@@ -1,0 +1,61 @@
+{
+  "name": "flash-conversion-html5-rebuild",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/web",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22 <27"
+  },
+  "scripts": {
+    "dev": "npm run dev --workspace @helpmath/web",
+    "dev:workbench": "next dev",
+    "build": "npm run build --workspace @helpmath/web",
+    "build:workbench": "next build",
+    "start": "npm run start --workspace @helpmath/web",
+    "lint": "npm run lint --workspace @helpmath/web",
+    "typecheck": "npm run typecheck --workspace @helpmath/web",
+    "test:site": "npm run test --workspace @helpmath/web",
+    "test:demos": "npm run test --workspace @helpmath/demos",
+    "typecheck:demos": "npm run typecheck --workspace @helpmath/demos",
+    "test:e2e": "npm run test:e2e --workspace @helpmath/web",
+    "test": "node --test lib/*.test.mjs scripts/*.test.mjs",
+    "doctor": "node scripts/workbench-doctor.mjs",
+    "verify:workbench": "node scripts/verify-workbench.mjs",
+    "verify:sources": "node scripts/freeze-help-math-sources.mjs --verify",
+    "catalog:build": "node scripts/build-help-math-catalog.mjs --output catalog --concurrency 8 --verify-known-counts",
+    "verify:archive": "npm run verify:sources && npm run catalog:build",
+    "scaffold:migration": "node scripts/create-flash-migration.mjs",
+    "scaffold:pilots": "node scripts/scaffold-pilot-migrations.mjs",
+    "scaffold:batch": "node scripts/scaffold-catalog-batch.mjs",
+    "sync:migrations": "node scripts/sync-migrations-from-catalog.mjs",
+    "ledger:build": "node scripts/build-completion-ledger.mjs",
+    "ledger:check": "node scripts/build-completion-ledger.mjs --check",
+    "audit:pilots": "node scripts/audit-pilot-swfs.mjs",
+    "sync:machine-audits": "node scripts/sync-machine-audits.mjs",
+    "capture:keyframes": "node scripts/capture-animation-keyframes.mjs",
+    "compare:frames": "node scripts/compare-images.mjs",
+    "verify": "npm run verify:workbench && npm test && npm run test:demos && npm run typecheck:demos && npm run lint && npm run typecheck && npm run test:site && npm run build"
+  },
+  "dependencies": {
+    "@ruffle-rs/ruffle": "^0.4.1",
+    "@types/node": "^26.1.1",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "next": "16.2.10",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "typescript": "6.0.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "pixelmatch": "^7.2.0",
+    "pngjs": "^7.0.0"
+  },
+  "overrides": {
+    "postcss": "^8.5.10"
+  }
+}

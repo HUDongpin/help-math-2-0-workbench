@@ -1,0 +1,97 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+  NEXT_PUBLIC_SITE_URL: https://www.helpmath.ai
+
+jobs:
+  workbench:
+    name: Workbench
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out source without Git LFS objects
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          lfs: false
+          persist-credentials: false
+
+      - name: Use repository Node.js version
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Verify migration workbench
+        run: npm run verify:workbench
+
+      - name: Run workbench tests
+        run: npm test
+
+      - name: Test demo integration package
+        run: npm run test:demos
+
+      - name: Type-check demo integration package
+        run: npm run typecheck:demos
+
+  site:
+    name: Site workspace
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - name: Check out source without Git LFS objects
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+          lfs: false
+          persist-credentials: false
+
+      - name: Use repository Node.js version
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Lint site
+        run: npm run lint
+
+      - name: Type-check site
+        run: npm run typecheck
+
+      - name: Test site
+        run: npm test
+
+      - name: Build site
+        run: npm run build
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run browser and accessibility tests
+        run: npm run test:e2e

@@ -1,0 +1,42 @@
+.faithful-conversion {
+  width: min(1110px, 100%);
+}
+
+.faithful-stage-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 780 / 379;
+  overflow: hidden;
+  background: #e4e4e4;
+}
+
+.faithful-stage {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.flash-replay {
+  cursor: pointer;
+}
+
+.flash-replay:focus {
+  outline: none;
+}
+
+.flash-replay:focus-visible {
+  outline: 3px solid #1d4ed8;
+  outline-offset: 3px;
+}
+
+.faithful-stage-wrap .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

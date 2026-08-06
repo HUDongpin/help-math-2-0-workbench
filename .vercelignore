@@ -1,0 +1,34 @@
+# The deployable application is apps/web in this npm monorepo. Its reviewed
+# inputs under catalog/ and packages/demos/ must remain available to the build.
+# These exclusions are a second line of defense for Vercel CLI uploads. The hard
+# boundary is keeping legacy evidence in a separate private archive repository.
+HELP MATH_ORIGINAL FILES/
+source-assets/
+public/flash/
+public/flash-assets/
+public/ruffle/
+**/*.fla
+**/*.swf
+
+# Forensic evidence, migration workspaces, and the legacy workbench are not part
+# of the public website deployment.
+migrations/
+templates/
+output/
+outputs/
+documentation/
+work/
+/app/
+/apps/site/
+/components/
+/lib/
+
+# Repository-only operating material.
+.agents/
+.github/
+docs/
+skills/
+scripts/
+AGENTS.md
+FILE_MANIFEST.sha256
+README.md

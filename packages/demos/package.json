@@ -1,0 +1,47 @@
+{
+  "name": "@helpmath/demos",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js"
+    },
+    "./components": {
+      "types": "./src/components.d.ts",
+      "import": "./src/components.js"
+    },
+    "./contracts": {
+      "types": "./src/contracts.d.ts",
+      "import": "./src/contracts.js"
+    },
+    "./manifests": {
+      "types": "./src/manifests.d.ts",
+      "import": "./src/manifests.js"
+    },
+    "./registry": {
+      "types": "./src/registry.d.ts",
+      "import": "./src/registry.js"
+    },
+    "./styles.css": "./src/styles.css",
+    "./animation-registry": "./src/animation-registry.ts",
+    "./runtime": "./src/runtime.ts",
+    "./prototype-manifest": "./src/prototype-manifest.ts"
+  },
+  "scripts": {
+    "generate:registry": "node scripts/generate-registry.mjs",
+    "check:registry": "node scripts/generate-registry.mjs --check",
+    "typecheck": "npm run check:registry && tsc --noEmit",
+    "test": "npm run check:registry && tsx --test test/*.test.mjs tests/**/*.test.ts"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "tsx": "^4.23.1",
+    "typescript": "6.0.3"
+  }
+}
