@@ -214,6 +214,17 @@ const nextConfig: NextConfig = {
     ? 'standalone'
     : undefined,
   outputFileTracingRoot: path.resolve(webDirectory, '../..'),
+  outputFileTracingIncludes: {
+    '/*': [
+      '../../catalog/animations.json',
+      '../../catalog/missing-references.json',
+      '../../catalog/completion-ledger.json',
+      '../../catalog/lesson-releases.json',
+      '../../catalog/lesson-release-ledger.json',
+      '../../catalog/lessons.json',
+      '../../reports/g5-l4-source-scope-freeze.json',
+    ],
+  },
   outputFileTracingExcludes: wholeLessonPackageBuild
     ? {
         '*': [
