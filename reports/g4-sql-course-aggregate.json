@@ -1,0 +1,554 @@
+{
+  "alignmentSummary": {
+    "historicalTitlesMatchingCurrentCatalog": 12,
+    "historicalUrlsMatchingCurrentXml": 12,
+    "placementPathMatchIsByteIdentity": false,
+    "sqlPageCountsMatchingCurrentXmlPageReferences": 0
+  },
+  "authorityBoundary": {
+    "audioEffect": false,
+    "canonicalSourcePromotionEffect": false,
+    "currentXmlSequenceAuthority": true,
+    "fidelityEffect": false,
+    "historicalAggregateContext": true,
+    "historicalSqlSequenceAuthority": false,
+    "humanReviewEffect": false,
+    "ownerAcceptanceEffect": false,
+    "publicationEffect": false,
+    "runtimeEffect": false,
+    "strictCompletionEffect": false
+  },
+  "historicalSqlCourse": {
+    "courseId": 5,
+    "courseName": "Math Foundations 2",
+    "declaredLessonCount": 12,
+    "displayOrder": 2,
+    "historicalIndexSwf": "indexELM.swf",
+    "isActive": true
+  },
+  "identity": {
+    "grade": 4,
+    "historicalCourseId": 5,
+    "lessonCount": 12
+  },
+  "inputs": {
+    "currentLessonCatalog": {
+      "bytes": 59672,
+      "file": "catalog/lessons.json",
+      "sha256": "96602f48c3c2089ab90d63262645de267a58522dc2bae57ab3e87745f3547905"
+    },
+    "generator": {
+      "bytes": 25426,
+      "file": "build-g4-sql-course-aggregate.mjs",
+      "sha256": "e74e1ba3ffab58975d9c36cbe1e405089229838bc0e68c1836ba51d8c4c370ed"
+    },
+    "repositoryTableCatalog": {
+      "bytes": 35695,
+      "file": "catalog/newhelpprogram-20210203-tables.csv",
+      "sha256": "6a783507d0ad4b3656cc42a12ddfcad67d6b55b9ec18b790a479252b82348f7a"
+    },
+    "sqlTables": [
+      {
+        "objectId": "784721848",
+        "projectedFields": [
+          "Course_ID",
+          "Course_Name",
+          "No_Of_Lessons",
+          "Display_Order",
+          "Is_Active",
+          "indexswf"
+        ],
+        "source": {
+          "bytes": 424,
+          "catalogReadablePathSha256": "0cf0c4c6ac6414d46e7505e81bee61f82fecee98cf7f1c7870978e3a71e3309b",
+          "domain": "course_content_taxonomy",
+          "fileBasename": "T_784721848.jsonl.gz",
+          "rowCountDeclared": 10,
+          "sensitiveNamedColumnCount": 0,
+          "sensitivity": "content_metadata",
+          "sha256": "9a70fcfa60a099dbf525520e5d31ac06c31abb8b882a0e69a9261a49f14f09a9"
+        },
+        "table": "dbo.Courses"
+      },
+      {
+        "objectId": "912722304",
+        "projectedFields": [
+          "Lesson_ID",
+          "Course_ID",
+          "Lesson_Title",
+          "url",
+          "Quiz_url",
+          "Is_Active",
+          "Lesson_number"
+        ],
+        "source": {
+          "bytes": 127644,
+          "catalogReadablePathSha256": "84bcb9ec962addd0608a7c786ca53df84ff0d9577cd661c9d392a648d0132404",
+          "domain": "course_content_taxonomy",
+          "fileBasename": "T_912722304.jsonl.gz",
+          "rowCountDeclared": 3727,
+          "sensitiveNamedColumnCount": 0,
+          "sensitivity": "content_metadata",
+          "sha256": "25614ba0440fa4ff0c9959deba5f8f8e2eabe2742ed23bc732db711f41359578"
+        },
+        "table": "dbo.Lessons"
+      },
+      {
+        "objectId": "1040722760",
+        "projectedFields": [
+          "Lesson_ID"
+        ],
+        "source": {
+          "bytes": 58552,
+          "catalogReadablePathSha256": "8b7ecb53251fad9e0336ccd18b5294d0b6dd3034d1b310b581219a4b5061d01b",
+          "domain": "course_content_taxonomy",
+          "fileBasename": "T_1040722760.jsonl.gz",
+          "rowCountDeclared": 3721,
+          "sensitiveNamedColumnCount": 0,
+          "sensitivity": "content_metadata",
+          "sha256": "1d5d8977c6c3709b56b11beda7846a286911ac357de72b8665a5adc8befc65cf"
+        },
+        "table": "dbo.MetaData"
+      },
+      {
+        "objectId": "61243273",
+        "projectedFields": [
+          "LessonId"
+        ],
+        "source": {
+          "bytes": 56558,
+          "catalogReadablePathSha256": "02467e5f45de561e4c6b3663377260d2e8c8e5a36b35b96a85a0b0773334db19",
+          "domain": "course_content_taxonomy",
+          "fileBasename": "T_61243273.jsonl.gz",
+          "rowCountDeclared": 2983,
+          "sensitiveNamedColumnCount": 0,
+          "sensitivity": "content_metadata",
+          "sha256": "5969c22960cfe82c58053f2a95b5b18aaf9a54eeda1d5a84099f07f9c4839eef"
+        },
+        "table": "dbo.ssm_LessonsPages"
+      },
+      {
+        "objectId": "125243501",
+        "projectedFields": [
+          "LessonId"
+        ],
+        "source": {
+          "bytes": 13680,
+          "catalogReadablePathSha256": "a956acee3181ccf0dd54ff6f0fa20a85e62fde3390c803d717aa67bbc1468233",
+          "domain": "course_content_taxonomy",
+          "fileBasename": "T_125243501.jsonl.gz",
+          "rowCountDeclared": 1883,
+          "sensitiveNamedColumnCount": 0,
+          "sensitivity": "content_metadata",
+          "sha256": "ffd138e4d5a8a77e8960bdf58de34ceec34239a5dfd25c01f3c0df99896c236f"
+        },
+        "table": "dbo.ssm_QuizQuestions"
+      },
+      {
+        "objectId": "896722247",
+        "projectedFields": [
+          "Lesson_ID"
+        ],
+        "source": {
+          "bytes": 6006,
+          "catalogReadablePathSha256": "04daa0ea3e3c130d25a072943e4ccb9dae3130b31bc6dffb0dab289ec3538229",
+          "domain": "course_content_taxonomy",
+          "fileBasename": "T_896722247.jsonl.gz",
+          "rowCountDeclared": 411,
+          "sensitiveNamedColumnCount": 0,
+          "sensitivity": "content_metadata",
+          "sha256": "a08b49cfa4437517de49dd8b3c1b73cd84b46f1615d6be22b028b2b3d997519a"
+        },
+        "table": "dbo.LearningObjectives"
+      }
+    ]
+  },
+  "lessons": [
+    {
+      "aggregates": {
+        "learningObjectiveRows": 0,
+        "metadataRows": 77,
+        "quizDefinitionRows": 32,
+        "structuredPageRows": 69
+      },
+      "alignment": {
+        "historicalTitleMatchesCurrentCatalog": true,
+        "historicalUrlMatchesCurrentCanonicalXml": true,
+        "pathOrTitleMatchProvesBinaryIdentity": false,
+        "sqlStructuredPageCountMatchesCurrentXmlPageReferences": false
+      },
+      "currentSequenceAuthority": {
+        "activePageReferenceCount": 80,
+        "canonicalTitle": "Place Value",
+        "canonicalXmlPath": "HELP_COURSES/ELMGR4/L1/index.xml",
+        "lessonNumber": 1,
+        "xmlBytes": 15715,
+        "xmlSha256": "b14d31c2f2c7cd83cc1e2de8bfe5463734b64572756b2677c09e851c46c670b2"
+      },
+      "historicalLessonId": 64,
+      "isActive": true,
+      "lessonNumber": 1,
+      "quizUrl": "ELMGR4/L1/RE/L1RE01.swf",
+      "title": "Place Value",
+      "url": "ELMGR4/L1/index.xml"
+    },
+    {
+      "aggregates": {
+        "learningObjectiveRows": 0,
+        "metadataRows": 65,
+        "quizDefinitionRows": 31,
+        "structuredPageRows": 55
+      },
+      "alignment": {
+        "historicalTitleMatchesCurrentCatalog": true,
+        "historicalUrlMatchesCurrentCanonicalXml": true,
+        "pathOrTitleMatchProvesBinaryIdentity": false,
+        "sqlStructuredPageCountMatchesCurrentXmlPageReferences": false
+      },
+      "currentSequenceAuthority": {
+        "activePageReferenceCount": 67,
+        "canonicalTitle": "Fractions & Decimals",
+        "canonicalXmlPath": "HELP_COURSES/ELMGR4/L2/index.xml",
+        "lessonNumber": 2,
+        "xmlBytes": 15456,
+        "xmlSha256": "c737ee50dddf6eae1025483f956a491fa030801bcf07f8c7ee30a94c1eaccad0"
+      },
+      "historicalLessonId": 54,
+      "isActive": true,
+      "lessonNumber": 2,
+      "quizUrl": "ELMGR4/L2/RE/L2RE01.swf",
+      "title": "Fractions & Decimals",
+      "url": "ELMGR4/L2/index.xml"
+    },
+    {
+      "aggregates": {
+        "learningObjectiveRows": 0,
+        "metadataRows": 36,
+        "quizDefinitionRows": 25,
+        "structuredPageRows": 28
+      },
+      "alignment": {
+        "historicalTitleMatchesCurrentCatalog": true,
+        "historicalUrlMatchesCurrentCanonicalXml": true,
+        "pathOrTitleMatchProvesBinaryIdentity": false,
+        "sqlStructuredPageCountMatchesCurrentXmlPageReferences": false
+      },
+      "currentSequenceAuthority": {
+        "activePageReferenceCount": 39,
+        "canonicalTitle": "Negative Numbers",
+        "canonicalXmlPath": "HELP_COURSES/ELMGR4/L3/index.xml",
+        "lessonNumber": 3,
+        "xmlBytes": 8976,
+        "xmlSha256": "0f1109321a5b65507c36fb8fd30380c4899cb7f381c2959aa7092d59bba990b0"
+      },
+      "historicalLessonId": 49,
+      "isActive": true,
+      "lessonNumber": 3,
+      "quizUrl": "ELMGR4/L3/RE/L3RE01.swf",
+      "title": "Negative Numbers",
+      "url": "ELMGR4/L3/index.xml"
+    },
+    {
+      "aggregates": {
+        "learningObjectiveRows": 0,
+        "metadataRows": 51,
+        "quizDefinitionRows": 25,
+        "structuredPageRows": 41
+      },
+      "alignment": {
+        "historicalTitleMatchesCurrentCatalog": true,
+        "historicalUrlMatchesCurrentCanonicalXml": true,
+        "pathOrTitleMatchProvesBinaryIdentity": false,
+        "sqlStructuredPageCountMatchesCurrentXmlPageReferences": false
+      },
+      "currentSequenceAuthority": {
+        "activePageReferenceCount": 54,
+        "canonicalTitle": "Addition & Subtraction",
+        "canonicalXmlPath": "HELP_COURSES/ELMGR4/L4/index.xml",
+        "lessonNumber": 4,
+        "xmlBytes": 11431,
+        "xmlSha256": "1f529ac5b5fdca858b39b97ce450192742ec6fdce8edba1bccb123fe9a9df90f"
+      },
+      "historicalLessonId": 65,
+      "isActive": true,
+      "lessonNumber": 4,
+      "quizUrl": "ELMGR4/L4/RE/L4RE01.swf",
+      "title": "Addition & Subtraction",
+      "url": "ELMGR4/L4/index.xml"
+    },
+    {
+      "aggregates": {
+        "learningObjectiveRows": 0,
+        "metadataRows": 50,
+        "quizDefinitionRows": 24,
+        "structuredPageRows": 40
+      },
+      "alignment": {
+        "historicalTitleMatchesCurrentCatalog": true,
+        "historicalUrlMatchesCurrentCanonicalXml": true,
+        "pathOrTitleMatchProvesBinaryIdentity": false,
+        "sqlStructuredPageCountMatchesCurrentXmlPageReferences": false
+      },
+      "currentSequenceAuthority": {
+        "activePageReferenceCount": 53,
+        "canonicalTitle": "Multiplication",
+        "canonicalXmlPath": "HELP_COURSES/ELMGR4/L5/index.xml",
+        "lessonNumber": 5,
+        "xmlBytes": 12131,
+        "xmlSha256": "f71151dd457a019e38bef4086927b2c0b3771101b5a5d2bed101d266a6567ce4"
+      },
+      "historicalLessonId": 61,
+      "isActive": true,
+      "lessonNumber": 5,
+      "quizUrl": "ELMGR4/L5/RE/L5RE01.swf",
+      "title": "Multiplication",
+      "url": "ELMGR4/L5/index.xml"
+    },
+    {
+      "aggregates": {
+        "learningObjectiveRows": 0,
+        "metadataRows": 44,
+        "quizDefinitionRows": 26,
+        "structuredPageRows": 36
+      },
+      "alignment": {
+        "historicalTitleMatchesCurrentCatalog": true,
+        "historicalUrlMatchesCurrentCanonicalXml": true,
+        "pathOrTitleMatchProvesBinaryIdentity": false,
+        "sqlStructuredPageCountMatchesCurrentXmlPageReferences": false
+      },
+      "currentSequenceAuthority": {
+        "activePageReferenceCount": 49,
+        "canonicalTitle": "Division",
+        "canonicalXmlPath": "HELP_COURSES/ELMGR4/L6/index.xml",
+        "lessonNumber": 6,
+        "xmlBytes": 10603,
+        "xmlSha256": "20a18596c6ff7d0e9997c3029a62b2be749306234a247aa9f7ef16b6b06f20af"
+      },
+      "historicalLessonId": 50,
+      "isActive": true,
+      "lessonNumber": 6,
+      "quizUrl": "ELMGR4/L6/RE/L6RE01.swf",
+      "title": "Division",
+      "url": "ELMGR4/L6/index.xml"
+    },
+    {
+      "aggregates": {
+        "learningObjectiveRows": 0,
+        "metadataRows": 45,
+        "quizDefinitionRows": 26,
+        "structuredPageRows": 37
+      },
+      "alignment": {
+        "historicalTitleMatchesCurrentCatalog": true,
+        "historicalUrlMatchesCurrentCanonicalXml": true,
+        "pathOrTitleMatchProvesBinaryIdentity": false,
+        "sqlStructuredPageCountMatchesCurrentXmlPageReferences": false
+      },
+      "currentSequenceAuthority": {
+        "activePageReferenceCount": 48,
+        "canonicalTitle": "Factoring",
+        "canonicalXmlPath": "HELP_COURSES/ELMGR4/L7/index.xml",
+        "lessonNumber": 7,
+        "xmlBytes": 10384,
+        "xmlSha256": "bb28368a5b6c03d120965a41bbc5a2c719ccf4f21292c88fa1a1de8e7d44b9f0"
+      },
+      "historicalLessonId": 55,
+      "isActive": true,
+      "lessonNumber": 7,
+      "quizUrl": "ELMGR4/L7/RE/L7RE01.swf",
+      "title": "Factoring",
+      "url": "ELMGR4/L7/index.xml"
+    },
+    {
+      "aggregates": {
+        "learningObjectiveRows": 0,
+        "metadataRows": 43,
+        "quizDefinitionRows": 24,
+        "structuredPageRows": 32
+      },
+      "alignment": {
+        "historicalTitleMatchesCurrentCatalog": true,
+        "historicalUrlMatchesCurrentCanonicalXml": true,
+        "pathOrTitleMatchProvesBinaryIdentity": false,
+        "sqlStructuredPageCountMatchesCurrentXmlPageReferences": false
+      },
+      "currentSequenceAuthority": {
+        "activePageReferenceCount": 46,
+        "canonicalTitle": "Mathematical Expressions",
+        "canonicalXmlPath": "HELP_COURSES/ELMGR4/L8/index.xml",
+        "lessonNumber": 8,
+        "xmlBytes": 10175,
+        "xmlSha256": "aa67d48954c94598f27cff27f44ca76ee8423236d25a175b402018810b909e8d"
+      },
+      "historicalLessonId": 56,
+      "isActive": true,
+      "lessonNumber": 8,
+      "quizUrl": "ELMGR4/L8/RE/L8RE01.swf",
+      "title": "Mathematical Expressions",
+      "url": "ELMGR4/L8/index.xml"
+    },
+    {
+      "aggregates": {
+        "learningObjectiveRows": 0,
+        "metadataRows": 40,
+        "quizDefinitionRows": 30,
+        "structuredPageRows": 30
+      },
+      "alignment": {
+        "historicalTitleMatchesCurrentCatalog": true,
+        "historicalUrlMatchesCurrentCanonicalXml": true,
+        "pathOrTitleMatchProvesBinaryIdentity": false,
+        "sqlStructuredPageCountMatchesCurrentXmlPageReferences": false
+      },
+      "currentSequenceAuthority": {
+        "activePageReferenceCount": 43,
+        "canonicalTitle": "Equations",
+        "canonicalXmlPath": "HELP_COURSES/ELMGR4/L9/index.xml",
+        "lessonNumber": 9,
+        "xmlBytes": 9736,
+        "xmlSha256": "d1d3bdba357f66e252d6201b00cffeed409ea4505233595cedf1f5bfd10722b4"
+      },
+      "historicalLessonId": 57,
+      "isActive": true,
+      "lessonNumber": 9,
+      "quizUrl": "ELMGR4/L9/RE/L9RE01.swf",
+      "title": "Equations",
+      "url": "ELMGR4/L9/index.xml"
+    },
+    {
+      "aggregates": {
+        "learningObjectiveRows": 0,
+        "metadataRows": 43,
+        "quizDefinitionRows": 25,
+        "structuredPageRows": 35
+      },
+      "alignment": {
+        "historicalTitleMatchesCurrentCatalog": true,
+        "historicalUrlMatchesCurrentCanonicalXml": true,
+        "pathOrTitleMatchProvesBinaryIdentity": false,
+        "sqlStructuredPageCountMatchesCurrentXmlPageReferences": false
+      },
+      "currentSequenceAuthority": {
+        "activePageReferenceCount": 46,
+        "canonicalTitle": "Perimeter & Area",
+        "canonicalXmlPath": "HELP_COURSES/ELMGR4/L10/index.xml",
+        "lessonNumber": 10,
+        "xmlBytes": 10209,
+        "xmlSha256": "652b236f1ad46077e75accc6fe7acb091cbd0bd24b8d99fa0b1f5ffeb1a379e9"
+      },
+      "historicalLessonId": 66,
+      "isActive": true,
+      "lessonNumber": 10,
+      "quizUrl": "ELMGR4/L10/RE/L10RE01.swf",
+      "title": "Perimeter & Area",
+      "url": "ELMGR4/L10/index.xml"
+    },
+    {
+      "aggregates": {
+        "learningObjectiveRows": 0,
+        "metadataRows": 40,
+        "quizDefinitionRows": 26,
+        "structuredPageRows": 29
+      },
+      "alignment": {
+        "historicalTitleMatchesCurrentCatalog": true,
+        "historicalUrlMatchesCurrentCanonicalXml": true,
+        "pathOrTitleMatchProvesBinaryIdentity": false,
+        "sqlStructuredPageCountMatchesCurrentXmlPageReferences": false
+      },
+      "currentSequenceAuthority": {
+        "activePageReferenceCount": 43,
+        "canonicalTitle": "Coordinate Grid",
+        "canonicalXmlPath": "HELP_COURSES/ELMGR4/L11/index.xml",
+        "lessonNumber": 11,
+        "xmlBytes": 10085,
+        "xmlSha256": "b5e0dddcf9e60124d54ecaf5d57d3254e2e0cea40cef1dd5a044a73c8ba4656a"
+      },
+      "historicalLessonId": 67,
+      "isActive": true,
+      "lessonNumber": 11,
+      "quizUrl": "ELMGR4/L11/RE/L11RE01.swf",
+      "title": "Coordinate Grid",
+      "url": "ELMGR4/L11/index.xml"
+    },
+    {
+      "aggregates": {
+        "learningObjectiveRows": 0,
+        "metadataRows": 74,
+        "quizDefinitionRows": 27,
+        "structuredPageRows": 65
+      },
+      "alignment": {
+        "historicalTitleMatchesCurrentCatalog": true,
+        "historicalUrlMatchesCurrentCanonicalXml": true,
+        "pathOrTitleMatchProvesBinaryIdentity": false,
+        "sqlStructuredPageCountMatchesCurrentXmlPageReferences": false
+      },
+      "currentSequenceAuthority": {
+        "activePageReferenceCount": 77,
+        "canonicalTitle": "Geometry",
+        "canonicalXmlPath": "HELP_COURSES/ELMGR4/L12/index.xml",
+        "lessonNumber": 12,
+        "xmlBytes": 17502,
+        "xmlSha256": "1a90deef7e58247fc9ac4c8e9daa452aa665c11d8cac0e20da77e294c5c75ca0"
+      },
+      "historicalLessonId": 68,
+      "isActive": true,
+      "lessonNumber": 12,
+      "quizUrl": "ELMGR4/L12/RE/L12RE01.swf",
+      "title": "Geometry",
+      "url": "ELMGR4/L12/index.xml"
+    }
+  ],
+  "privacyBoundary": {
+    "approvedSqlTableCount": 6,
+    "approvedSqlTablesRead": [
+      "dbo.Courses",
+      "dbo.Lessons",
+      "dbo.MetaData",
+      "dbo.ssm_LessonsPages",
+      "dbo.ssm_QuizQuestions",
+      "dbo.LearningObjectives"
+    ],
+    "explicitFieldProjectionOnly": true,
+    "personalRecordsEmitted": 0,
+    "rawCurriculumRowsEmitted": 0,
+    "requiredDomain": "course_content_taxonomy",
+    "requiredSensitiveNamedColumnCount": 0,
+    "requiredSensitivity": "content_metadata",
+    "restrictedSqlTablesRead": 0,
+    "sourceAbsolutePathsEmitted": 0
+  },
+  "reportType": "g4-privacy-safe-historical-sql-course-aggregate",
+  "schemaVersion": 1,
+  "sequenceAuthority": {
+    "authority": "current 12 canonical Grade 4 lesson XML files",
+    "historicalSqlIsSequenceAuthority": false,
+    "lessonNumbers": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "statement": "The current hash-bound Grade 4 L1-L12 index.xml files and their catalog records are the sequence authority. SQL Lesson_number and URLs are 2021 historical aggregate context only."
+  },
+  "sourceSnapshotDate": "2021-02-03",
+  "status": "historical-aggregate-context-only-current-xml-sequence-authority",
+  "totals": {
+    "activeHistoricalLessons": 12,
+    "currentXmlPageReferences": 645,
+    "learningObjectives": 0,
+    "metadata": 608,
+    "structuredPages": 497,
+    "structuredQuizQuestions": 321
+  }
+}

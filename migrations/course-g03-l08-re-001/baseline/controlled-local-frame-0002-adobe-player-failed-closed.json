@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "animationId": "course-g03-l08-re-001",
+  "capturedAt": "2026-07-21T17:40:31+08:00",
+  "status": "failed-closed",
+  "runtime": {
+    "name": "Adobe standalone Flash Player",
+    "version": "32",
+    "launchPolicy": "sandboxed hash-pinned local fixture after no-click GUI safety approval",
+    "networkAllowed": false,
+    "audioMutedByFixture": true
+  },
+  "fixture": {
+    "manifest": "work/adobe-course-host-fixtures-frame-controller-all/generated/course-g03-l08-re-001/frame-0002/c0558342683abc3780023894/fixture-manifest.json",
+    "fixtureDigest": "c0558342683abc378002389421887429a88a21e9dd313157d3507ec453ce11dd",
+    "hostSha256": "ec5ace5ba23252f8c0f499c27e9b7989b8e730157c392a04990dcdf31b80cb2a",
+    "sourceSwfSha256": "e4a6403f6b45a3b4aecb48e0659aa20113acb0644e37b027a19fb51f34417f9b",
+    "target": {
+      "rootEntryFrame": 51,
+      "rootEntryLabel": "Begin",
+      "placementName": "animation",
+      "placementObjectId": 621,
+      "localTimelineId": "sprite-621",
+      "localFrame": 2,
+      "localFrameCount": 27,
+      "consecutiveActualFrameChecksBeforeReveal": 3
+    }
+  },
+  "observation": {
+    "preloadCoverDisappeared": false,
+    "failureCoverVisible": true,
+    "failureCode": "local-frame-drift",
+    "expectedLocalFrame": 2,
+    "observedLocalFrame": 1,
+    "message": "FRAME CONTROL FAILED CLOSED; local-frame-drift; expected 2, observed 1; no baseline capture is eligible.",
+    "flashPlayerProcessClosedAfterCapture": true
+  },
+  "captures": [
+    {
+      "path": "migrations/course-g03-l08-re-001/baseline/controlled-local-frame-0002-adobe-player-failed-closed.jpeg",
+      "sha256": "19eac656c8ec4b5c12cab43a2f45babff0265c3cd6edc332f35b4d20819df860",
+      "width": 800,
+      "height": 628,
+      "format": "JPEG",
+      "containsWindowChrome": true
+    },
+    {
+      "path": "migrations/course-g03-l08-re-001/baseline/controlled-local-frame-0002-adobe-player-failed-closed-stage.jpeg",
+      "sha256": "e3b2fa969c47e2e21004f39cd1b8a12eda6d4e351e1100bf9149da691ef087b8",
+      "width": 800,
+      "height": 600,
+      "format": "JPEG",
+      "derivedFrom": "migrations/course-g03-l08-re-001/baseline/controlled-local-frame-0002-adobe-player-failed-closed.jpeg",
+      "crop": "800x600+0+28"
+    }
+  ],
+  "claims": {
+    "directControlledLocalFrameReached": false,
+    "threeConsecutiveActualFrameChecksPassed": false,
+    "authoritativeBaseline": false,
+    "losslessCapture": false,
+    "rmseEligible": false,
+    "fullFrameParityProved": false,
+    "humanReviewed": false,
+    "ownerAccepted": false
+  },
+  "requiredFollowUp": [
+    "Determine why the source named instance remains on local frame 1 after root Begin@51 and direct gotoAndStop(2).",
+    "Regenerate a corrected hash-pinned fixture, repeat the no-click GUI safety approval, and require three actual-frame matches before any child capture is admitted.",
+    "Do not use this failed controller output as a baseline or as evidence that the modern frame-2 candidate matches Adobe."
+  ]
+}

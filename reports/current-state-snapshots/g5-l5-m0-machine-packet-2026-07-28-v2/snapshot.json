@@ -1,0 +1,498 @@
+{
+  "acceptanceEffects": {
+    "audioAccepted": false,
+    "authoritativeOriginalRuntime": false,
+    "fidelityAccepted": false,
+    "humanReviewAccepted": false,
+    "ownerAccepted": false,
+    "promotionAuthorized": false,
+    "published": false,
+    "strictComplete": false
+  },
+  "authority": "Unsigned diagnostic receipt only. It binds an observed repository state and command outputs but grants no original-runtime authority, fidelity finding, review decision, Owner acceptance, strict completion, promotion, or publication.",
+  "capturePhase": "post-m0-machine-preparation-pre-authoritative-runtime",
+  "capturedAt": "2026-07-28T14:46:40.423Z",
+  "commands": [
+    {
+      "argv": [
+        "npm",
+        "run",
+        "doctor"
+      ],
+      "commandId": "doctor",
+      "endedAt": "2026-07-28T14:46:42.579Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "toolchain-diagnostic",
+      "signal": null,
+      "startedAt": "2026-07-28T14:46:40.778Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 1733,
+      "stdoutSha256": "9a88c922fad4225e3dbd3ff8c1a0dc7f49039d1f1412c1efefda4944d8d6168b"
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "verify:sources"
+      ],
+      "commandId": "verify-sources",
+      "endedAt": "2026-07-28T14:46:44.844Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "source-integrity",
+      "signal": null,
+      "startedAt": "2026-07-28T14:46:42.579Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 161,
+      "stdoutSha256": "a5be7bf747e2757a682c033d19228280fd439e78630519ec16e8430c8e938f01"
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "verify:workbench"
+      ],
+      "commandId": "verify-workbench",
+      "endedAt": "2026-07-28T14:47:27.462Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "workbench-integrity",
+      "signal": null,
+      "startedAt": "2026-07-28T14:46:44.844Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 365,
+      "stdoutSha256": "bf8d3453fb3d8a73a36cf6e71664c848d1fbe9af1340607f5f76324dda4ebee0"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/build-completion-ledger.mjs",
+        "--check"
+      ],
+      "commandId": "check-protected-completion-ledger",
+      "endedAt": "2026-07-28T14:47:47.970Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "protected-ledger-currentness",
+      "signal": null,
+      "startedAt": "2026-07-28T14:47:27.462Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 102,
+      "stdoutSha256": "e2fcd21a88457adcecab78c2cdf41b3f40e7a232feb5fa28c0e400640978db9e"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/build-lesson-release-ledger.mjs",
+        "--check"
+      ],
+      "commandId": "check-lesson-release-ledger",
+      "endedAt": "2026-07-28T14:48:08.411Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "release-ledger-currentness",
+      "signal": null,
+      "startedAt": "2026-07-28T14:47:47.970Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 110,
+      "stdoutSha256": "733c3754bf135121e3dcdfa0e4cddf1b1a4dcde138c6291f43e3df45aae85e63"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/materialize-g5-l5-pre-runtime-specification-candidates.mjs",
+        "--check"
+      ],
+      "commandId": "check-pre-runtime-specification-candidates",
+      "endedAt": "2026-07-28T14:48:09.701Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "pre-runtime-specification-candidates",
+      "signal": null,
+      "startedAt": "2026-07-28T14:48:08.411Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 221,
+      "stdoutSha256": "5345c250549c5d05addfdbcb0eb7dd473dd2f84fc5185d7504bc95d6dc7d2b85"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/build-g5-l5-missing-keyterm-recovery-readiness.mjs",
+        "--check"
+      ],
+      "commandId": "check-missing-keyterm-recovery",
+      "endedAt": "2026-07-28T14:48:09.783Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "missing-keyterm-recovery",
+      "signal": null,
+      "startedAt": "2026-07-28T14:48:09.701Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 344,
+      "stdoutSha256": "d73c0234035edeb6991684375d65a015565ce5ba1ae75f0153e00ad5811e568f"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/build-lesson-promotion-security-readiness.mjs",
+        "--release-id",
+        "lesson-g05-l05-add-subtract-negative-numbers",
+        "--workspace-readiness",
+        "reports/g5-l5-workspace-readiness.json",
+        "--output-prefix",
+        "reports/g5-l5-promotion-security-readiness",
+        "--check"
+      ],
+      "commandId": "check-promotion-security",
+      "endedAt": "2026-07-28T14:48:30.982Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "promotion-security",
+      "signal": null,
+      "startedAt": "2026-07-28T14:48:09.783Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 45,
+      "stdoutSha256": "8655bc9adf6574d8292ddf6b2bc0332c46875b54fb12bf6667ca6c08dbdf6ef7"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/build-g5-l5-specification-readiness.mjs",
+        "--check"
+      ],
+      "commandId": "check-specification-readiness",
+      "endedAt": "2026-07-28T14:48:31.418Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "specification-readiness",
+      "signal": null,
+      "startedAt": "2026-07-28T14:48:30.982Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 191,
+      "stdoutSha256": "cbfb02c26a4286089d9d42386dace7502531e0592c340843e9e81568cf9e11a4"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/build-g5-l5-m0-governance-readiness.mjs",
+        "--check"
+      ],
+      "commandId": "check-m0-governance",
+      "endedAt": "2026-07-28T14:48:31.469Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "m0-governance",
+      "signal": null,
+      "startedAt": "2026-07-28T14:48:31.418Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 71,
+      "stdoutSha256": "096321207f95cd575d3978223741a7a162cec1f3e1d288729a3d47bafd2758e5"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/build-g5-l5-m1-machine-foundation-readiness.mjs",
+        "--check"
+      ],
+      "commandId": "check-m1-machine-foundation",
+      "endedAt": "2026-07-28T14:48:31.556Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "m1-machine-foundation",
+      "signal": null,
+      "startedAt": "2026-07-28T14:48:31.469Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 100,
+      "stdoutSha256": "ee9d65fa50e2bc21d3e17ab2286b32b23ddd31d6614738c53a5ccddb1fd764a2"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/build-g5-l5-ruffle-reference-matrix.mjs",
+        "--check"
+      ],
+      "commandId": "check-ruffle-reference",
+      "endedAt": "2026-07-28T14:48:32.150Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "ruffle-forensic-reference",
+      "signal": null,
+      "startedAt": "2026-07-28T14:48:31.556Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 93,
+      "stdoutSha256": "490a9cb78ec456630ca2bea22f5d0995d6cc24d0f0d6acc1359c93d2f3e01b76"
+    },
+    {
+      "argv": [
+        "node",
+        "--test",
+        "scripts/build-g5-l5-m0-governance-readiness.test.mjs",
+        "scripts/build-g5-l5-m1-machine-foundation-readiness.test.mjs",
+        "scripts/build-g5-l5-missing-keyterm-recovery-readiness.test.mjs",
+        "scripts/build-g5-l5-specification-readiness.test.mjs",
+        "scripts/materialize-g5-l5-pre-runtime-specification-candidates.test.mjs",
+        "scripts/build-g5-l5-ruffle-reference-matrix.test.mjs",
+        "scripts/probe-g5-l5-ruffle-reference.test.mjs",
+        "scripts/capture-lesson-current-state-snapshot-g5-l5.test.mjs"
+      ],
+      "commandId": "g5-l5-machine-packet-tests",
+      "endedAt": "2026-07-28T14:48:33.794Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "machine-packet-regression",
+      "signal": null,
+      "startedAt": "2026-07-28T14:48:32.150Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 4279,
+      "stdoutSha256": "5811df825e466e9bf9eabd790476d0ebd442456c3ab782886ebdc4c3ba0521c3"
+    }
+  ],
+  "evidenceType": "help-math-current-state-snapshot-v1",
+  "generator": {
+    "artifactType": "generator-script",
+    "bytes": 47632,
+    "logicalId": "current-state-snapshot-generator",
+    "path": "scripts/capture-lesson-current-state-snapshot-v1.mjs",
+    "sha256": "dc0e6d729ab3baf78f045ba032bc32cc7cf76906a7e053c06122289c1801a297"
+  },
+  "inputs": [
+    {
+      "artifactType": "current-state-snapshot-profile",
+      "bytes": 9600,
+      "logicalId": "snapshot-profile",
+      "path": "catalog/g5-l5-m0-machine-packet-snapshot-profile-v2.json",
+      "sha256": "b2b1bbe77b586eaeccc0edd266592249aed9d0f036e210f219ceba307f7c7090"
+    },
+    {
+      "artifactType": "lesson-release-manifest",
+      "bytes": 87864,
+      "logicalId": "lesson-release-definition",
+      "path": "catalog/lesson-releases.json",
+      "sha256": "f3caa2ae0e9bfd6c02dd846aa2d45de5c2f746cc57ba01a09e506d4d3c42d632"
+    },
+    {
+      "artifactType": "source-sha256-manifest",
+      "bytes": 831011,
+      "logicalId": "source-manifest",
+      "path": "catalog/source-manifest.sha256",
+      "sha256": "a9625fb4a99e026fea09e4a1929edc2fa9d47ccf6cdbca7de4ba9ca75adf211e"
+    },
+    {
+      "artifactType": "completion-ledger",
+      "bytes": 97183,
+      "logicalId": "protected-completion-ledger",
+      "path": "catalog/completion-ledger.json",
+      "sha256": "6e9841ac5804506c0e2601f110c57122d5968030020c9bab6f2ff771be4b774a"
+    },
+    {
+      "artifactType": "lesson-release-ledger",
+      "bytes": 78417,
+      "logicalId": "lesson-release-ledger",
+      "path": "catalog/lesson-release-ledger.json",
+      "sha256": "95e658680d21159a38ef1c6759c130bd33a7b447a58d8130d38f78dfaabf09b7"
+    },
+    {
+      "artifactType": "source-scope-freeze",
+      "bytes": 200827,
+      "logicalId": "g5-l5-source-scope",
+      "path": "reports/g5-l5-source-scope-freeze.json",
+      "sha256": "ccb465e71d59c502c4aaf47a163a9d6ef046be3ca38ec5c0cd4c5769f2ce38c0"
+    },
+    {
+      "artifactType": "workspace-readiness",
+      "bytes": 58439,
+      "logicalId": "g5-l5-workspace-readiness",
+      "path": "reports/g5-l5-workspace-readiness.json",
+      "sha256": "0315d71afae63c5323e8a73e9a4a796a38d949437bdfaf184b26a17fb74277c1"
+    },
+    {
+      "artifactType": "runtime-acquisition-planning-readiness",
+      "bytes": 56864,
+      "logicalId": "g5-l5-runtime-planning-readiness",
+      "path": "reports/g05-l05-add-subtract-negative-numbers-runtime-acquisition-planning-readiness.json",
+      "sha256": "84e576d6aee23344328f595cc18a1490eb31aaddfafc41d498b7370bc46b6d51"
+    },
+    {
+      "artifactType": "authoring-operator-readiness",
+      "bytes": 435530,
+      "logicalId": "g5-l5-authoring-readiness",
+      "path": "reports/g5-l5-animate-authoring-operator-readiness.json",
+      "sha256": "6c3a1473b39a7eb0b27dd17df1a4ddda0fc2c8ff93db5f897047fb21f3c2b9eb"
+    },
+    {
+      "artifactType": "missing-keyterm-recovery-readiness",
+      "bytes": 7162,
+      "logicalId": "g5-l5-missing-keyterm-recovery",
+      "path": "reports/g5-l5-missing-keyterm-recovery-readiness.json",
+      "sha256": "4613c8fa8005c2d93a012dae0ec5a4f4bf579c2ed668eb8a68943a13e9ad19ab"
+    },
+    {
+      "artifactType": "promotion-security-readiness",
+      "bytes": 13353,
+      "logicalId": "g5-l5-promotion-security",
+      "path": "reports/g5-l5-promotion-security-readiness.json",
+      "sha256": "276c079e09b451ff62125882f392bf2df1ede8934e155f539dfc499b1bcf897f"
+    },
+    {
+      "artifactType": "specification-readiness",
+      "bytes": 990487,
+      "logicalId": "g5-l5-specification-readiness",
+      "path": "reports/g5-l5-specification-readiness.json",
+      "sha256": "cd5e47d5b58c69492785cbb27ba373afaf03e794fbad5167708800fa60cc7d7d"
+    },
+    {
+      "artifactType": "m0-governance-readiness",
+      "bytes": 19992,
+      "logicalId": "g5-l5-m0-governance",
+      "path": "reports/g5-l5-m0-governance-readiness.json",
+      "sha256": "d8225446761865a12a83d12a4fd0a308fa514763f181afa69cbff21a558142df"
+    },
+    {
+      "artifactType": "m1-machine-foundation-readiness",
+      "bytes": 121079,
+      "logicalId": "g5-l5-m1-machine-foundation",
+      "path": "reports/g5-l5-m1-machine-foundation-readiness.json",
+      "sha256": "74921db3bc3d46e00914d3e6bdeea84c8391b7a982f2cdde18695e75781b5b31"
+    },
+    {
+      "artifactType": "ruffle-forensic-reference-matrix",
+      "bytes": 305651,
+      "logicalId": "g5-l5-ruffle-reference",
+      "path": "reports/g5-l5-ruffle-reference-matrix.json",
+      "sha256": "bc4a8d1472a7d439d4045db635279293aa1c2f4a48bf76333b69db26b3847733"
+    },
+    {
+      "artifactType": "package-manifest",
+      "bytes": 39525,
+      "logicalId": "root-package",
+      "path": "package.json",
+      "sha256": "a63349af8bfee9ed99047112cff7e9e2a2ac25301660c11c84e1371e245d4789"
+    },
+    {
+      "artifactType": "package-lock",
+      "bytes": 287827,
+      "logicalId": "root-lockfile",
+      "path": "package-lock.json",
+      "sha256": "4a4495fc540c1da4c38cab6e3428a156dda00644ff6b70e4c15ed14657947839"
+    }
+  ],
+  "integrity": {
+    "commandSetSha256": "4abd83f7f0169c5e419834da808573db72f11545a58f63c93d2580346dcad8d5",
+    "inputSetSha256": "23de74ff7d27c72456c90811e29811d97ecca07a86899a537ee8d97c7f0fb6e1",
+    "snapshotPayloadSha256": "b58426482b10a766a6dda78d13e0157bc28cfb364531e2fd9337507c8cb50dab"
+  },
+  "knownBoundaries": [
+    "The protected completion and Lesson release ledgers are deliberately preserved even when their currentness checks fail; this snapshot never refreshes them.",
+    "A passing source, workspace, product, typecheck, or build command is current-JavaScript or machine-readiness evidence only.",
+    "Failed diagnostics are recorded as failures and are not rewritten as passing receipts.",
+    "The 610 root frames remain a structural root-timeline count, not full nested/interactive/audio coverage.",
+    "This snapshot consumes no G5 L4 M0/M1 packet, receipt, role assignment, or authorization; its G5 L5 state is independently derived from the exact release, release ledger, source/workspace reports, runtime plan, and authoring-readiness report.",
+    "No authorized original-runtime trace, authoritative baseline, paired full-frame RMSE result, audio listening decision, human review, or Owner decision is created here.",
+    "Public command output is hash-only; raw stdout and stderr stay under the ignored private work root and outside Git and deployments.",
+    "Input inode/hash and withheld worktree fingerprints were stable across the capture command window; any concurrent drift would have rejected this receipt."
+  ],
+  "observedState": {
+    "audioAcceptedFileCount": 0,
+    "authoringAuditCount": 0,
+    "authoritativeRuntimeSessionCount": 0,
+    "completionLedgerCurrent": true,
+    "diagnosticCommandCount": 13,
+    "draftValidWorkspaceCount": 57,
+    "expectedMemberCount": 57,
+    "failedDiagnosticCommandCount": 0,
+    "implementationStartedCount": 0,
+    "m0ExitReady": false,
+    "m1Authorized": false,
+    "machinePacketReadyForOwnerReview": false,
+    "namedRoleAssignmentReceiptCount": 0,
+    "ownerDecisionReceiptCount": 0,
+    "passedDiagnosticCommandCount": 13,
+    "publicRoutesOpen": false,
+    "published": false,
+    "releaseLedgerCurrent": true,
+    "strictCompleteCount": 0
+  },
+  "privacy": {
+    "containsContactInformation": false,
+    "containsPrivatePaths": false,
+    "containsRawAudio": false,
+    "containsRawFrames": false,
+    "containsSecrets": false,
+    "containsStudentData": false,
+    "exportClass": "public-hash-metadata-only",
+    "storesCommandOutput": false
+  },
+  "release": {
+    "activePageCount": 56,
+    "definitionSha256": "c03cf04129a19758f1bbdadbc67c78b26dde783fca1587447bf6ff83f2af7f84",
+    "expectedMemberCount": 57,
+    "memberIdentitySetSha256": "0db47d74a90fc5f1dbcdd74de8a47d73259d994645d3fc41bc20477bc303c26a",
+    "publicationMode": "atomic",
+    "shellCount": 1,
+    "title": "Add & Subtract Negative Numbers"
+  },
+  "releaseId": "lesson-g05-l05-add-subtract-negative-numbers",
+  "repository": {
+    "branch": "codex/g4-l3-fidelity-finish",
+    "dirty": true,
+    "excludedSnapshotOutputCount": 2,
+    "headSha": null,
+    "headState": "unborn",
+    "pathsWithheld": true,
+    "statusEntryCount": 62534,
+    "statusSha256": "b7bc3ffbd74608c4345af4b9e3a4e447ecad3d110cd5b6f94b53b5c9065d8995",
+    "trackedEntryCount": 656,
+    "untrackedEntryCount": 61878
+  },
+  "schema": {
+    "artifactType": "json-schema",
+    "bytes": 10246,
+    "logicalId": "current-state-snapshot-v1-schema",
+    "path": "schemas/current-state-snapshot-v1.schema.json",
+    "sha256": "8c4a73664f1983b2b3ee3b6c797736bf1fd658b6e838443c7df6fbb2535a1c65"
+  },
+  "schemaVersion": 1,
+  "snapshotId": "g5-l5-m0-machine-packet-2026-07-28-v2",
+  "temporalBoundary": {
+    "preExistingWork": [
+      "The exact 57-member G5 L5 release, preserved-source workspaces, source-scope freeze, machine SWF audits, runtime plans, and the earlier source-planning snapshot existed before this snapshot.",
+      "This snapshot additionally binds the acceptance-neutral pre-runtime specification candidates, M0 and M1 governance reports, missing-KeyTerm recovery search, promotion-security state, and local Ruffle forensic diagnostics created during the current machine-preparation phase.",
+      "The superseded v1 M0 machine-packet snapshot used noncanonical ledger diagnostic IDs and conservatively projected the two ledger-current booleans as false even though both commands passed; this v2 profile uses the canonical IDs without overwriting v1.",
+      "The repository contains unrelated user work and earlier G4 L3 and G5 L4 evidence; no G5 L4 receipt, named person, hour commitment, authorization, review decision, acceptance, strict result, or publication state is imported into G5 L5."
+    ],
+    "requestedBaselineDate": "2026-07-28",
+    "statement": "This is the corrected durable G5 L5 M0 machine-preparation current-state receipt taken after acceptance-neutral machine work and before M0 Owner signoff, M1 start authorization, authoritative original-runtime acquisition, renderer implementation, human review, Owner acceptance, strict completion, or publication. It grants no execution or acceptance authority."
+  },
+  "tools": [
+    {
+      "name": "node",
+      "version": "v24.18.0"
+    },
+    {
+      "name": "npm",
+      "version": "11.16.0"
+    },
+    {
+      "name": "git",
+      "version": "git version 2.50.1 (Apple Git-155)"
+    },
+    {
+      "name": "current-state-snapshot-generator",
+      "version": "1.0.0"
+    }
+  ]
+}

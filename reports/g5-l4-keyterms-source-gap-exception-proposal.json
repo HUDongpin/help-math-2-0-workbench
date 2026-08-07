@@ -1,0 +1,126 @@
+{
+  "acceptanceEffects": {
+    "audioAccepted": false,
+    "authoritativeOriginalRuntime": false,
+    "humanReviewAccepted": false,
+    "lessonSpecificSubstitutionAuthorized": false,
+    "missingSourcesRecovered": false,
+    "ownerFidelityAccepted": false,
+    "published": false,
+    "sourceGapClosed": false,
+    "strictComplete": false
+  },
+  "admissionPrerequisites": [
+    {
+      "id": "authorized-original-runtime-request-audit",
+      "requirement": "A hash-bound authorized EN/ES original-runtime session must show which KeyTerms paths are actually requested and must show zero requests for either missing lesson-local XML.",
+      "satisfied": false
+    },
+    {
+      "id": "grade-wide-runtime-load-success",
+      "requirement": "The same session must demonstrate successful loading and intended use of ELKTEG4.xml and ELKTSG4.xml without unallowlisted or legacy endpoint requests.",
+      "satisfied": false
+    },
+    {
+      "id": "validator-supported-exception-shape",
+      "requirement": "The strict validator and evidence schema must explicitly admit the exact bounded exception without weakening missing-frame, natural-trace, audio, review, or release gates.",
+      "satisfied": false
+    },
+    {
+      "id": "owner-reviewed-exception-record",
+      "requirement": "The Owner must review the exact evidence packet and create a separate immutable accepted or rejected exception record.",
+      "satisfied": false
+    }
+  ],
+  "authority": "Machine-prepared proposal only. It does not recover either missing XML, authorize a renamed substitute, establish runtime behavior, record an Owner decision, or change any fidelity, strict-completion, or publication gate.",
+  "proposal": {
+    "animationId": "shell-course-g05-l04-index-local",
+    "exactMissingDeclaredPaths": [
+      "HELP_KEYTERMS/KT/ELEMENTARY/XML/L4KTE01.xml",
+      "HELP_KEYTERMS/KT/ELEMENTARY/XML/L4KTS01.xml"
+    ],
+    "exceptionId": "shell-keyterms-declared-vs-shipped-static-dependency",
+    "gradeWideMastersRetainedUnderOriginalNames": [
+      "HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTEG4.xml",
+      "HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTSG4.xml"
+    ],
+    "machineEvidence": {
+      "authoritativeOriginalRuntime": false,
+      "courseXmlDeclarationCounts": {
+        "L4KTE01.xml": 1,
+        "L4KTS01.xml": 1
+      },
+      "evidenceClass": "preserved-course-declaration-plus-hash-bound-shipped-shell-static-code-only",
+      "exactMissingTargetCandidateCount": 0,
+      "linkedG5L4TermCount": 7,
+      "linkedTermsResolveExactlyOnceInAuthorizedCombinedReference": true,
+      "recoveredTargetCount": 0,
+      "runtimeLoadSuccessProven": false,
+      "runtimeReachabilityProven": false,
+      "shippedShellStaticLiteralCounts": {
+        "ELKTEG4.xml": 2,
+        "ELKTSG4.xml": 1,
+        "L4KTE01.xml": 0,
+        "L4KTS01.xml": 0
+      }
+    },
+    "proposedDisposition": {
+      "abortIfMissingLessonXmlIsRequested": true,
+      "migrationManifestChangeByThisProposal": false,
+      "ownerDecisionRequired": true,
+      "renameOrSubstituteMissingLessonXml": false,
+      "runtimeObservationRequired": true,
+      "scope": "trace-scoped-original-runtime-candidate-and-current-js-product-reference-only",
+      "sourceGapRemainsRecorded": true,
+      "useGradeWideMastersOnlyUnderTheirOriginalBasenames": true
+    }
+  },
+  "publicationEffect": "none",
+  "releaseId": "lesson-g05-l04-number-lines",
+  "reportFingerprintSha256": "e1ac458a4888c17ab781e401f83ef7fcebf0a6539a6a19bcd2af9cbafe1430de",
+  "reportType": "g5-l4-keyterms-source-gap-exception-proposal",
+  "schemaVersion": 1,
+  "sourceBindings": {
+    "courseXml": {
+      "bytes": 11841,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L4/index.xml",
+      "sha256": "b6f1718da8f5e909cb96c883902009887eb965d41e41588318b4bfb36c8f7a36"
+    },
+    "generator": {
+      "bytes": 19283,
+      "path": "scripts/build-g5-l4-keyterms-source-gap-exception-proposal.mjs",
+      "sha256": "831ec3877594f4a4aab367e2eadd94bd9c5898df66d5203d7ef195d63561ef0b"
+    },
+    "missingKeytermRecoveryReadiness": {
+      "bytes": 97033,
+      "path": "reports/g5-l4-missing-keyterm-recovery-readiness.json",
+      "sha256": "48eca19467f76eaaf154e9dfc470ff7280d4eb647b3fe7d003a951932bd86a4a"
+    },
+    "ownerWorkAuthorization": {
+      "bytes": 4538,
+      "path": "catalog/owner-authorizations/g5-l4-owner-continuation-and-prospective-approval-intake-2026-08-01.json",
+      "sha256": "c405044ada8fa6af21312b89f261763dbfdcddd7d20bc61566fb9e9a124befdf"
+    },
+    "shippedShellFfdecScripts": {
+      "bytes": 25143,
+      "path": "migrations/shell-course-g05-l04-index-local/audit/machine/ffdec-scripts.txt.gz",
+      "sha256": "ebf3a470ac5e78ce1da9e3ac0bdfb9c5a33777f370361632fb3697bb4e523706"
+    },
+    "shippedShellSwf": {
+      "bytes": 658851,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L4/index_local.swf",
+      "sha256": "7865195a07666e8123bef33f52aea36e06b7e0a9987fbbea605bc92cbe9b0301"
+    }
+  },
+  "status": "unsigned-proposal-runtime-observation-and-owner-review-required",
+  "strictAcceptanceEffect": "none; this is an unsigned proposal whose runtime, validator, and Owner prerequisites are all still unsatisfied",
+  "unsignedOwnerDecision": {
+    "automationMayFillOrSign": false,
+    "decision": "pending",
+    "exactEvidencePacketSha256": null,
+    "reason": "",
+    "reviewedAt": null,
+    "reviewerFullName": "",
+    "signatureEnvelope": null
+  }
+}

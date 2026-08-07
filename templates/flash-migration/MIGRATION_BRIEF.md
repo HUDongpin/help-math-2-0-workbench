@@ -44,11 +44,13 @@ Describe the instructional purpose, target users, required languages, interactio
 
 ## Baseline
 
-- Authoritative runtime or renderer:
-- Ruffle/Animate/browser version:
+- Authoritative original runtime, version, host, and toolchain receipt:
+- Requirement-level authority (`natural-trace`, `direct-seek`, or `frame-step`):
+- Separate Ruffle forensic-reference route, version, and renderer:
 - Native viewport and device scale factor:
-- Capture method:
+- Capture method, named operator, and containment/capacity preflight:
 - Required keyframes and why they matter:
+- Complete coverage-v2 frame domains, requirements, traces, and entry-state hashes:
 - Known emulator differences:
 
 ## Rendering Decision
@@ -62,7 +64,7 @@ Describe the instructional purpose, target users, required languages, interactio
 
 Summarize object phases, one-indexed frame windows, transforms, alpha, depth, text/count changes, audio cues, and interaction transitions. Keep the full frame list in `keyframes.csv`.
 
-List every reachable scenario/branch, its deterministic seed, and its terminal/Replay state. Every scenario and language must receive full one-indexed frame coverage.
+List every reachable scenario/branch, its deterministic seed, source-evidenced trace, and terminal/Replay state. Every explicit requirement must receive full one-indexed frame coverage; do not infer requirements from a global Cartesian product.
 
 ## Asset Strategy
 
@@ -76,22 +78,24 @@ Summarize extracted, converted, redrawn, and generated assets. Record each item 
 - Unit test file:
 - Ruffle reference route:
 - Standalone package:
-- Deterministic `?frame=` capture mode:
-- Deterministic `?scenario=`, `?lang=`, and `?seed=` modes:
-- Mandatory stage attribute `data-flash-frame`:
+- Deterministic `?frameDomain=`, `?requirementId=`, `?trace=`, `?entryStateSha256=`, `?frame=`, `?scenario=`, `?lang=`, and `?seed=` capture modes:
+- Mandatory matching `data-flash-*` identity attributes:
 
 ## Verification Evidence
 
 - Unit tests:
 - Production build:
 - Native-size keyframe captures:
-- Full-frame coverage manifest and archive:
+- Complete authoritative original-runtime and current-JS capture manifests:
+- Full-frame coverage manifest, comparisons, and archive:
 - Per-frame metrics files and checksums:
 - RMSE and diff-image results:
 - Replay and keyboard checks:
 - Desktop/mobile overflow checks:
 - Console and network checks:
 - Human reviewer and review date for all keyframe/full-frame diffs:
+- Audio listening-acceptance record, or source-bound not-required evidence:
+- Immutable human and owner record descriptors:
 
 ## Exceptions And Decisions
 
@@ -102,5 +106,7 @@ List every unresolved mismatch, unavailable tool/source, accepted emulator diffe
 - Engineering reviewer:
 - Review date:
 - Owner review status:
-- Owner decision, reviewer/date, or explicit not-required reason:
+- Owner accepted decision, reviewer/date/reason, and immutable record descriptor:
 - Strict validator result:
+- Completion-ledger binding:
+- Atomic lesson-release status:

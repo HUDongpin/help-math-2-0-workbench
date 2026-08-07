@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "decisionType": "g4-l3-reviewed-multi-frame-static-disposition-selection",
+  "reviewedOn": "2026-07-26",
+  "review": {
+    "reviewerKind": "codex-engineering-source-proof-review",
+    "humanReviewer": false,
+    "humanSignature": null,
+    "ownerAcceptance": false,
+    "decision": "accept-exact-eligible-set-and-preserve-exact-excluded-set",
+    "reason": "The exact hash-bound candidate partition was reviewed against the strong multi-frame parent-clock proof. Only course-g04-l03-rw-004/sprite-82 has a fully source-proven scriptless local playhead derived from one declared parent domain, with exact fresh placement, lifetime, removal, frame-wrap, internal display-graph, and no ActionScript, DoInitAction, clipActions, dynamic addressing, or external target control. The prior 144 excluded multi-frame timelines were conservatively materialized as explicit pending capture-domain candidates; their original exclusion reasons remain hash-bound in the materialization receipt. The current undeclared set therefore contains only the one accepted parent-clock composite."
+  },
+  "candidateReport": {
+    "path": "reports/g4-l3-multi-frame-disposition-candidates.json",
+    "sha256": "75103ee4151f93d52f6629fd2659b46f4aebf7993d63b1f89a3e88eb3c2073c2",
+    "schemaVersion": 1,
+    "reportType": "g4-l3-multi-frame-disposition-candidates",
+    "generatorSha256": "8061887f280e3a647349ee440d1fa4766182096e0c2dd6a499a7085af325bbd0"
+  },
+  "acceptedSet": {
+    "selector": "every members[].eligibleTimelineIds[] entry in the exact candidate-report bytes",
+    "candidateCount": 1,
+    "memberCount": 1,
+    "canonicalPairEncoding": "UTF-8 lines sorted lexicographically as <animationId> TAB <timelineId> LF",
+    "canonicalPairBytes": 32,
+    "canonicalPairSetSha256": "1a713ef3978d40a29a424e2609ba30de3ab909406271d2a25576094cd3b9eae1"
+  },
+  "excludedSet": {
+    "selector": "every members[].excludedTimelineIds[] entry in the exact candidate-report bytes",
+    "candidateCount": 0,
+    "canonicalPairEncoding": "UTF-8 lines sorted lexicographically as <animationId> TAB <timelineId> LF",
+    "canonicalPairBytes": 1,
+    "canonicalPairSetSha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "decision": "empty-after-prior-excluded-set-materialized-as-pending-domains",
+    "priorExcludedCandidateCount": 144,
+    "materializationReceipt": "reports/g4-l3-unresolved-frame-domain-materialization.json"
+  },
+  "requiredReverification": [
+    "Rehash the complete multi-frame candidate report, its generator, and its proof engine.",
+    "Recompute both accepted and excluded canonical pair-set digests and exact counts.",
+    "Re-run the strong source proof from physical SWF, swfmill XML, FFDec scripts, scenario inventory, and migration technical manifest for the accepted set.",
+    "Reject the whole reviewed partition if any accepted or excluded ID/count changes.",
+    "Preserve every visual, interaction, behavior, audio, full-frame/RMSE, independent human-review, owner-acceptance, and release obligation."
+  ],
+  "acceptance": {
+    "acceptanceNeutral": true,
+    "authoritativeRuntimeAccepted": false,
+    "audioAccepted": false,
+    "visualOrBehaviorParityAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictMigrationComplete": false
+  },
+  "strictAcceptanceEffect": "none; this engineering review pins one source-proven parent-clock disposition and preserves the other 144 multi-frame timelines as unresolved"
+}

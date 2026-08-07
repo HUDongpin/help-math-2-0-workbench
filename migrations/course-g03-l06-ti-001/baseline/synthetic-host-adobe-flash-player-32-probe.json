@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "animationId": "course-g03-l06-ti-001",
+  "captureClassification": "synthetic-host-engineering-probe-not-authoritative-baseline",
+  "scenarioInventoryDiscovery": "excluded-from-authoritative-adobe-runtime-inputs-to-avoid-a-circular-fixture-to-inventory-evidence-binding",
+  "capturedAt": "2026-07-21T15:49:02+08:00",
+  "completedAt": "2026-07-21T15:50:12+08:00",
+  "recorder": "Codex engineering probe recorder",
+  "authority": {
+    "untouchedChildSwf": true,
+    "originalCourseShellExecuted": false,
+    "originalWholeHostBehaviorClaimed": false,
+    "entryHandoffAuthority": "exact-same-lesson-shell-static-code-plus-untouched-child-root-label",
+    "strictAcceptanceEffect": "none"
+  },
+  "source": {
+    "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L6/TI/L6TI01.swf",
+    "sha256": "722b56b73cfc3bcff71c83cf71b00bfc89b4fdd3b147ecb43646f644f45dc739",
+    "stage": {
+      "width": 800,
+      "height": 600
+    },
+    "fps": 12,
+    "rootFrameCount": 10,
+    "entryLabel": "begin",
+    "entryRootFrame": 6
+  },
+  "fixture": {
+    "digest": "c247e930fe9620548bce4d0423f30fa1bc820ad46f3c7e408d09f836781927fa",
+    "manifest": {
+      "path": "work/adobe-course-host-fixtures/generated/course-g03-l06-ti-001/c247e930fe9620548bce4d04/fixture-manifest.json",
+      "sha256": "e554f8a2acbe5fc1b3d3e87ab0ce96a0dbd80ad6df7ce30d269d3a5b0dcaca94"
+    },
+    "hostSwf": {
+      "path": "work/adobe-course-host-fixtures/generated/course-g03-l06-ti-001/c247e930fe9620548bce4d04/host.swf",
+      "sha256": "7af9095c1997a8b0d45283ee19a9081ef205b4c2f695f23ce9a05b68db081feb"
+    },
+    "sandboxProfile": {
+      "path": "work/adobe-course-host-fixtures/generated/course-g03-l06-ti-001/c247e930fe9620548bce4d04/sandbox.sb",
+      "sha256": "9ad3721e7432c9ae0717726f76c2e5fd666dc5855debd36285a6a2fd4e185b2b",
+      "networkDenied": true,
+      "appleEventsDenied": true,
+      "outsideWritesDenied": true
+    },
+    "guiSmokeApproval": {
+      "path": "work/adobe-course-host-fixtures/generated/course-g03-l06-ti-001/c247e930fe9620548bce4d04/capture/sandbox-gui-smoke-test.json",
+      "sha256": "baf95fcdbc421dad45b75ae8dca9ae59bfab29fd03bc836656919f8a25d5ddde",
+      "verifiedBy": "node scripts/build-adobe-course-host-fixtures.mjs --verify-launch"
+    },
+    "scenarioInventorySha256": "c4297715584d26c17c45cbff9de49a2cfda7efdecec786af0d8130d39ec9e968",
+    "audioAuditSha256": "f7c6632502e448937b7db567eab0a143f8d771e9404d64ff015a71dccdd90b60",
+    "unresolvedBindingCount": 0
+  },
+  "environment": {
+    "player": "Adobe Flash Player Standalone 32.0.0.414 bundled with Adobe Animate 2021",
+    "os": "macOS 26.5.2 (25F84)",
+    "architecture": "arm64",
+    "captureTool": "Codex Computer Use / sky.get_app_state",
+    "rawWindowImageFormat": "image/jpeg",
+    "rawWindowPixelSize": {
+      "width": 800,
+      "height": 628
+    },
+    "nativeStagePixelSize": {
+      "width": 800,
+      "height": 600
+    }
+  },
+  "interaction": {
+    "preloadScreenVerified": true,
+    "preloadAnimationId": "course-g03-l06-ti-001",
+    "clicksBeforeLoad": 0,
+    "loadAction": {
+      "kind": "single-left-click",
+      "appRelativePoint": {
+        "x": 400,
+        "y": 300
+      },
+      "count": 1
+    },
+    "languageKeysPressed": [],
+    "spanishOverlayStarted": false,
+    "playerTerminatedAfterProbe": true
+  },
+  "playerControlProbe": {
+    "observedAt": "2026-07-21T15:59:19+08:00",
+    "method": "Codex Computer Use accessibility inspection of the Adobe Player Control menu after the child loaded",
+    "play": "disabled",
+    "rewind": "disabled",
+    "stepForward": "disabled",
+    "stepBack": "disabled",
+    "loop": "disabled",
+    "interpretation": "The one-frame synthetic parent prevents Adobe Player's root-timeline stepping controls from serving as a deterministic controller for the independently playing nested child timeline. A separately specified safe capture adapter is required; this menu probe cannot produce the 142 exact local frames."
+  },
+  "observations": [
+    {
+      "id": "after-entry-handoff",
+      "image": {
+        "path": "migrations/course-g03-l06-ti-001/baseline/adobe-flash-player-32-safe-host-synthetic-begin-probe.jpeg",
+        "sha256": "1c569d3d46354210c475d6e0eb31c7d36f0e3397bcc1fa155304708499906a1c",
+        "bytes": 38198
+      },
+      "observed": "The lazy fixture status disappeared and untouched child artwork became visible, including Decimals & Money: Try It!, 4.32, and the shipped coin/currency artwork.",
+      "frameClaim": null
+    },
+    {
+      "id": "post-wait-probe",
+      "waitAfterPriorObservationMs": 13000,
+      "image": {
+        "path": "migrations/course-g03-l06-ti-001/baseline/adobe-flash-player-32-safe-host-synthetic-terminal-probe.jpeg",
+        "sha256": "de2a9e92ca61db547423a52ee7fa7f4d24e5a6192c39b15cfcead6bbe0438046",
+        "bytes": 35516
+      },
+      "observed": "The same source content remained visible after the wait and the Player remained responsive.",
+      "frameClaim": null
+    }
+  ],
+  "proven": [
+    "The content-addressed sandbox fixture launches only after its GUI smoke approval verifies.",
+    "One explicit click can load the exact untouched child SWF and make its source content visible.",
+    "The source-evidenced begin handoff no longer remains only a static-code hypothesis."
+  ],
+  "notProven": [
+    "No exact local frame was frozen or reported, so neither image is an authoritative frame baseline.",
+    "Adobe Player's Play, Rewind, Step Forward, Step Back, and Loop menu commands were disabled for this one-frame parent, so the established standalone stepping protocol cannot control sprite-21 through this fixture.",
+    "The Flash trace event stream was not independently captured; status disappearance and visible child content are the runtime observations.",
+    "Neither AVM1 random(2) outcome was identified, controlled, or fully covered.",
+    "No audio was recorded, listened to, identified, or synchronized during this probe.",
+    "No interaction branch, drag path, component state, Replay state, or bilingual behavior was accepted.",
+    "The app-window JPEGs are lossy engineering records and are not eligible for lossless RMSE comparison.",
+    "No human visual reviewer or owner accepted this evidence."
+  ],
+  "strictAcceptanceEffect": "none; retain all course-g03-l06-ti-001 baseline, branch, audio, product, human, and owner blockers"
+}

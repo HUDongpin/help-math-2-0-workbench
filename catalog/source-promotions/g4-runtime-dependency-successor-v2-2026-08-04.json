@@ -1,0 +1,500 @@
+{
+  "schemaVersion": "help-math-g4-ledger-successor-promotion-plan/v2",
+  "artifactType": "help-math-g4-runtime-dependency-successor-plan",
+  "planDate": "2026-08-04",
+  "mode": "plan-only-no-executor",
+  "scope": {
+    "grade": 4,
+    "purpose": "evaluate the frozen v7/v8 object union only by complete SHA-256 against the current alignment-defined Grade 4 runtime dependency universe",
+    "ledgerObjectUniverse": 6060,
+    "identityRule": "complete lowercase SHA-256 plus byte count",
+    "placementUniverseAuthority": "current hash-bound Grade 4 curriculum/runtime dependency alignment",
+    "sqlRole": "historical aggregate context only; never sequence or byte identity authority",
+    "filenameIdentityAllowed": false,
+    "pathIdentityAllowed": false,
+    "caseInsensitiveAdmissionAllowed": false,
+    "placementMetadataAdmissionAllowed": false,
+    "blanketPromotionAllowed": false
+  },
+  "inputs": {
+    "frozenClosure": {
+      "appliedReceipt": {
+        "artifactToken": "frozen-v7-v8-combined-closure",
+        "name": "combined-freeze-applied-receipt-v1.json",
+        "bytes": 8375,
+        "sha256": "fd0ae61d347ab71abdc68581a2fb89761358f7d9fb1f7e5f8dc8326a54d8f751",
+        "outcome": "frozen-read-only-with-unresolved-independent-review"
+      },
+      "recordManifest": {
+        "artifactToken": "frozen-v7-v8-combined-closure",
+        "name": "combined-freeze-manifest-v1.jsonl",
+        "bytes": 3231021,
+        "sha256": "1be3672f9a9337982b6b37cb2bce4a298a2f855a95ac3ba5f31e9443372926a4"
+      },
+      "appliedReceiptSidecar": {
+        "artifactToken": "frozen-v7-v8-combined-closure",
+        "name": "combined-freeze-applied-receipt-v1.sha256",
+        "bytes": 106,
+        "sha256": "fb8c00a90926b2ae2ae6d371781e9dc66e491dab10d2e6b99ea19a1c0c32c750"
+      }
+    },
+    "canonical": {
+      "sourceCatalog": {
+        "path": "catalog/source-files.json",
+        "bytes": 1894761,
+        "sha256": "c5ba348ea968b4ae7292d86f7624a77ec105bc8f929bd61b4837c59623f33b29"
+      },
+      "sourceChecksumSet": {
+        "path": "catalog/source-files.sha256",
+        "bytes": 958064,
+        "sha256": "30dfa12b7cd76e7200fb89115155e7d32af1356247c07e3a4f79227e93f34875"
+      },
+      "sourceManifest": {
+        "path": "catalog/source-manifest.sha256",
+        "bytes": 958064,
+        "sha256": "f0a33c8a3d15afd7340e9ea5523385428bae7546bd8d4227a3a8977ab8914318"
+      },
+      "sourceFreeze": {
+        "path": "catalog/source-freeze.json",
+        "bytes": 435,
+        "sha256": "a03a5bb4e2a0672509fa2c2b9ac9b238b697cce043ccd4c2506e8301f780b6da"
+      }
+    },
+    "predecessorGrade4": {
+      "plan": {
+        "path": "catalog/source-promotions/g4-active-source-promotion-2026-08-02.json",
+        "bytes": 1579380,
+        "sha256": "61fbb021fbab57c427e1c0459c30cf94a88b449d0080c125d616213687833a87"
+      },
+      "appliedReceipt": {
+        "path": "catalog/source-promotions/g4-active-source-promotion-2026-08-02-applied.json",
+        "bytes": 17842,
+        "sha256": "df23e474a6a8ab632b5e7ed6928a485427ed8d1873fb846c2f79d06dfd0c0f72"
+      },
+      "transactionId": "20260802T040219914Z-1635d216a5c2"
+    },
+    "runtimeAlignment": {
+      "path": "catalog/alignments/g4-curriculum-runtime-dependency-map-v1.json",
+      "bytes": 2272953,
+      "sha256": "05357658e7c5f70b9d305ea64063130f1b1d816663748af45cfa1950319a670b"
+    },
+    "sqlAggregate": {
+      "path": "reports/g4-sql-course-aggregate.json",
+      "bytes": 18671,
+      "sha256": "7c8343e920cf3326125597bc905400952123942b1c77b383fd4fee07fe21e8b2"
+    },
+    "rejectedV1Candidate": {
+      "path": "catalog/source-promotions/g4-runtime-dependency-successor-2026-08-04.json",
+      "bytes": 16276,
+      "sha256": "8bd2d9a721566ec511325f6dfae4ad0e3638093b0cdf25810ad8eb3dc0d4dabf"
+    }
+  },
+  "verifiedEvidence": {
+    "frozenLedger": {
+      "v7ObjectCount": 5793,
+      "v8ObjectCount": 267,
+      "overlapCount": 0,
+      "uniqueSha256Count": 6060,
+      "digestSetSha256": "705c93bd496e8979e14a10b66e3cb376c1f00d9d417a6c4a6acc4790169ac9ed",
+      "rootedObjectSetSha256": "4c788433c8c8a3ceaf1f3b17e709adf1a30f3d4dd607f9e524c7479d0047801d",
+      "rootedObjectAndLedgerSetSha256": "3349bf069781367a07612e988767970f65ae452c5343ca9beb1b916ee0a0ccbd",
+      "byteAuthority": "hash-bound frozen record manifest; no object bytes copied"
+    },
+    "canonical": {
+      "fileCount": 9147,
+      "totalBytes": 3214585414,
+      "uniqueSha256Count": 8845,
+      "uniqueSha256SetSha256": "4e3d7dd5f098cb6138219828e4fcaf645bd7d137038be65007e68d0054ffa8dd",
+      "manifestSha256": "f0a33c8a3d15afd7340e9ea5523385428bae7546bd8d4227a3a8977ab8914318",
+      "checksumSetSha256": "30dfa12b7cd76e7200fb89115155e7d32af1356247c07e3a4f79227e93f34875",
+      "catalogManifestExact": true,
+      "readOnlyEnforced": true
+    },
+    "predecessorGrade4": {
+      "copyRecordCount": 1228,
+      "existingBindingCount": 883,
+      "knownClosureRecordCount": 2111,
+      "knownClosureUniqueSha256Count": 2036,
+      "knownClosureSha256SetSha256": "0b2e6be48a71de39956eeed01e72cd25f38de14f334bc0dc844b8fbd4b26db4f",
+      "knownRuntimeUniqueSha256Count": 1873,
+      "knownRuntimeSha256SetSha256": "ede38ace0f96b08e5be782b3347b3041e302c5f26e1932df2249ba2dd01eeeed",
+      "companionAuthoringRecordCount": 163,
+      "unresolvedSourceCount": 16,
+      "unresolvedPathSetSha256": "439fce1e41ef10591c165f0eed65638d1a7afc81080db182770911bd1d8c4286",
+      "appliedAndCurrentCanonicalBindingsExact": true
+    },
+    "runtimeAlignment": {
+      "authority": "current-placement-and-runtime-dependency-universe",
+      "historicalSqlRole": "historical-aggregate-context-only",
+      "lessonCount": 12,
+      "activePageCount": 645,
+      "shellCount": 12,
+      "sourceMemberCount": 657,
+      "orderedPageSetSha256": "030d5600305036ae584420beab9baea92e99e20b0f7e5046743e4e7f15c800fd",
+      "quizWrapperCount": 36,
+      "keyTermLessonDeclarationCount": 12,
+      "keyTermCandidateReviewHolds": {
+        "total": 316,
+        "caseVariantPlacement": 299,
+        "exactPlacementShaReceipt": 17,
+        "admittedByThisPlan": 0
+      },
+      "localization": {
+        "languages": [
+          "en",
+          "es"
+        ],
+        "sourceSpanishPageTitles": 470,
+        "explicitEnglishFallbackPages": 175,
+        "translationAcceptanceEffect": false
+      },
+      "audio": {
+        "expected": 2086,
+        "present": 2070,
+        "missing": 16,
+        "missingPathSetSha256": "439fce1e41ef10591c165f0eed65638d1a7afc81080db182770911bd1d8c4286",
+        "dependencyClosureComplete": false
+      },
+      "knownRuntimeIdentityRecordCount": 2739,
+      "knownRuntimeUniqueSha256Count": 2620,
+      "knownRuntimeSha256SetSha256": "30335b21014b8e38bf5f9ab101a682c5cdb91aa3664e2fbd4abcf94adcce69df",
+      "filenameCaseOrPlacementAdmissionUsed": false
+    },
+    "sqlAggregate": {
+      "role": "historical-aggregate-context-only",
+      "sourceSnapshotDate": "2021-02-03",
+      "historicalCourseId": 5,
+      "lessonCount": 12,
+      "currentXmlPageReferences": 645,
+      "historicalTitlesMatchingCurrentCatalog": 12,
+      "historicalUrlsMatchingCurrentXml": 12,
+      "sequenceAuthority": "current-hash-bound-Grade-4-lesson-XML-not-SQL",
+      "personalRecordsEmitted": 0,
+      "rawCurriculumRowsEmitted": 0,
+      "acceptanceEffect": false
+    },
+    "rejectedV1Candidate": {
+      "disposition": "rejected-runtime-alignment-epoch-not-bound",
+      "preservedByteForByte": true,
+      "reusableForPromotion": false,
+      "promotionRecordCount": 0,
+      "requiredUnresolvedSourceCount": 16,
+      "missingPathSetSha256": "439fce1e41ef10591c165f0eed65638d1a7afc81080db182770911bd1d8c4286",
+      "acceptanceEffect": false
+    },
+    "intersections": {
+      "frozenLedgerVsCurrentCanonicalSha256": 0,
+      "frozenLedgerVsPriorG4KnownClosureSha256": 0,
+      "frozenLedgerVsPriorG4KnownRuntimeSha256": 0,
+      "frozenLedgerVsCurrentAlignmentKnownRuntimeSha256": 0,
+      "frozenLedgerVsCurrentAlignmentCategoriesSha256": {
+        "activePages": 0,
+        "lessonShells": 0,
+        "sequenceAuthorityXml": 0,
+        "presentAudio": 0
+      },
+      "requiredMissingMp3ExactSha256Matches": 0
+    }
+  },
+  "decision": {
+    "outcome": "no-exact-sha256-promotion-candidates",
+    "reason": "none of the 6,060 frozen ledger SHA-256 identities intersects the current alignment-defined known runtime identities, and all 16 missing MP3 obligations lack expected SHA-256 identities",
+    "promotionRecordCount": 0,
+    "successorPlanMayBeApplied": false
+  },
+  "predecessorCandidateDisposition": {
+    "path": "catalog/source-promotions/g4-runtime-dependency-successor-2026-08-04.json",
+    "bytes": 16276,
+    "sha256": "8bd2d9a721566ec511325f6dfae4ad0e3638093b0cdf25810ad8eb3dc0d4dabf",
+    "disposition": "rejected-runtime-alignment-epoch-not-bound",
+    "preservedByteForByte": true,
+    "overwrittenOrDeleted": false,
+    "promotionAuthority": false
+  },
+  "promotionRecords": [],
+  "requiredUnresolvedSources": [
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q22A.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+      "audioBindingKind": "final-quiz-question-answer",
+      "language": "en",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "filenameCaseOrPlacementAdmissionUsed": false,
+      "status": "required-unresolved-source",
+      "resolution": "no expected SHA-256 identity exists, so no frozen object is admissible for this obligation"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q22B.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+      "audioBindingKind": "final-quiz-question-answer",
+      "language": "en",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "filenameCaseOrPlacementAdmissionUsed": false,
+      "status": "required-unresolved-source",
+      "resolution": "no expected SHA-256 identity exists, so no frozen object is admissible for this obligation"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q22C.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+      "audioBindingKind": "final-quiz-question-answer",
+      "language": "en",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "filenameCaseOrPlacementAdmissionUsed": false,
+      "status": "required-unresolved-source",
+      "resolution": "no expected SHA-256 identity exists, so no frozen object is admissible for this obligation"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q22D.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+      "audioBindingKind": "final-quiz-question-answer",
+      "language": "en",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "filenameCaseOrPlacementAdmissionUsed": false,
+      "status": "required-unresolved-source",
+      "resolution": "no expected SHA-256 identity exists, so no frozen object is admissible for this obligation"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q23A.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+      "audioBindingKind": "final-quiz-question-answer",
+      "language": "en",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "filenameCaseOrPlacementAdmissionUsed": false,
+      "status": "required-unresolved-source",
+      "resolution": "no expected SHA-256 identity exists, so no frozen object is admissible for this obligation"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q23B.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+      "audioBindingKind": "final-quiz-question-answer",
+      "language": "en",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "filenameCaseOrPlacementAdmissionUsed": false,
+      "status": "required-unresolved-source",
+      "resolution": "no expected SHA-256 identity exists, so no frozen object is admissible for this obligation"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q23C.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+      "audioBindingKind": "final-quiz-question-answer",
+      "language": "en",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "filenameCaseOrPlacementAdmissionUsed": false,
+      "status": "required-unresolved-source",
+      "resolution": "no expected SHA-256 identity exists, so no frozen object is admissible for this obligation"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q23D.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+      "audioBindingKind": "final-quiz-question-answer",
+      "language": "en",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "filenameCaseOrPlacementAdmissionUsed": false,
+      "status": "required-unresolved-source",
+      "resolution": "no expected SHA-256 identity exists, so no frozen object is admissible for this obligation"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/SA/L2IN21.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "audioBindingKind": "ordinary-spanish-page",
+      "language": "es",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/IN/L2IN21.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "filenameCaseOrPlacementAdmissionUsed": false,
+      "status": "required-unresolved-source",
+      "resolution": "no expected SHA-256 identity exists, so no frozen object is admissible for this obligation"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/SA/L2IN22.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "audioBindingKind": "ordinary-spanish-page",
+      "language": "es",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/IN/L2IN22.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "filenameCaseOrPlacementAdmissionUsed": false,
+      "status": "required-unresolved-source",
+      "resolution": "no expected SHA-256 identity exists, so no frozen object is admissible for this obligation"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/SA/L2IN23.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "audioBindingKind": "ordinary-spanish-page",
+      "language": "es",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/IN/L2IN23.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "filenameCaseOrPlacementAdmissionUsed": false,
+      "status": "required-unresolved-source",
+      "resolution": "no expected SHA-256 identity exists, so no frozen object is admissible for this obligation"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/SA/L2IN24.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "audioBindingKind": "ordinary-spanish-page",
+      "language": "es",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/IN/L2IN24.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "filenameCaseOrPlacementAdmissionUsed": false,
+      "status": "required-unresolved-source",
+      "resolution": "no expected SHA-256 identity exists, so no frozen object is admissible for this obligation"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/SA/L2IN25.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "audioBindingKind": "ordinary-spanish-page",
+      "language": "es",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/IN/L2IN25.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "filenameCaseOrPlacementAdmissionUsed": false,
+      "status": "required-unresolved-source",
+      "resolution": "no expected SHA-256 identity exists, so no frozen object is admissible for this obligation"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/SA/L2IN26.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "audioBindingKind": "ordinary-spanish-page",
+      "language": "es",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/IN/L2IN26.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "filenameCaseOrPlacementAdmissionUsed": false,
+      "status": "required-unresolved-source",
+      "resolution": "no expected SHA-256 identity exists, so no frozen object is admissible for this obligation"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L6/SA/L6GS03.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "audioBindingKind": "ordinary-spanish-page",
+      "language": "es",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L6/GS/L6GS03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "filenameCaseOrPlacementAdmissionUsed": false,
+      "status": "required-unresolved-source",
+      "resolution": "no expected SHA-256 identity exists, so no frozen object is admissible for this obligation"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L8/SA/L8GS03.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "audioBindingKind": "ordinary-spanish-page",
+      "language": "es",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L8/GS/L8GS03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "filenameCaseOrPlacementAdmissionUsed": false,
+      "status": "required-unresolved-source",
+      "resolution": "no expected SHA-256 identity exists, so no frozen object is admissible for this obligation"
+    }
+  ],
+  "controls": {
+    "planOnly": true,
+    "executable": false,
+    "executorPresent": false,
+    "sourceAssetsMutationPerformed": false,
+    "sourceAssetsMutationAuthorized": false,
+    "ledgerObjectsCopied": 0,
+    "bulkLedgerPromotionProhibited": true,
+    "futureCandidateRequiresKnownExpectedSha256": true,
+    "futureCandidateRequiresNewReviewedSuccessorPlan": true,
+    "runtimeAlignmentEpochRequired": true,
+    "sqlAggregateEpochRequiredAsHistoricalContextOnly": true,
+    "filenameBasenameCaseOrPlacementAdmissionUsed": false
+  },
+  "acceptanceEffects": {
+    "canonicalSourcePromotion": false,
+    "sourceDependencyClosure": false,
+    "javascriptImplementation": false,
+    "authoritativeOriginalRuntimeEvidence": false,
+    "runtimeFidelity": false,
+    "audioCorrectnessOrAcceptance": false,
+    "humanVisualAcceptance": false,
+    "ownerAcceptance": false,
+    "strictCompletion": false,
+    "wholeCourseIntegration": false,
+    "publication": false
+  },
+  "privacyBoundary": {
+    "rawLedgerPlacementMetadataIncluded": false,
+    "rawDriveIdsIncluded": false,
+    "rawPrivateClaimsIncluded": false,
+    "personallyIdentifyingInformationIncluded": false,
+    "privateAbsolutePathsIncluded": false,
+    "aggregateIntersectionCountsOnly": true
+  }
+}

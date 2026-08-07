@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "evidenceKind": "formal-evidence-invalidation",
+  "animationId": "course-g03-l06-ti-001",
+  "status": "invalidated",
+  "invalidates": {
+    "path": "audit/canvas-adapter-engineering-prereview.json",
+    "sha256": "44d6fcee179d765a223bc56ffd75a2012c7929d626c518d72ff2a2a8475c83fe"
+  },
+  "trigger": {
+    "dependency": {
+      "path": "audit/scenario-inventory.json",
+      "sha256": "cecccec1d923184aa85028be7acefa8391c355b887d42ee0a8a7ab062c982739"
+    },
+    "recordedSha256": "2272e0cf4f744acbfcd096585520c1e587c917c07c6d9128efb54580f8684ec5",
+    "reason": "The engineering prereview binds an obsolete scenario inventory and no deterministic producer exists that can rerun the same Chromium smoke while rebuilding every screenshot and output hash."
+  },
+  "disposition": "excluded-from-current-evidence; original artifact retained byte-for-byte",
+  "regenerationRequirement": "Rerun an explicit Chromium QA producer and rebuild every screenshot, browser observation, runtime/asset hash, and review conclusion before replacing this invalidation.",
+  "migrationStatusChanged": false,
+  "acceptanceChanged": false,
+  "strictAcceptanceEffect": "none; invalidation removes stale evidence from the current set and satisfies no gate",
+  "generatedBy": {
+    "script": "scripts/refresh-course-candidate-spec-bindings.mjs",
+    "deterministic": true
+  }
+}

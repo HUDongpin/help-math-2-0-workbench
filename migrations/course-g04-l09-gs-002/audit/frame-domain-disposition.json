@@ -1,0 +1,2490 @@
+{
+  "schemaVersion": 1,
+  "animationId": "course-g04-l09-gs-002",
+  "status": "structurally-enumerated-dispositions-unresolved",
+  "migrationStatusChanged": false,
+  "authorityStatement": [
+    "This audit deterministically enumerates the root timeline and every child timeline that the hash-bound scenario inventory marks reachable from the root placement graph.",
+    "A declared frame domain is reported only when the scenario inventory's bound migration technical projection matches the current technical contract and implementation.frameDomains names the same source timeline with the same frame count.",
+    "Static placement reachability, duration, labels, and action states are triage signals, not proof that an undeclared timeline is composite-only, independently required, or nonvisual; unsupported classifications remain unresolved.",
+    "Named root-placement paths include only placement names retained by scenario-inventory.json. Missing named paths do not negate its full-graph structural-reachability result.",
+    "Evidence-backed composite claims are accepted only from a reproducible checked artifact whose source, scenario inventory, machine structure, scripts, matrices, bounds, and obligations all verify."
+  ],
+  "dispositionDefinitions": {
+    "declared-frame-domain": "The bound manifest explicitly declares this source timeline as a frame domain with a matching frame count.",
+    "composite-child-with-parent": "A reproducible hash-bound source audit proves that the child's local state is exhaustively represented inside a declared parent domain while all non-frame-domain obligations remain pending.",
+    "independent-required": "Reserved for a future authoritative-runtime or authoring-evidence conclusion that this undeclared local playhead requires its own frame domain.",
+    "nonvisual": "Reserved for a future asset/script/authoring audit proving that the timeline has no visual or interaction-state contribution.",
+    "unresolved": "Current evidence does not support one of the other dispositions without guessing."
+  },
+  "generatedFrom": {
+    "scenarioInventory": {
+      "path": "audit/scenario-inventory.json",
+      "sha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+      "schemaVersion": 1,
+      "inventoryStatus": "static-exhaustive-runtime-unverified"
+    },
+    "migrationManifest": {
+      "path": "migration.json",
+      "hashMode": "canonical-json-v1",
+      "technicalProjection": "help-math-technical-manifest-v1",
+      "technicalProjectionSha256": "5c852edeff42d408b4e382e67e321cb2a2f6006e2c3c93d946654c5f289aaf7f",
+      "excludedPaths": [
+        "status",
+        "created",
+        "confidence",
+        "classification",
+        "audit",
+        "toolVersions",
+        "baseline",
+        "evidence",
+        "fidelity",
+        "accessibility",
+        "acceptance",
+        "catalogEvidence",
+        "implementation.candidateQa",
+        "implementation.candidateMaturity",
+        "implementation.candidateProductQa",
+        "implementation.candidateVisualEvidence",
+        "implementation.productQaEvidence",
+        "implementation.productQaScope",
+        "audio.catalogGroupCandidates",
+        "audio.catalogExactAssociations",
+        "audio.acceptance",
+        "audio.authoritativeListeningComplete",
+        "audio.originalHostSynchronizationComplete",
+        "audio.strictAcceptance",
+        "audio.structuralAuditComplete"
+      ],
+      "bindingStatus": "verified"
+    },
+    "sourceSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L9/GS/L9GS02.swf",
+      "sha256": "41cdb7e5cc5735eef2af3e4831908c47781840f0addcc3ac1a2142cbb0d48f15"
+    },
+    "swfmillStructure": {
+      "path": "audit/machine/swfmill.xml.gz",
+      "sha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+    },
+    "staticDispositionEvidence": {
+      "path": "audit/static-frame-domain-disposition-evidence.json",
+      "sha256": "26ffe6a375183ba54c8ab49e0748733beedb80b0296ea14daa6a7320bffd408b",
+      "schemaVersion": 2,
+      "status": "verified-static-composite-claims",
+      "claimCount": 12,
+      "bindingStatus": "verified-and-rebuilt"
+    }
+  },
+  "summary": {
+    "inventoryTimelineCount": 28,
+    "enumeratedTimelineCount": 26,
+    "reachableChildTimelineCount": 25,
+    "excludedNotProvenTimelineCount": 2,
+    "dispositionCounts": {
+      "declared-frame-domain": 2,
+      "composite-child-with-parent": 12,
+      "independent-required": 0,
+      "nonvisual": 0,
+      "unresolved": 12
+    },
+    "highRiskIndependentCandidateCount": 3,
+    "highRiskIndependentCandidates": [
+      {
+        "timelineId": "sprite-786",
+        "sourceObjectId": "786",
+        "frameCount": 112,
+        "rootPlacementStatus": "structurally-reachable-but-named-root-path-unresolved",
+        "signals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root",
+          "local-frame-count-at-least-100"
+        ]
+      },
+      {
+        "timelineId": "sprite-371",
+        "sourceObjectId": "371",
+        "frameCount": 103,
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "signals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root",
+          "local-frame-count-at-least-100"
+        ]
+      },
+      {
+        "timelineId": "sprite-291",
+        "sourceObjectId": "291",
+        "frameCount": 102,
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "signals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root",
+          "local-frame-count-at-least-100"
+        ]
+      }
+    ]
+  },
+  "timelines": [
+    {
+      "timelineId": "root",
+      "sourceTimelineId": "root",
+      "sourceObjectId": null,
+      "frameCount": 10,
+      "structuralReachability": "root",
+      "rootPlacement": {
+        "status": "root-timeline",
+        "namedPlacementPath": []
+      },
+      "knownNamedParentPlacements": [],
+      "declaredFrameDomains": [
+        {
+          "frameDomainId": "root",
+          "kind": "root",
+          "sourceTimelineId": "root",
+          "sourceInstanceId": "root",
+          "parentFrameDomainId": null,
+          "parentEntryFrame": null,
+          "localEntryFrame": null,
+          "frameCount": 10,
+          "role": "root-shell-placement"
+        }
+      ],
+      "disposition": "declared-frame-domain",
+      "dispositionBasis": "The hash-bound migration manifest declares a matching source timeline and frame count in implementation.frameDomains.",
+      "riskAssessment": {
+        "level": "none",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "source-timeline-already-declared-as-frame-domain"
+        ],
+        "interpretation": "No undeclared-domain triage signal; fidelity still depends on the declared domain's required runtime and visual evidence."
+      },
+      "staticSignals": {
+        "controlStateCount": 3,
+        "frameLabelCount": 1,
+        "namedChildPlacementCount": 2
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-21",
+      "sourceTimelineId": "sprite-21",
+      "sourceObjectId": "21",
+      "frameCount": 1,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-21",
+            "sourceObjectId": "21",
+            "frame": 642,
+            "depth": "764",
+            "instanceName": "Mc_Popup",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-21",
+          "sourceObjectId": "21",
+          "frame": 642,
+          "depth": "764",
+          "instanceName": "Mc_Popup",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "composite-child-with-parent",
+      "dispositionBasis": "A reproducible hash-bound source audit proves this timeline is one exact ShowFrame with no frame script, DoAction, DoInitAction, clipActions, or declared independent frame domain. The claim removes only a separate local-playhead obligation; structural/button/interaction/behavior/full-frame/audio validation remains pending in containing contexts.",
+      "staticCompositeEvidence": {
+        "evidencePath": "audit/static-frame-domain-disposition-evidence.json",
+        "evidenceSha256": "26ffe6a375183ba54c8ab49e0748733beedb80b0296ea14daa6a7320bffd408b",
+        "claimIndex": 0,
+        "role": "single-frame-scriptless-structural-child",
+        "claimScope": "independent-local-playhead-only",
+        "parentTimelineIds": [
+          "sprite-787"
+        ],
+        "exportedPlacementCount": 10,
+        "clipActionCount": 0,
+        "buttonObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-button-definition-and-runtime-event-validation"
+        },
+        "interactionObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-interaction-branch-validation"
+        },
+        "behaviorObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-behavior-and-terminal-validation"
+        },
+        "fullFrameObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "structural-content-remains-in-containing-domain-full-frame-capture-and-rmse-scope"
+        },
+        "audioObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-audio-and-runtime-synchronization-validation"
+        }
+      },
+      "riskAssessment": {
+        "level": "none",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "hash-bound-single-frame-scriptless-structural-child-proof",
+          "exactly-one-source-show-frame",
+          "no-frame-action-or-init-action",
+          "all-exported-placements-have-no-clip-actions",
+          "button-interaction-behavior-full-frame-audio-obligations-preserved"
+        ],
+        "interpretation": "Hash-bound source structure proves that this one-frame scriptless child has no independent local playhead to validate. Its structural content, buttons, interactions, behavior, full-frame/RMSE, and audio obligations remain in the containing runtime/domain scope and are not accepted by this disposition."
+      },
+      "staticSignals": {
+        "controlStateCount": 1,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 1
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-24",
+      "sourceTimelineId": "sprite-24",
+      "sourceObjectId": "24",
+      "frameCount": 1,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-24",
+            "sourceObjectId": "24",
+            "frame": 6,
+            "depth": "1",
+            "instanceName": "Mc_Page_Title",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "root",
+          "childTimelineId": "sprite-24",
+          "sourceObjectId": "24",
+          "frame": 6,
+          "depth": "1",
+          "instanceName": "Mc_Page_Title",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "composite-child-with-parent",
+      "dispositionBasis": "A reproducible hash-bound source audit proves this timeline is one exact ShowFrame with no frame script, DoAction, DoInitAction, clipActions, or declared independent frame domain. The claim removes only a separate local-playhead obligation; structural/button/interaction/behavior/full-frame/audio validation remains pending in containing contexts.",
+      "staticCompositeEvidence": {
+        "evidencePath": "audit/static-frame-domain-disposition-evidence.json",
+        "evidenceSha256": "26ffe6a375183ba54c8ab49e0748733beedb80b0296ea14daa6a7320bffd408b",
+        "claimIndex": 1,
+        "role": "single-frame-scriptless-structural-child",
+        "claimScope": "independent-local-playhead-only",
+        "parentTimelineIds": [
+          "root"
+        ],
+        "exportedPlacementCount": 2,
+        "clipActionCount": 0,
+        "buttonObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-button-definition-and-runtime-event-validation"
+        },
+        "interactionObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-interaction-branch-validation"
+        },
+        "behaviorObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-behavior-and-terminal-validation"
+        },
+        "fullFrameObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "structural-content-remains-in-containing-domain-full-frame-capture-and-rmse-scope"
+        },
+        "audioObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-audio-and-runtime-synchronization-validation"
+        }
+      },
+      "riskAssessment": {
+        "level": "none",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "hash-bound-single-frame-scriptless-structural-child-proof",
+          "exactly-one-source-show-frame",
+          "no-frame-action-or-init-action",
+          "all-exported-placements-have-no-clip-actions",
+          "button-interaction-behavior-full-frame-audio-obligations-preserved"
+        ],
+        "interpretation": "Hash-bound source structure proves that this one-frame scriptless child has no independent local playhead to validate. Its structural content, buttons, interactions, behavior, full-frame/RMSE, and audio obligations remain in the containing runtime/domain scope and are not accepted by this disposition."
+      },
+      "staticSignals": {
+        "controlStateCount": 1,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 0
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-122",
+      "sourceTimelineId": "sprite-122",
+      "sourceObjectId": "122",
+      "frameCount": 1,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-122",
+            "sourceObjectId": "122",
+            "frame": 331,
+            "depth": "120",
+            "instanceName": "Mc_Quest_Main",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-122",
+          "sourceObjectId": "122",
+          "frame": 331,
+          "depth": "120",
+          "instanceName": "Mc_Quest_Main",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        },
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-122",
+          "sourceObjectId": "122",
+          "frame": 643,
+          "depth": "67",
+          "instanceName": "Mc_Quest_Main",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "composite-child-with-parent",
+      "dispositionBasis": "A reproducible hash-bound source audit proves this timeline is one exact ShowFrame with no frame script, DoAction, DoInitAction, clipActions, or declared independent frame domain. The claim removes only a separate local-playhead obligation; structural/button/interaction/behavior/full-frame/audio validation remains pending in containing contexts.",
+      "staticCompositeEvidence": {
+        "evidencePath": "audit/static-frame-domain-disposition-evidence.json",
+        "evidenceSha256": "26ffe6a375183ba54c8ab49e0748733beedb80b0296ea14daa6a7320bffd408b",
+        "claimIndex": 2,
+        "role": "single-frame-scriptless-structural-child",
+        "claimScope": "independent-local-playhead-only",
+        "parentTimelineIds": [
+          "sprite-787"
+        ],
+        "exportedPlacementCount": 26,
+        "clipActionCount": 0,
+        "buttonObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-button-definition-and-runtime-event-validation"
+        },
+        "interactionObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-interaction-branch-validation"
+        },
+        "behaviorObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-behavior-and-terminal-validation"
+        },
+        "fullFrameObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "structural-content-remains-in-containing-domain-full-frame-capture-and-rmse-scope"
+        },
+        "audioObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-audio-and-runtime-synchronization-validation"
+        }
+      },
+      "riskAssessment": {
+        "level": "none",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "hash-bound-single-frame-scriptless-structural-child-proof",
+          "exactly-one-source-show-frame",
+          "no-frame-action-or-init-action",
+          "all-exported-placements-have-no-clip-actions",
+          "button-interaction-behavior-full-frame-audio-obligations-preserved"
+        ],
+        "interpretation": "Hash-bound source structure proves that this one-frame scriptless child has no independent local playhead to validate. Its structural content, buttons, interactions, behavior, full-frame/RMSE, and audio obligations remain in the containing runtime/domain scope and are not accepted by this disposition."
+      },
+      "staticSignals": {
+        "controlStateCount": 1,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 5
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-223",
+      "sourceTimelineId": "sprite-223",
+      "sourceObjectId": "223",
+      "frameCount": 90,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-223",
+            "sourceObjectId": "223",
+            "frame": 642,
+            "depth": "132",
+            "instanceName": "Mc_Right_Feed7",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-223",
+          "sourceObjectId": "223",
+          "frame": 642,
+          "depth": "132",
+          "instanceName": "Mc_Right_Feed7",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        },
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-223",
+          "sourceObjectId": "223",
+          "frame": 642,
+          "depth": "610",
+          "instanceName": "Mc_Right_Feed7",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        },
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-223",
+          "sourceObjectId": "223",
+          "frame": 642,
+          "depth": "728",
+          "instanceName": "Mc_Right_Feed7",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "unresolved",
+      "dispositionBasis": "Static root reachability does not prove that a MovieClip is composite-only, independently required, or nonvisual; no authoritative disposition is recorded in the bound manifest.",
+      "riskAssessment": {
+        "level": "review",
+        "independentFrameDomainCandidate": true,
+        "signals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "interpretation": "Static structure makes this an independent-frame-domain candidate only. Authorized natural-playback evidence is required before assigning independent-required or composite-child-with-parent."
+      },
+      "staticSignals": {
+        "controlStateCount": 4,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 0
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-290",
+      "sourceTimelineId": "sprite-290",
+      "sourceObjectId": "290",
+      "frameCount": 10,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-291",
+            "sourceObjectId": "291",
+            "frame": 642,
+            "depth": "165",
+            "instanceName": "Mc_Right_Feed4",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-291",
+            "childTimelineId": "sprite-290",
+            "sourceObjectId": "290",
+            "frame": 96,
+            "depth": "2",
+            "instanceName": "Robos_4",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-291",
+          "childTimelineId": "sprite-290",
+          "sourceObjectId": "290",
+          "frame": 96,
+          "depth": "2",
+          "instanceName": "Robos_4",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        },
+        {
+          "parentTimelineId": "sprite-371",
+          "childTimelineId": "sprite-290",
+          "sourceObjectId": "290",
+          "frame": 96,
+          "depth": "2",
+          "instanceName": "Robos_4",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "unresolved",
+      "dispositionBasis": "Static root reachability does not prove that a MovieClip is composite-only, independently required, or nonvisual; no authoritative disposition is recorded in the bound manifest.",
+      "riskAssessment": {
+        "level": "review",
+        "independentFrameDomainCandidate": true,
+        "signals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead"
+        ],
+        "interpretation": "Static structure makes this an independent-frame-domain candidate only. Authorized natural-playback evidence is required before assigning independent-required or composite-child-with-parent."
+      },
+      "staticSignals": {
+        "controlStateCount": 2,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 0
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-291",
+      "sourceTimelineId": "sprite-291",
+      "sourceObjectId": "291",
+      "frameCount": 102,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-291",
+            "sourceObjectId": "291",
+            "frame": 642,
+            "depth": "165",
+            "instanceName": "Mc_Right_Feed4",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-291",
+          "sourceObjectId": "291",
+          "frame": 642,
+          "depth": "165",
+          "instanceName": "Mc_Right_Feed4",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "unresolved",
+      "dispositionBasis": "Static root reachability does not prove that a MovieClip is composite-only, independently required, or nonvisual; no authoritative disposition is recorded in the bound manifest.",
+      "riskAssessment": {
+        "level": "high",
+        "independentFrameDomainCandidate": true,
+        "signals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root",
+          "local-frame-count-at-least-100"
+        ],
+        "interpretation": "Static structure makes this an independent-frame-domain candidate only. Authorized natural-playback evidence is required before assigning independent-required or composite-child-with-parent."
+      },
+      "staticSignals": {
+        "controlStateCount": 4,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 1
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-371",
+      "sourceTimelineId": "sprite-371",
+      "sourceObjectId": "371",
+      "frameCount": 103,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-371",
+            "sourceObjectId": "371",
+            "frame": 642,
+            "depth": "242",
+            "instanceName": "Mc_Right_Feed3",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-371",
+          "sourceObjectId": "371",
+          "frame": 642,
+          "depth": "242",
+          "instanceName": "Mc_Right_Feed3",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "unresolved",
+      "dispositionBasis": "Static root reachability does not prove that a MovieClip is composite-only, independently required, or nonvisual; no authoritative disposition is recorded in the bound manifest.",
+      "riskAssessment": {
+        "level": "high",
+        "independentFrameDomainCandidate": true,
+        "signals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root",
+          "local-frame-count-at-least-100"
+        ],
+        "interpretation": "Static structure makes this an independent-frame-domain candidate only. Authorized natural-playback evidence is required before assigning independent-required or composite-child-with-parent."
+      },
+      "staticSignals": {
+        "controlStateCount": 4,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 1
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-402",
+      "sourceTimelineId": "sprite-402",
+      "sourceObjectId": "402",
+      "frameCount": 83,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-402",
+            "sourceObjectId": "402",
+            "frame": 642,
+            "depth": "291",
+            "instanceName": "Mc_Right_Feed2",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-402",
+          "sourceObjectId": "402",
+          "frame": 642,
+          "depth": "291",
+          "instanceName": "Mc_Right_Feed2",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "unresolved",
+      "dispositionBasis": "Static root reachability does not prove that a MovieClip is composite-only, independently required, or nonvisual; no authoritative disposition is recorded in the bound manifest.",
+      "riskAssessment": {
+        "level": "review",
+        "independentFrameDomainCandidate": true,
+        "signals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "interpretation": "Static structure makes this an independent-frame-domain candidate only. Authorized natural-playback evidence is required before assigning independent-required or composite-child-with-parent."
+      },
+      "staticSignals": {
+        "controlStateCount": 4,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 0
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-462",
+      "sourceTimelineId": "sprite-462",
+      "sourceObjectId": "462",
+      "frameCount": 87,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-462",
+            "sourceObjectId": "462",
+            "frame": 642,
+            "depth": "442",
+            "instanceName": "Mc_Right_Feed6",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-462",
+          "sourceObjectId": "462",
+          "frame": 642,
+          "depth": "442",
+          "instanceName": "Mc_Right_Feed6",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        },
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-462",
+          "sourceObjectId": "462",
+          "frame": 642,
+          "depth": "643",
+          "instanceName": "Mc_Right_Feed6",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "unresolved",
+      "dispositionBasis": "Static root reachability does not prove that a MovieClip is composite-only, independently required, or nonvisual; no authoritative disposition is recorded in the bound manifest.",
+      "riskAssessment": {
+        "level": "review",
+        "independentFrameDomainCandidate": true,
+        "signals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "interpretation": "Static structure makes this an independent-frame-domain candidate only. Authorized natural-playback evidence is required before assigning independent-required or composite-child-with-parent."
+      },
+      "staticSignals": {
+        "controlStateCount": 4,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 0
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-516",
+      "sourceTimelineId": "sprite-516",
+      "sourceObjectId": "516",
+      "frameCount": 84,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-516",
+            "sourceObjectId": "516",
+            "frame": 642,
+            "depth": "487",
+            "instanceName": "Mc_Right_Feed5",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-516",
+          "sourceObjectId": "516",
+          "frame": 642,
+          "depth": "487",
+          "instanceName": "Mc_Right_Feed5",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "unresolved",
+      "dispositionBasis": "Static root reachability does not prove that a MovieClip is composite-only, independently required, or nonvisual; no authoritative disposition is recorded in the bound manifest.",
+      "riskAssessment": {
+        "level": "review",
+        "independentFrameDomainCandidate": true,
+        "signals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "interpretation": "Static structure makes this an independent-frame-domain candidate only. Authorized natural-playback evidence is required before assigning independent-required or composite-child-with-parent."
+      },
+      "staticSignals": {
+        "controlStateCount": 4,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 0
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-546",
+      "sourceTimelineId": "sprite-546",
+      "sourceObjectId": "546",
+      "frameCount": 87,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-546",
+            "sourceObjectId": "546",
+            "frame": 642,
+            "depth": "527",
+            "instanceName": "Mc_Right_Feed1",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-546",
+          "sourceObjectId": "546",
+          "frame": 642,
+          "depth": "527",
+          "instanceName": "Mc_Right_Feed1",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "unresolved",
+      "dispositionBasis": "Static root reachability does not prove that a MovieClip is composite-only, independently required, or nonvisual; no authoritative disposition is recorded in the bound manifest.",
+      "riskAssessment": {
+        "level": "review",
+        "independentFrameDomainCandidate": true,
+        "signals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "interpretation": "Static structure makes this an independent-frame-domain candidate only. Authorized natural-playback evidence is required before assigning independent-required or composite-child-with-parent."
+      },
+      "staticSignals": {
+        "controlStateCount": 3,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 0
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-644",
+      "sourceTimelineId": "sprite-644",
+      "sourceObjectId": "644",
+      "frameCount": 98,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-644",
+            "sourceObjectId": "644",
+            "frame": 642,
+            "depth": "570",
+            "instanceName": "Mc_Right_Feed8",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-644",
+          "sourceObjectId": "644",
+          "frame": 642,
+          "depth": "570",
+          "instanceName": "Mc_Right_Feed8",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        },
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-644",
+          "sourceObjectId": "644",
+          "frame": 642,
+          "depth": "688",
+          "instanceName": "Mc_Right_Feed8",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "unresolved",
+      "dispositionBasis": "Static root reachability does not prove that a MovieClip is composite-only, independently required, or nonvisual; no authoritative disposition is recorded in the bound manifest.",
+      "riskAssessment": {
+        "level": "review",
+        "independentFrameDomainCandidate": true,
+        "signals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "interpretation": "Static structure makes this an independent-frame-domain candidate only. Authorized natural-playback evidence is required before assigning independent-required or composite-child-with-parent."
+      },
+      "staticSignals": {
+        "controlStateCount": 4,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 0
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-650",
+      "sourceTimelineId": "sprite-650",
+      "sourceObjectId": "650",
+      "frameCount": 1,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-651",
+            "sourceObjectId": "651",
+            "frame": 642,
+            "depth": "762",
+            "instanceName": "Mc_Wrong_Feed1",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-651",
+            "childTimelineId": "sprite-650",
+            "sourceObjectId": "650",
+            "frame": 6,
+            "depth": "1",
+            "instanceName": "Mc_Feed_Popup",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-651",
+          "childTimelineId": "sprite-650",
+          "sourceObjectId": "650",
+          "frame": 6,
+          "depth": "1",
+          "instanceName": "Mc_Feed_Popup",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "unresolved",
+      "dispositionBasis": "Static root reachability does not prove that a MovieClip is composite-only, independently required, or nonvisual; no authoritative disposition is recorded in the bound manifest.",
+      "riskAssessment": {
+        "level": "review",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "undeclared-structurally-root-reachable-timeline"
+        ],
+        "interpretation": "Static structure does not prove whether this one-frame MovieClip is visual, nonvisual, interactive, or fully represented by a parent domain."
+      },
+      "staticSignals": {
+        "controlStateCount": 1,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 2
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-651",
+      "sourceTimelineId": "sprite-651",
+      "sourceObjectId": "651",
+      "frameCount": 42,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-651",
+            "sourceObjectId": "651",
+            "frame": 642,
+            "depth": "762",
+            "instanceName": "Mc_Wrong_Feed1",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-651",
+          "sourceObjectId": "651",
+          "frame": 642,
+          "depth": "762",
+          "instanceName": "Mc_Wrong_Feed1",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "unresolved",
+      "dispositionBasis": "Static root reachability does not prove that a MovieClip is composite-only, independently required, or nonvisual; no authoritative disposition is recorded in the bound manifest.",
+      "riskAssessment": {
+        "level": "review",
+        "independentFrameDomainCandidate": true,
+        "signals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "interpretation": "Static structure makes this an independent-frame-domain candidate only. Authorized natural-playback evidence is required before assigning independent-required or composite-child-with-parent."
+      },
+      "staticSignals": {
+        "controlStateCount": 3,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 1
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-665",
+      "sourceTimelineId": "sprite-665",
+      "sourceObjectId": "665",
+      "frameCount": 1,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-665",
+            "sourceObjectId": "665",
+            "frame": 644,
+            "depth": "67",
+            "instanceName": "Mc_Quest_Main",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-665",
+          "sourceObjectId": "665",
+          "frame": 644,
+          "depth": "67",
+          "instanceName": "Mc_Quest_Main",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "composite-child-with-parent",
+      "dispositionBasis": "A reproducible hash-bound source audit proves this timeline is one exact ShowFrame with no frame script, DoAction, DoInitAction, clipActions, or declared independent frame domain. The claim removes only a separate local-playhead obligation; structural/button/interaction/behavior/full-frame/audio validation remains pending in containing contexts.",
+      "staticCompositeEvidence": {
+        "evidencePath": "audit/static-frame-domain-disposition-evidence.json",
+        "evidenceSha256": "26ffe6a375183ba54c8ab49e0748733beedb80b0296ea14daa6a7320bffd408b",
+        "claimIndex": 3,
+        "role": "single-frame-scriptless-structural-child",
+        "claimScope": "independent-local-playhead-only",
+        "parentTimelineIds": [
+          "sprite-787"
+        ],
+        "exportedPlacementCount": 25,
+        "clipActionCount": 0,
+        "buttonObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-button-definition-and-runtime-event-validation"
+        },
+        "interactionObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-interaction-branch-validation"
+        },
+        "behaviorObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-behavior-and-terminal-validation"
+        },
+        "fullFrameObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "structural-content-remains-in-containing-domain-full-frame-capture-and-rmse-scope"
+        },
+        "audioObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-audio-and-runtime-synchronization-validation"
+        }
+      },
+      "riskAssessment": {
+        "level": "none",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "hash-bound-single-frame-scriptless-structural-child-proof",
+          "exactly-one-source-show-frame",
+          "no-frame-action-or-init-action",
+          "all-exported-placements-have-no-clip-actions",
+          "button-interaction-behavior-full-frame-audio-obligations-preserved"
+        ],
+        "interpretation": "Hash-bound source structure proves that this one-frame scriptless child has no independent local playhead to validate. Its structural content, buttons, interactions, behavior, full-frame/RMSE, and audio obligations remain in the containing runtime/domain scope and are not accepted by this disposition."
+      },
+      "staticSignals": {
+        "controlStateCount": 1,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 5
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-677",
+      "sourceTimelineId": "sprite-677",
+      "sourceObjectId": "677",
+      "frameCount": 1,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-677",
+            "sourceObjectId": "677",
+            "frame": 645,
+            "depth": "67",
+            "instanceName": "Mc_Quest_Main",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-677",
+          "sourceObjectId": "677",
+          "frame": 645,
+          "depth": "67",
+          "instanceName": "Mc_Quest_Main",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "composite-child-with-parent",
+      "dispositionBasis": "A reproducible hash-bound source audit proves this timeline is one exact ShowFrame with no frame script, DoAction, DoInitAction, clipActions, or declared independent frame domain. The claim removes only a separate local-playhead obligation; structural/button/interaction/behavior/full-frame/audio validation remains pending in containing contexts.",
+      "staticCompositeEvidence": {
+        "evidencePath": "audit/static-frame-domain-disposition-evidence.json",
+        "evidenceSha256": "26ffe6a375183ba54c8ab49e0748733beedb80b0296ea14daa6a7320bffd408b",
+        "claimIndex": 4,
+        "role": "single-frame-scriptless-structural-child",
+        "claimScope": "independent-local-playhead-only",
+        "parentTimelineIds": [
+          "sprite-787"
+        ],
+        "exportedPlacementCount": 26,
+        "clipActionCount": 0,
+        "buttonObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-button-definition-and-runtime-event-validation"
+        },
+        "interactionObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-interaction-branch-validation"
+        },
+        "behaviorObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-behavior-and-terminal-validation"
+        },
+        "fullFrameObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "structural-content-remains-in-containing-domain-full-frame-capture-and-rmse-scope"
+        },
+        "audioObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-audio-and-runtime-synchronization-validation"
+        }
+      },
+      "riskAssessment": {
+        "level": "none",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "hash-bound-single-frame-scriptless-structural-child-proof",
+          "exactly-one-source-show-frame",
+          "no-frame-action-or-init-action",
+          "all-exported-placements-have-no-clip-actions",
+          "button-interaction-behavior-full-frame-audio-obligations-preserved"
+        ],
+        "interpretation": "Hash-bound source structure proves that this one-frame scriptless child has no independent local playhead to validate. Its structural content, buttons, interactions, behavior, full-frame/RMSE, and audio obligations remain in the containing runtime/domain scope and are not accepted by this disposition."
+      },
+      "staticSignals": {
+        "controlStateCount": 1,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 5
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-684",
+      "sourceTimelineId": "sprite-684",
+      "sourceObjectId": "684",
+      "frameCount": 1,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-684",
+            "sourceObjectId": "684",
+            "frame": 646,
+            "depth": "67",
+            "instanceName": "Mc_Quest_Main",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-684",
+          "sourceObjectId": "684",
+          "frame": 646,
+          "depth": "67",
+          "instanceName": "Mc_Quest_Main",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "composite-child-with-parent",
+      "dispositionBasis": "A reproducible hash-bound source audit proves this timeline is one exact ShowFrame with no frame script, DoAction, DoInitAction, clipActions, or declared independent frame domain. The claim removes only a separate local-playhead obligation; structural/button/interaction/behavior/full-frame/audio validation remains pending in containing contexts.",
+      "staticCompositeEvidence": {
+        "evidencePath": "audit/static-frame-domain-disposition-evidence.json",
+        "evidenceSha256": "26ffe6a375183ba54c8ab49e0748733beedb80b0296ea14daa6a7320bffd408b",
+        "claimIndex": 5,
+        "role": "single-frame-scriptless-structural-child",
+        "claimScope": "independent-local-playhead-only",
+        "parentTimelineIds": [
+          "sprite-787"
+        ],
+        "exportedPlacementCount": 25,
+        "clipActionCount": 0,
+        "buttonObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-button-definition-and-runtime-event-validation"
+        },
+        "interactionObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-interaction-branch-validation"
+        },
+        "behaviorObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-behavior-and-terminal-validation"
+        },
+        "fullFrameObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "structural-content-remains-in-containing-domain-full-frame-capture-and-rmse-scope"
+        },
+        "audioObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-audio-and-runtime-synchronization-validation"
+        }
+      },
+      "riskAssessment": {
+        "level": "none",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "hash-bound-single-frame-scriptless-structural-child-proof",
+          "exactly-one-source-show-frame",
+          "no-frame-action-or-init-action",
+          "all-exported-placements-have-no-clip-actions",
+          "button-interaction-behavior-full-frame-audio-obligations-preserved"
+        ],
+        "interpretation": "Hash-bound source structure proves that this one-frame scriptless child has no independent local playhead to validate. Its structural content, buttons, interactions, behavior, full-frame/RMSE, and audio obligations remain in the containing runtime/domain scope and are not accepted by this disposition."
+      },
+      "staticSignals": {
+        "controlStateCount": 1,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 5
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-690",
+      "sourceTimelineId": "sprite-690",
+      "sourceObjectId": "690",
+      "frameCount": 1,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-690",
+            "sourceObjectId": "690",
+            "frame": 647,
+            "depth": "67",
+            "instanceName": "Mc_Quest_Main",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-690",
+          "sourceObjectId": "690",
+          "frame": 647,
+          "depth": "67",
+          "instanceName": "Mc_Quest_Main",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "composite-child-with-parent",
+      "dispositionBasis": "A reproducible hash-bound source audit proves this timeline is one exact ShowFrame with no frame script, DoAction, DoInitAction, clipActions, or declared independent frame domain. The claim removes only a separate local-playhead obligation; structural/button/interaction/behavior/full-frame/audio validation remains pending in containing contexts.",
+      "staticCompositeEvidence": {
+        "evidencePath": "audit/static-frame-domain-disposition-evidence.json",
+        "evidenceSha256": "26ffe6a375183ba54c8ab49e0748733beedb80b0296ea14daa6a7320bffd408b",
+        "claimIndex": 6,
+        "role": "single-frame-scriptless-structural-child",
+        "claimScope": "independent-local-playhead-only",
+        "parentTimelineIds": [
+          "sprite-787"
+        ],
+        "exportedPlacementCount": 25,
+        "clipActionCount": 0,
+        "buttonObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-button-definition-and-runtime-event-validation"
+        },
+        "interactionObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-interaction-branch-validation"
+        },
+        "behaviorObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-behavior-and-terminal-validation"
+        },
+        "fullFrameObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "structural-content-remains-in-containing-domain-full-frame-capture-and-rmse-scope"
+        },
+        "audioObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-audio-and-runtime-synchronization-validation"
+        }
+      },
+      "riskAssessment": {
+        "level": "none",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "hash-bound-single-frame-scriptless-structural-child-proof",
+          "exactly-one-source-show-frame",
+          "no-frame-action-or-init-action",
+          "all-exported-placements-have-no-clip-actions",
+          "button-interaction-behavior-full-frame-audio-obligations-preserved"
+        ],
+        "interpretation": "Hash-bound source structure proves that this one-frame scriptless child has no independent local playhead to validate. Its structural content, buttons, interactions, behavior, full-frame/RMSE, and audio obligations remain in the containing runtime/domain scope and are not accepted by this disposition."
+      },
+      "staticSignals": {
+        "controlStateCount": 1,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 5
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-699",
+      "sourceTimelineId": "sprite-699",
+      "sourceObjectId": "699",
+      "frameCount": 1,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-699",
+            "sourceObjectId": "699",
+            "frame": 648,
+            "depth": "67",
+            "instanceName": "Mc_Quest_Main",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-699",
+          "sourceObjectId": "699",
+          "frame": 648,
+          "depth": "67",
+          "instanceName": "Mc_Quest_Main",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "composite-child-with-parent",
+      "dispositionBasis": "A reproducible hash-bound source audit proves this timeline is one exact ShowFrame with no frame script, DoAction, DoInitAction, clipActions, or declared independent frame domain. The claim removes only a separate local-playhead obligation; structural/button/interaction/behavior/full-frame/audio validation remains pending in containing contexts.",
+      "staticCompositeEvidence": {
+        "evidencePath": "audit/static-frame-domain-disposition-evidence.json",
+        "evidenceSha256": "26ffe6a375183ba54c8ab49e0748733beedb80b0296ea14daa6a7320bffd408b",
+        "claimIndex": 7,
+        "role": "single-frame-scriptless-structural-child",
+        "claimScope": "independent-local-playhead-only",
+        "parentTimelineIds": [
+          "sprite-787"
+        ],
+        "exportedPlacementCount": 25,
+        "clipActionCount": 0,
+        "buttonObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-button-definition-and-runtime-event-validation"
+        },
+        "interactionObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-interaction-branch-validation"
+        },
+        "behaviorObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-behavior-and-terminal-validation"
+        },
+        "fullFrameObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "structural-content-remains-in-containing-domain-full-frame-capture-and-rmse-scope"
+        },
+        "audioObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-audio-and-runtime-synchronization-validation"
+        }
+      },
+      "riskAssessment": {
+        "level": "none",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "hash-bound-single-frame-scriptless-structural-child-proof",
+          "exactly-one-source-show-frame",
+          "no-frame-action-or-init-action",
+          "all-exported-placements-have-no-clip-actions",
+          "button-interaction-behavior-full-frame-audio-obligations-preserved"
+        ],
+        "interpretation": "Hash-bound source structure proves that this one-frame scriptless child has no independent local playhead to validate. Its structural content, buttons, interactions, behavior, full-frame/RMSE, and audio obligations remain in the containing runtime/domain scope and are not accepted by this disposition."
+      },
+      "staticSignals": {
+        "controlStateCount": 1,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 5
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-707",
+      "sourceTimelineId": "sprite-707",
+      "sourceObjectId": "707",
+      "frameCount": 1,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-707",
+            "sourceObjectId": "707",
+            "frame": 649,
+            "depth": "67",
+            "instanceName": "Mc_Quest_Main",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-707",
+          "sourceObjectId": "707",
+          "frame": 649,
+          "depth": "67",
+          "instanceName": "Mc_Quest_Main",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "composite-child-with-parent",
+      "dispositionBasis": "A reproducible hash-bound source audit proves this timeline is one exact ShowFrame with no frame script, DoAction, DoInitAction, clipActions, or declared independent frame domain. The claim removes only a separate local-playhead obligation; structural/button/interaction/behavior/full-frame/audio validation remains pending in containing contexts.",
+      "staticCompositeEvidence": {
+        "evidencePath": "audit/static-frame-domain-disposition-evidence.json",
+        "evidenceSha256": "26ffe6a375183ba54c8ab49e0748733beedb80b0296ea14daa6a7320bffd408b",
+        "claimIndex": 8,
+        "role": "single-frame-scriptless-structural-child",
+        "claimScope": "independent-local-playhead-only",
+        "parentTimelineIds": [
+          "sprite-787"
+        ],
+        "exportedPlacementCount": 25,
+        "clipActionCount": 0,
+        "buttonObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-button-definition-and-runtime-event-validation"
+        },
+        "interactionObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-interaction-branch-validation"
+        },
+        "behaviorObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-behavior-and-terminal-validation"
+        },
+        "fullFrameObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "structural-content-remains-in-containing-domain-full-frame-capture-and-rmse-scope"
+        },
+        "audioObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-audio-and-runtime-synchronization-validation"
+        }
+      },
+      "riskAssessment": {
+        "level": "none",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "hash-bound-single-frame-scriptless-structural-child-proof",
+          "exactly-one-source-show-frame",
+          "no-frame-action-or-init-action",
+          "all-exported-placements-have-no-clip-actions",
+          "button-interaction-behavior-full-frame-audio-obligations-preserved"
+        ],
+        "interpretation": "Hash-bound source structure proves that this one-frame scriptless child has no independent local playhead to validate. Its structural content, buttons, interactions, behavior, full-frame/RMSE, and audio obligations remain in the containing runtime/domain scope and are not accepted by this disposition."
+      },
+      "staticSignals": {
+        "controlStateCount": 1,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 5
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-714",
+      "sourceTimelineId": "sprite-714",
+      "sourceObjectId": "714",
+      "frameCount": 1,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-714",
+            "sourceObjectId": "714",
+            "frame": 650,
+            "depth": "67",
+            "instanceName": "Mc_Quest_Main",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-714",
+          "sourceObjectId": "714",
+          "frame": 650,
+          "depth": "67",
+          "instanceName": "Mc_Quest_Main",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "composite-child-with-parent",
+      "dispositionBasis": "A reproducible hash-bound source audit proves this timeline is one exact ShowFrame with no frame script, DoAction, DoInitAction, clipActions, or declared independent frame domain. The claim removes only a separate local-playhead obligation; structural/button/interaction/behavior/full-frame/audio validation remains pending in containing contexts.",
+      "staticCompositeEvidence": {
+        "evidencePath": "audit/static-frame-domain-disposition-evidence.json",
+        "evidenceSha256": "26ffe6a375183ba54c8ab49e0748733beedb80b0296ea14daa6a7320bffd408b",
+        "claimIndex": 9,
+        "role": "single-frame-scriptless-structural-child",
+        "claimScope": "independent-local-playhead-only",
+        "parentTimelineIds": [
+          "sprite-787"
+        ],
+        "exportedPlacementCount": 25,
+        "clipActionCount": 0,
+        "buttonObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-button-definition-and-runtime-event-validation"
+        },
+        "interactionObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-interaction-branch-validation"
+        },
+        "behaviorObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-behavior-and-terminal-validation"
+        },
+        "fullFrameObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "structural-content-remains-in-containing-domain-full-frame-capture-and-rmse-scope"
+        },
+        "audioObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-audio-and-runtime-synchronization-validation"
+        }
+      },
+      "riskAssessment": {
+        "level": "none",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "hash-bound-single-frame-scriptless-structural-child-proof",
+          "exactly-one-source-show-frame",
+          "no-frame-action-or-init-action",
+          "all-exported-placements-have-no-clip-actions",
+          "button-interaction-behavior-full-frame-audio-obligations-preserved"
+        ],
+        "interpretation": "Hash-bound source structure proves that this one-frame scriptless child has no independent local playhead to validate. Its structural content, buttons, interactions, behavior, full-frame/RMSE, and audio obligations remain in the containing runtime/domain scope and are not accepted by this disposition."
+      },
+      "staticSignals": {
+        "controlStateCount": 1,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 5
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-725",
+      "sourceTimelineId": "sprite-725",
+      "sourceObjectId": "725",
+      "frameCount": 1,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-725",
+            "sourceObjectId": "725",
+            "frame": 651,
+            "depth": "67",
+            "instanceName": "Mc_Quest_Main",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-725",
+          "sourceObjectId": "725",
+          "frame": 651,
+          "depth": "67",
+          "instanceName": "Mc_Quest_Main",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "composite-child-with-parent",
+      "dispositionBasis": "A reproducible hash-bound source audit proves this timeline is one exact ShowFrame with no frame script, DoAction, DoInitAction, clipActions, or declared independent frame domain. The claim removes only a separate local-playhead obligation; structural/button/interaction/behavior/full-frame/audio validation remains pending in containing contexts.",
+      "staticCompositeEvidence": {
+        "evidencePath": "audit/static-frame-domain-disposition-evidence.json",
+        "evidenceSha256": "26ffe6a375183ba54c8ab49e0748733beedb80b0296ea14daa6a7320bffd408b",
+        "claimIndex": 10,
+        "role": "single-frame-scriptless-structural-child",
+        "claimScope": "independent-local-playhead-only",
+        "parentTimelineIds": [
+          "sprite-787"
+        ],
+        "exportedPlacementCount": 25,
+        "clipActionCount": 0,
+        "buttonObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-button-definition-and-runtime-event-validation"
+        },
+        "interactionObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-interaction-branch-validation"
+        },
+        "behaviorObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-behavior-and-terminal-validation"
+        },
+        "fullFrameObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "structural-content-remains-in-containing-domain-full-frame-capture-and-rmse-scope"
+        },
+        "audioObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-audio-and-runtime-synchronization-validation"
+        }
+      },
+      "riskAssessment": {
+        "level": "none",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "hash-bound-single-frame-scriptless-structural-child-proof",
+          "exactly-one-source-show-frame",
+          "no-frame-action-or-init-action",
+          "all-exported-placements-have-no-clip-actions",
+          "button-interaction-behavior-full-frame-audio-obligations-preserved"
+        ],
+        "interpretation": "Hash-bound source structure proves that this one-frame scriptless child has no independent local playhead to validate. Its structural content, buttons, interactions, behavior, full-frame/RMSE, and audio obligations remain in the containing runtime/domain scope and are not accepted by this disposition."
+      },
+      "staticSignals": {
+        "controlStateCount": 1,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 5
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-731",
+      "sourceTimelineId": "sprite-731",
+      "sourceObjectId": "731",
+      "frameCount": 1,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-787",
+            "childTimelineId": "sprite-731",
+            "sourceObjectId": "731",
+            "frame": 652,
+            "depth": "67",
+            "instanceName": "Mc_Quest_Main",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-787",
+          "childTimelineId": "sprite-731",
+          "sourceObjectId": "731",
+          "frame": 652,
+          "depth": "67",
+          "instanceName": "Mc_Quest_Main",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "composite-child-with-parent",
+      "dispositionBasis": "A reproducible hash-bound source audit proves this timeline is one exact ShowFrame with no frame script, DoAction, DoInitAction, clipActions, or declared independent frame domain. The claim removes only a separate local-playhead obligation; structural/button/interaction/behavior/full-frame/audio validation remains pending in containing contexts.",
+      "staticCompositeEvidence": {
+        "evidencePath": "audit/static-frame-domain-disposition-evidence.json",
+        "evidenceSha256": "26ffe6a375183ba54c8ab49e0748733beedb80b0296ea14daa6a7320bffd408b",
+        "claimIndex": 11,
+        "role": "single-frame-scriptless-structural-child",
+        "claimScope": "independent-local-playhead-only",
+        "parentTimelineIds": [
+          "sprite-787"
+        ],
+        "exportedPlacementCount": 25,
+        "clipActionCount": 0,
+        "buttonObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-button-definition-and-runtime-event-validation"
+        },
+        "interactionObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-interaction-branch-validation"
+        },
+        "behaviorObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-behavior-and-terminal-validation"
+        },
+        "fullFrameObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "structural-content-remains-in-containing-domain-full-frame-capture-and-rmse-scope"
+        },
+        "audioObligation": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-source-audio-and-runtime-synchronization-validation"
+        }
+      },
+      "riskAssessment": {
+        "level": "none",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "hash-bound-single-frame-scriptless-structural-child-proof",
+          "exactly-one-source-show-frame",
+          "no-frame-action-or-init-action",
+          "all-exported-placements-have-no-clip-actions",
+          "button-interaction-behavior-full-frame-audio-obligations-preserved"
+        ],
+        "interpretation": "Hash-bound source structure proves that this one-frame scriptless child has no independent local playhead to validate. Its structural content, buttons, interactions, behavior, full-frame/RMSE, and audio obligations remain in the containing runtime/domain scope and are not accepted by this disposition."
+      },
+      "staticSignals": {
+        "controlStateCount": 1,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 5
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-786",
+      "sourceTimelineId": "sprite-786",
+      "sourceObjectId": "786",
+      "frameCount": 112,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "structurally-reachable-but-named-root-path-unresolved",
+        "namedPlacementPath": [],
+        "limitation": "The scenario inventory proves root reachability from the full placement graph but retains only named placements; no complete named chain to root is present in this artifact."
+      },
+      "knownNamedParentPlacements": [],
+      "declaredFrameDomains": [],
+      "disposition": "unresolved",
+      "dispositionBasis": "Static root reachability does not prove that a MovieClip is composite-only, independently required, or nonvisual; no authoritative disposition is recorded in the bound manifest.",
+      "riskAssessment": {
+        "level": "high",
+        "independentFrameDomainCandidate": true,
+        "signals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root",
+          "local-frame-count-at-least-100"
+        ],
+        "interpretation": "Static structure makes this an independent-frame-domain candidate only. Authorized natural-playback evidence is required before assigning independent-required or composite-child-with-parent."
+      },
+      "staticSignals": {
+        "controlStateCount": 2,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 0
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    },
+    {
+      "timelineId": "sprite-787",
+      "sourceTimelineId": "sprite-787",
+      "sourceObjectId": "787",
+      "frameCount": 653,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-787",
+            "sourceObjectId": "787",
+            "frame": 6,
+            "depth": "3",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "root",
+          "childTimelineId": "sprite-787",
+          "sourceObjectId": "787",
+          "frame": 6,
+          "depth": "3",
+          "instanceName": "animation",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [
+        {
+          "frameDomainId": "sprite-787",
+          "kind": "nested",
+          "sourceTimelineId": "sprite-787",
+          "sourceInstanceId": "main-animation",
+          "parentFrameDomainId": "root",
+          "parentEntryFrame": 6,
+          "localEntryFrame": 1,
+          "frameCount": 653,
+          "role": "main-animation"
+        }
+      ],
+      "disposition": "declared-frame-domain",
+      "dispositionBasis": "The hash-bound migration manifest declares a matching source timeline and frame count in implementation.frameDomains.",
+      "riskAssessment": {
+        "level": "none",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "source-timeline-already-declared-as-frame-domain"
+        ],
+        "interpretation": "No undeclared-domain triage signal; fidelity still depends on the declared domain's required runtime and visual evidence."
+      },
+      "staticSignals": {
+        "controlStateCount": 13,
+        "frameLabelCount": 12,
+        "namedChildPlacementCount": 32
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "7aad3613a70ca1b4971e7baf5ded8744e408de67426cf1caee1379942f6c631f"
+      }
+    }
+  ],
+  "strictAcceptanceEffect": "none; this structural audit does not advance migration status or satisfy authoritative runtime, full-frame RMSE, audio, behavior, human-review, or owner-acceptance gates"
+}

@@ -1,13 +1,516 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "animationId": "course-g03-l08-re-001",
-  "frameCount": 0,
-  "languages": [
-    "en",
-    "es"
-  ],
-  "scenarios": [
-    "default"
-  ],
-  "combinations": []
+  "requirements": [
+    {
+      "requirementId": "req:root:root-standalone:en",
+      "scenario": "root-standalone",
+      "frameDomainId": "root",
+      "traceId": "trace:root:root-standalone:en:seed-0",
+      "language": "en",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 55
+      },
+      "entryState": {
+        "kind": "original-root-frame-accurate-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "root-standalone",
+        "language": "en",
+        "seed": "0"
+      },
+      "entryStateSha256": "4dfbb3290627139f130afd170b4c6d925c09dd7262e32d9cbc1e1142632f9deb",
+      "baselineAuthorityRequirement": "original-runtime-frame-accurate",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "340e14373517cd77beade8e426f991fe445b7c8c6be900b18b713bcc7ca51c7a"
+        },
+        {
+          "file": "output/playwright/schema-v4-partial/course-g03-l08-re-001-root-en/req-root-root-standalone-en/capture-manifest.json",
+          "sha256": "71766236bb5a9da0959127e004b83de2fb1d58a5b04f6a7f37f6697fa4a9b64a"
+        },
+        {
+          "file": "output/playwright/schema-v4-partial/course-g03-l08-re-001-source-shared-v1/req-root-root-standalone-en/capture-manifest.json",
+          "sha256": "a3fc6d278d61f9aed5231d08b055422b904d2139546c419842ef7ca55bcba3f0"
+        }
+      ],
+      "capturedFrameCount": 55,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-partial/course-g03-l08-re-001-source-shared-v1/req-root-root-standalone-en/capture-manifest.json",
+      "captureManifestSha256": "a3fc6d278d61f9aed5231d08b055422b904d2139546c419842ef7ca55bcba3f0",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:root-standalone:es",
+      "scenario": "root-standalone",
+      "frameDomainId": "root",
+      "traceId": "trace:root:root-standalone:es:seed-0",
+      "language": "es",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 55
+      },
+      "entryState": {
+        "kind": "original-root-frame-accurate-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "root-standalone",
+        "language": "es",
+        "seed": "0"
+      },
+      "entryStateSha256": "437c8f45bab24d4e392fe021c9731ea0d96ac832931de29d38648196e7e44eea",
+      "baselineAuthorityRequirement": "original-runtime-frame-accurate",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "340e14373517cd77beade8e426f991fe445b7c8c6be900b18b713bcc7ca51c7a"
+        },
+        {
+          "file": "output/playwright/schema-v4-partial/course-g03-l08-re-001-source-shared-v1/req-root-root-standalone-es/capture-manifest.json",
+          "sha256": "353db66904bb33adf9e75f772143e92e5485670a93afdec5ef99dbe6bc06cbb1"
+        }
+      ],
+      "capturedFrameCount": 55,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-partial/course-g03-l08-re-001-source-shared-v1/req-root-root-standalone-es/capture-manifest.json",
+      "captureManifestSha256": "353db66904bb33adf9e75f772143e92e5485670a93afdec5ef99dbe6bc06cbb1",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:sprite-621:default:en",
+      "scenario": "default",
+      "frameDomainId": "sprite-621",
+      "traceId": "trace:sprite-621:default:en:seed-0",
+      "language": "en",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 27
+      },
+      "entryState": {
+        "kind": "natural-root-placement-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 51,
+        "instanceId": "main-animation",
+        "frameDomainId": "sprite-621",
+        "localEntryFrame": 1,
+        "scenario": "default",
+        "language": "en",
+        "seed": "0"
+      },
+      "entryStateSha256": "2198722719d23b60f42e9b2b5bfc8060d2413e279359f371c0c017c27fe3188c",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "sprite-621 requires an original-runtime natural trace entered through root frame 51; accepted per-frame capture and RMSE metrics are missing for this scenario/language.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "340e14373517cd77beade8e426f991fe445b7c8c6be900b18b713bcc7ca51c7a"
+        }
+      ],
+      "capturedFrameCount": 0,
+      "missingFrames": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "",
+      "captureManifestSha256": "",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:sprite-621:default:es",
+      "scenario": "default",
+      "frameDomainId": "sprite-621",
+      "traceId": "trace:sprite-621:default:es:seed-0",
+      "language": "es",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 27
+      },
+      "entryState": {
+        "kind": "natural-root-placement-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 51,
+        "instanceId": "main-animation",
+        "frameDomainId": "sprite-621",
+        "localEntryFrame": 1,
+        "scenario": "default",
+        "language": "es",
+        "seed": "0"
+      },
+      "entryStateSha256": "404a101341cc5e9be32feb454b20a5d82fa12b37047954b6c840bccd00f3eac3",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "sprite-621 requires an original-runtime natural trace entered through root frame 51; accepted per-frame capture and RMSE metrics are missing for this scenario/language.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "340e14373517cd77beade8e426f991fe445b7c8c6be900b18b713bcc7ca51c7a"
+        }
+      ],
+      "capturedFrameCount": 0,
+      "missingFrames": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "",
+      "captureManifestSha256": "",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:sprite-621:host-review-unavailable:en",
+      "scenario": "host-review-unavailable",
+      "frameDomainId": "sprite-621",
+      "traceId": "trace:sprite-621:host-review-unavailable:en:seed-0",
+      "language": "en",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 27
+      },
+      "entryState": {
+        "kind": "natural-root-placement-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 51,
+        "instanceId": "main-animation",
+        "frameDomainId": "sprite-621",
+        "localEntryFrame": 1,
+        "scenario": "host-review-unavailable",
+        "language": "en",
+        "seed": "0"
+      },
+      "entryStateSha256": "e0a40c6341a83f3ade549efdf3037aa9fb77158e0d87293635a2183e1f9afc59",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "sprite-621 requires an original-runtime natural trace entered through root frame 51; accepted per-frame capture and RMSE metrics are missing for this scenario/language.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "340e14373517cd77beade8e426f991fe445b7c8c6be900b18b713bcc7ca51c7a"
+        }
+      ],
+      "capturedFrameCount": 0,
+      "missingFrames": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "",
+      "captureManifestSha256": "",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:sprite-621:host-review-unavailable:es",
+      "scenario": "host-review-unavailable",
+      "frameDomainId": "sprite-621",
+      "traceId": "trace:sprite-621:host-review-unavailable:es:seed-0",
+      "language": "es",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 27
+      },
+      "entryState": {
+        "kind": "natural-root-placement-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 51,
+        "instanceId": "main-animation",
+        "frameDomainId": "sprite-621",
+        "localEntryFrame": 1,
+        "scenario": "host-review-unavailable",
+        "language": "es",
+        "seed": "0"
+      },
+      "entryStateSha256": "503ffa5bf9a2884efbdb020d71bdf8a91c4bf72e98ce801ea927b764a211dfa5",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "sprite-621 requires an original-runtime natural trace entered through root frame 51; accepted per-frame capture and RMSE metrics are missing for this scenario/language.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "340e14373517cd77beade8e426f991fe445b7c8c6be900b18b713bcc7ca51c7a"
+        }
+      ],
+      "capturedFrameCount": 0,
+      "missingFrames": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "",
+      "captureManifestSha256": "",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:sprite-621:legacy-back-unavailable:en",
+      "scenario": "legacy-back-unavailable",
+      "frameDomainId": "sprite-621",
+      "traceId": "trace:sprite-621:legacy-back-unavailable:en:seed-0",
+      "language": "en",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 27
+      },
+      "entryState": {
+        "kind": "natural-root-placement-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 51,
+        "instanceId": "main-animation",
+        "frameDomainId": "sprite-621",
+        "localEntryFrame": 1,
+        "scenario": "legacy-back-unavailable",
+        "language": "en",
+        "seed": "0"
+      },
+      "entryStateSha256": "18cc7c4e5a74a95a67e4e9da5bcec21cb8b2b4c3e16198c0dc0243ec401d74cc",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "sprite-621 requires an original-runtime natural trace entered through root frame 51; accepted per-frame capture and RMSE metrics are missing for this scenario/language.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "340e14373517cd77beade8e426f991fe445b7c8c6be900b18b713bcc7ca51c7a"
+        }
+      ],
+      "capturedFrameCount": 0,
+      "missingFrames": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "",
+      "captureManifestSha256": "",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:sprite-621:legacy-back-unavailable:es",
+      "scenario": "legacy-back-unavailable",
+      "frameDomainId": "sprite-621",
+      "traceId": "trace:sprite-621:legacy-back-unavailable:es:seed-0",
+      "language": "es",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 27
+      },
+      "entryState": {
+        "kind": "natural-root-placement-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 51,
+        "instanceId": "main-animation",
+        "frameDomainId": "sprite-621",
+        "localEntryFrame": 1,
+        "scenario": "legacy-back-unavailable",
+        "language": "es",
+        "seed": "0"
+      },
+      "entryStateSha256": "5e6a55ba34a5ead4a5717d83037531da6fb5bd3469365c2e66b3b688ae61347b",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "sprite-621 requires an original-runtime natural trace entered through root frame 51; accepted per-frame capture and RMSE metrics are missing for this scenario/language.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "340e14373517cd77beade8e426f991fe445b7c8c6be900b18b713bcc7ca51c7a"
+        }
+      ],
+      "capturedFrameCount": 0,
+      "missingFrames": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27
+      ],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "",
+      "captureManifestSha256": "",
+      "metricsFile": "",
+      "metricsSha256": ""
+    }
+  ]
 }

@@ -1,0 +1,71 @@
+{
+  "animationId": "course-g05-l13-rw-002",
+  "artifactType": "help-math-original-host-structural-placement-proof",
+  "finding": "Root frame 50 places sprite 697 as glossary; sprite 697 frame 1 places sprite 696 as keyterms; sprite 696 frame 1 ActionScript therefore enters the automatic doInitKeyTerms call chain.",
+  "generatedBy": {
+    "path": "scripts/build-rw002-original-host-entry-contract.mjs",
+    "sha256": "e866761348872d620251a8db82b2e645d2c7985d9db49ed88d94c84d9795df87"
+  },
+  "runtimeQualification": "Static placement proves reachability and the request chain, not XML parse success or exact within-frame runtime ordering; the execution log must record the observed load result.",
+  "schemaVersion": 1,
+  "sourceHost": {
+    "bytes": 676556,
+    "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/index_local.swf",
+    "role": "unmodified-original-lesson-host",
+    "sha256": "956d8e90ca07d59aeb9b3e97bc20f7e2e14221125913d8f774b8c98a61d4292d"
+  },
+  "structuralChain": {
+    "definitions": [
+      {
+        "frameCount": 1,
+        "line": 124868,
+        "objectId": 696,
+        "sourceLine": "<DefineSprite objectID=\"696\" frames=\"1\">"
+      },
+      {
+        "frameCount": 1,
+        "line": 127225,
+        "objectId": 697,
+        "sourceLine": "<DefineSprite objectID=\"697\" frames=\"1\">"
+      }
+    ],
+    "placements": [
+      {
+        "depth": 82,
+        "frame": 50,
+        "instanceName": "glossary",
+        "line": 127508,
+        "objectId": 697,
+        "sourceLine": "<PlaceObject2 replace=\"0\" depth=\"82\" objectID=\"697\" morph=\"49\" name=\"glossary\" allflags1=\"0\" allflags2=\"0\">",
+        "timelineId": "root"
+      },
+      {
+        "depth": 1,
+        "frame": 1,
+        "instanceName": "keyterms",
+        "line": 127228,
+        "objectId": 696,
+        "sourceLine": "<PlaceObject2 replace=\"0\" depth=\"1\" objectID=\"696\" name=\"keyterms\" allflags1=\"192\" allflags2=\"0\">",
+        "timelineId": "sprite-697"
+      }
+    ]
+  },
+  "tool": {
+    "command": [
+      "swfmill",
+      "-n",
+      "swf2xml",
+      "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/index_local.swf",
+      "<temporary-xml>"
+    ],
+    "executablePath": "/opt/homebrew/Cellar/swfmill/0.3.6_1/bin/swfmill",
+    "executableSha256": "b1299adad7f32d8e489574539e79b0f42c4960148170bc1ca48736e07ccbd311",
+    "version": "swfmill 0.3.6"
+  },
+  "transientXml": {
+    "bytes": 8306182,
+    "rationale": "The complete deterministic XML is reproducible with --check; this durable proof retains the exact selected structural lines instead of an 8.3 MB derivative.",
+    "retained": false,
+    "sha256": "6317e85312ca48c4d2b8efd3a9dd6502684291755ae002e05596f93d0b36330b"
+  }
+}

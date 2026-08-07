@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 1,
+  "receiptType": "g4-l3-ts006-current-javascript-asset-inventory-cross-writer-reconciliation-intent",
+  "transactionSemantics": "content-addressed-no-replace-prepared-intent; application requires the workspace report refresh-history binding",
+  "generator": {
+    "path": "scripts/materialize-g4-l3-ts006-current-js-workspace-binding.mjs",
+    "bytes": 91370,
+    "sha256": "11e5736de23a49715b57850b0c35d952e81919e1b8a4dcc1affa469420f88b4b"
+  },
+  "reconciliation": {
+    "schemaVersion": 1,
+    "transitionId": "v16-progress-inverse-gamma-current-js-rebind-2026-07-27",
+    "evidenceType": "g4-l3-ts006-current-javascript-asset-inventory-cross-writer-reconciliation",
+    "applicationStatus": "prepared-intent-not-standalone-application-proof",
+    "status": "cross-writer-lineage-verified-observer-remains-stale",
+    "workspaceReportPreimage": {
+      "path": "reports/g4-l3-ts006-current-javascript-workspace-binding.json",
+      "bytes": 34097,
+      "sha256": "cca3b07fe65d4b024671dcef27641a2c1115b7ccabcf9e87e62a8a121f72ba6c"
+    },
+    "observerReceipt": {
+      "path": "migrations/course-g04-l03-ts-006/audit/machine/g4-l3-inventory-materialization.json",
+      "bytes": 5807,
+      "sha256": "547a5fbd15958e9dde25e0f447ba509b200271b333e5c494eacf24cc31f2d5b8"
+    },
+    "observerAssetInventory": {
+      "path": "migrations/course-g04-l03-ts-006/asset-inventory.csv",
+      "bytes": 1470,
+      "sha256": "c65960d0ef5abeac6a7853dcdcc4c1c94e08a5adf6a89ee3b4aa96e9d3488a76",
+      "changedByMaterializer": false
+    },
+    "specializedWriterCurrentAssetInventory": {
+      "path": "migrations/course-g04-l03-ts-006/asset-inventory.csv",
+      "bytes": 1470,
+      "sha256": "c65960d0ef5abeac6a7853dcdcc4c1c94e08a5adf6a89ee3b4aa96e9d3488a76"
+    },
+    "specializedWriterNextAssetInventory": {
+      "path": "migrations/course-g04-l03-ts-006/asset-inventory.csv",
+      "bytes": 1470,
+      "sha256": "916210a15c8e293d9de89b9e2f0c1ad725d411f43ebc4873084fdb2265ed90e7"
+    },
+    "currentJavascriptCandidate": {
+      "path": "reports/g4-l3-ts006-current-javascript-candidate.json",
+      "bytes": 47151,
+      "sha256": "3cbda00327043171a3cf766e39dd92d513d6636fefa42c1a6e6eda86443fdd1c"
+    },
+    "currentJavascriptCandidateFingerprintSha256": "ed73fa45f5dc78675c2fa0d0c4fac33633fda7b37db85bc3044f651c0073a6b8",
+    "candidateAssetManifest": {
+      "path": "public/flash-assets/courses/course-g04-l03-ts-006/manifest.json",
+      "bytes": 46990,
+      "sha256": "eea637df94f8c7e9ba149138bcf05426e4f8fec1fc894e2703dc4a9b39a626a0"
+    },
+    "specializedWriterCurrentAssetInventorySemanticFields": {
+      "schema": [
+        "asset_id",
+        "swf_character_id",
+        "library_symbol",
+        "type",
+        "source_file",
+        "source_frame",
+        "exported_file",
+        "sha256",
+        "format",
+        "dimensions_or_bounds",
+        "font_glyphs",
+        "transformation",
+        "confidence",
+        "license_or_provenance",
+        "notes"
+      ],
+      "records": [
+        {
+          "asset_id": "ts006-source-static-canvas-runtime",
+          "swf_character_id": "23",
+          "library_symbol": "animation",
+          "type": "generated-deterministic-canvas-adapter",
+          "source_file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.swf",
+          "source_frame": "1-128",
+          "exported_file": "public/flash-assets/courses/course-g04-l03-ts-006/canvas-renderer.js",
+          "sha256": "162d67f65d72f307d27339d7a5f4d7945936b47854cc0fa8b6055455ac843252",
+          "format": "JavaScript Canvas",
+          "dimensions_or_bounds": "800x600 backing canvas",
+          "font_glyphs": "",
+          "transformation": "one-indexed sprite-23 frame n maps to zero-indexed FFDec export frame n-1; source root placement 8241,5668 twips",
+          "confidence": "engineering-candidate",
+          "license_or_provenance": "derived from owner-provided SWF",
+          "notes": "Source-static drawing candidate only; root composition, Spanish, audio, interaction, Replay, natural runtime, RMSE, human review, owner acceptance, and strict completion remain unresolved."
+        },
+        {
+          "asset_id": "ts006-source-static-canvas-manifest",
+          "swf_character_id": "23",
+          "library_symbol": "animation",
+          "type": "generated-asset-manifest",
+          "source_file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.swf",
+          "source_frame": "1-128",
+          "exported_file": "public/flash-assets/courses/course-g04-l03-ts-006/manifest.json",
+          "sha256": "3e53077860ab9e6f9aeea22989770d2605e8ccd8b56e124342cf536a4c8200de",
+          "format": "JSON",
+          "dimensions_or_bounds": "manifest",
+          "font_glyphs": "",
+          "transformation": "hash-bound generator inputs, output, safety boundary, disabled behavior, and unresolved obligations",
+          "confidence": "machine-verified-candidate",
+          "license_or_provenance": "derived from owner-provided SWF",
+          "notes": "The manifest is candidate evidence only and explicitly carries false authorization and acceptance fields."
+        }
+      ]
+    },
+    "specializedWriterNextAssetInventorySemanticFields": {
+      "schema": [
+        "asset_id",
+        "swf_character_id",
+        "library_symbol",
+        "type",
+        "source_file",
+        "source_frame",
+        "exported_file",
+        "sha256",
+        "format",
+        "dimensions_or_bounds",
+        "font_glyphs",
+        "transformation",
+        "confidence",
+        "license_or_provenance",
+        "notes"
+      ],
+      "records": [
+        {
+          "asset_id": "ts006-source-static-canvas-runtime",
+          "swf_character_id": "23",
+          "library_symbol": "animation",
+          "type": "generated-deterministic-canvas-adapter",
+          "source_file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.swf",
+          "source_frame": "1-128",
+          "exported_file": "public/flash-assets/courses/course-g04-l03-ts-006/canvas-renderer.js",
+          "sha256": "162d67f65d72f307d27339d7a5f4d7945936b47854cc0fa8b6055455ac843252",
+          "format": "JavaScript Canvas",
+          "dimensions_or_bounds": "800x600 backing canvas",
+          "font_glyphs": "",
+          "transformation": "one-indexed sprite-23 frame n maps to zero-indexed FFDec export frame n-1; source root placement 8241,5668 twips",
+          "confidence": "engineering-candidate",
+          "license_or_provenance": "derived from owner-provided SWF",
+          "notes": "Source-static drawing candidate only; root composition, Spanish, audio, interaction, Replay, natural runtime, RMSE, human review, owner acceptance, and strict completion remain unresolved."
+        },
+        {
+          "asset_id": "ts006-source-static-canvas-manifest",
+          "swf_character_id": "23",
+          "library_symbol": "animation",
+          "type": "generated-asset-manifest",
+          "source_file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.swf",
+          "source_frame": "1-128",
+          "exported_file": "public/flash-assets/courses/course-g04-l03-ts-006/manifest.json",
+          "sha256": "eea637df94f8c7e9ba149138bcf05426e4f8fec1fc894e2703dc4a9b39a626a0",
+          "format": "JSON",
+          "dimensions_or_bounds": "manifest",
+          "font_glyphs": "",
+          "transformation": "hash-bound generator inputs, output, safety boundary, disabled behavior, and unresolved obligations",
+          "confidence": "machine-verified-candidate",
+          "license_or_provenance": "derived from owner-provided SWF",
+          "notes": "The manifest is candidate evidence only and explicitly carries false authorization and acceptance fields."
+        }
+      ]
+    },
+    "exactCellTransition": {
+      "row": 3,
+      "field": "sha256",
+      "priorSha256": "3e53077860ab9e6f9aeea22989770d2605e8ccd8b56e124342cf536a4c8200de",
+      "nextSha256": "eea637df94f8c7e9ba149138bcf05426e4f8fec1fc894e2703dc4a9b39a626a0",
+      "allOtherBytesUnchanged": true
+    },
+    "lineageWitness": {
+      "historyIndex": 21,
+      "priorReportSha256": "cca3b07fe65d4b024671dcef27641a2c1115b7ccabcf9e87e62a8a121f72ba6c",
+      "immutablePreimage": {
+        "root": "work/g4-l3-v2-ts006-current-js-binding-refresh-preimages/c96fda675ef9d8aff6c5265e105376f0b0e33c2fca188d97527e747d2dc87e49",
+        "preimageSetSha256": "c96fda675ef9d8aff6c5265e105376f0b0e33c2fca188d97527e747d2dc87e49",
+        "bindings": {
+          "migrations/course-g04-l03-ts-006/asset-inventory.csv": {
+            "path": "migrations/course-g04-l03-ts-006/asset-inventory.csv",
+            "bytes": 1470,
+            "sha256": "c65960d0ef5abeac6a7853dcdcc4c1c94e08a5adf6a89ee3b4aa96e9d3488a76"
+          },
+          "reports/g4-l3-ts006-current-javascript-workspace-binding.json": {
+            "path": "reports/g4-l3-ts006-current-javascript-workspace-binding.json",
+            "bytes": 34097,
+            "sha256": "cca3b07fe65d4b024671dcef27641a2c1115b7ccabcf9e87e62a8a121f72ba6c"
+          },
+          "reports/g4-l3-ts006-current-javascript-workspace-binding.md": {
+            "path": "reports/g4-l3-ts006-current-javascript-workspace-binding.md",
+            "bytes": 1172,
+            "sha256": "6fb2bf170c060d354c82d1e9b297ff361cc6a3f547e8d0d822ddc45eb4b09e83"
+          }
+        },
+        "ignoredWorkArtifact": true
+      },
+      "assetInventory": {
+        "path": "migrations/course-g04-l03-ts-006/asset-inventory.csv",
+        "bytes": 1470,
+        "sha256": "c65960d0ef5abeac6a7853dcdcc4c1c94e08a5adf6a89ee3b4aa96e9d3488a76"
+      }
+    },
+    "observerRefreshTransaction": {
+      "schemaVersion": 1,
+      "evidenceType": "g4-l3-workspace-inventory-safe-refresh-transition",
+      "transactionId": "78d34420595778c22dd614f2d3e672f19ec2839484cd04703b2f173279717ae5",
+      "transactionRoot": "work/g4-l3-workspace-inventory-refresh-preimages/transactions/78d34420595778c22dd614f2d3e672f19ec2839484cd04703b2f173279717ae5",
+      "plan": {
+        "path": "work/g4-l3-workspace-inventory-refresh-preimages/transactions/78d34420595778c22dd614f2d3e672f19ec2839484cd04703b2f173279717ae5/plan.json",
+        "bytes": 180596,
+        "sha256": "8afa9e0a15169489cc65b0054ac83cc84189fecb82b7ed9d6562faf8c679a359"
+      },
+      "receipt": {
+        "path": "work/g4-l3-workspace-inventory-refresh-preimages/transactions/78d34420595778c22dd614f2d3e672f19ec2839484cd04703b2f173279717ae5/receipt.json",
+        "bytes": 1607,
+        "sha256": "8765b6b7c5c6a952eca0c8f53fd986df163739eb035996e928539f48601fc6b9"
+      },
+      "preimageArchiveManifest": {
+        "path": "work/g4-l3-workspace-inventory-refresh-preimages/sets/77b8e14a14cead5b7c54b1d2a93aa50959c044424473e626de7ebe8bfaddf704/manifest.json",
+        "bytes": 26575,
+        "sha256": "41c8dd7515fa74f415cd70d12d20006bbf6d6c19a6735138dfabf5d6373192d6"
+      },
+      "observerPreimage": {
+        "path": "work/g4-l3-workspace-inventory-refresh-preimages/sets/77b8e14a14cead5b7c54b1d2a93aa50959c044424473e626de7ebe8bfaddf704/files/migrations/course-g04-l03-ts-006/audit/machine/g4-l3-inventory-materialization.json",
+        "bytes": 5807,
+        "sha256": "03f51053974d2a7418d3bf7d28251c4a21fb4f91bffe152e27b6e9186919b49f"
+      },
+      "observerPostimage": {
+        "path": "migrations/course-g04-l03-ts-006/audit/machine/g4-l3-inventory-materialization.json",
+        "bytes": 5807,
+        "sha256": "547a5fbd15958e9dde25e0f447ba509b200271b333e5c494eacf24cc31f2d5b8"
+      },
+      "canonicalAssetInventory": {
+        "path": "migrations/course-g04-l03-ts-006/asset-inventory.csv",
+        "bytes": 1470,
+        "sha256": "c65960d0ef5abeac6a7853dcdcc4c1c94e08a5adf6a89ee3b4aa96e9d3488a76"
+      },
+      "canonicalAssetInventorySemanticFields": {
+        "schema": [
+          "asset_id",
+          "swf_character_id",
+          "library_symbol",
+          "type",
+          "source_file",
+          "source_frame",
+          "exported_file",
+          "sha256",
+          "format",
+          "dimensions_or_bounds",
+          "font_glyphs",
+          "transformation",
+          "confidence",
+          "license_or_provenance",
+          "notes"
+        ],
+        "records": [
+          {
+            "asset_id": "ts006-source-static-canvas-runtime",
+            "swf_character_id": "23",
+            "library_symbol": "animation",
+            "type": "generated-deterministic-canvas-adapter",
+            "source_file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.swf",
+            "source_frame": "1-128",
+            "exported_file": "public/flash-assets/courses/course-g04-l03-ts-006/canvas-renderer.js",
+            "sha256": "162d67f65d72f307d27339d7a5f4d7945936b47854cc0fa8b6055455ac843252",
+            "format": "JavaScript Canvas",
+            "dimensions_or_bounds": "800x600 backing canvas",
+            "font_glyphs": "",
+            "transformation": "one-indexed sprite-23 frame n maps to zero-indexed FFDec export frame n-1; source root placement 8241,5668 twips",
+            "confidence": "engineering-candidate",
+            "license_or_provenance": "derived from owner-provided SWF",
+            "notes": "Source-static drawing candidate only; root composition, Spanish, audio, interaction, Replay, natural runtime, RMSE, human review, owner acceptance, and strict completion remain unresolved."
+          },
+          {
+            "asset_id": "ts006-source-static-canvas-manifest",
+            "swf_character_id": "23",
+            "library_symbol": "animation",
+            "type": "generated-asset-manifest",
+            "source_file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.swf",
+            "source_frame": "1-128",
+            "exported_file": "public/flash-assets/courses/course-g04-l03-ts-006/manifest.json",
+            "sha256": "3e53077860ab9e6f9aeea22989770d2605e8ccd8b56e124342cf536a4c8200de",
+            "format": "JSON",
+            "dimensions_or_bounds": "manifest",
+            "font_glyphs": "",
+            "transformation": "hash-bound generator inputs, output, safety boundary, disabled behavior, and unresolved obligations",
+            "confidence": "machine-verified-candidate",
+            "license_or_provenance": "derived from owner-provided SWF",
+            "notes": "The manifest is candidate evidence only and explicitly carries false authorization and acceptance fields."
+          }
+        ]
+      },
+      "allowedSemanticChanges": [
+        {
+          "path": "/canonicalInventoryFiles/assetInventory/sha256",
+          "before": "5cdbfbb9ea7c38bae41d46ad9bfefe19e38e03e995b7f36bcac8c51d5d0f1dfa",
+          "after": "c65960d0ef5abeac6a7853dcdcc4c1c94e08a5adf6a89ee3b4aa96e9d3488a76"
+        },
+        {
+          "path": "/reportFingerprintSha256",
+          "before": "d43e7830989cbdcb3afd4623fcbc683e5fcffc62664bdb42c120b94053985ffa",
+          "after": "6fd11dd65d937fa2e2d505ca9b3176593878af5b4f7bc2ca424ad2f8524b37a4"
+        },
+        {
+          "path": "/sourceBindings/assetDefinitionCensus/sha256",
+          "before": "176bd22a0cdf802798b2e7de3e20e3b60b8be4afdff67cddea0985cd5f4ec1f0",
+          "after": "278ab624428ef073d43b7487e6a8466b184256bfacce7369aba11675fb418a45"
+        },
+        {
+          "path": "/sourceBindings/catalogAudioMediaProbe/sha256",
+          "before": "7e9111af17783b650542d06d337f794eed22b3db359dae3f6862e72eb6bc2def",
+          "after": "5d9b6392254dbba2ce2429045d3cb7670c648c100fffbacc2ffd73798023b5fe"
+        }
+      ],
+      "canonicalInventoriesUnchanged": true,
+      "protectedPinsChanged": false,
+      "completionOrReleaseLedgerChanged": false,
+      "strictAcceptanceEffect": "none"
+    },
+    "conflictPreserved": true,
+    "observerReceiptRewrittenByThisWriter": false,
+    "observerExplicitlyStaleAfterSpecializedRefresh": true,
+    "sourceAssetsChanged": false,
+    "protectedPinsChanged": false,
+    "acceptanceChanged": false,
+    "completionOrReleaseLedgerChanged": false,
+    "strictAcceptanceEffect": "none"
+  },
+  "writeContract": {
+    "contentAddressed": true,
+    "noReplace": true,
+    "compareAndSwapRequired": true,
+    "orphanPreparedReceiptIsNotApplicationProof": true,
+    "sourceAssetsWritable": false,
+    "protectedPinsWritable": false,
+    "acceptanceWritable": false,
+    "completionOrReleaseLedgerWritable": false
+  },
+  "strictAcceptanceEffect": "none",
+  "receiptFingerprintSha256": "d8b7ccfbd9c6ed481cd29d7ee1a18b9d310a14c585a811326abba0bcca099fcb"
+}

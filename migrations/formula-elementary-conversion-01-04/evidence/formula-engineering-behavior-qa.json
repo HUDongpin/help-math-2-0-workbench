@@ -1,0 +1,633 @@
+{
+  "schemaVersion": 1,
+  "animationId": "formula-elementary-conversion-01-04",
+  "generatedAt": "2026-07-22T13:36:55.099Z",
+  "acceptanceEffect": "none",
+  "strictAcceptanceEffect": false,
+  "generator": {
+    "file": "scripts/qa-formula-pilot-engineering.mjs",
+    "script": "scripts/qa-formula-pilot-engineering.mjs",
+    "sha256": "cf4386629d4e17b71fd5ca4b8d0a794f52b14176df596683e379f9b379892895",
+    "deterministic": false,
+    "command": "node scripts/qa-formula-pilot-engineering.mjs --base-url http://127.0.0.1:3000 --server-mode development",
+    "dependencies": [
+      {
+        "path": "scripts/formula-qa-dev-overlay.mjs",
+        "sha256": "b772d93c33cfac2289de4c5906b4f98486ae7f46df6d27ca55a606b17f105f6d"
+      }
+    ]
+  },
+  "environment": {
+    "baseUrl": "http://127.0.0.1:3000",
+    "browser": "Chromium 149.0.7827.55",
+    "serverMode": "development",
+    "auditOnlyRoute": true,
+    "productionVisibility": "intentionally unavailable while migration status is preserved"
+  },
+  "evidenceType": "implementation-behavior-qa",
+  "contract": {
+    "moduleKey": "conversion-1-4",
+    "stage": {
+      "width": 780,
+      "height": 379
+    },
+    "fps": 12,
+    "frameCount": 67,
+    "scenario": "default",
+    "seed": "0"
+  },
+  "checks": [
+    {
+      "id": "deterministic-terminal-frame",
+      "pass": true,
+      "details": {
+        "requested": 67,
+        "runtimeReported": 67,
+        "rendererReported": 67,
+        "scenario": "default",
+        "language": "en",
+        "seed": "0",
+        "identity": {
+          "frameDomain": "root",
+          "requirementId": "qa:formula:formula-elementary-conversion-01-04:deterministic-terminal:default:en",
+          "traceId": "qa-trace:formula:formula-elementary-conversion-01-04:deterministic-terminal:default:en:seed-0",
+          "entryState": {
+            "kind": "formula-engineering-candidate-product-qa",
+            "animationId": "formula-elementary-conversion-01-04",
+            "purpose": "deterministic-terminal",
+            "frameDomain": "root",
+            "scenario": "default",
+            "language": "en",
+            "seed": 0
+          },
+          "entryStateSha256": "844928d60d632eb64f593539517eb86fccf3022112dd095ca728b0439a1699df"
+        },
+        "runtimeState": {
+          "replay": 0,
+          "runtime": {
+            "animationId": "formula-elementary-conversion-01-04",
+            "frame": "67",
+            "rootFrame": "67",
+            "frameDomain": "root",
+            "requirementId": "qa:formula:formula-elementary-conversion-01-04:deterministic-terminal:default:en",
+            "traceId": "qa-trace:formula:formula-elementary-conversion-01-04:deterministic-terminal:default:en:seed-0",
+            "entryStateSha256": "844928d60d632eb64f593539517eb86fccf3022112dd095ca728b0439a1699df",
+            "scenario": "default",
+            "language": "en",
+            "seed": "0"
+          },
+          "candidate": {
+            "frame": "67",
+            "language": null
+          }
+        }
+      }
+    },
+    {
+      "id": "terminal-replay-focus-and-name",
+      "pass": true,
+      "details": {
+        "count": 1,
+        "role": "button",
+        "tabIndex": "0",
+        "accessibleName": "Replay animation"
+      }
+    },
+    {
+      "id": "replay-mouse-enter-space-complete-identity-reset",
+      "pass": true,
+      "details": {
+        "control": "native Next.js Replay button",
+        "identity": {
+          "frameDomain": "root",
+          "requirementId": "qa:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en",
+          "traceId": "qa-trace:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en:seed-0",
+          "entryState": {
+            "kind": "formula-engineering-candidate-product-qa",
+            "animationId": "formula-elementary-conversion-01-04",
+            "purpose": "replay-mouse-enter-space",
+            "frameDomain": "root",
+            "scenario": "default",
+            "language": "en",
+            "seed": 0
+          },
+          "entryStateSha256": "cf11f1c0d59ba36081f59bf982f2149d4961a4a7cbad0ae6d40b2c4686edc912"
+        },
+        "activations": [
+          {
+            "input": "mouse",
+            "pilot": {
+              "animationId": "formula-elementary-conversion-01-04",
+              "moduleKey": "conversion-1-4",
+              "frameCount": 67,
+              "panelY": 290.85,
+              "panelProbeFrames": [
+                1,
+                34,
+                67
+              ]
+            },
+            "identity": {
+              "frameDomain": "root",
+              "requirementId": "qa:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en",
+              "traceId": "qa-trace:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en:seed-0",
+              "entryState": {
+                "kind": "formula-engineering-candidate-product-qa",
+                "animationId": "formula-elementary-conversion-01-04",
+                "purpose": "replay-mouse-enter-space",
+                "frameDomain": "root",
+                "scenario": "default",
+                "language": "en",
+                "seed": 0
+              },
+              "entryStateSha256": "cf11f1c0d59ba36081f59bf982f2149d4961a4a7cbad0ae6d40b2c4686edc912"
+            },
+            "before": {
+              "replay": 0,
+              "runtime": {
+                "animationId": "formula-elementary-conversion-01-04",
+                "frame": "3",
+                "rootFrame": "3",
+                "frameDomain": "root",
+                "requirementId": "qa:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en",
+                "traceId": "qa-trace:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en:seed-0",
+                "entryStateSha256": "cf11f1c0d59ba36081f59bf982f2149d4961a4a7cbad0ae6d40b2c4686edc912",
+                "scenario": "default",
+                "language": "en",
+                "seed": "0"
+              },
+              "candidate": {
+                "frame": "3",
+                "language": null
+              }
+            },
+            "reset": {
+              "replay": 1,
+              "runtime": {
+                "animationId": "formula-elementary-conversion-01-04",
+                "frame": "1",
+                "rootFrame": "1",
+                "frameDomain": "root",
+                "requirementId": "qa:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en",
+                "traceId": "qa-trace:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en:seed-0",
+                "entryStateSha256": "cf11f1c0d59ba36081f59bf982f2149d4961a4a7cbad0ae6d40b2c4686edc912",
+                "scenario": "default",
+                "language": "en",
+                "seed": "0"
+              },
+              "candidate": {
+                "frame": "1",
+                "language": null
+              }
+            },
+            "resumed": {
+              "replay": 1,
+              "runtime": {
+                "animationId": "formula-elementary-conversion-01-04",
+                "frame": "2",
+                "rootFrame": "2",
+                "frameDomain": "root",
+                "requirementId": "qa:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en",
+                "traceId": "qa-trace:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en:seed-0",
+                "entryStateSha256": "cf11f1c0d59ba36081f59bf982f2149d4961a4a7cbad0ae6d40b2c4686edc912",
+                "scenario": "default",
+                "language": "en",
+                "seed": "0"
+              },
+              "candidate": {
+                "frame": "2",
+                "language": null
+              }
+            },
+            "pass": true
+          },
+          {
+            "input": "Enter",
+            "pilot": {
+              "animationId": "formula-elementary-conversion-01-04",
+              "moduleKey": "conversion-1-4",
+              "frameCount": 67,
+              "panelY": 290.85,
+              "panelProbeFrames": [
+                1,
+                34,
+                67
+              ]
+            },
+            "identity": {
+              "frameDomain": "root",
+              "requirementId": "qa:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en",
+              "traceId": "qa-trace:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en:seed-0",
+              "entryState": {
+                "kind": "formula-engineering-candidate-product-qa",
+                "animationId": "formula-elementary-conversion-01-04",
+                "purpose": "replay-mouse-enter-space",
+                "frameDomain": "root",
+                "scenario": "default",
+                "language": "en",
+                "seed": 0
+              },
+              "entryStateSha256": "cf11f1c0d59ba36081f59bf982f2149d4961a4a7cbad0ae6d40b2c4686edc912"
+            },
+            "before": {
+              "replay": 1,
+              "runtime": {
+                "animationId": "formula-elementary-conversion-01-04",
+                "frame": "3",
+                "rootFrame": "3",
+                "frameDomain": "root",
+                "requirementId": "qa:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en",
+                "traceId": "qa-trace:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en:seed-0",
+                "entryStateSha256": "cf11f1c0d59ba36081f59bf982f2149d4961a4a7cbad0ae6d40b2c4686edc912",
+                "scenario": "default",
+                "language": "en",
+                "seed": "0"
+              },
+              "candidate": {
+                "frame": "3",
+                "language": null
+              }
+            },
+            "reset": {
+              "replay": 2,
+              "runtime": {
+                "animationId": "formula-elementary-conversion-01-04",
+                "frame": "1",
+                "rootFrame": "1",
+                "frameDomain": "root",
+                "requirementId": "qa:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en",
+                "traceId": "qa-trace:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en:seed-0",
+                "entryStateSha256": "cf11f1c0d59ba36081f59bf982f2149d4961a4a7cbad0ae6d40b2c4686edc912",
+                "scenario": "default",
+                "language": "en",
+                "seed": "0"
+              },
+              "candidate": {
+                "frame": "1",
+                "language": null
+              }
+            },
+            "resumed": {
+              "replay": 2,
+              "runtime": {
+                "animationId": "formula-elementary-conversion-01-04",
+                "frame": "2",
+                "rootFrame": "2",
+                "frameDomain": "root",
+                "requirementId": "qa:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en",
+                "traceId": "qa-trace:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en:seed-0",
+                "entryStateSha256": "cf11f1c0d59ba36081f59bf982f2149d4961a4a7cbad0ae6d40b2c4686edc912",
+                "scenario": "default",
+                "language": "en",
+                "seed": "0"
+              },
+              "candidate": {
+                "frame": "2",
+                "language": null
+              }
+            },
+            "pass": true
+          },
+          {
+            "input": "Space",
+            "pilot": {
+              "animationId": "formula-elementary-conversion-01-04",
+              "moduleKey": "conversion-1-4",
+              "frameCount": 67,
+              "panelY": 290.85,
+              "panelProbeFrames": [
+                1,
+                34,
+                67
+              ]
+            },
+            "identity": {
+              "frameDomain": "root",
+              "requirementId": "qa:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en",
+              "traceId": "qa-trace:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en:seed-0",
+              "entryState": {
+                "kind": "formula-engineering-candidate-product-qa",
+                "animationId": "formula-elementary-conversion-01-04",
+                "purpose": "replay-mouse-enter-space",
+                "frameDomain": "root",
+                "scenario": "default",
+                "language": "en",
+                "seed": 0
+              },
+              "entryStateSha256": "cf11f1c0d59ba36081f59bf982f2149d4961a4a7cbad0ae6d40b2c4686edc912"
+            },
+            "before": {
+              "replay": 2,
+              "runtime": {
+                "animationId": "formula-elementary-conversion-01-04",
+                "frame": "3",
+                "rootFrame": "3",
+                "frameDomain": "root",
+                "requirementId": "qa:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en",
+                "traceId": "qa-trace:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en:seed-0",
+                "entryStateSha256": "cf11f1c0d59ba36081f59bf982f2149d4961a4a7cbad0ae6d40b2c4686edc912",
+                "scenario": "default",
+                "language": "en",
+                "seed": "0"
+              },
+              "candidate": {
+                "frame": "3",
+                "language": null
+              }
+            },
+            "reset": {
+              "replay": 3,
+              "runtime": {
+                "animationId": "formula-elementary-conversion-01-04",
+                "frame": "1",
+                "rootFrame": "1",
+                "frameDomain": "root",
+                "requirementId": "qa:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en",
+                "traceId": "qa-trace:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en:seed-0",
+                "entryStateSha256": "cf11f1c0d59ba36081f59bf982f2149d4961a4a7cbad0ae6d40b2c4686edc912",
+                "scenario": "default",
+                "language": "en",
+                "seed": "0"
+              },
+              "candidate": {
+                "frame": "1",
+                "language": null
+              }
+            },
+            "resumed": {
+              "replay": 3,
+              "runtime": {
+                "animationId": "formula-elementary-conversion-01-04",
+                "frame": "2",
+                "rootFrame": "2",
+                "frameDomain": "root",
+                "requirementId": "qa:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en",
+                "traceId": "qa-trace:formula:formula-elementary-conversion-01-04:replay-mouse-enter-space:default:en:seed-0",
+                "entryStateSha256": "cf11f1c0d59ba36081f59bf982f2149d4961a4a7cbad0ae6d40b2c4686edc912",
+                "scenario": "default",
+                "language": "en",
+                "seed": "0"
+              },
+              "candidate": {
+                "frame": "2",
+                "language": null
+              }
+            },
+            "pass": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "reduced-motion-freezes-frame-one",
+      "pass": true,
+      "details": {
+        "frame": 1,
+        "statusCount": 1,
+        "statusText": "Motion is reduced; a validated static frame is shown."
+      }
+    },
+    {
+      "id": "implementation-language-variants-are-visually-distinct",
+      "pass": true,
+      "details": {
+        "en": {
+          "runtimeLanguage": "en",
+          "title": "1 liter equals 1000 milliliters",
+          "replayName": "Replay animation",
+          "screenshot": {
+            "file": "output/playwright/formula-engineering-qa/formula-elementary-conversion-01-04/native-terminal-en.png",
+            "sha256": "6b3b858746b1c7b3817f1f2538765856b4931f7f8dd8e783fd47bd6d87f020da",
+            "width": 780,
+            "height": 379,
+            "devOverlaySuppression": {
+              "schemaVersion": 1,
+              "capturePageOnly": true,
+              "serverMode": "development",
+              "strategy": "Capture-page-only CSS plus inline important styles suppress Next.js overlay scripts, portal hosts, and recursively discovered shadow-root controls.",
+              "styleId": "help-math-formula-engineering-qa-hide-next-dev-overlay",
+              "cssSha256": "91504b8a30b9e005048cbb342dcd54e414c97d39ed389479fd74956f4732d077",
+              "styleInstalled": true,
+              "beforeSuppression": {
+                "scriptOverlayCount": 1,
+                "hiddenScriptOverlayCount": 1,
+                "portalCount": 1,
+                "hiddenPortalCount": 1,
+                "shadowRootCount": 1,
+                "controlCount": 2,
+                "visibleControlCount": 0
+              },
+              "afterSuppression": {
+                "scriptOverlayCount": 1,
+                "hiddenScriptOverlayCount": 1,
+                "portalCount": 1,
+                "hiddenPortalCount": 1,
+                "shadowRootCount": 1,
+                "controlCount": 2,
+                "visibleControlCount": 0
+              },
+              "afterCapture": {
+                "scriptOverlayCount": 1,
+                "hiddenScriptOverlayCount": 1,
+                "portalCount": 1,
+                "hiddenPortalCount": 1,
+                "shadowRootCount": 1,
+                "controlCount": 2,
+                "visibleControlCount": 0
+              }
+            }
+          }
+        },
+        "es": {
+          "runtimeLanguage": "es",
+          "title": "1 litro equivale a 1000 mililitros",
+          "replayName": "Repetir animación",
+          "screenshot": {
+            "file": "output/playwright/formula-engineering-qa/formula-elementary-conversion-01-04/native-terminal-es.png",
+            "sha256": "f14d552d0f347778c98c9c12f182b0015d0e382c92c6bbe93281712a34fa852e",
+            "width": 780,
+            "height": 379,
+            "devOverlaySuppression": {
+              "schemaVersion": 1,
+              "capturePageOnly": true,
+              "serverMode": "development",
+              "strategy": "Capture-page-only CSS plus inline important styles suppress Next.js overlay scripts, portal hosts, and recursively discovered shadow-root controls.",
+              "styleId": "help-math-formula-engineering-qa-hide-next-dev-overlay",
+              "cssSha256": "91504b8a30b9e005048cbb342dcd54e414c97d39ed389479fd74956f4732d077",
+              "styleInstalled": true,
+              "beforeSuppression": {
+                "scriptOverlayCount": 1,
+                "hiddenScriptOverlayCount": 1,
+                "portalCount": 1,
+                "hiddenPortalCount": 1,
+                "shadowRootCount": 1,
+                "controlCount": 2,
+                "visibleControlCount": 0
+              },
+              "afterSuppression": {
+                "scriptOverlayCount": 1,
+                "hiddenScriptOverlayCount": 1,
+                "portalCount": 1,
+                "hiddenPortalCount": 1,
+                "shadowRootCount": 1,
+                "controlCount": 2,
+                "visibleControlCount": 0
+              },
+              "afterCapture": {
+                "scriptOverlayCount": 1,
+                "hiddenScriptOverlayCount": 1,
+                "portalCount": 1,
+                "hiddenPortalCount": 1,
+                "shadowRootCount": 1,
+                "controlCount": 2,
+                "visibleControlCount": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "native-language-screenshots-have-no-visible-dev-overlay",
+      "pass": true,
+      "details": {
+        "en": {
+          "schemaVersion": 1,
+          "capturePageOnly": true,
+          "serverMode": "development",
+          "strategy": "Capture-page-only CSS plus inline important styles suppress Next.js overlay scripts, portal hosts, and recursively discovered shadow-root controls.",
+          "styleId": "help-math-formula-engineering-qa-hide-next-dev-overlay",
+          "cssSha256": "91504b8a30b9e005048cbb342dcd54e414c97d39ed389479fd74956f4732d077",
+          "styleInstalled": true,
+          "beforeSuppression": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 0
+          },
+          "afterSuppression": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 0
+          },
+          "afterCapture": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 0
+          }
+        },
+        "es": {
+          "schemaVersion": 1,
+          "capturePageOnly": true,
+          "serverMode": "development",
+          "strategy": "Capture-page-only CSS plus inline important styles suppress Next.js overlay scripts, portal hosts, and recursively discovered shadow-root controls.",
+          "styleId": "help-math-formula-engineering-qa-hide-next-dev-overlay",
+          "cssSha256": "91504b8a30b9e005048cbb342dcd54e414c97d39ed389479fd74956f4732d077",
+          "styleInstalled": true,
+          "beforeSuppression": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 0
+          },
+          "afterSuppression": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 0
+          },
+          "afterCapture": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "source-spanish-panel-persists-at-probed-frames",
+      "pass": true,
+      "details": {
+        "sourceInstance": "Mc_SD",
+        "spanish": [
+          {
+            "frame": 1,
+            "count": 1,
+            "visible": true,
+            "sourceDepth": "4",
+            "href": "/flash-assets/conversion-1-4/formula-es.svg",
+            "x": 414.3,
+            "y": 290.85,
+            "width": 365.7,
+            "height": 52.8
+          },
+          {
+            "frame": 34,
+            "count": 1,
+            "visible": true,
+            "sourceDepth": "4",
+            "href": "/flash-assets/conversion-1-4/formula-es.svg",
+            "x": 414.3,
+            "y": 290.85,
+            "width": 365.7,
+            "height": 52.8
+          },
+          {
+            "frame": 67,
+            "count": 1,
+            "visible": true,
+            "sourceDepth": "4",
+            "href": "/flash-assets/conversion-1-4/formula-es.svg",
+            "x": 414.3,
+            "y": 290.85,
+            "width": 365.7,
+            "height": 52.8
+          }
+        ],
+        "englishFrame1PanelCount": 0
+      }
+    }
+  ],
+  "engineeringBehaviorPassed": true,
+  "authorityBoundary": {
+    "englishStandaloneVisualBehavior": "covered separately by Adobe full-frame comparison",
+    "spanishImplementationBehavior": "tested against the source-composited Spanish child baseline: Adobe natural-playback dynamics plus only source-derived root Mc_SD",
+    "sourceCompositedSpanishVisualParity": true,
+    "sourceCompositedSpanishEvidence": [
+      {
+        "path": "baseline/source-composited-spanish-default.json",
+        "sha256": "86581cd7c24aaf607163e6c1bd76bab42a516fcef8b7ed6790f0bf273ff4e894"
+      },
+      {
+        "path": "evidence/full-frame-comparison-default-es.json",
+        "sha256": "56620bdb8142e09f9d703833c4ed06011383d6d7a9dc9a8707545f783ae092ec"
+      }
+    ],
+    "originalIndexElmExternalDefaultRecovered": false,
+    "audioListeningOrSynchronization": false,
+    "humanReview": false,
+    "ownerAcceptance": false,
+    "strictMigrationCompletion": false
+  }
+}

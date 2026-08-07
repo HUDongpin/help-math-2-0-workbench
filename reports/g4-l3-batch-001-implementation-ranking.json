@@ -1,0 +1,4337 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l3-batch-001-implementation-complexity-ranking",
+  "generator": {
+    "path": "scripts/build-g4-l3-batch-001-implementation-ranking.mjs",
+    "version": 1,
+    "bytes": 51678,
+    "sha256": "fa599ad5714aac58b3dbedbe04a1c8b4eff5c003a61960f33ee41bc8b682ab09"
+  },
+  "scope": {
+    "lesson": {
+      "grade": 4,
+      "lesson": 3,
+      "title": "Negative Numbers"
+    },
+    "batchId": "batch-001",
+    "canonicalItems": 25,
+    "orderedLessonAnimationIds": [
+      "course-g04-l03-ir-001-341242cc",
+      "course-g04-l03-rw-002",
+      "course-g04-l03-rw-003",
+      "course-g04-l03-rw-004",
+      "course-g04-l03-vb-002",
+      "course-g04-l03-vb-003",
+      "course-g04-l03-vb-004",
+      "course-g04-l03-vb-005",
+      "course-g04-l03-vb-006",
+      "course-g04-l03-vb-007",
+      "course-g04-l03-vb-008",
+      "course-g04-l03-vb-009",
+      "course-g04-l03-in-002",
+      "course-g04-l03-in-003",
+      "course-g04-l03-in-004",
+      "course-g04-l03-in-005",
+      "course-g04-l03-in-006",
+      "course-g04-l03-in-007",
+      "course-g04-l03-in-008",
+      "course-g04-l03-in-009",
+      "course-g04-l03-in-010",
+      "course-g04-l03-in-011",
+      "course-g04-l03-in-012",
+      "course-g04-l03-ti-002",
+      "course-g04-l03-ti-003"
+    ],
+    "rankingDirection": "ascending measured static complexity"
+  },
+  "method": {
+    "purpose": "Deterministic acceptance-neutral ordering of the exact G4 L3 batch-001 set by measured static implementation complexity only.",
+    "direction": "implementationSequencePosition 1 has the lowest aggregate ordinal score in this exact 25-item set",
+    "axes": [
+      {
+        "id": "timeline",
+        "metrics": [
+          {
+            "id": "rootFrameCount",
+            "axis": "timeline",
+            "description": "SWF root timeline frames"
+          },
+          {
+            "id": "staticRootReachableTimelineCount",
+            "axis": "timeline",
+            "description": "root plus statically root-reachable sprite timelines"
+          },
+          {
+            "id": "staticRootReachableDeclaredFrameCount",
+            "axis": "timeline",
+            "description": "declared frames in the static root-reachable graph"
+          },
+          {
+            "id": "placementTagCount",
+            "axis": "timeline",
+            "description": "recursive PlaceObject/PlaceObject2/PlaceObject3 tags"
+          }
+        ]
+      },
+      {
+        "id": "behavior",
+        "metrics": [
+          {
+            "id": "exactOperationCount",
+            "axis": "behavior",
+            "description": "exact source operation records"
+          },
+          {
+            "id": "exactEventHandlerOperationCount",
+            "axis": "behavior",
+            "description": "exact event-handler operation records"
+          },
+          {
+            "id": "exactSignalCount",
+            "axis": "behavior",
+            "description": "exact source lexical signal records"
+          },
+          {
+            "id": "scenarioTraceCandidateCount",
+            "axis": "behavior",
+            "description": "source-bound scenario/trace candidates only"
+          }
+        ]
+      },
+      {
+        "id": "assets",
+        "metrics": [
+          {
+            "id": "assetDefinitionCount",
+            "axis": "assets",
+            "description": "recursive SWF asset definitions"
+          },
+          {
+            "id": "featureHeavyDefinitionCount",
+            "axis": "assets",
+            "description": "morph, bitmap, and button definitions"
+          },
+          {
+            "id": "exactTextOccurrenceCount",
+            "axis": "assets",
+            "description": "exact statically decoded text occurrences"
+          },
+          {
+            "id": "fontDefinitionFactCount",
+            "axis": "assets",
+            "description": "exact embedded font-definition facts"
+          }
+        ]
+      },
+      {
+        "id": "audio",
+        "metrics": [
+          {
+            "id": "embeddedAudioUnitCount",
+            "axis": "audio",
+            "description": "DefineSound plus SoundStream archive units"
+          },
+          {
+            "id": "embeddedAudioBlockCount",
+            "axis": "audio",
+            "description": "SoundStreamBlock records"
+          },
+          {
+            "id": "embeddedAudioPayloadBytes",
+            "axis": "audio",
+            "description": "byte-exact archived logical codec payload bytes"
+          },
+          {
+            "id": "catalogAudioDurationMs",
+            "axis": "audio",
+            "description": "sum of technical-probe catalog-audio durations in milliseconds"
+          }
+        ]
+      }
+    ],
+    "metricRanking": "For each raw metric, ascending competition rank is 1 plus the number of batch items with a smaller value; equal raw values receive equal ranks.",
+    "aggregation": "All 16 metric ranks are summed with equal weight. Each of the four axes contributes exactly four metrics.",
+    "ties": "Equal aggregate scores remain complexity ties; lesson sequence and then animationId provide only a stable display order.",
+    "excludedFromScore": [
+      "FLA availability or SWF-only status",
+      "existing migration workspace or pilot reuse",
+      "provisional renderer recommendation",
+      "batch gate, implementation authorization, migration status, review, approval, or acceptance",
+      "unobserved runtime reachability, behavior, language semantics, cue timing, visual fidelity, or authoring semantics"
+    ],
+    "interpretationLimits": [
+      "The ordering is relative to this exact 25-item set and is not a time or staffing estimate.",
+      "Static source counts are implementation-planning facts, not proof that code is placed, reachable, ordered, visible, audible, or behaviorally authoritative at runtime.",
+      "The ordering does not establish renderer choice, specification readiness, implementation readiness, fidelity, parity, or completion."
+    ]
+  },
+  "developmentBoundary": {
+    "scaffoldGateOpen": true,
+    "scaffoldedWorkspaces": 25,
+    "scaffoldGateAffectsRanking": false,
+    "implementationAuthorized": false,
+    "strictComplete": false,
+    "statement": "The open scaffold gate and 25 existing workspaces are development-preparation facts only; neither affects the static complexity ranking nor authorizes implementation or strict completion."
+  },
+  "sourceBindings": {
+    "inputReports": {
+      "workCards": {
+        "path": "reports/g4-l3-implementation-work-cards.json",
+        "bytes": 1132339,
+        "sha256": "79ef4b4e4ef5c5e57e078fd5fcd07cefebb247bb8edaf588370c07e7abde41e0",
+        "schemaVersion": 1,
+        "reportType": "g4-l3-implementation-work-cards",
+        "generatorBinding": {
+          "available": false,
+          "verifiedNow": false
+        }
+      },
+      "batchSpecificationReadiness": {
+        "path": "reports/g4-l3-batch-001-specification-readiness.json",
+        "bytes": 1690338,
+        "sha256": "64063ed6545e9405514989cc8975ce8dbd8fc4a3b4c6bfc979e97851e8c52ad5",
+        "schemaVersion": 2,
+        "reportType": "g4-l3-batch-001-specification-readiness",
+        "generatorBinding": {
+          "available": true,
+          "verifiedNow": true,
+          "path": "scripts/build-g4-l3-batch-001-specification-readiness.mjs",
+          "bytes": 90953,
+          "sha256": "fdfe0f43b27ab75e256d741f5e41d3ed81ebc2634404ba314c1f3853ae5ef6a6"
+        }
+      },
+      "machineAudit": {
+        "path": "reports/g4-l3-machine-source-audits.json",
+        "bytes": 5152829,
+        "sha256": "c7f987904de8e2a5bca907931feedab0e3bd61ffdcf26b56ef5d7295e49ab9f6",
+        "schemaVersion": 1,
+        "reportType": "g4-l3-machine-source-audits",
+        "generatorBinding": {
+          "available": true,
+          "verifiedNow": true,
+          "path": "scripts/build-g4-l3-machine-source-audits.mjs",
+          "bytes": 56716,
+          "sha256": "079ae4c5f3034de39520ec1508079be1b8fe482c81b1d879ed2ba1a3a625a4dd"
+        }
+      },
+      "sourceOperations": {
+        "path": "reports/g4-l3-source-operation-index-v2.json",
+        "bytes": 8904942,
+        "sha256": "2b3d3b89d61dabcbcf3f6a40d8728b0429535c254180065fea7fa594c2879f3e",
+        "schemaVersion": 2,
+        "reportType": "g4-l3-actionscript-source-operation-index",
+        "generatorBinding": {
+          "available": true,
+          "verifiedNow": true,
+          "path": "scripts/build-g4-l3-source-operation-index-v2.mjs",
+          "bytes": 70118,
+          "sha256": "7ba2436cddb5ec544013d6ad1a9dd210f53326a89dadf6864180ff0f50f1591d"
+        }
+      },
+      "assetDefinitionCensus": {
+        "path": "reports/g4-l3-swf-asset-definition-census.json",
+        "bytes": 8686145,
+        "sha256": "278ab624428ef073d43b7487e6a8466b184256bfacce7369aba11675fb418a45",
+        "schemaVersion": 1,
+        "reportType": "g4-l3-swf-asset-definition-census",
+        "generatorBinding": {
+          "available": true,
+          "verifiedNow": true,
+          "path": "scripts/build-g4-l3-swf-asset-definition-census.mjs",
+          "bytes": 53302,
+          "sha256": "269ff4b858304021a1bf057f2425c98fcc80501a5a3d5a623f0be857e0427bc5"
+        }
+      },
+      "embeddedAudioArchive": {
+        "path": "reports/g4-l3-embedded-audio-archive.json",
+        "bytes": 14844830,
+        "sha256": "7a1fe8406c7b005ccde20bb34aec09ac6c2dc52a17bb913b65550915f2bb40c4",
+        "schemaVersion": 1,
+        "reportType": "g4-l3-embedded-audio-archive",
+        "generatorBinding": {
+          "available": true,
+          "verifiedNow": true,
+          "path": "scripts/build-g4-l3-embedded-audio-archive.mjs",
+          "bytes": 49846,
+          "sha256": "2c04bba5dc5e2c5870305ce5d4429457548712c5843e1bdf2dd11c8b5d3658cf"
+        }
+      },
+      "catalogAudioMediaProbe": {
+        "path": "reports/g4-l3-catalog-audio-media-probe.json",
+        "bytes": 3584381,
+        "sha256": "5d9b6392254dbba2ce2429045d3cb7670c648c100fffbacc2ffd73798023b5fe",
+        "schemaVersion": 1,
+        "reportType": "g4-l3-catalog-audio-technical-media-probe",
+        "generatorBinding": {
+          "available": true,
+          "verifiedNow": true,
+          "path": "scripts/build-g4-l3-catalog-audio-media-probe.mjs",
+          "bytes": 24368,
+          "sha256": "d5cdadb1a29f571e3d96aaa41aaf4b2a7ba707f603d90e58a76f139a9e79eaa4"
+        }
+      }
+    },
+    "inputReportSetSha256": "cf3bfb420851626a9f68875dee95c0725db61e61cf61746a9b7d393d0d84e921",
+    "selectedLegacySources": {
+      "swfCount": 25,
+      "flaCount": 19,
+      "physicalFileCount": 44,
+      "physicalHashesVerifiedNow": true,
+      "sourceSetSha256": "41e5680348c6b13bd84dde070de3ed9192c25536102e68dff7423d9c4f51ca68",
+      "filesByAnimation": [
+        {
+          "animationId": "course-g04-l03-ir-001-341242cc",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IR/L3RW01.swf",
+            "bytes": 146730,
+            "sha256": "2af6431db3ed786d9b48feec5a649887af92fb219a04e5dbd42e7e4b04087df4",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IR/L3RW01.fla",
+            "bytes": 949248,
+            "sha256": "3f5fe69773dea4516f1804cbd0e77396450c60d989691b87563d480d4179809c",
+            "physicalHashVerifiedNow": true
+          }
+        },
+        {
+          "animationId": "course-g04-l03-rw-002",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/RW/L3RW02.swf",
+            "bytes": 1203149,
+            "sha256": "8b2aa7afd7e82fc582b8e7b936d178c87fea16106b26061f872c81ea7d422785",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": null
+        },
+        {
+          "animationId": "course-g04-l03-rw-003",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/RW/L3RW03.swf",
+            "bytes": 108459,
+            "sha256": "783b74b036a7af4031f17ce9e1aab7536665c84a73400b3a980cfa3e89a9a335",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/RW/L3RW03.fla",
+            "bytes": 1098752,
+            "sha256": "16fb7b49f0d11ee93d58f46c97c80901d9356a76454daccd09c4401c59bfd5c5",
+            "physicalHashVerifiedNow": true
+          }
+        },
+        {
+          "animationId": "course-g04-l03-rw-004",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/RW/L3RW04.swf",
+            "bytes": 663801,
+            "sha256": "506c062e33d447d5837de2094e2d881581f602d7f10458b6eae2864e3b234710",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": null
+        },
+        {
+          "animationId": "course-g04-l03-vb-002",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB02.swf",
+            "bytes": 69230,
+            "sha256": "0e378f21899cd615107a08a085b4f37b96066e49e409eb9793219f7c953eb4f3",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB02.fla",
+            "bytes": 435200,
+            "sha256": "e47d05e8ebbd23f9b573ebee9041fca72277a015d76180aae0eefd7a8da65dd0",
+            "physicalHashVerifiedNow": true
+          }
+        },
+        {
+          "animationId": "course-g04-l03-vb-003",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB03.swf",
+            "bytes": 83472,
+            "sha256": "ab47ed70dd5bba5515011e6f156c5a985fa107ef7e426448fe65507e9927204a",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB03.fla",
+            "bytes": 615936,
+            "sha256": "263b18fb695f4b5b8f11db8774bfcc7312a485fb51d4f133cb7e08f3f34dd3ce",
+            "physicalHashVerifiedNow": true
+          }
+        },
+        {
+          "animationId": "course-g04-l03-vb-004",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB04.swf",
+            "bytes": 84627,
+            "sha256": "13bff9e32e20d8fdd7a3b1df03e585d8f0bffbe03f74fca20db99350d7c0ea47",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB04.fla",
+            "bytes": 463360,
+            "sha256": "51541729c19ba3faa57819ede17ad138686d26a0d8c3f5171487cf7cd4317d05",
+            "physicalHashVerifiedNow": true
+          }
+        },
+        {
+          "animationId": "course-g04-l03-vb-005",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB05.swf",
+            "bytes": 66761,
+            "sha256": "7595fa85408ef64720006e0e24a02505507aebfd89282a5709bab97e09b162d6",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB05.fla",
+            "bytes": 375296,
+            "sha256": "b63ccfb65ed4e89b025efccf256b552a0f48831b758827cc1f39f0ffc0b7ec94",
+            "physicalHashVerifiedNow": true
+          }
+        },
+        {
+          "animationId": "course-g04-l03-vb-006",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB06.swf",
+            "bytes": 62750,
+            "sha256": "e83889619f1a162491b2d7bbc720be78c5ca1eda7f6348680a949e5a71e90168",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB06.fla",
+            "bytes": 361984,
+            "sha256": "44ce279b65a6ffb552dc8f0b4f10f9bdc05b5bfe874bf6de574ef2cce418f058",
+            "physicalHashVerifiedNow": true
+          }
+        },
+        {
+          "animationId": "course-g04-l03-vb-007",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB07.swf",
+            "bytes": 219242,
+            "sha256": "e3e6c45a56f343b3a8baf8a65dd34b615327029f808eec0c5f9cfee2dd2c1450",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB07.fla",
+            "bytes": 3141120,
+            "sha256": "b4eb0a360733817b164356149bae97b11b21d9554a2a0a365a01a9ec69c4147c",
+            "physicalHashVerifiedNow": true
+          }
+        },
+        {
+          "animationId": "course-g04-l03-vb-008",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB08.swf",
+            "bytes": 751915,
+            "sha256": "3c61fd04bbaf6b316438691fd59222623bbb1d11a36c731ae7ed9fb862245bcf",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB08.fla",
+            "bytes": 4256256,
+            "sha256": "25b7f4acc1128d4b8a06df89d52b9f372b4af00b77d2053fbccfaa24dba53922",
+            "physicalHashVerifiedNow": true
+          }
+        },
+        {
+          "animationId": "course-g04-l03-vb-009",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB09.swf",
+            "bytes": 54446,
+            "sha256": "5a6532c1635ecbf29cf1b4bda6727ce3bc858b1a5771223fd629ee3a65df96f8",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB09.fla",
+            "bytes": 278528,
+            "sha256": "fc6a5819a64d1051bf9d8c8f750bca45d237526a72ae3891eca21c77ba766c08",
+            "physicalHashVerifiedNow": true
+          }
+        },
+        {
+          "animationId": "course-g04-l03-in-002",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN02.swf",
+            "bytes": 174243,
+            "sha256": "60a1a78e5e927d6732c69518699caf71307e4f30da3b9e2bab29d0bab241989d",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": null
+        },
+        {
+          "animationId": "course-g04-l03-in-003",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN03.swf",
+            "bytes": 152888,
+            "sha256": "ae967172d85728e42e4338f5ed74710b9b10eeb447fa6c6d86668bd63cc0dc7f",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN03.fla",
+            "bytes": 1682432,
+            "sha256": "c960c1bef6638b6fa71c9e8016c7cd7f9d99594d99aae1f4af0724c2eb0d63f0",
+            "physicalHashVerifiedNow": true
+          }
+        },
+        {
+          "animationId": "course-g04-l03-in-004",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN04.swf",
+            "bytes": 166617,
+            "sha256": "2ac5cd71bbc57bd9761668a7c383f821fa52b91f1e68a7b4f14151410857dfad",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN04.fla",
+            "bytes": 2105856,
+            "sha256": "879624e9cfac8a2b26539d6ea32ef2d3e7d0d8ca3bf3ebd1c44c2f96b7db14d2",
+            "physicalHashVerifiedNow": true
+          }
+        },
+        {
+          "animationId": "course-g04-l03-in-005",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN05.swf",
+            "bytes": 74705,
+            "sha256": "dcbc74e5f8391afb0a307421729c8b5d5f548f3185c429fb40e7aae3cb647048",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN05.fla",
+            "bytes": 4320768,
+            "sha256": "91654d016163c79a3d49e1f7135280f90b276e9492877fa0b9a6d567acb6334e",
+            "physicalHashVerifiedNow": true
+          }
+        },
+        {
+          "animationId": "course-g04-l03-in-006",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN06.swf",
+            "bytes": 396126,
+            "sha256": "e303dcdd4dbd48a45625663f8630c546987d1212cb3750cd710da853f25d59ba",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN06.fla",
+            "bytes": 4212224,
+            "sha256": "c79c838ba91c4e2b4dc072b9ebe3997d99130e8dfd723e66677089d03ec002a9",
+            "physicalHashVerifiedNow": true
+          }
+        },
+        {
+          "animationId": "course-g04-l03-in-007",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN07.swf",
+            "bytes": 203386,
+            "sha256": "91c013434558ec9d6b49df67ae29106073b1a98de19099fdda26ab8d5f2d8d45",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": null
+        },
+        {
+          "animationId": "course-g04-l03-in-008",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN08.swf",
+            "bytes": 115275,
+            "sha256": "5462ead920862a48ddbacf7be068f9cadf9e509e7032a2dbbb2659a28e08757f",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN08.fla",
+            "bytes": 843264,
+            "sha256": "b4c50528ad9f5c808ead7f44cc0fdedacf0dd8b55d9fb196bfc39ef668738bd9",
+            "physicalHashVerifiedNow": true
+          }
+        },
+        {
+          "animationId": "course-g04-l03-in-009",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN09.swf",
+            "bytes": 1967129,
+            "sha256": "766b6ab686bbaf8ab1dacc30a7ffb96f33735102a1dff7df6b7a97976e3ab25c",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": null
+        },
+        {
+          "animationId": "course-g04-l03-in-010",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN10.swf",
+            "bytes": 123587,
+            "sha256": "fab625d5c4028a72a3d5672c65884cc2b83ab4df6a318e26057f70469e9a8011",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN10.fla",
+            "bytes": 964096,
+            "sha256": "ac91921e09cca9bde604e6a057e39f518c83a401cace66b919fcdbd7b0f4f6ea",
+            "physicalHashVerifiedNow": true
+          }
+        },
+        {
+          "animationId": "course-g04-l03-in-011",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN11.swf",
+            "bytes": 190593,
+            "sha256": "a106b7a889b5da08377181e0e9d0e9ea2c59163103be0898fd5090f1a13fe1df",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": null
+        },
+        {
+          "animationId": "course-g04-l03-in-012",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN12.swf",
+            "bytes": 249556,
+            "sha256": "fa131c4cfad5619beb1343d0bfbc941bd9ffa59f190ae1b002f81d5f9d8cde55",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN12.fla",
+            "bytes": 3275776,
+            "sha256": "9b53a7990ab3f2954c81b83cf4a0d516828d4b72c6bb2269c402c3826ffcdce4",
+            "physicalHashVerifiedNow": true
+          }
+        },
+        {
+          "animationId": "course-g04-l03-ti-002",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TI/L3TI02.swf",
+            "bytes": 193445,
+            "sha256": "e640f8dcbfb6dd6945d97be67890e0015902702239e2bad4bd4283685fb0f807",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TI/L3TI02.fla",
+            "bytes": 2385408,
+            "sha256": "3068bbd11d14c4226b961edc7cc31117ba71515546195782771749727c2bc7d3",
+            "physicalHashVerifiedNow": true
+          }
+        },
+        {
+          "animationId": "course-g04-l03-ti-003",
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TI/L3TI03.swf",
+            "bytes": 100853,
+            "sha256": "7abcc6151596b89d7b3142985bf8de2aae1d31ddb6eb47b14d2b9950c095a262",
+            "physicalHashVerifiedNow": true
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TI/L3TI03.fla",
+            "bytes": 719872,
+            "sha256": "4670c0aa1e8bf7ccf7ffe83bcffd880daf95250c88dc8f528210b033113692d2",
+            "physicalHashVerifiedNow": true
+          }
+        }
+      ]
+    },
+    "selectedCatalogAudioSources": {
+      "fileCount": 24,
+      "physicalHashesVerifiedNow": true,
+      "sourceSetSha256": "16bbf877ec94a31de762ded2592e014a6b7aa88624f4ae58b34f8fbdb1206310",
+      "files": [
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN02.mp3",
+          "bytes": 693168,
+          "sha256": "65fbaef6b2a96b18da2bed86118a754d64c075af251bd5f0074ed16f5c40aafa"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN03.mp3",
+          "bytes": 397152,
+          "sha256": "7a3cd30827262d18506f31114127012bd0a5b68dc5c7e37fe28b60693c3cff57"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN04.mp3",
+          "bytes": 159264,
+          "sha256": "790c01a05ca5dde6f4b65d703111f0056afb6cf56f1717df6649eb11d7593ae6"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN05.mp3",
+          "bytes": 159936,
+          "sha256": "81ceef9a79907549339208d5c4f9f31f83bd774f71a41d4b3881c93957185bd2"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN06.mp3",
+          "bytes": 542640,
+          "sha256": "93479131bd93642f59ac7999b6c0f8a03c9fee2cadda96989a4a0591d522f03c"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN07.mp3",
+          "bytes": 323232,
+          "sha256": "96447525dc60534210a1752626bb9a627df2ce815339fded5ae2e13447fc10aa"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN08.mp3",
+          "bytes": 382368,
+          "sha256": "a00419d76ea4628861e70ccb1204a0e740ff91bf7a1b5d69c6e8b2ba243b035e"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN09.mp3",
+          "bytes": 564816,
+          "sha256": "1d2370d59a6400dbd666a3f049fd4222a54d664e62055a1fb5f93596b9a2ea4b"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN10.mp3",
+          "bytes": 244608,
+          "sha256": "4372a57fee69a7bbeb4e96fed83db8dc6665f3fc229c42215b57abf11e0f1a84"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN11.mp3",
+          "bytes": 547344,
+          "sha256": "d97d7e3b9cf9086c7dcfeadad8ecace32e5a66d545fec346c4b535423816913d"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN12.mp3",
+          "bytes": 267792,
+          "sha256": "573658185d37494f947c33a47bd3406da09c66a1c792cdb774de3e7ae47c0d75"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3RW02.mp3",
+          "bytes": 405888,
+          "sha256": "79d0b6504a0d8bb66e3a7a19a5156ab35a49271fdbaab40033c0dda5600a627e"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3RW03.mp3",
+          "bytes": 251328,
+          "sha256": "ea0a0922b90a9e612814a4b69ede2b687660b1e0adeadac91870e77f092f0975"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3RW04.mp3",
+          "bytes": 265776,
+          "sha256": "e14afaa951ea01d6e1e26b2fd641676628f92b4772a77c5d54f1f3031c5e10dd"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3TI02.mp3",
+          "bytes": 212016,
+          "sha256": "befdf13400e6b46d9a82510efbd66676c955d266fbb6fbf31016e6b98a81e4ef"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3TI03.mp3",
+          "bytes": 214704,
+          "sha256": "063887f58c7ab3b45bd62320cbb4bd95a90db93214e987ffbc001e9c4cb80799"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3VB02.mp3",
+          "bytes": 315168,
+          "sha256": "a611b160a2dec23c7e2368a72661a03f8b291e586d5148d048d48f16c8daa610"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3VB03.mp3",
+          "bytes": 186144,
+          "sha256": "068a69aaa9b11bc3c82f276a9c272345e8385401962b909f90a1e96f87426615"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3VB04.mp3",
+          "bytes": 399840,
+          "sha256": "2dc923614099d5290a2b6c62c69bdd4c1037b290635bd834890e2cdd16c1f4df"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3VB05.mp3",
+          "bytes": 276864,
+          "sha256": "4cd42bda4932132d37215de80674ad645ee41a917aeefd37cae36d00ba620f9f"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3VB06.mp3",
+          "bytes": 211008,
+          "sha256": "5a56dbcee1dff83597b928d59e7e25223d0c10709616338a7a55152bf87a67bd"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3VB07.mp3",
+          "bytes": 62832,
+          "sha256": "11dc5591a4e3ca66ec73432314ccc36d6b9cde4ff771096db26c7829ae96aacd"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3VB08.mp3",
+          "bytes": 64176,
+          "sha256": "6bb1c07967965ec131dcd57617c84f709c772b0e46c5ca27dec91c74b9f7ef90"
+        },
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3VB09.mp3",
+          "bytes": 217392,
+          "sha256": "e2896cb3b7b1816b1f48f5df451d3663736344b052ca8d096db96e2c692cb094"
+        }
+      ]
+    }
+  },
+  "summary": {
+    "rankedItems": 25,
+    "distinctAnimationIds": 25,
+    "distinctSequencePositions": 25,
+    "flaBacked": 19,
+    "swfOnly": 6,
+    "physicallyRehashedLegacySourceFiles": 44,
+    "physicallyRehashedCatalogAudioFiles": 24,
+    "inputReportsBound": 7,
+    "inputReportGeneratorsWithHashVerifiedNow": 6,
+    "minimumAggregateOrdinalScore": 69,
+    "maximumAggregateOrdinalScore": 322,
+    "implementationAuthorized": 0,
+    "authoritativeRuntimeReady": 0,
+    "strictComplete": 0,
+    "rankingSetSha256": "6da7173cbe8842a23ec8d6904c07c20d192304fd70a8107fca340da51ec7e8db"
+  },
+  "rankedItems": [
+    {
+      "lessonSequence": 3,
+      "animationId": "course-g04-l03-rw-003",
+      "assetId": "swf-783b74b036a7af4031f17ce9e1aab7536665c84a73400b3a980cfa3e89a9a335",
+      "classification": {
+        "section": "RW",
+        "page": 3,
+        "titleRaw": "Page 2",
+        "titleDisplay": "Page 2"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/RW/L3RW03.swf",
+          "bytes": 108459,
+          "sha256": "783b74b036a7af4031f17ce9e1aab7536665c84a73400b3a980cfa3e89a9a335",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/RW/L3RW03.fla",
+          "bytes": 1098752,
+          "sha256": "16fb7b49f0d11ee93d58f46c97c80901d9356a76454daccd09c4401c59bfd5c5",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "8715f4bcbe38ee3aea8461b5292bd691e70bf417dc1137fc631091fd627bd0e6",
+        "sourceOperationItemBinding": "538a607ce41e243fbb0d8b28e3b9ba2289ce54713814efabad997a747ae4dbe5",
+        "assetDefinitionInventorySha256": "4686ec901255fbae642f8f54d05022b3ccd6fae5e6ed515389fcdcffd00234c4",
+        "embeddedAudioItemFingerprintSha256": "43a22ebc1ebbf0db0c4bc7911ad2683ae2c80bb5357335307fb2e988093956a6"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 3,
+          "staticRootReachableDeclaredFrameCount": 289,
+          "placementTagCount": 136,
+          "exactOperationCount": 7,
+          "exactEventHandlerOperationCount": 2,
+          "exactSignalCount": 2,
+          "scenarioTraceCandidateCount": 3,
+          "assetDefinitionCount": 54,
+          "featureHeavyDefinitionCount": 4,
+          "exactTextOccurrenceCount": 20,
+          "fontDefinitionFactCount": 2,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 271,
+          "embeddedAudioPayloadBytes": 112190,
+          "catalogAudioDurationMs": 17952
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 317,
+          "exportedScriptFileCount": 4,
+          "operationCountsByCategory": {
+            "timeline": 5,
+            "input": 2
+          },
+          "assetCategoryCounts": {
+            "shape": 26,
+            "morph": 2,
+            "bitmap": 0,
+            "font": 2,
+            "text": 20,
+            "button": 2,
+            "sprite": 2,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3RW03.mp3",
+              "bytes": 251328,
+              "sha256": "ea0a0922b90a9e612814a4b69ede2b687660b1e0adeadac91870e77f092f0975",
+              "probeFingerprintSha256": "4d0a0a9a4778a160a05b0bfa43a7a887a81ad01eef33330b690617872339517a",
+              "durationMs": 17952
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 1,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 271
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 1,
+        "complexityCompetitionRank": 1,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 1,
+          "staticRootReachableDeclaredFrameCount": 8,
+          "placementTagCount": 2,
+          "exactOperationCount": 2,
+          "exactEventHandlerOperationCount": 3,
+          "exactSignalCount": 2,
+          "scenarioTraceCandidateCount": 2,
+          "assetDefinitionCount": 8,
+          "featureHeavyDefinitionCount": 4,
+          "exactTextOccurrenceCount": 3,
+          "fontDefinitionFactCount": 1,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 10,
+          "embeddedAudioPayloadBytes": 9,
+          "catalogAudioDurationMs": 12
+        },
+        "axisOrdinalScores": {
+          "timeline": 12,
+          "behavior": 9,
+          "assets": 16,
+          "audio": 32
+        },
+        "aggregateOrdinalScore": 69,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "5b03ba065ae4f5e1c785507a2a33d7519b3f0eb09db422c894a4cff3b7391f10"
+    },
+    {
+      "lessonSequence": 9,
+      "animationId": "course-g04-l03-vb-006",
+      "assetId": "swf-e83889619f1a162491b2d7bbc720be78c5ca1eda7f6348680a949e5a71e90168",
+      "classification": {
+        "section": "VB",
+        "page": 6,
+        "titleRaw": "Zero",
+        "titleDisplay": "Zero"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB06.swf",
+          "bytes": 62750,
+          "sha256": "e83889619f1a162491b2d7bbc720be78c5ca1eda7f6348680a949e5a71e90168",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB06.fla",
+          "bytes": 361984,
+          "sha256": "44ce279b65a6ffb552dc8f0b4f10f9bdc05b5bfe874bf6de574ef2cce418f058",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "aedfddb104d6f6fb4ec7b951336109f09d58efb1685039da7a873528bac38747",
+        "sourceOperationItemBinding": "94e52285235819279836a55c575d0b4e0488cb736fb95aeefb559e5068701bf1",
+        "assetDefinitionInventorySha256": "3b20200659cd7e1d4d8580c17fbb11109e4618152d9d15fdad4d14e397033d56",
+        "embeddedAudioItemFingerprintSha256": "a30ec35647ff76fc0d1b6464f3b94364a59ea1af38b337a4c3dc0dfeaa5f5390"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 3,
+          "staticRootReachableDeclaredFrameCount": 174,
+          "placementTagCount": 359,
+          "exactOperationCount": 11,
+          "exactEventHandlerOperationCount": 4,
+          "exactSignalCount": 4,
+          "scenarioTraceCandidateCount": 3,
+          "assetDefinitionCount": 44,
+          "featureHeavyDefinitionCount": 4,
+          "exactTextOccurrenceCount": 32,
+          "fontDefinitionFactCount": 4,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 157,
+          "embeddedAudioPayloadBytes": 65000,
+          "catalogAudioDurationMs": 15072
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 548,
+          "exportedScriptFileCount": 6,
+          "operationCountsByCategory": {
+            "timeline": 7,
+            "input": 4
+          },
+          "assetCategoryCounts": {
+            "shape": 10,
+            "morph": 0,
+            "bitmap": 0,
+            "font": 4,
+            "text": 24,
+            "button": 4,
+            "sprite": 2,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3VB06.mp3",
+              "bytes": 211008,
+              "sha256": "5a56dbcee1dff83597b928d59e7e25223d0c10709616338a7a55152bf87a67bd",
+              "probeFingerprintSha256": "2f4b9dbea6abf73663e956de64efb0442400e214d442b72204b4ad4aaf9af437",
+              "durationMs": 15072
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 1,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 157
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 2,
+        "complexityCompetitionRank": 2,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 1,
+          "staticRootReachableDeclaredFrameCount": 1,
+          "placementTagCount": 8,
+          "exactOperationCount": 9,
+          "exactEventHandlerOperationCount": 10,
+          "exactSignalCount": 9,
+          "scenarioTraceCandidateCount": 2,
+          "assetDefinitionCount": 3,
+          "featureHeavyDefinitionCount": 4,
+          "exactTextOccurrenceCount": 9,
+          "fontDefinitionFactCount": 12,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 3,
+          "embeddedAudioPayloadBytes": 2,
+          "catalogAudioDurationMs": 7
+        },
+        "axisOrdinalScores": {
+          "timeline": 11,
+          "behavior": 30,
+          "assets": 28,
+          "audio": 13
+        },
+        "aggregateOrdinalScore": 82,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "405a469c0ee5e686a5019c182bdbc5fd65ae9ff72d4a9c23b755044a7e05f84a"
+    },
+    {
+      "lessonSequence": 12,
+      "animationId": "course-g04-l03-vb-009",
+      "assetId": "swf-5a6532c1635ecbf29cf1b4bda6727ce3bc858b1a5771223fd629ee3a65df96f8",
+      "classification": {
+        "section": "VB",
+        "page": 9,
+        "titleRaw": "Pattern",
+        "titleDisplay": "Pattern"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB09.swf",
+          "bytes": 54446,
+          "sha256": "5a6532c1635ecbf29cf1b4bda6727ce3bc858b1a5771223fd629ee3a65df96f8",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB09.fla",
+          "bytes": 278528,
+          "sha256": "fc6a5819a64d1051bf9d8c8f750bca45d237526a72ae3891eca21c77ba766c08",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "17f2b350fd85ede1f8ff0d579325eecb0e9830d825656154c5668a4d2c2ff70d",
+        "sourceOperationItemBinding": "d46455670feecba0b4ebd58e3a18fb28ec529d522f466eda2585f05410d46bf1",
+        "assetDefinitionInventorySha256": "d6c7f37868b689e5dce8b0c0141e8d4badf26680ce35c3cf590df4bc83dd9d89",
+        "embeddedAudioItemFingerprintSha256": "0f1f218912ab50e65e524925224035be3c82f2f8118cc0dfcce117b6906ba808"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 3,
+          "staticRootReachableDeclaredFrameCount": 186,
+          "placementTagCount": 132,
+          "exactOperationCount": 11,
+          "exactEventHandlerOperationCount": 4,
+          "exactSignalCount": 4,
+          "scenarioTraceCandidateCount": 3,
+          "assetDefinitionCount": 24,
+          "featureHeavyDefinitionCount": 4,
+          "exactTextOccurrenceCount": 44,
+          "fontDefinitionFactCount": 4,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 140,
+          "embeddedAudioPayloadBytes": 57460,
+          "catalogAudioDurationMs": 15528
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 529,
+          "exportedScriptFileCount": 6,
+          "operationCountsByCategory": {
+            "timeline": 7,
+            "input": 4
+          },
+          "assetCategoryCounts": {
+            "shape": 7,
+            "morph": 0,
+            "bitmap": 0,
+            "font": 4,
+            "text": 7,
+            "button": 4,
+            "sprite": 2,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3VB09.mp3",
+              "bytes": 217392,
+              "sha256": "e2896cb3b7b1816b1f48f5df451d3663736344b052ca8d096db96e2c692cb094",
+              "probeFingerprintSha256": "2d35d8d9f61bb6e9977150be33d44d03c1b69d3e445b79a80a8e122d04448f12",
+              "durationMs": 15528
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 1,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 140
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 3,
+        "complexityCompetitionRank": 3,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 1,
+          "staticRootReachableDeclaredFrameCount": 2,
+          "placementTagCount": 1,
+          "exactOperationCount": 9,
+          "exactEventHandlerOperationCount": 10,
+          "exactSignalCount": 9,
+          "scenarioTraceCandidateCount": 2,
+          "assetDefinitionCount": 1,
+          "featureHeavyDefinitionCount": 4,
+          "exactTextOccurrenceCount": 17,
+          "fontDefinitionFactCount": 12,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 2,
+          "embeddedAudioPayloadBytes": 1,
+          "catalogAudioDurationMs": 10
+        },
+        "axisOrdinalScores": {
+          "timeline": 5,
+          "behavior": 30,
+          "assets": 34,
+          "audio": 14
+        },
+        "aggregateOrdinalScore": 83,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "7cb2fb416f8584de0c120125adada369fa9bd7faf61eb1a6f494924130ca9e50"
+    },
+    {
+      "lessonSequence": 8,
+      "animationId": "course-g04-l03-vb-005",
+      "assetId": "swf-7595fa85408ef64720006e0e24a02505507aebfd89282a5709bab97e09b162d6",
+      "classification": {
+        "section": "VB",
+        "page": 5,
+        "titleRaw": "Negative Numbers",
+        "titleDisplay": "Negative Numbers"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB05.swf",
+          "bytes": 66761,
+          "sha256": "7595fa85408ef64720006e0e24a02505507aebfd89282a5709bab97e09b162d6",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB05.fla",
+          "bytes": 375296,
+          "sha256": "b63ccfb65ed4e89b025efccf256b552a0f48831b758827cc1f39f0ffc0b7ec94",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "48cf8bee160b95c295f0244daafa90796219e438f4ad83244b749dc01172c4e7",
+        "sourceOperationItemBinding": "3e2db4bff5ec54ad4a13c96ef864de5dc3ac5dd4902f475ab119a62bd0670cf3",
+        "assetDefinitionInventorySha256": "1fb2f4022d0ca6ed769d4c336073eaad5e767d14a59ea48e85aae357c20aed24",
+        "embeddedAudioItemFingerprintSha256": "e7305f0769dd7bf195597ff81925b32eec57a50059f6bde63dc48ad6db264204"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 3,
+          "staticRootReachableDeclaredFrameCount": 191,
+          "placementTagCount": 390,
+          "exactOperationCount": 9,
+          "exactEventHandlerOperationCount": 3,
+          "exactSignalCount": 3,
+          "scenarioTraceCandidateCount": 3,
+          "assetDefinitionCount": 53,
+          "featureHeavyDefinitionCount": 4,
+          "exactTextOccurrenceCount": 36,
+          "fontDefinitionFactCount": 4,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 174,
+          "embeddedAudioPayloadBytes": 72020,
+          "catalogAudioDurationMs": 19776
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 427,
+          "exportedScriptFileCount": 5,
+          "operationCountsByCategory": {
+            "timeline": 6,
+            "input": 3
+          },
+          "assetCategoryCounts": {
+            "shape": 10,
+            "morph": 1,
+            "bitmap": 0,
+            "font": 4,
+            "text": 33,
+            "button": 3,
+            "sprite": 2,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3VB05.mp3",
+              "bytes": 276864,
+              "sha256": "4cd42bda4932132d37215de80674ad645ee41a917aeefd37cae36d00ba620f9f",
+              "probeFingerprintSha256": "b96f3fe13a684349d00243d1c119651cdca56f325f94ec6980ecb7009ce1237c",
+              "durationMs": 19776
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 1,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 174
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 4,
+        "complexityCompetitionRank": 4,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 1,
+          "staticRootReachableDeclaredFrameCount": 3,
+          "placementTagCount": 10,
+          "exactOperationCount": 6,
+          "exactEventHandlerOperationCount": 7,
+          "exactSignalCount": 6,
+          "scenarioTraceCandidateCount": 2,
+          "assetDefinitionCount": 6,
+          "featureHeavyDefinitionCount": 4,
+          "exactTextOccurrenceCount": 13,
+          "fontDefinitionFactCount": 12,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 4,
+          "embeddedAudioPayloadBytes": 3,
+          "catalogAudioDurationMs": 15
+        },
+        "axisOrdinalScores": {
+          "timeline": 15,
+          "behavior": 21,
+          "assets": 35,
+          "audio": 23
+        },
+        "aggregateOrdinalScore": 94,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "40adf2c00eea34b264a9574aa9aa7d3cfef4ba471352cdf524ba17660a69f47e"
+    },
+    {
+      "lessonSequence": 22,
+      "animationId": "course-g04-l03-in-011",
+      "assetId": "swf-a106b7a889b5da08377181e0e9d0e9ea2c59163103be0898fd5090f1a13fe1df",
+      "classification": {
+        "section": "IN",
+        "page": 11,
+        "titleRaw": "Situations with Negative Numbers: Owing",
+        "titleDisplay": "Situations with Negative Numbers: Owing"
+      },
+      "source": {
+        "sourceKind": "swf-only",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN11.swf",
+          "bytes": 190593,
+          "sha256": "a106b7a889b5da08377181e0e9d0e9ea2c59163103be0898fd5090f1a13fe1df",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": null,
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "8f43588610c69825c54070240a83dde7c9526d2ad21c92074a07e62bfa8d46c9",
+        "sourceOperationItemBinding": "793f280385b7209f1faad56615febda36ae0d0bc7dae2d48c74a7f9edebcdee9",
+        "assetDefinitionInventorySha256": "70787c610b093b21e4a6e2abbe7b04069230daf56f67aecd61978937c1d98a3a",
+        "embeddedAudioItemFingerprintSha256": "a1e101511cad9f1afb5b37cad79082bb2d9b4dcd62142bafd40b307cc4951673"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 3,
+          "staticRootReachableDeclaredFrameCount": 452,
+          "placementTagCount": 202,
+          "exactOperationCount": 7,
+          "exactEventHandlerOperationCount": 2,
+          "exactSignalCount": 2,
+          "scenarioTraceCandidateCount": 3,
+          "assetDefinitionCount": 51,
+          "featureHeavyDefinitionCount": 2,
+          "exactTextOccurrenceCount": 29,
+          "fontDefinitionFactCount": 2,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 439,
+          "embeddedAudioPayloadBytes": 181870,
+          "catalogAudioDurationMs": 39096
+        },
+        "supplemental": {
+          "sourceKind": "swf-only",
+          "normalizedScriptBytes": 305,
+          "exportedScriptFileCount": 4,
+          "operationCountsByCategory": {
+            "timeline": 5,
+            "input": 2
+          },
+          "assetCategoryCounts": {
+            "shape": 20,
+            "morph": 0,
+            "bitmap": 0,
+            "font": 2,
+            "text": 25,
+            "button": 2,
+            "sprite": 2,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN11.mp3",
+              "bytes": 547344,
+              "sha256": "d97d7e3b9cf9086c7dcfeadad8ecace32e5a66d545fec346c4b535423816913d",
+              "probeFingerprintSha256": "9c38297443fbd993a5dc9e315f2e5f8907d01cf0516271deb5b9e6c64de18754",
+              "durationMs": 39096
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 1,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 439
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 5,
+        "complexityCompetitionRank": 5,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 1,
+          "staticRootReachableDeclaredFrameCount": 15,
+          "placementTagCount": 4,
+          "exactOperationCount": 2,
+          "exactEventHandlerOperationCount": 3,
+          "exactSignalCount": 2,
+          "scenarioTraceCandidateCount": 2,
+          "assetDefinitionCount": 4,
+          "featureHeavyDefinitionCount": 2,
+          "exactTextOccurrenceCount": 8,
+          "fontDefinitionFactCount": 1,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 19,
+          "embeddedAudioPayloadBytes": 19,
+          "catalogAudioDurationMs": 23
+        },
+        "axisOrdinalScores": {
+          "timeline": 21,
+          "behavior": 9,
+          "assets": 15,
+          "audio": 62
+        },
+        "aggregateOrdinalScore": 107,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "a6aadfd1fdc7e4042aac555ed39e580893711ceb5156a20ee10ffdc0dd44f00f"
+    },
+    {
+      "lessonSequence": 7,
+      "animationId": "course-g04-l03-vb-004",
+      "assetId": "swf-13bff9e32e20d8fdd7a3b1df03e585d8f0bffbe03f74fca20db99350d7c0ea47",
+      "classification": {
+        "section": "VB",
+        "page": 4,
+        "titleRaw": "Positive Numbers",
+        "titleDisplay": "Positive Numbers"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB04.swf",
+          "bytes": 84627,
+          "sha256": "13bff9e32e20d8fdd7a3b1df03e585d8f0bffbe03f74fca20db99350d7c0ea47",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB04.fla",
+          "bytes": 463360,
+          "sha256": "51541729c19ba3faa57819ede17ad138686d26a0d8c3f5171487cf7cd4317d05",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "5f3b74b70deb0390c7a17a425c1b50d3345715980802c54ddac1f3a32295bb4e",
+        "sourceOperationItemBinding": "a5e50ae683a6b566885f953c791be013e461abb3b0b6339111dda71677feca47",
+        "assetDefinitionInventorySha256": "94d1d7d067d26814deba82afa0a361ccfc7c078a6c3b4f5e62a890789deb4078",
+        "embeddedAudioItemFingerprintSha256": "082f01c2c563ecf3051d5c570e85ee236e53b7fa1c204c8d5167141e1d8993a3"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 3,
+          "staticRootReachableDeclaredFrameCount": 256,
+          "placementTagCount": 442,
+          "exactOperationCount": 9,
+          "exactEventHandlerOperationCount": 3,
+          "exactSignalCount": 3,
+          "scenarioTraceCandidateCount": 3,
+          "assetDefinitionCount": 53,
+          "featureHeavyDefinitionCount": 4,
+          "exactTextOccurrenceCount": 36,
+          "fontDefinitionFactCount": 4,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 228,
+          "embeddedAudioPayloadBytes": 93990,
+          "catalogAudioDurationMs": 28560
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 430,
+          "exportedScriptFileCount": 5,
+          "operationCountsByCategory": {
+            "timeline": 6,
+            "input": 3
+          },
+          "assetCategoryCounts": {
+            "shape": 10,
+            "morph": 1,
+            "bitmap": 0,
+            "font": 4,
+            "text": 33,
+            "button": 3,
+            "sprite": 2,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3VB04.mp3",
+              "bytes": 399840,
+              "sha256": "2dc923614099d5290a2b6c62c69bdd4c1037b290635bd834890e2cdd16c1f4df",
+              "probeFingerprintSha256": "6687bb42d38aa55b88ea30a9a09f1e0849a103a0eb1bd2c2a0a9843dc04fea41",
+              "durationMs": 28560
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 1,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 228
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 6,
+        "complexityCompetitionRank": 6,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 1,
+          "staticRootReachableDeclaredFrameCount": 6,
+          "placementTagCount": 12,
+          "exactOperationCount": 6,
+          "exactEventHandlerOperationCount": 7,
+          "exactSignalCount": 6,
+          "scenarioTraceCandidateCount": 2,
+          "assetDefinitionCount": 6,
+          "featureHeavyDefinitionCount": 4,
+          "exactTextOccurrenceCount": 13,
+          "fontDefinitionFactCount": 12,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 8,
+          "embeddedAudioPayloadBytes": 7,
+          "catalogAudioDurationMs": 20
+        },
+        "axisOrdinalScores": {
+          "timeline": 20,
+          "behavior": 21,
+          "assets": 35,
+          "audio": 36
+        },
+        "aggregateOrdinalScore": 112,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "d7bfc777cd328593f20573b2c2f693f31816076451683cf0599455ae8fecf689"
+    },
+    {
+      "lessonSequence": 5,
+      "animationId": "course-g04-l03-vb-002",
+      "assetId": "swf-0e378f21899cd615107a08a085b4f37b96066e49e409eb9793219f7c953eb4f3",
+      "classification": {
+        "section": "VB",
+        "page": 2,
+        "titleRaw": "Number Line",
+        "titleDisplay": "Number Line"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB02.swf",
+          "bytes": 69230,
+          "sha256": "0e378f21899cd615107a08a085b4f37b96066e49e409eb9793219f7c953eb4f3",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB02.fla",
+          "bytes": 435200,
+          "sha256": "e47d05e8ebbd23f9b573ebee9041fca72277a015d76180aae0eefd7a8da65dd0",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "67a68146440210ca1b08327cdc3b88ca35c6771823f602d3efaff049141c3cbc",
+        "sourceOperationItemBinding": "b2c2851d791c7082bbfde8dd0bb4129c5c0367df583d5203e64458e15c659a75",
+        "assetDefinitionInventorySha256": "2288de1148578822c9359a23883113c4a80a22db1116e71db6643891987d0ed5",
+        "embeddedAudioItemFingerprintSha256": "f021f8652e5ec2a6d469814016aad50cce9d61c0ee448842e765ffb105aa3839"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 3,
+          "staticRootReachableDeclaredFrameCount": 204,
+          "placementTagCount": 530,
+          "exactOperationCount": 15,
+          "exactEventHandlerOperationCount": 6,
+          "exactSignalCount": 6,
+          "scenarioTraceCandidateCount": 3,
+          "assetDefinitionCount": 52,
+          "featureHeavyDefinitionCount": 8,
+          "exactTextOccurrenceCount": 34,
+          "fontDefinitionFactCount": 4,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 187,
+          "embeddedAudioPayloadBytes": 77480,
+          "catalogAudioDurationMs": 22512
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 784,
+          "exportedScriptFileCount": 8,
+          "operationCountsByCategory": {
+            "timeline": 9,
+            "input": 6
+          },
+          "assetCategoryCounts": {
+            "shape": 12,
+            "morph": 2,
+            "bitmap": 0,
+            "font": 4,
+            "text": 26,
+            "button": 6,
+            "sprite": 2,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3VB02.mp3",
+              "bytes": 315168,
+              "sha256": "a611b160a2dec23c7e2368a72661a03f8b291e586d5148d048d48f16c8daa610",
+              "probeFingerprintSha256": "109d9335bc06be3a033e9c58874bede18ae98f99a7c1ed448701e6a73434eb44",
+              "durationMs": 22512
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 1,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 187
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 7,
+        "complexityCompetitionRank": 7,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 1,
+          "staticRootReachableDeclaredFrameCount": 4,
+          "placementTagCount": 15,
+          "exactOperationCount": 12,
+          "exactEventHandlerOperationCount": 16,
+          "exactSignalCount": 12,
+          "scenarioTraceCandidateCount": 2,
+          "assetDefinitionCount": 5,
+          "featureHeavyDefinitionCount": 15,
+          "exactTextOccurrenceCount": 10,
+          "fontDefinitionFactCount": 12,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 5,
+          "embeddedAudioPayloadBytes": 4,
+          "catalogAudioDurationMs": 16
+        },
+        "axisOrdinalScores": {
+          "timeline": 21,
+          "behavior": 42,
+          "assets": 42,
+          "audio": 26
+        },
+        "aggregateOrdinalScore": 131,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "b1d3f978df2c08d7945ba8fc9b197451ee1748da9536518dbe04190e67ee7f79"
+    },
+    {
+      "lessonSequence": 14,
+      "animationId": "course-g04-l03-in-003",
+      "assetId": "swf-ae967172d85728e42e4338f5ed74710b9b10eeb447fa6c6d86668bd63cc0dc7f",
+      "classification": {
+        "section": "IN",
+        "page": 3,
+        "titleRaw": "Numbers on the Number Line",
+        "titleDisplay": "Numbers on the Number Line"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN03.swf",
+          "bytes": 152888,
+          "sha256": "ae967172d85728e42e4338f5ed74710b9b10eeb447fa6c6d86668bd63cc0dc7f",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN03.fla",
+          "bytes": 1682432,
+          "sha256": "c960c1bef6638b6fa71c9e8016c7cd7f9d99594d99aae1f4af0724c2eb0d63f0",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "0fe13b2f6d01a18468d852f0645ada8ee7966b0785c748011e49fab931d3dcee",
+        "sourceOperationItemBinding": "8b9f63dc6fc0f88ec81edf02ad3328c5cd03b09f4df0caa37075c921e3bfd673",
+        "assetDefinitionInventorySha256": "a16274c5f5b427d0e9992fa9914fc6440fee555808cb330cb48c6b029a41d5f8",
+        "embeddedAudioItemFingerprintSha256": "bf1678c6c3e13ae12814a57a8b6beb72954aa758168280a44f5144dd85dc8868"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 3,
+          "staticRootReachableDeclaredFrameCount": 483,
+          "placementTagCount": 382,
+          "exactOperationCount": 3,
+          "exactEventHandlerOperationCount": 0,
+          "exactSignalCount": 0,
+          "scenarioTraceCandidateCount": 1,
+          "assetDefinitionCount": 84,
+          "featureHeavyDefinitionCount": 2,
+          "exactTextOccurrenceCount": 49,
+          "fontDefinitionFactCount": 3,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 442,
+          "embeddedAudioPayloadBytes": 182390,
+          "catalogAudioDurationMs": 28368
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 69,
+          "exportedScriptFileCount": 2,
+          "operationCountsByCategory": {
+            "timeline": 3
+          },
+          "assetCategoryCounts": {
+            "shape": 28,
+            "morph": 2,
+            "bitmap": 0,
+            "font": 3,
+            "text": 49,
+            "button": 0,
+            "sprite": 2,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN03.mp3",
+              "bytes": 397152,
+              "sha256": "7a3cd30827262d18506f31114127012bd0a5b68dc5c7e37fe28b60693c3cff57",
+              "probeFingerprintSha256": "37a67d5c46bbfae9a9daff519a6caabd3ca4cb81d1a2ab15ede24c430350f881",
+              "durationMs": 28368
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 1,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 442
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 8,
+        "complexityCompetitionRank": 8,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 1,
+          "staticRootReachableDeclaredFrameCount": 18,
+          "placementTagCount": 9,
+          "exactOperationCount": 1,
+          "exactEventHandlerOperationCount": 1,
+          "exactSignalCount": 1,
+          "scenarioTraceCandidateCount": 1,
+          "assetDefinitionCount": 11,
+          "featureHeavyDefinitionCount": 2,
+          "exactTextOccurrenceCount": 19,
+          "fontDefinitionFactCount": 8,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 20,
+          "embeddedAudioPayloadBytes": 20,
+          "catalogAudioDurationMs": 19
+        },
+        "axisOrdinalScores": {
+          "timeline": 29,
+          "behavior": 4,
+          "assets": 40,
+          "audio": 60
+        },
+        "aggregateOrdinalScore": 133,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "91dcea56cfda1d82e1ba7ebdb0a881e9e2e1310e637f0ccf1d9704061a31089a"
+    },
+    {
+      "lessonSequence": 4,
+      "animationId": "course-g04-l03-rw-004",
+      "assetId": "swf-506c062e33d447d5837de2094e2d881581f602d7f10458b6eae2864e3b234710",
+      "classification": {
+        "section": "RW",
+        "page": 4,
+        "titleRaw": "Page 3",
+        "titleDisplay": "Page 3"
+      },
+      "source": {
+        "sourceKind": "swf-only",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/RW/L3RW04.swf",
+          "bytes": 663801,
+          "sha256": "506c062e33d447d5837de2094e2d881581f602d7f10458b6eae2864e3b234710",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": null,
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "b98bc621ae69dc1b82eae9e6a48f487002b361a1fc5a57ee37eecc06eac4546a",
+        "sourceOperationItemBinding": "4c35564c3fad296dd4fa0647bb388395571f94e4e9500e7109476c187bb9cc55",
+        "assetDefinitionInventorySha256": "9eaa1d11fbf38a609972f71e32650b47844922321c8705945034d0665a349490",
+        "embeddedAudioItemFingerprintSha256": "f99f6d26821d3d02d66b760506f0df1912863b1845c4ecda331a1ad399e3cba1"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 4,
+          "staticRootReachableDeclaredFrameCount": 475,
+          "placementTagCount": 484,
+          "exactOperationCount": 8,
+          "exactEventHandlerOperationCount": 2,
+          "exactSignalCount": 2,
+          "scenarioTraceCandidateCount": 3,
+          "assetDefinitionCount": 126,
+          "featureHeavyDefinitionCount": 17,
+          "exactTextOccurrenceCount": 8,
+          "fontDefinitionFactCount": 2,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 437,
+          "embeddedAudioPayloadBytes": 181090,
+          "catalogAudioDurationMs": 18984
+        },
+        "supplemental": {
+          "sourceKind": "swf-only",
+          "normalizedScriptBytes": 333,
+          "exportedScriptFileCount": 5,
+          "operationCountsByCategory": {
+            "timeline": 6,
+            "input": 2
+          },
+          "assetCategoryCounts": {
+            "shape": 100,
+            "morph": 3,
+            "bitmap": 12,
+            "font": 2,
+            "text": 4,
+            "button": 2,
+            "sprite": 3,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3RW04.mp3",
+              "bytes": 265776,
+              "sha256": "e14afaa951ea01d6e1e26b2fd641676628f92b4772a77c5d54f1f3031c5e10dd",
+              "probeFingerprintSha256": "e78faa96e8b7da4a46afc9018574d54bee56d7a7607fef57cfccf94d83140dc0",
+              "durationMs": 18984
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 1,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 437
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 9,
+        "complexityCompetitionRank": 9,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 12,
+          "staticRootReachableDeclaredFrameCount": 17,
+          "placementTagCount": 14,
+          "exactOperationCount": 5,
+          "exactEventHandlerOperationCount": 3,
+          "exactSignalCount": 2,
+          "scenarioTraceCandidateCount": 2,
+          "assetDefinitionCount": 16,
+          "featureHeavyDefinitionCount": 18,
+          "exactTextOccurrenceCount": 1,
+          "fontDefinitionFactCount": 1,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 17,
+          "embeddedAudioPayloadBytes": 18,
+          "catalogAudioDurationMs": 13
+        },
+        "axisOrdinalScores": {
+          "timeline": 44,
+          "behavior": 12,
+          "assets": 36,
+          "audio": 49
+        },
+        "aggregateOrdinalScore": 141,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "2624bbe7e57c44ddf22150360c1f672bbdaa8f019cce7212653b43b1ed0422ac"
+    },
+    {
+      "lessonSequence": 1,
+      "animationId": "course-g04-l03-ir-001-341242cc",
+      "assetId": "swf-2af6431db3ed786d9b48feec5a649887af92fb219a04e5dbd42e7e4b04087df4",
+      "classification": {
+        "section": "IR",
+        "page": 1,
+        "titleRaw": "Introduction",
+        "titleDisplay": "Introduction"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IR/L3RW01.swf",
+          "bytes": 146730,
+          "sha256": "2af6431db3ed786d9b48feec5a649887af92fb219a04e5dbd42e7e4b04087df4",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IR/L3RW01.fla",
+          "bytes": 949248,
+          "sha256": "3f5fe69773dea4516f1804cbd0e77396450c60d989691b87563d480d4179809c",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "2663235182693c0cb395bbc256501dd8d5a7847b1423614ae91c81443ea0e9ee",
+        "sourceOperationItemBinding": "3da66925d88c7d73afeb80be8c49dc1df8e49c6481dd28ed77ffcae6fff07f81",
+        "assetDefinitionInventorySha256": "9a8fcb53161724eb29b7322b704764d4a0c5e68e3b40c9dcbf15a5ccc46280fa",
+        "embeddedAudioItemFingerprintSha256": "0cf8baf3d9c779bd85a62acad2aa5545302ec162df10337d9d46654a6e72aed9"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 4,
+          "staticRootReachableDeclaredFrameCount": 416,
+          "placementTagCount": 651,
+          "exactOperationCount": 39,
+          "exactEventHandlerOperationCount": 0,
+          "exactSignalCount": 47,
+          "scenarioTraceCandidateCount": 6,
+          "assetDefinitionCount": 27,
+          "featureHeavyDefinitionCount": 0,
+          "exactTextOccurrenceCount": 11,
+          "fontDefinitionFactCount": 4,
+          "embeddedAudioUnitCount": 2,
+          "embeddedAudioBlockCount": 270,
+          "embeddedAudioPayloadBytes": 134160,
+          "catalogAudioDurationMs": 0
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 23359,
+          "exportedScriptFileCount": 20,
+          "operationCountsByCategory": {
+            "timeline": 24,
+            "random": 1,
+            "input": 13,
+            "replay-reset": 4,
+            "audio": 1
+          },
+          "assetCategoryCounts": {
+            "shape": 4,
+            "morph": 0,
+            "bitmap": 0,
+            "font": 4,
+            "text": 11,
+            "button": 0,
+            "sprite": 8,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 0,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 0
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 0,
+          "catalogAudioProbeBindings": [],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 2,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 270
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 10,
+        "complexityCompetitionRank": 10,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 12,
+          "staticRootReachableDeclaredFrameCount": 14,
+          "placementTagCount": 16,
+          "exactOperationCount": 15,
+          "exactEventHandlerOperationCount": 1,
+          "exactSignalCount": 21,
+          "scenarioTraceCandidateCount": 16,
+          "assetDefinitionCount": 2,
+          "featureHeavyDefinitionCount": 1,
+          "exactTextOccurrenceCount": 2,
+          "fontDefinitionFactCount": 12,
+          "embeddedAudioUnitCount": 14,
+          "embeddedAudioBlockCount": 9,
+          "embeddedAudioPayloadBytes": 13,
+          "catalogAudioDurationMs": 1
+        },
+        "axisOrdinalScores": {
+          "timeline": 43,
+          "behavior": 53,
+          "assets": 17,
+          "audio": 37
+        },
+        "aggregateOrdinalScore": 150,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "cbb66857ad75dac53627a14aa7e737e0ae29c6a3c700fddc3f6756411842f3ed"
+    },
+    {
+      "lessonSequence": 18,
+      "animationId": "course-g04-l03-in-007",
+      "assetId": "swf-91c013434558ec9d6b49df67ae29106073b1a98de19099fdda26ab8d5f2d8d45",
+      "classification": {
+        "section": "IN",
+        "page": 7,
+        "titleRaw": "Patterns",
+        "titleDisplay": "Patterns"
+      },
+      "source": {
+        "sourceKind": "swf-only",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN07.swf",
+          "bytes": 203386,
+          "sha256": "91c013434558ec9d6b49df67ae29106073b1a98de19099fdda26ab8d5f2d8d45",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": null,
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "f5314383d8758fed83c3db1085f3508b84507c7bb5eb328fc8aec42306c0278c",
+        "sourceOperationItemBinding": "7360aae80c12f5dba255da0882faabc9ecd64d1999b8c893be387995155c30ab",
+        "assetDefinitionInventorySha256": "a7deac600cfeb48ad3a0fcbecf024ba8c24e78333ac33ad2b3f23bc42984fb56",
+        "embeddedAudioItemFingerprintSha256": "375435c77937619905bf2741033ed31a2e759c1414ec7ccb5267f207ad6491f4"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 3,
+          "staticRootReachableDeclaredFrameCount": 566,
+          "placementTagCount": 483,
+          "exactOperationCount": 11,
+          "exactEventHandlerOperationCount": 4,
+          "exactSignalCount": 4,
+          "scenarioTraceCandidateCount": 3,
+          "assetDefinitionCount": 98,
+          "featureHeavyDefinitionCount": 4,
+          "exactTextOccurrenceCount": 41,
+          "fontDefinitionFactCount": 2,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 555,
+          "embeddedAudioPayloadBytes": 229970,
+          "catalogAudioDurationMs": 23088
+        },
+        "supplemental": {
+          "sourceKind": "swf-only",
+          "normalizedScriptBytes": 529,
+          "exportedScriptFileCount": 6,
+          "operationCountsByCategory": {
+            "timeline": 7,
+            "input": 4
+          },
+          "assetCategoryCounts": {
+            "shape": 57,
+            "morph": 0,
+            "bitmap": 0,
+            "font": 2,
+            "text": 33,
+            "button": 4,
+            "sprite": 2,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN07.mp3",
+              "bytes": 323232,
+              "sha256": "96447525dc60534210a1752626bb9a627df2ce815339fded5ae2e13447fc10aa",
+              "probeFingerprintSha256": "de7394cc48f9d6a532c3b17f31337dc61c4591ebd26a38e7a931f001a474ece7",
+              "durationMs": 23088
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 1,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 555
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 11,
+        "complexityCompetitionRank": 11,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 1,
+          "staticRootReachableDeclaredFrameCount": 22,
+          "placementTagCount": 13,
+          "exactOperationCount": 9,
+          "exactEventHandlerOperationCount": 10,
+          "exactSignalCount": 9,
+          "scenarioTraceCandidateCount": 2,
+          "assetDefinitionCount": 14,
+          "featureHeavyDefinitionCount": 4,
+          "exactTextOccurrenceCount": 16,
+          "fontDefinitionFactCount": 1,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 22,
+          "embeddedAudioPayloadBytes": 22,
+          "catalogAudioDurationMs": 17
+        },
+        "axisOrdinalScores": {
+          "timeline": 37,
+          "behavior": 30,
+          "assets": 35,
+          "audio": 62
+        },
+        "aggregateOrdinalScore": 164,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "e67795e7f35004a72191697d2ab3b9dcb9b03dbf6392e2abb08a43e4e4388979"
+    },
+    {
+      "lessonSequence": 16,
+      "animationId": "course-g04-l03-in-005",
+      "assetId": "swf-dcbc74e5f8391afb0a307421729c8b5d5f548f3185c429fb40e7aae3cb647048",
+      "classification": {
+        "section": "IN",
+        "page": 5,
+        "titleRaw": "Numbers on the Number Line",
+        "titleDisplay": "Numbers on the Number Line"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN05.swf",
+          "bytes": 74705,
+          "sha256": "dcbc74e5f8391afb0a307421729c8b5d5f548f3185c429fb40e7aae3cb647048",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN05.fla",
+          "bytes": 4320768,
+          "sha256": "91654d016163c79a3d49e1f7135280f90b276e9492877fa0b9a6d567acb6334e",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "15556eca10c91c6c1740f148e6ef4985c6e7ff2a53798273d0ab366d5a03c770",
+        "sourceOperationItemBinding": "b73dd801722c9d7bdaebf2719d052e6bfaa15c390f01e7d41d40650039460441",
+        "assetDefinitionInventorySha256": "ef5719974bb631a8532d0446cec48093a6c6f1a1c5bf9c5b05e863f18e7a28fd",
+        "embeddedAudioItemFingerprintSha256": "00c754a7b0def344965cf9a39e5141e16d96d43334c1bb17e275318416ed8176"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 20,
+          "staticRootReachableDeclaredFrameCount": 271,
+          "placementTagCount": 157,
+          "exactOperationCount": 72,
+          "exactEventHandlerOperationCount": 25,
+          "exactSignalCount": 36,
+          "scenarioTraceCandidateCount": 6,
+          "assetDefinitionCount": 80,
+          "featureHeavyDefinitionCount": 4,
+          "exactTextOccurrenceCount": 24,
+          "fontDefinitionFactCount": 3,
+          "embeddedAudioUnitCount": 4,
+          "embeddedAudioBlockCount": 206,
+          "embeddedAudioPayloadBytes": 84630,
+          "catalogAudioDurationMs": 11424
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 5581,
+          "exportedScriptFileCount": 37,
+          "operationCountsByCategory": {
+            "timeline": 33,
+            "lifecycle": 7,
+            "input": 32,
+            "replay-reset": 2,
+            "audio": 7
+          },
+          "assetCategoryCounts": {
+            "shape": 36,
+            "morph": 0,
+            "bitmap": 0,
+            "font": 3,
+            "text": 17,
+            "button": 4,
+            "sprite": 20,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN05.mp3",
+              "bytes": 159936,
+              "sha256": "81ceef9a79907549339208d5c4f9f31f83bd774f71a41d4b3881c93957185bd2",
+              "probeFingerprintSha256": "a6f85c1242cb2f9b13cd5ed9bb37eaded8823ec905d209553afc92c67a3be9e8",
+              "durationMs": 11424
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 4,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 206
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 12,
+        "complexityCompetitionRank": 12,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 21,
+          "staticRootReachableDeclaredFrameCount": 7,
+          "placementTagCount": 3,
+          "exactOperationCount": 20,
+          "exactEventHandlerOperationCount": 23,
+          "exactSignalCount": 18,
+          "scenarioTraceCandidateCount": 16,
+          "assetDefinitionCount": 10,
+          "featureHeavyDefinitionCount": 4,
+          "exactTextOccurrenceCount": 5,
+          "fontDefinitionFactCount": 8,
+          "embeddedAudioUnitCount": 15,
+          "embeddedAudioBlockCount": 7,
+          "embeddedAudioPayloadBytes": 6,
+          "catalogAudioDurationMs": 5
+        },
+        "axisOrdinalScores": {
+          "timeline": 32,
+          "behavior": 77,
+          "assets": 27,
+          "audio": 33
+        },
+        "aggregateOrdinalScore": 169,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "d92830b171381651e7daeff0f59ffb4415b6c53d53d3bb5988c9a3c7dbaec68c"
+    },
+    {
+      "lessonSequence": 20,
+      "animationId": "course-g04-l03-in-009",
+      "assetId": "swf-766b6ab686bbaf8ab1dacc30a7ffb96f33735102a1dff7df6b7a97976e3ab25c",
+      "classification": {
+        "section": "IN",
+        "page": 9,
+        "titleRaw": "Situations with Negative Numbers: Temperature",
+        "titleDisplay": "Situations with Negative Numbers: Temperature"
+      },
+      "source": {
+        "sourceKind": "swf-only",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN09.swf",
+          "bytes": 1967129,
+          "sha256": "766b6ab686bbaf8ab1dacc30a7ffb96f33735102a1dff7df6b7a97976e3ab25c",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": null,
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "77ef440403afabffab65022bbcc31a01bc6122a3237f856f191b1cf3614d256f",
+        "sourceOperationItemBinding": "e4d7391810dc30b53d79aeeedd049ff63b3dca82d9044300d9b7b843b52db72e",
+        "assetDefinitionInventorySha256": "f273b8cfdf32f26f29807515074563ae68d38a4d1919a4f2d655ce117938345e",
+        "embeddedAudioItemFingerprintSha256": "564e0682750b288bcfbdc5be1990879be27613e91ee1c3037b523f06ac8e044c"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 6,
+          "staticRootReachableDeclaredFrameCount": 982,
+          "placementTagCount": 1189,
+          "exactOperationCount": 7,
+          "exactEventHandlerOperationCount": 2,
+          "exactSignalCount": 2,
+          "scenarioTraceCandidateCount": 3,
+          "assetDefinitionCount": 200,
+          "featureHeavyDefinitionCount": 17,
+          "exactTextOccurrenceCount": 23,
+          "fontDefinitionFactCount": 2,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 588,
+          "embeddedAudioPayloadBytes": 243360,
+          "catalogAudioDurationMs": 40344
+        },
+        "supplemental": {
+          "sourceKind": "swf-only",
+          "normalizedScriptBytes": 307,
+          "exportedScriptFileCount": 5,
+          "operationCountsByCategory": {
+            "timeline": 5,
+            "input": 2
+          },
+          "assetCategoryCounts": {
+            "shape": 157,
+            "morph": 4,
+            "bitmap": 11,
+            "font": 2,
+            "text": 19,
+            "button": 2,
+            "sprite": 5,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN09.mp3",
+              "bytes": 564816,
+              "sha256": "1d2370d59a6400dbd666a3f049fd4222a54d664e62055a1fb5f93596b9a2ea4b",
+              "probeFingerprintSha256": "c376c8dadb69b696c769d0370aae48b9caf57dda68236e65311e5e8ad461ad9f",
+              "durationMs": 40344
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 1,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 588
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 13,
+        "complexityCompetitionRank": 13,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 14,
+          "staticRootReachableDeclaredFrameCount": 23,
+          "placementTagCount": 23,
+          "exactOperationCount": 2,
+          "exactEventHandlerOperationCount": 3,
+          "exactSignalCount": 2,
+          "scenarioTraceCandidateCount": 2,
+          "assetDefinitionCount": 21,
+          "featureHeavyDefinitionCount": 18,
+          "exactTextOccurrenceCount": 4,
+          "fontDefinitionFactCount": 1,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 23,
+          "embeddedAudioPayloadBytes": 23,
+          "catalogAudioDurationMs": 24
+        },
+        "axisOrdinalScores": {
+          "timeline": 61,
+          "behavior": 9,
+          "assets": 44,
+          "audio": 71
+        },
+        "aggregateOrdinalScore": 185,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "11f213102f21e8f892dce87badad18bbb687badea61a7f3c987cc33a8d1e4857"
+    },
+    {
+      "lessonSequence": 13,
+      "animationId": "course-g04-l03-in-002",
+      "assetId": "swf-60a1a78e5e927d6732c69518699caf71307e4f30da3b9e2bab29d0bab241989d",
+      "classification": {
+        "section": "IN",
+        "page": 2,
+        "titleRaw": "Numbers on the Number Line",
+        "titleDisplay": "Numbers on the Number Line"
+      },
+      "source": {
+        "sourceKind": "swf-only",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN02.swf",
+          "bytes": 174243,
+          "sha256": "60a1a78e5e927d6732c69518699caf71307e4f30da3b9e2bab29d0bab241989d",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": null,
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "24a6b26d724bdd655f355ba90bbc35810f07f079af963f6f81b0becf47770d7c",
+        "sourceOperationItemBinding": "35707b98c751bd794bc02dcc613e18f278593f65770f85f80d315964f4baf7e9",
+        "assetDefinitionInventorySha256": "aea66bceaea8bb87fb12fc1463e1120beabbcf1dbf946845ae018a8051c20ce0",
+        "embeddedAudioItemFingerprintSha256": "648652979622fbe1fc00ad674fe315a8c039d2d4e8bba8576e60eacb9507acec"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 3,
+          "staticRootReachableDeclaredFrameCount": 503,
+          "placementTagCount": 784,
+          "exactOperationCount": 15,
+          "exactEventHandlerOperationCount": 6,
+          "exactSignalCount": 6,
+          "scenarioTraceCandidateCount": 3,
+          "assetDefinitionCount": 88,
+          "featureHeavyDefinitionCount": 8,
+          "exactTextOccurrenceCount": 35,
+          "fontDefinitionFactCount": 2,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 486,
+          "embeddedAudioPayloadBytes": 200980,
+          "catalogAudioDurationMs": 49512
+        },
+        "supplemental": {
+          "sourceKind": "swf-only",
+          "normalizedScriptBytes": 784,
+          "exportedScriptFileCount": 8,
+          "operationCountsByCategory": {
+            "timeline": 9,
+            "input": 6
+          },
+          "assetCategoryCounts": {
+            "shape": 49,
+            "morph": 2,
+            "bitmap": 0,
+            "font": 2,
+            "text": 27,
+            "button": 6,
+            "sprite": 2,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN02.mp3",
+              "bytes": 693168,
+              "sha256": "65fbaef6b2a96b18da2bed86118a754d64c075af251bd5f0074ed16f5c40aafa",
+              "probeFingerprintSha256": "7dece85c3295cf5f233f4017cc9d19440a2a59c96bf14e2c7d50d0bd391a190f",
+              "durationMs": 49512
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 1,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 486
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 14,
+        "complexityCompetitionRank": 14,
+        "aggregateScoreTieSize": 2,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 1,
+          "staticRootReachableDeclaredFrameCount": 20,
+          "placementTagCount": 18,
+          "exactOperationCount": 12,
+          "exactEventHandlerOperationCount": 16,
+          "exactSignalCount": 12,
+          "scenarioTraceCandidateCount": 2,
+          "assetDefinitionCount": 12,
+          "featureHeavyDefinitionCount": 15,
+          "exactTextOccurrenceCount": 11,
+          "fontDefinitionFactCount": 1,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 21,
+          "embeddedAudioPayloadBytes": 21,
+          "catalogAudioDurationMs": 25
+        },
+        "axisOrdinalScores": {
+          "timeline": 40,
+          "behavior": 42,
+          "assets": 39,
+          "audio": 68
+        },
+        "aggregateOrdinalScore": 189,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "8f019cbee96e7045148a3c918c4a1f939bb766c6efbb1268f500652189075bd0"
+    },
+    {
+      "lessonSequence": 19,
+      "animationId": "course-g04-l03-in-008",
+      "assetId": "swf-5462ead920862a48ddbacf7be068f9cadf9e509e7032a2dbbb2659a28e08757f",
+      "classification": {
+        "section": "IN",
+        "page": 8,
+        "titleRaw": "Patterns",
+        "titleDisplay": "Patterns"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN08.swf",
+          "bytes": 115275,
+          "sha256": "5462ead920862a48ddbacf7be068f9cadf9e509e7032a2dbbb2659a28e08757f",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN08.fla",
+          "bytes": 843264,
+          "sha256": "b4c50528ad9f5c808ead7f44cc0fdedacf0dd8b55d9fb196bfc39ef668738bd9",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "583a1ea036ad5b2376b5d54b8603540d0505138f9971c029e7518b27c81903a9",
+        "sourceOperationItemBinding": "561cc2b25e1e1da62630f7c957b7513e04e5d1db30d17bc8ae18a7de4227cdee",
+        "assetDefinitionInventorySha256": "abc8b53e6a4c3942c5bea4a1b717b5f6849e16370b8e9b0ed2070325b2ad896a",
+        "embeddedAudioItemFingerprintSha256": "35a41edd82fd6027ff6a140e367e64c32c728ef0636c41e01f80314daba1cb69"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 6,
+          "staticRootReachableDeclaredFrameCount": 304,
+          "placementTagCount": 316,
+          "exactOperationCount": 26,
+          "exactEventHandlerOperationCount": 4,
+          "exactSignalCount": 37,
+          "scenarioTraceCandidateCount": 8,
+          "assetDefinitionCount": 57,
+          "featureHeavyDefinitionCount": 5,
+          "exactTextOccurrenceCount": 26,
+          "fontDefinitionFactCount": 3,
+          "embeddedAudioUnitCount": 4,
+          "embeddedAudioBlockCount": 293,
+          "embeddedAudioPayloadBytes": 121030,
+          "catalogAudioDurationMs": 27312
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 3362,
+          "exportedScriptFileCount": 19,
+          "operationCountsByCategory": {
+            "timeline": 20,
+            "random": 2,
+            "input": 4,
+            "replay-reset": 5,
+            "audio": 3
+          },
+          "assetCategoryCounts": {
+            "shape": 18,
+            "morph": 0,
+            "bitmap": 1,
+            "font": 3,
+            "text": 25,
+            "button": 4,
+            "sprite": 6,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN08.mp3",
+              "bytes": 382368,
+              "sha256": "a00419d76ea4628861e70ccb1204a0e740ff91bf7a1b5d69c6e8b2ba243b035e",
+              "probeFingerprintSha256": "908ff059297db79a07ef7b38a9665a81342ca7e0f6a9ef4e6a7350e52e62e7f5",
+              "durationMs": 27312
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 4,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 293
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 15,
+        "complexityCompetitionRank": 14,
+        "aggregateScoreTieSize": 2,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 14,
+          "staticRootReachableDeclaredFrameCount": 9,
+          "placementTagCount": 7,
+          "exactOperationCount": 14,
+          "exactEventHandlerOperationCount": 10,
+          "exactSignalCount": 19,
+          "scenarioTraceCandidateCount": 24,
+          "assetDefinitionCount": 9,
+          "featureHeavyDefinitionCount": 12,
+          "exactTextOccurrenceCount": 6,
+          "fontDefinitionFactCount": 8,
+          "embeddedAudioUnitCount": 15,
+          "embeddedAudioBlockCount": 12,
+          "embeddedAudioPayloadBytes": 11,
+          "catalogAudioDurationMs": 18
+        },
+        "axisOrdinalScores": {
+          "timeline": 31,
+          "behavior": 67,
+          "assets": 35,
+          "audio": 56
+        },
+        "aggregateOrdinalScore": 189,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "b6a771f2fc666d1847c647da275395569744c6eef7f9a505be4c9dc9cd0057da"
+    },
+    {
+      "lessonSequence": 21,
+      "animationId": "course-g04-l03-in-010",
+      "assetId": "swf-fab625d5c4028a72a3d5672c65884cc2b83ab4df6a318e26057f70469e9a8011",
+      "classification": {
+        "section": "IN",
+        "page": 10,
+        "titleRaw": "Situations with Negative Numbers: Temperature",
+        "titleDisplay": "Situations with Negative Numbers: Temperature"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN10.swf",
+          "bytes": 123587,
+          "sha256": "fab625d5c4028a72a3d5672c65884cc2b83ab4df6a318e26057f70469e9a8011",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN10.fla",
+          "bytes": 964096,
+          "sha256": "ac91921e09cca9bde604e6a057e39f518c83a401cace66b919fcdbd7b0f4f6ea",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "363d6b68a1856a4364ee7a95bcca02955dcccaa783d74a9d6b6b14ab379fc0a9",
+        "sourceOperationItemBinding": "b433b9cf4727c54db359151b04ecd907295ddacbe9238bb5b1b8972a897f52ed",
+        "assetDefinitionInventorySha256": "59b9bff1e44ec455a1f7a50ef329202bef1d7f175c26f4c01f71f112d9656161",
+        "embeddedAudioItemFingerprintSha256": "f9f7f72471e0e2013b62b4c7ccd5481098f1887c4cf6a64856abad967a92bf20"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 19,
+          "staticRootReachableDeclaredFrameCount": 348,
+          "placementTagCount": 314,
+          "exactOperationCount": 60,
+          "exactEventHandlerOperationCount": 21,
+          "exactSignalCount": 31,
+          "scenarioTraceCandidateCount": 6,
+          "assetDefinitionCount": 90,
+          "featureHeavyDefinitionCount": 4,
+          "exactTextOccurrenceCount": 35,
+          "fontDefinitionFactCount": 3,
+          "embeddedAudioUnitCount": 5,
+          "embeddedAudioBlockCount": 325,
+          "embeddedAudioPayloadBytes": 134290,
+          "catalogAudioDurationMs": 17472
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 4454,
+          "exportedScriptFileCount": 31,
+          "operationCountsByCategory": {
+            "timeline": 27,
+            "lifecycle": 6,
+            "input": 27,
+            "replay-reset": 1,
+            "audio": 6
+          },
+          "assetCategoryCounts": {
+            "shape": 33,
+            "morph": 0,
+            "bitmap": 1,
+            "font": 3,
+            "text": 31,
+            "button": 3,
+            "sprite": 19,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN10.mp3",
+              "bytes": 244608,
+              "sha256": "4372a57fee69a7bbeb4e96fed83db8dc6665f3fc229c42215b57abf11e0f1a84",
+              "probeFingerprintSha256": "2712f90f1f121d899279dc0f83e42fb4493afa28b39e2104ba8d5a0b67ce2fd8",
+              "durationMs": 17472
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 5,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 325
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 16,
+        "complexityCompetitionRank": 16,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 20,
+          "staticRootReachableDeclaredFrameCount": 12,
+          "placementTagCount": 6,
+          "exactOperationCount": 19,
+          "exactEventHandlerOperationCount": 22,
+          "exactSignalCount": 17,
+          "scenarioTraceCandidateCount": 16,
+          "assetDefinitionCount": 13,
+          "featureHeavyDefinitionCount": 4,
+          "exactTextOccurrenceCount": 11,
+          "fontDefinitionFactCount": 8,
+          "embeddedAudioUnitCount": 18,
+          "embeddedAudioBlockCount": 14,
+          "embeddedAudioPayloadBytes": 14,
+          "catalogAudioDurationMs": 11
+        },
+        "axisOrdinalScores": {
+          "timeline": 39,
+          "behavior": 74,
+          "assets": 36,
+          "audio": 57
+        },
+        "aggregateOrdinalScore": 206,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "541791396668ea3843c77e1c20f284361fefb1d927dc462f6d92d1964a0286c0"
+    },
+    {
+      "lessonSequence": 6,
+      "animationId": "course-g04-l03-vb-003",
+      "assetId": "swf-ab47ed70dd5bba5515011e6f156c5a985fa107ef7e426448fe65507e9927204a",
+      "classification": {
+        "section": "VB",
+        "page": 3,
+        "titleRaw": "Number Line Practice",
+        "titleDisplay": "Number Line Practice"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB03.swf",
+          "bytes": 83472,
+          "sha256": "ab47ed70dd5bba5515011e6f156c5a985fa107ef7e426448fe65507e9927204a",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB03.fla",
+          "bytes": 615936,
+          "sha256": "263b18fb695f4b5b8f11db8774bfcc7312a485fb51d4f133cb7e08f3f34dd3ce",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "35f8dc255ee02bf620d00831c244f1320f8ade7b50911411f2e74db1d86ce265",
+        "sourceOperationItemBinding": "1fcc5316a5f9b8a603c97e25c46c1893d43d3ce139e6e4553dca886b8c5bc13f",
+        "assetDefinitionInventorySha256": "08dfa85457a73ed210d1c0ac1f68847b0979349705afc3d0eed707ed80fc9c3d",
+        "embeddedAudioItemFingerprintSha256": "be04d3ddb1034d01a1ed5c1d24daa79020c8a7054129f0dc42cb36f4b674c9dc"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 18,
+          "staticRootReachableDeclaredFrameCount": 244,
+          "placementTagCount": 432,
+          "exactOperationCount": 59,
+          "exactEventHandlerOperationCount": 20,
+          "exactSignalCount": 28,
+          "scenarioTraceCandidateCount": 6,
+          "assetDefinitionCount": 106,
+          "featureHeavyDefinitionCount": 7,
+          "exactTextOccurrenceCount": 61,
+          "fontDefinitionFactCount": 6,
+          "embeddedAudioUnitCount": 4,
+          "embeddedAudioBlockCount": 195,
+          "embeddedAudioPayloadBytes": 80470,
+          "catalogAudioDurationMs": 13296
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 4427,
+          "exportedScriptFileCount": 32,
+          "operationCountsByCategory": {
+            "timeline": 29,
+            "lifecycle": 5,
+            "input": 25,
+            "replay-reset": 2,
+            "audio": 5
+          },
+          "assetCategoryCounts": {
+            "shape": 29,
+            "morph": 0,
+            "bitmap": 1,
+            "font": 6,
+            "text": 45,
+            "button": 6,
+            "sprite": 19,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3VB03.mp3",
+              "bytes": 186144,
+              "sha256": "068a69aaa9b11bc3c82f276a9c272345e8385401962b909f90a1e96f87426615",
+              "probeFingerprintSha256": "7f34ca0a8369253b68733483602a6a83d09f9ec61037b1964a6c70e804d62a0a",
+              "durationMs": 13296
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 4,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 195
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 17,
+        "complexityCompetitionRank": 17,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 19,
+          "staticRootReachableDeclaredFrameCount": 5,
+          "placementTagCount": 11,
+          "exactOperationCount": 18,
+          "exactEventHandlerOperationCount": 21,
+          "exactSignalCount": 16,
+          "scenarioTraceCandidateCount": 16,
+          "assetDefinitionCount": 15,
+          "featureHeavyDefinitionCount": 13,
+          "exactTextOccurrenceCount": 22,
+          "fontDefinitionFactCount": 20,
+          "embeddedAudioUnitCount": 15,
+          "embeddedAudioBlockCount": 6,
+          "embeddedAudioPayloadBytes": 5,
+          "catalogAudioDurationMs": 6
+        },
+        "axisOrdinalScores": {
+          "timeline": 36,
+          "behavior": 71,
+          "assets": 70,
+          "audio": 32
+        },
+        "aggregateOrdinalScore": 209,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "99b1d8121d17c93d79df51694936fffe917bc468a350c2fc863a79c15a3c2872"
+    },
+    {
+      "lessonSequence": 2,
+      "animationId": "course-g04-l03-rw-002",
+      "assetId": "swf-8b2aa7afd7e82fc582b8e7b936d178c87fea16106b26061f872c81ea7d422785",
+      "classification": {
+        "section": "RW",
+        "page": 2,
+        "titleRaw": "Page 1",
+        "titleDisplay": "Page 1"
+      },
+      "source": {
+        "sourceKind": "swf-only",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/RW/L3RW02.swf",
+          "bytes": 1203149,
+          "sha256": "8b2aa7afd7e82fc582b8e7b936d178c87fea16106b26061f872c81ea7d422785",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": null,
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "bf2d84c4ecc75aa5f04de45daefeb4fcfb075fde03f4ba54fd093cede9eb92a1",
+        "sourceOperationItemBinding": "5be0edbec0e0ceba8c5547b8d91299add7c5fefa52c88f54340f5b716a8bc256",
+        "assetDefinitionInventorySha256": "620ed83eb6abeda499ac035f3d9c3fb0ab58b4573c6ca5dc9049cc88b643676a",
+        "embeddedAudioItemFingerprintSha256": "57d324d50f1d3d1da0633ad3051cdc8e6d352df2df485e48fe7af02b10dc87b6"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 3,
+          "staticRootReachableDeclaredFrameCount": 1300,
+          "placementTagCount": 4720,
+          "exactOperationCount": 10,
+          "exactEventHandlerOperationCount": 3,
+          "exactSignalCount": 3,
+          "scenarioTraceCandidateCount": 3,
+          "assetDefinitionCount": 426,
+          "featureHeavyDefinitionCount": 26,
+          "exactTextOccurrenceCount": 47,
+          "fontDefinitionFactCount": 2,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 1286,
+          "embeddedAudioPayloadBytes": 319566,
+          "catalogAudioDurationMs": 28992
+        },
+        "supplemental": {
+          "sourceKind": "swf-only",
+          "normalizedScriptBytes": 435,
+          "exportedScriptFileCount": 6,
+          "operationCountsByCategory": {
+            "timeline": 7,
+            "input": 3
+          },
+          "assetCategoryCounts": {
+            "shape": 353,
+            "morph": 6,
+            "bitmap": 17,
+            "font": 2,
+            "text": 43,
+            "button": 3,
+            "sprite": 2,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3RW02.mp3",
+              "bytes": 405888,
+              "sha256": "79d0b6504a0d8bb66e3a7a19a5156ab35a49271fdbaab40033c0dda5600a627e",
+              "probeFingerprintSha256": "edf753a6ad7d2bffead4ac93f36ab2f12303f6aea950470fae466708a05e34e6",
+              "durationMs": 28992
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 1,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 1286
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 18,
+        "complexityCompetitionRank": 18,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 1,
+          "staticRootReachableDeclaredFrameCount": 25,
+          "placementTagCount": 25,
+          "exactOperationCount": 8,
+          "exactEventHandlerOperationCount": 7,
+          "exactSignalCount": 6,
+          "scenarioTraceCandidateCount": 2,
+          "assetDefinitionCount": 25,
+          "featureHeavyDefinitionCount": 21,
+          "exactTextOccurrenceCount": 18,
+          "fontDefinitionFactCount": 1,
+          "embeddedAudioUnitCount": 1,
+          "embeddedAudioBlockCount": 25,
+          "embeddedAudioPayloadBytes": 24,
+          "catalogAudioDurationMs": 21
+        },
+        "axisOrdinalScores": {
+          "timeline": 52,
+          "behavior": 23,
+          "assets": 65,
+          "audio": 71
+        },
+        "aggregateOrdinalScore": 211,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "0cd61093af8e279fa34a22df166e90136e2a0497a5175b85961b3e597926fcab"
+    },
+    {
+      "lessonSequence": 11,
+      "animationId": "course-g04-l03-vb-008",
+      "assetId": "swf-3c61fd04bbaf6b316438691fd59222623bbb1d11a36c731ae7ed9fb862245bcf",
+      "classification": {
+        "section": "VB",
+        "page": 8,
+        "titleRaw": "Negative Numbers Practice",
+        "titleDisplay": "Negative Numbers Practice"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB08.swf",
+          "bytes": 751915,
+          "sha256": "3c61fd04bbaf6b316438691fd59222623bbb1d11a36c731ae7ed9fb862245bcf",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB08.fla",
+          "bytes": 4256256,
+          "sha256": "25b7f4acc1128d4b8a06df89d52b9f372b4af00b77d2053fbccfaa24dba53922",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "f4fe20b540fe962342597d252f8472723f4815464602fe971b8ece736a70ad53",
+        "sourceOperationItemBinding": "f895c4101fe7f423f1b2843856a36d4b7d0023dabfbc526436359d1826dc0a94",
+        "assetDefinitionInventorySha256": "12e2b887fe2d8f07ca3bad7680cebe97ed3d009a7eda67f80b69f6e166c5a5ca",
+        "embeddedAudioItemFingerprintSha256": "bbdace86e22077d78356633acbfd6f861e15704cebc59bdf39ecf3c344244a99"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 15,
+          "staticRootReachableDeclaredFrameCount": 327,
+          "placementTagCount": 783,
+          "exactOperationCount": 48,
+          "exactEventHandlerOperationCount": 4,
+          "exactSignalCount": 12,
+          "scenarioTraceCandidateCount": 4,
+          "assetDefinitionCount": 195,
+          "featureHeavyDefinitionCount": 69,
+          "exactTextOccurrenceCount": 26,
+          "fontDefinitionFactCount": 12,
+          "embeddedAudioUnitCount": 11,
+          "embeddedAudioBlockCount": 291,
+          "embeddedAudioPayloadBytes": 117130,
+          "catalogAudioDurationMs": 4584
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 2050,
+          "exportedScriptFileCount": 43,
+          "operationCountsByCategory": {
+            "timeline": 44,
+            "input": 4,
+            "replay-reset": 9
+          },
+          "assetCategoryCounts": {
+            "shape": 75,
+            "morph": 52,
+            "bitmap": 13,
+            "font": 12,
+            "text": 24,
+            "button": 4,
+            "sprite": 15,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3VB08.mp3",
+              "bytes": 64176,
+              "sha256": "6bb1c07967965ec131dcd57617c84f709c772b0e46c5ca27dec91c74b9f7ef90",
+              "probeFingerprintSha256": "12fc8d61132e0f351cc69404b0cc8bcf7f0fdeb19db3b6535e71098c899e33a0",
+              "durationMs": 4584
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 11,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 291
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 19,
+        "complexityCompetitionRank": 19,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 17,
+          "staticRootReachableDeclaredFrameCount": 11,
+          "placementTagCount": 17,
+          "exactOperationCount": 16,
+          "exactEventHandlerOperationCount": 10,
+          "exactSignalCount": 15,
+          "scenarioTraceCandidateCount": 14,
+          "assetDefinitionCount": 20,
+          "featureHeavyDefinitionCount": 23,
+          "exactTextOccurrenceCount": 6,
+          "fontDefinitionFactCount": 24,
+          "embeddedAudioUnitCount": 22,
+          "embeddedAudioBlockCount": 11,
+          "embeddedAudioPayloadBytes": 10,
+          "catalogAudioDurationMs": 3
+        },
+        "axisOrdinalScores": {
+          "timeline": 46,
+          "behavior": 55,
+          "assets": 73,
+          "audio": 46
+        },
+        "aggregateOrdinalScore": 220,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "04b5a5b824219eb9487a0abee7923dd1469332b99e3ea7f59a9bac13a4815b4a"
+    },
+    {
+      "lessonSequence": 25,
+      "animationId": "course-g04-l03-ti-003",
+      "assetId": "swf-7abcc6151596b89d7b3142985bf8de2aae1d31ddb6eb47b14d2b9950c095a262",
+      "classification": {
+        "section": "TI",
+        "page": 3,
+        "titleRaw": "Question 2",
+        "titleDisplay": "Question 2"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TI/L3TI03.swf",
+          "bytes": 100853,
+          "sha256": "7abcc6151596b89d7b3142985bf8de2aae1d31ddb6eb47b14d2b9950c095a262",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TI/L3TI03.fla",
+          "bytes": 719872,
+          "sha256": "4670c0aa1e8bf7ccf7ffe83bcffd880daf95250c88dc8f528210b033113692d2",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "ca743f68642e8b72294f92e6b6f9fe54b125d8e19d6634532366f3e059c0d557",
+        "sourceOperationItemBinding": "f72bf7b246547ccfc7ea7eac2d2ea261f6260406676d8ab2eb0479cf1f000ef8",
+        "assetDefinitionInventorySha256": "4f4c7b047a417490bb08f109ec41492c5d0c982e23dec5f524f5050ffdf14b4c",
+        "embeddedAudioItemFingerprintSha256": "52518a37eb3eaf7b5ba167eaaf6b1379797859ab1d9f30c8d955d6c1c810170a"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 21,
+          "staticRootReachableDeclaredFrameCount": 314,
+          "placementTagCount": 220,
+          "exactOperationCount": 100,
+          "exactEventHandlerOperationCount": 29,
+          "exactSignalCount": 51,
+          "scenarioTraceCandidateCount": 7,
+          "assetDefinitionCount": 126,
+          "featureHeavyDefinitionCount": 12,
+          "exactTextOccurrenceCount": 67,
+          "fontDefinitionFactCount": 4,
+          "embeddedAudioUnitCount": 24,
+          "embeddedAudioBlockCount": 97,
+          "embeddedAudioPayloadBytes": 108925,
+          "catalogAudioDurationMs": 15336
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 8293,
+          "exportedScriptFileCount": 50,
+          "operationCountsByCategory": {
+            "timeline": 58,
+            "lifecycle": 6,
+            "random": 1,
+            "input": 35,
+            "replay-reset": 19,
+            "audio": 7
+          },
+          "assetCategoryCounts": {
+            "shape": 31,
+            "morph": 0,
+            "bitmap": 0,
+            "font": 4,
+            "text": 56,
+            "button": 12,
+            "sprite": 22,
+            "sound": 1,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3TI03.mp3",
+              "bytes": 214704,
+              "sha256": "063887f58c7ab3b45bd62320cbb4bd95a90db93214e987ffbc001e9c4cb80799",
+              "probeFingerprintSha256": "fec7499818e6c9de8db8811c933a4a6ee3acde58d82c71a9042b181c48e0c71d",
+              "durationMs": 15336
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 1,
+            "SoundStreamHead": 5,
+            "SoundStreamHead2": 18,
+            "SoundStreamBlock": 97
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 20,
+        "complexityCompetitionRank": 20,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 22,
+          "staticRootReachableDeclaredFrameCount": 10,
+          "placementTagCount": 5,
+          "exactOperationCount": 24,
+          "exactEventHandlerOperationCount": 24,
+          "exactSignalCount": 22,
+          "scenarioTraceCandidateCount": 21,
+          "assetDefinitionCount": 16,
+          "featureHeavyDefinitionCount": 17,
+          "exactTextOccurrenceCount": 23,
+          "fontDefinitionFactCount": 12,
+          "embeddedAudioUnitCount": 25,
+          "embeddedAudioBlockCount": 1,
+          "embeddedAudioPayloadBytes": 8,
+          "catalogAudioDurationMs": 9
+        },
+        "axisOrdinalScores": {
+          "timeline": 38,
+          "behavior": 91,
+          "assets": 68,
+          "audio": 43
+        },
+        "aggregateOrdinalScore": 240,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "de49ffca666926f4dfb800648965008f412620ce8dfa348d5cb02bc914dcf035"
+    },
+    {
+      "lessonSequence": 10,
+      "animationId": "course-g04-l03-vb-007",
+      "assetId": "swf-e3e6c45a56f343b3a8baf8a65dd34b615327029f808eec0c5f9cfee2dd2c1450",
+      "classification": {
+        "section": "VB",
+        "page": 7,
+        "titleRaw": "Positive Numbers Practice",
+        "titleDisplay": "Positive Numbers Practice"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB07.swf",
+          "bytes": 219242,
+          "sha256": "e3e6c45a56f343b3a8baf8a65dd34b615327029f808eec0c5f9cfee2dd2c1450",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB07.fla",
+          "bytes": 3141120,
+          "sha256": "b4eb0a360733817b164356149bae97b11b21d9554a2a0a365a01a9ec69c4147c",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "a8ef999a54c5c5c5affdc4cbfc4d574f6194ae5f3e78f717df41ec9c35cef1b6",
+        "sourceOperationItemBinding": "cb0d80b701489df9e3d6fd0a8f46b6bb07b8162c377a65cf26e887132a9c6a5c",
+        "assetDefinitionInventorySha256": "5ec5947dc78d14a5f39e13efa3330c078ab0ecea1b7c07c85a7e06ec4f32b024",
+        "embeddedAudioItemFingerprintSha256": "c3a3eaebf0dc2e77176e6bf53349575e5badf361672095aa9d66bdaecc1f3771"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 17,
+          "staticRootReachableDeclaredFrameCount": 395,
+          "placementTagCount": 955,
+          "exactOperationCount": 48,
+          "exactEventHandlerOperationCount": 4,
+          "exactSignalCount": 11,
+          "scenarioTraceCandidateCount": 4,
+          "assetDefinitionCount": 271,
+          "featureHeavyDefinitionCount": 95,
+          "exactTextOccurrenceCount": 37,
+          "fontDefinitionFactCount": 13,
+          "embeddedAudioUnitCount": 11,
+          "embeddedAudioBlockCount": 307,
+          "embeddedAudioPayloadBytes": 125320,
+          "catalogAudioDurationMs": 4488
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 2030,
+          "exportedScriptFileCount": 43,
+          "operationCountsByCategory": {
+            "timeline": 44,
+            "input": 4,
+            "replay-reset": 9
+          },
+          "assetCategoryCounts": {
+            "shape": 111,
+            "morph": 89,
+            "bitmap": 2,
+            "font": 13,
+            "text": 35,
+            "button": 4,
+            "sprite": 17,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3VB07.mp3",
+              "bytes": 62832,
+              "sha256": "11dc5591a4e3ca66ec73432314ccc36d6b9cde4ff771096db26c7829ae96aacd",
+              "probeFingerprintSha256": "5acb07a3e4151edab8f27b9266f7cbc6139ebad90a8e1378877dd4a1841fb630",
+              "durationMs": 4488
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 11,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 307
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 21,
+        "complexityCompetitionRank": 21,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 18,
+          "staticRootReachableDeclaredFrameCount": 13,
+          "placementTagCount": 21,
+          "exactOperationCount": 16,
+          "exactEventHandlerOperationCount": 10,
+          "exactSignalCount": 14,
+          "scenarioTraceCandidateCount": 14,
+          "assetDefinitionCount": 23,
+          "featureHeavyDefinitionCount": 25,
+          "exactTextOccurrenceCount": 15,
+          "fontDefinitionFactCount": 25,
+          "embeddedAudioUnitCount": 22,
+          "embeddedAudioBlockCount": 13,
+          "embeddedAudioPayloadBytes": 12,
+          "catalogAudioDurationMs": 2
+        },
+        "axisOrdinalScores": {
+          "timeline": 53,
+          "behavior": 54,
+          "assets": 88,
+          "audio": 49
+        },
+        "aggregateOrdinalScore": 244,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "8ba1135ac78127d1789ef983e9fbe70c9c352fd702467e2180717d150cf9d2cc"
+    },
+    {
+      "lessonSequence": 15,
+      "animationId": "course-g04-l03-in-004",
+      "assetId": "swf-2ac5cd71bbc57bd9761668a7c383f821fa52b91f1e68a7b4f14151410857dfad",
+      "classification": {
+        "section": "IN",
+        "page": 4,
+        "titleRaw": "Numbers on the Number Line",
+        "titleDisplay": "Numbers on the Number Line"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN04.swf",
+          "bytes": 166617,
+          "sha256": "2ac5cd71bbc57bd9761668a7c383f821fa52b91f1e68a7b4f14151410857dfad",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN04.fla",
+          "bytes": 2105856,
+          "sha256": "879624e9cfac8a2b26539d6ea32ef2d3e7d0d8ca3bf3ebd1c44c2f96b7db14d2",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "aa8776e71af25f624ad0eccd808d7636ed6ff139fdf4fe8bf25168fb51016abf",
+        "sourceOperationItemBinding": "8551519973df9a079344f1aad27594afe420c0183b6e3c1cd4078261ec5f1bff",
+        "assetDefinitionInventorySha256": "3c420ac2a3564e28d91c324dd18e0e5ba712bda9fb2e704b2b07778479b4660c",
+        "embeddedAudioItemFingerprintSha256": "9ff5d65bd49e55d4f819534acb67a7d10a70860ad9b6205559fc796a4abc4831"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 24,
+          "staticRootReachableDeclaredFrameCount": 453,
+          "placementTagCount": 956,
+          "exactOperationCount": 94,
+          "exactEventHandlerOperationCount": 18,
+          "exactSignalCount": 56,
+          "scenarioTraceCandidateCount": 7,
+          "assetDefinitionCount": 160,
+          "featureHeavyDefinitionCount": 24,
+          "exactTextOccurrenceCount": 50,
+          "fontDefinitionFactCount": 7,
+          "embeddedAudioUnitCount": 11,
+          "embeddedAudioBlockCount": 406,
+          "embeddedAudioPayloadBytes": 165230,
+          "catalogAudioDurationMs": 11376
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 6517,
+          "exportedScriptFileCount": 56,
+          "operationCountsByCategory": {
+            "timeline": 65,
+            "lifecycle": 5,
+            "random": 1,
+            "input": 23,
+            "replay-reset": 21,
+            "audio": 6
+          },
+          "assetCategoryCounts": {
+            "shape": 59,
+            "morph": 20,
+            "bitmap": 1,
+            "font": 7,
+            "text": 46,
+            "button": 3,
+            "sprite": 24,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN04.mp3",
+              "bytes": 159264,
+              "sha256": "790c01a05ca5dde6f4b65d703111f0056afb6cf56f1717df6649eb11d7593ae6",
+              "probeFingerprintSha256": "aaa417610b4a570d7c6f4b00caee8aa77154a714971fe6d501eea338b185f723",
+              "durationMs": 11376
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 11,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 406
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 22,
+        "complexityCompetitionRank": 22,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 23,
+          "staticRootReachableDeclaredFrameCount": 16,
+          "placementTagCount": 22,
+          "exactOperationCount": 22,
+          "exactEventHandlerOperationCount": 19,
+          "exactSignalCount": 23,
+          "scenarioTraceCandidateCount": 21,
+          "assetDefinitionCount": 19,
+          "featureHeavyDefinitionCount": 20,
+          "exactTextOccurrenceCount": 20,
+          "fontDefinitionFactCount": 21,
+          "embeddedAudioUnitCount": 22,
+          "embeddedAudioBlockCount": 16,
+          "embeddedAudioPayloadBytes": 16,
+          "catalogAudioDurationMs": 4
+        },
+        "axisOrdinalScores": {
+          "timeline": 62,
+          "behavior": 85,
+          "assets": 80,
+          "audio": 58
+        },
+        "aggregateOrdinalScore": 285,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "85d7eb9ca7a608a4eec2913fd0676bf86af555471fb6688a5af94da3143f4420"
+    },
+    {
+      "lessonSequence": 23,
+      "animationId": "course-g04-l03-in-012",
+      "assetId": "swf-fa131c4cfad5619beb1343d0bfbc941bd9ffa59f190ae1b002f81d5f9d8cde55",
+      "classification": {
+        "section": "IN",
+        "page": 12,
+        "titleRaw": "Situations with Negative Numbers: Owing",
+        "titleDisplay": "Situations with Negative Numbers: Owing"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN12.swf",
+          "bytes": 249556,
+          "sha256": "fa131c4cfad5619beb1343d0bfbc941bd9ffa59f190ae1b002f81d5f9d8cde55",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN12.fla",
+          "bytes": 3275776,
+          "sha256": "9b53a7990ab3f2954c81b83cf4a0d516828d4b72c6bb2269c402c3826ffcdce4",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "01ef7fb31b17e227c4955d6a2baef417c9a8ea17c0b0b4243b801657dd990beb",
+        "sourceOperationItemBinding": "c360f1f42f7bf4fef50f8e67785c0280d84a55b00083c6c52da583bf45ba46f0",
+        "assetDefinitionInventorySha256": "3242db01b16be2af4403c3d840eae36f1e021ada5efbe59dc1748f9b162e3458",
+        "embeddedAudioItemFingerprintSha256": "a71ed8c396549edd609c0db70779dddab6b512f03b625697764814b318b987df"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 24,
+          "staticRootReachableDeclaredFrameCount": 495,
+          "placementTagCount": 808,
+          "exactOperationCount": 78,
+          "exactEventHandlerOperationCount": 19,
+          "exactSignalCount": 43,
+          "scenarioTraceCandidateCount": 6,
+          "assetDefinitionCount": 228,
+          "featureHeavyDefinitionCount": 74,
+          "exactTextOccurrenceCount": 58,
+          "fontDefinitionFactCount": 8,
+          "embeddedAudioUnitCount": 9,
+          "embeddedAudioBlockCount": 380,
+          "embeddedAudioPayloadBytes": 156260,
+          "catalogAudioDurationMs": 19128
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 5290,
+          "exportedScriptFileCount": 50,
+          "operationCountsByCategory": {
+            "timeline": 49,
+            "lifecycle": 5,
+            "input": 24,
+            "replay-reset": 7,
+            "audio": 5
+          },
+          "assetCategoryCounts": {
+            "shape": 81,
+            "morph": 68,
+            "bitmap": 2,
+            "font": 8,
+            "text": 41,
+            "button": 4,
+            "sprite": 24,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN12.mp3",
+              "bytes": 267792,
+              "sha256": "573658185d37494f947c33a47bd3406da09c66a1c792cdb774de3e7ae47c0d75",
+              "probeFingerprintSha256": "6dd18c2274242942337d95f524ae3d37892690ba895100bb14e8802daebf1602",
+              "durationMs": 19128
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 9,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 380
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 23,
+        "complexityCompetitionRank": 23,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 23,
+          "staticRootReachableDeclaredFrameCount": 19,
+          "placementTagCount": 19,
+          "exactOperationCount": 21,
+          "exactEventHandlerOperationCount": 20,
+          "exactSignalCount": 20,
+          "scenarioTraceCandidateCount": 16,
+          "assetDefinitionCount": 22,
+          "featureHeavyDefinitionCount": 24,
+          "exactTextOccurrenceCount": 21,
+          "fontDefinitionFactCount": 22,
+          "embeddedAudioUnitCount": 20,
+          "embeddedAudioBlockCount": 15,
+          "embeddedAudioPayloadBytes": 15,
+          "catalogAudioDurationMs": 14
+        },
+        "axisOrdinalScores": {
+          "timeline": 62,
+          "behavior": 77,
+          "assets": 89,
+          "audio": 64
+        },
+        "aggregateOrdinalScore": 292,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "52825959f7e313c1003156dd7b250f7104c07aa530aaa66ba9ee5c275bd0c4d6"
+    },
+    {
+      "lessonSequence": 17,
+      "animationId": "course-g04-l03-in-006",
+      "assetId": "swf-e303dcdd4dbd48a45625663f8630c546987d1212cb3750cd710da853f25d59ba",
+      "classification": {
+        "section": "IN",
+        "page": 6,
+        "titleRaw": "Numbers on the Number Line",
+        "titleDisplay": "Numbers on the Number Line"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN06.swf",
+          "bytes": 396126,
+          "sha256": "e303dcdd4dbd48a45625663f8630c546987d1212cb3750cd710da853f25d59ba",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN06.fla",
+          "bytes": 4212224,
+          "sha256": "c79c838ba91c4e2b4dc072b9ebe3997d99130e8dfd723e66677089d03ec002a9",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "605ae60927c7477f6319372f374f0e5bd725e20951dc4adf060affc40eba0118",
+        "sourceOperationItemBinding": "54ec124a33d11441891f6dd9132d0fc7fecd3cbfa85d384d360ce70a369af7b9",
+        "assetDefinitionInventorySha256": "9b1e99c075e8a7344bd399076b4ef595bbf2fb8a775ba8a54dc9331964ee0029",
+        "embeddedAudioItemFingerprintSha256": "46bff8c0c21f3500cc3570c972e72deac9dd667f5e56697c75af7a4a7301d3a2"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 14,
+          "staticRootReachableDeclaredFrameCount": 1186,
+          "placementTagCount": 928,
+          "exactOperationCount": 96,
+          "exactEventHandlerOperationCount": 16,
+          "exactSignalCount": 271,
+          "scenarioTraceCandidateCount": 8,
+          "assetDefinitionCount": 151,
+          "featureHeavyDefinitionCount": 7,
+          "exactTextOccurrenceCount": 68,
+          "fontDefinitionFactCount": 4,
+          "embeddedAudioUnitCount": 5,
+          "embeddedAudioBlockCount": 1136,
+          "embeddedAudioPayloadBytes": 470470,
+          "catalogAudioDurationMs": 38760
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 11293,
+          "exportedScriptFileCount": 47,
+          "operationCountsByCategory": {
+            "timeline": 68,
+            "lifecycle": 4,
+            "random": 3,
+            "input": 20,
+            "scoring": 13,
+            "replay-reset": 8,
+            "audio": 21
+          },
+          "assetCategoryCounts": {
+            "shape": 53,
+            "morph": 0,
+            "bitmap": 1,
+            "font": 4,
+            "text": 72,
+            "button": 6,
+            "sprite": 15,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN06.mp3",
+              "bytes": 542640,
+              "sha256": "93479131bd93642f59ac7999b6c0f8a03c9fee2cadda96989a4a0591d522f03c",
+              "probeFingerprintSha256": "636075337bf613706f137ea55c18f382614fd5804d03cb0a04d711c6f3d3d56d",
+              "durationMs": 38760
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 5,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 1136
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 24,
+        "complexityCompetitionRank": 24,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 16,
+          "staticRootReachableDeclaredFrameCount": 24,
+          "placementTagCount": 20,
+          "exactOperationCount": 23,
+          "exactEventHandlerOperationCount": 18,
+          "exactSignalCount": 25,
+          "scenarioTraceCandidateCount": 24,
+          "assetDefinitionCount": 18,
+          "featureHeavyDefinitionCount": 13,
+          "exactTextOccurrenceCount": 24,
+          "fontDefinitionFactCount": 12,
+          "embeddedAudioUnitCount": 18,
+          "embeddedAudioBlockCount": 24,
+          "embeddedAudioPayloadBytes": 25,
+          "catalogAudioDurationMs": 22
+        },
+        "axisOrdinalScores": {
+          "timeline": 61,
+          "behavior": 90,
+          "assets": 67,
+          "audio": 89
+        },
+        "aggregateOrdinalScore": 307,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "32495ce9b63a40a2fcda24f74f34d5e480efe0cf37f1422e00d5f32b57c545b3"
+    },
+    {
+      "lessonSequence": 24,
+      "animationId": "course-g04-l03-ti-002",
+      "assetId": "swf-e640f8dcbfb6dd6945d97be67890e0015902702239e2bad4bd4283685fb0f807",
+      "classification": {
+        "section": "TI",
+        "page": 2,
+        "titleRaw": "Question 1",
+        "titleDisplay": "Question 1"
+      },
+      "source": {
+        "sourceKind": "fla+swf",
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TI/L3TI02.swf",
+          "bytes": 193445,
+          "sha256": "e640f8dcbfb6dd6945d97be67890e0015902702239e2bad4bd4283685fb0f807",
+          "physicalHashVerifiedNow": true
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TI/L3TI02.fla",
+          "bytes": 2385408,
+          "sha256": "3068bbd11d14c4226b961edc7cc31117ba71515546195782771749727c2bc7d3",
+          "physicalHashVerifiedNow": true
+        },
+        "sourceAvailabilityExcludedFromScore": true
+      },
+      "upstreamEvidence": {
+        "machineAuditFingerprintSha256": "429eef7af68fdce7821539ce5c8b5761c3d597abcb55b178059d5b64e22aedd7",
+        "sourceOperationItemBinding": "7166c9820a53361381c5c5bfbfdc2d1fe1900026cb129f622e5d24986fc4e82b",
+        "assetDefinitionInventorySha256": "226c1de803abb8488f419fab933dc28a7fc9cdbdc225be7259d6588d436a6e0a",
+        "embeddedAudioItemFingerprintSha256": "227e9a3045ecf3a05bb46af5b061ab1a2cd30cef1a23a91184bb279b3b950a86"
+      },
+      "evidence": {
+        "metrics": {
+          "rootFrameCount": 10,
+          "staticRootReachableTimelineCount": 35,
+          "staticRootReachableDeclaredFrameCount": 563,
+          "placementTagCount": 2417,
+          "exactOperationCount": 126,
+          "exactEventHandlerOperationCount": 38,
+          "exactSignalCount": 61,
+          "scenarioTraceCandidateCount": 7,
+          "assetDefinitionCount": 272,
+          "featureHeavyDefinitionCount": 40,
+          "exactTextOccurrenceCount": 94,
+          "fontDefinitionFactCount": 10,
+          "embeddedAudioUnitCount": 9,
+          "embeddedAudioBlockCount": 437,
+          "embeddedAudioPayloadBytes": 178750,
+          "catalogAudioDurationMs": 15144
+        },
+        "supplemental": {
+          "sourceKind": "fla+swf",
+          "normalizedScriptBytes": 7120,
+          "exportedScriptFileCount": 87,
+          "operationCountsByCategory": {
+            "timeline": 77,
+            "lifecycle": 5,
+            "random": 1,
+            "input": 43,
+            "replay-reset": 12,
+            "audio": 6
+          },
+          "assetCategoryCounts": {
+            "shape": 106,
+            "morph": 20,
+            "bitmap": 0,
+            "font": 10,
+            "text": 78,
+            "button": 20,
+            "sprite": 38,
+            "sound": 0,
+            "video": 0,
+            "binary": 0
+          },
+          "catalogAudioFileCount": 1,
+          "catalogAudioNormalizedLanguageCandidateCounts": {
+            "en": 0,
+            "es": 1
+          },
+          "catalogAudioTechnicalDecodeProbePassedCount": 1,
+          "catalogAudioProbeBindings": [
+            {
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3TI02.mp3",
+              "bytes": 212016,
+              "sha256": "befdf13400e6b46d9a82510efbd66676c955d266fbb6fbf31016e6b98a81e4ef",
+              "probeFingerprintSha256": "08a52ad906c14022b91cc2db1d06edbb173217a926d1f2b9b251ecde56cdb7f0",
+              "durationMs": 15144
+            }
+          ],
+          "embeddedAudioTagCounts": {
+            "DefineSound": 0,
+            "SoundStreamHead": 9,
+            "SoundStreamHead2": 0,
+            "SoundStreamBlock": 437
+          },
+          "sourceBoundOnly": true,
+          "runtimeReachabilityEstablished": false
+        }
+      },
+      "boundaries": {
+        "runtimeLaunchedByThisReport": false,
+        "runtimeReachabilityEstablished": false,
+        "specificationReady": false,
+        "implementationAuthorized": false,
+        "rendererSelected": false,
+        "visualOrBehavioralParityEstablished": false,
+        "audioLanguageCueSyncOrListeningAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false
+      },
+      "ranking": {
+        "implementationSequencePosition": 25,
+        "complexityCompetitionRank": 25,
+        "aggregateScoreTieSize": 1,
+        "metricOrdinalRanks": {
+          "rootFrameCount": 1,
+          "staticRootReachableTimelineCount": 25,
+          "staticRootReachableDeclaredFrameCount": 21,
+          "placementTagCount": 24,
+          "exactOperationCount": 25,
+          "exactEventHandlerOperationCount": 25,
+          "exactSignalCount": 24,
+          "scenarioTraceCandidateCount": 21,
+          "assetDefinitionCount": 24,
+          "featureHeavyDefinitionCount": 22,
+          "exactTextOccurrenceCount": 25,
+          "fontDefinitionFactCount": 23,
+          "embeddedAudioUnitCount": 20,
+          "embeddedAudioBlockCount": 17,
+          "embeddedAudioPayloadBytes": 17,
+          "catalogAudioDurationMs": 8
+        },
+        "axisOrdinalScores": {
+          "timeline": 71,
+          "behavior": 95,
+          "assets": 94,
+          "audio": 62
+        },
+        "aggregateOrdinalScore": 322,
+        "interpretation": "lower aggregate ordinal score means lower measured static complexity within this exact 25-item set",
+        "tieBreaker": "lesson sequence, then animationId; tie-breakers do not assert a complexity difference"
+      },
+      "itemFingerprintSha256": "3735cc97fe8a742f9b64026dcd3108b3cbfe1f2317d22309e86c298bc668b997"
+    }
+  ],
+  "acceptance": {
+    "acceptanceNeutral": true,
+    "sourceAssetChanges": 0,
+    "migrationWorkspaceChanges": 0,
+    "implementationOrRendererChanges": 0,
+    "routeChanges": 0,
+    "reviewOrApprovalChanges": 0,
+    "statusOrLedgerChanges": 0,
+    "runtimeSessions": 0,
+    "audioPlaybackOrListeningReviews": 0,
+    "strictAcceptanceEffect": false,
+    "statement": "This is a relative, source-count-based implementation sequencing aid only. It does not establish specification or implementation readiness, authorize implementation, select a renderer, prove runtime behavior/fidelity/audio, record review or approval, or complete any migration."
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "animationId": "shell-course-g04-l01-index-local",
+  "manifestSha256": "bfb4edd6d2c607ea52d5e113e82b2d836348355761584eeb54cf2625a5fc3aa4",
+  "commands": {
+    "test": {
+      "command": "npm test",
+      "status": "fail",
+      "exitCode": 1,
+      "outputFile": "reports/pilot-verification-runs/2026-07-23T112358-466Z-792ed990/npm-test.txt",
+      "outputSha256": "f9b3a946a1e5e26be2e674d6996b362a26cb05fb4f39264b2474693b6182dbfa",
+      "startedAt": "2026-07-23T11:23:58.467Z",
+      "completedAt": "2026-07-23T11:25:23.465Z",
+      "durationMs": 84998,
+      "signal": null
+    },
+    "build": {
+      "command": "npm run build",
+      "status": "pass",
+      "exitCode": 0,
+      "outputFile": "reports/pilot-verification-runs/2026-07-23T195116-286Z-7f5dde77/npm-run-build.txt",
+      "outputSha256": "25a17ed616b759666da88c5dbebc08862d580d5161b488e686b03c8e38c76d67",
+      "startedAt": "2026-07-23T19:51:16.291Z",
+      "completedAt": "2026-07-23T19:51:24.076Z",
+      "durationMs": 7785,
+      "signal": null
+    }
+  },
+  "strictCommandVerification": {
+    "generator": {
+      "path": "scripts/refresh-pilot-verification.mjs",
+      "version": "1.1.0",
+      "sha256": "173ee5adae5861e3b4f9e589af0b4a1f9ca9d509fb921537ccccc014e1e806c9"
+    },
+    "boundAt": "2026-07-23T19:51:24.083Z",
+    "commandResultSource": "executed-build-only",
+    "runReceipt": "reports/pilot-verification-runs/2026-07-23T195116-286Z-7f5dde77/build-command-result.json",
+    "runReceiptSha256": "581c617f72bacd90988b88c1605715a5c322443c31e336af73e8fe8cc0d1c6f8",
+    "allCommandsPassed": false,
+    "changesMigrationStatus": false,
+    "infersReviewAcceptance": false,
+    "buildOnlyRefresh": true,
+    "selectedCommands": [
+      "build"
+    ],
+    "preservedCommands": [
+      "test"
+    ],
+    "regressionTestDisposition": "preserved-authentic-failing-receipt-not-executed-or-promoted"
+  }
+}

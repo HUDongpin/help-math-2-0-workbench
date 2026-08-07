@@ -6,6 +6,13 @@ type Target = {animationId: string; assetId: string; migration: {status: Migrati
 
 const text = (value: unknown) => typeof value === 'string' && value.trim() ? value : undefined;
 
+export function strictCompletionSummaryMatchesEntries(summary: unknown, entries: readonly unknown[]): boolean {
+  const value = summary && typeof summary === 'object' && !Array.isArray(summary)
+    ? summary as Record<string, unknown>
+    : {};
+  return Number.isSafeInteger(value.strictComplete) && value.strictComplete === entries.length;
+}
+
 export function normalizeClassificationEvidence(value: unknown): ClassificationEvidence[] {
   if (!Array.isArray(value)) return [];
   return value.flatMap((entry): ClassificationEvidence[] => {

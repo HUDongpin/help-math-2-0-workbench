@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "source-shared-bilingual-visual-disposition",
+  "animationId": "course-g04-l01-ir-001",
+  "status": "verified-source-shared-untranslated-visual",
+  "migrationStatusChanged": false,
+  "authorityStatement": [
+    "The preserved IR001 SWF contains one fixed visual timeline. Its only source random branch selects between Mc_Sound_0 and Mc_Sound_1.",
+    "Hash-bound static source evidence proves both selected sound timelines have only off-stage visual markers and retain unresolved audio and natural-runtime behavior obligations.",
+    "The complete extracted SWF ActionScript contains no English, Spanish, language, or lang branch. Rendering the same source drawing in en and es is source preservation, not a Spanish translation or original-host parity claim."
+  ],
+  "generatedFrom": {
+    "sourceSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/IR/L1RW01.swf",
+      "sha256": "b21b16d1e5756820b5703136708f625dcc3a324d629b2337b1dc42af64559e46"
+    },
+    "ffdecScripts": {
+      "path": "migrations/course-g04-l01-ir-001/audit/machine/ffdec-scripts.txt.gz",
+      "sha256": "0cacaa6ea5de3d6b08015d04c06c4aa23aa42f54ed8d58f0c62059268b6ad723",
+      "uncompressedSha256": "2a69507ec8f16fe0fff7d64b460a41fe5850b196ee8e329080bb7f8f76c67b9e"
+    },
+    "scenarioInventory": {
+      "path": "migrations/course-g04-l01-ir-001/audit/scenario-inventory.json",
+      "sha256": "6dbc08b26fbfe65f921507b668ecf155ea6a4a903a4b4f4b4f51bfc7a7f0b6e1"
+    },
+    "staticFrameDomainDispositionEvidence": {
+      "path": "migrations/course-g04-l01-ir-001/audit/static-frame-domain-disposition-evidence.json",
+      "sha256": "263979ba40cb380f26705ad4e2e5d9e257574e311629bd48f0ffec761841d405"
+    },
+    "canvasAdapter": {
+      "manifestPath": "public/flash-assets/courses/course-g04-l01-ir-001/manifest.json",
+      "manifestSha256": "e0d287f831945df837872d6e31596adce9ed00484bef9697831846b49b704f62",
+      "scriptPath": "public/flash-assets/courses/course-g04-l01-ir-001/canvas-renderer.js",
+      "scriptSha256": "2f8e103fd39bfbe957d81ab6aeae07693c40f01afc7cd5c09101def5417d3043"
+    }
+  },
+  "sourceFindings": {
+    "mainTimeline": {
+      "timelineId": "sprite-58",
+      "frameCount": 142
+    },
+    "randomSelectionChangesOnlySoundTimeline": true,
+    "soundPlacements": [
+      {
+        "frame": 1,
+        "hasClipActions": false,
+        "name": "Mc_Sound_0",
+        "objectId": "7"
+      },
+      {
+        "frame": 1,
+        "hasClipActions": false,
+        "name": "Mc_Sound_1",
+        "objectId": "8"
+      }
+    ],
+    "soundTimelineClaims": [
+      {
+        "timelineId": "sprite-7",
+        "role": "audio-only-offstage-visual-marker",
+        "disposition": "composite-child-with-parent",
+        "nativeStageIntersection": false
+      },
+      {
+        "timelineId": "sprite-8",
+        "role": "audio-only-offstage-visual-marker",
+        "disposition": "composite-child-with-parent",
+        "nativeStageIntersection": false
+      }
+    ],
+    "sourceScripts": [
+      {
+        "script": "DefineSprite_58/frame_1/DoAction.as",
+        "bodySha256": "534196db1b9352db95897e78166465293f70844f5b18292d5da450cfeb3e9cbe"
+      },
+      {
+        "script": "DefineSprite_58/frame_5/DoAction.as",
+        "bodySha256": "4b2a8ea86d7a09876c10ea6d2e0abd838f294518275642d3c7f68c2257c8f16e"
+      },
+      {
+        "script": "DefineSprite_58/frame_142/DoAction.as",
+        "bodySha256": "2443ef5abd9a49f54017c2a509cda1259fb4f8a3e44bc3cfe669addf2fd291db"
+      }
+    ],
+    "languageSensitiveActionScriptMatches": []
+  },
+  "implementationDisposition": {
+    "languages": [
+      "en",
+      "es"
+    ],
+    "visualClassification": "source-shared-untranslated-visual",
+    "renderSameSourceVisualForBothLanguages": true,
+    "audioRendered": false,
+    "audioStatus": "pending-authoritative-listening-language-mapping-and-synchronization",
+    "hostIntegrationStatus": "blocked-not-reconstructed"
+  },
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntimeBaseline": false,
+    "bilingualVisualParity": false,
+    "audioAcceptance": false,
+    "naturalOriginalRuntimeTraversal": false,
+    "behaviorParity": false,
+    "fullFrameCoverage": false,
+    "rmseAcceptance": false,
+    "humanVisualReview": false,
+    "engineeringAcceptance": false,
+    "ownerAcceptance": false,
+    "strictMigrationCompletion": false
+  },
+  "strictAcceptanceEffect": "none; this evidence permits only the same source visual to render in both requested language contexts. Spanish translation, audio, original-host behavior, full-frame/RMSE, human review, owner acceptance, and migration completion remain unresolved."
+}

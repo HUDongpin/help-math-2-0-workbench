@@ -1,0 +1,53 @@
+
+> flash-conversion-html5-rebuild@0.1.0 build
+> npm run build --workspace @helpmath/web
+
+
+> @helpmath/web@0.1.0 build
+> next build
+
+▲ Next.js 16.2.10 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 2.4s
+  Running TypeScript ...
+  Finished TypeScript in 2.8s ...
+  Collecting page data using 9 workers ...
+  Generating static pages using 9 workers (0/19) ...
+  Generating static pages using 9 workers (4/19) 
+  Generating static pages using 9 workers (9/19) 
+  Generating static pages using 9 workers (14/19) 
+✓ Generating static pages using 9 workers (19/19) in 184ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /_not-found
+├ ● /[locale]
+│ ├ /en
+│ └ /es
+├ ƒ /[locale]/[page]
+├ ƒ /[locale]/animations/[animationId]
+├ ƒ /[locale]/courses/[grade]/[lesson]
+├ ● /[locale]/demos
+│ ├ /en/demos
+│ └ /es/demos
+├ ƒ /[locale]/demos/[id]
+├ ƒ /[locale]/library
+├ ƒ /[locale]/migration-status
+├ ƒ /[locale]/reference/[animationId]
+├ ƒ /api/contact
+├ ƒ /api/reference/[animationId]
+├ ƒ /api/ruffle/[...asset]
+├ ƒ /flash-assets/[...asset]
+├ ○ /icon.svg
+├ ○ /manifest.webmanifest
+├ ○ /robots.txt
+└ ○ /sitemap.xml
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+

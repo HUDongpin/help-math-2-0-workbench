@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 1,
+  "receiptType": "g4-l3-ts006-source-audit-rebind-receipt",
+  "receiptId": "g4-l3-ts006-source-audit-rebind-2026-07-27",
+  "animationId": "course-g04-l03-ts-006",
+  "status": "verified-acceptance-neutral-source-audit-rebind-with-bounded-historical-delta",
+  "reason": "The artifact-only workspace source audit was rematerialized after its derived provenance chain changed. The physical FLA/SWF identities and the exact semantic projection consumed by the archived current-JavaScript candidate remain unchanged.",
+  "transition": {
+    "from": {
+      "path": "migrations/course-g04-l03-ts-006/audit/machine/g4-l3-source-audit.json",
+      "bytes": 8195,
+      "sha256": "6b09c03c708f35fcd1fdb1cde365d41d21a1a8296d5f687c2f4ab6ef11c93fb1"
+    },
+    "to": {
+      "path": "migrations/course-g04-l03-ts-006/audit/machine/g4-l3-source-audit.json",
+      "bytes": 8195,
+      "sha256": "e27f043f7c2153896128cdd780a67b1d2c0e87557af9a622d42d4c0b76f41cfc"
+    },
+    "bytesUnchanged": true,
+    "sha256Changed": true
+  },
+  "historicalEvidence": {
+    "candidateReport": {
+      "path": "reports/g4-l3-ts006-current-javascript-candidate.json",
+      "bytes": 45433,
+      "sha256": "8b19edfa872110e71c97dfcee8cbfe66a867e41587522f27774342952c4bad7a"
+    },
+    "candidateReportFingerprintSha256": "720f060b51aeea7bb721c13b126c3848d44a2f7fb2c873c7ed7ffa5034da2980",
+    "candidateGenerator": {
+      "path": "scripts/build-g4-l3-ts006-current-js-candidate.mjs",
+      "bytes": 53296,
+      "sha256": "bf1e57be4c12e3e91e9ae3a0401c44e6b34fad35587a0ef61f09052ded0d0d73"
+    },
+    "staticEvidenceValidatorBody": {
+      "bytes": 2273,
+      "sha256": "58d8df4df59a2c2d30c42d0c386a0610f20aa4603a6f5087687c88bc61f08183",
+      "requiredConditionCount": 9
+    },
+    "oldSourceAuditCompleteBytesAvailable": false,
+    "oldSourceAuditFullByteDiffPerformed": false,
+    "limitation": "The old 8,195-byte source-audit preimage is not retained. This receipt therefore proves the unchanged source identities and candidate-consumed semantic projection through the archived candidate report and its exact hash-bound generator validation contract; it does not claim a field-by-field diff of the unavailable old audit bytes."
+  },
+  "currentEvidence": {
+    "sourceAudit": {
+      "path": "migrations/course-g04-l03-ts-006/audit/machine/g4-l3-source-audit.json",
+      "bytes": 8195,
+      "sha256": "e27f043f7c2153896128cdd780a67b1d2c0e87557af9a622d42d4c0b76f41cfc"
+    },
+    "sourceAuditArtifactFingerprintSha256": "358b983497241682795e9e2d61939a5e86aacc948a56f771f9b087c83ec63113",
+    "physicalSources": {
+      "swf": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.swf",
+        "bytes": 55154,
+        "sha256": "fa8962a6ca72c0bb213605a9836b62600992cb5c1cf955f7c871e857e90ddf47"
+      },
+      "fla": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.fla",
+        "bytes": 3950592,
+        "sha256": "3f500c60b73b735eb001993b31ff101bf1615384c86b6a28987a84feef5b70dd"
+      }
+    },
+    "provenance": {
+      "materializer": {
+        "path": "scripts/materialize-g4-l3-workspace-source-audits.mjs",
+        "bytes": 36651,
+        "sha256": "9da52c9d17bfec652a9cf58f90419978dcfc76588fd428e1f371b00661d23630"
+      },
+      "upstreamMachineAudit": {
+        "path": "reports/g4-l3-machine-source-audits.json",
+        "bytes": 5152829,
+        "sha256": "c7f987904de8e2a5bca907931feedab0e3bd61ffdcf26b56ef5d7295e49ab9f6",
+        "auditSetSha256": "ef3e3f2d6757778662d280d10a4b04f46da84f0bd402c9d6c41017f58da69709",
+        "itemJsonPointer": "/items/33",
+        "itemFingerprintSha256": "8a638dcbd53febfe277a988c40495142bd564e874b261194a9f6cdb6facac6ad"
+      },
+      "lessonReleaseManifest": {
+        "path": "catalog/lesson-releases.json",
+        "bytes": 54579,
+        "sha256": "ab0ad5dac373f7bf192b603c4c2b0bc4dae9f73fe770eba3be7507d458bfc375",
+        "memberJsonPointer": "/releases/0/members/33"
+      }
+    }
+  },
+  "semanticProjection": {
+    "encoding": "stable two-space-indented JSON plus LF",
+    "historical": {
+      "animationId": "course-g04-l03-ts-006",
+      "sourceKind": "fla+swf",
+      "source": {
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.swf",
+          "bytes": 55154,
+          "sha256": "fa8962a6ca72c0bb213605a9836b62600992cb5c1cf955f7c871e857e90ddf47"
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.fla",
+          "bytes": 3950592,
+          "sha256": "3f500c60b73b735eb001993b31ff101bf1615384c86b6a28987a84feef5b70dd",
+          "authoringAuditPerformed": false
+        }
+      },
+      "runtime": {
+        "stage": {
+          "width": 800,
+          "height": 600,
+          "backgroundColor": "#b8d8f7"
+        },
+        "fps": 12,
+        "rootFrameCount": 10
+      },
+      "scripts": {
+        "randomOccurrences": 0,
+        "externalApiCandidateCount": 0
+      },
+      "evidenceLimits": {
+        "authoritativeRuntimeLaunched": false
+      }
+    },
+    "current": {
+      "animationId": "course-g04-l03-ts-006",
+      "sourceKind": "fla+swf",
+      "source": {
+        "swf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.swf",
+          "bytes": 55154,
+          "sha256": "fa8962a6ca72c0bb213605a9836b62600992cb5c1cf955f7c871e857e90ddf47"
+        },
+        "fla": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.fla",
+          "bytes": 3950592,
+          "sha256": "3f500c60b73b735eb001993b31ff101bf1615384c86b6a28987a84feef5b70dd",
+          "authoringAuditPerformed": false
+        }
+      },
+      "runtime": {
+        "stage": {
+          "width": 800,
+          "height": 600,
+          "backgroundColor": "#b8d8f7"
+        },
+        "fps": 12,
+        "rootFrameCount": 10
+      },
+      "scripts": {
+        "randomOccurrences": 0,
+        "externalApiCandidateCount": 0
+      },
+      "evidenceLimits": {
+        "authoritativeRuntimeLaunched": false
+      }
+    },
+    "historicalSha256": "c18ce7be9aafed3467a44d9df205de1857f635522043a88a1cdbd3531db840ec",
+    "currentSha256": "c18ce7be9aafed3467a44d9df205de1857f635522043a88a1cdbd3531db840ec",
+    "equal": true,
+    "scope": "TS006 identity, physical FLA/SWF bindings, native stage/background/FPS/root-frame metadata, random/external-API candidate counts, and authoritative-runtime-negative boundary consumed by the archived candidate generator."
+  },
+  "driftAssessment": {
+    "classification": "derived-provenance-refresh-with-no-source-or-candidate-consumed-semantic-projection-drift-observed",
+    "sourceIdentityUnchanged": true,
+    "candidateConsumedSemanticProjectionUnchanged": true,
+    "currentProvenanceChainVerified": true,
+    "oldAuditCompleteBytesAvailable": false,
+    "onlyDerivedProvenanceChangedProvenByFullByteDiff": false,
+    "conclusionStrength": "bounded-rebind-eligibility-not-a-full-old-vs-new-audit-byte-diff"
+  },
+  "authorityBoundary": {
+    "acceptanceNeutral": true,
+    "currentJavaScriptCandidateOnly": true,
+    "originalRuntimeAuthorityCreated": false,
+    "audioAcceptanceCreated": false,
+    "humanReviewCreated": false,
+    "ownerAcceptanceCreated": false,
+    "strictCompletionCreated": false,
+    "completionLedgerWriteAuthorized": false,
+    "lessonReleaseWriteAuthorized": false,
+    "publicReleaseAuthorized": false,
+    "sourceAssetWriteAuthorized": false,
+    "strictAcceptanceEffect": "none"
+  },
+  "generatedBy": {
+    "path": "scripts/build-g4-l3-ts006-source-audit-rebind-receipt.mjs",
+    "bytes": 30489,
+    "sha256": "cca1fc147611b22f38dd115eb647d6ef2a12fa854b1c3132e64b51fdc639ea72"
+  },
+  "receiptFingerprintSha256": "c052d736f9c6ccf8595952d86cccf31b33bf52659c238591ee0031c70ac8adc3"
+}

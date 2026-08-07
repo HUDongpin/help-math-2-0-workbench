@@ -1,0 +1,1542 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-22T13:36:33.980Z",
+  "animationId": "formula-elementary-conversion-01-01",
+  "route": "/animations/formula-elementary-conversion-01-01",
+  "generatedBy": {
+    "script": "scripts/qa-formula-audio-controls.mjs",
+    "scriptSha256": "ae1435ac4ce446b2460b2abb2fd0b019739670ddefa9aad2533df53820b65259",
+    "deterministic": false,
+    "command": "node scripts/qa-formula-audio-controls.mjs --base-url http://127.0.0.1:3000 --server-mode development",
+    "dependencies": [
+      {
+        "path": "scripts/formula-qa-dev-overlay.mjs",
+        "sha256": "b772d93c33cfac2289de4c5906b4f98486ae7f46df6d27ca55a606b17f105f6d"
+      }
+    ]
+  },
+  "environment": {
+    "baseUrl": "http://127.0.0.1:3000",
+    "serverMode": "development"
+  },
+  "acceptanceEffect": "none",
+  "strictAcceptanceEffect": false,
+  "scope": {
+    "included": "Modern Next.js host-level formula audio files, controls, lifecycle, keyboard, responsive layout, capture isolation, console, and network behavior.",
+    "excluded": "Authoritative listening comparison against the original Flash indexELM host and owner/human acceptance.",
+    "fidelityClaim": "This QA does not prove original-host audio timing, wording, loudness, or perceptual parity and does not authorize complete status."
+  },
+  "browser": {
+    "engine": "Chromium",
+    "version": "149.0.7827.55",
+    "headless": true,
+    "deviceScaleFactor": 1
+  },
+  "assets": {
+    "manifestEntries": [
+      {
+        "animationId": "formula-elementary-conversion-01-01",
+        "id": "formula-narration-en",
+        "language": "en",
+        "activation": "modern-candidate-user-control-only",
+        "sourceEvidence": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/EAD/Conversion_1_1.mp3",
+        "sourceSha256": "ac64efe44e1960d1abde5fb9aeb0c2d38509ae5c2bafd86351b53d1a4177a66a",
+        "observedSourceSha256": "ac64efe44e1960d1abde5fb9aeb0c2d38509ae5c2bafd86351b53d1a4177a66a",
+        "durationMs": 2893,
+        "startFrame": null,
+        "startSemantics": "host-user-activated",
+        "synchronization": "not a child-timeline frame cue; authoritative host timing/listening remains pending",
+        "publicUrl": "/flash-assets/audio/formulas/conversion-1-1/en.mp3"
+      },
+      {
+        "animationId": "formula-elementary-conversion-01-01",
+        "id": "formula-narration-es",
+        "language": "es",
+        "activation": "modern-candidate-user-control-only",
+        "sourceEvidence": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SAD/Conversion_1_1.mp3",
+        "sourceSha256": "e1667a7b14a9ac38d885020a3f5fae0e947abbac74faf7231ceaff2198368d9c",
+        "observedSourceSha256": "e1667a7b14a9ac38d885020a3f5fae0e947abbac74faf7231ceaff2198368d9c",
+        "durationMs": 4743,
+        "startFrame": null,
+        "startSemantics": "host-user-activated",
+        "synchronization": "not a child-timeline frame cue; authoritative host timing/listening remains pending",
+        "publicUrl": "/flash-assets/audio/formulas/conversion-1-1/es.mp3"
+      }
+    ],
+    "directGets": [
+      {
+        "language": "en",
+        "url": "/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+        "status": 200,
+        "contentType": "audio/mpeg",
+        "bytes": 46378,
+        "expectedSha256": "ac64efe44e1960d1abde5fb9aeb0c2d38509ae5c2bafd86351b53d1a4177a66a",
+        "observedSha256": "ac64efe44e1960d1abde5fb9aeb0c2d38509ae5c2bafd86351b53d1a4177a66a"
+      },
+      {
+        "language": "es",
+        "url": "/flash-assets/audio/formulas/conversion-1-1/es.mp3",
+        "status": 200,
+        "contentType": "audio/mpeg",
+        "bytes": 75985,
+        "expectedSha256": "e1667a7b14a9ac38d885020a3f5fae0e947abbac74faf7231ceaff2198368d9c",
+        "observedSha256": "e1667a7b14a9ac38d885020a3f5fae0e947abbac74faf7231ceaff2198368d9c"
+      }
+    ]
+  },
+  "controls": {
+    "english": [
+      {
+        "tagName": "BUTTON",
+        "type": "button",
+        "text": "Play English audio",
+        "ariaPressed": "false",
+        "disabled": false,
+        "tabIndex": 0
+      }
+    ],
+    "spanish": [
+      {
+        "tagName": "BUTTON",
+        "type": "button",
+        "text": "Reproducir audio en inglés",
+        "ariaPressed": "false",
+        "disabled": false,
+        "tabIndex": 0
+      },
+      {
+        "tagName": "BUTTON",
+        "type": "button",
+        "text": "Reproducir audio en español",
+        "ariaPressed": "false",
+        "disabled": false,
+        "tabIndex": 0
+      }
+    ]
+  },
+  "playbackResponses": [
+    {
+      "url": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+      "status": 200,
+      "contentType": "audio/mpeg"
+    },
+    {
+      "url": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+      "status": 206,
+      "contentType": "audio/mpeg"
+    },
+    {
+      "url": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/es.mp3",
+      "status": 200,
+      "contentType": "audio/mpeg"
+    }
+  ],
+  "responsive": {
+    "narrow": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "body": {
+        "scrollWidth": 390,
+        "scrollHeight": 2675
+      },
+      "shell": {
+        "x": 20,
+        "y": 512.140625,
+        "width": 350,
+        "height": 406.875,
+        "right": 370,
+        "bottom": 919.015625
+      },
+      "toolbar": {
+        "x": 22,
+        "y": 514.140625,
+        "width": 346,
+        "height": 234.765625,
+        "right": 368,
+        "bottom": 748.90625
+      },
+      "stage": {
+        "x": 22,
+        "y": 748.90625,
+        "width": 346,
+        "height": 168.109375,
+        "right": 368,
+        "bottom": 917.015625
+      },
+      "buttons": [
+        {
+          "x": 34,
+          "y": 582.375,
+          "width": 255.5,
+          "height": 45.578125,
+          "right": 289.5,
+          "bottom": 627.953125
+        },
+        {
+          "x": 34,
+          "y": 635.953125,
+          "width": 270.109375,
+          "height": 45.578125,
+          "right": 304.109375,
+          "bottom": 681.53125
+        },
+        {
+          "x": 34,
+          "y": 693.53125,
+          "width": 89.5625,
+          "height": 45.578125,
+          "right": 123.5625,
+          "bottom": 739.109375
+        }
+      ],
+      "toolbarDirection": "column"
+    }
+  },
+  "capture": {
+    "toolbarDisplay": "none",
+    "captureControlCount": 0,
+    "devOverlaySuppression": {
+      "schemaVersion": 1,
+      "capturePageOnly": true,
+      "serverMode": "development",
+      "strategy": "Capture-page-only CSS plus inline important styles suppress Next.js overlay scripts, portal hosts, and recursively discovered shadow-root controls.",
+      "styleId": "help-math-formula-audio-qa-hide-next-dev-overlay",
+      "cssSha256": "91504b8a30b9e005048cbb342dcd54e414c97d39ed389479fd74956f4732d077",
+      "styleInstalled": true,
+      "beforeSuppression": {
+        "scriptOverlayCount": 1,
+        "hiddenScriptOverlayCount": 1,
+        "portalCount": 1,
+        "hiddenPortalCount": 1,
+        "shadowRootCount": 1,
+        "controlCount": 2,
+        "visibleControlCount": 0
+      },
+      "afterSuppression": {
+        "scriptOverlayCount": 1,
+        "hiddenScriptOverlayCount": 1,
+        "portalCount": 1,
+        "hiddenPortalCount": 1,
+        "shadowRootCount": 1,
+        "controlCount": 2,
+        "visibleControlCount": 0
+      },
+      "afterCapture": {
+        "scriptOverlayCount": 1,
+        "hiddenScriptOverlayCount": 1,
+        "portalCount": 1,
+        "hiddenPortalCount": 1,
+        "shadowRootCount": 1,
+        "controlCount": 2,
+        "visibleControlCount": 0
+      }
+    },
+    "audioRequests": []
+  },
+  "lifecycle": {
+    "events": [
+      {
+        "type": "construct",
+        "audioId": 1,
+        "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+        "documentId": "1784727392239-0.6640421264607393",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=en&scenario=default&seed=0"
+      },
+      {
+        "type": "play",
+        "audioId": 1,
+        "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+        "documentId": "1784727392239-0.6640421264607393",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=en&scenario=default&seed=0"
+      },
+      {
+        "type": "pause",
+        "audioId": 1,
+        "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+        "documentId": "1784727392239-0.6640421264607393",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=en&scenario=default&seed=0"
+      },
+      {
+        "type": "current-time",
+        "audioId": 1,
+        "value": 0,
+        "documentId": "1784727392239-0.6640421264607393",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=en&scenario=default&seed=0"
+      },
+      {
+        "type": "construct",
+        "audioId": 2,
+        "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+        "documentId": "1784727392239-0.6640421264607393",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=en&scenario=default&seed=0"
+      },
+      {
+        "type": "play",
+        "audioId": 2,
+        "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+        "documentId": "1784727392239-0.6640421264607393",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=en&scenario=default&seed=0"
+      },
+      {
+        "type": "pause",
+        "audioId": 2,
+        "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+        "documentId": "1784727392239-0.6640421264607393",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=en&scenario=default&seed=0"
+      },
+      {
+        "type": "construct",
+        "audioId": 1,
+        "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+        "documentId": "1784727392740-0.9322928258161111",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=es&scenario=default&seed=0"
+      },
+      {
+        "type": "play",
+        "audioId": 1,
+        "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+        "documentId": "1784727392740-0.9322928258161111",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=es&scenario=default&seed=0"
+      },
+      {
+        "type": "pause",
+        "audioId": 1,
+        "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+        "documentId": "1784727392740-0.9322928258161111",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=es&scenario=default&seed=0"
+      },
+      {
+        "type": "current-time",
+        "audioId": 1,
+        "value": 0,
+        "documentId": "1784727392740-0.9322928258161111",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=es&scenario=default&seed=0"
+      },
+      {
+        "type": "construct",
+        "audioId": 2,
+        "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/es.mp3",
+        "documentId": "1784727392740-0.9322928258161111",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=es&scenario=default&seed=0"
+      },
+      {
+        "type": "play",
+        "audioId": 2,
+        "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/es.mp3",
+        "documentId": "1784727392740-0.9322928258161111",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=es&scenario=default&seed=0"
+      },
+      {
+        "type": "pause",
+        "audioId": 2,
+        "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/es.mp3",
+        "documentId": "1784727392740-0.9322928258161111",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=es&scenario=default&seed=0"
+      },
+      {
+        "type": "current-time",
+        "audioId": 2,
+        "value": 0,
+        "documentId": "1784727392740-0.9322928258161111",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=es&scenario=default&seed=0"
+      },
+      {
+        "type": "construct",
+        "audioId": 1,
+        "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+        "documentId": "1784727393085-0.16670789173007394",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=en&scenario=default&seed=0"
+      },
+      {
+        "type": "play",
+        "audioId": 1,
+        "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+        "documentId": "1784727393085-0.16670789173007394",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=en&scenario=default&seed=0"
+      },
+      {
+        "type": "construct",
+        "audioId": 1,
+        "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+        "documentId": "1784727393512-0.29167044243261664",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=en&scenario=default&seed=0"
+      },
+      {
+        "type": "play",
+        "audioId": 1,
+        "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+        "documentId": "1784727393512-0.29167044243261664",
+        "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=en&scenario=default&seed=0"
+      },
+      {
+        "type": "pause",
+        "audioId": 1,
+        "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+        "documentId": "1784727393512-0.29167044243261664",
+        "href": "http://127.0.0.1:3000/library"
+      }
+    ],
+    "keyboard": {
+      "afterEnter": {
+        "controls": [
+          {
+            "tagName": "BUTTON",
+            "type": "button",
+            "text": "Stop English audio",
+            "ariaPressed": "true",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "mock": {
+          "documentId": "1784727392239-0.6640421264607393",
+          "instances": [
+            {
+              "id": 1,
+              "src": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+              "paused": false,
+              "currentTime": 0
+            }
+          ]
+        }
+      },
+      "afterSpace": {
+        "controls": [
+          {
+            "tagName": "BUTTON",
+            "type": "button",
+            "text": "Play English audio",
+            "ariaPressed": "false",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "mock": {
+          "documentId": "1784727392239-0.6640421264607393",
+          "instances": [
+            {
+              "id": 1,
+              "src": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+              "paused": true,
+              "currentTime": 0
+            }
+          ]
+        }
+      }
+    },
+    "exclusive": {
+      "events": [
+        {
+          "type": "construct",
+          "audioId": 1,
+          "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+          "documentId": "1784727392740-0.9322928258161111",
+          "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=es&scenario=default&seed=0"
+        },
+        {
+          "type": "play",
+          "audioId": 1,
+          "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+          "documentId": "1784727392740-0.9322928258161111",
+          "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=es&scenario=default&seed=0"
+        },
+        {
+          "type": "pause",
+          "audioId": 1,
+          "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+          "documentId": "1784727392740-0.9322928258161111",
+          "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=es&scenario=default&seed=0"
+        },
+        {
+          "type": "current-time",
+          "audioId": 1,
+          "value": 0,
+          "documentId": "1784727392740-0.9322928258161111",
+          "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=es&scenario=default&seed=0"
+        },
+        {
+          "type": "construct",
+          "audioId": 2,
+          "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/es.mp3",
+          "documentId": "1784727392740-0.9322928258161111",
+          "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=es&scenario=default&seed=0"
+        },
+        {
+          "type": "play",
+          "audioId": 2,
+          "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/es.mp3",
+          "documentId": "1784727392740-0.9322928258161111",
+          "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=es&scenario=default&seed=0"
+        },
+        {
+          "type": "pause",
+          "audioId": 2,
+          "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/es.mp3",
+          "documentId": "1784727392740-0.9322928258161111",
+          "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=es&scenario=default&seed=0"
+        },
+        {
+          "type": "current-time",
+          "audioId": 2,
+          "value": 0,
+          "documentId": "1784727392740-0.9322928258161111",
+          "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=es&scenario=default&seed=0"
+        }
+      ],
+      "afterSwitch": {
+        "controls": [
+          {
+            "tagName": "BUTTON",
+            "type": "button",
+            "text": "Reproducir audio en inglés",
+            "ariaPressed": "false",
+            "disabled": false,
+            "tabIndex": 0
+          },
+          {
+            "tagName": "BUTTON",
+            "type": "button",
+            "text": "Detener audio en español",
+            "ariaPressed": "true",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "mock": {
+          "documentId": "1784727392740-0.9322928258161111",
+          "instances": [
+            {
+              "id": 1,
+              "src": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+              "paused": true,
+              "currentTime": 0
+            },
+            {
+              "id": 2,
+              "src": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/es.mp3",
+              "paused": false,
+              "currentTime": 0
+            }
+          ]
+        }
+      },
+      "afterToggleStop": {
+        "controls": [
+          {
+            "tagName": "BUTTON",
+            "type": "button",
+            "text": "Reproducir audio en inglés",
+            "ariaPressed": "false",
+            "disabled": false,
+            "tabIndex": 0
+          },
+          {
+            "tagName": "BUTTON",
+            "type": "button",
+            "text": "Reproducir audio en español",
+            "ariaPressed": "false",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "mock": {
+          "documentId": "1784727392740-0.9322928258161111",
+          "instances": [
+            {
+              "id": 1,
+              "src": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+              "paused": true,
+              "currentTime": 0
+            },
+            {
+              "id": 2,
+              "src": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/es.mp3",
+              "paused": true,
+              "currentTime": 0
+            }
+          ]
+        }
+      }
+    },
+    "replay": {
+      "events": [
+        {
+          "type": "pause",
+          "audioId": 2,
+          "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+          "documentId": "1784727392239-0.6640421264607393",
+          "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=en&scenario=default&seed=0"
+        }
+      ],
+      "controls": [
+        {
+          "tagName": "BUTTON",
+          "type": "button",
+          "text": "Play English audio",
+          "ariaPressed": "false",
+          "disabled": false,
+          "tabIndex": 0
+        }
+      ]
+    },
+    "language": {
+      "priorDocument": "1784727393085-0.16670789173007394",
+      "currentDocument": "1784727393334-0.28565116218035025",
+      "oldDocumentPauseEvents": [],
+      "controls": [
+        {
+          "tagName": "BUTTON",
+          "type": "button",
+          "text": "Reproducir audio en inglés",
+          "ariaPressed": "false",
+          "disabled": false,
+          "tabIndex": 0
+        },
+        {
+          "tagName": "BUTTON",
+          "type": "button",
+          "text": "Reproducir audio en español",
+          "ariaPressed": "false",
+          "disabled": false,
+          "tabIndex": 0
+        }
+      ],
+      "mechanism": "query-language navigation disposes the prior document; browser media cannot survive that document"
+    },
+    "unmount": {
+      "priorDocument": "1784727393512-0.29167044243261664",
+      "events": [
+        {
+          "type": "pause",
+          "audioId": 1,
+          "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+          "documentId": "1784727393512-0.29167044243261664",
+          "href": "http://127.0.0.1:3000/library"
+        }
+      ],
+      "runtimeRemoved": true
+    }
+  },
+  "network": {
+    "externalRequests": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:3000/flash-assets/conversion-1-1/frames/3.svg",
+        "failure": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:3000/flash-assets/conversion-1-1/frames/5.svg",
+        "failure": "net::ERR_ABORTED"
+      }
+    ],
+    "intentionalNavigationAborts": [
+      {
+        "url": "http://127.0.0.1:3000/flash-assets/conversion-1-1/frames/3.svg",
+        "failure": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:3000/flash-assets/conversion-1-1/frames/5.svg",
+        "failure": "net::ERR_ABORTED"
+      }
+    ],
+    "unexpectedFailedRequests": [],
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  "screenshots": {
+    "desktopEn": {
+      "path": "output/playwright/formula-audio-controls-qa/formula-elementary-conversion-01-01/desktop-en.png",
+      "sha256": "e23194e316e83b15ef5c544a19a6811a18c35491e34f0bf71e1b24528f4b42f0",
+      "width": 1440,
+      "height": 2083,
+      "devOverlaySuppression": {
+        "schemaVersion": 1,
+        "capturePageOnly": true,
+        "serverMode": "development",
+        "strategy": "Capture-page-only CSS plus inline important styles suppress Next.js overlay scripts, portal hosts, and recursively discovered shadow-root controls.",
+        "styleId": "help-math-formula-audio-qa-hide-next-dev-overlay",
+        "cssSha256": "91504b8a30b9e005048cbb342dcd54e414c97d39ed389479fd74956f4732d077",
+        "styleInstalled": true,
+        "beforeSuppression": {
+          "scriptOverlayCount": 1,
+          "hiddenScriptOverlayCount": 1,
+          "portalCount": 1,
+          "hiddenPortalCount": 1,
+          "shadowRootCount": 1,
+          "controlCount": 2,
+          "visibleControlCount": 2
+        },
+        "afterSuppression": {
+          "scriptOverlayCount": 1,
+          "hiddenScriptOverlayCount": 1,
+          "portalCount": 1,
+          "hiddenPortalCount": 1,
+          "shadowRootCount": 1,
+          "controlCount": 2,
+          "visibleControlCount": 0
+        },
+        "afterCapture": {
+          "scriptOverlayCount": 1,
+          "hiddenScriptOverlayCount": 1,
+          "portalCount": 1,
+          "hiddenPortalCount": 1,
+          "shadowRootCount": 1,
+          "controlCount": 2,
+          "visibleControlCount": 0
+        }
+      }
+    },
+    "desktopEs": {
+      "path": "output/playwright/formula-audio-controls-qa/formula-elementary-conversion-01-01/desktop-es.png",
+      "sha256": "7f49bd1befbfb1946bd7630ac3069b66b0bef3bb2a6467032dc68697544024f5",
+      "width": 1440,
+      "height": 2083,
+      "devOverlaySuppression": {
+        "schemaVersion": 1,
+        "capturePageOnly": true,
+        "serverMode": "development",
+        "strategy": "Capture-page-only CSS plus inline important styles suppress Next.js overlay scripts, portal hosts, and recursively discovered shadow-root controls.",
+        "styleId": "help-math-formula-audio-qa-hide-next-dev-overlay",
+        "cssSha256": "91504b8a30b9e005048cbb342dcd54e414c97d39ed389479fd74956f4732d077",
+        "styleInstalled": true,
+        "beforeSuppression": {
+          "scriptOverlayCount": 1,
+          "hiddenScriptOverlayCount": 1,
+          "portalCount": 1,
+          "hiddenPortalCount": 1,
+          "shadowRootCount": 1,
+          "controlCount": 2,
+          "visibleControlCount": 2
+        },
+        "afterSuppression": {
+          "scriptOverlayCount": 1,
+          "hiddenScriptOverlayCount": 1,
+          "portalCount": 1,
+          "hiddenPortalCount": 1,
+          "shadowRootCount": 1,
+          "controlCount": 2,
+          "visibleControlCount": 0
+        },
+        "afterCapture": {
+          "scriptOverlayCount": 1,
+          "hiddenScriptOverlayCount": 1,
+          "portalCount": 1,
+          "hiddenPortalCount": 1,
+          "shadowRootCount": 1,
+          "controlCount": 2,
+          "visibleControlCount": 0
+        }
+      }
+    },
+    "narrowEs": {
+      "path": "output/playwright/formula-audio-controls-qa/formula-elementary-conversion-01-01/narrow-es.png",
+      "sha256": "53c66aa596a62ab0dce29ccea5c611746facff7c6681f96a37b5233963b61c68",
+      "width": 390,
+      "height": 2675,
+      "devOverlaySuppression": {
+        "schemaVersion": 1,
+        "capturePageOnly": true,
+        "serverMode": "development",
+        "strategy": "Capture-page-only CSS plus inline important styles suppress Next.js overlay scripts, portal hosts, and recursively discovered shadow-root controls.",
+        "styleId": "help-math-formula-audio-qa-hide-next-dev-overlay",
+        "cssSha256": "91504b8a30b9e005048cbb342dcd54e414c97d39ed389479fd74956f4732d077",
+        "styleInstalled": true,
+        "beforeSuppression": {
+          "scriptOverlayCount": 1,
+          "hiddenScriptOverlayCount": 1,
+          "portalCount": 1,
+          "hiddenPortalCount": 1,
+          "shadowRootCount": 1,
+          "controlCount": 2,
+          "visibleControlCount": 2
+        },
+        "afterSuppression": {
+          "scriptOverlayCount": 1,
+          "hiddenScriptOverlayCount": 1,
+          "portalCount": 1,
+          "hiddenPortalCount": 1,
+          "shadowRootCount": 1,
+          "controlCount": 2,
+          "visibleControlCount": 0
+        },
+        "afterCapture": {
+          "scriptOverlayCount": 1,
+          "hiddenScriptOverlayCount": 1,
+          "portalCount": 1,
+          "hiddenPortalCount": 1,
+          "shadowRootCount": 1,
+          "controlCount": 2,
+          "visibleControlCount": 0
+        }
+      }
+    },
+    "captureFrame1": {
+      "path": "output/playwright/formula-audio-controls-qa/formula-elementary-conversion-01-01/capture-frame-001.png",
+      "sha256": "99f26fa3b9013b0caa0177d143410228ff1a388d5aa225b20ead8c8e0798ce4f",
+      "width": 780,
+      "height": 379,
+      "devOverlaySuppression": {
+        "schemaVersion": 1,
+        "capturePageOnly": true,
+        "serverMode": "development",
+        "strategy": "Capture-page-only CSS plus inline important styles suppress Next.js overlay scripts, portal hosts, and recursively discovered shadow-root controls.",
+        "styleId": "help-math-formula-audio-qa-hide-next-dev-overlay",
+        "cssSha256": "91504b8a30b9e005048cbb342dcd54e414c97d39ed389479fd74956f4732d077",
+        "styleInstalled": true,
+        "beforeSuppression": {
+          "scriptOverlayCount": 1,
+          "hiddenScriptOverlayCount": 1,
+          "portalCount": 1,
+          "hiddenPortalCount": 1,
+          "shadowRootCount": 1,
+          "controlCount": 2,
+          "visibleControlCount": 0
+        },
+        "afterSuppression": {
+          "scriptOverlayCount": 1,
+          "hiddenScriptOverlayCount": 1,
+          "portalCount": 1,
+          "hiddenPortalCount": 1,
+          "shadowRootCount": 1,
+          "controlCount": 2,
+          "visibleControlCount": 0
+        },
+        "afterCapture": {
+          "scriptOverlayCount": 1,
+          "hiddenScriptOverlayCount": 1,
+          "portalCount": 1,
+          "hiddenPortalCount": 1,
+          "shadowRootCount": 1,
+          "controlCount": 2,
+          "visibleControlCount": 0
+        }
+      }
+    }
+  },
+  "assertions": [
+    {
+      "id": "en-only-english-control",
+      "pass": true,
+      "details": [
+        {
+          "tagName": "BUTTON",
+          "type": "button",
+          "text": "Play English audio",
+          "ariaPressed": "false",
+          "disabled": false,
+          "tabIndex": 0
+        }
+      ]
+    },
+    {
+      "id": "native-keyboard-button",
+      "pass": true,
+      "details": [
+        {
+          "tagName": "BUTTON",
+          "type": "button",
+          "text": "Play English audio",
+          "ariaPressed": "false",
+          "disabled": false,
+          "tabIndex": 0
+        }
+      ]
+    },
+    {
+      "id": "enter-starts-space-stops",
+      "pass": true,
+      "details": {
+        "enterPressed": "true",
+        "spaceStopped": "false"
+      }
+    },
+    {
+      "id": "es-shows-localized-english-and-spanish",
+      "pass": true,
+      "details": [
+        {
+          "tagName": "BUTTON",
+          "type": "button",
+          "text": "Reproducir audio en inglés",
+          "ariaPressed": "false",
+          "disabled": false,
+          "tabIndex": 0
+        },
+        {
+          "tagName": "BUTTON",
+          "type": "button",
+          "text": "Reproducir audio en español",
+          "ariaPressed": "false",
+          "disabled": false,
+          "tabIndex": 0
+        }
+      ]
+    },
+    {
+      "id": "one-track-at-a-time",
+      "pass": true,
+      "details": [
+        {
+          "tagName": "BUTTON",
+          "type": "button",
+          "text": "Reproducir audio en inglés",
+          "ariaPressed": "false",
+          "disabled": false,
+          "tabIndex": 0
+        },
+        {
+          "tagName": "BUTTON",
+          "type": "button",
+          "text": "Detener audio en español",
+          "ariaPressed": "true",
+          "disabled": false,
+          "tabIndex": 0
+        }
+      ]
+    },
+    {
+      "id": "second-click-stops",
+      "pass": true,
+      "details": [
+        {
+          "tagName": "BUTTON",
+          "type": "button",
+          "text": "Reproducir audio en inglés",
+          "ariaPressed": "false",
+          "disabled": false,
+          "tabIndex": 0
+        },
+        {
+          "tagName": "BUTTON",
+          "type": "button",
+          "text": "Reproducir audio en español",
+          "ariaPressed": "false",
+          "disabled": false,
+          "tabIndex": 0
+        }
+      ]
+    },
+    {
+      "id": "narrow-no-horizontal-overflow",
+      "pass": true,
+      "details": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "body": {
+          "scrollWidth": 390,
+          "scrollHeight": 2675
+        },
+        "shell": {
+          "x": 20,
+          "y": 512.140625,
+          "width": 350,
+          "height": 406.875,
+          "right": 370,
+          "bottom": 919.015625
+        },
+        "toolbar": {
+          "x": 22,
+          "y": 514.140625,
+          "width": 346,
+          "height": 234.765625,
+          "right": 368,
+          "bottom": 748.90625
+        },
+        "stage": {
+          "x": 22,
+          "y": 748.90625,
+          "width": 346,
+          "height": 168.109375,
+          "right": 368,
+          "bottom": 917.015625
+        },
+        "buttons": [
+          {
+            "x": 34,
+            "y": 582.375,
+            "width": 255.5,
+            "height": 45.578125,
+            "right": 289.5,
+            "bottom": 627.953125
+          },
+          {
+            "x": 34,
+            "y": 635.953125,
+            "width": 270.109375,
+            "height": 45.578125,
+            "right": 304.109375,
+            "bottom": 681.53125
+          },
+          {
+            "x": 34,
+            "y": 693.53125,
+            "width": 89.5625,
+            "height": 45.578125,
+            "right": 123.5625,
+            "bottom": 739.109375
+          }
+        ],
+        "toolbarDirection": "column"
+      }
+    },
+    {
+      "id": "narrow-toolbar-stacks",
+      "pass": true,
+      "details": "column"
+    },
+    {
+      "id": "capture-toolbar-hidden",
+      "pass": true,
+      "details": {
+        "toolbarDisplay": "none",
+        "captureControlCount": 0
+      }
+    },
+    {
+      "id": "capture-does-not-play-audio",
+      "pass": true,
+      "details": []
+    },
+    {
+      "id": "all-evidence-screenshots-have-no-visible-dev-overlay",
+      "pass": true,
+      "details": {
+        "desktopEn": {
+          "schemaVersion": 1,
+          "capturePageOnly": true,
+          "serverMode": "development",
+          "strategy": "Capture-page-only CSS plus inline important styles suppress Next.js overlay scripts, portal hosts, and recursively discovered shadow-root controls.",
+          "styleId": "help-math-formula-audio-qa-hide-next-dev-overlay",
+          "cssSha256": "91504b8a30b9e005048cbb342dcd54e414c97d39ed389479fd74956f4732d077",
+          "styleInstalled": true,
+          "beforeSuppression": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 2
+          },
+          "afterSuppression": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 0
+          },
+          "afterCapture": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 0
+          }
+        },
+        "desktopEs": {
+          "schemaVersion": 1,
+          "capturePageOnly": true,
+          "serverMode": "development",
+          "strategy": "Capture-page-only CSS plus inline important styles suppress Next.js overlay scripts, portal hosts, and recursively discovered shadow-root controls.",
+          "styleId": "help-math-formula-audio-qa-hide-next-dev-overlay",
+          "cssSha256": "91504b8a30b9e005048cbb342dcd54e414c97d39ed389479fd74956f4732d077",
+          "styleInstalled": true,
+          "beforeSuppression": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 2
+          },
+          "afterSuppression": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 0
+          },
+          "afterCapture": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 0
+          }
+        },
+        "narrowEs": {
+          "schemaVersion": 1,
+          "capturePageOnly": true,
+          "serverMode": "development",
+          "strategy": "Capture-page-only CSS plus inline important styles suppress Next.js overlay scripts, portal hosts, and recursively discovered shadow-root controls.",
+          "styleId": "help-math-formula-audio-qa-hide-next-dev-overlay",
+          "cssSha256": "91504b8a30b9e005048cbb342dcd54e414c97d39ed389479fd74956f4732d077",
+          "styleInstalled": true,
+          "beforeSuppression": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 2
+          },
+          "afterSuppression": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 0
+          },
+          "afterCapture": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 0
+          }
+        },
+        "captureFrame1": {
+          "schemaVersion": 1,
+          "capturePageOnly": true,
+          "serverMode": "development",
+          "strategy": "Capture-page-only CSS plus inline important styles suppress Next.js overlay scripts, portal hosts, and recursively discovered shadow-root controls.",
+          "styleId": "help-math-formula-audio-qa-hide-next-dev-overlay",
+          "cssSha256": "91504b8a30b9e005048cbb342dcd54e414c97d39ed389479fd74956f4732d077",
+          "styleInstalled": true,
+          "beforeSuppression": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 0
+          },
+          "afterSuppression": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 0
+          },
+          "afterCapture": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "capture-native-stage-size",
+      "pass": true,
+      "details": {
+        "path": "output/playwright/formula-audio-controls-qa/formula-elementary-conversion-01-01/capture-frame-001.png",
+        "sha256": "99f26fa3b9013b0caa0177d143410228ff1a388d5aa225b20ead8c8e0798ce4f",
+        "width": 780,
+        "height": 379,
+        "devOverlaySuppression": {
+          "schemaVersion": 1,
+          "capturePageOnly": true,
+          "serverMode": "development",
+          "strategy": "Capture-page-only CSS plus inline important styles suppress Next.js overlay scripts, portal hosts, and recursively discovered shadow-root controls.",
+          "styleId": "help-math-formula-audio-qa-hide-next-dev-overlay",
+          "cssSha256": "91504b8a30b9e005048cbb342dcd54e414c97d39ed389479fd74956f4732d077",
+          "styleInstalled": true,
+          "beforeSuppression": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 0
+          },
+          "afterSuppression": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 0
+          },
+          "afterCapture": {
+            "scriptOverlayCount": 1,
+            "hiddenScriptOverlayCount": 1,
+            "portalCount": 1,
+            "hiddenPortalCount": 1,
+            "shadowRootCount": 1,
+            "controlCount": 2,
+            "visibleControlCount": 0
+          }
+        }
+      }
+    },
+    {
+      "id": "direct-audio-get-200",
+      "pass": true,
+      "details": [
+        {
+          "language": "en",
+          "url": "/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+          "status": 200,
+          "contentType": "audio/mpeg",
+          "bytes": 46378,
+          "expectedSha256": "ac64efe44e1960d1abde5fb9aeb0c2d38509ae5c2bafd86351b53d1a4177a66a",
+          "observedSha256": "ac64efe44e1960d1abde5fb9aeb0c2d38509ae5c2bafd86351b53d1a4177a66a"
+        },
+        {
+          "language": "es",
+          "url": "/flash-assets/audio/formulas/conversion-1-1/es.mp3",
+          "status": 200,
+          "contentType": "audio/mpeg",
+          "bytes": 75985,
+          "expectedSha256": "e1667a7b14a9ac38d885020a3f5fae0e947abbac74faf7231ceaff2198368d9c",
+          "observedSha256": "e1667a7b14a9ac38d885020a3f5fae0e947abbac74faf7231ceaff2198368d9c"
+        }
+      ]
+    },
+    {
+      "id": "served-audio-hash-exact",
+      "pass": true,
+      "details": [
+        {
+          "language": "en",
+          "url": "/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+          "status": 200,
+          "contentType": "audio/mpeg",
+          "bytes": 46378,
+          "expectedSha256": "ac64efe44e1960d1abde5fb9aeb0c2d38509ae5c2bafd86351b53d1a4177a66a",
+          "observedSha256": "ac64efe44e1960d1abde5fb9aeb0c2d38509ae5c2bafd86351b53d1a4177a66a"
+        },
+        {
+          "language": "es",
+          "url": "/flash-assets/audio/formulas/conversion-1-1/es.mp3",
+          "status": 200,
+          "contentType": "audio/mpeg",
+          "bytes": 75985,
+          "expectedSha256": "e1667a7b14a9ac38d885020a3f5fae0e947abbac74faf7231ceaff2198368d9c",
+          "observedSha256": "e1667a7b14a9ac38d885020a3f5fae0e947abbac74faf7231ceaff2198368d9c"
+        }
+      ]
+    },
+    {
+      "id": "browser-media-request-success",
+      "pass": true,
+      "details": {
+        "english": 200,
+        "spanish": 200,
+        "note": "Chromium uses successful HTTP Range responses (206) for media playback; ordinary same-origin GETs above return 200."
+      }
+    },
+    {
+      "id": "no-external-network",
+      "pass": true,
+      "details": []
+    },
+    {
+      "id": "audio-only-approved-same-origin-path",
+      "pass": true,
+      "details": [
+        {
+          "url": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+          "status": 200,
+          "contentType": "audio/mpeg"
+        },
+        {
+          "url": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+          "status": 206,
+          "contentType": "audio/mpeg"
+        },
+        {
+          "url": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/es.mp3",
+          "status": 200,
+          "contentType": "audio/mpeg"
+        }
+      ]
+    },
+    {
+      "id": "no-console-or-page-errors",
+      "pass": true,
+      "details": {
+        "consoleErrors": [],
+        "pageErrors": []
+      }
+    },
+    {
+      "id": "no-unexpected-failed-requests",
+      "pass": true,
+      "details": {
+        "unexpectedFailedRequests": [],
+        "intentionalNavigationAborts": [
+          {
+            "url": "http://127.0.0.1:3000/flash-assets/conversion-1-1/frames/3.svg",
+            "failure": "net::ERR_ABORTED"
+          },
+          {
+            "url": "http://127.0.0.1:3000/flash-assets/conversion-1-1/frames/5.svg",
+            "failure": "net::ERR_ABORTED"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mock-keyboard-lifecycle",
+      "pass": true,
+      "details": {
+        "afterEnter": {
+          "controls": [
+            {
+              "tagName": "BUTTON",
+              "type": "button",
+              "text": "Stop English audio",
+              "ariaPressed": "true",
+              "disabled": false,
+              "tabIndex": 0
+            }
+          ],
+          "mock": {
+            "documentId": "1784727392239-0.6640421264607393",
+            "instances": [
+              {
+                "id": 1,
+                "src": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+                "paused": false,
+                "currentTime": 0
+              }
+            ]
+          }
+        },
+        "afterSpace": {
+          "controls": [
+            {
+              "tagName": "BUTTON",
+              "type": "button",
+              "text": "Play English audio",
+              "ariaPressed": "false",
+              "disabled": false,
+              "tabIndex": 0
+            }
+          ],
+          "mock": {
+            "documentId": "1784727392239-0.6640421264607393",
+            "instances": [
+              {
+                "id": 1,
+                "src": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+                "paused": true,
+                "currentTime": 0
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "mock-exclusive-pauses-previous",
+      "pass": true,
+      "details": {
+        "controls": [
+          {
+            "tagName": "BUTTON",
+            "type": "button",
+            "text": "Reproducir audio en inglés",
+            "ariaPressed": "false",
+            "disabled": false,
+            "tabIndex": 0
+          },
+          {
+            "tagName": "BUTTON",
+            "type": "button",
+            "text": "Detener audio en español",
+            "ariaPressed": "true",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "mock": {
+          "documentId": "1784727392740-0.9322928258161111",
+          "instances": [
+            {
+              "id": 1,
+              "src": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+              "paused": true,
+              "currentTime": 0
+            },
+            {
+              "id": 2,
+              "src": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/es.mp3",
+              "paused": false,
+              "currentTime": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "mock-second-click-resets-track",
+      "pass": true,
+      "details": {
+        "controls": [
+          {
+            "tagName": "BUTTON",
+            "type": "button",
+            "text": "Reproducir audio en inglés",
+            "ariaPressed": "false",
+            "disabled": false,
+            "tabIndex": 0
+          },
+          {
+            "tagName": "BUTTON",
+            "type": "button",
+            "text": "Reproducir audio en español",
+            "ariaPressed": "false",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "mock": {
+          "documentId": "1784727392740-0.9322928258161111",
+          "instances": [
+            {
+              "id": 1,
+              "src": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+              "paused": true,
+              "currentTime": 0
+            },
+            {
+              "id": 2,
+              "src": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/es.mp3",
+              "paused": true,
+              "currentTime": 0
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "replay-pauses-host-audio",
+      "pass": true,
+      "details": {
+        "events": [
+          {
+            "type": "pause",
+            "audioId": 2,
+            "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+            "documentId": "1784727392239-0.6640421264607393",
+            "href": "http://127.0.0.1:3000/animations/formula-elementary-conversion-01-01?lang=en&scenario=default&seed=0"
+          }
+        ],
+        "controls": [
+          {
+            "tagName": "BUTTON",
+            "type": "button",
+            "text": "Play English audio",
+            "ariaPressed": "false",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "language-navigation-stops-old-document-audio",
+      "pass": true,
+      "details": {
+        "priorDocument": "1784727393085-0.16670789173007394",
+        "currentDocument": "1784727393334-0.28565116218035025",
+        "oldDocumentPauseEvents": [],
+        "controls": [
+          {
+            "tagName": "BUTTON",
+            "type": "button",
+            "text": "Reproducir audio en inglés",
+            "ariaPressed": "false",
+            "disabled": false,
+            "tabIndex": 0
+          },
+          {
+            "tagName": "BUTTON",
+            "type": "button",
+            "text": "Reproducir audio en español",
+            "ariaPressed": "false",
+            "disabled": false,
+            "tabIndex": 0
+          }
+        ],
+        "mechanism": "query-language navigation disposes the prior document; browser media cannot survive that document"
+      }
+    },
+    {
+      "id": "runtime-unmount-stops-host-audio",
+      "pass": true,
+      "details": {
+        "priorDocument": "1784727393512-0.29167044243261664",
+        "events": [
+          {
+            "type": "pause",
+            "audioId": 1,
+            "source": "http://127.0.0.1:3000/flash-assets/audio/formulas/conversion-1-1/en.mp3",
+            "documentId": "1784727393512-0.29167044243261664",
+            "href": "http://127.0.0.1:3000/library"
+          }
+        ],
+        "runtimeRemoved": true
+      }
+    }
+  ],
+  "productQaPassed": true,
+  "authoritativeAudioListeningGate": {
+    "status": "blocked",
+    "passed": false,
+    "reason": "No signed human comparison against the original Flash indexELM host is present; modern control QA cannot satisfy this gate."
+  },
+  "authorityBoundary": {
+    "authoritativeOriginalHostListening": false,
+    "audioTimingParity": false,
+    "audioWordingParity": false,
+    "humanReview": false,
+    "ownerAcceptance": false,
+    "strictMigrationCompletion": false
+  },
+  "remainingStrictGates": [
+    "authoritative original indexELM host listening comparison",
+    "authoritative English/Spanish activation and timing review in the original host",
+    "human reviewer sign-off",
+    "owner acceptance"
+  ],
+  "assetSync": {
+    "command": "npm run sync:formula-audio -- --check",
+    "status": "pass",
+    "passed": true,
+    "acceptanceEffect": "none",
+    "stdout": "> flash-conversion-html5-rebuild@0.1.0 sync:formula-audio\n> node scripts/sync-formula-audio-assets.mjs --check\n\n{\n  \"entries\": 8,\n  \"manifest\": \"public/flash-assets/audio/formulas/manifest.json\"\n}",
+    "stderr": "",
+    "note": "The generated public asset manifest is current. This still does not prove authoritative listening."
+  }
+}

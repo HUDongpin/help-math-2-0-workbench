@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "engineering-visual-prereview",
+  "animationId": "formula-elementary-conversion-01-01",
+  "reviewedAt": "2026-07-21T06:43:11Z",
+  "comparison": {
+    "file": "migrations/formula-elementary-conversion-01-01/evidence/full-frame-comparison-standalone-default-en.json",
+    "sha256": "13670117bc34ec54a3c5923f13a32b9cb5398dac0069bce9dac739508fd5d389",
+    "baselineAuthority": "original-swf-adobe-flash-player-runtime",
+    "baselineManifestSha256": "e5a9b5a1924dcc9c404c7ec5330fa51d796f068254a5bdee699f8b2f3e58e10b",
+    "sourceVectorManifestSha256": "e41a32d88b66ba2d8b85aceecdd10e9c743d74317d40044a784edde113f882e0",
+    "implementationCapture": {
+      "directory": "output/playwright/conversion-1-1-fidelity-pass/en-default",
+      "manifestSha256": "399241d4801cd5c349c23e69645794d85aac192d6c22c8dca99e54c0b4745682",
+      "status": "complete",
+      "capturedFrames": 94,
+      "reportedFrameMismatches": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "httpErrors": 0,
+      "unexpectedRequests": 0
+    },
+    "scenario": "standalone-default",
+    "language": "en",
+    "frameCount": 94,
+    "stage": { "width": 780, "height": 379 }
+  },
+  "review": {
+    "kind": "codex-assisted-engineering-prereview",
+    "humanVisualReview": false,
+    "ownerAcceptance": false,
+    "audioReviewed": false,
+    "hostLocalizationReviewed": false
+  },
+  "numericResult": {
+    "staticThreshold": 0.05,
+    "transitionThreshold": 0.08,
+    "normalizedRmse": {
+      "min": 0.000021637853096341798,
+      "max": 0.021777376134572212,
+      "mean": 0.0187806954971481,
+      "median": 0.018835890135298634,
+      "p95": 0.020659779296421946
+    },
+    "framesAtOrBelowStaticThreshold": 94,
+    "framesAtOrBelowTransitionThreshold": 94,
+    "numericOutlierFrames": [],
+    "allAssignedThresholdsPass": true
+  },
+  "inspectedFrames": [
+    {
+      "frame": 1,
+      "selectionReason": "first-frame",
+      "normalizedRmse": 0.018372411840756078,
+      "mismatchedPixelRatio": 0.008379000067654421,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "The source-derived milk carton, measuring cup, shadows, embedded text, and English formula panel align with the Adobe standalone composition.",
+        "Residuals are limited to Flash-versus-browser SVG rasterization and antialiased edges."
+      ]
+    },
+    {
+      "frame": 11,
+      "selectionReason": "first-authored-motion-frame",
+      "normalizedRmse": 0.018139281344018092,
+      "mismatchedPixelRatio": 0.00801704891414654,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "The corrected runtime-to-root-frame mapping starts carton movement on the authoritative frame.",
+        "Carton position, rotation, layer order, and stationary cup match the source frame."
+      ]
+    },
+    {
+      "frame": 52,
+      "selectionReason": "first-script-cleared-frame",
+      "normalizedRmse": 0.000021637853096341798,
+      "mismatchedPixelRatio": 0,
+      "visualResult": "engineering-pass",
+      "observations": [
+        "The runtime-scripted blank stage is reproduced; no legacy objects remain visible.",
+        "Pixelmatch reports zero mismatched pixels."
+      ]
+    },
+    {
+      "frame": 53,
+      "selectionReason": "second-script-cleared-frame",
+      "normalizedRmse": 0.000021637853096341798,
+      "mismatchedPixelRatio": 0,
+      "visualResult": "engineering-pass",
+      "observations": [
+        "The second authoritative blank frame is preserved exactly under pixelmatch."
+      ]
+    },
+    {
+      "frame": 54,
+      "selectionReason": "post-clear-restoration-frame",
+      "normalizedRmse": 0.02051197208386207,
+      "mismatchedPixelRatio": 0.010232731208984507,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "Carton, cup, formula panel, and ounce callout return on the authoritative frame with source-derived geometry."
+      ]
+    },
+    {
+      "frame": 94,
+      "selectionReason": "terminal-and-maximum-rmse-frame",
+      "normalizedRmse": 0.021777376134572212,
+      "mismatchedPixelRatio": 0.011112238684798052,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "The final equation and source Replay up-state align in position, alpha, embedded glyphs, and layer order.",
+        "The transparent React hit target preserves click, Enter, Space, focus, and accessible-name behavior without altering source visuals."
+      ]
+    }
+  ],
+  "conclusion": {
+    "numericThresholdResult": "pass",
+    "visualFidelityResult": "engineering-prereview-pass-with-residuals",
+    "strictAcceptanceResult": "not-accepted-pending-human-owner-and-other-gates",
+    "reason": "All 94 authoritative English standalone frames pass their assigned thresholds; the corrected one-frame mapping, two script-cleared frames, and terminal Replay state were inspected without a material formula, number, label, timing, or layer mismatch.",
+    "requiredFollowUp": [
+      "Obtain signed human review of the all-frame contact sheet and accepted renderer residuals.",
+      "Validate parent-host Spanish behavior and both authoritative audio tracks, including hashes, durations, cue timing, and synchronization.",
+      "Complete responsive, reduced-motion, keyboard, strict-validator, and owner acceptance gates before changing migration status."
+    ]
+  },
+  "limitations": [
+    "This evidence covers only English standalone Adobe Flash Player playback.",
+    "It does not prove Spanish behavior driven by parent-movie variables.",
+    "Silent PNG comparison does not prove either language's audio activation or synchronization.",
+    "The authoritative baseline uses recorded alpha-composite normalization for transparent macOS window corners; invalidated captures were not used.",
+    "This engineering prereview is not a human visual-review signature and is not owner acceptance."
+  ]
+}

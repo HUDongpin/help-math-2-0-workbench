@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "profiles": [
+    {
+      "releaseId": "lesson-g05-l05-add-subtract-negative-numbers",
+      "snapshotId": "g5-l5-source-planning-entry-2026-07-28",
+      "capturePhase": "post-source-workspace-planning-pre-authoritative-runtime",
+      "outputDirectory": "reports/current-state-snapshots/g5-l5-source-planning-entry-2026-07-28",
+      "temporalBoundary": {
+        "requestedBaselineDate": "2026-07-28",
+        "preExistingWork": [
+          "The exact G5 L5 release definition, 57 draft migration workspaces, source-scope freeze, and runtime-planning artifacts existed before this snapshot.",
+          "The repository already contained unrelated user work and earlier G4 L3 and G5 L4 evidence.",
+          "No G5 L4 M0/M1 receipt, operator authorization, runtime session, implementation result, or acceptance decision is imported into this G5 L5 snapshot."
+        ],
+        "statement": "This is a durable G5 L5 current-state receipt taken after source/workspace/runtime-planning materialization and before authoritative runtime acquisition or renderer implementation. It is not a pre-change checkout image and must not be represented as one."
+      },
+      "observedStateSource": {
+        "mode": "fail-closed-planning",
+        "expectedMemberCount": 57,
+        "structuralRootFrameCount": 610,
+        "workspaceLogicalId": "g5-l5-workspace-readiness",
+        "sourceScopeLogicalId": "g5-l5-source-scope",
+        "releaseLedgerLogicalId": "lesson-release-ledger",
+        "runtimePlanningLogicalId": "g5-l5-runtime-planning-readiness",
+        "authoringReadinessLogicalId": "g5-l5-authoring-readiness"
+      },
+      "inputArtifacts": [
+        {
+          "logicalId": "snapshot-profile",
+          "artifactType": "current-state-snapshot-profile",
+          "path": "catalog/g5-l5-current-state-snapshot-profile.json"
+        },
+        {
+          "logicalId": "lesson-release-definition",
+          "artifactType": "lesson-release-manifest",
+          "path": "catalog/lesson-releases.json"
+        },
+        {
+          "logicalId": "source-manifest",
+          "artifactType": "source-sha256-manifest",
+          "path": "catalog/source-manifest.sha256"
+        },
+        {
+          "logicalId": "protected-completion-ledger",
+          "artifactType": "completion-ledger",
+          "path": "catalog/completion-ledger.json"
+        },
+        {
+          "logicalId": "lesson-release-ledger",
+          "artifactType": "lesson-release-ledger",
+          "path": "catalog/lesson-release-ledger.json"
+        },
+        {
+          "logicalId": "g5-l5-source-scope",
+          "artifactType": "source-scope-freeze",
+          "path": "reports/g5-l5-source-scope-freeze.json"
+        },
+        {
+          "logicalId": "g5-l5-workspace-readiness",
+          "artifactType": "workspace-readiness",
+          "path": "reports/g5-l5-workspace-readiness.json"
+        },
+        {
+          "logicalId": "g5-l5-runtime-planning-readiness",
+          "artifactType": "runtime-acquisition-planning-readiness",
+          "path": "reports/g05-l05-add-subtract-negative-numbers-runtime-acquisition-planning-readiness.json"
+        },
+        {
+          "logicalId": "g5-l5-authoring-readiness",
+          "artifactType": "authoring-operator-readiness",
+          "path": "reports/g5-l5-animate-authoring-operator-readiness.json"
+        },
+        {
+          "logicalId": "root-package",
+          "artifactType": "package-manifest",
+          "path": "package.json"
+        },
+        {
+          "logicalId": "root-lockfile",
+          "artifactType": "package-lock",
+          "path": "package-lock.json"
+        }
+      ],
+      "diagnosticCommands": [
+        {
+          "commandId": "doctor",
+          "argv": ["npm", "run", "doctor"],
+          "scope": "toolchain-diagnostic"
+        },
+        {
+          "commandId": "verify-sources",
+          "argv": ["npm", "run", "verify:sources"],
+          "scope": "source-integrity"
+        },
+        {
+          "commandId": "check-g5-l5-source-workspaces",
+          "argv": ["node", "scripts/materialize-g5-l5-source-workspaces.mjs", "--check"],
+          "scope": "release-source-workspace"
+        },
+        {
+          "commandId": "check-g5-l5-runtime-planning",
+          "argv": [
+            "node",
+            "scripts/materialize-release-runtime-acquisition-plans.mjs",
+            "--release-id",
+            "lesson-g05-l05-add-subtract-negative-numbers",
+            "--check"
+          ],
+          "scope": "runtime-planning"
+        },
+        {
+          "commandId": "check-g5-l5-authoring-readiness",
+          "argv": [
+            "node",
+            "scripts/build-lesson-animate-authoring-operator-readiness.mjs",
+            "--release-id",
+            "lesson-g05-l05-add-subtract-negative-numbers",
+            "--check"
+          ],
+          "scope": "authoring-planning"
+        },
+        {
+          "commandId": "check-protected-completion-ledger",
+          "argv": ["node", "scripts/build-completion-ledger.mjs", "--check"],
+          "scope": "protected-ledger-currentness"
+        },
+        {
+          "commandId": "check-lesson-release-ledger",
+          "argv": ["node", "scripts/build-lesson-release-ledger.mjs", "--check"],
+          "scope": "lesson-release-ledger-currentness"
+        },
+        {
+          "commandId": "snapshot-tests",
+          "argv": [
+            "node",
+            "--test",
+            "scripts/capture-lesson-current-state-snapshot-v1.test.mjs",
+            "scripts/capture-lesson-current-state-snapshot-g5-l5.test.mjs"
+          ],
+          "scope": "snapshot-regression"
+        }
+      ]
+    }
+  ]
+}

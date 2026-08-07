@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "animationId": "course-g03-l06-ti-001",
+  "reviewKind": "canvas-adapter-engineering-prereview",
+  "reviewedAt": "2026-07-21",
+  "decision": "candidate-adapter-passed-static-and-browser-smoke-not-eligible-for-strict-acceptance",
+  "authority": [
+    "This review verifies a deterministic, side-effect-free adapter around the hash-pinned FFDec drawing export.",
+    "It does not establish original-host defaults, authoritative local-frame captures, audio identity or synchronization, Spanish behavior, pixel fidelity, product QA, human visual review, or owner acceptance.",
+    "The migration manifest remains preserved and no acceptance field is changed."
+  ],
+  "sourceEvidence": {
+    "swf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L6/TI/L6TI01.swf",
+      "sha256": "722b56b73cfc3bcff71c83cf71b00bfc89b4fdd3b147ecb43646f644f45dc739"
+    },
+    "scenarioInventory": {
+      "path": "migrations/course-g03-l06-ti-001/audit/scenario-inventory.json",
+      "sha256": "2272e0cf4f744acbfcd096585520c1e587c917c07c6d9128efb54580f8684ec5"
+    },
+    "audioAudit": {
+      "path": "migrations/course-g03-l06-ti-001/audit/audio-runtime-evidence.json",
+      "sha256": "b0118e53045c6fb41d81fe445f1ea4c067735e614f84e53ea912611999132454"
+    },
+    "standaloneAdobeBaseline": {
+      "path": "migrations/course-g03-l06-ti-001/baseline/adobe-flash-player-32-standalone-default.json",
+      "sha256": "a53b3976eee6401a0ed4ac932295566110611a4d293cb86a72a381a262410aa0",
+      "limitation": "The ten root-frame captures do not freeze the independently playing 142-frame child sprite at a declared local frame."
+    },
+    "safeHostFixture": {
+      "fixtureDigest": "c247e930fe9620548bce4d0423f30fa1bc820ad46f3c7e408d09f836781927fa",
+      "manifest": "work/adobe-course-host-fixtures/generated/course-g03-l06-ti-001/c247e930fe9620548bce4d04/fixture-manifest.json",
+      "manifestSha256": "e554f8a2acbe5fc1b3d3e87ab0ce96a0dbd80ad6df7ce30d269d3a5b0dcaca94",
+      "captureClassification": "synthetic-host-probe-until-every-runtime-branch-and-audio-behavior-is-authoritatively-resolved",
+      "guiSmokeStatus": "passed-hash-verified-no-click-sandbox-smoke",
+      "entryHandoffRuntimeProbe": "passed-visible-child-content-without-an-exact-frame-or-independent-trace-capture",
+      "randomControlStatus": "blocked-for-seeded-authoritative-capture",
+      "unresolvedBindingCount": 0
+    },
+    "syntheticHostProbe": {
+      "path": "migrations/course-g03-l06-ti-001/baseline/synthetic-host-adobe-flash-player-32-probe.json",
+      "sha256": "bc339b4b9927cf708960a5ea0c0efb71e98d3ab7710adb4fb8bb0a7c7ba8b08f",
+      "classification": "engineering-probe-not-authoritative-baseline",
+      "strictAcceptanceEffect": "none"
+    }
+  },
+  "rootAndLocalFrameMapping": {
+    "sourceRoot": {
+      "frameCount": 10,
+      "frame1": "Calls _level0.InternalPreloader.gotoAndPlay(\"jump_check\") and stops.",
+      "frame6": "Label begin places sprite object 21 as animation at 8248,5666 twips (412.4,283.3 pixels) and stops.",
+      "normalHostInterpretation": "After the preloader advances the child to begin, the root remains at frame 6 while sprite 21 runs its own timeline. Root frames 7..10 therefore are not treated as a clock for sprite-21 frames."
+    },
+    "contentTimeline": {
+      "timelineId": "sprite-21",
+      "oneIndexedFrames": {
+        "first": 1,
+        "last": 142
+      },
+      "exportSwitchFrames": {
+        "first": 0,
+        "last": 141
+      },
+      "mapping": "public local frame n maps to FFDec switch frame n-1 with the source root pinned at frame 6",
+      "terminal": "AVM1 stop() executes on local frame 142; the adapter rejects frames outside 1..142 instead of wrapping."
+    },
+    "stagePlacement": {
+      "sourcePlacementPixels": {
+        "x": 412.4,
+        "y": 283.3
+      },
+      "ffdecExportInternalTranslation": {
+        "x": 536.9,
+        "y": 198.7
+      },
+      "adapterOuterTranslation": {
+        "x": -124.5,
+        "y": 84.6
+      },
+      "derivation": "(412.4-536.9, 283.3-198.7); this places the 835x355 sprite-bounds export in the native 800x600 SWF stage rather than treating 835x355 as the movie stage."
+    }
+  },
+  "avm1BehaviorExcludedByTheDrawingExport": {
+    "mainSprite": [
+      {
+        "localFrame": 1,
+        "sourceAction": "tempNum=random(2); _global.tempRandomSoundMc=\"Mc_Sound_\"+tempNum"
+      },
+      {
+        "localFrame": 5,
+        "sourceAction": "eval(_global.tempRandomSoundMc).gotoAndPlay(2)"
+      },
+      {
+        "localFrame": 142,
+        "sourceAction": "stop()"
+      }
+    ],
+    "soundSprites": [
+      "Sprite 7 and sprite 8 each stop at frames 1 and 135.",
+      "Each contains 135 MP3 SoundStreamBlock frames at 22050 Hz stereo with an audited decoded duration of 11233 ms.",
+      "The drawing export advances both nested sprite frame arguments geometrically and contains no audio bytes in its runtime contract; it cannot reproduce the source control actions by itself."
+    ],
+    "adapterDisposition": {
+      "scenarios": [
+        "sound-from-seed",
+        "sound-0",
+        "sound-1"
+      ],
+      "seedRule": "The unsigned seed modulo two chooses an explicit engineering branch. This is deterministic test control, not a claim that Adobe AVM1 uses that seeded sequence.",
+      "visualResult": "The branch is reported in frame state, but no audio is played and the exported visual drawing is branch-independent.",
+      "language": "Only source-visible English is admitted. lang=es throws until authoritative Spanish visual/audio behavior exists."
+    }
+  },
+  "generatedAdapter": {
+    "spec": {
+      "path": "migrations/course-g03-l06-ti-001/audit/canvas-adapter-spec.json",
+      "sha256": "22641696f153ca3701146cefc770c999b8f6b71e1105040a55c28ad1d40277cd"
+    },
+    "generator": {
+      "path": "scripts/build-safe-ffdec-canvas-adapter.mjs",
+      "sha256": "9468685c28b2cfe1d09f062fdb4733d68cf22b8d93adfa1b287eeae6402e6887"
+    },
+    "tests": {
+      "path": "scripts/build-safe-ffdec-canvas-adapter.test.mjs",
+      "sha256": "f02bb869e50d7f7dbf5fe229777b25f5427d99a63183766ce41920700c8805a5",
+      "result": "6/6 passed"
+    },
+    "runtime": {
+      "path": "public/flash-assets/courses/course-g03-l06-ti-001/canvas-renderer.js",
+      "sha256": "fe77e3e41496705db2fd950bc65297f895168a982f5eb28d56f48097352c8aff",
+      "bytes": 2305963
+    },
+    "manifest": {
+      "path": "public/flash-assets/courses/course-g03-l06-ti-001/manifest.json",
+      "sha256": "10cd6f02fc7fd1e02c89865ad76379a62eb5208174905a7ebac92b1486692327"
+    },
+    "removedOrBlocked": [
+      "dynamic drawing-object evaluation",
+      "83 ms autoplay interval and implicit looping",
+      "viewer resize listeners",
+      "document-body mutations",
+      "network, navigation, worker, persistent-storage and dynamic-import primitives",
+      "unknown drawing object names"
+    ],
+    "drawingObjectAllowlistCount": 10,
+    "embeddedImageCount": 4,
+    "sourceFilesModified": false
+  },
+  "chromiumEngineeringSmoke": {
+    "playwrightVersion": "1.61.1",
+    "chromiumVersion": "149.0.7827.55",
+    "deviceScaleFactor": 1,
+    "stage": {
+      "width": 800,
+      "height": 600
+    },
+    "framesRendered": [
+      1,
+      5,
+      12,
+      14,
+      50,
+      100,
+      142
+    ],
+    "seedBranchesAtFrame5": [
+      {
+        "seed": 0,
+        "selectedSound": "Mc_Sound_0",
+        "pngSha256": "87207dc5a2e5c96e9d09c01729b642d7e0f3ad836426aedc66fd86f5266b2f0d"
+      },
+      {
+        "seed": 1,
+        "selectedSound": "Mc_Sound_1",
+        "pngSha256": "87207dc5a2e5c96e9d09c01729b642d7e0f3ad836426aedc66fd86f5266b2f0d"
+      }
+    ],
+    "terminalAttributes": {
+      "data-flash-frame": "142",
+      "data-flash-frame-domain": "sprite-21",
+      "data-flash-root-frame": "6",
+      "data-runtime-scenario": "sound-1",
+      "data-runtime-seed": "1"
+    },
+    "unexpectedRequests": [],
+    "consoleErrors": [],
+    "pageErrors": [],
+    "spanishRejected": true,
+    "screenshots": [
+      {
+        "path": "output/playwright/course-g03-l06-ti-001-safe-canvas-adapter/frame-0001-seed-0.png",
+        "sha256": "87207dc5a2e5c96e9d09c01729b642d7e0f3ad836426aedc66fd86f5266b2f0d"
+      },
+      {
+        "path": "output/playwright/course-g03-l06-ti-001-safe-canvas-adapter/frame-0014.png",
+        "sha256": "f1bc66e24f504ac0438007daabe0e85c6a2ed31cfb4d52174e1d8b64fb3050aa"
+      },
+      {
+        "path": "output/playwright/course-g03-l06-ti-001-safe-canvas-adapter/frame-0050.png",
+        "sha256": "77e6e2accdbeec58f78fe58689ba3bffab1c9cd8b31ceeb14a2b806a13a87d5c"
+      },
+      {
+        "path": "output/playwright/course-g03-l06-ti-001-safe-canvas-adapter/frame-0100.png",
+        "sha256": "da85ffb6a01fe24fa37962a8d3c6c9b80774cf59e4e65194e7460298acbc117f"
+      },
+      {
+        "path": "output/playwright/course-g03-l06-ti-001-safe-canvas-adapter/frame-0142.png",
+        "sha256": "7fa81a632663988bd2a17e08715937072f122788c43b3da0e1e3fcbebcb11282"
+      }
+    ],
+    "claim": "renderability and deterministic-state smoke only; no Adobe-frame pairing or RMSE was performed"
+  },
+  "productIntegration": {
+    "packagesDemosModuleCreated": false,
+    "registryChanged": false,
+    "reason": "The safe fixture remains a synthetic-host candidate. Its sandbox smoke and visible begin-handoff probe pass, and all statically reported parent bindings are dispositioned; however, native AVM1 random(2) has no seed entry, both audio streams remain unaudited by listening/synchronization, Spanish is unavailable, and no authoritative local-frame capture exists."
+  },
+  "remainingBlockers": [
+    "Capture and classify both untouched Adobe random outcomes; do not treat modulo seed mapping as original PRNG evidence.",
+    "Identify and listen to both embedded MP3 streams, determine language/content, and capture start/stop synchronization.",
+    "Capture an independent fixture event trace and all 142 sprite-21 local frames for each reachable authoritative scenario at 800x600; the current two JPEGs have no exact frame identity and are not RMSE baselines.",
+    "Resolve Spanish visual/audio behavior or record an owner-approved exception; the current adapter deliberately rejects es.",
+    "Pair every implementation frame to authoritative baselines, compute RMSE/diffs, and complete product, accessibility, human, and owner review."
+  ],
+  "strictAcceptanceEffect": "none"
+}

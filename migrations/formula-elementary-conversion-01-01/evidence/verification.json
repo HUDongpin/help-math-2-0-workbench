@@ -1,0 +1,431 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "formula-pilot-engineering-verification",
+  "generatedAt": "2026-07-21T07:30:33.000Z",
+  "animationId": "formula-elementary-conversion-01-01",
+  "disposition": {
+    "migrationStatus": "preserved",
+    "engineeringReview": "accepted-limited-scope",
+    "strictAcceptance": false,
+    "statusPromotionAuthorized": false,
+    "statement": "The English standalone visual timeline and modern implementation engineering QA are accepted. This report deliberately does not sign Spanish original-host parity, audio listening/synchronization, human visual review, owner review, strict validation, or complete status."
+  },
+  "source": {
+    "fla": {
+      "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SWF/Conversion_1_1.fla",
+      "sha256": "9b369aa2a927e0417a7aef0c94956f609643b6c6737ba824a308d32ba8d928d4"
+    },
+    "swf": {
+      "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SWF/Conversion_1_1.swf",
+      "sha256": "72d1e337b81939bace7eddf0b4994b469b73f3e4c8b103d82c06bda858dcd8a3"
+    },
+    "byteIdenticalPlacements": [
+      {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SWF/Copy of Conversion_1_1.swf",
+        "sha256": "72d1e337b81939bace7eddf0b4994b469b73f3e4c8b103d82c06bda858dcd8a3"
+      }
+    ],
+    "missingSources": []
+  },
+  "movie": {
+    "stage": {
+      "width": 780,
+      "height": 379
+    },
+    "fps": 12,
+    "frameCount": 94,
+    "durationMs": 7833.333333333333,
+    "actionScriptVersion": "AS1/2"
+  },
+  "implementation": {
+    "route": "/animations/formula-elementary-conversion-01-01",
+    "routeFile": "apps/web/app/[locale]/animations/[animationId]/page.tsx",
+    "component": "components/CupConversionAnimation.jsx",
+    "timelineModule": "lib/conversion11Timeline.js",
+    "testFile": "lib/conversion11Timeline.test.mjs",
+    "registryModule": "packages/demos/src/modules/conversion-1-1.tsx",
+    "renderer": "React + SVG using a source-derived full root-frame vector sequence",
+    "deterministicCapture": {
+      "frameParameter": "frame",
+      "scenarioParameter": "scenario",
+      "languageParameter": "lang",
+      "seedParameter": "seed",
+      "captureParameter": "capture",
+      "frameAttribute": "data-flash-frame",
+      "frameNumbering": "one-indexed",
+      "nativeStage": {
+        "width": 780,
+        "height": 379
+      },
+      "deviceScaleFactor": 1
+    }
+  },
+  "visualEvidence": {
+    "authority": "original-swf-adobe-flash-player-runtime",
+    "renderer": "Adobe Flash Player 32.0.0.414 standalone",
+    "baselineScenario": "standalone-default",
+    "implementationScenario": "default",
+    "language": "en",
+    "seed": "0",
+    "frameCount": 94,
+    "firstFrame": 1,
+    "lastFrame": 94,
+    "missingFrames": [],
+    "allAssignedThresholdsPass": true,
+    "thresholds": {
+      "staticNormalizedRmseMax": 0.05,
+      "transitionNormalizedRmseMax": 0.08,
+      "timingToleranceFrames": 0
+    },
+    "normalizedRmse": {
+      "min": 0.000021637853096341798,
+      "max": 0.021777376134572212,
+      "mean": 0.0187806954971481,
+      "median": 0.018835890135298634,
+      "p95": 0.020659779296421946
+    },
+    "contactSheetPages": 10,
+    "everyFrameRepresentedExactlyOnce": true,
+    "spanishOriginalHost": {
+      "status": "blocked",
+      "blockingReason": "No authoritative Adobe/original indexELM-host Spanish full-frame baseline exists. Source frame-1 ActionScript toggles Mc_SD._visible from _root.dtfSpanishFormulas.text, so the English standalone baseline is not a valid Spanish alias.",
+      "requiredFollowUp": "Capture all frames in a hash-pinned Adobe parent fixture or the preserved indexELM host with dtfSpanishFormulas.text=ON, then compare the modern es implementation separately.",
+      "sourceBackedVisualInvariant": false
+    }
+  },
+  "behaviorAndProductQa": {
+    "deterministicBehaviorPassed": true,
+    "productQaPassed": true,
+    "audioControlProductQaPassed": true,
+    "responsiveViewports": [
+      "native 780x379",
+      "desktop 1440",
+      "tablet 768",
+      "narrow 390"
+    ],
+    "replayInputs": [
+      "mouse",
+      "Enter",
+      "Space"
+    ],
+    "reducedMotionVerified": true,
+    "accessibleNameAndFocusVerified": true,
+    "textAndHorizontalOverflowVerified": true,
+    "implementationLocalizationStatesVerified": true,
+    "consoleErrors": 0,
+    "unexpectedNetworkRequests": 0
+  },
+  "audioBoundary": {
+    "inventoryHashVerified": true,
+    "startSemantics": "host-user-activated",
+    "childTimelineStartFrame": null,
+    "servedAssetHashesVerified": true,
+    "controlLifecycleQaPassed": true,
+    "authoritativeListeningAccepted": false,
+    "originalHostActivationAndSynchronizationAccepted": false
+  },
+  "validationRuns": [
+    {
+      "command": "node skills/flash-to-js/scripts/validate_migration.mjs migrations/formula-elementary-conversion-01-01 --allow-draft",
+      "result": "pass"
+    },
+    {
+      "command": "node skills/flash-to-js/scripts/validate_migration.mjs migrations/formula-elementary-conversion-01-01",
+      "result": "expected-fail",
+      "validatorVersion": "2.2.0",
+      "errors": [
+        "status must be 'complete'",
+        "acceptance.humanVisualReview.decision must be accepted",
+        "acceptance.ownerReview.decision must be accepted or not-required",
+        "8 acceptance checklist item(s) remain unchecked",
+        "full-frame coverage combination 2 (default/es): coverage is blocked (No authoritative Adobe/original indexELM-host Spanish full-frame baseline exists. Source frame-1 ActionScript toggles Mc_SD._visible from _root.dtfSpanishFormulas.text, so the English standalone baseline is not a valid Spanish alias.)"
+      ]
+    }
+  ],
+  "repositoryRuns": [
+    {
+      "command": "node --test lib/conversion11Timeline.test.mjs lib/conversion13Timeline.test.mjs lib/conversionTimeline.test.mjs",
+      "result": "pass",
+      "tests": 34,
+      "passed": 34,
+      "failed": 0
+    },
+    {
+      "command": "node --test scripts/workbench-tools.test.mjs",
+      "result": "pass",
+      "tests": 5,
+      "passed": 5,
+      "failed": 0
+    },
+    {
+      "command": "node --test scripts/build-engineering-contact-sheet.test.mjs",
+      "result": "pass",
+      "tests": 5,
+      "passed": 5,
+      "failed": 0
+    },
+    {
+      "command": "npm run test:demos",
+      "result": "pass",
+      "tests": 31,
+      "passed": 31,
+      "failed": 0
+    },
+    {
+      "command": "npm run typecheck:demos",
+      "result": "pass"
+    },
+    {
+      "command": "npm run lint",
+      "result": "pass"
+    },
+    {
+      "command": "npm run typecheck",
+      "result": "pass"
+    },
+    {
+      "command": "npm run test:site",
+      "result": "pass",
+      "tests": 19,
+      "passed": 19,
+      "failed": 0
+    },
+    {
+      "command": "npm run build",
+      "result": "pass",
+      "note": "Next.js 16.2.10 production build compiled, typechecked, and generated 19 static pages."
+    },
+    {
+      "command": "npm test",
+      "result": "fail-unrelated-concurrent-state",
+      "tests": 123,
+      "passed": 122,
+      "failed": 1,
+      "failure": "scripts/build-safe-ffdec-canvas-adapter.test.mjs: TI-001 scenario-inventory SHA expected 3e06d31270595be33317b181e9aabc2e1df69d3177a4c75ab2099c5600eb000b, observed c4297715584d26c17c45cbff9de49a2cfda7efdecec786af0d8130d39ec9e968.",
+      "ownership": "Shared TI-001 adapter binding is outside this formula migration scope and will be reconciled by the root integration pass."
+    },
+    {
+      "command": "npm run verify:workbench",
+      "result": "fail-shared-stale-ledger",
+      "failure": "catalog/completion-ledger.json is stale"
+    },
+    {
+      "command": "npm run ledger:check",
+      "result": "fail-shared-stale-ledger",
+      "failure": "catalog/completion-ledger.json is stale; this formula closeout did not mutate the shared ledger"
+    }
+  ],
+  "gateSummary": {
+    "formulaScopedEngineeringEvidenceGreen": true,
+    "productionBuildGreen": true,
+    "fullRepositoryRegressionGreen": false,
+    "englishStandaloneFullFrameCoverage": true,
+    "spanishOriginalHostFullFrameCoverage": false,
+    "authoritativeAudioListeningAndSync": false,
+    "signedHumanVisualReview": false,
+    "ownerAcceptance": false,
+    "strictValidatorPass": false,
+    "strictMigrationComplete": false
+  },
+  "remainingGates": [
+    "Capture and compare all Spanish frames in a hash-pinned Adobe parent fixture or preserved original host with dtfSpanishFormulas.text=ON.",
+    "Listen to and compare English/Spanish narration, original-host activation semantics, and synchronization; record reviewer/date.",
+    "Obtain signed human review of every full-frame diff/contact-sheet page.",
+    "Obtain owner acceptance or an authorized not-required decision.",
+    "Reconcile the shared TI-001 safe-adapter scenario hash and refresh the shared completion ledger, then rerun the repository suite.",
+    "Run strict validation successfully and promote status only after every preceding gate passes."
+  ],
+  "integrity": {
+    "algorithm": "sha256",
+    "verificationFileExcludedFromSelfHash": true,
+    "allFilesExistedAndHashesMatchedAtGeneration": true,
+    "files": [
+      {
+        "file": "migrations/formula-elementary-conversion-01-01/migration.json",
+        "sha256": "5a16f7ebae49b069108d07712726dda39809a9eed7922737c942fb4ddec48a99",
+        "exists": true
+      },
+      {
+        "file": "migrations/formula-elementary-conversion-01-01/MIGRATION_BRIEF.md",
+        "sha256": "82f8b16761f659b03d150111523c667567a9dcc876b51b8447da8687872fa4c8",
+        "exists": true
+      },
+      {
+        "file": "migrations/formula-elementary-conversion-01-01/ACCEPTANCE_CHECKLIST.md",
+        "sha256": "2520e79c293e83b7eab4bfbfa91395de57ab55c154e578c6ca576f2de601725e",
+        "exists": true
+      },
+      {
+        "file": "migrations/formula-elementary-conversion-01-01/asset-inventory.csv",
+        "sha256": "c0c290a204fefb087ebc8a57bacfb98264b87276bfc93835cc699d81c85bcf63",
+        "exists": true
+      },
+      {
+        "file": "migrations/formula-elementary-conversion-01-01/audio-inventory.csv",
+        "sha256": "0ca8304900219c28e60ee77cc9ddf02dbf29e877cd0618c143a663c00b856a51",
+        "exists": true
+      },
+      {
+        "file": "migrations/formula-elementary-conversion-01-01/keyframes.csv",
+        "sha256": "774895707ef61fc3e20b1ac1329765a4d9479f1d5edcc140148705e3d6ef9b3a",
+        "exists": true
+      },
+      {
+        "file": "migrations/formula-elementary-conversion-01-01/evidence/full-frame-coverage.json",
+        "sha256": "fab9d6a265d3b8e8ff3bef20a84a8d09c30d361c4e9afb2806f6445a3219dcfa",
+        "exists": true
+      },
+      {
+        "file": "migrations/formula-elementary-conversion-01-01/evidence/full-frame-metrics-default-en.json",
+        "sha256": "36c0971f7d6a85b0c0fcc77d33c4b5b576e243832934bb6f351ebeb9c8a6cb72",
+        "exists": true
+      },
+      {
+        "file": "migrations/formula-elementary-conversion-01-01/baseline/adobe-flash-player-32-standalone-default.json",
+        "sha256": "e5a9b5a1924dcc9c404c7ec5330fa51d796f068254a5bdee699f8b2f3e58e10b",
+        "exists": true
+      },
+      {
+        "file": "migrations/formula-elementary-conversion-01-01/evidence/full-frame-comparison-standalone-default-en.json",
+        "sha256": "13670117bc34ec54a3c5923f13a32b9cb5398dac0069bce9dac739508fd5d389",
+        "exists": true
+      },
+      {
+        "file": "migrations/formula-elementary-conversion-01-01/evidence/contact-sheets/standalone-default-en/manifest.json",
+        "sha256": "857e2829d8526a85051e28ce107c162b2fab397dc9cf2de12c8cf5938264880a",
+        "exists": true
+      },
+      {
+        "file": "migrations/formula-elementary-conversion-01-01/evidence/behavior-qa.json",
+        "sha256": "73f08688e4a3f55e02ba615a23272aa37b8121c8fbdcc9973bbc4fc1cc93fa53",
+        "exists": true
+      },
+      {
+        "file": "migrations/formula-elementary-conversion-01-01/evidence/product-qa.json",
+        "sha256": "a1bf80c9fdc9c93c114e5cc469970ed33e440f3b7dcc2c4f91ca23ae5758b9e5",
+        "exists": true
+      },
+      {
+        "file": "migrations/formula-elementary-conversion-01-01/evidence/product-audio-controls-qa.json",
+        "sha256": "b41d50cac9e95aac62daaa57daad7c4dd4357aded13aca7b9c222259022df7bc",
+        "exists": true
+      },
+      {
+        "file": "migrations/formula-elementary-conversion-01-01/evidence/full-frame-comparison-standalone-default-en-engineering-prereview.json",
+        "sha256": "42db66058daf5635ba16991df4a86aba4653a97240d7eb24bef945a6ef23aebe",
+        "exists": true
+      },
+      {
+        "file": "migrations/formula-elementary-conversion-01-01/audit/strict-readiness.json",
+        "sha256": "722920e1a7fea513bb0f7a788301f369e355ef48ff34120fd7afa9a4119ce367",
+        "exists": true
+      },
+      {
+        "file": "migrations/formula-elementary-conversion-01-01/audit/machine/ffdec-scripts.txt.gz",
+        "sha256": "b0f8148c9cf32e3bb9363086b2098cd379547b055d7f62ae8a88dcbdc0f8761b",
+        "exists": true
+      },
+      {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SWF/Conversion_1_1.fla",
+        "sha256": "9b369aa2a927e0417a7aef0c94956f609643b6c6737ba824a308d32ba8d928d4",
+        "exists": true
+      },
+      {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SWF/Conversion_1_1.swf",
+        "sha256": "72d1e337b81939bace7eddf0b4994b469b73f3e4c8b103d82c06bda858dcd8a3",
+        "exists": true
+      },
+      {
+        "file": "apps/web/app/[locale]/animations/[animationId]/page.tsx",
+        "sha256": "0c2c0d0c8bbf4d10dc3da7194e2bad61c1f605589b9c407515b82e89d55134e1",
+        "exists": true
+      },
+      {
+        "file": "components/CupConversionAnimation.jsx",
+        "sha256": "ae26345ca0edf0da8dbbaf0d175a48a8e9ad48280e14ea8677e005737257ba83",
+        "exists": true
+      },
+      {
+        "file": "lib/conversion11Timeline.js",
+        "sha256": "88f25377b29b3c0a7b03f31b9781a68b14ed5f108375e92dc8186fc3ce2073bd",
+        "exists": true
+      },
+      {
+        "file": "lib/conversion11Timeline.test.mjs",
+        "sha256": "7375f614756d1eb70c584ea5b17dd0badae4bc2c6c571cf89a1fa7670e1ea3d6",
+        "exists": true
+      },
+      {
+        "file": "packages/demos/src/modules/conversion-1-1.tsx",
+        "sha256": "8ec2f0775986cf1f13d1f085460864129343801efcb17edfcc01e544a38b3c15",
+        "exists": true
+      },
+      {
+        "file": "scripts/qa-formula-pilot-engineering.mjs",
+        "sha256": "cf4386629d4e17b71fd5ca4b8d0a794f52b14176df596683e379f9b379892895",
+        "exists": true
+      },
+      {
+        "file": "skills/flash-to-js/scripts/validate_migration.mjs",
+        "sha256": "74d30f6e92de96baa180efa51b65849e921789eef268440a931075811524239b",
+        "exists": true
+      },
+      {
+        "file": "scripts/workbench-tools.test.mjs",
+        "sha256": "a7fba84bcdf8cfc09d644348f3f1db3eddee09997bebc52fed6d85b309ef7f07",
+        "exists": true
+      },
+      {
+        "file": "scripts/build-engineering-contact-sheet.test.mjs",
+        "sha256": "9e61bc27171d3ab0cbfae2d374bf7784210e60383a91712061988fcf4c93ee75",
+        "exists": true
+      },
+      {
+        "file": "migrations/formula-pilot-engineering-review-index.json",
+        "sha256": "6b4a375d60f55fb8e3ba543823199f08e5a86dfeda95038ace195580ea286de7",
+        "exists": true
+      }
+    ],
+    "refreshedAt": "2026-07-23T11:25:30.208Z",
+    "refreshedBy": "scripts/refresh-pilot-verification.mjs",
+    "refreshReason": "Recomputed after binding current strict command results; verification.json remains excluded from its own integrity list."
+  },
+  "manifestSha256": "5a16f7ebae49b069108d07712726dda39809a9eed7922737c942fb4ddec48a99",
+  "commands": {
+    "test": {
+      "command": "npm test",
+      "status": "fail",
+      "exitCode": 1,
+      "outputFile": "reports/pilot-verification-runs/2026-07-23T112358-466Z-792ed990/npm-test.txt",
+      "outputSha256": "f9b3a946a1e5e26be2e674d6996b362a26cb05fb4f39264b2474693b6182dbfa",
+      "startedAt": "2026-07-23T11:23:58.467Z",
+      "completedAt": "2026-07-23T11:25:23.465Z",
+      "durationMs": 84998,
+      "signal": null
+    },
+    "build": {
+      "command": "npm run build",
+      "status": "pass",
+      "exitCode": 0,
+      "outputFile": "reports/pilot-verification-runs/2026-07-23T112358-466Z-792ed990/npm-run-build.txt",
+      "outputSha256": "7c9fdfd2a2d1846d1e7843d94f0e617e1ad654bac28bc80cfbd7594da0bd65e5",
+      "startedAt": "2026-07-23T11:25:23.466Z",
+      "completedAt": "2026-07-23T11:25:30.205Z",
+      "durationMs": 6739,
+      "signal": null
+    }
+  },
+  "strictCommandVerification": {
+    "generator": {
+      "path": "scripts/refresh-pilot-verification.mjs",
+      "version": "1.0.0"
+    },
+    "boundAt": "2026-07-23T11:25:30.208Z",
+    "commandResultSource": "executed",
+    "runReceipt": "reports/pilot-verification-runs/2026-07-23T112358-466Z-792ed990/command-results.json",
+    "runReceiptSha256": "df3a0addb95e339c46973211ee22a8f6030666496ef6c6956217387315e93537",
+    "allCommandsPassed": false,
+    "changesMigrationStatus": false,
+    "infersReviewAcceptance": false
+  }
+}

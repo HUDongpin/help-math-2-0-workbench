@@ -11,8 +11,6 @@ const routes = [
   '/resources',
   '/library',
   '/demos',
-  '/demos/conversion-1-2',
-  '/demos/conversion-1-4',
   '/support',
   '/login',
   '/contact',
@@ -29,7 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: new URL(localizedPath(locale, route), siteUrl).toString(),
       lastModified,
       changeFrequency: route === '/' ? ('weekly' as const) : ('monthly' as const),
-      priority: route === '/' ? 1 : route.startsWith('/demos') ? 0.8 : 0.7,
+      priority: route === '/' ? 1 : route === '/demos' ? 0.8 : 0.7,
       alternates: {
         languages: {
           en: new URL(localizedPath('en', route), siteUrl).toString(),

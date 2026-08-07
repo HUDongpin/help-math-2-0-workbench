@@ -1,0 +1,357 @@
+{
+  "acceptanceEffects": {
+    "audioAccepted": false,
+    "authoritativeOriginalRuntime": false,
+    "fidelityAccepted": false,
+    "humanReviewAccepted": false,
+    "ownerAccepted": false,
+    "promotionAuthorized": false,
+    "published": false,
+    "strictComplete": false
+  },
+  "authority": "Unsigned diagnostic receipt only. It binds an observed repository state and command outputs but grants no original-runtime authority, fidelity finding, review decision, Owner acceptance, strict completion, promotion, or publication.",
+  "capturePhase": "post-source-workspace-planning-pre-authoritative-runtime",
+  "capturedAt": "2026-07-28T13:57:37.371Z",
+  "commands": [
+    {
+      "argv": [
+        "npm",
+        "run",
+        "doctor"
+      ],
+      "commandId": "doctor",
+      "endedAt": "2026-07-28T13:57:42.917Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "toolchain-diagnostic",
+      "signal": null,
+      "startedAt": "2026-07-28T13:57:38.034Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 1733,
+      "stdoutSha256": "9a88c922fad4225e3dbd3ff8c1a0dc7f49039d1f1412c1efefda4944d8d6168b"
+    },
+    {
+      "argv": [
+        "npm",
+        "run",
+        "verify:sources"
+      ],
+      "commandId": "verify-sources",
+      "endedAt": "2026-07-28T13:57:45.046Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "source-integrity",
+      "signal": null,
+      "startedAt": "2026-07-28T13:57:42.917Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 161,
+      "stdoutSha256": "a5be7bf747e2757a682c033d19228280fd439e78630519ec16e8430c8e938f01"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/materialize-g5-l5-source-workspaces.mjs",
+        "--check"
+      ],
+      "commandId": "check-g5-l5-source-workspaces",
+      "endedAt": "2026-07-28T13:57:47.465Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "release-source-workspace",
+      "signal": null,
+      "startedAt": "2026-07-28T13:57:45.046Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 84,
+      "stdoutSha256": "b96a897b19100634623b5d58dec1b1a0000275eba777b8b10ab829cd8c70879b"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/materialize-release-runtime-acquisition-plans.mjs",
+        "--release-id",
+        "lesson-g05-l05-add-subtract-negative-numbers",
+        "--check"
+      ],
+      "commandId": "check-g5-l5-runtime-planning",
+      "endedAt": "2026-07-28T13:57:47.685Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "runtime-planning",
+      "signal": null,
+      "startedAt": "2026-07-28T13:57:47.465Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 294,
+      "stdoutSha256": "75db1e012bc6c49ccb72017021a79fc5674ffaf18855ffb132238a50c137086b"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/build-lesson-animate-authoring-operator-readiness.mjs",
+        "--release-id",
+        "lesson-g05-l05-add-subtract-negative-numbers",
+        "--check"
+      ],
+      "commandId": "check-g5-l5-authoring-readiness",
+      "endedAt": "2026-07-28T13:57:48.355Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "authoring-planning",
+      "signal": null,
+      "startedAt": "2026-07-28T13:57:47.685Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 1337,
+      "stdoutSha256": "cf885a46fa70e6c9e68c1a46ab823b262f955ae2c4aa4fc6473f5ca585bd39ee"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/build-completion-ledger.mjs",
+        "--check"
+      ],
+      "commandId": "check-protected-completion-ledger",
+      "endedAt": "2026-07-28T13:58:11.242Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "protected-ledger-currentness",
+      "signal": null,
+      "startedAt": "2026-07-28T13:57:48.355Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 102,
+      "stdoutSha256": "e2fcd21a88457adcecab78c2cdf41b3f40e7a232feb5fa28c0e400640978db9e"
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/build-lesson-release-ledger.mjs",
+        "--check"
+      ],
+      "commandId": "check-lesson-release-ledger",
+      "endedAt": "2026-07-28T13:58:32.941Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "lesson-release-ledger-currentness",
+      "signal": null,
+      "startedAt": "2026-07-28T13:58:11.242Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 110,
+      "stdoutSha256": "733c3754bf135121e3dcdfa0e4cddf1b1a4dcde138c6291f43e3df45aae85e63"
+    },
+    {
+      "argv": [
+        "node",
+        "--test",
+        "scripts/capture-lesson-current-state-snapshot-v1.test.mjs",
+        "scripts/capture-lesson-current-state-snapshot-g5-l5.test.mjs"
+      ],
+      "commandId": "snapshot-tests",
+      "endedAt": "2026-07-28T13:58:33.097Z",
+      "exitCode": 0,
+      "outcome": "passed",
+      "scope": "snapshot-regression",
+      "signal": null,
+      "startedAt": "2026-07-28T13:58:32.942Z",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 1303,
+      "stdoutSha256": "167f77bc48c36577c0ce5152b586ba210222ab962a4b32742b9b32b47e02d0f7"
+    }
+  ],
+  "evidenceType": "help-math-current-state-snapshot-v1",
+  "generator": {
+    "artifactType": "generator-script",
+    "bytes": 47632,
+    "logicalId": "current-state-snapshot-generator",
+    "path": "scripts/capture-lesson-current-state-snapshot-v1.mjs",
+    "sha256": "dc0e6d729ab3baf78f045ba032bc32cc7cf76906a7e053c06122289c1801a297"
+  },
+  "inputs": [
+    {
+      "artifactType": "current-state-snapshot-profile",
+      "bytes": 5679,
+      "logicalId": "snapshot-profile",
+      "path": "catalog/g5-l5-current-state-snapshot-profile.json",
+      "sha256": "d4edc16948cda09464d5ed534d9fa4b3b89c252ddf29792401ac8e01a4aa84c6"
+    },
+    {
+      "artifactType": "lesson-release-manifest",
+      "bytes": 87864,
+      "logicalId": "lesson-release-definition",
+      "path": "catalog/lesson-releases.json",
+      "sha256": "f3caa2ae0e9bfd6c02dd846aa2d45de5c2f746cc57ba01a09e506d4d3c42d632"
+    },
+    {
+      "artifactType": "source-sha256-manifest",
+      "bytes": 831011,
+      "logicalId": "source-manifest",
+      "path": "catalog/source-manifest.sha256",
+      "sha256": "a9625fb4a99e026fea09e4a1929edc2fa9d47ccf6cdbca7de4ba9ca75adf211e"
+    },
+    {
+      "artifactType": "completion-ledger",
+      "bytes": 97183,
+      "logicalId": "protected-completion-ledger",
+      "path": "catalog/completion-ledger.json",
+      "sha256": "6e9841ac5804506c0e2601f110c57122d5968030020c9bab6f2ff771be4b774a"
+    },
+    {
+      "artifactType": "lesson-release-ledger",
+      "bytes": 78417,
+      "logicalId": "lesson-release-ledger",
+      "path": "catalog/lesson-release-ledger.json",
+      "sha256": "95e658680d21159a38ef1c6759c130bd33a7b447a58d8130d38f78dfaabf09b7"
+    },
+    {
+      "artifactType": "source-scope-freeze",
+      "bytes": 200827,
+      "logicalId": "g5-l5-source-scope",
+      "path": "reports/g5-l5-source-scope-freeze.json",
+      "sha256": "ccb465e71d59c502c4aaf47a163a9d6ef046be3ca38ec5c0cd4c5769f2ce38c0"
+    },
+    {
+      "artifactType": "workspace-readiness",
+      "bytes": 58439,
+      "logicalId": "g5-l5-workspace-readiness",
+      "path": "reports/g5-l5-workspace-readiness.json",
+      "sha256": "0315d71afae63c5323e8a73e9a4a796a38d949437bdfaf184b26a17fb74277c1"
+    },
+    {
+      "artifactType": "runtime-acquisition-planning-readiness",
+      "bytes": 56864,
+      "logicalId": "g5-l5-runtime-planning-readiness",
+      "path": "reports/g05-l05-add-subtract-negative-numbers-runtime-acquisition-planning-readiness.json",
+      "sha256": "84e576d6aee23344328f595cc18a1490eb31aaddfafc41d498b7370bc46b6d51"
+    },
+    {
+      "artifactType": "authoring-operator-readiness",
+      "bytes": 435530,
+      "logicalId": "g5-l5-authoring-readiness",
+      "path": "reports/g5-l5-animate-authoring-operator-readiness.json",
+      "sha256": "6c3a1473b39a7eb0b27dd17df1a4ddda0fc2c8ff93db5f897047fb21f3c2b9eb"
+    },
+    {
+      "artifactType": "package-manifest",
+      "bytes": 36243,
+      "logicalId": "root-package",
+      "path": "package.json",
+      "sha256": "6dfc6436d8395976a1981d0dc8d0eb01e0b4cf7c72f75265e13bfb4f5e5ce1b8"
+    },
+    {
+      "artifactType": "package-lock",
+      "bytes": 287827,
+      "logicalId": "root-lockfile",
+      "path": "package-lock.json",
+      "sha256": "4a4495fc540c1da4c38cab6e3428a156dda00644ff6b70e4c15ed14657947839"
+    }
+  ],
+  "integrity": {
+    "commandSetSha256": "52d2470e4e4f770bec3209bb9b971385ec6728fccf78832175a6216d29ddf132",
+    "inputSetSha256": "64e7b9b54a03af6b99c19d084654f4e1bf968c3034714a249a15291e430db915",
+    "snapshotPayloadSha256": "6dd496033323e4821d99bdb91deea82940b7974b61a666b137513e26f9303020"
+  },
+  "knownBoundaries": [
+    "The protected completion and Lesson release ledgers are deliberately preserved even when their currentness checks fail; this snapshot never refreshes them.",
+    "A passing source, workspace, product, typecheck, or build command is current-JavaScript or machine-readiness evidence only.",
+    "Failed diagnostics are recorded as failures and are not rewritten as passing receipts.",
+    "The 610 root frames remain a structural root-timeline count, not full nested/interactive/audio coverage.",
+    "This snapshot consumes no G5 L4 M0/M1 packet, receipt, role assignment, or authorization; its G5 L5 state is independently derived from the exact release, release ledger, source/workspace reports, runtime plan, and authoring-readiness report.",
+    "No authorized original-runtime trace, authoritative baseline, paired full-frame RMSE result, audio listening decision, human review, or Owner decision is created here.",
+    "Public command output is hash-only; raw stdout and stderr stay under the ignored private work root and outside Git and deployments.",
+    "Input inode/hash and withheld worktree fingerprints were stable across the capture command window; any concurrent drift would have rejected this receipt."
+  ],
+  "observedState": {
+    "audioAcceptedFileCount": 0,
+    "authoringAuditCount": 0,
+    "authoritativeRuntimeSessionCount": 0,
+    "completionLedgerCurrent": true,
+    "diagnosticCommandCount": 8,
+    "draftValidWorkspaceCount": 57,
+    "expectedMemberCount": 57,
+    "failedDiagnosticCommandCount": 0,
+    "implementationStartedCount": 0,
+    "m0ExitReady": false,
+    "m1Authorized": false,
+    "machinePacketReadyForOwnerReview": false,
+    "namedRoleAssignmentReceiptCount": 0,
+    "ownerDecisionReceiptCount": 0,
+    "passedDiagnosticCommandCount": 8,
+    "publicRoutesOpen": false,
+    "published": false,
+    "releaseLedgerCurrent": true,
+    "strictCompleteCount": 0
+  },
+  "privacy": {
+    "containsContactInformation": false,
+    "containsPrivatePaths": false,
+    "containsRawAudio": false,
+    "containsRawFrames": false,
+    "containsSecrets": false,
+    "containsStudentData": false,
+    "exportClass": "public-hash-metadata-only",
+    "storesCommandOutput": false
+  },
+  "release": {
+    "activePageCount": 56,
+    "definitionSha256": "c03cf04129a19758f1bbdadbc67c78b26dde783fca1587447bf6ff83f2af7f84",
+    "expectedMemberCount": 57,
+    "memberIdentitySetSha256": "0db47d74a90fc5f1dbcdd74de8a47d73259d994645d3fc41bc20477bc303c26a",
+    "publicationMode": "atomic",
+    "shellCount": 1,
+    "title": "Add & Subtract Negative Numbers"
+  },
+  "releaseId": "lesson-g05-l05-add-subtract-negative-numbers",
+  "repository": {
+    "branch": "codex/g4-l3-fidelity-finish",
+    "dirty": true,
+    "excludedSnapshotOutputCount": 2,
+    "headSha": null,
+    "headState": "unborn",
+    "pathsWithheld": true,
+    "statusEntryCount": 62074,
+    "statusSha256": "c6db0f266fbe6cce20f42d17f824c1be087a6baf25ef7930c2bbbd76c8311d2c",
+    "trackedEntryCount": 656,
+    "untrackedEntryCount": 61418
+  },
+  "schema": {
+    "artifactType": "json-schema",
+    "bytes": 10246,
+    "logicalId": "current-state-snapshot-v1-schema",
+    "path": "schemas/current-state-snapshot-v1.schema.json",
+    "sha256": "8c4a73664f1983b2b3ee3b6c797736bf1fd658b6e838443c7df6fbb2535a1c65"
+  },
+  "schemaVersion": 1,
+  "snapshotId": "g5-l5-source-planning-entry-2026-07-28",
+  "temporalBoundary": {
+    "preExistingWork": [
+      "The exact G5 L5 release definition, 57 draft migration workspaces, source-scope freeze, and runtime-planning artifacts existed before this snapshot.",
+      "The repository already contained unrelated user work and earlier G4 L3 and G5 L4 evidence.",
+      "No G5 L4 M0/M1 receipt, operator authorization, runtime session, implementation result, or acceptance decision is imported into this G5 L5 snapshot."
+    ],
+    "requestedBaselineDate": "2026-07-28",
+    "statement": "This is a durable G5 L5 current-state receipt taken after source/workspace/runtime-planning materialization and before authoritative runtime acquisition or renderer implementation. It is not a pre-change checkout image and must not be represented as one."
+  },
+  "tools": [
+    {
+      "name": "node",
+      "version": "v24.18.0"
+    },
+    {
+      "name": "npm",
+      "version": "11.16.0"
+    },
+    {
+      "name": "git",
+      "version": "git version 2.50.1 (Apple Git-155)"
+    },
+    {
+      "name": "current-state-snapshot-generator",
+      "version": "1.0.0"
+    }
+  ]
+}

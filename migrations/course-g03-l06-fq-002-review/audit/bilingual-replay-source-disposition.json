@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "animationId": "course-g03-l06-fq-002-review",
+  "artifactType": "help-math-fq002-review-bilingual-replay-source-disposition",
+  "scope": "deterministic-read-only-owner-source-forensics",
+  "disposition": "spanish-and-replay-blockers-retained-with-narrowed-source-reasons",
+  "authorityStatement": [
+    "This artifact records what the frozen course XML, three preserved L6FQ02 SWFs, indexELM host bytecode, Review-child bytecode, MP3 tree, and current frame-domain audit prove without running legacy network or reporting side effects.",
+    "It does not prove the historical deployment path of the Review binary, an original-runtime natural trace, a random question order, spoken-language listening, audio synchronization, visual fidelity, Replay acceptance, human review, owner review, or strict completion.",
+    "No file under source-assets was modified, and no parent FQ/EA or FQ/SA file is promoted from lesson-group candidate to an exact Review cue."
+  ],
+  "sourceBindings": {
+    "reviewPilotSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L6/FQ/Review/L6FQ02.swf",
+      "bytes": 1363405,
+      "sha256": "fadffa9df169b4c3417066431f8bfbc16a923778ec17a213b21a7ba2d0a51563"
+    },
+    "activeCourseSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L6/FQ/L6FQ02.swf",
+      "bytes": 1361425,
+      "sha256": "230abcb4302068f31589b6947eb53cb7c12f95ff87077f1b58fdb8e41928bf80"
+    },
+    "missingAudioButtonHistoricalSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L6/FQ/Missing_AudioBtn_March21_2015/L6FQ02.swf",
+      "bytes": 1356867,
+      "sha256": "99ac64f66bc43420430d06ca0f93df2dc14af65504c24f7abeaa379dfe86d1fc"
+    },
+    "lessonXml": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L6/index.xml",
+      "bytes": 12176,
+      "sha256": "d4f6b7efb8de3fff2cd28bdf31a5d97e24831a3af3fd8ee3cf13b16eb8c98a50"
+    },
+    "courseHostSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+      "bytes": 794543,
+      "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd"
+    },
+    "childScriptBundle": {
+      "path": "audit/machine/ffdec-scripts.txt.gz",
+      "sha256": "08b519e63659acf1729071510936952bfef159e7b5f9b9298b52ea60bd54d0e2"
+    },
+    "scenarioInventory": {
+      "path": "audit/scenario-inventory.json",
+      "sha256": "54249e17a7655779c1d9aecee7398b758c7ff022f9ab025180d05a8141f7c0e3"
+    },
+    "audioAudit": {
+      "path": "audit/audio-runtime-evidence.json",
+      "sha256": "7e0451310cc176f67cac4f2f60475d360bbfdff57464a3f4349a2f00ba8e218c"
+    },
+    "variantBinding": {
+      "path": "audit/fq002-review-variant-binding.json",
+      "sha256": "78701a541626f7c408b45d4115e0446c8dad9c898cdf33964bac96b52b7a1284"
+    },
+    "frameDomainDisposition": {
+      "path": "audit/frame-domain-disposition.json",
+      "sha256": "edfb12297aa57cb5582846a8cb3f576cce25c2069140eefe864387175c6a1b29"
+    }
+  },
+  "coursePlacement": {
+    "activeXmlLine": 164,
+    "activeXmlPage": "<Page Title=\"Page 1\" RandomAudio=\"\" BGText=\"\" Navigation=\"OFF\">FQ/L6FQ02.swf</Page>",
+    "activePlacementPath": "FQ/L6FQ02.swf",
+    "activePlacementSha256": "230abcb4302068f31589b6947eb53cb7c12f95ff87077f1b58fdb8e41928bf80",
+    "reviewPlacementPath": "FQ/Review/L6FQ02.swf",
+    "reviewPlacementSha256": "fadffa9df169b4c3417066431f8bfbc16a923778ec17a213b21a7ba2d0a51563",
+    "exactReviewPlacementCountInActiveXml": 0,
+    "relationship": "basename-only-conflict-distinct-binaries",
+    "historicalReviewHostPlacement": "unresolved"
+  },
+  "bilingualSourceDisposition": {
+    "childLanguageControls": {
+      "spanishButtonScript": {
+        "path": "DefineButton2_241/BUTTONCONDACTION on(release).as",
+        "rawSha256": "a2e4af1cd1fa0b238c8cc73348d24070857ef9e3db12862551437bef99cf397d",
+        "questionCall": "_root.doPlayFQQuestionAudio(this,\"SP\")",
+        "answerCall": "_root.doPlayFQAnswerAudio(this,\"SP\")"
+      },
+      "englishButtonScript": {
+        "path": "DefineButton2_247/BUTTONCONDACTION on(release).as",
+        "rawSha256": "8bbeee06a2f6f663596208db1822c70c1b96e8c3034be27327169ac1f2e2a45e",
+        "questionCall": "_root.doPlayFQQuestionAudio(this,\"EN\")",
+        "answerCall": "_root.doPlayFQAnswerAudio(this,\"EN\")"
+      },
+      "audioControlTimeline": {
+        "timelineId": "sprite-256",
+        "frameCount": 8,
+        "spanishQuestionFlag": "_root.dtfFinalQuizSpanishAudio",
+        "spanishAnswerFlag": "_root.dtfFinalQuizAnswerSpanishAudio",
+        "spanishControlFrame": 5,
+        "englishControlFrame": 6,
+        "disabledControlFrame": 8,
+        "hostFlagValues": "historical Review placement unresolved"
+      }
+    },
+    "hostAudioPathRule": {
+      "hostScript": "scripts/frame_35/DoAction.as",
+      "hostScriptRawSha256": "5a0975489fc331b1c0bec3738112397c24c055203890546ed862f06ae8233c3e",
+      "audioRelevantScriptsSha256": "bdf58f23b647b1b78968873adfdda55f52baa63ce8dc42dea7dd2e6c0ba9b8d3",
+      "questionNumberRule": "Q + Number(_root.animation_mc.animation._currentframe - 1)",
+      "answerSuffixRule": "option 1/2/3/4 maps to A/B/C/D",
+      "englishDirectory": "EA",
+      "spanishDirectory": "SA",
+      "baseDirectoryRule": "strip the final path segment from _global.playSwfFileName",
+      "activation": "user-triggered child audio button",
+      "automaticTimelineCue": false
+    },
+    "pathResolution": {
+      "ifLoadedFromActiveXmlPath": {
+        "loadedSwfPath": "HELP_COURSES/ELMGR3/L6/FQ/L6FQ02.swf",
+        "englishPattern": "HELP_COURSES/ELMGR3/L6/FQ/EA/Q<n>[A-D].mp3",
+        "spanishPattern": "HELP_COURSES/ELMGR3/L6/FQ/SA/Q<n>[A-D].mp3",
+        "sourceBinary": "activeCourseSwf-not-reviewPilotSwf"
+      },
+      "ifLoadedFromPreservedReviewPath": {
+        "loadedSwfPath": "HELP_COURSES/ELMGR3/L6/FQ/Review/L6FQ02.swf",
+        "englishPattern": "HELP_COURSES/ELMGR3/L6/FQ/Review/EA/Q<n>[A-D].mp3",
+        "spanishPattern": "HELP_COURSES/ELMGR3/L6/FQ/Review/SA/Q<n>[A-D].mp3",
+        "englishDirectoryStatus": "absent",
+        "spanishDirectoryStatus": "absent",
+        "exactAudioFileCount": 0
+      }
+    },
+    "parentAudioCandidates": {
+      "status": "active-placement-lesson-group-candidates-not-review-cues",
+      "englishDirectory": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L6/FQ/EA",
+      "englishFileCount": 53,
+      "englishCanonicalQuestionFilenameCount": 13,
+      "englishCanonicalAnswerFilenameCount": 39,
+      "englishNoncanonicalFilenameCount": 1,
+      "englishNoncanonicalFilenames": [
+        "Q20B_.mp3"
+      ],
+      "spanishDirectory": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L6/FQ/SA",
+      "spanishFileCount": 76,
+      "spanishCanonicalQuestionFilenameCount": 13,
+      "spanishCanonicalAnswerFilenameCount": 63,
+      "possibleHostRequestCount": 310,
+      "promotionToReviewCues": false
+    },
+    "staticTextProbe": {
+      "tool": "JPEXS Free Flash Decompiler v.26.2.1",
+      "command": "ffdec -onerror abort -export text <temporary-output> <review-pilot-swf>",
+      "retained": false,
+      "exportedTextFileCount": 555,
+      "nonemptyTextFileCount": 553,
+      "uniqueRawTextCount": 217,
+      "filenameAndRawSha256IndexSha256": "b7c4befb73a861e8ed8c5fc8d682f83a94a85161ce923dda3755c66db42487ad",
+      "boundedSpanishTokenProbeMatchCount": 0,
+      "limitation": "A token probe is not a language certification; it only corroborates that the child does not contain an obvious second Spanish question-text set."
+    },
+    "visualDisposition": "The active XML uses one SWF path for the page, and the Review child contains host-selected EN/SP audio-button states. It does not prove that this distinct Review binary was loaded by that active page or which dtfFinalQuiz* flags selected the visible controls. Spanish Review visuals therefore remain blocked rather than copied from English by assumption.",
+    "audioDisposition": "The Review-path host rule resolves to absent Review/EA and Review/SA directories. The parent FQ audio files cannot become exact Review cues without historical deployment provenance proving that these Review bytes were served from the active FQ/L6FQ02 path, followed by named-human listening and synchronization review.",
+    "blockerResolved": false
+  },
+  "behaviorAndReplayDisposition": {
+    "rootDomain": {
+      "timelineId": "root",
+      "frameCount": 10,
+      "frame1ScriptSha256": "af7188282949f2613421ba9c8be629f489bbe2ee1e370a072024794b2d2cfc19",
+      "frame1Behavior": "request InternalPreloader jump_check and stop",
+      "beginFrame": 6,
+      "beginLabel": "Begin",
+      "frame6ScriptSha256": "2e331f340fc0b23a29d4602103537aba56d3220b0eeb41382b1642a9a860175c",
+      "frame6Behavior": "stop root and run elapsed-time onEnterFrame timer",
+      "naturalStandaloneStopFrame": 1,
+      "hostEntryToBeginProven": false
+    },
+    "mainNestedDomain": {
+      "timelineId": "sprite-1168",
+      "frameCount": 82,
+      "rootPlacementFrame": 6,
+      "rootInstanceName": "animation",
+      "frame1ScriptSha256": "cc85e5bef9021e10f143f3b988a87a4255b4bb359499d1178b770b80a0bb527c",
+      "questionPoolCount": 31,
+      "randomDrawWithoutReplacementCount": 10,
+      "answerHitTargetCount": 124,
+      "questionFrames": {
+        "first": 2,
+        "last": 32
+      },
+      "reviewEntryFrame": 34,
+      "reviewStopFrame": 50,
+      "reviewQuestionFrames": {
+        "first": 51,
+        "last": 81
+      },
+      "correctOptionIds": [
+        "A1Opt3", "A2Opt2", "A3Opt4", "A4Opt1", "A5Opt2", "A6Opt1", "A7Opt2", "A8Opt4", "A9Opt2", "A10Opt1", "A11Opt2", "A12Opt3", "A13Opt2", "A14Opt2", "A15Opt3", "A16Opt1", "A17Opt2", "A18Opt1", "A19Opt3", "A20Opt3", "A21Opt4", "A22Opt3", "A23Opt2", "A24Opt1", "A25Opt4", "A26Opt4", "A27Opt4", "A28Opt4", "A29Opt1", "A30Opt3", "A31Opt3"
+      ],
+      "gradeBands": [
+        {"minimumCorrect": 0, "maximumCorrect": 3, "label": "Unsatisfactory"},
+        {"minimumCorrect": 4, "maximumCorrect": 6, "label": "Partially Proficient"},
+        {"minimumCorrect": 7, "maximumCorrect": 8, "label": "Proficient"},
+        {"minimumCorrect": 9, "maximumCorrect": 10, "label": "Advanced"}
+      ],
+      "naturalRandomOrderProven": false,
+      "answerBranchTraversalProven": false,
+      "reviewTraversalProven": false,
+      "reportingTraversalProven": false
+    },
+    "unresolvedReachableFrameDomains": [
+      {
+        "timelineId": "sprite-212",
+        "frameCount": 2,
+        "instanceName": "Mc_Finish",
+        "role": "quiz-finish-grade-and-report-state",
+        "frame1ScriptSha256": "3271a793e3f9600314c6b0facc05023c4f3ed09c116d452966200a5d04735655",
+        "frame2ScriptSha256": "9df2de68181dcb47d44c587c14e510a50ae5afa80a3d9ca09eb8b8a359312bd5"
+      },
+      {
+        "timelineId": "sprite-256",
+        "frameCount": 8,
+        "instanceName": "Mc_Quiz_Audio_1",
+        "role": "host-flag-selected-question-or-answer-audio-control",
+        "frame1ScriptSha256": "ddd46519145d8ab56156f4ea5a7fe85ea02f1b6f806d0c4967e751bae6896d0e"
+      },
+      {
+        "timelineId": "sprite-255",
+        "frameCount": 2,
+        "instanceName": "Mc_PlayPause_Audio",
+        "role": "audio-play-pause-control",
+        "frame1ScriptSha256": "325d1efe80749bf61f207fbe2db9e56849bd173405948cb642b90af8719400a3"
+      }
+    ],
+    "sourceInitializationVector": {
+      "moment": "immediately before the trailing doGetRandomQuiz call on sprite-1168 frame 1",
+      "arrayCorrectAnswer": [],
+      "arrayWrongAnswer": [],
+      "arrayResponseAnswer": [],
+      "arrayReview": [],
+      "totQuizCount": 0,
+      "reviewCount": 0,
+      "totalQuestionsCount": 10,
+      "quizSection": true,
+      "Mc_ResultVisible": false,
+      "Mc_FinishVisible": false,
+      "Mc_FinishFrame": 1,
+      "questionPoolRestored": true,
+      "reviewPoolRestored": true,
+      "answerKeyRestored": true,
+      "nextSourceAction": "doGetRandomQuiz() increments totQuizCount and selects one of 31 remaining labels"
+    },
+    "hostReplay": {
+      "buttonScript": "DefineButton2_300/BUTTONCONDACTION on(release).as",
+      "buttonScriptRawSha256": "5dae2d424274af02d5a0dec88025930987187051cac8fc67f277b72cccd4e0ca",
+      "action": "reset selected host playback flags, stop sound, then call _root.loadSWFMovie()",
+      "loadMechanism": "animation_mc.unloadMovie followed by animation_mc.loadMovie(_global.playSwfFileName,1)",
+      "activeXmlNavigation": "OFF",
+      "hostHidesReplayControlWhenNavigationOff": true,
+      "reviewVariantExactHostEntry": "unresolved",
+      "modernRendererButton": "product-host Replay/remount only",
+      "strictReplayResolved": false
+    },
+    "currentCoverageGap": {
+      "declaredRequirementCount": 4,
+      "requirements": [
+        "req:root:root-standalone:en",
+        "req:root:root-standalone:es",
+        "req:sprite-1168:default:en",
+        "req:sprite-1168:default:es"
+      ],
+      "acceptedRequirementCount": 0,
+      "gap": "One default nested requirement per language does not enumerate or prove the 10-of-31 random schedule, 124 answer targets, correct/wrong outcomes, four grade bands, Review traversal, report/close branches, three unresolved reachable child timelines, audio-control states, or full reload reset."
+    }
+  },
+  "requiredNextEvidence": [
+    "Owner or archive provenance that binds the exact Review SWF SHA-256 to its historical deployed _global.playSwfFileName and host/configuration values.",
+    "A source-hash-bound authorized original-runtime natural host entry through root frame 6 with ordered random observations and all required question, answer, finish, review, reporting-disabled, and reset checkpoints.",
+    "Explicit final dispositions and renderer support for sprite-212, sprite-256, and sprite-255.",
+    "Exact cue promotion only after path provenance, file hashing, named-human English/Spanish listening, duration checks, activation checks, and synchronization/Replay checks.",
+    "Full-frame baseline/implementation manifests and RMSE metrics for every accepted trace, followed by human visual and owner review."
+  ],
+  "strictAcceptanceEffect": "none; migration status, confidence, audio cues, human review, owner review, and completion remain unchanged"
+}

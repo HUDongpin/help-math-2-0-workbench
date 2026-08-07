@@ -52,6 +52,7 @@ Configure values in Vercel Project Settings, scoped separately to Production, Pr
 | Variable | Production | Preview / Development |
 | --- | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | `https://www.helpmath.ai` | Canonical production URL unless a feature explicitly needs its Preview origin |
+| `G5_L4_CEO_PREVIEW_ENABLED` | Unset or `0`; production remains fail-closed even if misconfigured | `1` only for the controlled G5 L4 executive review deployment |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | Production widget key restricted to HELP Math hostnames | Cloudflare test key or a separate non-production widget |
 | `TURNSTILE_SECRET_KEY` | Matching production secret | Matching test/non-production secret |
 | `RESEND_API_KEY` | Production key with minimum required access | Separate restricted test key where available |
@@ -59,6 +60,14 @@ Configure values in Vercel Project Settings, scoped separately to Production, Pr
 | `SUPPORT_FROM_EMAIL` | `HELP Math <support@helpmath.ai>` after sender verification | Verified non-production sender |
 
 Changing a Vercel variable affects only new deployments, so redeploy after every environment change. Vercel documents the environment scopes and behavior in [Environment variables](https://vercel.com/docs/environment-variables).
+
+When `G5_L4_CEO_PREVIEW_ENABLED=1` is scoped to a Vercel Preview deployment,
+both the bounded scene browser at `/en/executive-preview/g5-l4` and the full
+descriptor-driven lesson at `/en/courses/5/4` (plus their Spanish routes) are
+available behind Vercel Authentication. Their responses are forced to
+`private, no-store` and `noindex`. The same flag never bypasses the gate in a
+Vercel Production environment and does not change strict completion or
+publication state.
 
 Before enabling Resend, inventory existing mail DNS. Add only the exact verification records supplied for the selected sending identity. Never replace the current apex MX, SPF, DKIM, DMARC, or mailbox-provider verification records. If a record conflicts, stop and coordinate with the mail administrator instead of merging or deleting it.
 

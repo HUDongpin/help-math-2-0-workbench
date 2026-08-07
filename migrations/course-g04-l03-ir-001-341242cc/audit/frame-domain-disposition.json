@@ -1,0 +1,369 @@
+{
+  "schemaVersion": 1,
+  "animationId": "course-g04-l03-ir-001-341242cc",
+  "status": "structurally-enumerated",
+  "migrationStatusChanged": false,
+  "authorityStatement": [
+    "This audit deterministically enumerates the root timeline and every child timeline that the hash-bound scenario inventory marks reachable from the root placement graph.",
+    "A declared frame domain is reported only when the scenario inventory's bound migration technical projection matches the current technical contract and implementation.frameDomains names the same source timeline with the same frame count.",
+    "Static placement reachability, duration, labels, and action states are triage signals, not proof that an undeclared timeline is composite-only, independently required, or nonvisual; unsupported classifications remain unresolved.",
+    "Named root-placement paths include only placement names retained by scenario-inventory.json. Missing named paths do not negate its full-graph structural-reachability result."
+  ],
+  "dispositionDefinitions": {
+    "declared-frame-domain": "The bound manifest explicitly declares this source timeline as a frame domain with a matching frame count.",
+    "composite-child-with-parent": "Reserved for a future evidence-backed conclusion that the child's local state is exhaustively represented inside a declared parent domain; never inferred here from placement alone.",
+    "independent-required": "Reserved for a future authoritative-runtime or authoring-evidence conclusion that this undeclared local playhead requires its own frame domain.",
+    "nonvisual": "Reserved for a future asset/script/authoring audit proving that the timeline has no visual or interaction-state contribution.",
+    "unresolved": "Current evidence does not support one of the other dispositions without guessing."
+  },
+  "generatedFrom": {
+    "scenarioInventory": {
+      "path": "audit/scenario-inventory.json",
+      "sha256": "ee7c22dafaec83cad603228861987b910acca1d3f1af5cc7b130a290f6991edd",
+      "schemaVersion": 1,
+      "inventoryStatus": "static-exhaustive-runtime-unverified"
+    },
+    "migrationManifest": {
+      "path": "migration.json",
+      "hashMode": "canonical-json-v1",
+      "technicalProjection": "help-math-technical-manifest-v1",
+      "technicalProjectionSha256": "f1217896c9dafe2f03fb3b676e773ee3190fb4b884c2e42c07b09467b5dbfdba",
+      "excludedPaths": [
+        "status",
+        "created",
+        "confidence",
+        "classification",
+        "audit",
+        "toolVersions",
+        "baseline",
+        "evidence",
+        "fidelity",
+        "accessibility",
+        "acceptance",
+        "catalogEvidence",
+        "implementation.candidateQa",
+        "implementation.candidateMaturity",
+        "implementation.candidateProductQa",
+        "implementation.candidateVisualEvidence",
+        "implementation.productQaEvidence",
+        "implementation.productQaScope",
+        "audio.catalogGroupCandidates",
+        "audio.catalogExactAssociations",
+        "audio.acceptance",
+        "audio.authoritativeListeningComplete",
+        "audio.originalHostSynchronizationComplete",
+        "audio.strictAcceptance",
+        "audio.structuralAuditComplete"
+      ],
+      "bindingStatus": "verified"
+    },
+    "sourceSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IR/L3RW01.swf",
+      "sha256": "2af6431db3ed786d9b48feec5a649887af92fb219a04e5dbd42e7e4b04087df4"
+    },
+    "swfmillStructure": {
+      "path": "audit/machine/swfmill.xml.gz",
+      "sha256": "b8979ecf697cd137406d09c46c040c709d17293f82aabcc91266f7608c117d29"
+    }
+  },
+  "summary": {
+    "inventoryTimelineCount": 9,
+    "enumeratedTimelineCount": 4,
+    "reachableChildTimelineCount": 3,
+    "excludedNotProvenTimelineCount": 5,
+    "dispositionCounts": {
+      "declared-frame-domain": 4,
+      "composite-child-with-parent": 0,
+      "independent-required": 0,
+      "nonvisual": 0,
+      "unresolved": 0
+    },
+    "highRiskIndependentCandidateCount": 0,
+    "highRiskIndependentCandidates": []
+  },
+  "timelines": [
+    {
+      "timelineId": "root",
+      "sourceTimelineId": "root",
+      "sourceObjectId": null,
+      "frameCount": 10,
+      "structuralReachability": "root",
+      "rootPlacement": {
+        "status": "root-timeline",
+        "namedPlacementPath": []
+      },
+      "knownNamedParentPlacements": [],
+      "declaredFrameDomains": [
+        {
+          "frameDomainId": "root",
+          "kind": "root",
+          "sourceTimelineId": "root",
+          "sourceInstanceId": "",
+          "parentFrameDomainId": null,
+          "parentEntryFrame": null,
+          "localEntryFrame": null,
+          "frameCount": 10,
+          "role": ""
+        }
+      ],
+      "disposition": "declared-frame-domain",
+      "dispositionBasis": "The hash-bound migration manifest declares a matching source timeline and frame count in implementation.frameDomains.",
+      "riskAssessment": {
+        "level": "none",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "source-timeline-already-declared-as-frame-domain"
+        ],
+        "interpretation": "No undeclared-domain triage signal; fidelity still depends on the declared domain's required runtime and visual evidence."
+      },
+      "staticSignals": {
+        "controlStateCount": 3,
+        "frameLabelCount": 1,
+        "namedChildPlacementCount": 1
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "ee7c22dafaec83cad603228861987b910acca1d3f1af5cc7b130a290f6991edd",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "b8979ecf697cd137406d09c46c040c709d17293f82aabcc91266f7608c117d29"
+      }
+    },
+    {
+      "timelineId": "sprite-9",
+      "sourceTimelineId": "sprite-9",
+      "sourceObjectId": "9",
+      "frameCount": 135,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-27",
+            "sourceObjectId": "27",
+            "frame": 6,
+            "depth": "1",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-27",
+            "childTimelineId": "sprite-9",
+            "sourceObjectId": "9",
+            "frame": 1,
+            "depth": "18",
+            "instanceName": "Mc_Sound_0",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-27",
+          "childTimelineId": "sprite-9",
+          "sourceObjectId": "9",
+          "frame": 1,
+          "depth": "18",
+          "instanceName": "Mc_Sound_0",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [
+        {
+          "frameDomainId": "sprite-9",
+          "kind": "nested",
+          "sourceTimelineId": "sprite-9",
+          "sourceInstanceId": "Mc_Sound_0",
+          "parentFrameDomainId": "sprite-27",
+          "parentEntryFrame": 1,
+          "localEntryFrame": 1,
+          "frameCount": 135,
+          "role": "source-static-reachable-capture-domain-candidate-runtime-unverified"
+        }
+      ],
+      "disposition": "declared-frame-domain",
+      "dispositionBasis": "The hash-bound migration manifest declares a matching source timeline and frame count in implementation.frameDomains.",
+      "riskAssessment": {
+        "level": "none",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "source-timeline-already-declared-as-frame-domain"
+        ],
+        "interpretation": "No undeclared-domain triage signal; fidelity still depends on the declared domain's required runtime and visual evidence."
+      },
+      "staticSignals": {
+        "controlStateCount": 2,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 0
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "ee7c22dafaec83cad603228861987b910acca1d3f1af5cc7b130a290f6991edd",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "b8979ecf697cd137406d09c46c040c709d17293f82aabcc91266f7608c117d29"
+      }
+    },
+    {
+      "timelineId": "sprite-10",
+      "sourceTimelineId": "sprite-10",
+      "sourceObjectId": "10",
+      "frameCount": 135,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-27",
+            "sourceObjectId": "27",
+            "frame": 6,
+            "depth": "1",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-27",
+            "childTimelineId": "sprite-10",
+            "sourceObjectId": "10",
+            "frame": 1,
+            "depth": "20",
+            "instanceName": "Mc_Sound_1",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-27",
+          "childTimelineId": "sprite-10",
+          "sourceObjectId": "10",
+          "frame": 1,
+          "depth": "20",
+          "instanceName": "Mc_Sound_1",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [
+        {
+          "frameDomainId": "sprite-10",
+          "kind": "nested",
+          "sourceTimelineId": "sprite-10",
+          "sourceInstanceId": "Mc_Sound_1",
+          "parentFrameDomainId": "sprite-27",
+          "parentEntryFrame": 1,
+          "localEntryFrame": 1,
+          "frameCount": 135,
+          "role": "source-static-reachable-capture-domain-candidate-runtime-unverified"
+        }
+      ],
+      "disposition": "declared-frame-domain",
+      "dispositionBasis": "The hash-bound migration manifest declares a matching source timeline and frame count in implementation.frameDomains.",
+      "riskAssessment": {
+        "level": "none",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "source-timeline-already-declared-as-frame-domain"
+        ],
+        "interpretation": "No undeclared-domain triage signal; fidelity still depends on the declared domain's required runtime and visual evidence."
+      },
+      "staticSignals": {
+        "controlStateCount": 2,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 0
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "ee7c22dafaec83cad603228861987b910acca1d3f1af5cc7b130a290f6991edd",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "b8979ecf697cd137406d09c46c040c709d17293f82aabcc91266f7608c117d29"
+      }
+    },
+    {
+      "timelineId": "sprite-27",
+      "sourceTimelineId": "sprite-27",
+      "sourceObjectId": "27",
+      "frameCount": 136,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-27",
+            "sourceObjectId": "27",
+            "frame": 6,
+            "depth": "1",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "root",
+          "childTimelineId": "sprite-27",
+          "sourceObjectId": "27",
+          "frame": 6,
+          "depth": "1",
+          "instanceName": "animation",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [
+        {
+          "frameDomainId": "sprite-27",
+          "kind": "nested",
+          "sourceTimelineId": "sprite-27",
+          "sourceInstanceId": "animation",
+          "parentFrameDomainId": "root",
+          "parentEntryFrame": 6,
+          "localEntryFrame": 1,
+          "frameCount": 136,
+          "role": "main-teaching-animation-source-static-candidate"
+        }
+      ],
+      "disposition": "declared-frame-domain",
+      "dispositionBasis": "The hash-bound migration manifest declares a matching source timeline and frame count in implementation.frameDomains.",
+      "riskAssessment": {
+        "level": "none",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "source-timeline-already-declared-as-frame-domain"
+        ],
+        "interpretation": "No undeclared-domain triage signal; fidelity still depends on the declared domain's required runtime and visual evidence."
+      },
+      "staticSignals": {
+        "controlStateCount": 3,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 2
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "ee7c22dafaec83cad603228861987b910acca1d3f1af5cc7b130a290f6991edd",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "b8979ecf697cd137406d09c46c040c709d17293f82aabcc91266f7608c117d29"
+      }
+    }
+  ],
+  "strictAcceptanceEffect": "none; this structural audit does not advance migration status or satisfy authoritative runtime, full-frame RMSE, audio, behavior, human-review, or owner-acceptance gates"
+}

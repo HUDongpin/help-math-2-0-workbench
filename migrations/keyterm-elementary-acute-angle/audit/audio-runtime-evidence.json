@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 2,
+  "animationId": "keyterm-elementary-acute-angle",
+  "generatedBy": "scripts/audit-pilot-audio.mjs",
+  "scope": "strict-audio-structural-and-file-metadata-audit",
+  "migrationStatusBefore": null,
+  "migrationStatusBinding": "excluded-from-structural-audio-evidence",
+  "migrationStatusUnchanged": true,
+  "source": {
+    "swf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/DIG/acute_angle.swf",
+    "expectedSha256": "dbc56af636e5551c582977f9230be2ae530874a05c901f0cf44dd5e2d5f2a347",
+    "observedSha256": "dbc56af636e5551c582977f9230be2ae530874a05c901f0cf44dd5e2d5f2a347",
+    "hashMatches": true
+  },
+  "tools": {
+    "ffprobe": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers",
+    "ffdec": "JPEXS Free Flash Decompiler v.26.2.1",
+    "swfmillEvidence": "swfmill 0.3.6"
+  },
+  "authority": {
+    "hostScript": {
+      "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+      "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd",
+      "extractor": "JPEXS Free Flash Decompiler v.26.2.1",
+      "extractedScriptCount": 633,
+      "audioRelevantScriptCount": 2,
+      "combinedAudioRelevantScriptsSha256": "bdf58f23b647b1b78968873adfdda55f52baa63ce8dc42dea7dd2e6c0ba9b8d3",
+      "conventions": {
+        "formula": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "EAD is loaded when the formulas audio-language argument equals English; SAD is loaded by the Spanish/non-English branch."
+        },
+        "keyterm": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "The key-term host builds matching EAD and SAD MP3 paths and selects them from the English/Spanish language state."
+        },
+        "finalQuiz": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "Final-quiz language code EN maps to EA and SP maps to SA for question and answer MP3 paths."
+        },
+        "courseSpanishPage": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "The course host's Spanish-audio path is built from the loaded page basename under the sibling SA directory."
+        }
+      }
+    },
+    "xmlReferences": [
+      {
+        "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTEG4.xml",
+        "sha256": "bec389ce286b9a113297dfd87e052f28cf1da2640d93a277f91f669dfb3ef749",
+        "catalogOccurrence": 3,
+        "syntax": "canonical",
+        "matchedLines": [
+          {
+            "lineNumber": 4,
+            "text": "<Acute~angle~LNG~Àngulo~agudo EngCategory =\"a\" SpanCategory=\"a\" ScreenkeyTerm=\"Acute angle\" SubLinkEng=\"angle,Angle~measures,Measure~right angle,Right angle\" SubLinkSpan=\"ángulo,Àngulo~mide,Measure~ángulo recto,Ángulo recto\" ExFileName=\"Acute_angle.swf\">An angle that measures less than a right angle (90°).~LNG~Un ángulo que mide menos que un ángulo recto, menos de 90 grados.</Acute~angle~LNG~Àngulo~agudo>"
+          }
+        ]
+      },
+      {
+        "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTSG4.xml",
+        "sha256": "7f12ce833f1429073a11a3ea0dd9d9964eb773804c18c025bde12552b3be5a00",
+        "catalogOccurrence": 737,
+        "syntax": "canonical",
+        "matchedLines": [
+          {
+            "lineNumber": 738,
+            "text": "<Acute~angle~LNG~Àngulo~agudo EngCategory=\"a\" SpanCategory=\"a\" ScreenkeyTerm=\"Acute angle\" SubLinkEng=\"angle,Angle~measures,Measure~right angle,Right angle\" SubLinkSpan=\"ángulo,Àngulo~mide,Measure~ángulo recto,Ángulo recto\" ExFileName=\"Acute_angle.swf\">An angle that measures less than a right angle (90°).~LNG~Un ángulo que mide menos que un ángulo recto, menos de 90 grados.</Acute~angle~LNG~Àngulo~agudo>"
+          }
+        ]
+      }
+    ],
+    "catalogAnimation": "catalog/animations.json",
+    "catalogAudioGroups": null
+  },
+  "externalAudio": {
+    "exactAssociations": [
+      {
+        "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/EAD/acute_angle.mp3",
+        "catalogSha256": "8b150d56158690d70c8f9891a72c13fdb62719b973bf970dcdeadaed612dc97f",
+        "observedSha256": "8b150d56158690d70c8f9891a72c13fdb62719b973bf970dcdeadaed612dc97f",
+        "hashMatchesCatalog": true,
+        "bytes": 126017,
+        "association": "matching-basename",
+        "associationStatus": "exact-basename-association",
+        "languageAssessment": {
+          "language": "en",
+          "confidence": "verified-structural",
+          "evidence": "EAD is selected by the legacy host when its audio-language argument is English."
+        },
+        "probe": {
+          "tool": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers",
+          "codecName": "mp3",
+          "codecLongName": "MP3 (MPEG audio layer 3)",
+          "profile": null,
+          "sampleFormat": "fltp",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "channelLayout": "mono",
+          "streamStartSeconds": 0,
+          "streamDurationSeconds": 7.870875,
+          "durationSeconds": 7.870875,
+          "durationMs": 7871,
+          "streamBitRateBps": 128000,
+          "containerBitRateBps": 128084,
+          "formatName": "mp3",
+          "formatLongName": "MP2/3 (MPEG audio layer 2/3)",
+          "probeSizeBytes": 126017,
+          "tags": {
+            "track": "1",
+            "encoded_by": "Fraunhofer IIS MP3 v04.00.03 (fast)",
+            "date": "2009"
+          }
+        },
+        "startFrame": null,
+        "startFrameAuthority": "Verified legacy host script selects and starts this external track from language/user state; it is not a child root-timeline cue.",
+        "startSemantics": "host-user-activated"
+      }
+    ],
+    "lessonGroupCandidates": [],
+    "expectedButMissing": [
+      {
+        "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/SAD/acute_angle.mp3",
+        "language": "es",
+        "status": "missing-source",
+        "evidence": "The verified key-term host constructs the SAD counterpart of the matching EAD basename; no file exists at that preserved-source path."
+      }
+    ],
+    "exactCount": 1,
+    "candidateOnlyCount": 0,
+    "missingExpectedCount": 1
+  },
+  "embeddedAudio": {
+    "rootTimeline": {
+      "frameRate": 12,
+      "declaredFrames": 60
+    },
+    "defineSounds": [],
+    "soundStreams": [],
+    "startSounds": [],
+    "exportedSoundLinkages": []
+  },
+  "actionScriptAudioOperations": [],
+  "strictNoAudioAssessment": null,
+  "inventory": {
+    "file": "audio-inventory.csv",
+    "rowCount": 1,
+    "exactExternalRows": 1,
+    "embeddedRows": 0,
+    "manifestDeclaredAudioLanguages": [
+      "en",
+      "es"
+    ],
+    "inventoriedLanguages": [
+      "en"
+    ],
+    "lessonGroupCandidatesExcludedFromCsv": 0,
+    "rationale": "Candidate-only lesson audio is not promoted to a cue without a resolved host/runtime branch. Root SoundStream/StartSound cues use timeline-frame only when a root frame is structurally proven; verified host/user external tracks use host-user-activated; nested or unresolved cues use interaction-state. No root cue frame is guessed."
+  },
+  "acceptance": {
+    "structurallyAudited": true,
+    "authoritativeListeningComplete": false,
+    "hostStateTraversalComplete": false,
+    "synchronizationComplete": false,
+    "notApplicable": [],
+    "strictAudioAcceptance": "pending",
+    "strictAudioAcceptanceRationale": null,
+    "manifestFollowUp": [],
+    "requirements": [
+      "Adobe/original-host listening must verify spoken language/content, user-trigger behavior, start timing, pause/resume, and completion for every exact external track.",
+      "The host constructs the SAD counterpart of the exact EAD key-term track, but no matching Spanish MP3 is present for this pilot; the missing track must be confirmed and cannot be synthesized silently."
+    ]
+  },
+  "limitations": [
+    "Directory and host-script evidence can identify intended language routing but cannot prove the spoken content; listening remains mandatory.",
+    "SoundStream frame numbers inside DefineSprite are local symbol frames, not unconditional root/runtime cue times.",
+    "No cue frame, branch reachability, URL resolution, language content, or synchronization was guessed."
+  ]
+}

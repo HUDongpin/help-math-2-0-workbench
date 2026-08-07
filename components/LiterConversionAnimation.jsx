@@ -1,9 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import {
   LITER_FLASH_MOVIE,
+  LITER_FORMULAS,
   getGraduatedCylinderMarks,
   getLiterFrameState,
   restartLiterTimeline,
@@ -14,6 +15,7 @@ import {
 } from "./FlashBauhausFormula.jsx";
 
 const cylinderMarks = getGraduatedCylinderMarks();
+const SPANISH_PANEL_ASSET = "/flash-assets/conversion-1-4/formula-es.svg";
 
 function ScaleMark({ mark }) {
   return (
@@ -107,6 +109,8 @@ function ReplayButton({ opacity, onReplay }) {
 export function LiterConversionAnimation({
   spanishFormulaFlag = "off",
   captureFrame,
+  captureStageAttributes,
+  captureVisualAttributes,
 }) {
   const normalizedCaptureFrame = Number.isInteger(captureFrame)
     ? Math.min(LITER_FLASH_MOVIE.frameCount, Math.max(1, captureFrame))
@@ -156,18 +160,19 @@ export function LiterConversionAnimation({
     setIsPlaying(true);
   }, [languageOptions, normalizedCaptureFrame]);
 
-  const spanishFormula = frameState.formulaText.startsWith("1 litro");
-  const panelFill = spanishFormula ? "#b4dc9c" : "#9fd2df";
+  const spanishFormulaVisible = spanishFormulaFlag.toUpperCase() === "ON";
   const liquidBottom = 245.1;
   const surfaceY = frameState.surfaceY;
 
   return (
     <div className="faithful-conversion">
       <div
+        {...captureStageAttributes}
         className="faithful-stage-wrap"
         data-flash-frame={frameState.frame}
       >
         <svg
+          {...captureVisualAttributes}
           className="faithful-stage"
           viewBox="0 0 780 379"
           role="group"
@@ -200,13 +205,13 @@ export function LiterConversionAnimation({
 
           <rect width="780" height="379" fill="#e4e4e4" />
 
-          <g className="bottom-formula-panel">
+          <g aria-label={LITER_FORMULAS.en} className="bottom-formula-panel">
             <rect
               x="15.15"
               y="290.85"
               width="365.7"
               height="52.8"
-              fill={panelFill}
+              fill="#9fd2df"
               stroke="#1e4e59"
               strokeWidth="0.55"
             />
@@ -217,9 +222,26 @@ export function LiterConversionAnimation({
               fontFamily="Verdana, Arial, sans-serif"
               fontSize="16"
             >
-              {frameState.formulaText}
+              {LITER_FORMULAS.en}
             </text>
           </g>
+
+          {spanishFormulaVisible ? (
+            <g
+              aria-label={LITER_FORMULAS.es}
+              className="bottom-formula-panel bottom-formula-panel--spanish"
+              data-source-instance="Mc_SD"
+              data-source-depth="4"
+            >
+              <image
+                href={SPANISH_PANEL_ASSET}
+                x="414.3"
+                y="290.85"
+                width="365.7"
+                height="52.8"
+              />
+            </g>
+          ) : null}
 
           <image
             href="/flash-assets/pitcher-back.png"

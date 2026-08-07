@@ -2,7 +2,7 @@ import type {AnimationModule} from './contract';
 import {animationModuleLoaders} from './registry.generated';
 
 export type {AnimationModuleLoader} from './registry.generated';
-export type {AnimationModule} from './contract';
+export type {AnimationModule, AnimationRendererProps} from './contract';
 
 export const registeredAnimationKeys = Object.freeze(Object.keys(animationModuleLoaders));
 

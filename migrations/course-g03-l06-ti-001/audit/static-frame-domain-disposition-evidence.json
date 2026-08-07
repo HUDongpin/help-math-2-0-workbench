@@ -1,0 +1,541 @@
+{
+  "schemaVersion": 2,
+  "evidenceType": "static-frame-domain-disposition-evidence",
+  "animationId": "course-g03-l06-ti-001",
+  "status": "verified-static-composite-claims",
+  "migrationStatusChanged": false,
+  "authorityStatement": [
+    "This evidence is rebuilt from hash-bound preserved SWF, swfmill structure, FFDec ActionScript, scenario inventory, and migration technical-contract inputs.",
+    "A composite-child-with-parent claim is emitted only when the reviewed timeline/parent identities, exact tag census, MP3 SoundStream blocks, constant placement matrices, fully off-stage visual bounds, removal lifecycle, and unique ActionScript references all match.",
+    "A single-frame-scriptless-structural-child claim is emitted only when the pinned exact ID/count set equals every eligible root-reachable one-frame source timeline, swfmill has exactly one ShowFrame and no DoAction/DoInitAction for it, FFDec exports no frame script, every incoming/outgoing placement has no clipActions, and the manifest declares no independent domain for it.",
+    "Both classifications remove only an independent local-playhead/frame-domain obligation. They do not satisfy button, interaction, behavior, audio, full-frame/RMSE, human-review, or owner-acceptance obligations."
+  ],
+  "generatedFrom": {
+    "sourceSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L6/TI/L6TI01.swf",
+      "sha256": "722b56b73cfc3bcff71c83cf71b00bfc89b4fdd3b147ecb43646f644f45dc739"
+    },
+    "migrationManifest": {
+      "path": "migration.json",
+      "projection": "help-math-technical-manifest-v1",
+      "hashMode": "canonical-json-v1",
+      "sha256": "037b436012e51a4f4239216209330f60e5e64a8c325748133c675c7991ac3823",
+      "excludedPaths": [
+        "status",
+        "created",
+        "confidence",
+        "classification",
+        "audit",
+        "toolVersions",
+        "baseline",
+        "evidence",
+        "fidelity",
+        "accessibility",
+        "acceptance",
+        "catalogEvidence",
+        "implementation.candidateQa",
+        "implementation.candidateMaturity",
+        "implementation.candidateProductQa",
+        "implementation.candidateVisualEvidence",
+        "implementation.productQaEvidence",
+        "implementation.productQaScope",
+        "audio.catalogGroupCandidates",
+        "audio.catalogExactAssociations",
+        "audio.acceptance",
+        "audio.authoritativeListeningComplete",
+        "audio.originalHostSynchronizationComplete",
+        "audio.strictAcceptance",
+        "audio.structuralAuditComplete"
+      ]
+    },
+    "scenarioInventory": {
+      "path": "audit/scenario-inventory.json",
+      "sha256": "cecccec1d923184aa85028be7acefa8391c355b887d42ee0a8a7ab062c982739",
+      "schemaVersion": 1
+    },
+    "swfmillStructure": {
+      "path": "audit/machine/swfmill.xml.gz",
+      "sha256": "65f12db57b8c694a119596134a44b1404826a30aaa24e1711e7bfe5a8188e5e1",
+      "uncompressedSha256": "396142d4a083a30d301f20824075e832404c01e8fc7780518d3463c4d0b34dbe"
+    },
+    "ffdecScripts": {
+      "path": "audit/machine/ffdec-scripts.txt.gz",
+      "sha256": "6795b7dd17e1f709b7e3815c1cfc0dea57f2c3ae7a9fcee2a63c808e155b6e7f",
+      "uncompressedSha256": "bc20a01905d03eb15035cc012631488cf7ed7fb98f1cd7a895f7dfd00036c33e"
+    }
+  },
+  "nativeStage": {
+    "twipsPerPixel": 20,
+    "boundsTwips": {
+      "left": 0,
+      "right": 16000,
+      "top": 0,
+      "bottom": 12000
+    },
+    "widthPixels": 800,
+    "heightPixels": 600
+  },
+  "claimSetContracts": [
+    {
+      "proofType": "audio-only-offstage-visual-marker",
+      "expectedTimelineCount": 2,
+      "expectedTimelineIds": [
+        "sprite-7",
+        "sprite-8"
+      ],
+      "verifiedTimelineCount": 2,
+      "verifiedTimelineIds": [
+        "sprite-7",
+        "sprite-8"
+      ],
+      "exactMatch": true
+    }
+  ],
+  "claims": [
+    {
+      "timelineId": "sprite-7",
+      "sourceObjectId": "7",
+      "frameCount": 135,
+      "disposition": "composite-child-with-parent",
+      "parentTimelineId": "sprite-21",
+      "parentSourceObjectId": "21",
+      "parentFrameDomainId": "sprite-21",
+      "role": "audio-only-offstage-visual-marker",
+      "tagCensus": {
+        "observed": {
+          "DoAction": 2,
+          "End": 1,
+          "PlaceObject2": 1,
+          "ShowFrame": 135,
+          "SoundStreamBlock": 135,
+          "SoundStreamHead": 1
+        },
+        "allowedTags": [
+          "DoAction",
+          "End",
+          "PlaceObject2",
+          "ShowFrame",
+          "SoundStreamBlock",
+          "SoundStreamHead"
+        ],
+        "declaredFrameCount": 135,
+        "observedShowFrameCount": 135,
+        "exactMatch": true
+      },
+      "audioStructure": {
+        "required": true,
+        "acceptanceSatisfied": false,
+        "headTag": "SoundStreamHead",
+        "headCount": 1,
+        "blockCount": 135,
+        "compressionCode": 2,
+        "playbackRateCode": 2,
+        "playbackStereo": true,
+        "sourceFrameDomain": "sprite-7"
+      },
+      "placementChain": [
+        {
+          "parentTimelineId": "root",
+          "childTimelineId": "sprite-21",
+          "sourceObjectId": "21",
+          "frame": 6,
+          "depth": "1",
+          "instanceName": "animation",
+          "tag": "PlaceObject2",
+          "matrix": {
+            "a": 1,
+            "b": 0,
+            "c": 0,
+            "d": 1,
+            "tx": 8248,
+            "ty": 5666
+          }
+        },
+        {
+          "parentTimelineId": "sprite-21",
+          "childTimelineId": "sprite-7",
+          "sourceObjectId": "7",
+          "frame": 1,
+          "depth": "16",
+          "instanceName": "Mc_Sound_0",
+          "tag": "PlaceObject2",
+          "matrix": {
+            "a": 1,
+            "b": 0,
+            "c": 0,
+            "d": 1,
+            "tx": -10248,
+            "ty": -1390
+          }
+        },
+        {
+          "parentTimelineId": "sprite-7",
+          "childTimelineId": null,
+          "sourceObjectId": "6",
+          "frame": 1,
+          "depth": "1",
+          "instanceName": "",
+          "tag": "PlaceObject2",
+          "definitionTag": "DefineShape",
+          "matrix": {
+            "a": 1,
+            "b": 0,
+            "c": 0,
+            "d": 1,
+            "tx": 0,
+            "ty": 0
+          }
+        }
+      ],
+      "lifetime": {
+        "parentPlacementFrame": 1,
+        "parentRemovalFrame": 137,
+        "parentPlacementUpdateCount": 0,
+        "childPlacementUpdateCount": 0,
+        "clipActionCount": 0
+      },
+      "visualBounds": {
+        "sourceShapeObjectId": "6",
+        "sourceShapeBoundsTwips": {
+          "left": -490,
+          "right": 490,
+          "top": -415,
+          "bottom": 414
+        },
+        "compositeMatrix": {
+          "a": 1,
+          "b": 0,
+          "c": 0,
+          "d": 1,
+          "tx": -2000,
+          "ty": 4276
+        },
+        "stageBoundsTwips": {
+          "left": -2490,
+          "right": -1510,
+          "top": 3861,
+          "bottom": 4690
+        },
+        "nativeStageBoundsTwips": {
+          "left": 0,
+          "right": 16000,
+          "top": 0,
+          "bottom": 12000
+        },
+        "nativeStageIntersection": false,
+        "proof": "The only placed visual definition has a constant matrix chain and its transformed bounds do not intersect the native stage before the parent removes the child."
+      },
+      "scriptReferenceAudit": {
+        "candidateTimelineScripts": [
+          {
+            "script": "DefineSprite_7/frame_1/DoAction.as",
+            "frame": 1,
+            "bodySha256": "2443ef5abd9a49f54017c2a509cda1259fb4f8a3e44bc3cfe669addf2fd291db",
+            "lineStart": 39,
+            "lineEnd": 40
+          },
+          {
+            "script": "DefineSprite_7/frame_135/DoAction.as",
+            "frame": 135,
+            "bodySha256": "2443ef5abd9a49f54017c2a509cda1259fb4f8a3e44bc3cfe669addf2fd291db",
+            "lineStart": 42,
+            "lineEnd": 43
+          }
+        ],
+        "selectorPrefix": {
+          "value": "Mc_Sound_",
+          "occurrenceCount": 1,
+          "references": [
+            {
+              "script": "DefineSprite_21/frame_1/DoAction.as",
+              "line": 15,
+              "sourceLine": "_global.tempRandomSoundMc = \"Mc_Sound_\" + tempNum;"
+            }
+          ]
+        },
+        "selectorVariable": {
+          "value": "tempRandomSoundMc",
+          "occurrenceCount": 2,
+          "references": [
+            {
+              "script": "DefineSprite_21/frame_1/DoAction.as",
+              "line": 15,
+              "sourceLine": "_global.tempRandomSoundMc = \"Mc_Sound_\" + tempNum;"
+            },
+            {
+              "script": "DefineSprite_21/frame_5/DoAction.as",
+              "line": 21,
+              "sourceLine": "eval(_global.tempRandomSoundMc).gotoAndPlay(2);"
+            }
+          ]
+        },
+        "directInstanceName": {
+          "value": "Mc_Sound_0",
+          "occurrenceCount": 0,
+          "references": []
+        },
+        "parentSelection": {
+          "script": "DefineSprite_21/frame_1/DoAction.as",
+          "frame": 1,
+          "bodySha256": "534196db1b9352db95897e78166465293f70844f5b18292d5da450cfeb3e9cbe",
+          "lineStart": 14,
+          "lineEnd": 16
+        },
+        "parentTrigger": {
+          "script": "DefineSprite_21/frame_5/DoAction.as",
+          "frame": 5,
+          "bodySha256": "4b2a8ea86d7a09876c10ea6d2e0abd838f294518275642d3c7f68c2257c8f16e",
+          "lineStart": 21,
+          "lineEnd": 22
+        },
+        "selectorOutcome": 0,
+        "unsupportedReferenceCount": 0
+      },
+      "preservedObligations": {
+        "audio": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-authoritative-listening-and-runtime-synchronization"
+        },
+        "behavior": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-random-branch-traces"
+        },
+        "fullFrame": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "represented-through-parent-domain-but-not-yet-captured-or-compared"
+        }
+      }
+    },
+    {
+      "timelineId": "sprite-8",
+      "sourceObjectId": "8",
+      "frameCount": 135,
+      "disposition": "composite-child-with-parent",
+      "parentTimelineId": "sprite-21",
+      "parentSourceObjectId": "21",
+      "parentFrameDomainId": "sprite-21",
+      "role": "audio-only-offstage-visual-marker",
+      "tagCensus": {
+        "observed": {
+          "DoAction": 2,
+          "End": 1,
+          "PlaceObject2": 1,
+          "ShowFrame": 135,
+          "SoundStreamBlock": 135,
+          "SoundStreamHead": 1
+        },
+        "allowedTags": [
+          "DoAction",
+          "End",
+          "PlaceObject2",
+          "ShowFrame",
+          "SoundStreamBlock",
+          "SoundStreamHead"
+        ],
+        "declaredFrameCount": 135,
+        "observedShowFrameCount": 135,
+        "exactMatch": true
+      },
+      "audioStructure": {
+        "required": true,
+        "acceptanceSatisfied": false,
+        "headTag": "SoundStreamHead",
+        "headCount": 1,
+        "blockCount": 135,
+        "compressionCode": 2,
+        "playbackRateCode": 2,
+        "playbackStereo": true,
+        "sourceFrameDomain": "sprite-8"
+      },
+      "placementChain": [
+        {
+          "parentTimelineId": "root",
+          "childTimelineId": "sprite-21",
+          "sourceObjectId": "21",
+          "frame": 6,
+          "depth": "1",
+          "instanceName": "animation",
+          "tag": "PlaceObject2",
+          "matrix": {
+            "a": 1,
+            "b": 0,
+            "c": 0,
+            "d": 1,
+            "tx": 8248,
+            "ty": 5666
+          }
+        },
+        {
+          "parentTimelineId": "sprite-21",
+          "childTimelineId": "sprite-8",
+          "sourceObjectId": "8",
+          "frame": 1,
+          "depth": "18",
+          "instanceName": "Mc_Sound_1",
+          "tag": "PlaceObject2",
+          "matrix": {
+            "a": 1,
+            "b": 0,
+            "c": 0,
+            "d": 1,
+            "tx": -10248,
+            "ty": 210
+          }
+        },
+        {
+          "parentTimelineId": "sprite-8",
+          "childTimelineId": null,
+          "sourceObjectId": "6",
+          "frame": 1,
+          "depth": "1",
+          "instanceName": "",
+          "tag": "PlaceObject2",
+          "definitionTag": "DefineShape",
+          "matrix": {
+            "a": 1,
+            "b": 0,
+            "c": 0,
+            "d": 1,
+            "tx": 0,
+            "ty": 0
+          }
+        }
+      ],
+      "lifetime": {
+        "parentPlacementFrame": 1,
+        "parentRemovalFrame": 137,
+        "parentPlacementUpdateCount": 0,
+        "childPlacementUpdateCount": 0,
+        "clipActionCount": 0
+      },
+      "visualBounds": {
+        "sourceShapeObjectId": "6",
+        "sourceShapeBoundsTwips": {
+          "left": -490,
+          "right": 490,
+          "top": -415,
+          "bottom": 414
+        },
+        "compositeMatrix": {
+          "a": 1,
+          "b": 0,
+          "c": 0,
+          "d": 1,
+          "tx": -2000,
+          "ty": 5876
+        },
+        "stageBoundsTwips": {
+          "left": -2490,
+          "right": -1510,
+          "top": 5461,
+          "bottom": 6290
+        },
+        "nativeStageBoundsTwips": {
+          "left": 0,
+          "right": 16000,
+          "top": 0,
+          "bottom": 12000
+        },
+        "nativeStageIntersection": false,
+        "proof": "The only placed visual definition has a constant matrix chain and its transformed bounds do not intersect the native stage before the parent removes the child."
+      },
+      "scriptReferenceAudit": {
+        "candidateTimelineScripts": [
+          {
+            "script": "DefineSprite_8/frame_1/DoAction.as",
+            "frame": 1,
+            "bodySha256": "2443ef5abd9a49f54017c2a509cda1259fb4f8a3e44bc3cfe669addf2fd291db",
+            "lineStart": 45,
+            "lineEnd": 46
+          },
+          {
+            "script": "DefineSprite_8/frame_135/DoAction.as",
+            "frame": 135,
+            "bodySha256": "2443ef5abd9a49f54017c2a509cda1259fb4f8a3e44bc3cfe669addf2fd291db",
+            "lineStart": 48,
+            "lineEnd": 49
+          }
+        ],
+        "selectorPrefix": {
+          "value": "Mc_Sound_",
+          "occurrenceCount": 1,
+          "references": [
+            {
+              "script": "DefineSprite_21/frame_1/DoAction.as",
+              "line": 15,
+              "sourceLine": "_global.tempRandomSoundMc = \"Mc_Sound_\" + tempNum;"
+            }
+          ]
+        },
+        "selectorVariable": {
+          "value": "tempRandomSoundMc",
+          "occurrenceCount": 2,
+          "references": [
+            {
+              "script": "DefineSprite_21/frame_1/DoAction.as",
+              "line": 15,
+              "sourceLine": "_global.tempRandomSoundMc = \"Mc_Sound_\" + tempNum;"
+            },
+            {
+              "script": "DefineSprite_21/frame_5/DoAction.as",
+              "line": 21,
+              "sourceLine": "eval(_global.tempRandomSoundMc).gotoAndPlay(2);"
+            }
+          ]
+        },
+        "directInstanceName": {
+          "value": "Mc_Sound_1",
+          "occurrenceCount": 0,
+          "references": []
+        },
+        "parentSelection": {
+          "script": "DefineSprite_21/frame_1/DoAction.as",
+          "frame": 1,
+          "bodySha256": "534196db1b9352db95897e78166465293f70844f5b18292d5da450cfeb3e9cbe",
+          "lineStart": 14,
+          "lineEnd": 16
+        },
+        "parentTrigger": {
+          "script": "DefineSprite_21/frame_5/DoAction.as",
+          "frame": 5,
+          "bodySha256": "4b2a8ea86d7a09876c10ea6d2e0abd838f294518275642d3c7f68c2257c8f16e",
+          "lineStart": 21,
+          "lineEnd": 22
+        },
+        "selectorOutcome": 1,
+        "unsupportedReferenceCount": 0
+      },
+      "preservedObligations": {
+        "audio": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-authoritative-listening-and-runtime-synchronization"
+        },
+        "behavior": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "pending-natural-runtime-random-branch-traces"
+        },
+        "fullFrame": {
+          "required": true,
+          "satisfiedByDisposition": false,
+          "status": "represented-through-parent-domain-but-not-yet-captured-or-compared"
+        }
+      }
+    }
+  ],
+  "acceptanceEffects": {
+    "buttonAccepted": false,
+    "interactionAccepted": false,
+    "audioAccepted": false,
+    "behaviorAccepted": false,
+    "fullFrameAccepted": false,
+    "rmseAccepted": false,
+    "humanReviewAccepted": false,
+    "ownerReviewAccepted": false
+  },
+  "strictAcceptanceEffect": "none; static composite classification removes only an independent local playhead and preserves all button, interaction, behavior, audio, full-frame/RMSE, human-review, and owner-acceptance obligations"
+}

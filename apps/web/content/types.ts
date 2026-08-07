@@ -257,7 +257,7 @@ export interface LoginContent {
 }
 
 export interface DemoListItem {
-  id: DemoId;
+  id: string;
   title: string;
   summary: string;
   conceptLabel: string;

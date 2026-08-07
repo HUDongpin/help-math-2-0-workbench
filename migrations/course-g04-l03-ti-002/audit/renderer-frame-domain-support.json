@@ -1,0 +1,2599 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "renderer-frame-domain-support-audit",
+  "animationId": "course-g04-l03-ti-002",
+  "status": "renderer-frame-domain-support-incomplete",
+  "migrationStatusAtGeneration": null,
+  "migrationStatusBinding": "excluded-from-technical-projection-and-deterministic-audit-output",
+  "migrationStatusChanged": false,
+  "authorityStatement": [
+    "This deterministic engineering audit calls the registered animation module's pure getFrameState function directly; host DOM attributes and capture wrappers are not consulted.",
+    "For every manifest implementation.frameDomains × scenarioIds × en/es combination, the first and last one-indexed frames are requested and the returned frameDomain, frame, scenario, and language must match exactly.",
+    "A state whose status is blocked or whose blocker is non-null is recorded but never counted as renderable, even when all identity fields match.",
+    "This audit does not prove visual fidelity, natural-runtime reachability, ActionScript behavior, audio synchronization, accessibility, human review, or owner acceptance."
+  ],
+  "generatedFrom": {
+    "migrationManifest": {
+      "path": "migration.json",
+      "hashMode": "canonical-json-v1",
+      "technicalProjection": "help-math-technical-manifest-v1",
+      "technicalProjectionSha256": "991bc44aec00196890d061bf5ea7439eebfb0d1c0d9c96cb2efc56bb2a761f7b",
+      "excludedPaths": [
+        "status",
+        "created",
+        "confidence",
+        "classification",
+        "audit",
+        "toolVersions",
+        "baseline",
+        "evidence",
+        "fidelity",
+        "accessibility",
+        "acceptance",
+        "catalogEvidence",
+        "implementation.candidateQa",
+        "implementation.candidateMaturity",
+        "implementation.candidateProductQa",
+        "implementation.candidateVisualEvidence",
+        "implementation.productQaEvidence",
+        "implementation.productQaScope",
+        "audio.catalogGroupCandidates",
+        "audio.catalogExactAssociations",
+        "audio.acceptance",
+        "audio.authoritativeListeningComplete",
+        "audio.originalHostSynchronizationComplete",
+        "audio.strictAcceptance",
+        "audio.structuralAuditComplete"
+      ]
+    },
+    "prototypeRuntime": {
+      "path": "packages/demos/src/prototype-manifest.ts",
+      "sha256": "98cbdac786b9babff07fb6066507f8373652ccca0bd22198bb9932f73216cf9f"
+    },
+    "animationRegistry": {
+      "path": "packages/demos/src/animation-registry.ts",
+      "sha256": "50f5e4874e227591cb14677121ac60c2524eb4c11cf47a55be567e1ded7ff136"
+    },
+    "animationModule": {
+      "path": "packages/demos/src/modules/course-g04-l03-ti-002.tsx",
+      "sha256": "656b507dbcc78cf2e08e88bb527943e50c9e94239575d687d30c62d315214d11"
+    },
+    "pureTimeline": {
+      "path": "packages/demos/src/timelines/course-g04-l03-ti-002.ts",
+      "sha256": "9cd67e91a8c79cdee1924024709fe9aab52a83eee12984294db2922febe07910"
+    },
+    "runtimeContract": {
+      "path": "packages/demos/src/contract.ts",
+      "sha256": "e0bedca504601df93c3bc33a79f842cda5aeae4a15c244a8d104f2c1a2febde3"
+    },
+    "auditContract": {
+      "path": "scripts/evidence-projections.mjs",
+      "sha256": "0a5a4126fd72fa8137af6105a8a22759ebbaab8a46f7538bd13074af7d9e7a08"
+    },
+    "auditBuilder": {
+      "path": "scripts/build-renderer-frame-domain-support.mjs",
+      "sha256": "d5902b3bf7785c823ec5c057f583617fb770b0b686cca5c4938f484a8845ad03"
+    },
+    "auditProbe": {
+      "path": "scripts/probe-renderer-frame-domain-support.ts",
+      "sha256": "bc7ba85a6e84caf30d8e7b0f4e84e2179afb8723a00377e5f03bebaa3b720782"
+    }
+  },
+  "loadedRuntime": {
+    "prototypeKey": "course-g04-l03-ti-002",
+    "rootFrameCount": 10,
+    "defaultFrameDomain": "sprite-272",
+    "frameDomains": [
+      {
+        "id": "root",
+        "frameCount": 10
+      },
+      {
+        "id": "sprite-272",
+        "frameCount": 254
+      },
+      {
+        "id": "sprite-55",
+        "frameCount": 1
+      },
+      {
+        "id": "sprite-128",
+        "frameCount": 1
+      },
+      {
+        "id": "sprite-129",
+        "frameCount": 1
+      },
+      {
+        "id": "sprite-130",
+        "frameCount": 1
+      },
+      {
+        "id": "sprite-131",
+        "frameCount": 1
+      },
+      {
+        "id": "sprite-132",
+        "frameCount": 1
+      },
+      {
+        "id": "sprite-133",
+        "frameCount": 1
+      },
+      {
+        "id": "sprite-134",
+        "frameCount": 1
+      },
+      {
+        "id": "sprite-135",
+        "frameCount": 1
+      },
+      {
+        "id": "sprite-136",
+        "frameCount": 1
+      },
+      {
+        "id": "sprite-137",
+        "frameCount": 1
+      },
+      {
+        "id": "sprite-138",
+        "frameCount": 1
+      },
+      {
+        "id": "sprite-139",
+        "frameCount": 1
+      },
+      {
+        "id": "sprite-140",
+        "frameCount": 1
+      },
+      {
+        "id": "sprite-141",
+        "frameCount": 1
+      },
+      {
+        "id": "sprite-159",
+        "frameCount": 2
+      },
+      {
+        "id": "sprite-169",
+        "frameCount": 2
+      },
+      {
+        "id": "sprite-174",
+        "frameCount": 10
+      },
+      {
+        "id": "sprite-175",
+        "frameCount": 2
+      },
+      {
+        "id": "sprite-178",
+        "frameCount": 2
+      },
+      {
+        "id": "sprite-182",
+        "frameCount": 2
+      },
+      {
+        "id": "sprite-186",
+        "frameCount": 25
+      },
+      {
+        "id": "sprite-188",
+        "frameCount": 1
+      },
+      {
+        "id": "sprite-194",
+        "frameCount": 1
+      },
+      {
+        "id": "sprite-202",
+        "frameCount": 1
+      },
+      {
+        "id": "sprite-205",
+        "frameCount": 28
+      },
+      {
+        "id": "sprite-217",
+        "frameCount": 25
+      },
+      {
+        "id": "sprite-231",
+        "frameCount": 32
+      },
+      {
+        "id": "sprite-252",
+        "frameCount": 33
+      },
+      {
+        "id": "sprite-263",
+        "frameCount": 28
+      },
+      {
+        "id": "sprite-267",
+        "frameCount": 15
+      },
+      {
+        "id": "sprite-269",
+        "frameCount": 55
+      },
+      {
+        "id": "sprite-271",
+        "frameCount": 20
+      }
+    ],
+    "moduleMaturity": "legacy-prototype",
+    "moduleScenarioIds": [
+      "source-static-frame",
+      "root-unavailable",
+      "sprite-55-unavailable",
+      "sprite-128-unavailable",
+      "sprite-129-unavailable",
+      "sprite-130-unavailable",
+      "sprite-131-unavailable",
+      "sprite-132-unavailable",
+      "sprite-133-unavailable",
+      "sprite-134-unavailable",
+      "sprite-135-unavailable",
+      "sprite-136-unavailable",
+      "sprite-137-unavailable",
+      "sprite-138-unavailable",
+      "sprite-139-unavailable",
+      "sprite-140-unavailable",
+      "sprite-141-unavailable",
+      "sprite-159-unavailable",
+      "sprite-169-unavailable",
+      "sprite-174-unavailable",
+      "sprite-175-unavailable",
+      "sprite-178-unavailable",
+      "sprite-182-unavailable",
+      "sprite-186-unavailable",
+      "sprite-188-unavailable",
+      "sprite-194-unavailable",
+      "sprite-202-unavailable",
+      "sprite-205-unavailable",
+      "sprite-217-unavailable",
+      "sprite-231-unavailable",
+      "sprite-252-unavailable",
+      "sprite-263-unavailable",
+      "sprite-267-unavailable",
+      "sprite-269-unavailable",
+      "sprite-271-unavailable"
+    ]
+  },
+  "summary": {
+    "declaredFrameDomainCount": 17,
+    "fullyRenderableFrameDomainCount": 0,
+    "probeCount": 68,
+    "exactIdentityCount": 8,
+    "blockedCount": 66,
+    "renderableCount": 2,
+    "outcomeCounts": {
+      "renderable-exact": 2,
+      "blocked-not-renderable": 6,
+      "scenario-undeclared-by-module": 0,
+      "identity-mismatch": 60,
+      "probe-error": 0
+    }
+  },
+  "domainSupport": [
+    {
+      "frameDomain": "root",
+      "frameCount": 10,
+      "scenarioIds": [
+        "root-unavailable"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 10
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 4,
+      "blockedCount": 4,
+      "renderableCount": 0,
+      "fullyRenderable": false
+    },
+    {
+      "frameDomain": "sprite-272",
+      "frameCount": 254,
+      "scenarioIds": [
+        "source-static-frame"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 254
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 4,
+      "blockedCount": 2,
+      "renderableCount": 2,
+      "fullyRenderable": false
+    },
+    {
+      "frameDomain": "sprite-159",
+      "frameCount": 2,
+      "scenarioIds": [
+        "source-static-reachable-domain"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 2
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 0,
+      "blockedCount": 4,
+      "renderableCount": 0,
+      "fullyRenderable": false
+    },
+    {
+      "frameDomain": "sprite-169",
+      "frameCount": 2,
+      "scenarioIds": [
+        "source-static-reachable-domain"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 2
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 0,
+      "blockedCount": 4,
+      "renderableCount": 0,
+      "fullyRenderable": false
+    },
+    {
+      "frameDomain": "sprite-174",
+      "frameCount": 10,
+      "scenarioIds": [
+        "source-static-reachable-domain"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 10
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 0,
+      "blockedCount": 4,
+      "renderableCount": 0,
+      "fullyRenderable": false
+    },
+    {
+      "frameDomain": "sprite-175",
+      "frameCount": 2,
+      "scenarioIds": [
+        "source-static-reachable-domain"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 2
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 0,
+      "blockedCount": 4,
+      "renderableCount": 0,
+      "fullyRenderable": false
+    },
+    {
+      "frameDomain": "sprite-178",
+      "frameCount": 2,
+      "scenarioIds": [
+        "source-static-reachable-domain"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 2
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 0,
+      "blockedCount": 4,
+      "renderableCount": 0,
+      "fullyRenderable": false
+    },
+    {
+      "frameDomain": "sprite-182",
+      "frameCount": 2,
+      "scenarioIds": [
+        "source-static-reachable-domain"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 2
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 0,
+      "blockedCount": 4,
+      "renderableCount": 0,
+      "fullyRenderable": false
+    },
+    {
+      "frameDomain": "sprite-186",
+      "frameCount": 25,
+      "scenarioIds": [
+        "source-static-reachable-domain"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 25
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 0,
+      "blockedCount": 4,
+      "renderableCount": 0,
+      "fullyRenderable": false
+    },
+    {
+      "frameDomain": "sprite-205",
+      "frameCount": 28,
+      "scenarioIds": [
+        "source-static-reachable-domain"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 28
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 0,
+      "blockedCount": 4,
+      "renderableCount": 0,
+      "fullyRenderable": false
+    },
+    {
+      "frameDomain": "sprite-217",
+      "frameCount": 25,
+      "scenarioIds": [
+        "source-static-reachable-domain"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 25
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 0,
+      "blockedCount": 4,
+      "renderableCount": 0,
+      "fullyRenderable": false
+    },
+    {
+      "frameDomain": "sprite-231",
+      "frameCount": 32,
+      "scenarioIds": [
+        "source-static-reachable-domain"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 32
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 0,
+      "blockedCount": 4,
+      "renderableCount": 0,
+      "fullyRenderable": false
+    },
+    {
+      "frameDomain": "sprite-252",
+      "frameCount": 33,
+      "scenarioIds": [
+        "source-static-reachable-domain"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 33
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 0,
+      "blockedCount": 4,
+      "renderableCount": 0,
+      "fullyRenderable": false
+    },
+    {
+      "frameDomain": "sprite-263",
+      "frameCount": 28,
+      "scenarioIds": [
+        "source-static-reachable-domain"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 28
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 0,
+      "blockedCount": 4,
+      "renderableCount": 0,
+      "fullyRenderable": false
+    },
+    {
+      "frameDomain": "sprite-267",
+      "frameCount": 15,
+      "scenarioIds": [
+        "source-static-reachable-domain"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 15
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 0,
+      "blockedCount": 4,
+      "renderableCount": 0,
+      "fullyRenderable": false
+    },
+    {
+      "frameDomain": "sprite-269",
+      "frameCount": 55,
+      "scenarioIds": [
+        "source-static-reachable-domain"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 55
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 0,
+      "blockedCount": 4,
+      "renderableCount": 0,
+      "fullyRenderable": false
+    },
+    {
+      "frameDomain": "sprite-271",
+      "frameCount": 20,
+      "scenarioIds": [
+        "source-static-reachable-domain"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 20
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 0,
+      "blockedCount": 4,
+      "renderableCount": 0,
+      "fullyRenderable": false
+    }
+  ],
+  "probes": [
+    {
+      "request": {
+        "requestId": "root::root-unavailable::en::1",
+        "frameDomain": "root",
+        "frame": 1,
+        "scenario": "root-unavailable",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "root",
+        "frame": 1,
+        "scenario": "root-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "root-baseline-unavailable"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "blocked-not-renderable",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "root::root-unavailable::en::10",
+        "frameDomain": "root",
+        "frame": 10,
+        "scenario": "root-unavailable",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "root",
+        "frame": 10,
+        "scenario": "root-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "root-baseline-unavailable"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "blocked-not-renderable",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "root::root-unavailable::es::1",
+        "frameDomain": "root",
+        "frame": 1,
+        "scenario": "root-unavailable",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "root",
+        "frame": 1,
+        "scenario": "root-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "spanish-visual-and-audio-unvalidated"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "blocked-not-renderable",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "root::root-unavailable::es::10",
+        "frameDomain": "root",
+        "frame": 10,
+        "scenario": "root-unavailable",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "root",
+        "frame": 10,
+        "scenario": "root-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "spanish-visual-and-audio-unvalidated"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "blocked-not-renderable",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-272::source-static-frame::en::1",
+        "frameDomain": "sprite-272",
+        "frame": 1,
+        "scenario": "source-static-frame",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "sprite-272",
+        "frame": 1,
+        "scenario": "source-static-frame",
+        "language": "en",
+        "status": "ready",
+        "blocker": null
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": false,
+      "renderable": true,
+      "outcome": "renderable-exact",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-272::source-static-frame::en::254",
+        "frameDomain": "sprite-272",
+        "frame": 254,
+        "scenario": "source-static-frame",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "sprite-272",
+        "frame": 254,
+        "scenario": "source-static-frame",
+        "language": "en",
+        "status": "ready",
+        "blocker": null
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": false,
+      "renderable": true,
+      "outcome": "renderable-exact",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-272::source-static-frame::es::1",
+        "frameDomain": "sprite-272",
+        "frame": 1,
+        "scenario": "source-static-frame",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "sprite-272",
+        "frame": 1,
+        "scenario": "source-static-frame",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "spanish-visual-and-audio-unvalidated"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "blocked-not-renderable",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-272::source-static-frame::es::254",
+        "frameDomain": "sprite-272",
+        "frame": 254,
+        "scenario": "source-static-frame",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "sprite-272",
+        "frame": 254,
+        "scenario": "source-static-frame",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "spanish-visual-and-audio-unvalidated"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "blocked-not-renderable",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-159::source-static-reachable-domain::en::1",
+        "frameDomain": "sprite-159",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-159",
+        "frame": 1,
+        "scenario": "sprite-159-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-159::source-static-reachable-domain::en::2",
+        "frameDomain": "sprite-159",
+        "frame": 2,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-159",
+        "frame": 2,
+        "scenario": "sprite-159-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-159::source-static-reachable-domain::es::1",
+        "frameDomain": "sprite-159",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-159",
+        "frame": 1,
+        "scenario": "sprite-159-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-159::source-static-reachable-domain::es::2",
+        "frameDomain": "sprite-159",
+        "frame": 2,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-159",
+        "frame": 2,
+        "scenario": "sprite-159-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-169::source-static-reachable-domain::en::1",
+        "frameDomain": "sprite-169",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-169",
+        "frame": 1,
+        "scenario": "sprite-169-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-169::source-static-reachable-domain::en::2",
+        "frameDomain": "sprite-169",
+        "frame": 2,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-169",
+        "frame": 2,
+        "scenario": "sprite-169-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-169::source-static-reachable-domain::es::1",
+        "frameDomain": "sprite-169",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-169",
+        "frame": 1,
+        "scenario": "sprite-169-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-169::source-static-reachable-domain::es::2",
+        "frameDomain": "sprite-169",
+        "frame": 2,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-169",
+        "frame": 2,
+        "scenario": "sprite-169-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-174::source-static-reachable-domain::en::1",
+        "frameDomain": "sprite-174",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-174",
+        "frame": 1,
+        "scenario": "sprite-174-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-174::source-static-reachable-domain::en::10",
+        "frameDomain": "sprite-174",
+        "frame": 10,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-174",
+        "frame": 10,
+        "scenario": "sprite-174-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-174::source-static-reachable-domain::es::1",
+        "frameDomain": "sprite-174",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-174",
+        "frame": 1,
+        "scenario": "sprite-174-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-174::source-static-reachable-domain::es::10",
+        "frameDomain": "sprite-174",
+        "frame": 10,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-174",
+        "frame": 10,
+        "scenario": "sprite-174-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-175::source-static-reachable-domain::en::1",
+        "frameDomain": "sprite-175",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-175",
+        "frame": 1,
+        "scenario": "sprite-175-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-175::source-static-reachable-domain::en::2",
+        "frameDomain": "sprite-175",
+        "frame": 2,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-175",
+        "frame": 2,
+        "scenario": "sprite-175-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-175::source-static-reachable-domain::es::1",
+        "frameDomain": "sprite-175",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-175",
+        "frame": 1,
+        "scenario": "sprite-175-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-175::source-static-reachable-domain::es::2",
+        "frameDomain": "sprite-175",
+        "frame": 2,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-175",
+        "frame": 2,
+        "scenario": "sprite-175-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-178::source-static-reachable-domain::en::1",
+        "frameDomain": "sprite-178",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-178",
+        "frame": 1,
+        "scenario": "sprite-178-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-178::source-static-reachable-domain::en::2",
+        "frameDomain": "sprite-178",
+        "frame": 2,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-178",
+        "frame": 2,
+        "scenario": "sprite-178-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-178::source-static-reachable-domain::es::1",
+        "frameDomain": "sprite-178",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-178",
+        "frame": 1,
+        "scenario": "sprite-178-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-178::source-static-reachable-domain::es::2",
+        "frameDomain": "sprite-178",
+        "frame": 2,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-178",
+        "frame": 2,
+        "scenario": "sprite-178-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-182::source-static-reachable-domain::en::1",
+        "frameDomain": "sprite-182",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-182",
+        "frame": 1,
+        "scenario": "sprite-182-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-182::source-static-reachable-domain::en::2",
+        "frameDomain": "sprite-182",
+        "frame": 2,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-182",
+        "frame": 2,
+        "scenario": "sprite-182-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-182::source-static-reachable-domain::es::1",
+        "frameDomain": "sprite-182",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-182",
+        "frame": 1,
+        "scenario": "sprite-182-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-182::source-static-reachable-domain::es::2",
+        "frameDomain": "sprite-182",
+        "frame": 2,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-182",
+        "frame": 2,
+        "scenario": "sprite-182-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-186::source-static-reachable-domain::en::1",
+        "frameDomain": "sprite-186",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-186",
+        "frame": 1,
+        "scenario": "sprite-186-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-186::source-static-reachable-domain::en::25",
+        "frameDomain": "sprite-186",
+        "frame": 25,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-186",
+        "frame": 25,
+        "scenario": "sprite-186-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-186::source-static-reachable-domain::es::1",
+        "frameDomain": "sprite-186",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-186",
+        "frame": 1,
+        "scenario": "sprite-186-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-186::source-static-reachable-domain::es::25",
+        "frameDomain": "sprite-186",
+        "frame": 25,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-186",
+        "frame": 25,
+        "scenario": "sprite-186-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-205::source-static-reachable-domain::en::1",
+        "frameDomain": "sprite-205",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-205",
+        "frame": 1,
+        "scenario": "sprite-205-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-205::source-static-reachable-domain::en::28",
+        "frameDomain": "sprite-205",
+        "frame": 28,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-205",
+        "frame": 28,
+        "scenario": "sprite-205-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-205::source-static-reachable-domain::es::1",
+        "frameDomain": "sprite-205",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-205",
+        "frame": 1,
+        "scenario": "sprite-205-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-205::source-static-reachable-domain::es::28",
+        "frameDomain": "sprite-205",
+        "frame": 28,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-205",
+        "frame": 28,
+        "scenario": "sprite-205-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-217::source-static-reachable-domain::en::1",
+        "frameDomain": "sprite-217",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-217",
+        "frame": 1,
+        "scenario": "sprite-217-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-217::source-static-reachable-domain::en::25",
+        "frameDomain": "sprite-217",
+        "frame": 25,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-217",
+        "frame": 25,
+        "scenario": "sprite-217-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-217::source-static-reachable-domain::es::1",
+        "frameDomain": "sprite-217",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-217",
+        "frame": 1,
+        "scenario": "sprite-217-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-217::source-static-reachable-domain::es::25",
+        "frameDomain": "sprite-217",
+        "frame": 25,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-217",
+        "frame": 25,
+        "scenario": "sprite-217-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-231::source-static-reachable-domain::en::1",
+        "frameDomain": "sprite-231",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-231",
+        "frame": 1,
+        "scenario": "sprite-231-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-231::source-static-reachable-domain::en::32",
+        "frameDomain": "sprite-231",
+        "frame": 32,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-231",
+        "frame": 32,
+        "scenario": "sprite-231-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-231::source-static-reachable-domain::es::1",
+        "frameDomain": "sprite-231",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-231",
+        "frame": 1,
+        "scenario": "sprite-231-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-231::source-static-reachable-domain::es::32",
+        "frameDomain": "sprite-231",
+        "frame": 32,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-231",
+        "frame": 32,
+        "scenario": "sprite-231-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-252::source-static-reachable-domain::en::1",
+        "frameDomain": "sprite-252",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-252",
+        "frame": 1,
+        "scenario": "sprite-252-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-252::source-static-reachable-domain::en::33",
+        "frameDomain": "sprite-252",
+        "frame": 33,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-252",
+        "frame": 33,
+        "scenario": "sprite-252-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-252::source-static-reachable-domain::es::1",
+        "frameDomain": "sprite-252",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-252",
+        "frame": 1,
+        "scenario": "sprite-252-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-252::source-static-reachable-domain::es::33",
+        "frameDomain": "sprite-252",
+        "frame": 33,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-252",
+        "frame": 33,
+        "scenario": "sprite-252-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-263::source-static-reachable-domain::en::1",
+        "frameDomain": "sprite-263",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-263",
+        "frame": 1,
+        "scenario": "sprite-263-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-263::source-static-reachable-domain::en::28",
+        "frameDomain": "sprite-263",
+        "frame": 28,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-263",
+        "frame": 28,
+        "scenario": "sprite-263-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-263::source-static-reachable-domain::es::1",
+        "frameDomain": "sprite-263",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-263",
+        "frame": 1,
+        "scenario": "sprite-263-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-263::source-static-reachable-domain::es::28",
+        "frameDomain": "sprite-263",
+        "frame": 28,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-263",
+        "frame": 28,
+        "scenario": "sprite-263-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-267::source-static-reachable-domain::en::1",
+        "frameDomain": "sprite-267",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-267",
+        "frame": 1,
+        "scenario": "sprite-267-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-267::source-static-reachable-domain::en::15",
+        "frameDomain": "sprite-267",
+        "frame": 15,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-267",
+        "frame": 15,
+        "scenario": "sprite-267-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-267::source-static-reachable-domain::es::1",
+        "frameDomain": "sprite-267",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-267",
+        "frame": 1,
+        "scenario": "sprite-267-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-267::source-static-reachable-domain::es::15",
+        "frameDomain": "sprite-267",
+        "frame": 15,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-267",
+        "frame": 15,
+        "scenario": "sprite-267-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-269::source-static-reachable-domain::en::1",
+        "frameDomain": "sprite-269",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-269",
+        "frame": 1,
+        "scenario": "sprite-269-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-269::source-static-reachable-domain::en::55",
+        "frameDomain": "sprite-269",
+        "frame": 55,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-269",
+        "frame": 55,
+        "scenario": "sprite-269-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-269::source-static-reachable-domain::es::1",
+        "frameDomain": "sprite-269",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-269",
+        "frame": 1,
+        "scenario": "sprite-269-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-269::source-static-reachable-domain::es::55",
+        "frameDomain": "sprite-269",
+        "frame": 55,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-269",
+        "frame": 55,
+        "scenario": "sprite-269-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-271::source-static-reachable-domain::en::1",
+        "frameDomain": "sprite-271",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-271",
+        "frame": 1,
+        "scenario": "sprite-271-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-271::source-static-reachable-domain::en::20",
+        "frameDomain": "sprite-271",
+        "frame": 20,
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-271",
+        "frame": 20,
+        "scenario": "sprite-271-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-271::source-static-reachable-domain::es::1",
+        "frameDomain": "sprite-271",
+        "frame": 1,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-271",
+        "frame": 1,
+        "scenario": "sprite-271-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-271::source-static-reachable-domain::es::20",
+        "frameDomain": "sprite-271",
+        "frame": 20,
+        "scenario": "source-static-reachable-domain",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": false,
+      "actual": {
+        "frameDomain": "sprite-271",
+        "frame": 20,
+        "scenario": "sprite-271-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "unsupported-runtime-request"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": false,
+        "language": true
+      },
+      "identityExact": false,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "identity-mismatch",
+      "error": null
+    }
+  ],
+  "strictAcceptanceEffect": "none; this audit only exposes renderer-addressability gaps and does not advance migration status or satisfy strict acceptance"
+}

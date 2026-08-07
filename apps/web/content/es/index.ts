@@ -8,7 +8,7 @@ export const esContent = {
     skipToContent: "Ir al contenido principal",
     statusLabel: "Modernización en curso",
     statusMessage:
-      "HELP Math se está restaurando cuidadosamente para la web actual. Hay demostraciones públicas y asistencia; las cuentas de estudiantes aún no están activas.",
+      "HELP Math se está restaurando cuidadosamente para la web actual. Hay vistas previas privadas de revisión y asistencia; las cuentas de estudiantes aún no están activas.",
     externalLinkLabel: "Se abre en una pestaña nueva",
     requiredFieldLabel: "Obligatorio",
     navigation: {
@@ -340,7 +340,7 @@ export const esContent = {
       teacherRole: {
         title: "La tecnología apoya la enseñanza; los educadores orientan su uso.",
         body:
-          "Las demostraciones públicas muestran objetos de aprendizaje, no un curso completo ni un sistema docente automatizado. Los educadores son esenciales para elegir tareas apropiadas, escuchar el razonamiento del alumnado y conectar las actividades con las metas del aula.",
+          "Las vistas previas privadas muestran objetos de aprendizaje y cursos candidatos seleccionados, no un curso publicado completo ni un sistema docente automatizado. Los educadores son esenciales para elegir tareas apropiadas, escuchar el razonamiento del alumnado y conectar las actividades con las metas del aula.",
         action: { label: "Hacer una consulta didáctica", href: "/es/contact?topic=instruction" },
       },
     },
@@ -434,7 +434,7 @@ export const esContent = {
         eyebrow: "Lo que está disponible ahora",
         title: "Demostraciones, no matrículas",
         paragraphs: [
-          "El sitio moderno ofrece actualmente demostraciones públicas de objetos de aprendizaje e información del proyecto. No incluye lecciones completas, pruebas de ubicación, paneles docentes, tareas de clase ni almacenamiento del progreso estudiantil.",
+          "El sitio moderno ofrece actualmente información pública del proyecto y vistas previas privadas para revisores autorizados. No incluye matrículas, pruebas de ubicación, paneles docentes, tareas de clase ni almacenamiento del progreso estudiantil.",
           "La futura publicación curricular depende de auditorías de fuentes y derechos, revisión didáctica, trabajo de accesibilidad y validación frente al comportamiento original.",
         ],
       },
@@ -627,7 +627,7 @@ export const esContent = {
         eyebrow: "Asistencia de HELP Math",
         title: "Comienza por lo que está disponible hoy",
         summary:
-          "El sitio moderno ofrece información del proyecto y demostraciones públicas en JavaScript. Las cuentas anteriores de estudiantes y educadores no se han reactivado, y este sitio no puede recuperar contraseñas ni registros de aprendizaje antiguos.",
+          "El sitio moderno ofrece información pública del proyecto y vistas previas privadas en JavaScript para revisores autorizados. Las cuentas anteriores de estudiantes y educadores no se han reactivado, y este sitio no puede recuperar contraseñas ni registros de aprendizaje antiguos.",
         primaryAction: { label: "Contactar con asistencia", href: "/es/contact?topic=support" },
         secondaryAction: { label: "Comprobar el estado de acceso", href: "/es/login" },
       },
@@ -716,7 +716,7 @@ export const esContent = {
         summary:
           "Este sitio es una versión preliminar pública de la modernización. No tiene formulario de acceso para estudiantes o educadores ni está conectado con la base de datos histórica.",
         primaryAction: { label: "Consultar sobre una cuenta", href: "/es/contact?topic=account-access" },
-        secondaryAction: { label: "Usar las demostraciones públicas", href: "/es/demos" },
+        secondaryAction: { label: "Revisar la disponibilidad", href: "/es/demos" },
       },
       alert: {
         title: "Protege tus credenciales antiguas",
@@ -731,8 +731,8 @@ export const esContent = {
             id: "student",
             title: "Soy estudiante",
             description:
-              "Usa las demostraciones públicas sin iniciar sesión. Pide a un adulto de confianza que contacte por una cuenta antigua.",
-            action: { label: "Explorar demostraciones", href: "/es/demos" },
+              "Consulta la información pública del proyecto sin iniciar sesión. Pide a un adulto de confianza que contacte por una cuenta antigua o por acceso autorizado a una vista previa.",
+            action: { label: "Explorar el proyecto", href: "/es/about" },
           },
           {
             id: "educator",
@@ -833,24 +833,24 @@ export const esContent = {
     },
     demos: {
       metadata: {
-        title: "Demostraciones JavaScript",
+        title: "Demostraciones JavaScript privadas",
         description:
-          "Explora restauraciones nativas del navegador en fase de revisión de objetos de aprendizaje HELP Math sin Flash, inicio de sesión ni recopilación de datos estudiantiles.",
+          "Revisa dos prototipos de animación y dos lecciones completas candidatas en JavaScript dentro de una sesión privada controlada.",
       },
       hero: {
-        eyebrow: "Demostraciones restauradas",
-        title: "Pequeños objetos de aprendizaje, reconstruidos con cuidado",
+        eyebrow: "Demostraciones privadas controladas",
+        title: "Cuatro experiencias de revisión de HELP Math 2.0",
         summary:
-          "Cada demostración traduce una interacción histórica a JavaScript moderno y conserva la secuencia didáctica, el lenguaje visible, el ritmo y la repetición respaldados por las fuentes disponibles.",
-        primaryAction: { label: "Abrir la primera demostración", href: "/es/demos/conversion-1-2" },
+          "La revisión privada incluye dos prototipos individuales y las lecciones 3 de cuarto grado y 4 de quinto grado como candidatas completas en JavaScript.",
+        primaryAction: { label: "Abrir vista previa ejecutiva privada", href: "/es/executive-preview" },
         secondaryAction: { label: "Cómo funciona la restauración", href: "/es/about#preservation" },
       },
       previewNotice: {
-        title: "Son versiones preliminares, no el curso completo de HELP Math",
+        title: "Candidatas de revisión privada — no son publicaciones públicas",
         body:
-          "Las demostraciones no incluyen matrícula, ubicación, tareas, calificación ni registros de progreso. No recopilan respuestas o trabajo estudiantil y no deben usarse como evaluación diagnóstica.",
+          "Se requiere una frase de acceso temporal. Las lecciones siguen con cero miembros estrictamente completos y no están publicadas; la fidelidad original, el audio, la revisión visual, la aceptación del propietario, los derechos y la publicación siguen siendo puertas separadas.",
       },
-      listLabel: "Demostraciones disponibles",
+      listLabel: "Cuatro elementos privados de revisión",
       items: [
         {
           id: "conversion-1-2",
@@ -860,8 +860,8 @@ export const esContent = {
           conceptLabel: "Enfoque de restauración",
           concept: "Fidelidad de secuencia, diseño, texto y repetición",
           statusLabel: "Vista preliminar en revisión condicional",
-          statusDetail: "Disponible sin iniciar sesión",
-          action: { label: "Iniciar Conversión 1.2", href: "/es/demos/conversion-1-2" },
+          statusDetail: "Requiere sesión privada",
+          action: { label: "Abrir Conversión 1.2", href: "/es/demos/conversion-1-2" },
         },
         {
           id: "conversion-1-4",
@@ -871,8 +871,30 @@ export const esContent = {
           conceptLabel: "Enfoque de restauración",
           concept: "Animación vectorial adaptable y repetición",
           statusLabel: "Vista preliminar en revisión condicional",
-          statusDetail: "Disponible sin iniciar sesión",
-          action: { label: "Iniciar Conversión 1.4", href: "/es/demos/conversion-1-4" },
+          statusDetail: "Requiere sesión privada",
+          action: { label: "Abrir Conversión 1.4", href: "/es/demos/conversion-1-4" },
+        },
+        {
+          id: "g4-l3-negative-numbers",
+          title: "Grado 4 · Lección 3 · Números negativos",
+          summary:
+            "Lección navegable completa candidata con 39 páginas registradas en JavaScript y un shell funcional del curso.",
+          conceptLabel: "Límite de la candidata",
+          concept: "40 miembros en JavaScript · 0 estrictos · no publicada",
+          statusLabel: "Lección completa privada candidata",
+          statusDetail: "Requiere sesión privada",
+          action: { label: "Abrir Grado 4 Lección 3", href: "/es/courses/4/3" },
+        },
+        {
+          id: "g5-l4-fractions-decimals-percents",
+          title: "Grado 5 · Lección 4 · Fracciones, decimales y porcentajes",
+          summary:
+            "Lección navegable completa candidata con 54 páginas registradas en JavaScript y un shell funcional del curso.",
+          conceptLabel: "Límite de la candidata",
+          concept: "55 miembros en JavaScript · 0 estrictos · no publicada",
+          statusLabel: "Lección completa privada candidata",
+          statusDetail: "Requiere sesión privada",
+          action: { label: "Abrir Grado 5 Lección 4", href: "/es/courses/5/4" },
         },
       ],
       quality: {
@@ -909,7 +931,7 @@ export const esContent = {
         summary:
           "Esta reconstrucción nativa del navegador conserva una secuencia explicativa breve del archivo HELP Math mediante tiempos por fotogramas, gráficos vectoriales escalables y repetición determinista.",
         statusLabel: "Vista preliminar en revisión condicional",
-        statusDetail: "Validación incompleta · Sin inicio de sesión · Sin recopilación de datos estudiantiles",
+        statusDetail: "Validación incompleta · Sesión privada · Sin recopilación de datos estudiantiles",
         instructionsTitle: "Antes de comenzar",
         instructions: [
           "Observa cómo las etiquetas y los elementos visuales cambian juntos durante la secuencia.",
@@ -950,7 +972,7 @@ export const esContent = {
         summary:
           "Este segundo ejemplo nativo del navegador muestra cómo el proyecto traduce movimiento didáctico, etiquetas y tiempos a JavaScript sostenible.",
         statusLabel: "Vista preliminar en revisión condicional",
-        statusDetail: "Validación incompleta · Sin inicio de sesión · Sin recopilación de datos estudiantiles",
+        statusDetail: "Validación incompleta · Sesión privada · Sin recopilación de datos estudiantiles",
         instructionsTitle: "Antes de comenzar",
         instructions: [
           "Sigue la secuencia desde el estado inicial hasta el estado explicativo final.",
@@ -1089,7 +1111,7 @@ export const esContent = {
         eyebrow: "Términos de uso",
         title: "Utiliza responsablemente la versión preliminar pública",
         summary:
-          "Estos términos cubren el sitio informativo y las demostraciones públicas. No crean una cuenta, suscripción escolar, compra, licencia de materiales históricos ni garantía de acceso futuro.",
+          "Estos términos cubren el sitio informativo y cualquier vista previa de demostración con acceso controlado que se ofrezca a revisores autorizados. No crean una cuenta, suscripción escolar, compra, licencia de materiales históricos ni garantía de acceso futuro.",
       },
       effectiveDateLabel: "Última actualización",
       effectiveDate: "21 de julio de 2026",
@@ -1116,7 +1138,7 @@ export const esContent = {
           id: "acceptable-use",
           title: "3. Uso aceptable",
           paragraphs: [
-            "Puedes acceder a las páginas y demostraciones públicas para evaluación personal, revisión docente y referencia educativa ordinaria, sujeto a estos términos y a los avisos de cada recurso.",
+            "Puedes acceder a las páginas públicas y, cuando estés autorizado, a las vistas previas privadas para evaluación personal, revisión docente y referencia educativa ordinaria, sujeto a estos términos y a los avisos de cada recurso.",
           ],
           bullets: [
             "No interfieras con el sitio, eludas medidas de seguridad o acceso ni sobrecargues los servicios.",

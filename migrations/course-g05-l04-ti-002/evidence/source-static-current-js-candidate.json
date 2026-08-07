@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "g5-l4-source-static-current-javascript-candidate",
+  "animationId": "course-g05-l04-ti-002",
+  "title": "Question 1",
+  "status": "current-javascript-engineering-candidate-only",
+  "source": {
+    "swf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L4/TI/L4TI02.swf",
+      "bytes": 478903,
+      "sha256": "9922c110563282176b765f3d0befbc81000d85505475c18d5cd8b3fb415e8158"
+    },
+    "fla": {
+      "pairedFlaStatus": "missing",
+      "path": null,
+      "bytes": null,
+      "sha256": null,
+      "authoringAuditEstablished": false
+    },
+    "associatedAudio": {
+      "kind": "external-file",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L4/SA/L4TI02.mp3",
+      "bytes": 315840,
+      "sha256": "ceb01daec6d9d1a2f1524e4fac9df279cc2f481f0513640df5e8f7be9cbb8997",
+      "listened": false,
+      "rendered": false
+    }
+  },
+  "specification": {
+    "path": "migrations/course-g05-l04-ti-002/audit/source-static-current-js-candidate-spec.json",
+    "bytes": 5853,
+    "sha256": "69c0a6093ae2a54880f0eec1ee76b589237efed2585e83ff9a2ebb46ba6d3cfc"
+  },
+  "renderer": {
+    "kind": "safe-hash-bound-ffdec-canvas-source-static",
+    "frameDomain": "sprite-413",
+    "firstFrame": 1,
+    "lastFrame": 275,
+    "lastRenderableFrame": 256,
+    "renderableFrameCount": 256,
+    "blockedLocalFrameRanges": [
+      {
+        "firstFrame": 257,
+        "lastFrame": 275,
+        "reason": "Frames 257..275 begin a stop- and drag-handler-controlled quiz; hit testing, drop branches, score/count updates, feedback/audio progression, terminal state, and Replay depend on unresolved ActionScript and host state."
+      }
+    ],
+    "safePrefixBoundary": {
+      "firstNonInitialStopFrame": 257,
+      "firstBlockedFrame": 257,
+      "lastSafeFrame": 256,
+      "interactionKind": "drag",
+      "requiredReasons": [
+        "event-handler:press",
+        "event-handler:releaseOutside+release",
+        "exported-action-script",
+        "script-stop-state",
+        "structural-action:DoAction"
+      ],
+      "boundaryDoActionSourcePath": "DefineSprite_413/frame_257/DoAction.as",
+      "sourceStaticInferenceOnly": true,
+      "authoritativeRuntimeReachabilityEstablished": false,
+      "behaviorReconstructed": false,
+      "scenarioAntecedent": {
+        "path": "migrations/course-g05-l04-ti-002/evidence/source-static-prebinding-antecedents/scenario-inventory.json",
+        "sha256": "617414679a78f102f5c54739aac5c9d220a1044512e14077b1f790d93efc68e6",
+        "immutable": true
+      },
+      "scriptInventory": {
+        "path": "migrations/course-g05-l04-ti-002/audit/script-inventory.json",
+        "sha256": "96db8a4e0d4102dad3c67a13543449d0b5e42cc93b725a64a41e5890a5c8c7f1"
+      },
+      "swfmillStructure": {
+        "path": "migrations/course-g05-l04-ti-002/audit/machine/swfmill.xml.gz",
+        "sha256": "cc870e46b298387430bc68b95e5c04b78eefaa23ed94b68d36d3e20c32e8f24e"
+      }
+    },
+    "rootFrameCount": 10,
+    "rootEnabled": false,
+    "supportedLanguages": [
+      "en"
+    ],
+    "audioEnabled": false,
+    "sourceControlsEnabled": false,
+    "runtimeScript": {
+      "script": "public/flash-assets/courses/course-g05-l04-ti-002/canvas-renderer.js",
+      "bytes": 6684657,
+      "sha256": "bcdb04ed1df92261499cc3e0e80c4e924cd141729ae50543018b6586d45f86c5",
+      "globalRegistry": "HELP_MATH_CANVAS_ASSETS"
+    },
+    "runtimeManifest": {
+      "path": "public/flash-assets/courses/course-g05-l04-ti-002/manifest.json",
+      "sha256": "0d9a3b91b9bb70b09048755507f3d4b64902a17d7346c5ae1ea67c9685ac237e"
+    }
+  },
+  "browserQa": {
+    "renderedFrameCount": 256,
+    "blockedFrameCount": 19,
+    "blockedRequestRejectionCount": 38,
+    "samples": [
+      {
+        "frame": 1,
+        "fnv1a32Rgba": "9bdf9bc5",
+        "nonTransparentPixelCount": 480000
+      },
+      {
+        "frame": 128,
+        "fnv1a32Rgba": "6df565db",
+        "nonTransparentPixelCount": 480000
+      },
+      {
+        "frame": 256,
+        "fnv1a32Rgba": "4950f84f",
+        "nonTransparentPixelCount": 480000
+      }
+    ],
+    "canvasIdentity": {
+      "frame": "256",
+      "frameDomain": "sprite-413",
+      "rootFrame": "6",
+      "scenario": "source-static-frame",
+      "seed": "0"
+    },
+    "consoleErrorCount": 0,
+    "pageErrorCount": 0,
+    "unexpectedNetworkRequestCount": 0,
+    "nativeStage": {
+      "width": 800,
+      "height": 600
+    },
+    "browser": "Chromium 149.0.7827.55"
+  },
+  "evidenceBoundary": {
+    "prebindingAntecedentUsed": true,
+    "antecedentTargetFrameDomainDisposition": "unresolved",
+    "originalRuntimeBaselineUsed": false,
+    "canonicalFrameDomainDispositionChanged": false,
+    "currentCanonicalFrameDomainDispositionAsserted": false,
+    "authoritativeRuntimeFrameDomainDispositionEstablished": false,
+    "naturalRuntimeReachabilityEstablished": false,
+    "visualParityCompared": false,
+    "normalizedRmseComputed": false,
+    "spanishVisualEstablished": false,
+    "audioAccepted": false,
+    "humanVisualReviewPerformed": false,
+    "ownerReviewPerformed": false,
+    "strictCompletionClaimed": false,
+    "publicationClaimed": false
+  },
+  "unresolved": [
+    "The 10-frame root and InternalPreloader host entry have no authoritative original-runtime baseline and are not rendered.",
+    "Only sprite-413 frames 1..256 are exposed. Frames 257..275 are rejected beginning at the first non-initial source stop state; no interactive continuation is inferred.",
+    "Source controls are inert. Hit targets, click/drag branches, attempt/scoring state, randomized selection where present, feedback, associated audio, Spanish visuals, natural runtime reachability, terminal and Replay parity, RMSE, human review, Owner acceptance, strict completion, and publication remain unresolved."
+  ],
+  "acceptanceEffects": {
+    "implementationAuthorized": false,
+    "authoritativeOriginalRuntime": false,
+    "naturalRuntimeReachabilityComplete": false,
+    "frameDomainDispositionComplete": false,
+    "bilingualVisualParityComplete": false,
+    "audioAccepted": false,
+    "replayParityComplete": false,
+    "fullFrameRmseComplete": false,
+    "behaviorComplete": false,
+    "productQaComplete": false,
+    "accessibilityQaComplete": false,
+    "engineeringReviewAccepted": false,
+    "humanVisualReviewAccepted": false,
+    "ownerAccepted": false,
+    "strictMigrationComplete": false,
+    "published": false
+  },
+  "strictAcceptanceEffect": "none"
+}

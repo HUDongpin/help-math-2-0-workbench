@@ -1,0 +1,414 @@
+{
+  "acceptanceBoundary": {
+    "audioAcceptanceChanged": false,
+    "humanReviewRecorded": false,
+    "listeningEvidenceRecorded": false,
+    "ownerAcceptanceRecorded": false,
+    "sourceSubstitutionAuthorized": false,
+    "strictAcceptanceEffect": false
+  },
+  "animationId": "keyterm-elementary-acute-angle",
+  "artifactType": "acute-angle-spanish-audio-source-forensics",
+  "conclusion": {
+    "authoritativeSourceRecovered": false,
+    "authoritativeTargetSha256Known": false,
+    "blocker": "The legacy key-term host requires SAD/acute_angle.mp3, but the preserved SAD directory is empty and no provenance-backed alias or embedded copy exists.",
+    "exactAliasRecovered": false,
+    "expectedSource": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/SAD/acute_angle.mp3",
+    "semanticCandidatePromoted": false,
+    "status": "missing-source",
+    "strictBlocker": true
+  },
+  "generator": {
+    "bytes": 31056,
+    "path": "scripts/audit-acute-angle-spanish-audio-forensics.mjs",
+    "sha256": "612e928f13c94fd70e4c61d570822c0aa7dd89ef9c4c9d9aee66d72ce7060c99"
+  },
+  "hostContract": {
+    "basenameDerivation": "splKeyTerm[6].toLowerCase().split(\".\")[0]",
+    "bytes": 97415,
+    "derivedSpanishPath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/SAD/acute_angle.mp3",
+    "derivedStem": "acute_angle",
+    "englishPathTemplate": "<xmlPath>/EAD/<lowercase ExFileName stem>.mp3",
+    "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_AS_FILES/Global_Only_One.as",
+    "playerFunction": {
+      "aliasOrFallbackImplemented": false,
+      "courseSaRoutePresent": false,
+      "directlySelectsEnglishAndSpanishVariables": true,
+      "name": "doPlayKeyTermAudio",
+      "normalizedSha256": "7a7b0aa5bc96f41a93ee495229e2358ea2ebb766eb09fbc7b1cd4039062e1156",
+      "semanticCandidateBasenamePresent": false
+    },
+    "sha256": "da2e398f3f882474ebd3d59ae0670c5398beb3b67911676f43089ae545106ab8",
+    "spanishPathConstructions": [
+      {
+        "line": 1965,
+        "text": "SndKTSFName = _global.xmlPath+\"SAD/\" + tempSplSndKTFName[0] + \".mp3\";"
+      },
+      {
+        "line": 2132,
+        "text": "SndKTSFName = _global.xmlPath+\"SAD/\" + tempSplSndKTFName[0] + \".mp3\";"
+      },
+      {
+        "line": 2528,
+        "text": "SndKTSFName = _global.xmlPath+\"SAD/\" + tempSplSndKTFName[0] + \".mp3\";"
+      }
+    ],
+    "spanishPathTemplate": "<xmlPath>/SAD/<lowercase ExFileName stem>.mp3",
+    "xmlBasename": "Acute_angle.swf"
+  },
+  "keytermSpanishDirectory": {
+    "entryCount": 0,
+    "exists": true,
+    "fileCount": 0,
+    "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/SAD"
+  },
+  "limitations": [
+    "Because the expected Spanish file is absent, there is no authoritative target byte or payload hash against which arbitrary differently named or differently encoded MP3s can be compared.",
+    "Filename, catalog, exact-byte, stripped-payload, XML, host-code, SWF, and FLA evidence cannot substitute for authoritative listening or prove the spoken content of a candidate.",
+    "Course SA files with related titles remain separate course assets; this report does not authorize copying, renaming, synthesizing, or accepting any of them as the key-term source."
+  ],
+  "migrationStatusUnchanged": true,
+  "mp3Inventory": {
+    "archiveRoot": "source-assets/flash/HELP MATH_ORIGINAL FILES",
+    "catalog": {
+      "bytes": 1644589,
+      "path": "catalog/source-files.json",
+      "sha256": "3c69ff32fd641910f63b24709b3c0225418ba1eee823155a99b307456eb1ee6c"
+    },
+    "catalogSummary": {
+      "checksumSetSha256": "0d6f20e50576c73aac38aa5a88610c654bbe29430044c2db43d8d6236cf8fe0f",
+      "fileCount": 7919,
+      "totalBytes": 2779928841
+    },
+    "englishCounterpart": {
+      "bytes": 126017,
+      "fileSha256": "8b150d56158690d70c8f9891a72c13fdb62719b973bf970dcdeadaed612dc97f",
+      "languageAuthority": "legacy key-term host EAD routing only; spoken-content listening is outside this report",
+      "leadingId3v2Bytes": 83,
+      "path": "HELP_KEYTERMS/KT/ELEMENTARY/EAD/acute_angle.mp3",
+      "payloadBytes": 125934,
+      "payloadCopyCount": 1,
+      "payloadSha256": "3d46ab9a12ea1c7298b4ca3c43c5793d7bb7445134b98c0942b1d07f31942ceb",
+      "projectPath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/EAD/acute_angle.mp3",
+      "trailingId3v1Bytes": 0
+    },
+    "expectedSpanishPath": {
+      "authoritativeSha256Known": false,
+      "exists": false,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/SAD/acute_angle.mp3",
+      "payloadComparisonPossible": false
+    },
+    "filenameTermMatches": [
+      {
+        "bytes": 126017,
+        "fileSha256": "8b150d56158690d70c8f9891a72c13fdb62719b973bf970dcdeadaed612dc97f",
+        "leadingId3v2Bytes": 83,
+        "path": "HELP_KEYTERMS/KT/ELEMENTARY/EAD/acute_angle.mp3",
+        "payloadBytes": 125934,
+        "payloadSha256": "3d46ab9a12ea1c7298b4ca3c43c5793d7bb7445134b98c0942b1d07f31942ceb",
+        "trailingId3v1Bytes": 0
+      }
+    ],
+    "inferenceBoundary": "The absent Spanish file has no authoritative byte hash. The scan can exclude named copies and prove uniqueness of present payloads, but it cannot identify an arbitrary differently encoded recording as the missing original.",
+    "mp3FileCount": 4565,
+    "payloadProjection": {
+      "schema": "path,bytes,fileSha256,payloadBytes,payloadSha256,leadingId3v2Bytes,trailingId3v1Bytes; sorted by path",
+      "sha256": "eaad934cd8cc9476456b6633cdea4addafd8935800e4f4421f3772f977f5f3b0",
+      "tagStripping": "remove a leading ID3v2 tag using its syncsafe size and optional footer; remove a trailing 128-byte ID3v1 TAG block; hash all remaining bytes"
+    },
+    "sameBasenameMatches": [
+      {
+        "bytes": 126017,
+        "fileSha256": "8b150d56158690d70c8f9891a72c13fdb62719b973bf970dcdeadaed612dc97f",
+        "leadingId3v2Bytes": 83,
+        "path": "HELP_KEYTERMS/KT/ELEMENTARY/EAD/acute_angle.mp3",
+        "payloadBytes": 125934,
+        "payloadSha256": "3d46ab9a12ea1c7298b4ca3c43c5793d7bb7445134b98c0942b1d07f31942ceb",
+        "trailingId3v1Bytes": 0
+      }
+    ],
+    "scanCoverage": {
+      "actualArchiveMp3Count": 4565,
+      "catalogMp3Count": 4565,
+      "everyFileByteCountAndSha256MatchesCatalog": true,
+      "pathSetsMatchExactly": true
+    },
+    "uniqueFileSha256Count": 4344,
+    "uniquePayloadSha256Count": 4343
+  },
+  "nextRequiredEvidence": [
+    "Obtain HELP_KEYTERMS/KT/ELEMENTARY/SAD/acute_angle.mp3 from an owner-controlled original deployment, LMS web root, delivery medium, or backup with custody/provenance metadata.",
+    "Record the recovered file's SHA-256, byte count, media probe, original location, custodian, and acquisition date before staging it as a source asset.",
+    "After provenance validation, perform named-human authorized original-host Spanish listening, start/stop/synchronization, completion, and Replay review; this generator cannot perform or sign that review."
+  ],
+  "schemaVersion": 1,
+  "scope": "deterministic-source-path-provenance-and-full-archive-mp3-payload-forensics",
+  "semanticCourseCandidates": {
+    "audioCandidateCount": 5,
+    "catalog": {
+      "bytes": 5847974,
+      "path": "catalog/animations.json",
+      "sha256": "0f8ee8fea46796b1f1d7ae7c410ef11e90e5eb4a16823cde0830777903332733"
+    },
+    "conclusion": "Title similarity identifies review candidates only. None has a legacy key-term SAD path, alias/fallback reference, matching known target hash, or provenance permitting promotion.",
+    "placementCount": 6,
+    "placements": [
+      {
+        "animationId": "course-g03-l09-vb-005",
+        "candidateStatus": "semantic-course-placement-with-no-external-audio-candidate",
+        "exactCourseAudioCandidates": [],
+        "promotedToKeytermCue": false,
+        "source": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L9/VB/L9VB05.swf",
+          "sha256": "ba682d29c5e0c46df1a12c8ea00e0e1feb7137f2e3de5eeec55dd9c60bb7a25f"
+        },
+        "titleEnglish": "Acute Angle",
+        "titleSpanish": "Ángulo agudo"
+      },
+      {
+        "animationId": "course-g04-l12-vb-005",
+        "candidateStatus": "semantic-audio-candidate-not-promoted",
+        "exactCourseAudioCandidates": [
+          {
+            "association": "matching-basename",
+            "authorityStatus": "semantic-course-candidate-only",
+            "byteCopyCount": 1,
+            "bytes": 143472,
+            "catalogLanguage": "und",
+            "fileSha256": "87aed83644130421d4ea0fc7071d6a70006ef2af978712e2b261a3509bac4213",
+            "leadingId3v2Bytes": 0,
+            "path": "HELP_COURSES/ELMGR4/L12/SA/L12VB05.mp3",
+            "payloadBytes": 143472,
+            "payloadCopyCount": 1,
+            "payloadSha256": "87aed83644130421d4ea0fc7071d6a70006ef2af978712e2b261a3509bac4213",
+            "promotedToKeytermCue": false,
+            "promotionProhibitedReason": "The course host resolves this sibling SA file by the course-page basename; the key-term host instead resolves SAD/acute_angle.mp3 and contains no route to this file.",
+            "structuralLanguage": "es",
+            "trailingId3v1Bytes": 0
+          }
+        ],
+        "promotedToKeytermCue": false,
+        "source": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L12/VB/L12VB05.swf",
+          "sha256": "2d37eccc6d8a4230905a25d1841b12c8dfc184a0dc2cc087f7eb878cf16677ef"
+        },
+        "titleEnglish": "Acute Angle",
+        "titleSpanish": "Ángulo agudo"
+      },
+      {
+        "animationId": "course-g05-l13-vb-003",
+        "candidateStatus": "semantic-audio-candidate-not-promoted",
+        "exactCourseAudioCandidates": [
+          {
+            "association": "matching-basename",
+            "authorityStatus": "semantic-course-candidate-only",
+            "byteCopyCount": 1,
+            "bytes": 312144,
+            "catalogLanguage": "und",
+            "fileSha256": "89959641f7c5896024892bfb0f887ba415cfabe868b3165cc2f663ef18ec73fe",
+            "leadingId3v2Bytes": 0,
+            "path": "HELP_COURSES/ELMGR5/L13/SA/L13VB03.mp3",
+            "payloadBytes": 312144,
+            "payloadCopyCount": 1,
+            "payloadSha256": "89959641f7c5896024892bfb0f887ba415cfabe868b3165cc2f663ef18ec73fe",
+            "promotedToKeytermCue": false,
+            "promotionProhibitedReason": "The course host resolves this sibling SA file by the course-page basename; the key-term host instead resolves SAD/acute_angle.mp3 and contains no route to this file.",
+            "structuralLanguage": "es",
+            "trailingId3v1Bytes": 0
+          }
+        ],
+        "promotedToKeytermCue": false,
+        "source": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/VB/L13VB03.swf",
+          "sha256": "d07ff88e1d736f948cdd715eba9d8d5863fcffb657f9dfc411aa8dbce548e094"
+        },
+        "titleEnglish": "Right Angle, Acute Angle, and Obtuse Angle",
+        "titleSpanish": "Ángulo recto, ángulo agudo y ángulo obtuso"
+      },
+      {
+        "animationId": "course-g05-l13-vb-004",
+        "candidateStatus": "semantic-audio-candidate-not-promoted",
+        "exactCourseAudioCandidates": [
+          {
+            "association": "matching-basename",
+            "authorityStatus": "semantic-course-candidate-only",
+            "byteCopyCount": 1,
+            "bytes": 227136,
+            "catalogLanguage": "und",
+            "fileSha256": "9b6c5cfcf046bf645ad3def8ea7a8cc11e0f52d1f36eec1235714ac21ba2616c",
+            "leadingId3v2Bytes": 0,
+            "path": "HELP_COURSES/ELMGR5/L13/SA/L13VB04.mp3",
+            "payloadBytes": 227136,
+            "payloadCopyCount": 1,
+            "payloadSha256": "9b6c5cfcf046bf645ad3def8ea7a8cc11e0f52d1f36eec1235714ac21ba2616c",
+            "promotedToKeytermCue": false,
+            "promotionProhibitedReason": "The course host resolves this sibling SA file by the course-page basename; the key-term host instead resolves SAD/acute_angle.mp3 and contains no route to this file.",
+            "structuralLanguage": "es",
+            "trailingId3v1Bytes": 0
+          }
+        ],
+        "promotedToKeytermCue": false,
+        "source": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/VB/L13VB04.swf",
+          "sha256": "01d60b214e46d3f4ff8112dbd368c6d9169dd8aee5e9a9c6e0705ca3c83580c8"
+        },
+        "titleEnglish": "Right Angle, Acute Angle, and Obtuse Angle",
+        "titleSpanish": "Ángulo recto, ángulo agudo y ángulo obtuso"
+      },
+      {
+        "animationId": "course-g05-l13-vb-005",
+        "candidateStatus": "semantic-audio-candidate-not-promoted",
+        "exactCourseAudioCandidates": [
+          {
+            "association": "matching-basename",
+            "authorityStatus": "semantic-course-candidate-only",
+            "byteCopyCount": 1,
+            "bytes": 124320,
+            "catalogLanguage": "und",
+            "fileSha256": "fbe11921bd8871c128d5669672754a51829174f64adb740c9cf47b5fb8cb14de",
+            "leadingId3v2Bytes": 0,
+            "path": "HELP_COURSES/ELMGR5/L13/SA/L13VB05.mp3",
+            "payloadBytes": 124320,
+            "payloadCopyCount": 1,
+            "payloadSha256": "fbe11921bd8871c128d5669672754a51829174f64adb740c9cf47b5fb8cb14de",
+            "promotedToKeytermCue": false,
+            "promotionProhibitedReason": "The course host resolves this sibling SA file by the course-page basename; the key-term host instead resolves SAD/acute_angle.mp3 and contains no route to this file.",
+            "structuralLanguage": "es",
+            "trailingId3v1Bytes": 0
+          }
+        ],
+        "promotedToKeytermCue": false,
+        "source": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/VB/L13VB05.swf",
+          "sha256": "a6ad5b6607cc4e4da8456b6de45352c5a1eda097340bbce77e9a8b8d4aebc9a8"
+        },
+        "titleEnglish": "Right Angle, Acute Angle, and Obtuse Angle",
+        "titleSpanish": "Ángulo recto, ángulo agudo y ángulo obtuso"
+      },
+      {
+        "animationId": "course-g05-l13-vb-006",
+        "candidateStatus": "semantic-audio-candidate-not-promoted",
+        "exactCourseAudioCandidates": [
+          {
+            "association": "matching-basename",
+            "authorityStatus": "semantic-course-candidate-only",
+            "byteCopyCount": 1,
+            "bytes": 127680,
+            "catalogLanguage": "und",
+            "fileSha256": "3cd3c8dd5f6f8447c0fdebfd466c8122b788a8db759ac4497c6dfe008d2a89f7",
+            "leadingId3v2Bytes": 0,
+            "path": "HELP_COURSES/ELMGR5/L13/SA/L13VB06.mp3",
+            "payloadBytes": 127680,
+            "payloadCopyCount": 1,
+            "payloadSha256": "3cd3c8dd5f6f8447c0fdebfd466c8122b788a8db759ac4497c6dfe008d2a89f7",
+            "promotedToKeytermCue": false,
+            "promotionProhibitedReason": "The course host resolves this sibling SA file by the course-page basename; the key-term host instead resolves SAD/acute_angle.mp3 and contains no route to this file.",
+            "structuralLanguage": "es",
+            "trailingId3v1Bytes": 0
+          }
+        ],
+        "promotedToKeytermCue": false,
+        "source": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/VB/L13VB06.swf",
+          "sha256": "72e46211ebfdee6810c7a7a55d71cb0c272fb274e8cbc06b238c01d45727d47c"
+        },
+        "titleEnglish": "Right Angle, Acute Angle, and Obtuse Angle",
+        "titleSpanish": "Ángulo recto, ángulo agudo y ángulo obtuso"
+      }
+    ]
+  },
+  "sourceAndAudits": {
+    "animateAuthoringAudit": {
+      "animateVersion": "MAC 21,0,7,42652",
+      "authorityBoundary": "FLA authoring structure only; this audit does not prove host playback or external-audio listening/synchronization.",
+      "bytes": 118258,
+      "libraryItemCount": 4,
+      "libraryItems": [
+        {
+          "itemType": "graphic",
+          "name": "Tween 2"
+        },
+        {
+          "itemType": "graphic",
+          "name": "Tween 1"
+        },
+        {
+          "itemType": "graphic",
+          "name": "Arrow"
+        },
+        {
+          "itemType": "graphic",
+          "name": "Arrow 1"
+        }
+      ],
+      "nonemptySoundPlacementCount": 0,
+      "path": "migrations/keyterm-elementary-acute-angle/audit/adobe-animate-2021-authoring-audit.json",
+      "recursiveLibraryTimelineAuditVerified": true,
+      "sha256": "ec1766d9d0f82f02e4056985a22a20bd463a4766c664353c972440824eeb6a5a",
+      "soundLibraryItemCount": 0
+    },
+    "machineAudioAudit": {
+      "bytes": 8546,
+      "embeddedDefineSoundCount": 0,
+      "embeddedSoundStreamCount": 0,
+      "embeddedStartSoundCount": 0,
+      "exactExternalCount": 1,
+      "expectedMissingCount": 1,
+      "expectedSpanishStatus": "missing-source",
+      "path": "migrations/keyterm-elementary-acute-angle/audit/audio-runtime-evidence.json",
+      "sha256": "16eae0f7962f8940829fbe4c54b29fca79b313bca432f27b09574f9a06ae6233",
+      "strictAudioAcceptance": "pending"
+    },
+    "sources": {
+      "hostSwf": {
+        "bytes": 794543,
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+        "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd"
+      },
+      "sourceFla": {
+        "bytes": 44032,
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/DIG/acute_angle.fla",
+        "sha256": "f129e5a338c2d9c70d004e8473f6cb3ea7f4883f67d28ebe72607057f9ef6837"
+      },
+      "sourceSwf": {
+        "bytes": 3793,
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/DIG/acute_angle.swf",
+        "sha256": "dbc56af636e5551c582977f9230be2ae530874a05c901f0cf44dd5e2d5f2a347"
+      }
+    },
+    "swfMachineAudit": {
+      "actionScriptVersion": "none-detected",
+      "bytes": 8502,
+      "path": "migrations/keyterm-elementary-acute-angle/audit/machine/report.json",
+      "sha256": "a84f1b8da439a6f06891c27a7008896f65ee293419840007ff1a6303d1432e8b",
+      "soundTagCategories": {},
+      "sourceHashesMatch": true
+    }
+  },
+  "sourceMutationPerformed": false,
+  "xmlReferences": [
+    {
+      "bytes": 378783,
+      "matches": [
+        {
+          "line": 4,
+          "text": "<Acute~angle~LNG~Àngulo~agudo EngCategory =\"a\" SpanCategory=\"a\" ScreenkeyTerm=\"Acute angle\" SubLinkEng=\"angle,Angle~measures,Measure~right angle,Right angle\" SubLinkSpan=\"ángulo,Àngulo~mide,Measure~ángulo recto,Ángulo recto\" ExFileName=\"Acute_angle.swf\">An angle that measures less than a right angle (90°).~LNG~Un ángulo que mide menos que un ángulo recto, menos de 90 grados.</Acute~angle~LNG~Àngulo~agudo>"
+        }
+      ],
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTEG4.xml",
+      "sha256": "bec389ce286b9a113297dfd87e052f28cf1da2640d93a277f91f669dfb3ef749"
+    },
+    {
+      "bytes": 374466,
+      "matches": [
+        {
+          "line": 738,
+          "text": "<Acute~angle~LNG~Àngulo~agudo EngCategory=\"a\" SpanCategory=\"a\" ScreenkeyTerm=\"Acute angle\" SubLinkEng=\"angle,Angle~measures,Measure~right angle,Right angle\" SubLinkSpan=\"ángulo,Àngulo~mide,Measure~ángulo recto,Ángulo recto\" ExFileName=\"Acute_angle.swf\">An angle that measures less than a right angle (90°).~LNG~Un ángulo que mide menos que un ángulo recto, menos de 90 grados.</Acute~angle~LNG~Àngulo~agudo>"
+        }
+      ],
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTSG4.xml",
+      "sha256": "7f12ce833f1429073a11a3ea0dd9d9964eb773804c18c025bde12552b3be5a00"
+    }
+  ]
+}

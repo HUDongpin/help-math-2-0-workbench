@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 2,
+  "animationId": "formula-elementary-conversion-01-01",
+  "generatedBy": "scripts/audit-pilot-audio.mjs",
+  "scope": "strict-audio-structural-and-file-metadata-audit",
+  "migrationStatusBefore": null,
+  "migrationStatusBinding": "excluded-from-structural-audio-evidence",
+  "migrationStatusUnchanged": true,
+  "source": {
+    "swf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SWF/Conversion_1_1.swf",
+    "expectedSha256": "72d1e337b81939bace7eddf0b4994b469b73f3e4c8b103d82c06bda858dcd8a3",
+    "observedSha256": "72d1e337b81939bace7eddf0b4994b469b73f3e4c8b103d82c06bda858dcd8a3",
+    "hashMatches": true
+  },
+  "tools": {
+    "ffprobe": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers",
+    "ffdec": "JPEXS Free Flash Decompiler v.26.2.1",
+    "swfmillEvidence": "swfmill 0.3.6"
+  },
+  "authority": {
+    "hostScript": {
+      "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+      "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd",
+      "extractor": "JPEXS Free Flash Decompiler v.26.2.1",
+      "extractedScriptCount": 633,
+      "audioRelevantScriptCount": 2,
+      "combinedAudioRelevantScriptsSha256": "bdf58f23b647b1b78968873adfdda55f52baa63ce8dc42dea7dd2e6c0ba9b8d3",
+      "conventions": {
+        "formula": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "EAD is loaded when the formulas audio-language argument equals English; SAD is loaded by the Spanish/non-English branch."
+        },
+        "keyterm": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "The key-term host builds matching EAD and SAD MP3 paths and selects them from the English/Spanish language state."
+        },
+        "finalQuiz": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "Final-quiz language code EN maps to EA and SP maps to SA for question and answer MP3 paths."
+        },
+        "courseSpanishPage": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "The course host's Spanish-audio path is built from the loaded page basename under the sibling SA directory."
+        }
+      }
+    },
+    "xmlReferences": [],
+    "catalogAnimation": "catalog/animations.json",
+    "catalogAudioGroups": null
+  },
+  "externalAudio": {
+    "exactAssociations": [
+      {
+        "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/EAD/Conversion_1_1.mp3",
+        "catalogSha256": "ac64efe44e1960d1abde5fb9aeb0c2d38509ae5c2bafd86351b53d1a4177a66a",
+        "observedSha256": "ac64efe44e1960d1abde5fb9aeb0c2d38509ae5c2bafd86351b53d1a4177a66a",
+        "hashMatchesCatalog": true,
+        "bytes": 46378,
+        "association": "matching-basename",
+        "associationStatus": "exact-basename-association",
+        "languageAssessment": {
+          "language": "en",
+          "confidence": "verified-structural",
+          "evidence": "EAD is selected by the legacy host when its audio-language argument is English."
+        },
+        "probe": {
+          "tool": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers",
+          "codecName": "mp3",
+          "codecLongName": "MP3 (MPEG audio layer 3)",
+          "profile": null,
+          "sampleFormat": "fltp",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "channelLayout": "mono",
+          "streamStartSeconds": 0,
+          "streamDurationSeconds": 2.892937,
+          "durationSeconds": 2.892938,
+          "durationMs": 2893,
+          "streamBitRateBps": 128000,
+          "containerBitRateBps": 128251,
+          "formatName": "mp3",
+          "formatLongName": "MP2/3 (MPEG audio layer 2/3)",
+          "probeSizeBytes": 46378,
+          "tags": {
+            "track": "1",
+            "encoded_by": "Fraunhofer IIS MP3 v04.00.03 (high quality)",
+            "date": "2011"
+          }
+        },
+        "startFrame": null,
+        "startFrameAuthority": "Verified legacy host script selects and starts this external track from language/user state; it is not a child root-timeline cue.",
+        "startSemantics": "host-user-activated"
+      },
+      {
+        "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SAD/Conversion_1_1.mp3",
+        "catalogSha256": "e1667a7b14a9ac38d885020a3f5fae0e947abbac74faf7231ceaff2198368d9c",
+        "observedSha256": "e1667a7b14a9ac38d885020a3f5fae0e947abbac74faf7231ceaff2198368d9c",
+        "hashMatchesCatalog": true,
+        "bytes": 75985,
+        "association": "matching-basename",
+        "associationStatus": "exact-basename-association",
+        "languageAssessment": {
+          "language": "es",
+          "confidence": "verified-structural",
+          "evidence": "SAD is selected by the legacy host for the non-English/Spanish branch."
+        },
+        "probe": {
+          "tool": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers",
+          "codecName": "mp3",
+          "codecLongName": "MP3 (MPEG audio layer 3)",
+          "profile": null,
+          "sampleFormat": "fltp",
+          "sampleRateHz": 44100,
+          "channels": 1,
+          "channelLayout": "mono",
+          "streamStartSeconds": 0,
+          "streamDurationSeconds": 4.743375,
+          "durationSeconds": 4.743375,
+          "durationMs": 4743,
+          "streamBitRateBps": 128000,
+          "containerBitRateBps": 128153,
+          "formatName": "mp3",
+          "formatLongName": "MP2/3 (MPEG audio layer 2/3)",
+          "probeSizeBytes": 75985,
+          "tags": {
+            "track": "1",
+            "encoded_by": "Fraunhofer IIS MP3 v04.00.03 (high quality)",
+            "date": "2011"
+          }
+        },
+        "startFrame": null,
+        "startFrameAuthority": "Verified legacy host script selects and starts this external track from language/user state; it is not a child root-timeline cue.",
+        "startSemantics": "host-user-activated"
+      }
+    ],
+    "lessonGroupCandidates": [],
+    "expectedButMissing": [],
+    "exactCount": 2,
+    "candidateOnlyCount": 0,
+    "missingExpectedCount": 0
+  },
+  "embeddedAudio": {
+    "rootTimeline": {
+      "frameRate": 12,
+      "declaredFrames": 94
+    },
+    "defineSounds": [],
+    "soundStreams": [],
+    "startSounds": [],
+    "exportedSoundLinkages": []
+  },
+  "actionScriptAudioOperations": [],
+  "strictNoAudioAssessment": null,
+  "inventory": {
+    "file": "audio-inventory.csv",
+    "rowCount": 2,
+    "exactExternalRows": 2,
+    "embeddedRows": 0,
+    "manifestDeclaredAudioLanguages": [
+      "en",
+      "es"
+    ],
+    "inventoriedLanguages": [
+      "en",
+      "es"
+    ],
+    "lessonGroupCandidatesExcludedFromCsv": 0,
+    "rationale": "Candidate-only lesson audio is not promoted to a cue without a resolved host/runtime branch. Root SoundStream/StartSound cues use timeline-frame only when a root frame is structurally proven; verified host/user external tracks use host-user-activated; nested or unresolved cues use interaction-state. No root cue frame is guessed."
+  },
+  "acceptance": {
+    "structurallyAudited": true,
+    "authoritativeListeningComplete": false,
+    "hostStateTraversalComplete": false,
+    "synchronizationComplete": false,
+    "notApplicable": [],
+    "strictAudioAcceptance": "pending",
+    "strictAudioAcceptanceRationale": null,
+    "manifestFollowUp": [],
+    "requirements": [
+      "Adobe/original-host listening must verify spoken language/content, user-trigger behavior, start timing, pause/resume, and completion for every exact external track."
+    ]
+  },
+  "limitations": [
+    "Directory and host-script evidence can identify intended language routing but cannot prove the spoken content; listening remains mandatory.",
+    "SoundStream frame numbers inside DefineSprite are local symbol frames, not unconditional root/runtime cue times.",
+    "No cue frame, branch reachability, URL resolution, language content, or synchronization was guessed."
+  ]
+}

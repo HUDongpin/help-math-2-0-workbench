@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "animationId": "keyterm-elementary-computeghgh",
+  "generatedAt": "2026-07-27T10:15:08.386Z",
+  "status": "pass",
+  "acceptanceEffect": "none",
+  "strictAcceptanceEffect": false,
+  "scenarios": [
+    "default"
+  ],
+  "checks": [
+    {
+      "id": "replay-mouse",
+      "result": "pass",
+      "evidence": [
+        {
+          "path": "evidence/keyterm-engineering-qa.json",
+          "sha256": "0b894faf7e73a32a20bb8e612044655beb6af0b018a94d957e447d5176f87d47"
+        }
+      ]
+    },
+    {
+      "id": "replay-enter",
+      "result": "pass",
+      "evidence": [
+        {
+          "path": "evidence/keyterm-engineering-qa.json",
+          "sha256": "0b894faf7e73a32a20bb8e612044655beb6af0b018a94d957e447d5176f87d47"
+        }
+      ]
+    },
+    {
+      "id": "replay-space",
+      "result": "pass",
+      "evidence": [
+        {
+          "path": "evidence/keyterm-engineering-qa.json",
+          "sha256": "0b894faf7e73a32a20bb8e612044655beb6af0b018a94d957e447d5176f87d47"
+        }
+      ]
+    },
+    {
+      "id": "replay-reset-frame-state-audio",
+      "result": "pass",
+      "evidence": [
+        {
+          "path": "evidence/keyterm-engineering-qa.json",
+          "sha256": "0b894faf7e73a32a20bb8e612044655beb6af0b018a94d957e447d5176f87d47"
+        }
+      ]
+    },
+    {
+      "id": "source-playback-loop",
+      "result": "not-required",
+      "reason": "The audited source movie stops at its terminal frame.",
+      "evidence": [
+        {
+          "path": "evidence/keyterm-engineering-qa.json",
+          "sha256": "0b894faf7e73a32a20bb8e612044655beb6af0b018a94d957e447d5176f87d47"
+        }
+      ]
+    },
+    {
+      "id": "all-reachable-branches",
+      "result": "pass",
+      "evidence": [
+        {
+          "path": "evidence/keyterm-engineering-qa.json",
+          "sha256": "0b894faf7e73a32a20bb8e612044655beb6af0b018a94d957e447d5176f87d47"
+        }
+      ]
+    },
+    {
+      "id": "interaction-input-scoring",
+      "result": "not-required",
+      "reason": "The source key-term movie has no answer input, score, or grading branch.",
+      "evidence": [
+        {
+          "path": "evidence/keyterm-engineering-qa.json",
+          "sha256": "0b894faf7e73a32a20bb8e612044655beb6af0b018a94d957e447d5176f87d47"
+        }
+      ]
+    },
+    {
+      "id": "completion-terminal-state",
+      "result": "pass",
+      "evidence": [
+        {
+          "path": "evidence/keyterm-engineering-qa.json",
+          "sha256": "0b894faf7e73a32a20bb8e612044655beb6af0b018a94d957e447d5176f87d47"
+        }
+      ]
+    },
+    {
+      "id": "random-seeded-outcomes",
+      "result": "not-required",
+      "reason": "The audited source key-term movie has no random operation.",
+      "evidence": [
+        {
+          "path": "evidence/keyterm-engineering-qa.json",
+          "sha256": "0b894faf7e73a32a20bb8e612044655beb6af0b018a94d957e447d5176f87d47"
+        }
+      ]
+    }
+  ],
+  "claims": {
+    "authoritativeOriginalRuntimeBaseline": false,
+    "naturalOriginalRuntimeTraversal": false,
+    "interactionBranchParity": false,
+    "scoringParity": false,
+    "bilingualVisualParity": false,
+    "audioParity": false,
+    "fullFrameCoverage": false,
+    "rmseAcceptance": false,
+    "humanVisualReview": false,
+    "ownerAcceptance": false,
+    "strictMigrationCompletion": false
+  },
+  "authorityBoundary": {
+    "authoritativeAudioListening": false,
+    "audioSynchronization": false,
+    "originalRuntimeBaselineApproval": false,
+    "originalRuntimeNaturalTraversal": false,
+    "bilingualSourceParity": false,
+    "rmseAcceptance": false,
+    "humanVisualReview": false,
+    "ownerAcceptance": false,
+    "strictMigrationCompletion": false
+  }
+}

@@ -1,0 +1,313 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "g4-l3-ts006-en-native-replay-acceptance-neutral-diagnostic-integrity",
+  "status": "verified-diagnostic-visual-sequence-not-authoritative-not-promotion-eligible",
+  "animationId": "course-g04-l03-ts-006",
+  "sessionId": "ts006-en-native-replay-diagnostic-20260726T213100+0800",
+  "language": "en",
+  "scope": "Byte, geometry, cadence, window/title, PID-evidence classification, ALAC/decoded-PCM, and acceptance-neutral visual Replay-sequence diagnostics.",
+  "sourceBindings": {
+    "captureManifest": {
+      "path": "artifacts/full-frame/g4-l3/ts006-en-native-replay-diagnostic-20260726T213100+0800/capture-manifest.json",
+      "bytes": 169768,
+      "sha256": "a1ccd34fd01f7bde46353177f396b41985198fe8142a621148d28cbdfe1254fb"
+    },
+    "stagedLessonShell": {
+      "path": "work/original-runtime-host-trees/course-g04-l03-ts-006/root/HELP_COURSES/ELMGR4/L3/index_local.swf",
+      "bytes": 657421,
+      "sha256": "817e599de43a7924f0a93791e950c8781755692371945a5b7ea4cdd2ad26c58e",
+      "exactWindowTitle": "file:///Volumes/WestWorld/HELP MATH 2.0/work/original-runtime-host-trees/course-g04-l03-ts-006/root/HELP_COURSES/ELMGR4/L3/index_local.swf"
+    },
+    "analyzer": {
+      "path": "scripts/analyze-g4-l3-ts006-native-replay-diagnostic.mjs",
+      "bytes": 42688,
+      "sha256": "6602a0b378dc5387232722e3d7d9d807eac79b7546bff74ec6c84d01c31ea6a0"
+    }
+  },
+  "capture": {
+    "evidenceType": "g4-l3-lossless-window-frame-and-system-audio-capture",
+    "status": "raw-capture-not-yet-bound-to-runtime-trace",
+    "startedAt": "2026-07-26T13:31:12Z",
+    "endedAt": "2026-07-26T13:31:52Z",
+    "configuration": {
+      "audio": "system-audio-48kHz-2ch-ALAC",
+      "cursor": "excluded",
+      "fps": "12",
+      "minimumWindowHeight": "1",
+      "minimumWindowWidth": "1",
+      "outputHeight": "600",
+      "outputWidth": "800",
+      "pixelFormat": "BGRA",
+      "sourceKind": "window",
+      "sourceRect": "0.0,28.0,800.0,600.0",
+      "waitForPidSeconds": "0.0"
+    },
+    "window": {
+      "frameHeight": 628,
+      "frameWidth": 800,
+      "frameX": 0,
+      "frameY": 30,
+      "onScreen": true,
+      "ownerName": "Flash Player",
+      "title": "file:///Volumes/WestWorld/HELP MATH 2.0/work/original-runtime-host-trees/course-g04-l03-ts-006/root/HELP_COURSES/ELMGR4/L3/index_local.swf",
+      "windowID": 6310,
+      "exactOwnerAndTitleMatch": true,
+      "titleBoundStagedShellSha256": "817e599de43a7924f0a93791e950c8781755692371945a5b7ea4cdd2ad26c58e"
+    },
+    "pidEvidence": {
+      "sourceKind": "window",
+      "waitForPidSeconds": 0,
+      "displayEvidencePresent": false,
+      "includedApplicationName": null,
+      "includedProcessID": null,
+      "windowID": 6310,
+      "exactPidBindingEstablished": false,
+      "reason": "The manifest records a generic window source, zero PID wait, and no included process ID. windowID is a ScreenCaptureKit window identifier, not a Unix PID."
+    },
+    "frames": {
+      "count": 477,
+      "width": 800,
+      "height": 600,
+      "completeFrameCount": 477,
+      "droppedOrIncompleteFrameCount": 0,
+      "totalPngBytes": 48032290,
+      "orderedFrameSetAlgorithm": "ordinal-null-relative-file-null-sha256-newline-v1",
+      "orderedFrameSetSha256": "b0ddf80dccdc1bcad283eb68cd8380633f6d07d3ce1271c8aec14f1d47f86acf",
+      "contentCropSequenceAlgorithm": "ordinal-null-content-crop-rgb-sha256-newline-v1",
+      "contentCropSequenceSha256": "9f89beb608bb4503b79d49508ab79060e739c3b33e904f67e56f5575e996911b",
+      "timing": {
+        "durationSeconds": 40.089343666,
+        "effectiveFps": 11.873479495342757,
+        "nominalFps": 12,
+        "nominalFpsToleranceFraction": 0.02,
+        "nominalCadenceWithinTolerance": true,
+        "nominalFpsErrorFraction": 0.010543375388103607,
+        "intervalSeconds": {
+          "minimum": 0.080448999999998,
+          "median": 0.08394499999999994,
+          "p95": 0.08720508400000071,
+          "maximum": 0.09220108299999996
+        }
+      }
+    },
+    "audio": {
+      "file": "artifacts/full-frame/g4-l3/ts006-en-native-replay-diagnostic-20260726T213100+0800/system-audio-lossless.m4a",
+      "bytes": 4658698,
+      "sha256": "eb96a4732159c49c907d68949d37fcf8d12d0bf67a9f36347311ba7856a57ddc",
+      "containerFormat": "mov,mp4,m4a,3gp,3g2,mj2",
+      "durationSeconds": 40.106667,
+      "stream": {
+        "index": 0,
+        "codecName": "alac",
+        "codecLongName": "ALAC (Apple Lossless Audio Codec)",
+        "sampleRate": 48000,
+        "channels": 2,
+        "channelLayout": "stereo",
+        "bitsPerRawSample": 24
+      },
+      "decodedPcm": {
+        "format": "signed-32-bit-little-endian-stereo",
+        "bytes": 15383040,
+        "sha256": "98daa621127a0f6a5d8070f2dcfb64159debb35f793ceeee9c51154188cc4449",
+        "nonZeroByteCount": 5556438,
+        "captureManifestPayloadBytesMatch": true,
+        "captureManifestInputNonZeroByteCount": 8006354,
+        "captureManifestNonZeroByteCountComparable": false,
+        "captureManifestNonZeroByteCountComparisonReason": "The capture counter was computed over the ScreenCaptureKit input representation; this analyzer counts nonzero bytes after ALAC decode to signed 32-bit little-endian PCM."
+      },
+      "tools": {
+        "ffprobe": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers",
+        "ffmpeg": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "firstPresentationOffsetFromFirstVideoFrameSeconds": 0.01787420800246764,
+      "lastPresentationOffsetFromLastVideoFrameSeconds": -0.031469458001083694,
+      "inputContainsNonZeroAudio": true,
+      "bufferCount": 2003,
+      "limitation": "ALAC identity and nonzero decoded PCM are established. Spoken content, cue causality, language correctness, synchronization acceptance, and human listening acceptance are not established."
+    }
+  },
+  "replayDiagnostic": {
+    "algorithm": "content-crop-rgb-sha256-and-normalized-rmse-sequence-v1",
+    "contentCrop": {
+      "x": 0,
+      "y": 90,
+      "width": 800,
+      "height": 420,
+      "purpose": "Exclude the fixed shell header/footer and compare the lesson-content field only."
+    },
+    "terminalLikeRmseThreshold": 0.01,
+    "preTerminalLikePrefix": {
+      "firstOrdinal": 1,
+      "lastOrdinal": 157,
+      "frameCount": 157,
+      "maximumRmseToInitialContent": 0.005827256496782537,
+      "interpretation": "The recording begins in a stable terminal-like visual state; it does not capture arrival at that state."
+    },
+    "resetTransitionWindow": {
+      "firstOrdinal": 158,
+      "lastOrdinal": 164,
+      "frameCount": 7
+    },
+    "resetLikePlateau": {
+      "firstOrdinal": 162,
+      "lastOrdinal": 164,
+      "frameCount": 3,
+      "contentCropSha256": "9d6ac14c914dedf6a6e638068251a6e920f740e94abb7e5981df10aa1746e7ff",
+      "candidateOrdinal": 163,
+      "candidateRmseToInitialContent": 0.2185349483442027,
+      "interpretation": "The lesson-content pixels are identical across this plateau and materially different from the capture-start terminal-like state."
+    },
+    "proposedLocalFrameMapping": {
+      "firstCaptureOrdinal": 163,
+      "firstProposedLocalFrame": 1,
+      "lastCaptureOrdinal": 290,
+      "lastProposedLocalFrame": 128,
+      "status": "operator-provided-candidate-mapping-not-proved-by-runtime-playhead-telemetry",
+      "captureFrameCount": 128,
+      "firstOrdinalInsideResetPlateau": true,
+      "exactLocalFrameTelemetryPresent": false,
+      "pixelSequenceAloneProvesExactLocalFrameNumbers": false,
+      "limitation": "The content crop is pixel-identical at ordinals 162..164, so pixels alone cannot distinguish which of those samples is local frame 1. The 163..290 mapping remains a candidate until separately bound to source/keyframe or runtime-playhead evidence."
+    },
+    "secondTerminalLikeSuffix": {
+      "firstOrdinal": 406,
+      "lastOrdinal": 477,
+      "frameCount": 72,
+      "rmseToInitialContent": {
+        "minimum": 0,
+        "maximum": 0.0074844694354433364,
+        "mean": 0.004570762042458202
+      },
+      "interpretation": "A stable terminal-like visual state recurs after the reset/mapped interval and persists through capture end."
+    },
+    "diagnosticVisualSequenceEstablished": true,
+    "replayOperationCausalityEstablished": false,
+    "semanticTerminalStateEstablished": false,
+    "authoritativeNaturalTraceEstablished": false,
+    "keyFrames": {
+      "captureStartTerminalLike": {
+        "ordinal": 1,
+        "relativeTimeSeconds": 0,
+        "presentationTimeSeconds": 105160.56313075,
+        "frameSha256": "b5dcea377551b2ea4980820e48543c06da3f4bee0dd3552320fb519d896c67e1",
+        "contentCropSha256": "113994a100b61f7ad77e00410bfb53317c998f2659d3876ebb72fddceafa8f0e",
+        "rmseToInitialContent": 0,
+        "rmseToResetCandidateContent": 0.2185349483442027
+      },
+      "preResetTerminalLike": {
+        "ordinal": 157,
+        "relativeTimeSeconds": 13.153288583,
+        "presentationTimeSeconds": 105173.716419333,
+        "frameSha256": "31a7218291cf815698d07f02e86166907c02e1fb53de30b68a1ec0535fed7123",
+        "contentCropSha256": "d3572dd2d67010d294f14bc59fcf4efab6b868839c6a32756820af34b008246d",
+        "rmseToInitialContent": 0.002017291889286987,
+        "rmseToResetCandidateContent": 0.21849393902251713
+      },
+      "resetCandidate": {
+        "ordinal": 163,
+        "relativeTimeSeconds": 13.656119708,
+        "presentationTimeSeconds": 105174.219250458,
+        "frameSha256": "2203965b0f5b53715c70b0177d42d1f7072f0fba1a02734c4aaaa4a958ef6dcd",
+        "contentCropSha256": "9d6ac14c914dedf6a6e638068251a6e920f740e94abb7e5981df10aa1746e7ff",
+        "rmseToInitialContent": 0.2185349483442027,
+        "rmseToResetCandidateContent": 0
+      },
+      "proposedLocalFrame128": {
+        "ordinal": 290,
+        "relativeTimeSeconds": 24.351497583,
+        "presentationTimeSeconds": 105184.914628333,
+        "frameSha256": "2716f31ced3238b4e1255ce325a89d12eb491a9b1b2cae9353246ab9e907ffc6",
+        "contentCropSha256": "c608d476acf99c63f2c5fd22c5174ac679521e1e044a0f1632fe898fdbf8a5bb",
+        "rmseToInitialContent": 0.09956031284423959,
+        "rmseToResetCandidateContent": 0.19454425248773835
+      },
+      "secondTerminalLikeStart": {
+        "ordinal": 406,
+        "relativeTimeSeconds": 34.118565,
+        "presentationTimeSeconds": 105194.68169575,
+        "frameSha256": "062505674bac2ccb8befbb9fdc0a81557739bef51095418ffbc936c7c01601dc",
+        "contentCropSha256": "02eac247f9c7c2641a229d37bf70336c13f5eaf008a449aade1574ab769d2f01",
+        "rmseToInitialContent": 0.0074844694354433364,
+        "rmseToResetCandidateContent": 0.21841177804075876
+      },
+      "captureEndTerminalLike": {
+        "ordinal": 477,
+        "relativeTimeSeconds": 40.089343666,
+        "presentationTimeSeconds": 105200.652474416,
+        "frameSha256": "94dbbe1840a4bb911a97c6e7c90a5e9caa3bbb29bd54ae5134a2bdcb6cd3bf3f",
+        "contentCropSha256": "a15636c6a86ab02863fcb1e167dce2340ee7f98c21f9cc2ab1651fd50c21e986",
+        "rmseToInitialContent": 0.002679559216061291,
+        "rmseToResetCandidateContent": 0.21860665666169854
+      }
+    },
+    "proposedMappingTiming": {
+      "firstCaptureOrdinal": 163,
+      "lastCaptureOrdinal": 290,
+      "frameCount": 128,
+      "elapsedSecondsBetweenFirstAndLastSamples": 10.695377875,
+      "effectiveFpsAcross127Intervals": 11.874288265855217
+    },
+    "diagnosticConclusion": "Pixels establish a stable terminal-like capture prefix, a materially different reset-like plateau containing ordinal 163, and a stable terminal-like suffix after the 163..290 candidate interval. This is a visual Replay diagnostic pattern, not proof of the Replay input event, exact local playhead values, natural-trace causality, or semantic terminal authority."
+  },
+  "verifiedFacts": {
+    "manifestBytesBound": true,
+    "stagedLessonShellBytesBound": true,
+    "exactFlashPlayerOwnerAndWindowTitleBound": true,
+    "screenCaptureWindowIdPresent": true,
+    "exactRuntimePidEvidencePresent": false,
+    "native800x600PngFramesVerified": 477,
+    "requestedNominalFps": 12,
+    "observedCadenceWithinTwoPercentOfNominal": true,
+    "captureToolReportedZeroDrops": true,
+    "all477FrameDescriptorsBytesHashesAndPngsVerified": true,
+    "alac48kHzStereoVerified": true,
+    "decodedPcmBytesHashAndNonzeroSignalVerified": true,
+    "terminalLikeResetLikeTerminalLikePixelSequenceVerified": true
+  },
+  "unresolvedGates": [
+    "no-exact-runtime-pid-binding-in-capture-manifest",
+    "no-hash-chained-operation-event-log",
+    "no-hash-chained-source-target-resolution-log",
+    "no-hash-chained-pre-post-state-log",
+    "no-authorized-natural-trace-execution-report",
+    "no-runtime-playhead-telemetry-for-ordinal-to-local-frame-mapping",
+    "no-complete-natural-entry-proof",
+    "no-contained-disposable-profile-session-binding",
+    "no-audio-cue-causality-or-human-listening-acceptance",
+    "no-independent-human-visual-review",
+    "no-owner-acceptance"
+  ],
+  "authority": {
+    "naturalTraceExecutionEstablished": false,
+    "replayOperationCausalityEstablished": false,
+    "exactRuntimePidBindingEstablished": false,
+    "authoritativeOriginalRuntimeTrace": false,
+    "authoritativeBaseline": false,
+    "baselineAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictMigrationComplete": false,
+    "publicRelease": false
+  },
+  "acceptance": {
+    "naturalTraceExecutionEstablished": false,
+    "replayOperationCausalityEstablished": false,
+    "exactRuntimePidBindingEstablished": false,
+    "authoritativeOriginalRuntimeTrace": false,
+    "authoritativeBaseline": false,
+    "baselineAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictMigrationComplete": false,
+    "publicRelease": false
+  },
+  "acceptanceEffect": "none",
+  "strictAcceptanceEffect": "none",
+  "coverageMutationPerformed": false,
+  "candidateMutationPerformed": false,
+  "completionLedgerMutationPerformed": false,
+  "releaseLedgerMutationPerformed": false,
+  "reportFingerprintSha256": "b6cbf7ca8b0a111e9cc1584318094b91cef09ab80825c4de3f416320607abeb5"
+}

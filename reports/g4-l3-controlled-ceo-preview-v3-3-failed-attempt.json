@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l3-controlled-ceo-preview-v3-3-failed-attempt",
+  "recordedAt": "2026-08-01T23:06:52+08:00",
+  "artifactIdentity": {
+    "variant": "v3-3",
+    "version": "v3.3",
+    "title": "G4 L3 Controlled CEO Preview v3.3 QA",
+    "baseUrl": "http://127.0.0.1:3219",
+    "buildId": "AM-bFKYz1MC1YvYrM4oX",
+    "qaGeneratorSha256": "fe06a87208c1747954971f3627f7e2922c491c0dfab1a7de8ea34c498a071e4e"
+  },
+  "status": "failed-before-final-report-publication",
+  "attempt": {
+    "command": "npm run qa:g4:l3:ceo-preview:v3-3",
+    "lastCompletedGlobalPageOrdinal": 37,
+    "failingPageCandidate": {
+      "globalPageOrdinal": 38,
+      "animationId": "course-g04-l03-fq-002"
+    },
+    "phase": "replay-activation-wait",
+    "activationKindRecorded": false,
+    "timeoutMs": 30000,
+    "error": "page.waitForFunction: Timeout 30000ms exceeded",
+    "stackLocation": "scripts/qa-g4-l3-current-js-product.mjs:1102:18"
+  },
+  "finalArtifactState": {
+    "jsonReportPublished": false,
+    "markdownReportPublished": false,
+    "screenshotRootPreserved": true,
+    "screenshotRoot": "output/playwright/g4-l3-controlled-ceo-preview-v3-3-qa",
+    "screenshotFileCount": 5,
+    "screenshotTotalBytes": 876815,
+    "screenshotTreeSha256": "3b65a041d823e615aab11b1e89018d5af71fa38c5454dc351ed0b15f2ef29c10",
+    "screenshots": [
+      {
+        "path": "output/playwright/g4-l3-controlled-ceo-preview-v3-3-qa/course-map-en-1280x900.png",
+        "bytes": 173690,
+        "sha256": "a8a386925e5807ddeba25c8e697ee8f6df03b154af175a4a51f4aeb401700141"
+      },
+      {
+        "path": "output/playwright/g4-l3-controlled-ceo-preview-v3-3-qa/course-map-es-390x844.png",
+        "bytes": 111171,
+        "sha256": "2ac919a6e9b4d81e2724177b10d5d3b6a7df369fd65fd8981900ce3756c878cc"
+      },
+      {
+        "path": "output/playwright/g4-l3-controlled-ceo-preview-v3-3-qa/page-01-en-desktop.png",
+        "bytes": 160473,
+        "sha256": "499ef085a73bac8b89dccf3c996317a8870f3c232dec45c6e342ec8541b186b1"
+      },
+      {
+        "path": "output/playwright/g4-l3-controlled-ceo-preview-v3-3-qa/shell-en-1280x900.png",
+        "bytes": 237761,
+        "sha256": "1fd155cb8400bb2ed3a9ba92cc1fb1a19634faa97198e10285d4083ffdea496e"
+      },
+      {
+        "path": "output/playwright/g4-l3-controlled-ceo-preview-v3-3-qa/shell-es-390x844.png",
+        "bytes": 193720,
+        "sha256": "50319d3d862def2850d125e0b6d2356c1264da60560a938bfa29676397aae052"
+      }
+    ]
+  },
+  "successorBoundary": {
+    "classification": "qa-harness-timeout-requires-new-revision",
+    "v33PackagePublished": false,
+    "v33ZipPublished": false,
+    "v33SmokePublished": false,
+    "v33DeliveryReceiptPublished": false,
+    "v33ArtifactsOverwritten": false,
+    "productFailureEstablished": false,
+    "authoredProductSourceChangeAuthorized": false,
+    "nextRevision": "v3.3-r2",
+    "strictAcceptanceEffect": "none"
+  },
+  "authority": {
+    "currentJavascriptCandidateOnly": true,
+    "originalRuntimeEvidence": false,
+    "flashFidelityEstablished": false,
+    "independentHumanAcceptance": false,
+    "ownerAcceptance": false,
+    "strictCompleteMembers": 0,
+    "releaseMembers": 40,
+    "published": false
+  }
+}

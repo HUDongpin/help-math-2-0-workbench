@@ -1,0 +1,304 @@
+{
+  "schemaVersion": 2,
+  "evidenceKind": "course-shell-strict-readiness",
+  "generatedBy": {
+    "script": "scripts/build-course-strict-readiness.mjs",
+    "version": "1.3.0",
+    "deterministic": true
+  },
+  "animationId": "course-g04-l01-ir-001",
+  "assessedOn": "2026-07-21",
+  "migrationStatusChanged": false,
+  "conclusion": {
+    "strictAcceptanceReady": false,
+    "completionClaimAllowed": false,
+    "localAuthoritativeBaselineCompletable": false,
+    "localExhaustiveBranchCaptureCompletable": false,
+    "risk": "high",
+    "reason": "The current recursive, hash-bound FLA authoring audit is verified, but it does not prove original-runtime interaction branches, bilingual audio synchronization, terminal behavior, or Replay."
+  },
+  "source": {
+    "swf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/IR/L1RW01.swf",
+    "swfSha256": "b21b16d1e5756820b5703136708f625dcc3a324d629b2337b1dc42af64559e46",
+    "sourceHashVerified": true,
+    "fla": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/IR/L1RW01.fla",
+    "flaSha256": "c4ba5fd0b37b1a1ad622f4fdf89295a6b76c820588a8000b239b0f4d68984fb9",
+    "flaAvailability": "present",
+    "authoringInspection": "verified-current-recursive-authoring-audit"
+  },
+  "toolReadiness": {
+    "catalogToolchain": {
+      "path": "catalog/toolchain.json",
+      "sha256": "07484eaf52751128f91b429b7ce1b7bb46259365c545d17c360b5d0c74c3b41f"
+    },
+    "adobeAnimate": {
+      "installed": true,
+      "application": "Adobe Animate 2021",
+      "productVersion": "21.0.7",
+      "applicationPath": "/Applications/Adobe Animate 2021"
+    },
+    "jsflCliProbe": {
+      "status": "passed",
+      "scope": "disposable-blank-document",
+      "animateVersion": "MAC 21,0,7,42652",
+      "executableSha256": "fc7903fe74b3ad16842274eeffef12e18bcb51cee8722d7fd69166948991fbcb",
+      "result": {
+        "path": "work/animate/jsfl-cli-probes/run-z5AdDW/probe-result.json",
+        "sha256": "93bcfaedd4b957bbf4bacc92a761096dc088d4d306f34b7d43a0c5eab55b4e21"
+      },
+      "allInternalPathSha256PinsVerified": true,
+      "limitations": [
+        "This proves cold-start JSFL execution and the authoring-audit script on a generated blank document only.",
+        "It does not prove that a legacy HELP Math FLA can open unattended; legacy ActionScript conversion dialogs can require a human acknowledgement.",
+        "It does not establish runtime, localization, interaction, audio, or visual fidelity for any migration."
+      ]
+    },
+    "perFileFlaAuthoringAudit": {
+      "required": true,
+      "report": {
+        "path": "audit/adobe-animate-2021-authoring-audit.json",
+        "sha256": "27de76cabebadbf1dd58dc9562c15b4786c93ffb5cc7be350aadaa07dc5241d7"
+      },
+      "canonicalSchemaVersion": 2,
+      "animateVersion": "MAC 21,0,7,42652",
+      "capturedAt": "Wed, 22 Jul 2026 02:42:15 GMT",
+      "nativeMetadataMatchesShippedSwf": true,
+      "capturedAuthoringFrame": {
+        "path": "audit/adobe-animate-2021-authoring-frame-0010.png",
+        "sha256": "28f45b590038bc563dc8a1fb62c891faf0a068052d2917c3ead495db035138a8",
+        "flashFrame": 10,
+        "width": 800,
+        "height": 600
+      },
+      "strictAcceptanceEffect": false,
+      "limitations": [
+        "Animate 2021 converts this unsupported ActionScript 1 document to ActionScript 3 in memory and may remove attached ActionScript 1 code.",
+        "The original shipped SWF bytecode and Adobe Flash Player runtime capture remain authoritative for runtime behavior.",
+        "This authoring-stage capture does not prove host variables, interaction branches, localization selection, audio synchronization, or Replay behavior."
+      ],
+      "status": "verified-current-recursive-authoring-audit",
+      "comprehensiveCurrentContract": true,
+      "blocker": null,
+      "auditScript": {
+        "path": "scripts/animate-audit-current-document.jsfl",
+        "sha256": "043188cb940adc1895a8682ca2c5e146faf07e96a03bade11c62073055dda0ae"
+      },
+      "workingCopy": {
+        "path": "work/animate/read-only-fla-copies/course-g04-l01-ir-001/L1RW01.fla",
+        "sha256": "c4ba5fd0b37b1a1ad622f4fdf89295a6b76c820588a8000b239b0f4d68984fb9",
+        "bytes": 1372672,
+        "readOnly": true,
+        "byteIdenticalToSource": true
+      },
+      "recursiveLibraryTimelineAuditVerified": true
+    }
+  },
+  "machineAudit": {
+    "auditStatus": "partial",
+    "stage": {
+      "width": 800,
+      "height": 600
+    },
+    "fps": 12,
+    "rootFrameCount": 10,
+    "rootTimelineDurationMs": 833.3333333333334,
+    "swfVersion": 6,
+    "actionScriptVersion": "AS1/2",
+    "exportedScriptFileCount": 20,
+    "nestedShowFrameTagCount": 433,
+    "interactionSignals": {
+      "doAction": 18,
+      "doInitAction": 2,
+      "defineButton2": 1,
+      "eventRecords": 0,
+      "defineEditText": 0,
+      "branchIfTrue": 85,
+      "branchAlways": 47,
+      "random": 1,
+      "startDrag": 0,
+      "stopDrag": 0,
+      "stop": 14,
+      "play": 0,
+      "gotoFrame": 0,
+      "gotoLabel": 0,
+      "frameLabel": 2,
+      "defineSprite": 10,
+      "defineMorphShape": 0,
+      "defineFont2": 4
+    },
+    "externalCallCandidates": [],
+    "observedBehaviorFromExtractedScripts": [
+      "A nested 142-frame sound timeline randomly selects one of two sound clips.",
+      "The root timeline depends on _level0.InternalPreloader; exported component code includes scroll-bar state and input handlers.",
+      "Embedded streaming audio is present even though the catalog found no external MP3 association."
+    ],
+    "report": {
+      "path": "audit/machine/report.json",
+      "sha256": "42c56f66fe1729424e0b05238aa68adde165595c3154bdb04e07d5a77ba9b3b0"
+    },
+    "allReportOutputPinsVerified": true
+  },
+  "audioAudit": {
+    "status": "pending",
+    "report": {
+      "path": "audit/audio-runtime-evidence.json",
+      "sha256": "a104a35fd92af2b863230bbfb991431a99fb5113a486df8e5f9fde4be754eef9"
+    },
+    "inventory": {
+      "path": "audio-inventory.csv",
+      "sha256": "d57f00b9b83b30a213aebb8acd1a0f14cec0f7a71f2b19eed33c4cd2d7c47468",
+      "rowCount": 2
+    },
+    "structuralAuditComplete": true,
+    "authoritativeListeningComplete": false,
+    "hostStateTraversalComplete": false,
+    "synchronizationComplete": false,
+    "acceptanceRequirements": [
+      "Adobe/original-runtime listening is required to classify embedded speech versus effects, confirm language, and verify synchronization/loop/stop behavior.",
+      "Nested SoundStream local frames are known, but an authoritative traversal must map each sprite instance and interaction branch to its root/runtime cue time."
+    ]
+  },
+  "baselineReadiness": {
+    "ffdecStructuralRootFrameExport": {
+      "status": "structural-baseline-only",
+      "report": {
+        "path": "baseline/ffdec-root-frames.json",
+        "sha256": "79f9af301d3e6310d20ab79390d84284b22ee5ad2a7a24bcc515792b11fce2cd"
+      },
+      "archive": "artifacts/full-frame/pilot-baselines/course-g04-l01-ir-001/ffdec-root-frames",
+      "frames": 10,
+      "dimensionsVerified": true,
+      "everyArchivedFrameHashVerified": true
+    },
+    "authoritativeRuntimeBaseline": {
+      "status": "blocked",
+      "reason": "No source-hash-bound authorized original-runtime natural-entry traversal covers every required root/nested frame domain, branch, language, audio state, terminal state, and Replay reset."
+    },
+    "limitation": "FFDec static root-frame export does not execute ActionScript or nested runtime branches. Ruffle and candidate renderers are forensic/engineering references, not authoritative fidelity baselines."
+  },
+  "branchCaptureReadiness": {
+    "status": "partial-reference-only",
+    "requiredScenarioInventory": [
+      "both random sound selections under fixed seeds",
+      "all scroll/component states that are visible at runtime",
+      "terminal and Replay"
+    ],
+    "missing": [
+      "source-hash-bound authorized original-runtime natural-entry capture",
+      "deterministic parent/root/global fixture with denied legacy side effects",
+      "exact interaction hit targets and complete state-transition map",
+      "authoritative bilingual audio cue/listening/synchronization evidence",
+      "terminal and Replay full-state reset evidence"
+    ]
+  },
+  "strictGateBlockers": [
+    "No authoritative native-stage runtime baseline covers every required frame domain, reachable scenario, branch, and language.",
+    "A declared implementation route or engineering candidate does not establish full-frame parity; canonical captures, per-frame RMSE, diff review, and accepted exceptions remain incomplete.",
+    "Audio acceptance remains pending: listening, host-state traversal, language/content, synchronization, and controls are not signed off.",
+    "Accessibility, responsive, console/network product QA, human visual review, engineering review, and owner acceptance remain pending."
+  ],
+  "executableNextActions": [
+    "Capture the exact SWF in an authorized original runtime with an inert, source-derived host fixture and complete natural-entry traces for every declared frame domain.",
+    "Map every interaction/scoring/random branch to deterministic fixtures and capture every reachable state at the native 800x600 stage.",
+    "Complete bilingual audio mapping, authoritative listening, start semantics, synchronization, controls, and Replay checks without inventing cue frames.",
+    "Run implementation full-frame comparisons, inspect every diff/outlier, and obtain named human and owner decisions before any status promotion."
+  ],
+  "evidence": [
+    {
+      "id": "source-swf",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/IR/L1RW01.swf",
+      "sha256": "b21b16d1e5756820b5703136708f625dcc3a324d629b2337b1dc42af64559e46"
+    },
+    {
+      "id": "source-fla",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/IR/L1RW01.fla",
+      "sha256": "c4ba5fd0b37b1a1ad622f4fdf89295a6b76c820588a8000b239b0f4d68984fb9"
+    },
+    {
+      "id": "machine-report",
+      "path": "audit/machine/report.json",
+      "sha256": "42c56f66fe1729424e0b05238aa68adde165595c3154bdb04e07d5a77ba9b3b0"
+    },
+    {
+      "id": "machine-output-01",
+      "path": "audit/machine/ffdec-header.txt",
+      "sha256": "2bc4d4d8634a911847abb848924ed70dd5f1e9db3c00c75a7c35a6e2f734874e"
+    },
+    {
+      "id": "machine-output-02",
+      "path": "audit/machine/ffdec-script-index.txt",
+      "sha256": "305d90e4fbc9b58b11395446fdb04c217bc791680d150c17e76945cd70a0f94f"
+    },
+    {
+      "id": "machine-output-03",
+      "path": "audit/machine/ffdec-scripts.txt.gz",
+      "sha256": "0cacaa6ea5de3d6b08015d04c06c4aa23aa42f54ed8d58f0c62059268b6ad723"
+    },
+    {
+      "id": "machine-output-04",
+      "path": "audit/machine/ffdec-tags.txt.gz",
+      "sha256": "bb5e2499632d8a56143497fdb6cc810d29a377821f79718413fe72613a79d1fd"
+    },
+    {
+      "id": "machine-output-05",
+      "path": "audit/machine/swfmill-summary.json",
+      "sha256": "e890aa78986c8ef6b5e8c96cdaadadbf87eaa5c50217f2c1c40d13e4fae2cc27"
+    },
+    {
+      "id": "machine-output-06",
+      "path": "audit/machine/swfmill.xml.gz",
+      "sha256": "1fcd12a83f15f09becb8f12be8007f42e11953990c89297dc9d74e90963ea173"
+    },
+    {
+      "id": "structural-root-baseline",
+      "path": "baseline/ffdec-root-frames.json",
+      "sha256": "79f9af301d3e6310d20ab79390d84284b22ee5ad2a7a24bcc515792b11fce2cd"
+    },
+    {
+      "id": "audio-runtime-evidence",
+      "path": "audit/audio-runtime-evidence.json",
+      "sha256": "a104a35fd92af2b863230bbfb991431a99fb5113a486df8e5f9fde4be754eef9"
+    },
+    {
+      "id": "audio-inventory",
+      "path": "audio-inventory.csv",
+      "sha256": "d57f00b9b83b30a213aebb8acd1a0f14cec0f7a71f2b19eed33c4cd2d7c47468"
+    },
+    {
+      "id": "toolchain",
+      "path": "catalog/toolchain.json",
+      "sha256": "07484eaf52751128f91b429b7ce1b7bb46259365c545d17c360b5d0c74c3b41f"
+    },
+    {
+      "id": "animate-jsfl-cli-probe",
+      "path": "work/animate/jsfl-cli-probes/run-z5AdDW/probe-result.json",
+      "sha256": "93bcfaedd4b957bbf4bacc92a761096dc088d4d306f34b7d43a0c5eab55b4e21"
+    },
+    {
+      "id": "animate-authoring-audit",
+      "path": "audit/adobe-animate-2021-authoring-audit.json",
+      "sha256": "27de76cabebadbf1dd58dc9562c15b4786c93ffb5cc7be350aadaa07dc5241d7"
+    },
+    {
+      "id": "animate-authoring-audit-script",
+      "path": "scripts/animate-audit-current-document.jsfl",
+      "sha256": "043188cb940adc1895a8682ca2c5e146faf07e96a03bade11c62073055dda0ae"
+    },
+    {
+      "id": "animate-authoring-working-copy",
+      "path": "work/animate/read-only-fla-copies/course-g04-l01-ir-001/L1RW01.fla",
+      "sha256": "c4ba5fd0b37b1a1ad622f4fdf89295a6b76c820588a8000b239b0f4d68984fb9"
+    },
+    {
+      "id": "animate-authoring-frame",
+      "path": "audit/adobe-animate-2021-authoring-frame-0010.png",
+      "sha256": "28f45b590038bc563dc8a1fb62c891faf0a068052d2917c3ead495db035138a8"
+    }
+  ],
+  "review": {
+    "humanReviewer": null,
+    "engineeringReviewer": null,
+    "ownerReviewer": null,
+    "decision": "pending"
+  }
+}

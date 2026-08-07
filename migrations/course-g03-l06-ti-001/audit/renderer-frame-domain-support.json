@@ -1,0 +1,517 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "renderer-frame-domain-support-audit",
+  "animationId": "course-g03-l06-ti-001",
+  "status": "fully-renderable",
+  "migrationStatusAtGeneration": null,
+  "migrationStatusBinding": "excluded-from-technical-projection-and-deterministic-audit-output",
+  "migrationStatusChanged": false,
+  "authorityStatement": [
+    "This deterministic engineering audit calls the registered animation module's pure getFrameState function directly; host DOM attributes and capture wrappers are not consulted.",
+    "For every manifest implementation.frameDomains × scenarioIds × en/es combination, the first and last one-indexed frames are requested and the returned frameDomain, frame, scenario, and language must match exactly.",
+    "A state whose status is blocked or whose blocker is non-null is recorded but never counted as renderable, even when all identity fields match.",
+    "This audit does not prove visual fidelity, natural-runtime reachability, ActionScript behavior, audio synchronization, accessibility, human review, or owner acceptance."
+  ],
+  "generatedFrom": {
+    "migrationManifest": {
+      "path": "migration.json",
+      "hashMode": "canonical-json-v1",
+      "technicalProjection": "help-math-technical-manifest-v1",
+      "technicalProjectionSha256": "037b436012e51a4f4239216209330f60e5e64a8c325748133c675c7991ac3823",
+      "excludedPaths": [
+        "status",
+        "created",
+        "confidence",
+        "classification",
+        "audit",
+        "toolVersions",
+        "baseline",
+        "evidence",
+        "fidelity",
+        "accessibility",
+        "acceptance",
+        "catalogEvidence",
+        "implementation.candidateQa",
+        "implementation.candidateMaturity",
+        "implementation.candidateProductQa",
+        "implementation.candidateVisualEvidence",
+        "implementation.productQaEvidence",
+        "implementation.productQaScope",
+        "audio.catalogGroupCandidates",
+        "audio.catalogExactAssociations",
+        "audio.acceptance",
+        "audio.authoritativeListeningComplete",
+        "audio.originalHostSynchronizationComplete",
+        "audio.strictAcceptance",
+        "audio.structuralAuditComplete"
+      ]
+    },
+    "prototypeRuntime": {
+      "path": "packages/demos/src/prototype-manifest.ts",
+      "sha256": "ca9d48209a83ad8f8cb1f9a9e8c2b7f5571ee47c413a387c81b04cb3b34f07f7"
+    },
+    "animationRegistry": {
+      "path": "packages/demos/src/animation-registry.ts",
+      "sha256": "50f5e4874e227591cb14677121ac60c2524eb4c11cf47a55be567e1ded7ff136"
+    },
+    "animationModule": {
+      "path": "packages/demos/src/modules/course-g03-l06-ti-001.tsx",
+      "sha256": "e37dd683ff5d02c01f7b1f9bc33743f5f252ae8d31ba5523acae56f3f0ec7dd0"
+    },
+    "pureTimeline": {
+      "path": "packages/demos/src/timelines/course-g03-l06-ti-001.ts",
+      "sha256": "ce620138004ddb3f5f853397b9f7a7c8987e64f7fe7f8829d2f41952a2921a6c"
+    },
+    "runtimeContract": {
+      "path": "packages/demos/src/contract.ts",
+      "sha256": "e0bedca504601df93c3bc33a79f842cda5aeae4a15c244a8d104f2c1a2febde3"
+    },
+    "auditContract": {
+      "path": "scripts/evidence-projections.mjs",
+      "sha256": "0a5a4126fd72fa8137af6105a8a22759ebbaab8a46f7538bd13074af7d9e7a08"
+    },
+    "auditBuilder": {
+      "path": "scripts/build-renderer-frame-domain-support.mjs",
+      "sha256": "d5902b3bf7785c823ec5c057f583617fb770b0b686cca5c4938f484a8845ad03"
+    },
+    "auditProbe": {
+      "path": "scripts/probe-renderer-frame-domain-support.ts",
+      "sha256": "bc7ba85a6e84caf30d8e7b0f4e84e2179afb8723a00377e5f03bebaa3b720782"
+    }
+  },
+  "loadedRuntime": {
+    "prototypeKey": "course-g03-l06-ti-001",
+    "rootFrameCount": 10,
+    "defaultFrameDomain": "sprite-21",
+    "frameDomains": [
+      {
+        "id": "root",
+        "frameCount": 10
+      },
+      {
+        "id": "sprite-21",
+        "frameCount": 142
+      }
+    ],
+    "moduleMaturity": "legacy-prototype",
+    "moduleScenarioIds": [
+      "sound-from-seed",
+      "sound-0",
+      "sound-1",
+      "root-standalone"
+    ]
+  },
+  "summary": {
+    "declaredFrameDomainCount": 2,
+    "fullyRenderableFrameDomainCount": 2,
+    "probeCount": 12,
+    "exactIdentityCount": 12,
+    "blockedCount": 0,
+    "renderableCount": 12,
+    "outcomeCounts": {
+      "renderable-exact": 12,
+      "blocked-not-renderable": 0,
+      "scenario-undeclared-by-module": 0,
+      "identity-mismatch": 0,
+      "probe-error": 0
+    }
+  },
+  "domainSupport": [
+    {
+      "frameDomain": "root",
+      "frameCount": 10,
+      "scenarioIds": [
+        "root-standalone"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 10
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 4,
+      "blockedCount": 0,
+      "renderableCount": 4,
+      "fullyRenderable": true
+    },
+    {
+      "frameDomain": "sprite-21",
+      "frameCount": 142,
+      "scenarioIds": [
+        "sound-0",
+        "sound-1"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 142
+      },
+      "probeCount": 8,
+      "exactIdentityCount": 8,
+      "blockedCount": 0,
+      "renderableCount": 8,
+      "fullyRenderable": true
+    }
+  ],
+  "probes": [
+    {
+      "request": {
+        "requestId": "root::root-standalone::en::1",
+        "frameDomain": "root",
+        "frame": 1,
+        "scenario": "root-standalone",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "root",
+        "frame": 1,
+        "scenario": "root-standalone",
+        "language": "en",
+        "status": "ready",
+        "blocker": null
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": false,
+      "renderable": true,
+      "outcome": "renderable-exact",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "root::root-standalone::en::10",
+        "frameDomain": "root",
+        "frame": 10,
+        "scenario": "root-standalone",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "root",
+        "frame": 10,
+        "scenario": "root-standalone",
+        "language": "en",
+        "status": "ready",
+        "blocker": null
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": false,
+      "renderable": true,
+      "outcome": "renderable-exact",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "root::root-standalone::es::1",
+        "frameDomain": "root",
+        "frame": 1,
+        "scenario": "root-standalone",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "root",
+        "frame": 1,
+        "scenario": "root-standalone",
+        "language": "es",
+        "status": "ready",
+        "blocker": null
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": false,
+      "renderable": true,
+      "outcome": "renderable-exact",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "root::root-standalone::es::10",
+        "frameDomain": "root",
+        "frame": 10,
+        "scenario": "root-standalone",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "root",
+        "frame": 10,
+        "scenario": "root-standalone",
+        "language": "es",
+        "status": "ready",
+        "blocker": null
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": false,
+      "renderable": true,
+      "outcome": "renderable-exact",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-21::sound-0::en::1",
+        "frameDomain": "sprite-21",
+        "frame": 1,
+        "scenario": "sound-0",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "sprite-21",
+        "frame": 1,
+        "scenario": "sound-0",
+        "language": "en",
+        "status": "ready",
+        "blocker": null
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": false,
+      "renderable": true,
+      "outcome": "renderable-exact",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-21::sound-0::en::142",
+        "frameDomain": "sprite-21",
+        "frame": 142,
+        "scenario": "sound-0",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "sprite-21",
+        "frame": 142,
+        "scenario": "sound-0",
+        "language": "en",
+        "status": "ready",
+        "blocker": null
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": false,
+      "renderable": true,
+      "outcome": "renderable-exact",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-21::sound-0::es::1",
+        "frameDomain": "sprite-21",
+        "frame": 1,
+        "scenario": "sound-0",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "sprite-21",
+        "frame": 1,
+        "scenario": "sound-0",
+        "language": "es",
+        "status": "ready",
+        "blocker": null
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": false,
+      "renderable": true,
+      "outcome": "renderable-exact",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-21::sound-0::es::142",
+        "frameDomain": "sprite-21",
+        "frame": 142,
+        "scenario": "sound-0",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "sprite-21",
+        "frame": 142,
+        "scenario": "sound-0",
+        "language": "es",
+        "status": "ready",
+        "blocker": null
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": false,
+      "renderable": true,
+      "outcome": "renderable-exact",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-21::sound-1::en::1",
+        "frameDomain": "sprite-21",
+        "frame": 1,
+        "scenario": "sound-1",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "sprite-21",
+        "frame": 1,
+        "scenario": "sound-1",
+        "language": "en",
+        "status": "ready",
+        "blocker": null
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": false,
+      "renderable": true,
+      "outcome": "renderable-exact",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-21::sound-1::en::142",
+        "frameDomain": "sprite-21",
+        "frame": 142,
+        "scenario": "sound-1",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "sprite-21",
+        "frame": 142,
+        "scenario": "sound-1",
+        "language": "en",
+        "status": "ready",
+        "blocker": null
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": false,
+      "renderable": true,
+      "outcome": "renderable-exact",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-21::sound-1::es::1",
+        "frameDomain": "sprite-21",
+        "frame": 1,
+        "scenario": "sound-1",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "sprite-21",
+        "frame": 1,
+        "scenario": "sound-1",
+        "language": "es",
+        "status": "ready",
+        "blocker": null
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": false,
+      "renderable": true,
+      "outcome": "renderable-exact",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-21::sound-1::es::142",
+        "frameDomain": "sprite-21",
+        "frame": 142,
+        "scenario": "sound-1",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "sprite-21",
+        "frame": 142,
+        "scenario": "sound-1",
+        "language": "es",
+        "status": "ready",
+        "blocker": null
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": false,
+      "renderable": true,
+      "outcome": "renderable-exact",
+      "error": null
+    }
+  ],
+  "strictAcceptanceEffect": "none; this audit only exposes renderer-addressability gaps and does not advance migration status or satisfy strict acceptance"
+}

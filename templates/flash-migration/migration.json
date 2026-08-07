@@ -88,9 +88,15 @@
     "swfmill": "unavailable",
     "adobeAnimate": "unavailable"
   },
+  "forensicReference": {
+    "authority": "forensic-only",
+    "renderer": "Ruffle",
+    "route": "",
+    "version": ""
+  },
   "baseline": {
     "authority": "undecided",
-    "renderer": "Ruffle",
+    "renderer": "unresolved",
     "route": "",
     "routeFile": "",
     "viewport": {
@@ -110,12 +116,34 @@
     "timelineModule": "",
     "testFile": "",
     "standalonePackage": "",
+    "defaultFrameDomainId": "root",
+    "frameDomains": [
+      {
+        "id": "root",
+        "kind": "root",
+        "sourceTimelineId": "root",
+        "parentFrameDomainId": null,
+        "frameCount": null,
+        "scenarioIds": [
+          "default"
+        ]
+      }
+    ],
     "captureContract": {
       "frameParameter": "frame",
+      "frameDomainParameter": "frameDomain",
+      "requirementIdParameter": "requirementId",
+      "traceParameter": "trace",
+      "entryStateSha256Parameter": "entryStateSha256",
       "scenarioParameter": "scenario",
       "languageParameter": "lang",
       "seedParameter": "seed",
-      "frameAttribute": "data-flash-frame"
+      "frameAttribute": "data-flash-frame",
+      "animationIdAttribute": "data-animation-id",
+      "frameDomainAttribute": "data-flash-frame-domain",
+      "requirementIdAttribute": "data-flash-requirement-id",
+      "traceAttribute": "data-flash-trace-id",
+      "entryStateSha256Attribute": "data-flash-entry-state-sha256"
     }
   },
   "evidence": {
@@ -148,13 +176,15 @@
       "decision": "pending",
       "reviewer": "",
       "reviewedAt": "",
-      "scope": "all-keyframe-and-full-frame-diffs"
+      "scope": "all-keyframe-and-full-frame-diffs",
+      "record": null
     },
     "ownerReview": {
       "decision": "pending",
       "reviewer": "",
       "reviewedAt": "",
-      "reason": ""
+      "reason": "",
+      "record": null
     },
     "knownExceptions": []
   }

@@ -1,6 +1,9 @@
 import {defineConfig, devices} from '@playwright/test';
 
-const port = 3211;
+const port = Number(process.env.PLAYWRIGHT_PORT ?? 3211);
+if (!Number.isInteger(port) || port < 1 || port > 65_535) {
+  throw new Error('PLAYWRIGHT_PORT must be an integer from 1 through 65535.');
+}
 const baseURL = `http://127.0.0.1:${port}`;
 
 export default defineConfig({
@@ -26,8 +29,13 @@ export default defineConfig({
   },
   webServer: {
     command: `npm run start -- --hostname 127.0.0.1 --port ${port}`,
+    env: {
+      G4_L3_CEO_PREVIEW_ENABLED: '1',
+      G5_L4_CEO_PREVIEW_ENABLED: '1',
+      G5_L4_WHOLE_LESSON_PACKAGE: '1',
+    },
     url: `${baseURL}/robots.txt`,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: process.env.PLAYWRIGHT_REUSE_EXISTING_SERVER === '1',
     timeout: 120_000,
   },
 });

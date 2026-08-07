@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "animationId": "course-g04-l03-in-009",
+  "capturedAt": "2026-07-21T17:23:20+08:00",
+  "status": "controlled-source-addressed-adobe-engineering-cross-check",
+  "runtime": {
+    "name": "Adobe standalone Flash Player",
+    "version": "32",
+    "launchPolicy": "sandboxed hash-pinned local fixture after no-click GUI safety approval",
+    "networkAllowed": false,
+    "audioMutedByFixture": true
+  },
+  "fixture": {
+    "manifest": "work/adobe-course-host-fixtures-frame-controller-all/generated/course-g04-l03-in-009/frame-0637/bed87cbe9c10f0698eb08f4b/fixture-manifest.json",
+    "fixtureDigest": "bed87cbe9c10f0698eb08f4bfdf867067a5549e282f29da3000efbe37c8f7647",
+    "hostSha256": "3ea71833a1f02ffdc99058d9f9650d4244e20ac1b1f88587f617ff3b51368954",
+    "sourceSwfSha256": "766b6ab686bbaf8ab1dacc30a7ffb96f33735102a1dff7df6b7a97976e3ab25c",
+    "target": {
+      "rootEntryFrame": 6,
+      "rootEntryLabel": "begin",
+      "placementName": "animation",
+      "placementObjectId": 200,
+      "localTimelineId": "sprite-200",
+      "localFrame": 637,
+      "localFrameCount": 637,
+      "consecutiveActualFrameChecksBeforeReveal": 3
+    }
+  },
+  "observation": {
+    "preloadCoverDisappeared": true,
+    "failureCoverVisible": false,
+    "threeTickControllerConditionObserved": true,
+    "stageDescription": "The untouched child showed a snowy Anchorage scene with two children, a thermometer, the sentence 'Temperature is the measure of how hot or how cold something is: air, water, or our bodies.', and 'Anchorage, Alaska: -2° F'.",
+    "flashPlayerProcessClosedAfterCapture": true
+  },
+  "captures": [
+    {
+      "path": "migrations/course-g04-l03-in-009/baseline/controlled-local-frame-0637-adobe-player.jpeg",
+      "sha256": "9da2b9dbae452bcb13a5348e177bac4a8b774d32eb87b3397f2f153f33c21a44",
+      "width": 800,
+      "height": 628,
+      "format": "JPEG",
+      "containsWindowChrome": true
+    },
+    {
+      "path": "migrations/course-g04-l03-in-009/baseline/controlled-local-frame-0637-adobe-player-stage.jpeg",
+      "sha256": "608316840f892798dbba2bc0a29ec6bac06cebbc9613c643f1b5db8c94946997",
+      "width": 800,
+      "height": 600,
+      "format": "JPEG",
+      "derivedFrom": "migrations/course-g04-l03-in-009/baseline/controlled-local-frame-0637-adobe-player.jpeg",
+      "crop": "800x600+0+28"
+    }
+  ],
+  "claims": {
+    "directControlledLocalFrameReached": true,
+    "threeConsecutiveActualFrameChecksPassed": true,
+    "authoritativeBaseline": false,
+    "losslessCapture": false,
+    "rmseEligible": false,
+    "naturalPlaybackPhaseProved": false,
+    "fullFrameParityProved": false,
+    "audioParityProved": false,
+    "glossaryBranchesProved": false,
+    "languageCoverageProved": false,
+    "humanReviewed": false,
+    "ownerAccepted": false
+  },
+  "limitations": [
+    "The controller directly seeks the nested local timeline and therefore does not reproduce the original shell's natural nested-timeline phase or interaction history.",
+    "The screenshot service emitted JPEG and included the pointer; the stage crop is still JPEG-derived and cannot be used for strict RMSE.",
+    "Only local frame 637 was observed. Frames 1-636, Temperature/Measure glossary activations, audio, Spanish behavior, Replay, and natural playback were not exercised.",
+    "This probe is a source-addressed Adobe runtime cross-check for the Canvas candidate; it is not a canonical full-frame baseline or acceptance decision."
+  ]
+}

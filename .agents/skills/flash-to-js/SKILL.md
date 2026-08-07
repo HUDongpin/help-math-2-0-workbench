@@ -1,6 +1,6 @@
 ---
 name: flash-to-js
-description: Audit and faithfully migrate Adobe Flash FLA/SWF educational animations into maintainable HTML5 JavaScript implementations for Next.js/React. Use for Flash recovery, timeline and ActionScript audits, Ruffle baselines, SVG or Canvas renderer selection, exact-frame reconstruction, pixel comparison, and standalone packaging in this project.
+description: Discover the canonical project workflow for evidence-led Flash FLA/SWF migration to HTML5 JavaScript. Use for catalog-backed source intake, Ruffle forensic references, original-runtime and full-frame evidence, audio and immutable review gates, strict completion, and atomic lesson release in this project.
 ---
 
 # Flash To JavaScript

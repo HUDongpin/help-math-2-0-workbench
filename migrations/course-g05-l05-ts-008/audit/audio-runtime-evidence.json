@@ -1,0 +1,656 @@
+{
+  "schemaVersion": 2,
+  "animationId": "course-g05-l05-ts-008",
+  "generatedBy": "scripts/audit-pilot-audio.mjs",
+  "scope": "strict-audio-structural-and-file-metadata-audit",
+  "migrationStatusBefore": null,
+  "migrationStatusBinding": "excluded-from-structural-audio-evidence",
+  "migrationStatusUnchanged": true,
+  "source": {
+    "swf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L5/TS/L5TS08.swf",
+    "expectedSha256": "752ec6444203e2faff46a9c711ed76ee54a9f42e1111d9f78aad506cf8cc95d2",
+    "observedSha256": "752ec6444203e2faff46a9c711ed76ee54a9f42e1111d9f78aad506cf8cc95d2",
+    "hashMatches": true
+  },
+  "tools": {
+    "ffprobe": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers",
+    "ffdec": "JPEXS Free Flash Decompiler v.26.2.1",
+    "swfmillEvidence": "unavailable"
+  },
+  "authority": {
+    "hostScript": {
+      "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+      "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd",
+      "extractor": "JPEXS Free Flash Decompiler v.26.2.1",
+      "extractedScriptCount": 633,
+      "audioRelevantScriptCount": 2,
+      "combinedAudioRelevantScriptsSha256": "bdf58f23b647b1b78968873adfdda55f52baa63ce8dc42dea7dd2e6c0ba9b8d3",
+      "conventions": {
+        "formula": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "EAD is loaded when the formulas audio-language argument equals English; SAD is loaded by the Spanish/non-English branch."
+        },
+        "keyterm": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "The key-term host builds matching EAD and SAD MP3 paths and selects them from the English/Spanish language state."
+        },
+        "finalQuiz": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "Final-quiz language code EN maps to EA and SP maps to SA for question and answer MP3 paths."
+        },
+        "courseSpanishPage": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "The course host's Spanish-audio path is built from the loaded page basename under the sibling SA directory."
+        }
+      }
+    },
+    "xmlReferences": [
+      {
+        "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L5/index.xml",
+        "sha256": "b6aef32a4be5684cccc7a4f105fe5ca92129c2292f19a71cf975f24bb133fa9e",
+        "catalogOccurrence": 53,
+        "syntax": null,
+        "matchedLines": [
+          {
+            "lineNumber": 142,
+            "text": "<Page Title=\"Question 2\" RandomAudio=\"\" BGText=\"\">TS/L5TS08.swf</Page>"
+          },
+          {
+            "lineNumber": 146,
+            "text": "<SubPageTitle EngSubTitleName=\"Question 2\" SpanSubTitleName=\"Pregunta 2\" SubTitleButtonName=\"L5TS08\">TS/L5TS08.swf</SubPageTitle>"
+          }
+        ]
+      }
+    ],
+    "catalogAnimation": "catalog/animations.json",
+    "catalogAudioGroups": null,
+    "lessonReleaseMembership": {
+      "artifactId": "lesson-release-membership",
+      "catalog": {
+        "path": "catalog/lesson-releases.json",
+        "bytes": 87864,
+        "sha256": "f3caa2ae0e9bfd6c02dd846aa2d45de5c2f746cc57ba01a09e506d4d3c42d632"
+      },
+      "releaseId": "lesson-g05-l05-add-subtract-negative-numbers",
+      "publicationMode": "atomic",
+      "expectedMemberCount": 57,
+      "ordinal": 53,
+      "animationId": "course-g05-l05-ts-008",
+      "assetId": "swf-752ec6444203e2faff46a9c711ed76ee54a9f42e1111d9f78aad506cf8cc95d2",
+      "releaseRole": "active-xml-referenced-page",
+      "source": {
+        "path": "HELP_COURSES/ELMGR5/L5/TS/L5TS08.swf",
+        "bytes": 491626,
+        "sha256": "752ec6444203e2faff46a9c711ed76ee54a9f42e1111d9f78aad506cf8cc95d2"
+      },
+      "authorityBoundary": "Release membership authorizes this structural audio audit only; it does not establish audible language/content, original-runtime behavior, human review, owner acceptance, strict completion, or publication."
+    }
+  },
+  "externalAudio": {
+    "exactAssociations": [
+      {
+        "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L5/SA/L5TS08.mp3",
+        "catalogSha256": "893311f9b995957218144b987aec8bc4659ce284d484caf8351124efb7ad2d13",
+        "observedSha256": "893311f9b995957218144b987aec8bc4659ce284d484caf8351124efb7ad2d13",
+        "hashMatchesCatalog": true,
+        "bytes": 63504,
+        "association": "matching-basename",
+        "associationStatus": "exact-basename-association",
+        "languageAssessment": {
+          "language": "es",
+          "confidence": "verified-structural",
+          "evidence": "The legacy host maps language code SP and Spanish page audio to the SA directory."
+        },
+        "probe": {
+          "tool": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers",
+          "codecName": "mp3",
+          "codecLongName": "MP3 (MPEG audio layer 3)",
+          "profile": null,
+          "sampleFormat": "fltp",
+          "sampleRateHz": 48000,
+          "channels": 1,
+          "channelLayout": "mono",
+          "streamStartSeconds": 0,
+          "streamDurationSeconds": 4.536,
+          "durationSeconds": 4.536,
+          "durationMs": 4536,
+          "streamBitRateBps": 112000,
+          "containerBitRateBps": 112000,
+          "formatName": "mp3",
+          "formatLongName": "MP2/3 (MPEG audio layer 2/3)",
+          "probeSizeBytes": 63504,
+          "tags": {}
+        },
+        "startFrame": null,
+        "startFrameAuthority": "Verified legacy host script selects and starts this external track from language/user state; it is not a child root-timeline cue.",
+        "startSemantics": "host-user-activated"
+      }
+    ],
+    "lessonGroupCandidates": [],
+    "expectedButMissing": [],
+    "exactCount": 1,
+    "candidateOnlyCount": 0,
+    "missingExpectedCount": 0
+  },
+  "embeddedAudio": {
+    "rootTimeline": {
+      "frameRate": 12,
+      "declaredFrames": 10
+    },
+    "defineSounds": [],
+    "soundStreams": [
+      {
+        "streamIndex": 1,
+        "context": {
+          "kind": "sprite",
+          "characterId": 91
+        },
+        "contextLabel": "sprite:91",
+        "contextDeclaredFrames": 70,
+        "headFrame": 1,
+        "firstBlockFrame": 2,
+        "lastBlockFrame": 70,
+        "syncMode": "stream",
+        "stop": false,
+        "loops": null,
+        "compressionCode": 2,
+        "format": "mp3",
+        "playbackRateCode": 2,
+        "playbackSampleRateHz": 22050,
+        "playbackSampleSizeBits": 16,
+        "playbackChannels": 1,
+        "rateCode": 2,
+        "sampleRateHz": 22050,
+        "sampleSizeBits": 16,
+        "channels": 1,
+        "nominalSamplesPerBlock": 1837,
+        "blockCount": 69,
+        "blocksWithDecodedSampleCount": 69,
+        "totalDecodedSamples": 126144,
+        "seekSamplesMin": 0,
+        "seekSamplesMax": 1673,
+        "durationSeconds": 5.720816,
+        "durationMs": 5721,
+        "durationBasis": "sum-of-mp3-soundstreamblock-sample-counts",
+        "evidence": {
+          "file": "audit/machine/swfmill.xml.gz",
+          "headLine": 111526
+        }
+      },
+      {
+        "streamIndex": 2,
+        "context": {
+          "kind": "sprite",
+          "characterId": 120
+        },
+        "contextLabel": "sprite:120",
+        "contextDeclaredFrames": 5,
+        "headFrame": 1,
+        "firstBlockFrame": 1,
+        "lastBlockFrame": 5,
+        "syncMode": "stream",
+        "stop": false,
+        "loops": null,
+        "compressionCode": 2,
+        "format": "mp3",
+        "playbackRateCode": 2,
+        "playbackSampleRateHz": 22050,
+        "playbackSampleSizeBits": 16,
+        "playbackChannels": 1,
+        "rateCode": 2,
+        "sampleRateHz": 22050,
+        "sampleSizeBits": 16,
+        "channels": 1,
+        "nominalSamplesPerBlock": 1837,
+        "blockCount": 5,
+        "blocksWithDecodedSampleCount": 5,
+        "totalDecodedSamples": 8640,
+        "seekSamplesMin": 0,
+        "seekSamplesMax": 1673,
+        "durationSeconds": 0.391837,
+        "durationMs": 392,
+        "durationBasis": "sum-of-mp3-soundstreamblock-sample-counts",
+        "evidence": {
+          "file": "audit/machine/swfmill.xml.gz",
+          "headLine": 115017
+        }
+      },
+      {
+        "streamIndex": 3,
+        "context": {
+          "kind": "sprite",
+          "characterId": 197
+        },
+        "contextLabel": "sprite:197",
+        "contextDeclaredFrames": 28,
+        "headFrame": 1,
+        "firstBlockFrame": 2,
+        "lastBlockFrame": 28,
+        "syncMode": "stream",
+        "stop": false,
+        "loops": null,
+        "compressionCode": 2,
+        "format": "mp3",
+        "playbackRateCode": 2,
+        "playbackSampleRateHz": 22050,
+        "playbackSampleSizeBits": 16,
+        "playbackChannels": 1,
+        "rateCode": 2,
+        "sampleRateHz": 22050,
+        "sampleSizeBits": 16,
+        "channels": 1,
+        "nominalSamplesPerBlock": 1837,
+        "blockCount": 27,
+        "blocksWithDecodedSampleCount": 27,
+        "totalDecodedSamples": 48960,
+        "seekSamplesMin": 0,
+        "seekSamplesMax": 1673,
+        "durationSeconds": 2.220408,
+        "durationMs": 2220,
+        "durationBasis": "sum-of-mp3-soundstreamblock-sample-counts",
+        "evidence": {
+          "file": "audit/machine/swfmill.xml.gz",
+          "headLine": 127060
+        }
+      },
+      {
+        "streamIndex": 4,
+        "context": {
+          "kind": "sprite",
+          "characterId": 208
+        },
+        "contextLabel": "sprite:208",
+        "contextDeclaredFrames": 28,
+        "headFrame": 1,
+        "firstBlockFrame": 2,
+        "lastBlockFrame": 28,
+        "syncMode": "stream",
+        "stop": false,
+        "loops": null,
+        "compressionCode": 2,
+        "format": "mp3",
+        "playbackRateCode": 2,
+        "playbackSampleRateHz": 22050,
+        "playbackSampleSizeBits": 16,
+        "playbackChannels": 1,
+        "rateCode": 2,
+        "sampleRateHz": 22050,
+        "sampleSizeBits": 16,
+        "channels": 1,
+        "nominalSamplesPerBlock": 1837,
+        "blockCount": 27,
+        "blocksWithDecodedSampleCount": 27,
+        "totalDecodedSamples": 48960,
+        "seekSamplesMin": 0,
+        "seekSamplesMax": 1673,
+        "durationSeconds": 2.220408,
+        "durationMs": 2220,
+        "durationBasis": "sum-of-mp3-soundstreamblock-sample-counts",
+        "evidence": {
+          "file": "audit/machine/swfmill.xml.gz",
+          "headLine": 131434
+        }
+      },
+      {
+        "streamIndex": 5,
+        "context": {
+          "kind": "sprite",
+          "characterId": 220
+        },
+        "contextLabel": "sprite:220",
+        "contextDeclaredFrames": 29,
+        "headFrame": 1,
+        "firstBlockFrame": 2,
+        "lastBlockFrame": 29,
+        "syncMode": "stream",
+        "stop": false,
+        "loops": null,
+        "compressionCode": 2,
+        "format": "mp3",
+        "playbackRateCode": 2,
+        "playbackSampleRateHz": 22050,
+        "playbackSampleSizeBits": 16,
+        "playbackChannels": 1,
+        "rateCode": 2,
+        "sampleRateHz": 22050,
+        "sampleSizeBits": 16,
+        "channels": 1,
+        "nominalSamplesPerBlock": 1837,
+        "blockCount": 28,
+        "blocksWithDecodedSampleCount": 28,
+        "totalDecodedSamples": 51264,
+        "seekSamplesMin": 0,
+        "seekSamplesMax": 1673,
+        "durationSeconds": 2.324898,
+        "durationMs": 2325,
+        "durationBasis": "sum-of-mp3-soundstreamblock-sample-counts",
+        "evidence": {
+          "file": "audit/machine/swfmill.xml.gz",
+          "headLine": 133903
+        }
+      },
+      {
+        "streamIndex": 6,
+        "context": {
+          "kind": "sprite",
+          "characterId": 232
+        },
+        "contextLabel": "sprite:232",
+        "contextDeclaredFrames": 31,
+        "headFrame": 1,
+        "firstBlockFrame": 2,
+        "lastBlockFrame": 31,
+        "syncMode": "stream",
+        "stop": false,
+        "loops": null,
+        "compressionCode": 2,
+        "format": "mp3",
+        "playbackRateCode": 2,
+        "playbackSampleRateHz": 22050,
+        "playbackSampleSizeBits": 16,
+        "playbackChannels": 1,
+        "rateCode": 2,
+        "sampleRateHz": 22050,
+        "sampleSizeBits": 16,
+        "channels": 1,
+        "nominalSamplesPerBlock": 1837,
+        "blockCount": 30,
+        "blocksWithDecodedSampleCount": 30,
+        "totalDecodedSamples": 52992,
+        "seekSamplesMin": -1953,
+        "seekSamplesMax": 1673,
+        "durationSeconds": 2.403265,
+        "durationMs": 2403,
+        "durationBasis": "sum-of-mp3-soundstreamblock-sample-counts",
+        "evidence": {
+          "file": "audit/machine/swfmill.xml.gz",
+          "headLine": 134979
+        }
+      },
+      {
+        "streamIndex": 7,
+        "context": {
+          "kind": "sprite",
+          "characterId": 256
+        },
+        "contextLabel": "sprite:256",
+        "contextDeclaredFrames": 27,
+        "headFrame": 1,
+        "firstBlockFrame": 3,
+        "lastBlockFrame": 27,
+        "syncMode": "stream",
+        "stop": false,
+        "loops": null,
+        "compressionCode": 2,
+        "format": "mp3",
+        "playbackRateCode": 2,
+        "playbackSampleRateHz": 22050,
+        "playbackSampleSizeBits": 16,
+        "playbackChannels": 1,
+        "rateCode": 2,
+        "sampleRateHz": 22050,
+        "sampleSizeBits": 16,
+        "channels": 1,
+        "nominalSamplesPerBlock": 1837,
+        "blockCount": 25,
+        "blocksWithDecodedSampleCount": 25,
+        "totalDecodedSamples": 43776,
+        "seekSamplesMin": -1984,
+        "seekSamplesMax": 1673,
+        "durationSeconds": 1.985306,
+        "durationMs": 1985,
+        "durationBasis": "sum-of-mp3-soundstreamblock-sample-counts",
+        "evidence": {
+          "file": "audit/machine/swfmill.xml.gz",
+          "headLine": 137124
+        }
+      },
+      {
+        "streamIndex": 8,
+        "context": {
+          "kind": "sprite",
+          "characterId": 273
+        },
+        "contextLabel": "sprite:273",
+        "contextDeclaredFrames": 28,
+        "headFrame": 1,
+        "firstBlockFrame": 2,
+        "lastBlockFrame": 28,
+        "syncMode": "stream",
+        "stop": false,
+        "loops": null,
+        "compressionCode": 2,
+        "format": "mp3",
+        "playbackRateCode": 2,
+        "playbackSampleRateHz": 22050,
+        "playbackSampleSizeBits": 16,
+        "playbackChannels": 1,
+        "rateCode": 2,
+        "sampleRateHz": 22050,
+        "sampleSizeBits": 16,
+        "channels": 1,
+        "nominalSamplesPerBlock": 1837,
+        "blockCount": 27,
+        "blocksWithDecodedSampleCount": 27,
+        "totalDecodedSamples": 48960,
+        "seekSamplesMin": 0,
+        "seekSamplesMax": 1673,
+        "durationSeconds": 2.220408,
+        "durationMs": 2220,
+        "durationBasis": "sum-of-mp3-soundstreamblock-sample-counts",
+        "evidence": {
+          "file": "audit/machine/swfmill.xml.gz",
+          "headLine": 138412
+        }
+      },
+      {
+        "streamIndex": 9,
+        "context": {
+          "kind": "sprite",
+          "characterId": 285
+        },
+        "contextLabel": "sprite:285",
+        "contextDeclaredFrames": 25,
+        "headFrame": 1,
+        "firstBlockFrame": 1,
+        "lastBlockFrame": 13,
+        "syncMode": "stream",
+        "stop": false,
+        "loops": null,
+        "compressionCode": 1,
+        "format": "adpcm",
+        "playbackRateCode": 0,
+        "playbackSampleRateHz": 5512.5,
+        "playbackSampleSizeBits": 8,
+        "playbackChannels": 1,
+        "rateCode": 0,
+        "sampleRateHz": 5512.5,
+        "sampleSizeBits": 16,
+        "channels": 1,
+        "nominalSamplesPerBlock": 459,
+        "blockCount": 13,
+        "blocksWithDecodedSampleCount": 0,
+        "totalDecodedSamples": 0,
+        "seekSamplesMin": null,
+        "seekSamplesMax": null,
+        "durationSeconds": 1.082449,
+        "durationMs": 1082,
+        "durationBasis": "nominal-samples-per-block-times-block-count",
+        "evidence": {
+          "file": "audit/machine/swfmill.xml.gz",
+          "headLine": 140385
+        }
+      },
+      {
+        "streamIndex": 10,
+        "context": {
+          "kind": "sprite",
+          "characterId": 299
+        },
+        "contextLabel": "sprite:299",
+        "contextDeclaredFrames": 32,
+        "headFrame": 1,
+        "firstBlockFrame": 3,
+        "lastBlockFrame": 32,
+        "syncMode": "stream",
+        "stop": false,
+        "loops": null,
+        "compressionCode": 2,
+        "format": "mp3",
+        "playbackRateCode": 2,
+        "playbackSampleRateHz": 22050,
+        "playbackSampleSizeBits": 16,
+        "playbackChannels": 1,
+        "rateCode": 2,
+        "sampleRateHz": 22050,
+        "sampleSizeBits": 16,
+        "channels": 1,
+        "nominalSamplesPerBlock": 1837,
+        "blockCount": 30,
+        "blocksWithDecodedSampleCount": 30,
+        "totalDecodedSamples": 54720,
+        "seekSamplesMin": 0,
+        "seekSamplesMax": 1673,
+        "durationSeconds": 2.481633,
+        "durationMs": 2482,
+        "durationBasis": "sum-of-mp3-soundstreamblock-sample-counts",
+        "evidence": {
+          "file": "audit/machine/swfmill.xml.gz",
+          "headLine": 142204
+        }
+      },
+      {
+        "streamIndex": 11,
+        "context": {
+          "kind": "sprite",
+          "characterId": 320
+        },
+        "contextLabel": "sprite:320",
+        "contextDeclaredFrames": 33,
+        "headFrame": 1,
+        "firstBlockFrame": 3,
+        "lastBlockFrame": 33,
+        "syncMode": "stream",
+        "stop": false,
+        "loops": null,
+        "compressionCode": 2,
+        "format": "mp3",
+        "playbackRateCode": 2,
+        "playbackSampleRateHz": 22050,
+        "playbackSampleSizeBits": 16,
+        "playbackChannels": 1,
+        "rateCode": 2,
+        "sampleRateHz": 22050,
+        "sampleSizeBits": 16,
+        "channels": 1,
+        "nominalSamplesPerBlock": 1837,
+        "blockCount": 31,
+        "blocksWithDecodedSampleCount": 31,
+        "totalDecodedSamples": 56448,
+        "seekSamplesMin": 0,
+        "seekSamplesMax": 1673,
+        "durationSeconds": 2.56,
+        "durationMs": 2560,
+        "durationBasis": "sum-of-mp3-soundstreamblock-sample-counts",
+        "evidence": {
+          "file": "audit/machine/swfmill.xml.gz",
+          "headLine": 159871
+        }
+      },
+      {
+        "streamIndex": 12,
+        "context": {
+          "kind": "sprite",
+          "characterId": 347
+        },
+        "contextLabel": "sprite:347",
+        "contextDeclaredFrames": 690,
+        "headFrame": 1,
+        "firstBlockFrame": 14,
+        "lastBlockFrame": 685,
+        "syncMode": "stream",
+        "stop": false,
+        "loops": null,
+        "compressionCode": 2,
+        "format": "mp3",
+        "playbackRateCode": 2,
+        "playbackSampleRateHz": 22050,
+        "playbackSampleSizeBits": 16,
+        "playbackChannels": 1,
+        "rateCode": 2,
+        "sampleRateHz": 22050,
+        "sampleSizeBits": 16,
+        "channels": 1,
+        "nominalSamplesPerBlock": 1837,
+        "blockCount": 672,
+        "blocksWithDecodedSampleCount": 672,
+        "totalDecodedSamples": 1232064,
+        "seekSamplesMin": -2235,
+        "seekSamplesMax": 1673,
+        "durationSeconds": 55.875918,
+        "durationMs": 55876,
+        "durationBasis": "sum-of-mp3-soundstreamblock-sample-counts",
+        "evidence": {
+          "file": "audit/machine/swfmill.xml.gz",
+          "headLine": 163416
+        }
+      }
+    ],
+    "startSounds": [],
+    "exportedSoundLinkages": []
+  },
+  "actionScriptAudioOperations": [],
+  "strictNoAudioAssessment": null,
+  "inventory": {
+    "file": "audio-inventory.csv",
+    "rowCount": 13,
+    "exactExternalRows": 1,
+    "embeddedRows": 12,
+    "manifestDeclaredAudioLanguages": [
+      "und"
+    ],
+    "inventoriedLanguages": [
+      "es",
+      "und"
+    ],
+    "lessonGroupCandidatesExcludedFromCsv": 0,
+    "rationale": "Candidate-only lesson audio is not promoted to a cue without a resolved host/runtime branch. Root SoundStream/StartSound cues use timeline-frame only when a root frame is structurally proven; verified host/user external tracks use host-user-activated; nested or unresolved cues use interaction-state. No root cue frame is guessed."
+  },
+  "acceptance": {
+    "structurallyAudited": true,
+    "authoritativeListeningComplete": false,
+    "hostStateTraversalComplete": false,
+    "synchronizationComplete": false,
+    "notApplicable": [],
+    "strictAudioAcceptance": "pending",
+    "strictAudioAcceptanceRationale": null,
+    "manifestFollowUp": [
+      "migration.audio.languages omits structurally classified exact external language(s): es. Preserve any embedded und language until authoritative listening classifies it."
+    ],
+    "requirements": [
+      "Adobe/original-host listening must verify spoken language/content, user-trigger behavior, start timing, pause/resume, and completion for every exact external track.",
+      "Adobe/original-runtime listening is required to classify embedded speech versus effects, confirm language, and verify synchronization/loop/stop behavior.",
+      "Nested SoundStream local frames are known, but an authoritative traversal must map each sprite instance and interaction branch to its root/runtime cue time."
+    ],
+    "releaseBoundary": {
+      "authoritativeOriginalRuntimeListeningComplete": false,
+      "authoritativeOriginalRuntimeTraversalComplete": false,
+      "spokenLanguageContentVerified": false,
+      "humanAudioReviewComplete": false,
+      "ownerAcceptanceComplete": false,
+      "strictMigrationComplete": false,
+      "publicationAuthorized": false,
+      "strictAcceptanceEffect": "none"
+    }
+  },
+  "limitations": [
+    "Directory and host-script evidence can identify intended language routing but cannot prove the spoken content; listening remains mandatory.",
+    "SoundStream frame numbers inside DefineSprite are local symbol frames, not unconditional root/runtime cue times.",
+    "No cue frame, branch reachability, URL resolution, language content, or synchronization was guessed.",
+    "Lesson-release membership and this machine audit do not satisfy original-runtime listening, human review, owner acceptance, strict completion, or publication."
+  ]
+}

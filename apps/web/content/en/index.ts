@@ -8,7 +8,7 @@ export const enContent = {
     skipToContent: "Skip to main content",
     statusLabel: "Modernization in progress",
     statusMessage:
-      "HELP Math is being carefully restored for today’s web. Public demos and support are available; student accounts are not yet active.",
+      "HELP Math is being carefully restored for today’s web. Private review previews and support are available; student accounts are not yet active.",
     externalLinkLabel: "Opens in a new tab",
     requiredFieldLabel: "Required",
     navigation: {
@@ -340,7 +340,7 @@ export const enContent = {
       teacherRole: {
         title: "Technology supports instruction; educators shape its use.",
         body:
-          "The public demos show learning objects, not a complete course or an automated teaching system. Educators remain essential for choosing appropriate tasks, listening to student reasoning, and connecting activities to classroom goals.",
+          "The private review previews show selected learning objects and course candidates, not a complete released course or an automated teaching system. Educators remain essential for choosing appropriate tasks, listening to student reasoning, and connecting activities to classroom goals.",
         action: { label: "Ask an instructional question", href: "/contact?topic=instruction" },
       },
     },
@@ -716,7 +716,7 @@ export const enContent = {
         summary:
           "This site is a public modernization preview. It has no student or educator sign-in form and is not connected to the historical account database.",
         primaryAction: { label: "Contact account support", href: "/contact?topic=account-access" },
-        secondaryAction: { label: "Use the public demos", href: "/demos" },
+        secondaryAction: { label: "Review demo availability", href: "/demos" },
       },
       alert: {
         title: "Protect your old credentials",
@@ -731,8 +731,8 @@ export const enContent = {
             id: "student",
             title: "I am a student",
             description:
-              "Use the public demos without signing in. Ask a parent, guardian, teacher, or another trusted adult to contact us about an old account.",
-            action: { label: "Explore demos", href: "/demos" },
+              "Read the public project information without signing in. Ask a parent, guardian, teacher, or another trusted adult to contact us about an old account or authorized preview access.",
+            action: { label: "Explore the project", href: "/about" },
           },
           {
             id: "educator",
@@ -833,24 +833,24 @@ export const enContent = {
     },
     demos: {
       metadata: {
-        title: "JavaScript Demonstrations",
+        title: "Private JavaScript Demonstrations",
         description:
-          "Explore review-stage browser-native restorations of selected HELP Math learning objects without Flash, sign-in, or student-data collection.",
+          "Review two browser-native animation prototypes and two current-JavaScript whole-lesson candidates in a controlled private session.",
       },
       hero: {
-        eyebrow: "Restored demonstrations",
-        title: "Small learning objects, rebuilt with care",
+        eyebrow: "Controlled private demonstrations",
+        title: "Four HELP Math 2.0 review experiences",
         summary:
-          "Each demonstration translates a selected legacy interaction into modern JavaScript while preserving the instructional sequence, visible language, timing, and replay behavior supported by the source evidence.",
-        primaryAction: { label: "Open the first demo", href: "/demos/conversion-1-2" },
+          "The private review includes two individual animation prototypes plus Grade 4 Lesson 3 and Grade 5 Lesson 4 as current-JavaScript whole-lesson candidates.",
+        primaryAction: { label: "Open private executive preview", href: "/executive-preview" },
         secondaryAction: { label: "How restoration works", href: "/about#preservation" },
       },
       previewNotice: {
-        title: "These are public previews, not the complete HELP Math course",
+        title: "Private review candidates — not public releases",
         body:
-          "The demonstrations do not include enrollment, placement, assignments, scoring, or progress records. They collect no answers or student work and should not be used as a diagnostic assessment.",
+          "A time-limited passphrase is required. The whole-lesson candidates remain 0 strict-complete members and unpublished; original-runtime fidelity, audio, visual review, Owner acceptance, rights review, and publication remain separate gates.",
       },
-      listLabel: "Available demonstrations",
+      listLabel: "Four private review items",
       items: [
         {
           id: "conversion-1-2",
@@ -860,8 +860,8 @@ export const enContent = {
           conceptLabel: "Restoration focus",
           concept: "Timeline, layout, text, and Replay fidelity",
           statusLabel: "Conditional review preview",
-          statusDetail: "Available without sign-in",
-          action: { label: "Launch Conversion 1.2", href: "/demos/conversion-1-2" },
+          statusDetail: "Private session required",
+          action: { label: "Open Conversion 1.2", href: "/demos/conversion-1-2" },
         },
         {
           id: "conversion-1-4",
@@ -871,8 +871,30 @@ export const enContent = {
           conceptLabel: "Restoration focus",
           concept: "Responsive vector animation and Replay behavior",
           statusLabel: "Conditional review preview",
-          statusDetail: "Available without sign-in",
-          action: { label: "Launch Conversion 1.4", href: "/demos/conversion-1-4" },
+          statusDetail: "Private session required",
+          action: { label: "Open Conversion 1.4", href: "/demos/conversion-1-4" },
+        },
+        {
+          id: "g4-l3-negative-numbers",
+          title: "Grade 4 · Lesson 3 · Negative Numbers",
+          summary:
+            "A complete navigable lesson candidate with 39 registered current-JavaScript pages and one functional JavaScript course shell.",
+          conceptLabel: "Candidate boundary",
+          concept: "40 current-JavaScript members · 0 strict-complete · unpublished",
+          statusLabel: "Private whole-lesson candidate",
+          statusDetail: "Private session required",
+          action: { label: "Open Grade 4 Lesson 3", href: "/courses/4/3" },
+        },
+        {
+          id: "g5-l4-fractions-decimals-percents",
+          title: "Grade 5 · Lesson 4 · Fractions, Decimals, and Percents",
+          summary:
+            "A complete navigable lesson candidate with 54 registered current-JavaScript pages and one functional JavaScript course shell.",
+          conceptLabel: "Candidate boundary",
+          concept: "55 current-JavaScript members · 0 strict-complete · unpublished",
+          statusLabel: "Private whole-lesson candidate",
+          statusDetail: "Private session required",
+          action: { label: "Open Grade 5 Lesson 4", href: "/courses/5/4" },
         },
       ],
       quality: {
@@ -902,14 +924,14 @@ export const enContent = {
         metadata: {
           title: "Conversion 1.2 Demonstration",
           description:
-            "Run the review-stage Conversion 1.2 HELP Math JavaScript restoration, review usage guidance, and learn the limits of this public preview.",
+            "Run the private review-stage Conversion 1.2 HELP Math JavaScript restoration and review its evidence limits.",
         },
         eyebrow: "Restored learning object",
         title: "Conversion 1.2",
         summary:
           "This browser-native reconstruction preserves a compact explanatory sequence from the HELP Math archive with frame-based timing, scalable vector graphics, and deterministic Replay behavior.",
         statusLabel: "Conditional review preview",
-        statusDetail: "Validation incomplete · No sign-in · No student-data collection",
+        statusDetail: "Validation incomplete · Private session · No student-data collection",
         instructionsTitle: "Before you begin",
         instructions: [
           "Watch how the labels and visual elements change together across the sequence.",
@@ -943,14 +965,14 @@ export const enContent = {
         metadata: {
           title: "Conversion 1.4 Demonstration",
           description:
-            "Run the Conversion 1.4 HELP Math JavaScript restoration, review usage guidance, and learn the limits of this public preview.",
+            "Run the private review-stage Conversion 1.4 HELP Math JavaScript restoration and review its evidence limits.",
         },
         eyebrow: "Restored learning object",
         title: "Conversion 1.4",
         summary:
           "This second browser-native example demonstrates the project’s approach to translating instructional motion, labels, and timing into maintainable JavaScript.",
         statusLabel: "Conditional review preview",
-        statusDetail: "Validation incomplete · No sign-in · No student-data collection",
+        statusDetail: "Validation incomplete · Private session · No student-data collection",
         instructionsTitle: "Before you begin",
         instructions: [
           "Follow the sequence from its opening state to the final explanatory state.",
@@ -1002,7 +1024,7 @@ export const enContent = {
           id: "scope",
           title: "1. Scope",
           paragraphs: [
-            "This notice applies to the public HELP Math website at helpmath.ai, including informational pages, public demonstrations, and the contact form.",
+            "This notice applies to the public HELP Math website at helpmath.ai, including informational pages, the contact form, and access-controlled demonstration previews.",
             "It does not describe a student learning platform, because accounts, classes, assignments, purchases, and student progress storage are not part of this launch.",
           ],
         },
@@ -1089,7 +1111,7 @@ export const enContent = {
         eyebrow: "Terms of use",
         title: "Use the public preview thoughtfully",
         summary:
-          "These terms cover the informational website and public demonstrations. They do not create a student account, school subscription, purchase, license to archived materials, or guarantee of future access.",
+          "These terms cover the informational website and any access-controlled demonstration previews made available to authorized reviewers. They do not create a student account, school subscription, purchase, license to archived materials, or guarantee of future access.",
       },
       effectiveDateLabel: "Last updated",
       effectiveDate: "July 21, 2026",

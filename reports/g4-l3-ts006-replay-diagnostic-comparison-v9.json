@@ -1,0 +1,1854 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l3-ts006-replay-diagnostic-comparison-v9",
+  "animationId": "course-g04-l03-ts-006",
+  "classification": "acceptance-neutral-deterministic-engineering-comparison",
+  "authority": {
+    "sourceCapture": "raw-unpromoted-runtime-diagnostic",
+    "sourceReplayMapping": "operator-proposed-tentative-not-trace-bound",
+    "implementation": "existing-javascript-diagnostic-compositor-v8",
+    "originalRuntimeBaselineClaimed": false,
+    "implementationCandidatePromoted": false,
+    "coverageChanged": false,
+    "ledgerChanged": false,
+    "visualParityClaimed": false,
+    "strictAcceptanceEffect": "none"
+  },
+  "sourceReplaySegment": {
+    "firstCaptureOrdinal": 163,
+    "lastCaptureOrdinal": 290,
+    "proposedFirstSourceLocalFrame": 1,
+    "proposedLastSourceLocalFrame": 128,
+    "mappingFormula": "captureOrdinal = sourceLocalFrame + 162",
+    "mappingAuthorityClaimed": false,
+    "traceBound": false
+  },
+  "implementationIdentity": {
+    "iteration": "v8",
+    "frameDomain": "sprite-23",
+    "scenario": "manual-runtime-diagnostic-observation",
+    "language": "en",
+    "seed": "0",
+    "requirementId": "diagnostic:ts006:manual-runtime-observation:en",
+    "traceId": "diagnostic:ts005-to-ts006-natural:en:seed-0",
+    "entryStateSha256": "08f727387e57a543f8cecb9b7340c8822e393ee082caf1a3c69ecd3e581b5d8d"
+  },
+  "regionContract": {
+    "fullFrame": {
+      "x": 0,
+      "y": 0,
+      "width": 800,
+      "height": 600
+    },
+    "header": {
+      "x": 0,
+      "y": 0,
+      "width": 800,
+      "height": 108
+    },
+    "bodyContent": {
+      "x": 0,
+      "y": 108,
+      "width": 800,
+      "height": 416
+    },
+    "footer": {
+      "x": 0,
+      "y": 524,
+      "width": 800,
+      "height": 76
+    }
+  },
+  "bindings": {
+    "sourceCaptureManifest": {
+      "path": "artifacts/full-frame/g4-l3/ts006-en-native-replay-diagnostic-20260726T213100+0800/capture-manifest.json",
+      "bytes": 169768,
+      "sha256": "a1ccd34fd01f7bde46353177f396b41985198fe8142a621148d28cbdfe1254fb"
+    },
+    "implementationCaptureManifest": {
+      "path": "output/playwright/g4-l3-ts006-diagnostic-composite-v8/en-natural-entry-diagnostic/capture-manifest.json",
+      "bytes": 33190,
+      "sha256": "318fb8c4fffd153f9d3c11a9af4a895aa6d25d51044e5dfb53268076b231c604"
+    },
+    "generator": {
+      "path": "scripts/build-g4-l3-ts006-replay-diagnostic-comparison-v9.mjs",
+      "sha256": "6814b8a1c4c66bc752b84b7823f01a65581c3325e66e169707685c25dd5cea55"
+    }
+  },
+  "comparisons": [
+    {
+      "sourceLocalFrame": 1,
+      "captureOrdinal": 163,
+      "kind": "static",
+      "mappingStatus": "operator-proposed-tentative-diagnostic-not-trace-bound",
+      "sourceFile": "artifacts/full-frame/g4-l3/ts006-en-native-replay-diagnostic-20260726T213100+0800/frames/frame-000163.png",
+      "sourceSha256": "2203965b0f5b53715c70b0177d42d1f7072f0fba1a02734c4aaaa4a958ef6dcd",
+      "implementationFile": "output/playwright/g4-l3-ts006-diagnostic-composite-v8/en-natural-entry-diagnostic/frame-001.png",
+      "implementationSha256": "7fde360a5261ebf91098d5af46b10d1b342a628225f08c552b8f3ec8343cda71",
+      "sourceStageLeftOffsetPixels": 0,
+      "rmse": {
+        "rawFixedCoordinates": {
+          "fullFrame": {
+            "normalizedRmse": 0.065075492526,
+            "comparedPixels": 480000,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.073145637305,
+            "comparedPixels": 86400,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.038370269906,
+            "comparedPixels": 332800,
+            "sourceRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.133307798262,
+            "comparedPixels": 60800,
+            "sourceRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            }
+          }
+        },
+        "stageRegisteredDiagnostic": {
+          "fullFrame": {
+            "normalizedRmse": 0.065075492526,
+            "comparedPixels": 480000,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.073145637305,
+            "comparedPixels": 86400,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.038370269906,
+            "comparedPixels": 332800,
+            "sourceRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.133307798262,
+            "comparedPixels": 60800,
+            "sourceRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            }
+          }
+        }
+      },
+      "nextButton": {
+        "source": {
+          "state": "neutral-orange",
+          "sampledPixels": 1257,
+          "orangePixels": 960,
+          "orangeRatio": 0.763723150358,
+          "hoverBluePixels": 21,
+          "hoverBlueRatio": 0.016706443914
+        },
+        "implementation": {
+          "state": "neutral-orange",
+          "sampledPixels": 1257,
+          "orangePixels": 960,
+          "orangeRatio": 0.763723150358,
+          "hoverBluePixels": 27,
+          "hoverBlueRatio": 0.021479713604
+        }
+      }
+    },
+    {
+      "sourceLocalFrame": 8,
+      "captureOrdinal": 170,
+      "kind": "transition",
+      "mappingStatus": "operator-proposed-tentative-diagnostic-not-trace-bound",
+      "sourceFile": "artifacts/full-frame/g4-l3/ts006-en-native-replay-diagnostic-20260726T213100+0800/frames/frame-000170.png",
+      "sourceSha256": "226e37ccbeecdb9819f9f782455f23ff9b84cc481c4741f9fc97f1ca39f3d297",
+      "implementationFile": "output/playwright/g4-l3-ts006-diagnostic-composite-v8/en-natural-entry-diagnostic/frame-008.png",
+      "implementationSha256": "1fc2da263fa6688f3a12a33090de2a012bdb1721ddd9a1552950c38ec895a3f3",
+      "sourceStageLeftOffsetPixels": 25,
+      "rmse": {
+        "rawFixedCoordinates": {
+          "fullFrame": {
+            "normalizedRmse": 0.22611595986,
+            "comparedPixels": 480000,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.287339610898,
+            "comparedPixels": 86400,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.180648961039,
+            "comparedPixels": 332800,
+            "sourceRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.328160245744,
+            "comparedPixels": 60800,
+            "sourceRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            }
+          }
+        },
+        "stageRegisteredDiagnostic": {
+          "fullFrame": {
+            "normalizedRmse": 0.065962836078,
+            "comparedPixels": 465000,
+            "sourceRect": {
+              "x": 25,
+              "y": 0,
+              "width": 775,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 775,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.073872003031,
+            "comparedPixels": 83700,
+            "sourceRect": {
+              "x": 25,
+              "y": 0,
+              "width": 775,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 775,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.040255314007,
+            "comparedPixels": 322400,
+            "sourceRect": {
+              "x": 25,
+              "y": 108,
+              "width": 775,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 775,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.133138709475,
+            "comparedPixels": 58900,
+            "sourceRect": {
+              "x": 25,
+              "y": 524,
+              "width": 775,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 775,
+              "height": 76
+            }
+          }
+        }
+      },
+      "nextButton": {
+        "source": {
+          "state": "neutral-orange",
+          "sampledPixels": 844,
+          "orangePixels": 691,
+          "orangeRatio": 0.818720379147,
+          "hoverBluePixels": 5,
+          "hoverBlueRatio": 0.005924170616
+        },
+        "implementation": {
+          "state": "neutral-orange",
+          "sampledPixels": 1257,
+          "orangePixels": 960,
+          "orangeRatio": 0.763723150358,
+          "hoverBluePixels": 27,
+          "hoverBlueRatio": 0.021479713604
+        }
+      }
+    },
+    {
+      "sourceLocalFrame": 13,
+      "captureOrdinal": 175,
+      "kind": "transition",
+      "mappingStatus": "operator-proposed-tentative-diagnostic-not-trace-bound",
+      "sourceFile": "artifacts/full-frame/g4-l3/ts006-en-native-replay-diagnostic-20260726T213100+0800/frames/frame-000175.png",
+      "sourceSha256": "86be466ca322e98e01a65a119b6b8a4d15a4e153db903491861bb428770134b6",
+      "implementationFile": "output/playwright/g4-l3-ts006-diagnostic-composite-v8/en-natural-entry-diagnostic/frame-013.png",
+      "implementationSha256": "844a1015e49dad14b823c0d87594fd5bb12d0d4280b28f43c84c2063569c44d6",
+      "sourceStageLeftOffsetPixels": 25,
+      "rmse": {
+        "rawFixedCoordinates": {
+          "fullFrame": {
+            "normalizedRmse": 0.230959503205,
+            "comparedPixels": 480000,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.287339610898,
+            "comparedPixels": 86400,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.189343701567,
+            "comparedPixels": 332800,
+            "sourceRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.327960727169,
+            "comparedPixels": 60800,
+            "sourceRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            }
+          }
+        },
+        "stageRegisteredDiagnostic": {
+          "fullFrame": {
+            "normalizedRmse": 0.082036812929,
+            "comparedPixels": 465000,
+            "sourceRect": {
+              "x": 25,
+              "y": 0,
+              "width": 775,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 775,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.073872003031,
+            "comparedPixels": 83700,
+            "sourceRect": {
+              "x": 25,
+              "y": 0,
+              "width": 775,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 775,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.070608385599,
+            "comparedPixels": 322400,
+            "sourceRect": {
+              "x": 25,
+              "y": 108,
+              "width": 775,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 775,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.134490901023,
+            "comparedPixels": 58900,
+            "sourceRect": {
+              "x": 25,
+              "y": 524,
+              "width": 775,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 775,
+              "height": 76
+            }
+          }
+        }
+      },
+      "nextButton": {
+        "source": {
+          "state": "neutral-orange",
+          "sampledPixels": 844,
+          "orangePixels": 691,
+          "orangeRatio": 0.818720379147,
+          "hoverBluePixels": 5,
+          "hoverBlueRatio": 0.005924170616
+        },
+        "implementation": {
+          "state": "neutral-orange",
+          "sampledPixels": 1257,
+          "orangePixels": 960,
+          "orangeRatio": 0.763723150358,
+          "hoverBluePixels": 27,
+          "hoverBlueRatio": 0.021479713604
+        }
+      }
+    },
+    {
+      "sourceLocalFrame": 55,
+      "captureOrdinal": 217,
+      "kind": "transition",
+      "mappingStatus": "operator-proposed-tentative-diagnostic-not-trace-bound",
+      "sourceFile": "artifacts/full-frame/g4-l3/ts006-en-native-replay-diagnostic-20260726T213100+0800/frames/frame-000217.png",
+      "sourceSha256": "88234c4a70a707928ece9fa7dd1116191dbe2026336e6e970b211ddd57d9311b",
+      "implementationFile": "output/playwright/g4-l3-ts006-diagnostic-composite-v8/en-natural-entry-diagnostic/frame-055.png",
+      "implementationSha256": "7389a4e0707120e821a62c6a5982838aa02520faaf22c0ebe1faa4a01230206e",
+      "sourceStageLeftOffsetPixels": 25,
+      "rmse": {
+        "rawFixedCoordinates": {
+          "fullFrame": {
+            "normalizedRmse": 0.233514628883,
+            "comparedPixels": 480000,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.287339610898,
+            "comparedPixels": 86400,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.193933300361,
+            "comparedPixels": 332800,
+            "sourceRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.327565170915,
+            "comparedPixels": 60800,
+            "sourceRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            }
+          }
+        },
+        "stageRegisteredDiagnostic": {
+          "fullFrame": {
+            "normalizedRmse": 0.076460442373,
+            "comparedPixels": 465000,
+            "sourceRect": {
+              "x": 25,
+              "y": 0,
+              "width": 775,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 775,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.073872003031,
+            "comparedPixels": 83700,
+            "sourceRect": {
+              "x": 25,
+              "y": 0,
+              "width": 775,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 775,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.061262997864,
+            "comparedPixels": 322400,
+            "sourceRect": {
+              "x": 25,
+              "y": 108,
+              "width": 775,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 775,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.133625716552,
+            "comparedPixels": 58900,
+            "sourceRect": {
+              "x": 25,
+              "y": 524,
+              "width": 775,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 775,
+              "height": 76
+            }
+          }
+        }
+      },
+      "nextButton": {
+        "source": {
+          "state": "neutral-orange",
+          "sampledPixels": 844,
+          "orangePixels": 691,
+          "orangeRatio": 0.818720379147,
+          "hoverBluePixels": 5,
+          "hoverBlueRatio": 0.005924170616
+        },
+        "implementation": {
+          "state": "neutral-orange",
+          "sampledPixels": 1257,
+          "orangePixels": 960,
+          "orangeRatio": 0.763723150358,
+          "hoverBluePixels": 27,
+          "hoverBlueRatio": 0.021479713604
+        }
+      }
+    },
+    {
+      "sourceLocalFrame": 58,
+      "captureOrdinal": 220,
+      "kind": "transition",
+      "mappingStatus": "operator-proposed-tentative-diagnostic-not-trace-bound",
+      "sourceFile": "artifacts/full-frame/g4-l3/ts006-en-native-replay-diagnostic-20260726T213100+0800/frames/frame-000220.png",
+      "sourceSha256": "1e7c7b098a987fd9976fdba8d8a0bb95a441b7b9149590dbb62c7db290ec1531",
+      "implementationFile": "output/playwright/g4-l3-ts006-diagnostic-composite-v8/en-natural-entry-diagnostic/frame-058.png",
+      "implementationSha256": "f5240d8c8731c02610a8a861bb92ae5ba161cb149aa3f45aceef070bc4529bd7",
+      "sourceStageLeftOffsetPixels": 25,
+      "rmse": {
+        "rawFixedCoordinates": {
+          "fullFrame": {
+            "normalizedRmse": 0.234992513058,
+            "comparedPixels": 480000,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.287339610898,
+            "comparedPixels": 86400,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.196483930997,
+            "comparedPixels": 332800,
+            "sourceRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.327588920884,
+            "comparedPixels": 60800,
+            "sourceRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            }
+          }
+        },
+        "stageRegisteredDiagnostic": {
+          "fullFrame": {
+            "normalizedRmse": 0.080864818473,
+            "comparedPixels": 465000,
+            "sourceRect": {
+              "x": 25,
+              "y": 0,
+              "width": 775,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 775,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.073872003031,
+            "comparedPixels": 83700,
+            "sourceRect": {
+              "x": 25,
+              "y": 0,
+              "width": 775,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 775,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.069145411755,
+            "comparedPixels": 322400,
+            "sourceRect": {
+              "x": 25,
+              "y": 108,
+              "width": 775,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 775,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.133040103766,
+            "comparedPixels": 58900,
+            "sourceRect": {
+              "x": 25,
+              "y": 524,
+              "width": 775,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 775,
+              "height": 76
+            }
+          }
+        }
+      },
+      "nextButton": {
+        "source": {
+          "state": "neutral-orange",
+          "sampledPixels": 844,
+          "orangePixels": 691,
+          "orangeRatio": 0.818720379147,
+          "hoverBluePixels": 5,
+          "hoverBlueRatio": 0.005924170616
+        },
+        "implementation": {
+          "state": "neutral-orange",
+          "sampledPixels": 1257,
+          "orangePixels": 960,
+          "orangeRatio": 0.763723150358,
+          "hoverBluePixels": 27,
+          "hoverBlueRatio": 0.021479713604
+        }
+      }
+    },
+    {
+      "sourceLocalFrame": 74,
+      "captureOrdinal": 236,
+      "kind": "transition",
+      "mappingStatus": "operator-proposed-tentative-diagnostic-not-trace-bound",
+      "sourceFile": "artifacts/full-frame/g4-l3/ts006-en-native-replay-diagnostic-20260726T213100+0800/frames/frame-000236.png",
+      "sourceSha256": "c8b2f591e6ec566db8313c71c623d84b380ba0c7928d9e95790f79fb3d94f514",
+      "implementationFile": "output/playwright/g4-l3-ts006-diagnostic-composite-v8/en-natural-entry-diagnostic/frame-074.png",
+      "implementationSha256": "42fee67a9e80fd3a61c24ac18ec14f1c8792c90b59833367be636bd029bac92c",
+      "sourceStageLeftOffsetPixels": 25,
+      "rmse": {
+        "rawFixedCoordinates": {
+          "fullFrame": {
+            "normalizedRmse": 0.235774584203,
+            "comparedPixels": 480000,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.287339610898,
+            "comparedPixels": 86400,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.197844402378,
+            "comparedPixels": 332800,
+            "sourceRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.327543359461,
+            "comparedPixels": 60800,
+            "sourceRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            }
+          }
+        },
+        "stageRegisteredDiagnostic": {
+          "fullFrame": {
+            "normalizedRmse": 0.083045717816,
+            "comparedPixels": 465000,
+            "sourceRect": {
+              "x": 25,
+              "y": 0,
+              "width": 775,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 775,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.073872003031,
+            "comparedPixels": 83700,
+            "sourceRect": {
+              "x": 25,
+              "y": 0,
+              "width": 775,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 775,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.073040166624,
+            "comparedPixels": 322400,
+            "sourceRect": {
+              "x": 25,
+              "y": 108,
+              "width": 775,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 775,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.13225208443,
+            "comparedPixels": 58900,
+            "sourceRect": {
+              "x": 25,
+              "y": 524,
+              "width": 775,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 775,
+              "height": 76
+            }
+          }
+        }
+      },
+      "nextButton": {
+        "source": {
+          "state": "neutral-orange",
+          "sampledPixels": 844,
+          "orangePixels": 691,
+          "orangeRatio": 0.818720379147,
+          "hoverBluePixels": 5,
+          "hoverBlueRatio": 0.005924170616
+        },
+        "implementation": {
+          "state": "neutral-orange",
+          "sampledPixels": 1257,
+          "orangePixels": 960,
+          "orangeRatio": 0.763723150358,
+          "hoverBluePixels": 27,
+          "hoverBlueRatio": 0.021479713604
+        }
+      }
+    },
+    {
+      "sourceLocalFrame": 77,
+      "captureOrdinal": 239,
+      "kind": "transition",
+      "mappingStatus": "operator-proposed-tentative-diagnostic-not-trace-bound",
+      "sourceFile": "artifacts/full-frame/g4-l3/ts006-en-native-replay-diagnostic-20260726T213100+0800/frames/frame-000239.png",
+      "sourceSha256": "262033730adf11571b4c5582c113114f631621de4bab17b66e164c4ca83eda3e",
+      "implementationFile": "output/playwright/g4-l3-ts006-diagnostic-composite-v8/en-natural-entry-diagnostic/frame-077.png",
+      "implementationSha256": "8c99a6a134890fc443c2eec343a6e6400686f024ac70ec1d2aad95305d013fe7",
+      "sourceStageLeftOffsetPixels": 25,
+      "rmse": {
+        "rawFixedCoordinates": {
+          "fullFrame": {
+            "normalizedRmse": 0.24690099229,
+            "comparedPixels": 480000,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.287339610898,
+            "comparedPixels": 86400,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.216453333243,
+            "comparedPixels": 332800,
+            "sourceRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.327845668618,
+            "comparedPixels": 60800,
+            "sourceRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            }
+          }
+        },
+        "stageRegisteredDiagnostic": {
+          "fullFrame": {
+            "normalizedRmse": 0.111261374353,
+            "comparedPixels": 465000,
+            "sourceRect": {
+              "x": 25,
+              "y": 0,
+              "width": 775,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 775,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.073872003031,
+            "comparedPixels": 83700,
+            "sourceRect": {
+              "x": 25,
+              "y": 0,
+              "width": 775,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 775,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.115296148494,
+            "comparedPixels": 322400,
+            "sourceRect": {
+              "x": 25,
+              "y": 108,
+              "width": 775,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 775,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.13119492404,
+            "comparedPixels": 58900,
+            "sourceRect": {
+              "x": 25,
+              "y": 524,
+              "width": 775,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 775,
+              "height": 76
+            }
+          }
+        }
+      },
+      "nextButton": {
+        "source": {
+          "state": "neutral-orange",
+          "sampledPixels": 844,
+          "orangePixels": 691,
+          "orangeRatio": 0.818720379147,
+          "hoverBluePixels": 5,
+          "hoverBlueRatio": 0.005924170616
+        },
+        "implementation": {
+          "state": "neutral-orange",
+          "sampledPixels": 1257,
+          "orangePixels": 960,
+          "orangeRatio": 0.763723150358,
+          "hoverBluePixels": 27,
+          "hoverBlueRatio": 0.021479713604
+        }
+      }
+    },
+    {
+      "sourceLocalFrame": 125,
+      "captureOrdinal": 287,
+      "kind": "transition",
+      "mappingStatus": "operator-proposed-tentative-diagnostic-not-trace-bound",
+      "sourceFile": "artifacts/full-frame/g4-l3/ts006-en-native-replay-diagnostic-20260726T213100+0800/frames/frame-000287.png",
+      "sourceSha256": "8d5ecb20b2833a39c75a62a0983b849b111ca0e9f19ff11ab6163878350b422e",
+      "implementationFile": "output/playwright/g4-l3-ts006-diagnostic-composite-v8/en-natural-entry-diagnostic/frame-125.png",
+      "implementationSha256": "81cc1253d801c669a6344426aa63811619e43222925fce313188e2a05bd292b9",
+      "sourceStageLeftOffsetPixels": 25,
+      "rmse": {
+        "rawFixedCoordinates": {
+          "fullFrame": {
+            "normalizedRmse": 0.247588952624,
+            "comparedPixels": 480000,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.287339610898,
+            "comparedPixels": 86400,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.217774871819,
+            "comparedPixels": 332800,
+            "sourceRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.327150452809,
+            "comparedPixels": 60800,
+            "sourceRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            }
+          }
+        },
+        "stageRegisteredDiagnostic": {
+          "fullFrame": {
+            "normalizedRmse": 0.111543369824,
+            "comparedPixels": 465000,
+            "sourceRect": {
+              "x": 25,
+              "y": 0,
+              "width": 775,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 775,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.073872003031,
+            "comparedPixels": 83700,
+            "sourceRect": {
+              "x": 25,
+              "y": 0,
+              "width": 775,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 775,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.115953590213,
+            "comparedPixels": 322400,
+            "sourceRect": {
+              "x": 25,
+              "y": 108,
+              "width": 775,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 775,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.129907474694,
+            "comparedPixels": 58900,
+            "sourceRect": {
+              "x": 25,
+              "y": 524,
+              "width": 775,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 775,
+              "height": 76
+            }
+          }
+        }
+      },
+      "nextButton": {
+        "source": {
+          "state": "neutral-orange",
+          "sampledPixels": 844,
+          "orangePixels": 691,
+          "orangeRatio": 0.818720379147,
+          "hoverBluePixels": 5,
+          "hoverBlueRatio": 0.005924170616
+        },
+        "implementation": {
+          "state": "neutral-orange",
+          "sampledPixels": 1257,
+          "orangePixels": 960,
+          "orangeRatio": 0.763723150358,
+          "hoverBluePixels": 27,
+          "hoverBlueRatio": 0.021479713604
+        }
+      }
+    },
+    {
+      "sourceLocalFrame": 127,
+      "captureOrdinal": 289,
+      "kind": "transition",
+      "mappingStatus": "operator-proposed-tentative-diagnostic-not-trace-bound",
+      "sourceFile": "artifacts/full-frame/g4-l3/ts006-en-native-replay-diagnostic-20260726T213100+0800/frames/frame-000289.png",
+      "sourceSha256": "d2913cf7b483eede9f43e99f7bcfc04112146e229fd71e81bb96a48fc48c71dc",
+      "implementationFile": "output/playwright/g4-l3-ts006-diagnostic-composite-v8/en-natural-entry-diagnostic/frame-127.png",
+      "implementationSha256": "447ff2be3c95ac67d4b584a9de9164eeb6e8bd7dfcf8809a8bcb9a741d0b667d",
+      "sourceStageLeftOffsetPixels": 25,
+      "rmse": {
+        "rawFixedCoordinates": {
+          "fullFrame": {
+            "normalizedRmse": 0.248782050542,
+            "comparedPixels": 480000,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.287339610898,
+            "comparedPixels": 86400,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.219752819164,
+            "comparedPixels": 332800,
+            "sourceRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.327056371921,
+            "comparedPixels": 60800,
+            "sourceRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            }
+          }
+        },
+        "stageRegisteredDiagnostic": {
+          "fullFrame": {
+            "normalizedRmse": 0.114366115273,
+            "comparedPixels": 465000,
+            "sourceRect": {
+              "x": 25,
+              "y": 0,
+              "width": 775,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 775,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.073872003031,
+            "comparedPixels": 83700,
+            "sourceRect": {
+              "x": 25,
+              "y": 0,
+              "width": 775,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 775,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.119743718683,
+            "comparedPixels": 322400,
+            "sourceRect": {
+              "x": 25,
+              "y": 108,
+              "width": 775,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 775,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.130462786158,
+            "comparedPixels": 58900,
+            "sourceRect": {
+              "x": 25,
+              "y": 524,
+              "width": 775,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 775,
+              "height": 76
+            }
+          }
+        }
+      },
+      "nextButton": {
+        "source": {
+          "state": "neutral-orange",
+          "sampledPixels": 844,
+          "orangePixels": 691,
+          "orangeRatio": 0.818720379147,
+          "hoverBluePixels": 5,
+          "hoverBlueRatio": 0.005924170616
+        },
+        "implementation": {
+          "state": "neutral-orange",
+          "sampledPixels": 1257,
+          "orangePixels": 960,
+          "orangeRatio": 0.763723150358,
+          "hoverBluePixels": 27,
+          "hoverBlueRatio": 0.021479713604
+        }
+      }
+    },
+    {
+      "sourceLocalFrame": 128,
+      "captureOrdinal": 290,
+      "kind": "static",
+      "mappingStatus": "operator-proposed-tentative-diagnostic-not-trace-bound",
+      "sourceFile": "artifacts/full-frame/g4-l3/ts006-en-native-replay-diagnostic-20260726T213100+0800/frames/frame-000290.png",
+      "sourceSha256": "2716f31ced3238b4e1255ce325a89d12eb491a9b1b2cae9353246ab9e907ffc6",
+      "implementationFile": "output/playwright/g4-l3-ts006-diagnostic-composite-v8/en-natural-entry-diagnostic/frame-128.png",
+      "implementationSha256": "d2dc9e356aeb38fd3e3c7792dbaf93e2547af16e70e38cd7142764c4811099ea",
+      "sourceStageLeftOffsetPixels": 25,
+      "rmse": {
+        "rawFixedCoordinates": {
+          "fullFrame": {
+            "normalizedRmse": 0.248892241393,
+            "comparedPixels": 480000,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.287339610898,
+            "comparedPixels": 86400,
+            "sourceRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 800,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.219938954092,
+            "comparedPixels": 332800,
+            "sourceRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 800,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.327033383397,
+            "comparedPixels": 60800,
+            "sourceRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 800,
+              "height": 76
+            }
+          }
+        },
+        "stageRegisteredDiagnostic": {
+          "fullFrame": {
+            "normalizedRmse": 0.114674968567,
+            "comparedPixels": 465000,
+            "sourceRect": {
+              "x": 25,
+              "y": 0,
+              "width": 775,
+              "height": 600
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 775,
+              "height": 600
+            }
+          },
+          "header": {
+            "normalizedRmse": 0.073872003031,
+            "comparedPixels": 83700,
+            "sourceRect": {
+              "x": 25,
+              "y": 0,
+              "width": 775,
+              "height": 108
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 0,
+              "width": 775,
+              "height": 108
+            }
+          },
+          "bodyContent": {
+            "normalizedRmse": 0.120095962569,
+            "comparedPixels": 322400,
+            "sourceRect": {
+              "x": 25,
+              "y": 108,
+              "width": 775,
+              "height": 416
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 108,
+              "width": 775,
+              "height": 416
+            }
+          },
+          "footer": {
+            "normalizedRmse": 0.130830366761,
+            "comparedPixels": 58900,
+            "sourceRect": {
+              "x": 25,
+              "y": 524,
+              "width": 775,
+              "height": 76
+            },
+            "implementationRect": {
+              "x": 0,
+              "y": 524,
+              "width": 775,
+              "height": 76
+            }
+          }
+        }
+      },
+      "nextButton": {
+        "source": {
+          "state": "neutral-orange",
+          "sampledPixels": 844,
+          "orangePixels": 691,
+          "orangeRatio": 0.818720379147,
+          "hoverBluePixels": 5,
+          "hoverBlueRatio": 0.005924170616
+        },
+        "implementation": {
+          "state": "neutral-orange",
+          "sampledPixels": 1257,
+          "orangePixels": 960,
+          "orangeRatio": 0.763723150358,
+          "hoverBluePixels": 27,
+          "hoverBlueRatio": 0.021479713604
+        }
+      }
+    }
+  ],
+  "summary": {
+    "comparedFrames": 10,
+    "regions": {
+      "rawFixedCoordinates": {
+        "fullFrame": {
+          "min": 0.065075492526,
+          "max": 0.248892241393,
+          "mean": 0.221859691858,
+          "maxAtSourceLocalFrame": 128,
+          "maxAtCaptureOrdinal": 290
+        },
+        "header": {
+          "min": 0.073145637305,
+          "max": 0.287339610898,
+          "mean": 0.265920213539,
+          "maxAtSourceLocalFrame": 8,
+          "maxAtCaptureOrdinal": 170
+        },
+        "bodyContent": {
+          "min": 0.038370269906,
+          "max": 0.219938954092,
+          "mean": 0.187054454457,
+          "maxAtSourceLocalFrame": 128,
+          "maxAtCaptureOrdinal": 290
+        },
+        "footer": {
+          "min": 0.133307798262,
+          "max": 0.328160245744,
+          "mean": 0.308121209918,
+          "maxAtSourceLocalFrame": 8,
+          "maxAtCaptureOrdinal": 170
+        }
+      },
+      "stageRegistered": {
+        "fullFrame": {
+          "min": 0.065075492526,
+          "max": 0.114674968567,
+          "mean": 0.090529194821,
+          "maxAtSourceLocalFrame": 128,
+          "maxAtCaptureOrdinal": 290
+        },
+        "header": {
+          "min": 0.073145637305,
+          "max": 0.073872003031,
+          "mean": 0.073799366458,
+          "maxAtSourceLocalFrame": 8,
+          "maxAtCaptureOrdinal": 170
+        },
+        "bodyContent": {
+          "min": 0.038370269906,
+          "max": 0.120095962569,
+          "mean": 0.082377196571,
+          "maxAtSourceLocalFrame": 128,
+          "maxAtCaptureOrdinal": 290
+        },
+        "footer": {
+          "min": 0.129907474694,
+          "max": 0.134490901023,
+          "mean": 0.132225086516,
+          "maxAtSourceLocalFrame": 13,
+          "maxAtCaptureOrdinal": 175
+        }
+      }
+    },
+    "sourceStageRegistration": {
+      "detection": "count contiguous leading columns whose pixels are at least 98 percent RGB <= 5",
+      "distinctLeftOffsetsPixels": [
+        0,
+        25
+      ],
+      "stableAcrossSelectedFrames": false,
+      "acceptanceUse": "none-diagnostic-normalization-only"
+    },
+    "cursorExclusion": {
+      "captureConfiguration": "excluded",
+      "verifiedFromCaptureManifest": true,
+      "cursorPixelMaskApplied": false,
+      "fullFramePixelsRetained": true,
+      "note": "The capture tool excluded the pointer before PNG creation; this report does not hide any image region."
+    },
+    "nextButtonNeutral": {
+      "probe": {
+        "coordinateSpace": "native-stage",
+        "centerX": 769,
+        "centerY": 560,
+        "radius": 20,
+        "neutralOrangeRatioMinimum": 0.7,
+        "hoverBlueRatioMaximum": 0.05,
+        "minimumSampledPixels": 800,
+        "orangeRule": "red > 150; 55 < green < 220; blue < 120",
+        "hoverBlueRule": "blue > 110 and blue > red * 1.1"
+      },
+      "allSelectedFramesNeutral": true,
+      "sourceNeutralFrames": 10,
+      "implementationNeutralFrames": 10,
+      "selectedFrames": 10,
+      "acceptanceUse": "heuristic-diagnostic-only"
+    },
+    "implementationBrowserCaptureClean": true,
+    "strictAcceptanceEffect": "none"
+  },
+  "v9PrioritizedRecommendations": [
+    {
+      "priority": "P0",
+      "id": "adjudicate-whole-stage-registration-before-v9-tuning",
+      "action": "Re-run or adjudicate the Replay capture registration before changing candidate geometry: the selected source frames contain left-stage offsets 0, 25 px. Bind any replacement segment to a trace and require one stable native-stage origin.",
+      "executableCheck": "Run this generator again and require summary.sourceStageRegistration.distinctLeftOffsetsPixels to equal [0] before treating raw RMSE as candidate error.",
+      "candidateFiles": []
+    },
+    {
+      "priority": "P1",
+      "id": "retime-strategy-reveal-after-mapping-is-confirmed",
+      "action": "After the ordinal mapping is trace-confirmed, retune the sprite-23 reveal phases around source frames 77 and 125-128; the worst stage-registered body/content RMSE is 0.120096 at local frame 128.",
+      "executableCheck": "Update inferredSourcePhases/ramp anchors, recapture exactly the same ten local frames, and require the stage-registered body/content mean and max to decrease without changing neutral controls.",
+      "candidateFiles": [
+        "packages/demos/src/timelines/course-g04-l03-ts-006.ts",
+        "packages/demos/src/modules/course-g04-l03-ts-006.tsx"
+      ]
+    },
+    {
+      "priority": "P2",
+      "id": "refine-shell-footer-assets-and-control-geometry",
+      "action": "Refine footer background/control geometry independently from lesson content; its stage-registered RMSE mean is 0.132225 and the Next control must remain neutral-orange.",
+      "executableCheck": "Adjust only diagnostic shell/footer assets and layout constants, then rerun this report and require a lower footer mean while summary.nextButtonNeutral.allSelectedFramesNeutral remains true.",
+      "candidateFiles": [
+        "packages/demos/src/modules/course-g04-l03-ts-006.tsx",
+        "public/flash-assets/courses/course-g04-l03-ts-006/diagnostic-composite-assets"
+      ]
+    },
+    {
+      "priority": "P3",
+      "id": "preserve-cursor-free-neutral-capture",
+      "action": "Keep ScreenCaptureKit cursor exclusion enabled and park the pointer away from controls so an invisible pointer cannot leave a hover state in captured pixels.",
+      "executableCheck": "Require capture-manifest configuration.cursor = excluded and both source/implementation Next probes to classify neutral-orange for every selected frame.",
+      "candidateFiles": []
+    }
+  ],
+  "unresolved": [
+    "The proposed capture-ordinal to source-local-frame mapping is not trace-bound and is not source-frame authority.",
+    "The source's whole-stage left registration changes within the proposed segment; raw fixed-coordinate RMSE therefore combines capture/runtime registration with candidate differences.",
+    "Stage-registered RMSE discards the clipped rightmost source width and is diagnostic only, never an acceptance metric.",
+    "This ten-frame spot comparison does not establish full-frame coverage, authoritative baseline, audio timing/listening, Spanish behavior, independent human review, Owner acceptance, or strict completion."
+  ],
+  "strictAcceptanceEffect": "none"
+}

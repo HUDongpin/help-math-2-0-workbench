@@ -1,0 +1,388 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l3-ts006-original-runtime-schedule-candidate",
+  "generator": {
+    "path": "scripts/build-g4-l3-ts006-original-runtime-schedule-candidate.mjs",
+    "bytes": 21151,
+    "sha256": "0fcbb3a342148c05d87a428eee4b8d06b139d13efa92f90aeedcc9b5ab580fe1"
+  },
+  "sourceBindings": {
+    "protocol": {
+      "path": "reports/g4-l3-ts006-original-runtime-session-protocol-draft.json",
+      "bytes": 18849,
+      "sha256": "690b8c68c67f3b85220208ccb27d15021897f9801a7865b6f408db3b55813c03"
+    },
+    "firstSessionReadiness": {
+      "path": "reports/g4-l3-first-original-runtime-session-readiness.json",
+      "bytes": 24129,
+      "sha256": "156e04690dc0ed06f3b98f041e54d3e412db07e656f6045eb49c8aa92e001ca7"
+    },
+    "containment": {
+      "path": "reports/g4-l3-original-runtime-containment-readiness.json",
+      "bytes": 36370,
+      "sha256": "012817c68c1c5ec70553bc7f4743d757fcdaa96eb1a72789d8b1f366d200616b"
+    },
+    "capacity": {
+      "path": "reports/g4-l3-capture-capacity-readiness.json",
+      "bytes": 33799,
+      "sha256": "88960a9ca24c4760da5f46a2a30b30472607bb2e3193d01c39ab96ec8b135ddd"
+    },
+    "runtimeEnvironment": {
+      "path": "reports/g4-l3-original-runtime-environment-readiness.json",
+      "bytes": 11540,
+      "sha256": "06534a424cc7065e85044fa04665197f518abcef87cf4ddeae200510db8c6a54"
+    },
+    "coverage": {
+      "path": "migrations/course-g04-l03-ts-006/evidence/full-frame-coverage.json",
+      "bytes": 11080,
+      "sha256": "fc8608080a7a2a0af3dd46dfcd9419eda4f9a787f75e25316ae89bf386124b3f"
+    },
+    "hostTree": {
+      "path": "work/original-runtime-host-trees/course-g04-l03-ts-006/root/staging-manifest.json",
+      "bytes": 156481,
+      "sha256": "40e615227901b5235cb01695f5ccf10dd5d4749610fff98dd9413b0aeb0b4827"
+    }
+  },
+  "scope": {
+    "releaseId": "lesson-g04-l03-negative-numbers",
+    "animationId": "course-g04-l03-ts-006",
+    "languages": [
+      "en",
+      "es"
+    ],
+    "nativeStage": {
+      "width": 800,
+      "height": 600
+    },
+    "fps": 12
+  },
+  "scheduleCandidate": {
+    "status": "technical-candidate-pending-owner-containment-and-operator-approval",
+    "authority": "reviewable machine-generated schedule candidate only",
+    "sessions": [
+      {
+        "ordinal": 1,
+        "language": "en",
+        "status": "technical-candidate-not-approved-not-executed",
+        "requiredFreshMacosAccount": true,
+        "disposableAccount": {
+          "accountIdentifier": null,
+          "homeDirectory": null,
+          "icloudSignedIn": false,
+          "priorBrowserOrFlashStateAllowed": false
+        },
+        "runtimeProcessPolicy": "one fresh Adobe Flash Player Projector process for this language only",
+        "hostEntryPolicy": "same-lesson staged index_local.swf natural entry only",
+        "directSeekPermitted": false,
+        "protocolTraceCandidateId": "candidate:course-g04-l03-ts-006:natural-host-entry:en",
+        "entryStateCandidateSha256": "cc5bbba244e27277284ee0a791bf0b13dde575b01e64981d4ec2e5b0a11a6827",
+        "authoritativeTraceId": null,
+        "coverageRequirements": [
+          {
+            "requirementId": "req:root:lesson-shell-natural-entry:en",
+            "frameDomainId": "root",
+            "scenario": "root-unavailable",
+            "language": "en",
+            "traceId": "trace:root:lesson-shell-natural-entry:en:seed-0",
+            "entryStateSha256": "1f3414ecf1b085c4c47193e2397e013ee2a5e3b78f0bf864ef3a74923982a274",
+            "requiredRange": {
+              "firstFrame": 1,
+              "lastFrame": 10
+            }
+          },
+          {
+            "requirementId": "req:sprite-23:lesson-shell-natural-entry:en",
+            "frameDomainId": "sprite-23",
+            "scenario": "source-static-frame",
+            "language": "en",
+            "traceId": "trace:sprite-23:lesson-shell-natural-entry:en:seed-0",
+            "entryStateSha256": "d4f9baef8ce19c9503ff128aee12901b46f32736afbbd74833cdf9691bb51b4e",
+            "requiredRange": {
+              "firstFrame": 1,
+              "lastFrame": 128
+            }
+          }
+        ],
+        "independentFrameDomainFrames": 138,
+        "structuralDispositionCheckpointFrames": 1,
+        "conservativeOriginalRuntimePngUpperBound": 139,
+        "protocolSteps": [
+          {
+            "instruction": "Before any launch, recheck all bound hashes, live free space, approved no-egress control, approved read-only local dependency allowlist, fresh disposable profile, empty SharedObject store, authorized host context, owner decision, and named original-runtime operator; abort if any field is absent or differs.",
+            "kind": "preflight",
+            "stepId": "P00"
+          },
+          {
+            "instruction": "In one fresh runtime process for the selected language, use only the authorized staged lesson-shell host entry; do not directly open L3TS06.swf and do not use direct seek.",
+            "kind": "fresh-process",
+            "stepId": "P01"
+          },
+          {
+            "instruction": "Enter TS006 through the same-lesson host path before invoking any page-language audio control. Record root frame 1, the InternalPreloader jump_check request, the host response, and the natural transition or lack of transition to the frame-6 begin label; do not invent a pre-entry host-language selector.",
+            "kind": "natural-page-entry",
+            "stepId": "P02"
+          },
+          {
+            "instruction": "After natural TS006 entry, in the Spanish session release the orange En esta página control at native-stage point (699,95), inside the source-derived bounds left 633.9/right 762.65/top 84.4/bottom 106.4. Resolve Shell root frame 49 instance SA, button object 217, hit shape 212, depth 202; record the source-expected SA_PLAY to SA_PAUSE transition and the actual load, audibility, spoken language, synchronization, onSoundComplete, and resume outcome. In the English session, record the naturally reached English/audio state without fabricating a pre-entry selector.",
+            "kind": "page-language-audio",
+            "stepId": "P03"
+          },
+          {
+            "instruction": "Record whether root-placed sprite-3/Mc_Page_Title and sprite-23/Animation03 are instantiated, their entry states, parent/root frame, and every naturally reached local frame without relabeling either nested timeline as the root timeline.",
+            "kind": "frame-domain-disposition",
+            "stepId": "P04"
+          },
+          {
+            "instruction": "If sprite-23 is naturally reached, capture its ordered frame/state chain through declared frame 128 and the terminal stop. Record all observed root frames; leave unobserved declared root frames unresolved.",
+            "kind": "natural-playback",
+            "stepId": "P05"
+          },
+          {
+            "instruction": "Record the actual audio asset, start/stop time, owner frame domain, cue, synchronization, and language. Listen to the complete path; do not infer language or cue from filenames or technical probes.",
+            "kind": "audio",
+            "stepId": "P06"
+          },
+          {
+            "instruction": "At the observed terminal state, invoke Replay only through the host-native control and record a complete reset of root, nested playheads, audio, language, and navigation state followed by a second natural terminal state.",
+            "kind": "replay",
+            "stepId": "P07"
+          },
+          {
+            "instruction": "Exercise Previous and Next only through the host-native controls, record destinations and state effects, return naturally to TS006, and verify a fresh entry state.",
+            "kind": "navigation",
+            "stepId": "P08"
+          },
+          {
+            "instruction": "Close the runtime completely, record the process/session receipt and post-session no-egress/SharedObject checks, then repeat P00-P09 in a new process for the other language.",
+            "kind": "close",
+            "stepId": "P09"
+          }
+        ],
+        "requiredOutputs": [
+          "owner/runtime authorization record",
+          "named operator and authorized-host attestation",
+          "live capacity preflight",
+          "runtime process and executable receipt",
+          "ordered host event and state hash chain",
+          "one-indexed root and nested frame ledger",
+          "native 800x600 PNG manifest with per-file hashes",
+          "English and Spanish audio cue/synchronization/listening records",
+          "Replay and Previous/Next behavior record",
+          "no-egress, disposable-profile, and empty-SharedObject verification",
+          "complete-process-exit receipt"
+        ],
+        "audioReviewRequired": true,
+        "replayRequired": true,
+        "previousNextNavigationRequired": true,
+        "eventScheduleAccepted": false,
+        "captureScheduleAccepted": false,
+        "naturalExecutionProved": false
+      },
+      {
+        "ordinal": 2,
+        "language": "es",
+        "status": "technical-candidate-not-approved-not-executed",
+        "requiredFreshMacosAccount": true,
+        "disposableAccount": {
+          "accountIdentifier": null,
+          "homeDirectory": null,
+          "icloudSignedIn": false,
+          "priorBrowserOrFlashStateAllowed": false
+        },
+        "runtimeProcessPolicy": "one fresh Adobe Flash Player Projector process for this language only",
+        "hostEntryPolicy": "same-lesson staged index_local.swf natural entry only",
+        "directSeekPermitted": false,
+        "protocolTraceCandidateId": "candidate:course-g04-l03-ts-006:natural-host-entry:es",
+        "entryStateCandidateSha256": "5b793db36c453b8475042458d20c47644228d18355cef5458098d0e538d23be1",
+        "authoritativeTraceId": null,
+        "coverageRequirements": [
+          {
+            "requirementId": "req:root:lesson-shell-natural-entry:es",
+            "frameDomainId": "root",
+            "scenario": "root-unavailable",
+            "language": "es",
+            "traceId": "trace:root:lesson-shell-natural-entry:es:seed-0",
+            "entryStateSha256": "6dc19ae21e176343faec395d7918fd9c510ad945693d4639c4f37adcb114c9d8",
+            "requiredRange": {
+              "firstFrame": 1,
+              "lastFrame": 10
+            }
+          },
+          {
+            "requirementId": "req:sprite-23:lesson-shell-natural-entry:es",
+            "frameDomainId": "sprite-23",
+            "scenario": "source-static-frame",
+            "language": "es",
+            "traceId": "trace:sprite-23:lesson-shell-natural-entry:es:seed-0",
+            "entryStateSha256": "696db65bf10c029d06120385402670cf657b1e1c471083a46c94b90cd963520c",
+            "requiredRange": {
+              "firstFrame": 1,
+              "lastFrame": 128
+            }
+          }
+        ],
+        "independentFrameDomainFrames": 138,
+        "structuralDispositionCheckpointFrames": 1,
+        "conservativeOriginalRuntimePngUpperBound": 139,
+        "protocolSteps": [
+          {
+            "instruction": "Before any launch, recheck all bound hashes, live free space, approved no-egress control, approved read-only local dependency allowlist, fresh disposable profile, empty SharedObject store, authorized host context, owner decision, and named original-runtime operator; abort if any field is absent or differs.",
+            "kind": "preflight",
+            "stepId": "P00"
+          },
+          {
+            "instruction": "In one fresh runtime process for the selected language, use only the authorized staged lesson-shell host entry; do not directly open L3TS06.swf and do not use direct seek.",
+            "kind": "fresh-process",
+            "stepId": "P01"
+          },
+          {
+            "instruction": "Enter TS006 through the same-lesson host path before invoking any page-language audio control. Record root frame 1, the InternalPreloader jump_check request, the host response, and the natural transition or lack of transition to the frame-6 begin label; do not invent a pre-entry host-language selector.",
+            "kind": "natural-page-entry",
+            "stepId": "P02"
+          },
+          {
+            "instruction": "After natural TS006 entry, in the Spanish session release the orange En esta página control at native-stage point (699,95), inside the source-derived bounds left 633.9/right 762.65/top 84.4/bottom 106.4. Resolve Shell root frame 49 instance SA, button object 217, hit shape 212, depth 202; record the source-expected SA_PLAY to SA_PAUSE transition and the actual load, audibility, spoken language, synchronization, onSoundComplete, and resume outcome. In the English session, record the naturally reached English/audio state without fabricating a pre-entry selector.",
+            "kind": "page-language-audio",
+            "stepId": "P03"
+          },
+          {
+            "instruction": "Record whether root-placed sprite-3/Mc_Page_Title and sprite-23/Animation03 are instantiated, their entry states, parent/root frame, and every naturally reached local frame without relabeling either nested timeline as the root timeline.",
+            "kind": "frame-domain-disposition",
+            "stepId": "P04"
+          },
+          {
+            "instruction": "If sprite-23 is naturally reached, capture its ordered frame/state chain through declared frame 128 and the terminal stop. Record all observed root frames; leave unobserved declared root frames unresolved.",
+            "kind": "natural-playback",
+            "stepId": "P05"
+          },
+          {
+            "instruction": "Record the actual audio asset, start/stop time, owner frame domain, cue, synchronization, and language. Listen to the complete path; do not infer language or cue from filenames or technical probes.",
+            "kind": "audio",
+            "stepId": "P06"
+          },
+          {
+            "instruction": "At the observed terminal state, invoke Replay only through the host-native control and record a complete reset of root, nested playheads, audio, language, and navigation state followed by a second natural terminal state.",
+            "kind": "replay",
+            "stepId": "P07"
+          },
+          {
+            "instruction": "Exercise Previous and Next only through the host-native controls, record destinations and state effects, return naturally to TS006, and verify a fresh entry state.",
+            "kind": "navigation",
+            "stepId": "P08"
+          },
+          {
+            "instruction": "Close the runtime completely, record the process/session receipt and post-session no-egress/SharedObject checks, then repeat P00-P09 in a new process for the other language.",
+            "kind": "close",
+            "stepId": "P09"
+          }
+        ],
+        "requiredOutputs": [
+          "owner/runtime authorization record",
+          "named operator and authorized-host attestation",
+          "live capacity preflight",
+          "runtime process and executable receipt",
+          "ordered host event and state hash chain",
+          "one-indexed root and nested frame ledger",
+          "native 800x600 PNG manifest with per-file hashes",
+          "English and Spanish audio cue/synchronization/listening records",
+          "Replay and Previous/Next behavior record",
+          "no-egress, disposable-profile, and empty-SharedObject verification",
+          "complete-process-exit receipt"
+        ],
+        "audioReviewRequired": true,
+        "replayRequired": true,
+        "previousNextNavigationRequired": true,
+        "eventScheduleAccepted": false,
+        "captureScheduleAccepted": false,
+        "naturalExecutionProved": false
+      }
+    ],
+    "requiredControlIds": [
+      "CR-01",
+      "CR-02",
+      "CR-03",
+      "CR-04",
+      "CR-05",
+      "CR-06",
+      "CR-07",
+      "CR-08"
+    ],
+    "controlApprovalsRecorded": 0,
+    "namedOperatorsRecorded": 0,
+    "ownerApprovalsRecorded": 0,
+    "authorizedHostContextsRecorded": 0,
+    "launchCommands": [],
+    "runtimeSessionsExecuted": 0,
+    "baselinePackagesEstablished": 0
+  },
+  "authorizationTemplate": {
+    "status": "blank-not-a-decision",
+    "owner": {
+      "fullName": null,
+      "role": null,
+      "decision": null,
+      "decidedAt": null,
+      "signatureEnvelope": null
+    },
+    "containmentApprover": {
+      "fullName": null,
+      "role": null,
+      "approvedControlIds": [],
+      "decidedAt": null,
+      "signatureEnvelope": null
+    },
+    "originalRuntimeOperators": {
+      "en": {
+        "fullName": null,
+        "role": null,
+        "accountIdentifier": null,
+        "sessionId": null,
+        "signatureEnvelope": null
+      },
+      "es": {
+        "fullName": null,
+        "role": null,
+        "accountIdentifier": null,
+        "sessionId": null,
+        "signatureEnvelope": null
+      }
+    },
+    "liveCapacityPreflight": {
+      "capturedAt": null,
+      "availableBytes": null,
+      "minimumRequiredBytes": null,
+      "passed": false,
+      "evidence": null
+    },
+    "authorizedHostContext": null,
+    "selectedContainmentMechanisms": [],
+    "launchPath": null,
+    "launchCommand": null
+  },
+  "executionGate": {
+    "technicalScheduleCandidatePrepared": true,
+    "scheduleAcceptedByOwner": false,
+    "containmentControlsApproved": false,
+    "containmentControlsVerified": false,
+    "namedOperatorsBound": false,
+    "freshDisposableAccountsBound": false,
+    "authorizedHostContextBound": false,
+    "liveCapacityPreflightPassed": false,
+    "noEgressVerified": false,
+    "emptySharedObjectStoresVerified": false,
+    "originalRuntimeExecutionReady": false,
+    "state": "closed-pending-human-authorization-and-live-preflight"
+  },
+  "acceptance": {
+    "authoritativeOriginalRuntimeTrace": false,
+    "baselineAccepted": false,
+    "audioAccepted": false,
+    "humanVisualReviewAccepted": false,
+    "ownerAcceptance": false,
+    "strictMigrationComplete": false,
+    "publicRelease": false
+  },
+  "strictAcceptanceEffect": "none; this report fixes a reviewable two-session technical candidate but records no human identity, approval, launch, runtime observation, baseline, audio review, fidelity comparison, acceptance, completion, or publication",
+  "scheduleCandidateSha256": "59dc8b657d3fc0bdd84513f0c878dd2722c97017b34e8ecba40c934e1d6ac22d",
+  "reportFingerprintSha256": "9b0d31893966a1cef58b7c0fc3dd229e58d087669e6f18e46b5473a548baf7c3"
+}

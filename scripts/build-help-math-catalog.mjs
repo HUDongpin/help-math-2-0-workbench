@@ -21,29 +21,33 @@ const DEFAULT_CONCURRENCY = 4;
 const SHA256_PATTERN = /^[a-f0-9]{64}$/;
 
 const KNOWN_COUNTS = Object.freeze({
-  files: 7_919,
-  swf: 1_894,
-  fla: 1_398,
-  mp3: 4_565,
+  files: 9_147,
+  totalBytes: 3_214_585_414,
+  checksumSetSha256: "30dfa12b7cd76e7200fb89115155e7d32af1356247c07e3a4f79227e93f34875",
+  swf: 2_096,
+  fla: 1_541,
+  mp3: 5_448,
   xml: 31,
   courseXml: 29,
   swfByCollection: {
-    course: 1_385,
+    course: 1_587,
     keyterm: 459,
     formula: 50,
   },
-  uniqueSwfAssets: 1_873,
-  duplicatePlacements: 21,
-  pairedSwfFla: 1_181,
-  swfOnly: 713,
-  flaOnly: 217,
-  compoundBinaryFla: 1_398,
-  swfFrames: 32_149,
+  uniqueSwfAssets: 2_074,
+  duplicatePlacements: 22,
+  pairedSwfFla: 1_344,
+  swfOnly: 752,
+  flaOnly: 197,
+  compoundBinaryFla: 1_540,
+  zipArchiveFla: 1,
+  unrecognizedFla: 0,
+  swfFrames: 34_169,
   courseShells: 33,
   courseReferences: {
     unique: 1_750,
-    resolved: 1_159,
-    missing: 591,
+    resolved: 1_361,
+    missing: 389,
     unreferenced: 226,
   },
   keytermReferences: {
@@ -81,6 +85,221 @@ const COURSE_DOMAIN_RULES = Object.freeze([
   [/(geometry|coordinate|perimeter|area)/i, "geometry-coordinates"],
   [/(addition|subtraction|multiplication|division skills|^division$|add, subtract, multiply)/i, "integer-operations"],
 ]);
+
+export const LESSON_RELEASE_DEFINITIONS = Object.freeze([
+  Object.freeze({
+    releaseOrder: 1,
+    queueId: "release-g04-l03-negative-numbers",
+    releaseId: "lesson-g04-l03-negative-numbers",
+    releaseType: "complete-lesson",
+    publicationMode: "atomic",
+    developmentMode: "parallel-shards",
+    sequenceAuthority: "active-course-xml-global-page-order",
+    grade: 4,
+    lesson: 3,
+    titleDisplay: "Negative Numbers",
+    domain: "negative-numbers-number-line",
+    sourceLessonPath: "HELP_COURSES/ELMGR4/L3/index.xml",
+    sourceLessonBytes: 8_976,
+    sourceLessonSha256: "0f1109321a5b65507c36fb8fd30380c4899cb7f381c2959aa7092d59bba990b0",
+    shellAnimationId: "shell-course-g04-l03-index-local",
+    shellSourceSha256: "817e599de43a7924f0a93791e950c8781755692371945a5b7ea4cdd2ad26c58e",
+    expectedActiveXmlReferencedPageAssetCount: 39,
+    expectedCourseShellAssetCount: 1,
+    expectedPairedSwfFlaCount: 29,
+    expectedSwfOnlyCount: 11,
+    catalogQueueBinding: true,
+    shards: Object.freeze([
+      Object.freeze({
+        shardId: "shard-01",
+        batchId: "batch-001",
+        ordinal: 1,
+        parallelGroup: "g04-l03-mvp",
+        memberCount: 25,
+        firstXmlOccurrence: 1,
+        lastXmlOccurrence: 25,
+        includeShell: false,
+      }),
+      Object.freeze({
+        shardId: "shard-02",
+        batchId: "batch-002",
+        ordinal: 2,
+        parallelGroup: "g04-l03-mvp",
+        memberCount: 15,
+        firstXmlOccurrence: 26,
+        lastXmlOccurrence: 39,
+        includeShell: true,
+      }),
+    ]),
+  }),
+  Object.freeze({
+    releaseOrder: 2,
+    queueId: "release-g05-l04-number-lines",
+    releaseId: "lesson-g05-l04-number-lines",
+    releaseType: "complete-lesson",
+    publicationMode: "atomic",
+    developmentMode: "parallel-shards",
+    sequenceAuthority: "active-course-xml-global-page-order",
+    grade: 5,
+    lesson: 4,
+    titleDisplay: "Number Lines",
+    domain: "negative-numbers-number-line",
+    sourceLessonPath: "HELP_COURSES/ELMGR5/L4/index.xml",
+    sourceLessonBytes: 11_841,
+    sourceLessonSha256: "b6f1718da8f5e909cb96c883902009887eb965d41e41588318b4bfb36c8f7a36",
+    shellAnimationId: "shell-course-g05-l04-index-local",
+    shellSourceSha256: "7865195a07666e8123bef33f52aea36e06b7e0a9987fbbea605bc92cbe9b0301",
+    expectedActiveXmlReferencedPageAssetCount: 54,
+    expectedCourseShellAssetCount: 1,
+    expectedPairedSwfFlaCount: 44,
+    expectedSwfOnlyCount: 11,
+    catalogQueueBinding: false,
+    shards: Object.freeze([
+      Object.freeze({
+        shardId: "g05-l04-host-language",
+        batchId: "g05-l04-host-language",
+        ordinal: 1,
+        parallelGroup: "g05-l04-mvp",
+        memberCount: 15,
+        firstXmlOccurrence: 1,
+        lastXmlOccurrence: 14,
+        includeShell: true,
+      }),
+      Object.freeze({
+        shardId: "g05-l04-instruction",
+        batchId: "g05-l04-instruction",
+        ordinal: 2,
+        parallelGroup: "g05-l04-mvp",
+        memberCount: 21,
+        firstXmlOccurrence: 15,
+        lastXmlOccurrence: 35,
+        includeShell: false,
+      }),
+      Object.freeze({
+        shardId: "g05-l04-practice-assessment",
+        batchId: "g05-l04-practice-assessment",
+        ordinal: 3,
+        parallelGroup: "g05-l04-mvp",
+        memberCount: 19,
+        firstXmlOccurrence: 36,
+        lastXmlOccurrence: 54,
+        includeShell: false,
+      }),
+    ]),
+  }),
+  Object.freeze({
+    releaseOrder: 3,
+    queueId: "release-g05-l05-add-subtract-negative-numbers",
+    releaseId: "lesson-g05-l05-add-subtract-negative-numbers",
+    releaseType: "complete-lesson",
+    publicationMode: "atomic",
+    developmentMode: "parallel-shards",
+    sequenceAuthority: "active-course-xml-global-page-order",
+    grade: 5,
+    lesson: 5,
+    titleDisplay: "Add & Subtract Negative Numbers",
+    domain: "negative-numbers-number-line",
+    sourceLessonPath: "HELP_COURSES/ELMGR5/L5/index.xml",
+    sourceLessonBytes: 11_084,
+    sourceLessonSha256: "b6aef32a4be5684cccc7a4f105fe5ca92129c2292f19a71cf975f24bb133fa9e",
+    shellAnimationId: "shell-course-g05-l05-index-local",
+    shellSourceSha256: "5375c535f0761ae580f00eeda29c00d34d0de901239a7d2c65acf968a8290c66",
+    expectedActiveXmlReferencedPageAssetCount: 56,
+    expectedCourseShellAssetCount: 1,
+    expectedPairedSwfFlaCount: 49,
+    expectedSwfOnlyCount: 8,
+    catalogQueueBinding: false,
+    shards: Object.freeze([
+      Object.freeze({
+        shardId: "g05-l05-host-language",
+        batchId: "g05-l05-host-language",
+        ordinal: 1,
+        parallelGroup: "g05-l05-mvp",
+        memberCount: 18,
+        firstXmlOccurrence: 1,
+        lastXmlOccurrence: 17,
+        includeShell: true,
+      }),
+      Object.freeze({
+        shardId: "g05-l05-instruction",
+        batchId: "g05-l05-instruction",
+        ordinal: 2,
+        parallelGroup: "g05-l05-mvp",
+        memberCount: 19,
+        firstXmlOccurrence: 18,
+        lastXmlOccurrence: 36,
+        includeShell: false,
+      }),
+      Object.freeze({
+        shardId: "g05-l05-practice-assessment",
+        batchId: "g05-l05-practice-assessment",
+        ordinal: 3,
+        parallelGroup: "g05-l05-mvp",
+        memberCount: 20,
+        firstXmlOccurrence: 37,
+        lastXmlOccurrence: 56,
+        includeShell: false,
+      }),
+    ]),
+  }),
+  Object.freeze({
+    releaseOrder: 4,
+    queueId: "release-g04-l10-perimeter-area",
+    releaseId: "lesson-g04-l10-perimeter-area",
+    releaseType: "complete-lesson",
+    publicationMode: "atomic",
+    developmentMode: "parallel-shards",
+    sequenceAuthority: "active-course-xml-global-page-order",
+    grade: 4,
+    lesson: 10,
+    titleDisplay: "Perimeter & Area",
+    domain: "geometry-coordinates",
+    sourceLessonPath: "HELP_COURSES/ELMGR4/L10/index.xml",
+    sourceLessonBytes: 10_209,
+    sourceLessonSha256: "652b236f1ad46077e75accc6fe7acb091cbd0bd24b8d99fa0b1f5ffeb1a379e9",
+    shellAnimationId: "shell-course-g04-l10-index-local",
+    shellSourceSha256: "050d4181f8d679e6232871371b70aeaa02dbecb4c7e16cfbc732437307cf6072",
+    expectedActiveXmlReferencedPageAssetCount: 46,
+    expectedCourseShellAssetCount: 1,
+    expectedPairedSwfFlaCount: 34,
+    expectedSwfOnlyCount: 13,
+    catalogQueueBinding: false,
+    shards: Object.freeze([
+      Object.freeze({
+        shardId: "g04-l10-host-language",
+        batchId: "g04-l10-host-language",
+        ordinal: 1,
+        parallelGroup: "g04-l10-mvp",
+        memberCount: 16,
+        firstXmlOccurrence: 1,
+        lastXmlOccurrence: 15,
+        includeShell: true,
+      }),
+      Object.freeze({
+        shardId: "g04-l10-instruction",
+        batchId: "g04-l10-instruction",
+        ordinal: 2,
+        parallelGroup: "g04-l10-mvp",
+        memberCount: 15,
+        firstXmlOccurrence: 16,
+        lastXmlOccurrence: 30,
+        includeShell: false,
+      }),
+      Object.freeze({
+        shardId: "g04-l10-practice-assessment",
+        batchId: "g04-l10-practice-assessment",
+        ordinal: 3,
+        parallelGroup: "g04-l10-mvp",
+        memberCount: 16,
+        firstXmlOccurrence: 31,
+        lastXmlOccurrence: 46,
+        includeShell: false,
+      }),
+    ]),
+  }),
+]);
+
+const PRIORITY_LESSON_RELEASE = LESSON_RELEASE_DEFINITIONS[0];
 
 function compareText(left, right) {
   return left < right ? -1 : left > right ? 1 : 0;
@@ -212,6 +431,13 @@ async function mapWithConcurrency(items, concurrency, worker) {
   return results;
 }
 
+export function classifyFlaContainer(prefix) {
+  const signature = prefix.toString("hex");
+  if (signature.startsWith("d0cf11e0a1b11ae1")) return "compound-binary";
+  if (signature.startsWith("504b0304")) return "zip-archive";
+  return "unrecognized";
+}
+
 async function hashSourceFile(file) {
   const before = await stat(file.absolutePath);
   const hash = createHash("sha256");
@@ -238,7 +464,7 @@ async function hashSourceFile(file) {
     sha256,
     extension,
     ...(extension === "fla" ? {
-      flaContainer: prefix.toString("hex") === "d0cf11e0a1b11ae1" ? "compound-binary" : "unrecognized",
+      flaContainer: classifyFlaContainer(prefix),
     } : {}),
   };
 }
@@ -826,7 +1052,22 @@ function jsonl(values) {
   return `${values.map((value) => JSON.stringify(value)).join("\n")}\n`;
 }
 
-function buildBatchQueues(assets) {
+function isPriorityLessonReleaseAsset(asset) {
+  const classification = asset.classification;
+  if (
+    classification.collection !== "course" ||
+    classification.grade !== PRIORITY_LESSON_RELEASE.grade ||
+    classification.lesson !== PRIORITY_LESSON_RELEASE.lesson
+  ) {
+    return false;
+  }
+  if (asset.canonicalAnimationId === PRIORITY_LESSON_RELEASE.shellAnimationId) {
+    return asset.flags.shell === true;
+  }
+  return asset.flags.referenced === true && asset.flags.variant === false && asset.flags.shell === false;
+}
+
+export function buildBatchQueues(assets, { verifyKnownCounts = false } = {}) {
   const sectionOrder = new Map(["IR", "RW", "VB", "IN", "TI", "GS", "TS", "FQ", "RE"].map((code, index) => [code, index]));
   const compareForMigration = (left, right) => {
     const leftGrade = typeof left.classification.grade === "number" ? left.classification.grade : 99;
@@ -839,34 +1080,123 @@ function buildBatchQueues(assets) {
   };
   const assigned = new Set();
   const definitions = [
-    ["grade-3-active", (asset) => asset.classification.collection === "course" && asset.classification.grade === 3 && asset.flags.referenced && !asset.flags.variant && !asset.flags.shell],
-    ["grade-4-active", (asset) => asset.classification.collection === "course" && asset.classification.grade === 4 && asset.flags.referenced && !asset.flags.variant && !asset.flags.shell],
-    ["grade-5-active", (asset) => asset.classification.collection === "course" && asset.classification.grade === 5 && asset.flags.referenced && !asset.flags.variant && !asset.flags.shell],
-    ["shared-keyterms", (asset) => asset.classification.collection === "keyterm" && asset.flags.referenced],
-    ["shared-formulas", (asset) => asset.classification.collection === "formula"],
-    ["legacy-exceptions", () => true],
+    {
+      queueId: PRIORITY_LESSON_RELEASE.queueId,
+      queueType: "complete-lesson-release",
+      release: PRIORITY_LESSON_RELEASE,
+      predicate: isPriorityLessonReleaseAsset,
+    },
+    {
+      queueId: "grade-3-active",
+      predicate: (asset) => asset.classification.collection === "course" && asset.classification.grade === 3 && asset.flags.referenced && !asset.flags.variant && !asset.flags.shell,
+    },
+    {
+      queueId: "grade-4-active",
+      predicate: (asset) => asset.classification.collection === "course" && asset.classification.grade === 4 && asset.flags.referenced && !asset.flags.variant && !asset.flags.shell,
+    },
+    {
+      queueId: "grade-5-active",
+      predicate: (asset) => asset.classification.collection === "course" && asset.classification.grade === 5 && asset.flags.referenced && !asset.flags.variant && !asset.flags.shell,
+    },
+    {
+      queueId: "shared-keyterms",
+      predicate: (asset) => asset.classification.collection === "keyterm" && asset.flags.referenced,
+    },
+    {
+      queueId: "shared-formulas",
+      predicate: (asset) => asset.classification.collection === "formula",
+    },
+    { queueId: "legacy-exceptions", predicate: () => true },
   ];
   const queues = [];
   let sequence = 1;
-  for (const [queueId, predicate] of definitions) {
+  for (const { queueId, queueType, release, predicate } of definitions) {
     const selected = assets.filter((asset) => !assigned.has(asset.assetId) && predicate(asset)).sort(compareForMigration);
     for (const asset of selected) assigned.add(asset.assetId);
+    const releasePartCount = release ? Math.ceil(selected.length / 25) : null;
+    const activeXmlReferencedPageAssetCount = release
+      ? selected.filter((asset) => !asset.flags.shell).length
+      : null;
+    const courseShellAssetCount = release
+      ? selected.filter((asset) => asset.flags.shell).length
+      : null;
+    if (
+      release &&
+      verifyKnownCounts &&
+      (
+        activeXmlReferencedPageAssetCount !== release.expectedActiveXmlReferencedPageAssetCount ||
+        courseShellAssetCount !== release.expectedCourseShellAssetCount
+      )
+    ) {
+      throw new Error(
+        `${release.releaseId}: expected ${release.expectedActiveXmlReferencedPageAssetCount} active XML-referenced page assets ` +
+        `and ${release.expectedCourseShellAssetCount} course shell asset, got ` +
+        `${activeXmlReferencedPageAssetCount} and ${courseShellAssetCount}`,
+      );
+    }
     const batches = [];
     for (let offset = 0; offset < selected.length; offset += 25) {
+      const releasePart = release ? Math.floor(offset / 25) + 1 : null;
       const items = selected.slice(offset, offset + 25).map((asset) => ({
         assetId: asset.assetId,
         canonicalAnimationId: asset.canonicalAnimationId,
         placementCount: asset.animationIds.length,
+        ...(release ? {
+          releaseRole: asset.flags.shell ? "course-shell" : "active-xml-referenced-page",
+        } : {}),
       }));
       batches.push({
         batchId: `batch-${String(sequence).padStart(3, "0")}`,
         queueId,
         canonicalAssetCount: items.length,
+        ...(release ? {
+          releaseId: release.releaseId,
+          releasePart,
+          releasePartCount,
+          releaseComplete: releasePart === releasePartCount,
+        } : {}),
         items,
       });
       sequence += 1;
     }
-    queues.push({ queueId, canonicalAssetCount: selected.length, batches });
+    queues.push({
+      queueId,
+      ...(queueType ? { queueType } : {}),
+      canonicalAssetCount: selected.length,
+      ...(release ? {
+        releaseId: release.releaseId,
+        releaseType: release.releaseType,
+        grade: release.grade,
+        lesson: release.lesson,
+        titleDisplay: release.titleDisplay,
+        domain: release.domain,
+        activeXmlReferencedPageAssetCount,
+        courseShellAssetCount,
+        releasePartCount,
+      } : {}),
+      batches,
+    });
+  }
+  const orderedBatches = queues.flatMap((queue) => queue.batches);
+  for (const [index, batch] of orderedBatches.entries()) {
+    if (batch.releaseId === PRIORITY_LESSON_RELEASE.releaseId) {
+      batch.scaffoldingPrerequisite = {kind: "none"};
+      continue;
+    }
+    const previousBatch = orderedBatches[index - 1];
+    if (!previousBatch) {
+      batch.scaffoldingPrerequisite = {kind: "none"};
+    } else if (previousBatch.releaseId && previousBatch.releaseId !== batch.releaseId) {
+      batch.scaffoldingPrerequisite = {
+        kind: "release-strict",
+        releaseId: previousBatch.releaseId,
+      };
+    } else {
+      batch.scaffoldingPrerequisite = {
+        kind: "batch-strict",
+        batchId: previousBatch.batchId,
+      };
+    }
   }
   return {
     schemaVersion: 1,
@@ -877,9 +1207,206 @@ function buildBatchQueues(assets) {
   };
 }
 
+export function buildLessonReleases({animations, batches, lessons}) {
+  if (!Array.isArray(animations)) throw new Error("Lesson releases require an animations array");
+  if (!Array.isArray(batches?.queues)) throw new Error("Lesson releases require a batch queues array");
+  if (!Array.isArray(lessons?.lessons)) throw new Error("Lesson releases require a lessons array");
+  const canonicalById = new Map(animations
+    .filter((animation) => animation.isCanonical)
+    .map((animation) => [animation.animationId, animation]));
+
+  const releases = [];
+  for (const definition of LESSON_RELEASE_DEFINITIONS) {
+    const lesson = lessons.lessons.find((candidate) =>
+      candidate.grade === definition.grade && candidate.lesson === definition.lesson);
+    if (!lesson) continue;
+    if (
+      lesson.path !== definition.sourceLessonPath ||
+      lesson.bytes !== definition.sourceLessonBytes ||
+      lesson.sha256 !== definition.sourceLessonSha256 ||
+      lesson.titleDisplay !== definition.titleDisplay ||
+      lesson.domain !== definition.domain
+    ) {
+      throw new Error(`${definition.releaseId}: source lesson identity drifted`);
+    }
+
+    const orderedPages = animations
+      .filter((animation) =>
+        animation.isCanonical === true &&
+        animation.classification?.collection === "course" &&
+        animation.classification.grade === definition.grade &&
+        animation.classification.lesson === definition.lesson &&
+        animation.flags?.referenced === true &&
+        animation.flags?.variant === false &&
+        animation.flags?.shell === false)
+      .map((animation) => {
+        const references = (animation.references?.courseXml || []).filter((reference) =>
+          reference.sourceXmlPath === lesson.path);
+        if (references.length !== 1 || !Number.isSafeInteger(references[0].occurrence)) {
+          throw new Error(`${animation.animationId}: expected one ${definition.releaseId} XML occurrence`);
+        }
+        return {animation, xmlOccurrence: references[0].occurrence};
+      })
+      .sort((left, right) => left.xmlOccurrence - right.xmlOccurrence);
+    if (orderedPages.length !== definition.expectedActiveXmlReferencedPageAssetCount) {
+      throw new Error(
+        `${definition.releaseId}: expected ${definition.expectedActiveXmlReferencedPageAssetCount} active XML pages, ` +
+        `got ${orderedPages.length}`,
+      );
+    }
+    for (const [index, binding] of orderedPages.entries()) {
+      if (binding.xmlOccurrence !== index + 1) {
+        throw new Error(
+          `${definition.releaseId}: active XML occurrences must be exactly 1 through ` +
+          `${definition.expectedActiveXmlReferencedPageAssetCount}`,
+        );
+      }
+    }
+
+    const shellAnimation = canonicalById.get(definition.shellAnimationId);
+    if (
+      !shellAnimation ||
+      shellAnimation.classification?.collection !== "course" ||
+      shellAnimation.classification.grade !== definition.grade ||
+      shellAnimation.classification.lesson !== definition.lesson ||
+      shellAnimation.flags?.shell !== true ||
+      shellAnimation.source?.sha256 !== definition.shellSourceSha256 ||
+      shellAnimation.assetId !== `swf-${definition.shellSourceSha256}`
+    ) {
+      throw new Error(`${definition.releaseId}: course shell binding drifted`);
+    }
+
+    const sourceBindings = [
+      ...orderedPages.map(({animation, xmlOccurrence}) => ({
+        animation,
+        xmlOccurrence,
+        releaseRole: "active-xml-referenced-page",
+      })),
+      {animation: shellAnimation, xmlOccurrence: null, releaseRole: "course-shell"},
+    ];
+    const animationIds = sourceBindings.map(({animation}) => animation.animationId);
+    const assetIds = sourceBindings.map(({animation}) => animation.assetId);
+    if (new Set(animationIds).size !== sourceBindings.length || new Set(assetIds).size !== sourceBindings.length) {
+      throw new Error(`${definition.releaseId}: release members are not unique canonical source assets`);
+    }
+    const pairedSwfFlaCount = sourceBindings.filter(({animation}) => animation.pairedFla).length;
+    const swfOnlyCount = sourceBindings.length - pairedSwfFlaCount;
+    if (
+      pairedSwfFlaCount !== definition.expectedPairedSwfFlaCount ||
+      swfOnlyCount !== definition.expectedSwfOnlyCount
+    ) {
+      throw new Error(
+        `${definition.releaseId}: expected ${definition.expectedPairedSwfFlaCount} paired FLA/SWF and ` +
+        `${definition.expectedSwfOnlyCount} SWF-only members, got ${pairedSwfFlaCount} and ${swfOnlyCount}`,
+      );
+    }
+
+    const members = sourceBindings.map((binding, index) => {
+      const matchingShards = definition.shards.filter((shard) => binding.releaseRole === "course-shell"
+        ? shard.includeShell
+        : binding.xmlOccurrence >= shard.firstXmlOccurrence && binding.xmlOccurrence <= shard.lastXmlOccurrence);
+      if (matchingShards.length !== 1) {
+        throw new Error(`${definition.releaseId}: ${binding.animation.animationId} must map to exactly one development shard`);
+      }
+      const shard = matchingShards[0];
+      return {
+        ordinal: index + 1,
+        animationId: binding.animation.animationId,
+        assetId: binding.animation.assetId,
+        releaseRole: binding.releaseRole,
+        batchId: shard.batchId,
+        shardId: shard.shardId,
+        source: {
+          path: binding.animation.source.path,
+          sha256: binding.animation.source.sha256,
+        },
+        xmlOccurrence: binding.xmlOccurrence,
+      };
+    });
+    for (const shard of definition.shards) {
+      const observed = members.filter(({shardId}) => shardId === shard.shardId).length;
+      if (observed !== shard.memberCount) {
+        throw new Error(`${definition.releaseId}: ${shard.shardId} expected ${shard.memberCount} members, got ${observed}`);
+      }
+    }
+
+    if (definition.catalogQueueBinding) {
+      const queue = batches.queues.find((candidate) => candidate.queueId === definition.queueId);
+      if (
+        !queue ||
+        queue.releaseId !== definition.releaseId ||
+        queue.releaseType !== definition.releaseType ||
+        queue.activeXmlReferencedPageAssetCount !== definition.expectedActiveXmlReferencedPageAssetCount ||
+        queue.courseShellAssetCount !== definition.expectedCourseShellAssetCount ||
+        queue.canonicalAssetCount !== members.length ||
+        queue.batches.length !== definition.shards.length
+      ) {
+        throw new Error(`${definition.releaseId}: catalog batch queue scope drifted`);
+      }
+      const queueMembers = queue.batches.flatMap((batch, shardIndex) => {
+        const shard = definition.shards[shardIndex];
+        if (batch.batchId !== shard.batchId || batch.canonicalAssetCount !== shard.memberCount) {
+          throw new Error(`${definition.releaseId}: catalog batch queue shard drifted`);
+        }
+        return batch.items;
+      });
+      if (queueMembers.some((item, index) =>
+        item.canonicalAnimationId !== members[index].animationId ||
+        item.assetId !== members[index].assetId ||
+        item.releaseRole !== members[index].releaseRole)) {
+        throw new Error(`${definition.releaseId}: catalog batch order differs from active XML order plus the shell`);
+      }
+    }
+
+    releases.push({
+      releaseOrder: definition.releaseOrder,
+      releaseId: definition.releaseId,
+      releaseType: definition.releaseType,
+      publicationMode: definition.publicationMode,
+      developmentMode: definition.developmentMode,
+      queueId: definition.queueId,
+      grade: definition.grade,
+      lesson: definition.lesson,
+      titleDisplay: definition.titleDisplay,
+      domain: definition.domain,
+      sourceLesson: {
+        path: lesson.path,
+        bytes: lesson.bytes,
+        sha256: lesson.sha256,
+        sequenceAuthority: definition.sequenceAuthority,
+      },
+      expectedCounts: {
+        activeXmlReferencedPages: definition.expectedActiveXmlReferencedPageAssetCount,
+        courseShells: definition.expectedCourseShellAssetCount,
+        members: members.length,
+        shards: definition.shards.length,
+      },
+      scope: {
+        collection: "course",
+        grade: definition.grade,
+        lesson: definition.lesson,
+        excludeNonMembers: true,
+      },
+      shards: definition.shards.map((shard) => ({
+        shardId: shard.shardId,
+        batchId: shard.batchId,
+        ordinal: shard.ordinal,
+        parallelGroup: shard.parallelGroup,
+        memberCount: shard.memberCount,
+        developmentPrerequisites: [],
+      })),
+      members,
+    });
+  }
+
+  return {schemaVersion: 1, releases};
+}
+
 function assertKnownCounts(summary) {
   const checks = [
     ["files", summary.source.fileCount, KNOWN_COUNTS.files],
+    ["source bytes", summary.source.totalBytes, KNOWN_COUNTS.totalBytes],
+    ["source checksum set", summary.source.checksumSetSha256, KNOWN_COUNTS.checksumSetSha256],
     ["SWFs", summary.source.extensions.swf, KNOWN_COUNTS.swf],
     ["FLAs", summary.source.extensions.fla, KNOWN_COUNTS.fla],
     ["MP3s", summary.source.extensions.mp3, KNOWN_COUNTS.mp3],
@@ -894,6 +1421,8 @@ function assertKnownCounts(summary) {
     ["SWF-only", summary.pairing.swfOnly, KNOWN_COUNTS.swfOnly],
     ["FLA-only", summary.pairing.flaOnly, KNOWN_COUNTS.flaOnly],
     ["compound-binary FLAs", summary.fla.compoundBinary, KNOWN_COUNTS.compoundBinaryFla],
+    ["ZIP-archive FLAs", summary.fla.zipArchive, KNOWN_COUNTS.zipArchiveFla],
+    ["unrecognized FLAs", summary.fla.unrecognized, KNOWN_COUNTS.unrecognizedFla],
     ["SWF frames", summary.swf.totalFrames, KNOWN_COUNTS.swfFrames],
     ["course/index shells", summary.swf.courseShells, KNOWN_COUNTS.courseShells],
     ["unique course references", summary.references.course.unique, KNOWN_COUNTS.courseReferences.unique],
@@ -938,6 +1467,7 @@ export async function buildHelpMathCatalog({
   output = DEFAULT_OUTPUT,
   concurrency = DEFAULT_CONCURRENCY,
   verifyKnownCounts = false,
+  check = false,
 } = {}) {
   if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 32) {
     throw new Error("concurrency must be an integer from 1 to 32");
@@ -1186,7 +1716,8 @@ export async function buildHelpMathCatalog({
     fla: {
       files: flaFiles.length,
       compoundBinary: flaFiles.filter((file) => file.flaContainer === "compound-binary").length,
-      unrecognized: flaFiles.filter((file) => file.flaContainer !== "compound-binary").length,
+      zipArchive: flaFiles.filter((file) => file.flaContainer === "zip-archive").length,
+      unrecognized: flaFiles.filter((file) => file.flaContainer === "unrecognized").length,
     },
     xml: {
       files: xmlFiles.length,
@@ -1275,9 +1806,9 @@ export async function buildHelpMathCatalog({
       })),
     })),
   };
-  const batches = buildBatchQueues(assets);
+  const batches = buildBatchQueues(assets, { verifyKnownCounts });
+  const lessonReleases = buildLessonReleases({animations, batches, lessons});
 
-  await mkdir(outputRoot, { recursive: true });
   const outputs = new Map([
     ["summary.json", json(summary)],
     ["animations.json", json({ schemaVersion: 1, summary, animations })],
@@ -1291,12 +1822,25 @@ export async function buildHelpMathCatalog({
     ["lessons.json", json(lessons)],
     ["audio-groups.json", json(audioGroups)],
     ["batches.json", json(batches)],
+    ["lesson-releases.json", json(lessonReleases)],
     ["source-files.json", json({ schemaVersion: 1, sourceDirectory: SOURCE_DIRECTORY_NAME, fileCount: sourceFiles.length, totalBytes: summary.source.totalBytes, checksumSetSha256: summary.source.checksumSetSha256, files: sourceFiles })],
     ["source-files.jsonl", jsonl(sourceFiles)],
     ["source-files.csv", renderSourceCsv(sourceFiles)],
     ["source-files.sha256", checksumText],
   ]);
-  await Promise.all([...outputs.entries()].map(([filename, contents]) => writeFile(path.join(outputRoot, filename), contents, "utf8")));
+  if (check) {
+    const stale = [];
+    for (const [filename, contents] of outputs) {
+      const actual = await readFile(path.join(outputRoot, filename), "utf8")
+        .catch((error) => error?.code === "ENOENT" ? null : Promise.reject(error));
+      if (actual !== contents) stale.push(filename);
+    }
+    if (stale.length > 0) throw new Error(`Catalog check failed; stale or missing outputs: ${stale.join(", ")}`);
+  } else {
+    await mkdir(outputRoot, { recursive: true });
+    await Promise.all([...outputs.entries()].map(([filename, contents]) =>
+      writeFile(path.join(outputRoot, filename), contents, "utf8")));
+  }
 
   return {
     sourceRoot,
@@ -1308,6 +1852,8 @@ export async function buildHelpMathCatalog({
     missingReferences,
     flaOnly,
     batches,
+    lessonReleases,
+    check,
     outputFiles: [...outputs.keys()],
   };
 }
@@ -1323,6 +1869,7 @@ Options:
   --output <directory>      Catalog output directory (default: ${DEFAULT_OUTPUT})
   --concurrency <1-32>      Concurrent hashing/header workers (default: ${DEFAULT_CONCURRENCY})
   --verify-known-counts     Fail unless the approved full-archive totals match
+  --check                   Recompute and byte-check every catalog output without writing
   --help                    Show this help
 `;
 }
@@ -1334,6 +1881,10 @@ function parseArguments(argv) {
     if (argument === "--help" || argument === "-h") return { help: true };
     if (argument === "--verify-known-counts") {
       options.verifyKnownCounts = true;
+      continue;
+    }
+    if (argument === "--check") {
+      options.check = true;
       continue;
     }
     if (!new Set(["--source", "--output", "--concurrency"]).has(argument)) throw new Error(`Unknown option: ${argument}`);
@@ -1355,11 +1906,11 @@ async function main() {
       return;
     }
     const result = await buildHelpMathCatalog(options);
-    process.stdout.write(
-      `Cataloged ${result.summary.swf.placements} SWF placements as ${result.summary.swf.uniqueAssets} canonical assets.\n` +
-      `Source: ${result.sourceRoot}\nCatalog: ${result.outputRoot}\n` +
-      `Migration status remains intake-only; no animation was marked complete.\n`,
-    );
+    process.stdout.write(result.check
+      ? `PASS: all ${result.outputFiles.length} catalog outputs are current at ${result.outputRoot}\n`
+      : `Cataloged ${result.summary.swf.placements} SWF placements as ${result.summary.swf.uniqueAssets} canonical assets.\n` +
+        `Source: ${result.sourceRoot}\nCatalog: ${result.outputRoot}\n` +
+        `Migration status remains intake-only; no animation was marked complete.\n`);
   } catch (error) {
     process.stderr.write(`HELP Math catalog failed: ${error.message}\n\n${usage()}`);
     process.exitCode = 1;

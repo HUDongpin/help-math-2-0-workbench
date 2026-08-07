@@ -1,0 +1,303 @@
+{
+  "schemaVersion": 1,
+  "reportType": "adobe-animate-blank-document-jsfl-probe-regression-diagnostic",
+  "scope": "Hash-bound comparison of one historical pass and two current failed disposable-document probes; no Animate launch or UI operation",
+  "authorityBoundary": {
+    "toolAndReceiptIntegrityDiagnostic": true,
+    "adobeAnimateAuthoringAudit": false,
+    "originalRuntimeBehavior": false,
+    "javascriptImplementation": false,
+    "visualOrBehavioralParity": false,
+    "audioListening": false,
+    "humanReview": false,
+    "ownerAcceptance": false,
+    "strictAcceptanceEffect": false
+  },
+  "toolchain": {
+    "catalog": {
+      "file": "catalog/toolchain.json",
+      "sha256": "07484eaf52751128f91b429b7ce1b7bb46259365c545d17c360b5d0c74c3b41f",
+      "bytes": 1709
+    },
+    "adobeAnimate": {
+      "file": "/Applications/Adobe Animate 2021/Adobe Animate 2021.app/Contents/MacOS/Adobe Animate 2021",
+      "sha256": "fc7903fe74b3ad16842274eeffef12e18bcb51cee8722d7fd69166948991fbcb",
+      "bytes": 104824720,
+      "executable": true
+    },
+    "infoPlist": {
+      "file": "/Applications/Adobe Animate 2021/Adobe Animate 2021.app/Contents/Info.plist",
+      "sha256": "cd61f3182c7a071be6f704a4dfc3cf88345e76f06372e714b52f4aadb97c569a",
+      "bytes": 7047
+    },
+    "productVersion": "21.0.7",
+    "productBuild": "21.0.7.42652",
+    "probeRunner": {
+      "file": "scripts/probe-animate-jsfl-cli.mjs",
+      "sha256": "c25b66287698eee29a3002695b94fe1553cdfcc99828514e8cfc3aa74d910948",
+      "bytes": 15699
+    },
+    "auditTemplate": {
+      "file": "scripts/animate-audit-current-document.jsfl",
+      "sha256": "043188cb940adc1895a8682ca2c5e146faf07e96a03bade11c62073055dda0ae",
+      "bytes": 15346
+    }
+  },
+  "runs": {
+    "historicalPass": {
+      "receipt": {
+        "file": "work/animate/jsfl-cli-probes/run-pbVdi8/probe-result.json",
+        "sha256": "941c75066249dbdd1c646d10b9131f79ce31c2648e2f17df0dc3b307b7d835aa",
+        "bytes": 2846
+      },
+      "status": "passed",
+      "command": {
+        "executableSha256": "fc7903fe74b3ad16842274eeffef12e18bcb51cee8722d7fd69166948991fbcb",
+        "args": [
+          "--run-jsfl",
+          "-o",
+          "work/animate/jsfl-cli-probes/run-pbVdi8/controller.jsfl"
+        ],
+        "intentionallyOmitsQuitFlag": true
+      },
+      "scripts": {
+        "auditTemplateSha256": "043188cb940adc1895a8682ca2c5e146faf07e96a03bade11c62073055dda0ae",
+        "generatedAudit": {
+          "file": "work/animate/jsfl-cli-probes/run-pbVdi8/animate-audit-current-document.generated.jsfl",
+          "sha256": "d21dfb77975c43979de06d7eb201bd5bb806547e47c3c34cf415ac6151894545",
+          "bytes": 15373
+        },
+        "controller": {
+          "file": "work/animate/jsfl-cli-probes/run-pbVdi8/controller.jsfl",
+          "sha256": "7ab61525d06c264a3f79e4b37205bc3145731fa44473a1d1e286e3ce1a1ff742",
+          "bytes": 1783
+        },
+        "currentGeneratorExactAuditMatch": true,
+        "currentGeneratorExactControllerMatch": true,
+        "normalizedGeneratedAuditSha256": "fe52a49b2fae2742380b36f0a739f807fe657524f5931e0df047cb082b2476d3",
+        "normalizedControllerSha256": "8be103450ba941c6f8ab17d526a9e791dbc3b00afa7be2c9fd6a6e5ed30329e3"
+      },
+      "process": {
+        "exitCode": 0,
+        "signal": null,
+        "timedOut": false,
+        "durationMs": 23469,
+        "stdout": {
+          "file": "work/animate/jsfl-cli-probes/run-pbVdi8/stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        },
+        "stderr": {
+          "file": "work/animate/jsfl-cli-probes/run-pbVdi8/stderr.log",
+          "sha256": "6a0a215d5deb787fad5ed68abbd8a673c3b1f82d5eee632cace979674fad16d4",
+          "bytes": 3334
+        },
+        "stdoutEmpty": true,
+        "stderrSignals": {
+          "lineCount": 14,
+          "duplicateObjectiveCClassWarnings": 5,
+          "crashReporterInitialized": true,
+          "crashDaemonPreferenceObserved": true,
+          "crashDaemonExitStatusZeroObserved": true,
+          "coreTextFontAssetWarningObserved": true,
+          "illegalReflectiveAccessWarningObserved": true,
+          "controllerOrJsflErrorObserved": false
+        }
+      },
+      "artifacts": {
+        "controllerMarker": {
+          "file": "work/animate/jsfl-cli-probes/run-pbVdi8/controller-result.json",
+          "sha256": "b3c2764fb8bf18bf3c77d282dcd03ce68fc35d5290900c24170a8f99ba997a45"
+        },
+        "authoringAudit": {
+          "file": "work/animate/jsfl-cli-probes/run-pbVdi8/Untitled-1-authoring-audit.json",
+          "sha256": "af4ff4149cdcc1020a8e8be1b7d9d20ecb54d89102924cb68c4d3a30164ce00a",
+          "capturedAt": "Wed, 22 Jul 2026 07:09:08 GMT",
+          "animateVersion": "MAC 21,0,7,42652",
+          "documentName": "Untitled-1",
+          "stage": {
+            "width": 550,
+            "height": 400
+          },
+          "fps": 24,
+          "frameCount": 1
+        },
+        "nativeStagePng": {
+          "file": "work/animate/jsfl-cli-probes/run-pbVdi8/Untitled-1-frame-1.png",
+          "sha256": "c058aaf95dbb24bdcae15e78335e9e545141fa3b4fff2b5356d712b1dc0bb662",
+          "width": 550,
+          "height": 400
+        },
+        "hashAndStructureValidated": true
+      },
+      "failure": null
+    },
+    "currentFailures": [
+      {
+        "receipt": {
+          "file": "work/animate/jsfl-cli-probes/run-tQ3kYA/probe-result.json",
+          "sha256": "a36fa176e5a8ec1505dc94e31281a36fe9fde2439ff9cb1b48cf588f2e37d135",
+          "bytes": 2046
+        },
+        "status": "failed",
+        "command": {
+          "executableSha256": "fc7903fe74b3ad16842274eeffef12e18bcb51cee8722d7fd69166948991fbcb",
+          "args": [
+            "--run-jsfl",
+            "-o",
+            "work/animate/jsfl-cli-probes/run-tQ3kYA/controller.jsfl"
+          ],
+          "intentionallyOmitsQuitFlag": true
+        },
+        "scripts": {
+          "auditTemplateSha256": "043188cb940adc1895a8682ca2c5e146faf07e96a03bade11c62073055dda0ae",
+          "generatedAudit": {
+            "file": "work/animate/jsfl-cli-probes/run-tQ3kYA/animate-audit-current-document.generated.jsfl",
+            "sha256": "4274ccdde5887f80ebe7db3b5a94c19945f0af1bdc1083bd8d32664dba6a0b7a",
+            "bytes": 15373
+          },
+          "controller": {
+            "file": "work/animate/jsfl-cli-probes/run-tQ3kYA/controller.jsfl",
+            "sha256": "394259b44350d88f4ae29d710447a339b50c9bcf1e6c9db48ffe4197e5c0888a",
+            "bytes": 1783
+          },
+          "currentGeneratorExactAuditMatch": true,
+          "currentGeneratorExactControllerMatch": true,
+          "normalizedGeneratedAuditSha256": "fe52a49b2fae2742380b36f0a739f807fe657524f5931e0df047cb082b2476d3",
+          "normalizedControllerSha256": "8be103450ba941c6f8ab17d526a9e791dbc3b00afa7be2c9fd6a6e5ed30329e3"
+        },
+        "process": {
+          "exitCode": null,
+          "signal": "SIGTERM",
+          "timedOut": true,
+          "durationMs": 60298,
+          "stdout": {
+            "file": "work/animate/jsfl-cli-probes/run-tQ3kYA/stdout.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "file": "work/animate/jsfl-cli-probes/run-tQ3kYA/stderr.log",
+            "sha256": "eb651f2a01c49206bb533fc8649223a3506f6fc516458d0c800b34b47421898f",
+            "bytes": 2708
+          },
+          "stdoutEmpty": true,
+          "stderrSignals": {
+            "lineCount": 9,
+            "duplicateObjectiveCClassWarnings": 5,
+            "crashReporterInitialized": true,
+            "crashDaemonPreferenceObserved": true,
+            "crashDaemonExitStatusZeroObserved": true,
+            "coreTextFontAssetWarningObserved": true,
+            "illegalReflectiveAccessWarningObserved": false,
+            "controllerOrJsflErrorObserved": false
+          }
+        },
+        "artifacts": {
+          "controllerMarkerProduced": false,
+          "authoringAuditProduced": false,
+          "nativeStagePngProduced": false
+        },
+        "failure": "Animate JSFL probe timed out after 60000 ms"
+      },
+      {
+        "receipt": {
+          "file": "work/animate/jsfl-cli-probes/run-k7g1FO/probe-result.json",
+          "sha256": "efc77dc6ca44cf891f9b18151d811a227f5bc17c2770531012b2be9afd638940",
+          "bytes": 2048
+        },
+        "status": "failed",
+        "command": {
+          "executableSha256": "fc7903fe74b3ad16842274eeffef12e18bcb51cee8722d7fd69166948991fbcb",
+          "args": [
+            "--run-jsfl",
+            "-o",
+            "work/animate/jsfl-cli-probes/run-k7g1FO/controller.jsfl"
+          ],
+          "intentionallyOmitsQuitFlag": true
+        },
+        "scripts": {
+          "auditTemplateSha256": "043188cb940adc1895a8682ca2c5e146faf07e96a03bade11c62073055dda0ae",
+          "generatedAudit": {
+            "file": "work/animate/jsfl-cli-probes/run-k7g1FO/animate-audit-current-document.generated.jsfl",
+            "sha256": "9a9b7711f97f69bd1cf28ac72d6f50aa7ef5b3fcb964a71090a5560cf63fceea",
+            "bytes": 15373
+          },
+          "controller": {
+            "file": "work/animate/jsfl-cli-probes/run-k7g1FO/controller.jsfl",
+            "sha256": "fff7d685799037171811cc3f04aeb7672ee97d02f047f3872705f62aa1e951a5",
+            "bytes": 1783
+          },
+          "currentGeneratorExactAuditMatch": true,
+          "currentGeneratorExactControllerMatch": true,
+          "normalizedGeneratedAuditSha256": "fe52a49b2fae2742380b36f0a739f807fe657524f5931e0df047cb082b2476d3",
+          "normalizedControllerSha256": "8be103450ba941c6f8ab17d526a9e791dbc3b00afa7be2c9fd6a6e5ed30329e3"
+        },
+        "process": {
+          "exitCode": null,
+          "signal": "SIGTERM",
+          "timedOut": true,
+          "durationMs": 120329,
+          "stdout": {
+            "file": "work/animate/jsfl-cli-probes/run-k7g1FO/stdout.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "stderr": {
+            "file": "work/animate/jsfl-cli-probes/run-k7g1FO/stderr.log",
+            "sha256": "356eae314345a2d1e1acf3dd9b93bb1ce53f7d0e330ef89161521d60fab151ae",
+            "bytes": 2708
+          },
+          "stdoutEmpty": true,
+          "stderrSignals": {
+            "lineCount": 9,
+            "duplicateObjectiveCClassWarnings": 5,
+            "crashReporterInitialized": true,
+            "crashDaemonPreferenceObserved": true,
+            "crashDaemonExitStatusZeroObserved": true,
+            "coreTextFontAssetWarningObserved": true,
+            "illegalReflectiveAccessWarningObserved": false,
+            "controllerOrJsflErrorObserved": false
+          }
+        },
+        "artifacts": {
+          "controllerMarkerProduced": false,
+          "authoringAuditProduced": false,
+          "nativeStagePngProduced": false
+        },
+        "failure": "Animate JSFL probe timed out after 120000 ms"
+      }
+    ]
+  },
+  "comparison": {
+    "sameAnimateExecutableSha256AcrossReceiptsAndCurrentTool": true,
+    "sameAuditTemplateSha256AcrossReceiptsAndCurrentTool": true,
+    "currentGeneratorExactlyReproducesAllGeneratedAudits": true,
+    "currentGeneratorExactlyReproducesAllControllers": true,
+    "runDirectoryNormalizedGeneratedAuditSame": true,
+    "runDirectoryNormalizedControllerSame": true,
+    "stdoutEmptyAcrossAllRuns": true,
+    "commonAnimateStartupSignalsAcrossAllStderrLogs": true,
+    "controllerOrJsflErrorAbsentAcrossAllStderrLogs": true,
+    "historicalOnlyIllegalReflectiveAccessWarningObserved": true,
+    "historicalProcessExitedCleanlyWithValidatedArtifacts": true,
+    "currentAttemptsTimedOutWithoutControllerMarkerOrAuditArtifacts": true,
+    "longerSecondTimeoutChangedOutcome": false,
+    "deterministicRepositoryCodeDefectProven": false,
+    "rootCauseClassification": "undetermined-animate-runtime-ui-or-host-environment-state",
+    "interpretation": "The same current generator reproduces the historical and failed run scripts exactly after substituting each run directory. The executable and audit-template hashes also match. Both current attempts entered a bounded Animate process but produced no controller marker before SIGTERM, including the 120-second attempt. These receipts prove a current execution regression, but they do not identify a deterministic repository-code defect or a specific modal/UI cause."
+  },
+  "executionReadiness": {
+    "currentUnattendedDisposableDocumentJsflReady": false,
+    "status": "not-ready-repeated-timeout-without-controller-marker",
+    "batchAnimateAuditMayProceed": false,
+    "retryAutomatically": false,
+    "nextEvidenceNeeded": "A separately authorized, observed cold-start diagnostic must identify the actual Animate UI/runtime state and produce a new hash-bound controller marker, audit JSON, native-stage PNG, and clean process exit. Do not infer readiness from the historical pass."
+  },
+  "acceptance": {
+    "reportIsAcceptanceNeutral": true,
+    "migrationStatusWrites": 0,
+    "reviewOrApprovalWrites": 0,
+    "strictAcceptanceEffect": false
+  }
+}

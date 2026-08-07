@@ -57,29 +57,32 @@ export function SiteHeader({content, locale}: {content: SharedContent; locale: L
             {navigation.supportAction.label}
           </Link>
         </div>
-        <details className="mobile-nav">
-          <summary aria-label={navigation.openMenuLabel}>
-            <Menu aria-hidden="true" size={24} />
-            <span>{navigation.openMenuLabel}</span>
-          </summary>
-          <div className="mobile-nav__panel">
-            {navigation.links.map((link) => (
-              <Link href={link.href} key={link.href}>
-                {link.label}
-              </Link>
-            ))}
-            <Link href="/library">{locale === 'es' ? 'Biblioteca' : 'Library'}</Link>
-            {process.env.NODE_ENV !== 'production' || process.env.MIGRATION_STATUS_ENABLED === '1' ? (
-              <Link href="/migration-status">{locale === 'es' ? 'Migración' : 'Migration'}</Link>
-            ) : null}
-            <Link href={navigation.supportAction.href}>{navigation.supportAction.label}</Link>
-            <LanguageSwitcher
-              label={navigation.languageLabel}
-              locale={locale}
-              names={navigation.languageNames}
-            />
-          </div>
-        </details>
+        <nav aria-label={navigation.ariaLabel} className="mobile-nav-shell">
+          <details className="mobile-nav">
+            <summary aria-label={navigation.openMenuLabel}>
+              <Menu aria-hidden="true" size={24} />
+              <span>{navigation.openMenuLabel}</span>
+            </summary>
+            <div className="mobile-nav__panel">
+              {navigation.links.map((link) => (
+                <Link href={link.href} key={link.href}>
+                  {link.label}
+                </Link>
+              ))}
+              <Link href="/library">{locale === 'es' ? 'Biblioteca' : 'Library'}</Link>
+              {process.env.NODE_ENV !== 'production' ||
+              process.env.MIGRATION_STATUS_ENABLED === '1' ? (
+                <Link href="/migration-status">{locale === 'es' ? 'Migración' : 'Migration'}</Link>
+              ) : null}
+              <Link href={navigation.supportAction.href}>{navigation.supportAction.label}</Link>
+              <LanguageSwitcher
+                label={navigation.languageLabel}
+                locale={locale}
+                names={navigation.languageNames}
+              />
+            </div>
+          </details>
+        </nav>
       </div>
     </header>
   );

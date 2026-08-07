@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "animationId": "keyterm-elementary-computeghgh",
+  "status": "authoritative-runtime-interaction-partial-lossless",
+  "capturedAt": "2026-07-21T04:50:03Z",
+  "source": {
+    "swf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/DIG/computeghgh.swf",
+    "swfSha256": "fc5c79792530092fa98d450ac00622f5f107c598bf2f313b69fe3b524a6d62e8"
+  },
+  "runtime": {
+    "tool": "Adobe Flash Player 32.0.0.414 standalone",
+    "stage": {
+      "width": 225,
+      "height": 225
+    },
+    "fps": 12,
+    "frameCount": 35,
+    "terminalFrame": 35
+  },
+  "buttonStates": [
+    {
+      "state": "up",
+      "capture": "artifacts/full-frame/pilot-baselines/keyterm-elementary-computeghgh/adobe-flash-player-32-interactions-replay-up.png",
+      "sha256": "056133570fb8232d5a195c49b7d46a19bf89a8a111c62fb6e42678fc9378ce83",
+      "encoding": "lossless-png",
+      "nativeStageOnly": true,
+      "alphaComposite": "SWF #ffffff background"
+    },
+    {
+      "state": "over",
+      "capture": "artifacts/full-frame/pilot-baselines/keyterm-elementary-computeghgh/adobe-flash-player-32-interactions-replay-over.png",
+      "sha256": "d88f12d0583a019e4b054f09416b5e93d46ec7a2e3d534d09208090c6c748532",
+      "encoding": "lossless-png",
+      "nativeStageOnly": true,
+      "alphaComposite": "SWF #ffffff background",
+      "protocol": "Computer Use drag ended over the Replay button without starting on its hit area; the released pointer remained over the button before macOS lossless window capture."
+    },
+    {
+      "state": "down",
+      "capture": "migrations/keyterm-elementary-computeghgh/baseline/adobe-flash-player-32-replay-pressed-computer-use.jpeg",
+      "sha256": "d9f4ff90de057d40fc0e5b0e8bceedd46f5d541105dd51312f804ec3a4c1698e",
+      "encoding": "computer-use-jpeg",
+      "nativeStageOnly": false,
+      "usableForRmse": false,
+      "protocol": "The Computer Use action screenshot captured the transient pressed artwork and pointer during the Adobe Player click. It includes 28 pixels of player chrome and JPEG compression."
+    }
+  ],
+  "replayBehavior": {
+    "actionScriptEvidence": "audit/machine/ffdec-scripts.txt.gz",
+    "extractedHandler": "DefineButton2_14/BUTTONCONDACTION on(release).as",
+    "expectedAction": "gotoAndPlay(1)",
+    "runtimeObserved": true,
+    "observation": "Immediately after clicking Replay, Adobe Player Control showed Pause, proving that the stopped root timeline resumed. After one 35-frame duration, Control showed Play, proving that it reached the terminal stop again.",
+    "visualCaveat": "All 35 root frames have the same stage hash, so playback progress is observable through the authoritative player run state rather than changing pixels."
+  },
+  "limitations": [
+    "The pressed button state is authoritative Adobe runtime evidence but is JPEG and therefore excluded from RMSE metrics.",
+    "A lossless native-stage capture of the transient pressed state is still required before this interaction can pass the strict visual gate without an accepted exception.",
+    "This standalone child SWF evidence does not prove parent-host variables, audio, localization, human review, or owner acceptance."
+  ]
+}

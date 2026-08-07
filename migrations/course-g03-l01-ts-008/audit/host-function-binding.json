@@ -1,0 +1,306 @@
+{
+  "animationId": "course-g03-l01-ts-008",
+  "authority": {
+    "audioExecutedOrAccepted": false,
+    "childToHostFunctionNamesSourceProven": true,
+    "glossaryVisualStateResolved": false,
+    "hostFunctionBodiesSourceProven": true,
+    "humanOrOwnerAcceptance": false,
+    "migrationStatusChanged": false,
+    "originalRuntimeExecutionObserved": false,
+    "randomOutcomeMappingResolved": false,
+    "replayFullStateResetResolved": false,
+    "retryAndForcedContinuationResolved": false,
+    "scoringResolved": false,
+    "spanishGlossaryProtocolResolved": false,
+    "strictAcceptanceEffect": "none",
+    "terminalStateResolved": false,
+    "visualParityClaimed": false
+  },
+  "childActionScript": {
+    "handlers": [
+      {
+        "bodySha256": "22b512d1027c9549cd88e7fe4c34beb6ef20d19987513e7912a7db3a19876ad3",
+        "calls": [
+          "_root.disableQuizButton",
+          "_root.showWrongFeed"
+        ],
+        "categories": [
+          "wrong-outcome"
+        ],
+        "id": "script-0006",
+        "script": "DefineButton2_145/BUTTONCONDACTION on(release).as"
+      },
+      {
+        "bodySha256": "9992936fe3118ea79a1c87ffa5a4dbe9bcab35ca6e7fdb9cb14afa12a1a8c669",
+        "calls": [
+          "_root.disableQuizButton",
+          "_root.showRightFeed"
+        ],
+        "categories": [
+          "correct-outcome"
+        ],
+        "id": "script-0007",
+        "script": "DefineButton2_146/BUTTONCONDACTION on(release).as"
+      },
+      {
+        "bodySha256": "22b512d1027c9549cd88e7fe4c34beb6ef20d19987513e7912a7db3a19876ad3",
+        "calls": [
+          "_root.disableQuizButton",
+          "_root.showWrongFeed"
+        ],
+        "categories": [
+          "wrong-outcome"
+        ],
+        "id": "script-0008",
+        "script": "DefineButton2_147/BUTTONCONDACTION on(release).as"
+      },
+      {
+        "bodySha256": "22b512d1027c9549cd88e7fe4c34beb6ef20d19987513e7912a7db3a19876ad3",
+        "calls": [
+          "_root.disableQuizButton",
+          "_root.showWrongFeed"
+        ],
+        "categories": [
+          "wrong-outcome"
+        ],
+        "id": "script-0009",
+        "script": "DefineButton2_148/BUTTONCONDACTION on(release).as"
+      }
+    ],
+    "path": "migrations/course-g03-l01-ts-008/audit/machine/ffdec-scripts.txt.gz",
+    "sha256": "8732f240411fc572cf0e58c3bc5e620eb7f1c3ba459f797b9cc4ba7322a31ebd",
+    "uncompressedSha256": "e50e5e933915d9ee8c14a2b81728d7f17cdc4d897dbed94f1d200f8792c53bd3"
+  },
+  "evidenceType": "ts008-static-host-function-binding",
+  "generatedBy": {
+    "ffdec": {
+      "jarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+      "version": "JPEXS Free Flash Decompiler v.26.2.1"
+    },
+    "script": "scripts/build-ts008-host-function-binding.mjs",
+    "sha256": "fef55248f0f1137d45d42c1fa80962982d002d337d511630b2a4b2e6964839ae"
+  },
+  "hostActionScript": {
+    "events": [
+      {
+        "artifact": "DefineButton2_244/BUTTONCONDACTION on(release).as",
+        "bytes": 264,
+        "exact": true,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; exact balanced function/event block; one terminal LF",
+        "requiredTokens": [
+          "_global.quizSection = false",
+          "_global.gSound.stop()",
+          "_root.loadSWFMovie()"
+        ],
+        "role": "shell-replay-release",
+        "sha256": "22acd57ac5aaeecf5d096276afc511192c78a1c7c874dd11fbf5805b5fb8a080",
+        "text": "on(release){\n   _global.Play = true;\n   _global.Pause = false;\n   _global.CompClick = \"\";\n   _global.quizSection = false;\n   _global.gSound.stop();\n   _root.SA._visible = true;\n   _root.EA._visible = false;\n   _global.spanSound = false;\n   _root.loadSWFMovie();\n}\n"
+      }
+    ],
+    "fileCount": 547,
+    "functions": [
+      {
+        "artifact": "frame_35/DoAction.as",
+        "bytes": 290,
+        "exact": true,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; exact balanced function/event block; one terminal LF",
+        "requiredTokens": [
+          "random(3)",
+          "Mc_Wrong_Feed",
+          "gotoAndPlay(2)",
+          "_global.gSound.setVolume(_global.volLevel)"
+        ],
+        "role": "host-function-showWrongFeed",
+        "sha256": "1e5854e44309a16345405ee5e88e795b3e87247fd9b8e6513c32600158b9870b",
+        "text": "function showWrongFeed()\n{\n   intMc_Name = random(3);\n   intMc_Name += 1;\n   eval(\"_root.animation_mc.animation.Mc_Wrong_Feed\" + intMc_Name)._visible = true;\n   eval(\"_root.animation_mc.animation.Mc_Wrong_Feed\" + intMc_Name).gotoAndPlay(2);\n   _global.gSound.setVolume(_global.volLevel);\n}\n"
+      },
+      {
+        "artifact": "frame_35/DoAction.as",
+        "bytes": 290,
+        "exact": true,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; exact balanced function/event block; one terminal LF",
+        "requiredTokens": [
+          "random(4)",
+          "Mc_Right_Feed",
+          "gotoAndPlay(2)",
+          "_global.gSound.setVolume(_global.volLevel)"
+        ],
+        "role": "host-function-showRightFeed",
+        "sha256": "24e927fb710e75b9f3870d064f2a99ba178ccd795115f1e74ea076b65bd15ca0",
+        "text": "function showRightFeed()\n{\n   intMc_Name = random(4);\n   intMc_Name += 1;\n   eval(\"_root.animation_mc.animation.Mc_Right_Feed\" + intMc_Name)._visible = true;\n   eval(\"_root.animation_mc.animation.Mc_Right_Feed\" + intMc_Name).gotoAndPlay(2);\n   _global.gSound.setVolume(_global.volLevel);\n}\n"
+      },
+      {
+        "artifact": "frame_35/DoAction.as",
+        "bytes": 353,
+        "exact": true,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; exact balanced function/event block; one terminal LF",
+        "requiredTokens": [
+          "while(i <= 25)",
+          "AnsBtn",
+          ".enabled = false",
+          "NMHBtn.enabled = false"
+        ],
+        "role": "host-function-disableQuizButton",
+        "sha256": "002ebb97bc2f1c9b9984c695b75ffc8d4fe34f124bdec70e1e7ab59be08d4239",
+        "text": "function disableQuizButton()\n{\n   i = 1;\n   while(i <= 25)\n   {\n      eval(\"_root.animation_mc.animation.AnsBtn\" + i).enabled = false;\n      eval(\"_root.animation_mc.animation.AnsBtn\" + i)._visible = false;\n      eval(\"_root.animation_mc.animation.AnsBtn\" + i)._visible = false;\n      i++;\n   }\n   _root.animation_mc.animation.NMHBtn.enabled = false;\n}\n"
+      },
+      {
+        "artifact": "frame_35/DoAction.as",
+        "bytes": 277,
+        "exact": true,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; exact balanced function/event block; one terminal LF",
+        "requiredTokens": [
+          "while(i <= 25)",
+          "AnsBtn",
+          ".enabled = true",
+          "NMHBtn.enabled = true"
+        ],
+        "role": "host-function-enableQuizButton",
+        "sha256": "422596cfd8ed6d11d2115147067d5fb27981432df2d55cbcfa99f0c6a29b53b4",
+        "text": "function enableQuizButton()\n{\n   i = 1;\n   while(i <= 25)\n   {\n      eval(\"_root.animation_mc.animation.AnsBtn\" + i).enabled = true;\n      eval(\"_root.animation_mc.animation.AnsBtn\" + i)._visible = true;\n      i++;\n   }\n   _root.animation_mc.animation.NMHBtn.enabled = true;\n}\n"
+      },
+      {
+        "artifact": "frame_35/DoAction.as",
+        "bytes": 624,
+        "exact": true,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; exact balanced function/event block; one terminal LF",
+        "requiredTokens": [
+          "_loc2_.CompClick = \"HyperLink\"",
+          "_loc2_.KeyAttribute += \"~English\"",
+          "_loc1_.m_c.doGetSubLink(_loc2_.KeyAttribute)"
+        ],
+        "role": "host-function-DoHyperLinks",
+        "sha256": "9ba8fc1ac23d11d507b19dfdeedd2b3929baabb16ad2ce468455affb9c91ac58",
+        "text": "function DoHyperLinks()\n{\n   var _loc1_ = _root;\n   var _loc2_ = _global;\n   _loc2_.CompClick = \"HyperLink\";\n   _loc2_.Pause = true;\n   _loc2_.Play = false;\n   _loc1_.popup.gotoAndStop(1);\n   _loc1_.mover_mc.gotoAndStop(\"inactive\");\n   _loc1_.nextani.gotoAndStop(1);\n   _loc1_.navi.enabled = false;\n   _loc1_.glossary._visible = false;\n   _loc1_.m1_l1._visible = false;\n   _loc1_.calculator._visible = false;\n   _loc1_.ct_center.gotoAndStop(2);\n   _loc1_.m_c.gotoAndStop(6);\n   _loc1_.m_c._visible = true;\n   _loc2_.KeyAttribute += \"~English\";\n   _loc2_.openScrKey = true;\n   _loc1_.m_c.doGetSubLink(_loc2_.KeyAttribute);\n}\n"
+      },
+      {
+        "artifact": "frame_35/DoAction.as",
+        "bytes": 1898,
+        "exact": true,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; exact balanced function/event block; one terminal LF",
+        "requiredTokens": [
+          "_loc1_.dtfSPANISH.text = \"ON\"",
+          "_loc2_.sectionNumber == 7",
+          "_loc2_.tempURL + \"/TS/L1TS01.swf\"",
+          "_loc1_.SA._visible = true",
+          "_loc1_.EA._visible = true"
+        ],
+        "role": "host-function-doCheckSpanishAudio",
+        "sha256": "0aca0a419c989edbe7c381b87d3d9a9da4eaa1202fefceec352ca044e224f701",
+        "text": "function doCheckSpanishAudio()\n{\n   var _loc1_ = _root;\n   var _loc2_ = _global;\n   _loc1_.dtfSPANISH.text = \"ON\";\n   if(_loc1_.dtfSPANISH.text == \"ON\")\n   {\n      if(_loc2_.spanSound != true)\n      {\n         if(_loc2_.sectionNumber == 2 || _loc2_.sectionNumber == 3 || _loc2_.sectionNumber == 4 || _loc2_.sectionNumber == 5 || _loc2_.sectionNumber == 6 || _loc2_.sectionNumber == 7)\n         {\n            if(_loc2_.playSwfFileName != _loc2_.tempURL + \"/RW/L1RW01.swf\" && _loc2_.playSwfFileName != _loc2_.tempURL + \"/VB/L1VB01.swf\" && _loc2_.playSwfFileName != _loc2_.tempURL + \"/IN/L1IN01.swf\" && _loc2_.playSwfFileName != _loc2_.tempURL + \"/GS/L1GS01.swf\" && _loc2_.playSwfFileName != _loc2_.tempURL + \"/TI/L1TI01.swf\" && _loc2_.playSwfFileName != _loc2_.tempURL + \"/TS/L1TS01.swf\")\n            {\n               _loc1_.SA._visible = true;\n               _loc1_.EA._visible = true;\n               _loc1_.SA_PLAY._visible = false;\n               _loc1_.SA_PAUSE._visible = false;\n               _loc1_.SA._alpha = 100;\n               _loc1_.EA._alpha = 100;\n            }\n            else\n            {\n               _loc1_.SA._visible = false;\n               _loc1_.EA._visible = false;\n               _loc1_.SA_PLAY._visible = false;\n               _loc1_.SA_PAUSE._visible = false;\n               _loc1_.SA._alpha = 0;\n               _loc1_.EA._alpha = 0;\n            }\n         }\n         else\n         {\n            _loc1_.SA._visible = false;\n            _loc1_.EA._visible = false;\n            _loc1_.SA_PLAY._visible = false;\n            _loc1_.SA_PAUSE._visible = false;\n            _loc1_.SA._alpha = 0;\n            _loc1_.EA._alpha = 0;\n         }\n      }\n   }\n   else\n   {\n      _loc1_.SA._visible = false;\n      _loc1_.EA._visible = false;\n      _loc1_.SA_PLAY._visible = false;\n      _loc1_.SA_PAUSE._visible = false;\n      _loc1_.SA._alpha = 0;\n      _loc1_.EA._alpha = 0;\n   }\n}\n"
+      },
+      {
+        "artifact": "frame_35/DoAction.as",
+        "bytes": 1781,
+        "exact": true,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; exact balanced function/event block; one terminal LF",
+        "requiredTokens": [
+          "\"/SA/\"",
+          "_global.gSound.loadSound",
+          "_root.animation_mc.animation.stop()",
+          "_global.gSound.onSoundComplete"
+        ],
+        "role": "host-function-doPlaySpanishAudio",
+        "sha256": "c1feaec232c4b987bb1fb4fc2fd3ffbbbddb77c6321f7a21d9919335a00c926a",
+        "text": "function doPlaySpanishAudio()\n{\n   if(_global.sectionNumber == 2 || _global.sectionNumber == 3 || _global.sectionNumber == 4 || _global.sectionNumber == 5 || _global.sectionNumber == 6 || _global.sectionNumber == 7 && _global.slideNumber != 2)\n   {\n      _root.SA._visible = false;\n      _root.SA_PLAY._alpha = 100;\n      _root.SA_PAUSE._alpha = 100;\n      _root.SA_PLAY._visible = false;\n      _root.SA_PAUSE._visible = true;\n      _root.EA._visible = true;\n      _global.spanSound = true;\n      SFTemFName = _global.playSwfFileName.split(\"/\");\n      SSTemFName = SFTemFName[SFTemFName.length - 1].split(\".\");\n      _root.animation_mc.animation.stop();\n      SndFName = _global.tempURL + \"/SA/\" + SSTemFName[0] + \".mp3\";\n      _global.gSound.loadSound(SndFName,1);\n      _global.gSound.onSoundComplete = function()\n      {\n         var _loc1_ = _root;\n         var _loc2_ = _global;\n         _loc2_.gSound.stop();\n         if(_loc1_.animation_mc.animation._currentframe != _loc1_.animation_mc.animation._totalframes && _loc2_.quizSection == false)\n         {\n            _loc1_.animation_mc.animation.play();\n         }\n         _loc1_.SA._visible = true;\n         _loc1_.SA_PLAY._visible = false;\n         _loc1_.SA_PAUSE._visible = false;\n         _loc1_.EA._visible = false;\n         _loc2_.spanSound = false;\n      };\n      i = 1;\n      while(i <= 4)\n      {\n         eval(\"_root.animation_mc.animation.Mc_Feed\" + i).gotoAndStop(1);\n         eval(\"_root.animation_mc.animation.Mc_Right_Feed\" + i).gotoAndStop(1);\n         eval(\"_root.animation_mc.animation.Mc_Wrong_Feed\" + i).gotoAndStop(1);\n         i++;\n      }\n      _root.animation_mc.animation.Feed_Right.gotoAndStop(1);\n      _root.animation_mc.animation.Feed_Wrong.gotoAndStop(1);\n      _global.gSound.start();\n   }\n}\n"
+      }
+    ],
+    "indexHashMode": "stable-key-sorted-pretty-json-array-v1",
+    "indexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27"
+  },
+  "limitations": [
+    "This report binds static ActionScript function names and bodies only; it is not an authorized original-runtime trace.",
+    "The right/wrong feedback functions choose random host MovieClips. Their seed-to-variant mapping and natural display-list state remain unresolved.",
+    "The child retry counter, second-attempt continuation, score effects, terminal state, and complete Replay reset require natural host execution.",
+    "The host glossary function appends an English suffix. No Spanish glossary visual or audio protocol is inferred.",
+    "No JavaScript renderer scenario is unblocked by this report alone; baseline, RMSE, audio, human, owner, parity, and completion gates remain unchanged."
+  ],
+  "qualificationIssues": [],
+  "scenarioInventory": {
+    "excludedPaths": [
+      "migrationStatusAtGeneration",
+      "migrationStatusChanged",
+      "evidenceIndex[artifactId=migration-manifest]"
+    ],
+    "fullFileSha256": "6f9bf586ed355a094a54c3331ff8bac542fb12bd894d37a1f7e48c4c33a92236",
+    "hashMode": "canonical-json-v1",
+    "path": "migrations/course-g03-l01-ts-008/audit/scenario-inventory.json",
+    "projection": "help-math-scenario-inventory-technical-v1",
+    "technicalSha256": "18fa1e2a8967a65656ab727655f10a33320c696299b061136d0d5a61a86d62a1"
+  },
+  "schemaVersion": 1,
+  "scope": "read-only-static-child-to-same-lesson-host-function-chain",
+  "sourceCatalog": {
+    "checksumSetSha256": "0d6f20e50576c73aac38aa5a88610c654bbe29430044c2db43d8d6236cf8fe0f",
+    "path": "catalog/source-files.json",
+    "sha256": "3c69ff32fd641910f63b24709b3c0225418ba1eee823155a99b307456eb1ee6c"
+  },
+  "sourceContracts": {
+    "correctAnswer": {
+      "childCalls": "_root.showRightFeed",
+      "deterministicVariantMappingResolved": false,
+      "feedbackVariantCount": 4,
+      "hostFunctionSha256": "24e927fb710e75b9f3870d064f2a99ba178ccd795115f1e74ea076b65bd15ca0",
+      "randomExpression": "random(4) + 1"
+    },
+    "glossary": {
+      "childSetsKeyAttributeBeforeCall": true,
+      "hostFunctionSha256": "9ba8fc1ac23d11d507b19dfdeedd2b3929baabb16ad2ce468455affb9c91ac58",
+      "hostSuffixObserved": "~English",
+      "spanishGlossaryProtocolResolved": false
+    },
+    "quizButtons": {
+      "answerButtonRange": "AnsBtn1..AnsBtn25",
+      "enableDisableFunctionsSourceProven": true,
+      "naturalVisibilityAndEnabledStateResolved": false
+    },
+    "replay": {
+      "fullStateResetResolved": false,
+      "hostEventSha256": "22acd57ac5aaeecf5d096276afc511192c78a1c7c874dd11fbf5805b5fb8a080",
+      "observedOperation": "_root.loadSWFMovie()"
+    },
+    "spanishAudio": {
+      "availabilityCheckFunctionSha256": "0aca0a419c989edbe7c381b87d3d9a9da4eaa1202fefceec352ca044e224f701",
+      "naturalPlaybackAndSynchronizationResolved": false,
+      "playbackFunctionSha256": "c1feaec232c4b987bb1fb4fc2fd3ffbbbddb77c6321f7a21d9919335a00c926a",
+      "siblingSaPathConstructionSourceProven": true
+    },
+    "wrongAnswer": {
+      "childCalls": "_root.showWrongFeed",
+      "deterministicVariantMappingResolved": false,
+      "feedbackVariantCount": 3,
+      "hostFunctionSha256": "1e5854e44309a16345405ee5e88e795b3e87247fd9b8e6513c32600158b9870b",
+      "randomExpression": "random(3) + 1"
+    }
+  },
+  "sources": {
+    "child": {
+      "bytes": 885413,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/TS/L1TS08.swf",
+      "role": "target-child-swf",
+      "sha256": "9749ae5f4d533379aa58531e541ffd5da1624bc8fcea38660d54d0f5d3ddc29b"
+    },
+    "courseXml": {
+      "bytes": 14542,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index.xml",
+      "role": "same-lesson-course-xml",
+      "sha256": "f803cd0f01016385e8fd6d2ad11ee2b5379c82f252015999c62727c7fd581443"
+    },
+    "host": {
+      "bytes": 663428,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+      "role": "same-lesson-host-swf",
+      "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+    }
+  },
+  "status": "source-contract-proven-runtime-state-unresolved"
+}

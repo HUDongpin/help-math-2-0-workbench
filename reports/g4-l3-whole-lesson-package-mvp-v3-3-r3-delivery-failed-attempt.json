@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l3-whole-lesson-package-mvp-v3-3-r3-delivery-failed-attempt",
+  "recordedAt": "2026-08-01T16:20:22.000Z",
+  "status": "failed-before-delivery-publication",
+  "artifactIdentity": {
+    "variant": "v3-3-r3",
+    "version": "v3.3-r3",
+    "packageId": "g4-l3-whole-lesson-package-mvp-v3-3-r3"
+  },
+  "packageClosure": {
+    "archive": {
+      "path": "outputs/g4-l3-whole-lesson-package-mvp-v3-3-r3-darwin-arm64.zip",
+      "bytes": 70245422,
+      "sha256": "a0f2cc59a942ccd8b879da09091590cb2dc75a7880f490a9fba8214d00df2968"
+    },
+    "manifest": {
+      "path": "outputs/g4-l3-whole-lesson-package-mvp-v3-3-r3-darwin-arm64/package-manifest.json",
+      "bytes": 157322,
+      "sha256": "d1b32319290eed8a44b588b40fd515cbbb98329a5ba21d9142015ab3f1f49d44"
+    },
+    "payloadChecksums": {
+      "path": "outputs/g4-l3-whole-lesson-package-mvp-v3-3-r3-darwin-arm64/CHECKSUMS.sha256",
+      "bytes": 376085,
+      "sha256": "d2fea13b2a6578786ac91fdfa3d0b4f2fef7483fef61350b6312eba1f88031dd"
+    },
+    "archiveChecksum": {
+      "path": "outputs/g4-l3-whole-lesson-package-mvp-v3-3-r3-darwin-arm64.zip.sha256",
+      "bytes": 122,
+      "sha256": "f74100693e3ade26a37ac5cb73423a515a508bf625fde8d4f9af3ec98cdbf3bd"
+    },
+    "smoke": {
+      "path": "reports/g4-l3-whole-lesson-package-mvp-v3-3-r3-smoke.json",
+      "bytes": 58691,
+      "sha256": "6c7178649eca0903508b3a83074cc0d5daa62ea1ab8afd8096c4794547d33ea9"
+    }
+  },
+  "deliveryAttempt": {
+    "command": "node scripts/build-g4-l3-whole-lesson-package-v3-delivery.mjs --v3-3-r3 --build",
+    "phase": "manifest-package-smoke-harness-revision-binding",
+    "error": "The v3.3-r3 smoke-harness revision does not bind the sealed v3.3-r2 failed-smoke attempt, exact responsive Key Terms focus contract, reused r2 product evidence, and acceptance-neutral correction boundary.",
+    "receiptJsonPublished": false,
+    "receiptMarkdownPublished": false,
+    "packageChanged": false,
+    "smokeChanged": false
+  },
+  "rootCause": {
+    "classification": "delivery-verifier-read-wrong-manifest-field",
+    "manifestFieldWritten": "packageSmokeHarnessRevision",
+    "manifestFieldRead": "smokeHarnessRevision",
+    "manifestSourceField": "packageSmokeHarnessRevision"
+  },
+  "preimageRestoration": {
+    "packageCheckPassed": true,
+    "packageCheckCommand": "node scripts/build-g4-l3-whole-lesson-package-mvp.mjs --v3-3-r3 --check",
+    "packageCheckExitCode": 0,
+    "packageCheckObservedAt": "2026-08-01T15:45:00.000Z",
+    "outcomeCharacterization": "hash-bound-recorded-preimage-outcome",
+    "verifierSummary": {
+      "status": "pass",
+      "packageId": "g4-l3-whole-lesson-package-mvp-v3-3-r3",
+      "files": 2453,
+      "releaseMembers": 40,
+      "audioFiles": 72,
+      "strictCompleteMembers": 0,
+      "published": false
+    },
+    "exactManifestSnapshotRestored": true,
+    "sourceSnapshot": {
+      "fileCount": 1266,
+      "totalBytes": 191702749,
+      "sha256": "abe6bf7d97253b15002aaa0d08c198a3100f0c710a9dfffe40b82649457c42cf"
+    },
+    "fileBindings": [
+      {
+        "path": "scripts/build-g4-l3-whole-lesson-package-v3-delivery.mjs",
+        "bytes": 146078,
+        "sha256": "4ca859ecfe0938485267f9923281ad6daf4386eac7a556994cead004d9443662"
+      },
+      {
+        "path": "scripts/build-g4-l3-whole-lesson-package-v3-delivery.test.mjs",
+        "bytes": 66506,
+        "sha256": "9f95162b0bf17a0aa21690e0ece58416df348122c7df128151553b9a324d728b"
+      }
+    ]
+  },
+  "correctedHarness": {
+    "changeClass": "delivery-harness-only",
+    "exactChangedFileCount": 2,
+    "scopeSemantics": "declared-exact-delivery-harness-files-not-exhaustive-repository-delta",
+    "exhaustiveOtherCurrentTreeDeltaEstablished": false,
+    "exactChangedPaths": [
+      "scripts/build-g4-l3-whole-lesson-package-v3-delivery.mjs",
+      "scripts/build-g4-l3-whole-lesson-package-v3-delivery.test.mjs"
+    ],
+    "currentBindings": [
+      {
+        "path": "scripts/build-g4-l3-whole-lesson-package-v3-delivery.mjs",
+        "bytes": 161653,
+        "sha256": "6b9a1dc850d1fcbd0b09eb5368129fa986439cd371cd0297d76f711a8643824a"
+      },
+      {
+        "path": "scripts/build-g4-l3-whole-lesson-package-v3-delivery.test.mjs",
+        "bytes": 73968,
+        "sha256": "255f6997625889f70e399e44dc2194bab7e6a16a6185e8e689ae8e021283bc4e"
+      }
+    ],
+    "currentSourceSnapshot": {
+      "fileCount": 1266,
+      "totalBytes": 191725786,
+      "sha256": "ab8eb2f857844efeee3e9b610439d598f742167cb103f9b14672cb8dc1605945"
+    },
+    "currentSourceSnapshotByteDelta": 23037,
+    "currentPackageSourceSnapshotEqualsBuildSnapshot": false,
+    "currentPackageSourceCheckExpectedResult": "reject-aggregate-drift",
+    "authoredProductSourceChanged": false,
+    "packageBytesChanged": false,
+    "smokeBytesChanged": false,
+    "externalProductPostbuildCorrectionUsed": false,
+    "strictAcceptanceEffect": "none"
+  },
+  "successorBoundary": {
+    "sameR3PackageRetained": true,
+    "deliveryHarnessRevision": "r2",
+    "productFailureEstablished": false,
+    "ownerAcceptancePromoted": false,
+    "publicationPromoted": false,
+    "strictAcceptanceEffect": "none"
+  },
+  "authority": {
+    "currentJavascriptCandidateOnly": true,
+    "originalRuntimeEvidence": false,
+    "flashFidelityEstablished": false,
+    "independentHumanAcceptance": false,
+    "ownerAcceptance": false,
+    "strictCompleteMembers": 0,
+    "releaseMembers": 40,
+    "published": false
+  }
+}

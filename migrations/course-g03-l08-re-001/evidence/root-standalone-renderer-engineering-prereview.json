@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "renderer-full-frame-engineering-prereview",
+  "animationId": "course-g03-l08-re-001",
+  "recordedAt": "2026-07-21T14:26:30.254Z",
+  "authority": "engineering-prereview-only",
+  "acceptanceEffect": "none",
+  "requirement": {
+    "requirementId": "req:root:root-standalone:en",
+    "frameDomainId": "root",
+    "traceId": "trace:root:root-standalone:en:seed-0",
+    "entryStateSha256": "4dfbb3290627139f130afd170b4c6d925c09dd7262e32d9cbc1e1142632f9deb",
+    "scenario": "root-standalone",
+    "language": "en",
+    "seed": "0",
+    "firstFrame": 1,
+    "lastFrame": 55
+  },
+  "source": {
+    "swf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L8/RE/L8RE01.swf",
+    "swfSha256": "e4a6403f6b45a3b4aecb48e0659aa20113acb0644e37b027a19fb51f34417f9b"
+  },
+  "originalRuntimeBaseline": {
+    "manifest": "migrations/course-g03-l08-re-001/baseline/adobe-flash-player-32-standalone-default.json",
+    "manifestSha256": "22e0feea207c14bc457489d121d6dc2f3079eee0c6f7262ac2693bb327491393",
+    "runtime": "Adobe Flash Player 32.0.0.414 standalone",
+    "captureProtocol": "Rewind to source frame 1, then exactly one Control > Step Forward operation per subsequent frame.",
+    "archiveDirectory": "artifacts/full-frame/pilot-baselines/course-g03-l08-re-001/adobe-flash-player-32-standalone-default",
+    "pngCount": 55,
+    "directoryManifestSha256": "f4256901ab05548e687656b8e70ba61861e5c6afb0f41eb17c9c5fea1f9ef459",
+    "uniqueFrameSha256": [
+      "b5ca7ce7ed2805be4b0afe8309d26f0fa215abfe35efbc4d0f96bd32db5c3183"
+    ]
+  },
+  "implementation": {
+    "module": {
+      "path": "packages/demos/src/modules/course-g03-l08-re-001.tsx",
+      "sha256": "c673ac0008c79686e8ea6f4757c4360c016349df06316b6fdc3304633e8384af"
+    },
+    "timeline": {
+      "path": "packages/demos/src/timelines/course-g03-l08-re-001.ts",
+      "sha256": "7c7794fd8e47de763b781cc892bfc28cf66b5b0547e640e95bf9d62ac8e51759"
+    },
+    "test": {
+      "path": "packages/demos/tests/course-g03-l08-re-001.test.ts",
+      "sha256": "d7cc9775984592e9434ea179ead9587888e921db163369b5e3f8cc1785de5155"
+    },
+    "captureManifest": {
+      "path": "artifacts/full-frame/engineering-prereview/course-g03-l08-re-001/verdana27-full/capture-manifest.json",
+      "sha256": "261bf423f1bf68dd3b2dc25527dd6c59b3b903e647552ca1145ef59123cd8caa"
+    },
+    "archiveDirectory": "artifacts/full-frame/engineering-prereview/course-g03-l08-re-001/verdana27-full",
+    "pngCount": 55,
+    "archiveFileCount": 56,
+    "directoryManifestSha256": "4646779022d3d966528d52adafa264a17b5bcddfaeb8181be206ea017210da30",
+    "uniqueFrameSha256": [
+      "47848ff7cf6933f77e68a51a4093d58cad0699b8ce2b7ebbf5940c46c38288c1"
+    ],
+    "consoleErrors": 0,
+    "failedRequests": 0,
+    "unexpectedRequests": 0
+  },
+  "comparison": {
+    "method": "Both the original-runtime archive and implementation archive contain one unique image repeated for all 55 one-indexed frames; comparing that unique pair is therefore exactly equivalent to comparing all 55 frame pairs.",
+    "representativeFrame": 51,
+    "metrics": {
+      "path": "artifacts/full-frame/engineering-prereview/course-g03-l08-re-001/verdana27-keyframe/frame-051-comparison.json",
+      "sha256": "b35b987cb23034c8bb073f79066bab64755875d1aa963e2f12070330ee38a5e5"
+    },
+    "retainedKeyframes": {
+      "baseline": {
+        "path": "migrations/course-g03-l08-re-001/evidence/diffs/root-standalone-en-frame-0051-baseline.png",
+        "sha256": "b5ca7ce7ed2805be4b0afe8309d26f0fa215abfe35efbc4d0f96bd32db5c3183"
+      },
+      "implementation": {
+        "path": "migrations/course-g03-l08-re-001/evidence/diffs/root-standalone-en-frame-0051-implementation.png",
+        "sha256": "47848ff7cf6933f77e68a51a4093d58cad0699b8ce2b7ebbf5940c46c38288c1"
+      },
+      "diff": {
+        "path": "migrations/course-g03-l08-re-001/evidence/diffs/root-standalone-en-frame-0051-diff.png",
+        "sha256": "9df33da0f120112da7f5c72cec5a654f76da93c8c0a61b539054bd20a2682102"
+      }
+    },
+    "normalizedRmse": 0.03843325631193127,
+    "mismatchedPixels": 3623,
+    "mismatchedPixelRatio": 0.007547916666666666,
+    "staticThreshold": 0.05,
+    "engineeringResult": "pass-static-threshold-for-this-legacy-root-standalone-image-pair"
+  },
+  "limitations": [
+    "The legacy Adobe baseline manifest is schemaVersion 1 and predates the append-only operation-log and execution-chain contract; this prereview does not upgrade it to canonical trace evidence.",
+    "No course trace execution report exists for this requirement, so the strict baseline, deterministic-frame, coverage, and RMSE gates remain unsatisfied.",
+    "Only the English standalone root timeline is represented. Spanish, sprite-621 host-review branches, audio, assessment-host data, Replay semantics, accessibility, human review, and owner acceptance remain unresolved.",
+    "The archive is intentionally ignored by ordinary Git; this tracked record preserves its path, file count, and deterministic directory digest.",
+    "The module hash was refreshed after authority wording changed from Authoritative to Source-observed; Canvas drawing, timeline state, and retained image bytes were unchanged. This copy-only rehash does not recapture, upgrade, or expand the engineering prereview."
+  ]
+}

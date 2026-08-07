@@ -1,0 +1,369 @@
+{
+  "schemaVersion": 1,
+  "animationId": "course-g04-l03-ts-008",
+  "auditStatus": "partial",
+  "migrationStatus": "preserved",
+  "migrationStatusUnchanged": true,
+  "source": {
+    "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS08.swf",
+    "expectedSha256": "9c7288f67f764e02f4320655b64dbb57d3d690a75951b549ee5113f385e6b885",
+    "observedSha256Before": "9c7288f67f764e02f4320655b64dbb57d3d690a75951b549ee5113f385e6b885",
+    "observedSha256After": "9c7288f67f764e02f4320655b64dbb57d3d690a75951b549ee5113f385e6b885",
+    "bytesBefore": 693079,
+    "bytesAfter": 693079,
+    "hashMatches": true
+  },
+  "authoringSource": {
+    "path": "",
+    "pairedFlaStatus": "missing",
+    "expectedSha256": "",
+    "observedSha256Before": "",
+    "observedSha256After": "",
+    "bytes": 0,
+    "hashMatches": false,
+    "adobeAnimateAvailable": true,
+    "inspectionStatus": "missing-source"
+  },
+  "tools": {
+    "ffdec": {
+      "command": "ffdec",
+      "version": "JPEXS Free Flash Decompiler v.26.2.1",
+      "success": true,
+      "exitCode": 0,
+      "error": ""
+    },
+    "swfmill": {
+      "command": "swfmill",
+      "version": "swfmill 0.3.6",
+      "success": true,
+      "exitCode": 0,
+      "error": ""
+    },
+    "java": {
+      "command": "java",
+      "version": "openjdk version \"21.0.11\" 2026-04-21 LTS",
+      "success": true,
+      "exitCode": 0,
+      "error": ""
+    },
+    "xmlParser": {
+      "command": "python3",
+      "version": "Python 3.13.3",
+      "success": true,
+      "exitCode": 0,
+      "error": "",
+      "library": "Python standard library xml.etree.ElementTree.iterparse"
+    }
+  },
+  "commands": {
+    "ffdecHeader": {
+      "command": [
+        "ffdec",
+        "-header",
+        "<SWF>"
+      ],
+      "status": "success",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "error": "",
+      "evidence": "audit/machine/ffdec-header.txt"
+    },
+    "ffdecTags": {
+      "command": [
+        "ffdec",
+        "-dumpSWF",
+        "<SWF>"
+      ],
+      "status": "success",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "error": "",
+      "evidence": "audit/machine/ffdec-tags.txt.gz"
+    },
+    "ffdecAs2Index": {
+      "command": [
+        "ffdec",
+        "-dumpAS2",
+        "<SWF>"
+      ],
+      "status": "success",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "error": "",
+      "evidence": "audit/machine/ffdec-script-index.txt"
+    },
+    "ffdecAs3Index": {
+      "command": [
+        "ffdec",
+        "-dumpAS3",
+        "<SWF>"
+      ],
+      "status": "success",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "error": "",
+      "evidence": "audit/machine/ffdec-script-index.txt"
+    },
+    "ffdecScripts": {
+      "command": [
+        "ffdec",
+        "-export",
+        "script",
+        "<TEMP_DIR>/scripts",
+        "<SWF>"
+      ],
+      "status": "success",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "error": "",
+      "evidence": "audit/machine/ffdec-scripts.txt.gz"
+    },
+    "swfmillXmlParser": {
+      "command": [
+        "python3",
+        "xml.etree.ElementTree.iterparse",
+        "<TEMP_DIR>/swfmill.xml"
+      ],
+      "status": "success",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "error": "",
+      "evidence": "audit/machine/swfmill-summary.json"
+    },
+    "swfmillXml": {
+      "command": [
+        "swfmill",
+        "-n",
+        "swf2xml",
+        "<SWF>",
+        "<TEMP_DIR>/swfmill.xml"
+      ],
+      "status": "success",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "error": "",
+      "evidence": "audit/machine/swfmill.xml.gz"
+    }
+  },
+  "findings": {
+    "ffdecHeader": {
+      "fileSize": 992792,
+      "version": 6,
+      "compression": "ZLIB",
+      "encrypted": false,
+      "gfx": false,
+      "displayRect": "[0, 0, 16000, 12000]",
+      "widthPx": 800,
+      "heightPx": 600,
+      "frameCount": 10,
+      "frameRate": 12
+    },
+    "swfmill": {
+      "actionScriptVersion": "AS1/2",
+      "backgroundColor": {
+        "alpha": 255,
+        "blue": 247,
+        "green": 216,
+        "red": 184
+      },
+      "categories": {
+        "externalImportTags": {},
+        "filterTags": {},
+        "fontDefinitions": {
+          "DefineFont2": 9
+        },
+        "morphDefinitions": {
+          "DefineMorphShape": 60
+        },
+        "scriptTags": {
+          "DoAction": 53
+        },
+        "soundTags": {
+          "SoundStreamBlock": 1082,
+          "SoundStreamHead": 12
+        },
+        "videoTags": {}
+      },
+      "document": {
+        "compressed": "1",
+        "version": "6"
+      },
+      "fileAttributes": {},
+      "header": {
+        "framerate": "12",
+        "frames": "10",
+        "rectangle": {
+          "bottom": "12000",
+          "left": "0",
+          "right": "16000",
+          "top": "0"
+        }
+      },
+      "tagCounts": {
+        "BranchIfTrue": 5,
+        "Button": 95,
+        "CallMethod": 81,
+        "ClippedBitmap": 22,
+        "Color": 5546,
+        "ColorTransform2": 508,
+        "Condition": 22,
+        "CurveTo": 17415,
+        "DefineBitsJPEG3": 10,
+        "DefineButton2": 24,
+        "DefineFont2": 9,
+        "DefineMorphShape": 60,
+        "DefineShape": 32,
+        "DefineShape2": 16,
+        "DefineShape3": 85,
+        "DefineSprite": 21,
+        "DefineText": 97,
+        "Dictionary": 32,
+        "DoAction": 53,
+        "End": 22,
+        "EndAction": 83,
+        "Event": 16,
+        "Export": 4,
+        "FrameLabel": 1,
+        "GetMember": 67,
+        "GetVariable": 172,
+        "Glyph": 166,
+        "GlyphShape": 166,
+        "GotoFrame": 2,
+        "GradientItem": 721,
+        "Header": 1,
+        "Increment": 5,
+        "LessThanTyped": 5,
+        "LineStyle": 1912,
+        "LineTo": 46390,
+        "LinearGradient": 156,
+        "LogicalNOT": 10,
+        "PlaceObject2": 1919,
+        "Pop": 81,
+        "PushData": 401,
+        "RadialGradient": 38,
+        "Rectangle": 231,
+        "RemoveObject2": 145,
+        "SetBackgroundColor": 1,
+        "SetMember": 81,
+        "Shape": 133,
+        "ShapeSetup": 21348,
+        "ShowFrame": 1243,
+        "Solid": 2775,
+        "SoundStreamBlock": 1082,
+        "SoundStreamHead": 12,
+        "StackBoolean": 56,
+        "StackDictionaryLookup": 317,
+        "StackDouble": 74,
+        "StackInteger": 30,
+        "StackString": 99,
+        "Stop": 35,
+        "String": 239,
+        "StyleList": 1299,
+        "Symbol": 4,
+        "TextEntry": 1703,
+        "TextRecord": 97,
+        "TextRecord6": 399,
+        "Transform": 1756,
+        "UnknownTag": 1,
+        "actions": 83,
+        "bounds": 230,
+        "buttons": 24,
+        "color": 5546,
+        "colorTransform": 508,
+        "conditions": 24,
+        "data": 1233,
+        "edges": 299,
+        "events": 8,
+        "fillStyles": 1299,
+        "flags": 1,
+        "glyphs": 257,
+        "gradientColors": 194,
+        "items": 401,
+        "latencySeek": 11,
+        "lineStyles": 1299,
+        "matrix": 216,
+        "records": 194,
+        "shapes": 133,
+        "size": 1,
+        "strings": 32,
+        "styles": 1299,
+        "swf": 1,
+        "symbols": 4,
+        "tags": 22,
+        "transform": 1540
+      }
+    },
+    "actionScriptVersion": "AS1/2",
+    "backgroundColor": "#b8d8f7",
+    "exportedScriptFileCount": 83,
+    "externalCallCandidates": [],
+    "runtimeCrossCheck": {
+      "ffdecVersionMatches": true,
+      "ffdecWidthMatches": true,
+      "ffdecHeightMatches": true,
+      "ffdecFrameRateMatches": true,
+      "ffdecFrameCountMatches": true,
+      "swfmillVersionMatches": true,
+      "swfmillWidthMatches": true,
+      "swfmillHeightMatches": true,
+      "swfmillFrameRateMatches": true,
+      "swfmillFrameCountMatches": true,
+      "allMatch": true
+    }
+  },
+  "outputs": [
+    {
+      "path": "audit/machine/ffdec-header.txt",
+      "format": "text",
+      "bytes": 188,
+      "sha256": "6e256ca92ef24b467b514ea2e64d37cb7a77ac6d4e91b97280c186a4dfea750c"
+    },
+    {
+      "path": "audit/machine/ffdec-script-index.txt",
+      "format": "text",
+      "bytes": 4388,
+      "sha256": "078257fa31b21224abd116f542a4c3b52eb016cc9e71900672e9ac4f944e51e1"
+    },
+    {
+      "path": "audit/machine/ffdec-scripts.txt.gz",
+      "format": "gzip+text/actionscript",
+      "bytes": 1033,
+      "sha256": "271619937ef999980753232bc2dbcb9ea589dbebe7f5e83c7cf0c7e3fe7b29fb",
+      "uncompressedBytes": 10518,
+      "uncompressedSha256": "cdeb1d808220624d33820127fe7c16cf84110854afad46a0415db9e1a850e052"
+    },
+    {
+      "path": "audit/machine/ffdec-tags.txt.gz",
+      "format": "gzip+text/ffdec-tag-dump",
+      "bytes": 142733,
+      "sha256": "f7dfc61e9e0e3b9d317bc4e7230a633a1a8bba49617a0e7169d934072c286bf3",
+      "uncompressedBytes": 667946,
+      "uncompressedSha256": "9cd6b662bb0e7ae01263c42e13017c49943ecb32adfb38769880d2f522b33de6"
+    },
+    {
+      "path": "audit/machine/swfmill-summary.json",
+      "format": "text",
+      "bytes": 2730,
+      "sha256": "963d7a32eae5de556dc264fd7bab7c96e5c7a2cc6bba6390dbb4e99ede9a813b"
+    },
+    {
+      "path": "audit/machine/swfmill.xml.gz",
+      "format": "gzip+xml/swfmill",
+      "bytes": 1070071,
+      "sha256": "d2cc427fe26b8b917f8821b7e7327d3f3592974930ffc3c009e2ad71d07aa06f",
+      "uncompressedBytes": 7398401,
+      "uncompressedSha256": "d5321e5696e9b3ea22f543c12f236054ace0a8ee2507f46ab6792fec463b8de7"
+    }
+  ],
+  "limitations": [
+    "FLA authoring source is unavailable; authoring structure cannot be inspected.",
+    "No authoritative runtime traversal, interaction-branch capture, audio synchronization review, or visual baseline is part of this machine audit."
+  ]
+}

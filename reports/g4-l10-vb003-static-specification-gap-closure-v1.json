@@ -1,0 +1,1045 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l10-vb003-static-specification-gap-closure-v1",
+  "evidenceDate": "2026-08-04",
+  "status": "acceptance-neutral-static-gap-plan-do-not-apply",
+  "releaseId": "lesson-g04-l10-perimeter-area",
+  "animationId": "course-g04-l10-vb-003",
+  "decision": "DO_NOT_APPLY",
+  "workspaceModified": false,
+  "sourceModified": false,
+  "rendererAdopted": false,
+  "authorityBoundary": {
+    "readOnlyRecomputation": true,
+    "exactPreimageBound": true,
+    "currentWorkspaceIsUntracked": true,
+    "workspaceTrackingObservation": {
+      "command": [
+        "git",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=normal",
+        "--",
+        "migrations/course-g04-l10-vb-003"
+      ],
+      "exitCode": 0,
+      "statusLine": "?? migrations/course-g04-l10-vb-003/",
+      "observedState": "untracked-directory",
+      "claimScope": "live-git-porcelain-observation-not-git-binary-provenance"
+    },
+    "createsRuntimeEvidence": false,
+    "launchesOriginalRuntime": false,
+    "createsBaseline": false,
+    "createsRenderer": false,
+    "changesChecklist": false,
+    "changesMigrationStatus": false,
+    "changesLedgers": false,
+    "authorizesBatchAdmission": false,
+    "authorizesIntegrationOrPublication": false,
+    "rule": "This successor records a guarded candidate patch. A separate reviewed adopter must require the exact preimage set and must preserve all runtime, fidelity, review, and release boundaries."
+  },
+  "currentStaticFacts": {
+    "source": {
+      "swf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/VB/L10VB03.swf",
+      "swfSha256": "96a0c6c9cd7f5813d06e382bcb9dc2b81a0c0127a9865222dea1abba96a8d93d",
+      "fla": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/VB/L10VB03.fla",
+      "flaSha256": "1eccb733544de8eb0fa718cac6a1792e2e58145c737f6170e56268fc212003f7",
+      "sourceHashVerified": true,
+      "authoringSourceHashVerified": true,
+      "bindingAuthority": "direct-ordinary-file-read-and-sha256",
+      "externalAudioMp3Sha256": "491873156323b693212856ce2d3bec9d0e43aac2851f547489ae9346931bff03"
+    },
+    "nativeRoot": {
+      "stage": {
+        "width": 800,
+        "height": 600
+      },
+      "fps": 12,
+      "frameCount": 10,
+      "durationMs": 833.3333333333334,
+      "actionScriptVersion": "AS1/2"
+    },
+    "frameDomains": {
+      "inventoryTimelineCount": 3,
+      "enumeratedTimelineCount": 3,
+      "unresolvedTimelineCount": 0,
+      "declaration": [
+        {
+          "id": "root",
+          "kind": "root",
+          "sourceTimelineId": "root",
+          "parentFrameDomainId": null,
+          "frameCount": 10,
+          "scenarioIds": [
+            "default"
+          ]
+        },
+        {
+          "id": "sprite-120",
+          "kind": "nested",
+          "sourceTimelineId": "sprite-120",
+          "parentFrameDomainId": "root",
+          "frameCount": 203,
+          "scenarioIds": [
+            "source-proven-independent-domain-entry-unresolved"
+          ],
+          "role": "source-proven independent local-action frame domain; conservative root capture envelope only; natural runtime entry, behavior, visual, audio, review, and acceptance remain unresolved",
+          "sourceParentTimelineIds": [
+            "root"
+          ],
+          "captureParentResolution": "root is the nearest universally declared containing capture domain; sourceParentTimelineIds preserve the exact direct source parents and parentEntryState remains unresolved",
+          "sourceProof": {
+            "path": "audit/source-proven-independent-frame-domain-evidence.json",
+            "sha256": "7e3eea037f0637d55cbbf57389f1905abceecf6814ae86b725e3d4b62c34c9d0",
+            "claimIndex": 0,
+            "proofType": "multi-frame-local-action-independent-domain",
+            "claimScope": "separate-local-frame-action-domain-required",
+            "sourceObjectId": "120",
+            "directDoActionTagCount": 1,
+            "ffdecFrameScriptCount": 1,
+            "actionFrameSequenceSha256": "fac89bae5eac39640ce768446a28ff0770328c8c93ff079036e6ecad6ecbc20f",
+            "actionFrameSequenceEncoding": "one-indexed-decimal-frame-newline-v1",
+            "authoritativeRuntimeEntryEstablished": false,
+            "strictAcceptanceEffect": "none"
+          }
+        }
+      ],
+      "doNotReopenEnumeration": true
+    },
+    "definitions": {
+      "fonts": 6,
+      "texts": 98,
+      "shapes": 11,
+      "buttons": 3,
+      "sprites": 2,
+      "total": 120
+    },
+    "audio": {
+      "manifestLanguages": [
+        "und"
+      ],
+      "inventoriedLanguages": [
+        "es",
+        "und"
+      ],
+      "inventoryRows": 2,
+      "authoritativeListeningComplete": false,
+      "synchronizationComplete": false,
+      "strictAudioAcceptance": "pending"
+    },
+    "coverage": {
+      "requirementCount": 4,
+      "frameIdentityCount": 426,
+      "authoritativeCapturedFrameCount": 0
+    },
+    "template": {
+      "stable": false,
+      "strictCompleteMembers": 0,
+      "releaseMembers": 47,
+      "published": false
+    }
+  },
+  "proposedChanges": [
+    {
+      "id": "P1-A-audio-manifest-triangle",
+      "severity": "P1",
+      "current": {
+        "languages": [
+          "und"
+        ],
+        "cues": []
+      },
+      "proposed": {
+        "jsonPointers": {
+          "/audio/languages": [
+            "es",
+            "und"
+          ],
+          "/audio/cues": [
+            {
+              "id": "catalog-audio-01",
+              "language": "es",
+              "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/SA/L10VB03.mp3",
+              "sha256": "491873156323b693212856ce2d3bec9d0e43aac2851f547489ae9346931bff03",
+              "startFrame": null,
+              "startFrameDomainId": null,
+              "startSemantics": "host-user-activated",
+              "durationMs": 15144,
+              "format": "mp3",
+              "channels": 1,
+              "sampleRateHz": 48000,
+              "sourceCharacterId": null,
+              "authority": "static-identity-only",
+              "spokenLanguageVerified": false,
+              "runtimeReachabilityVerified": false,
+              "synchronizationVerified": false,
+              "listeningAccepted": false
+            },
+            {
+              "id": "embedded-stream-0001",
+              "language": "und",
+              "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/VB/L10VB03.swf",
+              "sha256": "96a0c6c9cd7f5813d06e382bcb9dc2b81a0c0127a9865222dea1abba96a8d93d",
+              "startFrame": null,
+              "startFrameDomainId": null,
+              "startSemantics": "interaction-state",
+              "durationMs": 16640,
+              "format": "swf-mp3-stream",
+              "channels": 1,
+              "sampleRateHz": 22050,
+              "sourceCharacterId": "120",
+              "authority": "static-identity-only",
+              "spokenLanguageVerified": false,
+              "runtimeReachabilityVerified": false,
+              "synchronizationVerified": false,
+              "listeningAccepted": false
+            }
+          ]
+        }
+      },
+      "evidence": [
+        "audioInventory",
+        "audioRuntimeEvidence",
+        "languageAudioBinding"
+      ],
+      "boundary": "Static cue identity only. Spoken language, reachability, synchronization, listening, human review, owner review, and acceptance remain unresolved."
+    },
+    {
+      "id": "P1-B-source-definition-and-host-dependency-manifest",
+      "severity": "P1",
+      "current": {
+        "assetsRequired": false,
+        "assetsNotRequiredReason": "",
+        "fonts": [],
+        "masks": [],
+        "externalDependencies": [],
+        "canonicalAssetInventoryRows": 1
+      },
+      "proposed": {
+        "jsonPointers": {
+          "/audit/assetsRequired": true,
+          "/audit/assetsNotRequiredReason": "",
+          "/runtime/fonts": [
+            {
+              "characterId": 1,
+              "name": "Bauhaus Md BT",
+              "style": "regular",
+              "glyphCount": 31
+            },
+            {
+              "characterId": 3,
+              "name": "Ensemble SSi",
+              "style": "regular",
+              "glyphCount": 18
+            },
+            {
+              "characterId": 17,
+              "name": "Stefa Display SSi",
+              "style": "regular",
+              "glyphCount": 10
+            },
+            {
+              "characterId": 40,
+              "name": "Terminus Black SSi",
+              "style": "regular",
+              "glyphCount": 1
+            },
+            {
+              "characterId": 62,
+              "name": "Arial",
+              "style": "regular",
+              "glyphCount": 2
+            },
+            {
+              "characterId": 92,
+              "name": "Bauhaus Md BT",
+              "style": "bold",
+              "glyphCount": 1
+            }
+          ],
+          "/audit/masks": [
+            {
+              "timelineId": "sprite-120",
+              "characterId": 6,
+              "frame": 3,
+              "depth": 1,
+              "clipDepth": 8
+            },
+            {
+              "timelineId": "sprite-120",
+              "characterId": 12,
+              "frame": 51,
+              "depth": 9,
+              "clipDepth": 14
+            },
+            {
+              "timelineId": "sprite-120",
+              "characterId": 42,
+              "frame": 130,
+              "depth": 15,
+              "clipDepth": 17
+            }
+          ],
+          "/runtime/externalDependencies": [
+            "_level0.InternalPreloader.gotoAndPlay(\"jump_check\")",
+            "_global.KeyAttribute",
+            "_root.DoHyperLinks()",
+            "_root.animation_mc.animation.stop()",
+            "_root.boolSendPageHLAClickRecord",
+            "original lesson-shell Spanish audio play/stop controls"
+          ]
+        },
+        "machineArtifactCandidate": {
+          "path": "migrations/course-g04-l10-vb-003/audit/machine/swf-definition-inventory.csv",
+          "rowCount": 120,
+          "definitionTypeCounts": {
+            "fonts": 6,
+            "texts": 98,
+            "shapes": 11,
+            "buttons": 3,
+            "sprites": 2,
+            "total": 120
+          },
+          "materializedByThisReport": false,
+          "rule": "Generate from the exact gzip SWF XML/tag evidence with character ID, tag type, tag-payload SHA-256, provenance, and unresolved authoring/runtime boundary; do not hand-author 120 rows."
+        }
+      },
+      "evidence": [
+        "brief",
+        "machineAudit",
+        "scenarioInventory",
+        "hostEntryAntecedent",
+        "glossaryContracts"
+      ],
+      "boundary": "Candidate manifest reconciliation only; no FLA symbol name, runtime reachability, renderer transformation, or visual completeness is inferred."
+    },
+    {
+      "id": "P1-C-static-placeholder-reconciliation",
+      "severity": "P1",
+      "current": {
+        "confidence": "unknown",
+        "complexity": "unknown",
+        "ruffle": "",
+        "browser": "",
+        "forensicReferenceVersion": "",
+        "baselineViewport": {
+          "width": 0,
+          "height": 0,
+          "deviceScaleFactor": 1
+        },
+        "defaultScenarioDescription": "",
+        "nestedScenarioKind": "source-proven-structural-entry-runtime-unresolved"
+      },
+      "proposed": {
+        "jsonPointers": {
+          "/confidence": "medium",
+          "/runtime/complexity": "nested-interactive-host-dependent-audio-bearing-as1-2",
+          "/toolVersions/ruffle": "0.4.1",
+          "/toolVersions/browser": "Playwright 1.61.1; Google Chrome for Testing 149.0.7827.55",
+          "/forensicReference/version": "0.4.1",
+          "/baseline/viewport": {
+            "width": 800,
+            "height": 600,
+            "deviceScaleFactor": 1
+          },
+          "/scenarios/0/description": "Source-static root frames 1-10 with structural stops at 1 and 6 and label begin at 6; natural playback remains unresolved.",
+          "/scenarios/1/kind": "interactive"
+        },
+        "retainedNestedScenarioFields": {
+          "reachabilityAuthority": "structural-root-placement-graph-only",
+          "authoritativeRuntimeEntryEstablished": false,
+          "strictAcceptanceEffect": "none"
+        }
+      },
+      "evidence": [
+        "migration",
+        "machineAudit",
+        "scenarioInventory",
+        "toolchain"
+      ],
+      "boundary": "Tool and viewport metadata do not establish that a baseline exists; Ruffle remains forensic-only."
+    },
+    {
+      "id": "P1-D-nested-structural-keyframe-candidates",
+      "severity": "P1",
+      "current": {
+        "rowCount": 8,
+        "frameDomains": [
+          "root"
+        ]
+      },
+      "proposed": {
+        "candidateRowCount": 12,
+        "rows": [
+          {
+            "frame": 1,
+            "requirementId": "req:sprite-120:source-proven-independent-domain-entry-unresolved:en",
+            "frameDomainId": "sprite-120",
+            "traceId": "trace:sprite-120:source-proven-independent-domain-entry-unresolved:en:seed-0",
+            "entryStateSha256": "a2ba7802bded99336ca0c6a8b3db9a8309c0fe8f5ef0dec213482387ed739cdf",
+            "timeMs": 0,
+            "scenario": "source-proven-independent-domain-entry-unresolved",
+            "language": "en",
+            "kind": "structural-specification-initial",
+            "structuralReasons": [
+              "initial-one-indexed-frame",
+              "soundstream-head-frame"
+            ],
+            "runtimeReachability": "unresolved",
+            "baselineFile": null,
+            "baselineSha256": null,
+            "implementationFile": null,
+            "implementationSha256": null,
+            "diffFile": null,
+            "diffSha256": null,
+            "normalizedRmse": null,
+            "timingResult": null,
+            "visualResult": null,
+            "reviewer": null,
+            "adoptionStatus": "candidate-only-do-not-write-current-keyframes"
+          },
+          {
+            "frame": 3,
+            "requirementId": "req:sprite-120:source-proven-independent-domain-entry-unresolved:en",
+            "frameDomainId": "sprite-120",
+            "traceId": "trace:sprite-120:source-proven-independent-domain-entry-unresolved:en:seed-0",
+            "entryStateSha256": "a2ba7802bded99336ca0c6a8b3db9a8309c0fe8f5ef0dec213482387ed739cdf",
+            "timeMs": 166.666667,
+            "scenario": "source-proven-independent-domain-entry-unresolved",
+            "language": "en",
+            "kind": "structural-specification-transition",
+            "structuralReasons": [
+              "glossary-button-placement",
+              "clip-depth-placement"
+            ],
+            "runtimeReachability": "unresolved",
+            "baselineFile": null,
+            "baselineSha256": null,
+            "implementationFile": null,
+            "implementationSha256": null,
+            "diffFile": null,
+            "diffSha256": null,
+            "normalizedRmse": null,
+            "timingResult": null,
+            "visualResult": null,
+            "reviewer": null,
+            "adoptionStatus": "candidate-only-do-not-write-current-keyframes"
+          },
+          {
+            "frame": 4,
+            "requirementId": "req:sprite-120:source-proven-independent-domain-entry-unresolved:en",
+            "frameDomainId": "sprite-120",
+            "traceId": "trace:sprite-120:source-proven-independent-domain-entry-unresolved:en:seed-0",
+            "entryStateSha256": "a2ba7802bded99336ca0c6a8b3db9a8309c0fe8f5ef0dec213482387ed739cdf",
+            "timeMs": 250,
+            "scenario": "source-proven-independent-domain-entry-unresolved",
+            "language": "en",
+            "kind": "structural-specification-transition",
+            "structuralReasons": [
+              "first-soundstream-block"
+            ],
+            "runtimeReachability": "unresolved",
+            "baselineFile": null,
+            "baselineSha256": null,
+            "implementationFile": null,
+            "implementationSha256": null,
+            "diffFile": null,
+            "diffSha256": null,
+            "normalizedRmse": null,
+            "timingResult": null,
+            "visualResult": null,
+            "reviewer": null,
+            "adoptionStatus": "candidate-only-do-not-write-current-keyframes"
+          },
+          {
+            "frame": 51,
+            "requirementId": "req:sprite-120:source-proven-independent-domain-entry-unresolved:en",
+            "frameDomainId": "sprite-120",
+            "traceId": "trace:sprite-120:source-proven-independent-domain-entry-unresolved:en:seed-0",
+            "entryStateSha256": "a2ba7802bded99336ca0c6a8b3db9a8309c0fe8f5ef0dec213482387ed739cdf",
+            "timeMs": 4166.666667,
+            "scenario": "source-proven-independent-domain-entry-unresolved",
+            "language": "en",
+            "kind": "structural-specification-transition",
+            "structuralReasons": [
+              "glossary-button-placement",
+              "clip-depth-placement"
+            ],
+            "runtimeReachability": "unresolved",
+            "baselineFile": null,
+            "baselineSha256": null,
+            "implementationFile": null,
+            "implementationSha256": null,
+            "diffFile": null,
+            "diffSha256": null,
+            "normalizedRmse": null,
+            "timingResult": null,
+            "visualResult": null,
+            "reviewer": null,
+            "adoptionStatus": "candidate-only-do-not-write-current-keyframes"
+          },
+          {
+            "frame": 130,
+            "requirementId": "req:sprite-120:source-proven-independent-domain-entry-unresolved:en",
+            "frameDomainId": "sprite-120",
+            "traceId": "trace:sprite-120:source-proven-independent-domain-entry-unresolved:en:seed-0",
+            "entryStateSha256": "a2ba7802bded99336ca0c6a8b3db9a8309c0fe8f5ef0dec213482387ed739cdf",
+            "timeMs": 10750,
+            "scenario": "source-proven-independent-domain-entry-unresolved",
+            "language": "en",
+            "kind": "structural-specification-transition",
+            "structuralReasons": [
+              "clip-depth-placement"
+            ],
+            "runtimeReachability": "unresolved",
+            "baselineFile": null,
+            "baselineSha256": null,
+            "implementationFile": null,
+            "implementationSha256": null,
+            "diffFile": null,
+            "diffSha256": null,
+            "normalizedRmse": null,
+            "timingResult": null,
+            "visualResult": null,
+            "reviewer": null,
+            "adoptionStatus": "candidate-only-do-not-write-current-keyframes"
+          },
+          {
+            "frame": 203,
+            "requirementId": "req:sprite-120:source-proven-independent-domain-entry-unresolved:en",
+            "frameDomainId": "sprite-120",
+            "traceId": "trace:sprite-120:source-proven-independent-domain-entry-unresolved:en:seed-0",
+            "entryStateSha256": "a2ba7802bded99336ca0c6a8b3db9a8309c0fe8f5ef0dec213482387ed739cdf",
+            "timeMs": 16833.333333,
+            "scenario": "source-proven-independent-domain-entry-unresolved",
+            "language": "en",
+            "kind": "structural-specification-terminal",
+            "structuralReasons": [
+              "last-soundstream-block",
+              "script-stop-state",
+              "terminal-structural-frame"
+            ],
+            "runtimeReachability": "unresolved",
+            "baselineFile": null,
+            "baselineSha256": null,
+            "implementationFile": null,
+            "implementationSha256": null,
+            "diffFile": null,
+            "diffSha256": null,
+            "normalizedRmse": null,
+            "timingResult": null,
+            "visualResult": null,
+            "reviewer": null,
+            "adoptionStatus": "candidate-only-do-not-write-current-keyframes"
+          },
+          {
+            "frame": 1,
+            "requirementId": "req:sprite-120:source-proven-independent-domain-entry-unresolved:es",
+            "frameDomainId": "sprite-120",
+            "traceId": "trace:sprite-120:source-proven-independent-domain-entry-unresolved:es:seed-0",
+            "entryStateSha256": "ffa33365361c0058ded8972ece63bc29a387a4fb5402615c5c01376ff131fe76",
+            "timeMs": 0,
+            "scenario": "source-proven-independent-domain-entry-unresolved",
+            "language": "es",
+            "kind": "structural-specification-initial",
+            "structuralReasons": [
+              "initial-one-indexed-frame",
+              "soundstream-head-frame"
+            ],
+            "runtimeReachability": "unresolved",
+            "baselineFile": null,
+            "baselineSha256": null,
+            "implementationFile": null,
+            "implementationSha256": null,
+            "diffFile": null,
+            "diffSha256": null,
+            "normalizedRmse": null,
+            "timingResult": null,
+            "visualResult": null,
+            "reviewer": null,
+            "adoptionStatus": "candidate-only-do-not-write-current-keyframes"
+          },
+          {
+            "frame": 3,
+            "requirementId": "req:sprite-120:source-proven-independent-domain-entry-unresolved:es",
+            "frameDomainId": "sprite-120",
+            "traceId": "trace:sprite-120:source-proven-independent-domain-entry-unresolved:es:seed-0",
+            "entryStateSha256": "ffa33365361c0058ded8972ece63bc29a387a4fb5402615c5c01376ff131fe76",
+            "timeMs": 166.666667,
+            "scenario": "source-proven-independent-domain-entry-unresolved",
+            "language": "es",
+            "kind": "structural-specification-transition",
+            "structuralReasons": [
+              "glossary-button-placement",
+              "clip-depth-placement"
+            ],
+            "runtimeReachability": "unresolved",
+            "baselineFile": null,
+            "baselineSha256": null,
+            "implementationFile": null,
+            "implementationSha256": null,
+            "diffFile": null,
+            "diffSha256": null,
+            "normalizedRmse": null,
+            "timingResult": null,
+            "visualResult": null,
+            "reviewer": null,
+            "adoptionStatus": "candidate-only-do-not-write-current-keyframes"
+          },
+          {
+            "frame": 4,
+            "requirementId": "req:sprite-120:source-proven-independent-domain-entry-unresolved:es",
+            "frameDomainId": "sprite-120",
+            "traceId": "trace:sprite-120:source-proven-independent-domain-entry-unresolved:es:seed-0",
+            "entryStateSha256": "ffa33365361c0058ded8972ece63bc29a387a4fb5402615c5c01376ff131fe76",
+            "timeMs": 250,
+            "scenario": "source-proven-independent-domain-entry-unresolved",
+            "language": "es",
+            "kind": "structural-specification-transition",
+            "structuralReasons": [
+              "first-soundstream-block"
+            ],
+            "runtimeReachability": "unresolved",
+            "baselineFile": null,
+            "baselineSha256": null,
+            "implementationFile": null,
+            "implementationSha256": null,
+            "diffFile": null,
+            "diffSha256": null,
+            "normalizedRmse": null,
+            "timingResult": null,
+            "visualResult": null,
+            "reviewer": null,
+            "adoptionStatus": "candidate-only-do-not-write-current-keyframes"
+          },
+          {
+            "frame": 51,
+            "requirementId": "req:sprite-120:source-proven-independent-domain-entry-unresolved:es",
+            "frameDomainId": "sprite-120",
+            "traceId": "trace:sprite-120:source-proven-independent-domain-entry-unresolved:es:seed-0",
+            "entryStateSha256": "ffa33365361c0058ded8972ece63bc29a387a4fb5402615c5c01376ff131fe76",
+            "timeMs": 4166.666667,
+            "scenario": "source-proven-independent-domain-entry-unresolved",
+            "language": "es",
+            "kind": "structural-specification-transition",
+            "structuralReasons": [
+              "glossary-button-placement",
+              "clip-depth-placement"
+            ],
+            "runtimeReachability": "unresolved",
+            "baselineFile": null,
+            "baselineSha256": null,
+            "implementationFile": null,
+            "implementationSha256": null,
+            "diffFile": null,
+            "diffSha256": null,
+            "normalizedRmse": null,
+            "timingResult": null,
+            "visualResult": null,
+            "reviewer": null,
+            "adoptionStatus": "candidate-only-do-not-write-current-keyframes"
+          },
+          {
+            "frame": 130,
+            "requirementId": "req:sprite-120:source-proven-independent-domain-entry-unresolved:es",
+            "frameDomainId": "sprite-120",
+            "traceId": "trace:sprite-120:source-proven-independent-domain-entry-unresolved:es:seed-0",
+            "entryStateSha256": "ffa33365361c0058ded8972ece63bc29a387a4fb5402615c5c01376ff131fe76",
+            "timeMs": 10750,
+            "scenario": "source-proven-independent-domain-entry-unresolved",
+            "language": "es",
+            "kind": "structural-specification-transition",
+            "structuralReasons": [
+              "clip-depth-placement"
+            ],
+            "runtimeReachability": "unresolved",
+            "baselineFile": null,
+            "baselineSha256": null,
+            "implementationFile": null,
+            "implementationSha256": null,
+            "diffFile": null,
+            "diffSha256": null,
+            "normalizedRmse": null,
+            "timingResult": null,
+            "visualResult": null,
+            "reviewer": null,
+            "adoptionStatus": "candidate-only-do-not-write-current-keyframes"
+          },
+          {
+            "frame": 203,
+            "requirementId": "req:sprite-120:source-proven-independent-domain-entry-unresolved:es",
+            "frameDomainId": "sprite-120",
+            "traceId": "trace:sprite-120:source-proven-independent-domain-entry-unresolved:es:seed-0",
+            "entryStateSha256": "ffa33365361c0058ded8972ece63bc29a387a4fb5402615c5c01376ff131fe76",
+            "timeMs": 16833.333333,
+            "scenario": "source-proven-independent-domain-entry-unresolved",
+            "language": "es",
+            "kind": "structural-specification-terminal",
+            "structuralReasons": [
+              "last-soundstream-block",
+              "script-stop-state",
+              "terminal-structural-frame"
+            ],
+            "runtimeReachability": "unresolved",
+            "baselineFile": null,
+            "baselineSha256": null,
+            "implementationFile": null,
+            "implementationSha256": null,
+            "diffFile": null,
+            "diffSha256": null,
+            "normalizedRmse": null,
+            "timingResult": null,
+            "visualResult": null,
+            "reviewer": null,
+            "adoptionStatus": "candidate-only-do-not-write-current-keyframes"
+          }
+        ],
+        "adoptionStatus": "candidate-only; preserve current keyframes.csv until a guarded adopter and evidence policy authorize structural nested rows"
+      },
+      "evidence": [
+        "brief",
+        "coverage",
+        "scenarioInventory",
+        "frameDomainDisposition"
+      ],
+      "boundary": "These are source-static frame selections, not natural traces, authoritative baseline captures, renderer frames, differences, RMSE results, or reviews."
+    },
+    {
+      "id": "P2-brief-and-checklist-static-hygiene",
+      "severity": "P2",
+      "current": {
+        "briefRetainsScaffoldInstructions": true,
+        "checklistCheckedCount": 0,
+        "checklistTotal": 2726
+      },
+      "proposed": {
+        "briefAction": "Replace the two remaining scaffold instruction sentences with evidence-bound factual introductions in a future exact-preimage adopter.",
+        "candidateChecklistPredicates": [
+          "source byte preservation",
+          "source SHA-256 and provenance",
+          "asset and placement identity",
+          "missing-source documentation",
+          "native root metadata",
+          "requirement identity",
+          "evidence-authority boundaries"
+        ],
+        "checklistMutationAuthorized": false
+      },
+      "evidence": [
+        "brief",
+        "l10TemplateV5"
+      ],
+      "boundary": "No checklist box is checked by this report; external dependency, complete asset, interaction, runtime, behavior, visual, audio, review, strict, and release predicates remain open."
+    }
+  ],
+  "guardedAdopterContract": {
+    "required": true,
+    "implementedByThisReport": false,
+    "requiredPreimageSetSha256": "e472ce78ecab8658194af162c93eff1cfa7c42117dfa1851f0e78b1372cff043",
+    "candidatePatchFingerprintSha256": "4f2d311e007c79b867c7d8eaf660dd9c7c80b793f562ae10f607e35bc1730954",
+    "noClobber": true,
+    "revalidateAfterWrite": true,
+    "requiredReview": "independent exact-preimage and semantic-boundary review",
+    "forbiddenEffects": [
+      "sourcePromotion",
+      "sourceMutation",
+      "workspaceMutation",
+      "authoritativeOriginalRuntimeEvidence",
+      "baselineAdoption",
+      "rendererAdoption",
+      "behaviorAcceptance",
+      "visualRmseAcceptance",
+      "audioAcceptance",
+      "humanVisualAcceptance",
+      "engineeringAcceptance",
+      "ownerAcceptance",
+      "strictCompletion",
+      "lessonBatchAdmission",
+      "wholeLessonIntegration",
+      "atomicLessonPublication",
+      "remainingGrade4BatchStart",
+      "wholeCourseIntegration",
+      "publication"
+    ]
+  },
+  "wholeLessonFreshnessAdvisory": {
+    "status": "fail-closed-stale-downstream-projections-detected",
+    "affectedMembers": [
+      "course-g04-l10-ts-007",
+      "course-g04-l10-ts-008"
+    ],
+    "probes": [
+      {
+        "id": "post-declaration-static-composites",
+        "command": [
+          "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/bin/node",
+          "scripts/materialize-g4-l10-post-declaration-static-composites.mjs",
+          "--check"
+        ],
+        "checker": {
+          "path": "scripts/materialize-g4-l10-post-declaration-static-composites.mjs",
+          "bytes": 57333,
+          "sha256": "83254f7afd5bd3bd41886afc147ebc4c6522712d729a2069d4790cc2d5555065",
+          "mode": "0644"
+        },
+        "exitCode": 1,
+        "outcome": "fail-closed-known-stale",
+        "expectedEvidence": [
+          "course-g04-l10-ts-007: unchanged declaration static evidence: exact descriptor drifted"
+        ],
+        "normalizedDiagnostic": "Error: course-g04-l10-ts-007: unchanged declaration static evidence: exact descriptor drifted\n    at invariant (file:///Volumes/WestWorld/HELP%20MATH%202.0/scripts/materialize-g4-l10-post-declaration-static-composites.mjs:259:25)\n    at assertDescriptor (file:///Volumes/WestWorld/HELP%20MATH%202.0/scripts/materialize-g4-l10-post-declaration-static-composites.mjs:397:3)\n    at buildState (file:///Volumes/WestWorld/HELP%20MATH%202.0/scripts/materialize-g4-l10-post-declaration-static-composites.mjs:1195:9)\n    at async materializeG4L10PostDeclarationStaticComposites (file:///Volumes/WestWorld/HELP%20MATH%202.0/scripts/materialize-g4-l10-post-declaration-static-composites.mjs:1368:17)\n    at async main (file:///Volumes/WestWorld/HELP%20MATH%202.0/scripts/materialize-g4-l10-post-declaration-static-composites.mjs:1440:18)",
+        "acceptanceEffect": "none"
+      },
+      {
+        "id": "release-coverage-v2",
+        "command": [
+          "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/bin/node",
+          "scripts/materialize-release-source-evidenced-coverage-v2.mjs",
+          "--release-id",
+          "lesson-g04-l10-perimeter-area",
+          "--check"
+        ],
+        "checker": {
+          "path": "scripts/materialize-release-source-evidenced-coverage-v2.mjs",
+          "bytes": 46613,
+          "sha256": "f223c8058ddf8f03860508fe476cf6d06b661449c737426dc91e833d704ad963",
+          "mode": "0644"
+        },
+        "exitCode": 1,
+        "outcome": "fail-closed-known-stale",
+        "expectedEvidence": [
+          "Stale release coverage-v2 output(s):",
+          "migrations/course-g04-l10-ts-007/evidence/full-frame-coverage.json",
+          "migrations/course-g04-l10-ts-008/evidence/full-frame-coverage.json"
+        ],
+        "normalizedDiagnostic": "Error: Stale release coverage-v2 output(s):\nmigrations/course-g04-l10-ts-007/evidence/full-frame-coverage.json\nmigrations/course-g04-l10-ts-008/evidence/full-frame-coverage.json\n    at invariant (file:///Volumes/WestWorld/HELP%20MATH%202.0/scripts/materialize-release-source-evidenced-coverage-v2.mjs:78:25)\n    at materializeReleaseSourceEvidencedCoverageV2 (file:///Volumes/WestWorld/HELP%20MATH%202.0/scripts/materialize-release-source-evidenced-coverage-v2.mjs:1385:5)\n    at async main (file:///Volumes/WestWorld/HELP%20MATH%202.0/scripts/materialize-release-source-evidenced-coverage-v2.mjs:1438:18)",
+        "acceptanceEffect": "none"
+      },
+      {
+        "id": "release-trace-specs",
+        "command": [
+          "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/bin/node",
+          "scripts/build-course-trace-specs.mjs",
+          "--release-id",
+          "lesson-g04-l10-perimeter-area",
+          "--check"
+        ],
+        "checker": {
+          "path": "scripts/build-course-trace-specs.mjs",
+          "bytes": 176260,
+          "sha256": "bfba7fd2430d0bf445bc6478b78d17eab5e8274b7b924be0f0513e8837b25e54",
+          "mode": "0644"
+        },
+        "exitCode": 1,
+        "outcome": "fail-closed-known-stale",
+        "expectedEvidence": [
+          "course-g04-l10-ts-007: stale trace spec req-default-root-en.json"
+        ],
+        "normalizedDiagnostic": "Error: course-g04-l10-ts-007: stale trace spec req-default-root-en.json\n    at buildCourseTraceSpecs (file:///Volumes/WestWorld/HELP%20MATH%202.0/scripts/build-course-trace-specs.mjs:3463:47)\n    at async file:///Volumes/WestWorld/HELP%20MATH%202.0/scripts/build-course-trace-specs.mjs:3629:22",
+        "acceptanceEffect": "none"
+      }
+    ],
+    "v5ScopeBoundary": "The exact v5 JSON is bound here, but this report does not treat that artifact as proof that these three separate semantic projection checks are fresh. A separately successful v5 --check cannot expand beyond the checks that v5 actually executes.",
+    "probeCodeBindingBoundary": {
+      "scope": "three-direct-checker-entrypoints-plus-selected-output-preimages",
+      "recursiveLocalDependenciesHashBound": false,
+      "completeFortySevenMemberInputClosureHashBound": false,
+      "packageRuntimeProvenanceBound": false,
+      "rule": "The live read-only probes establish the observed fail-closed diagnostics for this exact selected epoch; they do not claim a recursive semantic-code or complete 47-member provenance closure."
+    },
+    "remediationAuthorizedByThisReport": false,
+    "applyAttempted": false
+  },
+  "deferredEvidence": [
+    "Named Adobe Animate 2021 FLA authoring audit on a read-only working copy",
+    "Authorized original-runtime natural entry, ordered steps, targets, checkpoints, terminal state, and Replay reset vector",
+    "Runtime parent entry state and parentEntryFrame semantics",
+    "Authoritative EN/ES baseline execution receipts, capture manifests, and PNGs",
+    "Spoken-language listening, cue reachability, start-stop-sync, and Replay audio behavior",
+    "Formal renderer, route, component, registry, timeline module, and behavior tests",
+    "Full-frame visual comparison, normalized RMSE, timing, responsive, accessibility, and product QA",
+    "Named engineering, human visual, audio, and owner decisions",
+    "Strict completion, ledger admission, atomic L10 integration, Grade 4 batch admission, and publication"
+  ],
+  "acceptanceEffects": {
+    "sourcePromotion": false,
+    "sourceMutation": false,
+    "workspaceMutation": false,
+    "authoritativeOriginalRuntimeEvidence": false,
+    "baselineAdoption": false,
+    "rendererAdoption": false,
+    "behaviorAcceptance": false,
+    "visualRmseAcceptance": false,
+    "audioAcceptance": false,
+    "humanVisualAcceptance": false,
+    "engineeringAcceptance": false,
+    "ownerAcceptance": false,
+    "strictCompletion": false,
+    "lessonBatchAdmission": false,
+    "wholeLessonIntegration": false,
+    "atomicLessonPublication": false,
+    "remainingGrade4BatchStart": false,
+    "wholeCourseIntegration": false,
+    "publication": false
+  },
+  "inputBindings": {
+    "assetInventory": {
+      "path": "migrations/course-g04-l10-vb-003/asset-inventory.csv",
+      "bytes": 1198,
+      "sha256": "d6cbc6a5a4d3097dc7fdd689151f82ecb0b3f734864d8a808b860de6229ae884",
+      "mode": "0644"
+    },
+    "audioInventory": {
+      "path": "migrations/course-g04-l10-vb-003/audio-inventory.csv",
+      "bytes": 1327,
+      "sha256": "50492491fd02782775e92544f3f0a73f23b2d3aab02aadf46de042df7a900335",
+      "mode": "0600"
+    },
+    "audioRuntimeEvidence": {
+      "path": "migrations/course-g04-l10-vb-003/audit/audio-runtime-evidence.json",
+      "bytes": 10286,
+      "sha256": "dbcc0fdf0a53c37350639bb6212a8be6daa0f81c795eb3a093f2b67d49d05898",
+      "mode": "0600"
+    },
+    "brief": {
+      "path": "migrations/course-g04-l10-vb-003/MIGRATION_BRIEF.md",
+      "bytes": 19541,
+      "sha256": "9ea95188fd3c34f1d2fb019d9a9799abd69ab5d6994d284158f7b477a4b35338",
+      "mode": "0644"
+    },
+    "coverage": {
+      "path": "migrations/course-g04-l10-vb-003/evidence/full-frame-coverage.json",
+      "bytes": 16564,
+      "sha256": "98b85bc001b4538af82ba8cb92b82e482687a3bdd68ccece50f27854095bf4e2",
+      "mode": "0644"
+    },
+    "coverageChecker": {
+      "path": "scripts/materialize-release-source-evidenced-coverage-v2.mjs",
+      "bytes": 46613,
+      "sha256": "f223c8058ddf8f03860508fe476cf6d06b661449c737426dc91e833d704ad963",
+      "mode": "0644"
+    },
+    "externalAudioMp3": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/SA/L10VB03.mp3",
+      "bytes": 212016,
+      "sha256": "491873156323b693212856ce2d3bec9d0e43aac2851f547489ae9346931bff03",
+      "mode": "0500"
+    },
+    "frameDomainDisposition": {
+      "path": "migrations/course-g04-l10-vb-003/audit/frame-domain-disposition.json",
+      "bytes": 15617,
+      "sha256": "d69f282c571ed3ec19228372db425f52ae0d099c6b47bf27de9d9b680f92df68",
+      "mode": "0644"
+    },
+    "glossaryContracts": {
+      "path": "reports/lesson-release-behavior-contracts/lesson-g04-l10-perimeter-area/host-glossary-release-contracts.json",
+      "bytes": 1177070,
+      "sha256": "9656769b1bc0e623317a68668ccb0e22575512846d1eacb79fd322dd7487ddf7",
+      "mode": "0644"
+    },
+    "hostEntryAntecedent": {
+      "path": "reports/g4-l10-vb003-host-entry-antecedent.json",
+      "bytes": 38497,
+      "sha256": "9c64d146c8560551beac47fd493c0a9a35135e3d4dc756363f3ac643525c595d",
+      "mode": "0644"
+    },
+    "keyframes": {
+      "path": "migrations/course-g04-l10-vb-003/keyframes.csv",
+      "bytes": 15154,
+      "sha256": "0c2a7ee1961c581011baf94d97bc56b1337355957d244da36f01fcdbb7cff39f",
+      "mode": "0644"
+    },
+    "l10TemplateV5": {
+      "path": "reports/g4-l10-complete-migration-template-contract-v5-2026-08-04.json",
+      "bytes": 228467,
+      "sha256": "b4777628d6433241c247c1e3c4236becadd3b4b66e03585f51a81babd5fbeef9",
+      "mode": "0644"
+    },
+    "languageAudioBinding": {
+      "path": "migrations/course-g04-l10-vb-003/audit/language-audio-technical-binding.json",
+      "bytes": 17024,
+      "sha256": "ac87d1db72a799b8ec58a451051dc7d1e9cfe3d104c1722058b36769dc44081e",
+      "mode": "0644"
+    },
+    "machineAudit": {
+      "path": "migrations/course-g04-l10-vb-003/audit/machine/report.json",
+      "bytes": 12311,
+      "sha256": "e49170e6c4590eea8fa71a9d72a24c8cc7aef99395154d0a36ca2c073dbce2a5",
+      "mode": "0644"
+    },
+    "migration": {
+      "path": "migrations/course-g04-l10-vb-003/migration.json",
+      "bytes": 8998,
+      "sha256": "2450dd99af1806acf04ef4130f4b63001ba785db7b5ae96b3c13080d2a06a585",
+      "mode": "0644"
+    },
+    "scenarioInventory": {
+      "path": "migrations/course-g04-l10-vb-003/audit/scenario-inventory.json",
+      "bytes": 134836,
+      "sha256": "55a149952185c0f45e5843f6018288f7036269807cca1264e41905038a08b44a",
+      "mode": "0644"
+    },
+    "sourceFla": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/VB/L10VB03.fla",
+      "bytes": 767488,
+      "sha256": "1eccb733544de8eb0fa718cac6a1792e2e58145c737f6170e56268fc212003f7",
+      "mode": "0500"
+    },
+    "sourceSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/VB/L10VB03.swf",
+      "bytes": 97444,
+      "sha256": "96a0c6c9cd7f5813d06e382bcb9dc2b81a0c0127a9865222dea1abba96a8d93d",
+      "mode": "0500"
+    },
+    "staticCompositeChecker": {
+      "path": "scripts/materialize-g4-l10-post-declaration-static-composites.mjs",
+      "bytes": 57333,
+      "sha256": "83254f7afd5bd3bd41886afc147ebc4c6522712d729a2069d4790cc2d5555065",
+      "mode": "0644"
+    },
+    "toolchain": {
+      "path": "catalog/toolchain.json",
+      "bytes": 1709,
+      "sha256": "07484eaf52751128f91b429b7ce1b7bb46259365c545d17c360b5d0c74c3b41f",
+      "mode": "0644"
+    },
+    "traceChecker": {
+      "path": "scripts/build-course-trace-specs.mjs",
+      "bytes": 176260,
+      "sha256": "bfba7fd2430d0bf445bc6478b78d17eab5e8274b7b924be0f0513e8837b25e54",
+      "mode": "0644"
+    },
+    "ts007Coverage": {
+      "path": "migrations/course-g04-l10-ts-007/evidence/full-frame-coverage.json",
+      "bytes": 97875,
+      "sha256": "7a0b368f1d1f222a40a6a3185cfc0842036f7967063940e0511758aac100d789",
+      "mode": "0644"
+    },
+    "ts007FrameDomainDisposition": {
+      "path": "migrations/course-g04-l10-ts-007/audit/frame-domain-disposition.json",
+      "bytes": 100597,
+      "sha256": "b5495a553e3663dad5083bca04b82d06756912a8496617f8dc231014866c36da",
+      "mode": "0644"
+    },
+    "ts007RootTrace": {
+      "path": "migrations/course-g04-l10-ts-007/audit/trace-specs/lesson-releases/lesson-g04-l10-perimeter-area/req-default-root-en.json",
+      "bytes": 18166,
+      "sha256": "f7a7e7760fe8146f107a53db99fc47886199c2cadce1dfb00f3016c6f7d8fb01",
+      "mode": "0644"
+    },
+    "ts008Coverage": {
+      "path": "migrations/course-g04-l10-ts-008/evidence/full-frame-coverage.json",
+      "bytes": 95809,
+      "sha256": "f00e858b4b8c5f1e589c68627a9c1a36b0c02745dfb15889aaceda0db19c7c9e",
+      "mode": "0644"
+    },
+    "ts008FrameDomainDisposition": {
+      "path": "migrations/course-g04-l10-ts-008/audit/frame-domain-disposition.json",
+      "bytes": 83928,
+      "sha256": "8f4f4d32b532b58711ea09237184e27b121a721af1a05d378bb894cde1e54733",
+      "mode": "0644"
+    }
+  },
+  "preimageSetSha256": "e472ce78ecab8658194af162c93eff1cfa7c42117dfa1851f0e78b1372cff043",
+  "reportFingerprintSha256": "c49edaa4b1283a6bfa698794ea4992b2bee52b9f50c611eccd4f873963a2f632"
+}

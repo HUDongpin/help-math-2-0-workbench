@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "animationId": "course-g05-l04-gs-002",
+  "classification": "source-static-current-javascript-engineering-candidate-only",
+  "title": "Game 1",
+  "source": {
+    "swf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L4/GS/L4GS02.swf",
+    "swfBytes": 771187,
+    "swfSha256": "f2b6fc8157b04757e551d1d4fda5987af1e4dc6ecb1a101708fc822e1c7f1d43",
+    "pairedFlaStatus": "present",
+    "fla": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L4/GS/L4GS02.fla",
+    "flaBytes": 3813888,
+    "flaSha256": "5b1cb4a12213f1dd80de7f2695ac04d292986900fe9c97b216cb7fff1b3c1768",
+    "associatedAudio": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L4/SA/L4GS02.mp3",
+    "associatedAudioBytes": 534240,
+    "associatedAudioSha256": "9d447d7a4300e3c7f671a8e815d91af841cfe8b3523a90d457ec23732f22fd47"
+  },
+  "evidence": {
+    "prebindingScenarioInventory": "migrations/course-g05-l04-gs-002/evidence/source-static-prebinding-antecedents/scenario-inventory.json",
+    "prebindingScenarioInventorySha256": "2a102dd96341bdb0c2adcdc36dcd9d02012342dbc4fb618bba1e4819e7acff3d",
+    "prebindingFrameDomainDisposition": "migrations/course-g05-l04-gs-002/evidence/source-static-prebinding-antecedents/frame-domain-disposition.json",
+    "prebindingFrameDomainDispositionSha256": "a7c65b423e912037506a632906955394034812a54e01f3c9f4568a09192392f2",
+    "audioAudit": "migrations/course-g05-l04-gs-002/audit/audio-runtime-evidence.json",
+    "audioAuditSha256": "a3817b45a5e29d036e75366544fcc5da4783e3a83e00c1477a61fbecf544170b",
+    "boundaryScriptInventory": "migrations/course-g05-l04-gs-002/audit/script-inventory.json",
+    "boundaryScriptInventorySha256": "09a85699eda6e9ccba2a74b9881fad8e6281b2b4af15d0609134c7b04986b513",
+    "swfmillStructure": "migrations/course-g05-l04-gs-002/audit/machine/swfmill.xml.gz",
+    "swfmillStructureSha256": "d7dfa311b131ebe6e984a3a295c57368e1b45f51e347bf68059ac10a796157e3"
+  },
+  "ffdecExport": {
+    "tool": "JPEXS Free Flash Decompiler v.26.2.1",
+    "helperSha256": "78256220d01fba044341283703c3923a1ff8ff29499c51f65ab4e6ac825ccb93",
+    "helperBytes": 52872,
+    "framesHtmlSha256": "0c6de4678ba749837cccd554eec1ca0c2381d667df8b104b93a9784e4f85dedd",
+    "framesHtmlBytes": 9730448,
+    "targetSpriteObjectId": 436,
+    "targetSpriteFunction": "sprite436",
+    "exportCanvas": {
+      "width": 1563,
+      "height": 1088
+    },
+    "exportInternalTranslation": {
+      "x": 776.65,
+      "y": 326.95
+    },
+    "expectedPlacedFunctionCount": 408,
+    "expectedPlacedFunctionsSha256": "52aba7f55097ed8a88d095755f4c0d5ae86fac355acb6a6c36507518b17070c0",
+    "embeddedImageVariableCount": 1,
+    "embeddedImageVariablesSha256": "22a5087b30d0c4ba637feca2ee1928048d6bcafd388997ce1b1d5afe3031c2a5",
+    "expectedFontFunctionCount": 4,
+    "expectedFontFunctionsSha256": "b401fdfc2ae0e1fc950fcc2a8d074a8c921b86850e1d7f1e5fe82735dd53595f"
+  },
+  "timeline": {
+    "fps": 12,
+    "stage": {
+      "width": 800,
+      "height": 600,
+      "backgroundColor": "#b8d8f7"
+    },
+    "root": {
+      "frameCount": 10,
+      "preloaderStopFrame": 1,
+      "beginFrame": 6,
+      "beginLabel": "begin",
+      "placementName": "animation",
+      "placementTwips": {
+        "x": 8248,
+        "y": 5666
+      },
+      "placementPixels": {
+        "x": 412.4,
+        "y": 283.3
+      }
+    },
+    "local": {
+      "timelineId": "sprite-436",
+      "frameCount": 460,
+      "playbackMode": "once",
+      "publicFrameIndexing": "one-indexed"
+    },
+    "stageRenderOffset": {
+      "x": -364.25,
+      "y": -43.64999999999998
+    }
+  },
+  "runtimeContract": {
+    "kind": "structural-local-frame",
+    "scenarios": [
+      "source-static-frame"
+    ],
+    "defaultScenario": "source-static-frame",
+    "supportedLanguages": [
+      "en"
+    ],
+    "seedMapping": "normalized-but-unused-by-source-static-drawing",
+    "blockedLocalFrameRanges": [
+      {
+        "firstFrame": 452,
+        "lastFrame": 460,
+        "reason": "Frames 452..460 begin a stop- and release-handler-controlled randomized game; question selection, scoring/timer state, feedback/audio progression, terminal state, and Replay depend on unresolved ActionScript and host state."
+      }
+    ],
+    "safePrefixBoundary": {
+      "firstNonInitialStopFrame": 452,
+      "firstBlockedFrame": 452,
+      "lastSafeFrame": 451,
+      "interactionKind": "random-game",
+      "requiredReasons": [
+        "event-handler:release",
+        "event-handler:rollOut",
+        "event-handler:rollOver",
+        "exported-action-script",
+        "frame-label:StartGame",
+        "script-stop-state",
+        "structural-action:DoAction"
+      ],
+      "boundaryDoActionSourcePath": "DefineSprite_436/frame_452/DoAction.as",
+      "sourceStaticInferenceOnly": true,
+      "authoritativeRuntimeReachabilityEstablished": false,
+      "behaviorReconstructed": false
+    },
+    "unresolved": [
+      "The 10-frame root and InternalPreloader host entry have no authoritative original-runtime baseline and are not rendered.",
+      "Only sprite-436 frames 1..451 are exposed. Frames 452..460 are rejected beginning at the first non-initial source stop state; no interactive continuation is inferred.",
+      "Source controls are inert. Hit targets, click/drag branches, attempt/scoring state, randomized selection where present, feedback, associated audio, Spanish visuals, natural runtime reachability, terminal and Replay parity, RMSE, human review, Owner acceptance, strict completion, and publication remain unresolved."
+    ],
+    "prebindingTargetFrameDomainDisposition": "unresolved",
+    "currentCanonicalFrameDomainDispositionAsserted": false
+  },
+  "output": {
+    "script": "public/flash-assets/courses/course-g05-l04-gs-002/canvas-renderer.js",
+    "manifest": "public/flash-assets/courses/course-g05-l04-gs-002/manifest.json",
+    "report": "migrations/course-g05-l04-gs-002/evidence/source-static-current-js-candidate.json",
+    "globalRegistry": "HELP_MATH_CANVAS_ASSETS"
+  },
+  "strictAcceptanceEffect": "none"
+}

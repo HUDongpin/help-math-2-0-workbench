@@ -4,6 +4,7 @@ import {notFound} from 'next/navigation';
 import {DemoDetailPage} from '@/components/demos-pages';
 import {demoIds, getSiteContent, isLocale, type DemoId} from '@/content';
 import {createPageMetadata} from '@/lib/metadata';
+import {hasExecutivePreviewSession} from '@/lib/executive-preview-server';
 
 function isDemoId(value: string): value is DemoId {
   return demoIds.includes(value as DemoId);
@@ -33,6 +34,12 @@ export default async function DemoPage({
 }) {
   const [{locale, id}, query] = await Promise.all([params, searchParams]);
   if (!isLocale(locale) || !isDemoId(id)) notFound();
+  if (
+    process.env.NODE_ENV === 'production'
+    && !(await hasExecutivePreviewSession())
+  ) {
+    notFound();
+  }
 
   const rawFrame = Array.isArray(query.frame) ? query.frame[0] : query.frame;
   const parsedFrame = rawFrame && /^\d+$/.test(rawFrame) ? Number(rawFrame) : undefined;

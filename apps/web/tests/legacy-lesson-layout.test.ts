@@ -1,0 +1,164 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+
+import {
+  LEGACY_COMPACT_LANDSCAPE_MAX_WIDTH,
+  LEGACY_COMPACT_HEIGHT_MAX,
+  LEGACY_LESSON_LAYOUT_CONTRACT,
+  LEGACY_MAP_RAIL_MIN_WIDTH,
+  LEGACY_TOOL_RAIL_MIN_WIDTH,
+  LEGACY_WIDE_FUNCTIONAL_MIN_WIDTH,
+  resolveLegacyLessonLayout,
+} from '../lib/legacy-lesson-layout';
+
+const AUTHORED_STAGE = Object.freeze({height: 600, width: 800});
+
+function policy(
+  containerWidth: number,
+  viewportHeight: number,
+  stageTop = 180,
+) {
+  return resolveLegacyLessonLayout({
+    authoredStage: AUTHORED_STAGE,
+    containerWidth,
+    stageTop,
+    viewportHeight,
+    viewportWidth: containerWidth,
+  });
+}
+
+test('layout contract names the native-stage plus modern-rail strategy', () => {
+  assert.equal(
+    LEGACY_LESSON_LAYOUT_CONTRACT,
+    'native-stage-with-adaptive-functional-rails-v1',
+  );
+  assert.equal(LEGACY_WIDE_FUNCTIONAL_MIN_WIDTH, 1280);
+  assert.equal(LEGACY_MAP_RAIL_MIN_WIDTH, 1600);
+  assert.equal(LEGACY_TOOL_RAIL_MIN_WIDTH, 1800);
+  assert.equal(LEGACY_COMPACT_HEIGHT_MAX, 880);
+  assert.equal(LEGACY_COMPACT_LANDSCAPE_MAX_WIDTH, 1279);
+});
+
+test('ordinary and short wide screens preserve the native 800 by 600 stage', () => {
+  for (const [width, height] of [
+    [1280, 900],
+    [1366, 768],
+    [1440, 900],
+    [1536, 864],
+    [1920, 1080],
+  ]) {
+    const resolved = policy(width, height, 260);
+    assert.equal(resolved.layoutMode, 'wide-functional');
+    assert.equal(
+      resolved.mapPresentation,
+      width >= LEGACY_MAP_RAIL_MIN_WIDTH ? 'rail' : 'overlay',
+    );
+    assert.equal(resolved.stageCapWidth, 800);
+  }
+});
+
+test('map and tool rails switch only when their complete geometry fits', () => {
+  const beforeWide = policy(1279, 900);
+  const wideCompanion = policy(1280, 900);
+  const beforeMap = policy(1599, 900);
+  const mapRail = policy(1600, 900);
+  const beforeTool = policy(1799, 1000);
+  const toolRail = policy(1800, 1000);
+
+  assert.equal(beforeWide.layoutMode, 'legacy-native');
+  assert.equal(wideCompanion.layoutMode, 'wide-functional');
+  assert.equal(beforeMap.mapPresentation, 'overlay');
+  assert.equal(mapRail.mapPresentation, 'rail');
+  assert.equal(beforeTool.toolPresentation, 'overlay');
+  assert.equal(toolRail.toolPresentation, 'rail');
+});
+
+test('short wide workspaces compact only modern chrome around the native stage', () => {
+  const shortWide = policy(1366, 768, 260);
+  const commonWide = policy(1536, 864, 260);
+  const boundary = policy(1366, 880, 260);
+  const comfortable = policy(1366, 881, 260);
+
+  assert.equal(shortWide.layoutMode, 'wide-functional');
+  assert.equal(shortWide.stageCapWidth, 800);
+  assert.equal(shortWide.workspaceDensity, 'compact-height');
+  assert.equal(commonWide.workspaceDensity, 'compact-height');
+  assert.equal(boundary.workspaceDensity, 'compact-height');
+  assert.equal(comfortable.workspaceDensity, 'comfortable');
+});
+
+test('720p and nearby short-wide displays never downscale the authored stage', () => {
+  for (const [width, height] of [
+    [1280, 720],
+    [1366, 768],
+  ]) {
+    const resolved = policy(width, height, 128);
+
+    assert.equal(resolved.layoutMode, 'wide-functional');
+    assert.equal(resolved.workspaceDensity, 'compact-height');
+    assert.equal(resolved.mapPresentation, 'overlay');
+    assert.equal(resolved.toolPresentation, 'overlay');
+    assert.equal(resolved.stageCapWidth, 800);
+  }
+});
+
+test('compact landscape alone uses remaining height and a modern control column', () => {
+  const resolved = policy(720, 450, 110);
+  assert.deepEqual(resolved, {
+    compactLandscape: true,
+    containerWidth: 720,
+    layoutMode: 'compact',
+    mapPresentation: 'overlay',
+    stageCapWidth: 420,
+    toolPresentation: 'overlay',
+    workspaceDensity: 'comfortable',
+  });
+
+  const portrait = policy(390, 844, 110);
+  assert.equal(portrait.compactLandscape, false);
+  assert.equal(portrait.layoutMode, 'compact');
+  assert.equal(portrait.stageCapWidth, 800);
+  assert.equal(portrait.workspaceDensity, 'comfortable');
+});
+
+test('compact landscape media boundaries match the functional shell contract', () => {
+  for (const [width, height] of [
+    [681, 500],
+    [844, 390],
+    [1024, 500],
+    [1179, 500],
+    [1180, 500],
+    [1279, 500],
+  ]) {
+    assert.equal(policy(width, height, 20).compactLandscape, true);
+  }
+
+  assert.equal(policy(680, 500, 20).compactLandscape, false);
+  assert.equal(policy(1280, 500, 20).compactLandscape, false);
+  assert.equal(policy(1280, 500, 20).layoutMode, 'wide-functional');
+  assert.equal(policy(1280, 500, 20).stageCapWidth, 800);
+});
+
+test('invalid geometry fails before it can silently distort the stage', () => {
+  assert.throws(() => policy(0, 900), /containerWidth/);
+  assert.throws(
+    () => resolveLegacyLessonLayout({
+      authoredStage: {height: 0, width: 800},
+      containerWidth: 1366,
+      stageTop: 100,
+      viewportHeight: 768,
+      viewportWidth: 1366,
+    }),
+    /authoredStage\.height/,
+  );
+  assert.throws(
+    () => resolveLegacyLessonLayout({
+      authoredStage: AUTHORED_STAGE,
+      containerWidth: 1366,
+      stageTop: Number.NaN,
+      viewportHeight: 768,
+      viewportWidth: 1366,
+    }),
+    /stageTop/,
+  );
+});

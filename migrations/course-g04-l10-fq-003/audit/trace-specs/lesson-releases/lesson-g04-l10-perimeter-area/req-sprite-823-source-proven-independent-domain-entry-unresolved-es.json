@@ -1,0 +1,1720 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "course-pilot-original-runtime-trace-specification",
+  "animationId": "course-g04-l10-fq-003",
+  "requirementId": "req:sprite-823:source-proven-independent-domain-entry-unresolved:es",
+  "traceSpecStatus": "unresolved",
+  "authorityStatement": [
+    "This file specifies evidence needed to execute one original-runtime trace; it is not an execution log, baseline capture, RMSE result, or acceptance record.",
+    "Static ActionScript/timeline inventories expose candidates and obligations but do not prove event order, runtime reachability, source targets, checkpoints, or terminal semantics.",
+    "Empty orderedSteps and executedSteps are intentional when no complete source-evidenced schedule exists; product behavior and the JavaScript rewrite are never used to fill legacy-source gaps.",
+    "The exact atomic lesson-release membership, current scenario-inventory bytes, and current frame-domain disposition are hash-bound planning inputs only; unresolved dispositions and natural traces remain fail-closed."
+  ],
+  "identity": {
+    "frameDomainId": "sprite-823",
+    "traceId": "trace:sprite-823:source-proven-independent-domain-entry-unresolved:es:seed-0",
+    "entryStateSha256": "39ae6446448a03bd84709da3e143bb2166b9e7a2f4fee66e353ef892596c7720",
+    "scenario": "source-proven-independent-domain-entry-unresolved",
+    "scenarioKind": "source-proven-structural-entry-runtime-unresolved",
+    "language": "es",
+    "seed": "0",
+    "requiredRange": {
+      "firstFrame": 1,
+      "lastFrame": 70
+    },
+    "baselineAuthorityRequirement": "original-runtime-natural-trace"
+  },
+  "traceModel": {
+    "kind": "stateful-natural-trace",
+    "domainScope": "nested",
+    "interactionMode": "source-proven-structural-entry-runtime-unresolved",
+    "positioningProofModes": [],
+    "naturalPlaybackClaimed": true,
+    "captureMode": "natural-root-entry-then-every-one-indexed-local-frame-after-source-evidenced-actions"
+  },
+  "sourceBindings": {
+    "sourceSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/FQ/L10FQ03.swf",
+      "sha256": "afa03a2a134bb5b1fe91fd3b2847b751cc65a07b0250940fca3a01e215976c39"
+    },
+    "migrationManifest": {
+      "path": "migration.json",
+      "hashMode": "canonical-json-v1",
+      "projection": "help-math-technical-manifest-v1",
+      "sha256": "01209537b1d1ccf777b54546a8465605921936701042fea2935d4eb330871d4d",
+      "excludedPaths": [
+        "status",
+        "created",
+        "confidence",
+        "classification",
+        "audit",
+        "toolVersions",
+        "baseline",
+        "evidence",
+        "fidelity",
+        "accessibility",
+        "acceptance",
+        "catalogEvidence",
+        "implementation.candidateQa",
+        "implementation.candidateMaturity",
+        "implementation.candidateProductQa",
+        "implementation.candidateVisualEvidence",
+        "implementation.productQaEvidence",
+        "implementation.productQaScope",
+        "audio.catalogGroupCandidates",
+        "audio.catalogExactAssociations",
+        "audio.acceptance",
+        "audio.authoritativeListeningComplete",
+        "audio.originalHostSynchronizationComplete",
+        "audio.strictAcceptance",
+        "audio.structuralAuditComplete"
+      ]
+    },
+    "fullFrameCoverage": {
+      "path": "evidence/full-frame-coverage.json",
+      "hashMode": "canonical-json-v1",
+      "projection": "help-math-trace-coverage-identity-v1",
+      "sha256": "0523637bcb8ae80714b791f0b07a2d723a0051af2dd53c37b49b430dd6bc5ec9",
+      "excludedPaths": [
+        "status",
+        "blockingReason",
+        "blockingEvidence",
+        "baselineAuthority",
+        "capturedFrameCount",
+        "missingFrames",
+        "baselineCaptureManifest",
+        "baselineCaptureManifestSha256",
+        "captureManifest",
+        "captureManifestSha256",
+        "metricsFile",
+        "metricsSha256"
+      ],
+      "includedPaths": [
+        "requirementId",
+        "requirementSchemaVersion",
+        "coverageRole",
+        "coverageGroupId",
+        "scenario",
+        "frameDomainId",
+        "traceId",
+        "language",
+        "seed",
+        "requiredRange",
+        "requiredFrameSet",
+        "selectionSha256",
+        "naturalPath",
+        "entryState",
+        "entryStateSha256",
+        "baselineAuthorityRequirement",
+        "strictAcceptanceEffect"
+      ]
+    },
+    "scenarioInventory": {
+      "path": "audit/scenario-inventory.json",
+      "hashMode": "canonical-json-v1",
+      "projection": "help-math-scenario-inventory-technical-v1",
+      "sha256": "aa100575564423b8e6e3f264dbadb2fdb7daee62e54543e3c37969c65dd53393",
+      "excludedPaths": [
+        "migrationStatusAtGeneration",
+        "migrationStatusChanged",
+        "evidenceIndex[artifactId=migration-manifest]"
+      ]
+    },
+    "coverageInventoryBinding": {
+      "status": "verified-current-file-at-spec-generation-not-part-of-execution-binding",
+      "fileSha256AtSpecGeneration": "9d6861473d9acae55d93e5f15e5b2623b96b1547926a973349423c27f6a4d857",
+      "technicalProjectionSha256": "aa100575564423b8e6e3f264dbadb2fdb7daee62e54543e3c37969c65dd53393"
+    },
+    "lessonReleaseCatalog": {
+      "path": "catalog/lesson-releases.json",
+      "bytes": 115651,
+      "sha256": "d518f812a19b6038e55bca337b7a4f4f96425dd5599f9d07c9f69c8a0a1ae1cf",
+      "schemaVersion": 1,
+      "releaseId": "lesson-g04-l10-perimeter-area",
+      "releaseFingerprintSha256": "f4f2062204e026cb96a8d734e973d2a0b6d6dccb8e381068eb8209186eb43e60",
+      "orderedMemberIdentitySha256": "8a2d3a083ab41d33afa5554442abb46c46d88779d030fb7fef6b257a79e46534"
+    },
+    "scenarioInventoryExactFile": {
+      "path": "audit/scenario-inventory.json",
+      "sha256": "9d6861473d9acae55d93e5f15e5b2623b96b1547926a973349423c27f6a4d857",
+      "role": "exact-current-static-scenario-inventory-file-at-spec-generation"
+    },
+    "frameDomainDisposition": {
+      "path": "audit/frame-domain-disposition.json",
+      "sha256": "e49ecc1eaecc22966296a76f32665a7ea288217cf7ee57ab1d62ff91ca76f80e",
+      "fileSha256AtSpecGeneration": "e49ecc1eaecc22966296a76f32665a7ea288217cf7ee57ab1d62ff91ca76f80e",
+      "schemaVersion": 1,
+      "status": "structurally-enumerated-dispositions-unresolved",
+      "dispositionCounts": {
+        "declared-frame-domain": 5,
+        "composite-child-with-parent": 210,
+        "independent-required": 0,
+        "nonvisual": 0,
+        "unresolved": 3
+      },
+      "unresolvedTimelineCount": 3,
+      "independentRequiredTimelineCount": 0,
+      "highRiskIndependentCandidateCount": 0,
+      "scenarioInventoryFileSha256": "9d6861473d9acae55d93e5f15e5b2623b96b1547926a973349423c27f6a4d857",
+      "technicalManifestProjectionSha256": "01209537b1d1ccf777b54546a8465605921936701042fea2935d4eb330871d4d"
+    }
+  },
+  "frameDomain": {
+    "id": "sprite-823",
+    "kind": "nested",
+    "sourceTimelineId": "sprite-823",
+    "parentFrameDomainId": "root",
+    "parentEntryFrame": null,
+    "localEntryFrame": 1,
+    "frameCount": 70,
+    "structuralReachability": "reachable-from-root-placement-graph",
+    "inventoryEvidence": {
+      "artifactId": "swfmill-xml",
+      "timelineId": "sprite-823"
+    },
+    "nativeStage": {
+      "width": 800,
+      "height": 600
+    },
+    "fps": 12
+  },
+  "entryState": {
+    "kind": "declared-domain-entry-unresolved",
+    "animationId": "course-g04-l10-fq-003",
+    "releaseId": "lesson-g04-l10-perimeter-area",
+    "frameDomainId": "sprite-823",
+    "sourceTimelineId": "sprite-823",
+    "scenario": "source-proven-independent-domain-entry-unresolved",
+    "language": "es",
+    "seed": "0",
+    "runtimeReachabilityEstablished": false
+  },
+  "schedule": {
+    "status": "unresolved-no-complete-source-event-schedule",
+    "sourceEvidence": [],
+    "noActionsRequired": false,
+    "orderedStepSchema": {
+      "description": "Schema required for each future source-evidenced step. Empty unresolved orderedSteps are intentional and must not be filled from product behavior or inference.",
+      "required": [
+        "order",
+        "action",
+        "sourceTarget",
+        "preStateCheckpoint",
+        "postStateCheckpoint",
+        "evidence"
+      ],
+      "properties": {
+        "order": "one-indexed integer contiguous with the preceding step",
+        "action": "exact source event and input; never a guessed click, key, coordinate, value, or delay",
+        "sourceTarget": "source timeline/instance/object/script target plus authoritative locator",
+        "preStateCheckpoint": "complete source-observable state required before dispatch",
+        "postStateCheckpoint": "complete source-observable state required after dispatch",
+        "evidence": "one or more scenario-inventory artifact references that prove this exact step and ordering",
+        "terminalEffect": "optional source-evidenced relationship to completion, Replay, navigation, score, or stop state"
+      }
+    },
+    "orderedSteps": [],
+    "executedSteps": [],
+    "stateCheckpoints": [],
+    "terminalSemantics": {
+      "status": "unresolved",
+      "expectedState": null,
+      "evidence": []
+    },
+    "exhaustiveFrameCapturePlan": {
+      "indexing": "one-indexed",
+      "firstFrame": 1,
+      "lastFrame": 70,
+      "frameCount": 70,
+      "executionPrerequisite": "Blocked until the complete source-evidenced event/target/checkpoint/terminal schedule is supplied."
+    }
+  },
+  "unresolvedMappings": [
+    {
+      "mappingId": "action-schedule",
+      "status": "missing-source-evidence",
+      "requiredResolution": "Enumerate every source/host/user event in exact order, including input values, coordinates, keys, waits, random outcomes, and language/seed effects where applicable."
+    },
+    {
+      "mappingId": "action-to-source-target",
+      "status": "missing-source-evidence",
+      "requiredResolution": "Map every ordered event to an exact source timeline, placed instance, character/script target, and hit/input locator; static handler candidates are not an execution mapping."
+    },
+    {
+      "mappingId": "state-checkpoints",
+      "status": "missing-source-evidence",
+      "requiredResolution": "Define the complete observable pre/post state for entry and every action, including root/local playheads, score, attempts, random state, language, audio, overlays, and enabled controls."
+    },
+    {
+      "mappingId": "terminal-semantics",
+      "status": "missing-source-evidence",
+      "requiredResolution": "Prove the terminal stop/completion/navigation state and Replay reset vector; a structural last frame is not terminal-behavior evidence."
+    }
+  ],
+  "separateBehaviorUnknowns": [],
+  "inventoryContext": {
+    "inventoryStatus": "static-exhaustive-runtime-unverified",
+    "timelineControlStates": [
+      {
+        "frame": 1,
+        "reasons": [
+          "exported-action-script",
+          "frame-label:FirstSection",
+          "initial-one-indexed-frame",
+          "structural-action:DoAction"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_1/DoAction.as",
+            "lineStart": 510,
+            "lineEnd": 734
+          }
+        ]
+      },
+      {
+        "frame": 2,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q1"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_2/PlaceObject2_69_21/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1016,
+            "lineEnd": 1021
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_2/PlaceObject2_72_32/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1023,
+            "lineEnd": 1028
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_2/PlaceObject2_75_43/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1030,
+            "lineEnd": 1035
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_2/PlaceObject2_78_54/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1037,
+            "lineEnd": 1042
+          }
+        ]
+      },
+      {
+        "frame": 3,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q2"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_3/PlaceObject2_113_20/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1243,
+            "lineEnd": 1248
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_3/PlaceObject2_116_31/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1250,
+            "lineEnd": 1255
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_3/PlaceObject2_118_42/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1257,
+            "lineEnd": 1262
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_3/PlaceObject2_121_53/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1264,
+            "lineEnd": 1269
+          }
+        ]
+      },
+      {
+        "frame": 4,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q3"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_4/PlaceObject2_131_20/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1271,
+            "lineEnd": 1276
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_4/PlaceObject2_132_31/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1278,
+            "lineEnd": 1283
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_4/PlaceObject2_134_42/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1285,
+            "lineEnd": 1290
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_4/PlaceObject2_136_53/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1292,
+            "lineEnd": 1297
+          }
+        ]
+      },
+      {
+        "frame": 5,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q4"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_5/PlaceObject2_142_17/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1307,
+            "lineEnd": 1312
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_5/PlaceObject2_144_28/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1314,
+            "lineEnd": 1319
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_5/PlaceObject2_147_39/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1321,
+            "lineEnd": 1326
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_5/PlaceObject2_150_50/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1328,
+            "lineEnd": 1333
+          }
+        ]
+      },
+      {
+        "frame": 6,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q5"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_6/PlaceObject2_166_17/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1335,
+            "lineEnd": 1340
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_6/PlaceObject2_169_28/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1342,
+            "lineEnd": 1347
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_6/PlaceObject2_172_39/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1349,
+            "lineEnd": 1354
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_6/PlaceObject2_175_50/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1356,
+            "lineEnd": 1361
+          }
+        ]
+      },
+      {
+        "frame": 7,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q6"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_7/PlaceObject2_181_17/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1363,
+            "lineEnd": 1368
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_7/PlaceObject2_184_28/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1370,
+            "lineEnd": 1375
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_7/PlaceObject2_187_39/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1377,
+            "lineEnd": 1382
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_7/PlaceObject2_190_50/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1384,
+            "lineEnd": 1389
+          }
+        ]
+      },
+      {
+        "frame": 8,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q7"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_8/PlaceObject2_195_17/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1391,
+            "lineEnd": 1396
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_8/PlaceObject2_198_28/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1398,
+            "lineEnd": 1403
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_8/PlaceObject2_200_39/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1405,
+            "lineEnd": 1410
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_8/PlaceObject2_203_50/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1412,
+            "lineEnd": 1417
+          }
+        ]
+      },
+      {
+        "frame": 9,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q8"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_9/PlaceObject2_212_20/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1419,
+            "lineEnd": 1424
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_9/PlaceObject2_215_31/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1426,
+            "lineEnd": 1431
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_9/PlaceObject2_217_42/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1433,
+            "lineEnd": 1438
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_9/PlaceObject2_220_53/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1440,
+            "lineEnd": 1445
+          }
+        ]
+      },
+      {
+        "frame": 10,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q9"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_10/PlaceObject2_225_20/CLIPACTIONRECORD on(release).as",
+            "lineStart": 736,
+            "lineEnd": 741
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_10/PlaceObject2_228_31/CLIPACTIONRECORD on(release).as",
+            "lineStart": 743,
+            "lineEnd": 748
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_10/PlaceObject2_231_42/CLIPACTIONRECORD on(release).as",
+            "lineStart": 750,
+            "lineEnd": 755
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_10/PlaceObject2_234_53/CLIPACTIONRECORD on(release).as",
+            "lineStart": 757,
+            "lineEnd": 762
+          }
+        ]
+      },
+      {
+        "frame": 11,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q10"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_11/PlaceObject2_243_21/CLIPACTIONRECORD on(release).as",
+            "lineStart": 764,
+            "lineEnd": 769
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_11/PlaceObject2_245_32/CLIPACTIONRECORD on(release).as",
+            "lineStart": 771,
+            "lineEnd": 776
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_11/PlaceObject2_248_43/CLIPACTIONRECORD on(release).as",
+            "lineStart": 778,
+            "lineEnd": 783
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_11/PlaceObject2_251_54/CLIPACTIONRECORD on(release).as",
+            "lineStart": 785,
+            "lineEnd": 790
+          }
+        ]
+      },
+      {
+        "frame": 12,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q11"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_12/PlaceObject2_257_20/CLIPACTIONRECORD on(release).as",
+            "lineStart": 792,
+            "lineEnd": 797
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_12/PlaceObject2_260_31/CLIPACTIONRECORD on(release).as",
+            "lineStart": 799,
+            "lineEnd": 804
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_12/PlaceObject2_263_42/CLIPACTIONRECORD on(release).as",
+            "lineStart": 806,
+            "lineEnd": 811
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_12/PlaceObject2_265_53/CLIPACTIONRECORD on(release).as",
+            "lineStart": 813,
+            "lineEnd": 818
+          }
+        ]
+      },
+      {
+        "frame": 13,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q12"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_13/PlaceObject2_274_20/CLIPACTIONRECORD on(release).as",
+            "lineStart": 820,
+            "lineEnd": 825
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_13/PlaceObject2_277_31/CLIPACTIONRECORD on(release).as",
+            "lineStart": 827,
+            "lineEnd": 832
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_13/PlaceObject2_280_42/CLIPACTIONRECORD on(release).as",
+            "lineStart": 834,
+            "lineEnd": 839
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_13/PlaceObject2_282_53/CLIPACTIONRECORD on(release).as",
+            "lineStart": 841,
+            "lineEnd": 846
+          }
+        ]
+      },
+      {
+        "frame": 14,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q13"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_14/PlaceObject2_290_20/CLIPACTIONRECORD on(release).as",
+            "lineStart": 848,
+            "lineEnd": 853
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_14/PlaceObject2_293_31/CLIPACTIONRECORD on(release).as",
+            "lineStart": 855,
+            "lineEnd": 860
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_14/PlaceObject2_296_42/CLIPACTIONRECORD on(release).as",
+            "lineStart": 862,
+            "lineEnd": 867
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_14/PlaceObject2_299_53/CLIPACTIONRECORD on(release).as",
+            "lineStart": 869,
+            "lineEnd": 874
+          }
+        ]
+      },
+      {
+        "frame": 15,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q14"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_15/PlaceObject2_307_24/CLIPACTIONRECORD on(release).as",
+            "lineStart": 876,
+            "lineEnd": 881
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_15/PlaceObject2_310_35/CLIPACTIONRECORD on(release).as",
+            "lineStart": 883,
+            "lineEnd": 888
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_15/PlaceObject2_313_46/CLIPACTIONRECORD on(release).as",
+            "lineStart": 890,
+            "lineEnd": 895
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_15/PlaceObject2_316_57/CLIPACTIONRECORD on(release).as",
+            "lineStart": 897,
+            "lineEnd": 902
+          }
+        ]
+      },
+      {
+        "frame": 16,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q15"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_16/PlaceObject2_323_18/CLIPACTIONRECORD on(release).as",
+            "lineStart": 904,
+            "lineEnd": 909
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_16/PlaceObject2_326_29/CLIPACTIONRECORD on(release).as",
+            "lineStart": 911,
+            "lineEnd": 916
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_16/PlaceObject2_329_40/CLIPACTIONRECORD on(release).as",
+            "lineStart": 918,
+            "lineEnd": 923
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_16/PlaceObject2_332_51/CLIPACTIONRECORD on(release).as",
+            "lineStart": 925,
+            "lineEnd": 930
+          }
+        ]
+      },
+      {
+        "frame": 17,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q16"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_17/PlaceObject2_340_23/CLIPACTIONRECORD on(release).as",
+            "lineStart": 932,
+            "lineEnd": 937
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_17/PlaceObject2_343_34/CLIPACTIONRECORD on(release).as",
+            "lineStart": 939,
+            "lineEnd": 944
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_17/PlaceObject2_345_45/CLIPACTIONRECORD on(release).as",
+            "lineStart": 946,
+            "lineEnd": 951
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_17/PlaceObject2_347_56/CLIPACTIONRECORD on(release).as",
+            "lineStart": 953,
+            "lineEnd": 958
+          }
+        ]
+      },
+      {
+        "frame": 18,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q17"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_18/PlaceObject2_355_20/CLIPACTIONRECORD on(release).as",
+            "lineStart": 960,
+            "lineEnd": 965
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_18/PlaceObject2_358_31/CLIPACTIONRECORD on(release).as",
+            "lineStart": 967,
+            "lineEnd": 972
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_18/PlaceObject2_360_42/CLIPACTIONRECORD on(release).as",
+            "lineStart": 974,
+            "lineEnd": 979
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_18/PlaceObject2_363_53/CLIPACTIONRECORD on(release).as",
+            "lineStart": 981,
+            "lineEnd": 986
+          }
+        ]
+      },
+      {
+        "frame": 19,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q18"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_19/PlaceObject2_369_20/CLIPACTIONRECORD on(release).as",
+            "lineStart": 988,
+            "lineEnd": 993
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_19/PlaceObject2_371_31/CLIPACTIONRECORD on(release).as",
+            "lineStart": 995,
+            "lineEnd": 1000
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_19/PlaceObject2_374_42/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1002,
+            "lineEnd": 1007
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_19/PlaceObject2_377_53/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1009,
+            "lineEnd": 1014
+          }
+        ]
+      },
+      {
+        "frame": 20,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q19"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_20/PlaceObject2_383_24/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1044,
+            "lineEnd": 1049
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_20/PlaceObject2_386_35/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1051,
+            "lineEnd": 1056
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_20/PlaceObject2_388_46/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1058,
+            "lineEnd": 1063
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_20/PlaceObject2_391_57/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1065,
+            "lineEnd": 1070
+          }
+        ]
+      },
+      {
+        "frame": 21,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q20"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_21/PlaceObject2_398_26/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1072,
+            "lineEnd": 1077
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_21/PlaceObject2_401_37/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1079,
+            "lineEnd": 1084
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_21/PlaceObject2_403_48/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1086,
+            "lineEnd": 1091
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_21/PlaceObject2_406_59/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1093,
+            "lineEnd": 1098
+          }
+        ]
+      },
+      {
+        "frame": 22,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q21"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_22/PlaceObject2_411_20/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1100,
+            "lineEnd": 1105
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_22/PlaceObject2_414_31/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1107,
+            "lineEnd": 1112
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_22/PlaceObject2_416_42/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1114,
+            "lineEnd": 1119
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_22/PlaceObject2_419_53/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1121,
+            "lineEnd": 1126
+          }
+        ]
+      },
+      {
+        "frame": 23,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q22"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_23/PlaceObject2_428_22/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1128,
+            "lineEnd": 1133
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_23/PlaceObject2_429_33/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1135,
+            "lineEnd": 1140
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_23/PlaceObject2_431_44/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1142,
+            "lineEnd": 1147
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_23/PlaceObject2_433_55/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1149,
+            "lineEnd": 1154
+          }
+        ]
+      },
+      {
+        "frame": 24,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q23"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_24/PlaceObject2_437_18/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1156,
+            "lineEnd": 1161
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_24/PlaceObject2_438_29/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1163,
+            "lineEnd": 1168
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_24/PlaceObject2_440_40/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1170,
+            "lineEnd": 1175
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_24/PlaceObject2_442_51/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1177,
+            "lineEnd": 1182
+          }
+        ]
+      },
+      {
+        "frame": 25,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q24"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_25/PlaceObject2_455_23/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1184,
+            "lineEnd": 1189
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_25/PlaceObject2_457_34/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1191,
+            "lineEnd": 1196
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_25/PlaceObject2_458_45/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1198,
+            "lineEnd": 1203
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_25/PlaceObject2_460_56/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1205,
+            "lineEnd": 1210
+          }
+        ]
+      },
+      {
+        "frame": 26,
+        "reasons": [
+          "event-handler:release",
+          "frame-label:Q25"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_26/PlaceObject2_465_22/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1212,
+            "lineEnd": 1217
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_26/PlaceObject2_467_33/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1219,
+            "lineEnd": 1224
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_26/PlaceObject2_469_44/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1226,
+            "lineEnd": 1231
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_26/PlaceObject2_470_55/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1233,
+            "lineEnd": 1238
+          }
+        ]
+      },
+      {
+        "frame": 28,
+        "reasons": [
+          "exported-action-script",
+          "frame-label:Review",
+          "structural-action:DoAction"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_28/DoAction.as",
+            "lineStart": 1240,
+            "lineEnd": 1241
+          }
+        ]
+      },
+      {
+        "frame": 44,
+        "reasons": [
+          "event-handler:release",
+          "exported-action-script",
+          "script-stop-state",
+          "structural-action:DoAction"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_44/DoAction.as",
+            "lineStart": 1299,
+            "lineEnd": 1300
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_44/DoAction.as",
+            "lineStart": 1299,
+            "lineEnd": 1300
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_823/frame_44/PlaceObject2_475_13/CLIPACTIONRECORD on(release).as",
+            "lineStart": 1302,
+            "lineEnd": 1305
+          }
+        ]
+      },
+      {
+        "frame": 45,
+        "reasons": [
+          "frame-label:R1"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 46,
+        "reasons": [
+          "frame-label:R2"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 47,
+        "reasons": [
+          "frame-label:R3"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 48,
+        "reasons": [
+          "frame-label:R4"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 49,
+        "reasons": [
+          "frame-label:R5"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 50,
+        "reasons": [
+          "frame-label:R6"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 51,
+        "reasons": [
+          "frame-label:R7"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 52,
+        "reasons": [
+          "frame-label:R8"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 53,
+        "reasons": [
+          "frame-label:R9"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 54,
+        "reasons": [
+          "frame-label:R10"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 55,
+        "reasons": [
+          "frame-label:R11"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 56,
+        "reasons": [
+          "frame-label:R12"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 57,
+        "reasons": [
+          "frame-label:R13"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 58,
+        "reasons": [
+          "frame-label:R14"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 59,
+        "reasons": [
+          "frame-label:R15"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 60,
+        "reasons": [
+          "frame-label:R16"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 61,
+        "reasons": [
+          "frame-label:R17"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 62,
+        "reasons": [
+          "frame-label:R18"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 63,
+        "reasons": [
+          "frame-label:R19"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 64,
+        "reasons": [
+          "frame-label:R20"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 65,
+        "reasons": [
+          "frame-label:R21"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 66,
+        "reasons": [
+          "frame-label:R22"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 67,
+        "reasons": [
+          "frame-label:R23"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 68,
+        "reasons": [
+          "frame-label:R24"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 69,
+        "reasons": [
+          "frame-label:R25"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      },
+      {
+        "frame": 70,
+        "reasons": [
+          "terminal-structural-frame"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-823"
+          }
+        ]
+      }
+    ],
+    "obligationCounts": {
+      "handlerBehaviorGroups": 11,
+      "buttonTargetObligations": 7,
+      "inputObligations": 0,
+      "dragObligations": 6,
+      "correctWrongObligations": 106,
+      "conditionalBranchObligations": 45,
+      "randomObligations": 0,
+      "labeledStateObligations": 51,
+      "glossaryAndHyperlinkObligations": 0,
+      "sectionMenuObligations": 0,
+      "courseRouteObligations": 1,
+      "sideEffectObligations": 1,
+      "dependencyFixtureObligations": 63
+    },
+    "unknownIds": [
+      "dynamic-timeline-targets",
+      "hit-geometry",
+      "host-defaults",
+      "readiness-missing-01",
+      "readiness-missing-02",
+      "readiness-missing-03",
+      "readiness-missing-04",
+      "readiness-missing-05",
+      "replay-target",
+      "runtime-reachability",
+      "unproven-nested-timelines"
+    ],
+    "note": "These are static candidates/obligations only and are not mapped into orderedSteps by this generator."
+  },
+  "executionEvidence": {
+    "status": "not-executed-by-this-generator",
+    "expectedExecutionReportPath": "baseline/trace-executions/req-sprite-823-source-proven-independent-domain-entry-unresolved-es.json",
+    "hashDagDirection": "source -> stable technical manifest/coverage/inventory projections -> trace spec -> execution report; mutable coverage results, QA, status, signatures, and baseline adoption must never hash-bind back to the spec/report",
+    "executionProofSchema": {
+      "description": "Contract for a future authorized-original-runtime execution report. A report that only repeats identifiers or hashes is insufficient.",
+      "required": [
+        "schemaVersion",
+        "status",
+        "proofMode",
+        "animationId",
+        "requirementId",
+        "identity",
+        "traceSpecBinding",
+        "authorizedRuntime",
+        "rawEventLog",
+        "sourceTargetResolutionLog",
+        "stateSnapshotArchive",
+        "originalRuntimeCaptureManifest",
+        "frameResults",
+        "orderedStepResults",
+        "stateCheckpointResults",
+        "terminalResult",
+        "unexpectedEvents",
+        "sequenceChainSha256"
+      ],
+      "invariants": [
+        "traceSpecBinding.file and traceSpecBinding.sha256 must identify the exact indexed trace spec used for execution.",
+        "orderedStepResults length, one-indexed order, scheduledStepSha256, dispatchedAction, and resolvedSourceTarget must exactly match schedule.orderedSteps.",
+        "Each step must preserve an actual monotonic eventSequence index, raw-log locator, pre/post observed state, frame-domain/root/local playheads, and evidence hashes; identifier echoing is not execution proof.",
+        "Each result record is chain-bound to the preceding result hash. sequenceChainSha256 must end at the last canonical result record, or at the signed zero-action observation when noActionsRequired is source-evidenced.",
+        "stateCheckpointResults must cover every declared checkpoint and compare expectedState with observedState. Missing, extra, reordered, or mismatched events/checkpoints make status failed.",
+        "terminalResult must compare the source-evidenced terminal semantics with observed completion/stop/navigation/score/audio/Replay state and must include capture/log hashes.",
+        "unexpectedEvents must be empty for a passing report; legacy network, host-command, JavaScript bridge, or persistent side effects remain disabled and recorded.",
+        "For frame-accurate root proof, frameResults must contain every required root frame exactly once in strict order and bind the positioning operation, runtime-observed frame, display-list state hash, native-size bitmap, capture-log locator, and previous result hash.",
+        "direct-seek-root-exhaustive requires one original-runtime direct-seek operation per frame. sequential-step-root-exhaustive requires a Rewind observation at frame 1 followed by exactly one Step Forward operation for each frame 2..N. Neither positioning mode proves natural playback."
+      ],
+      "orderedStepResultRequired": [
+        "order",
+        "scheduledStepSha256",
+        "eventSequence",
+        "rawEventLogLocator",
+        "dispatchedAction",
+        "resolvedSourceTarget",
+        "preState",
+        "postState",
+        "frameEvidence",
+        "previousResultSha256",
+        "resultSha256",
+        "result"
+      ],
+      "stateObservationRequired": [
+        "observedState",
+        "observedStateSha256",
+        "rootFrame",
+        "frameDomainId",
+        "localFrame",
+        "screenshotSha256",
+        "eventLogOffset"
+      ],
+      "frameAccurateRootResultRequired": [
+        "frame",
+        "positioningOperation",
+        "operationCountSincePrevious",
+        "requestSequence",
+        "captureLogLocator",
+        "observedRootFrame",
+        "observedDisplayListStateSha256",
+        "screenshotFile",
+        "screenshotSha256",
+        "width",
+        "height",
+        "previousResultSha256",
+        "resultSha256",
+        "result"
+      ],
+      "rawEvidenceRequired": [
+        "authorizedRuntime version/build and launch protocol",
+        "append-only raw event log path/SHA-256",
+        "source-target resolution log path/SHA-256",
+        "state-snapshot archive path/SHA-256",
+        "original-runtime frame capture manifest path/SHA-256"
+      ]
+    },
+    "executionReport": null,
+    "originalRuntimeCaptureManifest": null,
+    "executedSteps": [],
+    "stateCheckpointResults": [],
+    "terminalResult": null
+  },
+  "strictAcceptanceEffect": "none; this specification neither resolves baseline authority nor satisfies branch, visual, RMSE, audio, human-review, or owner-acceptance gates",
+  "lessonReleaseMembership": {
+    "releaseId": "lesson-g04-l10-perimeter-area",
+    "publicationMode": "atomic",
+    "expectedAtomicMemberCount": 47,
+    "releaseFingerprintSha256": "f4f2062204e026cb96a8d734e973d2a0b6d6dccb8e381068eb8209186eb43e60",
+    "member": {
+      "ordinal": 46,
+      "animationId": "course-g04-l10-fq-003",
+      "assetId": "swf-afa03a2a134bb5b1fe91fd3b2847b751cc65a07b0250940fca3a01e215976c39",
+      "releaseRole": "active-xml-referenced-page",
+      "shardId": "g04-l10-practice-assessment",
+      "sourcePath": "HELP_COURSES/ELMGR4/L10/FQ/L10FQ03.swf",
+      "sourceSha256": "afa03a2a134bb5b1fe91fd3b2847b751cc65a07b0250940fca3a01e215976c39"
+    },
+    "memberIdentitySha256": "3ed8c4dc030847dfbb38260bde10f533b01ecbb344c58452a05d7e72701f47ed",
+    "publicationAuthorized": false
+  }
+}

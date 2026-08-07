@@ -1,0 +1,1043 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "course-pilot-original-runtime-trace-specification",
+  "animationId": "course-g04-l03-ts-006",
+  "requirementId": "req:sprite-23:lesson-shell-natural-entry:en",
+  "traceSpecStatus": "unresolved",
+  "authorityStatement": [
+    "This file specifies evidence needed to execute one original-runtime trace; it is not an execution log, baseline capture, RMSE result, or acceptance record.",
+    "Static ActionScript/timeline inventories expose candidates and obligations but do not prove event order, runtime reachability, source targets, checkpoints, or terminal semantics.",
+    "Empty orderedSteps and executedSteps are intentional when no complete source-evidenced schedule exists; product behavior and the JavaScript rewrite are never used to fill legacy-source gaps.",
+    "The ordered steps, checkpoints, termination, and acquisition modes below are a pending-candidate operator plan. They remain non-authoritative and cannot accept an execution report until exact runtime targets and observations promote the schedule through the evidence gate."
+  ],
+  "identity": {
+    "frameDomainId": "sprite-23",
+    "traceId": "trace:sprite-23:lesson-shell-natural-entry:en:seed-0",
+    "entryStateSha256": "d4f9baef8ce19c9503ff128aee12901b46f32736afbbd74833cdf9691bb51b4e",
+    "scenario": "source-static-frame",
+    "scenarioKind": "linear",
+    "language": "en",
+    "seed": "0",
+    "requiredRange": {
+      "firstFrame": 1,
+      "lastFrame": 128
+    },
+    "baselineAuthorityRequirement": "original-runtime-natural-trace"
+  },
+  "traceModel": {
+    "kind": "stateful-natural-trace",
+    "domainScope": "nested",
+    "interactionMode": "same-lesson-host-natural-entry-with-separate-supplemental-root-frame-positioning",
+    "positioningProofModes": [],
+    "naturalPlaybackClaimed": true,
+    "captureMode": "primary-natural-root-entry-then-every-one-indexed-local-frame"
+  },
+  "acquisitionPlan": {
+    "status": "planned-pending-authorized-original-runtime-observation",
+    "orderInvariant": "The primary natural trace must complete before any supplemental frame positioning in the same language session.",
+    "primary": {
+      "acquisitionMode": "primary-natural-same-lesson-host-trace",
+      "authorityTarget": "original-runtime-natural-trace",
+      "role": "primary behavior, reachability, language, audio, Replay, navigation, and terminal evidence",
+      "directSeekAllowed": false,
+      "requiredBeforeSupplemental": true,
+      "frameDomainId": "sprite-23",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 128
+      }
+    },
+    "supplemental": []
+  },
+  "sourceBindings": {
+    "sourceSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.swf",
+      "sha256": "fa8962a6ca72c0bb213605a9836b62600992cb5c1cf955f7c871e857e90ddf47"
+    },
+    "migrationManifest": {
+      "path": "migration.json",
+      "hashMode": "canonical-json-v1",
+      "projection": "help-math-technical-manifest-v1",
+      "sha256": "7d4a37b2985d2af68a06dcb57e3279c9586e8b848513583d4622bb585c1129a2",
+      "excludedPaths": [
+        "status",
+        "created",
+        "confidence",
+        "classification",
+        "audit",
+        "toolVersions",
+        "baseline",
+        "evidence",
+        "fidelity",
+        "accessibility",
+        "acceptance",
+        "catalogEvidence",
+        "implementation.candidateQa",
+        "implementation.candidateMaturity",
+        "implementation.candidateProductQa",
+        "implementation.candidateVisualEvidence",
+        "implementation.productQaEvidence",
+        "implementation.productQaScope",
+        "audio.catalogGroupCandidates",
+        "audio.catalogExactAssociations",
+        "audio.acceptance",
+        "audio.authoritativeListeningComplete",
+        "audio.originalHostSynchronizationComplete",
+        "audio.strictAcceptance",
+        "audio.structuralAuditComplete"
+      ]
+    },
+    "fullFrameCoverage": {
+      "path": "evidence/full-frame-coverage.json",
+      "hashMode": "canonical-json-v1",
+      "projection": "help-math-trace-coverage-identity-v1",
+      "sha256": "61172efccaed98258d66636a6a9c7d4908d090a9882c77f7f088bc3caba049f8",
+      "excludedPaths": [
+        "status",
+        "blockingReason",
+        "blockingEvidence",
+        "baselineAuthority",
+        "capturedFrameCount",
+        "missingFrames",
+        "baselineCaptureManifest",
+        "baselineCaptureManifestSha256",
+        "captureManifest",
+        "captureManifestSha256",
+        "metricsFile",
+        "metricsSha256"
+      ],
+      "includedPaths": [
+        "requirementId",
+        "requirementSchemaVersion",
+        "coverageRole",
+        "coverageGroupId",
+        "scenario",
+        "frameDomainId",
+        "traceId",
+        "language",
+        "seed",
+        "requiredRange",
+        "requiredFrameSet",
+        "selectionSha256",
+        "naturalPath",
+        "entryState",
+        "entryStateSha256",
+        "baselineAuthorityRequirement",
+        "strictAcceptanceEffect"
+      ]
+    },
+    "scenarioInventory": {
+      "path": "audit/scenario-inventory.json",
+      "hashMode": "canonical-json-v1",
+      "projection": "help-math-scenario-inventory-technical-v1",
+      "sha256": "d3728592a0a8eda73f878a895c4eead26798263d6cade3d5c5b04d5f2e7911fa",
+      "excludedPaths": [
+        "migrationStatusAtGeneration",
+        "migrationStatusChanged",
+        "evidenceIndex[artifactId=migration-manifest]"
+      ]
+    },
+    "coverageInventoryBinding": {
+      "status": "verified-current-file-at-spec-generation-not-part-of-execution-binding",
+      "fileSha256AtSpecGeneration": "6641101d5c300ecf2d41c50261ae9de782c48d67f9738dbd4840b9b1a4cbc2a7",
+      "technicalProjectionSha256": "d3728592a0a8eda73f878a895c4eead26798263d6cade3d5c5b04d5f2e7911fa"
+    }
+  },
+  "frameDomain": {
+    "id": "sprite-23",
+    "kind": "nested",
+    "sourceTimelineId": "sprite-23",
+    "sourceInstanceId": "animation",
+    "parentFrameDomainId": "root",
+    "parentEntryFrame": 6,
+    "localEntryFrame": 1,
+    "frameCount": 128,
+    "structuralReachability": "reachable-from-root-placement-graph",
+    "inventoryEvidence": {
+      "artifactId": "swfmill-xml",
+      "timelineId": "sprite-23"
+    },
+    "nativeStage": {
+      "width": 800,
+      "height": 600
+    },
+    "fps": 12
+  },
+  "entryState": {
+    "authoritativeTraceExecuted": false,
+    "frameDomainId": "sprite-23",
+    "kind": "lesson-shell-natural-entry-to-nested-domain",
+    "language": "en",
+    "localEntryFrameCandidate": 1,
+    "parentEntryFrameCandidate": 6,
+    "parentFrameDomainId": "root",
+    "releaseId": "lesson-g04-l03-negative-numbers",
+    "rootEntryFrame": 6,
+    "runtimeReachabilityEstablished": false,
+    "scenario": "source-static-frame",
+    "seed": "0",
+    "sourceInstanceId": "animation",
+    "sourceScenarioCandidateId": "root-natural-entry-and-playback",
+    "sourceTimelineId": "sprite-23",
+    "targetAnimationId": "course-g04-l03-ts-006",
+    "targetSequence": 34
+  },
+  "schedule": {
+    "status": "planned-pending-authorized-original-runtime-observation",
+    "sourceEvidence": [
+      {
+        "artifactId": "source-swf"
+      },
+      {
+        "artifactId": "course-xml"
+      },
+      {
+        "artifactId": "ffdec-scripts"
+      },
+      {
+        "artifactId": "swfmill-xml"
+      },
+      {
+        "artifactId": "strict-readiness"
+      }
+    ],
+    "noActionsRequired": false,
+    "authorityBoundary": "This is a hash-bound pending-candidate operator plan. Static source constrains frames and scripts, but exact host targets, event ordering, reachability, observed states, Replay, navigation, language, and audio remain unproved until an authorized execution report exists.",
+    "orderedStepSchema": {
+      "description": "Schema required for each future source-evidenced step. Empty unresolved orderedSteps are intentional and must not be filled from product behavior or inference.",
+      "required": [
+        "order",
+        "action",
+        "sourceTarget",
+        "preStateCheckpoint",
+        "postStateCheckpoint",
+        "evidence"
+      ],
+      "properties": {
+        "order": "one-indexed integer contiguous with the preceding step",
+        "action": "exact source event and input; never a guessed click, key, coordinate, value, or delay",
+        "sourceTarget": "source timeline/instance/object/script target plus authoritative locator",
+        "preStateCheckpoint": "complete source-observable state required before dispatch",
+        "postStateCheckpoint": "complete source-observable state required after dispatch",
+        "evidence": "one or more scenario-inventory artifact references that prove this exact step and ordering",
+        "terminalEffect": "optional source-evidenced relationship to completion, Replay, navigation, score, or stop state"
+      }
+    },
+    "orderedSteps": [
+      {
+        "order": 1,
+        "id": "select-host-language",
+        "acquisitionMode": "primary-natural-same-lesson-host-trace",
+        "status": "planned-pending-authorized-original-runtime-observation",
+        "action": {
+          "kind": "host-native-language-selection",
+          "language": "en",
+          "coordinatePolicy": "no guessed coordinate; record the exact resolved host-native target in the execution report"
+        },
+        "sourceTarget": {
+          "kind": "same-lesson-shell-language-control",
+          "resolutionStatus": "must-be-resolved-and-recorded-by-authorized-runtime-observation"
+        },
+        "preStateCheckpoint": {
+          "status": "planned-pending-authorized-original-runtime-observation",
+          "expectedState": {
+            "language": "en",
+            "runtimeProcessState": "fresh-disposable-process-profile",
+            "sharedObjectState": "empty",
+            "outboundNetworkState": "denied-and-audited",
+            "selectedLanguage": null
+          }
+        },
+        "postStateCheckpoint": {
+          "status": "planned-pending-authorized-original-runtime-observation",
+          "expectedState": {
+            "language": "en",
+            "runtimeProcessState": "fresh-disposable-process-profile",
+            "sharedObjectState": "empty",
+            "outboundNetworkState": "denied-and-audited",
+            "selectedLanguage": "en"
+          }
+        },
+        "evidence": [
+          {
+            "artifactId": "course-xml"
+          },
+          {
+            "artifactId": "strict-readiness"
+          }
+        ],
+        "evidenceAuthority": "planning-constraint-only; exact target resolution and observed state remain execution-report obligations"
+      },
+      {
+        "order": 2,
+        "id": "navigate-same-lesson-host-to-ts006",
+        "acquisitionMode": "primary-natural-same-lesson-host-trace",
+        "status": "planned-pending-authorized-original-runtime-observation",
+        "action": {
+          "kind": "same-lesson-natural-navigation",
+          "targetAnimationId": "course-g04-l03-ts-006",
+          "targetSequence": 34,
+          "directChildSwfOpenAllowed": false
+        },
+        "sourceTarget": {
+          "kind": "same-lesson-shell-course-page",
+          "targetSequence": 34,
+          "resolutionStatus": "must-be-resolved-and-recorded-by-authorized-runtime-observation"
+        },
+        "preStateCheckpoint": {
+          "status": "planned-pending-authorized-original-runtime-observation",
+          "expectedState": {
+            "language": "en",
+            "runtimeProcessState": "fresh-disposable-process-profile",
+            "sharedObjectState": "empty",
+            "outboundNetworkState": "denied-and-audited",
+            "selectedLanguage": "en",
+            "targetPageEntered": false
+          }
+        },
+        "postStateCheckpoint": {
+          "status": "planned-pending-authorized-original-runtime-observation",
+          "expectedState": {
+            "language": "en",
+            "frameDomainId": "root",
+            "rootFrame": 1,
+            "targetAnimationId": "course-g04-l03-ts-006",
+            "naturalHostEntryObserved": true
+          }
+        },
+        "evidence": [
+          {
+            "artifactId": "course-xml"
+          },
+          {
+            "artifactId": "strict-readiness"
+          }
+        ],
+        "evidenceAuthority": "planning-constraint-only; exact target resolution and observed state remain execution-report obligations"
+      },
+      {
+        "order": 3,
+        "id": "observe-root-preloader-handoff",
+        "acquisitionMode": "primary-natural-same-lesson-host-trace",
+        "status": "planned-pending-authorized-original-runtime-observation",
+        "action": {
+          "kind": "observe-source-driven-host-handoff",
+          "operatorDispatchAllowed": false
+        },
+        "sourceTarget": {
+          "timelineId": "root",
+          "frame": 1,
+          "operation": "_level0.InternalPreloader.gotoAndPlay",
+          "argument": "jump_check"
+        },
+        "preStateCheckpoint": {
+          "status": "planned-pending-authorized-original-runtime-observation",
+          "expectedState": {
+            "language": "en",
+            "frameDomainId": "root",
+            "rootFrame": 1,
+            "targetAnimationId": "course-g04-l03-ts-006"
+          }
+        },
+        "postStateCheckpoint": {
+          "status": "planned-pending-authorized-original-runtime-observation",
+          "expectedState": {
+            "language": "en",
+            "frameDomainId": "root",
+            "rootFrame": 1,
+            "targetAnimationId": "course-g04-l03-ts-006",
+            "preloaderRequest": "jump_check",
+            "hostResponse": "record-observed-response-without-assumption"
+          }
+        },
+        "evidence": [
+          {
+            "artifactId": "source-swf"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "frame_1/DoAction.as",
+            "lineStart": 4,
+            "lineEnd": 6
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "root"
+          }
+        ],
+        "evidenceAuthority": "planning-constraint-only; exact target resolution and observed state remain execution-report obligations"
+      },
+      {
+        "order": 4,
+        "id": "observe-natural-begin-and-nested-entry",
+        "acquisitionMode": "primary-natural-same-lesson-host-trace",
+        "status": "planned-pending-authorized-original-runtime-observation",
+        "action": {
+          "kind": "observe-natural-host-transition",
+          "operatorDispatchAllowed": false
+        },
+        "sourceTarget": {
+          "timelineId": "root",
+          "frame": 6,
+          "label": "begin",
+          "placedInstance": "animation",
+          "placedTimelineId": "sprite-23"
+        },
+        "preStateCheckpoint": {
+          "status": "planned-pending-authorized-original-runtime-observation",
+          "expectedState": {
+            "language": "en",
+            "frameDomainId": "root",
+            "rootFrame": 1,
+            "targetAnimationId": "course-g04-l03-ts-006",
+            "preloaderRequest": "jump_check"
+          }
+        },
+        "postStateCheckpoint": {
+          "status": "planned-pending-authorized-original-runtime-observation",
+          "expectedState": {
+            "language": "en",
+            "frameDomainId": "sprite-23",
+            "rootFrame": 6,
+            "localFrame": 1,
+            "sourceInstanceId": "animation"
+          }
+        },
+        "evidence": [
+          {
+            "artifactId": "source-swf"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "frame_6/DoAction.as",
+            "lineStart": 8,
+            "lineEnd": 9
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "root"
+          }
+        ],
+        "evidenceAuthority": "planning-constraint-only; exact target resolution and observed state remain execution-report obligations"
+      },
+      {
+        "order": 5,
+        "id": "observe-first-natural-terminal",
+        "acquisitionMode": "primary-natural-same-lesson-host-trace",
+        "status": "planned-pending-authorized-original-runtime-observation",
+        "action": {
+          "kind": "observe-natural-playback",
+          "operatorDispatchAllowed": false,
+          "requiredLocalRange": {
+            "firstFrame": 1,
+            "lastFrame": 128
+          }
+        },
+        "sourceTarget": {
+          "timelineId": "sprite-23",
+          "terminalFrame": 128
+        },
+        "preStateCheckpoint": {
+          "status": "planned-pending-authorized-original-runtime-observation",
+          "expectedState": {
+            "language": "en",
+            "frameDomainId": "sprite-23",
+            "rootFrame": 6,
+            "localFrame": 1,
+            "sourceInstanceId": "animation"
+          }
+        },
+        "postStateCheckpoint": {
+          "status": "planned-pending-authorized-original-runtime-observation",
+          "expectedState": {
+            "language": "en",
+            "frameDomainId": "sprite-23",
+            "rootFrame": 6,
+            "localFrame": 128,
+            "localPlayState": "stopped"
+          }
+        },
+        "evidence": [
+          {
+            "artifactId": "source-swf"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_23/frame_128/DoAction.as",
+            "lineStart": 1,
+            "lineEnd": 2
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-23"
+          }
+        ],
+        "evidenceAuthority": "planning-constraint-only; exact target resolution and observed state remain execution-report obligations",
+        "terminalEffect": "first-natural-terminal-observation-only; Replay and navigation remain pending"
+      },
+      {
+        "order": 6,
+        "id": "invoke-host-native-replay",
+        "acquisitionMode": "primary-natural-same-lesson-host-trace",
+        "status": "planned-pending-authorized-original-runtime-observation",
+        "action": {
+          "kind": "host-native-replay",
+          "coordinatePolicy": "no guessed coordinate; record the exact resolved host-native target in the execution report"
+        },
+        "sourceTarget": {
+          "kind": "same-lesson-shell-replay-control",
+          "resolutionStatus": "must-be-resolved-and-recorded-by-authorized-runtime-observation"
+        },
+        "preStateCheckpoint": {
+          "status": "planned-pending-authorized-original-runtime-observation",
+          "expectedState": {
+            "language": "en",
+            "frameDomainId": "sprite-23",
+            "rootFrame": 6,
+            "localFrame": 128,
+            "localPlayState": "stopped"
+          }
+        },
+        "postStateCheckpoint": {
+          "status": "planned-pending-authorized-original-runtime-observation",
+          "expectedState": {
+            "language": "en",
+            "frameDomainId": "sprite-23",
+            "rootFrame": 6,
+            "localFrame": 1,
+            "sourceInstanceId": "animation",
+            "replayCycle": 2,
+            "completeResetObserved": true
+          }
+        },
+        "evidence": [
+          {
+            "artifactId": "strict-readiness"
+          },
+          {
+            "artifactId": "source-swf"
+          }
+        ],
+        "evidenceAuthority": "planning-constraint-only; exact target resolution and observed state remain execution-report obligations"
+      },
+      {
+        "order": 7,
+        "id": "observe-second-natural-terminal",
+        "acquisitionMode": "primary-natural-same-lesson-host-trace",
+        "status": "planned-pending-authorized-original-runtime-observation",
+        "action": {
+          "kind": "observe-natural-replay-cycle",
+          "operatorDispatchAllowed": false,
+          "requiredLocalRange": {
+            "firstFrame": 1,
+            "lastFrame": 128
+          }
+        },
+        "sourceTarget": {
+          "timelineId": "sprite-23",
+          "terminalFrame": 128,
+          "replayCycle": 2
+        },
+        "preStateCheckpoint": {
+          "status": "planned-pending-authorized-original-runtime-observation",
+          "expectedState": {
+            "language": "en",
+            "frameDomainId": "sprite-23",
+            "rootFrame": 6,
+            "localFrame": 1,
+            "sourceInstanceId": "animation",
+            "replayCycle": 2
+          }
+        },
+        "postStateCheckpoint": {
+          "status": "planned-pending-authorized-original-runtime-observation",
+          "expectedState": {
+            "language": "en",
+            "frameDomainId": "sprite-23",
+            "rootFrame": 6,
+            "localFrame": 128,
+            "localPlayState": "stopped",
+            "replayCycle": 2
+          }
+        },
+        "evidence": [
+          {
+            "artifactId": "source-swf"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_23/frame_128/DoAction.as",
+            "lineStart": 1,
+            "lineEnd": 2
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-23"
+          }
+        ],
+        "evidenceAuthority": "planning-constraint-only; exact target resolution and observed state remain execution-report obligations"
+      },
+      {
+        "order": 8,
+        "id": "exercise-previous-next-and-natural-return",
+        "acquisitionMode": "primary-natural-same-lesson-host-trace",
+        "status": "planned-pending-authorized-original-runtime-observation",
+        "action": {
+          "kind": "host-native-previous-next-and-natural-return",
+          "coordinatePolicy": "no guessed coordinate; record each exact resolved host-native target and destination"
+        },
+        "sourceTarget": {
+          "kind": "same-lesson-shell-navigation-controls",
+          "requiredControls": [
+            "Previous",
+            "Next"
+          ],
+          "resolutionStatus": "must-be-resolved-and-recorded-by-authorized-runtime-observation"
+        },
+        "preStateCheckpoint": {
+          "status": "planned-pending-authorized-original-runtime-observation",
+          "expectedState": {
+            "language": "en",
+            "frameDomainId": "sprite-23",
+            "rootFrame": 6,
+            "localFrame": 128,
+            "localPlayState": "stopped",
+            "replayCycle": 2
+          }
+        },
+        "postStateCheckpoint": {
+          "status": "planned-pending-authorized-original-runtime-observation",
+          "expectedState": {
+            "language": "en",
+            "targetAnimationId": "course-g04-l03-ts-006",
+            "targetSequence": 34,
+            "entryFreshness": "fresh-natural-reentry-observed"
+          }
+        },
+        "evidence": [
+          {
+            "artifactId": "course-xml"
+          },
+          {
+            "artifactId": "strict-readiness"
+          }
+        ],
+        "evidenceAuthority": "planning-constraint-only; exact target resolution and observed state remain execution-report obligations"
+      },
+      {
+        "order": 9,
+        "id": "close-runtime-and-record-postconditions",
+        "acquisitionMode": "primary-natural-same-lesson-host-trace",
+        "status": "planned-pending-authorized-original-runtime-observation",
+        "action": {
+          "kind": "close-authorized-runtime-process"
+        },
+        "sourceTarget": {
+          "kind": "exact-authorized-runtime-process",
+          "resolutionStatus": "bind exact PID, executable hash, and process-exit receipt"
+        },
+        "preStateCheckpoint": {
+          "status": "planned-pending-authorized-original-runtime-observation",
+          "expectedState": {
+            "language": "en",
+            "targetAnimationId": "course-g04-l03-ts-006",
+            "targetSequence": 34,
+            "entryFreshness": "fresh-natural-reentry-observed"
+          }
+        },
+        "postStateCheckpoint": {
+          "status": "planned-pending-authorized-original-runtime-observation",
+          "expectedState": {
+            "language": "en",
+            "runtimeProcessState": "closed",
+            "outboundNetworkState": "denied-and-audited",
+            "sharedObjectState": "empty"
+          }
+        },
+        "evidence": [
+          {
+            "artifactId": "strict-readiness"
+          }
+        ],
+        "evidenceAuthority": "planning-constraint-only; exact target resolution and observed state remain execution-report obligations",
+        "terminalEffect": "session termination only; no migration acceptance or release effect"
+      }
+    ],
+    "executedSteps": [],
+    "stateCheckpoints": [
+      {
+        "id": "fresh-contained-process",
+        "status": "planned-pending-authorized-original-runtime-observation",
+        "expectedState": {
+          "language": "en",
+          "runtimeProcessState": "fresh-disposable-process-profile",
+          "sharedObjectState": "empty",
+          "outboundNetworkState": "denied-and-audited"
+        },
+        "evidence": [
+          {
+            "artifactId": "strict-readiness"
+          }
+        ]
+      },
+      {
+        "id": "natural-root-entry-frame-1",
+        "status": "planned-pending-authorized-original-runtime-observation",
+        "expectedState": {
+          "language": "en",
+          "frameDomainId": "root",
+          "rootFrame": 1,
+          "targetAnimationId": "course-g04-l03-ts-006"
+        },
+        "evidence": [
+          {
+            "artifactId": "source-swf"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "frame_1/DoAction.as",
+            "lineStart": 4,
+            "lineEnd": 6
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "root"
+          }
+        ]
+      },
+      {
+        "id": "natural-root-begin-and-nested-entry",
+        "status": "planned-pending-authorized-original-runtime-observation",
+        "expectedState": {
+          "language": "en",
+          "frameDomainId": "sprite-23",
+          "rootFrame": 6,
+          "localFrame": 1,
+          "sourceInstanceId": "animation"
+        },
+        "evidence": [
+          {
+            "artifactId": "source-swf"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "frame_6/DoAction.as",
+            "lineStart": 8,
+            "lineEnd": 9
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "root"
+          }
+        ]
+      },
+      {
+        "id": "first-natural-nested-terminal",
+        "status": "planned-pending-authorized-original-runtime-observation",
+        "expectedState": {
+          "language": "en",
+          "frameDomainId": "sprite-23",
+          "rootFrame": 6,
+          "localFrame": 128,
+          "localPlayState": "stopped"
+        },
+        "evidence": [
+          {
+            "artifactId": "source-swf"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_23/frame_128/DoAction.as",
+            "lineStart": 1,
+            "lineEnd": 2
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-23"
+          }
+        ]
+      },
+      {
+        "id": "replay-reset-to-nested-entry",
+        "status": "planned-pending-authorized-original-runtime-observation",
+        "expectedState": {
+          "language": "en",
+          "frameDomainId": "sprite-23",
+          "rootFrame": 6,
+          "localFrame": 1,
+          "sourceInstanceId": "animation",
+          "replayCycle": 2,
+          "completeResetObserved": true
+        },
+        "evidence": [
+          {
+            "artifactId": "strict-readiness"
+          },
+          {
+            "artifactId": "source-swf"
+          }
+        ]
+      },
+      {
+        "id": "second-natural-nested-terminal",
+        "status": "planned-pending-authorized-original-runtime-observation",
+        "expectedState": {
+          "language": "en",
+          "frameDomainId": "sprite-23",
+          "rootFrame": 6,
+          "localFrame": 128,
+          "localPlayState": "stopped",
+          "replayCycle": 2
+        },
+        "evidence": [
+          {
+            "artifactId": "source-swf"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_23/frame_128/DoAction.as",
+            "lineStart": 1,
+            "lineEnd": 2
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-23"
+          }
+        ]
+      },
+      {
+        "id": "post-navigation-natural-reentry",
+        "status": "planned-pending-authorized-original-runtime-observation",
+        "expectedState": {
+          "language": "en",
+          "targetAnimationId": "course-g04-l03-ts-006",
+          "targetSequence": 34,
+          "entryFreshness": "fresh-natural-reentry-observed"
+        },
+        "evidence": [
+          {
+            "artifactId": "course-xml"
+          },
+          {
+            "artifactId": "strict-readiness"
+          }
+        ]
+      }
+    ],
+    "terminalSemantics": {
+      "status": "planned-pending-authorized-original-runtime-observation",
+      "kind": "host-navigation-terminal",
+      "expectedState": {
+        "language": "en",
+        "runtimeProcessState": "closed",
+        "naturalReentryVerifiedBeforeClose": true,
+        "outboundNetworkState": "denied-and-audited",
+        "sharedObjectState": "empty"
+      },
+      "evidence": [
+        {
+          "artifactId": "strict-readiness"
+        },
+        {
+          "artifactId": "course-xml"
+        }
+      ]
+    },
+    "exhaustiveFrameCapturePlan": {
+      "indexing": "one-indexed",
+      "firstFrame": 1,
+      "lastFrame": 128,
+      "frameCount": 128,
+      "executionPrerequisite": "Complete the primary natural trace and bind every naturally observed sprite-23 frame 1..128 to the exact requirement identity."
+    }
+  },
+  "unresolvedMappings": [
+    {
+      "mappingId": "action-schedule",
+      "status": "missing-source-evidence",
+      "requiredResolution": "Enumerate every source/host/user event in exact order, including input values, coordinates, keys, waits, random outcomes, and language/seed effects where applicable."
+    },
+    {
+      "mappingId": "action-to-source-target",
+      "status": "missing-source-evidence",
+      "requiredResolution": "Map every ordered event to an exact source timeline, placed instance, character/script target, and hit/input locator; static handler candidates are not an execution mapping."
+    },
+    {
+      "mappingId": "state-checkpoints",
+      "status": "missing-source-evidence",
+      "requiredResolution": "Define the complete observable pre/post state for entry and every action, including root/local playheads, score, attempts, random state, language, audio, overlays, and enabled controls."
+    },
+    {
+      "mappingId": "terminal-semantics",
+      "status": "missing-source-evidence",
+      "requiredResolution": "Prove the terminal stop/completion/navigation state and Replay reset vector; a structural last frame is not terminal-behavior evidence."
+    }
+  ],
+  "separateBehaviorUnknowns": [],
+  "inventoryContext": {
+    "inventoryStatus": "static-exhaustive-runtime-unverified",
+    "timelineControlStates": [
+      {
+        "frame": 1,
+        "reasons": [
+          "initial-one-indexed-frame"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-23"
+          }
+        ]
+      },
+      {
+        "frame": 128,
+        "reasons": [
+          "exported-action-script",
+          "script-stop-state",
+          "structural-action:DoAction",
+          "terminal-structural-frame"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-23"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-23"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_23/frame_128/DoAction.as",
+            "lineStart": 1,
+            "lineEnd": 2
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_23/frame_128/DoAction.as",
+            "lineStart": 1,
+            "lineEnd": 2
+          }
+        ]
+      }
+    ],
+    "obligationCounts": {
+      "handlerBehaviorGroups": 0,
+      "buttonTargetObligations": 0,
+      "inputObligations": 0,
+      "dragObligations": 0,
+      "correctWrongObligations": 0,
+      "conditionalBranchObligations": 0,
+      "randomObligations": 0,
+      "labeledStateObligations": 0,
+      "glossaryAndHyperlinkObligations": 0,
+      "sectionMenuObligations": 0,
+      "courseRouteObligations": 1,
+      "sideEffectObligations": 0,
+      "dependencyFixtureObligations": 1
+    },
+    "unknownIds": [
+      "hit-geometry",
+      "host-defaults",
+      "readiness-missing-01",
+      "readiness-missing-02",
+      "readiness-missing-03",
+      "readiness-missing-04",
+      "readiness-missing-05",
+      "replay-target",
+      "runtime-reachability"
+    ],
+    "note": "These are static candidates/obligations only and are not mapped into orderedSteps by this generator."
+  },
+  "executionEvidence": {
+    "status": "not-executed-by-this-generator",
+    "expectedExecutionReportPath": "baseline/trace-executions/req-sprite-23-lesson-shell-natural-entry-en.json",
+    "hashDagDirection": "source -> stable technical manifest/coverage/inventory projections -> trace spec -> execution report; mutable coverage results, QA, status, signatures, and baseline adoption must never hash-bind back to the spec/report",
+    "executionProofSchema": {
+      "description": "Contract for a future authorized-original-runtime execution report. A report that only repeats identifiers or hashes is insufficient.",
+      "required": [
+        "schemaVersion",
+        "status",
+        "proofMode",
+        "animationId",
+        "requirementId",
+        "identity",
+        "traceSpecBinding",
+        "authorizedRuntime",
+        "rawEventLog",
+        "sourceTargetResolutionLog",
+        "stateSnapshotArchive",
+        "originalRuntimeCaptureManifest",
+        "frameResults",
+        "orderedStepResults",
+        "stateCheckpointResults",
+        "terminalResult",
+        "unexpectedEvents",
+        "sequenceChainSha256"
+      ],
+      "invariants": [
+        "traceSpecBinding.file and traceSpecBinding.sha256 must identify the exact indexed trace spec used for execution.",
+        "orderedStepResults length, one-indexed order, scheduledStepSha256, dispatchedAction, and resolvedSourceTarget must exactly match schedule.orderedSteps.",
+        "Each step must preserve an actual monotonic eventSequence index, raw-log locator, pre/post observed state, frame-domain/root/local playheads, and evidence hashes; identifier echoing is not execution proof.",
+        "Each result record is chain-bound to the preceding result hash. sequenceChainSha256 must end at the last canonical result record, or at the signed zero-action observation when noActionsRequired is source-evidenced.",
+        "stateCheckpointResults must cover every declared checkpoint and compare expectedState with observedState. Missing, extra, reordered, or mismatched events/checkpoints make status failed.",
+        "terminalResult must compare the source-evidenced terminal semantics with observed completion/stop/navigation/score/audio/Replay state and must include capture/log hashes.",
+        "unexpectedEvents must be empty for a passing report; legacy network, host-command, JavaScript bridge, or persistent side effects remain disabled and recorded.",
+        "For frame-accurate root proof, frameResults must contain every required root frame exactly once in strict order and bind the positioning operation, runtime-observed frame, display-list state hash, native-size bitmap, capture-log locator, and previous result hash.",
+        "direct-seek-root-exhaustive requires one original-runtime direct-seek operation per frame. sequential-step-root-exhaustive requires a Rewind observation at frame 1 followed by exactly one Step Forward operation for each frame 2..N. Neither positioning mode proves natural playback."
+      ],
+      "orderedStepResultRequired": [
+        "order",
+        "scheduledStepSha256",
+        "eventSequence",
+        "rawEventLogLocator",
+        "dispatchedAction",
+        "resolvedSourceTarget",
+        "preState",
+        "postState",
+        "frameEvidence",
+        "previousResultSha256",
+        "resultSha256",
+        "result"
+      ],
+      "stateObservationRequired": [
+        "observedState",
+        "observedStateSha256",
+        "rootFrame",
+        "frameDomainId",
+        "localFrame",
+        "screenshotSha256",
+        "eventLogOffset"
+      ],
+      "frameAccurateRootResultRequired": [
+        "frame",
+        "positioningOperation",
+        "operationCountSincePrevious",
+        "requestSequence",
+        "captureLogLocator",
+        "observedRootFrame",
+        "observedDisplayListStateSha256",
+        "screenshotFile",
+        "screenshotSha256",
+        "width",
+        "height",
+        "previousResultSha256",
+        "resultSha256",
+        "result"
+      ],
+      "rawEvidenceRequired": [
+        "authorizedRuntime version/build and launch protocol",
+        "append-only raw event log path/SHA-256",
+        "source-target resolution log path/SHA-256",
+        "state-snapshot archive path/SHA-256",
+        "original-runtime frame capture manifest path/SHA-256"
+      ]
+    },
+    "executionReport": null,
+    "originalRuntimeCaptureManifest": null,
+    "executedSteps": [],
+    "stateCheckpointResults": [],
+    "terminalResult": null
+  },
+  "strictAcceptanceEffect": "none; this specification neither resolves baseline authority nor satisfies branch, visual, RMSE, audio, human-review, or owner-acceptance gates"
+}

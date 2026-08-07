@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "g5-l4-source-derived-asset-inventory-candidate-receipt",
+  "releaseId": "lesson-g05-l04-number-lines",
+  "animationId": "shell-course-g05-l04-index-local",
+  "assetId": "swf-7865195a07666e8123bef33f52aea36e06b7e0a9987fbbea605bc92cbe9b0301",
+  "generatedBy": {
+    "path": "scripts/materialize-g5-l4-source-derived-asset-inventories.mjs",
+    "version": 1,
+    "bytes": 46099,
+    "sha256": "daa0161e7a9aac545e8817ff1e4030992442bfac5c88cbf04ef853f267f070bf",
+    "dependencies": {
+      "preRuntimeCandidateMaterializer": {
+        "path": "scripts/materialize-g5-l4-pre-runtime-specification-candidates.mjs",
+        "bytes": 71781,
+        "sha256": "be073e98ff3c19640c247c3540741a8f53dab55f5c4e0edbf100b43b6a4665ea"
+      },
+      "m1StaticReconciliationValidator": {
+        "path": "scripts/reconcile-lesson-m1-static-specification.mjs",
+        "bytes": 28810,
+        "sha256": "29982ded7acba4f9818d08d3caa8497634dbe1b760c0e9a4faa2fbf335d20d9f"
+      },
+      "assetInventoryTemplate": {
+        "path": "templates/flash-migration/asset-inventory.csv",
+        "bytes": 186,
+        "sha256": "d7ece14e70b251842accacbac14473650beaf934af65217c3271f9ed89f5e05a"
+      }
+    }
+  },
+  "ownership": {
+    "owner": "g5-l4-source-derived-asset-inventory-materializer",
+    "safeToReplaceOnlyWithThisMaterializer": true,
+    "canonicalCandidateFile": true,
+    "acceptanceEvidence": false
+  },
+  "releaseMembership": {
+    "ordinal": 55,
+    "releaseRole": "course-shell",
+    "batchId": "g05-l04-host-language",
+    "shardId": "g05-l04-host-language"
+  },
+  "inputs": {
+    "lessonReleaseCatalog": {
+      "path": "catalog/lesson-releases.json",
+      "bytes": 87864,
+      "sha256": "f3caa2ae0e9bfd6c02dd846aa2d45de5c2f746cc57ba01a09e506d4d3c42d632"
+    },
+    "assetInventoryTemplate": {
+      "path": "templates/flash-migration/asset-inventory.csv",
+      "bytes": 186,
+      "sha256": "d7ece14e70b251842accacbac14473650beaf934af65217c3271f9ed89f5e05a"
+    },
+    "currentMigrationManifest": {
+      "path": "migrations/shell-course-g05-l04-index-local/migration.json",
+      "bytes": 6037,
+      "sha256": "50f5af32026dc0140390d610d8e326f67432be490d53a9abf8c14348385af113"
+    },
+    "physicalSourceSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L4/index_local.swf",
+      "bytes": 658851,
+      "sha256": "7865195a07666e8123bef33f52aea36e06b7e0a9987fbbea605bc92cbe9b0301"
+    },
+    "machineAudit": {
+      "path": "migrations/shell-course-g05-l04-index-local/audit/machine/report.json",
+      "bytes": 97662,
+      "sha256": "d2e21b988381b3dae53204f808003aabe0fa118b4dfb4c3d8c4046f85a854b59"
+    },
+    "ffdecHeader": {
+      "path": "migrations/shell-course-g05-l04-index-local/audit/machine/ffdec-header.txt",
+      "bytes": 188,
+      "sha256": "031fcf8bda432d412f810ec9181ce3026351689adc25a28f681379e2c18b8c2d"
+    },
+    "swfmillSummary": {
+      "path": "migrations/shell-course-g05-l04-index-local/audit/machine/swfmill-summary.json",
+      "bytes": 14534,
+      "sha256": "2d099227895df1b82802a61b54f3f8856c18f9b563392f6b564c121de1b60d42"
+    },
+    "preRuntimeCandidateReceipt": {
+      "path": "migrations/shell-course-g05-l04-index-local/audit/machine/g5-l4-pre-runtime-specification-candidate-receipt.json",
+      "bytes": 9683,
+      "sha256": "da7302703eb952259ba5f0201aeab5c96c4dbf5abdd8a4be53240a0f3a035bd2"
+    },
+    "m1StaticReconciliationReceipt": {
+      "path": "migrations/shell-course-g05-l04-index-local/audit/machine/g5-l4-m1-static-reconciliation-receipt.json",
+      "bytes": 8510,
+      "sha256": "421cb72d92db9b37d24f8ef2a2158f24920b81b5f7ed674e4a97401acd2ded42"
+    },
+    "assetDefinitionCensus": {
+      "path": "migrations/shell-course-g05-l04-index-local/audit/machine/g5-l4-pre-runtime-swf-asset-definition-census.json",
+      "bytes": 927891,
+      "sha256": "564626e50278d32b085242225101491e17ca517d0a3ad7f1771b1df5dc7eced8"
+    },
+    "machineDefinitionIndex": {
+      "path": "migrations/shell-course-g05-l04-index-local/audit/machine/g5-l4-pre-runtime-swf-definition-inventory.csv",
+      "bytes": 709624,
+      "sha256": "42d1c73ccf654f398cbdbcdb2ed072ad731bd413ef21ba150f96159e5f288a94"
+    }
+  },
+  "historicalCanonicalPreimage": {
+    "bytes": 186,
+    "path": "migrations/shell-course-g05-l04-index-local/asset-inventory.csv",
+    "sha256": "d7ece14e70b251842accacbac14473650beaf934af65217c3271f9ed89f5e05a"
+  },
+  "output": {
+    "assetInventory": {
+      "path": "migrations/shell-course-g05-l04-index-local/asset-inventory.csv",
+      "bytes": 1448602,
+      "sha256": "45360265931a9b41df7055f0a503eb1af22507526bff846c9a0c5b60a4724bdc",
+      "rowCount": 1094
+    }
+  },
+  "projection": {
+    "oneRowPerMachineDefinition": true,
+    "sourceDefinitionCandidateCount": 1094,
+    "categoryCounts": {
+      "bitmap": 6,
+      "button": 102,
+      "font": 24,
+      "morph": 1,
+      "shape": 435,
+      "sound": 4,
+      "sprite": 193,
+      "text": 329
+    },
+    "sharedDefinitionIndexBindingOnly": true,
+    "rendererAssetExportCount": 0,
+    "authoritativeBaselineRowCount": 0,
+    "runtimePlacementDispositionCount": 0,
+    "assetUsageDispositionCount": 0,
+    "visualConfirmationCount": 0,
+    "rendererReadyAssetCount": 0,
+    "finalAssetSpecificationComplete": false
+  },
+  "limitations": [
+    "Rows inventory hash-bound SWF definition candidates only; they do not assert root reachability, frame placement, visibility, scenario/language use, or instructional purpose.",
+    "The exported_file column points to the shared machine definition-index CSV so each canonical row has a verifiable backing artifact; it is not a visual, editable, or renderer asset export.",
+    "FLA authoring names/layers, bounds, masks, transforms, editable exports, renderer dispositions, original-runtime baselines, visual comparison, and listening remain unresolved.",
+    "This successor leaves migration manifests, sources, original-runtime evidence, reviews, acceptance, strict completion, and publication untouched."
+  ],
+  "sourceAssetsChanged": false,
+  "migrationManifestChanged": false,
+  "originalRuntimeEvidenceChanged": false,
+  "humanReviewChanged": false,
+  "ownerReviewChanged": false,
+  "completionLedgerChanged": false,
+  "lessonReleaseLedgerChanged": false,
+  "strictAcceptanceEffect": "none",
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "currentJavaScriptCandidate": false,
+    "implementationAuthorized": false,
+    "fidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "published": false
+  },
+  "artifactFingerprintSha256": "d65341917189916961250ca45a69e4efe10f00fb9b8e9385ccbf6fd60c4e860e",
+  "generatedMarker": "sha256:d65341917189916961250ca45a69e4efe10f00fb9b8e9385ccbf6fd60c4e860e"
+}

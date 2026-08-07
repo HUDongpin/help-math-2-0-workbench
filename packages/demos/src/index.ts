@@ -1,9 +1,14 @@
 export type {
   AnimationLanguage,
   AnimationModule,
+  AnimationPlaybackMode,
   AnimationRendererProps,
+  AnimationRuntimeMetadata,
   AudioCue,
+  AudioTrack,
+  FrameDomainMetadata,
   MovieMetadata,
+  ResolvedRuntimeContext,
   RuntimeContext,
   RuntimeScenario
 } from './contract';
@@ -12,6 +17,7 @@ export type {PrototypeKey, PrototypeManifestEntry} from './prototype-manifest';
 export {
   clampFrame,
   createRuntimeContext,
+  frameAtElapsedMs,
   frameToElapsedMs,
   parseFrame,
   parseLanguage,

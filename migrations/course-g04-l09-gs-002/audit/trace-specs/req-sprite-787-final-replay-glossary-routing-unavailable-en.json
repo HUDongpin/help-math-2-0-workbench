@@ -1,0 +1,735 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "course-pilot-original-runtime-trace-specification",
+  "animationId": "course-g04-l09-gs-002",
+  "requirementId": "req:sprite-787:final-replay-glossary-routing-unavailable:en",
+  "traceSpecStatus": "unresolved",
+  "authorityStatement": [
+    "This file specifies evidence needed to execute one original-runtime trace; it is not an execution log, baseline capture, RMSE result, or acceptance record.",
+    "Static ActionScript/timeline inventories expose candidates and obligations but do not prove event order, runtime reachability, source targets, checkpoints, or terminal semantics.",
+    "Empty orderedSteps and executedSteps are intentional when no complete source-evidenced schedule exists; product behavior and the JavaScript rewrite are never used to fill legacy-source gaps."
+  ],
+  "identity": {
+    "frameDomainId": "sprite-787",
+    "traceId": "trace:sprite-787:final-replay-glossary-routing-unavailable:en:seed-0",
+    "entryStateSha256": "be2b9b60c869477414d1e82066f33711820fdeeec0e151dc99fce1b2440343e6",
+    "scenario": "final-replay-glossary-routing-unavailable",
+    "scenarioKind": "interactive",
+    "language": "en",
+    "seed": "0",
+    "requiredRange": {
+      "firstFrame": 1,
+      "lastFrame": 653
+    },
+    "baselineAuthorityRequirement": "original-runtime-natural-trace"
+  },
+  "traceModel": {
+    "kind": "stateful-natural-trace",
+    "domainScope": "nested",
+    "interactionMode": "interactive",
+    "positioningProofModes": [],
+    "naturalPlaybackClaimed": true,
+    "captureMode": "natural-root-entry-then-every-one-indexed-local-frame-after-source-evidenced-actions"
+  },
+  "sourceBindings": {
+    "sourceSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L9/GS/L9GS02.swf",
+      "sha256": "41cdb7e5cc5735eef2af3e4831908c47781840f0addcc3ac1a2142cbb0d48f15"
+    },
+    "migrationManifest": {
+      "path": "migration.json",
+      "hashMode": "canonical-json-v1",
+      "projection": "help-math-technical-manifest-v1",
+      "sha256": "5c852edeff42d408b4e382e67e321cb2a2f6006e2c3c93d946654c5f289aaf7f",
+      "excludedPaths": [
+        "status",
+        "created",
+        "confidence",
+        "classification",
+        "audit",
+        "toolVersions",
+        "baseline",
+        "evidence",
+        "fidelity",
+        "accessibility",
+        "acceptance",
+        "catalogEvidence",
+        "implementation.candidateQa",
+        "implementation.candidateMaturity",
+        "implementation.candidateProductQa",
+        "implementation.candidateVisualEvidence",
+        "implementation.productQaEvidence",
+        "implementation.productQaScope",
+        "audio.catalogGroupCandidates",
+        "audio.catalogExactAssociations",
+        "audio.acceptance",
+        "audio.authoritativeListeningComplete",
+        "audio.originalHostSynchronizationComplete",
+        "audio.strictAcceptance",
+        "audio.structuralAuditComplete"
+      ]
+    },
+    "fullFrameCoverage": {
+      "path": "evidence/full-frame-coverage.json",
+      "hashMode": "canonical-json-v1",
+      "projection": "help-math-trace-coverage-identity-v1",
+      "sha256": "1c1156a8e9f9da9d94e698a9349a6401a9d736957867ee815f72ab5c49497169",
+      "excludedPaths": [
+        "status",
+        "blockingReason",
+        "blockingEvidence",
+        "baselineAuthority",
+        "capturedFrameCount",
+        "missingFrames",
+        "baselineCaptureManifest",
+        "baselineCaptureManifestSha256",
+        "captureManifest",
+        "captureManifestSha256",
+        "metricsFile",
+        "metricsSha256"
+      ],
+      "includedPaths": [
+        "requirementId",
+        "requirementSchemaVersion",
+        "coverageRole",
+        "coverageGroupId",
+        "scenario",
+        "frameDomainId",
+        "traceId",
+        "language",
+        "seed",
+        "requiredRange",
+        "requiredFrameSet",
+        "selectionSha256",
+        "naturalPath",
+        "entryState",
+        "entryStateSha256",
+        "baselineAuthorityRequirement",
+        "strictAcceptanceEffect"
+      ]
+    },
+    "scenarioInventory": {
+      "path": "audit/scenario-inventory.json",
+      "hashMode": "canonical-json-v1",
+      "projection": "help-math-scenario-inventory-technical-v1",
+      "sha256": "747a70ec5a7b66955de79824b0eef69e2267e7b2a5d277e562479fe0e4a74382",
+      "excludedPaths": [
+        "migrationStatusAtGeneration",
+        "migrationStatusChanged",
+        "evidenceIndex[artifactId=migration-manifest]"
+      ]
+    },
+    "coverageInventoryBinding": {
+      "status": "verified-current-file-at-spec-generation-not-part-of-execution-binding",
+      "fileSha256AtSpecGeneration": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+      "technicalProjectionSha256": "747a70ec5a7b66955de79824b0eef69e2267e7b2a5d277e562479fe0e4a74382"
+    }
+  },
+  "frameDomain": {
+    "id": "sprite-787",
+    "kind": "nested",
+    "sourceTimelineId": "sprite-787",
+    "sourceInstanceId": "main-animation",
+    "parentFrameDomainId": "root",
+    "parentEntryFrame": 6,
+    "localEntryFrame": 1,
+    "frameCount": 653,
+    "structuralReachability": "reachable-from-root-placement-graph",
+    "inventoryEvidence": {
+      "artifactId": "swfmill-xml",
+      "timelineId": "sprite-787"
+    },
+    "nativeStage": {
+      "width": 800,
+      "height": 600
+    },
+    "fps": 12
+  },
+  "entryState": {
+    "kind": "natural-root-placement-entry",
+    "rootTimelineId": "root",
+    "rootEntryFrame": 6,
+    "instanceId": "main-animation",
+    "frameDomainId": "sprite-787",
+    "localEntryFrame": 1,
+    "scenario": "final-replay-glossary-routing-unavailable",
+    "language": "en",
+    "seed": "0"
+  },
+  "schedule": {
+    "status": "unresolved-no-complete-source-event-schedule",
+    "sourceEvidence": [],
+    "noActionsRequired": false,
+    "orderedStepSchema": {
+      "description": "Schema required for each future source-evidenced step. Empty unresolved orderedSteps are intentional and must not be filled from product behavior or inference.",
+      "required": [
+        "order",
+        "action",
+        "sourceTarget",
+        "preStateCheckpoint",
+        "postStateCheckpoint",
+        "evidence"
+      ],
+      "properties": {
+        "order": "one-indexed integer contiguous with the preceding step",
+        "action": "exact source event and input; never a guessed click, key, coordinate, value, or delay",
+        "sourceTarget": "source timeline/instance/object/script target plus authoritative locator",
+        "preStateCheckpoint": "complete source-observable state required before dispatch",
+        "postStateCheckpoint": "complete source-observable state required after dispatch",
+        "evidence": "one or more scenario-inventory artifact references that prove this exact step and ordering",
+        "terminalEffect": "optional source-evidenced relationship to completion, Replay, navigation, score, or stop state"
+      }
+    },
+    "orderedSteps": [],
+    "executedSteps": [],
+    "stateCheckpoints": [],
+    "terminalSemantics": {
+      "status": "unresolved",
+      "expectedState": null,
+      "evidence": []
+    },
+    "exhaustiveFrameCapturePlan": {
+      "indexing": "one-indexed",
+      "firstFrame": 1,
+      "lastFrame": 653,
+      "frameCount": 653,
+      "executionPrerequisite": "Blocked until the complete source-evidenced event/target/checkpoint/terminal schedule is supplied."
+    }
+  },
+  "unresolvedMappings": [
+    {
+      "mappingId": "action-schedule",
+      "status": "missing-source-evidence",
+      "requiredResolution": "Enumerate every source/host/user event in exact order, including input values, coordinates, keys, waits, random outcomes, and language/seed effects where applicable."
+    },
+    {
+      "mappingId": "action-to-source-target",
+      "status": "missing-source-evidence",
+      "requiredResolution": "Map every ordered event to an exact source timeline, placed instance, character/script target, and hit/input locator; static handler candidates are not an execution mapping."
+    },
+    {
+      "mappingId": "state-checkpoints",
+      "status": "missing-source-evidence",
+      "requiredResolution": "Define the complete observable pre/post state for entry and every action, including root/local playheads, score, attempts, random state, language, audio, overlays, and enabled controls."
+    },
+    {
+      "mappingId": "terminal-semantics",
+      "status": "missing-source-evidence",
+      "requiredResolution": "Prove the terminal stop/completion/navigation state and Replay reset vector; a structural last frame is not terminal-behavior evidence."
+    }
+  ],
+  "separateBehaviorUnknowns": [],
+  "inventoryContext": {
+    "inventoryStatus": "static-exhaustive-runtime-unverified",
+    "timelineControlStates": [
+      {
+        "frame": 1,
+        "reasons": [
+          "initial-one-indexed-frame"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          }
+        ]
+      },
+      {
+        "frame": 642,
+        "reasons": [
+          "exported-action-script",
+          "frame-label:GS_Begin",
+          "script-stop-state",
+          "structural-action:DoAction"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_642/DoAction.as",
+            "lineStart": 251,
+            "lineEnd": 314
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_642/DoAction.as",
+            "lineStart": 251,
+            "lineEnd": 314
+          }
+        ]
+      },
+      {
+        "frame": 643,
+        "reasons": [
+          "exported-action-script",
+          "frame-label:Q1",
+          "script-stop-state",
+          "structural-action:DoAction"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_643/DoAction.as",
+            "lineStart": 316,
+            "lineEnd": 344
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_643/DoAction.as",
+            "lineStart": 316,
+            "lineEnd": 344
+          }
+        ]
+      },
+      {
+        "frame": 644,
+        "reasons": [
+          "exported-action-script",
+          "frame-label:Q2",
+          "script-stop-state",
+          "structural-action:DoAction"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_644/DoAction.as",
+            "lineStart": 346,
+            "lineEnd": 374
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_644/DoAction.as",
+            "lineStart": 346,
+            "lineEnd": 374
+          }
+        ]
+      },
+      {
+        "frame": 645,
+        "reasons": [
+          "exported-action-script",
+          "frame-label:Q3",
+          "script-stop-state",
+          "structural-action:DoAction"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_645/DoAction.as",
+            "lineStart": 376,
+            "lineEnd": 404
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_645/DoAction.as",
+            "lineStart": 376,
+            "lineEnd": 404
+          }
+        ]
+      },
+      {
+        "frame": 646,
+        "reasons": [
+          "exported-action-script",
+          "frame-label:Q4",
+          "script-stop-state",
+          "structural-action:DoAction"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_646/DoAction.as",
+            "lineStart": 406,
+            "lineEnd": 434
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_646/DoAction.as",
+            "lineStart": 406,
+            "lineEnd": 434
+          }
+        ]
+      },
+      {
+        "frame": 647,
+        "reasons": [
+          "exported-action-script",
+          "frame-label:Q5",
+          "script-stop-state",
+          "structural-action:DoAction"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_647/DoAction.as",
+            "lineStart": 436,
+            "lineEnd": 464
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_647/DoAction.as",
+            "lineStart": 436,
+            "lineEnd": 464
+          }
+        ]
+      },
+      {
+        "frame": 648,
+        "reasons": [
+          "exported-action-script",
+          "frame-label:Q6",
+          "script-stop-state",
+          "structural-action:DoAction"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_648/DoAction.as",
+            "lineStart": 466,
+            "lineEnd": 494
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_648/DoAction.as",
+            "lineStart": 466,
+            "lineEnd": 494
+          }
+        ]
+      },
+      {
+        "frame": 649,
+        "reasons": [
+          "exported-action-script",
+          "frame-label:Q7",
+          "script-stop-state",
+          "structural-action:DoAction"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_649/DoAction.as",
+            "lineStart": 496,
+            "lineEnd": 524
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_649/DoAction.as",
+            "lineStart": 496,
+            "lineEnd": 524
+          }
+        ]
+      },
+      {
+        "frame": 650,
+        "reasons": [
+          "exported-action-script",
+          "frame-label:Q8",
+          "script-stop-state",
+          "structural-action:DoAction"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_650/DoAction.as",
+            "lineStart": 526,
+            "lineEnd": 554
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_650/DoAction.as",
+            "lineStart": 526,
+            "lineEnd": 554
+          }
+        ]
+      },
+      {
+        "frame": 651,
+        "reasons": [
+          "exported-action-script",
+          "frame-label:Q9",
+          "script-stop-state",
+          "structural-action:DoAction"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_651/DoAction.as",
+            "lineStart": 556,
+            "lineEnd": 584
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_651/DoAction.as",
+            "lineStart": 556,
+            "lineEnd": 584
+          }
+        ]
+      },
+      {
+        "frame": 652,
+        "reasons": [
+          "exported-action-script",
+          "frame-label:Q10",
+          "script-stop-state",
+          "structural-action:DoAction"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_652/DoAction.as",
+            "lineStart": 586,
+            "lineEnd": 614
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_652/DoAction.as",
+            "lineStart": 586,
+            "lineEnd": 614
+          }
+        ]
+      },
+      {
+        "frame": 653,
+        "reasons": [
+          "exported-action-script",
+          "frame-label:Final",
+          "script-stop-state",
+          "structural-action:DoAction",
+          "terminal-structural-frame"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "sprite-787"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_653/DoAction.as",
+            "lineStart": 616,
+            "lineEnd": 617
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineSprite_787/frame_653/DoAction.as",
+            "lineStart": 616,
+            "lineEnd": 617
+          }
+        ]
+      }
+    ],
+    "obligationCounts": {
+      "handlerBehaviorGroups": 11,
+      "buttonTargetObligations": 14,
+      "inputObligations": 0,
+      "dragObligations": 0,
+      "correctWrongObligations": 13,
+      "conditionalBranchObligations": 8,
+      "randomObligations": 1,
+      "labeledStateObligations": 11,
+      "glossaryAndHyperlinkObligations": 3,
+      "sectionMenuObligations": 0,
+      "courseRouteObligations": 1,
+      "sideEffectObligations": 0,
+      "dependencyFixtureObligations": 38
+    },
+    "unknownIds": [
+      "hit-geometry",
+      "host-defaults",
+      "partial-authoritative-runtime-01",
+      "readiness-missing-01",
+      "readiness-missing-02",
+      "readiness-missing-03",
+      "readiness-missing-04",
+      "readiness-missing-05",
+      "runtime-reachability",
+      "unproven-nested-timelines"
+    ],
+    "note": "These are static candidates/obligations only and are not mapped into orderedSteps by this generator."
+  },
+  "executionEvidence": {
+    "status": "not-executed-by-this-generator",
+    "expectedExecutionReportPath": "baseline/trace-executions/req-sprite-787-final-replay-glossary-routing-unavailable-en.json",
+    "hashDagDirection": "source -> stable technical manifest/coverage/inventory projections -> trace spec -> execution report; mutable coverage results, QA, status, signatures, and baseline adoption must never hash-bind back to the spec/report",
+    "executionProofSchema": {
+      "description": "Contract for a future authorized-original-runtime execution report. A report that only repeats identifiers or hashes is insufficient.",
+      "required": [
+        "schemaVersion",
+        "status",
+        "proofMode",
+        "animationId",
+        "requirementId",
+        "identity",
+        "traceSpecBinding",
+        "authorizedRuntime",
+        "rawEventLog",
+        "sourceTargetResolutionLog",
+        "stateSnapshotArchive",
+        "originalRuntimeCaptureManifest",
+        "frameResults",
+        "orderedStepResults",
+        "stateCheckpointResults",
+        "terminalResult",
+        "unexpectedEvents",
+        "sequenceChainSha256"
+      ],
+      "invariants": [
+        "traceSpecBinding.file and traceSpecBinding.sha256 must identify the exact indexed trace spec used for execution.",
+        "orderedStepResults length, one-indexed order, scheduledStepSha256, dispatchedAction, and resolvedSourceTarget must exactly match schedule.orderedSteps.",
+        "Each step must preserve an actual monotonic eventSequence index, raw-log locator, pre/post observed state, frame-domain/root/local playheads, and evidence hashes; identifier echoing is not execution proof.",
+        "Each result record is chain-bound to the preceding result hash. sequenceChainSha256 must end at the last canonical result record, or at the signed zero-action observation when noActionsRequired is source-evidenced.",
+        "stateCheckpointResults must cover every declared checkpoint and compare expectedState with observedState. Missing, extra, reordered, or mismatched events/checkpoints make status failed.",
+        "terminalResult must compare the source-evidenced terminal semantics with observed completion/stop/navigation/score/audio/Replay state and must include capture/log hashes.",
+        "unexpectedEvents must be empty for a passing report; legacy network, host-command, JavaScript bridge, or persistent side effects remain disabled and recorded.",
+        "For frame-accurate root proof, frameResults must contain every required root frame exactly once in strict order and bind the positioning operation, runtime-observed frame, display-list state hash, native-size bitmap, capture-log locator, and previous result hash.",
+        "direct-seek-root-exhaustive requires one original-runtime direct-seek operation per frame. sequential-step-root-exhaustive requires a Rewind observation at frame 1 followed by exactly one Step Forward operation for each frame 2..N. Neither positioning mode proves natural playback."
+      ],
+      "orderedStepResultRequired": [
+        "order",
+        "scheduledStepSha256",
+        "eventSequence",
+        "rawEventLogLocator",
+        "dispatchedAction",
+        "resolvedSourceTarget",
+        "preState",
+        "postState",
+        "frameEvidence",
+        "previousResultSha256",
+        "resultSha256",
+        "result"
+      ],
+      "stateObservationRequired": [
+        "observedState",
+        "observedStateSha256",
+        "rootFrame",
+        "frameDomainId",
+        "localFrame",
+        "screenshotSha256",
+        "eventLogOffset"
+      ],
+      "frameAccurateRootResultRequired": [
+        "frame",
+        "positioningOperation",
+        "operationCountSincePrevious",
+        "requestSequence",
+        "captureLogLocator",
+        "observedRootFrame",
+        "observedDisplayListStateSha256",
+        "screenshotFile",
+        "screenshotSha256",
+        "width",
+        "height",
+        "previousResultSha256",
+        "resultSha256",
+        "result"
+      ],
+      "rawEvidenceRequired": [
+        "authorizedRuntime version/build and launch protocol",
+        "append-only raw event log path/SHA-256",
+        "source-target resolution log path/SHA-256",
+        "state-snapshot archive path/SHA-256",
+        "original-runtime frame capture manifest path/SHA-256"
+      ]
+    },
+    "executionReport": null,
+    "originalRuntimeCaptureManifest": null,
+    "executedSteps": [],
+    "stateCheckpointResults": [],
+    "terminalResult": null
+  },
+  "strictAcceptanceEffect": "none; this specification neither resolves baseline authority nor satisfies branch, visual, RMSE, audio, human-review, or owner-acceptance gates"
+}

@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "animationId": "course-g03-l06-ti-001",
+  "capturedAt": "2026-07-21T17:03:46+08:00",
+  "status": "engineering-cross-check-only",
+  "runtime": {
+    "name": "Adobe standalone Flash Player",
+    "version": "32",
+    "launchPolicy": "sandboxed hash-pinned local fixture",
+    "networkAllowed": false,
+    "audioMutedByFixture": true
+  },
+  "fixture": {
+    "manifest": "work/adobe-course-host-fixtures-frame-controller/generated/course-g03-l06-ti-001/frame-0014/1fac1dc270af42398a0e36b7/fixture-manifest.json",
+    "fixtureDigest": "1fac1dc270af42398a0e36b7e40fdb6667d9abae18d66cb27fe39e4be49a1a6b",
+    "hostSha256": "52c8ea577af77bb3a2faf0f2a197e4eebd5444a7bcf57b5d3e7e433f56c7a905",
+    "sourceSwfSha256": "722b56b73cfc3bcff71c83cf71b00bfc89b4fdd3b147ecb43646f644f45dc739",
+    "target": {
+      "rootEntryFrame": 6,
+      "rootEntryLabel": "begin",
+      "placementName": "animation",
+      "placementObjectId": 21,
+      "localTimelineId": "sprite-21",
+      "localFrame": 14,
+      "localFrameCount": 142
+    }
+  },
+  "observation": {
+    "preloadCoverDisappeared": true,
+    "failureCoverVisible": false,
+    "stageDescription": "The untouched child was visible as an almost-white frame with the very faint centered title 'Decimals & Money: Try It!'.",
+    "safeCanvasCandidateAtSameFrame": "The extracted Canvas candidate shows the same faint centered title but a pale-blue background, so exact color parity is not established.",
+    "flashPlayerProcessClosedAfterCapture": true
+  },
+  "captures": [
+    {
+      "path": "migrations/course-g03-l06-ti-001/baseline/controlled-frame-0014-adobe-player.jpeg",
+      "sha256": "765748af64971ada5a784ca37e3214f7de35c5a531b43fb52f00c1da3b4a62c1",
+      "width": 800,
+      "height": 628,
+      "format": "JPEG",
+      "containsWindowChrome": true
+    },
+    {
+      "path": "migrations/course-g03-l06-ti-001/baseline/controlled-frame-0014-adobe-player-stage.jpeg",
+      "sha256": "b4e90cb81c00f43ea024e1f0dc7e1060ff2519febadbc3d1647631526f845422",
+      "width": 800,
+      "height": 600,
+      "format": "JPEG",
+      "derivedFrom": "migrations/course-g03-l06-ti-001/baseline/controlled-frame-0014-adobe-player.jpeg",
+      "crop": "800x600+0+28"
+    },
+    {
+      "path": "output/playwright/course-g03-l06-ti-001-safe-canvas-adapter/frame-0014.png",
+      "sha256": "f1bc66e24f504ac0438007daabe0e85c6a2ed31cfb4d52174e1d8b64fb3050aa",
+      "width": 800,
+      "height": 600,
+      "format": "PNG",
+      "role": "modern engineering candidate"
+    }
+  ],
+  "claims": {
+    "authoritativeBaseline": false,
+    "losslessCapture": false,
+    "rmseEligible": false,
+    "exactRuntimeFrameProved": false,
+    "fullFrameParityProved": false,
+    "audioParityProved": false,
+    "branchCoverageProved": false,
+    "languageCoverageProved": false,
+    "humanReviewed": false,
+    "ownerAccepted": false
+  },
+  "limitations": [
+    "The controller directly seeks a nested local timeline and does not reproduce the original shell's natural nested-timeline progression.",
+    "The screenshot service emitted JPEG and included the pointer; the stage crop is still JPEG-derived and cannot be used for strict RMSE.",
+    "Only one local frame was observed. Random states, branches, terminal behavior, Replay, audio, and Spanish behavior were not exercised.",
+    "The pale-blue Canvas background differs visibly from this Adobe probe and must not be accepted as faithful from this evidence."
+  ]
+}

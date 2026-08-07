@@ -1,203 +1,190 @@
 {
-  "schemaVersion": 2,
-  "id": "course-g03-l08-re-001",
-  "animationId": "course-g03-l08-re-001",
-  "assetId": "swf-e4a6403f6b45a3b4aecb48e0659aa20113acb0644e37b027a19fb51f34417f9b",
-  "status": "preserved",
-  "created": "2026-07-20",
-  "confidence": "unknown",
-  "classification": {
-    "collection": "course",
-    "grade": 3,
-    "lesson": 8,
-    "section": "RE",
-    "page": 1,
-    "domain": "measurement-money",
-    "knowledgePoint": {
-      "en": "L8RE01",
-      "es": ""
+  "acceptance": {
+    "currentJavaScriptOutputApproval": {
+      "decision": "accepted",
+      "reviewer": "Dr. Peter Hu",
+      "reviewedAt": "2026-07-25T00:46:38+08:00",
+      "sourceMessage": "Codex，我看到你的第六步——设计到人类验收animations。\n\n因为我马上要去睡觉了。所以我通过“人对animations的审核”。Codex可以认定完成验收。",
+      "scope": "currently-generated-javascript-based-animations-at-review-time",
+      "approvalRecord": "reports/current-javascript-output-human-approval.json",
+      "approvalRecordSha256": "7f291bd72cf2a9c35cdb7d7fcbd3b52c1e3b88ec1e31e66e776b909e9c01cc5c",
+      "artifactBindingSha256": "6ed912dfd68b91db60f29b072cd48d2aa72c5026db44c7560979d10cd549247e",
+      "strictHumanReviewEffect": "none; strict human review still requires a named human to accept all required keyframe and full-frame diffs, bilingual audio, and interaction evidence",
+      "history": [
+        {
+          "decision": "stale",
+          "priorDecision": "accepted",
+          "reviewer": "Project user (explicit human approval in Codex thread)",
+          "reviewedAt": "2026-07-22",
+          "invalidatedAt": "",
+          "invalidationReason": "The RE01 runtime and renderer were revised after approval to report exact root/sprite frame-domain identity and fail closed for every unresolved sprite-621 state.",
+          "scope": "javascript-output-existing-at-review-time; prior decision retained as historical approval but invalidated by subsequent renderer/runtime-contract revisions"
+        },
+        {
+          "decision": "accepted",
+          "priorDecision": "",
+          "reviewer": "Project user (explicit human approval in Codex thread; name not provided)",
+          "reviewedAt": "2026-07-21T20:58:06Z",
+          "invalidatedAt": "",
+          "invalidationReason": "",
+          "scope": "currently-generated-javascript-based-animations-at-review-time"
+        },
+        {
+          "decision": "accepted",
+          "priorDecision": "",
+          "reviewer": "Project user (explicit human approval in Codex thread; name not provided)",
+          "reviewedAt": "2026-07-22T01:31:02Z",
+          "invalidatedAt": "",
+          "invalidationReason": "",
+          "scope": "currently-generated-javascript-based-animations-at-review-time"
+        },
+        {
+          "decision": "accepted",
+          "priorDecision": "",
+          "reviewer": "Dr. Peter Hu",
+          "reviewedAt": "2026-07-23T11:05:10+08:00",
+          "invalidatedAt": "",
+          "invalidationReason": "",
+          "scope": "currently-generated-javascript-based-animations-at-review-time"
+        }
+      ]
     },
-    "titleRaw": "L8RE01",
-    "titleDisplay": "L8RE01",
-    "status": "inferred",
-    "evidence": [
+    "engineeringReview": {
+      "decision": "pending",
+      "reviewedAt": "",
+      "reviewer": ""
+    },
+    "humanVisualReview": {
+      "decision": "pending",
+      "reviewedAt": "",
+      "reviewer": "",
+      "scope": "all-keyframe-and-full-frame-diffs"
+    },
+    "knownExceptions": [
       {
-        "source": "course-xml",
-        "path": "HELP_COURSES/ELMGR3/L8/index.xml",
-        "field": "NewTitle1",
-        "value": "Measurement"
+        "evidenceIds": [
+          "audit/strict-readiness.json",
+          "audit/machine/ffdec-scripts.txt.gz",
+          "evidence/native-canvas-candidate-qa.json"
+        ],
+        "id": "reviewans-host-state-missing",
+        "ownerDecision": "pending",
+        "reason": "The SWF is not self-contained. sprite-621 parses _parent.dtfREVIEWANS into assessment arrays and cannot select or render an R1-R25 state without the original host payload."
       },
       {
-        "source": "source-path",
-        "path": "HELP_COURSES/ELMGR3/L8/RE/L8RE01.swf"
-      }
-    ]
-  },
-  "source": {
-    "placementPath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L8/RE/L8RE01.swf",
-    "fla": "",
-    "swf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L8/RE/L8RE01.swf",
-    "flaSha256": "",
-    "swfSha256": "e4a6403f6b45a3b4aecb48e0659aa20113acb0644e37b027a19fb51f34417f9b",
-    "pairedFlaStatus": "missing",
-    "provenance": "owner-provided",
-    "aliasOf": null,
-    "variantOf": "course-g03-l08-re-001"
-  },
-  "runtime": {
-    "swfSignature": "CWS",
-    "swfVersion": 6,
-    "declaredFileLength": 225635,
-    "stage": {
-      "width": 800,
-      "height": 600
-    },
-    "fps": 12,
-    "frameCount": 55,
-    "durationMs": 4583.333333333333,
-    "backgroundColor": "#b8d8f7",
-    "actionScriptVersion": "AS1/2",
-    "complexity": "unknown",
-    "fonts": [],
-    "scripts": [
+        "evidenceIds": [
+          "baseline/controlled-local-frame-0002-adobe-player-failed-closed.json",
+          "evidence/native-canvas-candidate-qa.json"
+        ],
+        "id": "controlled-local-frame-2-failed-closed",
+        "ownerDecision": "pending",
+        "reason": "The hash-pinned Adobe controller initially sought local frame 2 but the next monitor tick observed frame 1. The failed-closed output is not baseline- or RMSE-eligible."
+      },
       {
-        "actionScriptVersion": "AS1/2",
-        "exportedFileCount": 6,
-        "tagCounts": {
-          "DoAction": 3
-        },
-        "evidence": "audit/machine/ffdec-scripts.txt.gz",
-        "confidence": "machine-extracted"
+        "evidenceIds": [
+          "audit/scenario-inventory.json",
+          "evidence/native-canvas-candidate-qa.json"
+        ],
+        "id": "spanish-host-state-unproven",
+        "ownerDecision": "pending",
+        "reason": "No authoritative Spanish visual, assessment payload, or language branch is established. Spanish requests fail closed instead of translating source content."
+      },
+      {
+        "evidenceIds": [
+          "audit/audio-runtime-evidence.json"
+        ],
+        "id": "audio-listening-pending",
+        "ownerDecision": "pending",
+        "reason": "Structural audit found no source audio signals, but authoritative listening across every host-bound state has not confirmed silence."
+      },
+      {
+        "evidenceIds": [
+          "audit/machine/ffdec-scripts.txt.gz"
+        ],
+        "id": "legacy-back-side-effect-disabled",
+        "ownerDecision": "pending",
+        "reason": "The source Back button invokes javascript:history.back(); the candidate records the obligation but never executes a JavaScript URL or ambient navigation side effect."
+      },
+      {
+        "evidenceIds": [
+          "audit/scenario-inventory.json"
+        ],
+        "id": "source-replay-unproven",
+        "ownerDecision": "pending",
+        "reason": "No source handler is unambiguously Replay. The native Replay control only restarts the candidate root timeline and is not claimed as legacy behavior parity."
+      },
+      {
+        "evidenceIds": [
+          "evidence/native-canvas-candidate-qa.json"
+        ],
+        "id": "candidate-product-qa-is-not-fidelity-acceptance",
+        "ownerDecision": "pending",
+        "reason": "The Next.js candidate passes deterministic frame reporting, native-size rendering, Replay pointer/Enter/Space, reduced-motion, responsive-overflow, console, and same-origin network checks. Those checks cover the implemented fail-closed candidate only and do not establish the missing REVIEWANS host branches, local frame 2, Spanish parity, audio parity, full-frame RMSE, or source Replay behavior."
       }
     ],
-    "externalDependencies": []
+    "ownerReview": {
+      "decision": "pending",
+      "reason": "",
+      "reviewedAt": "",
+      "reviewer": ""
+    }
+  },
+  "accessibility": {
+    "accessibleNameReviewed": true,
+    "keyboardReplay": true,
+    "localizationReviewed": true,
+    "reducedMotionReviewed": true,
+    "responsiveOverflowReviewed": true
+  },
+  "animationId": "course-g03-l08-re-001",
+  "assetId": "swf-e4a6403f6b45a3b4aecb48e0659aa20113acb0644e37b027a19fb51f34417f9b",
+  "audio": {
+    "catalogExactAssociations": [],
+    "catalogGroupCandidates": [],
+    "cues": [],
+    "inventoryFile": "audio-inventory.csv",
+    "languages": [],
+    "reasonNotRequired": "No DefineSound, SoundStream, StartSound, exact external association, or ActionScript audio operation was found. Authoritative listening across host-bound states remains pending before strict not-applicable acceptance.",
+    "required": false
   },
   "audit": {
+    "assetsNotRequiredReason": "The minimal candidate draws only the source-proven standalone background and header with native Canvas primitives. Question artwork remains unavailable because the required REVIEWANS host state is unresolved.",
     "assetsRequired": false,
-    "assetsNotRequiredReason": "",
-    "masks": [],
-    "morphs": [],
     "filters": [],
-    "networkCalls": [
-      {
-        "api": "getURL",
-        "occurrences": 1,
-        "status": "candidate-not-executed",
-        "evidence": "audit/machine/ffdec-scripts.txt.gz"
-      }
-    ],
     "machineEvidence": {
-      "status": "partial",
-      "report": "audit/machine/report.json",
-      "sourceHashVerified": true,
-      "runtimeCrossCheckPassed": true,
       "authoringInspectionStatus": "missing-source",
       "limitations": [
         "FLA authoring source is unavailable; authoring structure cannot be inspected.",
         "No authoritative runtime traversal, interaction-branch capture, audio synchronization review, or visual baseline is part of this machine audit."
-      ]
-    }
-  },
-  "localization": {
-    "bilingualRequired": true,
-    "languages": [
-      "en",
-      "es"
+      ],
+      "report": "audit/machine/report.json",
+      "runtimeCrossCheckPassed": true,
+      "sourceHashVerified": true,
+      "status": "partial"
+    },
+    "masks": [],
+    "morphs": [],
+    "networkCalls": [
+      {
+        "api": "getURL",
+        "evidence": "audit/machine/ffdec-scripts.txt.gz",
+        "occurrences": 1,
+        "status": "candidate-not-executed"
+      }
     ]
   },
-  "scenarios": [
-    {
-      "id": "default",
-      "kind": "linear",
-      "description": "",
-      "reachable": true
-    }
-  ],
-  "audio": {
-    "required": false,
-    "reasonNotRequired": "No catalog association was found; manual SWF/FLA timeline audit must confirm that audio is not required.",
-    "languages": [],
-    "inventoryFile": "audio-inventory.csv",
-    "cues": [],
-    "catalogGroupCandidates": [],
-    "catalogExactAssociations": []
-  },
-  "toolVersions": {
-    "ruffle": "",
-    "browser": "",
-    "ffdec": "JPEXS Free Flash Decompiler v.26.2.1",
-    "swfmill": "swfmill 0.3.6",
-    "adobeAnimate": "unavailable"
-  },
   "baseline": {
-    "authority": "undecided",
-    "renderer": "Ruffle",
-    "route": "",
-    "routeFile": "",
+    "authority": "authoritative-standalone-default-limited",
+    "captureDirectory": "baseline/keyframes",
+    "keyframeCsv": "keyframes.csv",
+    "renderer": "Adobe Flash Player 32.0.0.414",
+    "route": "/reference/course-g03-l08-re-001",
+    "routeFile": "apps/web/app/[locale]/reference/[animationId]/page.tsx",
     "viewport": {
-      "width": 0,
-      "height": 0,
-      "deviceScaleFactor": 1
-    },
-    "keyframeCsv": "keyframes.csv",
-    "captureDirectory": "baseline/keyframes"
-  },
-  "implementation": {
-    "rendering": "undecided",
-    "route": "",
-    "routeFile": "",
-    "component": "",
-    "timelineModule": "",
-    "testFile": "",
-    "standalonePackage": "",
-    "captureContract": {
-      "frameParameter": "frame",
-      "scenarioParameter": "scenario",
-      "languageParameter": "lang",
-      "seedParameter": "seed",
-      "frameAttribute": "data-flash-frame"
-    },
-    "registryModule": ""
-  },
-  "evidence": {
-    "assetInventory": "asset-inventory.csv",
-    "audioInventory": "audio-inventory.csv",
-    "keyframeCsv": "keyframes.csv",
-    "fullFrameCoverageFile": "evidence/full-frame-coverage.json",
-    "differenceDirectory": "evidence/diffs",
-    "archiveDirectory": ""
-  },
-  "fidelity": {
-    "staticFrameMaxNormalizedRmse": 0.05,
-    "transitionFrameMaxNormalizedRmse": 0.08,
-    "timingToleranceFrames": 1
-  },
-  "accessibility": {
-    "keyboardReplay": false,
-    "reducedMotionReviewed": false,
-    "accessibleNameReviewed": false,
-    "responsiveOverflowReviewed": false,
-    "localizationReviewed": false
-  },
-  "acceptance": {
-    "engineeringReview": {
-      "decision": "pending",
-      "reviewer": "",
-      "reviewedAt": ""
-    },
-    "humanVisualReview": {
-      "decision": "pending",
-      "reviewer": "",
-      "reviewedAt": "",
-      "scope": "all-keyframe-and-full-frame-diffs"
-    },
-    "ownerReview": {
-      "decision": "pending",
-      "reviewer": "",
-      "reviewedAt": "",
-      "reason": ""
-    },
-    "knownExceptions": []
+      "deviceScaleFactor": 1,
+      "height": 600,
+      "width": 800
+    }
   },
   "catalogEvidence": {
     "schemaVersion": 1,
@@ -207,5 +194,273 @@
     "classificationImported": true,
     "audioAssociationsImported": false,
     "migrationStatusImported": false
+  },
+  "classification": {
+    "collection": "course",
+    "domain": "measurement-money",
+    "evidence": [
+      {
+        "field": "NewTitle1",
+        "path": "HELP_COURSES/ELMGR3/L8/index.xml",
+        "source": "course-xml",
+        "value": "Measurement"
+      },
+      {
+        "path": "HELP_COURSES/ELMGR3/L8/RE/L8RE01.swf",
+        "source": "source-path"
+      }
+    ],
+    "grade": 3,
+    "knowledgePoint": {
+      "en": "Quiz Review",
+      "es": ""
+    },
+    "lesson": 8,
+    "page": 1,
+    "section": "RE",
+    "status": "inferred",
+    "titleDisplay": "Quiz Review Details for the Student",
+    "titleRaw": "Quiz Review Details for the Student:"
+  },
+  "confidence": "low",
+  "created": "2026-07-20",
+  "evidence": {
+    "archiveDirectory": "",
+    "assetInventory": "asset-inventory.csv",
+    "audioInventory": "audio-inventory.csv",
+    "candidateQaFile": "evidence/native-canvas-candidate-qa.json",
+    "differenceDirectory": "evidence/diffs",
+    "fullFrameCoverageFile": "evidence/full-frame-coverage.json",
+    "keyframeCsv": "keyframes.csv",
+    "candidateCaptureManifests": [
+      {
+        "requirementId": "req:root:root-standalone:en",
+        "frameDomainId": "root",
+        "traceId": "trace:root:root-standalone:en:seed-0",
+        "entryStateSha256": "4dfbb3290627139f130afd170b4c6d925c09dd7262e32d9cbc1e1142632f9deb",
+        "scenario": "root-standalone",
+        "language": "en",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-partial/course-g03-l08-re-001-source-shared-v1/req-root-root-standalone-en/capture-manifest.json",
+        "sha256": "a3fc6d278d61f9aed5231d08b055422b904d2139546c419842ef7ca55bcba3f0",
+        "frames": 55,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:root-standalone:es",
+        "frameDomainId": "root",
+        "traceId": "trace:root:root-standalone:es:seed-0",
+        "entryStateSha256": "437c8f45bab24d4e392fe021c9731ea0d96ac832931de29d38648196e7e44eea",
+        "scenario": "root-standalone",
+        "language": "es",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-partial/course-g03-l08-re-001-source-shared-v1/req-root-root-standalone-es/capture-manifest.json",
+        "sha256": "353db66904bb33adf9e75f772143e92e5485670a93afdec5ef99dbe6bc06cbb1",
+        "frames": 55,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      }
+    ],
+    "currentJavaScriptImplementationCaptureAdoption": {
+      "path": "evidence/current-javascript-implementation-capture-adoption.json",
+      "sha256": "2a7a1eea8d3d0d7f614562de1a376df88140bcacb6d6e8fe21b4e4dd137e5d0d",
+      "authority": "non-authoritative-current-javascript-output",
+      "strictAcceptanceEffect": "none"
+    }
+  },
+  "fidelity": {
+    "staticFrameMaxNormalizedRmse": 0.05,
+    "timingToleranceFrames": 1,
+    "transitionFrameMaxNormalizedRmse": 0.08
+  },
+  "id": "course-g03-l08-re-001",
+  "implementation": {
+    "captureContract": {
+      "animationIdAttribute": "data-animation-id",
+      "entryStateSha256Attribute": "data-flash-entry-state-sha256",
+      "entryStateSha256Parameter": "entryStateSha256",
+      "frameAttribute": "data-flash-frame",
+      "frameDomainAttribute": "data-flash-frame-domain",
+      "frameDomainParameter": "frameDomain",
+      "frameParameter": "frame",
+      "languageParameter": "lang",
+      "requirementIdAttribute": "data-flash-requirement-id",
+      "requirementIdParameter": "requirementId",
+      "scenarioParameter": "scenario",
+      "seedParameter": "seed",
+      "traceAttribute": "data-flash-trace-id",
+      "traceParameter": "trace"
+    },
+    "component": "packages/demos/src/modules/course-g03-l08-re-001.tsx",
+    "defaultFrameDomainId": "root",
+    "frameDomains": [
+      {
+        "id": "root",
+        "kind": "root",
+        "sourceTimelineId": "root",
+        "sourceInstanceId": "root",
+        "parentFrameDomainId": null,
+        "frameCount": 55,
+        "scenarioIds": [
+          "root-standalone"
+        ],
+        "role": "root-shell-placement"
+      },
+      {
+        "id": "sprite-621",
+        "kind": "nested",
+        "sourceTimelineId": "sprite-621",
+        "sourceInstanceId": "main-animation",
+        "parentFrameDomainId": "root",
+        "parentEntryFrame": 51,
+        "localEntryFrame": 1,
+        "frameCount": 27,
+        "scenarioIds": [
+          "default",
+          "host-review-unavailable",
+          "legacy-back-unavailable"
+        ],
+        "role": "main-animation"
+      }
+    ],
+    "naturalPlaybackEndFrame": 51,
+    "productQaEvidence": "evidence/native-canvas-candidate-qa.json",
+    "productQaScope": "Candidate-only Next.js route QA; does not resolve REVIEWANS host state, fidelity, audio, human review, or owner acceptance.",
+    "registryModule": "./modules/course-g03-l08-re-001",
+    "rendering": "Native React + Canvas candidate with no network, dynamic execution, or module-owned ticker",
+    "route": "/animations/course-g03-l08-re-001",
+    "routeFile": "apps/web/app/[locale]/animations/[animationId]/page.tsx",
+    "standalonePackage": "",
+    "testFile": "packages/demos/tests/course-g03-l08-re-001.test.ts",
+    "timelineModule": "packages/demos/src/timelines/course-g03-l08-re-001.ts"
+  },
+  "localization": {
+    "bilingualRequired": true,
+    "languages": [
+      "en",
+      "es"
+    ]
+  },
+  "runtime": {
+    "actionScriptVersion": "AS1/2",
+    "backgroundColor": "#b8d8f7",
+    "complexity": "high",
+    "declaredFileLength": 225635,
+    "durationMs": 4583.333333333333,
+    "externalDependencies": [],
+    "fonts": [],
+    "fps": 12,
+    "frameCount": 55,
+    "instances": [
+      {
+        "id": "root",
+        "timelineDefinitionId": "root",
+        "parentInstanceId": null,
+        "placement": null
+      },
+      {
+        "id": "main-animation",
+        "timelineDefinitionId": "sprite-621",
+        "parentInstanceId": "root",
+        "placement": {
+          "parentTimelineId": "root",
+          "frame": 51,
+          "depth": "4",
+          "instanceName": "animation",
+          "sourceObjectId": "621"
+        }
+      }
+    ],
+    "rootTimelineId": "root",
+    "scripts": [
+      {
+        "actionScriptVersion": "AS1/2",
+        "confidence": "machine-extracted",
+        "evidence": "audit/machine/ffdec-scripts.txt.gz",
+        "exportedFileCount": 6,
+        "tagCounts": {
+          "DoAction": 3
+        }
+      }
+    ],
+    "stage": {
+      "width": 800,
+      "height": 600
+    },
+    "swfSignature": "CWS",
+    "swfVersion": 6,
+    "timelineDefinitions": [
+      {
+        "id": "root",
+        "kind": "root",
+        "sourceTimelineId": "root",
+        "sourceObjectId": null,
+        "frameCount": 55,
+        "indexing": "one-indexed",
+        "structuralReachability": "root",
+        "evidence": "audit/scenario-inventory.json"
+      },
+      {
+        "id": "sprite-621",
+        "kind": "movie-clip",
+        "sourceTimelineId": "sprite-621",
+        "sourceObjectId": "621",
+        "frameCount": 27,
+        "indexing": "one-indexed",
+        "structuralReachability": "reachable-from-root-placement-graph",
+        "role": "main-animation",
+        "evidence": "audit/scenario-inventory.json"
+      }
+    ]
+  },
+  "scenarios": [
+    {
+      "candidateDisposition": "authoritative-standalone-default-candidate",
+      "description": "English header-only visual observed across the authoritative standalone Adobe frame set; natural playback stops at root Begin frame 51 with sprite-621 on local frame 1.",
+      "id": "default",
+      "kind": "linear",
+      "reachable": true
+    },
+    {
+      "candidateDisposition": "fail-closed",
+      "description": "Records the unresolved REVIEWANS assessment-host obligation without inventing a question, answer, score, or response.",
+      "id": "host-review-unavailable",
+      "kind": "interactive",
+      "reachable": true
+    },
+    {
+      "candidateDisposition": "fail-closed",
+      "description": "Records the source JavaScript-history Back action while prohibiting its side effect.",
+      "id": "legacy-back-unavailable",
+      "kind": "interactive",
+      "reachable": true
+    },
+    {
+      "description": "Original SWF root-shell and animation-placement trace only; the current renderer does not implement this standalone root-domain scenario.",
+      "id": "root-standalone",
+      "kind": "linear",
+      "reachable": true
+    }
+  ],
+  "schemaVersion": 2,
+  "source": {
+    "aliasOf": null,
+    "fla": "",
+    "flaSha256": "",
+    "pairedFlaStatus": "missing",
+    "placementPath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L8/RE/L8RE01.swf",
+    "provenance": "owner-provided",
+    "swf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L8/RE/L8RE01.swf",
+    "swfSha256": "e4a6403f6b45a3b4aecb48e0659aa20113acb0644e37b027a19fb51f34417f9b",
+    "variantOf": "course-g03-l08-re-001"
+  },
+  "status": "preserved",
+  "toolVersions": {
+    "adobeAnimate": "Adobe Animate 2021 21.0.7 installed; paired FLA missing, so authoring inspection is not applicable",
+    "browser": "Chromium 150.0.7871.129 via Playwright 1.61.1",
+    "ffdec": "JPEXS Free Flash Decompiler v.26.2.1",
+    "ruffle": "@ruffle-rs/ruffle 0.4.1 (forensic reference only)",
+    "swfmill": "swfmill 0.3.6"
   }
 }

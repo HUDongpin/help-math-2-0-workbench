@@ -1,228 +1,427 @@
 {
-  "schemaVersion": 2,
-  "id": "shell-course-g04-l01-index-local",
+  "acceptance": {
+    "currentJavaScriptOutputApproval": {
+      "decision": "accepted",
+      "reviewer": "Dr. Peter Hu",
+      "reviewedAt": "2026-07-25T00:46:38+08:00",
+      "sourceMessage": "Codex，我看到你的第六步——设计到人类验收animations。\n\n因为我马上要去睡觉了。所以我通过“人对animations的审核”。Codex可以认定完成验收。",
+      "scope": "currently-generated-javascript-based-animations-at-review-time",
+      "approvalRecord": "reports/current-javascript-output-human-approval.json",
+      "approvalRecordSha256": "7f291bd72cf2a9c35cdb7d7fcbd3b52c1e3b88ec1e31e66e776b909e9c01cc5c",
+      "artifactBindingSha256": "34cdfbacdf40d1f2fd6cacd9f804afd5cc410edc935818c636684fb682b45eb8",
+      "strictHumanReviewEffect": "none; strict human review still requires a named human to accept all required keyframe and full-frame diffs, bilingual audio, and interaction evidence",
+      "history": [
+        {
+          "decision": "stale",
+          "priorDecision": "accepted",
+          "reviewer": "Project user (explicit human approval in Codex thread)",
+          "reviewedAt": "2026-07-22",
+          "invalidatedAt": "2026-07-22",
+          "invalidationReason": "The shell pure-state identity contract and React renderer capture attributes changed after the approval event; renewed review must bind the current timeline, renderer, and candidate-QA hashes.",
+          "scope": "javascript-output-existing-at-review-time"
+        },
+        {
+          "decision": "accepted",
+          "priorDecision": "",
+          "reviewer": "Project user (explicit human approval in Codex thread; name not provided)",
+          "reviewedAt": "2026-07-21T20:58:06Z",
+          "invalidatedAt": "",
+          "invalidationReason": "",
+          "scope": "currently-generated-javascript-based-animations-at-review-time"
+        },
+        {
+          "decision": "accepted",
+          "priorDecision": "",
+          "reviewer": "Project user (explicit human approval in Codex thread; name not provided)",
+          "reviewedAt": "2026-07-22T01:31:02Z",
+          "invalidatedAt": "",
+          "invalidationReason": "",
+          "scope": "currently-generated-javascript-based-animations-at-review-time"
+        },
+        {
+          "decision": "accepted",
+          "priorDecision": "",
+          "reviewer": "Dr. Peter Hu",
+          "reviewedAt": "2026-07-23T11:05:10+08:00",
+          "invalidatedAt": "",
+          "invalidationReason": "",
+          "scope": "currently-generated-javascript-based-animations-at-review-time"
+        }
+      ]
+    },
+    "engineeringReview": {
+      "decision": "pending",
+      "reviewedAt": "",
+      "reviewer": ""
+    },
+    "humanVisualReview": {
+      "decision": "pending",
+      "reviewedAt": "",
+      "reviewer": "",
+      "scope": "all-keyframe-and-full-frame-diffs"
+    },
+    "knownExceptions": [
+      {
+        "evidenceIds": [
+          "audit/scenario-inventory.json",
+          "baseline/ffdec-root-frames.json",
+          "evidence/native-navigation-candidate-qa.json"
+        ],
+        "id": "native-navigation-candidate-not-fidelity-baseline",
+        "ownerDecision": "pending",
+        "reason": "The native renderer reconstructs the course-navigation information architecture from index.xml and source scripts, but it has not been compared against an authoritative original-host runtime and is not a one-to-one visual replacement."
+      },
+      {
+        "evidenceIds": [
+          "catalog/animations.json",
+          "catalog/completion-ledger.json",
+          "audit/scenario-inventory.json",
+          "evidence/native-navigation-candidate-qa.json"
+        ],
+        "id": "child-routes-fail-closed",
+        "ownerDecision": "pending",
+        "reason": "All 80 XML page destinations are disabled: 21 source SWFs are present but not strict-complete and 59 references have no provided source. The candidate emits no child animation link until the completion ledger admits it."
+      },
+      {
+        "evidenceIds": [
+          "audit/machine/ffdec-scripts.txt.gz"
+        ],
+        "id": "legacy-side-effects-disabled",
+        "ownerDecision": "pending",
+        "reason": "Legacy getURL, fscommand, loadMovie, SharedObject, reporting, JavaScript close, and remote-help effects are not executed. The source-proven quit confirmation keeps its affirmative close action disabled."
+      },
+      {
+        "evidenceIds": [
+          "audit/scenario-inventory.json"
+        ],
+        "id": "spanish-lesson-title-inferred",
+        "ownerDecision": "pending",
+        "reason": "index.xml has no lesson-level Spanish title. The candidate reuses the exact SpanSubTitleName 'Valor posicional' from the Place Value VB subpage and records that inference instead of claiming a direct lesson-title field."
+      },
+      {
+        "evidenceIds": [
+          "audit/scenario-inventory.json",
+          "evidence/native-navigation-candidate-qa.json"
+        ],
+        "id": "spanish-page-title-coverage-is-partial",
+        "ownerDecision": "pending",
+        "reason": "The course XML supplies Spanish titles only for selected page starts. The candidate uses those exact titles and retains raw English on continuation pages that have no source-provided Spanish title; it does not invent translations."
+      },
+      {
+        "evidenceIds": [
+          "audit/audio-runtime-evidence.json"
+        ],
+        "id": "shell-audio-unimplemented",
+        "ownerDecision": "pending",
+        "reason": "The SWF contains embedded sounds/streams and conditional audio operations whose reachability, language, listening result, and synchronization remain unresolved; the native candidate emits no guessed cue."
+      },
+      {
+        "evidenceIds": [
+          "evidence/native-navigation-candidate-qa.json"
+        ],
+        "id": "candidate-product-qa-is-not-fidelity-acceptance",
+        "ownerDecision": "pending",
+        "reason": "The Next.js candidate passes deterministic frame/scenario/language/seed reporting, exact 800 by 600 capture, Replay pointer/Enter/Space, reduced-motion, responsive-overflow, dialog focus/Escape, console, and same-origin network checks. These checks do not replace authoritative original-host traversal, full-frame RMSE, audio parity, human review, or owner acceptance."
+      }
+    ],
+    "ownerReview": {
+      "decision": "pending",
+      "reason": "",
+      "reviewedAt": "",
+      "reviewer": ""
+    }
+  },
+  "accessibility": {
+    "accessibleNameReviewed": true,
+    "keyboardReplay": true,
+    "localizationReviewed": true,
+    "reducedMotionReviewed": true,
+    "responsiveOverflowReviewed": true
+  },
   "animationId": "shell-course-g04-l01-index-local",
   "assetId": "swf-ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
-  "status": "preserved",
-  "created": "2026-07-20",
-  "confidence": "unknown",
-  "classification": {
-    "collection": "course",
-    "grade": 4,
-    "lesson": 1,
-    "section": null,
-    "page": null,
-    "domain": "platform-shell",
-    "knowledgePoint": {
-      "en": "Place Value",
-      "es": ""
-    },
-    "titleRaw": "Place Value",
-    "titleDisplay": "Place Value",
-    "status": "inferred",
-    "evidence": [
+  "audio": {
+    "catalogExactAssociations": [],
+    "catalogGroupCandidates": [],
+    "cues": [
       {
-        "source": "course-xml",
-        "path": "HELP_COURSES/ELMGR4/L1/index.xml",
-        "field": "NewTitle1",
-        "value": "Place Value"
+        "channels": 2,
+        "durationMs": 4598,
+        "format": "swf-mp3",
+        "id": "embedded-define-sound-0001",
+        "language": "und",
+        "sampleRateHz": 44100,
+        "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+        "source": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+        "startFrame": null,
+        "startFrameDomainId": null,
+        "startSemantics": "interaction-state"
       },
       {
-        "source": "source-path",
-        "path": "HELP_COURSES/ELMGR4/L1/index_local.swf"
-      }
-    ]
-  },
-  "source": {
-    "placementPath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
-    "fla": "",
-    "swf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
-    "flaSha256": "",
-    "swfSha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
-    "pairedFlaStatus": "missing",
-    "provenance": "owner-provided",
-    "aliasOf": null,
-    "variantOf": null
-  },
-  "runtime": {
-    "swfSignature": "CWS",
-    "swfVersion": 6,
-    "declaredFileLength": 956031,
-    "stage": {
-      "width": 800,
-      "height": 600
-    },
-    "fps": 12,
-    "frameCount": 50,
-    "durationMs": 4166.666666666667,
-    "backgroundColor": "#ffffff",
-    "actionScriptVersion": "AS1/2",
-    "complexity": "unknown",
-    "fonts": [],
-    "scripts": [
+        "channels": 1,
+        "durationMs": 20193,
+        "format": "swf-mp3",
+        "id": "embedded-define-sound-0002",
+        "language": "und",
+        "sampleRateHz": 44100,
+        "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+        "source": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+        "startFrame": null,
+        "startFrameDomainId": null,
+        "startSemantics": "interaction-state"
+      },
       {
-        "actionScriptVersion": "AS1/2",
-        "exportedFileCount": 600,
-        "tagCounts": {
-          "DoAction": 327,
-          "DoInitAction": 3
-        },
-        "evidence": "audit/machine/ffdec-scripts.txt.gz",
-        "confidence": "machine-extracted"
+        "channels": 1,
+        "durationMs": 13,
+        "format": "swf-mp3",
+        "id": "embedded-define-sound-0149",
+        "language": "und",
+        "sampleRateHz": 22050,
+        "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+        "source": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+        "startFrame": null,
+        "startFrameDomainId": null,
+        "startSemantics": "interaction-state"
+      },
+      {
+        "channels": 1,
+        "durationMs": 57,
+        "format": "swf-mp3",
+        "id": "embedded-define-sound-0150",
+        "language": "und",
+        "sampleRateHz": 22050,
+        "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+        "source": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+        "startFrame": null,
+        "startFrameDomainId": null,
+        "startSemantics": "interaction-state"
+      },
+      {
+        "channels": 1,
+        "durationMs": 392,
+        "format": "swf-mp3-stream",
+        "id": "embedded-stream-0100",
+        "language": "und",
+        "sampleRateHz": 22050,
+        "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+        "source": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+        "startFrame": null,
+        "startFrameDomainId": null,
+        "startSemantics": "interaction-state"
+      },
+      {
+        "channels": 1,
+        "durationMs": 575,
+        "format": "swf-mp3-stream",
+        "id": "embedded-stream-0137",
+        "language": "und",
+        "sampleRateHz": 22050,
+        "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+        "source": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+        "startFrame": null,
+        "startFrameDomainId": null,
+        "startSemantics": "interaction-state"
+      },
+      {
+        "channels": 1,
+        "durationMs": 810,
+        "format": "swf-mp3-stream",
+        "id": "embedded-stream-0141",
+        "language": "und",
+        "sampleRateHz": 22050,
+        "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+        "source": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+        "startFrame": null,
+        "startFrameDomainId": null,
+        "startSemantics": "interaction-state"
+      },
+      {
+        "channels": 1,
+        "durationMs": 575,
+        "format": "swf-mp3-stream",
+        "id": "embedded-stream-0144",
+        "language": "und",
+        "sampleRateHz": 22050,
+        "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+        "source": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+        "startFrame": null,
+        "startFrameDomainId": null,
+        "startSemantics": "interaction-state"
+      },
+      {
+        "channels": 1,
+        "durationMs": 575,
+        "format": "swf-mp3-stream",
+        "id": "embedded-stream-0147",
+        "language": "und",
+        "sampleRateHz": 22050,
+        "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+        "source": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+        "startFrame": null,
+        "startFrameDomainId": null,
+        "startSemantics": "interaction-state"
+      },
+      {
+        "channels": 1,
+        "durationMs": 575,
+        "format": "swf-mp3-stream",
+        "id": "embedded-stream-0150",
+        "language": "und",
+        "sampleRateHz": 22050,
+        "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+        "source": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+        "startFrame": null,
+        "startFrameDomainId": null,
+        "startSemantics": "interaction-state"
+      },
+      {
+        "channels": 1,
+        "durationMs": 575,
+        "format": "swf-mp3-stream",
+        "id": "embedded-stream-0153",
+        "language": "und",
+        "sampleRateHz": 22050,
+        "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+        "source": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+        "startFrame": null,
+        "startFrameDomainId": null,
+        "startSemantics": "interaction-state"
+      },
+      {
+        "channels": 1,
+        "durationMs": 575,
+        "format": "swf-mp3-stream",
+        "id": "embedded-stream-0155",
+        "language": "und",
+        "sampleRateHz": 22050,
+        "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+        "source": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+        "startFrame": null,
+        "startFrameDomainId": null,
+        "startSemantics": "interaction-state"
+      },
+      {
+        "channels": 1,
+        "durationMs": 888,
+        "format": "swf-mp3-stream",
+        "id": "embedded-stream-0157",
+        "language": "und",
+        "sampleRateHz": 22050,
+        "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+        "source": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+        "startFrame": null,
+        "startFrameDomainId": null,
+        "startSemantics": "interaction-state"
+      },
+      {
+        "channels": 1,
+        "durationMs": 888,
+        "format": "swf-mp3-stream",
+        "id": "embedded-stream-0177",
+        "language": "und",
+        "sampleRateHz": 22050,
+        "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+        "source": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+        "startFrame": null,
+        "startFrameDomainId": null,
+        "startSemantics": "interaction-state"
+      },
+      {
+        "channels": 1,
+        "durationMs": 575,
+        "format": "swf-mp3-stream",
+        "id": "embedded-stream-0197",
+        "language": "und",
+        "sampleRateHz": 22050,
+        "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+        "source": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+        "startFrame": null,
+        "startFrameDomainId": null,
+        "startSemantics": "interaction-state"
+      },
+      {
+        "channels": 2,
+        "durationMs": 392,
+        "format": "swf-mp3-stream",
+        "id": "embedded-stream-0206",
+        "language": "und",
+        "sampleRateHz": 22050,
+        "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+        "source": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+        "startFrame": null,
+        "startFrameDomainId": null,
+        "startSemantics": "interaction-state"
       }
     ],
-    "externalDependencies": []
+    "inventoryFile": "audio-inventory.csv",
+    "languages": [
+      "und"
+    ],
+    "reasonNotRequired": "",
+    "required": true
   },
   "audit": {
+    "assetsNotRequiredReason": "The current native navigation candidate uses editable React/HTML/CSS geometry. Source artwork extraction remains required before any pixel-fidelity claim.",
     "assetsRequired": false,
-    "assetsNotRequiredReason": "",
-    "masks": [],
-    "morphs": [
-      {
-        "tag": "DefineMorphShape",
-        "count": 1,
-        "evidence": "audit/machine/swfmill-summary.json"
-      }
-    ],
     "filters": [],
-    "networkCalls": [
-      {
-        "api": "SharedObject",
-        "occurrences": 1,
-        "status": "candidate-not-executed",
-        "evidence": "audit/machine/ffdec-scripts.txt.gz"
-      },
-      {
-        "api": "fscommand",
-        "occurrences": 5,
-        "status": "candidate-not-executed",
-        "evidence": "audit/machine/ffdec-scripts.txt.gz"
-      },
-      {
-        "api": "getURL",
-        "occurrences": 3,
-        "status": "candidate-not-executed",
-        "evidence": "audit/machine/ffdec-scripts.txt.gz"
-      },
-      {
-        "api": "loadMovie",
-        "occurrences": 5,
-        "status": "candidate-not-executed",
-        "evidence": "audit/machine/ffdec-scripts.txt.gz"
-      }
-    ],
     "machineEvidence": {
-      "status": "partial",
-      "report": "audit/machine/report.json",
-      "sourceHashVerified": true,
-      "runtimeCrossCheckPassed": true,
       "authoringInspectionStatus": "missing-source",
       "limitations": [
         "FLA authoring source is unavailable; authoring structure cannot be inspected.",
         "No authoritative runtime traversal, interaction-branch capture, audio synchronization review, or visual baseline is part of this machine audit."
-      ]
-    }
-  },
-  "localization": {
-    "bilingualRequired": true,
-    "languages": [
-      "en",
-      "es"
+      ],
+      "report": "audit/machine/report.json",
+      "runtimeCrossCheckPassed": true,
+      "sourceHashVerified": true,
+      "status": "partial"
+    },
+    "masks": [],
+    "morphs": [
+      {
+        "count": 1,
+        "evidence": "audit/machine/swfmill-summary.json",
+        "tag": "DefineMorphShape"
+      }
+    ],
+    "networkCalls": [
+      {
+        "api": "SharedObject",
+        "evidence": "audit/machine/ffdec-scripts.txt.gz",
+        "occurrences": 1,
+        "status": "candidate-not-executed"
+      },
+      {
+        "api": "fscommand",
+        "evidence": "audit/machine/ffdec-scripts.txt.gz",
+        "occurrences": 5,
+        "status": "candidate-not-executed"
+      },
+      {
+        "api": "getURL",
+        "evidence": "audit/machine/ffdec-scripts.txt.gz",
+        "occurrences": 3,
+        "status": "candidate-not-executed"
+      },
+      {
+        "api": "loadMovie",
+        "evidence": "audit/machine/ffdec-scripts.txt.gz",
+        "occurrences": 5,
+        "status": "candidate-not-executed"
+      }
     ]
-  },
-  "scenarios": [
-    {
-      "id": "default",
-      "kind": "linear",
-      "description": "",
-      "reachable": true
-    }
-  ],
-  "audio": {
-    "required": false,
-    "reasonNotRequired": "No catalog association was found; manual SWF/FLA timeline audit must confirm that audio is not required.",
-    "languages": [],
-    "inventoryFile": "audio-inventory.csv",
-    "cues": [],
-    "catalogGroupCandidates": [],
-    "catalogExactAssociations": []
-  },
-  "toolVersions": {
-    "ruffle": "",
-    "browser": "",
-    "ffdec": "JPEXS Free Flash Decompiler v.26.2.1",
-    "swfmill": "swfmill 0.3.6",
-    "adobeAnimate": "unavailable"
   },
   "baseline": {
     "authority": "undecided",
+    "captureDirectory": "baseline/keyframes",
+    "keyframeCsv": "keyframes.csv",
     "renderer": "Ruffle",
     "route": "",
     "routeFile": "",
     "viewport": {
-      "width": 0,
+      "deviceScaleFactor": 1,
       "height": 0,
-      "deviceScaleFactor": 1
-    },
-    "keyframeCsv": "keyframes.csv",
-    "captureDirectory": "baseline/keyframes"
-  },
-  "implementation": {
-    "rendering": "undecided",
-    "route": "",
-    "routeFile": "",
-    "component": "",
-    "timelineModule": "",
-    "testFile": "",
-    "standalonePackage": "",
-    "captureContract": {
-      "frameParameter": "frame",
-      "scenarioParameter": "scenario",
-      "languageParameter": "lang",
-      "seedParameter": "seed",
-      "frameAttribute": "data-flash-frame"
-    },
-    "registryModule": ""
-  },
-  "evidence": {
-    "assetInventory": "asset-inventory.csv",
-    "audioInventory": "audio-inventory.csv",
-    "keyframeCsv": "keyframes.csv",
-    "fullFrameCoverageFile": "evidence/full-frame-coverage.json",
-    "differenceDirectory": "evidence/diffs",
-    "archiveDirectory": ""
-  },
-  "fidelity": {
-    "staticFrameMaxNormalizedRmse": 0.05,
-    "transitionFrameMaxNormalizedRmse": 0.08,
-    "timingToleranceFrames": 1
-  },
-  "accessibility": {
-    "keyboardReplay": false,
-    "reducedMotionReviewed": false,
-    "accessibleNameReviewed": false,
-    "responsiveOverflowReviewed": false,
-    "localizationReviewed": false
-  },
-  "acceptance": {
-    "engineeringReview": {
-      "decision": "pending",
-      "reviewer": "",
-      "reviewedAt": ""
-    },
-    "humanVisualReview": {
-      "decision": "pending",
-      "reviewer": "",
-      "reviewedAt": "",
-      "scope": "all-keyframe-and-full-frame-diffs"
-    },
-    "ownerReview": {
-      "decision": "pending",
-      "reviewer": "",
-      "reviewedAt": "",
-      "reason": ""
-    },
-    "knownExceptions": []
+      "width": 0
+    }
   },
   "catalogEvidence": {
     "schemaVersion": 1,
@@ -232,5 +431,545 @@
     "classificationImported": true,
     "audioAssociationsImported": false,
     "migrationStatusImported": false
+  },
+  "classification": {
+    "collection": "course",
+    "domain": "platform-shell",
+    "evidence": [
+      {
+        "field": "NewTitle1",
+        "path": "HELP_COURSES/ELMGR4/L1/index.xml",
+        "source": "course-xml",
+        "value": "Place Value"
+      },
+      {
+        "path": "HELP_COURSES/ELMGR4/L1/index_local.swf",
+        "source": "source-path"
+      },
+      {
+        "field": "Section[VB].SubPageTitle[Place Value].SpanSubTitleName",
+        "path": "HELP_COURSES/ELMGR4/L1/index.xml",
+        "source": "course-xml",
+        "value": "Valor posicional (reused as an inferred lesson-level Spanish title; index.xml has no explicit lesson-level Spanish field)"
+      }
+    ],
+    "grade": 4,
+    "knowledgePoint": {
+      "en": "Place Value",
+      "es": "Valor posicional"
+    },
+    "lesson": 1,
+    "page": null,
+    "section": null,
+    "status": "inferred",
+    "titleDisplay": "Place Value",
+    "titleRaw": "Place Value"
+  },
+  "confidence": "low",
+  "created": "2026-07-20",
+  "evidence": {
+    "archiveDirectory": "",
+    "assetInventory": "asset-inventory.csv",
+    "audioInventory": "audio-inventory.csv",
+    "candidateQaFile": "evidence/native-navigation-candidate-qa.json",
+    "candidateQaSha256": "d3fa7e7d86d15959dbf6ce73ac5b80b3dc62419139af185265bf00317f1fb374",
+    "differenceDirectory": "evidence/diffs",
+    "fullFrameCoverageFile": "evidence/full-frame-coverage.json",
+    "keyframeCsv": "keyframes.csv",
+    "candidateCaptureManifests": [
+      {
+        "requirementId": "req:root:default:en",
+        "frameDomainId": "root",
+        "traceId": "trace:root:default:en:seed-0",
+        "entryStateSha256": "4040d01285cccec9ab9de736f732ce96f269bd41f869e7b8c6a6b25d89b71efa",
+        "scenario": "default",
+        "language": "en",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-default-en/capture-manifest.json",
+        "sha256": "3e5fc59fdbda3c6254b425a398d40f6d7ddea58b83bd44387154a0314bc57a17",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:default:es",
+        "frameDomainId": "root",
+        "traceId": "trace:root:default:es:seed-0",
+        "entryStateSha256": "db44c6cbe20a92bab99ee963454b2da751174496e81e1b288083abd7358da72f",
+        "scenario": "default",
+        "language": "es",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-default-es/capture-manifest.json",
+        "sha256": "d1a906d6ff8ea63249eed1be260c1c06acb741ace4e5e51a76a53f3ec93ef1f3",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:quit-confirmation:en",
+        "frameDomainId": "root",
+        "traceId": "trace:root:quit-confirmation:en:seed-0",
+        "entryStateSha256": "285c18fb655016a53b40a1f2a5c222c61ac80745e3bdd30ad63e01e4fa1be7ad",
+        "scenario": "quit-confirmation",
+        "language": "en",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-quit-confirmation-en/capture-manifest.json",
+        "sha256": "5accc8ab23cc099fa1462bb96941b483f760b84ad9b647a8fba08ad76fc239be",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:quit-confirmation:es",
+        "frameDomainId": "root",
+        "traceId": "trace:root:quit-confirmation:es:seed-0",
+        "entryStateSha256": "12ec70e2d6aceb1f8dd65d5c2fb9f2421997342351e77bab728215ef10c8483d",
+        "scenario": "quit-confirmation",
+        "language": "es",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-quit-confirmation-es/capture-manifest.json",
+        "sha256": "ec758ac9399e671c0845aa95ec690c8e08122fafd07263d358f202e3e47f1853",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:section-fq:en",
+        "frameDomainId": "root",
+        "traceId": "trace:root:section-fq:en:seed-0",
+        "entryStateSha256": "7847ef287abac6b55723350f663a3fecf995d269381c3ddd165ab55a3d07e441",
+        "scenario": "section-fq",
+        "language": "en",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-fq-en/capture-manifest.json",
+        "sha256": "23a4122bf35fe19fac0e04f49b8a336a42b63682c6b9f5a755a45398d1603f9e",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:section-fq:es",
+        "frameDomainId": "root",
+        "traceId": "trace:root:section-fq:es:seed-0",
+        "entryStateSha256": "c6d8894114df9e3654e4374ce4cf480d92fd40cd43915c313019a9206b6fef37",
+        "scenario": "section-fq",
+        "language": "es",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-fq-es/capture-manifest.json",
+        "sha256": "a7a9bd475b843ce541ae8714f560a45a5b4f3346460886c954fc1eb249095e64",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:section-gs:en",
+        "frameDomainId": "root",
+        "traceId": "trace:root:section-gs:en:seed-0",
+        "entryStateSha256": "4fb141ec4313cb673df468368f11067fbc71e126840a11bdc60be51d6960786f",
+        "scenario": "section-gs",
+        "language": "en",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-gs-en/capture-manifest.json",
+        "sha256": "b07349f2194f009b38cec416dba3ae4b0ef3f6b22488c180156026057154ed89",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:section-gs:es",
+        "frameDomainId": "root",
+        "traceId": "trace:root:section-gs:es:seed-0",
+        "entryStateSha256": "b04be4bd049b801ab74b19a0f499caacc422306419c6fe915f73491c4732bc85",
+        "scenario": "section-gs",
+        "language": "es",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-gs-es/capture-manifest.json",
+        "sha256": "12b4ac15664967485af8945fff6eae5434f956b234a30b668b1be8022c25dd40",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:section-in:en",
+        "frameDomainId": "root",
+        "traceId": "trace:root:section-in:en:seed-0",
+        "entryStateSha256": "7fdfb8b43e18be63577af22de644e0ec238f4218bca2052c13d37279aabc98a1",
+        "scenario": "section-in",
+        "language": "en",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-in-en/capture-manifest.json",
+        "sha256": "45039d67dcfd6ee58502512c32838deb15c44a32d62e55a534002f223e66417a",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:section-in:es",
+        "frameDomainId": "root",
+        "traceId": "trace:root:section-in:es:seed-0",
+        "entryStateSha256": "f2af1fc75b54f66a7902a5b485d3d1e54dffe9f99c00f892608eddf5282d4b82",
+        "scenario": "section-in",
+        "language": "es",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-in-es/capture-manifest.json",
+        "sha256": "e82f9bde2f076a103ab97de1b851106e10e2c3c154e9ccf92f761f175c8abd42",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:section-ir:en",
+        "frameDomainId": "root",
+        "traceId": "trace:root:section-ir:en:seed-0",
+        "entryStateSha256": "5cee776966c8ef79a64c2fb607376240cc9b8e06cbc680326edc32ac7e044127",
+        "scenario": "section-ir",
+        "language": "en",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-ir-en/capture-manifest.json",
+        "sha256": "ddf7a4dfa238e082f0987e02c0e51ca19eca820e60e0afbf36605fb4c630b275",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:section-ir:es",
+        "frameDomainId": "root",
+        "traceId": "trace:root:section-ir:es:seed-0",
+        "entryStateSha256": "6c5c0cf3adc0622c4e8da1c6bdb0c9b3bc3f7785b4e7ec4154a62c247eb671f6",
+        "scenario": "section-ir",
+        "language": "es",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-ir-es/capture-manifest.json",
+        "sha256": "3fe25a5fb6886de29348598f6fa5301cf08188e58f0ae4de9c7942cd8b2d97e0",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:section-rw:en",
+        "frameDomainId": "root",
+        "traceId": "trace:root:section-rw:en:seed-0",
+        "entryStateSha256": "5fbb8dced0b95986f2744fac1f60a67e56b0ef14e37451b4ee4810bba64dbff4",
+        "scenario": "section-rw",
+        "language": "en",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-rw-en/capture-manifest.json",
+        "sha256": "445a3253f97c5ee3210de7ef3a05189b526166b000b9488ed5a96fd966251d36",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:section-rw:es",
+        "frameDomainId": "root",
+        "traceId": "trace:root:section-rw:es:seed-0",
+        "entryStateSha256": "1b3e9dc0ccb793067f78558f6b4cd2ab6a7a75af2e377d08c5bc4d97e0f86702",
+        "scenario": "section-rw",
+        "language": "es",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-rw-es/capture-manifest.json",
+        "sha256": "71f43a61247ff2349bcde6151cccf844a618c3fe19d238f74f29551ae1d3511e",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:section-ti:en",
+        "frameDomainId": "root",
+        "traceId": "trace:root:section-ti:en:seed-0",
+        "entryStateSha256": "f968a21d43c42aa4630bd158dd2bc15638cfc14e7e71f8bf70ae880b40737cf6",
+        "scenario": "section-ti",
+        "language": "en",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-ti-en/capture-manifest.json",
+        "sha256": "a3fef59ce04000f40b45b5bd3b439846a82e4e192a9860f69009aa7f2db170b5",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:section-ti:es",
+        "frameDomainId": "root",
+        "traceId": "trace:root:section-ti:es:seed-0",
+        "entryStateSha256": "49cb8729ab74c5a98e8a2017332686cc808555ebc05218d8544d604940e74bc6",
+        "scenario": "section-ti",
+        "language": "es",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-ti-es/capture-manifest.json",
+        "sha256": "c8a8cea38ef6fa1e84d9aabc3c9de046ed45110fa8d34f9cd22d5bac53896479",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:section-ts:en",
+        "frameDomainId": "root",
+        "traceId": "trace:root:section-ts:en:seed-0",
+        "entryStateSha256": "75d44b76463f9d748f4c0aa92335bd2aa77239965ef4e5e54d058ddb7982a8e4",
+        "scenario": "section-ts",
+        "language": "en",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-ts-en/capture-manifest.json",
+        "sha256": "a14a88e0cca771dbf5b8b0bb566a375eaa6b0a784564394cf057f329e613aa14",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:section-ts:es",
+        "frameDomainId": "root",
+        "traceId": "trace:root:section-ts:es:seed-0",
+        "entryStateSha256": "d7f5a2d65ee7917ab786a8f601fb6b09cfa0555379b5eae635dd1676420ebc88",
+        "scenario": "section-ts",
+        "language": "es",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-ts-es/capture-manifest.json",
+        "sha256": "403eb47145262fcf89b375cd8695043d300f44892adff49d1239b169c8f27c29",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:section-vb:en",
+        "frameDomainId": "root",
+        "traceId": "trace:root:section-vb:en:seed-0",
+        "entryStateSha256": "ec22625b372e9ed726340c17607cc2dd427d4cb630d069716dcbb1f5f2e43145",
+        "scenario": "section-vb",
+        "language": "en",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-vb-en/capture-manifest.json",
+        "sha256": "3fbfcb176446251f2da3ad1f46acb89a9e053c8df6f7049b89e172a0c5257504",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      },
+      {
+        "requirementId": "req:root:section-vb:es",
+        "frameDomainId": "root",
+        "traceId": "trace:root:section-vb:es:seed-0",
+        "entryStateSha256": "b56227058a4d80a92218cf6fed595bda7d1d9027774892863762769555270c51",
+        "scenario": "section-vb",
+        "language": "es",
+        "seed": "0",
+        "path": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-vb-es/capture-manifest.json",
+        "sha256": "2a36ad2eba7229e7c3b7ba70b55a3d98837b1d9b427d8e8a7d2ad291b042d71e",
+        "frames": 50,
+        "authority": "non-authoritative-current-javascript-output",
+        "strictAcceptanceEffect": "implementation-capture-only"
+      }
+    ],
+    "currentJavaScriptImplementationCaptureAdoption": {
+      "path": "evidence/current-javascript-implementation-capture-adoption.json",
+      "sha256": "ddb7e6d3cc4bce51290ad6b252554f4ad4422caa3e884f7c0844426dd7c1dad3",
+      "authority": "non-authoritative-current-javascript-output",
+      "strictAcceptanceEffect": "none"
+    }
+  },
+  "fidelity": {
+    "staticFrameMaxNormalizedRmse": 0.05,
+    "timingToleranceFrames": 1,
+    "transitionFrameMaxNormalizedRmse": 0.08
+  },
+  "id": "shell-course-g04-l01-index-local",
+  "implementation": {
+    "captureContract": {
+      "animationIdAttribute": "data-animation-id",
+      "entryStateSha256Attribute": "data-flash-entry-state-sha256",
+      "entryStateSha256Parameter": "entryStateSha256",
+      "frameAttribute": "data-flash-frame",
+      "frameDomainAttribute": "data-flash-frame-domain",
+      "frameDomainParameter": "frameDomain",
+      "frameParameter": "frame",
+      "languageParameter": "lang",
+      "requirementIdAttribute": "data-flash-requirement-id",
+      "requirementIdParameter": "requirementId",
+      "scenarioParameter": "scenario",
+      "seedParameter": "seed",
+      "traceAttribute": "data-flash-trace-id",
+      "traceParameter": "trace"
+    },
+    "component": "packages/demos/src/modules/shell-course-g04-l01-index-local.tsx",
+    "defaultFrameDomainId": "root",
+    "frameDomains": [
+      {
+        "id": "root",
+        "kind": "root",
+        "sourceTimelineId": "root",
+        "sourceInstanceId": "root",
+        "parentFrameDomainId": null,
+        "frameCount": 50,
+        "scenarioIds": [
+          "default",
+          "section-ir",
+          "section-rw",
+          "section-vb",
+          "section-in",
+          "section-ti",
+          "section-gs",
+          "section-ts",
+          "section-fq",
+          "quit-confirmation"
+        ],
+        "role": "original-course-shell"
+      }
+    ],
+    "productQaEvidence": "evidence/native-navigation-candidate-qa.json",
+    "productQaScope": "Candidate-only Next.js route QA; does not establish original-host visual, behavioral, or audio fidelity.",
+    "registryModule": "./modules/shell-course-g04-l01-index-local",
+    "rendering": "React + semantic HTML + CSS geometry (native navigation candidate; not a pixel-fidelity implementation)",
+    "route": "/animations/shell-course-g04-l01-index-local",
+    "routeFile": "apps/web/app/[locale]/animations/[animationId]/page.tsx",
+    "standalonePackage": "",
+    "testFile": "packages/demos/tests/course-shell-g04-l01.test.ts",
+    "timelineModule": "packages/demos/src/timelines/shell-course-g04-l01-index-local.ts"
+  },
+  "localization": {
+    "bilingualRequired": true,
+    "languages": [
+      "en",
+      "es"
+    ]
+  },
+  "runtime": {
+    "actionScriptVersion": "AS1/2",
+    "backgroundColor": "#ffffff",
+    "complexity": "high",
+    "declaredFileLength": 956031,
+    "durationMs": 4166.666666666667,
+    "externalDependencies": [],
+    "fonts": [],
+    "fps": 12,
+    "frameCount": 50,
+    "instances": [
+      {
+        "id": "root",
+        "timelineDefinitionId": "root",
+        "parentInstanceId": null,
+        "placement": null
+      }
+    ],
+    "rootTimelineId": "root",
+    "scripts": [
+      {
+        "actionScriptVersion": "AS1/2",
+        "confidence": "machine-extracted",
+        "evidence": "audit/machine/ffdec-scripts.txt.gz",
+        "exportedFileCount": 600,
+        "tagCounts": {
+          "DoAction": 327,
+          "DoInitAction": 3
+        }
+      }
+    ],
+    "stage": {
+      "width": 800,
+      "height": 600
+    },
+    "swfSignature": "CWS",
+    "swfVersion": 6,
+    "timelineDefinitions": [
+      {
+        "id": "root",
+        "kind": "root",
+        "sourceTimelineId": "root",
+        "sourceObjectId": null,
+        "frameCount": 50,
+        "indexing": "one-indexed",
+        "structuralReachability": "root",
+        "evidence": "audit/scenario-inventory.json"
+      }
+    ]
+  },
+  "scenarios": [
+    {
+      "candidateDisposition": "interactive-navigation-candidate",
+      "description": "Fail-closed native course menu in the eight-section order from index.xml.",
+      "id": "default",
+      "kind": "interactive",
+      "reachable": true
+    },
+    {
+      "candidateDisposition": "interactive-navigation-candidate",
+      "description": "Deterministic Introduction section view.",
+      "id": "section-ir",
+      "kind": "interactive",
+      "reachable": true
+    },
+    {
+      "candidateDisposition": "interactive-navigation-candidate",
+      "description": "Deterministic Your World section view.",
+      "id": "section-rw",
+      "kind": "interactive",
+      "reachable": true
+    },
+    {
+      "candidateDisposition": "interactive-navigation-candidate",
+      "description": "Deterministic Important Words section view.",
+      "id": "section-vb",
+      "kind": "interactive",
+      "reachable": true
+    },
+    {
+      "candidateDisposition": "interactive-navigation-candidate",
+      "description": "Deterministic Learn It section view.",
+      "id": "section-in",
+      "kind": "interactive",
+      "reachable": true
+    },
+    {
+      "candidateDisposition": "interactive-navigation-candidate",
+      "description": "Deterministic Try It section view.",
+      "id": "section-ti",
+      "kind": "interactive",
+      "reachable": true
+    },
+    {
+      "candidateDisposition": "interactive-navigation-candidate",
+      "description": "Deterministic Play It section view.",
+      "id": "section-gs",
+      "kind": "interactive",
+      "reachable": true
+    },
+    {
+      "candidateDisposition": "interactive-navigation-candidate",
+      "description": "Deterministic Practice Test section view.",
+      "id": "section-ts",
+      "kind": "interactive",
+      "reachable": true
+    },
+    {
+      "candidateDisposition": "interactive-navigation-candidate",
+      "description": "Deterministic Final Quiz section view.",
+      "id": "section-fq",
+      "kind": "interactive",
+      "reachable": true
+    },
+    {
+      "candidateDisposition": "source-scripted-modal-candidate",
+      "description": "Source-proven close confirmation UI with legacy close-window/fscommand side effects disabled.",
+      "id": "quit-confirmation",
+      "kind": "interactive",
+      "reachable": true
+    }
+  ],
+  "schemaVersion": 2,
+  "source": {
+    "aliasOf": null,
+    "fla": "",
+    "flaSha256": "",
+    "pairedFlaStatus": "missing",
+    "placementPath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+    "provenance": "owner-provided",
+    "swf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+    "swfSha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+    "variantOf": null
+  },
+  "status": "preserved",
+  "toolVersions": {
+    "adobeAnimate": "installed; not used because this migration is SWF-only",
+    "browser": "Chromium 150.0.7871.129 via Playwright 1.61.1",
+    "ffdec": "JPEXS Free Flash Decompiler v.26.2.1",
+    "ruffle": "@ruffle-rs/ruffle 0.4.1 (forensic reference only)",
+    "swfmill": "swfmill 0.3.6"
   }
 }

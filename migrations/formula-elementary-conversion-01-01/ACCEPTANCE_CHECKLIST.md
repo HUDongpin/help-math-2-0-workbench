@@ -2,73 +2,73 @@
 
 ## Source Preservation
 
-- [ ] Original FLA/SWF files are preserved byte-for-byte under `source-assets/`.
-- [ ] SHA-256 hashes and provenance are recorded in `migration.json`.
-- [ ] `assetId` equals `swf-<full SHA-256>` and every placement has a stable `animationId`.
-- [ ] Alias and variant relationships preserve every original source placement.
-- [ ] Missing or unreadable sources are documented.
-- [ ] Legacy network endpoints and external dependencies are inventoried without exposing secrets.
+- [x] Original FLA/SWF files are preserved byte-for-byte under `source-assets/`.
+- [x] SHA-256 hashes and provenance are recorded in `migration.json`.
+- [x] `assetId` equals `swf-<full SHA-256>` and every placement has a stable `animationId`.
+- [x] Alias and variant relationships preserve every original source placement.
+- [x] Missing or unreadable sources are documented; this canonical formula placement has no missing FLA/SWF.
+- [x] Legacy network endpoints and external dependencies are inventoried without exposing secrets.
 
 ## Audit
 
-- [ ] Stage size, background, FPS, frame count, duration, SWF version, and ActionScript version are verified.
-- [ ] Symbols, depths, masks, morphs, filters, matrices, and color transforms are audited.
-- [ ] Scripts, labels, stops, buttons, Replay, and other interactions are audited.
-- [ ] Fonts, glyphs, exact strings, language variants, audio, and video are audited.
-- [ ] Tool versions and unavailable forensic capabilities are recorded.
-- [ ] Classification, raw/display titles, grade/lesson/section/page, domain, evidence, and confidence are recorded.
+- [x] Stage size, background, FPS, frame count, duration, SWF version, and ActionScript version are verified.
+- [x] Symbols, depths, masks, morphs, filters, matrices, and color transforms are audited.
+- [x] Scripts, labels, stops, buttons, Replay, and other interactions are audited.
+- [x] Fonts, glyphs, exact strings, language variants, audio, and video are structurally audited.
+- [x] Tool versions and unavailable forensic capabilities are recorded.
+- [x] Classification, raw/display titles, grade/lesson/section/page, domain, evidence, and confidence are recorded.
 
 ## Baseline
 
-- [ ] An independent original/Ruffle/Animate baseline is identified and versioned.
-- [ ] Frame 1, all transition boundaries, text/count changes, interactions, final frame, and Replay are listed in `keyframes.csv`.
-- [ ] Native-size baseline images exist for every required keyframe.
-- [ ] Every baseline, implementation, diff, capture-manifest, metrics, asset, and audio checksum verifies.
-- [ ] Emulator differences and evidence conflicts are documented.
+- [x] A hash-bound Adobe Flash Player standalone English baseline is identified and versioned.
+- [x] Frame 1, transition boundaries, text/count changes, final frame, and Replay are listed in `keyframes.csv`.
+- [x] Native-size baseline images exist for every listed English keyframe.
+- [x] Every listed baseline, implementation, diff, capture-manifest, metrics, asset, and audio checksum verifies.
+- [x] Emulator differences, the source-composited Spanish child baseline, and its original-host authority boundary are documented.
 
 ## Implementation
 
-- [ ] Renderer choice and rejected alternatives are justified.
-- [ ] Native stage coordinates and aspect ratio are preserved.
-- [ ] Timeline state is implemented as pure queryable JavaScript.
-- [ ] Exact-frame deterministic capture mode is implemented.
-- [ ] Scenario, language, and seed capture modes are deterministic.
-- [ ] The stage always reports the requested one-indexed frame through `data-flash-frame`.
-- [ ] Extracted/redrawn/generated assets are listed in `asset-inventory.csv`.
-- [ ] Text, labels, numbers, and formulas stay within their intended objects.
-- [ ] Replay resets to frame 1 and reproduces the same timeline.
-- [ ] The modern implementation does not depend on the SWF or Ruffle unless explicitly approved.
+- [x] Renderer choice and rejected alternatives are justified.
+- [x] Native stage coordinates and aspect ratio are preserved.
+- [x] Timeline state is implemented as pure queryable JavaScript.
+- [x] Exact-frame deterministic capture mode is implemented.
+- [x] Scenario, language, and seed modes are deterministic.
+- [x] The stage reports the requested one-indexed frame through `data-flash-frame`.
+- [x] Extracted/redrawn/generated assets are listed in `asset-inventory.csv`.
+- [x] Text, labels, numbers, and formulas stay within their intended objects in tested layouts.
+- [x] Replay resets to frame 1 and reproduces the same timeline.
+- [x] The modern implementation does not depend on the SWF or Ruffle.
 
 ## Verification
 
-- [ ] Metadata and every required timeline beat have automated tests.
-- [ ] Language variants, boundary frames, completion, and Replay have automated tests.
-- [ ] Every reachable scenario and every language has complete frame 1-through-terminal coverage.
-- [ ] All tests pass.
-- [ ] Production build passes.
-- [ ] Implementation images exist for every required keyframe.
-- [ ] Diff images and normalized RMSE values exist for every required keyframe.
-- [ ] Static keyframes meet RMSE `<= 0.05` or have an accepted written exception.
-- [ ] Transition keyframes meet RMSE `<= 0.08` or have an accepted written exception.
-- [ ] Every diff image received human visual review.
-- [ ] The full-frame capture manifest reports zero console errors, failed requests, HTTP errors, and unexpected network calls.
-- [ ] Capture PNG files decode and match the native stage dimensions at device scale 1.
+- [x] Metadata and required timeline beats have automated tests.
+- [x] Implementation language variants, boundary frames, completion, and Replay have automated tests.
+- [x] The child SWF's complete reachable default scenario has authoritative frame 1-through-terminal English and Spanish visual coverage; original-host traversal remains separately unclaimed.
+- [x] All repository tests pass in the final evidence run (`npm test`: 173/173).
+- [x] Production build passes in the final evidence run.
+- [x] Implementation images exist for every English and Spanish child-visual frame.
+- [x] Diff images and normalized RMSE values exist for every English and Spanish child-visual frame.
+- [x] English and Spanish static frames meet RMSE `<= 0.05`.
+- [x] English and Spanish transition frames meet RMSE `<= 0.08`.
+- [ ] Every diff image received signed human visual review.
+- [x] English and Spanish canonical full-frame capture manifests report zero console errors, failed requests, HTTP errors, and unexpected network calls.
+- [x] English and Spanish capture PNG files decode and match the native stage at device scale 1.
 
 ## Product Quality
 
-- [ ] Native, desktop, tablet, and mobile layouts have no clipping or overlap.
-- [ ] Replay works with mouse, Enter, and Space.
-- [ ] Accessible names and focus behavior are verified.
-- [ ] Reduced-motion behavior is intentional and verified.
-- [ ] English/Spanish or other required localization is verified.
-- [ ] Standalone package works offline when one is required.
+- [x] Native, desktop, tablet, and narrow layouts have no tested clipping or horizontal overflow.
+- [x] Replay works with mouse, Enter, and Space.
+- [x] Accessible names and focus behavior are verified.
+- [x] Reduced-motion behavior intentionally freezes at frame 1 and is verified.
+- [ ] Original-host English/Spanish visual and audio localization parity is verified.
+- [x] A standalone package is not required for this Next.js delivery; any existing legacy package is not acceptance evidence.
 
 ## Handoff
 
-- [ ] `MIGRATION_BRIEF.md`, `migration.json`, CSV inventories, and evidence paths are complete.
-- [ ] Known exceptions and owner decisions are explicit.
-- [ ] Engineering and human visual reviews include reviewer identity and review date.
-- [ ] Owner acceptance includes reviewer/date, or `not-required` includes an explicit reason.
+- [x] `MIGRATION_BRIEF.md`, `migration.json`, CSV inventories, and evidence paths are populated.
+- [x] No accepted exceptions hide the explicit original-host, audio-listening, human, or owner gates.
+- [ ] Engineering and human visual reviews both include reviewer identity and review date.
+- [ ] Owner acceptance includes reviewer/date, or an authorized `not-required` decision.
 - [ ] Strict migration validator passes.
-- [ ] Final report lists source hashes, route, package, tests, build, keyframes, RMSE, and exceptions.
+- [x] Final verification report lists source hashes, route, tests, build, keyframes, RMSE, and remaining gates.
 - [ ] Owner review is accepted or explicitly marked not required.

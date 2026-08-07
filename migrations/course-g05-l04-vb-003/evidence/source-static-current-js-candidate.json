@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "g5-l4-source-static-current-javascript-candidate",
+  "animationId": "course-g05-l04-vb-003",
+  "title": "Number Line Practice",
+  "status": "current-javascript-engineering-candidate-only",
+  "source": {
+    "swf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L4/VB/L4VB03.swf",
+      "bytes": 94884,
+      "sha256": "9ab43dd0bb28cf5567a5804d1fd5d65ccc69027bac8243c14d677e6a5484d3d8"
+    },
+    "fla": {
+      "pairedFlaStatus": "present",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L4/VB/L4VB03.fla",
+      "bytes": 1788928,
+      "sha256": "f13cd465ef32807449df3349d9483e6aba90f7a86811f40779313d391e3cc7ea",
+      "authoringAuditEstablished": false
+    },
+    "associatedAudio": {
+      "kind": "external-file",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L4/SA/L4VB03.mp3",
+      "bytes": 122640,
+      "sha256": "90325bdf66dce7508c96d2829fc684be1a1b25d220ab87821762b8987b21c074",
+      "listened": false,
+      "rendered": false
+    }
+  },
+  "specification": {
+    "path": "migrations/course-g05-l04-vb-003/audit/source-static-current-js-candidate-spec.json",
+    "bytes": 6009,
+    "sha256": "37c234c440b5b519f3cb5504bc25a82f2bfa903904a1ad88cfce169a0422355f"
+  },
+  "renderer": {
+    "kind": "safe-hash-bound-ffdec-canvas-source-static",
+    "frameDomain": "sprite-95",
+    "firstFrame": 1,
+    "lastFrame": 175,
+    "lastRenderableFrame": 125,
+    "renderableFrameCount": 125,
+    "blockedLocalFrameRanges": [
+      {
+        "firstFrame": 126,
+        "lastFrame": 175,
+        "reason": "Frames 126..175 begin a stop- and drag-handler-controlled quiz; hit testing, drop branches, score/count updates, feedback/audio progression, terminal state, and Replay depend on unresolved ActionScript and host state."
+      }
+    ],
+    "safePrefixBoundary": {
+      "firstNonInitialStopFrame": 126,
+      "firstBlockedFrame": 126,
+      "lastSafeFrame": 125,
+      "interactionKind": "drag",
+      "requiredReasons": [
+        "event-handler:press",
+        "event-handler:releaseOutside+release",
+        "exported-action-script",
+        "script-stop-state",
+        "structural-action:DoAction"
+      ],
+      "boundaryDoActionSourcePath": "DefineSprite_95/frame_126/DoAction.as",
+      "sourceStaticInferenceOnly": true,
+      "authoritativeRuntimeReachabilityEstablished": false,
+      "behaviorReconstructed": false,
+      "scenarioAntecedent": {
+        "path": "migrations/course-g05-l04-vb-003/evidence/source-static-prebinding-antecedents/scenario-inventory.json",
+        "sha256": "a587c363d2d4061675902f40b00bf723cf7b08888720acc3baf9763170eac65f",
+        "immutable": true
+      },
+      "scriptInventory": {
+        "path": "migrations/course-g05-l04-vb-003/audit/script-inventory.json",
+        "sha256": "004d74e3507d5678e86f32f8e3ca5280029dcd36ac34e313c675452af2f5c373"
+      },
+      "swfmillStructure": {
+        "path": "migrations/course-g05-l04-vb-003/audit/machine/swfmill.xml.gz",
+        "sha256": "8624b8b3ccee1d9358e137bf8a7e4d2b4a1a3556217a6e528e33f9503ccc15d0"
+      }
+    },
+    "rootFrameCount": 10,
+    "rootEnabled": false,
+    "supportedLanguages": [
+      "en"
+    ],
+    "audioEnabled": false,
+    "sourceControlsEnabled": false,
+    "runtimeScript": {
+      "script": "public/flash-assets/courses/course-g05-l04-vb-003/canvas-renderer.js",
+      "bytes": 972971,
+      "sha256": "9957cc8bc7adcf4d452d94f771cd407ab82a355be1ad69880a4a3bbbdb7ccc85",
+      "globalRegistry": "HELP_MATH_CANVAS_ASSETS"
+    },
+    "runtimeManifest": {
+      "path": "public/flash-assets/courses/course-g05-l04-vb-003/manifest.json",
+      "sha256": "112b55c6f68bbaaa70e491e534f39814dfbf1e4dd396d971e164d13562cd7da7"
+    }
+  },
+  "browserQa": {
+    "renderedFrameCount": 125,
+    "blockedFrameCount": 50,
+    "blockedRequestRejectionCount": 100,
+    "samples": [
+      {
+        "frame": 1,
+        "fnv1a32Rgba": "9bdf9bc5",
+        "nonTransparentPixelCount": 480000
+      },
+      {
+        "frame": 63,
+        "fnv1a32Rgba": "da261788",
+        "nonTransparentPixelCount": 480000
+      },
+      {
+        "frame": 125,
+        "fnv1a32Rgba": "05c4046d",
+        "nonTransparentPixelCount": 480000
+      }
+    ],
+    "canvasIdentity": {
+      "frame": "125",
+      "frameDomain": "sprite-95",
+      "rootFrame": "6",
+      "scenario": "source-static-frame",
+      "seed": "0"
+    },
+    "consoleErrorCount": 0,
+    "pageErrorCount": 0,
+    "unexpectedNetworkRequestCount": 0,
+    "nativeStage": {
+      "width": 800,
+      "height": 600
+    },
+    "browser": "Chromium 149.0.7827.55"
+  },
+  "evidenceBoundary": {
+    "prebindingAntecedentUsed": true,
+    "antecedentTargetFrameDomainDisposition": "unresolved",
+    "originalRuntimeBaselineUsed": false,
+    "canonicalFrameDomainDispositionChanged": false,
+    "currentCanonicalFrameDomainDispositionAsserted": false,
+    "authoritativeRuntimeFrameDomainDispositionEstablished": false,
+    "naturalRuntimeReachabilityEstablished": false,
+    "visualParityCompared": false,
+    "normalizedRmseComputed": false,
+    "spanishVisualEstablished": false,
+    "audioAccepted": false,
+    "humanVisualReviewPerformed": false,
+    "ownerReviewPerformed": false,
+    "strictCompletionClaimed": false,
+    "publicationClaimed": false
+  },
+  "unresolved": [
+    "The 10-frame root and InternalPreloader host entry have no authoritative original-runtime baseline and are not rendered.",
+    "Only sprite-95 frames 1..125 are exposed. Frames 126..175 are rejected beginning at the first non-initial source stop state; no interactive continuation is inferred.",
+    "Source controls are inert. Hit targets, click/drag branches, attempt/scoring state, randomized selection where present, feedback, associated audio, Spanish visuals, natural runtime reachability, terminal and Replay parity, RMSE, human review, Owner acceptance, strict completion, and publication remain unresolved."
+  ],
+  "acceptanceEffects": {
+    "implementationAuthorized": false,
+    "authoritativeOriginalRuntime": false,
+    "naturalRuntimeReachabilityComplete": false,
+    "frameDomainDispositionComplete": false,
+    "bilingualVisualParityComplete": false,
+    "audioAccepted": false,
+    "replayParityComplete": false,
+    "fullFrameRmseComplete": false,
+    "behaviorComplete": false,
+    "productQaComplete": false,
+    "accessibilityQaComplete": false,
+    "engineeringReviewAccepted": false,
+    "humanVisualReviewAccepted": false,
+    "ownerAccepted": false,
+    "strictMigrationComplete": false,
+    "published": false
+  },
+  "strictAcceptanceEffect": "none"
+}
