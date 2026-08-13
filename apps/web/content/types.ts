@@ -267,13 +267,147 @@ export interface DemoListItem {
   action: LinkContent;
 }
 
+export type DemoAgeModeId = "elementary" | "middle" | "high";
+
+export type DemoLanguageModeId = "english" | "spanish" | "dual";
+
+export interface DemoAgeModeContent {
+  id: DemoAgeModeId;
+  label: string;
+  grades: string;
+  badge: string;
+  headline: DemoLocalizedTextContent;
+  summary: DemoLocalizedTextContent;
+  workspaceLabel: DemoLocalizedTextContent;
+  progressLabel: DemoLocalizedTextContent;
+  progressDetail: DemoLocalizedTextContent;
+  navigatorLabel: DemoLocalizedTextContent;
+  novaGreeting: DemoLocalizedTextContent;
+}
+
+export interface DemoLocalizedTextContent {
+  english: string;
+  spanish: string;
+}
+
+export interface DemoLanguageOptionContent {
+  id: DemoLanguageModeId;
+  label: string;
+}
+
+export interface DemoLessonStopContent {
+  emoji: string;
+  label: DemoLocalizedTextContent;
+  middleLabel: DemoLocalizedTextContent;
+  highLabel: DemoLocalizedTextContent;
+  activityTitle: DemoLocalizedTextContent;
+  activityPrompt: DemoLocalizedTextContent;
+}
+
+export interface DemoNovaPromptContent {
+  id: "number-line" | "spanish" | "another-way";
+  label: DemoLocalizedTextContent;
+  responseEnglish: string;
+  responseSpanish: string;
+}
+
+export interface DemoEvidenceFactContent {
+  value: string;
+  label: string;
+}
+
+export interface DemoPrincipleContent {
+  title: string;
+  body: string;
+}
+
 export interface DemosContent {
   metadata: PageMetadata;
   hero: HeroContent;
-  previewNotice: CalloutContent;
-  listLabel: string;
-  items: DemoListItem[];
-  quality: TextSection;
+  audienceLabel: string;
+  audience: string[];
+  ageIndependenceNote: string;
+  experience: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    fixedLevelLabel: string;
+    fixedLevelValue: string;
+    ageSelectorLabel: string;
+    ageSelectorHint: string;
+    modes: DemoAgeModeContent[];
+    supportTitle: string;
+    supportSummary: string;
+    languageLabel: string;
+    languageOptions: DemoLanguageOptionContent[];
+    toolsLabel: string;
+    readAloudLabel: string;
+    stopReadAloudLabel: string;
+    stepByStepLabel: string;
+    visualModelLabel: string;
+    reducedMotionLabel: string;
+    activeSupportsLabel: string;
+    noActiveSupportsLabel: string;
+    speechUnavailable: string;
+    speechStatus: DemoLocalizedTextContent;
+    speechStoppedStatus: DemoLocalizedTextContent;
+    stopsLabel: string;
+    stops: DemoLessonStopContent[];
+    lessonKicker: DemoLocalizedTextContent;
+    lessonTitle: DemoLocalizedTextContent;
+    lessonSubtitle: DemoLocalizedTextContent;
+    temperatureLabel: DemoLocalizedTextContent;
+    sliderLabel: DemoLocalizedTextContent;
+    decreaseLabel: DemoLocalizedTextContent;
+    increaseLabel: DemoLocalizedTextContent;
+    rangeHint: DemoLocalizedTextContent;
+    thermometerLabel: DemoLocalizedTextContent;
+    numberLineLabel: DemoLocalizedTextContent;
+    phrases: {
+      negativeEnglish: string;
+      negativeSpanish: string;
+      zeroEnglish: string;
+      zeroSpanish: string;
+      positiveEnglish: string;
+      positiveSpanish: string;
+    };
+    scaffoldTitle: DemoLocalizedTextContent;
+    scaffoldSteps: DemoLocalizedTextContent[];
+    scaffoldDirections: {
+      negative: DemoLocalizedTextContent;
+      zero: DemoLocalizedTextContent;
+      positive: DemoLocalizedTextContent;
+    };
+    visualModelHidden: DemoLocalizedTextContent;
+    currentStopLabel: DemoLocalizedTextContent;
+    previousLabel: DemoLocalizedTextContent;
+    nextLabel: DemoLocalizedTextContent;
+    novaEyebrow: DemoLocalizedTextContent;
+    novaTitle: DemoLocalizedTextContent;
+    novaSummary: DemoLocalizedTextContent;
+    novaPrivacyNote: DemoLocalizedTextContent;
+    novaPromptLabel: DemoLocalizedTextContent;
+    novaPrompts: DemoNovaPromptContent[];
+  };
+  principles: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    items: DemoPrincipleContent[];
+  };
+  evidence: {
+    id: string;
+    eyebrow: string;
+    title: string;
+    intro: string;
+    snapshotLabel: string;
+    facts: DemoEvidenceFactContent[];
+    demonstratesTitle: string;
+    demonstrates: string[];
+    remainsTitle: string;
+    remains: string[];
+    note: string;
+  };
   accessibility: CalloutContent;
 }
 
