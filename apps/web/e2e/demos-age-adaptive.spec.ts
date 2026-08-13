@@ -186,6 +186,15 @@ test('the demo reflows across presentation and student-device viewports', async 
       level: 1,
       name: 'One math lesson. Three age-respectful experiences.',
     })).toBeVisible();
+    const homeBrandBox = await page
+      .getByRole('banner')
+      .getByRole('link', {name: 'HELP Math home'})
+      .boundingBox();
+    expect(homeBrandBox, `Home brand is missing at ${viewport.width}×${viewport.height}`).not.toBeNull();
+    expect(
+      homeBrandBox?.height ?? 0,
+      `Home brand is shorter than 44px at ${viewport.width}×${viewport.height}`,
+    ).toBeGreaterThanOrEqual(44);
     await expectNoHorizontalOverflow(page);
   }
 });
