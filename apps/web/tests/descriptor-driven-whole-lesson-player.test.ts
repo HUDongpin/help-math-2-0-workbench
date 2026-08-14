@@ -112,7 +112,19 @@ test('descriptor-driven player never mounts or prefetches unavailable renderers'
     component,
     /currentLabel\.usesEnglishFallback\s*\?\s*'El candidato visual current-JS permanece limitado al contenido fuente en inglés\.'\s*:\s*'El título en español procede del XML;/,
   );
-  assert.match(component, /disabled=\{!runtimeAvailable\}/);
+  // Review is earned by playback, and only the registered-renderer branch of
+  // the stage mounts a runtime that can report it. An unavailable position has
+  // nothing to play, so it can never be counted and never shows the strip's
+  // page tick.
+  assert.doesNotMatch(component, /completionAction/);
+  assert.match(
+    component,
+    /currentRenderer\.kind === 'registered'[\s\S]*?onPlaybackComplete=\{reviewCurrentPage\}[\s\S]*?data-renderer-availability="unavailable"/,
+  );
+  assert.match(
+    component,
+    /pageComplete=\{runtimeAvailable && reviewed\.has\(currentPage\.animationId\)\}/,
+  );
   assert.match(shell, /data-runtime-available=/);
   assert.doesNotMatch(shell, /<aside[\s\S]*?role=\{mapOverlay \? 'dialog'/);
   assert.doesNotMatch(shell, /<aside[\s\S]*?role=\{toolOverlay \? 'dialog'/);
@@ -133,7 +145,7 @@ test('descriptor-driven player never mounts or prefetches unavailable renderers'
     'legacy and modern Pause controls disable only when support owns pause',
   );
   const resumeInspectionControls = shell.match(
-    /playbackInspectionActive\s*\? onPlaybackResumeFromInspection\(\)/g,
+    /frameInspectionActive\s*\? onPlaybackResumeFromInspection\(\)/g,
   ) ?? [];
   assert.equal(
     resumeInspectionControls.length,
@@ -230,7 +242,7 @@ test('registered whole-lesson routes preserve cross-binding and publication gate
     '!wholeLessonDescriptorMatchesNavigation(',
   );
   const publicationGate = registeredBranch.indexOf(
-    'if (!auditPreview && !releasePublished) notFound();',
+    'if (!auditPreview && !releasePublished && !showcasePublication.enabled)',
   );
   const playerMount = registeredBranch.indexOf(
     'return <WholeLessonCoursePlayer',
@@ -241,12 +253,17 @@ test('registered whole-lesson routes preserve cross-binding and publication gate
   assert.ok(playerMount > publicationGate);
   assert.match(
     registeredBranch,
-    /const controlledPreview =\s*courseRegistration\.isControlledPreviewEnabled\(\);/,
+    /const auditPreview = developmentAuditPreview;/,
   );
   assert.match(
     registeredBranch,
-    /const auditPreview = developmentAuditPreview \|\| controlledPreview;/,
+    /currentJsShowcasePublication\(\s*courseRegistration\.descriptor\.releaseId,\s*\)/,
   );
+  assert.match(
+    registeredBranch,
+    /if \(!auditPreview && !releasePublished && !showcasePublication\.enabled\) \{\s*notFound\(\);\s*\}/,
+  );
+  assert.doesNotMatch(registeredBranch, /controlledPreview|isControlledPreviewEnabled/);
   assert.match(
     registeredBranch,
     /wholeLessonDescriptorMatchesNavigation\(\s*courseRegistration\.descriptor,\s*releaseDescriptor,/,
@@ -259,4 +276,29 @@ test('registered whole-lesson routes preserve cross-binding and publication gate
   assert.match(coursePlayer, /<DescriptorDrivenWholeLessonPlayer/);
   assert.match(registry, /G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR/);
   assert.match(registry, /G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR/);
+});
+
+test('the descriptor-driven player forwards the header title band to the shell', async () => {
+  const [component, shell] = await Promise.all([
+    readFile(componentUrl, 'utf8'),
+    readFile(shellUrl, 'utf8'),
+  ]);
+
+  assert.match(
+    component,
+    /chromeTitleBand: descriptor\.visualSkin\.header\.title,/,
+  );
+  assert.match(
+    component,
+    /courseContext=\{\{[\s\S]*?courseTitle: descriptor\.course\.labels\[progress\.locale\],/,
+  );
+  assert.match(shell, /chromeTitleBand\?: WholeLessonChromeTitleBand;/);
+  assert.match(
+    shell,
+    /const chromeTitleBand = visualSkin\.chromeTitleBand;/,
+  );
+  // Every lesson chrome paints the same <CourseName> wordmark, so no shell or
+  // player may treat that string as a lesson identity.
+  assert.doesNotMatch(component, /Counting on Numbers/);
+  assert.doesNotMatch(shell, /Counting on Numbers/);
 });

@@ -44,33 +44,86 @@ async function expectDocument(page: Page, path: string, language: 'en' | 'es') {
   await expect(page.locator('main#main-content')).toBeVisible();
 }
 
-test('English home exposes the primary navigation and the language-rich project promise', async ({
+test('English home exposes the learning platform and the Grade 4 Lesson 3 entry', async ({
   page,
 }) => {
   const issues = monitorRuntimeIssues(page);
   await expectDocument(page, '/', 'en');
 
   await expect(
-    page.getByRole('heading', {level: 1, name: 'See the language inside every math idea.'}),
+    page.getByRole('heading', {
+      level: 1,
+      name: 'Math makes more sense when you can see it.',
+    }),
   ).toBeVisible();
+  await expect(page.getByText('Grade 4 · Lesson 3').first()).toBeVisible();
+  await expect(page.getByRole('heading', {level: 2, name: 'Negative Numbers'})).toBeVisible();
+  await expect(page.getByText(
+    'Fully navigable 39-page current-JavaScript showcase · bilingual interface + Nova',
+  )).toBeVisible();
 
   const navigation = page.getByRole('navigation', {name: 'Main navigation'});
   const links = [
-    ['About', '/about'],
-    ['Approach', '/approach'],
-    ['Curriculum', '/curriculum'],
-    ['Research', '/research'],
-    ['Resources', '/resources'],
-    ['Demos', '/demos'],
+    ['Home', '/'],
+    ['My lesson', '/courses/4/3'],
+    ['Progress', '/#progress'],
+    ['Learning supports', '/#learning-supports'],
   ] as const;
   for (const [name, href] of links) {
     await expect(navigation.getByRole('link', {name, exact: true})).toHaveAttribute('href', href);
   }
 
+  await expect(page.getByRole('link', {name: 'Start your lesson'}).first()).toHaveAttribute(
+    'href',
+    '/courses/4/3?mode=focus',
+  );
+  await expect(page.getByRole('link', {name: 'Open study mode'})).toHaveAttribute(
+    'href',
+    '/courses/4/3?mode=study',
+  );
+
   await expect(page.getByRole('link', {name: 'Language: Español'}).first()).toHaveAttribute(
     'href',
     '/es',
   );
+  expectNoRuntimeIssues(issues);
+});
+
+test('site header uses the supplied HELP Math 2.0 logo without changing the footer brand', async ({
+  page,
+  request,
+}) => {
+  const issues = monitorRuntimeIssues(page);
+  const logoAsset = await request.get('/brand/help-math-2-logo.png');
+  expect(logoAsset.status()).toBe(200);
+  expect(logoAsset.headers()['content-type']).toContain('image/png');
+  expect((await logoAsset.body()).byteLength).toBeGreaterThan(100);
+
+  await expectDocument(page, '/', 'en');
+
+  const headerBrand = page.locator('.site-header .brand');
+  await expect(headerBrand).toBeVisible();
+  await expect(headerBrand).toHaveAccessibleName('HELP Math home');
+  await expect(headerBrand).toHaveAttribute('href', '/');
+
+  const headerLogo = headerBrand.locator('img.brand__logo');
+  await expect(headerLogo).toBeVisible();
+  await expect(headerLogo).toHaveAttribute('src', /help-math-2-logo\.png/);
+  await expect(headerBrand.locator('.brand__mark, .brand__name')).toHaveCount(0);
+  await expect
+    .poll(() =>
+      headerLogo.evaluate(
+        (image: HTMLImageElement) =>
+          image.complete &&
+          image.naturalWidth >= 64 &&
+          image.naturalWidth === image.naturalHeight,
+      ),
+    )
+    .toBe(true);
+
+  await expect(page.locator('.site-footer .brand__logo')).toHaveCount(0);
+  await expect(page.locator('.site-footer .brand__mark')).toHaveCount(1);
+  await expect(page.locator('.site-footer .brand__name')).toHaveCount(1);
   expectNoRuntimeIssues(issues);
 });
 
@@ -81,10 +134,22 @@ test('Spanish home localizes content and never duplicates the /es route prefix',
   await expect(
     page.getByRole('heading', {
       level: 1,
-      name: 'Descubre el lenguaje dentro de cada idea matemática.',
+      name: 'Las matemáticas se entienden mejor cuando puedes verlas.',
     }),
   ).toBeVisible();
   await expect(page.getByRole('navigation', {name: 'Navegación principal'})).toBeVisible();
+  await expect(page.getByRole('heading', {level: 2, name: 'Negative Numbers'})).toBeVisible();
+  await expect(page.getByText(
+    'Muestra de 39 páginas completamente navegable en JavaScript actual · interfaz bilingüe + Nova',
+  )).toBeVisible();
+  await expect(page.getByRole('link', {name: 'Comenzar la lección'}).first()).toHaveAttribute(
+    'href',
+    '/es/courses/4/3?mode=focus',
+  );
+  await expect(page.locator('.site-header .brand')).toHaveAccessibleName(
+    'Página principal de HELP Math',
+  );
+  await expect(page.locator('.site-header .brand__logo')).toBeVisible();
   await expect(page.getByRole('link', {name: 'Idioma: English'}).first()).toHaveAttribute(
     'href',
     '/',
@@ -100,10 +165,17 @@ test('Spanish home localizes content and never duplicates the /es route prefix',
   expectNoRuntimeIssues(issues);
 });
 
-test('mobile navigation opens at a phone viewport and reaches a primary route', async ({page}) => {
+test('mobile navigation opens at a phone viewport and reaches Grade 4 Lesson 3', async ({page}) => {
   const issues = monitorRuntimeIssues(page);
   await page.setViewportSize({width: 390, height: 844});
   await expectDocument(page, '/', 'en');
+
+  const logoBox = await page.locator('.site-header .brand__logo').boundingBox();
+  expect(logoBox?.width).toBe(64);
+  expect(logoBox?.height).toBe(64);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+    await page.evaluate(() => document.documentElement.clientWidth),
+  );
 
   await expect(page.locator('.desktop-nav')).toBeHidden();
   const menu = page.locator('details.mobile-nav');
@@ -113,12 +185,16 @@ test('mobile navigation opens at a phone viewport and reaches a primary route', 
   await trigger.click();
   await expect(menu).toHaveAttribute('open', '');
 
-  const approach = menu.getByRole('link', {name: 'Approach', exact: true});
-  await expect(approach).toBeVisible();
-  await expect(approach).toHaveAttribute('href', '/approach');
-  await approach.click();
-  await expect(page).toHaveURL(/\/approach$/);
-  await expect(page.getByRole('heading', {level: 1})).toContainText('Make the mathematics');
+  const lesson = menu.getByRole('link', {name: 'My lesson', exact: true});
+  await expect(lesson).toBeVisible();
+  await expect(lesson).toHaveAttribute('href', '/courses/4/3');
+  await lesson.click();
+  await expect(page).toHaveURL(/\/courses\/4\/3$/);
+  const lessonPlayer = page.locator('[data-lesson-player="g4-l3-whole-lesson-mvp"]');
+  await expect(lessonPlayer).toBeVisible();
+  await expect(lessonPlayer).toHaveAttribute('data-current-page', '1');
+  await expect(page.locator('main[data-release-id="lesson-g04-l03-negative-numbers"]')).toBeVisible();
+  await expect(page.getByRole('heading', {level: 1}).first()).toBeVisible();
   expectNoRuntimeIssues(issues);
 });
 
@@ -136,26 +212,37 @@ test('account access page is a status page and never renders credential fields',
   expectNoRuntimeIssues(issues);
 });
 
-test('contact page provides an adult-facing form and prominent sensitive-data guidance', async ({
-  page,
-}) => {
+test('contact submission is visibly paused without collecting contact data', async ({page}) => {
   const issues = monitorRuntimeIssues(page);
   await expectDocument(page, '/contact', 'en');
 
-  await expect(page.getByRole('heading', {level: 1, name: 'Tell us what you are looking for'})).toBeVisible();
-  const form = page.locator('main form');
-  await expect(form).toBeVisible();
-  await expect(form.getByLabel('Your role')).toBeVisible();
-  await expect(form.getByLabel('Email address')).toHaveAttribute('type', 'email');
-  await expect(form.getByLabel('How can we help?')).toBeVisible();
-  await expect(form.getByRole('option', {name: 'Educator', exact: true})).toHaveCount(1);
-  await expect(form.getByRole('option', {name: 'Parent or guardian', exact: true})).toHaveCount(1);
-  await expect(form.getByRole('option', {name: /student/i})).toHaveCount(0);
+  await expect(page.locator('[data-contact-form="disabled"]')).toBeVisible();
+  await expect(page.getByRole('heading', {level: 2, name: 'Contact submission is paused'})).toBeVisible();
+  await expect(page.getByText(/does not collect or send a name, email address, school, or message/i)).toBeVisible();
   await expect(
-    page.getByRole('heading', {level: 2, name: 'Do not send student or account secrets'}),
+    page.getByRole('heading', {level: 2, name: 'Do not enter personal or student information'}),
   ).toBeVisible();
-  await expect(page.getByText(/student records, passwords, or other sensitive personal information/i)).toBeVisible();
+  await expect(page.getByText(/does not accept any message/i)).toBeVisible();
+  await expect(page.locator('main form')).toHaveCount(0);
+  await expect(page.locator('main input, main textarea, main select')).toHaveCount(0);
+  await expect(page.locator('main iframe[src*="challenges.cloudflare.com"]')).toHaveCount(0);
+  await expect(page.locator('main button[type="submit"]')).toHaveCount(0);
   await expect(page.locator('input[type="password"]')).toHaveCount(0);
+  expectNoRuntimeIssues(issues);
+});
+
+test('Spanish contact status page is equally fail-closed', async ({page}) => {
+  const issues = monitorRuntimeIssues(page);
+  await expectDocument(page, '/es/contact', 'es');
+
+  await expect(page.locator('[data-contact-form="disabled"]')).toBeVisible();
+  await expect(
+    page.getByRole('heading', {level: 2, name: 'El envío de contactos está en pausa'}),
+  ).toBeVisible();
+  await expect(page.getByText(/no recopila ni envía nombres, correos, escuelas ni mensajes/i)).toBeVisible();
+  await expect(page.locator('main form, main input, main textarea, main select')).toHaveCount(0);
+  await expect(page.locator('main iframe[src*="challenges.cloudflare.com"]')).toHaveCount(0);
+  await expect(page.locator('main button[type="submit"]')).toHaveCount(0);
   expectNoRuntimeIssues(issues);
 });
 
@@ -213,20 +300,23 @@ test('prototype demos honor exact one-indexed frame capture', async ({page}) => 
   expectNoRuntimeIssues(issues);
 });
 
-test('production excludes forensic SWF surfaces and their WASM CSP permission', async ({request}) => {
-  for (const path of [
-    '/migration-status',
-    '/reference/formula-elementary-conversion-01-02',
-    '/es/reference/formula-elementary-conversion-01-02',
-    '/api/reference/formula-elementary-conversion-01-02',
-    '/api/ruffle/ruffle.js',
-    '/animations/formula-elementary-conversion-01-02'
-  ]) {
-    expect((await request.get(path)).status(), path).toBe(404);
+test('ordinary platform surfaces expose only the environment-required CSP', async ({request}) => {
+  // This browser suite runs `next dev`, where local forensic routes are
+  // intentionally available. The production-only 404 gate is covered by its
+  // environment-aware unit tests; this real-browser check verifies that the
+  // ordinary platform CSP still follows the environment boundary rather than
+  // implying that development behavior is the production policy.
+  for (const path of ['/', '/library', '/courses/4/3']) {
+    const response = await request.get(path);
+    expect(response.status(), path).toBe(200);
+    const policy = response.headers()['content-security-policy'];
+    expect(policy, path).toContain("object-src 'none'");
+    if (process.env.NODE_ENV === 'production') {
+      expect(policy, path).not.toContain('wasm-unsafe-eval');
+    } else {
+      expect(policy, path).toContain('wasm-unsafe-eval');
+    }
   }
-  const library = await request.get('/library');
-  expect(library.status()).toBe(200);
-  expect(library.headers()['content-security-policy']).not.toContain('wasm-unsafe-eval');
 });
 
 test('robots and sitemap publish crawl policy and both locale variants', async ({request}) => {
@@ -244,8 +334,8 @@ test('robots and sitemap publish crawl policy and both locale variants', async (
   const sitemapText = await sitemap.text();
   expect(sitemapText).toContain('<loc>https://www.helpmath.ai/</loc>');
   expect(sitemapText).toContain('<loc>https://www.helpmath.ai/es</loc>');
-  expect(sitemapText).toContain('https://www.helpmath.ai/demos/conversion-1-2');
-  expect(sitemapText).toContain('https://www.helpmath.ai/es/demos/conversion-1-4');
+  expect(sitemapText).toContain('<loc>https://www.helpmath.ai/courses/4/3</loc>');
+  expect(sitemapText).toContain('<loc>https://www.helpmath.ai/es/courses/4/3</loc>');
 });
 
 for (const path of [

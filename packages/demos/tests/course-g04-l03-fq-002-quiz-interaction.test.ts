@@ -624,7 +624,7 @@ test("static Canvas masking policy preserves capture while closing every gate", 
       "QuestNo-and-CQ-retain-source-question-id",
     sourceStaticDynamicVisibilityAndCounterParityEstablished: false,
     functionalPresentationMask:
-      "modern-DOM-mask-covers-static-finish-artifact-and-source-counters",
+      "opaque-modern-full-stage-backdrop-hides-source-canvas-visual-layer",
     functionalSequenceCounter: "selected-order-1-through-10",
     deterministicCaptureMask: "none",
     deterministicCaptureCanvas: "preserve-unmodified-source-static-drawing",

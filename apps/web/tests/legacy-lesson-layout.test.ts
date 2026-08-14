@@ -8,6 +8,7 @@ import {
   LEGACY_MAP_RAIL_MIN_WIDTH,
   LEGACY_TOOL_RAIL_MIN_WIDTH,
   LEGACY_WIDE_FUNCTIONAL_MIN_WIDTH,
+  MODERN_WIDE_MIN_PLANE_WIDTH,
   resolveLegacyLessonLayout,
 } from '../lib/legacy-lesson-layout';
 
@@ -161,4 +162,82 @@ test('invalid geometry fails before it can silently distort the stage', () => {
     }),
     /stageTop/,
   );
+});
+
+const PRESENTED_PLANE = Object.freeze({height: 415, width: 800});
+
+function widePolicy(
+  containerWidth: number,
+  viewportHeight: number,
+  viewportWidth: number,
+  stageTop = 150,
+) {
+  return resolveLegacyLessonLayout({
+    authoredStage: AUTHORED_STAGE,
+    containerWidth,
+    presentedPlane: PRESENTED_PLANE,
+    stageTop,
+    viewportHeight,
+    viewportWidth,
+  });
+}
+
+test('a presented plane grows past the authored 800px cap', () => {
+  const policy = widePolicy(1709, 1080, 1920);
+  assert.ok(
+    policy.stageCapWidth > AUTHORED_STAGE.width,
+    `expected the plane to exceed 800px, got ${policy.stageCapWidth}`,
+  );
+});
+
+test('remaining viewport height binds the presented plane', () => {
+  // 1080 - 150 top - 132 reserve = 798 available; 798 * 800/415 = 1538.
+  const policy = widePolicy(1709, 1080, 1920);
+  assert.equal(policy.stageCapWidth, 1538);
+});
+
+test('container width binds the presented plane when height is generous', () => {
+  const policy = widePolicy(1200, 2000, 1920);
+  assert.equal(policy.stageCapWidth, 1200);
+});
+
+test('the presented plane never resolves below its floor', () => {
+  const policy = widePolicy(120, 200, 360, 180);
+  assert.equal(policy.stageCapWidth, MODERN_WIDE_MIN_PLANE_WIDTH);
+});
+
+test('the presented plane keeps its aspect at every breakpoint', () => {
+  for (const [w, h] of [[1920, 1080], [1600, 900], [1440, 900], [1366, 768], [1280, 800]]) {
+    const policy = widePolicy(w - 220, h, w);
+    const planeHeight = policy.stageCapWidth * (PRESENTED_PLANE.height / PRESENTED_PLANE.width);
+    const available = h - 150 - 132;
+    assert.ok(
+      planeHeight <= available + 1,
+      `${w}x${h}: plane height ${planeHeight} exceeded available ${available}`,
+    );
+    assert.ok(policy.stageCapWidth >= MODERN_WIDE_MIN_PLANE_WIDTH);
+  }
+});
+
+test('omitting the presented plane preserves the native-stage policy exactly', () => {
+  const native = policy(1200, 1080);
+  assert.equal(native.stageCapWidth, AUTHORED_STAGE.width);
+});
+
+test('a presented plane keeps the course map on demand rather than as a rail', () => {
+  // The section spine occupies the rail slot, so a second permanent column
+  // would push the plane narrower for no gain. The map must stay reachable as
+  // an overlay at every width.
+  for (const width of [1280, 1600, 1920, 2560]) {
+    const policy = widePolicy(width - 220, 1080, width);
+    assert.equal(
+      policy.mapPresentation,
+      'overlay',
+      `${width}: map must be an overlay when a plane is presented`,
+    );
+  }
+  // Without a presented plane the legacy rail behaviour is untouched: the rail
+  // still appears at and above its own threshold, and not below it.
+  assert.equal(policy(LEGACY_MAP_RAIL_MIN_WIDTH, 1080).mapPresentation, 'rail');
+  assert.equal(policy(LEGACY_MAP_RAIL_MIN_WIDTH - 1, 1080).mapPresentation, 'overlay');
 });

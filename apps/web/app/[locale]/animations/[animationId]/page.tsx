@@ -4,17 +4,12 @@ import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 
 import {AnimationRuntime} from '@/components/animation-runtime';
-import {G4L3ControlledCeoPreviewBoundary} from '@/components/g4-l3-controlled-ceo-preview-boundary';
 import {G4L3LessonContextNavigation} from '@/components/g4-l3-lesson-navigation';
 import {LessonContextNavigation} from '@/components/lesson-navigation';
 import {Container} from '@/components/ui';
 import {Link} from '@/i18n/navigation';
 import {buildCaptureFrameLinks} from '@/lib/animation-capture-controls';
 import {getCatalog, isAnimationPublished, isLessonReleasePublished} from '@/lib/catalog';
-import {
-  isG4L3ControlledCeoPreviewEnabled,
-  isG4L3ControlledCeoPreviewMember,
-} from '@/lib/g4-l3-controlled-ceo-preview';
 import {G4_L3_LESSON} from '@/lib/g4-l3-lesson-navigation';
 import {findLessonNavigationForAnimation} from '@/lib/lesson-navigation';
 
@@ -26,9 +21,7 @@ export async function generateMetadata({params}: {params: Promise<{animationId: 
   const {animationId} = await params;
   const catalog = getCatalog();
   const animation = catalog.animations.find((candidate) => candidate.animationId === animationId);
-  const controlledCeoPreview = isG4L3ControlledCeoPreviewEnabled()
-    && isG4L3ControlledCeoPreviewMember(animationId);
-  if (!animation || (process.env.NODE_ENV === 'production' && !isAnimationPublished(catalog, animation) && !controlledCeoPreview)) notFound();
+  if (!animation || (process.env.NODE_ENV === 'production' && !isAnimationPublished(catalog, animation))) notFound();
   return {title: animation.classification.titleDisplay, robots: animation.migration.status === 'complete' ? undefined : {index: false, follow: false}};
 }
 
@@ -36,11 +29,9 @@ export default async function AnimationPage({params, searchParams}: {params: Pro
   const [{locale, animationId}, query] = await Promise.all([params, searchParams]);
   const catalog = getCatalog();
   const animation = catalog.animations.find((item) => item.animationId === animationId);
-  const controlledCeoPreview = isG4L3ControlledCeoPreviewEnabled()
-    && isG4L3ControlledCeoPreviewMember(animationId);
-  if (!animation || (process.env.NODE_ENV === 'production' && !isAnimationPublished(catalog, animation) && !controlledCeoPreview)) notFound();
+  if (!animation || (process.env.NODE_ENV === 'production' && !isAnimationPublished(catalog, animation))) notFound();
   const spanish = locale === 'es';
-  const auditPreview = process.env.NODE_ENV !== 'production' || controlledCeoPreview;
+  const auditPreview = process.env.NODE_ENV !== 'production';
   const completeAnimationIds = new Set(catalog.animations
     .filter((candidate) => candidate.migration.status === 'complete')
     .map((candidate) => candidate.animationId));
@@ -73,7 +64,6 @@ export default async function AnimationPage({params, searchParams}: {params: Pro
   return <main className={captureMode ? 'capture-page' : undefined} id="main-content">
     <header className="animation-header"><Container><div className="animation-breadcrumbs"><Link href="/library">{spanish ? 'Biblioteca' : 'Library'}</Link><span aria-hidden="true">/</span><span>{animation.classification.collection}</span></div><div className="animation-title-row"><div><p className="eyebrow">{animation.classification.grade === 'elementary' ? (spanish ? 'Compartido · Primaria' : 'Shared · Elementary') : `${spanish ? 'Grado' : 'Grade'} ${animation.classification.grade ?? '—'} · ${spanish ? 'Lección' : 'Lesson'} ${animation.classification.lesson ?? '—'}`}</p><h1>{animation.classification.titleDisplay}</h1>{animation.classification.titleRaw !== animation.classification.titleDisplay ? <p className="raw-title">Original: {animation.classification.titleRaw}</p> : null}</div><span className={`status-chip status-chip--${animation.migration.status}`}>{animation.migration.status}</span></div></Container></header>
     <section className="animation-workspace-section"><Container>
-      {controlledCeoPreview && !captureMode ? <G4L3ControlledCeoPreviewBoundary locale={locale} /> : null}
       {prototype && animation.migration.status !== 'complete' ? <div className="prototype-warning" role="note"><strong>{spanish ? 'Prototipo heredado, no migración completa.' : 'Legacy prototype, not a complete migration.'}</strong><span>{spanish ? 'Solo se ofrece en el entorno local de auditoría.' : 'Available only in the local audit environment.'}</span></div> : null}
       {!prototype && animation.migration.status !== 'complete' ? <div className="prototype-warning audit-placeholder-warning" data-audit-placeholder="true" role="note"><strong>{spanish ? 'Marcador de auditoría, no implementación.' : 'Audit placeholder, not an implementation.'}</strong><span>{spanish ? 'Esta ruta solo expone identidad de fuente y navegación de la lección; no afirma conversión, fidelidad ni aceptación.' : 'This route exposes source identity and lesson navigation only; it makes no conversion, fidelity, or acceptance claim.'}</span></div> : null}
       <G4L3LessonContextNavigation animationId={animation.animationId} auditPreview={auditPreview} completeAnimationIds={completeAnimationIds} locale={locale} releasePublished={g4L3ReleasePublished} />

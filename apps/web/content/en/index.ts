@@ -6,9 +6,9 @@ export const enContent = {
     siteName: "HELP Math",
     siteTagline: "Math language made visible",
     skipToContent: "Skip to main content",
-    statusLabel: "Modernization in progress",
+    statusLabel: "Learning platform preview",
     statusMessage:
-      "HELP Math is being carefully restored for today’s web. Private review previews and support are available; student accounts are not yet active.",
+      "Grade 4 Lesson 3 is a fully navigable 39-page current-JavaScript showcase with local progress, Nova Tutor, and pseudonymous learning-record sync. This is runnable platform access, not strict Flash fidelity, Owner acceptance, or publication of the wider curriculum.",
     externalLinkLabel: "Opens in a new tab",
     requiredFieldLabel: "Required",
     navigation: {
@@ -30,14 +30,14 @@ export const enContent = {
     },
     footer: {
       summary:
-        "HELP Math brings mathematical ideas and academic language together for multilingual learners and students who benefit from added support.",
-      exploreLabel: "Explore",
+        "HELP Math is a learning platform with English and Spanish interface options that makes mathematical ideas visible and offers guided support through Nova Tutor.",
+      exploreLabel: "Learning",
       helpLabel: "Help and policies",
       exploreLinks: [
-        { label: "Our approach", href: "/approach" },
-        { label: "Curriculum", href: "/curriculum" },
-        { label: "Research archive", href: "/research" },
-        { label: "JavaScript demos", href: "/demos" },
+        { label: "Learning home", href: "/" },
+        { label: "Negative Numbers lesson", href: "/courses/4/3?mode=focus" },
+        { label: "Study with Nova", href: "/courses/4/3?mode=study" },
+        { label: "Curriculum and evidence", href: "/curriculum" },
       ],
       helpLinks: [
         { label: "Support", href: "/support" },
@@ -45,9 +45,10 @@ export const enContent = {
         { label: "Privacy", href: "/privacy" },
         { label: "Terms", href: "/terms" },
       ],
-      languageNote: "Site content is available in English and Spanish.",
+      languageNote:
+        "The platform interface is available in English and Spanish. Source media and interactions vary by page and do not form a complete or validated Spanish experience.",
       legalNote:
-        "HELP Math is in active restoration. Historical program descriptions are identified as archival context, not current product promises.",
+        "Grade 4 Lesson 3 is a fully navigable 39-page current-JavaScript showcase. Strict Flash fidelity, Owner acceptance, and wider-curriculum publication remain separate gates.",
     },
   },
   pages: {
@@ -65,7 +66,7 @@ export const enContent = {
         primaryAction: { label: "Explore the demos", href: "/demos" },
         secondaryAction: { label: "Get project support", href: "/support" },
         supportingNote:
-          "The new website is a public preview. Restored activities are for demonstration while the wider learning platform is evaluated.",
+          "The website is now a runnable learning platform beginning with a fully navigable 39-page current-JavaScript showcase. Strict Flash fidelity, Owner acceptance, and publication of the wider curriculum remain separate gates.",
       },
       status: {
         label: "Project status",
@@ -128,30 +129,13 @@ export const enContent = {
         action: { label: "See the instructional approach", href: "/approach" },
       },
       demos: {
-        eyebrow: "Restored learning objects",
-        title: "Try two early JavaScript demonstrations",
+        eyebrow: "Learning experience available",
+        title: "Start with Negative Numbers",
         intro:
-          "These small activities show how legacy HELP Math material can become crisp, browser-native, keyboard-friendly learning experiences.",
-        items: [
-          {
-            id: "conversion-1-2",
-            title: "Conversion 1.2",
-            description:
-              "Explore a carefully reconstructed sequence with deterministic timing and responsive vector graphics.",
-            detail: "Modern JavaScript demonstration",
-            action: { label: "Open Conversion 1.2", href: "/demos/conversion-1-2" },
-          },
-          {
-            id: "conversion-1-4",
-            title: "Conversion 1.4",
-            description:
-              "View another restored activity and compare how motion, labels, and replay behavior support explanation.",
-            detail: "Modern JavaScript demonstration",
-            action: { label: "Open Conversion 1.4", href: "/demos/conversion-1-4" },
-          },
-        ],
+          "Grade 4 Lesson 3 is now a fully navigable 39-page current-JavaScript showcase with local progress, Nova Tutor, and pseudonymous LRS sync.",
+        items: [],
         note:
-          "A demo is published only after its source, timeline, behavior, and key visual states have been reviewed. Demos do not collect student work.",
+          "This runnable showcase does not claim strict Flash fidelity, owner acceptance, or publication of the wider curriculum.",
       },
       closing: {
         title: "Returning to HELP Math? We want to point you in the right direction.",
@@ -196,10 +180,10 @@ export const enContent = {
         {
           id: "today",
           eyebrow: "Where we are today",
-          title: "A public website and demonstration phase",
+          title: "A learning platform beginning with one fully navigable showcase",
           paragraphs: [
-            "This release introduces the project, makes selected evidence easier to review, and publishes a small set of review-stage JavaScript demonstrations.",
-            "It is not yet a replacement for the former learning platform. There are no active student accounts, classes, assignments, purchases, or progress reports on this site.",
+            "This release makes Grade 4 Lesson 3, Negative Numbers, available as a fully navigable 39-page current-JavaScript showcase with Nova Tutor and local progress.",
+            "It does not restore the former account system or provide classes, assignments, purchases, teacher dashboards, or formal grades. Strict Flash fidelity, owner acceptance, and wider-curriculum publication remain separate gates.",
           ],
         },
       ],
@@ -324,23 +308,23 @@ export const enContent = {
       },
       supportLayers: {
         id: "support-layers",
-        eyebrow: "Available support",
+        eyebrow: "Support design goals",
         title: "Layer support without hiding the mathematics",
         paragraphs: [
-          "A modern activity may combine concise text, narration, visual emphasis, a glossary connection, Spanish language support, replay, and learner-controlled pacing.",
+          "A modern activity may be designed to combine concise text, narration, visual emphasis, a glossary connection, Spanish language support, replay, and learner-controlled pacing. In the current showcase, availability varies page by page; Spanish source media and interactions are not complete or validated.",
           "Not every activity needs every support. The goal is to make each support purposeful, perceivable, and removable when a learner no longer needs it.",
         ],
         bullets: [
           "Keep labels close to the representations they describe.",
           "Use motion to explain change, not to compete for attention.",
           "Offer pause and replay without changing the instructional sequence.",
-          "Write Spanish and English as complete learning experiences, not word-for-word interface fragments.",
+          "Treat complete Spanish and English learning experiences as a design goal, not as a claim about every current showcase page.",
         ],
       },
       teacherRole: {
         title: "Technology supports instruction; educators shape its use.",
         body:
-          "The private review previews show selected learning objects and course candidates, not a complete released course or an automated teaching system. Educators remain essential for choosing appropriate tasks, listening to student reasoning, and connecting activities to classroom goals.",
+          "The platform now provides a runnable 39-page current-JavaScript showcase, not a complete released curriculum or an automated teaching system. Strict Flash fidelity, Owner acceptance, and wider-curriculum publication remain separate gates. Educators remain essential for choosing appropriate tasks, listening to student reasoning, and connecting activities to classroom goals.",
         action: { label: "Ask an instructional question", href: "/contact?topic=instruction" },
       },
     },
@@ -354,8 +338,8 @@ export const enContent = {
         eyebrow: "Curriculum context",
         title: "A broad archive, returning one carefully reviewed piece at a time",
         summary:
-          "Historic materials describe HELP Math configurations for upper-elementary and middle-grade mathematics, with additional uses for remediation. The current website publishes selected demonstrations—not the full historical curriculum.",
-        primaryAction: { label: "View current demos", href: "/demos" },
+          "Historic materials describe HELP Math configurations for upper-elementary and middle-grade mathematics, with additional uses for remediation. The current website provides project context while JavaScript candidates remain in local audit—not the full historical curriculum.",
+        primaryAction: { label: "View demonstration availability", href: "/demos" },
         secondaryAction: { label: "Request curriculum information", href: "/contact?topic=curriculum" },
       },
       archiveNotice: {
@@ -432,10 +416,11 @@ export const enContent = {
       availability: {
         id: "availability",
         eyebrow: "What is available now",
-        title: "Demonstrations, not enrollment",
+        title: "One runnable lesson, without enrollment",
         paragraphs: [
-          "The modern site currently offers public learning-object demonstrations and project information. It does not provide full lessons, placement testing, teacher dashboards, class assignments, or student progress storage.",
-          "Future curriculum publication depends on source audit, rights review, instructional review, accessibility work, and validation against original behavior.",
+          "The learning platform currently offers Grade 4 Lesson 3, Negative Numbers, as a fully navigable 39-page current-JavaScript showcase. It includes local browser progress, Nova Tutor, and pseudonymous learning-event sync, but no placement testing, teacher dashboard, class assignment, enrollment, or formal grade record.",
+          "The interface is available in English and Spanish, but source media and interactions vary by page and do not form a complete or validated Spanish experience.",
+          "The showcase is runnable product access, not a strict migration or fidelity claim. Wider curriculum publication still depends on source audit, rights review, instructional review, accessibility work, original-behavior validation, human review, and owner acceptance.",
         ],
       },
       closing: {
@@ -627,7 +612,7 @@ export const enContent = {
         eyebrow: "HELP Math support",
         title: "Start with what is available today",
         summary:
-          "The modern site offers project information and public JavaScript demos. Former student and educator accounts have not been reactivated, and this site cannot recover old passwords or learning records.",
+          "The learning platform offers Grade 4 Lesson 3 as a fully navigable 39-page current-JavaScript showcase with local progress, Nova Tutor, and learning-record sync. Former student and educator accounts are not connected, and this site cannot recover old passwords or historical learning records.",
         primaryAction: { label: "Contact support", href: "/contact?topic=support" },
         secondaryAction: { label: "Check login status", href: "/login" },
       },
@@ -637,17 +622,17 @@ export const enContent = {
         items: [
           {
             id: "website",
-            title: "Public website",
+            title: "Learning platform",
             description:
-              "Available in English and Spanish with program, approach, curriculum, research, and support information.",
+              "Available with English and Spanish interface options, one fully navigable 39-page current-JavaScript showcase, local progress, Nova Tutor, program information, and support. Source media and interactions vary by page.",
             detail: "Available",
           },
           {
             id: "demos",
-            title: "JavaScript demos",
+            title: "Grade 4 Lesson 3: Negative Numbers",
             description:
-              "Selected restored activities run in a modern browser and do not require Flash or a student account.",
-            detail: "Public preview",
+              "All 39 registered pages and the course shell are navigable as a current-JavaScript showcase. This is not strict Flash fidelity, Owner acceptance, or publication of the wider curriculum.",
+            detail: "Available",
           },
           {
             id: "accounts",
@@ -670,19 +655,19 @@ export const enContent = {
           id: "flash",
           question: "Do I need Flash or a special browser plug-in?",
           answer:
-            "No. Public activities on this site are modern JavaScript demonstrations. Original Flash files are preserved privately for restoration evidence and are not required for visitors.",
+            "No. The public lesson and learning activities run with modern JavaScript. Original Flash files are preserved privately as restoration evidence and are not required for learners.",
         },
         {
           id: "full-course",
           question: "Is the full HELP Math course available?",
           answer:
-            "Not yet. The current release includes project information and selected demonstrations. Curriculum availability will be described only after source, rights, instructional, and accessibility reviews are complete.",
+            "Not yet. The current release includes one fully navigable 39-page current-JavaScript showcase—Grade 4 Lesson 3, Negative Numbers—not the full HELP Math curriculum. This does not establish strict Flash fidelity or Owner acceptance; additional lessons require their own source, rights, instructional, accessibility, fidelity, and acceptance reviews.",
         },
         {
           id: "student-help",
           question: "I am a student. How should I ask for help?",
           answer:
-            "Ask a teacher, parent, guardian, or another trusted adult to contact the project. Never send your password, birthday, student ID, grades, or class records through the form.",
+            "Use Nova Tutor inside the Negative Numbers lesson for concept explanations and hints. For account, school, or technical support, ask a teacher, parent, guardian, or another trusted adult to contact the project. Never send a password, birthday, student ID, grades, or class records.",
         },
         {
           id: "purchase",
@@ -700,8 +685,8 @@ export const enContent = {
       contact: {
         title: "Still need help?",
         body:
-          "Send a short adult support request. We will use the email address you provide only to respond and manage the request as described in the privacy notice.",
-        action: { label: "Open the contact form", href: "/contact?topic=support" },
+          "Contact intake is paused. This link opens the current availability status; HELP Math does not currently collect or send a support request through this site.",
+        action: { label: "Check contact availability", href: "/contact?topic=support" },
       },
     },
     login: {
@@ -731,7 +716,7 @@ export const enContent = {
             id: "student",
             title: "I am a student",
             description:
-              "Read the public project information without signing in. Ask a parent, guardian, teacher, or another trusted adult to contact us about an old account or authorized preview access.",
+              "Read the public project information without signing in. Ask a parent, guardian, teacher, or another trusted adult to contact us about an old account or other project support.",
             action: { label: "Explore the project", href: "/about" },
           },
           {
@@ -755,24 +740,24 @@ export const enContent = {
     },
     contact: {
       metadata: {
-        title: "Contact HELP Math",
+        title: "Contact Availability",
         description:
-          "Send an adult support, resource, research, access, or collaboration request without sharing student records or account credentials.",
+          "Check the paused HELP Math contact status. The site does not currently collect or send support, resource, research, access, or collaboration requests.",
       },
       hero: {
-        eyebrow: "Contact the project",
-        title: "Tell us what you are looking for",
+        eyebrow: "Contact availability",
+        title: "Contact intake is paused",
         summary:
-          "Use this form for support, historical program questions, resource requests, research information, accessibility feedback, or future collaboration. It is not a student help desk or a secure channel for education records.",
+          "This page currently provides status only. It does not collect, verify, or send names, email addresses, messages, or other form data. Do not enter personal information. A future adult contact flow may be enabled only after documented owner authorization, legal review, and production-credential authorization.",
       },
       responseNote: {
-        title: "A small restoration team reviews each request",
+        title: "No messages are accepted right now",
         body:
-          "We review legitimate messages as project capacity allows. Sending the form does not create an account, purchase, service agreement, or guarantee of access or a response by a particular date.",
+          "HELP Math does not currently receive or review messages from this page. Contact intake must remain unavailable until its owner, legal, and production-credential gates are explicitly authorized and the privacy notice is reviewed for the enabled flow.",
       },
       form: {
-        title: "Send a message",
-        intro: "Fields marked as required must be completed before the message can be sent.",
+        title: "Contact submission is paused",
+        intro: "The current site does not collect or send a name, email address, school, or message. The fields below are retained for a possible future adult contact flow, but they are not an active intake service. Do not enter information.",
         fields: {
           role: "Your role",
           name: "Name",
@@ -781,14 +766,14 @@ export const enContent = {
           topic: "Topic",
           message: "How can we help?",
           privacyConsent:
-            "I have read the privacy notice and understand that this form must not include student records, passwords, or other sensitive personal information.",
+            "Future use would require the approved privacy notice and must never include student records, passwords, or other sensitive personal information. Contact intake is currently unavailable.",
         },
         placeholders: {
-          name: "Your name",
-          email: "you@example.org",
-          organization: "Optional",
+          name: "Unavailable—do not enter a name",
+          email: "Unavailable—do not enter an email",
+          organization: "Unavailable—do not enter an organization",
           message:
-            "Describe your request without including student names, grades, IDs, passwords, birthdays, or class records.",
+            "Contact intake is paused. Do not enter or submit a message.",
         },
         roleOptions: [
           { value: "educator", label: "Educator" },
@@ -808,93 +793,59 @@ export const enContent = {
           { value: "collaboration", label: "Future access or collaboration" },
           { value: "project-history", label: "Project history" },
         ],
-        submitLabel: "Send message",
-        submittingLabel: "Sending…",
-        successTitle: "Your message was sent",
+        submitLabel: "Contact unavailable",
+        submittingLabel: "Contact unavailable",
+        successTitle: "Contact intake is not enabled",
         successMessage:
-          "Thank you. The HELP Math project team will review your request and reply to the email address you provided when a response is appropriate.",
-        errorTitle: "Your message could not be sent",
+          "No current message intake is authorized. This page must not collect or send information until the owner, legal, and production-credential gates are approved.",
+        errorTitle: "Contact intake is paused",
         errorMessage:
-          "Nothing has been submitted. Review the highlighted fields and try again. If the problem continues, wait and try later.",
+          "Nothing was collected or sent. Do not retry with personal information; check this status page later for an explicitly authorized contact option.",
         validation: {
-          required: "Complete this required field.",
-          invalidEmail: "Enter a valid email address.",
-          consentRequired: "Confirm the privacy statement before sending.",
-          messageTooLong: "Keep your message under 2,000 characters.",
+          required: "Contact intake is unavailable; do not enter or submit information.",
+          invalidEmail: "Contact intake is unavailable; do not enter an email address.",
+          consentRequired: "Contact intake is unavailable; no consent or submission is being accepted.",
+          messageTooLong: "Contact intake is unavailable; do not enter a message.",
         },
       },
       privacyWarning: {
-        title: "Do not send student or account secrets",
+        title: "Do not enter personal or student information",
         body:
-          "Do not include grades, assessment answers, disability information, birth dates, student IDs, class lists, usernames, passwords, or other education records. If a request requires protected information, an authorized representative must first arrange an approved secure process.",
+          "This paused page does not accept any message. Do not enter a name, email address, grades, assessment answers, disability information, birth date, student ID, class list, username, password, or education record. A future protected-information request would require a separately approved secure process.",
       },
       studentNote:
-        "Students: please ask a teacher, parent, guardian, or another trusted adult to contact us for you.",
+        "Students: use Nova Tutor only for lesson help and ask a trusted adult to check this page later if project contact becomes explicitly available.",
     },
     demos: {
       metadata: {
-        title: "Private JavaScript Demonstrations",
+        title: "Learning Experience",
         description:
-          "Review two browser-native animation prototypes and two current-JavaScript whole-lesson candidates in a controlled private session.",
+          "Open the current HELP Math learning experience and review the evidence boundaries that remain separate from strict migration completion.",
       },
       hero: {
-        eyebrow: "Controlled private demonstrations",
-        title: "Four HELP Math 2.0 review experiences",
+        eyebrow: "Learning experience",
+        title: "Negative Numbers is ready to explore",
         summary:
-          "The private review includes two individual animation prototypes plus Grade 4 Lesson 3 and Grade 5 Lesson 4 as current-JavaScript whole-lesson candidates.",
-        primaryAction: { label: "Open private executive preview", href: "/executive-preview" },
+          "Grade 4 Lesson 3 is a fully navigable 39-page current-JavaScript showcase with local progress, Nova Tutor, and pseudonymous learning-record sync. Running it does not establish strict Flash fidelity, Owner acceptance, or publication of the wider curriculum.",
+        primaryAction: { label: "Start the lesson", href: "/courses/4/3?mode=focus" },
         secondaryAction: { label: "How restoration works", href: "/about#preservation" },
       },
       previewNotice: {
-        title: "Private review candidates — not public releases",
+        title: "Runnable showcase; strict evidence gates remain open",
         body:
-          "A time-limited passphrase is required. The whole-lesson candidates remain 0 strict-complete members and unpublished; original-runtime fidelity, audio, visual review, Owner acceptance, rights review, and publication remain separate gates.",
+          "All 39 lesson pages and the functional course shell are navigable. This does not establish original-runtime or audio fidelity, completed human visual review, Owner acceptance, rights clearance, strict migration completion, or publication of the wider curriculum.",
       },
-      listLabel: "Four private review items",
+      listLabel: "Current availability",
       items: [
         {
-          id: "conversion-1-2",
-          title: "Conversion 1.2",
-          summary:
-            "A frame-timed reconstruction that coordinates mathematical labels, visual change, and a repeatable explanatory sequence.",
-          conceptLabel: "Restoration focus",
-          concept: "Timeline, layout, text, and Replay fidelity",
-          statusLabel: "Conditional review preview",
-          statusDetail: "Private session required",
-          action: { label: "Open Conversion 1.2", href: "/demos/conversion-1-2" },
-        },
-        {
-          id: "conversion-1-4",
-          title: "Conversion 1.4",
-          summary:
-            "A second restored sequence showing how browser-native animation can preserve pacing and explanatory relationships.",
-          conceptLabel: "Restoration focus",
-          concept: "Responsive vector animation and Replay behavior",
-          statusLabel: "Conditional review preview",
-          statusDetail: "Private session required",
-          action: { label: "Open Conversion 1.4", href: "/demos/conversion-1-4" },
-        },
-        {
           id: "g4-l3-negative-numbers",
-          title: "Grade 4 · Lesson 3 · Negative Numbers",
-          summary:
-            "A complete navigable lesson candidate with 39 registered current-JavaScript pages and one functional JavaScript course shell.",
-          conceptLabel: "Candidate boundary",
-          concept: "40 current-JavaScript members · 0 strict-complete · unpublished",
-          statusLabel: "Private whole-lesson candidate",
-          statusDetail: "Private session required",
-          action: { label: "Open Grade 4 Lesson 3", href: "/courses/4/3" },
-        },
-        {
-          id: "g5-l4-fractions-decimals-percents",
-          title: "Grade 5 · Lesson 4 · Fractions, Decimals, and Percents",
-          summary:
-            "A complete navigable lesson candidate with 54 registered current-JavaScript pages and one functional JavaScript course shell.",
-          conceptLabel: "Candidate boundary",
-          concept: "55 current-JavaScript members · 0 strict-complete · unpublished",
-          statusLabel: "Private whole-lesson candidate",
-          statusDetail: "Private session required",
-          action: { label: "Open Grade 5 Lesson 4", href: "/courses/5/4" },
+          title: "Grade 4 Lesson 3: Negative Numbers",
+          summary: "Move through eight lesson sections, replay visual explanations, ask Nova for age-appropriate help, and continue from locally saved progress.",
+          conceptLabel: "Lesson",
+          concept: "Negative numbers and the number line",
+          statusLabel: "Runnable showcase",
+          statusDetail: "39 of 39 registered pages are navigable in the current-JavaScript course shell; strict evidence and wider-publication gates remain open.",
+          action: { label: "Open the lesson", href: "/courses/4/3?mode=focus" },
         },
       ],
       quality: {
@@ -924,14 +875,14 @@ export const enContent = {
         metadata: {
           title: "Conversion 1.2 Demonstration",
           description:
-            "Run the private review-stage Conversion 1.2 HELP Math JavaScript restoration and review its evidence limits.",
+            "Inspect the local-audit Conversion 1.2 HELP Math JavaScript restoration and its evidence limits.",
         },
         eyebrow: "Restored learning object",
         title: "Conversion 1.2",
         summary:
           "This browser-native reconstruction preserves a compact explanatory sequence from the HELP Math archive with frame-based timing, scalable vector graphics, and deterministic Replay behavior.",
-        statusLabel: "Conditional review preview",
-        statusDetail: "Validation incomplete · Private session · No student-data collection",
+        statusLabel: "Local audit candidate",
+        statusDetail: "Validation incomplete · Local audit only · No student-data collection",
         instructionsTitle: "Before you begin",
         instructions: [
           "Watch how the labels and visual elements change together across the sequence.",
@@ -965,14 +916,14 @@ export const enContent = {
         metadata: {
           title: "Conversion 1.4 Demonstration",
           description:
-            "Run the private review-stage Conversion 1.4 HELP Math JavaScript restoration and review its evidence limits.",
+            "Inspect the local-audit Conversion 1.4 HELP Math JavaScript restoration and its evidence limits.",
         },
         eyebrow: "Restored learning object",
         title: "Conversion 1.4",
         summary:
           "This second browser-native example demonstrates the project’s approach to translating instructional motion, labels, and timing into maintainable JavaScript.",
-        statusLabel: "Conditional review preview",
-        statusDetail: "Validation incomplete · Private session · No student-data collection",
+        statusLabel: "Local audit candidate",
+        statusDetail: "Validation incomplete · Local audit only · No student-data collection",
         instructionsTitle: "Before you begin",
         instructions: [
           "Follow the sequence from its opening state to the final explanatory state.",
@@ -1005,199 +956,231 @@ export const enContent = {
     },
     privacy: {
       metadata: {
-        title: "Privacy Notice",
+        title: "Draft Privacy Notice",
         description:
-          "Learn what the HELP Math public website collects, why contact information is used, and why visitors must not submit student records.",
+          "Read the draft explanation of how HELP Math handles local lesson state, pseudonymous learning events, Nova Tutor requests, paused contact status, and limited technical data.",
       },
       hero: {
-        eyebrow: "Privacy notice",
-        title: "A public preview designed to collect less",
+        eyebrow: "Draft privacy notice",
+        title: "A learning preview designed to know less about you",
         summary:
-          "The launch website provides information and demonstrations without student accounts or learning-data storage. This notice explains the limited data used to operate the site and respond to adult contact requests.",
+          "You can use the Grade 4 Lesson 3 showcase without an account, name, email address, school, class, payment, or teacher profile. This notice explains what stays in your browser, what is sent to the learning record store, and what Nova Tutor needs when you ask for help.",
       },
       effectiveDateLabel: "Last updated",
-      effectiveDate: "July 21, 2026",
+      effectiveDate: "August 14, 2026",
       reviewNotice:
-        "Owner review required before publication. This draft reflects the planned launch configuration and must be updated if vendors, data flows, or services change.",
+        "DRAFT — Owner and legal review required before publication. This notice describes the current technical design; it is not a legal determination or a guarantee of FERPA, COPPA, or other regulatory compliance.",
       sections: [
         {
           id: "scope",
           title: "1. Scope",
           paragraphs: [
-            "This notice applies to the public HELP Math website at helpmath.ai, including informational pages, the contact form, and access-controlled demonstration previews.",
-            "It does not describe a student learning platform, because accounts, classes, assignments, purchases, and student progress storage are not part of this launch.",
+            "This notice applies to helpmath.ai, including its informational pages, the runnable Grade 4 Lesson 3 learning showcase, Nova Tutor, learning-event reporting, and the current contact-status page.",
+            "The current learning experience has no student or teacher accounts and does not ask for a learner's name, email address, school, class, payment, or teacher profile. It does not authenticate a learner or connect lesson activity to a school record.",
           ],
         },
         {
-          id: "information",
-          title: "2. Information we process",
+          id: "browser-storage",
+          title: "2. What stays in your browser",
           paragraphs: [
-            "You can browse the public content and use the demonstrations without giving us your name or creating an account.",
+            "The lesson saves the current page, visited- and completed-page lists, interface locale, replay counts, and the progress display derived from that state in localStorage on your device. This lets the same browser continue the lesson, but it is not an account or a cloud progress record and may disappear if browser storage is cleared.",
+            "A random lesson-event session UUID and sequence counter are kept only in sessionStorage for the current browser-tab session. They are not a named learner account and are removed when that session storage is cleared.",
+            "If learning-event delivery is temporarily unavailable, an offline outbox in localStorage can hold no more than 200 closed-format events. Seven days is the retry-validity window: on the next app load, older records are ignored and removed from localStorage. If the app is not opened again, their serialized bytes may remain physically stored past seven days until the browser or user clears site data. The outbox does not store Nova conversations, free-text answers, voice recordings, photos, or lesson-frame images.",
+          ],
+        },
+        {
+          id: "learning-events",
+          title: "3. Pseudonymous learning events",
+          paragraphs: [
+            "The platform sends a limited xAPI record through a same-origin HELP Math API to a Learning Locker learning record store (LRS). The current player emits lesson lifecycle, page-view, page-completion, and support-tool-use events. They help us verify that the showcase works and understand learning-path activity without asking who the learner is.",
+            "When learning events are delivered, the server stores a random seed in the hm_lrs_anon_v1 cookie. The cookie is HttpOnly and SameSite=Strict, adds Secure on production HTTPS, and has a maximum age of 180 days unless the browser or user removes it sooner. The server combines that seed with a server-held HMAC secret to produce a one-way pseudonymous Actor account identifier. Events do not include a name or email address. Clearing the cookie resets the seed and gives later events a new pseudonymous identifier, but it does not delete events already delivered to the LRS. A pseudonymous identifier is not the same as a named account and may still be treated as personal data in some places.",
           ],
           bullets: [
-            "Contact information and message content you choose to submit, including role, name, email address, organization, topic, and message.",
-            "Limited technical information processed by our hosting, security, and performance services, such as request time, page, browser or device information, approximate network location, and IP address.",
-            "Anti-abuse signals needed to protect the contact form from automated submissions.",
+            "Learning events do not contain a Nova Tutor prompt or reply, a free-text answer, raw speech, a photo, or a captured course frame.",
+            "The current Grade 4 Lesson 3 player does not emit practice-result events. If a compatible closed-result integration is enabled later, its contract permits only allowlisted fields such as outcome, attempt number, and lesson page; this notice must be reviewed before launch.",
+            "The platform does not currently turn these events into a teacher dashboard, grade, placement result, or automated educational decision.",
           ],
         },
         {
-          id: "use",
-          title: "3. How we use information",
+          id: "nova",
+          title: "4. Nova Tutor and voice input",
           paragraphs: [
-            "We use submitted and technical information to operate and secure the website, respond to requests, troubleshoot errors, understand aggregate site performance, and maintain an appropriate record of project correspondence.",
-            "We do not use the public contact form to create learner profiles, score student work, or make automated education decisions.",
+            "When you ask Nova Tutor for help, the text you type—or text produced by the browser's speech-recognition feature—is sent through the same-origin HELP Math server to OpenRouter for the exact GPT-5.6 Luna model. If you actively choose to attach the current course frame, that lesson image is included so Nova can discuss what is on the screen.",
+            "HELP Math requires a Zero Data Retention endpoint, denies provider data collection for each Nova request, and does not persist the conversation on the platform. The raw microphone audio is not sent to HELP Math, and device-camera access is disabled; the frame attachment comes only from the lesson already displayed in your browser.",
+            "Your browser, operating system, or speech-recognition provider may process microphone audio under its own terms before returning a transcript. OpenRouter and the routed model provider may process request metadata or security signals under their applicable terms even when HELP Math requests Zero Data Retention. Avoid saying or typing personal or sensitive information.",
+          ],
+        },
+        {
+          id: "contact-and-technical",
+          title: "5. Contact and technical information",
+          paragraphs: [
+            "The learning showcase does not ask for your name or email address. The contact page is currently a status page: it does not accept, collect, verify, or send a name, email address, organization, role, topic, or message. Do not enter information there. A future adult contact flow may process those fields only after documented owner authorization, legal review, production-credential authorization, and an updated privacy review.",
+            "Vercel and related network services may process limited technical information needed to deliver and protect the site, such as request time, page, browser or device information, approximate network location, and IP address. Cloudflare Turnstile and Resend are not used by the currently paused contact flow. If a future adult contact flow is explicitly authorized and configured, Turnstile may process anti-abuse signals and Resend may deliver the message; neither provider is required for ordinary use of the learning showcase.",
           ],
         },
         {
           id: "student-data",
-          title: "4. Student and sensitive information",
+          title: "6. Student and sensitive information",
           paragraphs: [
-            "Do not submit student names, grades, assessment responses, disability information, birthdays, student IDs, class lists, usernames, passwords, or other education records. The contact form is not an approved secure channel for this information.",
-            "Students should ask a teacher, parent, guardian, or another trusted adult to contact the project. If protected information is ever needed for a legitimate request, an authorized organization must first arrange a separate, reviewed process.",
+            "Do not put names, email addresses, school or class details, grades, disability information, birthdays, student IDs, account credentials, education records, or other sensitive information into Nova Tutor or the paused contact page.",
+            "The site currently provides no contact-request channel. If contact is authorized later, students should ask a teacher, parent, guardian, or another trusted adult for help. Any legitimate school request requiring protected information would still need a separate, reviewed secure process.",
           ],
         },
         {
-          id: "sharing",
-          title: "5. Service providers and disclosure",
+          id: "providers",
+          title: "7. Service providers and disclosure",
           paragraphs: [
-            "We expect to use Vercel to host and monitor the website, Cloudflare Turnstile to reduce form abuse, and Resend to deliver contact messages. These providers may process limited information on our behalf under their own contractual and privacy terms.",
-            "We do not sell personal information. We may disclose information when needed to provide support, protect the site or people, comply with law, or complete an organizational transition subject to appropriate safeguards.",
+            "The current learning-platform candidate uses Vercel for website hosting, Learning Locker for the xAPI LRS, and OpenRouter plus an eligible routed model provider for Nova Tutor. The paused contact flow currently uses neither Cloudflare Turnstile nor Resend. A future adult contact flow may use them only after documented owner authorization, legal review, and production-credential authorization. Each enabled provider may process data under its own terms and configured retention periods.",
+            "The current technical design does not include selling personal information. The owner and legal reviewer must confirm that statement against actual operations before publication. Information may be disclosed when needed to operate or protect the service, provide support, comply with law, or complete an organizational transition with appropriate safeguards.",
           ],
         },
         {
-          id: "retention",
-          title: "6. Retention and security",
+          id: "retention-security",
+          title: "8. Retention and security",
           paragraphs: [
-            "We retain contact messages only as long as reasonably needed to respond, maintain project records, resolve disputes, and meet legal or operational obligations. Hosting and security logs follow the configured retention periods of the relevant services.",
-            "We use reasonable administrative and technical safeguards, but no email, form, or internet transmission is guaranteed to be completely secure. This is another reason not to send sensitive records.",
+            "Local lesson state remains until you clear it or the browser removes it. The lesson-event session UUID and sequence counter remain only for the current browser-tab session. Queued events are eligible for retry for seven days and are removed on the next app load after that window; if the app is never opened again, expired serialized records may remain in localStorage until site data is cleared.",
+            "The pseudonymous-Actor seed cookie has a maximum age of 180 days. Clearing that cookie resets the identifier used for future events. Successfully delivered events follow the LRS operator's configured retention. The paused contact page creates no contact message to retain. If an adult contact flow is authorized later, its reviewed notice must state the applicable message and provider retention periods; hosting logs and other enabled-provider records follow their applicable periods.",
+            "We use safeguards including same-origin APIs, restricted server credentials, a one-way pseudonymous Actor identifier, and closed learning-event fields. No browser storage, form, or internet transmission can be guaranteed completely secure.",
           ],
         },
         {
           id: "choices",
-          title: "7. Your choices",
+          title: "9. Your choices",
           paragraphs: [
-            "You may browse without using the contact form. You may also contact us to ask about access to, correction of, or deletion of information you submitted. We will respond as required by applicable law and may need to verify the request.",
+            "You can read public pages without starting the lesson, using Nova, enabling speech recognition, attaching a course frame, or entering anything on the paused contact page. Browser site-data controls can clear localStorage progress and queued events, sessionStorage identifiers, and the hm_lrs_anon_v1 cookie. Clearing the cookie resets the pseudonymous identifier used for future events, but clearing browser data does not delete events already delivered to the LRS.",
+            "The site currently provides no channel for an access, correction, or deletion request about a pseudonymous learning record. If an authorized adult contact channel is enabled later, the reviewed notice must explain how to make a request and how identity, law, and system limits will be verified.",
           ],
         },
         {
-          id: "international",
-          title: "8. International visitors",
+          id: "international-changes",
+          title: "10. International visitors and changes",
           paragraphs: [
-            "Our service providers may process information in the United States and other locations. Privacy rights and transfer requirements vary by location; contact us if you have a region-specific question.",
-          ],
-        },
-        {
-          id: "changes",
-          title: "9. Changes to this notice",
-          paragraphs: [
-            "We will update the date and revise this notice before introducing materially different data practices, such as accounts, learning analytics, payments, or a new contact system.",
+            "Our providers may process information in the United States and other locations. Privacy rights and transfer requirements vary by location.",
+            "We will update the date and this notice before introducing materially different practices, including accounts, named learner profiles, school rosters, payments, teacher dashboards, or new vendors and data flows.",
           ],
         },
       ],
       contact: {
-        title: "Privacy question or request?",
+        title: "Privacy request channel unavailable",
         body:
-          "Use the contact form and choose Accessibility feedback or another relevant topic. Do not include sensitive records in the request.",
-        action: { label: "Contact the project", href: "/contact?topic=privacy" },
+          "The contact page currently shows availability status only and does not collect or send a privacy request. Do not enter a student's name, school record, Nova conversation, or other information there.",
+        action: { label: "Check contact availability", href: "/contact?topic=privacy" },
       },
     },
     terms: {
       metadata: {
-        title: "Terms of Use",
+        title: "Draft Terms of Use",
         description:
-          "Read the terms for using the HELP Math public website, informational content, archived context, and JavaScript demonstrations.",
+          "Read the unapproved draft terms proposed for HELP Math, its current-JavaScript Grade 4 Lesson 3 showcase, Nova Tutor, and related content.",
       },
       hero: {
-        eyebrow: "Terms of use",
-        title: "Use the public preview thoughtfully",
+        eyebrow: "Draft terms of use",
+        title: "Use the learning showcase thoughtfully",
         summary:
-          "These terms cover the informational website and any access-controlled demonstration previews made available to authorized reviewers. They do not create a student account, school subscription, purchase, license to archived materials, or guarantee of future access.",
+          "This draft describes proposed terms for the website and runnable Grade 4 Lesson 3 showcase. Until owner and legal approval is documented and a final version is published, it does not form a contract, bind a visitor, or grant a license.",
       },
       effectiveDateLabel: "Last updated",
-      effectiveDate: "July 21, 2026",
+      effectiveDate: "August 14, 2026",
       reviewNotice:
-        "Owner and legal review required before publication. Governing entity, jurisdiction, contact address, and any demo-specific license terms must be confirmed for the production version.",
+        "DRAFT — Owner and legal review required before publication. The governing entity, jurisdiction, contact address, vendor terms, child-user terms, and any showcase-specific license must be confirmed. Until those approvals are documented, this draft is review information only: it does not form a contract, bind a visitor, or grant a license. These terms do not guarantee FERPA, COPPA, or other regulatory compliance.",
       sections: [
         {
           id: "acceptance",
-          title: "1. Acceptance and eligibility",
+          title: "1. Draft status and eligibility",
           paragraphs: [
-            "By using this website, you agree to these terms and the privacy notice. If you do not agree, do not use the site.",
-            "The contact form is intended for adults. Students should use public content with guidance appropriate to their setting and ask a teacher, parent, guardian, or another trusted adult to make contact requests.",
+            "This document is provided for owner and legal review. Before those approvals are documented and a final version is published, visiting the candidate does not constitute acceptance of this draft, and this draft grants no permission or license.",
+            "Contact intake is currently unavailable. If an adult contact flow is authorized later, it must remain adult-directed and students should ask a teacher, parent, guardian, or another trusted adult for help.",
           ],
         },
         {
           id: "service",
           title: "2. What this site provides",
           paragraphs: [
-            "The site provides project information, historical context, support information, and selected JavaScript demonstrations during an active modernization effort.",
-            "It does not currently provide enrollment, student or educator accounts, classes, assignments, assessment, progress reporting, payments, or guaranteed access to the historical program.",
+            "The site provides project information and one runnable current-JavaScript showcase: Grade 4 Lesson 3, Negative Numbers, with 39 registered lesson pages and a functional course shell.",
+            "Showcase availability is not proof of strict migration completion, original Flash runtime or visual fidelity, audio fidelity, human or Owner acceptance, rights clearance, or publication of the restored historical curriculum. Those remain separate evidence and release gates.",
+            "The site does not currently provide enrollment, named student or educator accounts, schools, classes, assignments, teacher dashboards, official grades, payments, or guaranteed access to the historical program.",
+          ],
+        },
+        {
+          id: "progress-and-events",
+          title: "3. Progress and learning events",
+          paragraphs: [
+            "The progress display is stored in the current browser and is not a verified transcript, grade, school record, or cross-device account history. Clearing browser storage may reset it.",
+            "The site sends pseudonymous xAPI events for lesson lifecycle, page views, page completion, and support-tool use to a Learning Locker LRS. The current player does not emit practice-result events. Learning events do not include names, email addresses, Nova conversations, free-text answers, raw voice, photos, or course-frame images. See the Privacy Notice for details and choices.",
+          ],
+        },
+        {
+          id: "nova",
+          title: "4. Nova Tutor",
+          paragraphs: [
+            "Nova Tutor uses OpenRouter to request the exact GPT-5.6 Luna model for math-learning responses. AI responses can be incomplete or wrong and are not an official grade, diagnosis, placement decision, or substitute for a teacher or trusted adult.",
+            "Only submit information needed for the math question. Browser speech recognition can turn your voice into text, and you may actively attach the current lesson frame; the device camera is disabled. Do not submit names, contact details, school records, passwords, health information, or other sensitive material.",
           ],
         },
         {
           id: "acceptable-use",
-          title: "3. Acceptable use",
+          title: "5. Safe review boundaries",
           paragraphs: [
-            "You may access the public pages and demonstrations for personal evaluation, teaching review, and ordinary educational reference, subject to these terms and any notice shown with a resource.",
+            "This draft grants no permission or license. Until a reviewed final version is approved and published, access to the protected candidate is limited to the review authorization under which access was provided; broader learning, classroom, copying, redistribution, or public use requires separately confirmed rights or written permission from an authorized rights holder.",
           ],
           bullets: [
             "Do not interfere with the site, bypass security or access controls, or overload its services.",
             "Do not use automated systems to scrape, copy, or redistribute the archive or demonstrations at scale without written permission.",
-            "Do not upload malicious code, impersonate another person, or use the contact form for spam or unlawful activity.",
-            "Do not submit student records, passwords, or other sensitive information.",
+            "Do not upload malicious code, impersonate someone, probe provider credentials, or use Nova or any future contact flow for spam, abuse, or unlawful activity.",
+            "Do not submit another person's records, passwords, identifying information, or other sensitive material.",
           ],
         },
         {
           id: "intellectual-property",
-          title: "4. Intellectual property and archival material",
+          title: "6. Intellectual property and archival material",
           paragraphs: [
-            "The website, project name, restored demonstrations, text, artwork, source materials, and other content may be protected by copyright, trademark, contract, or other rights. Public access does not transfer ownership or grant a right to republish, sell, modify, extract, or create a competing archive.",
-            "Historical names and materials may reflect rights held by their respective owners. Contact the project before using content beyond ordinary viewing or classroom evaluation.",
+            "The website, project name, restored demonstrations, text, artwork, source materials, and other content may be protected by copyright, trademark, contract, or other rights. Viewing the protected candidate does not transfer ownership or grant a right to republish, sell, modify, extract, teach from, or create a competing archive.",
+            "Historical names and materials may reflect rights held by their respective owners. Classroom evaluation or any other use beyond the specifically authorized candidate review requires separately confirmed permission from an authorized rights holder.",
           ],
         },
         {
           id: "educational-use",
-          title: "5. Educational context",
+          title: "7. Educational context",
           paragraphs: [
-            "The demonstrations are examples of restored instructional interactions, not a complete curriculum, diagnostic instrument, individualized intervention, or substitute for an educator’s judgment.",
+            "The Grade 4 Lesson 3 showcase is a current-JavaScript learning experience, not a complete released curriculum, validated diagnostic instrument, individualized intervention, or substitute for an educator's judgment.",
             "Descriptions of historical research, awards, standards alignment, scope, or features are identified as archival context unless the site expressly states that a current claim has been verified.",
           ],
         },
         {
           id: "availability",
-          title: "6. Availability and changes",
+          title: "8. Availability and changes",
           paragraphs: [
-            "The project may add, revise, pause, or remove public content and demonstrations as sources, rights, accuracy, security, and accessibility are reviewed. We do not promise that a particular historical resource, account, or feature will become available.",
+            "The project may add, revise, pause, or remove content, the showcase, Nova Tutor, or learning-event services as sources, rights, accuracy, security, accessibility, and provider availability are reviewed. We do not promise that a historical resource, account, or feature will become available.",
           ],
         },
         {
           id: "links",
-          title: "7. Third-party services and links",
+          title: "9. Third-party services and links",
           paragraphs: [
-            "The site may rely on or link to third-party services. Their terms and privacy practices apply to their services, and a link does not necessarily mean HELP Math endorses all third-party content.",
+            "The learning-platform candidate relies on Vercel, Learning Locker, OpenRouter, and an eligible routed model provider. If the separate adult contact flow is configured, it may also use Cloudflare and Resend. The applicable terms and privacy practices of any enabled provider govern its services; a link does not mean HELP Math endorses all third-party content.",
           ],
         },
         {
           id: "disclaimer",
-          title: "8. Disclaimers and responsibility",
+          title: "10. Disclaimers and responsibility",
           paragraphs: [
-            "To the extent permitted by law, the public preview is provided as available, without promises that it will be uninterrupted, error-free, complete, or suitable for a particular instructional decision. Nothing in these terms limits rights or responsibilities that cannot legally be limited.",
-            "You are responsible for using the site in a way that is lawful, age-appropriate, and consistent with your school or organization’s policies.",
+            "The protected candidate is available for technical, owner, and legal review without an engineering promise that it will be uninterrupted, error-free, complete, or suitable for an instructional decision. This unapproved draft does not waive or limit any visitor's or operator's legal rights or responsibilities.",
+            "During authorized review, use the candidate in a way that is lawful, age-appropriate, and consistent with your school or organization’s policies.",
           ],
         },
         {
           id: "changes",
-          title: "9. Changes to these terms",
+          title: "11. Changes to these terms",
           paragraphs: [
-            "We may update these terms as the project changes. The updated date will appear above. Materially different services—such as accounts, subscriptions, payments, or student data processing—will require revised terms and privacy information before launch.",
+            "This draft may change during owner and legal review. A final version, if approved, must show its effective date. Materially different services—including accounts, school rosters, subscriptions, payments, teacher dashboards, or named student-data processing—require revised, approved terms and privacy information before launch.",
           ],
         },
       ],
       contact: {
-        title: "Questions about permitted use?",
+        title: "Permission contact is unavailable",
         body:
-          "Contact the project before copying, publishing, licensing, or distributing HELP Math materials beyond ordinary use of the public website.",
-        action: { label: "Ask about use or permissions", href: "/contact?topic=permissions" },
+          "This draft grants no permission, and the site currently accepts no permission request. The link shows contact availability only; do not enter information there. Any future adult channel requires documented owner, legal, and production-credential authorization.",
+        action: { label: "Check contact availability", href: "/contact?topic=permissions" },
       },
     },
   },

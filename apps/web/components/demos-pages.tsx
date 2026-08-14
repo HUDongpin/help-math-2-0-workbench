@@ -17,7 +17,7 @@ export function DemosPage({content}: {content: DemosContent}) {
           <Callout {...content.previewNotice} tone="yellow" />
         </Container>
       </Section>
-      <Section>
+      {content.items.length > 0 ? <Section>
         <Container>
           <Eyebrow>{content.listLabel}</Eyebrow>
           <div className="demo-library">
@@ -43,7 +43,7 @@ export function DemosPage({content}: {content: DemosContent}) {
             ))}
           </div>
         </Container>
-      </Section>
+      </Section> : null}
       <Section className="surface-blue">
         <Container>
           <TextSection content={content.quality} />

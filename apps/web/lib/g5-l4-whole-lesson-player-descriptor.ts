@@ -593,7 +593,22 @@ export function buildG5L4WholeLessonPlayerDescriptor(
       layoutId: 'help-math-course-shell-800x600-v1',
       chromeAsset:
         '/flash-assets/courses/shell-course-g05-l04-index-local/root-frames/frame-0049.png',
-      header: Object.freeze({height: 109}),
+      header: Object.freeze({
+        height: 109,
+        title: Object.freeze({
+          kind: 'source-declared-lesson-title',
+          sourceField: 'NewTitle1',
+          fontFamily: 'Verdana',
+          fontSize: 25,
+          color: '#ffffff',
+          bounds: Object.freeze({left: 82, top: 48, width: 712, height: 59}),
+          boundsEvidence:
+            'chrome asset rows 44-107 carry no painted glyph right of x=80, ' +
+            'so the band is the clear header strip below the painted ' +
+            '<CourseName> wordmark, inset to clear the HELP PROGRAM logo on ' +
+            'the left and the header hit areas that end at row 47',
+        }),
+      }),
       footer: Object.freeze({height: 76}),
       controls: Object.freeze({
         kind: 'source-derived-diagnostic-candidate',

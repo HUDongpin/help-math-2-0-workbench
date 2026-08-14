@@ -1,8 +1,6 @@
 import {hasAnimationModule} from '@helpmath/demos/animation-registry';
 
-import {isG4L3ControlledCeoPreviewEnabled} from './g4-l3-controlled-ceo-preview';
 import {G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR} from './g4-l3-whole-lesson-player-descriptor';
-import {isG5L4ExecutivePreviewEnabled} from './g5-l4-executive-preview';
 import {G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR} from './g5-l4-whole-lesson-player-descriptor';
 import type {WholeLessonPlayerDescriptor} from './whole-lesson-player-descriptor';
 
@@ -19,13 +17,11 @@ export type WholeLessonCoursePlayer =
 export interface WholeLessonCourseRegistration {
   readonly descriptor: WholeLessonPlayerDescriptor;
   readonly player: WholeLessonCoursePlayer;
-  readonly isControlledPreviewEnabled: () => boolean;
 }
 
 export interface WholeLessonCourseRegistrationInput {
   readonly descriptor: WholeLessonPlayerDescriptor | undefined;
   readonly player: WholeLessonCoursePlayer;
-  readonly isControlledPreviewEnabled: () => boolean;
 }
 
 function descriptorPagesAreRunnable(
@@ -89,7 +85,6 @@ function descriptorDrivenShellIsBound(
 export function buildWholeLessonCourseRegistration({
   descriptor,
   player,
-  isControlledPreviewEnabled,
 }: WholeLessonCourseRegistrationInput): WholeLessonCourseRegistration | undefined {
   if (
     !descriptor ||
@@ -106,8 +101,7 @@ export function buildWholeLessonCourseRegistration({
       descriptor.course.shellAnimationId ||
     !/^[a-f0-9]{64}$/.test(descriptor.source.sourceXmlSha256) ||
     !/^[a-f0-9]{64}$/.test(descriptor.visualSkin.evidence.sourceSwfSha256) ||
-    !descriptorPagesAreRunnable(descriptor) ||
-    typeof isControlledPreviewEnabled !== 'function'
+    !descriptorPagesAreRunnable(descriptor)
   ) {
     return undefined;
   }
@@ -129,7 +123,6 @@ export function buildWholeLessonCourseRegistration({
   return Object.freeze({
     descriptor,
     player: Object.freeze({...player}),
-    isControlledPreviewEnabled,
   });
 }
 
@@ -141,12 +134,10 @@ const registrations = Object.freeze([
       component: 'g4-l3-whole-lesson-player',
       descriptorId: 'whole-lesson-player-g04-l03-v1',
     }),
-    isControlledPreviewEnabled: isG4L3ControlledCeoPreviewEnabled,
   }),
   buildWholeLessonCourseRegistration({
     descriptor: G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR,
     player: Object.freeze({kind: 'descriptor-driven'}),
-    isControlledPreviewEnabled: isG5L4ExecutivePreviewEnabled,
   }),
 ].filter(
   (registration): registration is WholeLessonCourseRegistration =>

@@ -5,9 +5,15 @@ import {Container} from '@/components/ui';
 import {WholeLessonCoursePlayer} from '@/components/whole-lesson-course-player';
 import {Link} from '@/i18n/navigation';
 import {completeAnimations, getCatalog, isLessonReleasePublished, publishedAnimations} from '@/lib/catalog';
-import {hasExecutivePreviewSession} from '@/lib/executive-preview-server';
+import {currentJsShowcasePublication} from '@/lib/current-js-showcase-publication';
 import {findLessonNavigationForRoute} from '@/lib/lesson-navigation';
 import {protectedAtomicReleaseIdForScope} from '@/lib/lesson-release-publication';
+import {isReviewerInstrumentationEnabled} from '@/lib/reviewer-instrumentation';
+import {resolveNovaTutorMode} from '@/lib/tutor-integration';
+import {
+  isModernWideShellEnabled,
+  resolveWholeLessonHostPresentation,
+} from '@/lib/whole-lesson-host-presentation';
 import {findWholeLessonCourseRegistration} from '@/lib/whole-lesson-course-registry';
 import {wholeLessonDescriptorMatchesNavigation} from '@/lib/whole-lesson-player-descriptor';
 
@@ -16,8 +22,16 @@ import {wholeLessonDescriptorMatchesNavigation} from '@/lib/whole-lesson-player-
 
 export const dynamic = 'force-dynamic';
 
-export default async function CoursePage({params}: {params: Promise<{locale: 'en' | 'es'; grade: string; lesson: string}>}) {
+export default async function CoursePage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{locale: 'en' | 'es'; grade: string; lesson: string}>;
+  searchParams: Promise<{mode?: string | string[]}>;
+}) {
   const {locale, grade, lesson} = await params;
+  const {mode} = await searchParams;
+  const novaTutorMode = resolveNovaTutorMode(mode);
   if (!/^[3-5]$/.test(grade) || !/^\d{1,2}$/.test(lesson)) notFound();
 
   const spanish = locale === 'es';
@@ -42,30 +56,36 @@ export default async function CoursePage({params}: {params: Promise<{locale: 'en
       notFound();
     }
 
-    const controlledPreview =
-      courseRegistration.isControlledPreviewEnabled();
-    if (
-      process.env.NODE_ENV === 'production'
-      && controlledPreview
-      && !(await hasExecutivePreviewSession())
-    ) {
-      notFound();
-    }
-    const auditPreview = developmentAuditPreview || controlledPreview;
+    const auditPreview = developmentAuditPreview;
     const releasePublished = isLessonReleasePublished(
       catalog,
       courseRegistration.descriptor.releaseId,
     );
-    if (!auditPreview && !releasePublished) notFound();
+    const showcasePublication = currentJsShowcasePublication(
+      courseRegistration.descriptor.releaseId,
+    );
+    if (!auditPreview && !releasePublished && !showcasePublication.enabled) {
+      notFound();
+    }
 
     const releaseMemberIds = new Set(releaseDescriptor.memberAnimationIds);
     const strictCompleteMemberCount = complete.filter(
       (animation) => releaseMemberIds.has(animation.animationId),
     ).length;
+    // Resolved on the server: a lesson renders the widescreen presentation only
+    // when its own descriptor declares support for it and the deployment opts
+    // in. Either missing falls back to the legacy composite.
+    const hostPresentation = resolveWholeLessonHostPresentation({
+      declared: courseRegistration.descriptor.visualSkin.presentations,
+      enabled: isModernWideShellEnabled(),
+    });
     return <WholeLessonCoursePlayer
       candidateMode={auditPreview || !releasePublished}
-      controlledPreview={controlledPreview}
+      hostPresentation={hostPresentation}
+      learningEventsEnabled={process.env.LRS_ENABLED === 'true'}
+      reviewerMode={isReviewerInstrumentationEnabled()}
       locale={locale}
+      novaTutorMode={novaTutorMode}
       registration={courseRegistration}
       releasePublished={releasePublished}
       strictCompleteMemberCount={strictCompleteMemberCount}

@@ -95,3 +95,6 @@ jobs:
 
       - name: Run browser and accessibility tests
         run: npm run test:e2e
+
+      - name: Run modern-wide lesson and Nova acceptance tests
+        run: npm run test:e2e:modern-wide --workspace @helpmath/web

@@ -203,11 +203,10 @@ test('runtime requests require one exact lowercase SHA-256 query value', () => {
   }
 });
 
-test('controlled assets allow local audit, explicit preview, or publication independently', () => {
+test('candidate assets allow only local audit or publication', () => {
   assert.equal(
     isG5L4PreviewAssetAuthorized({
       developmentAudit: false,
-      previewEnabled: false,
       published: false
     }),
     false
@@ -215,15 +214,6 @@ test('controlled assets allow local audit, explicit preview, or publication inde
   assert.equal(
     isG5L4PreviewAssetAuthorized({
       developmentAudit: false,
-      previewEnabled: true,
-      published: false
-    }),
-    true
-  );
-  assert.equal(
-    isG5L4PreviewAssetAuthorized({
-      developmentAudit: false,
-      previewEnabled: false,
       published: true
     }),
     true
@@ -231,7 +221,6 @@ test('controlled assets allow local audit, explicit preview, or publication inde
   assert.equal(
     isG5L4PreviewAssetAuthorized({
       developmentAudit: true,
-      previewEnabled: false,
       published: false
     }),
     true

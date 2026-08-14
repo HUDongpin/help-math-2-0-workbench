@@ -225,7 +225,7 @@ test('G5 L4 shell skin and controls stay bound to G5 structural evidence', () =>
     descriptor.visualSkin.chromeAsset,
     '/flash-assets/courses/shell-course-g05-l04-index-local/root-frames/frame-0049.png'
   );
-  assert.deepEqual(descriptor.visualSkin.header, {height: 109});
+  assert.equal(descriptor.visualSkin.header.height, 109);
   assert.deepEqual(descriptor.visualSkin.footer, {height: 76});
   assert.equal(
     descriptor.visualSkin.controls.kind,
@@ -487,4 +487,27 @@ test('G5 L4 descriptor builder fails closed on source or acceptance drift', asyn
     }),
     undefined
   );
+});
+
+test('the G5 L4 header chrome carries the lesson title as a source-declared text band', () => {
+  const descriptor = G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR;
+  assert.ok(descriptor);
+  const band = descriptor.visualSkin.header.title;
+
+  assert.ok(band, 'the header must declare a live lesson title band');
+  assert.equal(band.kind, 'source-declared-lesson-title');
+  assert.equal(band.sourceField, 'NewTitle1');
+  assert.equal(band.fontFamily, 'Verdana');
+  assert.equal(band.fontSize, 25);
+  assert.equal(band.color, '#ffffff');
+  assert.ok(
+    band.bounds.top + band.bounds.height <= descriptor.visualSkin.header.height,
+  );
+  assert.ok(band.bounds.left + band.bounds.width <= descriptor.stage.width);
+
+  // This chrome paints the same "Counting on Numbers" wordmark as every other
+  // lesson, because it is <CourseName>. The live title is this lesson's own.
+  assert.equal(descriptor.course.labels.en.text, 'Number Lines');
+  assert.notEqual(descriptor.course.labels.en.text, 'Counting on Numbers');
+  assert.notEqual(descriptor.course.labels.es.text, 'Counting on Numbers');
 });

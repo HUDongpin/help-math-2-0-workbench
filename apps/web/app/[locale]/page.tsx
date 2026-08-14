@@ -1,8 +1,8 @@
 import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 
-import {HomePage} from '@/components/home-page';
-import {getSiteContent, isLocale} from '@/content';
+import {LearningPlatformHome} from '@/components/learning-platform-home';
+import {isLocale} from '@/content';
 import {createPageMetadata} from '@/lib/metadata';
 
 export async function generateMetadata({
@@ -12,7 +12,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) notFound();
-  return createPageMetadata(locale, getSiteContent(locale).pages.home.metadata);
+  return createPageMetadata(locale, locale === 'es' ? {
+    title: 'Aprende matemáticas con HELP Math',
+    description: 'Tu plataforma bilingüe de aprendizaje: empieza Grade 4 Lesson 3, Negative Numbers, con animaciones, apoyos y Nova Tutor.',
+  } : {
+    title: 'Learn math with HELP Math',
+    description: 'Your bilingual learning platform: start Grade 4 Lesson 3, Negative Numbers, with animation, learning supports, and Nova Tutor.',
+  });
 }
 
 export default async function Home({params}: {params: Promise<{locale: string}>}) {
@@ -20,7 +26,7 @@ export default async function Home({params}: {params: Promise<{locale: string}>}
   if (!isLocale(locale)) notFound();
   return (
     <main id="main-content">
-      <HomePage content={getSiteContent(locale).pages.home} locale={locale} />
+      <LearningPlatformHome locale={locale} />
     </main>
   );
 }

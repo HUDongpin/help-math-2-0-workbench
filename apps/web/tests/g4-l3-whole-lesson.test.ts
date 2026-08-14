@@ -363,22 +363,17 @@ test('course route mounts the whole-lesson player while keeping candidate labeli
   ]);
   assert.match(routeSource, /<WholeLessonCoursePlayer/);
   assert.match(routeSource, /candidateMode=\{auditPreview \|\| !releasePublished\}/);
-  assert.match(routeSource, /controlledPreview=\{controlledPreview\}/);
+  assert.match(routeSource, /const auditPreview = developmentAuditPreview;/);
+  assert.doesNotMatch(routeSource, /controlledPreview|ExecutivePreview/);
   assert.match(routeSource, /strictCompleteMemberCount=\{strictCompleteMemberCount\}/);
   assert.match(routeSource, /releaseMemberIds\.has\(animation\.animationId\)/);
-  assert.match(
-    registrySource,
-    /isControlledPreviewEnabled: isG4L3ControlledCeoPreviewEnabled/,
-  );
+  assert.doesNotMatch(registrySource, /isControlledPreviewEnabled|ControlledCeoPreview/);
   assert.match(
     coursePlayerSource,
     /registration\.player\.kind === 'preserved-custom'/,
   );
   assert.match(coursePlayerSource, /<G4L3WholeLessonPlayer/);
-  assert.match(
-    coursePlayerSource,
-    /controlledPreview=\{controlledPreview\}/,
-  );
+  assert.doesNotMatch(coursePlayerSource, /controlledPreview/);
   assert.match(playerSource, /data-lesson-player="g4-l3-whole-lesson-mvp"/);
   assert.match(playerSource, /data-progress-kind="learner-session"/);
   assert.match(playerSource, /data-current-replay-count=/);
@@ -457,7 +452,7 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   assert.match(shellSource, /window\.visualViewport\?\.addEventListener\('resize'/);
   assert.match(shellSource, /data-legacy-chrome-evidence=\{visualSkin\.chromeEvidence\}/);
   assert.match(descriptorSource, /root-frames\/frame-0049\.png/);
-  assert.match(descriptorSource, /header: Object\.freeze\(\{height: 109\}\)/);
+  assert.match(descriptorSource, /header: Object\.freeze\(\{\s*height: 109,/);
   assert.match(descriptorSource, /footer: Object\.freeze\(\{height: 76\}\)/);
   assert.match(descriptorSource, /layoutId: 'help-math-course-shell-800x600-v1'/);
   assert.match(descriptorSource, /817e599de43a7924f0a93791e950c8781755692371945a5b7ea4cdd2ad26c58e/);
@@ -560,7 +555,7 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   );
   assert.match(
     shellSource,
-    /const modernControlPresentation = resolveModernControlPresentation\(\{\s*accessibleControlFallback,\s*coarsePointerAvailable,\s*companionCanRemainVisible,\s*\}\);/,
+    /const modernControlPresentation = resolveModernControlPresentation\(\{\s*accessibleControlFallback,\s*coarsePointerAvailable,\s*companionCanRemainVisible,\s*modernWidePresentation: modernWide,\s*\}\);/,
   );
   // The wide companion is a layout signal only. Electing the modern surface
   // from viewport width alone is what put a second labelled copy of every
@@ -568,6 +563,18 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   assert.doesNotMatch(
     shellSource,
     /resolveModernControlPresentation\(\{[^}]*wideFunctionalCompanion/,
+  );
+  // `modernWidePresentation` is admissible for the opposite reason: in that
+  // presentation no chrome is drawn, so there are no source hit regions for a
+  // labelled control to duplicate. It must come from the descriptor-declared
+  // presentation, never from a viewport measurement.
+  assert.match(
+    shellSource,
+    /const modernWide = visualSkin\.presentation === 'modern-wide';/,
+  );
+  assert.doesNotMatch(
+    shellSource,
+    /const modernWide =[^;]*(?:innerWidth|matchMedia|wideViewportAvailable|layoutPolicy)/,
   );
   assert.match(
     shellSource,
@@ -624,7 +631,10 @@ test('responsive lesson shell preserves the authored stage and separates modern 
     /data-wide-functional-companion=\{wideFunctionalCompanion \? 'true' : 'false'\}/,
   );
   assert.match(shellSource, /const supportModalOpen = mapModalOpen \|\| toolModalOpen;/);
-  assert.match(shellSource, /const backgroundUnavailable = stageOverlayOpen \|\| supportModalOpen;/);
+  assert.match(
+    shellSource,
+    /const backgroundUnavailable = stageOverlayOpen \|\| supportModalOpen \|\|\s*tutorPanelModal;/,
+  );
   assert.match(shellSource, /\.filter\(isVisibleOverlayControl\)/);
   assert.match(shellSource, /element\.closest\('\[hidden\], \[inert\], \[aria-hidden="true"\]'\)/);
   assert.match(shellSource, /element\.tabIndex < 0/);
@@ -633,7 +643,7 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   assert.match(shellSource, /!activeOverlay\.contains\(document\.activeElement\)/);
   assert.equal(
     shellSource.match(/data-responsive-focus-fallback="true"/g)?.length,
-    2,
+    3,
   );
   assert.match(
     shellSource,
@@ -681,7 +691,7 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   );
   assert.match(
     shellSource,
-    /data-frame-inspection-action=\{playbackInspectionActive[\s\S]*?'resume-current-js-from-inspected-frame'/,
+    /data-frame-inspection-action=\{frameInspectionActive[\s\S]*?'resume-current-js-from-inspected-frame'/,
   );
   assert.match(shellSource, /Continue from frame/);
   assert.match(shellSource, /data-shell-layout=\{visualSkin\.layoutId\}/);
@@ -702,7 +712,7 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   assert.match(shellSource, /lesson-shell2__legacy-navigation-state--over/);
   assert.match(playerSource, /if \(!nextPage && lessonFinished\) return;/);
   assert.match(playerSource, /nextDisabled=\{!nextPage && lessonFinished\}/);
-  assert.match(playerSource, /Lesson review finished/);
+  assert.match(playerSource, /Lesson finished/);
   assert.match(descriptorSource, /hasAnimationModule\(animationId\)/);
   assert.match(playerSource, /strictCompleteMemberCount === G4_L3_REQUIRED_MEMBER_COUNT/);
   assert.match(shellSource, /href=\{courseHref\}/);
@@ -710,17 +720,47 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   assert.match(shellSource, /data-tool-origin="modern-functional-equivalent"/);
   assert.match(
     shellSource,
-    /data-support-tool-playback="modern-support-open-forces-pause-restores-prior-state"/,
+    /data-support-tool-playback="support-tools-pause-restore-nova-independent"/,
   );
   assert.match(
     shellSource,
-    /reconcileSupportPlayback\(\s*\(open && mapOverlay\) \|\| activeTool !== null,/,
+    /const supportPauseSessionRef = useRef<SupportPauseSession \| null>\(null\);/,
   );
   assert.match(
     shellSource,
-    /reconcileSupportPlayback\(\s*\(mapOpen && mapOverlay\) \|\| nextTool !== null,/,
+    /reconcileSupportPauseSession\(\{\s*currentPage,\s*paused,\s*playbackInspectionActive: frameInspectionActive,\s*session: supportPauseSessionRef\.current,\s*supportOpen,\s*\}\)/,
   );
+  assert.match(shellSource, /data-tutor-playback="independent"/);
+  assert.match(
+    shellSource,
+    /onTutorEngagementChange\?\.\(tutorVisible\);/,
+    'Nova open/close engagement remains available to LRS telemetry',
+  );
+  assert.match(
+    shellSource,
+    /const pauseControl = <button[\s\S]*?disabled=\{!runtimeAvailable \|\| supportOpen\}[\s\S]*?onPausedChange\(!paused\)/,
+    'the wide Pause control remains operable while Nova is open',
+  );
+  assert.doesNotMatch(shellSource, /resolveTutorTransport|tutorHeldPausedRef|effectiveOpen/);
+  assert.doesNotMatch(shellSource, /Narration paused while Nova support is open/);
+  assert.doesNotMatch(shellSource, /data-tutor-pause-notice/);
+  assert.doesNotMatch(shellSource, /reconcileSupportPlayback/);
   assert.match(shellSource, /toolOverlay && mapOpen && activeTool/);
+  assert.match(
+    playerSource,
+    /paused=\{paused \|\| resumeDecision !== 'resolved'\}/,
+  );
+  assert.doesNotMatch(
+    playerSource,
+    /paused=\{paused \|\| tutorEngaged/,
+    'Nova engagement is telemetry only and cannot pause the runtime or shell',
+  );
+  assert.match(
+    playerSource,
+    /support: \{\s*kind: 'nova-tutor',\s*action: engaged \? 'opened' : 'closed',\s*\}/,
+    'Nova Focus, Study, and Classroom still record opened/closed support events',
+  );
+  assert.match(playerSource, /onTutorEngagementChange=\{handleTutorEngagementChange\}/);
   assert.match(playerSource, /data-animation-id=\{page\.animationId\}/);
   assert.match(playerSource, /data-global-page-ordinal=\{page\.globalPageOrdinal\}/);
   assert.match(playerSource, /data-section-code=\{page\.sectionCode\}/);
@@ -735,6 +775,102 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   assert.match(runtimeSource, /data-runtime-transport=/);
   assert.match(runtimeSource, /data-source-transport-parity="not-established"/);
   assert.match(runtimeSource, /data-runtime-volume=/);
+
+  // Narration has a designed home in the chrome, so the runtime no longer
+  // drops an unstyled button over the artwork when autoplay is refused. It
+  // reports state up and takes a play/stop command back, the same shape the
+  // host already uses to drive a seek.
+  assert.match(
+    runtimeSource,
+    /presentation === 'legacy-shell'\s*\?\s*null/,
+    'the legacy shell owns narration; the runtime adds no floating control',
+  );
+  assert.doesNotMatch(runtimeSource, /runtime-toolbar--legacy-audio/);
+  assert.doesNotMatch(globalCss, /runtime-toolbar--legacy-audio/);
+  assert.match(
+    runtimeSource,
+    /export type AnimationRuntimeNarrationStatus =\s*'unavailable' \| 'waiting' \| 'idle' \| 'playing' \| 'blocked';/,
+  );
+  assert.match(
+    runtimeSource,
+    /readonly narration: AnimationRuntimeNarrationStatus;/,
+  );
+  assert.match(
+    runtimeSource,
+    /narrationRequest\?: AnimationRuntimeNarrationRequest \| null;/,
+  );
+  // Status is derived, never guessed: an unavailable page can never report
+  // playing, and a refused autoplay stops presenting itself as blocked once
+  // the learner has answered it.
+  assert.match(
+    runtimeSource,
+    /const narration: AnimationRuntimeNarrationStatus = !audioAvailable\s*\?\s*'unavailable'\s*:\s*narrationSounding\s*\?\s*'playing'\s*:\s*autoplayBlockedCue && !narrationGestureGiven\s*\?\s*'blocked'\s*:\s*narrationTracks\.length > 0\s*\?\s*'idle'\s*:\s*'waiting';/,
+  );
+  assert.match(
+    runtimeSource,
+    /const narrationSounding = timelineAudioSounding \|\|\s*playingNarrationTrackId !== null;/,
+    'a timeline cue and an on-demand track both count as narration sounding',
+  );
+
+  // Both copies of the control read one status and share one command path.
+  assert.match(shellSource, /data-narration-status=\{narrationStatus\}/);
+  assert.equal(
+    shellSource.match(/className="lesson-shell2__narration"/g)?.length,
+    1,
+    'one control definition serves the session bar and the compact toolbar',
+  );
+  // Narration keeps the same two-surface guarantee as every other functional
+  // control, but from one component rather than two copies of the markup, so
+  // the pair is counted here instead of in the focus-key loop above.
+  assert.equal(
+    shellSource.match(/data-responsive-focus-key="narration"/g)?.length,
+    1,
+    'the focus key belongs to the shared control, not to each placement',
+  );
+  assert.equal(
+    shellSource.match(/<LessonNarrationControl/g)?.length,
+    2,
+    'narration survives the compact landscape layout that hides the session bar',
+  );
+  assert.match(
+    shellSource,
+    /className="lesson-shell2__session-bar"[\s\S]*?<LessonNarrationControl[\s\S]*?surface="persistent"/,
+    'the session bar placement declares its own focus surface',
+  );
+  assert.match(
+    shellSource,
+    /className="lesson-shell2__modern-toolbar"[\s\S]*?<LessonNarrationControl/,
+    'the compact toolbar placement inherits the modern-wide focus surface',
+  );
+  assert.match(
+    shellSource,
+    /data-narration-announcement="true"/,
+    'a refused autoplay arrives silently and has to be announced',
+  );
+  for (const status of [
+    'unavailable',
+    'waiting',
+    'idle',
+    'blocked',
+    'playing',
+  ]) {
+    assert.match(
+      globalCss,
+      new RegExp(
+        `\\.lesson-shell2__narration\\[data-narration-status='${status}'\\]`,
+      ),
+      `${status} needs its own treatment, or the control cannot reflect state`,
+    );
+  }
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__narration \{[\s\S]*?min-height: 48px;/,
+  );
+  assert.match(
+    globalCss,
+    /@media \(prefers-reduced-motion: reduce\) \{[\s\S]*?\.lesson-shell2__narration\[data-narration-status='playing'\][\s\S]*?animation: none;/,
+  );
+
   assert.match(runtimeSource, /'--flash-stage-aspect'/);
   assert.match(globalCss, /\.lesson-shell2__stage \{\s*aspect-ratio: var\(--lesson-stage-aspect, 4 \/ 3\);/);
   assert.match(globalCss, /\.lesson-shell2__legacy-stage \{\s*aspect-ratio: var\(--lesson-stage-aspect\);/);
@@ -766,7 +902,7 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   );
   assert.match(
     globalCss,
-    /data-modern-control-presentation='true'[\s\S]*?min-height: 44px;[\s\S]*?min-width: 44px;/,
+    /data-modern-control-presentation='true'[\s\S]*?min-height: 48px;[\s\S]*?min-width: 48px;/,
   );
   assert.match(
     globalCss,
@@ -812,22 +948,31 @@ test('responsive lesson shell preserves the authored stage and separates modern 
     globalCss,
     /grid-template-columns:\s*minmax\(\s*280px,\s*min\(\s*var\(--lesson-stage-viewport-fit-width\),\s*var\(--lesson-short-landscape-css-stage-cap\)\s*\)\s*\)\s*minmax\(0, 1fr\)/,
   );
-  // The labelled action row itself is never hidden: it is the surface that
-  // carries navigation once the authored stage hit areas go inert.
-  assert.doesNotMatch(
-    globalCss.slice(globalCss.indexOf('/* Responsive HELP Math lesson shell.')),
-    /\.lesson-shell2__learning-actions \{[^}]*display:\s*none/,
+  // Exactly one Back and one Next reach the learner. The action row now holds
+  // nothing but that pair, so while the authored stage hit areas are the live
+  // control surface the row is a duplicate and stands down. Exactly one rule
+  // is allowed to hide it, and it is that gate: the row must come back, in
+  // full, once the hit areas go inert and it becomes the only navigation.
+  assert.equal(
+    (globalCss.match(
+      /\.lesson-shell2__learning-actions \{\s*display: none;/g,
+    ) ?? []).length,
+    1,
   );
-  // Exactly one Back and one Next reach the learner. While the authored hit
-  // areas are live, the labelled duplicates below the stage are suppressed;
-  // the review action inside the same row is not.
   assert.match(
     globalCss,
-    /\.lesson-shell2\[data-legacy-hit-control-mode='active-visible-stage'\]\s*:is\(\s*\.lesson-shell2__learning-actions-previous,\s*\.lesson-shell2__learning-actions-next\s*\) \{\s*display: none;/,
+    /\.lesson-shell2\[data-legacy-hit-control-mode='active-visible-stage'\]\s*\.lesson-shell2__learning-actions \{\s*display: none;/,
+  );
+  // Progress is reported by the strip, not by a control. Nothing between
+  // Previous and Next renders a third button.
+  assert.doesNotMatch(shellSource, /completionAction/);
+  assert.match(
+    shellSource,
+    /data-lesson-nav="action-previous"[\s\S]{0,400}?data-lesson-nav="action-next"/,
   );
   assert.doesNotMatch(
-    globalCss,
-    /\.lesson-shell2\[data-legacy-hit-control-mode='active-visible-stage'\][\s\S]{0,240}?lesson-shell2__learning-actions \{\s*display: none;/,
+    shellSource,
+    /data-lesson-nav="action-previous"[\s\S]{0,400}?aria-pressed[\s\S]{0,400}?data-lesson-nav="action-next"/,
   );
 });
 
@@ -937,7 +1082,7 @@ test('short landscape keeps progress, evidence, and the focused page title', asy
   );
   assert.match(
     shellSource,
-    /<progress[\s\S]*?aria-label=\{spanish[\s\S]*?'Lesson completion'[\s\S]*?aria-valuetext=\{`\$\{completionPercent\}% · \$\{completionLabel\}`\}/,
+    /<progress[\s\S]*?aria-label=\{spanish[\s\S]*?'Lesson completion'[\s\S]*?aria-valuetext=\{modernWide[\s\S]*?`\$\{journeyPercent\}% · \$\{pageOrdinalLabel\} · \$\{completionLabel\}`[\s\S]*?: `\$\{completionPercent\}% · \$\{completionLabel\}`\}/,
   );
   assert.match(
     globalCss,
@@ -1112,26 +1257,33 @@ test('wide contemporary displays pair the native stage with source-bound context
   );
   assert.match(
     wideRailCss,
-    /\.lesson-shell2__modern-toolbar[\s\S]*?:is\(button, label, a\) \{[\s\S]*?min-height: 44px;[\s\S]*?min-width: 44px;/,
+    /\.lesson-shell2__modern-toolbar[\s\S]*?:is\(button, label, a\) \{[\s\S]*?min-height: 48px;[\s\S]*?min-width: 48px;/,
   );
   assert.match(
     wideRailCss,
     /\.lesson-shell2__learning-actions \{[\s\S]*?grid-column: 2;[\s\S]*?grid-template-columns: repeat\(2, minmax\(0, 1fr\)\);/,
   );
+  // The row is exactly Previous and Next, so both sit on one line in the wide
+  // rail. Nothing is stacked underneath them any more.
   assert.match(
     wideRailCss,
-    /> button:nth-child\(2\) \{[\s\S]*?grid-column: 2;[\s\S]*?grid-row: 1;/,
+    /\.lesson-shell2__learning-actions-next \{[\s\S]*?grid-column: 2;[\s\S]*?grid-row: 1;/,
   );
-  assert.match(
-    wideRailCss,
-    /\.lesson-shell2__learning-actions-next \{[\s\S]*?grid-column: 1 \/ -1;[\s\S]*?grid-row: 2;/,
-  );
+  assert.doesNotMatch(wideRailCss, /> button:nth-child\(2\) \{/);
   assert.match(
     wideRailCss,
     /\.lesson-shell2__finished,[\s\S]*?\.lesson-shell2__learning-support \{[\s\S]*?grid-column: 1 \/ -1;[\s\S]*?grid-row: 5;/,
   );
+  // On a wide legacy display the session bar reports progress, so the toolbar
+  // strip must stay hidden or progress appears twice. The widescreen
+  // presentation hides the session bar instead and is governed by its own
+  // paired invariant, so its rules are excluded here rather than exempted.
+  const legacyWideRules = wideRailCss
+    .split('}')
+    .filter((rule) => !rule.includes("[data-host-presentation='modern-wide']"))
+    .join('}');
   assert.doesNotMatch(
-    wideRailCss,
+    legacyWideRules,
     /\.lesson-shell2__modern-completion \{[\s\S]*?display: (?:grid|flex|block);/,
   );
 });
@@ -1221,13 +1373,27 @@ test('compact landscape and short-wide chrome preserve parity disclosure and usa
     shellSource,
     /lesson-shell2__modern-transport-summary[\s\S]*?<label className="lesson-shell2__modern-timeline">/,
   );
+  // The parity disclosure and the association that points at it must be gated
+  // by the same flag. If they ever diverge the toolbar carries a dangling
+  // aria-describedby to a paragraph that was not rendered.
   assert.match(
     shellSource,
-    /aria-describedby=\{candidateMode \? transportBoundaryId : undefined\}[\s\S]*?className="lesson-shell2__modern-toolbar"/,
+    /aria-describedby=\{reviewerMode \? transportBoundaryId : undefined\}[\s\S]*?className="lesson-shell2__modern-toolbar"/,
+  );
+  assert.match(
+    shellSource,
+    /\{reviewerMode\s*\?\s*<p\s*className="lesson-shell2__transport-boundary"/,
   );
   assert.match(
     shellSource,
     /className="lesson-shell2__transport-boundary"[\s\S]*?id=\{transportBoundaryId\}/,
+  );
+  // Release status is disclosed on its own terms and must not be dragged into
+  // the instrument gate: every lesson is a candidate today, so gating the
+  // instruments on candidateMode showed them to every audience.
+  assert.doesNotMatch(
+    shellSource,
+    /aria-describedby=\{candidateMode \? transportBoundaryId/,
   );
 
   assert.match(
@@ -1278,5 +1444,80 @@ test('compact landscape and short-wide chrome preserve parity disclosure and usa
   assert.match(
     globalCss,
     /\.lesson-shell2__stage \.reduced-motion-note \{[\s\S]*?pointer-events: none;/,
+  );
+});
+
+test('the lesson title is live text on the header chrome, not a painted glyph', async () => {
+  const [shellSource, playerSource, globalCss] = await Promise.all([
+    readFile(
+      new URL(
+        '../components/legacy-responsive-lesson-shell.tsx',
+        import.meta.url,
+      ),
+      'utf8',
+    ),
+    readFile(
+      new URL('../components/g4-l3-whole-lesson-player.tsx', import.meta.url),
+      'utf8',
+    ),
+    readFile(new URL('../app/globals.css', import.meta.url), 'utf8'),
+  ]);
+
+  // The title is rendered from the source-bound label, carrying its own `lang`
+  // so the language layer and a screen reader both see the real string.
+  assert.match(
+    shellSource,
+    /className="lesson-shell2__chrome-lesson-title"[\s\S]*?<span lang=\{courseContext\.courseTitle\.sourceLanguage\}>\s*\{courseContext\.courseTitle\.text\}/,
+  );
+  assert.match(
+    shellSource,
+    /data-chrome-title-source-field=\{chromeTitleBand\.sourceField\}/,
+  );
+  assert.match(
+    shellSource,
+    /data-chrome-title-english-fallback=\{[\s\S]*?courseContext\.courseTitle\.usesEnglishFallback/,
+  );
+  // No hardcoded title anywhere in the shell: the string comes from the source.
+  assert.doesNotMatch(shellSource, /Counting on Numbers/);
+
+  // The band geometry travels as a percentage of the authored plane, the same
+  // mechanism the chrome clips already use.
+  assert.match(shellSource, /'--lesson-chrome-title-top': `\$\{/);
+  assert.match(shellSource, /'--lesson-chrome-title-size': `\$\{/);
+  assert.match(shellSource, /\}cqw`/);
+  assert.match(
+    playerSource,
+    /chromeTitleBand:\s*G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR\.visualSkin\.header\.title,/,
+  );
+
+  // The artwork stays artwork: both chrome images keep an empty alt inside an
+  // aria-hidden layer, and the live text sits above them but below the source
+  // hit areas so it can never swallow a control.
+  assert.match(
+    shellSource,
+    /aria-hidden="true"\s*className="lesson-shell2__source-chrome"/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__chrome-lesson-title \{[\s\S]*?z-index: 6;/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__chrome-lesson-title \{[\s\S]*?pointer-events: none;/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__chrome-lesson-title > span \{[\s\S]*?user-select: text;/,
+  );
+
+  // Text on the artwork has to scale with the artwork, which needs the stage to
+  // be a query container.
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__legacy-stage \{[\s\S]*?container-type: inline-size;/,
+  );
+  assert.match(
+    globalCss,
+    /font-size: clamp\(\.7rem, var\(--lesson-chrome-title-size, 3\.125cqw\), 2rem\);/,
   );
 });

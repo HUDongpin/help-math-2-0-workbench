@@ -1,3 +1,5 @@
+import type {WholeLessonHostPresentation} from './whole-lesson-host-presentation';
+
 export type WholeLessonPlayerLocale = 'en' | 'es';
 
 export interface SourceBoundLabel {
@@ -49,6 +51,22 @@ export interface WholeLessonPlayerPage {
   readonly rendererAvailability: WholeLessonRendererAvailability;
   readonly presentation?: Readonly<{
     pageInteractionCompanionTargetIdSuffix: string;
+  }>;
+  /**
+   * Reading support this page offers in the widescreen gutter.
+   *
+   * Declared per page rather than decided by the player comparing animation
+   * ids, so a second lesson can offer the same support without editing a
+   * component. The crops, transcripts and provenance hashes stay in the
+   * lesson's own readable-view specification; this only records that the page
+   * has one and which specification it is.
+   *
+   * Declaring it creates no content: a page without source-bound readable
+   * evidence simply omits the field, and nothing is invented to fill it.
+   */
+  readonly readableView?: Readonly<{
+    kind: 'source-bound-readable-view';
+    specId: string;
   }>;
   readonly source: Readonly<{
     assetId?: string;
@@ -189,6 +207,35 @@ export interface WholeLessonExitPromptVisualEvidence {
     'static-structural-candidate-original-runtime-not-established';
 }
 
+/**
+ * The lesson's own name, rendered as live text inside the header chrome.
+ *
+ * The header artwork paints `<CourseName>` — the product wordmark, byte
+ * identical in every lesson's chrome because every lesson XML declares the
+ * same "Counting on Numbers". The lesson's own name lives in `<NewTitle1>`
+ * and is not painted anywhere, so rendering it as text adds the missing
+ * string instead of masking an existing one: the artwork stays artwork.
+ *
+ * `fontFamily`, `fontSize`, and `color` are the `NewTitle1` attributes as
+ * authored. `bounds` is the measured clear region of the header band, in
+ * authored stage pixels, so the shell can express it as a percentage of
+ * whatever size the stage is actually rendered at.
+ */
+export interface WholeLessonChromeTitleBand {
+  readonly kind: 'source-declared-lesson-title';
+  readonly sourceField: 'NewTitle1';
+  readonly fontFamily: string;
+  readonly fontSize: number;
+  readonly color: string;
+  readonly bounds: Readonly<{
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+  }>;
+  readonly boundsEvidence: string;
+}
+
 export interface WholeLessonKeyTermsMasterSource {
   readonly assetId: 'ELKTEG4.xml' | 'ELKTSG4.xml';
   readonly sourcePath: string;
@@ -313,8 +360,18 @@ export interface WholeLessonPlayerDescriptor {
   readonly visualSkin: Readonly<{
     kind: 'legacy-composite';
     layoutId: 'help-math-course-shell-800x600-v1';
+    /**
+     * Host presentations this lesson is declared to support. Omitted means
+     * legacy composite only. Declaring `modern-wide` authorizes rendering the
+     * authored content band without the source chrome; it is a host
+     * presentation statement and confers no Flash fidelity, audio, human
+     * visual, original-runtime, Owner, strict-completion, or release
+     * acceptance. The band geometry is derived from `stage`, `header.height`
+     * and `footer.height` rather than restated here.
+     */
+    presentations?: readonly WholeLessonHostPresentation[];
     chromeAsset: string;
-    header: Readonly<{height: number}>;
+    header: Readonly<{height: number; title?: WholeLessonChromeTitleBand}>;
     footer: Readonly<{height: number}>;
     controls: WholeLessonControlAssets;
     backgroundCompanion?: WholeLessonBackgroundCompanion;

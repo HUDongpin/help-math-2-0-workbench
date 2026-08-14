@@ -3,6 +3,7 @@
 # These exclusions are a second line of defense for Vercel CLI uploads. The hard
 # boundary is keeping legacy evidence in a separate private archive repository.
 HELP MATH_ORIGINAL FILES/
+/HELP MATH_ORIGINAL FILES
 source-assets/
 public/flash/
 public/flash-assets/
@@ -25,16 +26,32 @@ private-archive/
 reports/*
 !reports/g5-l4-source-scope-freeze.json
 
+# Local secrets and owner-provided credential documents must never enter a
+# deployment upload, even when a future CLI version changes ignore precedence.
+All API Keys.docx
+**/.env.local
+**/.env.*.local
+
 # Local Next.js output variants are reproducible build caches, not deployment
 # inputs. The checked-in course runtime assets remain under apps/web/public/.
 apps/web/.next*/
 
 # Repository-only operating material.
 .agents/
+.claude/
+.playwright-cli/
+.catalog.*
 .github/
 docs/
+design/
 skills/
 scripts/
 AGENTS.md
 FILE_MANIFEST.sha256
+PROJECT_MEMORY.md
 README.md
+*.docx
+*.pdf
+*.plist
+20260808_Claude_Suggestions on UI of HELP MATH 2.0.md
+help-math-modernization-recovery-audit-ai-roadmap.md

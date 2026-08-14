@@ -44,10 +44,15 @@ function collectRuntimeIssues(page: Page, origin: string) {
     const canceledNextRoute = request.resourceType() === 'fetch' &&
       requestUrl.searchParams.has('_rsc') &&
       request.failure()?.errorText === 'net::ERR_ABORTED';
+    const canceledLocaleKeyTerms = request.resourceType() === 'fetch' &&
+      /^\/generated\/g4-grade-wide-keyterms-(?:en|es)\.json$/u.test(
+        requestUrl.pathname,
+      ) && request.failure()?.errorText === 'net::ERR_ABORTED';
     if (
       requestUrl.origin === origin &&
       !speculativePrefetch &&
-      !canceledNextRoute
+      !canceledNextRoute &&
+      !canceledLocaleKeyTerms
     ) {
       issues.push({
         kind: 'request',
@@ -114,8 +119,17 @@ async function openLesson(
   const response = await page.goto(path, {waitUntil: 'domcontentloaded'});
 
   expect(response?.status()).toBe(200);
-  expect(response?.headers()['x-helpmath-controlled-preview']).toBe('g4-l3-local-only');
+  // Whole lessons now live on the platform route. G4 L3 is the explicit
+  // current-JavaScript showcase boundary; the retired controlled-review
+  // middleware header must not reappear or imply a private-preview gate.
+  expect(response?.headers()['x-helpmath-controlled-preview']).toBeUndefined();
   await expect(page.locator(PLAYER)).toBeVisible();
+  await expect(page.locator(ROOT)).toHaveAttribute(
+    'data-release-id',
+    'lesson-g04-l03-negative-numbers',
+  );
+  await expect(page.locator(ROOT)).toHaveAttribute('data-current-js-pages', '39');
+  await expect(page.locator(ROOT)).toHaveAttribute('data-public-release', 'false');
   await expect(page.locator(ROOT)).not.toHaveAttribute('data-stage-render-mode', 'measuring');
   await page.evaluate(() => document.fonts.ready);
   await page.waitForLoadState('networkidle');
@@ -134,10 +148,13 @@ async function openG5Lesson(page: Page, baseURL: string) {
   });
 
   expect(response?.status()).toBe(200);
-  expect(response?.headers()['x-helpmath-controlled-preview']).toBe(
-    'g5-l4-ceo-preview',
-  );
+  expect(response?.headers()['x-helpmath-controlled-preview']).toBeUndefined();
   await expect(page.locator(G5_PLAYER)).toBeVisible();
+  await expect(page.locator(ROOT)).toHaveAttribute(
+    'data-release-id',
+    'lesson-g05-l04-number-lines',
+  );
+  await expect(page.locator(ROOT)).toHaveAttribute('data-public-release', 'false');
   await expect(page.locator(ROOT)).not.toHaveAttribute(
     'data-stage-render-mode',
     'measuring',
@@ -412,7 +429,7 @@ async function dragCenterToCenter(
   await page.mouse.up();
 }
 
-test('844x390 keeps compact controls, parity disclosure, and the stage in separate columns', async ({
+test('844x390 keeps compact controls, platform disclosure, and the stage in separate columns', async ({
   baseURL,
   page,
 }) => {
@@ -433,14 +450,16 @@ test('844x390 keeps compact controls, parity disclosure, and the stage in separa
   await expectSingleLiveControlSurface(page, 'modern-wide');
   const toolbar = await stableBox(page.locator('.lesson-shell2__modern-toolbar'));
   const actions = await stableBox(page.locator('.lesson-shell2__learning-actions'));
-  const badge = page.locator('[data-compact-transport-summary="true"]');
+  const disclosure = page.locator('.lesson-shell2__status');
 
-  await expect(badge).toBeVisible();
-  await expect(badge).toContainText('Flash transport parity: not established');
-  await expect(page.locator('.lesson-shell2__modern-toolbar')).toHaveAttribute(
-    'aria-describedby',
-    /-transport-boundary$/,
+  await expect(disclosure).toBeVisible();
+  await expect(disclosure).toContainText(
+    'Current JavaScript MVP; this is not a strict-fidelity or public-release claim.',
   );
+  await expect(page.locator('[data-compact-transport-summary="true"]'))
+    .toHaveCount(0);
+  await expect(page.locator('.lesson-shell2__modern-toolbar'))
+    .not.toHaveAttribute('aria-describedby', /-transport-boundary$/);
   expect(stage.x + stage.width).toBeLessThanOrEqual(toolbar.x + 1);
   expect(toolbar.x + toolbar.width).toBeLessThanOrEqual(845);
   expect(toolbar.y + toolbar.height).toBeLessThanOrEqual(391);
@@ -460,7 +479,7 @@ test('844x390 keeps compact controls, parity disclosure, and the stage in separa
   await expectNoRuntimeIssues(page, issues);
 });
 
-test('844x390 keeps the Spanish compact controls and fail-closed badge visible', async ({
+test('844x390 keeps Spanish compact controls and the platform boundary visible', async ({
   baseURL,
   page,
 }) => {
@@ -471,9 +490,11 @@ test('844x390 keeps the Spanish compact controls and fail-closed badge visible',
 
   await expect(root).toHaveAttribute('data-layout-mode', 'compact');
   await expect(root).toHaveAttribute('data-stage-render-mode', 'proportional-scale');
-  await expect(
-    page.locator('[data-compact-transport-summary="true"]'),
-  ).toContainText('Paridad del transporte de Flash: no establecida');
+  await expect(page.locator('.lesson-shell2__status')).toContainText(
+    'MVP actual de JavaScript; no es una declaración de fidelidad estricta ni de publicación pública.',
+  );
+  await expect(page.locator('[data-compact-transport-summary="true"]'))
+    .toHaveCount(0);
   await expectSingleLiveControlSurface(page, 'modern-wide');
 
   const toolbar = await stableBox(page.locator('.lesson-shell2__modern-toolbar'));
@@ -483,8 +504,8 @@ test('844x390 keeps the Spanish compact controls and fail-closed badge visible',
   await expectControlsWithinViewport(page, [
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="key-terms"]'),
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="calculator"]'),
-    page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="rewind"]'),
-    page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="forward"]'),
+    page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="replay"]'),
+    page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="pause"]'),
     page.locator('.lesson-shell2__learning-actions [data-responsive-focus-key="previous"]'),
     page.locator('.lesson-shell2__learning-actions [data-responsive-focus-key="next"]'),
   ]);
@@ -670,7 +691,7 @@ test('tool focus remains visible across overlay, rail, language, and resize chan
 });
 
 for (const width of [1180, 1279] as const) {
-  test(`${width}x720 keeps comfortable density and the full disclosure`, async ({
+  test(`${width}x720 keeps comfortable density and the platform disclosure`, async ({
     baseURL,
     page,
   }) => {
@@ -685,12 +706,16 @@ for (const width of [1180, 1279] as const) {
       'data-stage-render-mode',
       'native-pixel-size',
     );
-    await expect(
-      page.locator('.controlled-ceo-preview-boundary__full-copy'),
-    ).toBeVisible();
-    await expect(
-      page.locator('.controlled-ceo-preview-boundary__compact-summary'),
-    ).toBeHidden();
+    const disclosure = page.locator('.lesson-shell2__status');
+    await expect(disclosure).toBeVisible();
+    await expect(disclosure).toContainText(
+      'Current JavaScript MVP; this is not a strict-fidelity or public-release claim.',
+    );
+    await expect(disclosure).toContainText(
+      'Pseudonymous learning events sync to the LRS',
+    );
+    await expect(page.locator('.controlled-ceo-preview-boundary'))
+      .toHaveCount(0);
     await expectNativeStage(page);
     await expectNoHorizontalOverflow(page);
     await expectNoRuntimeIssues(page, issues);

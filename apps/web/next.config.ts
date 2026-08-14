@@ -95,7 +95,10 @@ const securityHeaders = [
     ].join('; ')
   },
   {key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups'},
-  {key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()'},
+  // Nova voice input uses the browser's speech-recognition control. HELP Math
+  // never receives the audio stream; only the learner-approved transcript is
+  // posted to the same-origin Nova route. Device camera access stays blocked.
+  {key: 'Permissions-Policy', value: 'camera=(), microphone=(self), geolocation=()'},
   {key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin'},
   {key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload'},
   {key: 'X-Content-Type-Options', value: 'nosniff'},
@@ -125,68 +128,6 @@ const embeddedCourseAdapterHeaders = [
   {key: 'X-Frame-Options', value: 'SAMEORIGIN'}
 ];
 
-const executivePreviewHeaders = [
-  {key: 'Cache-Control', value: 'private, no-store, max-age=0'},
-  {key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive, noimageindex'},
-  {key: 'Vary', value: 'Cookie'}
-];
-
-const g4L3PreviewHeaders = [
-  ...executivePreviewHeaders,
-  {key: 'X-Helpmath-Controlled-Preview', value: 'g4-l3-executive-preview'}
-];
-
-const g4L3ControlledPreviewHeaders = [
-      {
-        source: '/courses/4/3',
-        headers: g4L3PreviewHeaders
-      },
-      {
-        source: '/en/courses/4/3',
-        headers: g4L3PreviewHeaders
-      },
-      {
-        source: '/es/courses/4/3',
-        headers: g4L3PreviewHeaders
-      },
-      {
-        source: '/animations/:animationId',
-        headers: g4L3PreviewHeaders
-      },
-      {
-        source: '/en/animations/:animationId',
-        headers: g4L3PreviewHeaders
-      },
-      {
-        source: '/es/animations/:animationId',
-        headers: g4L3PreviewHeaders
-      }
-    ];
-
-const g5L4ControlledPreviewHeaders = [
-      {
-        source: '/courses/5/4',
-        headers: [
-          ...executivePreviewHeaders,
-          {key: 'X-Helpmath-Controlled-Preview', value: 'g5-l4-ceo-preview'}
-        ]
-      },
-      {
-        source: '/en/courses/5/4',
-        headers: [
-          ...executivePreviewHeaders,
-          {key: 'X-Helpmath-Controlled-Preview', value: 'g5-l4-ceo-preview'}
-        ]
-      },
-      {
-        source: '/es/courses/5/4',
-        headers: [
-          ...executivePreviewHeaders,
-          {key: 'X-Helpmath-Controlled-Preview', value: 'g5-l4-ceo-preview'}
-        ]
-      }
-    ];
-
 const legacyRedirects: NonNullable<NextConfig['redirects']> = async () => [
   {source: '/Home.htm', destination: '/', permanent: true},
   {source: '/About.htm', destination: '/about', permanent: true},
@@ -205,6 +146,9 @@ const legacyRedirects: NonNullable<NextConfig['redirects']> = async () => [
 ];
 
 const nextConfig: NextConfig = {
+  // Keep the learner-facing local preview free of the development badge so
+  // screenshot and projector review reflect the actual course surface.
+  devIndicators: false,
   distDir: localReferenceDiagnosticBuild
     ? '.next-local-reference-diagnostic'
     : wholeLessonPackageBuild
@@ -246,38 +190,19 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/flash-assets/courses/:path*',
-        headers: [...embeddedCourseAdapterHeaders, ...executivePreviewHeaders]
+        headers: embeddedCourseAdapterHeaders
       },
       {
-        source: '/flash-assets/:path*',
-        headers: executivePreviewHeaders
-      },
-      {
-        source: '/executive-preview',
-        headers: executivePreviewHeaders
-      },
-      {
-        source: '/en/executive-preview',
-        headers: executivePreviewHeaders
-      },
-      {
-        source: '/es/executive-preview',
-        headers: executivePreviewHeaders
-      },
-      {
-        source: '/executive-preview/g5-l4',
-        headers: executivePreviewHeaders
-      },
-      {
-        source: '/en/executive-preview/g5-l4',
-        headers: executivePreviewHeaders
-      },
-      {
-        source: '/es/executive-preview/g5-l4',
-        headers: executivePreviewHeaders
-      },
-      ...g4L3ControlledPreviewHeaders,
-      ...g5L4ControlledPreviewHeaders
+        source:
+          '/flash-assets/courses/shell-course-g04-l03-index-local/host-composite-assets/:path*',
+        headers: [
+          {key: 'Cache-Control', value: 'private, no-store, max-age=0'},
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow, noarchive, noimageindex',
+          },
+        ],
+      }
     ];
   },
   redirects: legacyRedirects

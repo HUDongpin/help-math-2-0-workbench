@@ -662,36 +662,20 @@ function StageSurface(props: SharedSurfaceProps) {
   );
 }
 
-function ArtifactMask({
-  phase,
-  sourceSymbolQuestion,
-}: {
+function ArtifactMask({phase}: {
   readonly phase: CourseG04L03Fq002InteractionState["phase"];
-  readonly sourceSymbolQuestion: boolean;
 }) {
-  const reviewOrResults = phase !== "question";
   return (
     <svg
       aria-hidden="true"
       className="course-g04-l03-fq-002-artifact-mask"
       data-functional-canvas-artifact-mask="Mc_Finish-QuestNo-CQ"
       data-functional-mask-phase={phase}
+      data-modern-source-visual-cover="full-stage-opaque"
       focusable="false"
       viewBox="0 0 800 600"
     >
-      {reviewOrResults ? (
-        <rect fill="#b8d8f7" height="560" width="760" x="20" y="20" />
-      ) : sourceSymbolQuestion ? (
-        <>
-          <rect fill="#b8d8f7" height="430" width="755" x="20" y="100" />
-          <rect fill="#b8d8f7" height="54" width="124" x="645" y="48" />
-        </>
-      ) : (
-        <>
-          <rect fill="#b8d8f7" height="430" width="590" x="185" y="100" />
-          <rect fill="#b8d8f7" height="54" width="124" x="645" y="48" />
-        </>
-      )}
+      <rect fill="#b8d8f7" height="600" width="800" x="0" y="0" />
     </svg>
   );
 }
@@ -1612,6 +1596,11 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
         data-source-canvas-accessibility-isolated={
           interactionEnabled ? "true" : "false"
         }
+        data-source-canvas-visual-exposure={
+          interactionEnabled
+            ? "hidden-behind-modern-backdrop"
+            : "source-only"
+        }
         inert={interactionEnabled ? true : undefined}
         ref={visualHostRef}
         style={{pointerEvents: interactionEnabled ? "none" : undefined}}
@@ -1625,10 +1614,7 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
             className="course-g04-l03-fq-002-functional-overlay"
             data-current-js-functional-overlay={`${animationId}-quiz`}
           >
-            <ArtifactMask
-              phase={interaction.phase}
-              sourceSymbolQuestion={sourceSymbolProjectionRequired}
-            />
+            <ArtifactMask phase={interaction.phase} />
             <StageSurface {...sharedSurfaceProps} />
           </div>
           <DisabledSourceIntegrations />
@@ -1694,7 +1680,7 @@ export const COURSE_G04_L03_FQ_002_SOURCE_CONTRACT = Object.freeze({
     "source-score-bands-and-current-javascript-results",
     "current-javascript-text-review-previous-next-enhancement",
     "source-question-and-review-frame-donor-projection",
-    "functional-Mc_Finish-QuestNo-CQ-static-canvas-artifact-mask",
+    "opaque-full-stage-modern-backdrop-hides-source-canvas-visual-layer",
     "deterministic-capture-preserves-unmodified-source-static-drawing-with-zero-overlay",
     "whole-state-replay-reset",
     "pause-disables-actions",

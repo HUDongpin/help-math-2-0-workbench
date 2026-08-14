@@ -62,14 +62,12 @@ export function classifyG5L4PreviewAsset(
 
 export function isG5L4PreviewAssetAuthorized({
   developmentAudit,
-  previewEnabled,
   published
 }: {
   developmentAudit: boolean;
-  previewEnabled: boolean;
   published: boolean;
 }) {
-  return developmentAudit || previewEnabled || published;
+  return developmentAudit || published;
 }
 
 export function hasExactG5L4RuntimeDigest(

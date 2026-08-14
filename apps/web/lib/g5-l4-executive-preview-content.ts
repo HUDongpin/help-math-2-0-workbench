@@ -1042,8 +1042,8 @@ function buildScene(definition: SceneDefinition): G5L4ExecutivePreviewScene {
 }
 
 /**
- * Fifty-four bounded current-JavaScript page candidates for the controlled
- * executive preview: 51 manifest-bound single-sprite source-static modules,
+ * Fifty-four bounded current-JavaScript page candidates for local audit: 51
+ * manifest-bound single-sprite source-static modules,
  * the independently evidenced FQ001 dual-sprite composite, and two
  * product-only FQ question-atlas inspection modules.
  *
@@ -1116,6 +1116,5 @@ export const G5_L4_EXECUTIVE_PREVIEW_BOUNDARY = Object.freeze({
   originalRuntimeNaturalEntryAccepted: false,
   humanVisualReviewAccepted: false,
   ownerFidelityAccepted: false,
-  strictMigrationComplete: false,
-  previewAuthorized: true
+  strictMigrationComplete: false
 });

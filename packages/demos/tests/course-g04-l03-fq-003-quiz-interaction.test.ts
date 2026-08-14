@@ -258,6 +258,18 @@ test("FQ003 functional renderer exposes 25-question responsive controls", () => 
     /data-current-js-functional-host-frame-window="1-43"/,
   );
   assert.match(markup, /data-current-js-functional-overlay="course-g04-l03-fq-003-quiz"/);
+  assert.match(
+    markup,
+    /data-modern-source-visual-cover="full-stage-opaque"/,
+  );
+  assert.match(
+    markup,
+    /<rect fill="#b8d8f7" height="600" width="800" x="0" y="0"/,
+  );
+  assert.match(
+    markup,
+    /data-source-canvas-visual-exposure="hidden-behind-modern-backdrop"/,
+  );
   assert.match(markup, /Question 1 of 25/);
   assert.match(markup, /data-source-lms-enabled="false"/);
   assert.doesNotMatch(markup, /data-owner-accepted="true"/);
@@ -275,6 +287,14 @@ test("FQ003 functional renderer exposes 25-question responsive controls", () => 
   assert.doesNotMatch(
     deterministicMarkup,
     /data-current-js-functional-overlay=/,
+  );
+  assert.doesNotMatch(
+    deterministicMarkup,
+    /data-modern-source-visual-cover=/,
+  );
+  assert.match(
+    deterministicMarkup,
+    /data-source-canvas-visual-exposure="source-only"/,
   );
 
   const hostStopMarkup = renderToStaticMarkup(createElement(fq003.Renderer, {

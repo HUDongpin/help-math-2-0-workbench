@@ -5,15 +5,25 @@ import {
   useCallback,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
 
+import type {
+  AnimationRuntimeNarrationStatus,
+} from '@/components/animation-runtime';
 import {
   LegacyCalculator,
   type LegacyCalculatorEvidence,
 } from '@/components/legacy-calculator';
 import {LegacyExitPrompt} from '@/components/legacy-exit-prompt';
+import {
+  LessonNovaClassroomBand,
+  LessonNovaTutor,
+  NovaSparkle,
+  type NovaSupportTab,
+} from '@/components/lesson-nova-tutor';
 import {Link} from '@/i18n/navigation';
 import {
   rememberLegacyAudibleVolume,
@@ -24,14 +34,41 @@ import {
   resolveLegacyLessonLayout,
   type LegacyLessonLayoutPolicy,
 } from '@/lib/legacy-lesson-layout';
+import {
+  NOVA_TUTOR_GATEWAY,
+  type NovaTutorModel,
+} from '@/lib/nova-provider-contract';
+import {
+  wholeLessonContentPlane,
+  type WholeLessonHostPresentation,
+} from '@/lib/whole-lesson-host-presentation';
+import {
+  tutorStageFrameSnapshot,
+  type NovaTutorMode,
+  type TutorFrameSnapshot,
+  type TutorPageContext,
+} from '@/lib/tutor-integration';
 import type {
   WholeLessonBackgroundCompanion,
+  WholeLessonChromeTitleBand,
   WholeLessonControlAssets,
   WholeLessonExitPromptVisualEvidence,
   WholeLessonResumePromptVisualEvidence,
 } from '@/lib/whole-lesson-player-descriptor';
 
 export type LessonShellTool = 'help' | 'key-terms' | 'calculator' | null;
+
+/**
+ * One entry in the lesson's section spine. The spine is the widescreen
+ * replacement for the course-map rail: it shows where the learner is in the
+ * lesson's own named sequence rather than listing every page.
+ */
+export interface LessonShellSection {
+  readonly code: string;
+  readonly title: string;
+  readonly state: 'complete' | 'current' | 'upcoming';
+  readonly onSelect: () => void;
+}
 
 const WIDE_FUNCTIONAL_COMPANION_MEDIA = '(min-width: 1280px)';
 const COARSE_POINTER_MEDIA = '(any-pointer: coarse)';
@@ -55,11 +92,17 @@ export interface LegacyLessonShellVisualSkin {
   chromeEvidence: 'ffdec-static-structural-candidate' | 'original-runtime-accepted';
   chromeFooterHeight: number;
   chromeHeaderHeight: number;
+  chromeTitleBand?: WholeLessonChromeTitleBand;
   controlAssets: WholeLessonControlAssets;
   backgroundCompanion?: WholeLessonBackgroundCompanion;
   exitPrompt?: WholeLessonExitPromptVisualEvidence;
   resumePrompt?: WholeLessonResumePromptVisualEvidence;
   layoutId: 'help-math-course-shell-800x600-v1';
+  /**
+   * Which host presentation the player resolved for this lesson. Defaults to
+   * the legacy composite, so an omitted value renders exactly as before.
+   */
+  presentation?: WholeLessonHostPresentation;
   sourceAnimationId: string;
   sourceSwfSha256: string;
 }
@@ -77,6 +120,13 @@ export interface LessonShellReleaseBoundary {
 export interface LessonShellContextLabel {
   readonly sourceLanguage: 'en' | 'es';
   readonly text: string;
+  /**
+   * True when the active locale has no source string and the English one is
+   * standing in. The shell never invents a translation; it reports the gap and
+   * marks the text with its real `lang`, so a Spanish screen reader still
+   * pronounces an English title as English.
+   */
+  readonly usesEnglishFallback?: boolean;
 }
 
 export interface LessonShellCourseContext {
@@ -195,12 +245,20 @@ export function resolveModernControlPresentation({
   accessibleControlFallback,
   coarsePointerAvailable,
   companionCanRemainVisible,
+  modernWidePresentation = false,
 }: {
   accessibleControlFallback: boolean;
   coarsePointerAvailable: boolean;
   companionCanRemainVisible: boolean;
+  /**
+   * The widescreen presentation draws no chrome, so the source hit areas have
+   * no artwork under them. The labelled controls are then the only control
+   * surface, not a second copy of one.
+   */
+  modernWidePresentation?: boolean;
 }) {
-  return accessibleControlFallback ||
+  return modernWidePresentation ||
+    accessibleControlFallback ||
     (coarsePointerAvailable && companionCanRemainVisible);
 }
 
@@ -369,13 +427,140 @@ function LegacyNavigationControlFace({
   </span>;
 }
 
+/**
+ * Narration is how a language learner receives the lesson, so it gets a named,
+ * permanent seat in the chrome rather than a button that only appears when a
+ * browser refuses autoplay. The control reads the same in every state; only
+ * the state line and the treatment change.
+ *
+ * `unavailable` and `waiting` are reported, not actionable: the page either
+ * carries no narration, or carries narration that is bound to the timeline and
+ * has nothing to start on demand. Both stay in place as a disabled control so
+ * the bar never reflows and the learner never has to look for it.
+ */
+function narrationCopy(
+  status: AnimationRuntimeNarrationStatus,
+  spanish: boolean,
+) {
+  if (status === 'unavailable') {
+    return spanish
+      ? {action: 'Esta página no tiene audio', hint: null}
+      : {action: 'No audio on this page', hint: null};
+  }
+  if (status === 'waiting') {
+    return spanish
+      ? {action: 'El audio acompaña la página', hint: null}
+      : {action: 'Audio plays with the page', hint: null};
+  }
+  if (status === 'playing') {
+    return spanish
+      ? {action: 'Detener el audio', hint: null}
+      : {action: 'Stop the audio', hint: null};
+  }
+  if (status === 'blocked') {
+    return spanish
+      ? {action: 'Reproducir el audio', hint: 'Pulsa para empezar'}
+      : {action: 'Play the audio', hint: 'Press to start'};
+  }
+  return spanish
+    ? {action: 'Reproducir el audio', hint: null}
+    : {action: 'Play the audio', hint: null};
+}
+
+/**
+ * What the live region says. `waiting` is deliberately silent: it is the
+ * resting state a page settles into once its narration has played, and
+ * announcing it would interrupt the learner for no new information.
+ */
+function narrationAnnouncementCopy(
+  status: AnimationRuntimeNarrationStatus,
+  spanish: boolean,
+) {
+  if (status === 'blocked') {
+    return spanish
+      ? 'El navegador no puede reproducir el audio todavía. Usa Narración para empezar.'
+      : 'The browser cannot play the audio yet. Use Narration to start it.';
+  }
+  if (status === 'playing') {
+    return spanish ? 'El audio se está reproduciendo.' : 'The audio is playing.';
+  }
+  if (status === 'idle') {
+    return spanish
+      ? 'El audio está listo. Usa Narración para reproducirlo.'
+      : 'The audio is ready. Use Narration to play it.';
+  }
+  return '';
+}
+
+function LessonNarrationControl({
+  locale,
+  muted,
+  onToggle,
+  runtimeAvailable,
+  status,
+  surface,
+}: {
+  locale: 'en' | 'es';
+  muted: boolean;
+  onToggle: () => void;
+  runtimeAvailable: boolean;
+  status: AnimationRuntimeNarrationStatus;
+  /**
+   * Set only where the control is not already inside a focus surface. The
+   * modern toolbar declares `modern-wide` for everything it holds.
+   */
+  surface?: ResponsiveFocusSurface;
+}) {
+  const spanish = locale === 'es';
+  const actionable = runtimeAvailable &&
+    (status === 'blocked' || status === 'idle' || status === 'playing');
+  const {action, hint} = narrationCopy(status, spanish);
+  const control = <button
+    aria-pressed={status === 'playing'}
+    className="lesson-shell2__narration"
+    data-narration-muted={muted ? 'true' : 'false'}
+    data-narration-status={status}
+    data-responsive-focus-key="narration"
+    disabled={!actionable}
+    onClick={onToggle}
+    type="button"
+  >
+    <span aria-hidden="true" className="lesson-shell2__narration-icon">
+      <span /><span /><span />
+    </span>
+    <span className="lesson-shell2__narration-copy">
+      <span aria-hidden="true" className="lesson-shell2__narration-name">
+        {spanish ? 'Narración' : 'Narration'}
+      </span>
+      <span className="lesson-shell2__narration-action">{action}</span>
+      {hint
+        ? <span
+            aria-hidden="true"
+            className="lesson-shell2__narration-hint"
+          >{hint}</span>
+        : null}
+    </span>
+    {muted && status !== 'unavailable'
+      ? <span className="lesson-shell2__narration-muted">
+          {spanish ? 'Sonido apagado' : 'Sound is off'}
+        </span>
+      : null}
+  </button>;
+  return surface
+    ? <div
+        className="lesson-shell2__narration-slot"
+        data-responsive-focus-surface={surface}
+      >{control}</div>
+    : control;
+}
+
 export function LegacyResponsiveLessonShell({
   activeTool,
   audioAvailable,
   backgroundCompanionVisible,
   calculatorEvidence,
   candidateMode,
-  completionAction,
+  reviewerMode = false,
   completionLabel,
   completionPercent,
   courseContext,
@@ -389,13 +574,17 @@ export function LegacyResponsiveLessonShell({
   idPrefix,
   keyTermsPanel,
   learningSupport,
+  sections,
   locale,
   mapOpen,
   mapPanel,
+  narrationStatus,
+  novaTutorMode = 'focus',
   nextControlLabel,
   nextDisabled,
   nextLabel,
   onMapOpenChange,
+  onNarrationToggle,
   onHeaderBack,
   onExit,
   onNext,
@@ -405,7 +594,9 @@ export function LegacyResponsiveLessonShell({
   onPrevious,
   onReplay,
   onToolChange,
+  onTutorEngagementChange,
   onVolumeChange,
+  pageComplete,
   pageInteractionCompanionTargetId,
   pageHeading,
   paused,
@@ -423,6 +614,8 @@ export function LegacyResponsiveLessonShell({
   stageOverlay,
   status,
   totalPages,
+  tutorContext,
+  tutorVocabulary = [],
   visualSkin,
   volume,
 }: {
@@ -431,7 +624,7 @@ export function LegacyResponsiveLessonShell({
   backgroundCompanionVisible: boolean;
   calculatorEvidence: LegacyCalculatorEvidence;
   candidateMode: boolean;
-  completionAction: ReactNode;
+  reviewerMode?: boolean;
   completionLabel: string;
   completionPercent: number;
   courseContext: LessonShellCourseContext;
@@ -445,13 +638,17 @@ export function LegacyResponsiveLessonShell({
   idPrefix: string;
   keyTermsPanel: ReactNode;
   learningSupport?: ReactNode;
+  sections?: readonly LessonShellSection[];
   locale: 'en' | 'es';
   mapOpen: boolean;
   mapPanel: ReactNode;
+  narrationStatus: AnimationRuntimeNarrationStatus;
+  novaTutorMode?: NovaTutorMode;
   nextControlLabel: string;
   nextDisabled: boolean;
   nextLabel: string;
   onMapOpenChange: (open: boolean) => void;
+  onNarrationToggle: () => void;
   onHeaderBack: () => void;
   onExit: () => void;
   onNext: () => void;
@@ -461,7 +658,9 @@ export function LegacyResponsiveLessonShell({
   onPrevious: () => void;
   onReplay: () => void;
   onToolChange: (tool: LessonShellTool) => void;
+  onTutorEngagementChange?: (engaged: boolean) => void;
   onVolumeChange: (volume: number) => void;
+  pageComplete: boolean;
   pageInteractionCompanionTargetId?: string;
   pageHeading: ReactNode;
   paused: boolean;
@@ -479,14 +678,47 @@ export function LegacyResponsiveLessonShell({
   stageOverlay?: ReactNode;
   status: ReactNode;
   totalPages: number;
+  tutorContext?: TutorPageContext;
+  tutorVocabulary?: readonly string[];
   visualSkin: LegacyLessonShellVisualSkin;
   volume: number;
 }) {
   const spanish = locale === 'es';
+  const narrationAnnouncement = narrationAnnouncementCopy(
+    narrationStatus,
+    spanish,
+  );
+  // Frame inspection is reviewer tooling. Every control that can start a seek
+  // sits behind `reviewerMode`, so a learner cannot reach an inspected frame
+  // — but nothing in the component should depend on that reachability
+  // argument. Gating the state itself keeps the Pause control's label, its
+  // click behavior, and the inspection data attributes from ever presenting
+  // frame language to a learner, however a seek came to be requested.
+  //
+  // This is deliberately not `candidateMode`. Every lesson is a candidate
+  // today, so gating on it rendered the instruments for every audience,
+  // including the executive preview. Release status still discloses itself
+  // through `candidateMode`; only the instruments moved.
+  const frameInspectionActive = reviewerMode && playbackInspectionActive;
   const [exitPromptOpen, setExitPromptOpen] = useState(false);
+  const [tutorOpen, setTutorOpen] = useState(false);
+  // Study owns a persistent support column on wide screens. It must not turn
+  // into an unsolicited modal during the first mobile render, so the viewport
+  // effect below opts the desktop column in after the media query resolves.
+  const [studySupportOpen, setStudySupportOpen] = useState(false);
+  const [studyTab, setStudyTab] = useState<NovaSupportTab>('read');
+  const [tutorSnapshot, setTutorSnapshot] =
+    useState<TutorFrameSnapshot | null>(null);
+  const [tutorSnapshotRevision, setTutorSnapshotRevision] = useState(0);
+  const [confirmedTutorProvider, setConfirmedTutorProvider] =
+    useState<NovaTutorModel | null>(null);
+  const activeTutorSnapshot = tutorSnapshot?.animationId === currentAnimationId
+    ? tutorSnapshot
+    : null;
   const stageOverlayOpen = Boolean(stageOverlay) || exitPromptOpen;
   const mapPanelId = `${idPrefix}-course-map`;
   const toolPanelId = `${idPrefix}-tool-panel`;
+  const tutorPanelId = `${idPrefix}-nova-tutor`;
   const exitPromptId = `${idPrefix}-exit-prompt`;
   const transportBoundaryId = `${idPrefix}-transport-boundary`;
   const stageIdentity = `${visualSkin.authoredStage.width}x${visualSkin.authoredStage.height}`;
@@ -549,17 +781,87 @@ export function LegacyResponsiveLessonShell({
       visualSkin.authoredStage.width,
     ],
   );
+  // The widescreen presentation renders only the band the source chrome leaves
+  // between its header and footer. Cropping is lossless because that chrome is
+  // fully opaque, so nothing drawn beneath it is visible in the legacy
+  // presentation either.
+  const modernWide = visualSkin.presentation === 'modern-wide';
+  const tutorAvailable = modernWide && Boolean(tutorContext);
+  const tutorPanelVisible = tutorAvailable && (
+    (novaTutorMode === 'study' && studySupportOpen) ||
+    (novaTutorMode === 'focus' && tutorOpen)
+  );
+  const classroomBandVisible = tutorAvailable &&
+    novaTutorMode === 'classroom' && tutorOpen;
+  const tutorVisible = tutorAvailable && (
+    novaTutorMode === 'study'
+      ? studySupportOpen && studyTab === 'nova'
+      : novaTutorMode === 'focus'
+        ? tutorOpen && studyTab === 'nova'
+        : tutorOpen
+  );
+  const tutorSurfaceVisible = tutorPanelVisible || classroomBandVisible;
+  const contentPlane = useMemo(
+    () => wholeLessonContentPlane({
+      stage: visualSkin.authoredStage,
+      headerHeight: visualSkin.chromeHeaderHeight,
+      footerHeight: visualSkin.chromeFooterHeight,
+    }),
+    [
+      visualSkin.authoredStage,
+      visualSkin.chromeFooterHeight,
+      visualSkin.chromeHeaderHeight,
+    ],
+  );
+  // The lesson title band is authored in 800 x 600 stage pixels. Publishing it
+  // as percentages of the authored plane keeps the live text locked to the
+  // painted header at every rendered stage size, exactly like the chrome clips
+  // above. The font size becomes a container query unit for the same reason:
+  // the title has to scale with the artwork it sits on, not with the viewport.
+  const chromeTitleBand = visualSkin.chromeTitleBand;
+  const chromeTitleStyle = chromeTitleBand
+    ? {
+        '--lesson-chrome-title-color': chromeTitleBand.color,
+        '--lesson-chrome-title-font': chromeTitleBand.fontFamily,
+        '--lesson-chrome-title-height': `${
+          (chromeTitleBand.bounds.height / visualSkin.authoredStage.height) * 100
+        }%`,
+        '--lesson-chrome-title-left': `${
+          (chromeTitleBand.bounds.left / visualSkin.authoredStage.width) * 100
+        }%`,
+        '--lesson-chrome-title-size': `${
+          (chromeTitleBand.fontSize / visualSkin.authoredStage.width) * 100
+        }cqw`,
+        '--lesson-chrome-title-top': `${
+          (chromeTitleBand.bounds.top / visualSkin.authoredStage.height) * 100
+        }%`,
+        '--lesson-chrome-title-width': `${
+          (chromeTitleBand.bounds.width / visualSkin.authoredStage.width) * 100
+        }%`,
+      }
+    : null;
   const stageStyle = {
+    ...chromeTitleStyle,
     '--lesson-chrome-bottom-clip': `${
       100 - (visualSkin.chromeFooterHeight / visualSkin.authoredStage.height) * 100
     }%`,
     '--lesson-chrome-top-clip': `${
       100 - (visualSkin.chromeHeaderHeight / visualSkin.authoredStage.height) * 100
     }%`,
-    '--lesson-stage-aspect': `${visualSkin.authoredStage.width} / ${visualSkin.authoredStage.height}`,
-    '--lesson-stage-max-height': `${visualSkin.authoredStage.height}px`,
+    // The widescreen presentation shows only the authored content band, so the
+    // stage box takes that band's aspect and the full authored plane is pushed
+    // up behind it. Every value is derived from the authored stage and the
+    // declared chrome heights; none is a restated measurement.
+    '--lesson-stage-aspect': modernWide
+      ? `${contentPlane.width} / ${contentPlane.height}`
+      : `${visualSkin.authoredStage.width} / ${visualSkin.authoredStage.height}`,
+    '--lesson-stage-max-height': `${
+      modernWide ? contentPlane.height : visualSkin.authoredStage.height
+    }px`,
     '--lesson-stage-max-width': `${visualSkin.authoredStage.width}px`,
     '--lesson-stage-viewport-fit-width': `${layoutPolicy.stageCapWidth}px`,
+    '--lesson-plane-stage-height': `${contentPlane.stageHeightPercent}%`,
+    '--lesson-plane-stage-top': `${contentPlane.stageTopPercent}%`,
   } as CSSProperties;
   const mapButtonRef = useRef<HTMLButtonElement>(null);
   const mapCloseRef = useRef<HTMLButtonElement>(null);
@@ -570,9 +872,11 @@ export function LegacyResponsiveLessonShell({
   const shellRef = useRef<HTMLElement>(null);
   const legacyStageRef = useRef<HTMLDivElement>(null);
   const exitTriggerRef = useRef<HTMLButtonElement>(null);
+  const tutorTriggerRef = useRef<HTMLButtonElement>(null);
+  const supportPauseSessionRef = useRef<SupportPauseSession | null>(null);
   const exitPausedBeforeOpenRef = useRef(false);
   const lastResponsiveFocusRef = useRef<ResponsiveFocusMemory | null>(null);
-  const supportPauseSessionRef = useRef<SupportPauseSession | null>(null);
+  const initialStudyViewportResolvedRef = useRef(false);
   const lastAudibleVolumeRef = useRef(
     rememberLegacyAudibleVolume({
       lastAudibleVolume: .8,
@@ -590,6 +894,7 @@ export function LegacyResponsiveLessonShell({
     accessibleControlFallback,
     coarsePointerAvailable,
     companionCanRemainVisible,
+    modernWidePresentation: modernWide,
   });
   const previousModernControlPresentationRef = useRef(
     modernControlPresentation,
@@ -610,14 +915,128 @@ export function LegacyResponsiveLessonShell({
   const mapModalOpen = mapOpen && mapOverlay;
   const toolModalOpen = Boolean(activeTool) && toolOverlay;
   const supportModalOpen = mapModalOpen || toolModalOpen;
-  const backgroundUnavailable = stageOverlayOpen || supportModalOpen;
+  const tutorPanelModal = tutorPanelVisible && !wideViewportAvailable;
+  const backgroundUnavailable = stageOverlayOpen || supportModalOpen ||
+    tutorPanelModal;
   const supportOpen =
     (mapOpen && mapOverlay) || activeTool !== null;
+
+  useEffect(() => {
+    if (!tutorSurfaceVisible) return;
+    let cancelled = false;
+    let captureTimeout = 0;
+    let capturedAtLeastOnce = false;
+    // Canvas-backed lesson modules can finish their first meaningful paint
+    // after code-split assets resolve. Keep the capture window open long
+    // enough for a busy classroom device (and parallel browser validation)
+    // while every attempt still rejects a fully transparent frame.
+    const retryDelays = [80, 160, 320, 640, 1_200, 2_400] as const;
+    let retryIndex = 0;
+    const captureFrame = async () => {
+      if (cancelled) return;
+      const nextSnapshot = await tutorStageFrameSnapshot(
+        legacyStageRef.current,
+        currentAnimationId,
+        modernWide
+          ? {
+              left: 0,
+              top: contentPlane.top,
+              width: contentPlane.width,
+              height: contentPlane.height,
+            }
+          : undefined,
+      );
+      if (cancelled) return;
+      if (nextSnapshot) {
+        capturedAtLeastOnce = true;
+        setTutorSnapshot((currentSnapshot) =>
+          currentSnapshot?.animationId === nextSnapshot.animationId &&
+          currentSnapshot.dataUrl === nextSnapshot.dataUrl
+            ? currentSnapshot
+            : nextSnapshot
+        );
+      } else if (!capturedAtLeastOnce && retryIndex >= retryDelays.length) {
+        setTutorSnapshot(null);
+      }
+      if (retryIndex < retryDelays.length) {
+        const delay = retryDelays[retryIndex];
+        retryIndex += 1;
+        captureTimeout = window.setTimeout(() => {
+          void captureFrame();
+        }, delay);
+      }
+    };
+    const animationFrame = window.requestAnimationFrame(() => {
+      void captureFrame();
+    });
+    return () => {
+      cancelled = true;
+      window.cancelAnimationFrame(animationFrame);
+      window.clearTimeout(captureTimeout);
+    };
+  }, [
+    contentPlane,
+    currentAnimationId,
+    modernWide,
+    studyTab,
+    tutorSnapshotRevision,
+    tutorSurfaceVisible,
+  ]);
+
+  useEffect(() => {
+    // Map and tool overlays temporarily borrow playback so their controls do
+    // not compete with the lesson. Nova is deliberately independent: opening,
+    // using, or closing the tutor must never change the learner's transport.
+    const decision = reconcileSupportPauseSession({
+      currentPage,
+      paused,
+      playbackInspectionActive: frameInspectionActive,
+      session: supportPauseSessionRef.current,
+      supportOpen,
+    });
+    supportPauseSessionRef.current = decision.session;
+    if (decision.requestedPaused !== null) {
+      onPausedChange(decision.requestedPaused);
+    }
+  }, [
+    currentPage,
+    frameInspectionActive,
+    onPausedChange,
+    paused,
+    supportOpen,
+  ]);
+
+  useEffect(() => {
+    onTutorEngagementChange?.(tutorVisible);
+  }, [onTutorEngagementChange, tutorVisible]);
+
+  useEffect(() => {
+    if (!tutorSurfaceVisible) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      event.preventDefault();
+      if (novaTutorMode === 'study') {
+        setStudySupportOpen(false);
+        setStudyTab('read');
+      } else {
+        setTutorOpen(false);
+        setStudyTab('read');
+      }
+      setTutorSnapshot(null);
+      window.setTimeout(() => tutorTriggerRef.current?.focus(), 0);
+    };
+    document.addEventListener('keydown', closeOnEscape);
+    return () => document.removeEventListener('keydown', closeOnEscape);
+  }, [novaTutorMode, tutorSurfaceVisible]);
 
   useLayoutEffect(() => {
     const media = window.matchMedia(WIDE_FUNCTIONAL_COMPANION_MEDIA);
     const updateWideViewportAvailability = () => {
       setWideViewportAvailable(media.matches);
+      if (!initialStudyViewportResolvedRef.current) {
+        initialStudyViewportResolvedRef.current = true;
+        setStudySupportOpen(novaTutorMode === 'study' && media.matches);
+      }
     };
 
     updateWideViewportAvailability();
@@ -625,7 +1044,7 @@ export function LegacyResponsiveLessonShell({
     return () => {
       media.removeEventListener('change', updateWideViewportAvailability);
     };
-  }, []);
+  }, [novaTutorMode]);
 
   useLayoutEffect(() => {
     const media = window.matchMedia(COARSE_POINTER_MEDIA);
@@ -748,12 +1167,20 @@ export function LegacyResponsiveLessonShell({
     let animationFrame = 0;
     const updateViewportFit = () => {
       animationFrame = 0;
-      const top = stageNode.getBoundingClientRect().top;
+      // Use the stage's document position, not its transient viewport top.
+      // Focusing a bottom-bar control can scroll the page just before a
+      // ResizeObserver callback. A viewport-relative value then makes the
+      // plane grow merely because the document moved under it — most visibly
+      // while opening Nova. Adding scrollY keeps the fit stable across focus
+      // scroll and lets the new support column, rather than scroll position,
+      // determine the available width.
+      const top = stageNode.getBoundingClientRect().top + window.scrollY;
       const containerWidth = shellNode.getBoundingClientRect().width;
       if (containerWidth <= 0) return;
       const nextPolicy = resolveLegacyLessonLayout({
         authoredStage: visualSkin.authoredStage,
         containerWidth,
+        presentedPlane: modernWide ? contentPlane : undefined,
         stageTop: top,
         viewportHeight: window.innerHeight,
         viewportWidth: window.innerWidth,
@@ -792,6 +1219,8 @@ export function LegacyResponsiveLessonShell({
       resizeObserver?.disconnect();
     };
   }, [
+    contentPlane,
+    modernWide,
     visualSkin.authoredStage,
   ]);
 
@@ -846,31 +1275,46 @@ export function LegacyResponsiveLessonShell({
     if (toolOpened || toolBecameModal) toolCloseRef.current?.focus();
   }, [activeTool, toolOverlay]);
 
-  const reconcileSupportPlayback = useCallback((nextSupportOpen: boolean) => {
-    const result = reconcileSupportPauseSession({
-      currentPage,
-      paused,
-      playbackInspectionActive,
-      session: supportPauseSessionRef.current,
-      supportOpen: nextSupportOpen,
-    });
-    supportPauseSessionRef.current = result.session;
-    if (
-      result.requestedPaused !== null &&
-      result.requestedPaused !== paused
-    ) {
-      onPausedChange(result.requestedPaused);
-    }
-  }, [
-    currentPage,
-    onPausedChange,
-    paused,
-    playbackInspectionActive,
-  ]);
+  const dismissTutor = useCallback(() => {
+    setTutorOpen(false);
+    setStudySupportOpen(false);
+    setStudyTab('read');
+    setTutorSnapshot(null);
+  }, []);
 
-  useEffect(() => {
-    reconcileSupportPlayback(supportOpen);
-  }, [reconcileSupportPlayback, supportOpen]);
+  const closeTutor = useCallback(() => {
+    dismissTutor();
+    window.setTimeout(() => tutorTriggerRef.current?.focus(), 0);
+  }, [dismissTutor]);
+
+  const toggleTutor = useCallback(() => {
+    const opening = novaTutorMode === 'study'
+      ? !studySupportOpen || studyTab !== 'nova'
+      : novaTutorMode === 'focus'
+        ? !tutorOpen || studyTab !== 'nova'
+        : !tutorOpen;
+    if (opening) {
+      onMapOpenChange(false);
+      onToolChange(null);
+    }
+    if (novaTutorMode === 'study') {
+      setStudySupportOpen(opening);
+      setStudyTab(opening ? 'nova' : 'read');
+    } else if (novaTutorMode === 'focus') {
+      setTutorOpen(opening);
+      setStudyTab(opening ? 'nova' : 'read');
+    } else {
+      setTutorOpen(opening);
+    }
+    if (!opening) setTutorSnapshot(null);
+  }, [
+    novaTutorMode,
+    onMapOpenChange,
+    onToolChange,
+    studyTab,
+    studySupportOpen,
+    tutorOpen,
+  ]);
 
   const toggleMap = useCallback((trigger?: HTMLButtonElement) => {
     if (trigger) mapButtonRef.current = trigger;
@@ -878,17 +1322,14 @@ export function LegacyResponsiveLessonShell({
     if (open && mapOverlay) {
       onToolChange(null);
     }
-    reconcileSupportPlayback(
-      (open && mapOverlay) || activeTool !== null,
-    );
+    if (open) dismissTutor();
     onMapOpenChange(open);
   }, [
-    activeTool,
     mapOpen,
     mapOverlay,
     onMapOpenChange,
     onToolChange,
-    reconcileSupportPlayback,
+    dismissTutor,
   ]);
 
   const toggleTool = useCallback((
@@ -900,22 +1341,17 @@ export function LegacyResponsiveLessonShell({
     if (nextTool && toolOverlay) {
       onMapOpenChange(false);
     }
-    reconcileSupportPlayback(
-      (mapOpen && mapOverlay) || nextTool !== null,
-    );
+    if (nextTool) dismissTutor();
     onToolChange(nextTool);
   }, [
     activeTool,
-    mapOpen,
-    mapOverlay,
     onMapOpenChange,
     onToolChange,
-    reconcileSupportPlayback,
     toolOverlay,
+    dismissTutor,
   ]);
 
   const closeMap = useCallback(() => {
-    reconcileSupportPlayback(activeTool !== null);
     onMapOpenChange(false);
     window.requestAnimationFrame(() => {
       const root = shellRef.current;
@@ -936,17 +1372,14 @@ export function LegacyResponsiveLessonShell({
       }
     });
   }, [
-    activeTool,
     modernControlPresentation,
     onMapOpenChange,
-    reconcileSupportPlayback,
   ]);
 
   const closeTool = useCallback(() => {
     const closingTool = activeTool;
     const rememberedTrigger = lastToolTriggerRef.current;
 
-    reconcileSupportPlayback(mapOpen && mapOverlay);
     onToolChange(null);
     window.requestAnimationFrame(() => {
       if (
@@ -969,10 +1402,7 @@ export function LegacyResponsiveLessonShell({
     });
   }, [
     activeTool,
-    mapOpen,
-    mapOverlay,
     onToolChange,
-    reconcileSupportPlayback,
   ]);
 
   const requestExit = useCallback((trigger: HTMLButtonElement) => {
@@ -1054,6 +1484,10 @@ export function LegacyResponsiveLessonShell({
   const pageOrdinalLabel = spanish
     ? `Página ${currentPage} de ${totalPages}`
     : `Page ${currentPage} of ${totalPages}`;
+  // The prototype's primary yellow strip reports where the learner is in the
+  // 39-page journey (Page 34 -> 87%). Earned completion remains a separate,
+  // honest value in the course map and release/progress state.
+  const journeyPercent = Math.round((currentPage / totalPages) * 100);
   const normalizedPlaybackFrameCount = Math.max(
     1,
     Math.trunc(playbackFrameCount),
@@ -1102,18 +1536,182 @@ export function LegacyResponsiveLessonShell({
     }
   });
 
+  // "Grade 4 · Lesson 3" / "Grado 4 · Leccion 3" -> "L3". Taking the trailing
+  // number keeps this locale-independent without a new prop.
+  const lessonNumberLabel = (gradeLessonLabel.match(/(\d+)\s*$/)?.[1]) ?? '';
+  const sectionSpine = modernWide && sections && sections.length
+    ? <nav
+        aria-hidden={tutorPanelModal ? true : undefined}
+        aria-label={spanish ? 'Secciones de la lección' : 'Lesson sections'}
+        className="lesson-shell2__spine"
+        data-responsive-focus-surface="persistent"
+        inert={tutorPanelModal ? true : undefined}
+      >
+        <p className="lesson-shell2__spine-mark">{lessonNumberLabel
+            ? `L${lessonNumberLabel} · ${courseContext.courseTitle.text}`
+            : courseContext.courseTitle.text}</p>
+        <ol>
+          {sections.map((section) => <li key={section.code}>
+            <button
+              aria-current={section.state === 'current' ? 'step' : undefined}
+              data-section-code={section.code}
+              data-section-state={section.state}
+              onClick={section.onSelect}
+              type="button"
+            >
+              <span aria-hidden="true" className="lesson-shell2__spine-tick">
+                {section.code}
+              </span>
+              <span className="lesson-shell2__spine-name">{section.title}</span>
+            </button>
+          </li>)}
+        </ol>
+      </nav>
+    : null;
+  const languageNav = <nav
+      aria-label={spanish ? 'Idioma de la lección' : 'Lesson language'}
+      className="lesson-shell2__language"
+      data-responsive-focus-surface="persistent"
+    >
+      <Link
+        aria-current={!spanish ? 'page' : undefined}
+        data-responsive-focus-key="language-en"
+        href={courseHref}
+        locale="en"
+        onClick={!spanish ? undefined : rememberLanguageRouteFocusIntent}
+      >EN</Link>
+      <Link
+        aria-current={spanish ? 'page' : undefined}
+        data-responsive-focus-key="language-es"
+        href={courseHref}
+        locale="es"
+        onClick={spanish ? undefined : rememberLanguageRouteFocusIntent}
+      >ES</Link>
+    </nav>;
+  const previousControl = <button
+      className="lesson-shell2__learning-actions-previous"
+      data-lesson-nav="action-previous"
+      data-responsive-focus-key="previous"
+      disabled={previousDisabled}
+      onClick={onPrevious}
+      type="button"
+    >
+      {spanish ? '← Anterior' : '← Previous'}
+    </button>;
+  const nextControl = <button
+      aria-label={nextControlLabel}
+      className="lesson-shell2__learning-actions-next"
+      data-lesson-nav="action-next"
+      data-responsive-focus-key="next"
+      disabled={nextDisabled}
+      onClick={onNext}
+      type="button"
+    >
+      {nextLabel}
+    </button>;
+  const mapControl = <button
+      aria-controls={mapPanelId}
+      aria-expanded={mapOpen}
+      data-course-map-trigger="modern-accessible-control"
+      data-responsive-focus-fallback="true"
+      data-responsive-focus-key="map"
+      onClick={(event) => toggleMap(event.currentTarget)}
+      type="button"
+    >
+      {spanish ? 'Mapa' : 'Map'}
+    </button>;
+  const readSupportExpanded = tutorPanelVisible && studyTab === 'read';
+  const modernSupportControl = novaTutorMode === 'classroom'
+    ? mapControl
+    : <button
+        aria-controls={tutorPanelId}
+        aria-expanded={readSupportExpanded}
+        aria-label={readSupportExpanded
+          ? (spanish ? 'Cerrar apoyo de estudio' : 'Close study support')
+          : (spanish ? 'Abrir apoyo de estudio' : 'Open study support')}
+        className="lesson-shell2__study-support"
+        data-responsive-focus-fallback="true"
+        data-responsive-focus-key="study-support"
+        onClick={() => {
+          if (readSupportExpanded) {
+            dismissTutor();
+            return;
+          }
+          onMapOpenChange(false);
+          onToolChange(null);
+          setStudyTab('read');
+          if (novaTutorMode === 'focus') {
+            setTutorOpen(true);
+          } else {
+            setStudySupportOpen(true);
+          }
+        }}
+        type="button"
+      >
+        {spanish ? 'Apoyo de estudio' : 'Study support'}
+      </button>;
+  const replayControl = <button
+      data-responsive-focus-key="replay"
+      disabled={!runtimeAvailable}
+      onClick={() => {
+        onReplay();
+        if (tutorSurfaceVisible) {
+          setTutorSnapshot(null);
+          setTutorSnapshotRevision((revision) => revision + 1);
+        }
+      }}
+      type="button"
+    >
+      {spanish ? 'Repetir' : 'Replay'}
+    </button>;
+  const pauseControl = <button
+      aria-pressed={paused}
+      data-frame-inspection-action={frameInspectionActive
+        ? 'resume-current-js-from-inspected-frame'
+        : 'toggle-pause'}
+      data-responsive-focus-key="pause"
+      disabled={!runtimeAvailable || supportOpen}
+      onClick={() => frameInspectionActive
+        ? onPlaybackResumeFromInspection()
+        : onPausedChange(!paused)}
+      type="button"
+    >
+      {paused && !frameInspectionActive && !supportOpen
+        ? (spanish ? 'Continuar' : 'Resume')
+        : supportOpen
+          ? (spanish ? 'Herramienta en pausa' : 'Support tool paused')
+          : frameInspectionActive
+            ? (spanish
+                ? 'Continuar desde el fotograma'
+                : 'Continue from frame')
+            : (spanish ? 'Pausa' : 'Pause')}
+    </button>;
+  const muteControl = <button
+      aria-pressed={volume === 0}
+      data-responsive-focus-key="mute"
+      disabled={!runtimeAvailable || !audioAvailable}
+      onClick={toggleMute}
+      type="button"
+    >
+      {volume === 0
+        ? (spanish ? 'Restaurar volumen' : 'Restore volume')
+        : (spanish ? 'Silenciar' : 'Mute')}
+    </button>;
+
   return <main
     data-audio-available={audioAvailable ? 'true' : 'false'}
+    data-narration-status={narrationStatus}
     data-accessible-control-fallback={
       accessibleControlFallback ? 'true' : 'false'
     }
     className="whole-lesson-page lesson-shell2"
     data-candidate-mode={candidateMode ? 'true' : 'false'}
+    data-reviewer-mode={reviewerMode ? 'true' : 'false'}
     data-coarse-pointer={coarsePointerAvailable ? 'true' : 'false'}
     data-current-animation-id={currentAnimationId}
     data-current-js-candidate={releaseBoundary.currentJsCandidate ? 'true' : 'false'}
     data-current-js-pages={releaseBoundary.currentJsPageCount}
-    data-frame-inspection-active={playbackInspectionActive ? 'true' : 'false'}
+    data-frame-inspection-active={frameInspectionActive ? 'true' : 'false'}
     data-learning-support={learningSupport ? 'present' : 'none'}
     data-layout-contract={LEGACY_LESSON_LAYOUT_CONTRACT}
     data-layout-container-width={layoutPolicy.containerWidth}
@@ -1125,6 +1723,10 @@ export function LegacyResponsiveLessonShell({
     data-modern-control-presentation={
       modernControlPresentation ? 'true' : 'false'
     }
+    data-page-complete={pageComplete ? 'true' : 'false'}
+    data-earned-completion-percent={completionPercent}
+    data-journey-percent={journeyPercent}
+    data-host-presentation={modernWide ? 'modern-wide' : 'legacy-composite'}
     data-presentation="wide-functional-audit-candidate"
     data-public-release={releaseBoundary.publicRelease ? 'true' : 'false'}
     data-release-id={releaseBoundary.releaseId}
@@ -1148,11 +1750,33 @@ export function LegacyResponsiveLessonShell({
     }
     data-source-background-companion-status={backgroundCompanionStatus}
     data-support-modal-open={supportModalOpen ? 'true' : 'false'}
-    data-support-tool-playback="modern-support-open-forces-pause-restores-prior-state"
+    data-support-tool-playback="support-tools-pause-restore-nova-independent"
     data-tool-visual-authority={visualSkin.controlAssets.kind}
     data-strict-complete-members={releaseBoundary.strictCompleteMemberCount}
     data-strict-completion={releaseBoundary.strictCompletion ? 'true' : 'false'}
     data-tool-open={activeTool ? 'true' : 'false'}
+    data-tutor-open={tutorSurfaceVisible ? 'true' : 'false'}
+    data-tutor-interaction-open={tutorVisible ? 'true' : 'false'}
+    data-tutor-frame-snapshot={tutorSurfaceVisible && activeTutorSnapshot
+      ? 'available'
+      : 'unavailable'}
+    data-tutor-modal={tutorPanelModal ? 'true' : 'false'}
+    data-tutor-mode={novaTutorMode}
+    data-tutor-panel-open={tutorPanelVisible ? 'true' : 'false'}
+    data-tutor-playback="independent"
+    data-tutor-placement={novaTutorMode === 'classroom'
+      ? 'classroom-voice-band'
+      : novaTutorMode === 'study'
+        ? 'study-support-region'
+        : 'focus-side-column'}
+    data-tutor-model={tutorContext
+      ? confirmedTutorProvider ?? 'not-yet-confirmed'
+      : 'unavailable'}
+    data-tutor-provider={tutorContext
+      ? confirmedTutorProvider
+        ? NOVA_TUTOR_GATEWAY
+        : 'same-origin-gateway-not-yet-confirmed'
+      : 'unavailable'}
     data-tool-presentation={layoutPolicy.toolPresentation}
     data-wide-functional-companion={wideFunctionalCompanion ? 'true' : 'false'}
     data-stage-render-mode={renderedStageWidth === null
@@ -1181,28 +1805,43 @@ export function LegacyResponsiveLessonShell({
         max={100}
         value={completionPercent}
       >{completionPercent}%</progress>
-      <span>{pageOrdinalLabel}</span>
-      <nav
-        aria-label={spanish ? 'Idioma de la lección' : 'Lesson language'}
-        className="lesson-shell2__language"
-        data-responsive-focus-surface="persistent"
+      {/* The strip is the only place lesson progress is reported. A page marks
+          itself complete when its animation finishes, so this tick replaces the
+          separate review control the learner used to have to press. */}
+      <span
+        className="lesson-shell2__session-page"
+        data-page-complete={pageComplete ? 'true' : 'false'}
       >
-        <Link
-          aria-current={!spanish ? 'page' : undefined}
-          data-responsive-focus-key="language-en"
-          href={courseHref}
-          locale="en"
-          onClick={!spanish ? undefined : rememberLanguageRouteFocusIntent}
-        >EN</Link>
-        <Link
-          aria-current={spanish ? 'page' : undefined}
-          data-responsive-focus-key="language-es"
-          href={courseHref}
-          locale="es"
-          onClick={spanish ? undefined : rememberLanguageRouteFocusIntent}
-        >ES</Link>
-      </nav>
+        <span aria-hidden="true" className="lesson-shell2__session-page-tick">✓</span>
+        {pageOrdinalLabel}
+      </span>
+      <LessonNarrationControl
+        locale={locale}
+        muted={volume === 0}
+        onToggle={onNarrationToggle}
+        runtimeAvailable={runtimeAvailable}
+        status={narrationStatus}
+        surface="persistent"
+      />
+      {modernWide ? null : languageNav}
     </section>
+
+    {/* Announced outside the session bar: a compact landscape viewport hides
+        that bar entirely, and a hidden live region announces nothing. */}
+    <p aria-live="polite" className="sr-only">
+      {pageComplete
+        ? (spanish
+            ? `${pageOrdinalLabel} completa`
+            : `${pageOrdinalLabel} complete`)
+        : ''}
+    </p>
+
+    {/* A refused autoplay arrives after the page has settled, and narration
+        ends without any learner action. Both change the control silently, so
+        the state is announced once here rather than from either copy of it. */}
+    <p aria-live="polite" className="sr-only" data-narration-announcement="true">
+      {narrationAnnouncement}
+    </p>
 
     {disclosure
       ? <div
@@ -1289,10 +1928,12 @@ export function LegacyResponsiveLessonShell({
         <div className="lesson-shell2__map-content">{mapPanel}</div>
       </div>
 
+      {sectionSpine}
+
       <article
-        aria-hidden={supportModalOpen ? true : undefined}
+        aria-hidden={supportModalOpen || tutorPanelModal ? true : undefined}
         className="lesson-shell2__learning-column"
-        inert={supportModalOpen ? true : undefined}
+        inert={supportModalOpen || tutorPanelModal ? true : undefined}
       >
         <header
           aria-hidden={stageOverlayOpen ? true : undefined}
@@ -1375,7 +2016,7 @@ export function LegacyResponsiveLessonShell({
             {stage}
           </div>
 
-          <div
+          {modernWide ? null : <div
             aria-hidden="true"
             className="lesson-shell2__source-chrome"
             inert={stageOverlayOpen ? true : undefined}
@@ -1399,9 +2040,39 @@ export function LegacyResponsiveLessonShell({
               src={bottomChromeAsset}
               width={visualSkin.authoredStage.width}
             />
-          </div>
+          </div>}
 
-          <div
+          {/* The lesson's own name, as live text on the header band.
+              What the chrome paints is `<CourseName>` — the product wordmark,
+              identical in every lesson XML in the catalogue — and the lesson
+              title `<NewTitle1>` was never drawn into that artwork at all. So
+              this adds the missing string rather than covering a painted one:
+              no glyph is masked, the artwork above stays untouched artwork,
+              and the one name that identifies this lesson becomes selectable,
+              resizable, reachable by the language layer, and speakable by a
+              screen reader. */}
+          {chromeTitleBand && !modernWide
+            ? <p
+                aria-hidden={stageOverlayOpen ? true : undefined}
+                className="lesson-shell2__chrome-lesson-title"
+                data-chrome-title-source-field={chromeTitleBand.sourceField}
+                data-chrome-title-source-language={
+                  courseContext.courseTitle.sourceLanguage
+                }
+                data-chrome-title-english-fallback={
+                  courseContext.courseTitle.usesEnglishFallback
+                    ? 'true'
+                    : 'false'
+                }
+                inert={stageOverlayOpen ? true : undefined}
+              >
+                <span lang={courseContext.courseTitle.sourceLanguage}>
+                  {courseContext.courseTitle.text}
+                </span>
+              </p>
+            : null}
+
+          {modernWide ? null : <div
             aria-hidden={legacyHitControlsInert ? true : undefined}
             aria-label={spanish ? 'Controles superiores de la lección' : 'Lesson header controls'}
             className="lesson-shell2__legacy-header-hits"
@@ -1437,9 +2108,9 @@ export function LegacyResponsiveLessonShell({
               onClick={(event) => requestExit(event.currentTarget)}
               type="button"
             />
-          </div>
+          </div>}
 
-          <nav
+          {modernWide ? null : <nav
             aria-hidden={legacyHitControlsInert ? true : undefined}
             aria-label={spanish ? 'Herramientas heredadas' : 'Legacy lesson tools'}
             className="lesson-shell2__legacy-tools"
@@ -1502,10 +2173,10 @@ export function LegacyResponsiveLessonShell({
               />
               <span className="sr-only">{spanish ? 'Calculadora' : 'Calculator'}</span>
             </button>
-          </nav>
+          </nav>}
 
-          <div
-            aria-label={candidateMode
+          {modernWide ? null : <div
+            aria-label={reviewerMode
               ? (spanish
                   ? 'Controles visuales heredados con transporte moderno de auditoría'
                   : 'Legacy visuals with modern audit transport')
@@ -1541,7 +2212,7 @@ export function LegacyResponsiveLessonShell({
               onClick={onReplay}
               type="button"
             />
-            {candidateMode
+            {reviewerMode
               ? <>
                   <button
                     aria-label={spanish
@@ -1623,7 +2294,7 @@ export function LegacyResponsiveLessonShell({
                   ? (spanish
                       ? 'Una herramienta de apoyo mantiene la animación en pausa'
                       : 'A support tool keeps animation paused')
-                  : playbackInspectionActive
+                  : frameInspectionActive
                   ? (spanish
                       ? 'Continuar desde el fotograma inspeccionado'
                       : 'Continue from inspected frame')
@@ -1631,14 +2302,14 @@ export function LegacyResponsiveLessonShell({
                 : (spanish ? 'Pausar animación' : 'Pause animation')}
               aria-pressed={paused}
               className="lesson-shell2__legacy-hit lesson-shell2__legacy-hit--pause"
-              data-frame-inspection-action={playbackInspectionActive
+              data-frame-inspection-action={frameInspectionActive
                 ? 'resume-current-js-from-inspected-frame'
                 : 'toggle-pause'}
               data-responsive-focus-key="pause"
               disabled={
                 !runtimeAvailable || supportOpen
               }
-              onClick={() => playbackInspectionActive
+              onClick={() => frameInspectionActive
                 ? onPlaybackResumeFromInspection()
                 : onPausedChange(!paused)}
               type="button"
@@ -1711,7 +2382,7 @@ export function LegacyResponsiveLessonShell({
                 visualSkin={visualSkin}
               />
             </button>
-          </div>
+          </div>}
 
           {exitPromptOpen
             ? <LegacyExitPrompt
@@ -1735,7 +2406,7 @@ export function LegacyResponsiveLessonShell({
             />
           : null}
 
-        {learningSupport
+        {learningSupport && !(modernWide && tutorPanelVisible)
           ? <div
               aria-hidden={stageOverlayOpen ? true : undefined}
               className="lesson-shell2__learning-support"
@@ -1746,7 +2417,7 @@ export function LegacyResponsiveLessonShell({
           : null}
 
         <div
-          aria-describedby={candidateMode ? transportBoundaryId : undefined}
+          aria-describedby={reviewerMode ? transportBoundaryId : undefined}
           aria-label={spanish ? 'Controles modernos de la lección' : 'Modern lesson controls'}
           aria-hidden={stageOverlayOpen ? true : undefined}
           className="lesson-shell2__modern-toolbar"
@@ -1760,33 +2431,77 @@ export function LegacyResponsiveLessonShell({
           >
             {spanish ? 'Controles modernos' : 'Modern controls'}
           </span>
+          {modernWide ? previousControl : null}
+          {modernWide ? pauseControl : null}
+          {modernWide ? nextControl : null}
+          {/* A compact landscape viewport hides the session bar, so this is the
+              progress strip in that layout. It has to carry the same page
+              completion state, or finishing a page would report nowhere. */}
           <div
             className="lesson-shell2__modern-completion"
             data-compact-landscape-completion="true"
+            data-page-complete={pageComplete ? 'true' : 'false'}
           >
             <progress
               aria-label={spanish
-                ? 'Progreso de la lección'
-                : 'Lesson completion'}
-              aria-valuetext={`${completionPercent}% · ${completionLabel}`}
+                ? modernWide
+                  ? 'Posición en la lección'
+                  : 'Progreso de la lección'
+                : modernWide
+                  ? 'Lesson position'
+                  : 'Lesson completion'}
+              aria-valuetext={modernWide
+                ? `${journeyPercent}% · ${pageOrdinalLabel} · ${completionLabel}`
+                : `${completionPercent}% · ${completionLabel}`}
+              data-progress-model={modernWide
+                ? 'page-position'
+                : 'earned-page-completion'}
               max={100}
-              value={completionPercent}
-            >{completionPercent}%</progress>
-            <span aria-hidden="true">{spanish
-              ? `Progreso ${completionPercent}%`
-              : `Progress ${completionPercent}%`}</span>
+              value={modernWide ? journeyPercent : completionPercent}
+            >{modernWide ? journeyPercent : completionPercent}%</progress>
+            {modernWide
+              ? <>
+                  <span aria-hidden="true" data-completion-position>
+                    {pageOrdinalLabel}
+                  </span>
+                  <span aria-hidden="true" data-completion-share>
+                    {spanish
+                      ? `${journeyPercent}% del recorrido`
+                      : `${journeyPercent}% through journey`}
+                  </span>
+                </>
+              : <span aria-hidden="true">{pageComplete ? '✓ ' : ''}{spanish
+                  ? `Progreso ${completionPercent}%`
+                  : `Progress ${completionPercent}%`}</span>}
           </div>
-          <button
-            aria-controls={mapPanelId}
-            aria-expanded={mapOpen}
-            data-course-map-trigger="modern-accessible-control"
-            data-responsive-focus-fallback="true"
-            data-responsive-focus-key="map"
-            onClick={(event) => toggleMap(event.currentTarget)}
-            type="button"
-          >
-            {spanish ? 'Mapa' : 'Map'}
-          </button>
+          {/* The same reason the progress strip is mirrored here: narration is
+              the lesson for a language learner, and it cannot disappear with
+              the session bar when a phone is turned sideways. */}
+          <LessonNarrationControl
+            locale={locale}
+            muted={volume === 0}
+            onToggle={onNarrationToggle}
+            runtimeAvailable={runtimeAvailable}
+            status={narrationStatus}
+          />
+          {modernWide && tutorContext
+            ? <button
+                aria-controls={tutorPanelId}
+                aria-expanded={tutorVisible}
+                className="lesson-shell2__ask-nova"
+                data-responsive-focus-key="ask-nova"
+                onClick={toggleTutor}
+                ref={tutorTriggerRef}
+                type="button"
+              >
+                <NovaSparkle />
+                <span>{spanish ? 'Preguntar a Nova' : 'Ask Nova'}</span>
+              </button>
+            : null}
+          {modernWide ? replayControl : null}
+          {modernWide ? muteControl : null}
+          {modernWide ? modernSupportControl : null}
+          {modernWide ? null : mapControl}
           <button
             aria-controls={toolPanelId}
             aria-expanded={activeTool === 'help'}
@@ -1849,15 +2564,8 @@ export function LegacyResponsiveLessonShell({
           >
             {spanish ? 'Calculadora' : 'Calculator'}
           </button>
-          <button
-            data-responsive-focus-key="replay"
-            disabled={!runtimeAvailable}
-            onClick={onReplay}
-            type="button"
-          >
-            {spanish ? 'Repetir' : 'Replay'}
-          </button>
-          {candidateMode
+          {modernWide ? null : replayControl}
+          {reviewerMode
             ? <button
                 data-responsive-focus-key="rewind"
                 disabled={!playbackSeekAvailable || normalizedPlaybackFrame <= 1}
@@ -1871,31 +2579,8 @@ export function LegacyResponsiveLessonShell({
                   : `−${normalizedPlaybackStep} frames`}
               </button>
             : null}
-          <button
-            aria-pressed={paused}
-            data-frame-inspection-action={playbackInspectionActive
-              ? 'resume-current-js-from-inspected-frame'
-              : 'toggle-pause'}
-            data-responsive-focus-key="pause"
-            disabled={
-              !runtimeAvailable || supportOpen
-            }
-            onClick={() => playbackInspectionActive
-              ? onPlaybackResumeFromInspection()
-              : onPausedChange(!paused)}
-            type="button"
-          >
-            {paused && !playbackInspectionActive && !supportOpen
-              ? (spanish ? 'Continuar' : 'Resume')
-              : supportOpen
-                ? (spanish ? 'Herramienta en pausa' : 'Support tool paused')
-                : playbackInspectionActive
-                ? (spanish
-                    ? 'Continuar desde el fotograma'
-                    : 'Continue from frame')
-                : (spanish ? 'Pausa' : 'Pause')}
-          </button>
-          {candidateMode
+          {modernWide ? null : pauseControl}
+          {reviewerMode
             ? <>
                 <button
                   data-responsive-focus-key="forward"
@@ -1958,20 +2643,10 @@ export function LegacyResponsiveLessonShell({
               value={volume}
             />
           </label>
-          <button
-            aria-pressed={volume === 0}
-            data-responsive-focus-key="mute"
-            disabled={!runtimeAvailable || !audioAvailable}
-            onClick={toggleMute}
-            type="button"
-          >
-            {volume === 0
-              ? (spanish ? 'Restaurar volumen' : 'Restore volume')
-              : (spanish ? 'Silenciar' : 'Mute')}
-          </button>
+          {modernWide ? null : muteControl}
         </div>
 
-        {candidateMode
+        {reviewerMode
           ? <p
               className="lesson-shell2__transport-boundary"
               aria-hidden={stageOverlayOpen ? true : undefined}
@@ -1990,38 +2665,57 @@ export function LegacyResponsiveLessonShell({
             </p>
           : null}
 
-        <div
+        {modernWide ? null : <div
           aria-hidden={stageOverlayOpen ? true : undefined}
           className="lesson-shell2__learning-actions"
           data-responsive-focus-surface="persistent"
           inert={stageOverlayOpen ? true : undefined}
         >
-          <button
-            className="lesson-shell2__learning-actions-previous"
-            data-lesson-nav="action-previous"
-            data-responsive-focus-key="previous"
-            disabled={previousDisabled}
-            onClick={onPrevious}
-            type="button"
-          >
-            {spanish ? '← Anterior' : '← Previous'}
-          </button>
-          {completionAction}
-          <button
-            aria-label={nextControlLabel}
-            className="lesson-shell2__learning-actions-next"
-            data-lesson-nav="action-next"
-            data-responsive-focus-key="next"
-            disabled={nextDisabled}
-            onClick={onNext}
-            type="button"
-          >
-            {nextLabel}
-          </button>
-        </div>
+          {previousControl}
+          {nextControl}
+        </div>}
 
         {finishedNotice}
       </article>
+
+      {tutorPanelVisible && tutorContext
+        ? <>
+            <button
+              aria-hidden="true"
+              className="lesson-shell2__nova-scrim"
+              onClick={closeTutor}
+              tabIndex={-1}
+              type="button"
+            />
+            <LessonNovaTutor
+              activeTab={studyTab}
+              context={tutorContext}
+              defaultTab={novaTutorMode === 'study' ? 'read' : 'nova'}
+              frameSnapshot={activeTutorSnapshot}
+              id={tutorPanelId}
+              key={`${novaTutorMode}:${currentAnimationId}`}
+              locale={locale}
+              modal={tutorPanelModal}
+              onClose={closeTutor}
+              onProviderConfirmed={setConfirmedTutorProvider}
+              onTabChange={setStudyTab}
+              placement={novaTutorMode === 'study' ? 'study' : 'focus'}
+              readableContent={learningSupport}
+              vocabulary={tutorVocabulary}
+            />
+          </>
+        : null}
+
+      {classroomBandVisible && tutorContext
+        ? <LessonNovaClassroomBand
+            context={tutorContext}
+            frameSnapshot={activeTutorSnapshot}
+            id={tutorPanelId}
+            locale={locale}
+            onClose={closeTutor}
+            onProviderConfirmed={setConfirmedTutorProvider}
+          />
+        : null}
 
       <button
         aria-hidden="true"

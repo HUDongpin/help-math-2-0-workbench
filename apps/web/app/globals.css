@@ -1318,6 +1318,15 @@ svg {
   text-decoration: none;
 }
 
+.brand--header {
+  border-radius: 12px;
+}
+
+.brand__logo {
+  height: 64px;
+  width: 64px;
+}
+
 .brand__mark {
   align-items: center;
   background: var(--yellow);
@@ -1958,17 +1967,33 @@ svg {
   padding-block: 1.4rem;
 }
 
-/* One breakpoint for every locale: the desktop row is sized above to fit the
-   longest translated labels, so it collapses to the mobile menu at the same
-   width in English and Spanish. Keep this locale-agnostic — a locale-scoped
-   breakpoint here silently drops the navigation landmark for that locale. */
-@media (max-width: 1180px) {
+/* Baseline collapse for every locale. English fits the desktop row from about
+   1024px, so this leaves it comfortable headroom. */
+@media (max-width: 1060px) {
   .desktop-nav,
   .site-header__actions {
     display: none;
   }
 
   .mobile-nav-shell {
+    display: block;
+  }
+}
+
+/* Spanish labels are materially longer, and .container caps the row at 1180px,
+   so a wider viewport never buys them more room — Spanish stops fitting below
+   about 1140px. Collapse that locale earlier rather than letting labels wrap.
+   This is presentation only: .mobile-nav-shell carries the same navigation
+   landmark, so both locales still expose it at every viewport. Any locale-
+   scoped rule here MUST toggle .mobile-nav-shell alongside .desktop-nav —
+   hiding the desktop row on its own silently drops the landmark. */
+@media (max-width: 1180px) {
+  html:lang(es) .desktop-nav,
+  html:lang(es) .site-header__actions {
+    display: none;
+  }
+
+  html:lang(es) .mobile-nav-shell {
     display: block;
   }
 }
@@ -2449,57 +2474,6 @@ body:has(.whole-lesson-page) .site-footer {
   margin-top: .15rem;
 }
 
-.whole-lesson-section-tabs {
-  background: #f8fbff;
-  border-bottom: 1px solid #cbd8e7;
-  display: grid;
-  gap: .45rem;
-  grid-template-columns: repeat(8, minmax(110px, 1fr));
-  overflow-x: auto;
-  padding: .65rem clamp(1rem, 3vw, 2.5rem);
-}
-
-.whole-lesson-section-tabs button {
-  align-items: center;
-  background: #fff;
-  border: 1px solid #aebed0;
-  border-radius: 9px;
-  color: #29415f;
-  cursor: pointer;
-  display: flex;
-  font-size: .74rem;
-  font-weight: 780;
-  gap: .4rem;
-  min-height: 44px;
-  padding: .4rem .55rem;
-  text-align: left;
-}
-
-.whole-lesson-section-tabs button > span {
-  align-items: center;
-  background: #d9e8f8;
-  border-radius: 999px;
-  color: #0758ba;
-  display: flex;
-  flex: 0 0 auto;
-  font-size: .68rem;
-  height: 25px;
-  justify-content: center;
-  width: 25px;
-}
-
-.whole-lesson-section-tabs button[aria-current="step"] {
-  background: #e6f2ff;
-  border-color: #0758ba;
-  box-shadow: inset 0 -3px 0 #0758ba;
-  color: #07367a;
-}
-
-.whole-lesson-section-tabs button[data-complete="true"] > span {
-  background: #d9f5e9;
-  color: #087153;
-}
-
 .whole-lesson-layout {
   display: grid;
   gap: 1rem;
@@ -2912,10 +2886,6 @@ body:has(.whole-lesson-page) .site-footer {
     grid-row: 2;
   }
 
-  .whole-lesson-section-tabs {
-    padding-inline: .8rem;
-  }
-
   .whole-lesson-layout {
     padding: .8rem;
   }
@@ -3132,7 +3102,7 @@ body:has(.lesson-shell2) {
   border-bottom: 1px solid #a8bdd6;
   display: grid;
   gap: .8rem;
-  grid-template-columns: minmax(230px, auto) minmax(140px, 1fr) auto auto;
+  grid-template-columns: minmax(200px, auto) minmax(120px, 1fr) auto auto auto;
   min-height: 48px;
   padding: .45rem clamp(.75rem, 2vw, 2rem);
 }
@@ -3148,9 +3118,11 @@ body:has(.lesson-shell2) {
   font-size: 1.15rem;
 }
 
+/* "Page 3 of 39" and the completion count are progress the learner reads, so
+   they sit on the 16px floor rather than the old .76rem. */
 .lesson-shell2__session-bar span {
   color: #4b627d;
-  font-size: .76rem;
+  font-size: 1rem;
   font-weight: 750;
 }
 
@@ -3158,6 +3130,244 @@ body:has(.lesson-shell2) {
   accent-color: #16a477;
   height: 13px;
   width: 100%;
+}
+
+/* The page counter carries its own completion state, so finishing a page is
+   visible in the progress strip rather than in a control the learner has to
+   press. */
+.lesson-shell2__session-page {
+  align-items: center;
+  border-radius: 999px;
+  display: inline-flex;
+  gap: .3rem;
+  padding: .15rem .45rem;
+}
+
+.lesson-shell2__session-page[data-page-complete='true'] {
+  background: #d9f5e9;
+  color: #087153;
+}
+
+.lesson-shell2__session-page-tick {
+  color: #087153;
+  font-size: 1rem;
+  font-weight: 850;
+  visibility: hidden;
+}
+
+.lesson-shell2__session-page[data-page-complete='true']
+  .lesson-shell2__session-page-tick {
+  visibility: visible;
+}
+
+/* Narration is how a language learner receives the lesson, so it holds a named
+   seat in the chrome in every state — including the states with nothing to
+   press. Only the state line and the treatment change, so the control reads
+   the same whether the browser autoplayed the audio or refused to. It is a
+   sibling of the language pill and borrows that family's shape. */
+.lesson-shell2__narration-slot {
+  display: flex;
+  min-width: 0;
+}
+
+.lesson-shell2__narration {
+  align-items: center;
+  background: #fff;
+  border: 1px solid #9eb8d4;
+  border-radius: 8px;
+  color: #214b79;
+  cursor: pointer;
+  display: flex;
+  gap: .45rem;
+  min-height: 48px;
+  min-width: 0;
+  padding: .2rem .6rem;
+  text-align: left;
+  width: 100%;
+}
+
+.lesson-shell2__narration:disabled {
+  cursor: default;
+}
+
+/* One glyph for every state. A rising staircase reads as "ready", the same
+   three bars animate while narration sounds, and they flatten when the page
+   carries none — so the control never swaps icons under the learner. */
+/* The session bar colours every bare span it contains. These two are wrappers,
+   not copy, so they hand the state colour through to the bars and the label
+   instead of overriding it with the bar's own text grey. */
+.lesson-shell2__narration .lesson-shell2__narration-icon,
+.lesson-shell2__narration .lesson-shell2__narration-copy {
+  color: inherit;
+}
+
+.lesson-shell2__narration-icon {
+  align-items: flex-end;
+  display: flex;
+  flex: none;
+  gap: 2px;
+  height: 16px;
+}
+
+.lesson-shell2__narration .lesson-shell2__narration-icon > span {
+  background: currentcolor;
+  border-radius: 1px;
+  color: inherit;
+  display: block;
+  width: 3px;
+}
+
+.lesson-shell2__narration .lesson-shell2__narration-icon > span:nth-child(1) {
+  height: 6px;
+}
+
+.lesson-shell2__narration .lesson-shell2__narration-icon > span:nth-child(2) {
+  height: 11px;
+}
+
+.lesson-shell2__narration .lesson-shell2__narration-icon > span:nth-child(3) {
+  height: 16px;
+}
+
+.lesson-shell2__narration-copy {
+  display: grid;
+  min-width: 0;
+}
+
+.lesson-shell2__narration .lesson-shell2__narration-name {
+  color: inherit;
+  font-size: 1rem;
+  font-weight: 850;
+  letter-spacing: .09em;
+  line-height: 1.2;
+  opacity: .75;
+  text-transform: uppercase;
+}
+
+/* Starting or stopping narration is a decision the learner reads, so the
+   action line clears 18px while its supporting copy sits on the 16px floor. */
+.lesson-shell2__narration .lesson-shell2__narration-action {
+  color: inherit;
+  font-size: 1.125rem;
+  font-weight: 850;
+  line-height: 1.2;
+}
+
+.lesson-shell2__narration .lesson-shell2__narration-hint {
+  color: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.2;
+  opacity: .85;
+}
+
+.lesson-shell2__narration .lesson-shell2__narration-muted {
+  background: #e7edf5;
+  border-radius: 999px;
+  color: #4b5f76;
+  flex: none;
+  font-size: 1rem;
+  font-weight: 850;
+  padding: .1rem .35rem;
+}
+
+/* This page carries no narration. Stated plainly and kept in place, so the
+   bar never reflows between pages and the control never goes missing. */
+.lesson-shell2__narration[data-narration-status='unavailable'] {
+  background: #eef2f7;
+  border-color: #cbd6e3;
+  color: #59687b;
+}
+
+.lesson-shell2__narration[data-narration-status='unavailable']
+  .lesson-shell2__narration-icon > span {
+  height: 4px;
+}
+
+/* Narration exists but is bound to the timeline: it plays with the page and
+   there is nothing to start on demand. Reported, not offered. */
+.lesson-shell2__narration[data-narration-status='waiting'] {
+  color: #35597f;
+}
+
+.lesson-shell2__narration[data-narration-status='idle'] {
+  border-color: #0758ba;
+  color: #0758ba;
+}
+
+/* The browser refused autoplay and is waiting for a gesture. This is the one
+   state that asks the learner for something, so it is the one state that
+   raises its voice — as an invitation, not an error. */
+/* The ring is a shadow rather than a thicker border: a border would change the
+   control's height, and the session bar must not jump when a browser refuses
+   autoplay a moment after the page settles. */
+.lesson-shell2__narration[data-narration-status='blocked'] {
+  background: #fff4d8;
+  border-color: #b07716;
+  box-shadow: 0 0 0 2px #f0cf8b;
+  color: #7a4b06;
+}
+
+.lesson-shell2__narration[data-narration-status='playing'] {
+  background: #0758ba;
+  border-color: #0758ba;
+  color: #fff;
+}
+
+.lesson-shell2__narration[data-narration-status='playing']
+  .lesson-shell2__narration-muted {
+  background: #d7e6f8;
+  color: #0d3f7f;
+}
+
+/* The caption is dimmed to sit behind the state line, but not on the filled
+   treatment, where the same dimming drops it into the background. */
+.lesson-shell2__narration[data-narration-status='playing']
+  .lesson-shell2__narration-name {
+  opacity: .9;
+}
+
+.lesson-shell2__narration[data-narration-status='playing']
+  .lesson-shell2__narration-icon > span {
+  animation: lesson-narration-bars 1s ease-in-out infinite;
+}
+
+.lesson-shell2__narration[data-narration-status='playing']
+  .lesson-shell2__narration-icon > span:nth-child(2) {
+  animation-delay: .18s;
+}
+
+.lesson-shell2__narration[data-narration-status='playing']
+  .lesson-shell2__narration-icon > span:nth-child(3) {
+  animation-delay: .36s;
+}
+
+/* Volume is owned by the lesson controls. Narration only reports that the
+   sound is turned down, so a learner who hears nothing knows why. */
+.lesson-shell2__narration[data-narration-muted='true']
+  .lesson-shell2__narration-icon {
+  opacity: .45;
+}
+
+/* In the compact control grid narration spans the row: it is the one control
+   there whose label is a sentence, and the layout that hides the session bar
+   is exactly the layout where it must stay readable. */
+.lesson-shell2__modern-toolbar .lesson-shell2__narration {
+  grid-column: 1 / -1;
+  justify-content: center;
+  text-align: left;
+}
+
+@keyframes lesson-narration-bars {
+  0%, 100% { height: 5px; }
+  50% { height: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lesson-shell2__narration[data-narration-status='playing']
+    .lesson-shell2__narration-icon > span {
+    animation: none;
+  }
 }
 
 .lesson-shell2__language {
@@ -3174,11 +3384,11 @@ body:has(.lesson-shell2) {
   border-radius: 5px;
   color: #214b79;
   display: flex;
-  font-size: .72rem;
+  font-size: 1rem;
   font-weight: 900;
   justify-content: center;
-  min-height: 40px;
-  min-width: 40px;
+  min-height: 48px;
+  min-width: 48px;
   text-decoration: none;
 }
 
@@ -3307,29 +3517,6 @@ body:has(.lesson-shell2) {
   width: 100%;
 }
 
-.lesson-shell2__stage .runtime-toolbar--legacy-audio {
-  background: rgb(255 255 255 / 94%);
-  border: 1px solid #769ac0;
-  border-radius: 6px;
-  min-height: 44px;
-  padding: .25rem;
-  position: absolute;
-  right: .5rem;
-  top: .5rem;
-  z-index: 4;
-}
-
-.lesson-shell2__stage .runtime-toolbar--legacy-audio:not(:has(.runtime-audio-controls)) {
-  display: none;
-}
-
-.lesson-shell2__stage .runtime-toolbar--legacy-audio button {
-  background: #073684;
-  border-radius: 5px;
-  min-height: 40px;
-  padding: .35rem .6rem;
-}
-
 .lesson-shell2__stage .runtime-stage,
 .lesson-shell2__stage .runtime-stage > div,
 .lesson-shell2__stage .faithful-conversion,
@@ -3433,33 +3620,17 @@ body:has(.lesson-shell2) {
   height: 100%;
 }
 
-.lesson-shell2__volume {
-  align-items: center;
-  display: flex;
-  gap: .1rem;
-  min-height: 44px;
-}
-
-.lesson-shell2__volume img {
-  height: 36px;
-  pointer-events: none;
-  width: 36px;
-}
-
-.lesson-shell2__volume input {
-  accent-color: #ffcc00;
-  cursor: pointer;
-  width: 48px;
-}
-
 .lesson-shell2__learning-actions {
   align-items: center;
   display: grid;
   gap: .6rem;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr 1fr;
   margin-top: .8rem;
 }
 
+/* K–5 control floor: 18px, because Previous/Next are read to make a decision,
+   and 48px rather than the 24px WCAG minimum — small hands, trackpads, and
+   shared classroom hardware all want headroom above the floor. */
 .lesson-shell2__learning-actions button,
 .lesson-shell2__status button {
   background: #fff;
@@ -3467,19 +3638,15 @@ body:has(.lesson-shell2) {
   border-radius: 8px;
   color: #0758ba;
   cursor: pointer;
+  font-size: 1.125rem;
   font-weight: 850;
-  min-height: 46px;
+  min-height: 48px;
+  min-width: 48px;
   padding: .5rem .8rem;
 }
 
 .lesson-shell2__learning-actions > button:first-child {
   justify-self: start;
-}
-
-.lesson-shell2__learning-actions > button:nth-child(2)[aria-pressed='true'] {
-  background: #d9f5e9;
-  border-color: #168160;
-  color: #087153;
 }
 
 .lesson-shell2__learning-actions .lesson-shell2__learning-actions-next {
@@ -3488,22 +3655,23 @@ body:has(.lesson-shell2) {
   justify-self: end;
 }
 
+/* #7b8795 measured 3.66:1 on this white face. #67717e is 4.95:1, so the
+   disabled label stays readable; "disabled" is still carried by the pale
+   border and the cursor rather than by contrast alone. */
 .lesson-shell2__learning-actions button:disabled {
   border-color: #a8b4c2;
-  color: #7b8795;
+  color: #67717e;
   cursor: not-allowed;
 }
 
-/* Exactly one Back and one Next reach the learner. While the authored stage
-   hit areas are the live control surface, the labelled copies below the stage
-   would be a second pair of the same two controls, so only the review action
-   remains. The row itself is never hidden: once the modern surface takes over
-   (`inert-modern-surface`) these buttons become the only navigation. */
+/* Exactly one Back and one Next reach the learner. Now that page completion is
+   earned by watching rather than pressed, this row holds nothing but the
+   labelled Previous/Next pair, so while the authored stage hit areas are the
+   live control surface the whole row is a duplicate and stands down. Once the
+   modern surface takes over (`inert-modern-surface`) it returns as the only
+   navigation. */
 .lesson-shell2[data-legacy-hit-control-mode='active-visible-stage']
-  :is(
-    .lesson-shell2__learning-actions-previous,
-    .lesson-shell2__learning-actions-next
-  ) {
+  .lesson-shell2__learning-actions {
   display: none;
 }
 
@@ -4375,8 +4543,8 @@ body:has(.lesson-shell2) {
 .lesson-shell2[data-layout-density='compact-height']
   .lesson-shell2__language
   a {
-  min-height: 44px;
-  min-width: 44px;
+  min-height: 48px;
+  min-width: 48px;
 }
 
 .lesson-shell2[data-layout-density='compact-height']
@@ -4462,8 +4630,8 @@ body:has(.lesson-shell2) {
   }
 
   .lesson-shell2__language a {
-    min-height: 44px;
-    min-width: 44px;
+    min-height: 48px;
+    min-width: 48px;
   }
 
   .lesson-shell2__disclosure .controlled-ceo-preview-boundary p {
@@ -4495,6 +4663,552 @@ body:has(.lesson-shell2) {
 
   .lesson-shell2__page-heading h1 {
     font-size: 1.35rem;
+  }
+}
+
+/* ===========================================================================
+   Nova Tutor — Focus-mode placement.
+
+   The launcher is a named control in the lesson bar, not a floating glyph over
+   the mathematics. Opening it adds a 290px support column to the body grid, so
+   the aspect-locked lesson plane resizes and remains completely visible.
+   ========================================================================== */
+.lesson-shell2[data-host-presentation='modern-wide'] {
+  --lesson-nova: #413db0;
+  --lesson-nova-fill: #39359f;
+  --lesson-nova-ink: #292574;
+  --lesson-nova-pale: #efefff;
+  --lesson-nova-cyan: #2fa3d7;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-tutor-open='true']
+  .lesson-shell2__body {
+  grid-template-columns:
+    clamp(9rem, 13vw, 11.5rem)
+    minmax(0, 1fr)
+    clamp(16rem, 18vw, 18.125rem);
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-tutor-open='true']
+  .lesson-shell2__learning-column {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.lesson-shell2__ask-nova {
+  align-items: center;
+  background: var(--lesson-nova-pale) !important;
+  border: 2px solid var(--lesson-nova) !important;
+  border-radius: 999px !important;
+  color: var(--lesson-nova-ink) !important;
+  display: inline-flex;
+  flex: none;
+  font-size: .82rem !important;
+  font-weight: 850 !important;
+  gap: .45rem;
+  height: 3rem;
+  min-height: 3rem !important;
+  padding: 0 .9rem !important;
+  white-space: nowrap;
+}
+
+.lesson-shell2__ask-nova:hover,
+.lesson-shell2__ask-nova[aria-expanded='true'] {
+  background: var(--lesson-nova-fill) !important;
+  color: #fff !important;
+}
+
+.lesson-shell2__nova-sparkle {
+  display: inline-grid;
+  flex: none;
+  height: 1.1rem;
+  place-items: center;
+  width: 1.1rem;
+}
+
+.lesson-shell2__nova-sparkle svg {
+  fill: currentcolor;
+  height: 100%;
+  width: 100%;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > .lesson-shell2__ask-nova {
+  order: 4;
+}
+
+/* Match the prototype's one-line learner bar: transport, progress, Ask Nova,
+   then Replay, Mute, and one support launcher. The tools remain available in
+   the support surfaces instead of competing with the primary controls. */
+@media (min-width: 1280px) {
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar {
+    flex-wrap: nowrap;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > :is(
+      .lesson-shell2__narration,
+      label:has([data-responsive-focus-key='volume']),
+      [data-responsive-focus-key='help'],
+      [data-responsive-focus-key='key-terms'],
+      [data-responsive-focus-key='calculator'],
+      [data-responsive-focus-key='exit'],
+      [data-responsive-focus-key='language-en'],
+      [data-responsive-focus-key='language-es']
+    ) {
+    display: none;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > :is(
+      [data-responsive-focus-key='replay'],
+      [data-responsive-focus-key='mute']
+    ) {
+    order: 5;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > [data-responsive-focus-key='map'] {
+    border-radius: 999px;
+    font-size: 0;
+    height: 3rem;
+    margin-inline-start: 0;
+    min-height: 3rem;
+    min-width: 3rem;
+    order: 5;
+    overflow: hidden;
+    padding: 0;
+    text-indent: -9999px;
+    width: 3rem;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > [data-responsive-focus-key='map']::before {
+    background-color: currentcolor;
+    content: '';
+    display: block;
+    height: 46%;
+    mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M4%204h16v4H4zm0%206h16v4H4zm0%206h16v4H4z%27%2F%3E%3C%2Fsvg%3E");
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    text-indent: 0;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M4%204h16v4H4zm0%206h16v4H4zm0%206h16v4H4z%27%2F%3E%3C%2Fsvg%3E");
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    width: 46%;
+  }
+}
+
+.lesson-shell2__nova-panel {
+  align-self: stretch;
+  background: #f8f9fc;
+  border: 1px solid #cfd9e6;
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgb(20 33 61 / 10%);
+  display: flex;
+  flex-direction: column;
+  grid-column: 3;
+  grid-row: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.lesson-shell2__nova-panel-header {
+  align-items: center;
+  background: linear-gradient(135deg, var(--lesson-nova-fill), #4c48bd);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  min-height: 64px;
+  padding: .7rem .75rem;
+}
+
+.lesson-shell2__nova-panel-header > div {
+  display: grid;
+  gap: .15rem;
+  min-width: 0;
+}
+
+.lesson-shell2__nova-panel-header span {
+  align-items: center;
+  color: #cfceff;
+  display: flex;
+  font-size: .68rem;
+  font-weight: 800;
+  gap: .35rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.lesson-shell2__nova-panel-header strong {
+  font-size: .95rem;
+}
+
+.lesson-shell2__nova-close {
+  align-items: center;
+  background: transparent;
+  border: 1.5px solid rgb(255 255 255 / 55%);
+  border-radius: 999px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  flex: none;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 850;
+  height: 44px;
+  justify-content: center;
+  width: 44px;
+}
+
+.lesson-shell2__nova-close:hover {
+  background: rgb(255 255 255 / 18%);
+}
+
+.lesson-shell2__nova-tabs {
+  display: flex;
+  flex: none;
+  gap: .15rem;
+  padding: .55rem .55rem 0;
+}
+
+.lesson-shell2__nova-tabs button {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: #5f7086;
+  cursor: pointer;
+  flex: 1;
+  font: inherit;
+  font-size: .72rem;
+  font-weight: 750;
+  min-height: 44px;
+  min-width: 0;
+  overflow: hidden;
+  padding: .45rem .1rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lesson-shell2__nova-tabs button:first-child {
+  flex: 1.25;
+}
+
+.lesson-shell2__nova-tabs button[aria-selected='true'] {
+  border-bottom-color: var(--lesson-nova);
+  color: var(--lesson-nova-ink);
+}
+
+.lesson-shell2__nova-tab-panel {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: .85rem;
+  min-height: 0;
+  overflow-y: auto;
+  padding: .8rem .8rem 1rem;
+}
+
+.lesson-shell2__nova-tab-panel[hidden] {
+  display: none;
+}
+
+.lesson-shell2__nova-context {
+  align-items: center;
+  background: var(--lesson-nova-pale);
+  border: 1px solid var(--lesson-nova);
+  border-radius: 7px;
+  display: flex;
+  flex: none;
+  gap: .5rem;
+  padding: .5rem;
+}
+
+.lesson-shell2__nova-context > span {
+  aspect-ratio: 800 / 415;
+  background: #b8dcf4;
+  border: 1px solid var(--lesson-nova);
+  border-radius: 3px;
+  flex: none;
+  width: 2.6rem;
+}
+
+.lesson-shell2__nova-context p {
+  color: var(--lesson-nova-ink);
+  font-size: .7rem;
+  line-height: 1.35;
+  margin: 0;
+  min-width: 0;
+}
+
+.lesson-shell2__nova-context b {
+  display: block;
+  font-size: .64rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.lesson-shell2__nova-status {
+  background: #fff;
+  border: 1px solid #cfd3ee;
+  border-left: 4px solid var(--lesson-nova);
+  border-radius: 7px;
+  color: #39445b;
+  display: grid;
+  flex: none;
+  font-size: .875rem;
+  gap: .3rem;
+  line-height: 1.4;
+  padding: .65rem .7rem;
+}
+
+.lesson-shell2__nova-status strong {
+  color: var(--lesson-nova-ink);
+  font-size: 1rem;
+}
+
+.lesson-shell2__nova-thread {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 5rem;
+  overflow-y: auto;
+}
+
+.lesson-shell2__nova-empty {
+  align-content: center;
+  background: #f8f9fc;
+  border: 1px dashed #c7cfdd;
+  border-radius: 7px;
+  color: #526177;
+  display: grid;
+  flex: 1;
+  font-size: .875rem;
+  gap: .25rem;
+  line-height: 1.4;
+  min-height: 4rem;
+  padding: .7rem;
+  text-align: center;
+}
+
+.lesson-shell2__nova-empty strong {
+  color: #263c58;
+  font-size: 1rem;
+}
+
+.lesson-shell2__nova-message {
+  align-self: flex-start;
+  background: #fff;
+  border: 1px solid #cfd9e6;
+  border-bottom-left-radius: 2px;
+  border-radius: 7px;
+  color: #1e3350;
+  font-size: .78rem;
+  line-height: 1.45;
+  max-width: 94%;
+  padding: .65rem .7rem;
+}
+
+.lesson-shell2__nova-message strong {
+  color: var(--lesson-nova);
+}
+
+.lesson-shell2__nova-message p {
+  border-top: 1px solid #e0e5f2;
+  color: #554f86;
+  font-size: .68rem;
+  margin: .55rem 0 0;
+  padding-top: .55rem;
+}
+
+.lesson-shell2__nova-chips {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: .35rem;
+}
+
+.lesson-shell2__nova-chips > strong {
+  color: #4b5d74;
+  flex-basis: 100%;
+  font-size: .875rem;
+  letter-spacing: .04em;
+}
+
+.lesson-shell2__nova-chips button {
+  background: #fff;
+  border: 1px solid var(--lesson-nova);
+  border-radius: 999px;
+  color: var(--lesson-nova-ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: .68rem;
+  font-weight: 700;
+  min-height: 44px;
+  padding: .38rem .7rem;
+}
+
+.lesson-shell2__nova-chips button:hover {
+  background: var(--lesson-nova-fill);
+  color: #fff;
+}
+
+.lesson-shell2__nova-input {
+  align-items: center;
+  display: grid;
+  flex: none;
+  gap: .4rem;
+  grid-template-areas:
+    "draft draft send"
+    "mic photo .";
+  grid-template-columns: auto auto minmax(0, 1fr);
+}
+
+.lesson-shell2__nova-input input {
+  background: #fff;
+  border: 1.5px solid #bbc8d8;
+  border-radius: 999px;
+  color: #1e3350;
+  flex: 1;
+  font: inherit;
+  font-size: .75rem;
+  min-height: 44px;
+  min-width: 0;
+  padding: .45rem .75rem;
+  grid-area: draft;
+}
+
+.lesson-shell2__nova-input input::placeholder {
+  color: #66758b;
+  opacity: 1;
+}
+
+.lesson-shell2__nova-mic,
+.lesson-shell2__nova-camera,
+.lesson-shell2__nova-send {
+  align-items: center;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  flex: none;
+  height: 46px;
+  justify-content: center;
+  width: 46px;
+}
+
+.lesson-shell2__nova-mic {
+  background: var(--lesson-nova-fill);
+  border: 0;
+  color: #fff;
+  grid-area: mic;
+}
+
+.lesson-shell2__nova-camera {
+  background: #fff;
+  border: 1.5px solid #bbc8d8;
+  color: #43566e;
+  grid-area: photo;
+}
+
+.lesson-shell2__nova-send {
+  background: var(--lesson-nova-fill);
+  border: 0;
+  color: #fff;
+  font: inherit;
+  font-size: .875rem;
+  font-weight: 800;
+  grid-area: send;
+  height: 44px;
+  padding: 0 .65rem;
+  width: auto;
+}
+
+.lesson-shell2__nova-input button:disabled,
+.lesson-shell2__nova-classroom-mic:disabled {
+  cursor: not-allowed;
+  filter: grayscale(.35);
+  opacity: .55;
+}
+
+.lesson-shell2__nova-mic svg,
+.lesson-shell2__nova-camera svg {
+  fill: currentcolor;
+  height: 48%;
+  width: 48%;
+}
+
+.lesson-shell2__nova-notice {
+  color: #6d3c23;
+  font-size: .68rem;
+  line-height: 1.35;
+  margin: -.35rem 0 0;
+  min-height: 1.85em;
+}
+
+.lesson-shell2__nova-read h3,
+.lesson-shell2__nova-words h3 {
+  color: var(--lesson-nova-ink);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.lesson-shell2__nova-read p,
+.lesson-shell2__nova-words li {
+  color: #3e526b;
+  font-size: .8rem;
+  line-height: 1.5;
+}
+
+.lesson-shell2__nova-words ul {
+  display: grid;
+  gap: .45rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lesson-shell2__nova-words li {
+  background: #fff;
+  border: 1px solid #cfd9e6;
+  border-radius: 7px;
+  font-weight: 700;
+  padding: .6rem .7rem;
+}
+
+.lesson-shell2__ask-nova:focus-visible,
+.lesson-shell2__nova-panel :is(button, input):focus-visible {
+  outline: 3px solid var(--lesson-nova-cyan);
+  outline-offset: 2px;
+}
+
+@media (max-width: 1279px) {
+  .lesson-shell2[data-host-presentation='modern-wide'][data-tutor-open='true']
+    .lesson-shell2__body {
+    grid-template-columns: clamp(7rem, 13vw, 10rem) minmax(0, 1fr);
+  }
+
+  .lesson-shell2__nova-panel {
+    bottom: 1rem;
+    max-width: min(90vw, 18.125rem);
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+    width: 18.125rem;
+    z-index: 100;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lesson-shell2__ask-nova,
+  .lesson-shell2__nova-panel,
+  .lesson-shell2__nova-panel * {
+    scroll-behavior: auto !important;
+    transition: none !important;
   }
 }
 
@@ -4650,6 +5364,14 @@ body:has(.lesson-shell2) {
     display: none;
   }
 
+  /* Narration takes a row of its own rather than a sliver of one. Its label is
+     a sentence, and squeezing it into the leftover column is what turns the
+     most important control on the page into an unreadable stub. */
+  .lesson-shell2__narration-slot {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+
   .lesson-shell2__session-bar progress {
     grid-column: 1 / -1;
     grid-row: 2;
@@ -4718,11 +5440,15 @@ body:has(.lesson-shell2) {
   }
 
   .lesson-shell2__session-bar > span {
-    font-size: .68rem;
+    font-size: 1rem;
+  }
+
+  .lesson-shell2__narration .lesson-shell2__narration-action {
+    font-size: 1.125rem;
   }
 
   .lesson-shell2__language a {
-    min-width: 44px;
+    min-width: 48px;
   }
 
   .lesson-shell2__body {
@@ -4767,15 +5493,6 @@ body:has(.lesson-shell2) {
     width: 100%;
   }
 
-  .lesson-shell2__volume img {
-    display: none;
-  }
-
-  .lesson-shell2__volume input {
-    min-height: 44px;
-    width: 58px;
-  }
-
   .lesson-shell2__learning-actions {
     grid-template-columns: 1fr 1fr;
   }
@@ -4783,11 +5500,6 @@ body:has(.lesson-shell2) {
   .lesson-shell2__learning-actions > button:first-child,
   .lesson-shell2__learning-actions .lesson-shell2__learning-actions-next {
     justify-self: stretch;
-  }
-
-  .lesson-shell2__learning-actions > button:nth-child(2) {
-    grid-column: 1 / -1;
-    grid-row: 2;
   }
 
   .lesson-shell2__status {
@@ -4819,10 +5531,6 @@ body:has(.lesson-shell2) {
   .lesson-shell2__media-pod > button img {
     max-width: 40px;
   }
-
-  .lesson-shell2__volume input {
-    width: 42px;
-  }
 }
 
 /* Native HELP Math composite stage.
@@ -4835,6 +5543,10 @@ body:has(.lesson-shell2) {
   aspect-ratio: var(--lesson-stage-aspect);
   background: var(--legacy-pale);
   box-shadow: 0 16px 38px rgb(0 35 92 / 22%);
+  /* The authored plane is the type scale for anything drawn on the chrome. A
+     query container lets the live lesson title be sized in authored stage
+     pixels and still track the artwork at any rendered stage width. */
+  container-type: inline-size;
   isolation: isolate;
   max-height: var(--lesson-stage-max-height);
   max-width: min(
@@ -5150,6 +5862,43 @@ body:has(.lesson-shell2) {
 
 .lesson-shell2__source-chrome-image--bottom {
   clip-path: inset(var(--lesson-chrome-bottom-clip) 0 0 0);
+}
+
+/* The lesson's own name as live text, sitting on the header band above the
+   chrome artwork (z-index 5) and below the source hit areas (z-index 8).
+   Typography is the authored `NewTitle1` spec — Verdana 25 in #ffffff on the
+   800-wide plane — carried in as custom properties, so the text matches what
+   the original runtime would have drawn there rather than a house style. The
+   floor keeps it legible once the stage scales below roughly 360px, where a
+   pure authored-pixel size would fall under 11px. */
+.lesson-shell2__chrome-lesson-title {
+  align-items: center;
+  color: var(--lesson-chrome-title-color, #fff);
+  display: flex;
+  font-family: var(--lesson-chrome-title-font, Verdana), Geneva, sans-serif;
+  font-size: clamp(.7rem, var(--lesson-chrome-title-size, 3.125cqw), 2rem);
+  font-weight: 400;
+  height: var(--lesson-chrome-title-height, 9.833333%);
+  justify-content: center;
+  left: var(--lesson-chrome-title-left, 10.25%);
+  line-height: 1.15;
+  margin: 0;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  /* Only the glyphs take the pointer, so selecting the title never steals a
+     click from the source hit areas sharing this band. */
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  text-wrap: balance;
+  top: var(--lesson-chrome-title-top, 8%);
+  width: var(--lesson-chrome-title-width, 89%);
+  z-index: 6;
+}
+
+.lesson-shell2__chrome-lesson-title > span {
+  pointer-events: auto;
+  user-select: text;
 }
 
 .lesson-shell2__legacy-header-hits,
@@ -5676,11 +6425,6 @@ body:has(.lesson-shell2) {
   outline-offset: 3px;
 }
 
-.lesson-shell2__legacy-stage .runtime-toolbar--legacy-audio {
-  right: 1%;
-  top: 19%;
-}
-
 .lesson-shell2__learning-support {
   margin-top: .85rem;
   min-width: 0;
@@ -5869,9 +6613,11 @@ body:has(.lesson-shell2) {
   text-align: center;
 }
 
+/* Narration carries its own state treatment, so it opts out of the shared
+   control skin rather than fighting it for specificity. */
 .lesson-shell2[data-modern-control-presentation='true']
   .lesson-shell2__modern-toolbar
-  :is(button, label, a) {
+  :is(button:not(.lesson-shell2__narration), label, a) {
   align-items: center;
   background: #fff;
   border: 2px solid #0758ba;
@@ -5879,14 +6625,31 @@ body:has(.lesson-shell2) {
   color: #0758ba;
   cursor: pointer;
   display: flex;
-  font-size: .72rem;
+  font-size: 1rem;
   font-weight: 850;
   justify-content: center;
-  min-height: 44px;
-  min-width: 44px;
+  min-height: 48px;
+  min-width: 48px;
   padding: .35rem;
   text-align: center;
   text-decoration: none;
+}
+
+/* Choosing a tool or a direction is a decision the learner reads, so these
+   clear 18px; the transport and frame-inspection controls beside them stay at
+   the 16px floor. */
+.lesson-shell2[data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar
+  :is(
+    [data-responsive-focus-key='map'],
+    [data-responsive-focus-key='key-terms'],
+    [data-responsive-focus-key='calculator'],
+    [data-responsive-focus-key='help'],
+    [data-responsive-focus-key='exit'],
+    [data-responsive-focus-key='previous'],
+    [data-responsive-focus-key='next']
+  ) {
+  font-size: 1.125rem;
 }
 
 .lesson-shell2[data-modern-control-presentation='true']
@@ -5897,19 +6660,25 @@ body:has(.lesson-shell2) {
   gap: .1rem;
 }
 
+/* At .6rem this label rendered 9.6px into a 43px box and broke "VOLUME"
+   mid-word. It sits on the 16px floor now and is allowed to size its own
+   column rather than wrap. */
 .lesson-shell2[data-modern-control-presentation='true']
   .lesson-shell2__modern-toolbar
   label
   span {
-  font-size: .6rem;
+  font-size: 1rem;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
+/* The volume and timeline sliders are learner controls too, so they get the
+   same 48px grab height as the buttons around them. */
 .lesson-shell2[data-modern-control-presentation='true']
   .lesson-shell2__modern-toolbar
   input {
   cursor: pointer;
-  min-height: 24px;
+  min-height: 48px;
   width: 100%;
 }
 
@@ -5927,7 +6696,7 @@ body:has(.lesson-shell2) {
     margin-top: .65rem;
   }
 
-  .lesson-shell2__modern-toolbar button,
+  .lesson-shell2__modern-toolbar button:not(.lesson-shell2__narration),
   .lesson-shell2__modern-toolbar label,
   .lesson-shell2__modern-toolbar > a {
     align-items: center;
@@ -5937,14 +6706,27 @@ body:has(.lesson-shell2) {
     color: #0758ba;
     cursor: pointer;
     display: flex;
-    font-size: .72rem;
+    font-size: 1rem;
     font-weight: 850;
     justify-content: center;
-    min-height: 44px;
+    min-height: 48px;
     min-width: 0;
     padding: .35rem;
     text-align: center;
     text-decoration: none;
+  }
+
+  .lesson-shell2__modern-toolbar
+    :is(
+      [data-responsive-focus-key='map'],
+      [data-responsive-focus-key='key-terms'],
+      [data-responsive-focus-key='calculator'],
+      [data-responsive-focus-key='help'],
+      [data-responsive-focus-key='exit'],
+      [data-responsive-focus-key='previous'],
+      [data-responsive-focus-key='next']
+    ) {
+    font-size: 1.125rem;
   }
 
   .lesson-shell2__modern-toolbar label {
@@ -5954,13 +6736,14 @@ body:has(.lesson-shell2) {
   }
 
   .lesson-shell2__modern-toolbar label span {
-    font-size: .6rem;
+    font-size: 1rem;
     text-transform: uppercase;
+    white-space: nowrap;
   }
 
   .lesson-shell2__modern-toolbar input {
     cursor: pointer;
-    min-height: 24px;
+    min-height: 48px;
     width: 100%;
   }
 
@@ -6138,7 +6921,7 @@ body:has(.lesson-shell2) {
 
   .lesson-shell2__modern-completion span {
     color: #17395f;
-    font-size: .65rem;
+    font-size: 1rem;
     font-weight: 850;
     white-space: nowrap;
   }
@@ -6159,11 +6942,6 @@ body:has(.lesson-shell2) {
   .lesson-shell2__learning-actions > button:first-child,
   .lesson-shell2__learning-actions .lesson-shell2__learning-actions-next {
     justify-self: stretch;
-  }
-
-  .lesson-shell2__learning-actions > button:nth-child(2) {
-    grid-column: 1 / -1;
-    grid-row: 2;
   }
 
   .lesson-shell2__finished {
@@ -6425,11 +7203,11 @@ body:has(.lesson-shell2) {
     color: #0758ba;
     cursor: pointer;
     display: flex;
-    font-size: .72rem;
+    font-size: 1rem;
     font-weight: 850;
     justify-content: center;
-    min-height: 44px;
-    min-width: 44px;
+    min-height: 48px;
+    min-width: 48px;
     padding: .35rem;
     text-align: center;
     text-decoration: none;
@@ -6453,8 +7231,9 @@ body:has(.lesson-shell2) {
     .lesson-shell2__modern-toolbar
     label
     span {
-    font-size: .6rem;
+    font-size: 1rem;
     text-transform: uppercase;
+    white-space: nowrap;
   }
 
   .lesson-shell2:is(
@@ -6464,7 +7243,7 @@ body:has(.lesson-shell2) {
     .lesson-shell2__modern-toolbar
     input {
     cursor: pointer;
-    min-height: 24px;
+    min-height: 48px;
     width: 100%;
   }
 
@@ -6518,19 +7297,9 @@ body:has(.lesson-shell2) {
       [data-tool-presentation='overlay']
     )
     .lesson-shell2__learning-actions
-    > button:nth-child(2) {
+    .lesson-shell2__learning-actions-next {
     grid-column: 2;
     grid-row: 1;
-  }
-
-  .lesson-shell2:is(
-      [data-tool-open='false'],
-      [data-tool-presentation='overlay']
-    )
-    .lesson-shell2__learning-actions
-    .lesson-shell2__learning-actions-next {
-    grid-column: 1 / -1;
-    grid-row: 2;
   }
 
   .lesson-shell2:is(
@@ -6647,6 +7416,608 @@ body:has(.lesson-shell2) {
   }
 }
 
+/* ==========================================================================
+   Widescreen host presentation (`modern-wide`).
+
+   The authored plane stays 800 x 600 and every drawing coordinate is
+   unchanged. What changes is the window onto it: the stage box takes the
+   aspect of the authored content band, and the page renderer is pushed up
+   behind that window by the declared header height, so the band between the
+   source chrome fills it. Both offsets arrive as custom properties derived
+   from the descriptor, never restated here.
+
+   Cropping is lossless: the chrome asset is opaque across both bands, so the
+   rows removed here were never visible in the legacy presentation either.
+   ========================================================================== */
+.lesson-shell2[data-host-presentation='modern-wide']
+  .lesson-shell2__legacy-stage {
+  /* The band is the layout unit now, so the 800px authored cap is retired.
+     What remains is the measured fit: whichever of the container width or the
+     remaining viewport height binds first, resolved in the layout policy. */
+  max-height: none;
+  max-width: var(--lesson-stage-viewport-fit-width, 100%);
+}
+
+/* The legacy layout puts the heading and the control rail in a second column
+   beside a fixed 800px stage. Here the plane takes the whole learning column
+   and the controls stack beneath it, which is what buys the width back: at
+   1920 the stage stops being one of two columns and becomes the column. */
+.lesson-shell2[data-host-presentation='modern-wide']:is(
+    [data-tool-open='false'],
+    [data-tool-presentation='overlay']
+  )
+  .lesson-shell2__learning-column {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.lesson-shell2[data-host-presentation='modern-wide']:is(
+    [data-tool-open='false'],
+    [data-tool-presentation='overlay']
+  )
+  .lesson-shell2__page-heading {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide']:is(
+    [data-tool-open='false'],
+    [data-tool-presentation='overlay']
+  )
+  .lesson-shell2__legacy-stage {
+  grid-column: 1;
+  grid-row: 2;
+  justify-self: center;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide']:is(
+    [data-tool-open='false'],
+    [data-tool-presentation='overlay']
+  )
+  .lesson-shell2__modern-toolbar {
+  grid-column: 1;
+  grid-row: 3;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide']:is(
+    [data-tool-open='false'],
+    [data-tool-presentation='overlay']
+  )
+  .lesson-shell2__transport-boundary {
+  grid-column: 1;
+  grid-row: 4;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide']:is(
+    [data-tool-open='false'],
+    [data-tool-presentation='overlay']
+  )
+  .lesson-shell2__learning-actions {
+  grid-column: 1;
+  grid-row: 5;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide']:is(
+    [data-tool-open='false'],
+    [data-tool-presentation='overlay']
+  )
+  .lesson-shell2__page-interaction-companion {
+  grid-column: 1;
+  grid-row: 6;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide']:is(
+    [data-tool-open='false'],
+    [data-tool-presentation='overlay']
+  )
+  .lesson-shell2__finished,
+.lesson-shell2[data-host-presentation='modern-wide']:is(
+    [data-tool-open='false'],
+    [data-tool-presentation='overlay']
+  )
+  .lesson-shell2__learning-support {
+  grid-column: 1;
+  grid-row: 7;
+}
+
+/* --------------------------------------------------------------------------
+   Control hierarchy.
+
+   The legacy toolbar lays every control out on one auto-fit grid, so Pause and
+   the frame inspector carry identical weight to a nine-year-old. Here the same
+   DOM is ranked by how often a learner needs each control: move the lesson,
+   adjust how it plays, look something up. Ordering is done with `order` rather
+   than by moving nodes, so the tab order and every source pin stay put.
+   -------------------------------------------------------------------------- */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  grid-template-columns: none;
+  padding: .55rem .7rem;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar::after {
+  content: '';
+  flex-basis: 100%;
+  height: 0;
+  order: 5;
+}
+
+/* "Modern controls" named the surface only because a second one existed. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-context {
+  display: none;
+}
+
+/* Tier 1 — move through the lesson. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='pause'] {
+  background: linear-gradient(#ffad17, #e06100);
+  border-color: #b34d00;
+  color: #fff;
+  font-weight: 800;
+  order: 1;
+  padding-inline: 1.1rem;
+}
+
+/* Progress is deliberately NOT repeated here. On a wide display the session
+   bar already carries it; the toolbar's completion strip exists only for
+   compact landscape, where the session bar is hidden. Showing both is the
+   duplication this presentation removes. */
+
+/* Tier 2 — adjust how it plays. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > .lesson-shell2__narration,
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='replay'],
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > :is(label):has([data-responsive-focus-key='volume']),
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='mute'] {
+  order: 3;
+}
+
+/* Tier 3 — look something up. Quieter, and pushed to the far end so the two
+   tiers a learner actually uses are not interleaved with lookups. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='map'] {
+  margin-inline-start: auto;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='map'],
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='help'],
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='key-terms'],
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='calculator'],
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='header-back'],
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='exit'] {
+  background: transparent;
+  border-color: #b8c9dc;
+  color: #33517a;
+  font-weight: 600;
+  order: 6;
+}
+
+/* Reviewer instruments, when present at all, rank below everything a learner
+   uses rather than sitting between Pause and Volume. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='rewind'],
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='forward'],
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > .lesson-shell2__modern-timeline,
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-transport-summary {
+  order: 7;
+}
+
+/* Reading support is prose, and prose does not want the plane's width. At 1561
+   px a transcript line runs far past a comfortable measure, so the support
+   region keeps a reading width and centres under the plane it belongs to. */
+.lesson-shell2[data-host-presentation='modern-wide']
+  .lesson-shell2__learning-support {
+  justify-self: center;
+  margin-inline: auto;
+  max-width: 78ch;
+  width: 100%;
+}
+
+/* Back repeats Previous once the transport lives in the bar. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='header-back'] {
+  display: none;
+}
+
+/* ==========================================================================
+   Phase 8 — the composition the prototype specifies.
+
+   A section spine on the left, one transport group at the head of the bar with
+   the progress meter inline, and no session bar above the lesson. The map rail
+   and the standalone Previous/Next row are not rendered in this presentation.
+   ========================================================================== */
+.lesson-shell2[data-host-presentation='modern-wide'] .lesson-shell2__session-bar {
+  display: none;
+}
+
+/* The spine replaces the map rail, so the body is spine + learning column.
+   Both are placed explicitly: above 1600px an existing rule moves the learning
+   column to track 2, but below that it would otherwise share track 1 with the
+   spine and collapse the plane to the spine's width. */
+.lesson-shell2[data-host-presentation='modern-wide'] .lesson-shell2__body {
+  grid-template-columns: clamp(9rem, 13vw, 11.5rem) minmax(0, 1fr);
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__spine {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__learning-column {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+/* The spine owns the rail slot; the map is an overlay here (see
+   resolveLegacyLessonLayout), so it never claims a second column. */
+
+.lesson-shell2__spine {
+  align-self: stretch;
+  background: #0f3f9f;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: .15rem;
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+  padding: .7rem .45rem;
+}
+
+.lesson-shell2__spine-mark {
+  color: #8fb4ee;
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .13em;
+  margin: 0 0 .5rem;
+  padding: 0 .4rem;
+  text-transform: uppercase;
+}
+
+.lesson-shell2__spine ol {
+  display: flex;
+  flex-direction: column;
+  gap: .12rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lesson-shell2__spine button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  color: #c3dafb;
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  font-size: .78rem;
+  font-weight: 600;
+  gap: .5em;
+  min-height: 34px;
+  padding: .4em .5em;
+  text-align: left;
+  width: 100%;
+}
+
+.lesson-shell2__spine button:hover {
+  background: #1b4fb8;
+  color: #fff;
+}
+
+.lesson-shell2__spine button[aria-current='step'] {
+  background: #ffcc00;
+  color: #2a1b00;
+  font-weight: 800;
+}
+
+.lesson-shell2__spine-tick {
+  align-items: center;
+  background: #1b4fb8;
+  border-radius: 999px;
+  color: #8fb4ee;
+  display: flex;
+  flex: none;
+  font-family: ui-monospace, "SF Mono", monospace;
+  font-size: .62rem;
+  font-weight: 800;
+  height: 1.6em;
+  justify-content: center;
+  width: 1.9em;
+}
+
+.lesson-shell2__spine button[data-section-state='complete'] .lesson-shell2__spine-tick {
+  background: #0e7a57;
+  color: #fff;
+}
+
+.lesson-shell2__spine button[aria-current='step'] .lesson-shell2__spine-tick {
+  background: #2a1b00;
+  color: #ffcc00;
+}
+
+.lesson-shell2__spine-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Transport: Previous, Pause, Next as one group, then progress. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > .lesson-shell2__learning-actions-previous {
+  order: 0;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > .lesson-shell2__learning-actions-next {
+  order: 2;
+}
+
+/* Progress belongs in the bar now that the session bar is gone, so this is the
+   only place it appears rather than a second copy of it. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-completion {
+  display: flex;
+  flex: 1 1 12rem;
+  gap: .5rem;
+  min-width: 0;
+  order: 3;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-completion progress {
+  flex: 1;
+  min-width: 0;
+}
+
+/* The toolbar carries its own language links; rank them with the lookups. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='language-en'],
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='language-es'] {
+  order: 6;
+}
+
+/* Narration is a secondary control, not a banner. Left full width it wraps the
+   bar onto three rows and buries the transport. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > .lesson-shell2__narration {
+  flex: 0 0 auto;
+  max-width: 13rem;
+  order: 4;
+  width: auto;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > .lesson-shell2__narration .lesson-shell2__narration-name {
+  display: none;
+}
+
+
+.lesson-shell2[data-host-presentation='modern-wide']
+  .lesson-shell2__legacy-stage > .lesson-shell2__stage,
+.lesson-shell2[data-host-presentation='modern-wide']
+  .lesson-shell2__source-background-text {
+  bottom: auto;
+  height: var(--lesson-plane-stage-height);
+  top: var(--lesson-plane-stage-top);
+}
+
+/* The source chrome, its live title band, and the hit areas painted onto it
+   are not rendered in this presentation. These rules are a floor in case a
+   descriptor still emits that artwork. */
+.lesson-shell2[data-host-presentation='modern-wide'] .lesson-shell2__source-chrome,
+.lesson-shell2[data-host-presentation='modern-wide'] .lesson-shell2__chrome-lesson-title,
+.lesson-shell2[data-host-presentation='modern-wide'] .lesson-shell2__legacy-header-hits,
+.lesson-shell2[data-host-presentation='modern-wide'] .lesson-shell2__legacy-tools,
+.lesson-shell2[data-host-presentation='modern-wide'] .lesson-shell2__media-hits {
+  display: none;
+}
+
+/* ==========================================================================
+   Phase 8.1 — the artifact's visual language.
+
+   Circular icon transport, a gold meter, and a bare crumb. Labels stay in the
+   DOM for the accessible name; only their glyphs are suppressed.
+   ========================================================================== */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > :is(
+    [data-responsive-focus-key='previous'],
+    [data-responsive-focus-key='next'],
+    [data-responsive-focus-key='pause'],
+    [data-responsive-focus-key='replay'],
+    [data-responsive-focus-key='mute']
+  ) {
+  align-items: center;
+  border-radius: 999px;
+  display: inline-flex;
+  flex: none;
+  font-size: 0;
+  height: 3rem;
+  justify-content: center;
+  min-height: 3rem;
+  min-width: 3rem;
+  padding: 0;
+  width: 3rem;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > :is(
+    [data-responsive-focus-key='previous'],
+    [data-responsive-focus-key='next'],
+    [data-responsive-focus-key='pause'],
+    [data-responsive-focus-key='replay'],
+    [data-responsive-focus-key='mute']
+  )::before {
+  background-color: currentColor;
+  content: '';
+  display: block;
+  height: 46%;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  width: 46%;
+}
+
+/* Pause is the primary action, so it is larger and filled. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='pause'] {
+  height: 3.6rem;
+  min-height: 3.6rem;
+  min-width: 3.6rem;
+  width: 3.6rem;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='previous']::before {
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M15.4%204.6%208%2012l7.4%207.4%201.6-1.6L11%2012l6-5.8z%27%2F%3E%3C%2Fsvg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M15.4%204.6%208%2012l7.4%207.4%201.6-1.6L11%2012l6-5.8z%27%2F%3E%3C%2Fsvg%3E");
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='next']::before {
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M8.6%204.6%2016%2012l-7.4%207.4L7%2017.8%2013%2012%207%206.2z%27%2F%3E%3C%2Fsvg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M8.6%204.6%2016%2012l-7.4%207.4L7%2017.8%2013%2012%207%206.2z%27%2F%3E%3C%2Fsvg%3E");
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='pause']::before {
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M8%205h3v14H8zm5%200h3v14h-3z%27%2F%3E%3C%2Fsvg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M8%205h3v14H8zm5%200h3v14h-3z%27%2F%3E%3C%2Fsvg%3E");
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='replay']::before {
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M12%205V1L7%206l5%205V7a5%205%200%201%201-5%205H5a7%207%200%201%200%207-7z%27%2F%3E%3C%2Fsvg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M12%205V1L7%206l5%205V7a5%205%200%201%201-5%205H5a7%207%200%201%200%207-7z%27%2F%3E%3C%2Fsvg%3E");
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > [data-responsive-focus-key='mute']::before {
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M4%209v6h4l5%204V5L8%209zm12.5%203a4.5%204.5%200%200%200-2.5-4v8a4.5%204.5%200%200%200%202.5-4z%27%2F%3E%3C%2Fsvg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M4%209v6h4l5%204V5L8%209zm12.5%203a4.5%204.5%200%200%200-2.5-4v8a4.5%204.5%200%200%200%202.5-4z%27%2F%3E%3C%2Fsvg%3E");
+}
+
+/* The meter carries the lesson's own gold. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-completion progress {
+  accent-color: #ffcc00;
+  block-size: .55rem;
+  border-radius: 999px;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-completion progress::-webkit-progress-bar {
+  background: #d7e2ef;
+  border-radius: 999px;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-completion progress::-webkit-progress-value {
+  background: #ffcc00;
+  border-radius: 999px;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-completion span {
+  color: #56718f;
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", monospace;
+  font-size: .74rem;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+
+/* A bare crumb: title, then section and position, no card. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__page-heading {
+  align-items: baseline;
+  background: transparent;
+  border: 0;
+  flex-direction: row;
+  gap: .7rem;
+  padding: .2rem 0 .5rem;
+}
+
+
+/* The lookups collapse behind one control so the bar stays a single row, which
+   is what the artifact shows. They remain in the tab order inside the group. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar::after {
+  display: none;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > :is(
+    [data-responsive-focus-key='map'],
+    [data-responsive-focus-key='help'],
+    [data-responsive-focus-key='key-terms'],
+    [data-responsive-focus-key='calculator'],
+    [data-responsive-focus-key='exit'],
+    [data-responsive-focus-key='language-en'],
+    [data-responsive-focus-key='language-es']
+  ) {
+  font-size: .74rem;
+  padding-inline: .55rem;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > .lesson-shell2__narration {
+  border-radius: 999px;
+  flex: none;
+  font-size: 0;
+  height: 3rem;
+  max-width: none;
+  min-height: 3rem;
+  min-width: 3rem;
+  padding: 0;
+  width: 3rem;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > .lesson-shell2__narration::before {
+  background-color: currentColor;
+  content: '';
+  display: block;
+  height: 46%;
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M4%204h7v16H4zm9%200h7v16h-7zm1.5%203h4v1.5h-4zm0%203h4V11.5h-4z%27%2F%3E%3C%2Fsvg%3E");
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M4%204h7v16H4zm9%200h7v16h-7zm1.5%203h4v1.5h-4zm0%203h4V11.5h-4z%27%2F%3E%3C%2Fsvg%3E");
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  width: 46%;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+  .lesson-shell2__modern-toolbar > .lesson-shell2__narration > * {
+  display: none;
+}
+
 .lesson-shell2__transport-boundary {
   background: #eef5fc;
   border: 1px solid #aac1d9;
@@ -6745,9 +8116,19 @@ body:has(.lesson-shell2[data-support-modal-open='true']) {
     )
     .lesson-shell2__modern-completion span {
     color: #17395f;
-    font-size: .62rem;
+    font-size: 1rem;
     font-weight: 850;
     white-space: nowrap;
+  }
+
+  /* This is the progress strip in compact landscape, so a finished page has to
+     read here the way the session bar's page counter reads everywhere else. */
+  :is(
+      .lesson-shell2,
+      .lesson-shell2[data-modern-control-presentation='true']
+    )
+    .lesson-shell2__modern-completion[data-page-complete='true'] span {
+    color: #087153;
   }
 
   :is(
@@ -6758,10 +8139,10 @@ body:has(.lesson-shell2[data-support-modal-open='true']) {
     :is(button, label, a) {
     box-sizing: border-box;
     flex-direction: row;
-    font-size: .7rem;
+    font-size: 1rem;
     line-height: 1.2;
-    min-height: 44px;
-    min-width: 44px;
+    min-height: 48px;
+    min-width: 48px;
     overflow-wrap: anywhere;
     padding: .2rem;
   }
@@ -6773,7 +8154,7 @@ body:has(.lesson-shell2[data-support-modal-open='true']) {
     .lesson-shell2__modern-toolbar
     label {
     flex-direction: row;
-    min-width: 44px;
+    min-width: 48px;
     padding-block: 0;
   }
 
@@ -6784,8 +8165,8 @@ body:has(.lesson-shell2[data-support-modal-open='true']) {
     .lesson-shell2__modern-toolbar
     input {
     box-sizing: border-box;
-    min-height: 40px;
-    min-width: 44px;
+    min-height: 48px;
+    min-width: 48px;
   }
 
   :is(
@@ -6887,9 +8268,9 @@ body:has(.lesson-shell2[data-support-modal-open='true']) {
     )
     .lesson-shell2__learning-actions
     button {
-    font-size: .72rem;
+    font-size: 1.125rem;
     line-height: 1.15;
-    min-height: 44px;
+    min-height: 48px;
     overflow-wrap: anywhere;
     padding: .15rem;
   }
@@ -6926,6 +8307,18 @@ body:has(.lesson-shell2[data-support-modal-open='true']) {
     position: relative;
     z-index: 1;
   }
+
+  /* The public platform footer is taller than the retired one-line preview
+     badge. Keep the two required navigation targets inside a short landscape
+     viewport without shrinking their 48px learner touch floor. */
+  :is(
+      .lesson-shell2,
+      .lesson-shell2[data-modern-control-presentation='true']
+    )
+    .lesson-shell2__learning-actions {
+    align-self: start;
+    transform: translateY(-24px);
+  }
 }
 
 @media (min-width: 1280px) and (max-height: 880px) {
@@ -6947,5 +8340,1060 @@ body:has(.lesson-shell2[data-support-modal-open='true']) {
     > span {
     font-size: .68rem;
     line-height: 1.1;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Final modern-wide composition override.
+
+   Keep this block last. The stylesheet intentionally retains the legacy and
+   compact-shell rules above; the learner-facing widescreen presentation is a
+   separate declared skin and must win only when that presentation is active.
+   -------------------------------------------------------------------------- */
+@media (min-width: 1280px) {
+  body:has(.lesson-shell2[data-host-presentation='modern-wide']) {
+    background: #edf3fa;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'] {
+    background: #102f63;
+    border-radius: 28px;
+    display: flex;
+    flex-direction: column;
+    margin: 16px auto;
+    min-height: calc(100dvh - 32px);
+    overflow: hidden;
+    padding: 20px;
+    width: calc(100% - 32px);
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__body {
+    align-items: stretch;
+    background: #fff;
+    border-radius: 16px;
+    flex: 1;
+    gap: 0;
+    grid-template-columns: clamp(12rem, 13vw, 15rem) minmax(0, 1fr);
+    justify-content: stretch;
+    margin: 0;
+    max-width: none;
+    min-height: 0;
+    overflow: hidden;
+    padding: 0;
+    width: 100%;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-tutor-open='true']
+    .lesson-shell2__body {
+    grid-template-columns:
+      clamp(12rem, 13vw, 15rem)
+      minmax(0, 1fr)
+      18.125rem;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__spine {
+    border-radius: 16px 0 0 16px;
+    gap: .35rem;
+    padding: 1.1rem .75rem;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__spine-mark {
+    color: #b8d1f7;
+    font-size: .72rem;
+    line-height: 1.45;
+    margin-bottom: .5rem;
+    padding-inline: .45rem;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__spine ol {
+    gap: .22rem;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__spine button {
+    border-radius: 8px;
+    font-size: clamp(.78rem, .9vw, 1rem);
+    gap: .65rem;
+    min-height: 48px;
+    padding: .55rem .65rem;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__spine-tick {
+    color: #e5f0ff;
+    font-size: .66rem;
+    height: 1.8rem;
+    width: 1.8rem;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__learning-column {
+    align-content: start;
+    display: grid;
+    grid-column: 2;
+    grid-row: 1;
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    padding: 1.15rem 1.75rem .85rem;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__page-heading {
+    align-items: baseline;
+    display: flex;
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0;
+    min-height: 52px;
+    padding: .1rem 0 .7rem;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__page-heading > div:first-child {
+    align-items: baseline;
+    display: flex;
+    gap: 1rem;
+    min-width: 0;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__page-heading h1 {
+    flex: none;
+    font-size: clamp(1.5rem, 1.75vw, 2rem);
+    order: 0;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__page-heading p {
+    clip: auto;
+    clip-path: none;
+    color: #5b708a;
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", monospace;
+    font-size: clamp(.68rem, .78vw, .85rem);
+    font-weight: 650;
+    letter-spacing: .08em;
+    height: auto;
+    margin: 0;
+    order: 1;
+    overflow: visible;
+    padding: 0;
+    position: static;
+    text-transform: none;
+    white-space: nowrap;
+    width: auto;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__legacy-stage {
+    align-self: start;
+    border-radius: 9px;
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: center;
+    overflow: hidden;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__stage {
+    border: 0;
+    border-radius: 9px;
+    box-shadow: 0 12px 28px rgb(24 55 91 / 14%);
+  }
+
+  /* Source-static canvases carry the authored 800 x 600 page coordinates but
+     intentionally stop at their 800px backing store. When the modern content
+     plane grows wider, centre that native surface and keep the exact
+     109..524 authored content band inside the blue viewport. Without this
+     adjustment the host's proportional crop is calculated from the wider
+     plane while the canvas stays native-sized, which clips the top of TS006. */
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__legacy-stage:has(canvas[data-course-canvas])
+    .runtime-shell {
+    margin-inline: auto;
+    top: max(0px, calc(39.5625cqw - 316.5px));
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-reviewer-mode='false']
+    .lesson-shell2__stage [data-source-replay-parity='unvalidated'] {
+    display: none;
+  }
+
+  /* Reduced motion remains active; its engineering-style explanation is not
+     a learner control and must not cover the mathematical content in Focus. */
+  .lesson-shell2[data-host-presentation='modern-wide'][data-reviewer-mode='false']
+    .lesson-shell2__stage .reduced-motion-note {
+    display: none;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__modern-toolbar {
+    align-items: center;
+    background: #fff;
+    border: 1px solid #cbd8e7;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: .55rem;
+    grid-column: 1;
+    grid-row: 3;
+    margin: .75rem 0 0;
+    min-height: 68px;
+    padding: .35rem .65rem;
+    visibility: visible;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__modern-toolbar > :is(
+      .lesson-shell2__narration,
+      label:has([data-responsive-focus-key='volume']),
+      [data-responsive-focus-key='help'],
+      [data-responsive-focus-key='key-terms'],
+      [data-responsive-focus-key='calculator'],
+      [data-responsive-focus-key='exit'],
+      [data-responsive-focus-key='header-back'],
+      [data-responsive-focus-key='language-en'],
+      [data-responsive-focus-key='language-es']
+    ) {
+    display: none;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__modern-toolbar > :is(
+      [data-responsive-focus-key='previous'],
+      [data-responsive-focus-key='next'],
+      [data-responsive-focus-key='replay'],
+      [data-responsive-focus-key='mute'],
+      [data-responsive-focus-key='map'],
+      [data-responsive-focus-key='study-support']
+    ) {
+    background: #fff;
+    border: 1.5px solid #c4d2e2;
+    border-radius: 999px;
+    color: #183f73;
+    flex: none;
+    font-size: 0;
+    height: 48px;
+    min-height: 48px;
+    min-width: 48px;
+    order: initial;
+    overflow: hidden;
+    padding: 0;
+    text-indent: -9999px;
+    width: 48px;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__modern-toolbar > [data-responsive-focus-key='pause'] {
+    background: linear-gradient(#ffad17, #e06100);
+    border: 2px solid #b34d00;
+    border-radius: 999px;
+    color: #fff;
+    flex: none;
+    font-size: 0;
+    height: 58px;
+    min-height: 58px;
+    min-width: 58px;
+    order: initial;
+    padding: 0;
+    width: 58px;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__modern-toolbar > :is(
+      [data-responsive-focus-key='previous'],
+      [data-responsive-focus-key='next'],
+      [data-responsive-focus-key='pause'],
+      [data-responsive-focus-key='replay'],
+      [data-responsive-focus-key='mute'],
+      [data-responsive-focus-key='map'],
+      [data-responsive-focus-key='study-support']
+    )::before {
+    text-indent: 0;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__modern-completion {
+    align-items: center;
+    display: grid;
+    flex: 1 1 16rem;
+    gap: .35rem .65rem;
+    grid-template-columns: minmax(5rem, 1fr) auto;
+    min-width: 8rem;
+    order: initial;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__modern-completion progress {
+    grid-column: 1 / -1;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__modern-completion [data-completion-position] {
+    grid-column: 1;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__modern-completion [data-completion-share] {
+    grid-column: 2;
+    text-align: end;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__ask-nova {
+    background: var(--lesson-nova-pale) !important;
+    border: 2px solid var(--lesson-nova) !important;
+    border-radius: 999px !important;
+    color: var(--lesson-nova-ink) !important;
+    display: inline-flex;
+    flex: none;
+    font-size: .82rem !important;
+    font-weight: 850 !important;
+    height: 48px;
+    min-height: 48px !important;
+    order: initial;
+    padding: 0 .9rem !important;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__ask-nova:hover,
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__ask-nova[aria-expanded='true'] {
+    background: var(--lesson-nova-fill) !important;
+    color: #fff !important;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__modern-toolbar > [data-responsive-focus-key='map'] {
+    margin-inline-start: 0;
+  }
+
+  /* Preserve the artifact's semantic reading order: transport, progress,
+     Nova, then the three secondary controls. */
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > [data-responsive-focus-key='previous'] {
+    order: 1;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > [data-responsive-focus-key='pause'] {
+    order: 2;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > [data-responsive-focus-key='next'] {
+    order: 3;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > .lesson-shell2__modern-completion {
+    order: 4;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > .lesson-shell2__ask-nova {
+    order: 5;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > [data-responsive-focus-key='replay'] {
+    order: 6;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > [data-responsive-focus-key='mute'] {
+    order: 7;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > [data-responsive-focus-key='map'] {
+    order: 8;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__nova-panel {
+    border: 0;
+    border-left: 1px solid #cfd9e6;
+    border-radius: 0 16px 16px 0;
+    box-shadow: none;
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  /* Candidate/release authority remains machine-readable on the shell and in
+     the accessible DOM, but the engineering footer is not a learner control
+     and does not occupy the prototype's presentation plane. */
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__status {
+    border: 0;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Nova placement and prototype pixel lock.
+
+   These selectors intentionally carry both presentation attributes. Earlier
+   shared-control rules are more specific than a presentation-only override;
+   matching their specificity here keeps the measured Artifact dimensions in
+   the browser instead of only in the source file.
+   -------------------------------------------------------------------------- */
+.lesson-shell2__nova-scrim {
+  display: none;
+}
+
+.lesson-shell2__nova-context > span,
+.lesson-shell2__nova-classroom-context > span {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.lesson-shell2__nova-words li {
+  padding: 0;
+}
+
+.lesson-shell2__nova-words li button {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  min-height: 44px;
+  padding: .6rem .7rem;
+  text-align: start;
+  width: 100%;
+}
+
+.lesson-shell2__nova-classroom-band {
+  align-items: center;
+  background: linear-gradient(110deg, #292574, #413db0);
+  border-top: 1px solid #6864cc;
+  color: #fff;
+  display: grid;
+  gap: 1rem;
+  grid-column: 1 / -1;
+  grid-row: 2;
+  grid-template-columns: 80px minmax(0, 1fr) 48px;
+  min-height: 150px;
+  padding: 1rem 1.35rem;
+}
+
+.lesson-shell2__nova-classroom-mic {
+  align-items: center;
+  background: #fff;
+  border: 3px solid #b8dcf4;
+  border-radius: 999px;
+  color: #292574;
+  cursor: pointer;
+  display: inline-flex;
+  height: 80px;
+  justify-content: center;
+  width: 80px;
+}
+
+.lesson-shell2__nova-classroom-mic svg {
+  fill: currentcolor;
+  height: 45%;
+  width: 45%;
+}
+
+.lesson-shell2__nova-classroom-copy {
+  min-width: 0;
+}
+
+.lesson-shell2__nova-classroom-context {
+  align-items: center;
+  color: #d9e9ff;
+  display: flex;
+  font-size: .82rem;
+  gap: .4rem;
+  margin: 0 0 .35rem;
+}
+
+.lesson-shell2__nova-classroom-context > span {
+  aspect-ratio: 800 / 415;
+  background-color: #b8d8f7;
+  border: 1px solid #b8dcf4;
+  border-radius: 3px;
+  display: inline-block;
+  flex: none;
+  width: 48px;
+}
+
+.lesson-shell2__nova-classroom-context b {
+  color: #fff;
+}
+
+.lesson-shell2__nova-classroom-exchange {
+  align-items: end;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(12rem, .65fr) minmax(0, 1.35fr);
+}
+
+.lesson-shell2__nova-classroom-exchange p {
+  margin: 0;
+  min-width: 0;
+}
+
+.lesson-shell2__nova-classroom-exchange strong {
+  color: #cbdcff;
+  display: block;
+  font-size: .72rem;
+  letter-spacing: .08em;
+  margin-bottom: .2rem;
+  text-transform: uppercase;
+}
+
+.lesson-shell2__nova-classroom-exchange span {
+  display: block;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.lesson-shell2__nova-classroom-answer span {
+  font-size: clamp(1.5rem, 1.45vw, 1.6875rem);
+  line-height: 1.25;
+}
+
+.lesson-shell2__nova-classroom-close {
+  align-items: center;
+  background: transparent;
+  border: 1.5px solid rgb(255 255 255 / 68%);
+  border-radius: 999px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-size: 1.2rem;
+  height: 48px;
+  justify-content: center;
+  width: 48px;
+}
+
+body:has(.lesson-shell2[data-tutor-modal='true']) {
+  overflow: hidden;
+}
+
+@media (max-width: 1279px) {
+  html:has(.lesson-shell2[data-host-presentation='modern-wide']) {
+    scrollbar-gutter: auto;
+  }
+
+  .lesson-shell2__nova-scrim {
+    background: rgb(6 20 47 / 58%);
+    border: 0;
+    display: block;
+    inset: 0;
+    position: fixed;
+    z-index: 100;
+  }
+
+  .lesson-shell2__nova-panel {
+    border: 0;
+    border-radius: 20px 20px 0 0;
+    bottom: 0;
+    box-shadow: 0 -18px 48px rgb(6 20 47 / 28%);
+    left: 0;
+    max-height: min(90dvh, 760px);
+    max-width: none;
+    overscroll-behavior: contain;
+    position: fixed;
+    right: 0;
+    top: auto;
+    width: 100%;
+    z-index: 101;
+  }
+
+  .lesson-shell2__nova-panel-header {
+    padding-inline: max(.9rem, env(safe-area-inset-left));
+  }
+
+  .lesson-shell2__nova-tab-panel {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .lesson-shell2__nova-classroom-band {
+    grid-template-columns: 72px minmax(0, 1fr) 44px;
+    min-height: 128px;
+    padding: .8rem;
+  }
+
+  .lesson-shell2__nova-classroom-mic {
+    height: 72px;
+    width: 72px;
+  }
+}
+
+@media (max-width: 640px) {
+  .lesson-shell2__nova-classroom-band {
+    gap: .65rem;
+    grid-template-columns: 56px minmax(0, 1fr) 44px;
+    min-height: 190px;
+    padding: .7rem;
+  }
+
+  .lesson-shell2__nova-classroom-mic {
+    height: 56px;
+    width: 56px;
+  }
+
+  .lesson-shell2__nova-classroom-context {
+    align-items: flex-start;
+    font-size: .72rem;
+  }
+
+  .lesson-shell2__nova-classroom-exchange {
+    gap: .55rem;
+    grid-template-columns: 1fr;
+  }
+
+  .lesson-shell2__nova-classroom-answer span {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  body:has(.lesson-shell2[data-host-presentation='modern-wide']) {
+    background: #f2f6fc;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'] {
+    background: #0c2555;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-tutor-panel-open='true']
+    .lesson-shell2__body {
+    grid-template-columns:
+      clamp(12rem, 13vw, 15rem)
+      minmax(0, 1fr)
+      18.125rem;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-tutor-mode='classroom']
+    .lesson-shell2__body {
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  /* The classroom voice band belongs inside the projector frame, not below
+     the first viewport. Opening it converts the shell's minimum-height canvas
+     into a fixed viewport budget, then lets the authored plane consume the
+     remaining middle row without changing its aspect ratio. */
+  .lesson-shell2[data-host-presentation='modern-wide'][data-tutor-mode='classroom'][data-tutor-open='true'] {
+    height: calc(100dvh - 32px);
+    min-height: 0;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-tutor-mode='classroom'][data-tutor-open='true']
+    .lesson-shell2__learning-column {
+    align-content: stretch;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-tutor-mode='classroom'][data-tutor-open='true']
+    .lesson-shell2__legacy-stage {
+    align-self: center;
+    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
+    width: auto;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-tutor-mode='classroom']
+    .lesson-shell2__spine {
+    padding-inline: .25rem;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-tutor-mode='classroom']
+    .lesson-shell2__spine-mark,
+  .lesson-shell2[data-host-presentation='modern-wide'][data-tutor-mode='classroom']
+    .lesson-shell2__spine-name {
+    border: 0;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-tutor-mode='classroom']
+    .lesson-shell2__spine button {
+    justify-content: center;
+    padding-inline: 0;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    gap: .6rem;
+    margin-top: 1rem;
+    min-height: 84px;
+    padding: .25rem 0;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > :is(
+      [data-responsive-focus-key='previous'],
+      [data-responsive-focus-key='next'],
+      [data-responsive-focus-key='replay'],
+      [data-responsive-focus-key='mute'],
+      [data-responsive-focus-key='map'],
+      [data-responsive-focus-key='study-support']
+    ) {
+    background: #fff;
+    border: 2px solid #cbd9ea;
+    color: #183f73;
+    height: 60px;
+    min-height: 60px;
+    min-width: 60px;
+    width: 60px;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > :is(
+      [data-responsive-focus-key='previous'],
+      [data-responsive-focus-key='next'],
+      [data-responsive-focus-key='replay'],
+      [data-responsive-focus-key='mute'],
+      [data-responsive-focus-key='map'],
+      [data-responsive-focus-key='study-support']
+    ):hover {
+    background: #f7faff;
+    border-color: #9fb6d1;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > [data-responsive-focus-key='pause'] {
+    background: linear-gradient(180deg, #f57a00, #e45c00);
+    border: 1px solid #d75a00;
+    height: 80px;
+    min-height: 80px;
+    min-width: 80px;
+    width: 80px;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-completion {
+    column-gap: 12px;
+    display: grid;
+    flex: 1 1 18rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-width: 0;
+    row-gap: 6px;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-completion progress {
+    block-size: 12px;
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-completion span {
+    color: #61758f;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: .05em;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__ask-nova {
+    font-size: 1rem !important;
+    gap: .5rem;
+    height: 56px;
+    min-height: 56px !important;
+    min-width: 152px;
+    padding-inline: 1.25rem !important;
+    width: 152px;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > [data-responsive-focus-key='study-support'] {
+    border-radius: 999px;
+    font-size: 0;
+    order: 8;
+    overflow: hidden;
+    padding: 0;
+    text-indent: -9999px;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true'][data-tutor-interaction-open='true']
+    .lesson-shell2__modern-toolbar > [data-responsive-focus-key='pause']:disabled {
+    cursor: default;
+    opacity: 1;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > [data-responsive-focus-key='study-support']::before {
+    background-color: currentcolor;
+    content: '';
+    display: block;
+    height: 46%;
+    margin: auto;
+    mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M4%205h7v14H4zm9%200h7v14h-7z%27%2F%3E%3C%2Fsvg%3E");
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    text-indent: 0;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%3E%3Cpath%20d%3D%27M4%205h7v14H4zm9%200h7v14h-7z%27%2F%3E%3C%2Fsvg%3E");
+    -webkit-mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    width: 46%;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__spine {
+    padding: 1.1rem .2rem;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__spine-mark {
+    font-size: 1rem;
+    font-weight: 550;
+    letter-spacing: .21em;
+    max-width: 10rem;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__spine button {
+    font-size: 1.125rem;
+    gap: .625rem;
+    padding: .5rem .55rem;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__spine-tick {
+    font-size: .5625rem;
+    height: 21px;
+    width: 21px;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__page-heading h1 {
+    font-size: clamp(1.5rem, 1.55vw, 1.75rem);
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__page-heading p {
+    font-size: .8125rem;
+    font-weight: 500;
+    letter-spacing: .11em;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__nova-panel {
+    border: 0;
+    border-left: 1px solid #cfd9e6;
+    border-radius: 0 16px 16px 0;
+    box-shadow: none;
+    grid-column: 3;
+    grid-row: 1;
+  }
+}
+
+.lesson-shell2__nova-tabs button {
+  font-size: .875rem;
+}
+
+.lesson-shell2__nova-context > span {
+  width: 48px;
+}
+
+.lesson-shell2__nova-context p {
+  font-size: .875rem;
+}
+
+.lesson-shell2__nova-context b {
+  font-size: .75rem;
+}
+
+.lesson-shell2__nova-message {
+  font-size: .875rem;
+  line-height: 1.5;
+}
+
+.lesson-shell2__nova-message p,
+.lesson-shell2__nova-notice {
+  font-size: .875rem;
+}
+
+.lesson-shell2__nova-chips button {
+  font-size: .875rem;
+}
+
+.lesson-shell2__nova-input input {
+  font-size: 1rem;
+}
+
+.lesson-shell2__nova-mic {
+  height: 60px;
+  width: 60px;
+}
+
+/* Mobile learner composition. The desktop section spine becomes a horizontal
+   lesson-step strip so the authored plane keeps the full phone width. */
+@media (max-width: 680px) {
+  body:has(.lesson-shell2[data-host-presentation='modern-wide']) {
+    background: #edf3fa;
+    overflow-x: hidden;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'] {
+    min-height: 100dvh;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__body {
+    align-items: stretch;
+    gap: .55rem;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    justify-content: stretch;
+    max-width: none;
+    padding: .5rem;
+    width: 100%;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__spine {
+    border-radius: 12px;
+    grid-column: 1;
+    grid-row: 1;
+    max-width: 100%;
+    padding: .45rem;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__spine-mark {
+    font-size: .64rem;
+    letter-spacing: .1em;
+    margin: 0 0 .35rem;
+    padding-inline: .25rem;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__spine ol {
+    flex-direction: row;
+    gap: .35rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding-block-end: .2rem;
+    scroll-snap-type: x proximity;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__spine li {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__spine button {
+    border-radius: 8px;
+    font-size: .75rem;
+    gap: .35rem;
+    min-height: 44px;
+    padding: .4rem .5rem;
+    width: auto;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__spine-name {
+    max-width: 7.5rem;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__learning-column {
+    grid-column: 1;
+    grid-row: 2;
+    min-width: 0;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__page-heading {
+    margin-bottom: .45rem;
+    min-width: 0;
+    padding-inline: .2rem;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__page-heading h1 {
+    font-size: clamp(1.35rem, 7vw, 1.75rem);
+    overflow-wrap: anywhere;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__legacy-stage {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar {
+    align-items: stretch;
+    display: grid;
+    gap: .45rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: .55rem;
+    padding: .55rem;
+    width: 100%;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar::after {
+    display: none;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > * {
+    margin-inline-start: 0;
+    min-width: 0;
+    order: initial;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-completion {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']
+    .lesson-shell2__modern-toolbar > :is(label):has([data-responsive-focus-key='volume']) {
+    grid-column: span 2;
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__finished,
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__learning-support {
+    max-width: 100%;
+    min-width: 0;
   }
 }

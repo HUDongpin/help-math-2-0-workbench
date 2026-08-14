@@ -6,6 +6,7 @@ import {
   G4_L3_PAGE_36_READABLE_TRANSCRIPT,
   G4_L3_PAGE_36_READABLE_VIEW_SPEC,
 } from '../lib/g4-l3-readable-view';
+import {G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR} from '../lib/g4-l3-whole-lesson-player-descriptor';
 
 test('Page 36 Readable View is bound to the approved fixed source identity', () => {
   const spec = G4_L3_PAGE_36_READABLE_VIEW_SPEC;
@@ -104,7 +105,25 @@ test('Readable View is Page 36-only, non-modal, keyboard closable, and follows t
       readFile(new URL('../app/globals.css', import.meta.url), 'utf8'),
     ]);
 
-  assert.match(
+  // Which page offers reading support is a descriptor fact, so the guarantee is
+  // asserted against the data rather than against the expression the player
+  // happens to use: exactly one page declares it, and it is the page the
+  // source-bound crop specification belongs to.
+  const declaring = G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.pages
+    .filter((page) => page.readableView);
+  assert.equal(declaring.length, 1, 'exactly one page may declare reading support');
+  assert.equal(
+    declaring[0]!.animationId,
+    G4_L3_PAGE_36_READABLE_VIEW_SPEC.animationId,
+  );
+  assert.equal(declaring[0]!.readableView?.kind, 'source-bound-readable-view');
+  assert.equal(
+    declaring[0]!.readableView?.specId,
+    G4_L3_PAGE_36_READABLE_VIEW_SPEC.animationId,
+  );
+  // The player must render from that declaration, never from a hard-coded id.
+  assert.match(playerSource, /readableViewDeclaration\?\.specId ===/);
+  assert.doesNotMatch(
     playerSource,
     /currentPage\.animationId === G4_L3_PAGE_36_READABLE_VIEW_SPEC\.animationId/,
   );

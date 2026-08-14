@@ -10,7 +10,7 @@ export function SiteFooter({content}: {content: SharedContent}) {
     <footer className="site-footer">
       <div className="container site-footer__grid">
         <div className="site-footer__about">
-          <Brand homeLabel={navigation.homeLabel} />
+          <Brand homeLabel={navigation.homeLabel} location="footer" />
           <p>{footer.summary}</p>
           <p className="site-footer__language">{footer.languageNote}</p>
         </div>

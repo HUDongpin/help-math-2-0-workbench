@@ -4,7 +4,8 @@ const port = Number(process.env.PLAYWRIGHT_PORT ?? 3211);
 if (!Number.isInteger(port) || port < 1 || port > 65_535) {
   throw new Error('PLAYWRIGHT_PORT must be an integer from 1 through 65535.');
 }
-const baseURL = `http://127.0.0.1:${port}`;
+const host = process.env.PLAYWRIGHT_HOST ?? '127.0.0.1';
+const baseURL = `http://${host}:${port}`;
 
 export default defineConfig({
   testDir: './e2e',
@@ -28,11 +29,14 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
   webServer: {
-    command: `npm run start -- --hostname 127.0.0.1 --port ${port}`,
+    command: `npm run dev -- --hostname ${host} --port ${port}`,
     env: {
-      G4_L3_CEO_PREVIEW_ENABLED: '1',
-      G5_L4_CEO_PREVIEW_ENABLED: '1',
-      G5_L4_WHOLE_LESSON_PACKAGE: '1',
+      // The browser suite exercises unfinished candidates only in a local
+      // development server. Production does not expose a review route.
+      MODERN_WIDE_SHELL_ENABLED:
+        process.env.MODERN_WIDE_SHELL_ENABLED ?? 'false',
+      REVIEWER_INSTRUMENTATION_ENABLED:
+        process.env.REVIEWER_INSTRUMENTATION_ENABLED ?? 'false',
     },
     url: `${baseURL}/robots.txt`,
     reuseExistingServer: process.env.PLAYWRIGHT_REUSE_EXISTING_SERVER === '1',

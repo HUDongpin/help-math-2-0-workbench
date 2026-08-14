@@ -10,6 +10,7 @@ const routes = [
   '/research',
   '/resources',
   '/library',
+  '/courses/4/3',
   '/demos',
   '/support',
   '/login',
@@ -20,14 +21,14 @@ const routes = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
-  const lastModified = new Date('2026-07-21T00:00:00.000Z');
+  const lastModified = new Date('2026-08-14T00:00:00.000Z');
 
   return routes.flatMap((route) =>
     (['en', 'es'] as const).map((locale) => ({
       url: new URL(localizedPath(locale, route), siteUrl).toString(),
       lastModified,
       changeFrequency: route === '/' ? ('weekly' as const) : ('monthly' as const),
-      priority: route === '/' ? 1 : route === '/demos' ? 0.8 : 0.7,
+      priority: route === '/' ? 1 : route === '/courses/4/3' ? 0.95 : route === '/demos' ? 0.8 : 0.7,
       alternates: {
         languages: {
           en: new URL(localizedPath('en', route), siteUrl).toString(),

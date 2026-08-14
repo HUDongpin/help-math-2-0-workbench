@@ -478,23 +478,81 @@ test('legacy lesson Back history preserves visit order and duplicates', () => {
   assert.deepEqual(appendLegacyLessonHistory([], 'A', 'A'), []);
 });
 
-test('all support close paths share the reversible pause reconciler', async () => {
+test('support tools keep a reversible pause lease while Nova remains transport-independent', async () => {
   const shell = await readFile(
     new URL('../components/legacy-responsive-lesson-shell.tsx', import.meta.url),
     'utf8',
   );
-  assert.match(shell, /const closeMap = useCallback\(\(\) => \{\s*reconcileSupportPlayback\(activeTool !== null\)/);
   assert.match(
     shell,
-    /const closeTool = useCallback\(\(\) => \{\s*const closingTool = activeTool;\s*const rememberedTrigger = lastToolTriggerRef\.current;\s*reconcileSupportPlayback\(mapOpen && mapOverlay\)/,
+    /const supportPauseSessionRef = useRef<SupportPauseSession \| null>\(null\);/,
   );
+  assert.match(
+    shell,
+    /reconcileSupportPauseSession\(\{\s*currentPage,\s*paused,\s*playbackInspectionActive: frameInspectionActive,\s*session: supportPauseSessionRef\.current,\s*supportOpen,\s*\}\)/,
+  );
+  const pauseLeaseStart = shell.indexOf(
+    'const decision = reconcileSupportPauseSession({',
+  );
+  const pauseLeaseEnd = shell.indexOf(
+    'onTutorEngagementChange?.(tutorVisible)',
+    pauseLeaseStart,
+  );
+  assert.ok(pauseLeaseStart >= 0 && pauseLeaseEnd > pauseLeaseStart);
+  const pauseLeaseSource = shell.slice(pauseLeaseStart, pauseLeaseEnd);
+  assert.match(pauseLeaseSource, /supportOpen/);
+  assert.doesNotMatch(
+    pauseLeaseSource,
+    /tutorVisible|tutorOpen|studySupportOpen|novaTutorMode/,
+    'Focus, Study, and Classroom tutor visibility cannot enter the pause lease',
+  );
+
+  const tutorHandlersStart = shell.indexOf('const dismissTutor = useCallback');
+  const tutorHandlersEnd = shell.indexOf(
+    'const toggleMap = useCallback',
+    tutorHandlersStart,
+  );
+  assert.ok(tutorHandlersStart >= 0 && tutorHandlersEnd > tutorHandlersStart);
+  const tutorHandlersSource = shell.slice(tutorHandlersStart, tutorHandlersEnd);
+  assert.match(tutorHandlersSource, /novaTutorMode === 'study'/);
+  assert.match(tutorHandlersSource, /novaTutorMode === 'focus'/);
+  assert.match(tutorHandlersSource, /else \{\s*setTutorOpen\(opening\);\s*\}/);
+  assert.doesNotMatch(
+    tutorHandlersSource,
+    /onPausedChange|setPaused|reconcileSupportPauseSession/,
+    'opening or closing any Nova placement leaves paused unchanged',
+  );
+
+  const pauseControlStart = shell.indexOf('const pauseControl = <button');
+  const pauseControlEnd = shell.indexOf(
+    'const muteControl = <button',
+    pauseControlStart,
+  );
+  assert.ok(pauseControlStart >= 0 && pauseControlEnd > pauseControlStart);
+  const pauseControlSource = shell.slice(pauseControlStart, pauseControlEnd);
+  assert.match(
+    pauseControlSource,
+    /disabled=\{!runtimeAvailable \|\| supportOpen\}/,
+  );
+  assert.doesNotMatch(
+    pauseControlSource,
+    /tutorVisible|tutorOpen|studySupportOpen/,
+    'wide Nova does not disable the learner-owned Pause control',
+  );
+
+  assert.match(shell, /data-tutor-playback="independent"/);
+  assert.match(shell, /onTutorEngagementChange\?\.\(tutorVisible\);/);
+  assert.doesNotMatch(shell, /resolveTutorTransport|tutorHeldPausedRef|effectiveOpen/);
+  assert.doesNotMatch(shell, /Narration paused while Nova support is open/);
+  assert.doesNotMatch(shell, /data-tutor-pause-notice/);
+  assert.doesNotMatch(shell, /reconcileSupportPlayback/);
   assert.match(shell, /if \(activeTool\) \{\s*closeTool\(\);\s*\} else if \(mapOpen\) \{\s*closeMap\(\);/);
   assert.match(shell, /lesson-shell2__scrim--map"[\s\S]*onClick=\{closeMap\}/);
   assert.match(shell, /lesson-shell2__scrim--tool"[\s\S]*onClick=\{closeTool\}/);
   assert.match(shell, /onRequestClose=\{closeTool\}/);
   assert.match(
     shell,
-    /data-support-tool-playback="modern-support-open-forces-pause-restores-prior-state"/,
+    /data-support-tool-playback="support-tools-pause-restore-nova-independent"/,
   );
 });
 

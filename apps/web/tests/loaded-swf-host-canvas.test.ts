@@ -34,3 +34,24 @@ test('loaded-SWF host canvas stays local, hash-bound, and fail-closed', async ()
   assert.match(source, /data-strict-migration-complete="false"/);
   assert.match(source, /The local loaded-SWF host drawing failed safely\./);
 });
+
+test('a canvas page is never stretched past the pixels behind it', async () => {
+  const source = await readFile(
+    new URL('../components/loaded-swf-host-canvas.tsx', import.meta.url),
+    'utf8',
+  );
+
+  // The backing store follows the scale the adapter declares...
+  assert.match(source, /canvas\.width !== width \* scale/);
+  assert.match(source, /canvas\.height !== height \* scale/);
+  assert.match(source, /width=\{width \* renderScale\}/);
+  assert.match(source, /height=\{height \* renderScale\}/);
+
+  // ...and the CSS box is capped to it, so widening the lesson plane can never
+  // upscale a canvas page into softness.
+  assert.match(source, /maxWidth: `\$\{width \* renderScale\}px`/);
+
+  // An adapter that declares nothing renders at the authored stage.
+  assert.match(source, /useState\(1\)/);
+  assert.match(source, /Number\.isInteger\(declared\) && \(declared as number\) >= 1/);
+});

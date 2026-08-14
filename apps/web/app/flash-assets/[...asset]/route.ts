@@ -9,7 +9,10 @@ import {
   classifyG4L3HostCompositeAsset,
   hasExactG4L3HostCompositeDigest,
 } from '@/lib/g4-l3-host-composite-asset-policy';
-import {isG5L4ExecutivePreviewEnabled} from '@/lib/g5-l4-executive-preview';
+import {
+  isG4L3ShowcaseAssetAuthorized,
+  isG4L3ShowcaseAssetSegments,
+} from '@/lib/g4-l3-showcase-asset-policy';
 import {
   classifyG5L4PreviewAsset,
   hasSafeFlashAssetSegments,
@@ -48,7 +51,16 @@ export async function GET(
   const canonicalAsset = path.relative(root, target).split(path.sep);
   const g4HostCompositePolicy =
     classifyG4L3HostCompositeAsset(canonicalAsset);
+  const g4L3ShowcaseAsset = isG4L3ShowcaseAssetSegments(canonicalAsset);
   const policy = classifyG5L4PreviewAsset(canonicalAsset);
+
+  if (
+    g4L3ShowcaseAsset
+    && process.env.NODE_ENV === 'production'
+    && !isG4L3ShowcaseAssetAuthorized()
+  ) {
+    notFound();
+  }
 
   if (
     g4HostCompositePolicy.controlled
@@ -72,7 +84,6 @@ export async function GET(
     }
     if (!isG5L4PreviewAssetAuthorized({
       developmentAudit: process.env.NODE_ENV !== 'production',
-      previewEnabled: isG5L4ExecutivePreviewEnabled(),
       published
     })) {
       notFound();

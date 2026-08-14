@@ -22,24 +22,48 @@ import {
   type LessonHostCapability,
   type LessonHostRequest,
 } from '@helpmath/demos/runtime';
-import {useCallback, useEffect, useRef, useState, type CSSProperties} from 'react';
+import {useCallback, useEffect, useMemo, useRef, useState, type CSSProperties} from 'react';
 import {
   LoadedSwfHostCanvas,
   type LoadedSwfHostAsset,
 } from './loaded-swf-host-canvas';
 export type AnimationRuntimeQuery = {frame?: string; frameDomain?: string; scenario?: string; lang?: string; seed?: string; requirementId?: string; trace?: string; entryStateSha256?: string; capture?: string; duplicateCaptureIdentity?: boolean};
+/**
+ * Narration is the lesson for a language learner, so the host renders a
+ * permanent control for it instead of surfacing a button only when a browser
+ * refuses autoplay. These are every state that control has to read back:
+ *
+ * - `unavailable`: this page carries no narration at all.
+ * - `waiting`: narration exists but is bound to the timeline, so there is
+ *   nothing the learner can start on demand right now.
+ * - `idle`: narration exists and a track can be started on demand.
+ * - `playing`: narration is sounding, from either a timeline cue or a track.
+ * - `blocked`: the browser refused autoplay and is waiting for a gesture.
+ */
+export type AnimationRuntimeNarrationStatus =
+  'unavailable' | 'waiting' | 'idle' | 'playing' | 'blocked';
 export interface AnimationRuntimePlaybackState {
   readonly audioAvailable: boolean;
   readonly frame: number;
   readonly frameCount: number;
   readonly frameDomain: string;
   readonly fps: number;
+  readonly narration: AnimationRuntimeNarrationStatus;
   readonly seekAvailable: boolean;
   readonly stepFrames: number;
   readonly transportMode: 'none' | 'visual-frame-inspector';
 }
 export interface AnimationRuntimeSeekRequest {
   readonly frame: number;
+  readonly requestId: number;
+}
+/**
+ * Host to runtime narration command. It mirrors `AnimationRuntimeSeekRequest`:
+ * the host owns the control, the runtime owns the audio elements, and a
+ * monotonic `requestId` keeps a repeated action from replaying on re-render.
+ */
+export interface AnimationRuntimeNarrationRequest {
+  readonly action: 'play' | 'stop';
   readonly requestId: number;
 }
 export const INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE:
@@ -49,6 +73,7 @@ AnimationRuntimePlaybackState = Object.freeze({
   frameCount: 1,
   frameDomain: 'root',
   fps: 0,
+  narration: 'unavailable',
   seekAvailable: false,
   stepFrames: 0,
   transportMode: 'none',
@@ -58,6 +83,7 @@ const stableCaptureId = /^[A-Za-z0-9][A-Za-z0-9._:-]*$/;
 const canonicalPositiveInteger = /^[1-9]\d*$/;
 const canonicalUnsignedInteger = /^(?:0|[1-9]\d*)$/;
 const ignoreTimelinePauseChange: (paused: boolean) => void = () => undefined;
+const ignoreAudioActivity: (sounding: boolean) => void = () => undefined;
 type RuntimeAudioCue = AnimationModule['audioCues'][number];
 
 function lessonHostCapabilityForRequest(
@@ -90,6 +116,40 @@ export function moduleDeclaresLessonHostRequest(
   const capability = lessonHostCapabilityForRequest(request);
   return capability !== null &&
     Boolean(module?.lessonHost?.capabilities.includes(capability));
+}
+
+/**
+ * A page has finished playing once its authored timeline reaches its end
+ * frame. That is the last frame of the first pass, so a looping page reports
+ * completion once instead of never.
+ *
+ * Two cases have nothing to play and are finished the moment they render: a
+ * reduced-motion device, which holds a single authored frame, and a movie with
+ * no live frame rate. Neither should cost a learner their progress.
+ *
+ * A page that has not rendered, cannot render its requested domain, or is
+ * frozen at a deterministic capture frame reports nothing.
+ */
+export function playbackReachedEnd({
+  captureFrame,
+  fps,
+  frame,
+  playbackEndFrame,
+  reducedMotion,
+  rendererDomainSupported,
+}: Readonly<{
+  captureFrame: number | undefined;
+  fps: number;
+  frame: number;
+  playbackEndFrame: number;
+  reducedMotion: boolean | undefined;
+  rendererDomainSupported: boolean;
+}>): boolean {
+  if (!rendererDomainSupported) return false;
+  if (captureFrame !== undefined) return false;
+  if (reducedMotion === undefined) return false;
+  if (reducedMotion) return true;
+  return !fps || frame >= playbackEndFrame;
 }
 
 /**
@@ -229,9 +289,14 @@ function useFrame(movie: AnimationModule['movie'] | undefined, playbackMode: Ani
   };
 }
 
-function useAudio(module: AnimationModule | undefined, frame: number, fps: number, frameDomain: string, lang: 'en' | 'es', enabled: boolean, replay: number, scenario: string, seed: number, volume: number, onAutoplayBlocked: (cue: RuntimeAudioCue | null) => void) {
+function useAudio(module: AnimationModule | undefined, frame: number, fps: number, frameDomain: string, lang: 'en' | 'es', enabled: boolean, replay: number, scenario: string, seed: number, volume: number, onAutoplayBlocked: (cue: RuntimeAudioCue | null) => void, onSounding: (sounding: boolean) => void = ignoreAudioActivity) {
   const active = useRef<Map<string, HTMLAudioElement>>(new Map()), previous = useRef(0);
   const safeVolume = Math.max(0, Math.min(1, volume));
+  // The host narration control reads timeline cues back as playback state, so
+  // every path that adds to or drains `active` has to report the new count.
+  const reportSounding = useCallback(() => {
+    onSounding(active.current.size > 0);
+  }, [onSounding]);
   const stopNow = useCallback(() => {
     onAutoplayBlocked(null);
     for (const audio of active.current.values()) {
@@ -240,7 +305,8 @@ function useAudio(module: AnimationModule | undefined, frame: number, fps: numbe
     }
     active.current.clear();
     previous.current = 0;
-  }, [onAutoplayBlocked]);
+    reportSounding();
+  }, [onAutoplayBlocked, reportSounding]);
   useEffect(() => {
     stopNow();
     return stopNow;
@@ -269,11 +335,17 @@ function useAudio(module: AnimationModule | undefined, frame: number, fps: numbe
       if (offsetSeconds > 0) {
         try {audio.currentTime = offsetSeconds;} catch {audio.addEventListener('loadedmetadata', () => {audio.currentTime = offsetSeconds;}, {once: true});}
       }
-      const done = () => {if (active.current.get(cue.id) === audio) active.current.delete(cue.id);};
+      const done = () => {
+        if (active.current.get(cue.id) === audio) active.current.delete(cue.id);
+        reportSounding();
+      };
       audio.addEventListener('ended', done, {once: true});
       audio.addEventListener('error', done, {once: true});
       void audio.play().then(
-        () => onAutoplayBlocked(null),
+        () => {
+          onAutoplayBlocked(null);
+          reportSounding();
+        },
         (error: unknown) => {
           done();
           if (error instanceof DOMException && error.name === 'NotAllowedError') {
@@ -282,59 +354,97 @@ function useAudio(module: AnimationModule | undefined, frame: number, fps: numbe
         }
       );
     }
-  }, [module, enabled, frame, fps, frameDomain, lang, scenario, seed, safeVolume, onAutoplayBlocked]);
+    reportSounding();
+  }, [module, enabled, frame, fps, frameDomain, lang, scenario, seed, safeVolume, onAutoplayBlocked, reportSounding]);
   return {stopNow};
 }
 
-export function HostAudioControls({module, lang, frameDomain = 'root', fallbackCue = null, disabled = false, onTimelinePauseChange = ignoreTimelinePauseChange, volume = 1}: {module: AnimationModule; lang: 'en' | 'es'; frameDomain?: string; fallbackCue?: RuntimeAudioCue | null; disabled?: boolean; onTimelinePauseChange?: (paused: boolean) => void; volume?: number}) {
+type HostAudioTrack = NonNullable<AnimationModule['audioTracks']>[number];
+interface HostAudioTracksOptions {
+  module: AnimationModule | undefined;
+  lang: 'en' | 'es';
+  frameDomain?: string;
+  fallbackCue?: RuntimeAudioCue | null;
+  disabled?: boolean;
+  onTimelinePauseChange?: (paused: boolean) => void;
+  volume?: number;
+}
+
+/**
+ * Owns the on-demand narration elements. It is a hook rather than component
+ * state because two hosts drive the same tracks: the runtime toolbar's own
+ * buttons, and a lesson shell that renders the narration control in its top
+ * bar and commands playback through `narrationRequest`.
+ */
+function useHostAudioTracks({module, lang, frameDomain = 'root', fallbackCue = null, disabled = false, onTimelinePauseChange = ignoreTimelinePauseChange, volume = 1}: HostAudioTracksOptions) {
   const active = useRef<{audio: HTMLAudioElement; pausesTimeline: boolean} | null>(null);
-  const [playing, setPlaying] = useState<string | null>(null);
+  // A track belongs to exactly one page, language, and frame domain. Stamping
+  // what is playing with that identity means moving to another page reports
+  // silence by derivation, with no reset to run and no window in which the new
+  // page inherits the old one's playing state.
+  const identity = `${module?.key ?? ''} ${lang} ${frameDomain} ${disabled}`;
+  const [playingTrack, setPlayingTrack] =
+    useState<{identity: string; trackId: string} | null>(null);
+  const playing = playingTrack?.identity === identity
+    ? playingTrack.trackId
+    : null;
   const safeVolume = Math.max(0, Math.min(1, volume));
-  const explicitTracks = (module.audioTracks ?? []).filter(
-    (track) => track.visibleWhen.includes(lang) && (!track.frameDomains || track.frameDomains.includes(frameDomain))
-  );
-  // Browsers may reject source-faithful autoplay until the learner interacts
-  // with the page. Expose only the exact cue whose play() attempt was blocked.
-  const tracks = explicitTracks.length === 0
-      && fallbackCue
-      && fallbackCue.durationMs !== undefined
-      && fallbackCue.sha256 !== undefined
-    ? [
-        {
-          id: `${fallbackCue.id}-manual-fallback`,
-          language: lang,
-          label: lang === 'es' ? 'Audio en español' : 'English audio',
-          source: fallbackCue.source,
-          durationMs: fallbackCue.durationMs,
-          sha256: fallbackCue.sha256,
-          activation: 'user' as const,
-          visibleWhen: [lang] as const,
-          frameDomains: [frameDomain] as const,
-          timelineBehavior: 'none' as const
-        }
-      ]
-    : explicitTracks;
+  const tracks = useMemo(() => {
+    const explicitTracks = (module?.audioTracks ?? []).filter(
+      (track) => track.visibleWhen.includes(lang) && (!track.frameDomains || track.frameDomains.includes(frameDomain))
+    );
+    // Browsers may reject source-faithful autoplay until the learner interacts
+    // with the page. Expose only the exact cue whose play() attempt was blocked.
+    return explicitTracks.length === 0
+        && fallbackCue
+        && fallbackCue.durationMs !== undefined
+        && fallbackCue.sha256 !== undefined
+      ? [
+          {
+            id: `${fallbackCue.id}-manual-fallback`,
+            language: lang,
+            label: lang === 'es' ? 'Audio en español' : 'English audio',
+            source: fallbackCue.source,
+            durationMs: fallbackCue.durationMs,
+            sha256: fallbackCue.sha256,
+            activation: 'user' as const,
+            visibleWhen: [lang] as const,
+            frameDomains: [frameDomain] as const,
+            timelineBehavior: 'none' as const
+          }
+        ]
+      : explicitTracks;
+  }, [module, lang, frameDomain, fallbackCue]);
+  const stop = useCallback(() => {
+    const current = active.current;
+    active.current = null;
+    setPlayingTrack(null);
+    if (!current) return;
+    current.audio.pause();
+    current.audio.currentTime = 0;
+    if (current.pausesTimeline) onTimelinePauseChange(false);
+  }, [onTimelinePauseChange]);
+  // Tearing down the element the previous identity left on air. Only the audio
+  // element is touched here; `playing` already reports null by derivation.
+  useEffect(() => () => {
+    const current = active.current;
+    active.current = null;
+    if (!current) return;
+    current.audio.pause();
+    current.audio.currentTime = 0;
+    if (current.pausesTimeline) onTimelinePauseChange(false);
+  }, [identity, onTimelinePauseChange]);
   useEffect(() => () => {
     const current = active.current;
     current?.audio.pause();
     if (current?.pausesTimeline) onTimelinePauseChange(false);
     active.current = null;
-  }, [module, lang, frameDomain, disabled, onTimelinePauseChange]);
+  }, [onTimelinePauseChange]);
   useEffect(() => {
     if (active.current) active.current.audio.volume = safeVolume;
   }, [safeVolume]);
-  if (!tracks.length) return null;
-  const toggle = (track: NonNullable<AnimationModule['audioTracks']>[number]) => {
+  const play = useCallback((track: HostAudioTrack) => {
     if (disabled || !isSameOriginAssetSource(track.source)) return;
-    if (playing === track.id && active.current) {
-      const current = active.current;
-      current.audio.pause();
-      current.audio.currentTime = 0;
-      if (current.pausesTimeline) onTimelinePauseChange(false);
-      active.current = null;
-      setPlaying(null);
-      return;
-    }
     const prior = active.current;
     prior?.audio.pause();
     if (prior) prior.audio.currentTime = 0;
@@ -349,13 +459,28 @@ export function HostAudioControls({module, lang, frameDomain = 'root', fallbackC
         active.current = null;
         if (pausesTimeline) onTimelinePauseChange(false);
       }
-      setPlaying((current) => current === track.id ? null : current);
+      setPlayingTrack((current) => current?.trackId === track.id
+        ? null
+        : current);
     };
     audio.addEventListener('ended', done, {once: true});
     audio.addEventListener('error', done, {once: true});
-    setPlaying(track.id);
+    setPlayingTrack({identity, trackId: track.id});
     void audio.play().catch(done);
-  };
+  }, [disabled, identity, onTimelinePauseChange, safeVolume]);
+  const toggle = useCallback((track: HostAudioTrack) => {
+    if (disabled || !isSameOriginAssetSource(track.source)) return;
+    if (playing === track.id && active.current) {
+      stop();
+      return;
+    }
+    play(track);
+  }, [disabled, play, playing, stop]);
+  return {play, playing, stop, toggle, tracks};
+}
+
+function HostAudioControlsView({disabled, lang, playing, toggle, tracks}: {disabled: boolean; lang: 'en' | 'es'; playing: string | null; toggle: (track: HostAudioTrack) => void; tracks: readonly HostAudioTrack[]}) {
+  if (!tracks.length) return null;
   return <div aria-label={lang === 'es' ? 'Audio narrado' : 'Narration audio'} className="runtime-audio-controls" role="group">
     {tracks.map((track) => {
       const trackName = lang === 'es'
@@ -371,13 +496,26 @@ export function HostAudioControls({module, lang, frameDomain = 'root', fallbackC
   </div>;
 }
 
+export function HostAudioControls(options: HostAudioTracksOptions & {module: AnimationModule}) {
+  const {playing, toggle, tracks} = useHostAudioTracks(options);
+  return <HostAudioControlsView
+    disabled={options.disabled ?? false}
+    lang={options.lang}
+    playing={playing}
+    toggle={toggle}
+    tracks={tracks}
+  />;
+}
+
 export function AnimationRuntime({
   animationId,
   moduleKey,
   query,
   labels,
   loadedSwfHostAsset,
+  narrationRequest,
   onLessonHostRequest,
+  onPlaybackComplete,
   onReplay: onReplayCallback,
   onPlaybackStateChange,
   pageInteractionCompanionTargetId,
@@ -398,7 +536,9 @@ export function AnimationRuntime({
     loading: string;
   };
   loadedSwfHostAsset?: LoadedSwfHostAsset;
+  narrationRequest?: AnimationRuntimeNarrationRequest | null;
   onLessonHostRequest?: AnimationRendererProps['onLessonHostRequest'];
+  onPlaybackComplete?: () => void;
   onReplay?: () => void;
   onPlaybackStateChange?: (state: AnimationRuntimePlaybackState) => void;
   pageInteractionCompanionTargetId?: string;
@@ -412,6 +552,7 @@ export function AnimationRuntime({
   const [replay, setReplay] = useState(0), [reduced, setReduced] = useState<boolean | undefined>();
   const [hostAudioPaused, setHostAudioPaused] = useState(false);
   const [autoplayBlockedCue, setAutoplayBlockedCue] = useState<RuntimeAudioCue | null>(null);
+  const [timelineAudioSounding, setTimelineAudioSounding] = useState(false);
   const animationModule = loaded.key === moduleKey ? loaded.module : undefined;
   const prototype = matchPrototype({animationId: moduleKey});
   useEffect(() => {let cancelled = false; loadAnimationModule(moduleKey).then((value) => {if (!cancelled) setLoaded({key: moduleKey, module: value, failed: !value});}).catch(() => {if (!cancelled) setLoaded({key: moduleKey, failed: true});}); return () => {cancelled = true;};}, [moduleKey]);
@@ -507,30 +648,6 @@ export function AnimationRuntime({
     seekToFrame(seekRequest.frame);
   }, [seekAvailable, seekRequest, seekToFrame]);
   const reportedFrameCount = activeMovie?.frameCount ?? 1;
-  useEffect(() => {
-    onPlaybackStateChange?.({
-      audioAvailable,
-      frame,
-      frameCount: reportedFrameCount,
-      frameDomain: frameDomain?.id ?? 'root',
-      fps: activeMovie?.fps ?? 0,
-      seekAvailable,
-      stepFrames: transport?.stepFrames ?? 0,
-      transportMode: transportEnabledForDomain
-        ? 'visual-frame-inspector'
-        : 'none',
-    });
-  }, [
-    activeMovie?.fps,
-    audioAvailable,
-    frame,
-    frameDomain?.id,
-    onPlaybackStateChange,
-    reportedFrameCount,
-    seekAvailable,
-    transport?.stepFrames,
-    transportEnabledForDomain,
-  ]);
   const playbackContext = context && frameDomain
     ? createPlaybackContext(context, frame, replay, frameDomain)
     : undefined;
@@ -549,7 +666,99 @@ export function AnimationRuntime({
         moduleKey === 'course-g04-l03-ts-006'
       )
     : null;
-  const {stopNow: stopTimelineAudioNow} = useAudio(animationModule, frame, activeMovie?.fps ?? 1, context?.frameDomain ?? 'root', context?.lang ?? 'en', running && !capture && rendererDomainSupported, replay, context?.scenario ?? 'default', context?.seed ?? 0, volume, setAutoplayBlockedCue);
+  const {stopNow: stopTimelineAudioNow} = useAudio(animationModule, frame, activeMovie?.fps ?? 1, context?.frameDomain ?? 'root', context?.lang ?? 'en', running && !capture && rendererDomainSupported, replay, context?.scenario ?? 'default', context?.seed ?? 0, volume, setAutoplayBlockedCue, setTimelineAudioSounding);
+  const narrationDisabled = capture ||
+    context?.captureFrame !== undefined ||
+    paused;
+  const {
+    play: playNarrationTrack,
+    playing: playingNarrationTrackId,
+    stop: stopNarrationTrack,
+    toggle: toggleNarrationTrack,
+    tracks: narrationTracks,
+  } = useHostAudioTracks({
+    disabled: narrationDisabled,
+    fallbackCue: autoplayBlockedCue,
+    frameDomain: playbackContext?.frameDomain ?? 'root',
+    lang: context?.lang ?? 'en',
+    module: animationModule,
+    onTimelinePauseChange: onHostAudioTimelinePauseChange,
+    volume,
+  });
+  const narrationSounding = timelineAudioSounding ||
+    playingNarrationTrackId !== null;
+  // A refused cue stays on the module for as long as the page is open, because
+  // it is what the manual track is built from. A request on this page is the
+  // gesture the browser was holding out for, so once one exists the control
+  // stops asking and becomes an ordinary play/stop toggle. The host clears the
+  // request when it changes page, which resets this with it: a new page makes
+  // its own autoplay attempt, and the last page's refusal says nothing about it.
+  const narrationGestureGiven = narrationRequest !== null;
+  const narration: AnimationRuntimeNarrationStatus = !audioAvailable
+    ? 'unavailable'
+    : narrationSounding
+      ? 'playing'
+      : autoplayBlockedCue && !narrationGestureGiven
+        ? 'blocked'
+        : narrationTracks.length > 0
+          ? 'idle'
+          : 'waiting';
+  const lastNarrationRequestRef = useRef(0);
+  useEffect(() => {
+    if (
+      !narrationRequest ||
+      narrationRequest.requestId === lastNarrationRequestRef.current
+    ) {
+      return;
+    }
+    lastNarrationRequestRef.current = narrationRequest.requestId;
+    if (narrationRequest.action === 'stop') {
+      stopNarrationTrack();
+      stopTimelineAudioNow();
+      return;
+    }
+    const track = narrationTracks[0];
+    if (!track) return;
+    if (playingNarrationTrackId === track.id) {
+      toggleNarrationTrack(track);
+      return;
+    }
+    playNarrationTrack(track);
+  }, [
+    narrationRequest,
+    narrationTracks,
+    playNarrationTrack,
+    playingNarrationTrackId,
+    stopNarrationTrack,
+    stopTimelineAudioNow,
+    toggleNarrationTrack,
+  ]);
+  useEffect(() => {
+    onPlaybackStateChange?.({
+      audioAvailable,
+      frame,
+      frameCount: reportedFrameCount,
+      frameDomain: frameDomain?.id ?? 'root',
+      fps: activeMovie?.fps ?? 0,
+      narration,
+      seekAvailable,
+      stepFrames: transport?.stepFrames ?? 0,
+      transportMode: transportEnabledForDomain
+        ? 'visual-frame-inspector'
+        : 'none',
+    });
+  }, [
+    activeMovie?.fps,
+    audioAvailable,
+    frame,
+    frameDomain?.id,
+    narration,
+    onPlaybackStateChange,
+    reportedFrameCount,
+    seekAvailable,
+    transport?.stepFrames,
+    transportEnabledForDomain,
+  ]);
   const handleRendererLessonHostRequest = useCallback<
     NonNullable<AnimationRendererProps['onLessonHostRequest']>
   >((request, hostContext) => {
@@ -577,6 +786,30 @@ export function AnimationRuntime({
     onLessonHostRequest && animationModule?.lessonHost?.capabilities.length
       ? handleRendererLessonHostRequest
       : undefined;
+  const playbackComplete = Boolean(
+    animationModule &&
+      activeMovie &&
+      !captureIdentityFailure &&
+      playbackReachedEnd({
+        captureFrame: context?.captureFrame,
+        fps: activeMovie.fps,
+        frame: liveFrame,
+        playbackEndFrame: resolvePlaybackEndFrame(
+          activeMovie,
+          playbackEndFrame,
+        ),
+        reducedMotion: reduced,
+        rendererDomainSupported,
+      }),
+  );
+  const completionIdentity = `${playbackIdentity}:${replay}`;
+  const reportedCompletionRef = useRef<string | null>(null);
+  useEffect(() => {
+    if (!playbackComplete) return;
+    if (reportedCompletionRef.current === completionIdentity) return;
+    reportedCompletionRef.current = completionIdentity;
+    onPlaybackComplete?.();
+  }, [completionIdentity, onPlaybackComplete, playbackComplete]);
   if (loaded.failed) return <p className="runtime-unavailable">{labels.unavailable}</p>;
   if (!animationModule || !context || !runtimeMetadata || !frameDomain || !activeMovie || !playbackContext || !state) return <p aria-live="polite" className="runtime-unavailable">{labels.loading}</p>;
   const Renderer = animationModule.Renderer;
@@ -610,14 +843,13 @@ export function AnimationRuntime({
     loadedSwfHostAsset?.sourceProvenLanguage === playbackContext.lang
       ? loadedSwfHostAsset
       : undefined;
-  return <div className={`runtime-shell${capture ? ' runtime-shell--capture' : ''}`} data-audio-available={audioAvailable ? 'true' : 'false'} data-host-audio-timeline-paused={hostAudioPaused ? 'true' : 'false'} data-runtime-paused={paused ? 'true' : 'false'} data-runtime-presentation={presentation} data-runtime-replay={replay} data-runtime-transport={transportEnabledForDomain ? 'visual-frame-inspector' : 'none'} data-runtime-volume={Math.max(0, Math.min(1, volume))} data-source-transport-parity="not-established" style={{'--flash-stage-width': `${runtimeMetadata.stage.width}px`, '--flash-stage-height': `${runtimeMetadata.stage.height}px`, '--flash-stage-aspect': `${runtimeMetadata.stage.width} / ${runtimeMetadata.stage.height}`} as CSSProperties}>
+  return <div className={`runtime-shell${capture ? ' runtime-shell--capture' : ''}`} data-audio-available={audioAvailable ? 'true' : 'false'} data-host-audio-timeline-paused={hostAudioPaused ? 'true' : 'false'} data-runtime-playback-complete={playbackComplete ? 'true' : 'false'} data-runtime-paused={paused ? 'true' : 'false'} data-runtime-presentation={presentation} data-runtime-replay={replay} data-runtime-transport={transportEnabledForDomain ? 'visual-frame-inspector' : 'none'} data-runtime-volume={Math.max(0, Math.min(1, volume))} data-source-transport-parity="not-established" style={{'--flash-stage-width': `${runtimeMetadata.stage.width}px`, '--flash-stage-height': `${runtimeMetadata.stage.height}px`, '--flash-stage-aspect': `${runtimeMetadata.stage.width} / ${runtimeMetadata.stage.height}`} as CSSProperties}>
+    {/* The lesson shell owns narration: it renders a permanent, designed
+        control in its top bar and drives these same tracks through
+        `narrationRequest`, so the runtime adds no floating button of its own. */}
     {presentation === 'legacy-shell'
-      ? <div className="runtime-toolbar runtime-toolbar--legacy-audio">
-          <div className="runtime-toolbar__actions">
-            <HostAudioControls disabled={capture || context.captureFrame !== undefined || paused} fallbackCue={autoplayBlockedCue} frameDomain={playbackContext.frameDomain} key={`${animationModule.key}:${context.lang}:${playbackContext.frameDomain}:${context.scenario}:${context.seed}:${autoplayBlockedCue?.id ?? ''}:${capture}:${context.captureFrame !== undefined}:${replay}`} lang={context.lang} module={animationModule} onTimelinePauseChange={onHostAudioTimelinePauseChange} volume={volume} />
-          </div>
-        </div>
-      : <div className="runtime-toolbar">{presentation === 'workbench' ? <div><span className="prototype-badge">{labels.prototype}</span><span>{runtimeMetadata.stage.width} × {runtimeMetadata.stage.height}</span><span>{runtimeMetadata.fps} FPS</span><span>{runtimeMetadata.frameCount} root frames</span>{playbackContext.frameDomain !== 'root' ? <span>{playbackContext.frameDomain}: {activeMovie.frameCount} frames</span> : null}</div> : <div><span className="prototype-badge">{labels.prototype}</span></div>}<div className="runtime-toolbar__actions"><HostAudioControls disabled={capture || context.captureFrame !== undefined || paused} fallbackCue={autoplayBlockedCue} frameDomain={playbackContext.frameDomain} key={`${animationModule.key}:${context.lang}:${playbackContext.frameDomain}:${context.scenario}:${context.seed}:${autoplayBlockedCue?.id ?? ''}:${capture}:${context.captureFrame !== undefined}:${replay}`} lang={context.lang} module={animationModule} onTimelinePauseChange={onHostAudioTimelinePauseChange} volume={volume} /><button data-replay-keyboard="enter-space" disabled={context.captureFrame !== undefined} onClick={onReplay} onKeyDown={(event) => {if (event.key === ' ' || event.code === 'Space') event.preventDefault();}} onKeyUp={(event) => {if (event.key === ' ' || event.code === 'Space') {event.preventDefault(); onReplay();}}} type="button">{labels.replay}</button></div></div>}
+      ? null
+      : <div className="runtime-toolbar">{presentation === 'workbench' ? <div><span className="prototype-badge">{labels.prototype}</span><span>{runtimeMetadata.stage.width} × {runtimeMetadata.stage.height}</span><span>{runtimeMetadata.fps} FPS</span><span>{runtimeMetadata.frameCount} root frames</span>{playbackContext.frameDomain !== 'root' ? <span>{playbackContext.frameDomain}: {activeMovie.frameCount} frames</span> : null}</div> : <div><span className="prototype-badge">{labels.prototype}</span></div>}<div className="runtime-toolbar__actions"><HostAudioControlsView disabled={narrationDisabled} lang={context.lang} playing={playingNarrationTrackId} toggle={toggleNarrationTrack} tracks={narrationTracks} /><button data-replay-keyboard="enter-space" disabled={context.captureFrame !== undefined} onClick={onReplay} onKeyDown={(event) => {if (event.key === ' ' || event.code === 'Space') event.preventDefault();}} onKeyUp={(event) => {if (event.key === ' ' || event.code === 'Space') {event.preventDefault(); onReplay();}}} type="button">{labels.replay}</button></div></div>}
     {reduced === true && context.captureFrame === undefined ? <p className="reduced-motion-note" role="status">{labels.reduced}</p> : null}
     <div className="runtime-stage" data-animation-id={animationId} data-animation-module={animationModule.key} data-capture-identity-status={capture ? 'verified' : undefined} data-flash-entry-state-sha256={playbackContext.entryStateSha256 || undefined} data-flash-frame={playbackContext.frame} data-flash-frame-domain={playbackContext.frameDomain} data-flash-lang={playbackContext.lang} data-flash-requirement-id={playbackContext.requirementId} data-flash-root-frame={playbackContext.rootFrame} data-flash-scenario={playbackContext.scenario} data-flash-seed={playbackContext.seed} data-flash-trace-id={playbackContext.traceId} data-loaded-swf-host-composite={compatibleLoadedSwfHostAsset && presentation === 'legacy-shell' ? 'true' : 'false'} data-runtime-language={playbackContext.lang} data-runtime-scenario={playbackContext.scenario} data-runtime-seed={playbackContext.seed}>
       {compatibleLoadedSwfHostAsset && presentation === 'legacy-shell'

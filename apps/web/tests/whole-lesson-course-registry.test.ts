@@ -42,13 +42,11 @@ test('course registry owns the exact G4 L3 and G5 L4 player bindings', () => {
 
 test('registration validation fails closed on descriptor and preserved-player drift', () => {
   const descriptor = G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR;
-  const previewGate = () => false;
 
   assert.equal(
     buildWholeLessonCourseRegistration({
       descriptor: undefined,
       player: {kind: 'descriptor-driven'},
-      isControlledPreviewEnabled: previewGate,
     }),
     undefined,
   );
@@ -59,7 +57,6 @@ test('registration validation fails closed on descriptor and preserved-player dr
         course: {...descriptor.course, href: '/courses/4/4'},
       },
       player: {kind: 'descriptor-driven'},
-      isControlledPreviewEnabled: previewGate,
     }),
     undefined,
   );
@@ -74,21 +71,18 @@ test('registration validation fails closed on descriptor and preserved-player dr
         component: 'g4-l3-whole-lesson-player',
         descriptorId: 'whole-lesson-player-g04-l03-v1',
       },
-      isControlledPreviewEnabled: previewGate,
     }),
     undefined,
   );
 });
 
 test('descriptor-driven registration requires live page modules and a bound shell implementation', () => {
-  const previewGate = () => false;
   const g5Descriptor = G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR;
   assert.ok(g5Descriptor);
   assert.equal(
     buildWholeLessonCourseRegistration({
       descriptor: G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR,
       player: {kind: 'descriptor-driven'},
-      isControlledPreviewEnabled: previewGate,
     }),
     undefined,
   );
@@ -108,7 +102,6 @@ test('descriptor-driven registration requires live page modules and a bound shel
     buildWholeLessonCourseRegistration({
       descriptor: unavailablePageDescriptor,
       player: {kind: 'descriptor-driven'},
-      isControlledPreviewEnabled: previewGate,
     }),
     undefined,
   );
@@ -128,7 +121,6 @@ test('descriptor-driven registration requires live page modules and a bound shel
     buildWholeLessonCourseRegistration({
       descriptor: unregisteredModuleDescriptor,
       player: {kind: 'descriptor-driven'},
-      isControlledPreviewEnabled: previewGate,
     }),
     undefined,
   );
@@ -136,7 +128,6 @@ test('descriptor-driven registration requires live page modules and a bound shel
   const valid = buildWholeLessonCourseRegistration({
     descriptor: g5Descriptor,
     player: {kind: 'descriptor-driven'},
-    isControlledPreviewEnabled: previewGate,
   });
   assert.ok(valid);
   assert.deepEqual(valid.player, {kind: 'descriptor-driven'});

@@ -6,6 +6,7 @@ import {useEffect, useMemo, useRef, useState} from 'react';
 import {
   AnimationRuntime,
   INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE,
+  type AnimationRuntimeNarrationRequest,
   type AnimationRuntimePlaybackState,
   type AnimationRuntimeSeekRequest,
 } from '@/components/animation-runtime';
@@ -16,6 +17,7 @@ import {
   type LegacyLessonShellVisualSkin,
   type LessonShellTool,
 } from '@/components/legacy-responsive-lesson-shell';
+import type {WholeLessonHostPresentation} from '@/lib/whole-lesson-host-presentation';
 import type {
   WholeLessonPlayerDescriptor,
   WholeLessonPlayerLocale,
@@ -35,13 +37,16 @@ import {
 
 function visualSkin(
   descriptor: WholeLessonPlayerDescriptor,
+  presentation: WholeLessonHostPresentation,
 ): LegacyLessonShellVisualSkin {
   return Object.freeze({
     authoredStage: descriptor.stage,
+    presentation,
     chromeAsset: descriptor.visualSkin.chromeAsset,
     chromeEvidence: descriptor.visualSkin.evidence.kind,
     chromeFooterHeight: descriptor.visualSkin.footer.height,
     chromeHeaderHeight: descriptor.visualSkin.header.height,
+    chromeTitleBand: descriptor.visualSkin.header.title,
     controlAssets: descriptor.visualSkin.controls,
     backgroundCompanion: descriptor.visualSkin.backgroundCompanion,
     resumePrompt: descriptor.visualSkin.resumePrompt,
@@ -65,14 +70,18 @@ function calculatorEvidence(
 export function DescriptorDrivenWholeLessonPlayer({
   candidateMode,
   descriptor,
+  hostPresentation = 'legacy-composite',
   locale,
   releasePublished,
+  reviewerMode = false,
   strictCompleteMemberCount,
 }: {
   candidateMode: boolean;
   descriptor: WholeLessonPlayerDescriptor;
+  hostPresentation?: WholeLessonHostPresentation;
   locale: WholeLessonPlayerLocale;
   releasePublished: boolean;
+  reviewerMode?: boolean;
   strictCompleteMemberCount: number;
 }) {
   const [progress, setProgress] = useState(() =>
@@ -93,6 +102,8 @@ export function DescriptorDrivenWholeLessonPlayer({
   );
   const [seekRequest, setSeekRequest] =
     useState<AnimationRuntimeSeekRequest | null>(null);
+  const [narrationRequest, setNarrationRequest] =
+    useState<AnimationRuntimeNarrationRequest | null>(null);
   const [runtimeEpoch, setRuntimeEpoch] = useState(0);
   const [navigationFocusEpoch, setNavigationFocusEpoch] = useState(0);
   const [tourFinished, setTourFinished] = useState(false);
@@ -100,6 +111,7 @@ export function DescriptorDrivenWholeLessonPlayer({
   const lessonPlayerRef = useRef<HTMLDivElement>(null);
   const pageHeadingRef = useRef<HTMLHeadingElement>(null);
   const seekRequestIdRef = useRef(0);
+  const narrationRequestIdRef = useRef(0);
   const lessonNavigationHistoryRef = useRef<readonly string[]>([]);
   const currentPage = descriptor.pages.find(
     (page) => page.animationId === progress.currentAnimationId,
@@ -141,7 +153,10 @@ export function DescriptorDrivenWholeLessonPlayer({
       descriptor.pages.filter((page) => page.sectionCode === section.code),
     ]),
   ), [descriptor]);
-  const skin = useMemo(() => visualSkin(descriptor), [descriptor]);
+  const skin = useMemo(
+    () => visualSkin(descriptor, hostPresentation),
+    [descriptor, hostPresentation],
+  );
 
   useEffect(() => {
     let active = true;
@@ -170,11 +185,14 @@ export function DescriptorDrivenWholeLessonPlayer({
   }, [descriptor, locale]);
 
   useEffect(() => {
+    // See the G4 L3 player: a permanent section spine makes an auto-opened
+    // course map a duplicate that covers it.
+    if (hostPresentation === 'modern-wide') return;
     const frame = window.requestAnimationFrame(() => {
       if (window.innerWidth >= LEGACY_MAP_RAIL_MIN_WIDTH) setMapOpen(true);
     });
     return () => window.cancelAnimationFrame(frame);
-  }, []);
+  }, [hostPresentation]);
 
   useEffect(() => {
     if (!hydrated) return;
@@ -228,18 +246,22 @@ export function DescriptorDrivenWholeLessonPlayer({
     setPaused(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
+    setNarrationRequest(null);
   };
   const selectPage = (animationId: string) => {
     navigateToPage(animationId, true);
   };
 
+  // A page counts as reviewed when its current-JS animation has actually
+  // played through. A position without a registered renderer has nothing to
+  // play and therefore can never be counted.
   const reviewCurrentPage = () => {
-    if (!runtimeAvailable) return;
     setProgress((value) =>
       reviewWholeLessonPage(value, descriptor, currentPage.animationId)
     );
   };
 
+  // Next only moves. Stepping past a page never records it as reviewed.
   const advance = () => {
     if (!nextPage && tourFinished) return;
     if (nextPage) {
@@ -248,29 +270,17 @@ export function DescriptorDrivenWholeLessonPlayer({
         currentPage.animationId,
         nextPage.animationId,
       );
+      setProgress((value) =>
+        visitWholeLessonPage(value, descriptor, nextPage.animationId)
+      );
     }
-    setProgress((value) => {
-      const reviewedValue = runtimeAvailable
-        ? reviewWholeLessonPage(
-            value,
-            descriptor,
-            currentPage.animationId,
-          )
-        : value;
-      return nextPage
-        ? visitWholeLessonPage(
-            reviewedValue,
-            descriptor,
-            nextPage.animationId,
-          )
-        : reviewedValue;
-    });
     setRuntimeEpoch((value) => value + 1);
     setMapOpen(false);
     setActiveTool(null);
     setPaused(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
+    setNarrationRequest(null);
     if (!nextPage) setTourFinished(true);
   };
 
@@ -283,6 +293,7 @@ export function DescriptorDrivenWholeLessonPlayer({
     setPaused(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
+    setNarrationRequest(null);
   };
 
   const inspectFrame = (frame: number) => {
@@ -299,6 +310,14 @@ export function DescriptorDrivenWholeLessonPlayer({
     if (!seekRequest) return;
     setSeekRequest(null);
     setPaused(false);
+  };
+
+  const toggleNarration = () => {
+    narrationRequestIdRef.current += 1;
+    setNarrationRequest({
+      action: playbackState.narration === 'playing' ? 'stop' : 'play',
+      requestId: narrationRequestIdRef.current,
+    });
   };
 
   const libraryHref = spanish ? '/es/library' : '/library';
@@ -335,6 +354,7 @@ export function DescriptorDrivenWholeLessonPlayer({
     setPaused(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
+    setNarrationRequest(null);
     lessonNavigationHistoryRef.current = [];
   };
 
@@ -499,6 +519,8 @@ export function DescriptorDrivenWholeLessonPlayer({
           ? descriptor.visualSkin.backgroundCompanion?.loadedSwfHostAsset
           : undefined}
         moduleKey={currentRenderer.moduleKey}
+        narrationRequest={narrationRequest}
+        onPlaybackComplete={reviewCurrentPage}
         onPlaybackStateChange={setPlaybackState}
         onReplay={() => setProgress((value) =>
           recordWholeLessonReplay(
@@ -545,8 +567,8 @@ export function DescriptorDrivenWholeLessonPlayer({
       ? `Usa Anterior y Siguiente para recorrer las ${descriptor.pages.length} posiciones del XML. ${registeredPages.length} tienen módulos current-JS; ${unavailablePageCount} permanecen explícitamente no disponibles.`
       : `Use Previous and Next to traverse all ${descriptor.pages.length} XML positions. ${registeredPages.length} have current-JS modules; ${unavailablePageCount} remain explicitly unavailable.`}</p>
     <p>{spanish
-      ? 'Solo una página con renderer registrado puede marcarse como revisada. El progreso local no modifica la admisión estricta.'
-      : 'Only a page with a registered renderer can be marked reviewed. Local progress never changes strict admission.'}</p>
+      ? 'Una página se cuenta como revisada cuando su animación current-JS llega al final; Siguiente solo avanza. Las posiciones sin renderer nunca se cuentan y el progreso local no modifica la admisión estricta.'
+      : 'A page counts as reviewed once its current-JS animation plays through; Next only moves. Positions without a renderer are never counted, and local progress never changes strict admission.'}</p>
     <p>{spanish
       ? 'La ayuda moderna no ejecuta vínculos heredados.'
       : 'Modern help does not execute legacy links.'}</p>
@@ -576,20 +598,7 @@ export function DescriptorDrivenWholeLessonPlayer({
       }
       calculatorEvidence={calculator}
       candidateMode={candidateMode}
-      completionAction={<button
-        aria-pressed={runtimeAvailable
-          ? reviewed.has(currentPage.animationId)
-          : undefined}
-        disabled={!runtimeAvailable}
-        onClick={reviewCurrentPage}
-        type="button"
-      >
-        {!runtimeAvailable
-          ? (spanish ? 'current-JS no disponible' : 'current-JS unavailable')
-          : reviewed.has(currentPage.animationId)
-            ? (spanish ? '✓ Página revisada' : '✓ Page reviewed')
-            : (spanish ? 'Marcar como revisada' : 'Mark reviewed')}
-      </button>}
+      reviewerMode={reviewerMode}
       completionLabel={spanish
         ? `${reviewedRegisteredCount} de ${registeredPages.length} páginas current-JS revisadas · ${unavailablePageCount} no disponibles`
         : `${reviewedRegisteredCount} of ${registeredPages.length} current-JS pages reviewed · ${unavailablePageCount} unavailable`}
@@ -635,6 +644,7 @@ export function DescriptorDrivenWholeLessonPlayer({
       locale={progress.locale}
       mapOpen={mapOpen}
       mapPanel={mapPanel}
+      narrationStatus={playbackState.narration}
       nextControlLabel={tourFinished
         ? (spanish ? 'Recorrido finalizado' : 'Lesson tour finished')
         : nextPage
@@ -644,13 +654,10 @@ export function DescriptorDrivenWholeLessonPlayer({
       nextLabel={tourFinished
         ? (spanish ? 'Recorrido finalizado ✓' : 'Lesson tour finished ✓')
         : nextPage
-          ? runtimeAvailable
-            ? (spanish ? 'Revisada y siguiente →' : 'Reviewed & next →')
-            : (spanish ? 'Siguiente página →' : 'Next page →')
-          : runtimeAvailable
-            ? (spanish ? 'Revisar y terminar ✓' : 'Review & finish ✓')
-            : (spanish ? 'Terminar recorrido ✓' : 'Finish tour ✓')}
+          ? (spanish ? 'Siguiente →' : 'Next →')
+          : (spanish ? 'Terminar recorrido ✓' : 'Finish tour ✓')}
       onMapOpenChange={setMapOpen}
+      onNarrationToggle={toggleNarration}
       onHeaderBack={returnToPreviousLocation}
       onExit={exitToLibrary}
       onNext={advance}
@@ -662,6 +669,7 @@ export function DescriptorDrivenWholeLessonPlayer({
       onReplay={replayCurrentPage}
       onToolChange={setActiveTool}
       onVolumeChange={setVolume}
+      pageComplete={runtimeAvailable && reviewed.has(currentPage.animationId)}
       pageInteractionCompanionTargetId={pageInteractionCompanionTargetId}
       pageHeading={pageHeading}
       paused={paused}

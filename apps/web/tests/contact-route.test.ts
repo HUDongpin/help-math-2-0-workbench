@@ -9,6 +9,8 @@ import {contactRequestSchema} from '../lib/contact-schema';
 
 const envKeys = [
   'NODE_ENV',
+  'CONTACT_FORM_ENABLED',
+  'NEXT_PUBLIC_TURNSTILE_SITE_KEY',
   'TURNSTILE_SECRET_KEY',
   'RESEND_API_KEY',
   'SUPPORT_TO_EMAIL',
@@ -20,6 +22,15 @@ const originalFetch = globalThis.fetch;
 function setEnv(key: (typeof envKeys)[number], value: string | undefined) {
   if (value === undefined) Reflect.deleteProperty(process.env, key);
   else Reflect.set(process.env, key, value);
+}
+
+function enableContactForm() {
+  setEnv('CONTACT_FORM_ENABLED', 'true');
+  setEnv('NEXT_PUBLIC_TURNSTILE_SITE_KEY', 'test-site-key');
+  setEnv('TURNSTILE_SECRET_KEY', 'test-turnstile-secret');
+  setEnv('RESEND_API_KEY', 're_test_key');
+  setEnv('SUPPORT_TO_EMAIL', 'team@example.org');
+  setEnv('SUPPORT_FROM_EMAIL', 'HELP Math <support@example.org>');
 }
 
 function validRequest(overrides: Record<string, unknown> = {}) {
@@ -66,6 +77,7 @@ describe('POST /api/contact', () => {
   });
 
   it('returns the same structured error envelope for malformed JSON', async () => {
+    enableContactForm();
     const response = await POST(request('{not json'));
     const body = await response.json();
     assert.equal(response.status, 400);
@@ -75,6 +87,7 @@ describe('POST /api/contact', () => {
   });
 
   it('returns field errors for invalid submissions', async () => {
+    enableContactForm();
     const response = await POST(request(validRequest({email: 'not-an-email'})));
     const body = await response.json();
     assert.equal(response.status, 422);
@@ -83,47 +96,93 @@ describe('POST /api/contact', () => {
     assert.ok(body.error.fieldErrors.email);
   });
 
-  it('quietly accepts and discards honeypot submissions', async () => {
-    setEnv('NODE_ENV', 'production');
-    delete process.env.TURNSTILE_SECRET_KEY;
+  it('fails closed before body parsing or provider delivery unless the feature flag is exact true', async () => {
+    enableContactForm();
+    let providerCalls = 0;
+    globalThis.fetch = async () => {
+      providerCalls += 1;
+      throw new Error('provider must not be called');
+    };
+
+    for (const value of [undefined, 'false', 'TRUE', ' true ']) {
+      setEnv('CONTACT_FORM_ENABLED', value);
+      const response = await POST(request('{not json'));
+      const body = await response.json();
+      assert.equal(response.status, 503);
+      assert.equal(body.ok, false);
+      assert.equal(body.error.code, 'CONTACT_DISABLED');
+      assert.equal(body.error.message, 'Contact submission is not available.');
+    }
+    assert.equal(providerCalls, 0);
+  });
+
+  it('fails closed before body parsing or provider delivery when any configuration is missing', async () => {
+    const requiredConfiguration = [
+      'NEXT_PUBLIC_TURNSTILE_SITE_KEY',
+      'TURNSTILE_SECRET_KEY',
+      'RESEND_API_KEY',
+      'SUPPORT_TO_EMAIL',
+      'SUPPORT_FROM_EMAIL',
+    ] as const;
+    let providerCalls = 0;
+    globalThis.fetch = async () => {
+      providerCalls += 1;
+      throw new Error('provider must not be called');
+    };
+
+    for (const key of requiredConfiguration) {
+      enableContactForm();
+      setEnv(key, undefined);
+      const response = await POST(request('{not json'));
+      const body = await response.json();
+      assert.equal(response.status, 503, key);
+      assert.equal(body.error.code, 'CONTACT_DISABLED', key);
+    }
+    enableContactForm();
+    setEnv('RESEND_API_KEY', '   ');
+    const whitespaceResponse = await POST(request('{not json'));
+    assert.equal(whitespaceResponse.status, 503);
+    assert.equal((await whitespaceResponse.json()).error.code, 'CONTACT_DISABLED');
+    assert.equal(providerCalls, 0);
+  });
+
+  it('quietly accepts and discards honeypot submissions without provider delivery when enabled', async () => {
+    enableContactForm();
+    let providerCalls = 0;
+    globalThis.fetch = async () => {
+      providerCalls += 1;
+      throw new Error('provider must not be called');
+    };
     const response = await POST(request(validRequest({website: 'https://bot.example'})));
     assert.equal(response.status, 200);
     assert.deepEqual(await response.json(), {ok: true});
+    assert.equal(providerCalls, 0);
   });
 
-  it('fails closed when Turnstile is not configured in production', async () => {
-    setEnv('NODE_ENV', 'production');
-    delete process.env.TURNSTILE_SECRET_KEY;
+  it('fails closed when the exact flag is true but Turnstile is not configured', async () => {
+    enableContactForm();
+    setEnv('TURNSTILE_SECRET_KEY', undefined);
     const response = await POST(request(validRequest()));
     const body = await response.json();
     assert.equal(response.status, 503);
-    assert.equal(body.error.code, 'TURNSTILE_NOT_CONFIGURED');
+    assert.equal(body.error.code, 'CONTACT_DISABLED');
   });
 
-  it('permits only the explicit local-development Turnstile simulation token', async () => {
+  it('does not let the local-development simulation bypass complete configuration', async () => {
     setEnv('NODE_ENV', 'development');
-    delete process.env.TURNSTILE_SECRET_KEY;
-    delete process.env.RESEND_API_KEY;
+    enableContactForm();
+    setEnv('TURNSTILE_SECRET_KEY', undefined);
     const response = await POST(
       request(validRequest({turnstileToken: DEVELOPMENT_TURNSTILE_TOKEN})),
     );
     const body = await response.json();
     assert.equal(response.status, 503);
-    assert.equal(body.error.code, 'EMAIL_NOT_CONFIGURED');
-  });
-
-  it('does not treat arbitrary tokens as local-development verification', async () => {
-    setEnv('NODE_ENV', 'development');
-    delete process.env.TURNSTILE_SECRET_KEY;
-    const response = await POST(request(validRequest({turnstileToken: 'not-the-bypass'})));
-    const body = await response.json();
-    assert.equal(response.status, 503);
-    assert.equal(body.error.code, 'TURNSTILE_NOT_CONFIGURED');
+    assert.equal(body.error.code, 'CONTACT_DISABLED');
   });
 
   it('rejects a failed Turnstile verification before email delivery', async () => {
     setEnv('NODE_ENV', 'production');
-    process.env.TURNSTILE_SECRET_KEY = 'test-secret';
+    enableContactForm();
     globalThis.fetch = async () => Response.json({success: false});
 
     const response = await POST(
@@ -136,7 +195,7 @@ describe('POST /api/contact', () => {
 
   it('rejects a successful token issued for a different Turnstile action', async () => {
     setEnv('NODE_ENV', 'production');
-    process.env.TURNSTILE_SECRET_KEY = 'test-secret';
+    enableContactForm();
     globalThis.fetch = async () => Response.json({success: true, action: 'login'});
 
     const response = await POST(request(validRequest()));
@@ -145,18 +204,21 @@ describe('POST /api/contact', () => {
     assert.equal(body.error.code, 'TURNSTILE_FAILED');
   });
 
-  it('verifies the Turnstile action and forwarded client address before delivery', async () => {
+  it('preserves the enabled Turnstile and Resend delivery flow only for exact true', async () => {
     setEnv('NODE_ENV', 'production');
-    process.env.TURNSTILE_SECRET_KEY = 'test-secret';
-    delete process.env.RESEND_API_KEY;
+    enableContactForm();
     let verificationBody = '';
+    let deliveryBody = '';
+    let providerCalls = 0;
     globalThis.fetch = async (input, init) => {
-      assert.equal(
-        String(input),
-        'https://challenges.cloudflare.com/turnstile/v0/siteverify',
-      );
-      verificationBody = String(init?.body);
-      return Response.json({success: true, action: 'contact'});
+      providerCalls += 1;
+      if (String(input) === 'https://challenges.cloudflare.com/turnstile/v0/siteverify') {
+        verificationBody = String(init?.body);
+        return Response.json({success: true, action: 'contact'});
+      }
+      assert.equal(String(input), 'https://api.resend.com/emails');
+      deliveryBody = String(init?.body);
+      return Response.json({id: 'test-message-id'});
     };
 
     const response = await POST(
@@ -165,7 +227,10 @@ describe('POST /api/contact', () => {
     const body = await response.json();
     assert.match(verificationBody, /remoteip=203\.0\.113\.8/);
     assert.match(verificationBody, /response=verified-token/);
-    assert.equal(response.status, 503);
-    assert.equal(body.error.code, 'EMAIL_NOT_CONFIGURED');
+    assert.equal(response.status, 200);
+    assert.deepEqual(body, {ok: true});
+    assert.equal(providerCalls, 2);
+    assert.match(deliveryBody, /I need help opening a public demonstration\./);
+    assert.doesNotMatch(deliveryBody, /verified-token|test-turnstile-secret/);
   });
 });

@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/**/*.test.ts",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:e2e:modern-wide": "MODERN_WIDE_SHELL_ENABLED=true playwright test prototype-acceptance.spec.ts modern-wide-geometry.spec.ts canvas-sharpness.spec.ts"
   },
   "dependencies": {
     "@helpmath/demos": "*",

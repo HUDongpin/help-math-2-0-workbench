@@ -6,6 +6,7 @@ const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/sit
 export const DEVELOPMENT_TURNSTILE_TOKEN = 'development-bypass';
 
 type ErrorCode =
+  | 'CONTACT_DISABLED'
   | 'BAD_REQUEST'
   | 'VALIDATION_ERROR'
   | 'TURNSTILE_NOT_CONFIGURED'
@@ -24,6 +25,19 @@ interface ErrorBody {
 
 interface SuccessBody {
   ok: true;
+}
+
+const CONTACT_CONFIGURATION_KEYS = [
+  'NEXT_PUBLIC_TURNSTILE_SITE_KEY',
+  'TURNSTILE_SECRET_KEY',
+  'RESEND_API_KEY',
+  'SUPPORT_TO_EMAIL',
+  'SUPPORT_FROM_EMAIL',
+] as const;
+
+function contactFormIsEnabled() {
+  return process.env.CONTACT_FORM_ENABLED === 'true' &&
+    CONTACT_CONFIGURATION_KEYS.every((key) => Boolean(process.env[key]?.trim()));
 }
 
 function errorResponse(
@@ -118,6 +132,17 @@ export function buildContactEmail(payload: ContactRequest, from: string, to: str
 }
 
 export async function POST(request: Request) {
+  // Keep the dormant contact integration closed unless its independent owner
+  // authorization and every runtime dependency are explicitly present. This
+  // check must remain before body parsing, bot handling, and all provider calls.
+  if (!contactFormIsEnabled()) {
+    return errorResponse(
+      503,
+      'CONTACT_DISABLED',
+      'Contact submission is not available.',
+    );
+  }
+
   let body: unknown;
   try {
     body = await request.json();
