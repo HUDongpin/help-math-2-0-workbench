@@ -1,20 +1,41 @@
 import {Menu, Sparkles} from 'lucide-react';
+import Image from 'next/image';
 
 import type {Locale, SharedContent} from '@/content/types';
 import {Link} from '@/i18n/navigation';
 
 import {LanguageSwitcher} from './language-switcher';
 
-export function Brand({homeLabel}: {homeLabel: string}) {
+export function Brand({
+  homeLabel,
+  location = 'header',
+}: {
+  homeLabel: string;
+  location?: 'header' | 'footer';
+}) {
   return (
-    <Link aria-label={homeLabel} className="brand" href="/">
-      <span aria-hidden="true" className="brand__mark">
-        <span>+</span>
-        <span>×</span>
-      </span>
-      <span className="brand__name">
-        HELP <strong>Math</strong>
-      </span>
+    <Link aria-label={homeLabel} className={`brand brand--${location}`} href="/">
+      {location === 'header' ? (
+        <Image
+          alt=""
+          aria-hidden="true"
+          className="brand__logo"
+          height={64}
+          preload
+          src="/brand/help-math-2-logo.svg"
+          width={64}
+        />
+      ) : (
+        <>
+          <span aria-hidden="true" className="brand__mark">
+            <span>+</span>
+            <span>×</span>
+          </span>
+          <span className="brand__name">
+            HELP <strong>Math</strong>
+          </span>
+        </>
+      )}
     </Link>
   );
 }
