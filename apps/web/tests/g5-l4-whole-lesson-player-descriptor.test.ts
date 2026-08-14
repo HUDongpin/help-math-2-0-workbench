@@ -24,6 +24,10 @@ const lessonsCatalogUrl = new URL(
   '../../../catalog/lessons.json',
   import.meta.url
 );
+const sourceFilesCatalogUrl = new URL(
+  '../../../catalog/source-files.json',
+  import.meta.url
+);
 
 const sha256 = (bytes: Uint8Array) =>
   createHash('sha256').update(bytes).digest('hex');
@@ -284,6 +288,10 @@ test('G5 L4 shell Key Terms candidate stays exact-source-bound and acceptance-ne
   assert.equal(shell.actionScript.rootFrame, 35);
   assert.equal(shell.actionScript.actionScriptExecuted, false);
 
+  const sourceFilesCatalog = await readFile(
+    sourceFilesCatalogUrl,
+    'utf8'
+  ).then(JSON.parse);
   for (const language of ['en', 'es'] as const) {
     const lessonSource: Readonly<{path: string; present: false}> =
       shell.keyTerms.lessonDeclaredSources[language];
@@ -300,10 +308,62 @@ test('G5 L4 shell Key Terms candidate stays exact-source-bound and acceptance-ne
     );
     assert.equal(lessonSource.present, false);
 
-    const masterBytes = await readFile(
-      new URL(`../../../${masterSource.sourcePath}`, import.meta.url)
+    const canonicalSourcePrefix =
+      'source-assets/flash/HELP MATH_ORIGINAL FILES/';
+    assert.ok(masterSource.sourcePath.startsWith(canonicalSourcePrefix));
+    const catalogPath = masterSource.sourcePath.slice(
+      canonicalSourcePrefix.length
     );
-    assert.equal(sha256(masterBytes), masterSource.sourceSha256);
+    const catalogSource = sourceFilesCatalog.files.find(
+      ({path}: {path: string}) => path === catalogPath
+    );
+    assert.ok(catalogSource, masterSource.sourcePath);
+    assert.equal(catalogSource.extension, 'xml');
+    assert.equal(catalogSource.sha256, masterSource.sourceSha256);
+
+    const generatedBytes = await readFile(
+      new URL(`../public${masterSource.generatedDataUrl}`, import.meta.url)
+    );
+    const generatedDocument = JSON.parse(generatedBytes.toString('utf8'));
+    assert.equal(generatedDocument.schemaVersion, 1);
+    assert.equal(
+      generatedDocument.dataKind,
+      'g5-l4-combined-elementary-keyterms-reference'
+    );
+    assert.equal(generatedDocument.indexLanguage, language);
+    assert.deepEqual(generatedDocument.source.clientSelected, {
+      assetId: masterSource.assetId,
+      path: masterSource.sourcePath,
+      bytes: catalogSource.bytes,
+      sha256: masterSource.sourceSha256,
+      ordering: 'source-file-order'
+    });
+    assert.equal(
+      generatedDocument.counts.clientTermCount,
+      masterSource.extractedEntryCount
+    );
+    assert.equal(
+      generatedDocument.lessonBinding.declaredLessonSpecificSources[language],
+      lessonSource.path
+    );
+    assert.equal(
+      generatedDocument.lessonBinding.declaredLessonSpecificSourcesPresent,
+      false
+    );
+    assert.equal(
+      generatedDocument.lessonBinding.runtimeResolutionVerified,
+      false
+    );
+    assert.equal(generatedDocument.lessonBinding.referenceUseAuthorized, true);
+    assert.equal(
+      generatedDocument.lessonBinding.productDispositionAccepted,
+      true
+    );
+    assert.ok(
+      Object.values(generatedDocument.authority).every(
+        (value) => value === false
+      )
+    );
     assert.equal(masterSource.staticTargetStatus, 'exact-actionscript-string');
   }
   assert.deepEqual(
