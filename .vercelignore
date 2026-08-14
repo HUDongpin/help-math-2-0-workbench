@@ -25,6 +25,13 @@ private-archive/
 reports/*
 !reports/g5-l4-source-scope-freeze.json
 
+# Local secrets and owner-provided credential documents must never enter a
+# deployment upload, even when a future CLI version changes ignore precedence.
+All API Keys.docx
+*.docx
+**/.env.local
+**/.env.*.local
+
 # Local Next.js output variants are reproducible build caches, not deployment
 # inputs. The checked-in course runtime assets remain under apps/web/public/.
 apps/web/.next*/
