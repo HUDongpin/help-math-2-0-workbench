@@ -36,6 +36,14 @@ All API Keys.docx
 # inputs. The checked-in course runtime assets remain under apps/web/public/.
 apps/web/.next*/
 
+# Test and browser-automation sources stay in Git and CI, but are not production
+# application inputs. The related local scripts are excluded below as
+# repository-only operating material, so exclude the complete test closure
+# together rather than uploading partial imports to Vercel.
+apps/web/tests/
+apps/web/e2e/
+apps/web/playwright*.ts
+
 # Repository-only operating material.
 .agents/
 .claude/
