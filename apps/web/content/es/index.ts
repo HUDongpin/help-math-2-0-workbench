@@ -8,7 +8,7 @@ export const esContent = {
     skipToContent: "Ir al contenido principal",
     statusLabel: "Vista previa de la plataforma educativa",
     statusMessage:
-      "La Lección 3 de 4.º grado es una muestra de 39 páginas completamente navegable en JavaScript actual, con progreso local, Nova Tutor y sincronización seudónima del registro de aprendizaje. Es acceso funcional a la plataforma, no fidelidad estricta a Flash, aceptación del propietario ni publicación del currículo más amplio.",
+      "Hay dos lecciones disponibles en JavaScript actual: la lección 3 de cuarto grado, Números negativos (39 páginas), y la lección 4 de quinto grado, Rectas numéricas (54 páginas). Es acceso funcional al aprendizaje, no fidelidad estricta a Flash, aceptación del audio, aceptación del titular ni publicación del currículo más amplio.",
     externalLinkLabel: "Se abre en una pestaña nueva",
     requiredFieldLabel: "Obligatorio",
     navigation: {
@@ -36,7 +36,7 @@ export const esContent = {
       exploreLinks: [
         { label: "Inicio de aprendizaje", href: "/" },
         { label: "Lección Números negativos", href: "/courses/4/3?mode=focus" },
-        { label: "Estudiar con Nova", href: "/courses/4/3?mode=study" },
+        { label: "Aprender con Nova", href: "/courses/4/3?mode=focus" },
         { label: "Currículo y evidencia", href: "/curriculum" },
       ],
       helpLinks: [
@@ -48,7 +48,7 @@ export const esContent = {
       languageNote:
         "La interfaz de la plataforma está disponible en inglés y español. Los medios y las interacciones de origen varían según la página y no forman una experiencia completa ni validada en español.",
       legalNote:
-        "La Lección 3 de 4.º grado es una muestra de 39 páginas completamente navegable en JavaScript actual. La fidelidad estricta a Flash, la aceptación del propietario y la publicación del currículo más amplio siguen siendo procesos separados.",
+        "La lección 3 de cuarto grado y la lección 4 de quinto grado son lecciones funcionales en JavaScript actual. La fidelidad estricta a Flash, la aceptación del audio, la aceptación del titular y la publicación del currículo más amplio siguen siendo procesos separados.",
     },
   },
   pages: {
@@ -66,7 +66,7 @@ export const esContent = {
         primaryAction: { label: "Explorar las demostraciones", href: "/es/demos" },
         secondaryAction: { label: "Obtener ayuda con el proyecto", href: "/es/support" },
         supportingNote:
-          "El sitio web ya es una plataforma educativa funcional que comienza con una muestra de 39 páginas completamente navegable en JavaScript actual. La fidelidad estricta a Flash, la aceptación del propietario y la publicación del currículo más amplio siguen siendo procesos separados.",
+          "El sitio web ofrece dos lecciones funcionales en JavaScript actual: la lección 3 de cuarto grado con 39 páginas y la lección 4 de quinto grado con 54. La fidelidad estricta a Flash, la aceptación del audio, la aceptación del titular y la publicación del currículo más amplio siguen siendo procesos separados.",
       },
       status: {
         label: "Estado del proyecto",
@@ -130,12 +130,12 @@ export const esContent = {
       },
       demos: {
         eyebrow: "Experiencia de aprendizaje disponible",
-        title: "Comienza con Negative Numbers",
+        title: "Elige una lección para explorar",
         intro:
-          "Grade 4 Lesson 3 ya es una muestra de 39 páginas completamente navegable en JavaScript actual, con progreso local, Nova Tutor y sincronización seudónima con el LRS.",
+          "La lección 3 de cuarto grado, Números negativos, y la lección 4 de quinto grado, Rectas numéricas, ya son lecciones funcionales en JavaScript actual con progreso local y apoyos para aprender.",
         items: [],
         note:
-          "Esta muestra ejecutable no afirma fidelidad Flash estricta, aceptación del propietario ni publicación del currículo más amplio.",
+          "Estas lecciones funcionales no afirman fidelidad estricta a Flash, aceptación del audio, aceptación del titular ni publicación del currículo más amplio.",
       },
       closing: {
         title: "¿Regresas a HELP Math? Queremos orientarte.",
@@ -180,10 +180,10 @@ export const esContent = {
         {
           id: "today",
           eyebrow: "Nuestra situación actual",
-          title: "Una plataforma educativa que comienza con una muestra completamente navegable",
+          title: "Una plataforma educativa con dos lecciones funcionales en JavaScript actual",
           paragraphs: [
-            "Esta versión ofrece Grade 4 Lesson 3, Negative Numbers, como una muestra de 39 páginas completamente navegable en JavaScript actual con Nova Tutor y progreso local.",
-            "No restaura el antiguo sistema de cuentas ni ofrece clases, tareas, compras, paneles docentes o calificaciones formales. La fidelidad Flash estricta, la aceptación del propietario y la publicación del currículo más amplio siguen siendo puertas separadas.",
+            "Esta versión ofrece la lección 3 de cuarto grado, Números negativos, con 39 páginas registradas en JavaScript actual y la lección 4 de quinto grado, Rectas numéricas, con 54 páginas registradas en JavaScript actual dentro de la experiencia moderna Mi lección.",
+            "No restaura el antiguo sistema de cuentas ni ofrece clases, tareas, compras, paneles docentes o calificaciones formales. La fidelidad estricta a Flash, la aceptación del audio, la aceptación del titular y la publicación del currículo más amplio siguen siendo puertas separadas.",
           ],
         },
       ],
@@ -324,7 +324,7 @@ export const esContent = {
       teacherRole: {
         title: "La tecnología apoya la enseñanza; los educadores orientan su uso.",
         body:
-          "La plataforma ya ofrece una muestra funcional de 39 páginas en JavaScript actual, no un currículo publicado completo ni un sistema docente automatizado. La fidelidad estricta a Flash, la aceptación del propietario y la publicación del currículo más amplio siguen siendo procesos separados. Los educadores son esenciales para elegir tareas apropiadas, escuchar el razonamiento del alumnado y conectar las actividades con las metas del aula.",
+          "La plataforma ya ofrece dos lecciones funcionales en JavaScript actual con un total de 93 páginas registradas, no un currículo publicado completo ni un sistema docente automatizado. La fidelidad estricta a Flash, la aceptación del audio, la aceptación del titular y la publicación del currículo más amplio siguen siendo procesos separados. Los educadores son esenciales para elegir tareas apropiadas, escuchar el razonamiento del alumnado y conectar las actividades con las metas del aula.",
         action: { label: "Hacer una consulta didáctica", href: "/es/contact?topic=instruction" },
       },
     },
@@ -416,11 +416,11 @@ export const esContent = {
       availability: {
         id: "availability",
         eyebrow: "Lo que está disponible ahora",
-        title: "Una lección ejecutable, sin matrículas",
+        title: "Dos lecciones funcionales, sin matrículas",
         paragraphs: [
-          "La plataforma ofrece actualmente Grade 4 Lesson 3, Negative Numbers, como una muestra de 39 páginas completamente navegable en JavaScript actual. Incluye progreso local del navegador, Nova Tutor y sincronización seudónima de eventos, pero no pruebas de ubicación, paneles docentes, tareas, matrículas ni calificaciones formales.",
+          "La plataforma ofrece actualmente dos lecciones en JavaScript actual dentro de la experiencia moderna Mi lección: la lección 3 de cuarto grado, Números negativos, con 39 páginas registradas, y la lección 4 de quinto grado, Rectas numéricas, con 54. Incluyen progreso local del navegador y apoyos de aprendizaje, pero no pruebas de ubicación, paneles docentes, tareas, matrículas ni calificaciones formales.",
           "La interfaz está disponible en inglés y español, pero los medios y las interacciones de origen varían según la página y no forman una experiencia completa ni validada en español.",
-          "La muestra es acceso funcional al producto, no una afirmación de migración estricta o fidelidad. La publicación de más currículo aún depende de auditorías de fuentes y derechos, revisión didáctica, accesibilidad, validación del comportamiento original, revisión humana y aceptación del propietario.",
+          "Estas lecciones son acceso funcional al producto, no afirmaciones de migración estricta, fidelidad a Flash, aceptación del audio ni aceptación del titular. La publicación de más currículo aún depende de auditorías de fuentes y derechos, revisión didáctica, accesibilidad, validación del comportamiento original, revisión humana y aceptación del titular.",
         ],
       },
       closing: {
@@ -612,7 +612,7 @@ export const esContent = {
         eyebrow: "Asistencia de HELP Math",
         title: "Comienza por lo que está disponible hoy",
         summary:
-          "La plataforma ofrece Grade 4 Lesson 3 como una muestra de 39 páginas completamente navegable en JavaScript actual, con progreso local, Nova Tutor y sincronización de eventos de aprendizaje. Las cuentas anteriores no están conectadas y este sitio no puede recuperar contraseñas ni registros históricos.",
+          "La plataforma ofrece la lección 3 de cuarto grado con 39 páginas en JavaScript actual y la lección 4 de quinto grado con 54, junto con progreso local y apoyos de aprendizaje. Las cuentas anteriores no están conectadas y este sitio no puede recuperar contraseñas ni registros históricos.",
         primaryAction: { label: "Contactar con asistencia", href: "/es/contact?topic=support" },
         secondaryAction: { label: "Comprobar el estado de acceso", href: "/es/login" },
       },
@@ -624,14 +624,21 @@ export const esContent = {
             id: "website",
             title: "Plataforma de aprendizaje",
             description:
-              "Disponible con opciones de interfaz en inglés y español, una muestra de 39 páginas completamente navegable en JavaScript actual, progreso local, Nova Tutor, información del programa y asistencia. Los medios y las interacciones de origen varían según la página.",
+              "Disponible con opciones de interfaz en inglés y español, dos lecciones funcionales en JavaScript actual con un total de 93 páginas registradas, progreso local, Nova Tutor, información del programa y asistencia. Los medios y las interacciones de origen varían según la página.",
             detail: "Disponible",
           },
           {
             id: "demos",
             title: "Grade 4 Lesson 3: Negative Numbers",
             description:
-              "Las 39 páginas registradas y la interfaz del curso son navegables como muestra en JavaScript actual. Esto no demuestra fidelidad estricta a Flash, aceptación del propietario ni publicación del currículo más amplio.",
+              "Las 39 páginas registradas son navegables dentro de la experiencia moderna Mi lección. Esto no demuestra fidelidad estricta a Flash, aceptación del audio, aceptación del titular ni publicación del currículo más amplio.",
+            detail: "Disponible",
+          },
+          {
+            id: "g5-l4",
+            title: "Grade 5 Lesson 4: Number Lines",
+            description:
+              "Las 54 páginas registradas son navegables dentro de la experiencia moderna Mi lección. Esto no demuestra fidelidad estricta a Flash, aceptación del audio, aceptación del titular ni publicación del currículo más amplio.",
             detail: "Disponible",
           },
           {
@@ -661,13 +668,13 @@ export const esContent = {
           id: "full-course",
           question: "¿Está disponible el curso completo de HELP Math?",
           answer:
-            "Todavía no. La versión actual incluye una muestra de 39 páginas completamente navegable en JavaScript actual —Grade 4 Lesson 3, Negative Numbers—, no todo el currículo de HELP Math. Esto no demuestra fidelidad estricta a Flash ni aceptación del propietario; cada lección adicional requiere sus propias revisiones de fuentes, derechos, instrucción, accesibilidad, fidelidad y aceptación.",
+            "Todavía no. La versión actual incluye dos lecciones funcionales en JavaScript actual —la lección 3 de cuarto grado, Números negativos (39 páginas), y la lección 4 de quinto grado, Rectas numéricas (54 páginas)—, no todo el currículo de HELP Math. Esto no demuestra fidelidad estricta a Flash, aceptación del audio ni aceptación del titular; cada lección adicional requiere sus propias revisiones de fuentes, derechos, instrucción, accesibilidad, fidelidad y aceptación.",
         },
         {
           id: "student-help",
           question: "Soy estudiante. ¿Cómo debo pedir ayuda?",
           answer:
-            "Usa Nova Tutor dentro de la lección Negative Numbers para pedir explicaciones y pistas. Para asistencia de cuentas, escuela o problemas técnicos, pide a un adulto de confianza que contacte con el proyecto. Nunca envíes contraseñas, fechas de nacimiento, identificadores, calificaciones ni expedientes.",
+            "Usa Nova Tutor dentro de una lección disponible para pedir explicaciones y pistas. Para asistencia de cuentas, escuela o problemas técnicos, pide a un adulto de confianza que contacte con el proyecto. Nunca envíes contraseñas, fechas de nacimiento, identificadores, calificaciones ni expedientes.",
         },
         {
           id: "purchase",
@@ -824,16 +831,16 @@ export const esContent = {
       },
       hero: {
         eyebrow: "Experiencia de aprendizaje",
-        title: "Negative Numbers está listo para explorar",
+        title: "Hay dos lecciones listas para explorar",
         summary:
-          "Grade 4 Lesson 3 es una muestra de 39 páginas completamente navegable en JavaScript actual, con progreso local, Nova Tutor y sincronización seudónima del aprendizaje. Ejecutarla no demuestra fidelidad estricta a Flash, aceptación del propietario ni publicación del currículo más amplio.",
+          "La lección 3 de cuarto grado, Números negativos, tiene 39 páginas registradas en JavaScript actual y la lección 4 de quinto grado, Rectas numéricas, tiene 54. Ejecutarlas no demuestra fidelidad estricta a Flash, aceptación del audio, aceptación del titular ni publicación del currículo más amplio.",
         primaryAction: { label: "Comenzar la lección", href: "/es/courses/4/3?mode=focus" },
         secondaryAction: { label: "Cómo funciona la restauración", href: "/es/about#preservation" },
       },
       previewNotice: {
-        title: "Muestra ejecutable; las puertas estrictas siguen abiertas",
+        title: "Lecciones funcionales; las puertas estrictas siguen abiertas",
         body:
-          "Las 39 páginas y la interfaz funcional del curso son navegables. Esto no establece fidelidad de ejecución original o audio, revisión visual humana completa, aceptación del propietario, derechos, finalización estricta ni publicación del currículo más amplio.",
+          "Las 39 páginas de G4 L3 y las 54 páginas de G5 L4 son navegables dentro de la experiencia moderna Mi lección. Esto no establece fidelidad original de ejecución, imagen o audio, revisión humana completa, aceptación del titular, derechos, finalización estricta ni publicación del currículo más amplio.",
       },
       listLabel: "Disponibilidad actual",
       items: [
@@ -844,8 +851,18 @@ export const esContent = {
           conceptLabel: "Lección",
           concept: "Números negativos y la recta numérica",
           statusLabel: "Muestra ejecutable",
-          statusDetail: "Las 39 páginas registradas son navegables en la interfaz actual del curso en JavaScript; las puertas de evidencia estricta y publicación más amplia siguen abiertas.",
+          statusDetail: "Las 39 páginas registradas son navegables dentro de la experiencia moderna Mi lección; las puertas de evidencia estricta y publicación más amplia siguen abiertas.",
           action: { label: "Abrir la lección", href: "/es/courses/4/3?mode=focus" },
+        },
+        {
+          id: "g5-l4-number-lines",
+          title: "Grade 5 Lesson 4: Number Lines",
+          summary: "Explora rectas numéricas en ocho secciones, utiliza los apoyos, pide a Nova ayuda apropiada para la edad y continúa desde el progreso guardado localmente.",
+          conceptLabel: "Lección",
+          concept: "Rectas numéricas",
+          statusLabel: "Lección funcional en JavaScript actual",
+          statusDetail: "Las 54 páginas registradas son navegables dentro de la experiencia moderna Mi lección; las puertas de evidencia estricta y publicación más amplia siguen abiertas.",
+          action: { label: "Abrir la lección", href: "/es/courses/5/4?mode=focus" },
         },
       ],
       quality: {
@@ -964,10 +981,10 @@ export const esContent = {
         eyebrow: "Borrador del aviso de privacidad",
         title: "Una experiencia educativa diseñada para saber menos sobre ti",
         summary:
-          "Puedes usar la lección 3 de cuarto grado sin cuenta, nombre, correo electrónico, escuela, clase, pago ni perfil docente. Este aviso explica qué permanece en tu navegador, qué se envía al almacén de registros de aprendizaje y qué necesita Nova Tutor cuando pides ayuda.",
+          "Puedes usar la lección 3 de cuarto grado y la lección 4 de quinto grado, ambas en JavaScript actual, sin cuenta, nombre, correo electrónico, escuela, clase, pago ni perfil docente. Este aviso explica qué permanece en tu navegador, qué se envía al almacén de registros de aprendizaje y qué necesita Nova Tutor cuando pides ayuda.",
       },
       effectiveDateLabel: "Última actualización",
-      effectiveDate: "14 de agosto de 2026",
+      effectiveDate: "16 de agosto de 2026",
       reviewNotice:
         "BORRADOR — Requiere revisión del titular y asesoría legal antes de publicarse. Describe el diseño técnico actual; no es una determinación legal ni garantiza el cumplimiento de FERPA, COPPA u otra normativa.",
       sections: [
@@ -975,7 +992,7 @@ export const esContent = {
           id: "scope",
           title: "1. Alcance",
           paragraphs: [
-            "Este aviso se aplica a helpmath.ai, incluidas sus páginas informativas, la experiencia funcional de la lección 3 de cuarto grado, Nova Tutor, el registro de eventos de aprendizaje y la página actual de estado del contacto.",
+            "Este aviso se aplica a helpmath.ai, incluidas sus páginas informativas, las dos lecciones funcionales en JavaScript actual —la lección 3 de cuarto grado, Números negativos, y la lección 4 de quinto grado, Rectas numéricas—, Nova Tutor, el registro de eventos de aprendizaje y la página actual de estado del contacto.",
             "La experiencia educativa actual no tiene cuentas de estudiantes o docentes ni pide el nombre, correo, escuela, clase, pago o perfil docente del estudiante. No autentica al estudiante ni conecta la actividad de la lección con un expediente escolar.",
           ],
         },
@@ -997,7 +1014,7 @@ export const esContent = {
           ],
           bullets: [
             "Los eventos no contienen preguntas ni respuestas de Nova Tutor, respuestas de texto libre, voz sin procesar, fotos ni capturas de la lección.",
-            "El reproductor actual de Grade 4 Lesson 3 no emite eventos con resultados de ejercicios. Si más adelante se habilita una integración compatible de resultados cerrados, su contrato solo permitirá campos autorizados como resultado, número de intento y página de la lección; este aviso deberá revisarse antes del lanzamiento.",
+            "Los reproductores actuales de la lección 3 de cuarto grado y la lección 4 de quinto grado no emiten eventos con resultados de ejercicios. Si más adelante se habilita una integración compatible de resultados cerrados, su contrato solo permitirá campos autorizados como resultado, número de intento y página de la lección; este aviso deberá revisarse antes del lanzamiento.",
             "Actualmente la plataforma no convierte estos eventos en panel docente, calificación, resultado de ubicación ni decisión educativa automatizada.",
           ],
         },
@@ -1071,16 +1088,16 @@ export const esContent = {
       metadata: {
         title: "Borrador de los términos de uso",
         description:
-          "Consulta el borrador no aprobado de los términos propuestos para HELP Math, la experiencia actual en JavaScript de la lección 3 de cuarto grado, Nova Tutor y el contenido relacionado.",
+          "Consulta el borrador no aprobado de los términos propuestos para HELP Math, sus lecciones en JavaScript actual de cuarto y quinto grado, Nova Tutor y el contenido relacionado.",
       },
       hero: {
         eyebrow: "Borrador de los términos de uso",
-        title: "Utiliza responsablemente la experiencia educativa",
+        title: "Utiliza responsablemente las experiencias educativas",
         summary:
-          "Este borrador describe los términos propuestos para el sitio y la experiencia funcional de la lección 3 de cuarto grado. Hasta que queden documentadas la aprobación del titular y la revisión legal y se publique una versión final, no constituye contrato, no obliga a quien lo visita ni concede licencia.",
+          "Este borrador describe los términos propuestos para el sitio y sus dos lecciones funcionales en JavaScript actual: la lección 3 de cuarto grado y la lección 4 de quinto grado. Hasta que queden documentadas la aprobación del titular y la revisión legal y se publique una versión final, no constituye contrato, no obliga a quien lo visita ni concede licencia.",
       },
       effectiveDateLabel: "Última actualización",
-      effectiveDate: "14 de agosto de 2026",
+      effectiveDate: "16 de agosto de 2026",
       reviewNotice:
         "BORRADOR — Requiere revisión del titular y asesoría legal antes de publicarse. Deben confirmarse la entidad responsable, jurisdicción, dirección de contacto, términos de proveedores, condiciones para menores y cualquier licencia específica. Hasta documentar esas aprobaciones, este borrador solo sirve como información para revisión: no constituye contrato, no obliga a quien lo visita ni concede licencia. No garantiza el cumplimiento de FERPA, COPPA u otra normativa.",
       sections: [
@@ -1096,8 +1113,8 @@ export const esContent = {
           id: "service",
           title: "2. Qué ofrece este sitio",
           paragraphs: [
-            "El sitio ofrece información del proyecto y una experiencia funcional en JavaScript actual: la lección 3 de cuarto grado, Números negativos, con 39 páginas registradas y un shell funcional del curso.",
-            "Que la experiencia esté disponible no demuestra finalización estricta de la migración, fidelidad al Flash original en ejecución o imagen, fidelidad del audio, aceptación humana o del titular, autorización de derechos ni publicación del currículo histórico restaurado. Son puertas de evidencia y publicación independientes.",
+            "El sitio ofrece dos lecciones funcionales en JavaScript actual dentro de la experiencia moderna Mi lección: la lección 3 de cuarto grado, Números negativos, con 39 páginas registradas, y la lección 4 de quinto grado, Rectas numéricas, con 54 páginas registradas.",
+            "Que las lecciones estén disponibles no demuestra finalización estricta de la migración, fidelidad al Flash original en ejecución o imagen, fidelidad del audio, aceptación humana o del titular, autorización de derechos ni publicación del currículo histórico restaurado. Son puertas de evidencia y publicación independientes.",
             "Actualmente no ofrece matrículas, cuentas nominales de estudiantes o docentes, escuelas, clases, tareas, paneles docentes, calificaciones oficiales, pagos ni acceso garantizado al programa histórico.",
           ],
         },
@@ -1142,7 +1159,7 @@ export const esContent = {
           id: "educational-use",
           title: "7. Contexto educativo",
           paragraphs: [
-            "La experiencia de la lección 3 de cuarto grado es una experiencia educativa en JavaScript actual, no un currículo publicado completo, instrumento diagnóstico validado, intervención individualizada ni sustituto del criterio docente.",
+            "La lección 3 de cuarto grado y la lección 4 de quinto grado son experiencias educativas en JavaScript actual, no un currículo publicado completo, instrumento diagnóstico validado, intervención individualizada ni sustituto del criterio docente.",
             "Las descripciones históricas de investigación, premios, alineación, alcance o funciones se identifican como contexto archivado salvo que el sitio afirme expresamente una verificación actual.",
           ],
         },
@@ -1150,7 +1167,7 @@ export const esContent = {
           id: "availability",
           title: "8. Disponibilidad y cambios",
           paragraphs: [
-            "El proyecto puede añadir, revisar, pausar o retirar contenido, la experiencia, Nova Tutor o los servicios de eventos mientras revisa fuentes, derechos, precisión, seguridad, accesibilidad y disponibilidad de proveedores. No prometemos que un recurso, cuenta o función histórica llegue a estar disponible.",
+            "El proyecto puede añadir, revisar, pausar o retirar contenido, una lección, Nova Tutor o los servicios de eventos mientras revisa fuentes, derechos, precisión, seguridad, accesibilidad y disponibilidad de proveedores. No prometemos que un recurso, cuenta o función histórica llegue a estar disponible.",
           ],
         },
         {

@@ -1,6 +1,8 @@
 import type {Metadata, Viewport} from 'next';
 import {notFound} from 'next/navigation';
+import {Analytics} from '@vercel/analytics/next';
 
+import {ClerkLocalAuthProvider} from '@/components/auth/clerk-local-auth-provider';
 import {SiteFooter} from '@/components/site-footer';
 import {SiteHeader} from '@/components/site-header';
 import {getSiteContent} from '@/content';
@@ -9,6 +11,7 @@ import {LocaleProvider} from '@/i18n/navigation';
 import {routing} from '@/i18n/routing';
 import {getSiteUrl, SITE_DESCRIPTION, SITE_NAME} from '@/lib/site';
 
+import 'katex/dist/katex.min.css';
 import '../globals.css';
 
 export const metadata: Metadata = {
@@ -23,9 +26,19 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  colorScheme: 'light',
+  colorScheme: 'light dark',
   themeColor: '#1768d4'
 };
+
+const learningThemeBootstrap = `(() => {
+  let theme = 'light';
+  try {
+    const saved = localStorage.getItem('helpmath:learning-workspace-theme:v1');
+    if (saved === 'light' || saved === 'dark') theme = saved;
+    else if (matchMedia('(prefers-color-scheme: dark)').matches) theme = 'dark';
+  } catch {}
+  document.documentElement.dataset.learningPlatformTheme = theme;
+})();`;
 
 export function generateStaticParams() {
   return [{locale: 'en'}, {locale: 'es'}];
@@ -53,19 +66,25 @@ export default async function LocaleLayout({
 
   return (
     <html data-scroll-behavior="smooth" lang={locale} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{__html: learningThemeBootstrap}} />
+      </head>
       <body>
-        <LocaleProvider locale={appLocale}>
-          <a className="skip-link" href="#main-content">
-            {content.skipToContent}
-          </a>
-          <SiteHeader content={content} locale={appLocale} />
-          {children}
-          <SiteFooter content={content} />
-        </LocaleProvider>
+        <ClerkLocalAuthProvider locale={appLocale}>
+          <LocaleProvider locale={appLocale}>
+            <a className="skip-link" href="#main-content">
+              {content.skipToContent}
+            </a>
+            <SiteHeader content={content} locale={appLocale} />
+            {children}
+            <SiteFooter content={content} locale={appLocale} />
+          </LocaleProvider>
+        </ClerkLocalAuthProvider>
         <script
           dangerouslySetInnerHTML={{__html: organizationData}}
           type="application/ld+json"
         />
+        {process.env.NODE_ENV === 'production' ? <Analytics /> : null}
       </body>
     </html>
   );

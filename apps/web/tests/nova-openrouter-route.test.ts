@@ -338,6 +338,9 @@ describe('Nova Tutor OpenRouter GPT-5.6 Luna integration', () => {
     assert.match(instruction, /Do not provide, reveal, confirm, or complete the final answer/u);
     assert.match(instruction, /one small hint/u);
     assert.match(instruction, /one short step at a time/u);
+    assert.match(instruction, /clean Markdown/u);
+    assert.match(instruction, /LaTeX using \$\.\.\.\$/u);
+    assert.match(instruction, /fenced text block/u);
     assert.match(instruction, /Do not infer, diagnose/u);
     assert.match(instruction, /Never ask for or repeat a learner's full name/u);
     assert.match(instruction, /immediate danger or self-harm/u);
@@ -450,6 +453,62 @@ describe('Nova Tutor OpenRouter GPT-5.6 Luna integration', () => {
           error instanceof NovaProviderError && error.failure === failure &&
           !error.message.includes('SECRET') && !error.message.includes('sk-leak'),
       );
+    }
+  });
+
+  it('retries one transient Luna transport or 5xx failure without changing models', async () => {
+    const input = novaTutorRequestSchema.parse(inputForPage(4));
+    let statusCalls = 0;
+    const recoveredFromStatus = await requestNovaTutor(input, {
+      config: config(),
+      fetchImpl: async (_url, init) => {
+        statusCalls += 1;
+        const payload = JSON.parse(String(init?.body)) as {model?: string};
+        assert.equal(payload.model, NOVA_OPENROUTER_MODEL);
+        return statusCalls === 1
+          ? new Response('', {status: 503})
+          : providerResponse('The number farther left is smaller.');
+      },
+    });
+    assert.equal(statusCalls, 2);
+    assert.equal(recoveredFromStatus.model, NOVA_OPENROUTER_MODEL);
+
+    let transportCalls = 0;
+    const recoveredFromTransport = await requestNovaTutor(input, {
+      config: config(),
+      fetchImpl: async () => {
+        transportCalls += 1;
+        if (transportCalls === 1) throw new TypeError('synthetic transport failure');
+        return providerResponse('Move left from zero.');
+      },
+    });
+    assert.equal(transportCalls, 2);
+    assert.equal(recoveredFromTransport.model, NOVA_OPENROUTER_MODEL);
+  });
+
+  it('does not retry non-transient, invalid, wrong-model, or unsafe replies', async () => {
+    const input = novaTutorRequestSchema.parse(inputForPage(4));
+    for (const [response, stage] of [
+      [new Response('', {status: 400}), 'http-status'],
+      [new Response('', {status: 429}), 'http-status'],
+      [providerResponse('Wrong model.', 'openai/gpt-5.6-luna-pro'), 'model'],
+      [providerResponse('Send me your full name.'), 'unsafe-output'],
+    ] as const) {
+      let calls = 0;
+      await assert.rejects(
+        requestNovaTutor(input, {
+          config: config(),
+          fetchImpl: async () => {
+            calls += 1;
+            return response;
+          },
+        }),
+        (error: unknown) =>
+          error instanceof NovaProviderError &&
+          error.stage === stage &&
+          error.attempts === 1,
+      );
+      assert.equal(calls, 1);
     }
   });
 

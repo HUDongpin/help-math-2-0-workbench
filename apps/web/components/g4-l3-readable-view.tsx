@@ -2,7 +2,24 @@
 
 import {useId, useRef, useState, type KeyboardEvent} from 'react';
 
-import {G4_L3_PAGE_36_READABLE_VIEW_SPEC} from '@/lib/g4-l3-readable-view';
+import {
+  G4_L3_PAGE_36_NUMBER_LINE_AMOUNTS,
+  G4_L3_PAGE_36_READABLE_VIEW_SPEC,
+  G4_L3_PAGE_36_SIGNED_AMOUNTS,
+} from '@/lib/g4-l3-readable-view';
+
+const NUMBER_LINE_TICKS = Object.freeze(
+  Array.from({length: 21}, (_, index) => index - 10),
+);
+
+function formatTick(value: number) {
+  if (value > 0) return `+${value}`;
+  return `${value}`.replace('-', '−');
+}
+
+function numberLinePosition(value: number) {
+  return `${((value + 10) / 20) * 100}%`;
+}
 
 export function G4L3Page36ReadableView({
   locale,
@@ -10,8 +27,13 @@ export function G4L3Page36ReadableView({
   locale: 'en' | 'es';
 }) {
   const spec = G4_L3_PAGE_36_READABLE_VIEW_SPEC;
+  const step3Crop = spec.crops[0]!;
+  const step4Crop = spec.crops[1]!;
   const [expanded, setExpanded] = useState<boolean>(spec.defaultExpanded);
-  const contentId = `${useId()}-g4-l3-page-36-readable-content`;
+  const baseId = useId();
+  const contentId = `${baseId}-g4-l3-page-36-readable-content`;
+  const step3HeadingId = `${baseId}-step-3-heading`;
+  const step4HeadingId = `${baseId}-step-4-heading`;
   const toggleRef = useRef<HTMLButtonElement>(null);
   const spanish = locale === 'es';
 
@@ -73,68 +95,183 @@ export function G4L3Page36ReadableView({
         type="button"
       >
         {expanded
-          ? (spanish ? 'Solo diseño original' : 'Original Layout only')
-          : (spanish ? 'Mostrar vista legible' : 'Show Readable View')}
+          ? (spanish ? 'Ocultar apoyo' : 'Hide reading support')
+          : (spanish ? 'Mostrar apoyo' : 'Show reading support')}
       </button>
     </header>
 
     {spanish
       ? <p className="g4-l3-readable-view__language-boundary" lang="es">
-          El contenido matemático original solo está disponible en inglés; se
-          conserva en inglés y no se traduce.
+          La lección fuente está en inglés. Este apoyo conserva el texto
+          matemático original en inglés.
         </p>
-      : <p className="g4-l3-readable-view__language-boundary">
-          The source mathematical content is available only in English.
-        </p>}
+      : null}
 
     {expanded
       ? <div className="g4-l3-readable-view__content" id={contentId}>
-          <p className="g4-l3-readable-view__evidence-boundary">
-            {spanish
-              ? 'Esta ayuda fija de legibilidad está vinculada al fotograma 789 de JavaScript actual en sprite-350. No representa el fotograma en vivo actual ni constituye evidencia de fidelidad con Flash.'
-              : 'This fixed readability aid is bound to current-JavaScript frame 789 in sprite-350. It does not represent the current live frame and is not Flash-fidelity evidence.'}
-          </p>
           <div className="g4-l3-readable-view__steps">
-            {spec.crops.map((crop) =>
-              <figure
-                data-crop-height={crop.nativeRect.height}
-                data-crop-padding={spec.nativePadding}
-                data-crop-width={crop.nativeRect.width}
-                data-crop-x={crop.nativeRect.x}
-                data-crop-y={crop.nativeRect.y}
-                data-desktop-scale={spec.desktopScale}
-                data-readable-crop-sha256={crop.assetSha256}
-                data-source-character-ids={crop.sourceCharacterIds.join(',')}
-                key={crop.label}
+            <article
+              aria-labelledby={step3HeadingId}
+              className="g4-l3-readable-view__step"
+              data-crop-height={step3Crop.nativeRect.height}
+              data-crop-padding={spec.nativePadding}
+              data-crop-width={step3Crop.nativeRect.width}
+              data-crop-x={step3Crop.nativeRect.x}
+              data-crop-y={step3Crop.nativeRect.y}
+              data-readable-crop-sha256={step3Crop.assetSha256}
+              data-source-character-ids={
+                step3Crop.sourceCharacterIds.join(',')
+              }
+            >
+              <header className="g4-l3-readable-view__step-heading">
+                <span aria-hidden="true">3</span>
+                <h3 id={step3HeadingId}>
+                  {spanish ? 'Paso 3 · Recta numérica' : 'Step 3 · Number line'}
+                </h3>
+              </header>
+
+              <div
+                className="g4-l3-readable-view__source-copy"
+                data-readable-transcript
+                data-source-character-ids={
+                  step3Crop.sourceCharacterIds.join(',')
+                }
+                data-transcript-sha256={step3Crop.transcriptSha256}
+                lang="en"
               >
-                <figcaption>{crop.label}</figcaption>
-                {/* The bound PNG is a deterministic crop from the single
-                    current-JS runtime at fixed source frame 789. The exact DOM
-                    transcript below is the accessible text alternative. */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  alt=""
-                  aria-hidden="true"
-                  height={crop.paddedRect.height}
-                  src={crop.asset}
-                  style={{
-                    width: crop.paddedRect.width * spec.desktopScale,
-                  }}
-                  width={crop.paddedRect.width}
-                />
-                <div
-                  className="g4-l3-readable-view__transcript"
-                  data-source-character-ids={
-                    crop.sourceCharacterIds.join(',')
-                  }
-                  data-readable-transcript
-                  lang="en"
-                  data-transcript-sha256={crop.transcriptSha256}
-                >
-                  {crop.transcript.map((line) => <p key={line}>{line}</p>)}
+                <p className="g4-l3-readable-view__strategy">
+                  {step3Crop.transcript[0]}
+                </p>
+                <p className="g4-l3-readable-view__instruction">
+                  {step3Crop.transcript[1]}
+                </p>
+
+                <div className="g4-l3-readable-view__number-line-block">
+                  <div
+                    aria-hidden="true"
+                    className="g4-l3-readable-view__number-line"
+                  >
+                    <div className="g4-l3-readable-view__number-line-axis" />
+                    {NUMBER_LINE_TICKS.map((tick) => {
+                      const major = tick % 5 === 0;
+                      return <span
+                        className={major
+                          ? 'g4-l3-readable-view__tick g4-l3-readable-view__tick--major'
+                          : 'g4-l3-readable-view__tick'}
+                        data-edge={tick === -10
+                          ? 'start'
+                          : tick === 10
+                            ? 'end'
+                            : undefined}
+                        key={tick}
+                        style={{left: numberLinePosition(tick)}}
+                      >
+                        {major
+                          ? <span>{formatTick(tick)}</span>
+                          : null}
+                      </span>;
+                    })}
+                    {G4_L3_PAGE_36_NUMBER_LINE_AMOUNTS.map((amount, index) =>
+                      <span
+                        className="g4-l3-readable-view__marker"
+                        data-edge={amount.signedValue === -10
+                          ? 'start'
+                          : undefined}
+                        data-level={index % 2 === 0 ? 'high' : 'low'}
+                        key={amount.name}
+                        style={{left: numberLinePosition(amount.signedValue)}}
+                      >
+                        <strong>{amount.name}</strong>
+                        <span>{amount.signedLabel}</span>
+                      </span>
+                    )}
+                  </div>
+
+                  <ol
+                    aria-label="Positions on the number line"
+                    className="g4-l3-readable-view__position-list"
+                  >
+                    {G4_L3_PAGE_36_NUMBER_LINE_AMOUNTS.map((amount) =>
+                      <li key={amount.name}>
+                        <span>{amount.statement}</span>
+                        <strong>{amount.signedLabel}</strong>
+                      </li>
+                    )}
+                  </ol>
                 </div>
-              </figure>
-            )}
+
+                <div className="g4-l3-readable-view__result">
+                  <p>{step3Crop.transcript[2]}</p>
+                  <p>{step3Crop.transcript[3]}</p>
+                </div>
+              </div>
+            </article>
+
+            <article
+              aria-labelledby={step4HeadingId}
+              className="g4-l3-readable-view__step"
+              data-crop-height={step4Crop.nativeRect.height}
+              data-crop-padding={spec.nativePadding}
+              data-crop-width={step4Crop.nativeRect.width}
+              data-crop-x={step4Crop.nativeRect.x}
+              data-crop-y={step4Crop.nativeRect.y}
+              data-readable-crop-sha256={step4Crop.assetSha256}
+              data-source-character-ids={
+                step4Crop.sourceCharacterIds.join(',')
+              }
+            >
+              <header className="g4-l3-readable-view__step-heading">
+                <span aria-hidden="true">4</span>
+                <h3 id={step4HeadingId}>
+                  {spanish
+                    ? 'Paso 4 · Razonamiento lógico'
+                    : 'Step 4 · Logical reasoning'}
+                </h3>
+              </header>
+
+              <div
+                className="g4-l3-readable-view__source-copy"
+                data-readable-transcript
+                data-source-character-ids={
+                  step4Crop.sourceCharacterIds.join(',')
+                }
+                data-transcript-sha256={step4Crop.transcriptSha256}
+                lang="en"
+              >
+                <p className="g4-l3-readable-view__strategy">
+                  {step4Crop.transcript[0]}
+                </p>
+
+                <div className="g4-l3-readable-view__concepts">
+                  <p>
+                    <strong aria-hidden="true">+</strong>
+                    <span>{step4Crop.transcript[1]}</span>
+                  </p>
+                  <p>
+                    <strong aria-hidden="true">−</strong>
+                    <span>{step4Crop.transcript[2]}</span>
+                  </p>
+                </div>
+
+                <ul
+                  aria-label="Signed amounts"
+                  className="g4-l3-readable-view__equations"
+                >
+                  {G4_L3_PAGE_36_SIGNED_AMOUNTS.map((amount) =>
+                    <li key={amount.name}>
+                      <span>{amount.statement}</span>
+                      <span>=</span>
+                      <strong>{amount.signedLabel}</strong>
+                    </li>
+                  )}
+                </ul>
+
+                <div className="g4-l3-readable-view__result">
+                  <p>{step4Crop.transcript[7]}</p>
+                  <p>{step4Crop.transcript[8]}</p>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       : null}

@@ -9,7 +9,7 @@ const assetRoot = path.resolve(
   '../public/flash-assets/courses',
 );
 const expectedChecksumSetSha256 =
-  '2a7f200cbb69a7e1cff8075a61091f4cae953f8b50f2fa4b0557928b9d5e9f78';
+  '12be4163b1fdec63a4218d8ed9617535aca4cc33e0eb88d10fbd891c84b15f99';
 const allowedExtensions = new Set(['.js', '.mp3', '.png', '.svg', '.ttf']);
 
 async function walk(directory: string): Promise<string[]> {
@@ -34,13 +34,13 @@ test('private deployment assets are an exact runtime-only G4 L3 and G5 L4 closur
   const relativeFiles = files.map((file) =>
     path.relative(assetRoot, file).split(path.sep).join('/')
   );
-  assert.equal(files.length, 676);
+  assert.equal(files.length, 677);
   assert.equal(
     relativeFiles.filter((file) =>
       file.startsWith('course-g04-l03-')
       || file.startsWith('shell-course-g04-l03-index-local/')
     ).length,
-    558,
+    559,
   );
   assert.equal(
     relativeFiles.filter((file) =>
@@ -50,6 +50,12 @@ test('private deployment assets are an exact runtime-only G4 L3 and G5 L4 closur
     118,
   );
   assert.equal(relativeFiles.filter((file) => file.endsWith('/canvas-renderer.js')).length, 93);
+  assert.equal(
+    relativeFiles.filter((file) =>
+      file === 'course-g04-l03-gs-002/canvas-interaction-base-renderer.js'
+    ).length,
+    1,
+  );
   assert.equal(relativeFiles.filter((file) => file.endsWith('.mp3')).length, 72);
   assert.equal(relativeFiles.some((file) => file.endsWith('manifest.json')), false);
   assert(relativeFiles.every((file) => allowedExtensions.has(path.extname(file))));

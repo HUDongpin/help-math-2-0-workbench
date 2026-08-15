@@ -9,6 +9,10 @@ const baseURL = `http://${host}:${port}`;
 
 export default defineConfig({
   testDir: './e2e',
+  // External Clerk mutation is reachable only through the dedicated,
+  // redacted, fresh-server launcher. Ordinary browser regression must never
+  // discover it even if authorization variables were left in a shell.
+  testIgnore: 'clerk-synthetic-lifecycle.spec.ts',
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,

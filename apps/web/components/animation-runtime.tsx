@@ -49,6 +49,12 @@ export interface AnimationRuntimePlaybackState {
   readonly frameDomain: string;
   readonly fps: number;
   readonly narration: AnimationRuntimeNarrationStatus;
+  /**
+   * Current playhead within the authored playback span, from 0 to 1.
+   * This is intentionally separate from lesson/page completion. `null` keeps
+   * capture, loading and unsupported renderer states fail-closed.
+   */
+  readonly playbackProgress: number | null;
   readonly seekAvailable: boolean;
   readonly stepFrames: number;
   readonly transportMode: 'none' | 'visual-frame-inspector';
@@ -74,6 +80,7 @@ AnimationRuntimePlaybackState = Object.freeze({
   frameDomain: 'root',
   fps: 0,
   narration: 'unavailable',
+  playbackProgress: null,
   seekAvailable: false,
   stepFrames: 0,
   transportMode: 'none',
@@ -150,6 +157,32 @@ export function playbackReachedEnd({
   if (reducedMotion === undefined) return false;
   if (reducedMotion) return true;
   return !fps || frame >= playbackEndFrame;
+}
+
+export function resolveAnimationPlaybackProgress({
+  capture,
+  fps,
+  frame,
+  playbackEndFrame,
+  reducedMotion,
+  rendererDomainSupported,
+}: Readonly<{
+  capture: boolean;
+  fps: number;
+  frame: number;
+  playbackEndFrame: number;
+  reducedMotion: boolean | undefined;
+  rendererDomainSupported: boolean;
+}>): number | null {
+  if (capture || !rendererDomainSupported || reducedMotion === undefined) {
+    return null;
+  }
+  if (reducedMotion || !fps || playbackEndFrame <= 1) return 1;
+  const clampedFrame = Math.min(
+    playbackEndFrame,
+    Math.max(1, Math.trunc(frame)),
+  );
+  return (clampedFrame - 1) / (playbackEndFrame - 1);
 }
 
 /**
@@ -519,6 +552,7 @@ export function AnimationRuntime({
   onReplay: onReplayCallback,
   onPlaybackStateChange,
   pageInteractionCompanionTargetId,
+  pageInteractionStageTargetId,
   paused = false,
   seekRequest,
   presentation = 'workbench',
@@ -542,6 +576,7 @@ export function AnimationRuntime({
   onReplay?: () => void;
   onPlaybackStateChange?: (state: AnimationRuntimePlaybackState) => void;
   pageInteractionCompanionTargetId?: string;
+  pageInteractionStageTargetId?: string;
   paused?: boolean;
   seekRequest?: AnimationRuntimeSeekRequest | null;
   presentation?: 'workbench' | 'lesson' | 'legacy-shell';
@@ -658,6 +693,17 @@ export function AnimationRuntime({
     state && playbackContext && runtimeMetadata &&
       stateSupportsRuntimeContext(state, playbackContext, runtimeMetadata)
   );
+  const resolvedPlaybackEndFrame = activeMovie
+    ? resolvePlaybackEndFrame(activeMovie, playbackEndFrame)
+    : 1;
+  const playbackProgress = resolveAnimationPlaybackProgress({
+    capture: capture || context?.captureFrame !== undefined,
+    fps: activeMovie?.fps ?? 0,
+    frame,
+    playbackEndFrame: resolvedPlaybackEndFrame,
+    reducedMotion: reduced,
+    rendererDomainSupported,
+  });
   const captureIdentityFailure = playbackContext
     ? strictCaptureIdentityFailure(
         query,
@@ -741,6 +787,7 @@ export function AnimationRuntime({
       frameDomain: frameDomain?.id ?? 'root',
       fps: activeMovie?.fps ?? 0,
       narration,
+      playbackProgress,
       seekAvailable,
       stepFrames: transport?.stepFrames ?? 0,
       transportMode: transportEnabledForDomain
@@ -754,6 +801,7 @@ export function AnimationRuntime({
     frameDomain?.id,
     narration,
     onPlaybackStateChange,
+    playbackProgress,
     reportedFrameCount,
     seekAvailable,
     transport?.stepFrames,
@@ -869,7 +917,7 @@ export function AnimationRuntime({
             traceId={playbackContext.traceId}
             width={runtimeMetadata.stage.width}
           />
-        : <Renderer entryStateSha256={playbackContext.entryStateSha256} frame={playbackContext.frame} frameDomain={playbackContext.frameDomain} key={rendererKey} lang={playbackContext.lang} onLessonHostRequest={rendererLessonHostRequest} onReplay={onReplay} pageInteractionCompanionTargetId={pageInteractionCompanionTargetId} paused={paused || hostAudioPaused} reducedMotion={reduced === true} replay={playbackContext.replay} requirementId={playbackContext.requirementId} rootFrame={playbackContext.rootFrame} scenario={playbackContext.scenario} seed={playbackContext.seed} state={state} traceId={playbackContext.traceId} uiLanguage={uiLanguage ?? playbackContext.lang} />}
+        : <Renderer entryStateSha256={playbackContext.entryStateSha256} frame={playbackContext.frame} frameDomain={playbackContext.frameDomain} key={rendererKey} lang={playbackContext.lang} onLessonHostRequest={rendererLessonHostRequest} onReplay={onReplay} pageInteractionCompanionTargetId={pageInteractionCompanionTargetId} pageInteractionStageTargetId={pageInteractionStageTargetId} paused={paused || hostAudioPaused} reducedMotion={reduced === true} replay={playbackContext.replay} requirementId={playbackContext.requirementId} rootFrame={playbackContext.rootFrame} scenario={playbackContext.scenario} seed={playbackContext.seed} state={state} traceId={playbackContext.traceId} uiLanguage={uiLanguage ?? playbackContext.lang} />}
     </div>
   </div>;
 }

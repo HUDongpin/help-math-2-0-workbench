@@ -159,6 +159,12 @@ export interface AnimationRendererProps {
    * standalone in-stage fallback when this host is absent.
    */
   readonly pageInteractionCompanionTargetId?: string;
+  /**
+   * Optional host-owned overlay target inside the authored stage plane. This
+   * is for responsive current-JS controls that must remain inside the visible
+   * animation rectangle; it is separate from the below-stage companion host.
+   */
+  readonly pageInteractionStageTargetId?: string;
 }
 
 export interface AnimationModule<State = unknown> {

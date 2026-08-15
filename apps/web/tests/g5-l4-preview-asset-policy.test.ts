@@ -1,13 +1,41 @@
 import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
 import test from 'node:test';
+
+import {NextRequest} from 'next/server';
 
 import {
   classifyG5L4PreviewAsset,
   G5_L4_PREVIEW_RUNTIME_SHA256,
   hasSafeFlashAssetSegments,
   hasExactG5L4RuntimeDigest,
-  isG5L4PreviewAssetAuthorized
+  isG5L4PreviewAssetAuthorized,
+  isG5L4ShowcaseAssetAuthorized,
+  isG5L4ShowcaseAssetPath,
+  isG5L4ShowcaseAssetSegments
 } from '../lib/g5-l4-preview-asset-policy';
+import {proxyForRequest} from '../proxy';
+
+async function withEnvironment<T>(
+  values: Readonly<Record<string, string | undefined>>,
+  callback: () => Promise<T>
+) {
+  const original = Object.fromEntries(
+    Object.keys(values).map((key) => [key, process.env[key]])
+  );
+  try {
+    for (const [key, value] of Object.entries(values)) {
+      if (value === undefined) Reflect.deleteProperty(process.env, key);
+      else Reflect.set(process.env, key, value);
+    }
+    return await callback();
+  } finally {
+    for (const [key, value] of Object.entries(original)) {
+      if (value === undefined) Reflect.deleteProperty(process.env, key);
+      else Reflect.set(process.env, key, value);
+    }
+  }
+}
 
 const expected = {
   'course-g05-l04-ir-001-a662633d':
@@ -137,6 +165,11 @@ test('asset policy controls exactly the 54 hash-bound G5 L4 page subtrees', () =
       classifyG5L4PreviewAsset(['courses', animationId, 'manifest.json']).kind,
       'manifest'
     );
+    assert.equal(isG5L4ShowcaseAssetSegments([
+      'courses',
+      animationId,
+      'manifest.json'
+    ]), false);
   }
   assert.equal(
     classifyG5L4PreviewAsset([
@@ -146,6 +179,45 @@ test('asset policy controls exactly the 54 hash-bound G5 L4 page subtrees', () =
     ]).controlled,
     false
   );
+  assert.equal(isG5L4ShowcaseAssetPath(
+    '/flash-assets/courses/course-g05-l04-vb-002/manifest.json'
+  ), false);
+  assert.equal(isG5L4ShowcaseAssetPath(
+    '/flash-assets/courses/course-g05-l04-vb-002/canvas-renderer.js'
+  ), true);
+  assert.equal(isG5L4ShowcaseAssetPath(
+    '/flash-assets/courses/course-g05-l04-future/manifest.json'
+  ), false);
+});
+
+test('asset policy allows only the exact existing G5 L4 shell support files', () => {
+  for (const asset of [
+    ['courses', 'shell-course-g05-l04-index-local', 'control-assets', 'lesson-shell-play-up.png'],
+    ['courses', 'shell-course-g05-l04-index-local', 'root-frames', 'frame-0049.png'],
+    ['courses', 'shell-course-g05-l04-index-local', 'root-frames', 'frame-0050.png']
+  ]) {
+    const classification = classifyG5L4PreviewAsset(asset);
+    assert.equal(classification.controlled, true);
+    assert.equal(classification.animationId, 'shell-course-g05-l04-index-local');
+    assert.equal(classification.kind, 'shell');
+    assert.match(classification.expectedRuntimeSha256 ?? '', /^[a-f0-9]{64}$/u);
+    assert.equal(isG5L4ShowcaseAssetSegments(asset), true);
+  }
+  for (const asset of [
+    ['courses', 'shell-course-g05-l04-index-local', 'control-assets', 'manifest.json'],
+    ['courses', 'shell-course-g05-l04-index-local', 'root-frames', 'manifest.json'],
+    ['courses', 'shell-course-g05-l04-index-local', 'root-frames', 'frame-0001.png'],
+    ['courses', 'shell-course-g04-l03-index-local', 'root-frames', 'frame-0001.png'],
+    ['courses', 'shell-course-g05-l05-index-local', 'root-frames', 'frame-0001.png'],
+    ['courses', 'shell-course-g05-l04-index-local', 'root-frames', 'frame-0051.png'],
+    ['courses', 'shell-course-g05-l04-index-local', 'root-frames', 'future.png'],
+    ['courses', 'shell-course-g05-l04-index-local', 'control-assets', 'future.png'],
+    ['courses', 'shell-course-g05-l04-index-local', 'other', 'frame-0001.png'],
+    ['courses', 'shell-course-g05-l04-index-local', 'root-frames', 'frame-0001.png', 'extra']
+  ]) {
+    assert.equal(classifyG5L4PreviewAsset(asset).controlled, false);
+    assert.equal(isG5L4ShowcaseAssetSegments(asset), false);
+  }
 });
 
 test('asset policy rejects traversal and path-separator aliases before classification', () => {
@@ -165,6 +237,7 @@ test('asset policy rejects traversal and path-separator aliases before classific
     []
   ]) {
     assert.equal(hasSafeFlashAssetSegments(adversarial), false);
+    assert.equal(classifyG5L4PreviewAsset(adversarial).controlled, false);
   }
 });
 
@@ -203,26 +276,110 @@ test('runtime requests require one exact lowercase SHA-256 query value', () => {
   }
 });
 
-test('candidate assets allow only local audit or publication', () => {
+test('candidate assets allow only local audit or the exact G5 showcase gate', () => {
   assert.equal(
     isG5L4PreviewAssetAuthorized({
       developmentAudit: false,
-      published: false
+      showcaseEnabled: false,
+      showcaseAsset: true,
     }),
     false
   );
   assert.equal(
     isG5L4PreviewAssetAuthorized({
       developmentAudit: false,
-      published: true
+      showcaseEnabled: true,
+      showcaseAsset: true,
     }),
     true
   );
   assert.equal(
     isG5L4PreviewAssetAuthorized({
       developmentAudit: true,
-      published: false
+      showcaseEnabled: false,
+      showcaseAsset: false,
     }),
     true
   );
+  assert.equal(
+    isG5L4PreviewAssetAuthorized({
+      developmentAudit: false,
+      showcaseEnabled: true,
+      showcaseAsset: false,
+    }),
+    false
+  );
+  assert.equal(isG5L4ShowcaseAssetAuthorized({}), false);
+  assert.equal(isG5L4ShowcaseAssetAuthorized({
+    CURRENT_JS_SHOWCASE_G5_L4_ENABLED: '1'
+  }), false);
+  assert.equal(isG5L4ShowcaseAssetAuthorized({
+    CURRENT_JS_SHOWCASE_G4_L3_ENABLED: 'true'
+  }), false);
+  assert.equal(isG5L4ShowcaseAssetAuthorized({
+    CURRENT_JS_SHOWCASE_G5_L4_ENABLED: 'true'
+  }), true);
+});
+
+test('production proxy serves only opted-in G5 L4 assets with exact runtime digest', async () => {
+  const digest = expected['course-g05-l04-vb-002'];
+  const runtime = 'https://www.helpmath.ai/flash-assets/courses/'
+    + `course-g05-l04-vb-002/canvas-renderer.js?sha256=${digest}`;
+  const manifest = 'https://www.helpmath.ai/flash-assets/courses/'
+    + 'course-g05-l04-vb-002/manifest.json';
+  const sourceFla = 'https://www.helpmath.ai/flash-assets/courses/'
+    + 'course-g05-l04-vb-002/source.fla';
+  const privateAudit = 'https://www.helpmath.ai/flash-assets/courses/'
+    + 'course-g05-l04-vb-002/audit/private.json';
+  const nestedRuntime = 'https://www.helpmath.ai/flash-assets/courses/'
+    + 'course-g05-l04-vb-002/canvas-renderer.js/backup';
+  const shellFrame = 'https://www.helpmath.ai/flash-assets/courses/'
+    + 'shell-course-g05-l04-index-local/root-frames/frame-0050.png';
+
+  await withEnvironment({
+    NODE_ENV: 'production',
+    CURRENT_JS_SHOWCASE_G5_L4_ENABLED: undefined
+  }, async () => {
+    assert.equal((await proxyForRequest(new NextRequest(runtime))).status, 404);
+    assert.equal((await proxyForRequest(new NextRequest(manifest))).status, 404);
+    assert.equal((await proxyForRequest(new NextRequest(shellFrame))).status, 404);
+  });
+
+  await withEnvironment({
+    NODE_ENV: 'production',
+    CURRENT_JS_SHOWCASE_G5_L4_ENABLED: 'true'
+  }, async () => {
+    assert.equal((await proxyForRequest(new NextRequest(manifest))).status, 404);
+    assert.equal((await proxyForRequest(new NextRequest(sourceFla))).status, 404);
+    assert.equal((await proxyForRequest(new NextRequest(privateAudit))).status, 404);
+    assert.equal((await proxyForRequest(new NextRequest(nestedRuntime))).status, 404);
+    assert.equal((await proxyForRequest(new NextRequest(runtime))).status, 200);
+    assert.equal((await proxyForRequest(new NextRequest(shellFrame))).status, 200);
+    assert.equal((await proxyForRequest(new NextRequest(
+      shellFrame.replace('g05-l04', 'g05-l05')
+    ))).status, 404);
+    assert.equal((await proxyForRequest(new NextRequest(
+      runtime.replace(digest, '0'.repeat(64))
+    ))).status, 404);
+    assert.equal((await proxyForRequest(new NextRequest(
+      runtime.replace(`?sha256=${digest}`, '')
+    ))).status, 404);
+  });
+});
+
+test('flash asset route applies the G5 gate before serving page or shell bytes', async () => {
+  const source = await readFile(
+    new URL('../app/flash-assets/[...asset]/route.ts', import.meta.url),
+    'utf8'
+  );
+  assert.match(source, /classifyG5L4PreviewAsset\(canonicalAsset\)/u);
+  assert.match(source, /isG5L4ShowcaseAssetSegments\(canonicalAsset\)/u);
+  assert.match(source, /showcaseEnabled: isG5L4ShowcaseAssetAuthorized\(\)/u);
+  assert.match(source, /showcaseAsset: g5L4ShowcaseAsset/u);
+  assert.match(source, /hasExactG5L4RuntimeDigest\(/u);
+  assert.match(source, /targetEntry\.isSymbolicLink\(\)/u);
+  assert.match(source, /realpath\(root\)/u);
+  assert.match(source, /realpath\(target\)/u);
+  assert.match(source, /policy\.kind === 'runtime' \|\| policy\.kind === 'shell'/u);
+  assert.match(source, /sha256\(bytes\) !== policy\.expectedRuntimeSha256/u);
 });

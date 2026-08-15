@@ -185,7 +185,46 @@ declare global {
   }
 }
 
-type CanvasStatus = "idle" | "loading" | "ready" | "error";
+export type SourceStaticCanvasStatus =
+  | "idle"
+  | "loading"
+  | "updating"
+  | "ready"
+  | "error";
+
+export function sourceStaticCanvasVisualKey(state: Readonly<{
+  animationId: string;
+  frame: number;
+  frameDomain: string;
+  rootFrame: number;
+  scenario: string;
+  language: string;
+  seed: number;
+}>): string {
+  return JSON.stringify([
+    state.animationId,
+    state.frame,
+    state.frameDomain,
+    state.rootFrame,
+    state.scenario,
+    state.language,
+    state.seed,
+  ]);
+}
+
+export function retainedCanvasStatus({
+  canvasStatus,
+  renderedVisualKey,
+  requestedVisualKey,
+}: Readonly<{
+  canvasStatus: SourceStaticCanvasStatus;
+  renderedVisualKey: string | null;
+  requestedVisualKey: string;
+}>): SourceStaticCanvasStatus {
+  return canvasStatus === "ready" && renderedVisualKey !== requestedVisualKey
+    ? "updating"
+    : canvasStatus;
+}
 
 const assetPromises = new Map<string, Promise<CanvasAsset>>();
 
@@ -679,7 +718,7 @@ export function createSourceStaticCanvasCandidate(
     state,
     traceId,
   }: {
-    canvasStatus: CanvasStatus;
+    canvasStatus: SourceStaticCanvasStatus;
     entryStateSha256: string;
     frame?: number;
     frameDomain?: string;
@@ -804,16 +843,35 @@ export function createSourceStaticCanvasCandidate(
       ],
     );
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [canvasStatus, setCanvasStatus] = useState<CanvasStatus>("idle");
+    const [canvasStatus, setCanvasStatus] =
+      useState<SourceStaticCanvasStatus>("idle");
+    const [renderedVisualKey, setRenderedVisualKey] = useState<string | null>(
+      null,
+    );
+    const requestedVisualKey = sourceStaticCanvasVisualKey(deterministicState);
+    const reportedCanvasStatus = retainedCanvasStatus({
+      canvasStatus,
+      renderedVisualKey,
+      requestedVisualKey,
+    });
 
     useEffect(() => {
       const canvas = canvasRef.current;
       if (!canvas || deterministicState.status !== "ready") {
+        setRenderedVisualKey(null);
         setCanvasStatus("idle");
         return;
       }
       let cancelled = false;
-      setCanvasStatus("loading");
+      // Keep the last successfully painted bitmap visible while the next
+      // deterministic frame is prepared. Demoting an already-ready Canvas to
+      // `loading` hid it on every playback tick and exposed the stage's blue
+      // background, producing a rapid full-frame flash. `updating` remains
+      // capture-ineligible, so the retained bitmap cannot be mistaken for
+      // evidence of the requested frame before the new draw completes.
+      setCanvasStatus((current) =>
+        current === "ready" || current === "updating" ? "updating" : "loading",
+      );
       loadCanvasAsset(config)
         .then(async (asset) => {
           await asset.ready();
@@ -825,15 +883,21 @@ export function createSourceStaticCanvasCandidate(
             seed: deterministicState.seed,
           });
           verifyRenderedIdentity(canvas, rendered, deterministicState);
-          if (!cancelled) setCanvasStatus("ready");
+          if (!cancelled) {
+            setRenderedVisualKey(requestedVisualKey);
+            setCanvasStatus("ready");
+          }
         })
         .catch(() => {
-          if (!cancelled) setCanvasStatus("error");
+          if (!cancelled) {
+            setRenderedVisualKey(null);
+            setCanvasStatus("error");
+          }
         });
       return () => {
         cancelled = true;
       };
-    }, [deterministicState]);
+    }, [deterministicState, requestedVisualKey]);
 
     const blocked =
       deterministicState.status === "blocked"
@@ -845,7 +909,7 @@ export function createSourceStaticCanvasCandidate(
         data-audio-rendered="false"
         data-authoritative-runtime-validated="false"
         data-candidate-status="source-static-engineering-not-strict"
-        data-canvas-status={blocked ? "blocked" : canvasStatus}
+        data-canvas-status={blocked ? "blocked" : reportedCanvasStatus}
         data-human-visual-review-accepted="false"
         data-interactive-controls-enabled="false"
         data-owner-accepted="false"
@@ -889,7 +953,7 @@ export function createSourceStaticCanvasCandidate(
             <>
               <canvas
                 {...buildCaptureAttributes({
-                  canvasStatus,
+                  canvasStatus: reportedCanvasStatus,
                   entryStateSha256,
                   frame,
                   frameDomain,
@@ -908,19 +972,24 @@ export function createSourceStaticCanvasCandidate(
                 role="img"
                 style={{
                   aspectRatio: `${config.nativeStage.width} / ${config.nativeStage.height}`,
-                  display: canvasStatus === "ready" ? "block" : "none",
+                  display:
+                    reportedCanvasStatus === "ready" ||
+                      reportedCanvasStatus === "updating"
+                      ? "block"
+                      : "none",
                   height: "auto",
                   pointerEvents: "none",
                   width: "100%",
                 }}
                 width={config.backingStage.width}
               />
-              {canvasStatus === "loading" || canvasStatus === "idle" ? (
+              {reportedCanvasStatus === "loading" ||
+              reportedCanvasStatus === "idle" ? (
                 <span aria-live="polite" role="status">
                   Loading source-static drawing…
                 </span>
               ) : null}
-              {canvasStatus === "error" ? (
+              {reportedCanvasStatus === "error" ? (
                 <p aria-live="assertive" role="alert">
                   The local drawing asset failed safely. No legacy or remote
                   fallback was executed.

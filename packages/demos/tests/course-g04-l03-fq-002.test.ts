@@ -312,4 +312,10 @@ test("functional contract records masking and modern enhancements while every ac
         "Q7-Q12-source-canvas-pixel-bound-target-and-choice-projection",
       ),
   );
+  assert.doesNotMatch(
+    JSON.stringify(
+      COURSE_G04_L03_FQ_002_SOURCE_CONTRACT.currentJavascriptInteractionScope,
+    ),
+    /TS007|cross-placement/,
+  );
 });

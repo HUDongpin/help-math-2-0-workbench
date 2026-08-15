@@ -281,7 +281,7 @@ export function LearningPlatformHome({locale}: {locale: G4L3Locale}) {
           <span className={styles.supportIcon}><Sparkles aria-hidden="true" /></span>
           <h3>{labels.novaTitle}</h3>
           <p>{labels.novaBody}</p>
-          <Link href="/courses/4/3?mode=study">{spanish ? 'Abrir modo de estudio' : 'Open study mode'}<ArrowRight aria-hidden="true" size={16} /></Link>
+          <Link href="/courses/4/3?mode=focus">{spanish ? 'Abrir la lección' : 'Open the lesson'}<ArrowRight aria-hidden="true" size={16} /></Link>
         </article>
         <article>
           <span className={styles.supportIcon}><Languages aria-hidden="true" /></span>

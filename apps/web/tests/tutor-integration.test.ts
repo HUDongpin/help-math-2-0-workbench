@@ -2,8 +2,10 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
+  NOVA_TUTOR_MODE_PRODUCT_LABELS,
   TUTOR_ASSESSMENT_SECTIONS,
   isTutorAssessmentSection,
+  novaTutorModeHref,
   resolveTutorAvailability,
   resolveNovaTutorMode,
   tutorContextSummary,
@@ -90,13 +92,38 @@ test('the context summary states the page in the reader’s language', () => {
   );
 });
 
-test('lesson mode accepts only the three declared Nova placements', () => {
+test('every legacy lesson mode input resolves to the single Focus view', () => {
   assert.equal(resolveNovaTutorMode('focus'), 'focus');
-  assert.equal(resolveNovaTutorMode('study'), 'study');
-  assert.equal(resolveNovaTutorMode('classroom'), 'classroom');
-  assert.equal(resolveNovaTutorMode(['study', 'focus']), 'study');
+  assert.equal(resolveNovaTutorMode('study'), 'focus');
+  assert.equal(resolveNovaTutorMode('classroom'), 'focus');
+  assert.equal(resolveNovaTutorMode(['study', 'focus']), 'focus');
   assert.equal(resolveNovaTutorMode('unknown'), 'focus');
   assert.equal(resolveNovaTutorMode(undefined), 'focus');
+});
+
+test('legacy product labels remain metadata while lesson links canonicalize to Focus', () => {
+  assert.deepEqual(NOVA_TUTOR_MODE_PRODUCT_LABELS, {
+    focus: {
+      en: 'Focus', es: 'Enfoque', zh: '专注学习',
+      purposeEn: 'Focused learning', purposeEs: 'Aprendizaje enfocado',
+    },
+    study: {
+      en: 'Study', es: 'Estudio', zh: '辅助学习',
+      purposeEn: 'Learning support', purposeEs: 'Apoyo de aprendizaje',
+    },
+    classroom: {
+      en: 'Classroom', es: 'Clase', zh: '课堂展示',
+      purposeEn: 'Class display', purposeEs: 'Presentación de clase',
+    },
+  });
+  assert.equal(
+    novaTutorModeHref('/courses/4/3', 'focus'),
+    '/courses/4/3?mode=focus',
+  );
+  assert.equal(
+    novaTutorModeHref('/courses/4/3?review=1&mode=focus#page', 'classroom'),
+    '/courses/4/3?review=1&mode=focus#page',
+  );
 });
 
 /* ---------- frame snapshot ---------- */

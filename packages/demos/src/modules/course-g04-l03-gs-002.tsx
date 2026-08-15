@@ -17,6 +17,7 @@ import {
 } from "../timelines/course-g04-l03-gs-002-interaction";
 import {
   COURSE_G04_L03_GS_002_CONFIG,
+  COURSE_G04_L03_GS_002_INTERACTION_BASE_CONFIG,
   COURSE_G04_L03_GS_002_SOURCE,
 } from "../timelines/course-g04-l03-gs-002";
 
@@ -24,6 +25,10 @@ const candidate = createSourceStaticCanvasCandidate(
   COURSE_G04_L03_GS_002_CONFIG,
 );
 const SourceStaticRenderer = candidate.Renderer;
+const interactionBaseCandidate = createSourceStaticCanvasCandidate(
+  COURSE_G04_L03_GS_002_INTERACTION_BASE_CONFIG,
+);
+const InteractionBaseRenderer = interactionBaseCandidate.Renderer;
 
 const SOURCE_GAME_FRAME = 427;
 const SOURCE_GAME_DOMAIN = "sprite-321";
@@ -34,6 +39,7 @@ const SOURCE_SHIP_LEFT = STAGE_BASE_X - 298.2;
 const SOURCE_VIRUS_LEFT = STAGE_BASE_X - 67.2;
 const SOURCE_VIRUS_IMAGE_ALPHA_OFFSET_X = 129;
 const CLOCK_DISPATCH_INTERVAL_MS = 100;
+const MAX_CLOCK_DELTA_MS = 250;
 const SOURCE_FONT =
   '"Arial Rounded MT Bold", "Trebuchet MS", ui-rounded, sans-serif';
 
@@ -45,7 +51,7 @@ const SOURCE_SHIP_PNG_SHA256 =
 const SOURCE_VIRUS_PNG_SHA256 =
   "4e3f9ed24e5c1b637ef9a56089a58d9c2bdef55d71588825e80fd0efcb8404fe";
 const SOURCE_SHIP_PNG =
-  "data:image/png;base64,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";
+  "data:image/png;base64,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";
 const SOURCE_VIRUS_PNG =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKEAAAAfCAYAAACPka2zAAAElElEQVR4Xu3aaUxUVxQA4PNYh70wzMAMwyzMUNBGiFXELoLQFhhkNUQUZdBQ9k12y1JFxUitGlsMEklba9pg1ZRaSCopP5pYFbWm1apgKaXWUitg3FBU4PS+AdrJpLRUIOmP8yUn9+W9d+6vk/vu8gAIIYQQQgghhJD/KVu1o6WWtaYsxCwsjZ4TMmscWUhfkAt074aLrut87d/ZEiz8Ou45m1LjFwmZDdapCx0at7wi/L4uUjw4WKHB/g0eeK1QhWl+Du/xz40TCJlpZul+Dh+1p8rxQaUGR6s8/4xv0uSPVvnYbbM2h/nGSUYELDzHQ8pCAlS8ZIqcg1U2iekh87r2Fa/G9hxvHHpTg21Z8/DzjAXYk6/C/VHiJ5n+DkfZu+bGyeMsXAF00QAnEjiuN5rjrgRwXIsdQDKMzS0JmVyIxjpjZ5ho9P3dm7Gvrw8/KdRie6YGP208iM1NR/FkugfeKVNjY7ykRygwC54jtohhaWaGfbwKkFIE8IU/wLplHHduAcB2dlvJgjN8j5DJCP3drPZqla4PW1uahw8VaLFp/VKM9322ryRp5b3W3EX6z/JtVoi7wpx73goVdbEcuWEHSQD1KQA72KWZFYA/3xo+J+RfqYXm2YtMuaE1AS/2Hi4Ixcb8cFxianIvRiPrnyhCPk4ky0ZeUlhmsxQLw3w/gG3p7FMMNAckT2v5HNuKhggRNid5DLfnzMXmjPlYHSTFiiAFns/+a5Fy6w01slV0PUsxMcwPB0hk399OdulmeJ+QKdPpdJWVKwIvHIhx+el0qvuTS9kK7MhV4LeZcmxbK7t9IMqlu22t28DjjRqsixCfg7FN7AlOcQCtrAjbYWyvkZD/ztfXN9FPJNqjEwge7q2tfZDrrfoxWyPrrqvdM5jt6tq/ieMwT2T5S3e+Eo8nud1kKd7jqSK2CPmATQaHSgCaYfLVMyH/yIqNhB8GmJoeKWfFto4VXQ1r+euswMCuatZuZVFoazZwOUfB5oXuj1hOJpsHvs1GwO5KAPwSYJQtmfOMOyZkSuwswWvDmtCvCiIjLvMjXq5W21lqYjK6mV2nyGS/b+fbxYu7M9V2V2+UeOCp191Hylnh7WfxGYtfWZSNjYIi474JmRJ3e3O/rcHCi0fiJXer/B07qlNir+T5qDvSXFwGdtbU3EgTmN4pj11yoSFGcuvnAhW2rJL81soK7wyLUwD3UwDqgBYkZJq4ZZ42RT/kKXFkkyfeLPXAzlwlnk2T6+NilgL5EfDYail2rVdiw2vOnd+xAmwAuLRUv0WoP64jZFrUB5e7XOUL0PDMeCL4wuN/ZGiIdtEX6Ma5dmd0YyciKuOOCHka/Oay9myqfHT4b4rwepEKmxKkeGiFBOujxHx7TfaMWSAY7RMSMh0+O0Kde44lSO8f17nh4XgJ3i1X6wuQ3xPsLfbAj+NcsS5S/Lgs0OnkywqrWKDzYDLD+OM3L/4nhqpg4fl9rNj4jWp+fng61R13h4l6k5+33+XlLAhi7zkZJxMy08TW5rAwRG27MsrbJilcY5Mf4WVTDPTpJYQQQgghhBBCZtEfxtG8IRIQiJUAAAAASUVORK5CYII=";
 
@@ -145,17 +151,36 @@ function CourseG04L03Gs002InteractionOverlay({
   const priorModeRef = useRef(interaction.mode);
 
   useEffect(() => {
-    dispatch({type: "replay"});
+    dispatch({type: "replay", seed});
   }, [replay, seed]);
 
   useEffect(() => {
-    if (paused || interaction.mode === "expired") return;
+    if (
+      paused
+      || interaction.mode === "expired"
+      || interaction.mode === "help"
+      || interaction.mode === "feedback"
+    ) return;
     let animationFrame = 0;
     let lastTime = performance.now();
     let pendingElapsedMs = 0;
 
+    const resetClockOrigin = () => {
+      lastTime = performance.now();
+      pendingElapsedMs = 0;
+    };
+
     const tick = (now: number) => {
-      pendingElapsedMs += Math.max(0, now - lastTime);
+      if (document.visibilityState === "hidden") {
+        lastTime = now;
+        pendingElapsedMs = 0;
+        animationFrame = requestAnimationFrame(tick);
+        return;
+      }
+      pendingElapsedMs += Math.min(
+        MAX_CLOCK_DELTA_MS,
+        Math.max(0, now - lastTime),
+      );
       lastTime = now;
       if (pendingElapsedMs >= CLOCK_DISPATCH_INTERVAL_MS) {
         dispatch({type: "advance-time", elapsedMs: pendingElapsedMs});
@@ -164,8 +189,12 @@ function CourseG04L03Gs002InteractionOverlay({
       animationFrame = requestAnimationFrame(tick);
     };
 
+    document.addEventListener("visibilitychange", resetClockOrigin);
     animationFrame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(animationFrame);
+    return () => {
+      document.removeEventListener("visibilitychange", resetClockOrigin);
+      cancelAnimationFrame(animationFrame);
+    };
   }, [interaction.mode, paused]);
 
   useEffect(() => {
@@ -203,7 +232,6 @@ function CourseG04L03Gs002InteractionOverlay({
 
   const shipTop = sourceShipTop(interaction.shipIndex);
   const virusTop = sourceVirusTop(interaction.virusIndex);
-  const initialVirusTop = sourceVirusTop(interaction.initialVirusIndex);
   const ready = interaction.mode === "ready";
   const modalOpen =
     interaction.mode === "feedback" || interaction.mode === "help";
@@ -229,6 +257,19 @@ function CourseG04L03Gs002InteractionOverlay({
   return (
     <>
       <style>{`
+        @keyframes course-g04-l03-gs-002-hit-feedback {
+          0% {filter: brightness(1); transform: scale(1) rotate(0deg);}
+          32% {filter: brightness(1.35); transform: scale(1.2) rotate(-7deg);}
+          68% {filter: brightness(1.1); transform: scale(.88) rotate(7deg);}
+          100% {filter: brightness(1); transform: scale(1) rotate(0deg);}
+        }
+
+        @keyframes course-g04-l03-gs-002-score-feedback {
+          0% {opacity: 0; transform: translateY(8px) scale(.8);}
+          24%, 70% {opacity: 1; transform: translateY(0) scale(1);}
+          100% {opacity: 0; transform: translateY(-8px) scale(.94);}
+        }
+
         .course-g04-l03-gs-002-mobile-controls {
           display: none;
         }
@@ -353,7 +394,7 @@ function CourseG04L03Gs002InteractionOverlay({
       data-game-mode={interaction.mode}
       data-legacy-actionscript-executed="false"
       data-source-script-bound="true"
-      data-timing-authority="static-frame-deduction-not-original-runtime-trace"
+      data-timing-authority="current-js-product-clock-and-source-informed-movement-not-original-runtime-trace"
       role="group"
       style={{
         height: "auto",
@@ -378,38 +419,6 @@ function CourseG04L03Gs002InteractionOverlay({
             width: 800,
           }}
         >
-          <div
-            aria-hidden="true"
-            data-source-sprite-mask="initial-ship"
-            style={{
-              backdropFilter: "blur(6px)",
-              background: "rgba(184, 216, 247, 0.2)",
-              borderRadius: "50%",
-              height: 30,
-              left: SOURCE_SHIP_LEFT - 2,
-              position: "absolute",
-              top: STAGE_BASE_Y + COURSE_G04_L03_GS_002_SHIP_Y[7] - 2,
-              width: 42,
-              zIndex: 1,
-            }}
-          />
-          {initialVirusTop !== null ? (
-            <div
-              aria-hidden="true"
-              data-source-sprite-mask="initial-virus"
-              style={{
-                backdropFilter: "blur(10px)",
-                background: "rgba(184, 216, 247, 0.2)",
-                borderRadius: "50%",
-                height: 26,
-                left: SOURCE_VIRUS_LEFT - 2,
-                position: "absolute",
-                top: initialVirusTop + 1,
-                width: 29,
-                zIndex: 1,
-              }}
-            />
-          ) : null}
           {shipTop !== null ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -439,21 +448,44 @@ function CourseG04L03Gs002InteractionOverlay({
               height="31"
               src={SOURCE_VIRUS_PNG}
               style={{
+                animation:
+                  interaction.mode === "hit-resolving" && !reducedMotion
+                    ? `${COURSE_G04_L03_GS_002_CURRENT_JS_TIMING.hitResolutionMs}ms ease-in-out both course-g04-l03-gs-002-hit-feedback`
+                    : undefined,
                 height: 31,
                 left: SOURCE_VIRUS_LEFT - SOURCE_VIRUS_IMAGE_ALPHA_OFFSET_X,
-                opacity: interaction.mode === "hit-resolving" ? 0.45 : 1,
+                opacity: 1,
                 position: "absolute",
                 top: virusTop,
-                transform:
-                  interaction.mode === "hit-resolving" && !reducedMotion
-                    ? "scale(1.12)"
-                    : undefined,
                 transformOrigin: "10px 15px",
                 width: 161,
                 zIndex: 2,
               }}
               width="161"
             />
+          ) : null}
+          {interaction.mode === "hit-resolving" && virusTop !== null ? (
+            <output
+              aria-hidden="true"
+              data-current-js-hit-feedback="visible"
+              style={{
+                animation: reducedMotion
+                  ? undefined
+                  : `${COURSE_G04_L03_GS_002_CURRENT_JS_TIMING.hitResolutionMs}ms ease-out both course-g04-l03-gs-002-score-feedback`,
+                background: "#ffdd29",
+                border: "2px solid #173f86",
+                borderRadius: 999,
+                color: "#102b70",
+                fontFamily: SOURCE_FONT,
+                fontSize: 17,
+                fontWeight: 900,
+                left: SOURCE_VIRUS_LEFT - 8,
+                padding: "3px 8px",
+                position: "absolute",
+                top: virusTop - 29,
+                zIndex: 4,
+              }}
+            >+1</output>
           ) : null}
 
           <fieldset
@@ -929,11 +961,13 @@ export function CourseG04L03Gs002Renderer(props: AnimationRendererProps) {
 
   useEffect(() => {
     const canvas = wrapperRef.current?.querySelector<HTMLCanvasElement>(
-      'canvas[data-course-canvas="course-g04-l03-gs-002"]',
+      'canvas[data-course-canvas="course-g04-l03-gs-002-interaction-base"]',
     );
     if (!canvas || !interactionEnabled) return;
     canvas.setAttribute("aria-hidden", "true");
-    return () => canvas.removeAttribute("aria-hidden");
+    return () => {
+      canvas.removeAttribute("aria-hidden");
+    };
   }, [interactionEnabled]);
 
   return (
@@ -946,7 +980,9 @@ export function CourseG04L03Gs002Renderer(props: AnimationRendererProps) {
       ref={wrapperRef}
       style={{margin: "0 auto", maxWidth: 800, position: "relative", width: "100%"}}
     >
-      <SourceStaticRenderer {...props} />
+      {interactionEnabled
+        ? <InteractionBaseRenderer {...props} />
+        : <SourceStaticRenderer {...props} />}
       {interactionEnabled ? (
         <CourseG04L03Gs002InteractionOverlay
           pageInteractionCompanionTargetId={
@@ -975,7 +1011,10 @@ export const COURSE_G04_L03_GS_002_SOURCE_CONTRACT = Object.freeze({
     "exact-source-validation-feedback",
     "nominal-source-frame-deduced-step-movement",
     "hit-scoring-and-deterministic-next-target",
-    "source-script-specific-timer-display-and-expiry",
+    "current-javascript-standard-four-minute-timer-and-expiry",
+    "current-javascript-crisp-single-actor-layer",
+    "source-sprite321-case426-clean-base-without-pixel-interpolation",
+    "current-javascript-visible-hit-and-score-feedback",
     "need-more-help-text-dialog",
     "whole-renderer-new-game-and-host-replay-reset",
     "host-pause-freezes-current-javascript-clock",
@@ -985,6 +1024,23 @@ export const COURSE_G04_L03_GS_002_SOURCE_CONTRACT = Object.freeze({
   sourceSpriteExports: Object.freeze({
     shipPngSha256: SOURCE_SHIP_PNG_SHA256,
     virusPngSha256: SOURCE_VIRUS_PNG_SHA256,
+  }),
+  interactionBaseSuccessor: Object.freeze({
+    animationId: COURSE_G04_L03_GS_002_INTERACTION_BASE_CONFIG.animationId,
+    assetSource: COURSE_G04_L03_GS_002_INTERACTION_BASE_CONFIG.assetSource,
+    assetSha256: COURSE_G04_L03_GS_002_INTERACTION_BASE_CONFIG.assetSha256,
+    manifestSource:
+      "public/flash-assets/courses/course-g04-l03-gs-002/interaction-base-manifest.json",
+    manifestSha256:
+      "c248508d8e8fc42fc533f90ff2746849c8456b377d2786cedc99a3742e688b7e",
+    publicFrame: 427,
+    sourceSpriteObjectId: 321,
+    sourceSpriteExportFrame: 426,
+    sourceLocalGameInitialStateDrawn: false,
+    reactOwnsActorsTimerAndScore: true,
+    preservedRendererAssetSha256:
+      "1c806e2fdeb026edb5b0109ab24bac3689918894b3d7e38fe17503dfbbc1bfb1",
+    acceptanceEffect: "none",
   }),
   associatedAudioStatus: "inventoried-unimplemented-unaccepted",
   glossaryHostStatus: "source-bound-unimplemented",

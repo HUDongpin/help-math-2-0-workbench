@@ -142,6 +142,10 @@ test("VB003 deterministic capture keeps all source behavior disabled", () => {
 });
 
 test("VB003 stays prototype-only with all authority and acceptance closed", async () => {
+  const moduleSource = await readFile(new URL(
+    "../src/modules/course-g04-l03-vb-003.tsx",
+    import.meta.url,
+  ), "utf8");
   const manifest = matchPrototype({animationId: "course-g04-l03-vb-003"});
   assert.equal(manifest?.runtime.frameCount, 10);
   assert.equal(manifest?.movie.frameCount, 160);
@@ -176,6 +180,21 @@ test("VB003 stays prototype-only with all authority and acceptance closed", asyn
   assert.match(activityMarkup, /Mobile number-line practice controls/);
   assert.match(activityMarkup, /data-mobile-touch-target-min="48"/);
   assert.match(activityMarkup, /<div aria-hidden="true"><section/);
+  assert.match(
+    moduleSource,
+    /className="course-g04-l03-vb-003-feedback-card"[\s\S]*?data-current-js-feedback-placement="companion-outside-authored-stage"[\s\S]*?role="alertdialog"/,
+  );
+  assert.match(
+    moduleSource,
+    /data-source-feedback-text="exact-define-text-character-98"/,
+  );
+  assert.doesNotMatch(moduleSource, /course-g04-l03-vb-003-stage-wrong/);
+  assert.doesNotMatch(moduleSource, /course-g04-l03-vb-003-mobile-wrong/);
+  assert.doesNotMatch(moduleSource, /aria-modal="true"/);
+  assert.ok(
+    COURSE_G04_L03_VB_003_SOURCE_CONTRACT.currentJavascriptInteractionScope
+      .includes("non-occluding-modern-feedback-card-after-authored-stage"),
+  );
   assert.equal(
     COURSE_G04_L03_VB_003_SOURCE_CONTRACT.currentJavascriptInteractionStatus,
     "source-script-bound-functional-candidate",

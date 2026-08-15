@@ -7,6 +7,8 @@ import test from "node:test";
 import {
   buildCanvasAssetRequest,
   createSourceStaticCanvasCandidate,
+  retainedCanvasStatus,
+  sourceStaticCanvasVisualKey,
 } from "../src/source-static-canvas-candidate";
 
 const candidate = createSourceStaticCanvasCandidate({
@@ -212,6 +214,39 @@ test("generic source-static state exposes visual markers but never host behavior
   assert.equal(later.audioRendered, false);
 });
 
+test("a retained bitmap is capture-ineligible as soon as a new frame is requested", () => {
+  const rendered = candidate.getFrameState(31, {
+    frameDomain: "sprite-44",
+    scenario: "source-static-frame",
+    lang: "en",
+    seed: 7,
+  });
+  const requested = candidate.getFrameState(32, {
+    frameDomain: "sprite-44",
+    scenario: "source-static-frame",
+    lang: "en",
+    seed: 7,
+  });
+  const renderedVisualKey = sourceStaticCanvasVisualKey(rendered);
+  const requestedVisualKey = sourceStaticCanvasVisualKey(requested);
+  assert.notEqual(renderedVisualKey, requestedVisualKey);
+  assert.equal(retainedCanvasStatus({
+    canvasStatus: "ready",
+    renderedVisualKey,
+    requestedVisualKey,
+  }), "updating");
+  assert.equal(retainedCanvasStatus({
+    canvasStatus: "ready",
+    renderedVisualKey: requestedVisualKey,
+    requestedVisualKey,
+  }), "ready");
+  assert.equal(retainedCanvasStatus({
+    canvasStatus: "loading",
+    renderedVisualKey,
+    requestedVisualKey,
+  }), "loading");
+});
+
 test("generic source-static factory fails closed for Spanish, root, companion, and mismatches", () => {
   const spanish = candidate.getFrameState(1, {
     frameDomain: "sprite-44",
@@ -302,6 +337,20 @@ test("generic capture attributes require full trace identity and disclose disabl
   assert.equal(complete["data-flash-frame-domain"], "sprite-44");
   assert.equal(complete["data-source-marker-visuals"], "opposite");
   assert.equal(complete["data-source-controls-enabled"], "false");
+
+  const updating = candidate.buildCaptureAttributes({
+    canvasStatus: "updating",
+    frame: 32,
+    frameDomain: "sprite-44",
+    lang: "en",
+    scenario: "source-static-frame",
+    seed: 7,
+    state,
+    ...identity,
+  });
+  assert.equal(updating["data-capture-stage"], undefined);
+  assert.equal(updating["data-render-state"], "updating");
+  assert.equal(updating["data-render-visual"], undefined);
 
   const mismatched = candidate.buildCaptureAttributes({
     canvasStatus: "ready",

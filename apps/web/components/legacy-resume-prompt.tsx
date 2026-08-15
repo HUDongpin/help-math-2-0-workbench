@@ -2,10 +2,12 @@
 
 import {
   useEffect,
+  useId,
   useRef,
   useState,
   type KeyboardEvent as ReactKeyboardEvent,
 } from 'react';
+import {BookOpen, Play, RotateCcw} from 'lucide-react';
 
 import type {
   WholeLessonResumePromptVisualEvidence,
@@ -13,38 +15,43 @@ import type {
 
 export function LegacyResumePrompt({
   evidence,
+  lessonControlsRemainAvailable = false,
   locale,
   onContinue,
   onStartAtBeginning,
   resumePage,
   resumePageLabel,
+  resumePageLabelLanguage,
 }: {
   evidence: WholeLessonResumePromptVisualEvidence;
+  lessonControlsRemainAvailable?: boolean;
   locale: 'en' | 'es';
   onContinue: () => void;
   onStartAtBeginning: () => void;
   resumePage: number;
   resumePageLabel: string;
+  resumePageLabelLanguage: 'en' | 'es';
 }) {
   const spanish = locale === 'es';
   const promptRef = useRef<HTMLDivElement>(null);
   const continueRef = useRef<HTMLButtonElement>(null);
   const decisionCommittedRef = useRef(false);
   const [decisionCommitted, setDecisionCommitted] = useState(false);
-  const [sourceAssetStatus, setSourceAssetStatus] =
-    useState<'loading' | 'ready' | 'error'>('loading');
-  const useSourceVisual = !spanish && sourceAssetStatus !== 'error';
-  const titleId = 'legacy-resume-prompt-title';
-  const descriptionId = 'legacy-resume-prompt-description';
+  const promptId = useId();
+  const titleId = `${promptId}-title`;
+  const descriptionId = `${promptId}-description`;
+  const locationId = `${promptId}-location`;
+  const noteId = `${promptId}-note`;
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() =>
-      continueRef.current?.focus()
+      continueRef.current?.focus({preventScroll: true})
     );
     return () => window.cancelAnimationFrame(frame);
-  }, [useSourceVisual]);
+  }, []);
 
   useEffect(() => {
+    if (lessonControlsRemainAvailable) return;
     const body = document.body;
     const root = document.documentElement;
     const priorBodyOverflow = body.style.overflow;
@@ -71,7 +78,7 @@ export function LegacyResumePrompt({
       body.style.overscrollBehavior = priorBodyOverscroll;
       root.style.overflow = priorRootOverflow;
     };
-  }, []);
+  }, [lessonControlsRemainAvailable]);
 
   const commitDecision = (decision: 'continue' | 'beginning') => {
     if (decisionCommittedRef.current) return;
@@ -89,6 +96,7 @@ export function LegacyResumePrompt({
       continueRef.current?.focus();
       return;
     }
+    if (lessonControlsRemainAvailable) return;
     if (event.key !== 'Tab') return;
     const buttons = [...(promptRef.current?.querySelectorAll<HTMLButtonElement>(
       '[data-resume-choice]',
@@ -106,23 +114,17 @@ export function LegacyResumePrompt({
   };
 
   return <div
-    aria-describedby={descriptionId}
+    aria-describedby={`${descriptionId} ${locationId} ${noteId}`}
     aria-labelledby={titleId}
-    aria-modal="true"
-    className={[
-      'lesson-shell2__resume-prompt',
-      useSourceVisual
-        ? 'lesson-shell2__resume-prompt--source-en'
-        : 'lesson-shell2__resume-prompt--modern',
-    ].join(' ')}
+    aria-modal={lessonControlsRemainAvailable ? undefined : 'true'}
+    className="lesson-shell2__resume-prompt lesson-shell2__resume-prompt--modern"
     data-actionscript-executed="false"
-    data-hit-target-geometry={
-      useSourceVisual
-        ? 'image-aligned-modern-touch-target-original-bounds-not-derived'
-        : 'modern-functional-equivalent'
-    }
+    data-hit-target-geometry="modern-functional-equivalent"
     data-legacy-bookmark-endpoint-executed="false"
     data-local-persistence="local-device-only"
+    data-lesson-controls-available={
+      lessonControlsRemainAvailable ? 'true' : 'false'
+    }
     data-resume-functional-authority="modern-local-functional-equivalent"
     data-source-animation-id={evidence.sourceAnimationId}
     data-source-asset-sha256={evidence.assetSha256}
@@ -139,94 +141,69 @@ export function LegacyResumePrompt({
     ref={promptRef}
     role="dialog"
   >
-    <h2 className="sr-only" id={titleId}>
-      {spanish ? 'Continuar la lección' : 'Resume lesson'}
-    </h2>
-    <p className="sr-only" id={descriptionId}>
-      {spanish
-        ? `Hay progreso guardado en este navegador. Puedes continuar en la página ${resumePage}, ${resumePageLabel}, o comenzar desde la primera página sin borrar el historial de revisión.`
-        : `${evidence.sourceEnglishText} The saved local position is page ${resumePage}, ${resumePageLabel}. Starting at the beginning keeps local review history.`}
-    </p>
+    <div
+      className="lesson-shell2__resume-modern-card"
+      data-visual-origin={spanish
+        ? 'modern-functional-equivalent-source-spanish-absent'
+        : 'modern-functional-equivalent-source-evidence-retained'}
+    >
+      <header className="lesson-shell2__resume-modern-header">
+        <span aria-hidden="true" className="lesson-shell2__resume-modern-icon">
+          <BookOpen />
+        </span>
+        <div>
+          <span className="lesson-shell2__resume-modern-eyebrow">
+            {spanish ? 'Progreso guardado en este dispositivo' : 'Saved on this device'}
+          </span>
+          <h2 id={titleId}>
+            {spanish ? '¿Continuamos tu lección?' : 'Continue your lesson?'}
+          </h2>
+        </div>
+      </header>
 
-    {useSourceVisual
-      ? <>
-          {/* This image is the exact transparent FFDec frame-2 export. Its
-              root composition offset is encoded in responsive CSS so the
-              dialog remains at its source 800 × 600 placement. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            alt=""
-            aria-hidden="true"
-            className="lesson-shell2__resume-source-image"
-            draggable={false}
-            height={evidence.exporterCanvas.height}
-            onError={() => setSourceAssetStatus('error')}
-            onLoad={(event) => {
-              setSourceAssetStatus(
-                event.currentTarget.naturalWidth ===
-                    evidence.exporterCanvas.width &&
-                  event.currentTarget.naturalHeight ===
-                    evidence.exporterCanvas.height
-                  ? 'ready'
-                  : 'error',
-              );
-            }}
-            src={`${evidence.asset}?sha256=${evidence.assetSha256}`}
-            width={evidence.exporterCanvas.width}
-          />
-          <button
-            aria-label={`Yes — continue at page ${resumePage}: ${resumePageLabel}`}
-            className="lesson-shell2__resume-source-hit lesson-shell2__resume-source-hit--yes"
-            data-resume-choice="continue"
-            disabled={decisionCommitted}
-            onClick={() => commitDecision('continue')}
-            ref={continueRef}
-            type="button"
-          >
-            <span className="sr-only">Yes</span>
-          </button>
-          <button
-            aria-label="No — start at the beginning of the lesson"
-            className="lesson-shell2__resume-source-hit lesson-shell2__resume-source-hit--no"
-            data-resume-choice="beginning"
-            disabled={decisionCommitted}
-            onClick={() => commitDecision('beginning')}
-            type="button"
-          >
-            <span className="sr-only">No</span>
-          </button>
-        </>
-      : <div
-          className="lesson-shell2__resume-modern-card"
-          data-visual-origin={spanish
-            ? 'modern-functional-equivalent-source-spanish-absent'
-            : 'modern-fallback-source-asset-error'}
+      <p className="lesson-shell2__resume-modern-lead" id={descriptionId}>
+        {spanish
+          ? 'Puedes retomar exactamente donde te quedaste o volver a la primera página.'
+          : 'Pick up exactly where you stopped, or return to the first page.'}
+      </p>
+
+      <div className="lesson-shell2__resume-modern-location" id={locationId}>
+        <span>{spanish ? 'Continuar desde' : 'Continue from'}</span>
+        <strong>{spanish ? `Página ${resumePage}` : `Page ${resumePage}`}</strong>
+        <small lang={resumePageLabelLanguage}>{resumePageLabel}</small>
+      </div>
+
+      <p className="lesson-shell2__resume-modern-note" id={noteId}>
+        {spanish
+          ? 'Empezar en la página 1 solo cambia tu ubicación. Las páginas completadas y el historial de repeticiones siguen guardados en este dispositivo.'
+          : 'Starting at Page 1 changes only your place. Completed pages and replay history stay saved on this device.'}
+      </p>
+
+      <div className="lesson-shell2__resume-modern-actions">
+        <button
+          className="lesson-shell2__resume-modern-primary"
+          data-resume-choice="continue"
+          disabled={decisionCommitted}
+          onClick={() => commitDecision('continue')}
+          ref={continueRef}
+          type="button"
         >
-          <p>{spanish
-            ? '¿Quieres volver al lugar donde dejaste la lección?'
-            : 'Do you want to return to where you stopped in the lesson?'}</p>
-          <small>{spanish
-            ? `Posición guardada: página ${resumePage}, ${resumePageLabel}. La fuente no incluye una versión visual en español.`
-            : `Saved position: page ${resumePage}, ${resumePageLabel}. The source image could not be displayed, so this safe local fallback is shown.`}</small>
-          <div>
-            <button
-              data-resume-choice="continue"
-              disabled={decisionCommitted}
-              onClick={() => commitDecision('continue')}
-              ref={continueRef}
-              type="button"
-            >
-              {spanish ? 'Sí, continuar' : 'Yes, continue'}
-            </button>
-            <button
-              data-resume-choice="beginning"
-              disabled={decisionCommitted}
-              onClick={() => commitDecision('beginning')}
-              type="button"
-            >
-              {spanish ? 'No, comenzar desde el inicio' : 'No, start at the beginning'}
-            </button>
-          </div>
-        </div>}
+          <Play aria-hidden="true" />
+          <span>{spanish
+            ? `Continuar en la página ${resumePage}`
+            : `Continue from page ${resumePage}`}</span>
+        </button>
+        <button
+          className="lesson-shell2__resume-modern-secondary"
+          data-resume-choice="beginning"
+          disabled={decisionCommitted}
+          onClick={() => commitDecision('beginning')}
+          type="button"
+        >
+          <RotateCcw aria-hidden="true" />
+          <span>{spanish ? 'Empezar en la página 1' : 'Start at Page 1'}</span>
+        </button>
+      </div>
+    </div>
   </div>;
 }

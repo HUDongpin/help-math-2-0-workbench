@@ -5,9 +5,14 @@ import {Container} from '@/components/ui';
 import {WholeLessonCoursePlayer} from '@/components/whole-lesson-course-player';
 import {Link} from '@/i18n/navigation';
 import {completeAnimations, getCatalog, isLessonReleasePublished, publishedAnimations} from '@/lib/catalog';
+import {readAuthSession} from '@/lib/clerk-auth-session.server';
 import {currentJsShowcasePublication} from '@/lib/current-js-showcase-publication';
 import {findLessonNavigationForRoute} from '@/lib/lesson-navigation';
 import {protectedAtomicReleaseIdForScope} from '@/lib/lesson-release-publication';
+import {
+  isMigrationStatusAvailable,
+  isMigrationStatusDesignerViewRequested,
+} from '@/lib/migration-status-access';
 import {isReviewerInstrumentationEnabled} from '@/lib/reviewer-instrumentation';
 import {resolveNovaTutorMode} from '@/lib/tutor-integration';
 import {
@@ -27,11 +32,16 @@ export default async function CoursePage({
   searchParams,
 }: {
   params: Promise<{locale: 'en' | 'es'; grade: string; lesson: string}>;
-  searchParams: Promise<{mode?: string | string[]}>;
+  searchParams: Promise<{
+    mode?: string | string[];
+    view?: string | string[];
+  }>;
 }) {
   const {locale, grade, lesson} = await params;
-  const {mode} = await searchParams;
+  const {mode, view} = await searchParams;
   const novaTutorMode = resolveNovaTutorMode(mode);
+  const designerView = isMigrationStatusAvailable()
+    && isMigrationStatusDesignerViewRequested(view);
   if (!/^[3-5]$/.test(grade) || !/^\d{1,2}$/.test(lesson)) notFound();
 
   const spanish = locale === 'es';
@@ -79,8 +89,10 @@ export default async function CoursePage({
       declared: courseRegistration.descriptor.visualSkin.presentations,
       enabled: isModernWideShellEnabled(),
     });
+    const authSession = await readAuthSession();
     return <WholeLessonCoursePlayer
-      candidateMode={auditPreview || !releasePublished}
+      authStatus={authSession.status}
+      candidateMode={designerView && (auditPreview || !releasePublished)}
       hostPresentation={hostPresentation}
       learningEventsEnabled={process.env.LRS_ENABLED === 'true'}
       reviewerMode={isReviewerInstrumentationEnabled()}

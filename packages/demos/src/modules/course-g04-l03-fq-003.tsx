@@ -1,6 +1,9 @@
 "use client";
 
-import {createCourseG04L03FinalQuizFunctionalRenderer} from "./course-g04-l03-fq-002";
+import {
+  COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT,
+  createCourseG04L03FinalQuizFunctionalRenderer,
+} from "./course-g04-l03-fq-002";
 import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
 import {
   COURSE_G04_L03_FQ_003_INTERACTION_AUTHORITY,
@@ -54,7 +57,9 @@ export const COURSE_G04_L03_FQ_003_SOURCE_CONTRACT = Object.freeze({
     "source-shape-atomic-answer-and-immediate-advance",
     "stale-and-double-answer-dispatch-rejected",
     "physical-double-click-answer-transition-lock",
-    "Q7-Q12-source-canvas-pixel-bound-target-and-choice-projection",
+    "Q7-and-Q9-Q12-source-canvas-pixel-bound-target-and-choice-projection",
+    "Q8-owner-directed-current-javascript-cross-placement-from-course-g04-l03-ts-007",
+    "Q8-cross-placement-does-not-establish-final-quiz-source-visual-parity",
     "source-legacy-raw-score-bands-preserved-with-documented-total-mismatch",
     "current-javascript-text-review-previous-next-enhancement",
     "source-question-and-review-frame-donor-projection",
@@ -70,6 +75,7 @@ export const COURSE_G04_L03_FQ_003_SOURCE_CONTRACT = Object.freeze({
   ]),
   interactionAuthority: COURSE_G04_L03_FQ_003_INTERACTION_AUTHORITY,
   interactionSource: COURSE_G04_L03_FQ_003_INTERACTION_SOURCE,
+  ownerDirectedCrossPlacement: COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT,
   sourceStaticDynamicVisibilityAndCounterParityEstablished: false,
   sourceQuestionSelectionParityEstablished: false,
   sourceReviewVisualParityEstablished: false,

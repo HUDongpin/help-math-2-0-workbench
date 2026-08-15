@@ -38,6 +38,13 @@ const BREAKPOINTS = [
   {width: 1280, height: 800},
 ];
 
+test.beforeEach(async ({page}) => {
+  // Geometry review must never emit learner records or reach an external LRS.
+  await page.route('**/api/learning-events', async (route) => {
+    await route.fulfill({status: 204});
+  });
+});
+
 async function openLesson(page: Page) {
   // Progress is stored per device, so a worker that finished the lesson in an
   // earlier test would otherwise reopen straight onto the finished screen.

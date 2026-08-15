@@ -29,6 +29,11 @@ import {
   COURSE_G04_L03_FQ_002_CONFIG,
   COURSE_G04_L03_FQ_002_SOURCE,
 } from "../timelines/course-g04-l03-fq-002";
+import {
+  COURSE_G04_L03_TS_007_CHOICES,
+  COURSE_G04_L03_TS_007_QUESTION,
+  type CourseG04L03Ts007Choice,
+} from "../timelines/course-g04-l03-ts-007-practice-question-interaction";
 
 const candidate = createSourceStaticCanvasCandidate(
   COURSE_G04_L03_FQ_002_CONFIG,
@@ -43,6 +48,22 @@ const RESPONSIVE_CONTROLS_MEDIA =
 const SOURCE_FONT =
   '"Bauhaus Md BT", "Arial Rounded MT Bold", "Trebuchet MS", ui-rounded, sans-serif';
 
+/**
+ * Owner-directed current-JavaScript cross-placement. The requested visual is
+ * authored in TS007, not in the Final Quiz source SWF. Reusing the source-bound
+ * prompt/answer identity at FQ Q8 keeps grading and question counts unchanged,
+ * while these explicit fields prevent the presentation from being mistaken for
+ * Final Quiz Flash fidelity or a strict-acceptance result.
+ */
+export const COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT = Object.freeze({
+  finalQuizQuestionId: 8,
+  sourceAnimationId: "course-g04-l03-ts-007",
+  sourceSectionCode: "TS",
+  placement: "owner-directed-current-javascript-cross-placement",
+  finalQuizSourceVisualParityEffect: "none",
+  strictAcceptanceEffect: "none",
+});
+
 type SourceCanvasStatus =
   | "idle"
   | "loading"
@@ -53,6 +74,98 @@ type SourceCanvasStatus =
 interface SourceCanvasSnapshot {
   readonly element: HTMLCanvasElement;
   readonly frame: number;
+}
+
+function isTs007CrossPlacementQuestion(
+  question: CourseG04L03Fq002Question | null | undefined,
+  questionCount: number,
+) {
+  return questionCount === 25 && question?.id
+    === COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT.finalQuizQuestionId;
+}
+
+function presentedQuestionText(
+  question: CourseG04L03Fq002Question,
+  ts007CrossPlacement: boolean,
+) {
+  return ts007CrossPlacement
+    ? COURSE_G04_L03_TS_007_QUESTION.prompt
+    : question.questionText;
+}
+
+function ts007ChoiceForId(optionId: CourseG04L03Fq002OptionId) {
+  return COURSE_G04_L03_TS_007_CHOICES.find(({id}) => id === optionId);
+}
+
+function Ts007Symbol({choice}: {
+  readonly choice: CourseG04L03Ts007Choice;
+}) {
+  const common = {
+    "aria-hidden": true,
+    className: "course-g04-l03-fq-002-ts007-choice-symbol",
+    focusable: "false",
+    viewBox: "0 0 56 44",
+  } as const;
+
+  if (choice.id === "A") {
+    return <svg {...common}><circle cx="28" cy="22" fill="#8fce4f" r="15" stroke="#4f8b2d" strokeWidth="2" /></svg>;
+  }
+  if (choice.id === "B") {
+    return <svg {...common}><path d="M28 38C19 31 9 25 9 15c0-7 5-11 11-11 4 0 7 2 8 5 2-3 5-5 9-5 6 0 11 4 11 11 0 10-10 16-20 23Z" fill="#ef684c" stroke="#b83d2a" strokeWidth="2" /></svg>;
+  }
+  if (choice.id === "C") {
+    return <svg {...common}><rect fill="#ef65bd" height="29" rx="2" stroke="#a72b7e" strokeWidth="2" width="29" x="13.5" y="7.5" /></svg>;
+  }
+  return <svg {...common}><path d="m28 6 18 32H10L28 6Z" fill="#43c9df" stroke="#16849b" strokeLinejoin="round" strokeWidth="2" /></svg>;
+}
+
+function Ts007CrossPlacementNumberLine() {
+  const xForValue = (value: number) => 64 + (value + 5) * 39.2;
+  const choicesByLocation = new Map<number, CourseG04L03Ts007Choice>(
+    COURSE_G04_L03_TS_007_CHOICES.map((choice) => [
+      choice.numberLineLocation,
+      choice,
+    ]),
+  );
+
+  return (
+    <svg
+      aria-label="Number line from negative five to five. A green circle is at negative four, an orange-red heart is at negative two, a pink square is at two, and a cyan triangle is at four."
+      className="course-g04-l03-fq-002-ts007-number-line"
+      data-final-quiz-source-visual-parity-effect="none"
+      data-owner-directed-question-source={
+        COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT.sourceAnimationId
+      }
+      data-presentation-kind="semantic-current-javascript-vector-reconstruction"
+      data-scoring-source-question-id={
+        COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT.finalQuizQuestionId
+      }
+      role="img"
+      viewBox="0 0 520 132"
+    >
+      <path
+        className="course-g04-l03-fq-002-ts007-axis"
+        d="M26 73H494M26 73l12-10M26 73l12 10M494 73l-12-10M494 73l-12 10"
+      />
+      {Array.from({length: 11}, (_, index) => index - 5).map((value) => {
+        const x = xForValue(value);
+        const choice = choicesByLocation.get(value);
+        return (
+          <g key={value}>
+            <line className="course-g04-l03-fq-002-ts007-tick" x1={x} x2={x} y1="65" y2="81" />
+            {value === -5 || value === 0 || value === 5 ? (
+              <text className="course-g04-l03-fq-002-ts007-label" textAnchor="middle" x={x} y="105">{value < 0 ? `−${Math.abs(value)}` : value}</text>
+            ) : null}
+            {choice ? (
+              <foreignObject height="44" width="56" x={x - 28} y="13">
+                <Ts007Symbol choice={choice} />
+              </foreignObject>
+            ) : null}
+          </g>
+        );
+      })}
+    </svg>
+  );
 }
 
 export interface FinalQuizFunctionalRendererConfig {
@@ -156,13 +269,18 @@ function SourceSymbolCrop({
 }
 
 function SourceSymbolTarget({
+  crossPlacement = false,
   question,
   snapshot,
 }: {
+  readonly crossPlacement?: boolean;
   readonly question: CourseG04L03Fq002Question;
   readonly snapshot: SourceCanvasSnapshot | null;
 }) {
-  if (question.options[0]?.contentKind !== "source-symbol-only") return null;
+  if (
+    question.options[0]?.contentKind !== "source-symbol-only"
+    || crossPlacement
+  ) return null;
   return (
     <div
       aria-label="Target symbol projected from the legacy question drawing"
@@ -234,11 +352,17 @@ function findVisibleFocusTarget(
 
 function QuestionContext({
   compact = false,
+  crossPlacement = false,
   question,
 }: {
   readonly compact?: boolean;
+  readonly crossPlacement?: boolean;
   readonly question: CourseG04L03Fq002Question;
 }) {
+  if (crossPlacement) {
+    return <Ts007CrossPlacementNumberLine />;
+  }
+
   if (question.contextText.length === 0) return null;
 
   if (question.id >= 22) {
@@ -326,6 +450,7 @@ interface MobileSurfaceProps extends SharedSurfaceProps {
 function BoundQuestionChoices({
   answerTransitionLocked,
   controlsReady,
+  crossPlacement = false,
   interaction,
   onAnswer,
   paused,
@@ -334,6 +459,7 @@ function BoundQuestionChoices({
 }: {
   readonly answerTransitionLocked: boolean;
   readonly controlsReady: boolean;
+  readonly crossPlacement?: boolean;
   readonly interaction: CourseG04L03Fq002InteractionState;
   readonly onAnswer: SharedSurfaceProps["onAnswer"];
   readonly paused: boolean;
@@ -341,16 +467,28 @@ function BoundQuestionChoices({
   readonly sourceCanvasSnapshot: SourceCanvasSnapshot | null;
 }) {
   const sequenceNumber = interaction.sequenceNumber;
+  const ts007CrossPlacement = crossPlacement;
   return (
     <div
       aria-label="Answer choices"
       className="course-g04-l03-fq-002-choices"
       role="group"
     >
-      {question.options.map((option) => (
+      {question.options.map((option) => {
+        const ts007Choice = ts007CrossPlacement
+          ? ts007ChoiceForId(option.id)
+          : undefined;
+        const presentedLabel = ts007Choice?.symbol ?? option.label;
+        return (
         <button
-          aria-label={`${option.id}. ${option.label}`}
+          aria-label={`${option.id}. ${presentedLabel}`}
           data-fq002-focus-control={`choice-${option.id}`}
+          data-owner-directed-question-source={ts007Choice
+            ? COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT.sourceAnimationId
+            : undefined}
+          data-presented-visual-source={ts007Choice
+            ? COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT.sourceAnimationId
+            : undefined}
           data-source-content-kind={option.contentKind}
           data-source-option-instance={option.sourceInstance}
           disabled={
@@ -367,16 +505,19 @@ function BoundQuestionChoices({
           type="button"
         >
           <strong>{option.id}</strong>
-          {option.contentKind === "source-symbol-only" ? (
+          {ts007Choice ? (
+            <Ts007Symbol choice={ts007Choice} />
+          ) : option.contentKind === "source-symbol-only" ? (
             <SourceSymbolCrop
               optionNumber={option.optionNumber}
               snapshot={sourceCanvasSnapshot}
               usage="choice"
             />
           ) : null}
-          <span>{option.label}</span>
+          <span>{presentedLabel}</span>
         </button>
-      ))}
+        );
+      })}
     </div>
   );
 }
@@ -476,6 +617,20 @@ function ReviewContent({
   const correct = reviewItem.question.options.find(
     ({id}) => id === reviewItem.response.correctOptionId,
   );
+  const crossPlacement = isTs007CrossPlacementQuestion(
+    reviewItem.question,
+    interaction.questionOrder.length,
+  );
+  const selectedLabel = selected
+    ? (crossPlacement
+        ? ts007ChoiceForId(selected.id)?.symbol ?? selected.label
+        : selected.label)
+    : undefined;
+  const correctLabel = correct
+    ? (crossPlacement
+        ? ts007ChoiceForId(correct.id)?.symbol ?? correct.label
+        : correct.label)
+    : undefined;
 
   return (
     <div
@@ -488,9 +643,14 @@ function ReviewContent({
           " "
         }{interaction.responses.length}
       </p>
-      <h2>{reviewItem.question.questionText}</h2>
-      <QuestionContext compact question={reviewItem.question} />
+      <h2>{presentedQuestionText(reviewItem.question, crossPlacement)}</h2>
+      <QuestionContext
+        compact
+        crossPlacement={crossPlacement}
+        question={reviewItem.question}
+      />
       <SourceSymbolTarget
+        crossPlacement={crossPlacement}
         question={reviewItem.question}
         snapshot={sourceCanvasSnapshot}
       />
@@ -503,14 +663,14 @@ function ReviewContent({
       >
         Your answer:{" "}
         <strong>
-          {selected?.id}. {selected?.label}
+          {selected?.id}. {selectedLabel}
         </strong>
       </p>
       {!reviewItem.response.correct ? (
         <p className="course-g04-l03-fq-002-review-correct">
           Correct answer:{" "}
           <strong>
-            {correct?.id}. {correct?.label}
+            {correct?.id}. {correctLabel}
           </strong>
         </p>
       ) : null}
@@ -572,12 +732,10 @@ function StageSurface(props: SharedSurfaceProps) {
     sourceCanvasSnapshot,
   } = props;
   const question = interaction.currentQuestion;
-  const sourceSymbolQuestion =
-    question?.options[0]?.contentKind === "source-symbol-only";
-  const widePanel =
-    interaction.phase === "results"
-    || interaction.phase === "review"
-    || sourceSymbolQuestion;
+  const ts007CrossPlacement = isTs007CrossPlacementQuestion(
+    question,
+    interaction.questionOrder.length,
+  );
 
   return (
     <svg
@@ -597,12 +755,13 @@ function StageSurface(props: SharedSurfaceProps) {
       <foreignObject height="600" width="800" x="0" y="0">
         <div className="course-g04-l03-fq-002-stage-layer">
           <section
-            className={
-              "course-g04-l03-fq-002-stage-panel"
-              + (widePanel
-                ? " course-g04-l03-fq-002-stage-panel--wide"
-                : "")
+            className="course-g04-l03-fq-002-stage-panel course-g04-l03-fq-002-stage-panel--wide"
+            data-final-quiz-source-visual-parity-effect={
+              ts007CrossPlacement ? "none" : undefined
             }
+            data-owner-directed-question-source={ts007CrossPlacement
+              ? COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT.sourceAnimationId
+              : undefined}
           >
             {!controlsReady ? (
               <p
@@ -624,14 +783,19 @@ function StageSurface(props: SharedSurfaceProps) {
                     }{interaction.questionOrder.length}
                   </strong>
                 </p>
-                <h2>{question.questionText}</h2>
-                <QuestionContext compact question={question} />
+                <h2>{presentedQuestionText(question, ts007CrossPlacement)}</h2>
+                <QuestionContext
+                  compact
+                  crossPlacement={ts007CrossPlacement}
+                  question={question}
+                />
                 <SourceSymbolTarget
+                  crossPlacement={ts007CrossPlacement}
                   question={question}
                   snapshot={sourceCanvasSnapshot}
                 />
-                {question.options[0]?.contentKind ===
-                "source-symbol-only" ? (
+                {question.options[0]?.contentKind === "source-symbol-only"
+                && !ts007CrossPlacement ? (
                   <p className="course-g04-l03-fq-002-source-symbol-note">
                     Target and A–D symbols are projected from the legacy canvas.
                   </p>
@@ -639,6 +803,7 @@ function StageSurface(props: SharedSurfaceProps) {
                 <BoundQuestionChoices
                   answerTransitionLocked={answerTransitionLocked}
                   controlsReady={controlsReady}
+                  crossPlacement={ts007CrossPlacement}
                   interaction={interaction}
                   onAnswer={onAnswer}
                   paused={paused}
@@ -699,6 +864,10 @@ function MobileSurface({
   sourceCanvasSnapshot,
 }: MobileSurfaceProps) {
   const question = interaction.currentQuestion;
+  const ts007CrossPlacement = isTs007CrossPlacementQuestion(
+    question,
+    interaction.questionOrder.length,
+  );
   const shared = {
     answerTransitionLocked,
     canvasStatus,
@@ -732,6 +901,12 @@ function MobileSurface({
       data-interaction-companion-placement={placement}
       data-interaction-companion-surface="mobile"
       data-interaction-phase={interaction.phase}
+      data-final-quiz-source-visual-parity-effect={
+        ts007CrossPlacement ? "none" : undefined
+      }
+      data-owner-directed-question-source={ts007CrossPlacement
+        ? COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT.sourceAnimationId
+        : undefined}
       data-reduced-motion={reducedMotion ? "true" : "false"}
       data-source-canvas-status={canvasStatus}
     >
@@ -753,13 +928,18 @@ function MobileSurface({
               Question {interaction.sequenceNumber} of {interaction.questionOrder.length}
             </strong>
           </p>
-          <h2>{question.questionText}</h2>
-          <QuestionContext question={question} />
+          <h2>{presentedQuestionText(question, ts007CrossPlacement)}</h2>
+          <QuestionContext
+            crossPlacement={ts007CrossPlacement}
+            question={question}
+          />
           <SourceSymbolTarget
+            crossPlacement={ts007CrossPlacement}
             question={question}
             snapshot={sourceCanvasSnapshot}
           />
-          {question.options[0]?.contentKind === "source-symbol-only" ? (
+          {question.options[0]?.contentKind === "source-symbol-only"
+          && !ts007CrossPlacement ? (
             <p className="course-g04-l03-fq-002-source-symbol-note">
               Target and A–D symbols are projected from the legacy canvas.
             </p>
@@ -767,6 +947,7 @@ function MobileSurface({
           <BoundQuestionChoices
             answerTransitionLocked={answerTransitionLocked}
             controlsReady={controlsReady}
+            crossPlacement={ts007CrossPlacement}
             interaction={interaction}
             onAnswer={onAnswer}
             paused={paused}
@@ -886,8 +1067,14 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
     interaction.phase === "review"
       ? reviewItem?.question ?? null
       : interaction.currentQuestion;
+  const ts007CrossPlacement =
+    isTs007CrossPlacementQuestion(
+      sourceSymbolQuestion,
+      interaction.questionOrder.length,
+    );
   const sourceSymbolProjectionRequired =
-    sourceSymbolQuestion?.options[0]?.contentKind === "source-symbol-only";
+    sourceSymbolQuestion?.options[0]?.contentKind === "source-symbol-only"
+    && !ts007CrossPlacement;
   const sourceSymbolProjectionReady =
     !sourceSymbolProjectionRequired
     || sourceCanvasSnapshot?.frame === sourceVisualFrame;
@@ -1031,8 +1218,19 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
       || answerTransitionLocked
     ) return;
     const frame = window.requestAnimationFrame(() => {
+      const activeElement = document.activeElement;
+      const focusRoots = [rendererRef.current, companionTarget].filter(
+        (root): root is HTMLElement => root !== null,
+      );
+      const focusAlreadyOwned = activeElement instanceof HTMLElement
+        && focusRoots.some((root) => root.contains(activeElement));
+      const outsideFocusMustStay = activeElement instanceof HTMLElement
+        && activeElement !== document.body
+        && activeElement !== document.documentElement
+        && !focusAlreadyOwned;
+      if (outsideFocusMustStay) return;
       findVisibleFocusTarget(
-        [rendererRef.current, companionTarget],
+        focusRoots,
         focusTarget,
       )?.focus();
     });
@@ -1139,6 +1337,12 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
       data-current-js-overlay-count={interactionEnabled ? "1" : "0"}
       data-current-js-sequence-number={interaction.sequenceNumber ?? undefined}
       data-current-js-source-visual-frame={sourceVisualFrame}
+      data-final-quiz-source-visual-parity-effect={
+        ts007CrossPlacement ? "none" : undefined
+      }
+      data-owner-directed-question-source={ts007CrossPlacement
+        ? COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT.sourceAnimationId
+        : undefined}
       data-deterministic-evidence-capture={
         deterministicEvidenceCapture ? "true" : "false"
       }
@@ -1151,7 +1355,11 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
       data-results-grade-label={resultsGradeLabel}
       data-source-random-parity-established="false"
       data-source-symbol-projection={
-        interactionEnabled ? "exact-source-canvas-option-pixels" : undefined
+        interactionEnabled
+          ? ts007CrossPlacement
+            ? "owner-directed-current-javascript-ts007-visual"
+            : "exact-source-canvas-option-pixels"
+          : undefined
       }
       data-source-results-visual-parity-established="false"
       data-source-review-visual-parity-established="false"
@@ -1233,19 +1441,18 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
           color: #10213b;
           display: grid;
           gap: 9px;
-          left: 397px;
+          left: 50%;
           max-height: 548px;
           overflow: auto;
           padding: 16px;
           pointer-events: auto;
           position: absolute;
-          top: 26px;
-          width: 383px;
+          top: 66px;
+          transform: translateX(-50%);
+          width: 564px;
         }
 
         .course-g04-l03-fq-002-stage-panel--wide {
-          left: 118px;
-          top: 66px;
           width: 564px;
         }
 
@@ -1332,6 +1539,45 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
           justify-content: space-between;
           margin: 2px 4px 6px;
           padding: 0 0 5px;
+        }
+
+        .course-g04-l03-fq-002-ts007-number-line {
+          background: #eef7ff;
+          border: 2px solid #6b86a9;
+          border-radius: 12px;
+          box-sizing: border-box;
+          display: block;
+          height: auto;
+          padding: 4px;
+          width: 100%;
+        }
+
+        .course-g04-l03-fq-002-ts007-axis,
+        .course-g04-l03-fq-002-ts007-tick {
+          stroke: #213c66;
+          stroke-linecap: round;
+        }
+
+        .course-g04-l03-fq-002-ts007-axis {
+          fill: none;
+          stroke-width: 4;
+        }
+
+        .course-g04-l03-fq-002-ts007-tick {
+          stroke-width: 3;
+        }
+
+        .course-g04-l03-fq-002-ts007-label {
+          fill: #e53b55;
+          font: 800 16px/1 system-ui, sans-serif;
+        }
+
+        .course-g04-l03-fq-002-ts007-choice-symbol {
+          display: block;
+          grid-area: symbol;
+          height: 44px;
+          margin: auto;
+          width: 56px;
         }
 
         .course-g04-l03-fq-002-context-table {

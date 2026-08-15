@@ -7,6 +7,11 @@ import type {
   AnimationRendererProps,
   RuntimeContext,
 } from "../contract";
+import {
+  retainedCanvasStatus,
+  sourceStaticCanvasVisualKey,
+  type SourceStaticCanvasStatus,
+} from "../source-static-canvas-candidate";
 import {createCourseG04L03SourceGlossaryCandidate} from "./course-g04-l03-source-glossary-candidate";
 import {
   COURSE_G04_L03_RW_003_GLOSSARY_CONFIG,
@@ -182,8 +187,6 @@ function blockerCopy(state: CourseG04L03Rw003FrameState): {
   };
 }
 
-type CanvasStatus = "idle" | "loading" | "ready" | "error";
-
 export function buildCourseG04L03Rw003CaptureAttributes({
   canvasStatus,
   entryStateSha256,
@@ -191,7 +194,7 @@ export function buildCourseG04L03Rw003CaptureAttributes({
   state,
   traceId,
 }: {
-  canvasStatus: CanvasStatus;
+  canvasStatus: SourceStaticCanvasStatus;
   entryStateSha256: string;
   requirementId: string;
   state: CourseG04L03Rw003FrameState;
@@ -240,16 +243,38 @@ function CourseG04L03Rw003SourceStaticRenderer({
         seed,
       });
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [canvasStatus, setCanvasStatus] = useState<CanvasStatus>("idle");
+  const [canvasStatus, setCanvasStatus] =
+    useState<SourceStaticCanvasStatus>("idle");
+  const [renderedVisualKey, setRenderedVisualKey] = useState<string | null>(
+    null,
+  );
+  const requestedVisualKey = sourceStaticCanvasVisualKey({
+    animationId: ANIMATION_ID,
+    ...deterministicState,
+  });
+  const reportedCanvasStatus = retainedCanvasStatus({
+    canvasStatus,
+    renderedVisualKey,
+    requestedVisualKey,
+  });
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas || deterministicState.status !== "ready") {
+      setRenderedVisualKey(null);
       setCanvasStatus("idle");
       return;
     }
     let cancelled = false;
-    setCanvasStatus("loading");
+    // The first frame may use the blue loading plane, but an already-painted
+    // frame must stay visible while the next deterministic frame is prepared.
+    // Demoting `ready` to `loading` hid the Canvas on every 12 fps tick and
+    // exposed that plane, producing a full-stage blue flash. `updating` also
+    // withholds capture readiness, so the retained bitmap is never presented
+    // as evidence for the requested frame before the atomic draw completes.
+    setCanvasStatus((current) =>
+      current === "ready" || current === "updating" ? "updating" : "loading",
+    );
     loadCanvasAsset()
       .then(async (asset) => {
         await asset.ready();
@@ -261,10 +286,16 @@ function CourseG04L03Rw003SourceStaticRenderer({
           seed: deterministicState.seed,
         });
         verifyRenderedIdentity(canvas, rendered, deterministicState);
-        if (!cancelled) setCanvasStatus("ready");
+        if (!cancelled) {
+          setRenderedVisualKey(requestedVisualKey);
+          setCanvasStatus("ready");
+        }
       })
       .catch(() => {
-        if (!cancelled) setCanvasStatus("error");
+        if (!cancelled) {
+          setRenderedVisualKey(null);
+          setCanvasStatus("error");
+        }
       });
     return () => {
       cancelled = true;
@@ -277,6 +308,7 @@ function CourseG04L03Rw003SourceStaticRenderer({
     deterministicState.scenario,
     deterministicState.seed,
     deterministicState.status,
+    requestedVisualKey,
   ]);
 
   const blocked =
@@ -290,7 +322,7 @@ function CourseG04L03Rw003SourceStaticRenderer({
       data-audio-rendered="false"
       data-authoritative-runtime-validated="false"
       data-candidate-status="source-static-engineering-not-strict"
-      data-canvas-status={blocked ? "blocked" : canvasStatus}
+      data-canvas-status={blocked ? "blocked" : reportedCanvasStatus}
       data-human-visual-review-accepted="false"
       data-interactive-controls-enabled="false"
       data-owner-accepted="false"
@@ -330,7 +362,7 @@ function CourseG04L03Rw003SourceStaticRenderer({
           <>
             <canvas
               {...buildCourseG04L03Rw003CaptureAttributes({
-                canvasStatus,
+                canvasStatus: reportedCanvasStatus,
                 entryStateSha256,
                 requirementId,
                 state: deterministicState,
@@ -344,14 +376,19 @@ function CourseG04L03Rw003SourceStaticRenderer({
               role="img"
               style={{
                 aspectRatio: "4 / 3",
-                display: canvasStatus === "ready" ? "block" : "none",
+                display:
+                  reportedCanvasStatus === "ready" ||
+                    reportedCanvasStatus === "updating"
+                    ? "block"
+                    : "none",
                 height: "auto",
                 pointerEvents: "none",
                 width: "100%",
               }}
               width={800}
             />
-            {canvasStatus === "loading" || canvasStatus === "idle" ? (
+            {reportedCanvasStatus === "loading" ||
+            reportedCanvasStatus === "idle" ? (
               <span
                 aria-live="polite"
                 role="status"
@@ -360,7 +397,7 @@ function CourseG04L03Rw003SourceStaticRenderer({
                 Loading source-static drawing…
               </span>
             ) : null}
-            {canvasStatus === "error" ? (
+            {reportedCanvasStatus === "error" ? (
               <p
                 aria-live="assertive"
                 role="alert"

@@ -34,6 +34,17 @@ export interface G4L3ReadableViewSpec {
   readonly crops: readonly G4L3ReadableViewCropSpec[];
 }
 
+export interface G4L3Page36SignedAmount {
+  readonly name: 'Elvin' | 'Ricky' | 'Susan' | 'Toni';
+  readonly signedLabel: '+3' | '+7' | '−10' | '−2';
+  readonly signedValue: -10 | -2 | 3 | 7;
+  readonly statement:
+    | 'Elvin has $3'
+    | 'Ricky owes $2'
+    | 'Susan owes $10'
+    | 'Toni has $7';
+}
+
 const STEP_3_TRANSCRIPT = Object.freeze([
   'Use strategy: Draw a picture. Make a number line.',
   'Place each person’s name on the number line based on the amount of money they have or owe:',
@@ -52,6 +63,46 @@ const STEP_4_TRANSCRIPT = Object.freeze([
   'Toni has the most money with $7.',
   'The correct answer choice is D.',
 ] as const);
+
+/**
+ * Source-authored values from the Step 3 number-line labels and the matching
+ * Step 4 equations. The source crop remains immutable evidence; this small
+ * semantic model lets the student surface present the same relationships as
+ * readable HTML instead of asking learners to decipher a 244 px raster.
+ */
+export const G4_L3_PAGE_36_SIGNED_AMOUNTS = Object.freeze([
+  Object.freeze({
+    name: 'Toni',
+    statement: 'Toni has $7',
+    signedValue: 7,
+    signedLabel: '+7',
+  }),
+  Object.freeze({
+    name: 'Elvin',
+    statement: 'Elvin has $3',
+    signedValue: 3,
+    signedLabel: '+3',
+  }),
+  Object.freeze({
+    name: 'Susan',
+    statement: 'Susan owes $10',
+    signedValue: -10,
+    signedLabel: '−10',
+  }),
+  Object.freeze({
+    name: 'Ricky',
+    statement: 'Ricky owes $2',
+    signedValue: -2,
+    signedLabel: '−2',
+  }),
+] as const satisfies readonly G4L3Page36SignedAmount[]);
+
+export const G4_L3_PAGE_36_NUMBER_LINE_AMOUNTS = Object.freeze([
+  G4_L3_PAGE_36_SIGNED_AMOUNTS[2],
+  G4_L3_PAGE_36_SIGNED_AMOUNTS[3],
+  G4_L3_PAGE_36_SIGNED_AMOUNTS[1],
+  G4_L3_PAGE_36_SIGNED_AMOUNTS[0],
+]);
 
 /**
  * Private, G4 L3-only specification for the Page 36 readability aid.

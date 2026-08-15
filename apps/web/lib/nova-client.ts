@@ -14,6 +14,9 @@ export const NOVA_CLIENT_LIMITS = Object.freeze({
 // current question, and canonical page context.
 const NOVA_PREPARED_FRAME_BYTES = 14 * 1024;
 const NOVA_PREPARED_FRAME_DATA_URL_CHARACTERS = 19_500;
+const NOVA_FRAME_DECODE_TIMEOUT_MS = 8_000;
+const NOVA_FRAME_MAX_SOURCE_DIMENSION = 12_000;
+const NOVA_FRAME_MAX_SOURCE_PIXELS = 40_000_000;
 
 export interface NovaConversationEntry {
   readonly role: 'user' | 'assistant';
@@ -77,10 +80,29 @@ export function novaFrameFitsRequest(dataUrl: string) {
 function loadFrameImage(dataUrl: string) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
     const image = new Image();
+    let settled = false;
+    const finish = (
+      result: Readonly<{image: HTMLImageElement}> | Readonly<{error: Error}>,
+    ) => {
+      if (settled) return;
+      settled = true;
+      globalThis.clearTimeout(timeoutId);
+      image.onload = null;
+      image.onerror = null;
+      if ('image' in result) resolve(result.image);
+      else reject(result.error);
+    };
+    const timeoutId = globalThis.setTimeout(() => {
+      finish({error: new Error('frame-decode-timeout')});
+    }, NOVA_FRAME_DECODE_TIMEOUT_MS);
     image.decoding = 'async';
-    image.onload = () => resolve(image);
-    image.onerror = () => reject(new Error('frame-decode-failed'));
-    image.src = dataUrl;
+    image.onload = () => finish({image});
+    image.onerror = () => finish({error: new Error('frame-decode-failed')});
+    try {
+      image.src = dataUrl;
+    } catch {
+      finish({error: new Error('frame-decode-failed')});
+    }
   });
 }
 
@@ -105,6 +127,11 @@ export async function prepareNovaFrame(
   const sourceWidth = image.naturalWidth || frame.width;
   const sourceHeight = image.naturalHeight || frame.height;
   if (!sourceWidth || !sourceHeight) return null;
+  if (
+    sourceWidth > NOVA_FRAME_MAX_SOURCE_DIMENSION ||
+    sourceHeight > NOVA_FRAME_MAX_SOURCE_DIMENSION ||
+    sourceWidth * sourceHeight > NOVA_FRAME_MAX_SOURCE_PIXELS
+  ) return null;
 
   const initialScale = Math.min(1, 480 / sourceWidth, 360 / sourceHeight);
   let width = Math.max(1, Math.round(sourceWidth * initialScale));
@@ -117,12 +144,12 @@ export async function prepareNovaFrame(
     canvas.height = height;
     const drawing = canvas.getContext('2d');
     if (!drawing) return null;
-    drawing.fillStyle = '#ffffff';
-    drawing.fillRect(0, 0, width, height);
-    drawing.drawImage(image, 0, 0, width, height);
 
     let dataUrl: string;
     try {
+      drawing.fillStyle = '#ffffff';
+      drawing.fillRect(0, 0, width, height);
+      drawing.drawImage(image, 0, 0, width, height);
       dataUrl = canvas.toDataURL('image/jpeg', quality);
     } catch {
       return null;

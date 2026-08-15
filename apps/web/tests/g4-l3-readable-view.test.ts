@@ -3,8 +3,10 @@ import {readFile} from 'node:fs/promises';
 import test from 'node:test';
 
 import {
+  G4_L3_PAGE_36_NUMBER_LINE_AMOUNTS,
   G4_L3_PAGE_36_READABLE_TRANSCRIPT,
   G4_L3_PAGE_36_READABLE_VIEW_SPEC,
+  G4_L3_PAGE_36_SIGNED_AMOUNTS,
 } from '../lib/g4-l3-readable-view';
 import {G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR} from '../lib/g4-l3-whole-lesson-player-descriptor';
 
@@ -84,7 +86,44 @@ test('Page 36 transcript preserves source English and normalizes source minus sh
   ));
 });
 
-test('Readable View is Page 36-only, non-modal, keyboard closable, and follows the stage', async () => {
+test('Page 36 native learner model preserves all four signed amounts and their number-line order', () => {
+  assert.deepEqual(G4_L3_PAGE_36_SIGNED_AMOUNTS, [
+    {
+      name: 'Toni',
+      statement: 'Toni has $7',
+      signedValue: 7,
+      signedLabel: '+7',
+    },
+    {
+      name: 'Elvin',
+      statement: 'Elvin has $3',
+      signedValue: 3,
+      signedLabel: '+3',
+    },
+    {
+      name: 'Susan',
+      statement: 'Susan owes $10',
+      signedValue: -10,
+      signedLabel: '−10',
+    },
+    {
+      name: 'Ricky',
+      statement: 'Ricky owes $2',
+      signedValue: -2,
+      signedLabel: '−2',
+    },
+  ]);
+  assert.deepEqual(
+    G4_L3_PAGE_36_NUMBER_LINE_AMOUNTS.map((amount) => amount.name),
+    ['Susan', 'Ricky', 'Elvin', 'Toni'],
+  );
+  assert.deepEqual(
+    G4_L3_PAGE_36_NUMBER_LINE_AMOUNTS.map((amount) => amount.signedValue),
+    [-10, -2, 3, 7],
+  );
+});
+
+test('Readable View is Page 36-only, native, responsive, keyboard closable, and follows the stage', async () => {
   const [componentSource, playerSource, shellSource, globalCss] =
     await Promise.all([
       readFile(
@@ -139,19 +178,35 @@ test('Readable View is Page 36-only, non-modal, keyboard closable, and follows t
   assert.match(componentSource, /event\.key !== 'Escape'/);
   assert.match(componentSource, /toggleRef\.current\?\.focus\(\)/);
   assert.match(componentSource, /aria-expanded=\{expanded\}/);
-  assert.match(componentSource, /Original Layout only/);
-  assert.match(componentSource, /not Flash-fidelity evidence/);
+  assert.match(componentSource, /Hide reading support/);
+  assert.match(componentSource, /G4_L3_PAGE_36_NUMBER_LINE_AMOUNTS\.map/);
+  assert.match(componentSource, /G4_L3_PAGE_36_SIGNED_AMOUNTS\.map/);
+  assert.equal(componentSource.match(/<article/g)?.length, 2);
+  assert.match(componentSource, /Positions on the number line/);
+  assert.match(componentSource, /aria-label="Signed amounts"/);
+  assert.doesNotMatch(componentSource, /<img\b|frame-789-step-[34]\.png/);
+  assert.doesNotMatch(componentSource, /Original Layout only/);
+  assert.doesNotMatch(componentSource, /not Flash-fidelity evidence/);
+  assert.doesNotMatch(componentSource, /bound to current-JavaScript frame/);
   assert.match(
     componentSource,
-    /El contenido matemático original solo está disponible en inglés/,
+    /La lección fuente está en inglés/,
   );
   assert.doesNotMatch(componentSource, /role="dialog"|aria-modal/);
   assert.match(
     globalCss,
-    /\.g4-l3-readable-view__transcript \{[\s\S]*?font-size: 1rem;/,
+    /\.g4-l3-readable-view__source-copy \{[\s\S]*?font-size: clamp\(1\.08rem, 2\.2vw, 1\.2rem\);/,
   );
   assert.match(
     globalCss,
-    /\.g4-l3-readable-view__steps img \{[\s\S]*?max-width: 100%;/,
+    /\.g4-l3-readable-view__number-line \{[\s\S]*?position: relative;/,
+  );
+  assert.match(
+    globalCss,
+    /grid-template-columns: repeat\(auto-fit, minmax\(min\(100%, 11\.5rem\), 1fr\)\);/,
+  );
+  assert.match(
+    globalCss,
+    /@container page36-reading-support \(max-width: 32rem\)/,
   );
 });

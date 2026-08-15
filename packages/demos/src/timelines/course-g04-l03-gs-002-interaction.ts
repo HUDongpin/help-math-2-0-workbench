@@ -43,7 +43,7 @@ export type CourseG04L03Gs002InteractionAction =
   | Readonly<{type: "timer-tick"}>
   | Readonly<{type: "advance-time"; elapsedMs: number}>
   | Readonly<{type: "new-game"}>
-  | Readonly<{type: "replay"}>;
+  | Readonly<{type: "replay"; seed?: number}>;
 
 export const COURSE_G04_L03_GS_002_SHIP_Y = Object.freeze([
   -177.35, -154.35, -130.35, -106.35, -82.35,
@@ -64,6 +64,7 @@ export const COURSE_G04_L03_GS_002_FEEDBACK = Object.freeze({
   missingSign:
     "You need to choose whether the number is positive or negative.",
   missingNumber: "You need to enter the number in the number field.",
+  zeroDistance: "Enter a number from 1 to 14. Zero does not move the ship.",
   lowerBoundary: "The ship can not go any lower.",
   upperBoundary: "The ship can not go any higher.",
 } as const);
@@ -75,13 +76,14 @@ export const COURSE_G04_L03_GS_002_HELP = Object.freeze([
 
 /**
  * These durations make the current-JavaScript candidate deterministic and
- * queryable. They are nominal deductions from the saved 12 FPS child-frame
- * scripts, not an original-runtime trace or an audio-synchronization claim.
+ * queryable. Movement is informed by the saved child-frame scripts; the short
+ * hit feedback is a modern product choice that avoids a silent locked state.
+ * Neither duration is an original-runtime trace or audio-synchronization claim.
  */
 export const COURSE_G04_L03_GS_002_CURRENT_JS_TIMING = Object.freeze({
   timerTickMs: 1_000,
   movementStepMs: 750,
-  hitResolutionMs: (34 * 1_000) / 12,
+  hitResolutionMs: 900,
   tieBreak: "timer-before-gameplay" as const,
 });
 
@@ -127,9 +129,7 @@ const nextCurrentJsRandom = (
 };
 
 const sourceTimerDisplay = (minutes: number, seconds: number): string =>
-  seconds < 10
-    ? `00:0${minutes}:0${seconds}`
-    : `00:0${minutes}:${seconds}`;
+  `00:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 
 const expireGame = (
   state: CourseG04L03Gs002InteractionState,
@@ -146,32 +146,27 @@ const expireGame = (
 const applyTimerTick = (
   state: CourseG04L03Gs002InteractionState,
 ): CourseG04L03Gs002InteractionState => {
-  if (state.mode === "expired") return state;
+  if (
+    state.mode === "expired"
+    || state.mode === "help"
+    || state.mode === "feedback"
+  ) return state;
 
-  if (state.timerSeconds <= 0) {
-    const display = sourceTimerDisplay(
-      state.timerMinutes,
-      state.timerSeconds,
-    );
-    const next = freezeState({
-      ...state,
-      timerDisplay: display,
-      timerMinutes: state.timerMinutes - 1,
-      timerSeconds: 60,
-      timerTickCount: state.timerTickCount + 1,
-    });
-    return state.timerMinutes <= 0 ? expireGame(next) : next;
-  }
-
-  return freezeState({
+  const remainingSeconds = Math.max(
+    0,
+    state.timerMinutes * 60 + state.timerSeconds - 1,
+  );
+  const next = freezeState({
     ...state,
     timerDisplay: sourceTimerDisplay(
-      state.timerMinutes,
-      state.timerSeconds,
+      Math.floor(remainingSeconds / 60),
+      remainingSeconds % 60,
     ),
-    timerSeconds: state.timerSeconds - 1,
+    timerMinutes: Math.floor(remainingSeconds / 60),
+    timerSeconds: remainingSeconds % 60,
     timerTickCount: state.timerTickCount + 1,
   });
+  return remainingSeconds === 0 ? expireGame(next) : next;
 };
 
 const drawNextVirus = (
@@ -208,9 +203,6 @@ const applyMovementStep = (
     return state;
   }
 
-  // This intentionally preserves the visible source-script edge case: an
-  // entered zero still reaches the child clip's frame-10 handler once and
-  // therefore moves the ship by one position before the counter becomes -1.
   const shipIndex = state.shipIndex
     + (state.movementDirection === "+" ? -1 : 1);
   const remainingMoveCount = state.remainingMoveCount - 1;
@@ -272,7 +264,13 @@ const advanceTime = (
   state: CourseG04L03Gs002InteractionState,
   elapsedMs: number,
 ): CourseG04L03Gs002InteractionState => {
-  if (!Number.isFinite(elapsedMs) || elapsedMs <= 0 || state.mode === "expired") {
+  if (
+    !Number.isFinite(elapsedMs)
+    || elapsedMs <= 0
+    || state.mode === "expired"
+    || state.mode === "help"
+    || state.mode === "feedback"
+  ) {
     return state;
   }
 
@@ -376,7 +374,7 @@ export const createCourseG04L03Gs002InteractionState = (
     score: 0,
     timerMinutes: 4,
     timerSeconds: 0,
-    timerDisplay: "00:00:00",
+    timerDisplay: "00:04:00",
     timerTickCount: 0,
     timerAccumulatorMs: 0,
     activityAccumulatorMs: 0,
@@ -424,6 +422,13 @@ export const reduceCourseG04L03Gs002Interaction = (
       }
 
       const distance = Number(state.distanceInput);
+      if (distance === 0) {
+        return freezeState({
+          ...state,
+          mode: "feedback",
+          feedbackText: COURSE_G04_L03_GS_002_FEEDBACK.zeroDistance,
+        });
+      }
       const plannedTargetIndex = state.shipIndex
         + (state.sign === "+" ? -distance : distance);
       if (plannedTargetIndex > 14) {
@@ -479,8 +484,28 @@ export const reduceCourseG04L03Gs002Interaction = (
     case "advance-time":
       return advanceTime(state, action.elapsedMs);
 
-    case "new-game":
+    case "new-game": {
+      const random = nextCurrentJsRandom(state.rngState);
+      const initialVirusIndex =
+        COURSE_G04_L03_GS_002_ALLOWED_INITIAL_VIRUS_INDICES[
+          Math.floor(
+            random.value
+              * COURSE_G04_L03_GS_002_ALLOWED_INITIAL_VIRUS_INDICES.length,
+          )
+        ];
+      if (initialVirusIndex === undefined) {
+        throw new Error("GS002 current-JS new-game target is unavailable");
+      }
+      return freezeState({
+        ...createCourseG04L03Gs002InteractionState(state.seed),
+        rngState: random.rngState,
+        drawCount: state.drawCount + 1,
+        initialVirusIndex,
+        virusIndex: initialVirusIndex,
+      });
+    }
+
     case "replay":
-      return createCourseG04L03Gs002InteractionState(state.seed);
+      return createCourseG04L03Gs002InteractionState(action.seed ?? state.seed);
   }
 };

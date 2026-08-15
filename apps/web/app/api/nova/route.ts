@@ -5,6 +5,7 @@ import {
   novaTutorRequestSchema,
 } from '@/lib/nova-request-schema';
 import {
+  NOVA_OPENROUTER_MODEL,
   NovaProviderError,
   requestNovaTutor,
 } from '@/lib/nova-openrouter.server';
@@ -190,11 +191,21 @@ export async function POST(request: Request) {
     );
   }
 
+  const providerStartedAt = Date.now();
   try {
     const result = await requestNovaTutor(parsed.data);
     return json({ok: true, ...result, requestId});
   } catch (error) {
     if (error instanceof NovaProviderError) {
+      console.warn('Nova Tutor provider request failed', {
+        attempts: error.attempts,
+        durationMs: Date.now() - providerStartedAt,
+        failure: error.failure,
+        model: NOVA_OPENROUTER_MODEL,
+        requestId,
+        stage: error.stage,
+        upstreamStatus: error.upstreamStatus ?? null,
+      });
       return providerErrorResponse(error, requestId);
     }
     return errorResponse(

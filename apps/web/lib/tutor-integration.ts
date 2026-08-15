@@ -66,17 +66,71 @@ export const NOVA_TUTOR_MODES = [
 export type NovaTutorMode = (typeof NOVA_TUTOR_MODES)[number];
 
 /**
- * The lesson mode is presentation state, never provider configuration. Route
- * inputs are deliberately fail-closed to Focus so an unknown URL value cannot
- * accidentally enable a classroom surface or imply a tutor is connected.
+ * Owner-approved product names for the three lesson presentations. Chinese is
+ * retained as naming metadata; the current learner surface renders English or
+ * Spanish according to the route locale.
+ */
+export const NOVA_TUTOR_MODE_PRODUCT_LABELS = Object.freeze({
+  focus: Object.freeze({
+    en: 'Focus',
+    es: 'Enfoque',
+    zh: '专注学习',
+    purposeEn: 'Focused learning',
+    purposeEs: 'Aprendizaje enfocado',
+  }),
+  study: Object.freeze({
+    en: 'Study',
+    es: 'Estudio',
+    zh: '辅助学习',
+    purposeEn: 'Learning support',
+    purposeEs: 'Apoyo de aprendizaje',
+  }),
+  classroom: Object.freeze({
+    en: 'Classroom',
+    es: 'Clase',
+    zh: '课堂展示',
+    purposeEn: 'Class display',
+    purposeEs: 'Presentación de clase',
+  }),
+} satisfies Record<NovaTutorMode, Readonly<{
+  en: string;
+  es: string;
+  zh: string;
+  purposeEn: string;
+  purposeEs: string;
+}>>);
+
+/**
+ * Canonicalize every legacy lesson-presentation link to Focus while retaining
+ * the descriptor's path, unrelated query values, and hash. The mode argument
+ * remains solely for compatibility with older call sites.
+ */
+export function novaTutorModeHref(
+  courseHref: string,
+  _mode: NovaTutorMode,
+): string {
+  const hashIndex = courseHref.indexOf('#');
+  const hash = hashIndex >= 0 ? courseHref.slice(hashIndex) : '';
+  const withoutHash = hashIndex >= 0 ? courseHref.slice(0, hashIndex) : courseHref;
+  const queryIndex = withoutHash.indexOf('?');
+  const pathname = queryIndex >= 0
+    ? withoutHash.slice(0, queryIndex)
+    : withoutHash;
+  const search = queryIndex >= 0 ? withoutHash.slice(queryIndex + 1) : '';
+  const params = new URLSearchParams(search);
+  params.set('mode', 'focus');
+  return `${pathname}?${params.toString()}${hash}`;
+}
+
+/**
+ * Lessons now use one consistent Focus presentation. Legacy `mode` query
+ * values remain accepted as inert compatibility input, but none of them may
+ * activate a second learner view or imply a different Tutor configuration.
  */
 export function resolveNovaTutorMode(
-  value: string | string[] | undefined,
+  _value: string | string[] | undefined,
 ): NovaTutorMode {
-  const candidate = Array.isArray(value) ? value[0] : value;
-  return NOVA_TUTOR_MODES.includes(candidate as NovaTutorMode)
-    ? candidate as NovaTutorMode
-    : 'focus';
+  return 'focus';
 }
 
 /** Sections where the tutor must scaffold rather than give the answer. */

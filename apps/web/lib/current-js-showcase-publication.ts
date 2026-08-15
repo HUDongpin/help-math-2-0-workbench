@@ -9,6 +9,8 @@
 
 export const G4_L3_SHOWCASE_RELEASE_ID =
   'lesson-g04-l03-negative-numbers';
+export const G5_L4_SHOWCASE_RELEASE_ID =
+  'lesson-g05-l04-number-lines';
 
 export type CurrentJsShowcaseEnvironment =
   Readonly<Record<string, string | undefined>>;
@@ -24,8 +26,13 @@ export function currentJsShowcasePublication(
   releaseId: string,
   env: CurrentJsShowcaseEnvironment = process.env,
 ): CurrentJsShowcasePublication {
-  const enabled = releaseId === G4_L3_SHOWCASE_RELEASE_ID &&
-    env.CURRENT_JS_SHOWCASE_G4_L3_ENABLED === 'true';
+  const enabled = (
+    releaseId === G4_L3_SHOWCASE_RELEASE_ID
+    && env.CURRENT_JS_SHOWCASE_G4_L3_ENABLED === 'true'
+  ) || (
+    releaseId === G5_L4_SHOWCASE_RELEASE_ID
+    && env.CURRENT_JS_SHOWCASE_G5_L4_ENABLED === 'true'
+  );
   return Object.freeze({
     enabled,
     releaseId,

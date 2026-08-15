@@ -78,6 +78,29 @@ test('descriptor-driven player never mounts or prefetches unavailable renderers'
     component,
     /courseContext=\{\{[\s\S]*?courseTitle: descriptor\.course\.labels\[progress\.locale\],[\s\S]*?pageTitle: currentLabel,[\s\S]*?title: sectionLabel/,
   );
+  assert.match(
+    component,
+    /const shellSections: LessonShellSection\[\] = descriptor\.sections\.map/,
+  );
+  assert.match(component, /sections=\{shellSections\}/);
+  assert.match(component, /const tutorContext = tutorPageContext\(\{/);
+  assert.match(component, /novaTutorMode=\{novaTutorMode\}/);
+  assert.match(component, /tutorContext=\{tutorContext\}/);
+  assert.match(
+    component,
+    /pageTitleSpanish: currentPage\.labels\.es\.usesEnglishFallback[\s\S]*?\? null[\s\S]*?: currentPage\.labels\.es\.text/,
+    'an English fallback must not be mislabeled as authored Spanish tutor context',
+  );
+  assert.match(
+    shell,
+    /const tutorAvailable = modernWide && Boolean\(tutorContext\)/,
+  );
+  assert.doesNotMatch(shell, /data-learning-mode-switch="three-mode"/);
+  assert.match(shell, /data-mode-switch-available="false"/);
+  assert.match(
+    shell,
+    /data-tutor-placement=\{!tutorAvailable[\s\S]*?\? 'unavailable'/,
+  );
   assert.match(shell, /export interface LessonShellCourseContext/);
   assert.match(
     shell,
@@ -89,7 +112,28 @@ test('descriptor-driven player never mounts or prefetches unavailable renderers'
   );
   assert.match(
     component,
-    /one source-static functional shell candidate/,
+    /disclosure=\{reviewerMode[\s\S]*?: undefined\}/,
+    'migration evidence must be reviewer-only on the learner route',
+  );
+  assert.doesNotMatch(
+    component,
+    /current-JS pages plus .*strict members; unpublished/,
+    'ordinary learner copy must not expose the superseded shell-inclusive denominator',
+  );
+  assert.match(
+    component,
+    /historical shell and strict-admission contracts remain available for internal review only/,
+  );
+  assert.match(component, /Use Previous and Next to move through this lesson\./);
+  assert.match(component, /Your progress stays saved on this device\./);
+  assert.match(
+    component,
+    /`\$\{reviewedRegisteredCount\} of \$\{registeredPages\.length\} pages complete`/,
+  );
+  assert.doesNotMatch(
+    component,
+    /Use Previous and Next to traverse all .* XML positions|current-JS pages reviewed/,
+    'ordinary help and progress copy must stay learner-facing',
   );
   assert.match(
     component,
@@ -126,8 +170,8 @@ test('descriptor-driven player never mounts or prefetches unavailable renderers'
     /pageComplete=\{runtimeAvailable && reviewed\.has\(currentPage\.animationId\)\}/,
   );
   assert.match(shell, /data-runtime-available=/);
-  assert.doesNotMatch(shell, /<aside[\s\S]*?role=\{mapOverlay \? 'dialog'/);
-  assert.doesNotMatch(shell, /<aside[\s\S]*?role=\{toolOverlay \? 'dialog'/);
+  assert.doesNotMatch(shell, /<aside[^>]*role=\{mapOverlay \? 'dialog'/);
+  assert.doesNotMatch(shell, /<aside[^>]*role=\{toolOverlay \? 'dialog'/);
   const disabledRuntimeControls =
     shell.match(/disabled=\{!runtimeAvailable\}/g) ?? [];
   assert.equal(
@@ -144,9 +188,14 @@ test('descriptor-driven player never mounts or prefetches unavailable renderers'
     2,
     'legacy and modern Pause controls disable only when support owns pause',
   );
-  const resumeInspectionControls = shell.match(
-    /frameInspectionActive\s*\? onPlaybackResumeFromInspection\(\)/g,
-  ) ?? [];
+  const resumeInspectionControls = [
+    ...(shell.match(
+      /frameInspectionActive\s*\? onPlaybackResumeFromInspection\(\)/g,
+    ) ?? []),
+    ...(shell.match(
+      /if \(frameInspectionActive\) onPlaybackResumeFromInspection\(\)/g,
+    ) ?? []),
+  ];
   assert.equal(
     resumeInspectionControls.length,
     2,
@@ -156,12 +205,26 @@ test('descriptor-driven player never mounts or prefetches unavailable renderers'
     component,
     /const resumeFromInspectedFrame = \(\) => \{[\s\S]*?setSeekRequest\(null\);[\s\S]*?setPaused\(false\);/,
   );
+  assert.match(
+    component,
+    /const pendingScrubberFocusRef = useRef<[\s\S]*?'section-scrubber'[\s\S]*?null[\s\S]*?>\(null\);/,
+  );
+  assert.doesNotMatch(component, /const selectPageOrdinal = \(pageOrdinal: number\)/);
+  assert.doesNotMatch(component, /onPageSelect=\{selectPageOrdinal\}/);
+  assert.match(
+    component,
+    /sectionProgress=\{\{[\s\S]*?code: currentSection\.code,[\s\S]*?currentPage: currentSectionPageOrdinal,[\s\S]*?onPageSelect: selectSectionPageOrdinal,[\s\S]*?totalPages: currentSectionPages\.length/,
+  );
+  assert.match(
+    component,
+    /if \(pendingScrubberFocusRef\.current\) \{[\s\S]*?pendingScrubberFocusRef\.current = null;[\s\S]*?requestAnimationFrame[\s\S]*?data-responsive-focus-key=[\s\S]*?focus\(\{preventScroll: true\}\)/,
+  );
   const disabledAudioControls =
     shell.match(/disabled=\{!runtimeAvailable \|\| !audioAvailable\}/g) ?? [];
   assert.equal(
     disabledAudioControls.length,
-    4,
-    'legacy and modern mute buttons and Volume sliders must fail closed without audio',
+    5,
+    'legacy and disclosure volume controls must fail closed without audio',
   );
   assert.match(shell, /disabled=\{!playbackSeekAvailable\}/);
   assert.match(shell, /data-source-transport-parity="not-established"/);
@@ -274,6 +337,11 @@ test('registered whole-lesson routes preserve cross-binding and publication gate
   assert.match(coursePlayer, /registration\.player\.kind === 'preserved-custom'/);
   assert.match(coursePlayer, /<G4L3WholeLessonPlayer/);
   assert.match(coursePlayer, /<DescriptorDrivenWholeLessonPlayer/);
+  assert.equal(
+    coursePlayer.match(/novaTutorMode=\{novaTutorMode\}/g)?.length,
+    2,
+    'both whole-lesson adapters must receive the fixed Focus Nova mode',
+  );
   assert.match(registry, /G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR/);
   assert.match(registry, /G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR/);
 });

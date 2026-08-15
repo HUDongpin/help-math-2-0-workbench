@@ -29,6 +29,7 @@ import {
   type LessonShellTool,
 } from '@/components/legacy-responsive-lesson-shell';
 import {useLearningEventRecorder} from '@/hooks/use-learning-event-recorder';
+import type {PublicAuthStatus} from '@/lib/auth-session';
 import {
   G4_L3_LESSON,
   findG4L3Page,
@@ -93,6 +94,8 @@ const G4_L3_RELEASE_MEMBER_IDS = Object.freeze(
 );
 const G4_L3_PAGE_INTERACTION_COMPANION_TARGET_ID =
   `${G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.domIdPrefix}-page-interaction-companion`;
+const G4_L3_PAGE_INTERACTION_STAGE_TARGET_ID =
+  `${G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.domIdPrefix}-page-interaction-stage`;
 const G4_L3_CURRENT_JS_PAGE_COUNT =
   G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.pages.filter(
   (page) => page.rendererAvailability.kind === 'registered',
@@ -134,6 +137,7 @@ function learningSupportKind(tool: Exclude<LessonShellTool, null>) {
 }
 
 export function G4L3WholeLessonPlayer({
+  authStatus = 'disabled',
   candidateMode,
   hostPresentation = 'legacy-composite',
   learningEventsEnabled = false,
@@ -143,6 +147,7 @@ export function G4L3WholeLessonPlayer({
   reviewerMode = false,
   strictCompleteMemberCount,
 }: {
+  authStatus?: PublicAuthStatus;
   candidateMode: boolean;
   hostPresentation?: WholeLessonHostPresentation;
   learningEventsEnabled?: boolean;
@@ -187,6 +192,10 @@ export function G4L3WholeLessonPlayer({
   const [runtimeEpoch, setRuntimeEpoch] = useState(0);
   const [lessonFinished, setLessonFinished] = useState(false);
   const initialPageFocusSkippedRef = useRef(false);
+  const pendingScrubberFocusRef = useRef<
+    'section-scrubber' | null
+  >(null);
+  const resumeFocusAfterDecisionRef = useRef(false);
   const lessonPlayerRef = useRef<HTMLDivElement>(null);
   const pageHeadingRef = useRef<HTMLHeadingElement>(null);
   const seekRequestIdRef = useRef(0);
@@ -424,6 +433,10 @@ export function G4L3WholeLessonPlayer({
     queueMicrotask(() => {
       if (!active) return;
       if (candidate) {
+        // Keep the saved page behind the decision card. If the learner uses a
+        // lesson control instead of either card action, that control acts on
+        // the page they actually saved rather than silently starting at Page 1.
+        setProgress(candidate);
         setResumeCandidate(candidate);
         setResumeDecision('prompt');
       } else {
@@ -525,8 +538,32 @@ export function G4L3WholeLessonPlayer({
       initialPageFocusSkippedRef.current = true;
       return;
     }
+    if (pendingScrubberFocusRef.current) {
+      const focusKey = pendingScrubberFocusRef.current;
+      pendingScrubberFocusRef.current = null;
+      const frame = window.requestAnimationFrame(() => {
+        lessonPlayerRef.current
+          ?.querySelector<HTMLInputElement>(
+            `[data-responsive-focus-key="${focusKey}"]`,
+          )
+          ?.focus({preventScroll: true});
+      });
+      return () => window.cancelAnimationFrame(frame);
+    }
     pageHeadingRef.current?.focus();
   }, [currentPage.animationId, hydrated]);
+
+  useEffect(() => {
+    if (
+      resumeDecision !== 'resolved' ||
+      !resumeFocusAfterDecisionRef.current
+    ) return;
+    resumeFocusAfterDecisionRef.current = false;
+    const frame = window.requestAnimationFrame(() => {
+      pageHeadingRef.current?.focus({preventScroll: true});
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [resumeDecision]);
 
   const navigateToPage = (
     animationId: string,
@@ -552,6 +589,12 @@ export function G4L3WholeLessonPlayer({
   };
   const selectPage = (animationId: string) => {
     navigateToPage(animationId, true);
+  };
+  const selectSectionPageOrdinal = (sectionPageOrdinal: number) => {
+    const destination = currentSectionPages[sectionPageOrdinal - 1];
+    if (!destination || destination.animationId === currentAnimationId) return;
+    pendingScrubberFocusRef.current = 'section-scrubber';
+    selectPage(destination.animationId);
   };
 
   // Completion is earned by watching, never by pressing. The runtime reports
@@ -647,7 +690,9 @@ export function G4L3WholeLessonPlayer({
 
   const finishResumeDecision = (
     nextProgress: G4L3WholeLessonProgress,
+    focusPageHeading = true,
   ) => {
+    resumeFocusAfterDecisionRef.current = focusPageHeading;
     setProgress(nextProgress);
     setResumeCandidate(null);
     setResumeDecision('resolved');
@@ -673,8 +718,13 @@ export function G4L3WholeLessonPlayer({
     beginLearningLifecycle(nextProgress, false);
     finishResumeDecision(nextProgress);
   };
+  const continueFromSavedPositionForControl = () => {
+    if (resumeDecision !== 'prompt' || !resumeCandidate) return;
+    beginLearningLifecycle(resumeCandidate, true);
+    finishResumeDecision(resumeCandidate, false);
+  };
 
-  const libraryHref = spanish ? '/es/library' : '/library';
+  const learningHomeHref = spanish ? '/es' : '/';
   const returnToPreviousLocation = () => {
     const transition = takeLegacyLessonHistory(
       lessonNavigationHistoryRef.current,
@@ -688,9 +738,9 @@ export function G4L3WholeLessonPlayer({
       window.history.back();
       return;
     }
-    window.location.assign(libraryHref);
+    window.location.assign(learningHomeHref);
   };
-  const exitToLibrary = () => window.location.assign(libraryHref);
+  const exitToLearningHome = () => window.location.assign(learningHomeHref);
 
   const restartLesson = () => {
     const confirmed = window.confirm(spanish
@@ -812,16 +862,6 @@ export function G4L3WholeLessonPlayer({
     locale: progress.language,
     pageTitleUsesEnglishFallback: currentLabel.usesEnglishFallback,
   });
-  const tutorVocabulary = [
-    'course-g04-l03-vb-002',
-    'course-g04-l03-vb-004',
-    'course-g04-l03-vb-005',
-    'course-g04-l03-vb-006',
-    'course-g04-l03-vb-009',
-  ].map((animationId) => getG4L3PageLabel(
-    findG4L3Page(animationId)!,
-    progress.language,
-  ).text);
   const pageHeading = <div>
     <p lang={currentSectionLabel.sourceLanguage}>
       {currentSectionLabel.text}
@@ -865,6 +905,7 @@ export function G4L3WholeLessonPlayer({
     pageInteractionCompanionTargetId={
       G4_L3_PAGE_INTERACTION_COMPANION_TARGET_ID
     }
+    pageInteractionStageTargetId={G4_L3_PAGE_INTERACTION_STAGE_TARGET_ID}
     paused={paused || resumeDecision !== 'resolved'}
     presentation="legacy-shell"
     query={{lang: progress.language, seed: '0'}}
@@ -874,21 +915,25 @@ export function G4L3WholeLessonPlayer({
   const resumePage = resumeCandidate
     ? findG4L3Page(resumeCandidate.currentAnimationId)
     : null;
+  const resumePageDisplayLabel = resumePage
+    ? getG4L3PageLabel(resumePage, progress.language)
+    : null;
   const resumePromptEvidence =
     G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.visualSkin.resumePrompt;
   const stageOverlay = resumeDecision === 'prompt' &&
       resumeCandidate &&
       resumePage &&
+      resumePageDisplayLabel &&
       resumePromptEvidence
-    ? <LegacyResumePrompt
+      ? <LegacyResumePrompt
         evidence={resumePromptEvidence}
+        lessonControlsRemainAvailable
         locale={progress.language}
         onContinue={continueFromSavedPosition}
         onStartAtBeginning={startFromBeginning}
         resumePage={resumePage.globalPageOrdinal}
-        resumePageLabel={
-          getG4L3PageLabel(resumePage, progress.language).text
-        }
+        resumePageLabel={resumePageDisplayLabel.text}
+        resumePageLabelLanguage={resumePageDisplayLabel.sourceLanguage}
       />
     : undefined;
 
@@ -991,6 +1036,7 @@ export function G4L3WholeLessonPlayer({
     <LegacyResponsiveLessonShell
       activeTool={activeTool}
       audioAvailable={playbackState.audioAvailable}
+      authStatus={authStatus}
       backgroundCompanionVisible={currentPage.xmlBackgroundText}
       calculatorEvidence={G4_L3_CALCULATOR_EVIDENCE}
       candidateMode={candidateMode}
@@ -1042,6 +1088,13 @@ export function G4L3WholeLessonPlayer({
       mapOpen={mapOpen}
       mapPanel={mapPanel}
       sections={shellSections}
+      sectionProgress={{
+        code: currentSection.code,
+        currentPage: Math.max(1, currentSectionPosition),
+        label: getG4L3SectionLabel(currentSection, progress.language).text,
+        onPageSelect: selectSectionPageOrdinal,
+        totalPages: currentSectionPages.length,
+      }}
       narrationStatus={playbackState.narration}
       novaTutorMode={novaTutorMode}
       nextControlLabel={lessonFinished
@@ -1065,7 +1118,7 @@ export function G4L3WholeLessonPlayer({
             : (spanish ? 'Finalizar recorrido ✓' : 'End journey ✓')}
       onMapOpenChange={handleMapOpenChange}
       onHeaderBack={returnToPreviousLocation}
-      onExit={exitToLibrary}
+      onExit={exitToLearningHome}
       onNarrationToggle={toggleNarration}
       onNext={advanceToNextPage}
       onPausedChange={handlePausedChange}
@@ -1080,6 +1133,7 @@ export function G4L3WholeLessonPlayer({
       pageInteractionCompanionTargetId={
         G4_L3_PAGE_INTERACTION_COMPANION_TARGET_ID
       }
+      pageInteractionStageTargetId={G4_L3_PAGE_INTERACTION_STAGE_TARGET_ID}
       pageHeading={pageHeading}
       paused={paused || resumeDecision !== 'resolved'}
       playbackFrame={playbackState.frame}
@@ -1105,6 +1159,8 @@ export function G4L3WholeLessonPlayer({
       runtimeAvailable
       stage={stage}
       stageOverlay={stageOverlay}
+      stageOverlayControlsEnabled={resumeDecision === 'prompt'}
+      onStageOverlayControlIntent={continueFromSavedPositionForControl}
       status={<>
         <div>
           <p>
@@ -1142,7 +1198,6 @@ export function G4L3WholeLessonPlayer({
       </>}
       totalPages={G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.activePageCount}
       tutorContext={tutorContext}
-      tutorVocabulary={tutorVocabulary}
       visualSkin={visualSkin}
       volume={volume}
     />

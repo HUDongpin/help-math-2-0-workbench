@@ -90,6 +90,90 @@ test('production routing no longer sends visitors to a review login', async () =
     assert.equal(course.status, 200);
     assert.equal(course.headers.get('location'), null);
     assert.equal(course.headers.get('x-helpmath-controlled-preview'), null);
+
+    for (const pathName of [
+      '/about',
+      '/approach',
+      '/curriculum',
+      '/research',
+      '/resources',
+      '/support',
+      '/library',
+      '/demos',
+      '/login',
+      '/sign-in',
+      '/sign-up',
+      '/account',
+      '/contact',
+      '/migration-status',
+    ]) {
+      const response = await proxyForRequest(
+        new NextRequest(`https://www.helpmath.ai${pathName}`),
+      );
+      assert.equal(response.status, 404, pathName);
+      assert.equal(response.headers.get('x-robots-tag'), 'noindex, nofollow');
+    }
+
+    for (const pathName of ['/privacy', '/terms']) {
+      const response = await proxyForRequest(
+        new NextRequest(`https://www.helpmath.ai${pathName}`),
+      );
+      assert.equal(response.status, 200, pathName);
+    }
+
+    const originalG5L4Showcase =
+      process.env.CURRENT_JS_SHOWCASE_G5_L4_ENABLED;
+    try {
+      Reflect.deleteProperty(
+        process.env,
+        'CURRENT_JS_SHOWCASE_G5_L4_ENABLED',
+      );
+      const hiddenG5L4 = await proxyForRequest(
+        new NextRequest('https://www.helpmath.ai/courses/5/4'),
+      );
+      assert.equal(hiddenG5L4.status, 404);
+
+      process.env.CURRENT_JS_SHOWCASE_G5_L4_ENABLED = '1';
+      const inexactG5L4 = await proxyForRequest(
+        new NextRequest('https://www.helpmath.ai/courses/5/4'),
+      );
+      assert.equal(inexactG5L4.status, 404);
+
+      process.env.CURRENT_JS_SHOWCASE_G5_L4_ENABLED = 'true';
+      const publicG5L4 = await proxyForRequest(
+        new NextRequest('https://www.helpmath.ai/courses/5/4'),
+      );
+      assert.equal(publicG5L4.status, 200);
+      assert.equal(publicG5L4.headers.get('x-middleware-next'), null);
+    } finally {
+      if (originalG5L4Showcase === undefined) {
+        Reflect.deleteProperty(
+          process.env,
+          'CURRENT_JS_SHOWCASE_G5_L4_ENABLED',
+        );
+      } else {
+        process.env.CURRENT_JS_SHOWCASE_G5_L4_ENABLED = originalG5L4Showcase;
+      }
+    }
+
+    const originalMigrationStatus = process.env.MIGRATION_STATUS_ENABLED;
+    try {
+      process.env.MIGRATION_STATUS_ENABLED = '1';
+      const hiddenMigrationStatus = await proxyForRequest(
+        new NextRequest('https://www.helpmath.ai/migration-status'),
+      );
+      assert.equal(hiddenMigrationStatus.status, 404);
+      const migrationStatus = await proxyForRequest(
+        new NextRequest('https://www.helpmath.ai/migration-status?view=designer'),
+      );
+      assert.equal(migrationStatus.status, 200);
+    } finally {
+      if (originalMigrationStatus === undefined) {
+        Reflect.deleteProperty(process.env, 'MIGRATION_STATUS_ENABLED');
+      } else {
+        process.env.MIGRATION_STATUS_ENABLED = originalMigrationStatus;
+      }
+    }
   });
 });
 

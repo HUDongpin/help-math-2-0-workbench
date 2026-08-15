@@ -1,10 +1,10 @@
 import {createHash} from 'node:crypto';
-import {readFile, stat} from 'node:fs/promises';
+import {lstat, readFile, realpath} from 'node:fs/promises';
 import path from 'node:path';
 
 import {notFound} from 'next/navigation';
 
-import {getCatalog, getWorkspaceRoot, isAnimationPublished} from '@/lib/catalog';
+import {getWorkspaceRoot} from '@/lib/catalog';
 import {
   classifyG4L3HostCompositeAsset,
   hasExactG4L3HostCompositeDigest,
@@ -17,7 +17,9 @@ import {
   classifyG5L4PreviewAsset,
   hasSafeFlashAssetSegments,
   hasExactG5L4RuntimeDigest,
-  isG5L4PreviewAssetAuthorized
+  isG5L4PreviewAssetAuthorized,
+  isG5L4ShowcaseAssetAuthorized,
+  isG5L4ShowcaseAssetSegments,
 } from '@/lib/g5-l4-preview-asset-policy';
 
 const types: Record<string, string> = {
@@ -53,6 +55,7 @@ export async function GET(
     classifyG4L3HostCompositeAsset(canonicalAsset);
   const g4L3ShowcaseAsset = isG4L3ShowcaseAssetSegments(canonicalAsset);
   const policy = classifyG5L4PreviewAsset(canonicalAsset);
+  const g5L4ShowcaseAsset = isG5L4ShowcaseAssetSegments(canonicalAsset);
 
   if (
     g4L3ShowcaseAsset
@@ -73,18 +76,10 @@ export async function GET(
   }
 
   if (policy.controlled) {
-    let published = false;
-    try {
-      published = isAnimationPublished(
-        getCatalog(),
-        policy.animationId as string
-      );
-    } catch {
-      notFound();
-    }
     if (!isG5L4PreviewAssetAuthorized({
       developmentAudit: process.env.NODE_ENV !== 'production',
-      published
+      showcaseEnabled: isG5L4ShowcaseAssetAuthorized(),
+      showcaseAsset: g5L4ShowcaseAsset,
     })) {
       notFound();
     }
@@ -100,8 +95,19 @@ export async function GET(
   }
 
   try {
-    if (!(await stat(target)).isFile()) notFound();
-    const bytes = await readFile(target);
+    const [realRoot, targetEntry] = await Promise.all([
+      realpath(root),
+      lstat(target),
+    ]);
+    if (targetEntry.isSymbolicLink() || !targetEntry.isFile()) notFound();
+    const realTarget = await realpath(target);
+    if (
+      realTarget === realRoot
+      || !realTarget.startsWith(`${realRoot}${path.sep}`)
+    ) {
+      notFound();
+    }
+    const bytes = await readFile(realTarget);
     if (
       g4HostCompositePolicy.controlled
       && sha256(bytes) !== g4HostCompositePolicy.expectedSha256
@@ -110,7 +116,7 @@ export async function GET(
     }
     if (
       policy.controlled
-      && policy.kind === 'runtime'
+      && (policy.kind === 'runtime' || policy.kind === 'shell')
       && sha256(bytes) !== policy.expectedRuntimeSha256
     ) {
       notFound();

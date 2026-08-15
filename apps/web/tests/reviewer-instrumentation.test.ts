@@ -65,7 +65,7 @@ test('every engineering instrument is gated on reviewerMode, not candidateMode',
   }
 });
 
-test('release status keeps disclosing itself through candidateMode', async () => {
+test('release status remains available through the designer-only candidate mode', async () => {
   const shell = await readFile(new URL(SHELL, import.meta.url), 'utf8');
   // The status footer and the release-mode attribute are release facts, not
   // instruments, and must not have moved behind the reviewer gate.
@@ -81,13 +81,18 @@ test('both gates are reported in the DOM so a reviewer can tell them apart', asy
   assert.match(shell, /data-reviewer-mode=\{reviewerMode \? 'true' : 'false'\}/);
 });
 
-test('the route resolves the gate from the environment, never from release state', async () => {
+test('the route resolves reviewer and designer disclosure gates independently', async () => {
   const route = await readFile(
     new URL('../app/[locale]/courses/[grade]/[lesson]/page.tsx', import.meta.url),
     'utf8',
   );
   assert.match(route, /reviewerMode=\{isReviewerInstrumentationEnabled\(\)\}/);
-  // candidateMode stays bound to publication state.
-  assert.match(route, /candidateMode=\{auditPreview \|\| !releasePublished\}/);
+  // Publication state is preserved, but ordinary learners do not see its
+  // engineering disclosure unless the explicit designer view is available.
+  assert.match(
+    route,
+    /candidateMode=\{designerView && \(auditPreview \|\| !releasePublished\)\}/,
+  );
+  assert.match(route, /isMigrationStatusDesignerViewRequested\(view\)/);
   assert.doesNotMatch(route, /reviewerMode=\{auditPreview/);
 });

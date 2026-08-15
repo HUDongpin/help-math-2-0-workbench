@@ -92,11 +92,12 @@ test('resume placement is later-page only and starting over preserves review his
     false,
   );
 
-  const stoppedLater = reviewWholeLessonPage(
+  let stoppedLater = reviewWholeLessonPage(
     visitWholeLessonPage(initial, descriptor, second),
     descriptor,
     first,
   );
+  stoppedLater = recordWholeLessonReplay(stoppedLater, descriptor, second);
   assert.equal(
     wholeLessonHasResumablePlacement(stoppedLater, descriptor),
     true,
@@ -109,6 +110,7 @@ test('resume placement is later-page only and starting over preserves review his
   assert.equal(fromBeginning.currentAnimationId, first);
   assert.deepEqual(fromBeginning.reviewedAnimationIds, [first]);
   assert.deepEqual(fromBeginning.visitedAnimationIds, [first, second]);
+  assert.deepEqual(fromBeginning.replayCounts, {[second]: 1});
   assert.equal(
     wholeLessonHasResumablePlacement(fromBeginning, descriptor),
     false,

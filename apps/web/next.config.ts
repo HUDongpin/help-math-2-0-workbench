@@ -2,6 +2,12 @@ import type {NextConfig} from 'next';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
+import {isClerkLocalAuthConfigurationReady} from './lib/clerk-local-auth-config';
+import {
+  CLERK_SYNTHETIC_DIST_DIR,
+  CLERK_SYNTHETIC_DIST_DIR_AUTHORIZATION,
+} from './lib/clerk-synthetic-execution';
+
 const webDirectory = path.dirname(fileURLToPath(import.meta.url));
 const g4L3WholeLessonPackageBuild =
   process.env.G4_L3_WHOLE_LESSON_PACKAGE === '1';
@@ -20,6 +26,24 @@ const localReferenceDiagnosticBuild =
   process.env.HELP_MATH_LOCAL_REFERENCE_DIAGNOSTIC === '1'
   && process.env.NODE_ENV === 'production'
   && process.env.VERCEL_ENV === undefined;
+const clerkSyntheticBuild =
+  process.env.HELP_MATH_CLERK_SYNTHETIC_BUILD
+    === CLERK_SYNTHETIC_DIST_DIR_AUTHORIZATION
+  && process.env.NODE_ENV === 'development'
+  && process.env.VERCEL_ENV === undefined;
+const localClerkAuthBuild = isClerkLocalAuthConfigurationReady(process.env);
+const localClerkScriptSources = localClerkAuthBuild
+  ? ' https://*.clerk.accounts.dev https://*.clerk.com https://*.protect.clerk.com'
+  : '';
+const localClerkConnectSources = localClerkAuthBuild
+  ? ' https://api.clerk.com https://*.clerk.accounts.dev https://*.clerk.com https://*.protect.clerk.com https://img.clerk.com'
+  : '';
+const localClerkImageSources = localClerkAuthBuild
+  ? ' https://img.clerk.com'
+  : '';
+const localClerkFrameSources = localClerkAuthBuild
+  ? ' https://*.protect.clerk.com'
+  : '';
 if (g4L3WholeLessonPackageBuild && g5L4WholeLessonPackageBuild) {
   throw new Error(
     'G4 L3 and G5 L4 standalone package builds are mutually exclusive.',
@@ -67,6 +91,14 @@ if (localReferenceDiagnosticBuild && wholeLessonPackageBuild) {
     'The local reference diagnostic build and whole-lesson package builds are mutually exclusive.',
   );
 }
+if (
+  clerkSyntheticBuild
+  && (localReferenceDiagnosticBuild || wholeLessonPackageBuild)
+) {
+  throw new Error(
+    'The Clerk synthetic dev build is mutually exclusive with diagnostic and package builds.',
+  );
+}
 const wholeLessonPackageDistDir = g5L4WholeLessonPackageBuild
   ? '.next-g5-l4-package'
   : g4L3WholeLessonPackageV33Build
@@ -83,15 +115,16 @@ const securityHeaders = [
     value: [
       "default-src 'self'",
       "base-uri 'self'",
-      "connect-src 'self' https://challenges.cloudflare.com",
+      `connect-src 'self' https://challenges.cloudflare.com${localClerkConnectSources}`,
       "font-src 'self' data:",
       "form-action 'self'",
       "frame-ancestors 'none'",
-      "frame-src 'self' https://challenges.cloudflare.com",
-      "img-src 'self' data: blob:",
+      `frame-src 'self' https://challenges.cloudflare.com${localClerkFrameSources}`,
+      `img-src 'self' data: blob:${localClerkImageSources}`,
       "object-src 'none'",
-      `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'production' ? '' : " 'unsafe-eval' 'wasm-unsafe-eval'"} https://challenges.cloudflare.com`,
-      "style-src 'self' 'unsafe-inline'"
+      `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'production' ? '' : " 'unsafe-eval' 'wasm-unsafe-eval'"} https://challenges.cloudflare.com${localClerkScriptSources}`,
+      "style-src 'self' 'unsafe-inline'",
+      "worker-src 'self' blob:"
     ].join('; ')
   },
   {key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups'},
@@ -149,11 +182,13 @@ const nextConfig: NextConfig = {
   // Keep the learner-facing local preview free of the development badge so
   // screenshot and projector review reflect the actual course surface.
   devIndicators: false,
-  distDir: localReferenceDiagnosticBuild
-    ? '.next-local-reference-diagnostic'
-    : wholeLessonPackageBuild
-      ? wholeLessonPackageDistDir
-      : '.next',
+  distDir: clerkSyntheticBuild
+    ? CLERK_SYNTHETIC_DIST_DIR
+    : localReferenceDiagnosticBuild
+      ? '.next-local-reference-diagnostic'
+      : wholeLessonPackageBuild
+        ? wholeLessonPackageDistDir
+        : '.next',
   output: wholeLessonPackageBuild
     ? 'standalone'
     : undefined,

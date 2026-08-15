@@ -59,4 +59,51 @@ export const COURSE_G04_L03_GS_002_CONFIG = Object.freeze({
   sourceControlBehaviorLabel: "Frame 427 renders a deterministic current-JavaScript source-local initial game state; frame 428 is post-stop structural inspection only. Source buttons, input, movement, scoring, timer/feedback behavior, audio, and all ActionScript execution remain disabled",
 } satisfies SourceStaticCanvasCandidateConfig);
 
+/**
+ * Acceptance-neutral successor used only behind the current-JavaScript game
+ * controls. The preserved renderer above keeps its hash-bound frame-427
+ * source-local initial overlay. This successor stops after source sprite 321
+ * export case 426, whose source composition omits the initial ship and virus,
+ * so React can own the sole actor/timer/score layer without altering pixels.
+ */
+export const COURSE_G04_L03_GS_002_INTERACTION_BASE_CONFIG = Object.freeze({
+  animationId: "course-g04-l03-gs-002-interaction-base",
+  title: "Game 1 — interaction-only source clean base successor",
+  sourceSwfSha256: COURSE_G04_L03_GS_002_SOURCE.swfSha256,
+  assetSource:
+    "/flash-assets/courses/course-g04-l03-gs-002/canvas-interaction-base-renderer.js",
+  assetSha256:
+    "7e4d352d925c65b1ba1d3d1329d95c690e27be4e2ed01e6683b10c2c12cd4797",
+  stage: Object.freeze({width: 800, height: 600, backgroundColor: "#b8d8f7"}),
+  fps: 12,
+  rootFrameCount: 10,
+  rootBeginFrame: 6,
+  mainFrameDomain: "sprite-321",
+  mainFrameCount: 428,
+  livePlaybackEndFrame: COURSE_G04_L03_GS_002_SOURCE.livePlaybackEndFrame,
+  playbackMode: "once",
+  companionDomains: Object.freeze([]),
+  blockedFrameRanges: Object.freeze([
+    Object.freeze({
+      firstFrame: 1,
+      lastFrame: 426,
+      reason: "interaction-only successor is limited to public frame 427",
+    }),
+    Object.freeze({
+      firstFrame: 428,
+      lastFrame: 428,
+      reason: "post-stop inspection is outside the interaction base contract",
+    }),
+  ]),
+  visualMarkers: Object.freeze([
+    Object.freeze({
+      id: "source-sprite321-case426-clean-interaction-base",
+      firstFrame: 427,
+      lastFrame: 427,
+    }),
+  ]),
+  sourceControlBehaviorLabel:
+    "Frame 427 draws only source sprite 321 export case 426; the successor omits the source-local initial actor/timer/score overlay so the separate current-JavaScript React layer owns those visuals. This changes no fidelity or acceptance status",
+} satisfies SourceStaticCanvasCandidateConfig);
+
 export const COURSE_G04_L03_GS_002_AUTHORITY = SOURCE_STATIC_CANDIDATE_AUTHORITY;

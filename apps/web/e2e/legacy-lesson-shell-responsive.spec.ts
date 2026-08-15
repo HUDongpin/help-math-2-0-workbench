@@ -154,6 +154,7 @@ async function openG5Lesson(page: Page, baseURL: string) {
     'data-release-id',
     'lesson-g05-l04-number-lines',
   );
+  await expect(page.locator(ROOT)).toHaveAttribute('data-current-js-pages', '54');
   await expect(page.locator(ROOT)).toHaveAttribute('data-public-release', 'false');
   await expect(page.locator(ROOT)).not.toHaveAttribute(
     'data-stage-render-mode',
@@ -429,7 +430,7 @@ async function dragCenterToCenter(
   await page.mouse.up();
 }
 
-test('844x390 keeps compact controls, platform disclosure, and the stage in separate columns', async ({
+test('844x390 keeps compact controls and the stage in separate columns without learner evidence copy', async ({
   baseURL,
   page,
 }) => {
@@ -450,12 +451,7 @@ test('844x390 keeps compact controls, platform disclosure, and the stage in sepa
   await expectSingleLiveControlSurface(page, 'modern-wide');
   const toolbar = await stableBox(page.locator('.lesson-shell2__modern-toolbar'));
   const actions = await stableBox(page.locator('.lesson-shell2__learning-actions'));
-  const disclosure = page.locator('.lesson-shell2__status');
-
-  await expect(disclosure).toBeVisible();
-  await expect(disclosure).toContainText(
-    'Current JavaScript MVP; this is not a strict-fidelity or public-release claim.',
-  );
+  await expect(page.locator('.lesson-shell2__status')).toHaveCount(0);
   await expect(page.locator('[data-compact-transport-summary="true"]'))
     .toHaveCount(0);
   await expect(page.locator('.lesson-shell2__modern-toolbar'))
@@ -470,7 +466,7 @@ test('844x390 keeps compact controls, platform disclosure, and the stage in sepa
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="exit"]'),
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="header-back"]'),
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="key-terms"]'),
-    page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="calculator"]'),
+    page.locator('.lesson-shell2__spine [data-responsive-focus-key="calculator"]'),
     page.locator('.lesson-shell2__learning-actions [data-responsive-focus-key="previous"]'),
     page.locator('.lesson-shell2__learning-actions [data-responsive-focus-key="next"]'),
   ]);
@@ -503,7 +499,7 @@ test('844x390 keeps Spanish compact controls and the platform boundary visible',
   expect(actions.y + actions.height).toBeLessThanOrEqual(391);
   await expectControlsWithinViewport(page, [
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="key-terms"]'),
-    page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="calculator"]'),
+    page.locator('.lesson-shell2__spine [data-responsive-focus-key="calculator"]'),
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="replay"]'),
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="pause"]'),
     page.locator('.lesson-shell2__learning-actions [data-responsive-focus-key="previous"]'),
@@ -690,8 +686,45 @@ test('tool focus remains visible across overlay, rail, language, and resize chan
   await expectNoRuntimeIssues(page, issues);
 });
 
+test('candidate evidence is hidden from learners and retained in explicit designer view', async ({
+  baseURL,
+  page,
+}) => {
+  await page.route('**/api/learning-events', async (route) => {
+    await route.fulfill({status: 204});
+  });
+  const issues = collectRuntimeIssues(page, new URL(baseURL!).origin);
+  await openLesson(page, baseURL!, '/courses/4/3?mode=focus');
+  await expect(page.locator('.lesson-shell2__status')).toHaveCount(0);
+  await expectNoRuntimeIssues(page, issues);
+
+  const designerPage = await page.context().newPage();
+  await designerPage.route('**/api/learning-events', async (route) => {
+    await route.fulfill({status: 204});
+  });
+  const designerIssues = collectRuntimeIssues(
+    designerPage,
+    new URL(baseURL!).origin,
+  );
+  await openLesson(
+    designerPage,
+    baseURL!,
+    '/courses/4/3?mode=focus&view=designer',
+  );
+  const disclosure = designerPage.locator('.lesson-shell2__status');
+  await expect(disclosure).toBeVisible();
+  await expect(disclosure).toContainText(
+    'Current JavaScript MVP; this is not a strict-fidelity or public-release claim.',
+  );
+  await expect(disclosure).toContainText(
+    'Pseudonymous learning events sync to the LRS',
+  );
+  await expectNoRuntimeIssues(designerPage, designerIssues);
+  await designerPage.close();
+});
+
 for (const width of [1180, 1279] as const) {
-  test(`${width}x720 keeps comfortable density and the platform disclosure`, async ({
+  test(`${width}x720 keeps comfortable density without learner evidence copy`, async ({
     baseURL,
     page,
   }) => {
@@ -706,14 +739,7 @@ for (const width of [1180, 1279] as const) {
       'data-stage-render-mode',
       'native-pixel-size',
     );
-    const disclosure = page.locator('.lesson-shell2__status');
-    await expect(disclosure).toBeVisible();
-    await expect(disclosure).toContainText(
-      'Current JavaScript MVP; this is not a strict-fidelity or public-release claim.',
-    );
-    await expect(disclosure).toContainText(
-      'Pseudonymous learning events sync to the LRS',
-    );
+    await expect(page.locator('.lesson-shell2__status')).toHaveCount(0);
     await expect(page.locator('.controlled-ceo-preview-boundary'))
       .toHaveCount(0);
     await expectNativeStage(page);

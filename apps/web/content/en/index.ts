@@ -8,7 +8,7 @@ export const enContent = {
     skipToContent: "Skip to main content",
     statusLabel: "Learning platform preview",
     statusMessage:
-      "Grade 4 Lesson 3 is a fully navigable 39-page current-JavaScript showcase with local progress, Nova Tutor, and pseudonymous learning-record sync. This is runnable platform access, not strict Flash fidelity, Owner acceptance, or publication of the wider curriculum.",
+      "Two current-JavaScript lessons are available: Grade 4 Lesson 3, Negative Numbers (39 pages), and Grade 5 Lesson 4, Number Lines (54 pages). This is runnable learning access, not strict Flash fidelity, audio acceptance, Owner acceptance, or publication of the wider curriculum.",
     externalLinkLabel: "Opens in a new tab",
     requiredFieldLabel: "Required",
     navigation: {
@@ -36,7 +36,7 @@ export const enContent = {
       exploreLinks: [
         { label: "Learning home", href: "/" },
         { label: "Negative Numbers lesson", href: "/courses/4/3?mode=focus" },
-        { label: "Study with Nova", href: "/courses/4/3?mode=study" },
+        { label: "Learn with Nova", href: "/courses/4/3?mode=focus" },
         { label: "Curriculum and evidence", href: "/curriculum" },
       ],
       helpLinks: [
@@ -48,7 +48,7 @@ export const enContent = {
       languageNote:
         "The platform interface is available in English and Spanish. Source media and interactions vary by page and do not form a complete or validated Spanish experience.",
       legalNote:
-        "Grade 4 Lesson 3 is a fully navigable 39-page current-JavaScript showcase. Strict Flash fidelity, Owner acceptance, and wider-curriculum publication remain separate gates.",
+        "Grade 4 Lesson 3 and Grade 5 Lesson 4 are runnable current-JavaScript lessons. Strict Flash fidelity, audio acceptance, Owner acceptance, and wider-curriculum publication remain separate gates.",
     },
   },
   pages: {
@@ -66,7 +66,7 @@ export const enContent = {
         primaryAction: { label: "Explore the demos", href: "/demos" },
         secondaryAction: { label: "Get project support", href: "/support" },
         supportingNote:
-          "The website is now a runnable learning platform beginning with a fully navigable 39-page current-JavaScript showcase. Strict Flash fidelity, Owner acceptance, and publication of the wider curriculum remain separate gates.",
+          "The website now offers two runnable current-JavaScript lessons: Grade 4 Lesson 3 with 39 pages and Grade 5 Lesson 4 with 54 pages. Strict Flash fidelity, audio acceptance, Owner acceptance, and publication of the wider curriculum remain separate gates.",
       },
       status: {
         label: "Project status",
@@ -130,12 +130,12 @@ export const enContent = {
       },
       demos: {
         eyebrow: "Learning experience available",
-        title: "Start with Negative Numbers",
+        title: "Choose a lesson to explore",
         intro:
-          "Grade 4 Lesson 3 is now a fully navigable 39-page current-JavaScript showcase with local progress, Nova Tutor, and pseudonymous LRS sync.",
+          "Grade 4 Lesson 3, Negative Numbers, and Grade 5 Lesson 4, Number Lines, are now runnable current-JavaScript lessons with local progress and learning supports.",
         items: [],
         note:
-          "This runnable showcase does not claim strict Flash fidelity, owner acceptance, or publication of the wider curriculum.",
+          "These runnable lessons do not claim strict Flash fidelity, audio acceptance, Owner acceptance, or publication of the wider curriculum.",
       },
       closing: {
         title: "Returning to HELP Math? We want to point you in the right direction.",
@@ -180,10 +180,10 @@ export const enContent = {
         {
           id: "today",
           eyebrow: "Where we are today",
-          title: "A learning platform beginning with one fully navigable showcase",
+          title: "A learning platform with two runnable current-JavaScript lessons",
           paragraphs: [
-            "This release makes Grade 4 Lesson 3, Negative Numbers, available as a fully navigable 39-page current-JavaScript showcase with Nova Tutor and local progress.",
-            "It does not restore the former account system or provide classes, assignments, purchases, teacher dashboards, or formal grades. Strict Flash fidelity, owner acceptance, and wider-curriculum publication remain separate gates.",
+            "This release makes Grade 4 Lesson 3, Negative Numbers, available with 39 registered current-JavaScript pages and Grade 5 Lesson 4, Number Lines, available with 54 registered current-JavaScript pages in the modern My Lesson experience.",
+            "It does not restore the former account system or provide classes, assignments, purchases, teacher dashboards, or formal grades. Strict Flash fidelity, audio acceptance, Owner acceptance, and wider-curriculum publication remain separate gates.",
           ],
         },
       ],
@@ -324,7 +324,7 @@ export const enContent = {
       teacherRole: {
         title: "Technology supports instruction; educators shape its use.",
         body:
-          "The platform now provides a runnable 39-page current-JavaScript showcase, not a complete released curriculum or an automated teaching system. Strict Flash fidelity, Owner acceptance, and wider-curriculum publication remain separate gates. Educators remain essential for choosing appropriate tasks, listening to student reasoning, and connecting activities to classroom goals.",
+          "The platform now provides two runnable current-JavaScript lessons totaling 93 registered pages, not a complete released curriculum or an automated teaching system. Strict Flash fidelity, audio acceptance, Owner acceptance, and wider-curriculum publication remain separate gates. Educators remain essential for choosing appropriate tasks, listening to student reasoning, and connecting activities to classroom goals.",
         action: { label: "Ask an instructional question", href: "/contact?topic=instruction" },
       },
     },
@@ -416,11 +416,11 @@ export const enContent = {
       availability: {
         id: "availability",
         eyebrow: "What is available now",
-        title: "One runnable lesson, without enrollment",
+        title: "Two runnable lessons, without enrollment",
         paragraphs: [
-          "The learning platform currently offers Grade 4 Lesson 3, Negative Numbers, as a fully navigable 39-page current-JavaScript showcase. It includes local browser progress, Nova Tutor, and pseudonymous learning-event sync, but no placement testing, teacher dashboard, class assignment, enrollment, or formal grade record.",
+          "The learning platform currently offers two current-JavaScript lessons in the modern My Lesson experience: Grade 4 Lesson 3, Negative Numbers, with 39 registered pages, and Grade 5 Lesson 4, Number Lines, with 54 registered pages. They include local browser progress and learning supports, but no placement testing, teacher dashboard, class assignment, enrollment, or formal grade record.",
           "The interface is available in English and Spanish, but source media and interactions vary by page and do not form a complete or validated Spanish experience.",
-          "The showcase is runnable product access, not a strict migration or fidelity claim. Wider curriculum publication still depends on source audit, rights review, instructional review, accessibility work, original-behavior validation, human review, and owner acceptance.",
+          "These lessons are runnable product access, not strict migration, Flash-fidelity, audio-acceptance, or Owner-acceptance claims. Wider curriculum publication still depends on source audit, rights review, instructional review, accessibility work, original-behavior validation, human review, and Owner acceptance.",
         ],
       },
       closing: {
@@ -612,7 +612,7 @@ export const enContent = {
         eyebrow: "HELP Math support",
         title: "Start with what is available today",
         summary:
-          "The learning platform offers Grade 4 Lesson 3 as a fully navigable 39-page current-JavaScript showcase with local progress, Nova Tutor, and learning-record sync. Former student and educator accounts are not connected, and this site cannot recover old passwords or historical learning records.",
+          "The learning platform offers Grade 4 Lesson 3 with 39 current-JavaScript pages and Grade 5 Lesson 4 with 54 current-JavaScript pages, together with local progress and learning supports. Former student and educator accounts are not connected, and this site cannot recover old passwords or historical learning records.",
         primaryAction: { label: "Contact support", href: "/contact?topic=support" },
         secondaryAction: { label: "Check login status", href: "/login" },
       },
@@ -624,14 +624,21 @@ export const enContent = {
             id: "website",
             title: "Learning platform",
             description:
-              "Available with English and Spanish interface options, one fully navigable 39-page current-JavaScript showcase, local progress, Nova Tutor, program information, and support. Source media and interactions vary by page.",
+              "Available with English and Spanish interface options, two runnable current-JavaScript lessons totaling 93 registered pages, local progress, Nova Tutor, program information, and support. Source media and interactions vary by page.",
             detail: "Available",
           },
           {
             id: "demos",
             title: "Grade 4 Lesson 3: Negative Numbers",
             description:
-              "All 39 registered pages and the course shell are navigable as a current-JavaScript showcase. This is not strict Flash fidelity, Owner acceptance, or publication of the wider curriculum.",
+              "All 39 registered pages are navigable in the modern My Lesson experience. This is not strict Flash fidelity, audio acceptance, Owner acceptance, or publication of the wider curriculum.",
+            detail: "Available",
+          },
+          {
+            id: "g5-l4",
+            title: "Grade 5 Lesson 4: Number Lines",
+            description:
+              "All 54 registered pages are navigable in the modern My Lesson experience. This is not strict Flash fidelity, audio acceptance, Owner acceptance, or publication of the wider curriculum.",
             detail: "Available",
           },
           {
@@ -661,13 +668,13 @@ export const enContent = {
           id: "full-course",
           question: "Is the full HELP Math course available?",
           answer:
-            "Not yet. The current release includes one fully navigable 39-page current-JavaScript showcase—Grade 4 Lesson 3, Negative Numbers—not the full HELP Math curriculum. This does not establish strict Flash fidelity or Owner acceptance; additional lessons require their own source, rights, instructional, accessibility, fidelity, and acceptance reviews.",
+            "Not yet. The current release includes two runnable current-JavaScript lessons—Grade 4 Lesson 3, Negative Numbers (39 pages), and Grade 5 Lesson 4, Number Lines (54 pages)—not the full HELP Math curriculum. This does not establish strict Flash fidelity, audio acceptance, or Owner acceptance; additional lessons require their own source, rights, instructional, accessibility, fidelity, and acceptance reviews.",
         },
         {
           id: "student-help",
           question: "I am a student. How should I ask for help?",
           answer:
-            "Use Nova Tutor inside the Negative Numbers lesson for concept explanations and hints. For account, school, or technical support, ask a teacher, parent, guardian, or another trusted adult to contact the project. Never send a password, birthday, student ID, grades, or class records.",
+            "Use Nova Tutor inside an available lesson for concept explanations and hints. For account, school, or technical support, ask a teacher, parent, guardian, or another trusted adult to contact the project. Never send a password, birthday, student ID, grades, or class records.",
         },
         {
           id: "purchase",
@@ -824,16 +831,16 @@ export const enContent = {
       },
       hero: {
         eyebrow: "Learning experience",
-        title: "Negative Numbers is ready to explore",
+        title: "Two lessons are ready to explore",
         summary:
-          "Grade 4 Lesson 3 is a fully navigable 39-page current-JavaScript showcase with local progress, Nova Tutor, and pseudonymous learning-record sync. Running it does not establish strict Flash fidelity, Owner acceptance, or publication of the wider curriculum.",
+          "Grade 4 Lesson 3, Negative Numbers, has 39 registered current-JavaScript pages, and Grade 5 Lesson 4, Number Lines, has 54. Running them does not establish strict Flash fidelity, audio acceptance, Owner acceptance, or publication of the wider curriculum.",
         primaryAction: { label: "Start the lesson", href: "/courses/4/3?mode=focus" },
         secondaryAction: { label: "How restoration works", href: "/about#preservation" },
       },
       previewNotice: {
-        title: "Runnable showcase; strict evidence gates remain open",
+        title: "Runnable lessons; strict evidence gates remain open",
         body:
-          "All 39 lesson pages and the functional course shell are navigable. This does not establish original-runtime or audio fidelity, completed human visual review, Owner acceptance, rights clearance, strict migration completion, or publication of the wider curriculum.",
+          "All 39 G4 L3 pages and all 54 G5 L4 pages are navigable in the modern My Lesson experience. This does not establish original-runtime, visual, or audio fidelity, completed human review, Owner acceptance, rights clearance, strict migration completion, or publication of the wider curriculum.",
       },
       listLabel: "Current availability",
       items: [
@@ -844,8 +851,18 @@ export const enContent = {
           conceptLabel: "Lesson",
           concept: "Negative numbers and the number line",
           statusLabel: "Runnable showcase",
-          statusDetail: "39 of 39 registered pages are navigable in the current-JavaScript course shell; strict evidence and wider-publication gates remain open.",
+          statusDetail: "39 of 39 registered pages are navigable in the modern My Lesson experience; strict evidence and wider-publication gates remain open.",
           action: { label: "Open the lesson", href: "/courses/4/3?mode=focus" },
+        },
+        {
+          id: "g5-l4-number-lines",
+          title: "Grade 5 Lesson 4: Number Lines",
+          summary: "Explore number lines across eight lesson sections, use the support tools, ask Nova for age-appropriate help, and continue from locally saved progress.",
+          conceptLabel: "Lesson",
+          concept: "Number lines",
+          statusLabel: "Runnable current-JavaScript lesson",
+          statusDetail: "54 of 54 registered pages are navigable in the modern My Lesson experience; strict evidence and wider-publication gates remain open.",
+          action: { label: "Open the lesson", href: "/courses/5/4?mode=focus" },
         },
       ],
       quality: {
@@ -964,10 +981,10 @@ export const enContent = {
         eyebrow: "Draft privacy notice",
         title: "A learning preview designed to know less about you",
         summary:
-          "You can use the Grade 4 Lesson 3 showcase without an account, name, email address, school, class, payment, or teacher profile. This notice explains what stays in your browser, what is sent to the learning record store, and what Nova Tutor needs when you ask for help.",
+          "You can use the Grade 4 Lesson 3 and Grade 5 Lesson 4 current-JavaScript lessons without an account, name, email address, school, class, payment, or teacher profile. This notice explains what stays in your browser, what is sent to the learning record store, and what Nova Tutor needs when you ask for help.",
       },
       effectiveDateLabel: "Last updated",
-      effectiveDate: "August 14, 2026",
+      effectiveDate: "August 16, 2026",
       reviewNotice:
         "DRAFT — Owner and legal review required before publication. This notice describes the current technical design; it is not a legal determination or a guarantee of FERPA, COPPA, or other regulatory compliance.",
       sections: [
@@ -975,7 +992,7 @@ export const enContent = {
           id: "scope",
           title: "1. Scope",
           paragraphs: [
-            "This notice applies to helpmath.ai, including its informational pages, the runnable Grade 4 Lesson 3 learning showcase, Nova Tutor, learning-event reporting, and the current contact-status page.",
+            "This notice applies to helpmath.ai, including its informational pages, the two runnable current-JavaScript lessons—Grade 4 Lesson 3, Negative Numbers, and Grade 5 Lesson 4, Number Lines—Nova Tutor, learning-event reporting, and the current contact-status page.",
             "The current learning experience has no student or teacher accounts and does not ask for a learner's name, email address, school, class, payment, or teacher profile. It does not authenticate a learner or connect lesson activity to a school record.",
           ],
         },
@@ -997,7 +1014,7 @@ export const enContent = {
           ],
           bullets: [
             "Learning events do not contain a Nova Tutor prompt or reply, a free-text answer, raw speech, a photo, or a captured course frame.",
-            "The current Grade 4 Lesson 3 player does not emit practice-result events. If a compatible closed-result integration is enabled later, its contract permits only allowlisted fields such as outcome, attempt number, and lesson page; this notice must be reviewed before launch.",
+            "The current Grade 4 Lesson 3 and Grade 5 Lesson 4 players do not emit practice-result events. If a compatible closed-result integration is enabled later, its contract permits only allowlisted fields such as outcome, attempt number, and lesson page; this notice must be reviewed before launch.",
             "The platform does not currently turn these events into a teacher dashboard, grade, placement result, or automated educational decision.",
           ],
         },
@@ -1071,16 +1088,16 @@ export const enContent = {
       metadata: {
         title: "Draft Terms of Use",
         description:
-          "Read the unapproved draft terms proposed for HELP Math, its current-JavaScript Grade 4 Lesson 3 showcase, Nova Tutor, and related content.",
+          "Read the unapproved draft terms proposed for HELP Math, its Grade 4 Lesson 3 and Grade 5 Lesson 4 current-JavaScript lessons, Nova Tutor, and related content.",
       },
       hero: {
         eyebrow: "Draft terms of use",
-        title: "Use the learning showcase thoughtfully",
+        title: "Use the learning experiences thoughtfully",
         summary:
-          "This draft describes proposed terms for the website and runnable Grade 4 Lesson 3 showcase. Until owner and legal approval is documented and a final version is published, it does not form a contract, bind a visitor, or grant a license.",
+          "This draft describes proposed terms for the website and its two runnable current-JavaScript lessons: Grade 4 Lesson 3 and Grade 5 Lesson 4. Until owner and legal approval is documented and a final version is published, it does not form a contract, bind a visitor, or grant a license.",
       },
       effectiveDateLabel: "Last updated",
-      effectiveDate: "August 14, 2026",
+      effectiveDate: "August 16, 2026",
       reviewNotice:
         "DRAFT — Owner and legal review required before publication. The governing entity, jurisdiction, contact address, vendor terms, child-user terms, and any showcase-specific license must be confirmed. Until those approvals are documented, this draft is review information only: it does not form a contract, bind a visitor, or grant a license. These terms do not guarantee FERPA, COPPA, or other regulatory compliance.",
       sections: [
@@ -1096,8 +1113,8 @@ export const enContent = {
           id: "service",
           title: "2. What this site provides",
           paragraphs: [
-            "The site provides project information and one runnable current-JavaScript showcase: Grade 4 Lesson 3, Negative Numbers, with 39 registered lesson pages and a functional course shell.",
-            "Showcase availability is not proof of strict migration completion, original Flash runtime or visual fidelity, audio fidelity, human or Owner acceptance, rights clearance, or publication of the restored historical curriculum. Those remain separate evidence and release gates.",
+            "The site provides two runnable current-JavaScript lessons in the modern My Lesson experience: Grade 4 Lesson 3, Negative Numbers, with 39 registered pages, and Grade 5 Lesson 4, Number Lines, with 54 registered pages.",
+            "Lesson availability is not proof of strict migration completion, original Flash runtime or visual fidelity, audio fidelity, human or Owner acceptance, rights clearance, or publication of the restored historical curriculum. Those remain separate evidence and release gates.",
             "The site does not currently provide enrollment, named student or educator accounts, schools, classes, assignments, teacher dashboards, official grades, payments, or guaranteed access to the historical program.",
           ],
         },
@@ -1142,7 +1159,7 @@ export const enContent = {
           id: "educational-use",
           title: "7. Educational context",
           paragraphs: [
-            "The Grade 4 Lesson 3 showcase is a current-JavaScript learning experience, not a complete released curriculum, validated diagnostic instrument, individualized intervention, or substitute for an educator's judgment.",
+            "Grade 4 Lesson 3 and Grade 5 Lesson 4 are current-JavaScript learning experiences, not a complete released curriculum, validated diagnostic instrument, individualized intervention, or substitute for an educator's judgment.",
             "Descriptions of historical research, awards, standards alignment, scope, or features are identified as archival context unless the site expressly states that a current claim has been verified.",
           ],
         },
@@ -1150,7 +1167,7 @@ export const enContent = {
           id: "availability",
           title: "8. Availability and changes",
           paragraphs: [
-            "The project may add, revise, pause, or remove content, the showcase, Nova Tutor, or learning-event services as sources, rights, accuracy, security, accessibility, and provider availability are reviewed. We do not promise that a historical resource, account, or feature will become available.",
+            "The project may add, revise, pause, or remove content, a lesson, Nova Tutor, or learning-event services as sources, rights, accuracy, security, accessibility, and provider availability are reviewed. We do not promise that a historical resource, account, or feature will become available.",
           ],
         },
         {

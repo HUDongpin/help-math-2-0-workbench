@@ -1,10 +1,12 @@
 import {DescriptorDrivenWholeLessonPlayer} from '@/components/descriptor-driven-whole-lesson-player';
 import {G4L3WholeLessonPlayer} from '@/components/g4-l3-whole-lesson-player';
+import type {PublicAuthStatus} from '@/lib/auth-session';
 import type {WholeLessonCourseRegistration} from '@/lib/whole-lesson-course-registry';
 import type {WholeLessonHostPresentation} from '@/lib/whole-lesson-host-presentation';
 import type {NovaTutorMode} from '@/lib/tutor-integration';
 
 export function WholeLessonCoursePlayer({
+  authStatus = 'disabled',
   candidateMode,
   hostPresentation = 'legacy-composite',
   learningEventsEnabled = false,
@@ -15,6 +17,7 @@ export function WholeLessonCoursePlayer({
   reviewerMode = false,
   strictCompleteMemberCount,
 }: {
+  authStatus?: PublicAuthStatus;
   candidateMode: boolean;
   hostPresentation?: WholeLessonHostPresentation;
   learningEventsEnabled?: boolean;
@@ -27,6 +30,7 @@ export function WholeLessonCoursePlayer({
 }) {
   if (registration.player.kind === 'preserved-custom') {
     return <G4L3WholeLessonPlayer
+      authStatus={authStatus}
       candidateMode={candidateMode}
       hostPresentation={hostPresentation}
       learningEventsEnabled={learningEventsEnabled}
@@ -39,10 +43,12 @@ export function WholeLessonCoursePlayer({
   }
 
   return <DescriptorDrivenWholeLessonPlayer
+    authStatus={authStatus}
     candidateMode={candidateMode}
     descriptor={registration.descriptor}
     hostPresentation={hostPresentation}
     locale={locale}
+    novaTutorMode={novaTutorMode}
     releasePublished={releasePublished}
     reviewerMode={reviewerMode}
     strictCompleteMemberCount={strictCompleteMemberCount}

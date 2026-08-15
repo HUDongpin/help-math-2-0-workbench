@@ -2,7 +2,10 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import test from 'node:test';
 
-import {playbackReachedEnd} from '@/components/animation-runtime';
+import {
+  playbackReachedEnd,
+  resolveAnimationPlaybackProgress,
+} from '@/components/animation-runtime';
 import {frameAtElapsedMs, resolvePlaybackEndFrame} from '@helpmath/demos/runtime';
 
 const PLAYING = {
@@ -67,6 +70,64 @@ test('a page that is not really playing reports nothing', () => {
   assert.equal(
     playbackReachedEnd({...PLAYING, frame: 43, rendererDomainSupported: false}),
     false,
+  );
+});
+
+test('page animation progress uses the authored playback end rather than asset frame count', () => {
+  const progressing = {
+    capture: false,
+    fps: 12,
+    playbackEndFrame: 328,
+    reducedMotion: false,
+    rendererDomainSupported: true,
+  } as const;
+
+  assert.equal(resolveAnimationPlaybackProgress({...progressing, frame: 1}), 0);
+  assert.equal(
+    resolveAnimationPlaybackProgress({...progressing, frame: 164}),
+    163 / 327,
+  );
+  // Page 36 owns 789 source frames but its authored playback stops at 328.
+  // Reaching that real endpoint must report 100%, and later frames clamp.
+  assert.equal(resolveAnimationPlaybackProgress({...progressing, frame: 328}), 1);
+  assert.equal(resolveAnimationPlaybackProgress({...progressing, frame: 789}), 1);
+  // A loop returns to the beginning of its next pass; this is a playhead, not
+  // earned completion, so the reset to zero is intentional.
+  assert.equal(resolveAnimationPlaybackProgress({...progressing, frame: 1}), 0);
+});
+
+test('page animation progress handles static, reduced-motion and unavailable states', () => {
+  const base = {
+    capture: false,
+    fps: 12,
+    frame: 1,
+    playbackEndFrame: 68,
+    reducedMotion: false,
+    rendererDomainSupported: true,
+  } as const;
+
+  assert.equal(
+    resolveAnimationPlaybackProgress({...base, playbackEndFrame: 1}),
+    1,
+    'a ready static page is immediately complete',
+  );
+  assert.equal(
+    resolveAnimationPlaybackProgress({...base, reducedMotion: true}),
+    1,
+    'reduced motion holds an authored frame but must not look stuck',
+  );
+  assert.equal(resolveAnimationPlaybackProgress({...base, fps: 0}), 1);
+  assert.equal(resolveAnimationPlaybackProgress({...base, capture: true}), null);
+  assert.equal(
+    resolveAnimationPlaybackProgress({...base, reducedMotion: undefined}),
+    null,
+  );
+  assert.equal(
+    resolveAnimationPlaybackProgress({
+      ...base,
+      rendererDomainSupported: false,
+    }),
+    null,
   );
 });
 

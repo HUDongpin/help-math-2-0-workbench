@@ -591,6 +591,13 @@ export function buildG5L4WholeLessonPlayerDescriptor(
     visualSkin: Object.freeze({
       kind: 'legacy-composite',
       layoutId: 'help-math-course-shell-800x600-v1',
+      // Grade 5 Lesson 4 uses the same responsive HELP Math 2.0 host as the
+      // admitted Grade 4 lesson. This host declaration changes neither the 54
+      // source-bound page renderers nor any fidelity or publication gate.
+      presentations: Object.freeze([
+        'legacy-composite',
+        'modern-wide',
+      ] as const),
       chromeAsset:
         '/flash-assets/courses/shell-course-g05-l04-index-local/root-frames/frame-0049.png',
       header: Object.freeze({

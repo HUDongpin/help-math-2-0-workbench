@@ -133,16 +133,17 @@ test('G4 L3 is the declared widescreen pilot', () => {
   );
 });
 
-test('G5 L4 has not been admitted to the widescreen presentation yet', () => {
-  // The descriptor-only gate in the rollout plan: turning G5 L4 on must be a
-  // change to its own descriptor and nothing else. Until that review happens it
-  // must not inherit the presentation from the shared shell.
+test('G5 L4 declares the shared widescreen HELP Math 2.0 presentation', () => {
   const descriptor = G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR;
   assert.ok(descriptor, 'G5 L4 descriptor should be constructible');
   const declared = descriptor.visualSkin.presentations;
+  assert.deepEqual(
+    [...(declared ?? [])],
+    ['legacy-composite', 'modern-wide'],
+  );
   assert.equal(
     resolveWholeLessonHostPresentation({declared, enabled: true}),
-    'legacy-composite',
+    'modern-wide',
   );
 });
 
@@ -173,7 +174,7 @@ test('the widescreen control bar ranks controls instead of levelling them', asyn
   };
 
   const pause = orderOf("[data-responsive-focus-key='pause']");
-  const secondary = orderOf("[data-responsive-focus-key='mute']");
+  const secondary = orderOf('.lesson-shell2__volume-control');
   const lookup = orderOf("[data-responsive-focus-key='exit']");
   const instrument = orderOf('.lesson-shell2__modern-transport-summary');
 
