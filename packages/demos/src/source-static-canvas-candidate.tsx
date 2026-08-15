@@ -510,7 +510,18 @@ function loadCanvasAsset(config: ResolvedSourceStaticCanvasCandidateConfig) {
 function verifyRenderedIdentity(
   canvas: HTMLCanvasElement,
   rendered: unknown,
-  expected: SourceStaticCanvasFrameState,
+  expected: Pick<
+    SourceStaticCanvasFrameState,
+    | "entryStateSha256"
+    | "frame"
+    | "frameDomain"
+    | "language"
+    | "requirementId"
+    | "rootFrame"
+    | "scenario"
+    | "seed"
+    | "traceId"
+  >,
 ) {
   invariant(
     isCanvasRuntimeState(rendered) &&
@@ -849,6 +860,30 @@ export function createSourceStaticCanvasCandidate(
       null,
     );
     const requestedVisualKey = sourceStaticCanvasVisualKey(deterministicState);
+    const renderIdentity = useMemo(
+      () => Object.freeze({
+        entryStateSha256: deterministicState.entryStateSha256,
+        frame: deterministicState.frame,
+        frameDomain: deterministicState.frameDomain,
+        language: deterministicState.language,
+        requirementId: deterministicState.requirementId,
+        rootFrame: deterministicState.rootFrame,
+        scenario: deterministicState.scenario,
+        seed: deterministicState.seed,
+        traceId: deterministicState.traceId,
+      }),
+      [
+        deterministicState.entryStateSha256,
+        deterministicState.frame,
+        deterministicState.frameDomain,
+        deterministicState.language,
+        deterministicState.requirementId,
+        deterministicState.rootFrame,
+        deterministicState.scenario,
+        deterministicState.seed,
+        deterministicState.traceId,
+      ],
+    );
     const reportedCanvasStatus = retainedCanvasStatus({
       canvasStatus,
       renderedVisualKey,
@@ -877,12 +912,12 @@ export function createSourceStaticCanvasCandidate(
           await asset.ready();
           if (cancelled) return;
           const rendered = asset.render(canvas, {
-            frame: deterministicState.frame,
-            scenario: deterministicState.scenario,
-            lang: deterministicState.language,
-            seed: deterministicState.seed,
+            frame: renderIdentity.frame,
+            scenario: renderIdentity.scenario,
+            lang: renderIdentity.language,
+            seed: renderIdentity.seed,
           });
-          verifyRenderedIdentity(canvas, rendered, deterministicState);
+          verifyRenderedIdentity(canvas, rendered, renderIdentity);
           if (!cancelled) {
             setRenderedVisualKey(requestedVisualKey);
             setCanvasStatus("ready");
@@ -897,7 +932,7 @@ export function createSourceStaticCanvasCandidate(
       return () => {
         cancelled = true;
       };
-    }, [deterministicState, requestedVisualKey]);
+    }, [deterministicState.status, renderIdentity, requestedVisualKey]);
 
     const blocked =
       deterministicState.status === "blocked"

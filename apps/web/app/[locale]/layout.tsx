@@ -30,16 +30,6 @@ export const viewport: Viewport = {
   themeColor: '#1768d4'
 };
 
-const learningThemeBootstrap = `(() => {
-  let theme = 'light';
-  try {
-    const saved = localStorage.getItem('helpmath:learning-workspace-theme:v1');
-    if (saved === 'light' || saved === 'dark') theme = saved;
-    else if (matchMedia('(prefers-color-scheme: dark)').matches) theme = 'dark';
-  } catch {}
-  document.documentElement.dataset.learningPlatformTheme = theme;
-})();`;
-
 export function generateStaticParams() {
   return [{locale: 'en'}, {locale: 'es'}];
 }
@@ -67,7 +57,18 @@ export default async function LocaleLayout({
   return (
     <html data-scroll-behavior="smooth" lang={locale} suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{__html: learningThemeBootstrap}} />
+        <script
+          async
+          blocking="render"
+          data-help-math-theme-bootstrap="true"
+          fetchPriority="high"
+          src="/learning-theme-bootstrap.js"
+        />
+        <script
+          dangerouslySetInnerHTML={{__html: organizationData}}
+          id="help-math-organization"
+          type="application/ld+json"
+        />
       </head>
       <body>
         <ClerkLocalAuthProvider locale={appLocale}>
@@ -80,10 +81,6 @@ export default async function LocaleLayout({
             <SiteFooter content={content} locale={appLocale} />
           </LocaleProvider>
         </ClerkLocalAuthProvider>
-        <script
-          dangerouslySetInnerHTML={{__html: organizationData}}
-          type="application/ld+json"
-        />
         {process.env.NODE_ENV === 'production' ? <Analytics /> : null}
       </body>
     </html>

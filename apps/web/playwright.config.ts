@@ -35,10 +35,18 @@ export default defineConfig({
   webServer: {
     command: `npm run dev -- --hostname ${host} --port ${port}`,
     env: {
+      // Ordinary browser regression must never connect to the development
+      // Clerk instance. The destructive provider lifecycle has a separate,
+      // explicitly authorized launcher and Playwright configuration.
+      CLERK_LOCAL_AUTH_ENABLED: 'false',
       // The browser suite exercises unfinished candidates only in a local
       // development server. Production does not expose a review route.
       MODERN_WIDE_SHELL_ENABLED:
         process.env.MODERN_WIDE_SHELL_ENABLED ?? 'false',
+      CURRENT_JS_SHOWCASE_G4_L3_ENABLED:
+        process.env.CURRENT_JS_SHOWCASE_G4_L3_ENABLED ?? 'false',
+      CURRENT_JS_SHOWCASE_G5_L4_ENABLED:
+        process.env.CURRENT_JS_SHOWCASE_G5_L4_ENABLED ?? 'false',
       REVIEWER_INSTRUMENTATION_ENABLED:
         process.env.REVIEWER_INSTRUMENTATION_ENABLED ?? 'false',
     },

@@ -74,6 +74,7 @@ test('lesson platform header is title-free, auth-aware, bilingual, and theme-per
     shellSource,
     globalCss,
     localeLayoutSource,
+    themeBootstrapSource,
     courseRouteSource,
     playerBridgeSource,
     g4PlayerSource,
@@ -85,6 +86,10 @@ test('lesson platform header is title-free, auth-aware, bilingual, and theme-per
     ),
     readFile(new URL('../app/globals.css', import.meta.url), 'utf8'),
     readFile(new URL('../app/[locale]/layout.tsx', import.meta.url), 'utf8'),
+    readFile(
+      new URL('../public/learning-theme-bootstrap.js', import.meta.url),
+      'utf8',
+    ),
     readFile(
       new URL('../app/[locale]/courses/[grade]/[lesson]/page.tsx', import.meta.url),
       'utf8',
@@ -127,10 +132,14 @@ test('lesson platform header is title-free, auth-aware, bilingual, and theme-per
   assert.match(localeLayoutSource, /colorScheme: 'light dark'/);
   assert.match(
     localeLayoutSource,
+    /blocking="render"[\s\S]*?src="\/learning-theme-bootstrap\.js"/,
+  );
+  assert.match(
+    themeBootstrapSource,
     /localStorage\.getItem\('helpmath:learning-workspace-theme:v1'\)/,
   );
   assert.match(
-    localeLayoutSource,
+    themeBootstrapSource,
     /document\.documentElement\.dataset\.learningPlatformTheme = theme/,
   );
   assert.match(courseRouteSource, /const authSession = await readAuthSession\(\)/);

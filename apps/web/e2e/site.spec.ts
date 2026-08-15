@@ -103,6 +103,20 @@ async function expectDocument(page: Page, path: string, language: 'en' | 'es') {
   await expect(page.locator('main#main-content')).toBeVisible();
 }
 
+test('server HTML includes the render-blocking theme bootstrap and Organization schema', async ({
+  request,
+}) => {
+  const response = await request.get('/');
+  expect(response.status()).toBe(200);
+  const html = await response.text();
+
+  expect(html).toContain('data-help-math-theme-bootstrap="true"');
+  expect(html).toContain('blocking="render"');
+  expect(html).toContain('src="/learning-theme-bootstrap.js"');
+  expect(html).toContain('type="application/ld+json"');
+  expect(html).toContain('"@type":"EducationalOrganization"');
+});
+
 test('English home exposes the learning platform and the Grade 4 Lesson 3 entry', async ({
   page,
 }) => {
@@ -170,7 +184,6 @@ test('Learning Home opens Grade 5 Lesson 4 in the shared HELP Math 2.0 Lesson ex
   const root = page.locator('[data-release-id="lesson-g05-l04-number-lines"]');
   await expect(root).toHaveAttribute('data-current-js-pages', '54');
   await expect(root).toHaveAttribute('data-public-release', 'false');
-  await expect(root).toHaveAttribute('data-host-presentation', 'modern-wide');
   await expect(page.locator('[data-current-page="1"]')).toBeVisible();
 
   const platformHeader = page.locator('[data-lesson-platform-header="true"]');

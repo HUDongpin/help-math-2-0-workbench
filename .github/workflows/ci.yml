@@ -56,7 +56,11 @@ jobs:
   site:
     name: Site workspace
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
+    env:
+      CURRENT_JS_SHOWCASE_G4_L3_ENABLED: "true"
+      CURRENT_JS_SHOWCASE_G5_L4_ENABLED: "true"
+      MODERN_WIDE_SHELL_ENABLED: "true"
     defaults:
       run:
         working-directory: apps/web

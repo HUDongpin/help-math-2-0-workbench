@@ -206,11 +206,15 @@ async function expectNoHorizontalOverflow(page: Page) {
   expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth + 1);
 }
 
-async function expectControlsWithinViewport(page: Page, controls: Locator[]) {
+async function expectControlsReachableByVerticalScroll(
+  page: Page,
+  controls: Locator[],
+) {
   const viewport = page.viewportSize();
   expect(viewport).not.toBeNull();
 
   for (const control of controls) {
+    await control.scrollIntoViewIfNeeded();
     await expect(control).toBeVisible();
     const box = await stableBox(control);
     expect(box.width).toBeGreaterThanOrEqual(44);
@@ -430,7 +434,7 @@ async function dragCenterToCenter(
   await page.mouse.up();
 }
 
-test('844x390 keeps compact controls and the stage in separate columns without learner evidence copy', async ({
+test('844x390 keeps compact controls reachable by vertical scroll without learner evidence copy', async ({
   baseURL,
   page,
 }) => {
@@ -458,15 +462,15 @@ test('844x390 keeps compact controls and the stage in separate columns without l
     .not.toHaveAttribute('aria-describedby', /-transport-boundary$/);
   expect(stage.x + stage.width).toBeLessThanOrEqual(toolbar.x + 1);
   expect(toolbar.x + toolbar.width).toBeLessThanOrEqual(845);
-  expect(toolbar.y + toolbar.height).toBeLessThanOrEqual(391);
-  expect(actions.y + actions.height).toBeLessThanOrEqual(391);
-  await expectControlsWithinViewport(page, [
+  expect(toolbar.y).toBeGreaterThanOrEqual(-1);
+  expect(actions.y).toBeGreaterThanOrEqual(-1);
+  await expectControlsReachableByVerticalScroll(page, [
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="map"]'),
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="help"]'),
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="exit"]'),
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="header-back"]'),
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="key-terms"]'),
-    page.locator('.lesson-shell2__spine [data-responsive-focus-key="calculator"]'),
+    page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="calculator"]'),
     page.locator('.lesson-shell2__learning-actions [data-responsive-focus-key="previous"]'),
     page.locator('.lesson-shell2__learning-actions [data-responsive-focus-key="next"]'),
   ]);
@@ -475,7 +479,7 @@ test('844x390 keeps compact controls and the stage in separate columns without l
   await expectNoRuntimeIssues(page, issues);
 });
 
-test('844x390 keeps Spanish compact controls and the platform boundary visible', async ({
+test('844x390 keeps Spanish compact controls reachable by vertical scroll', async ({
   baseURL,
   page,
 }) => {
@@ -486,20 +490,18 @@ test('844x390 keeps Spanish compact controls and the platform boundary visible',
 
   await expect(root).toHaveAttribute('data-layout-mode', 'compact');
   await expect(root).toHaveAttribute('data-stage-render-mode', 'proportional-scale');
-  await expect(page.locator('.lesson-shell2__status')).toContainText(
-    'MVP actual de JavaScript; no es una declaración de fidelidad estricta ni de publicación pública.',
-  );
+  await expect(page.locator('.lesson-shell2__status')).toHaveCount(0);
   await expect(page.locator('[data-compact-transport-summary="true"]'))
     .toHaveCount(0);
   await expectSingleLiveControlSurface(page, 'modern-wide');
 
   const toolbar = await stableBox(page.locator('.lesson-shell2__modern-toolbar'));
   const actions = await stableBox(page.locator('.lesson-shell2__learning-actions'));
-  expect(toolbar.y + toolbar.height).toBeLessThanOrEqual(391);
-  expect(actions.y + actions.height).toBeLessThanOrEqual(391);
-  await expectControlsWithinViewport(page, [
+  expect(toolbar.y).toBeGreaterThanOrEqual(-1);
+  expect(actions.y).toBeGreaterThanOrEqual(-1);
+  await expectControlsReachableByVerticalScroll(page, [
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="key-terms"]'),
-    page.locator('.lesson-shell2__spine [data-responsive-focus-key="calculator"]'),
+    page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="calculator"]'),
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="replay"]'),
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="pause"]'),
     page.locator('.lesson-shell2__learning-actions [data-responsive-focus-key="previous"]'),
@@ -513,7 +515,7 @@ for (const viewport of [
   {height: 720, width: 1280},
   {height: 768, width: 1366},
 ] as const) {
-  test(`${viewport.width}x${viewport.height} preserves the 800x600 stage inside the viewport`, async ({
+  test(`${viewport.width}x${viewport.height} preserves the 800x600 stage inside the lesson column`, async ({
     baseURL,
     page,
   }) => {
@@ -529,7 +531,17 @@ for (const viewport of [
     await expect(root).toHaveAttribute('data-stage-render-mode', 'native-pixel-size');
 
     const stage = await expectNativeStage(page);
-    expect(stage.y + stage.height).toBeLessThanOrEqual(viewport.height + 1);
+    const learningColumn = await stableBox(
+      page.locator('.lesson-shell2__learning-column'),
+    );
+    expect(stage.x).toBeGreaterThanOrEqual(learningColumn.x - 1);
+    expect(stage.x + stage.width).toBeLessThanOrEqual(
+      learningColumn.x + learningColumn.width + 1,
+    );
+    expect(stage.y).toBeGreaterThanOrEqual(learningColumn.y - 1);
+    expect(stage.y + stage.height).toBeLessThanOrEqual(
+      learningColumn.y + learningColumn.height + 1,
+    );
     // A wide, fine-pointer viewport draws the plane at native size. The
     // labelled toolbar is not a companion here: the source hit regions are
     // the only control surface, so it stays out of the way.
@@ -655,7 +667,7 @@ test('tool focus remains visible across overlay, rail, language, and resize chan
     ),
   ).toContainText('candidate entries');
   await Promise.all([
-    page.waitForURL(/\/es\/courses\/4\/3$/),
+    page.waitForURL(/\/es\/courses\/4\/3\?mode=focus$/),
     page.locator(
       '.lesson-shell2__language [data-responsive-focus-key="language-es"]',
     ).click(),

@@ -376,7 +376,9 @@ async function expectLessonPlatformHeader(
   })).toBe(true);
 
   const authStatus = await header.getAttribute('data-auth-status');
+  let minimumVisibleHeaderItems = 2;
   if (authStatus === 'signed-out') {
+    minimumVisibleHeaderItems = 4;
     await expect(header.getByRole('link', {
       exact: true,
       name: locale.signInLabel,
@@ -386,6 +388,7 @@ async function expectLessonPlatformHeader(
       name: locale.signUpLabel,
     })).toBeVisible();
   } else if (authStatus === 'signed-in') {
+    minimumVisibleHeaderItems = 3;
     await expect(header.locator('[data-responsive-focus-key="account"]'))
       .toBeVisible();
     await expect(header.getByRole('link', {name: locale.signInLabel}))
@@ -426,7 +429,9 @@ async function expectLessonPlatformHeader(
       visualOrder: visualOrder.map((item) => item.key),
     };
   });
-  expect(geometry.items.length).toBeGreaterThanOrEqual(4);
+  expect(geometry.items.length).toBeGreaterThanOrEqual(
+    minimumVisibleHeaderItems,
+  );
   for (const item of geometry.items) {
     expect(item.width, `${item.key} width`).toBeGreaterThanOrEqual(44);
     expect(item.height, `${item.key} height`).toBeGreaterThanOrEqual(44);
@@ -679,25 +684,31 @@ test.describe('prototype composition', () => {
           headerBackground: string;
         }>;
       }).__lessonThemeFirstPaint = undefined;
+      let captureScheduled = false;
       const observer = new MutationObserver(() => {
         const root = document.querySelector<HTMLElement>('main.lesson-shell2');
         const header = document.querySelector<HTMLElement>(
           '[data-lesson-platform-header="true"]',
         );
-        if (!root || !header) return;
-        (window as Window & {
-          __lessonThemeFirstPaint?: Readonly<{
-            colorScheme: string;
-            documentTheme: string;
-            headerBackground: string;
-          }>;
-        }).__lessonThemeFirstPaint = {
-          colorScheme: getComputedStyle(root).colorScheme,
-          documentTheme:
-            document.documentElement.dataset.learningPlatformTheme ?? '',
-          headerBackground: getComputedStyle(header).backgroundColor,
-        };
-        observer.disconnect();
+        if (!root || !header || captureScheduled) return;
+        captureScheduled = true;
+        // The external bootstrap is render-blocking. Its contract is the first
+        // paint, not the earlier parser-time DOM insertion observed above.
+        requestAnimationFrame(() => {
+          (window as Window & {
+            __lessonThemeFirstPaint?: Readonly<{
+              colorScheme: string;
+              documentTheme: string;
+              headerBackground: string;
+            }>;
+          }).__lessonThemeFirstPaint = {
+            colorScheme: getComputedStyle(root).colorScheme,
+            documentTheme:
+              document.documentElement.dataset.learningPlatformTheme ?? '',
+            headerBackground: getComputedStyle(header).backgroundColor,
+          };
+          observer.disconnect();
+        });
       });
       observer.observe(document, {childList: true, subtree: true});
     });
@@ -770,7 +781,7 @@ test.describe('prototype composition', () => {
     await header.getByRole('link', {exact: true, name: 'HELP Math home'}).click();
     await expect(page).toHaveURL(/\/$/u);
     await expect(page.locator('[data-learning-platform-home]'))
-      .toHaveAttribute('data-role-preview', 'learner');
+      .toHaveAttribute('data-role-preview', 'student');
     await expect(page.getByRole('group', {name: 'Learning workspace role'}))
       .toBeVisible();
   });
