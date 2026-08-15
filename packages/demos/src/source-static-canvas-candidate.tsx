@@ -212,6 +212,32 @@ export function sourceStaticCanvasVisualKey(state: Readonly<{
   ]);
 }
 
+export function sourceStaticCanvasRenderKey(state: Readonly<{
+  animationId: string;
+  entryStateSha256?: string;
+  frame: number;
+  frameDomain: string;
+  language: string;
+  requirementId?: string;
+  rootFrame: number;
+  scenario: string;
+  seed: number;
+  traceId?: string;
+}>): string {
+  return JSON.stringify([
+    state.animationId,
+    state.entryStateSha256 ?? "",
+    state.frame,
+    state.frameDomain,
+    state.language,
+    state.requirementId ?? "",
+    state.rootFrame,
+    state.scenario,
+    state.seed,
+    state.traceId ?? "",
+  ]);
+}
+
 export function retainedCanvasStatus({
   canvasStatus,
   renderedVisualKey,
@@ -860,30 +886,18 @@ export function createSourceStaticCanvasCandidate(
       null,
     );
     const requestedVisualKey = sourceStaticCanvasVisualKey(deterministicState);
-    const renderIdentity = useMemo(
-      () => Object.freeze({
-        entryStateSha256: deterministicState.entryStateSha256,
-        frame: deterministicState.frame,
-        frameDomain: deterministicState.frameDomain,
-        language: deterministicState.language,
-        requirementId: deterministicState.requirementId,
-        rootFrame: deterministicState.rootFrame,
-        scenario: deterministicState.scenario,
-        seed: deterministicState.seed,
-        traceId: deterministicState.traceId,
-      }),
-      [
-        deterministicState.entryStateSha256,
-        deterministicState.frame,
-        deterministicState.frameDomain,
-        deterministicState.language,
-        deterministicState.requirementId,
-        deterministicState.rootFrame,
-        deterministicState.scenario,
-        deterministicState.seed,
-        deterministicState.traceId,
-      ],
-    );
+    const requestedRenderKey = sourceStaticCanvasRenderKey(deterministicState);
+    const renderedRequestKeyRef = useRef<string | null>(null);
+    const renderEntryStateSha256 = deterministicState.entryStateSha256;
+    const renderFrame = deterministicState.frame;
+    const renderFrameDomain = deterministicState.frameDomain;
+    const renderLanguage = deterministicState.language;
+    const renderRequirementId = deterministicState.requirementId;
+    const renderRootFrame = deterministicState.rootFrame;
+    const renderScenario = deterministicState.scenario;
+    const renderSeed = deterministicState.seed;
+    const renderStatus = deterministicState.status;
+    const renderTraceId = deterministicState.traceId;
     const reportedCanvasStatus = retainedCanvasStatus({
       canvasStatus,
       renderedVisualKey,
@@ -892,9 +906,17 @@ export function createSourceStaticCanvasCandidate(
 
     useEffect(() => {
       const canvas = canvasRef.current;
-      if (!canvas || deterministicState.status !== "ready") {
-        setRenderedVisualKey(null);
-        setCanvasStatus("idle");
+      if (!canvas || renderStatus !== "ready") {
+        renderedRequestKeyRef.current = null;
+        setRenderedVisualKey((current) => current === null ? current : null);
+        setCanvasStatus((current) => current === "idle" ? current : "idle");
+        return;
+      }
+      // A parent may supply a freshly allocated frame-state object on every
+      // render. The exact primitive request key keeps those equivalent renders
+      // idempotent while still redrawing for any visual or trace identity
+      // change required by deterministic capture.
+      if (renderedRequestKeyRef.current === requestedRenderKey) {
         return;
       }
       let cancelled = false;
@@ -911,6 +933,17 @@ export function createSourceStaticCanvasCandidate(
         .then(async (asset) => {
           await asset.ready();
           if (cancelled) return;
+          const renderIdentity = Object.freeze({
+            entryStateSha256: renderEntryStateSha256,
+            frame: renderFrame,
+            frameDomain: renderFrameDomain,
+            language: renderLanguage,
+            requirementId: renderRequirementId,
+            rootFrame: renderRootFrame,
+            scenario: renderScenario,
+            seed: renderSeed,
+            traceId: renderTraceId,
+          });
           const rendered = asset.render(canvas, {
             frame: renderIdentity.frame,
             scenario: renderIdentity.scenario,
@@ -919,20 +952,41 @@ export function createSourceStaticCanvasCandidate(
           });
           verifyRenderedIdentity(canvas, rendered, renderIdentity);
           if (!cancelled) {
-            setRenderedVisualKey(requestedVisualKey);
-            setCanvasStatus("ready");
+            renderedRequestKeyRef.current = requestedRenderKey;
+            setRenderedVisualKey((current) =>
+              current === requestedVisualKey ? current : requestedVisualKey,
+            );
+            setCanvasStatus((current) =>
+              current === "ready" ? current : "ready",
+            );
           }
         })
         .catch(() => {
           if (!cancelled) {
-            setRenderedVisualKey(null);
-            setCanvasStatus("error");
+            renderedRequestKeyRef.current = null;
+            setRenderedVisualKey((current) => current === null ? current : null);
+            setCanvasStatus((current) =>
+              current === "error" ? current : "error",
+            );
           }
         });
       return () => {
         cancelled = true;
       };
-    }, [deterministicState.status, renderIdentity, requestedVisualKey]);
+    }, [
+      renderEntryStateSha256,
+      renderFrame,
+      renderFrameDomain,
+      renderLanguage,
+      renderRequirementId,
+      renderRootFrame,
+      renderScenario,
+      renderSeed,
+      renderStatus,
+      renderTraceId,
+      requestedRenderKey,
+      requestedVisualKey,
+    ]);
 
     const blocked =
       deterministicState.status === "blocked"
@@ -1108,7 +1162,7 @@ export function createSourceStaticCanvasCandidate(
       : {[config.mainFrameDomain]: config.livePlaybackEndFrame}),
     ...Object.fromEntries(config.companionDomains.map((domain) => [domain.id, 1])),
   });
-  const module: AnimationModule<SourceStaticCanvasFrameState> = Object.freeze({
+  const animationModule: AnimationModule<SourceStaticCanvasFrameState> = Object.freeze({
     key: config.animationId,
     movie,
     runtime,
@@ -1176,6 +1230,6 @@ export function createSourceStaticCanvasCandidate(
     getFrameState,
     buildCaptureAttributes,
     Renderer,
-    module,
+    module: animationModule,
   });
 }

@@ -8,6 +8,7 @@ import {
   buildCanvasAssetRequest,
   createSourceStaticCanvasCandidate,
   retainedCanvasStatus,
+  sourceStaticCanvasRenderKey,
   sourceStaticCanvasVisualKey,
 } from "../src/source-static-canvas-candidate";
 
@@ -245,6 +246,35 @@ test("a retained bitmap is capture-ineligible as soon as a new frame is requeste
     renderedVisualKey,
     requestedVisualKey,
   }), "loading");
+});
+
+test("Canvas render request keys are stable and include every deterministic trace identity field", () => {
+  const identity = candidate.getFrameState(32, {
+    frameDomain: "sprite-44",
+    scenario: "source-static-frame",
+    lang: "en",
+    seed: 7,
+    requirementId: "req-source-static-32",
+    traceId: "trace-source-static-32",
+    entryStateSha256: "d".repeat(64),
+  });
+  const key = sourceStaticCanvasRenderKey(identity);
+  assert.equal(sourceStaticCanvasRenderKey({...identity}), key);
+
+  for (const changed of [
+    {...identity, animationId: "course-g04-l03-test-999"},
+    {...identity, entryStateSha256: "e".repeat(64)},
+    {...identity, frame: identity.frame + 1},
+    {...identity, frameDomain: "sprite-5"},
+    {...identity, language: "es" as const},
+    {...identity, requirementId: "req-source-static-32-successor"},
+    {...identity, rootFrame: identity.rootFrame + 1},
+    {...identity, scenario: "source-static-frame-successor"},
+    {...identity, seed: identity.seed + 1},
+    {...identity, traceId: "trace-source-static-32-successor"},
+  ]) {
+    assert.notEqual(sourceStaticCanvasRenderKey(changed), key);
+  }
 });
 
 test("generic source-static factory fails closed for Spanish, root, companion, and mismatches", () => {

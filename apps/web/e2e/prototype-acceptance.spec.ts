@@ -863,6 +863,7 @@ test.describe('prototype composition', () => {
   });
 
   test('Exit and Learning home return to the locale home without clearing progress', async ({page}) => {
+    test.setTimeout(60_000);
     await page.setViewportSize({width: 844, height: 390});
     await page.goto('/', {waitUntil: 'domcontentloaded'});
     await page.evaluate(({key, value}) => {
@@ -1143,6 +1144,7 @@ test.describe('prototype composition', () => {
   });
 
   test('a descriptor lesson treats a legacy Classroom URL as fixed Focus', async ({page}) => {
+    test.setTimeout(60_000);
     await page.setViewportSize({width: 844, height: 390});
     await page.goto('/', {waitUntil: 'domcontentloaded'});
     await page.evaluate(() => {

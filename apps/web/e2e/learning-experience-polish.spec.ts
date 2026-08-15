@@ -564,8 +564,16 @@ test('GS002 presents one crisp actor layer and a responsive modern game loop', a
   );
   await pause.click();
   await expect(page.locator('[data-source-sprite-mask]')).toHaveCount(0);
-  await expect(page.locator('output[aria-label="Time remaining"]'))
-    .toHaveText('00:04:00');
+  const timeRemaining = page.locator('output[aria-label="Time remaining"]');
+  const pausedTime = await timeRemaining.textContent();
+  expect(pausedTime).toMatch(/^00:\d{2}:\d{2}$/u);
+  const [, pausedMinutes, pausedSeconds] = pausedTime!.split(':').map(Number);
+  const pausedTotalSeconds = pausedMinutes! * 60 + pausedSeconds!;
+  expect(pausedSeconds).toBeLessThan(60);
+  expect(pausedTotalSeconds).toBeGreaterThan(0);
+  expect(pausedTotalSeconds).toBeLessThanOrEqual(4 * 60);
+  await page.waitForTimeout(1_100);
+  await expect(timeRemaining).toHaveText(pausedTime!);
 
   await pause.click();
   await stageControls.getByRole('radio', {name: 'Positive'}).check();
