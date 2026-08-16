@@ -183,6 +183,99 @@ interface CanvasAsset {
   ) => unknown;
 }
 
+export interface LatestCanvasRenderRun<TRequest> {
+  readonly started: boolean;
+  readonly completion: Promise<TRequest | null>;
+}
+
+export interface LatestCanvasRenderCoordinator<TRequest, TPrepared> {
+  readonly enqueue: (request: TRequest) => void;
+  readonly run: (
+    prepare: () => Promise<TPrepared>,
+    render: (request: TRequest, prepared: TPrepared) => void,
+  ) => LatestCanvasRenderRun<TRequest>;
+  readonly cancel: () => void;
+}
+
+/**
+ * Coalesces advancing playback frames while an asynchronous Canvas asset is
+ * loading. A slow `asset.ready()` must not let every playback tick cancel its
+ * predecessor before any frame can paint; the one active preparation instead
+ * renders the latest request that it owns.
+ */
+export function createLatestCanvasRenderCoordinator<
+  TRequest,
+  TPrepared,
+>(): LatestCanvasRenderCoordinator<TRequest, TPrepared> {
+  let latestRequest: TRequest | null = null;
+  let activeCompletion: Promise<TRequest | null> | null = null;
+  let generation = 0;
+
+  return Object.freeze({
+    enqueue(request: TRequest) {
+      latestRequest = request;
+    },
+    run(
+      prepare: () => Promise<TPrepared>,
+      render: (request: TRequest, prepared: TPrepared) => void,
+    ) {
+      if (activeCompletion) {
+        return Object.freeze({
+          started: false,
+          completion: activeCompletion,
+        });
+      }
+      const runGeneration = generation;
+      const completion = (async () => {
+        try {
+          const prepared = await prepare();
+          if (generation !== runGeneration) return null;
+          const request = latestRequest;
+          if (request === null) return null;
+          render(request, prepared);
+          return request;
+        } catch (error) {
+          // Lifecycle cancellation makes a late readiness failure stale. A
+          // current failure remains fail-closed and reaches the renderer.
+          if (generation !== runGeneration) return null;
+          throw error;
+        }
+      })();
+      activeCompletion = completion;
+      const clearActive = () => {
+        if (activeCompletion === completion) activeCompletion = null;
+      };
+      void completion.then(clearActive, clearActive);
+      return Object.freeze({started: true, completion});
+    },
+    cancel() {
+      generation += 1;
+      latestRequest = null;
+      activeCompletion = null;
+    },
+  });
+}
+
+interface PendingCanvasRenderRequest {
+  readonly canvas: HTMLCanvasElement;
+  readonly renderKey: string;
+  readonly visualKey: string;
+  readonly identity: Readonly<
+    Pick<
+      SourceStaticCanvasFrameState,
+      | "entryStateSha256"
+      | "frame"
+      | "frameDomain"
+      | "language"
+      | "requirementId"
+      | "rootFrame"
+      | "scenario"
+      | "seed"
+      | "traceId"
+    >
+  >;
+}
+
 declare global {
   interface Window {
     HELP_MATH_CANVAS_ASSETS?: Record<string, CanvasAsset>;
@@ -905,6 +998,12 @@ export function createSourceStaticCanvasCandidate(
     const renderSeed = deterministicState.seed;
     const renderStatus = deterministicState.status;
     const renderTraceId = deterministicState.traceId;
+    const [renderCoordinator] = useState(() =>
+      createLatestCanvasRenderCoordinator<
+        PendingCanvasRenderRequest,
+        CanvasAsset
+      >(),
+    );
     const reportedCanvasStatus = retainedCanvasStatus({
       canvasStatus,
       renderedVisualKey,
@@ -914,11 +1013,31 @@ export function createSourceStaticCanvasCandidate(
     useEffect(() => {
       const canvas = canvasRef.current;
       if (!canvas || renderStatus !== "ready") {
+        renderCoordinator.cancel();
         renderedRequestKeyRef.current = null;
         setRenderedVisualKey((current) => current === null ? current : null);
         setCanvasStatus((current) => current === "idle" ? current : "idle");
         return;
       }
+      const renderRequest = Object.freeze({
+        canvas,
+        renderKey: requestedRenderKey,
+        visualKey: requestedVisualKey,
+        identity: Object.freeze({
+          entryStateSha256: renderEntryStateSha256,
+          frame: renderFrame,
+          frameDomain: renderFrameDomain,
+          language: renderLanguage,
+          requirementId: renderRequirementId,
+          rootFrame: renderRootFrame,
+          scenario: renderScenario,
+          seed: renderSeed,
+          traceId: renderTraceId,
+        }),
+      });
+      // Enqueue before the idempotence check so an in-flight preparation also
+      // observes a request that returns to the currently painted frame.
+      renderCoordinator.enqueue(renderRequest);
       // A parent may supply a freshly allocated frame-state object on every
       // render. The exact primitive request key keeps those equivalent renders
       // idempotent while still redrawing for any visual or trace identity
@@ -926,7 +1045,23 @@ export function createSourceStaticCanvasCandidate(
       if (renderedRequestKeyRef.current === requestedRenderKey) {
         return;
       }
-      let cancelled = false;
+      const run = renderCoordinator.run(
+        async () => {
+          const asset = await loadCanvasAsset(config);
+          await asset.ready();
+          return asset;
+        },
+        (request, asset) => {
+          const rendered = asset.render(request.canvas, {
+            frame: request.identity.frame,
+            scenario: request.identity.scenario,
+            lang: request.identity.language,
+            seed: request.identity.seed,
+          });
+          verifyRenderedIdentity(request.canvas, rendered, request.identity);
+        },
+      );
+      if (!run.started) return;
       // Keep the last successfully painted bitmap visible while the next
       // deterministic frame is prepared. Demoting an already-ready Canvas to
       // `loading` hid it on every playback tick and exposed the stage's blue
@@ -936,32 +1071,14 @@ export function createSourceStaticCanvasCandidate(
       setCanvasStatus((current) =>
         current === "ready" || current === "updating" ? "updating" : "loading",
       );
-      loadCanvasAsset(config)
-        .then(async (asset) => {
-          await asset.ready();
-          if (cancelled) return;
-          const renderIdentity = Object.freeze({
-            entryStateSha256: renderEntryStateSha256,
-            frame: renderFrame,
-            frameDomain: renderFrameDomain,
-            language: renderLanguage,
-            requirementId: renderRequirementId,
-            rootFrame: renderRootFrame,
-            scenario: renderScenario,
-            seed: renderSeed,
-            traceId: renderTraceId,
-          });
-          const rendered = asset.render(canvas, {
-            frame: renderIdentity.frame,
-            scenario: renderIdentity.scenario,
-            lang: renderIdentity.language,
-            seed: renderIdentity.seed,
-          });
-          verifyRenderedIdentity(canvas, rendered, renderIdentity);
-          if (!cancelled) {
-            renderedRequestKeyRef.current = requestedRenderKey;
+      void run.completion
+        .then((completedRequest) => {
+          if (completedRequest) {
+            renderedRequestKeyRef.current = completedRequest.renderKey;
             setRenderedVisualKey((current) =>
-              current === requestedVisualKey ? current : requestedVisualKey,
+              current === completedRequest.visualKey
+                ? current
+                : completedRequest.visualKey,
             );
             setCanvasStatus((current) =>
               current === "ready" ? current : "ready",
@@ -969,17 +1086,12 @@ export function createSourceStaticCanvasCandidate(
           }
         })
         .catch(() => {
-          if (!cancelled) {
-            renderedRequestKeyRef.current = null;
-            setRenderedVisualKey((current) => current === null ? current : null);
-            setCanvasStatus((current) =>
-              current === "error" ? current : "error",
-            );
-          }
+          renderedRequestKeyRef.current = null;
+          setRenderedVisualKey((current) => current === null ? current : null);
+          setCanvasStatus((current) =>
+            current === "error" ? current : "error",
+          );
         });
-      return () => {
-        cancelled = true;
-      };
     }, [
       renderEntryStateSha256,
       renderFrame,
@@ -991,9 +1103,12 @@ export function createSourceStaticCanvasCandidate(
       renderSeed,
       renderStatus,
       renderTraceId,
+      renderCoordinator,
       requestedRenderKey,
       requestedVisualKey,
     ]);
+
+    useEffect(() => () => renderCoordinator.cancel(), [renderCoordinator]);
 
     const blocked =
       deterministicState.status === "blocked"

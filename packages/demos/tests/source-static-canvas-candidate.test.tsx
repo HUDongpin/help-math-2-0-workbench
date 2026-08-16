@@ -6,11 +6,22 @@ import test from "node:test";
 
 import {
   buildCanvasAssetRequest,
+  createLatestCanvasRenderCoordinator,
   createSourceStaticCanvasCandidate,
   retainedCanvasStatus,
   sourceStaticCanvasRenderKey,
   sourceStaticCanvasVisualKey,
 } from "../src/source-static-canvas-candidate";
+
+function deferred<T>() {
+  let resolve!: (value: T | PromiseLike<T>) => void;
+  let reject!: (reason?: unknown) => void;
+  const promise = new Promise<T>((resolvePromise, rejectPromise) => {
+    resolve = resolvePromise;
+    reject = rejectPromise;
+  });
+  return {promise, reject, resolve};
+}
 
 const candidate = createSourceStaticCanvasCandidate({
   animationId: "course-g04-l03-test-001",
@@ -246,6 +257,80 @@ test("a retained bitmap is capture-ineligible as soon as a new frame is requeste
     renderedVisualKey,
     requestedVisualKey,
   }), "loading");
+});
+
+test("Canvas rendering coalesces advancing frames while asset readiness is delayed", async () => {
+  const readiness = deferred<{readonly asset: "ready"}>();
+  const coordinator = createLatestCanvasRenderCoordinator<
+    Readonly<{frame: number}>,
+    Readonly<{asset: "ready"}>
+  >();
+  const renderedFrames: number[] = [];
+  let prepareCalls = 0;
+
+  coordinator.enqueue({frame: 1});
+  const firstRun = coordinator.run(
+    async () => {
+      prepareCalls += 1;
+      return readiness.promise;
+    },
+    (request) => renderedFrames.push(request.frame),
+  );
+  assert.equal(firstRun.started, true);
+
+  for (let frame = 2; frame <= 20; frame += 1) {
+    coordinator.enqueue({frame});
+    const coalescedRun = coordinator.run(
+      async () => {
+        prepareCalls += 1;
+        return {asset: "ready"};
+      },
+      (request) => renderedFrames.push(request.frame),
+    );
+    assert.equal(coalescedRun.started, false);
+    assert.equal(coalescedRun.completion, firstRun.completion);
+  }
+
+  readiness.resolve({asset: "ready"});
+  assert.deepEqual(await firstRun.completion, {frame: 20});
+  assert.equal(prepareCalls, 1);
+  assert.deepEqual(renderedFrames, [20]);
+
+  coordinator.enqueue({frame: 21});
+  const nextRun = coordinator.run(
+    async () => ({asset: "ready"}),
+    (request) => renderedFrames.push(request.frame),
+  );
+  assert.equal(nextRun.started, true);
+  assert.deepEqual(await nextRun.completion, {frame: 21});
+  assert.deepEqual(renderedFrames, [20, 21]);
+});
+
+test("Canvas rendering drops a late completion after lifecycle cancellation", async () => {
+  const readiness = deferred<{readonly asset: "stale"}>();
+  const coordinator = createLatestCanvasRenderCoordinator<
+    Readonly<{frame: number}>,
+    Readonly<{asset: "ready" | "stale"}>
+  >();
+  const renderedFrames: number[] = [];
+
+  coordinator.enqueue({frame: 1});
+  const staleRun = coordinator.run(
+    async () => readiness.promise,
+    (request) => renderedFrames.push(request.frame),
+  );
+  coordinator.cancel();
+
+  coordinator.enqueue({frame: 2});
+  const currentRun = coordinator.run(
+    async () => ({asset: "ready"}),
+    (request) => renderedFrames.push(request.frame),
+  );
+  assert.equal(currentRun.started, true);
+  assert.deepEqual(await currentRun.completion, {frame: 2});
+  readiness.resolve({asset: "stale"});
+  assert.equal(await staleRun.completion, null);
+  assert.deepEqual(renderedFrames, [2]);
 });
 
 test("Canvas render request keys are stable and include every deterministic trace identity field", () => {
