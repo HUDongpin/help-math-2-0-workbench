@@ -24,6 +24,11 @@ const AUDIO_CANDIDATE_REPORT = "reports/g5-l4-current-js-audio-candidates.json";
 const SOURCE_SCOPE = "reports/g5-l4-source-scope-freeze.json";
 const RUNTIME_MAP = "packages/demos/src/g5-l4-audio.generated.ts";
 const BROWSER_SPEC = "apps/web/e2e/g5-l4-audio.spec.ts";
+const REVIEW_SERVER = "scripts/serve-g5-l4-audio-review.mjs";
+const WORKSHEET_VALIDATOR =
+  "scripts/validate-g5-l4-audio-human-review-worksheet.mjs";
+const FQ001_DISPOSITION =
+  "reports/g5-l4-fq001-audio-disposition-review-v1.json";
 const EXPECTED_PAGE_COUNT = 54;
 const EXPECTED_REVIEWABLE_PAGE_COUNT = 53;
 const EXPECTED_TRACK_COUNT = 185;
@@ -363,6 +368,19 @@ export function validateListeningReview(report) {
       report?.publicationGate?.published === false,
     "listening review protected gates changed",
   );
+  invariant(
+    report?.reviewSurface?.authority === "local-unsigned-review-only" &&
+      report?.reviewSurface?.bindHost === "127.0.0.1" &&
+      report?.reviewSurface?.trackCount === EXPECTED_TRACK_COUNT &&
+      report?.reviewSurface?.reviewablePageCount ===
+        EXPECTED_REVIEWABLE_PAGE_COUNT &&
+      typeof report?.reviewSurface?.productCommand === "string" &&
+      report.reviewSurface.productCommand.includes(
+        "CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED=true",
+      ) &&
+      report?.reviewSurface?.acceptanceEffect === "none",
+    "listening review surface crossed its local unsigned boundary",
+  );
   assertAcceptanceEnvelope(report.acceptanceEffects);
   return true;
 }
@@ -407,18 +425,51 @@ async function attachPhysicalAndProbe(projectRoot, track, assetIndex) {
 export async function buildListeningReview({projectRoot = DEFAULT_PROJECT_ROOT} = {}) {
   const normalizedRoot = path.resolve(projectRoot);
   const generatorRelative = portable(path.relative(normalizedRoot, SCRIPT_PATH));
-  const [generator, audioRecord, scopeRecord, runtimeMap, browserSpec, probeVersion] =
+  const [
+    generator,
+    audioRecord,
+    scopeRecord,
+    runtimeMap,
+    browserSpec,
+    reviewServer,
+    worksheetValidator,
+    fq001DispositionRecord,
+    probeVersion,
+  ] =
     await Promise.all([
       readOrdinaryFile(normalizedRoot, generatorRelative, "generator"),
       readOrdinaryFile(normalizedRoot, AUDIO_CANDIDATE_REPORT, "audio candidate report"),
       readOrdinaryFile(normalizedRoot, SOURCE_SCOPE, "source scope"),
       readOrdinaryFile(normalizedRoot, RUNTIME_MAP, "runtime audio map"),
       readOrdinaryFile(normalizedRoot, BROWSER_SPEC, "audio browser spec"),
+      readOrdinaryFile(normalizedRoot, REVIEW_SERVER, "local audio review server"),
+      readOrdinaryFile(
+        normalizedRoot,
+        WORKSHEET_VALIDATOR,
+        "human review worksheet validator",
+      ),
+      readOrdinaryFile(
+        normalizedRoot,
+        FQ001_DISPOSITION,
+        "FQ001 audio disposition review",
+      ),
       ffprobeVersion(),
     ]);
   const audioReport = JSON.parse(audioRecord.bytes.toString("utf8"));
   const sourceScope = JSON.parse(scopeRecord.bytes.toString("utf8"));
+  const fq001Disposition = JSON.parse(
+    fq001DispositionRecord.bytes.toString("utf8"),
+  );
   validateCandidateReport(audioReport);
+  invariant(
+    fq001Disposition?.status ===
+      "machine-negative-evidence-complete-owner-disposition-pending" &&
+      fq001Disposition?.recommendation?.decision ===
+        "accepted-not-required-candidate" &&
+      fq001Disposition?.recommendation?.applied === false &&
+      fq001Disposition?.acceptanceEffects?.audioNotRequiredAccepted === false,
+    "FQ001 disposition review crossed its unsigned recommendation boundary",
+  );
   const pages = selectPages(sourceScope);
   const pageIndex = sourcePageById(pages);
   const assetIndex = stagedAssetByPath(audioReport);
@@ -597,6 +648,9 @@ export async function buildListeningReview({projectRoot = DEFAULT_PROJECT_ROOT} 
       pageOnlySourceScope: descriptor(scopeRecord),
       runtimeAudioMap: descriptor(runtimeMap),
       browserAudioRegression: descriptor(browserSpec),
+      localReviewServer: descriptor(reviewServer),
+      humanReviewWorksheetValidator: descriptor(worksheetValidator),
+      fq001AudioDispositionReview: descriptor(fq001DispositionRecord),
     },
     machineProbe: {
       tool: "ffprobe",
@@ -703,6 +757,24 @@ export async function buildListeningReview({projectRoot = DEFAULT_PROJECT_ROOT} 
       instructions:
         "Create a separate append-only record outside this generated packet. A named reviewer must actually listen; automation may not fill or sign it.",
     },
+    reviewSurface: {
+      authority: "local-unsigned-review-only",
+      bindHost: "127.0.0.1",
+      defaultPort: 3210,
+      command:
+        "node scripts/serve-g5-l4-audio-review.mjs --port 3210 --product-url http://127.0.0.1:3211/courses/5/4?mode=focus",
+      reviewUrl: "http://127.0.0.1:3210/",
+      productUrl: "http://127.0.0.1:3211/courses/5/4?mode=focus",
+      productCommand:
+        "CURRENT_JS_SHOWCASE_G5_L4_ENABLED=true CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED=true npm run dev --workspace @helpmath/web -- --hostname 127.0.0.1 --port 3211",
+      trackCount: EXPECTED_TRACK_COUNT,
+      reviewablePageCount: EXPECTED_REVIEWABLE_PAGE_COUNT,
+      exportedWorksheetStatus: "unsigned-reviewer-export",
+      validatorCommand:
+        "node scripts/validate-g5-l4-audio-human-review-worksheet.mjs g5-l4-audio-human-review-worksheet-unsigned.json",
+      validatorAuthority: "machine-validation-only",
+      acceptanceEffect: "none",
+    },
     originalRuntimeGate: {
       status: "blocked-not-provided-by-this-packet",
       naturalListeningSessionCount: 0,
@@ -754,6 +826,8 @@ function markdownFor(report) {
     `The machine probe used \`${report.machineProbe.version}\`. It proves only exact identity and decodability, not audible correctness or synchronization.\n\n` +
     `## Controlled review surface\n\n` +
     `Use a candidate built from the exact reviewed commit with both G5 animation and the independent G5 audio gate enabled. Do not enable production. Open the loopback course route \`/courses/5/4?mode=focus\` and execute the protocol for every page below. Store reviewer identity, time, exact build/runtime identity, ordered operations, cue/page decisions, and notes in a separate append-only record.\n\n` +
+    `Start the local gate-on product route in a separate terminal with:\n\n\`${report.reviewSurface.productCommand}\`\n\nFor direct content listening, start the loopback-only unsigned worksheet with:\n\n\`${report.reviewSurface.command}\`\n\n` +
+    `Then open \`${report.reviewSurface.reviewUrl}\`. The worksheet serves only the 185 hash-verified local MP3s and can export an unsigned JSON input; it cannot sign or accept a review. Validate an exported worksheet with:\n\n\`${report.reviewSurface.validatorCommand}\`\n\nThe validator proves only structural completeness and current-report identity; it cannot adopt or accept the review.\n\n` +
     `## Protocols\n\n${protocols.join("\n")}\n` +
     `## Page matrix\n\n` +
     `| Ordinal | Animation ID | Section | Protocol | Tracks | Status |\n` +

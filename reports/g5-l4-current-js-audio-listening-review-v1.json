@@ -17,9 +17,9 @@
   "authority": "machine-preflight-and-unsigned-human-review-template",
   "authorityBoundary": "The machine preflight verifies the 185 committed MP3 identities and decodability. The empty templates prepare, but do not perform, named-human current-JS listening or synchronization review. This packet contains no authoritative original-runtime listening session, human decision, Owner decision, strict completion, release, or publication authority.",
   "generator": {
-    "bytes": 35430,
+    "bytes": 39052,
     "path": "scripts/build-g5-l4-current-js-audio-listening-review.mjs",
-    "sha256": "d334520e8a28973d7ba447f2aa1481f55684cfad972ab10ec2994494e800b6c0"
+    "sha256": "7ea6c7714991d5e3a2fbed3940e388a7853c3c91c5ded072f2cc384e5b099345"
   },
   "humanRecordTemplate": {
     "browserAndRuntimeIdentity": null,
@@ -1766,6 +1766,21 @@
       "protocolId": "fq-no-positive-trigger"
     }
   ],
+  "reviewSurface": {
+    "acceptanceEffect": "none",
+    "authority": "local-unsigned-review-only",
+    "bindHost": "127.0.0.1",
+    "command": "node scripts/serve-g5-l4-audio-review.mjs --port 3210 --product-url http://127.0.0.1:3211/courses/5/4?mode=focus",
+    "defaultPort": 3210,
+    "exportedWorksheetStatus": "unsigned-reviewer-export",
+    "productCommand": "CURRENT_JS_SHOWCASE_G5_L4_ENABLED=true CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED=true npm run dev --workspace @helpmath/web -- --hostname 127.0.0.1 --port 3211",
+    "productUrl": "http://127.0.0.1:3211/courses/5/4?mode=focus",
+    "reviewUrl": "http://127.0.0.1:3210/",
+    "reviewablePageCount": 53,
+    "trackCount": 185,
+    "validatorAuthority": "machine-validation-only",
+    "validatorCommand": "node scripts/validate-g5-l4-audio-human-review-worksheet.mjs g5-l4-audio-human-review-worksheet-unsigned.json"
+  },
   "schemaVersion": 1,
   "sourceBindings": {
     "browserAudioRegression": {
@@ -1777,6 +1792,21 @@
       "bytes": 225148,
       "path": "reports/g5-l4-current-js-audio-candidates.json",
       "sha256": "e670b76b93217c76f8759a65da68c7f910f9a11597aaec1b4acfe08ebda8b1f3"
+    },
+    "fq001AudioDispositionReview": {
+      "bytes": 5681,
+      "path": "reports/g5-l4-fq001-audio-disposition-review-v1.json",
+      "sha256": "3c6a2920939c571701b19fbdb9a25f98494fd35fbceee93aed6dee2ebbf583c0"
+    },
+    "humanReviewWorksheetValidator": {
+      "bytes": 10401,
+      "path": "scripts/validate-g5-l4-audio-human-review-worksheet.mjs",
+      "sha256": "3973321f66cbdab67c48c0f2595953637d425d000097adbebbc6ba3ec47f3b67"
+    },
+    "localReviewServer": {
+      "bytes": 14740,
+      "path": "scripts/serve-g5-l4-audio-review.mjs",
+      "sha256": "21c8c74177b91d33fd66201c01be78c92ad665fabe4bc4e9144c394d3b26fb40"
     },
     "pageOnlySourceScope": {
       "bytes": 168839,

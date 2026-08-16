@@ -18,6 +18,20 @@ The machine probe used `ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg
 
 Use a candidate built from the exact reviewed commit with both G5 animation and the independent G5 audio gate enabled. Do not enable production. Open the loopback course route `/courses/5/4?mode=focus` and execute the protocol for every page below. Store reviewer identity, time, exact build/runtime identity, ordered operations, cue/page decisions, and notes in a separate append-only record.
 
+Start the local gate-on product route in a separate terminal with:
+
+`CURRENT_JS_SHOWCASE_G5_L4_ENABLED=true CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED=true npm run dev --workspace @helpmath/web -- --hostname 127.0.0.1 --port 3211`
+
+For direct content listening, start the loopback-only unsigned worksheet with:
+
+`node scripts/serve-g5-l4-audio-review.mjs --port 3210 --product-url http://127.0.0.1:3211/courses/5/4?mode=focus`
+
+Then open `http://127.0.0.1:3210/`. The worksheet serves only the 185 hash-verified local MP3s and can export an unsigned JSON input; it cannot sign or accept a review. Validate an exported worksheet with:
+
+`node scripts/validate-g5-l4-audio-human-review-worksheet.mjs g5-l4-audio-human-review-worksheet-unsigned.json`
+
+The validator proves only structural completeness and current-report identity; it cannot adopt or accept the review.
+
 ## Protocols
 
 ### ordinary-bilingual-current-js

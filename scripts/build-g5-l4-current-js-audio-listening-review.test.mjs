@@ -44,6 +44,12 @@ test("checked-in G5 L4 listening packet binds 185 exact decodable tracks and rem
   assert.equal(report.publicationGate.audioEnvironmentEnabled, false);
   assert.equal(report.acceptanceEffects.machineAudioIdentityVerified, true);
   assert.equal(report.acceptanceEffects.humanListeningAccepted, false);
+  assert.equal(report.reviewSurface.authority, "local-unsigned-review-only");
+  assert.equal(report.reviewSurface.trackCount, 185);
+  assert.match(report.reviewSurface.productCommand, /--hostname 127\.0\.0\.1 --port 3211/);
+  assert.equal(report.reviewSurface.validatorAuthority, "machine-validation-only");
+  assert.match(report.reviewSurface.validatorCommand, /validate-g5-l4-audio-human-review-worksheet/);
+  assert.equal(report.reviewSurface.acceptanceEffect, "none");
 });
 
 test("every listening row rehashes the committed server-only MP3 bytes without private source custody", async () => {
