@@ -70,6 +70,8 @@ test.describe('canvas pages keep their resolution', () => {
     await expect(page.locator(
       '[data-lesson-player="g4-l3-whole-lesson-mvp"]',
     )).toHaveAttribute('data-hydrated', 'true');
+    const chromeSession = await page.context().newCDPSession(page);
+    await chromeSession.send('Emulation.setCPUThrottlingRate', {rate: 2});
     await page.locator(
       '.lesson-shell2__spine button[data-section-code="RW"]',
     ).click();

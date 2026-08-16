@@ -980,11 +980,15 @@ export function createSourceStaticCanvasCandidate(
       ],
     );
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [canvasStatus, setCanvasStatus] =
-      useState<SourceStaticCanvasStatus>("idle");
-    const [renderedVisualKey, setRenderedVisualKey] = useState<string | null>(
-      null,
+    const canvasHostRef = useRef<HTMLElement>(null);
+    const canvasStatusRef = useRef<SourceStaticCanvasStatus>("idle");
+    const canvasPresentationRef = useRef<"pending" | "painted" | "error">(
+      "pending",
     );
+    const [, setCanvasPresentation] = useState<
+      "pending" | "painted" | "error"
+    >("pending");
+    const renderedVisualKeyRef = useRef<string | null>(null);
     const requestedVisualKey = sourceStaticCanvasVisualKey(deterministicState);
     const requestedRenderKey = sourceStaticCanvasRenderKey(deterministicState);
     const renderedRequestKeyRef = useRef<string | null>(null);
@@ -1005,8 +1009,8 @@ export function createSourceStaticCanvasCandidate(
       >(),
     );
     const reportedCanvasStatus = retainedCanvasStatus({
-      canvasStatus,
-      renderedVisualKey,
+      canvasStatus: canvasStatusRef.current,
+      renderedVisualKey: renderedVisualKeyRef.current,
       requestedVisualKey,
     });
 
@@ -1015,8 +1019,12 @@ export function createSourceStaticCanvasCandidate(
       if (!canvas || renderStatus !== "ready") {
         renderCoordinator.cancel();
         renderedRequestKeyRef.current = null;
-        setRenderedVisualKey((current) => current === null ? current : null);
-        setCanvasStatus((current) => current === "idle" ? current : "idle");
+        renderedVisualKeyRef.current = null;
+        canvasStatusRef.current = "idle";
+        if (canvasPresentationRef.current !== "pending") {
+          canvasPresentationRef.current = "pending";
+          setCanvasPresentation("pending");
+        }
         return;
       }
       const renderRequest = Object.freeze({
@@ -1068,29 +1076,41 @@ export function createSourceStaticCanvasCandidate(
       // background, producing a rapid full-frame flash. `updating` remains
       // capture-ineligible, so the retained bitmap cannot be mistaken for
       // evidence of the requested frame before the new draw completes.
-      setCanvasStatus((current) =>
-        current === "ready" || current === "updating" ? "updating" : "loading",
-      );
+      const pendingStatus =
+        canvasStatusRef.current === "ready" ||
+        canvasStatusRef.current === "updating"
+          ? "updating"
+          : "loading";
+      canvasStatusRef.current = pendingStatus;
+      canvasHostRef.current?.setAttribute("data-canvas-status", pendingStatus);
       void run.completion
         .then((completedRequest) => {
           if (completedRequest) {
             renderedRequestKeyRef.current = completedRequest.renderKey;
-            setRenderedVisualKey((current) =>
-              current === completedRequest.visualKey
-                ? current
-                : completedRequest.visualKey,
-            );
-            setCanvasStatus((current) =>
-              current === "ready" ? current : "ready",
-            );
+            renderedVisualKeyRef.current = completedRequest.visualKey;
+            canvasStatusRef.current = "ready";
+            // Canvas painting is imperative and runs at the movie frame rate.
+            // Keep its readiness marker on that same imperative surface;
+            // scheduling React state for every frame creates a passive-effect
+            // update loop on slower runners even when each paint succeeds.
+            canvasHostRef.current?.setAttribute("data-canvas-status", "ready");
+            if (canvasPresentationRef.current !== "painted") {
+              canvasPresentationRef.current = "painted";
+              // One transition render exposes the initially hidden Canvas and
+              // removes its loading copy. Later movie frames stay imperative.
+              setCanvasPresentation("painted");
+            }
           }
         })
         .catch(() => {
           renderedRequestKeyRef.current = null;
-          setRenderedVisualKey((current) => current === null ? current : null);
-          setCanvasStatus((current) =>
-            current === "error" ? current : "error",
-          );
+          renderedVisualKeyRef.current = null;
+          canvasStatusRef.current = "error";
+          canvasHostRef.current?.setAttribute("data-canvas-status", "error");
+          if (canvasPresentationRef.current !== "error") {
+            canvasPresentationRef.current = "error";
+            setCanvasPresentation("error");
+          }
         });
     }, [
       renderEntryStateSha256,
@@ -1124,6 +1144,7 @@ export function createSourceStaticCanvasCandidate(
         data-human-visual-review-accepted="false"
         data-interactive-controls-enabled="false"
         data-owner-accepted="false"
+        ref={canvasHostRef}
         data-strict-migration-complete="false"
         style={{
           margin: "0 auto",
