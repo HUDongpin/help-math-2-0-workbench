@@ -436,6 +436,14 @@ test("live renderer exposes keyboard-native radio/submit/replay controls while d
     }));
     assert.match(liveMarkup, /data-interactive-controls-enabled="true"/);
     assert.match(liveMarkup, /data-current-javascript-question-controls="true"/);
+    assert.match(
+      liveMarkup,
+      new RegExp(
+        `<legend[^>]*><span[^>]*>Question 1 of ${item.presentedQuestionCount}: </span>Choose A, B, C, or D</legend>`,
+        "u",
+      ),
+      "the answer fieldset legend must retain the question position and choice prompt",
+    );
     assert.equal((liveMarkup.match(/type="radio"/g) ?? []).length, 4);
     assert.match(liveMarkup, /Submit answer and continue/);
     assert.match(liveMarkup, /Replay quiz/);

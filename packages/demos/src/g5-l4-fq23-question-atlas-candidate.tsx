@@ -642,6 +642,18 @@ export function createG5L4Fq23QuestionAtlasCandidate(
       minHeight: 42,
       padding: "0.65rem 1rem",
     } as const;
+    const screenReaderOnlyStyle = {
+      border: 0,
+      clip: "rect(0 0 0 0)",
+      clipPath: "inset(50%)",
+      height: 1,
+      margin: -1,
+      overflow: "hidden",
+      padding: 0,
+      position: "absolute",
+      whiteSpace: "nowrap",
+      width: 1,
+    } as const;
     const audioButton = (
       asset: G5L4FqInteractiveAudioAsset | undefined,
       subject: string,
@@ -869,6 +881,12 @@ export function createG5L4Fq23QuestionAtlasCandidate(
               }}
             >
               <legend style={{font: "600 1rem/1.4 system-ui, sans-serif"}}>
+                <span style={screenReaderOnlyStyle}>
+                  {audioLanguage === "es" ? "Pregunta" : "Question"}{" "}
+                  {questionSequence.questionPosition + 1}{" "}
+                  {audioLanguage === "es" ? "de" : "of"}{" "}
+                  {questionSequence.sourcePresentedQuestionCount}:{" "}
+                </span>
                 {audioLanguage === "es"
                   ? "Elige A, B, C o D"
                   : "Choose A, B, C, or D"}
