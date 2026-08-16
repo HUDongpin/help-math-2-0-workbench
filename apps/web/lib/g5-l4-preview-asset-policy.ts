@@ -4,6 +4,7 @@ import {
   G5_L4_SHOWCASE_RELEASE_ID,
   type CurrentJsShowcaseEnvironment,
 } from './current-js-showcase-publication';
+import {getExactG5L4AudioAssetSha256} from './g5-l4-audio-assets.generated';
 
 const SHA256 = /^[a-f0-9]{64}$/;
 const G5_L4_SHOWCASE_SHELL_ANIMATION_ID =
@@ -55,8 +56,8 @@ export const G5_L4_PREVIEW_RUNTIME_SHA256 = Object.freeze(
 export type G5L4PreviewAssetClassification = Readonly<{
   controlled: boolean;
   animationId: string | null;
-  kind: 'runtime' | 'manifest' | 'other' | 'shell' | null;
-  expectedRuntimeSha256: string | null;
+  kind: 'runtime' | 'manifest' | 'other' | 'shell' | 'audio' | null;
+  expectedSha256: string | null;
 }>;
 
 export function hasSafeFlashAssetSegments(asset: readonly string[]) {
@@ -78,7 +79,7 @@ export function classifyG5L4PreviewAsset(
       controlled: false,
       animationId: null,
       kind: null,
-      expectedRuntimeSha256: null
+      expectedSha256: null
     });
   }
   const [collection, animationId, ...remainder] = asset;
@@ -91,8 +92,19 @@ export function classifyG5L4PreviewAsset(
       controlled: true,
       animationId,
       kind: 'shell' as const,
-      expectedRuntimeSha256:
+      expectedSha256:
         getExactG5L4ShowcaseShellAssetSha256(remainder)
+    });
+  }
+  const expectedAudioSha256 = collection === 'courses' && animationId
+    ? getExactG5L4AudioAssetSha256(animationId, remainder)
+    : null;
+  if (expectedAudioSha256) {
+    return Object.freeze({
+      controlled: true,
+      animationId,
+      kind: 'audio' as const,
+      expectedSha256: expectedAudioSha256,
     });
   }
   const expectedRuntimeSha256 =
@@ -104,7 +116,7 @@ export function classifyG5L4PreviewAsset(
       controlled: false,
       animationId: null,
       kind: null,
-      expectedRuntimeSha256: null
+      expectedSha256: null
     });
   }
 
@@ -118,7 +130,7 @@ export function classifyG5L4PreviewAsset(
         : relative === 'manifest.json'
           ? 'manifest'
           : 'other',
-    expectedRuntimeSha256
+    expectedSha256: expectedRuntimeSha256
   });
 }
 
@@ -134,7 +146,11 @@ function getExactG5L4ShowcaseShellAssetSha256(
 export function isG5L4ShowcaseAssetSegments(asset: readonly string[]) {
   const classification = classifyG5L4PreviewAsset(asset);
   return classification.controlled
-    && (classification.kind === 'runtime' || classification.kind === 'shell');
+    && (
+      classification.kind === 'runtime'
+      || classification.kind === 'shell'
+      || classification.kind === 'audio'
+    );
 }
 
 export function isG5L4ShowcaseAssetPath(pathname: string) {
@@ -152,6 +168,18 @@ export function isG5L4ShowcaseAssetAuthorized(
     G5_L4_SHOWCASE_RELEASE_ID,
     env
   ).enabled;
+}
+
+/**
+ * The generated G5 L4 audio closure has its own publication boundary. The
+ * animation showcase opt-in alone must never make these 185 exact assets
+ * public; both server-only flags have to be the literal string `true`.
+ */
+export function isG5L4ShowcaseAudioAuthorized(
+  env: CurrentJsShowcaseEnvironment = process.env,
+) {
+  return isG5L4ShowcaseAssetAuthorized(env)
+    && env.CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED === 'true';
 }
 
 export function isG5L4PreviewAssetAuthorized({
@@ -174,4 +202,12 @@ export function hasExactG5L4RuntimeDigest(
   return values.length === 1
     && SHA256.test(values[0] ?? '')
     && values[0] === expectedRuntimeSha256;
+}
+
+export function hasExactG5L4AudioDigest(
+  url: URL,
+  expectedAudioSha256: string,
+) {
+  return SHA256.test(expectedAudioSha256)
+    && url.search === `?sha256=${expectedAudioSha256}`;
 }

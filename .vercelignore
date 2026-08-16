@@ -33,7 +33,9 @@ All API Keys.docx
 **/.env.*.local
 
 # Local Next.js output variants are reproducible build caches, not deployment
-# inputs. The checked-in course runtime assets remain under apps/web/public/.
+# inputs. Public visual runtimes remain under apps/web/public/; exact G5 L4
+# audio remains deployable under apps/web/server-assets/ and is included only
+# in the protected route's output trace.
 apps/web/.next*/
 
 # Test and browser-automation sources stay in Git and CI, but are not production

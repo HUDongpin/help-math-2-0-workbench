@@ -10,7 +10,9 @@ import {Container} from '@/components/ui';
 import {Link} from '@/i18n/navigation';
 import {buildCaptureFrameLinks} from '@/lib/animation-capture-controls';
 import {getCatalog, isAnimationPublished, isLessonReleasePublished} from '@/lib/catalog';
+import {G5_L4_SHOWCASE_RELEASE_ID} from '@/lib/current-js-showcase-publication';
 import {G4_L3_LESSON} from '@/lib/g4-l3-lesson-navigation';
+import {isG5L4ShowcaseAudioAuthorized} from '@/lib/g5-l4-preview-asset-policy';
 import {findLessonNavigationForAnimation} from '@/lib/lesson-navigation';
 
 export const dynamic = 'force-dynamic';
@@ -40,6 +42,12 @@ export default async function AnimationPage({params, searchParams}: {params: Pro
   const lessonReleasePublished = lessonDescriptor
     ? isLessonReleasePublished(catalog, lessonDescriptor.releaseId)
     : false;
+  const g5L4AudioScope = lessonDescriptor?.releaseId === G5_L4_SHOWCASE_RELEASE_ID
+    || (
+      animation.classification.grade === 5
+      && animation.classification.lesson === 4
+    );
+  const audioEnabled = !g5L4AudioScope || isG5L4ShowcaseAudioAuthorized();
   const prototype = matchPrototype({animationId, sourcePath: animation.source.path});
   const requestedLanguage = first(query.lang);
   const queryLanguage = requestedLanguage === 'en' || requestedLanguage === 'es' ? requestedLanguage : locale;
@@ -77,7 +85,7 @@ export default async function AnimationPage({params, searchParams}: {params: Pro
             releasePublished={lessonReleasePublished}
           />
         : null}
-      <AnimationRuntime animationId={animation.animationId} labels={{replay: spanish ? 'Repetir' : 'Replay', reduced: spanish ? 'El movimiento está reducido; se muestra un cuadro estático validado.' : 'Motion is reduced; a validated static frame is shown.', prototype: animation.migration.status === 'complete' ? (spanish ? 'migración estricta' : 'strict migration') : prototype ? (spanish ? 'prototipo heredado' : 'legacy prototype') : (spanish ? 'migración en curso' : 'migration in progress'), unavailable: spanish ? 'El módulo no está disponible.' : 'The module is unavailable.', loading: spanish ? 'Cargando módulo…' : 'Loading module…'}} moduleKey={moduleKey} query={{frame, frameDomain, scenario, lang: captureMode ? requestedLanguage : queryLanguage, seed, requirementId, trace, entryStateSha256, capture, duplicateCaptureIdentity}} />
+      <AnimationRuntime audioEnabled={audioEnabled} animationId={animation.animationId} labels={{replay: spanish ? 'Repetir' : 'Replay', reduced: spanish ? 'El movimiento está reducido; se muestra un cuadro estático validado.' : 'Motion is reduced; a validated static frame is shown.', prototype: animation.migration.status === 'complete' ? (spanish ? 'migración estricta' : 'strict migration') : prototype ? (spanish ? 'prototipo heredado' : 'legacy prototype') : (spanish ? 'migración en curso' : 'migration in progress'), unavailable: spanish ? 'El módulo no está disponible.' : 'The module is unavailable.', loading: spanish ? 'Cargando módulo…' : 'Loading module…'}} moduleKey={moduleKey} query={{frame, frameDomain, scenario, lang: captureMode ? requestedLanguage : queryLanguage, seed, requirementId, trace, entryStateSha256, capture, duplicateCaptureIdentity}} />
       {!captureMode ? <nav aria-label={spanish ? 'Controles de captura determinista' : 'Deterministic capture controls'} className="capture-controls"><div><span>{spanish ? 'Cuadro exacto' : 'Exact frame'}</span>{frameLinks.map((value) => <a href={`?${frameDomainQuery}${traceStateQuery}${scenarioQuery}frame=${value}&lang=${queryLanguage}&seed=${seed ?? '0'}`} key={value}>{value}</a>)}<a href={`?${frameDomainQuery}${traceStateQuery}${scenarioQuery}lang=${queryLanguage}&seed=${seed ?? '0'}`}>{spanish ? 'Reproducir' : 'Live'}</a></div><div><span>{spanish ? 'Idioma' : 'Language'}</span><a aria-current={queryLanguage === 'en' ? 'page' : undefined} href={`?${frameDomainQuery}${traceStateQuery}${scenarioQuery}${frame ? `frame=${frame}&` : ''}lang=en&seed=${seed ?? '0'}`}>English</a><a aria-current={queryLanguage === 'es' ? 'page' : undefined} href={`?${frameDomainQuery}${traceStateQuery}${scenarioQuery}${frame ? `frame=${frame}&` : ''}lang=es&seed=${seed ?? '0'}`}>Español</a></div></nav> : null}
       <aside className="animation-evidence"><div><h2>{spanish ? 'Identidad y fuente' : 'Identity and source'}</h2><dl><div><dt>animationId</dt><dd><code>{animation.animationId}</code></dd></div><div><dt>assetId</dt><dd><code>{animation.assetId}</code></dd></div><div><dt>{spanish ? 'Fuente' : 'Source'}</dt><dd><code>{animation.source.path}</code></dd></div><div><dt>SHA-256</dt><dd><code>{animation.source.sha256 ?? '—'}</code></dd></div></dl></div><div><h2>{spanish ? 'Película' : 'Movie'}</h2><dl><div><dt>{spanish ? 'Escenario' : 'Stage'}</dt><dd>{animation.source.swf.stage?.width ?? '—'} × {animation.source.swf.stage?.height ?? '—'}</dd></div><div><dt>FPS</dt><dd>{animation.source.swf.fps ?? '—'}</dd></div><div><dt>{spanish ? 'Cuadros' : 'Frames'}</dt><dd>{animation.source.swf.frameCount ?? '—'}</dd></div><div><dt>{spanish ? 'Audio exacto' : 'Exact audio'}</dt><dd>{animation.audio.length}</dd></div></dl></div></aside>
       {process.env.NODE_ENV !== 'production' ? <p className="reference-link"><Link href={`/reference/${animation.animationId}`}>{spanish ? 'Abrir referencia SWF local' : 'Open local SWF reference'} ↗</Link></p> : null}

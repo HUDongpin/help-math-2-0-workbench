@@ -6,6 +6,7 @@ import type {WholeLessonHostPresentation} from '@/lib/whole-lesson-host-presenta
 import type {NovaTutorMode} from '@/lib/tutor-integration';
 
 export function WholeLessonCoursePlayer({
+  audioEnabled = false,
   authStatus = 'disabled',
   candidateMode,
   hostPresentation = 'legacy-composite',
@@ -17,6 +18,7 @@ export function WholeLessonCoursePlayer({
   reviewerMode = false,
   strictCompleteMemberCount,
 }: {
+  audioEnabled?: boolean;
   authStatus?: PublicAuthStatus;
   candidateMode: boolean;
   hostPresentation?: WholeLessonHostPresentation;
@@ -43,6 +45,7 @@ export function WholeLessonCoursePlayer({
   }
 
   return <DescriptorDrivenWholeLessonPlayer
+    audioEnabled={audioEnabled}
     authStatus={authStatus}
     candidateMode={candidateMode}
     descriptor={registration.descriptor}

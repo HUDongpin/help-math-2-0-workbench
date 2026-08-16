@@ -6,7 +6,11 @@ import {WholeLessonCoursePlayer} from '@/components/whole-lesson-course-player';
 import {Link} from '@/i18n/navigation';
 import {completeAnimations, getCatalog, isLessonReleasePublished, publishedAnimations} from '@/lib/catalog';
 import {readAuthSession} from '@/lib/clerk-auth-session.server';
-import {currentJsShowcasePublication} from '@/lib/current-js-showcase-publication';
+import {
+  currentJsShowcasePublication,
+  G5_L4_SHOWCASE_RELEASE_ID,
+} from '@/lib/current-js-showcase-publication';
+import {isG5L4ShowcaseAudioAuthorized} from '@/lib/g5-l4-preview-asset-policy';
 import {findLessonNavigationForRoute} from '@/lib/lesson-navigation';
 import {protectedAtomicReleaseIdForScope} from '@/lib/lesson-release-publication';
 import {
@@ -91,6 +95,10 @@ export default async function CoursePage({
     });
     const authSession = await readAuthSession();
     return <WholeLessonCoursePlayer
+      audioEnabled={
+        courseRegistration.descriptor.releaseId === G5_L4_SHOWCASE_RELEASE_ID
+        && isG5L4ShowcaseAudioAuthorized()
+      }
       authStatus={authSession.status}
       candidateMode={designerView && (auditPreview || !releasePublished)}
       hostPresentation={hostPresentation}

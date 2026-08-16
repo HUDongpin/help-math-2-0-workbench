@@ -269,6 +269,63 @@ test('descriptor-driven player never mounts or prefetches unavailable renderers'
     /query=\{\{[\s\S]*?lang: runtimeLanguage,/,
     'source runtime language remains independently fail-closed',
   );
+  assert.match(
+    component,
+    /audioLanguage=\{progress\.locale\}/,
+    'product audio language must remain independent from fixed visual English',
+  );
+  assert.match(component, /createMemoryOnlyLessonHost\(\{/);
+  assert.match(component, /enabledCapabilities: audioEnabled \? \['audio'\] : \[\]/);
+  assert.match(component, /audioEnabled=\{audioEnabled\}/);
+  assert.match(component, /onLessonHostRequest=\{handleLessonHostRequest\}/);
+  assert.match(animationContract, /readonly audioEnabled\?: boolean;/);
+  assert.match(
+    animationRuntime,
+    /const audioModule = audioEnabled \? animationModule : undefined;/,
+    'a closed server audio gate strips audio declarations from executable hooks',
+  );
+  assert.match(
+    animationRuntime,
+    /<Renderer activeInteractiveAudioId=\{playingInteractiveAudioId\} audioEnabled=\{audioEnabled\}/,
+    'the renderer receives the same server-resolved audio publication decision',
+  );
+  assert.match(
+    animationRuntime,
+    /interactiveAudioAssets[\s\S]*?isExactInteractiveAudioAsset/,
+  );
+  assert.match(animationRuntime, /\? 'interactive'/);
+  assert.match(
+    animationRuntime,
+    /if \(narrationRequest\.action === 'stop'\) \{[\s\S]*?stopNarrationTrack\(\);[\s\S]*?stopInteractiveAudio\(\);[\s\S]*?stopTimelineAudioNow\(\);/,
+    'the shell narration stop command must stop interactive FQ audio too',
+  );
+  assert.match(
+    animationRuntime,
+    /const explicitlyStopped = useRef\(false\);[\s\S]*?const stopNow = useCallback\(\(\) => \{\s*explicitlyStopped\.current = true;\s*stopActive\(\);[\s\S]*?explicitlyStopped\.current = false;[\s\S]*?if \(explicitlyStopped\.current\) \{\s*previous\.current = frame;\s*return;/,
+    'a learner Stop decision must remain latched while the current timeline keeps advancing',
+  );
+  assert.equal(
+    animationRuntime.match(
+      /if \(active\.current\.get\(cue\.id\) !== audio\) return;/g,
+    )?.length,
+    2,
+    'late play promise resolution or rejection must not mutate a newer audio identity',
+  );
+  assert.match(
+    animationRuntime,
+    /const reducedMotionManualCue = reduced === true[\s\S]*?audioCueMatchesContext\(cue, audioContext\)[\s\S]*?fallbackCue: currentAutoplayBlockedCue \?\? reducedMotionManualCue/,
+    'reduced-motion learners must receive an on-demand path to the exact context-matched cue',
+  );
+  assert.match(
+    animationRuntime,
+    /const currentAutoplayBlockedCue = autoplayBlockedCue[\s\S]*?audioModule\.audioCues\.some[\s\S]*?cue\.id === autoplayBlockedCue\.id[\s\S]*?cue\.source === autoplayBlockedCue\.source[\s\S]*?audioCueMatchesContext\(cue, audioContext\)/,
+    'a stale blocked cue may not become another page identity\'s manual fallback',
+  );
+  assert.match(
+    animationRuntime,
+    /<Renderer activeInteractiveAudioId=\{playingInteractiveAudioId\}/,
+    'the renderer receives actual HTMLAudio playback state instead of local intent',
+  );
   assert.match(component, /if \(!nextPage && tourFinished\) return;/);
   assert.match(component, /nextDisabled=\{!nextPage && tourFinished\}/);
   assert.match(shell, /data-lesson-nav="footer-previous"/);
@@ -324,6 +381,11 @@ test('registered whole-lesson routes preserve cross-binding and publication gate
   );
   assert.match(
     registeredBranch,
+    /audioEnabled=\{\s*courseRegistration\.descriptor\.releaseId === G5_L4_SHOWCASE_RELEASE_ID\s*&& isG5L4ShowcaseAudioAuthorized\(\)\s*\}/,
+    'the server must resolve the independent audio gate before mounting the client player',
+  );
+  assert.match(
+    registeredBranch,
     /if \(!auditPreview && !releasePublished && !showcasePublication\.enabled\) \{\s*notFound\(\);\s*\}/,
   );
   assert.doesNotMatch(registeredBranch, /controlledPreview|isControlledPreviewEnabled/);
@@ -337,6 +399,7 @@ test('registered whole-lesson routes preserve cross-binding and publication gate
   assert.match(coursePlayer, /registration\.player\.kind === 'preserved-custom'/);
   assert.match(coursePlayer, /<G4L3WholeLessonPlayer/);
   assert.match(coursePlayer, /<DescriptorDrivenWholeLessonPlayer/);
+  assert.match(coursePlayer, /audioEnabled=\{audioEnabled\}/);
   assert.equal(
     coursePlayer.match(/novaTutorMode=\{novaTutorMode\}/g)?.length,
     2,

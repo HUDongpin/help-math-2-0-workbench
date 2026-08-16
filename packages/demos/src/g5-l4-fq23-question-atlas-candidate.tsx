@@ -19,6 +19,11 @@ import type {
   RuntimeScenario,
 } from "./contract";
 import {
+  G5_L4_FQ_INTERACTIVE_AUDIO_ASSETS,
+  getG5L4FqInteractiveAudioAsset,
+  type G5L4FqInteractiveAudioAsset,
+} from "./g5-l4-audio.generated";
+import {
   G5_L4_FQ23_ANSWER_OPTIONS,
   G5_L4_FQ23_SOURCE_SCRIPT_EVIDENCE,
   createG5L4Fq23QuestionSequenceState,
@@ -402,7 +407,7 @@ export function createG5L4Fq23QuestionAtlasCandidate(
       id: G5_L4_FQ23_SCENARIO,
       label: "English source-bound current-JavaScript question flow",
       description:
-        "The hash-bound 18-page atlas supports a deterministic current-JavaScript question order, answer submission, scoring, text review, and Replay/reset; AVM1 random parity, source review visuals, audio, Spanish, and reporting remain disabled.",
+        "The hash-bound 18-page atlas supports a deterministic current-JavaScript question order, answer submission, scoring, text review, Replay/reset, and only the source-exact interactive audio assets currently present; listening and synchronization acceptance, AVM1 random parity, source review visuals, Spanish visual parity, and reporting remain unresolved or disabled.",
     }),
     Object.freeze({
       id: "root-unavailable",
@@ -522,6 +527,62 @@ export function createG5L4Fq23QuestionAtlasCandidate(
     const activeQuestionNumber = captureInspection
       ? atlasState.frame
       : getG5L4Fq23ActiveQuestionNumber(questionSequence);
+    const audioLanguage = props.uiLanguage ?? props.lang;
+    const audioPublicationEnabled = props.audioEnabled === true;
+    const questionAudioAsset = !audioPublicationEnabled || activeQuestionNumber === null
+      ? undefined
+      : getG5L4FqInteractiveAudioAsset(
+          audioLanguage,
+          activeQuestionNumber,
+          null,
+        );
+    const answerAudioAssets = useMemo(() => Object.freeze(
+      Object.fromEntries(G5_L4_FQ23_ANSWER_OPTIONS.map((option) => [
+        option,
+        !audioPublicationEnabled || activeQuestionNumber === null
+          ? undefined
+          : getG5L4FqInteractiveAudioAsset(
+              audioLanguage,
+              activeQuestionNumber,
+              option,
+            ),
+      ])) as Readonly<Record<
+        G5L4Fq23AnswerOption,
+        G5L4FqInteractiveAudioAsset | undefined
+      >>,
+    ), [activeQuestionNumber, audioLanguage, audioPublicationEnabled]);
+    const interactiveAudioPresentCount =
+      (questionAudioAsset ? 1 : 0) +
+      G5_L4_FQ23_ANSWER_OPTIONS.filter(
+        (option) => answerAudioAssets[option] !== undefined,
+      ).length;
+    useEffect(() => {
+      const activeId = props.activeInteractiveAudioId;
+      if (!activeId || !props.onLessonHostRequest) return;
+      const belongsToCurrentQuestion =
+        questionAudioAsset?.id === activeId ||
+        G5_L4_FQ23_ANSWER_OPTIONS.some(
+          (option) => answerAudioAssets[option]?.id === activeId,
+        );
+      if (!belongsToCurrentQuestion) {
+        props.onLessonHostRequest({type: "stop-audio", cueId: activeId});
+      }
+    }, [
+      answerAudioAssets,
+      props.activeInteractiveAudioId,
+      props.onLessonHostRequest,
+      questionAudioAsset,
+    ]);
+    const requestInteractiveAudio = useCallback((
+      asset: G5L4FqInteractiveAudioAsset,
+      trigger: HTMLButtonElement,
+    ) => {
+      if (!props.onLessonHostRequest) return;
+      const request = props.activeInteractiveAudioId === asset.id
+        ? {type: "stop-audio" as const, cueId: asset.id}
+        : {type: "play-audio" as const, cueId: asset.id};
+      props.onLessonHostRequest(request, {trigger});
+    }, [props.activeInteractiveAudioId, props.onLessonHostRequest]);
     const visualState = useMemo(() => {
       if (atlasState.status === "blocked" || activeQuestionNumber === null) {
         return atlasState.status === "blocked" ? atlasState : null;
@@ -581,6 +642,45 @@ export function createG5L4Fq23QuestionAtlasCandidate(
       minHeight: 42,
       padding: "0.65rem 1rem",
     } as const;
+    const audioButton = (
+      asset: G5L4FqInteractiveAudioAsset | undefined,
+      subject: string,
+    ) => {
+      const active = asset !== undefined &&
+        props.activeInteractiveAudioId === asset.id;
+      const available = asset !== undefined &&
+        Boolean(props.onLessonHostRequest) &&
+        !props.paused;
+      const action = !asset
+        ? audioLanguage === "es" ? "Audio no disponible" : "Audio unavailable"
+        : active
+          ? audioLanguage === "es" ? "Detener audio" : "Stop audio"
+          : audioLanguage === "es" ? "Reproducir audio" : "Play audio";
+      return <button
+        aria-label={`${subject}: ${action}`}
+        aria-pressed={asset ? active : undefined}
+        data-interactive-audio-asset-id={asset?.id}
+        data-interactive-audio-status={asset ? "available" : "missing"}
+        disabled={!available}
+        onClick={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          if (asset) requestInteractiveAudio(asset, event.currentTarget);
+        }}
+        style={{
+          ...controlButtonStyle,
+          background: asset ? "#174f82" : "#6c7a86",
+          cursor: available ? "pointer" : "not-allowed",
+          minHeight: 36,
+          opacity: available ? 1 : 0.68,
+          padding: "0.45rem 0.65rem",
+        }}
+        type="button"
+      >
+        <span aria-hidden="true">{asset ? active ? "■" : "🔊" : "🔇"}</span>{" "}
+        {action}
+      </button>;
+    };
     return (
       <section
         aria-label={config.title}
@@ -609,6 +709,9 @@ export function createG5L4Fq23QuestionAtlasCandidate(
         data-exact-avm1-random-order-established="false"
         data-human-visual-review-accepted="false"
         data-interactive-controls-enabled={interactionEnabled ? "true" : "false"}
+        data-interactive-audio-coverage={audioPublicationEnabled
+          ? "partial-source-exact"
+          : "publication-gated-off"}
         data-natural-question-selection-enabled="false"
         data-network-reporting-enabled="false"
         data-owner-accepted="false"
@@ -721,6 +824,10 @@ export function createG5L4Fq23QuestionAtlasCandidate(
           {interactionEnabled && questionSequence.mode === "question" ? (
           <form
             data-current-javascript-question-controls="true"
+            data-interactive-audio-missing-count={
+              5 - interactiveAudioPresentCount
+            }
+            data-interactive-audio-present-count={interactiveAudioPresentCount}
             onSubmit={(event) => {
               event.preventDefault();
               submitAnswer();
@@ -733,6 +840,24 @@ export function createG5L4Fq23QuestionAtlasCandidate(
               padding: 16,
             }}
           >
+            <div style={{
+              alignItems: "center",
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 10,
+              justifyContent: "space-between",
+            }}>
+              <strong>
+                {audioLanguage === "es" ? "Pregunta" : "Question"}{" "}
+                {questionSequence.questionPosition + 1}{" "}
+                {audioLanguage === "es" ? "de" : "of"}{" "}
+                {questionSequence.sourcePresentedQuestionCount}
+              </strong>
+              {audioButton(
+                questionAudioAsset,
+                audioLanguage === "es" ? "Audio de la pregunta" : "Question audio",
+              )}
+            </div>
             <fieldset
               style={{
                 border: 0,
@@ -744,38 +869,53 @@ export function createG5L4Fq23QuestionAtlasCandidate(
               }}
             >
               <legend style={{font: "600 1rem/1.4 system-ui, sans-serif"}}>
-                Question {questionSequence.questionPosition + 1} of {questionSequence.sourcePresentedQuestionCount}: choose A, B, C, or D
+                {audioLanguage === "es"
+                  ? "Elige A, B, C o D"
+                  : "Choose A, B, C, or D"}
               </legend>
-              {G5_L4_FQ23_ANSWER_OPTIONS.map((option) => (
-                <label
+              {G5_L4_FQ23_ANSWER_OPTIONS.map((option) => {
+                const answerAudioAsset = answerAudioAssets[option];
+                return <div
                   key={option}
                   style={{
-                    alignItems: "center",
                     background: questionSequence.selectedOption === option
                       ? "#dceeff"
                       : "white",
                     border: "1px solid #7d9db8",
                     borderRadius: 6,
+                    display: "grid",
+                    gap: 8,
+                    padding: 8,
+                  }}
+                >
+                  <label style={{
+                    alignItems: "center",
                     display: "flex",
                     font: "600 1rem/1.2 system-ui, sans-serif",
                     gap: 8,
                     justifyContent: "center",
-                    minHeight: 44,
-                  }}
-                >
-                  <input
-                    checked={questionSequence.selectedOption === option}
-                    name={`${config.animationId}-answer`}
-                    onChange={() => dispatch({
-                      type: "select-answer",
-                      option: option as G5L4Fq23AnswerOption,
-                    })}
-                    type="radio"
-                    value={option}
-                  />
-                  {option}
-                </label>
-              ))}
+                    minHeight: 36,
+                  }}>
+                    <input
+                      checked={questionSequence.selectedOption === option}
+                      name={`${config.animationId}-answer`}
+                      onChange={() => dispatch({
+                        type: "select-answer",
+                        option: option as G5L4Fq23AnswerOption,
+                      })}
+                      type="radio"
+                      value={option}
+                    />
+                    {option}
+                  </label>
+                  {audioButton(
+                    answerAudioAsset,
+                    audioLanguage === "es"
+                      ? `Audio de la respuesta ${option}`
+                      : `Answer ${option} audio`,
+                  )}
+                </div>;
+              })}
             </fieldset>
             <div style={{display: "flex", flexWrap: "wrap", gap: 10}}>
               <button
@@ -855,9 +995,11 @@ export function createG5L4Fq23QuestionAtlasCandidate(
             question count/order rule, A–D submission, scoring, grade bands,
             text review, and whole-state Replay/reset. It does not execute AVM1;
             FQ002&apos;s deterministic seed does not establish the original
-            Player&apos;s random order. Source review visuals, audio, timer,
-            reports, Spanish parity, original-runtime parity, RMSE, human review,
-            Owner acceptance, strict completion, and publication remain unclaimed.
+            Player&apos;s random order. Exact source-bound question/answer audio
+            assets are exposed only where present; listening, synchronization,
+            source review visuals, timer, reports, Spanish visual parity,
+            original-runtime parity, RMSE, human review, Owner acceptance,
+            strict completion, and publication remain unclaimed.
           </p>
           </div>;
           return companionTarget
@@ -893,7 +1035,8 @@ export function createG5L4Fq23QuestionAtlasCandidate(
     }),
     visualLanguages: Object.freeze(["en"] as const),
     spanishVisualStatus: "disabled-unvalidated",
-    audioStatus: "zero-exact-associations-disabled",
+    audioStatus:
+      "source-exact-interactive-assets-current-js-host-wired-listening-and-sync-pending",
     legacyActionScriptStatus: "not-executed",
     currentJavascriptBehavior: config.currentJavascriptBehavior,
     currentJavascriptBehaviorStatus:
@@ -932,6 +1075,13 @@ export function createG5L4Fq23QuestionAtlasCandidate(
     }),
     scenarios,
     audioCues: Object.freeze([]),
+    interactiveAudioAssets: G5_L4_FQ_INTERACTIVE_AUDIO_ASSETS,
+    lessonHost: Object.freeze({
+      capabilities: Object.freeze(["audio"] as const),
+      legacyOperations: "blocked",
+      auditStorage: "memory-only",
+      storesPersonalData: false,
+    }),
     transport: Object.freeze({
       mode: "visual-frame-inspector",
       frameDomains: Object.freeze([G5_L4_FQ23_ATLAS_FRAME_DOMAIN]),

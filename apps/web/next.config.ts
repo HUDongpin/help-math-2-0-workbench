@@ -202,6 +202,7 @@ const nextConfig: NextConfig = {
       '../../catalog/lesson-release-ledger.json',
       '../../catalog/lessons.json',
       '../../reports/g5-l4-source-scope-freeze.json',
+      '../../apps/web/server-assets/flash-assets/courses/**/*.mp3',
     ],
   },
   outputFileTracingExcludes: wholeLessonPackageBuild

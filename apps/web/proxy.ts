@@ -31,7 +31,9 @@ import {
 } from './lib/local-auth-access';
 import {
   classifyG5L4PreviewAsset,
+  hasExactG5L4AudioDigest,
   hasExactG5L4RuntimeDigest,
+  isG5L4ShowcaseAudioAuthorized,
   isG5L4ShowcaseAssetAuthorized,
   isG5L4ShowcaseAssetSegments,
 } from './lib/g5-l4-preview-asset-policy';
@@ -115,6 +117,15 @@ function isAllowed(pathname: string, request: NextRequest) {
   const g4HostCompositePolicy =
     classifyG4L3HostCompositeAsset(assetSegments);
   const g5L4ShowcasePolicy = classifyG5L4PreviewAsset(assetSegments);
+  // Generated audio is independently gated even in local development. This
+  // check must run before the local-audit fallback below, or a showcase-only
+  // deployment would advertise audio whose route is not publication-safe.
+  if (
+    g5L4ShowcasePolicy.kind === 'audio'
+    && !isG5L4ShowcaseAudioAuthorized()
+  ) {
+    return false;
+  }
   if (
     g4HostCompositePolicy.controlled
     && !hasExactG4L3HostCompositeDigest(
@@ -126,10 +137,21 @@ function isAllowed(pathname: string, request: NextRequest) {
   }
   if (
     g5L4ShowcasePolicy.controlled
-    && g5L4ShowcasePolicy.kind === 'runtime'
-    && !hasExactG5L4RuntimeDigest(
-      request.nextUrl,
-      g5L4ShowcasePolicy.expectedRuntimeSha256 as string,
+    && (
+      (
+        g5L4ShowcasePolicy.kind === 'runtime'
+        && !hasExactG5L4RuntimeDigest(
+          request.nextUrl,
+          g5L4ShowcasePolicy.expectedSha256 as string,
+        )
+      )
+      || (
+        g5L4ShowcasePolicy.kind === 'audio'
+        && !hasExactG5L4AudioDigest(
+          request.nextUrl,
+          g5L4ShowcasePolicy.expectedSha256 as string,
+        )
+      )
     )
   ) {
     return false;
@@ -137,7 +159,11 @@ function isAllowed(pathname: string, request: NextRequest) {
   const publicShowcaseAsset = isG4L3ShowcaseAssetPath(pathname)
     && isG4L3ShowcaseAssetAuthorized();
   const publicG5L4ShowcaseAsset = isG5L4ShowcaseAssetSegments(assetSegments)
-    && isG5L4ShowcaseAssetAuthorized();
+    && (
+      g5L4ShowcasePolicy.kind === 'audio'
+        ? isG5L4ShowcaseAudioAuthorized()
+        : isG5L4ShowcaseAssetAuthorized()
+    );
   return publicPaths.has(pathname)
     || isArchivePath(pathname, request)
     || publicShowcaseAsset

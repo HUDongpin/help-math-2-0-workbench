@@ -16,6 +16,10 @@ import {
   getG4L3MainTimelineAudioCandidate,
   type G4L3MainTimelineAudioCandidate,
 } from "./g4-l3-main-timeline-audio.generated";
+import {
+  getG5L4PageAudioCandidate,
+  type G5L4PageAudioCandidate,
+} from "./g5-l4-audio.generated";
 
 export interface SourceStaticVisualMarker {
   readonly id: string;
@@ -627,12 +631,15 @@ function blockerCopy(blocker: SourceStaticCanvasBlocker | null) {
 
 export function createSourceStaticCanvasCandidate(
   suppliedConfig: SourceStaticCanvasCandidateConfig,
-  suppliedAudioCandidate?: G4L3MainTimelineAudioCandidate,
+  suppliedAudioCandidate?:
+    | G4L3MainTimelineAudioCandidate
+    | G5L4PageAudioCandidate,
 ) {
   const config = validateConfig(suppliedConfig);
   const mainTimelineAudioCandidate =
     suppliedAudioCandidate ??
-    getG4L3MainTimelineAudioCandidate(config.animationId);
+    getG4L3MainTimelineAudioCandidate(config.animationId) ??
+    getG5L4PageAudioCandidate(config.animationId);
   const rootScenario = "root-unavailable";
   const mainScenario = "source-static-frame";
   const companionScenario = (id: string) => `${id}-unavailable`;

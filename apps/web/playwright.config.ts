@@ -47,6 +47,8 @@ export default defineConfig({
         process.env.CURRENT_JS_SHOWCASE_G4_L3_ENABLED ?? 'false',
       CURRENT_JS_SHOWCASE_G5_L4_ENABLED:
         process.env.CURRENT_JS_SHOWCASE_G5_L4_ENABLED ?? 'false',
+      CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED:
+        process.env.CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED ?? 'false',
       REVIEWER_INSTRUMENTATION_ENABLED:
         process.env.REVIEWER_INSTRUMENTATION_ENABLED ?? 'false',
     },

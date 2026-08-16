@@ -484,10 +484,10 @@ function LegacyNavigationControlFace({
  * browser refuses autoplay. The control reads the same in every state; only
  * the state line and the treatment change.
  *
- * `unavailable` and `waiting` are reported, not actionable: the page either
- * carries no narration, or carries narration that is bound to the timeline and
- * has nothing to start on demand. Both stay in place as a disabled control so
- * the bar never reflows and the learner never has to look for it.
+ * `unavailable`, `waiting`, and `interactive` are reported, not actionable:
+ * the page either carries no narration, carries narration bound to the
+ * timeline, or exposes audio through its own question/answer controls. These
+ * stay in place as disabled shell controls so the bar never reflows.
  */
 function narrationCopy(
   status: AnimationRuntimeNarrationStatus,
@@ -502,6 +502,11 @@ function narrationCopy(
     return spanish
       ? {action: 'El audio acompaña la página', hint: null}
       : {action: 'Audio plays with the page', hint: null};
+  }
+  if (status === 'interactive') {
+    return spanish
+      ? {action: 'Usa los botones de audio de la pregunta', hint: null}
+      : {action: 'Use the question audio buttons', hint: null};
   }
   if (status === 'playing') {
     return spanish

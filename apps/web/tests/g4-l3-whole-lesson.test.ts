@@ -1129,7 +1129,7 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   assert.doesNotMatch(globalCss, /runtime-toolbar--legacy-audio/);
   assert.match(
     runtimeSource,
-    /export type AnimationRuntimeNarrationStatus =\s*'unavailable' \| 'waiting' \| 'idle' \| 'playing' \| 'blocked';/,
+    /export type AnimationRuntimeNarrationStatus =\s*'unavailable'\s*\| 'waiting'\s*\| 'idle'\s*\| 'interactive'\s*\| 'playing'\s*\| 'blocked';/,
   );
   assert.match(
     runtimeSource,
@@ -1144,12 +1144,12 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   // the learner has answered it.
   assert.match(
     runtimeSource,
-    /const narration: AnimationRuntimeNarrationStatus = !audioAvailable\s*\?\s*'unavailable'\s*:\s*narrationSounding\s*\?\s*'playing'\s*:\s*autoplayBlockedCue && !narrationGestureGiven\s*\?\s*'blocked'\s*:\s*narrationTracks\.length > 0\s*\?\s*'idle'\s*:\s*'waiting';/,
+    /const narration: AnimationRuntimeNarrationStatus = !audioAvailable\s*\?\s*'unavailable'\s*:\s*narrationSounding\s*\?\s*'playing'\s*:\s*currentAutoplayBlockedCue && !narrationGestureGiven\s*\?\s*'blocked'\s*:\s*narrationTracks\.length > 0\s*\?\s*'idle'\s*:\s*interactiveAudioAssets\.length > 0\s*\?\s*'interactive'\s*:\s*'waiting';/,
   );
   assert.match(
     runtimeSource,
-    /const narrationSounding = timelineAudioSounding \|\|\s*playingNarrationTrackId !== null;/,
-    'a timeline cue and an on-demand track both count as narration sounding',
+    /const narrationSounding =\s*timelineAudioSounding \|\|\s*playingNarrationTrackId !== null \|\|\s*playingInteractiveAudioId !== null;/,
+    'a timeline cue, narration track, or source-exact interactive clip all count as audio sounding',
   );
 
   // The reusable control reads one status and keeps one command path.

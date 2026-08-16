@@ -104,6 +104,19 @@ export interface AudioTrack {
 }
 
 /**
+ * A source-bound audio file that a renderer may request only through the
+ * typed lesson-host contract. Unlike a timeline cue or the shell narration
+ * track, this asset belongs to an explicit in-page interaction such as a
+ * question or answer speaker button.
+ */
+export interface InteractiveAudioAsset {
+  readonly id: string;
+  readonly language: AnimationLanguage;
+  readonly source: string;
+  readonly sha256: string;
+}
+
+/**
  * A modern, acceptance-neutral transport may be exposed only when a renderer
  * declares how seeking reconstructs state. This is intentionally separate
  * from source-host behavior: direct frame inspection does not establish
@@ -120,6 +133,8 @@ export interface AnimationTransportCapability {
 }
 
 export interface AnimationRendererProps {
+  /** Product publication gate; false/absent means no audio may be advertised or requested. */
+  readonly audioEnabled?: boolean;
   /** The runtime-owned, one-indexed Flash frame. */
   readonly frame: number;
   /** Optional only for backward-compatible direct renderer tests. */
@@ -134,11 +149,15 @@ export interface AnimationRendererProps {
   /**
    * Optional language for app-owned responsive controls and accessibility
    * copy. This never changes the source-runtime language, capture identity,
-   * visual evidence, or audio eligibility represented by `lang`.
+   * or visual evidence represented by `lang`. A module may use it only for
+   * explicitly declared, exact product-audio routing that stays independent
+   * from the fixed visual runtime language.
    */
   readonly uiLanguage?: AnimationLanguage;
   readonly seed: number;
   readonly state?: unknown;
+  /** Live product-runtime state for an exact typed interactive audio asset. */
+  readonly activeInteractiveAudioId?: string | null;
   readonly onReplay?: () => void;
   /**
    * Typed modern host intent. The optional trigger stays outside the serializable
@@ -197,6 +216,8 @@ export interface AnimationModule<State = unknown> {
   readonly audioCues: readonly AudioCue[];
   /** Host-level audio buttons that were user-triggered rather than timeline cues. */
   readonly audioTracks?: readonly AudioTrack[];
+  /** Exact, user-triggered audio assets addressable by typed lesson-host ID. */
+  readonly interactiveAudioAssets?: readonly InteractiveAudioAsset[];
   /** Explicit, fail-closed modern transport capability. Absence disables seeking. */
   readonly transport?: AnimationTransportCapability;
   /**

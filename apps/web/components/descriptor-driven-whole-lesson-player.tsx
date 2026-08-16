@@ -1,7 +1,12 @@
 'use client';
 
 import {loadAnimationModule} from '@helpmath/demos/animation-registry';
-import {useEffect, useMemo, useRef, useState} from 'react';
+import {
+  createMemoryOnlyLessonHost,
+  type LessonHostDecision,
+  type LessonHostRequest,
+} from '@helpmath/demos/runtime';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {
   AnimationRuntime,
@@ -74,6 +79,7 @@ function calculatorEvidence(
 }
 
 export function DescriptorDrivenWholeLessonPlayer({
+  audioEnabled = false,
   authStatus = 'disabled',
   candidateMode,
   descriptor,
@@ -84,6 +90,7 @@ export function DescriptorDrivenWholeLessonPlayer({
   reviewerMode = false,
   strictCompleteMemberCount,
 }: {
+  audioEnabled?: boolean;
   authStatus?: PublicAuthStatus;
   candidateMode: boolean;
   descriptor: WholeLessonPlayerDescriptor;
@@ -138,6 +145,20 @@ export function DescriptorDrivenWholeLessonPlayer({
   const currentLabel = currentPage.labels[progress.locale];
   const currentRenderer = currentPage.rendererAvailability;
   const runtimeAvailable = currentRenderer.kind === 'registered';
+  const lessonHost = useMemo(() => createMemoryOnlyLessonHost({
+    releaseId: descriptor.releaseId,
+    releaseMemberIds: [...new Set(
+      descriptor.pages.map((page) => page.animationId),
+    )],
+    currentAnimationId: currentPage.animationId,
+    enabledCapabilities: audioEnabled ? ['audio'] : [],
+    initialLanguage: progress.locale,
+    mode: 'audit',
+    releasePublished: false,
+  }), [audioEnabled, currentPage.animationId, descriptor, progress.locale]);
+  const handleLessonHostRequest = useCallback((
+    request: LessonHostRequest,
+  ): LessonHostDecision => lessonHost.dispatch(request), [lessonHost]);
   const reviewed = new Set(progress.reviewedAnimationIds);
   const visited = new Set(progress.visitedAnimationIds);
   const spanish = progress.locale === 'es';
@@ -542,6 +563,8 @@ export function DescriptorDrivenWholeLessonPlayer({
       : undefined;
   const stage = currentRenderer.kind === 'registered'
     ? <AnimationRuntime
+        audioEnabled={audioEnabled}
+        audioLanguage={progress.locale}
         animationId={currentPage.animationId}
         key={`${currentPage.animationId}:${runtimeEpoch}`}
         labels={{
@@ -560,6 +583,7 @@ export function DescriptorDrivenWholeLessonPlayer({
           : undefined}
         moduleKey={currentRenderer.moduleKey}
         narrationRequest={narrationRequest}
+        onLessonHostRequest={handleLessonHostRequest}
         onPlaybackComplete={reviewCurrentPage}
         onPlaybackStateChange={setPlaybackState}
         onReplay={() => setProgress((value) =>
