@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "help-math-fla-swf-counterpart-successor-invalidation/v2",
+  "artifactType": "help-math-fla-swf-counterpart-successor-invalidation",
+  "invalidatedAt": "2026-08-08T01:10:00.000+08:00",
+  "detectedAfterPublication": true,
+  "status": "v1-failed-superseded-no-authorization",
+  "supersededIncorrectInvalidation": {
+    "path": "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v1-invalidated.json",
+    "bytes": 1999,
+    "sha256": "832b634ecb13685adf88480e7204db4d83a2bdb7fb767534b3a77ae2673e5213",
+    "defect": "invalidatedAt was recorded as midnight, before the v1 artifact publication; this v2 receipt corrects the historical timestamp without overwriting v1",
+    "mayBeConsumed": false
+  },
+  "invalidatedArtifacts": {
+    "universe": {
+      "path": "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-universe.json",
+      "bytes": 2739300,
+      "sha256": "e0e3a4787cc52efa036aea18bfa3e2782628e0b5e852757ca5de6b0359b717b9"
+    },
+    "unsignedReviewCandidate": {
+      "path": "work/fla-swf-counterpart-successor-review/fla-swf-counterpart-successor-2026-08-07-pair-review-ledger.unsigned.json",
+      "bytes": 2088272,
+      "sha256": "cec319a0c172fe6abe8f20178eaec3b1cb31838d750b056804c6fdd1b8cd0789"
+    },
+    "finalReviewLedgerPresent": false,
+    "executablePlanPresent": false
+  },
+  "reasons": [
+    "v1 universe records omitted the required priorIntakeDecision field",
+    "v1 current holds did not use the required withheld-pending-manual-review promotionEligibility literal"
+  ],
+  "effectiveSuccessor": {
+    "universePath": "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v2-universe.json",
+    "unsignedReviewCandidatePath": "work/fla-swf-counterpart-successor-review/fla-swf-counterpart-successor-2026-08-07-v2-pair-review-ledger.unsigned.json",
+    "finalReviewLedgerPath": "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v2-pair-review-ledger.json",
+    "executablePlanPath": "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v2-plan.json",
+    "requiredSchemaVersion": "help-math-fla-swf-counterpart-successor-universe/v2"
+  },
+  "claims": {
+    "v1MayBeConsumedByReview": false,
+    "v1MayBeConsumedByPlan": false,
+    "v1MayBeConsumedByPromotion": false,
+    "sourceMutationAuthorized": false,
+    "canonicalCountsReportable": false
+  },
+  "retention": "preserve-v1-universe-and-unsigned-candidate-byte-for-byte-as-failed-evidence"
+}

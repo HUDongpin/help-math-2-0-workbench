@@ -1,13 +1,16 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { deflateSync } from "node:zlib";
-import { mkdtemp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { chmod, link, mkdtemp, mkdir, readFile, realpath, rm, symlink, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 
 import {
+  assertLessonReleaseInvariants,
   buildHelpMathCatalog,
   classifyFlaContainer,
+  loadCurrentSourceProfile,
   parseSwfHeader,
 } from "./build-help-math-catalog.mjs";
 
@@ -126,6 +129,8 @@ test("builds deterministic placement, duplicate, reference, audio, and FLA inven
 
     const first = await buildHelpMathCatalog({ source, output: firstOutput, concurrency: 2 });
     await buildHelpMathCatalog({ source, output: secondOutput, concurrency: 1 });
+    assert.equal(first.outputFiles.length, 17);
+    assert.equal(first.outputFiles.includes("current-source-profile.json"), false);
 
     assert.equal(first.summary.source.fileCount, 13);
     assert.equal(first.summary.swf.placements, 5);
@@ -179,13 +184,131 @@ test("builds deterministic placement, duplicate, reference, audio, and FLA inven
   }
 });
 
+test("loads only a hash-bound, real, single-link current-source profile", async () => {
+  const temporaryRoot = await mkdtemp(path.join(await realpath(os.tmpdir()), "helpmath-source-profile-"));
+  const outputRoot = path.join(temporaryRoot, "catalog");
+  const profilePath = path.join(outputRoot, "current-source-profile.json");
+
+  try {
+    await mkdir(outputRoot, { recursive: true });
+    const contents = await readFile(new URL("../catalog/current-source-profile.json", import.meta.url));
+    const sha256 = createHash("sha256").update(contents).digest("hex");
+    await writeFile(profilePath, contents);
+    await assert.rejects(
+      loadCurrentSourceProfile({ outputRoot, expectedProfileSha256: sha256 }),
+      /must be read-only/,
+    );
+    await chmod(profilePath, 0o444);
+
+    const selectedByDefault = await loadCurrentSourceProfile({ outputRoot, expectedProfileSha256: sha256 });
+    assert.deepEqual(
+      { path: selectedByDefault.path, bytes: selectedByDefault.bytes, sha256: selectedByDefault.sha256 },
+      { path: profilePath, bytes: contents.length, sha256 },
+    );
+    assert.equal(selectedByDefault.profile.schemaVersion, 1);
+    assert.equal(selectedByDefault.profile.artifactType, "help-math-current-source-profile");
+    assert.equal(selectedByDefault.filesystemIdentity.nlink, 1);
+    const selectedByImplicitBaseAuthority = await loadCurrentSourceProfile({ outputRoot });
+    assert.equal(selectedByImplicitBaseAuthority.sha256, sha256);
+    assert.equal(selectedByImplicitBaseAuthority.authority.type,
+      "checked-in-base-profile-sha256");
+
+    const selectedExplicitly = await loadCurrentSourceProfile({
+      outputRoot: path.join(temporaryRoot, "unused-output"),
+      expectedProfile: profilePath,
+      expectedProfileSha256: sha256,
+    });
+    assert.equal(selectedExplicitly.sha256, sha256);
+
+    await assert.rejects(
+      loadCurrentSourceProfile({ outputRoot, expectedProfileSha256: "0".repeat(64) }),
+      /Current source profile SHA-256 mismatch/,
+    );
+    await assert.rejects(
+      loadCurrentSourceProfile({ outputRoot, expectedProfileSha256: "ABC" }),
+      /lowercase SHA-256 digest/,
+    );
+    await assert.rejects(
+      buildHelpMathCatalog({ expectedProfile: profilePath }),
+      /require verifyKnownCounts/,
+    );
+    await assert.rejects(
+      buildHelpMathCatalog({ verifyKnownCounts: true, expectedProfile: profilePath }),
+      /requires expectedProfileSha256/,
+    );
+
+    const symlinkPath = path.join(temporaryRoot, "profile-symlink.json");
+    await symlink(profilePath, symlinkPath);
+    await assert.rejects(
+      loadCurrentSourceProfile({ outputRoot, expectedProfile: symlinkPath }),
+      /cannot be a symbolic link/,
+    );
+
+    const hardlinkPath = path.join(temporaryRoot, "profile-hardlink.json");
+    await link(profilePath, hardlinkPath);
+    await assert.rejects(
+      loadCurrentSourceProfile({ outputRoot, expectedProfile: hardlinkPath }),
+      /exactly one hard link/,
+    );
+
+    const realProfileDirectory = path.join(temporaryRoot, "real-profile-directory");
+    const aliasProfileDirectory = path.join(temporaryRoot, "alias-profile-directory");
+    const nestedProfilePath = path.join(realProfileDirectory, "profile.json");
+    await mkdir(realProfileDirectory);
+    await writeFile(nestedProfilePath, contents);
+    await chmod(nestedProfilePath, 0o444);
+    await symlink(realProfileDirectory, aliasProfileDirectory);
+    await assert.rejects(
+      loadCurrentSourceProfile({
+        outputRoot,
+        expectedProfile: path.join(aliasProfileDirectory, "profile.json"),
+      }),
+      /cannot contain symbolic-link components/,
+    );
+
+    const invalidSchemaPath = path.join(temporaryRoot, "invalid-schema.json");
+    const invalidSchema = JSON.parse(contents.toString("utf8"));
+    invalidSchema.unapproved = true;
+    const invalidSchemaBytes = Buffer.from(`${JSON.stringify(invalidSchema)}\n`);
+    await writeFile(invalidSchemaPath, invalidSchemaBytes);
+    await chmod(invalidSchemaPath, 0o444);
+    await assert.rejects(
+      loadCurrentSourceProfile({
+        outputRoot,
+        expectedProfile: invalidSchemaPath,
+        expectedProfileSha256: createHash("sha256").update(invalidSchemaBytes).digest("hex"),
+      }),
+      /must contain exactly these keys/,
+    );
+
+    const inconsistentProfilePath = path.join(temporaryRoot, "inconsistent-profile.json");
+    const inconsistentProfile = JSON.parse(contents.toString("utf8"));
+    inconsistentProfile.expected.swfOnly += 1;
+    const inconsistentProfileBytes = Buffer.from(`${JSON.stringify(inconsistentProfile)}\n`);
+    await writeFile(inconsistentProfilePath, inconsistentProfileBytes);
+    await chmod(inconsistentProfilePath, 0o444);
+    await assert.rejects(
+      loadCurrentSourceProfile({
+        outputRoot,
+        expectedProfile: inconsistentProfilePath,
+        expectedProfileSha256: createHash("sha256").update(inconsistentProfileBytes).digest("hex"),
+      }),
+      /internally inconsistent/,
+    );
+  } finally {
+    await rm(temporaryRoot, { recursive: true, force: true });
+  }
+});
+
 test("the checked-in full-archive catalog records the evidence-grounded known totals", async () => {
-  const [summary, batches, lessonReleases, catalog, assetCatalog] = await Promise.all([
+  const [summary, batches, lessonReleases, catalog, assetCatalog, currentSourceProfile, lessonReleasesBytes] = await Promise.all([
     readFile(new URL("../catalog/summary.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../catalog/batches.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../catalog/lesson-releases.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../catalog/animations.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../catalog/assets.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../catalog/current-source-profile.json", import.meta.url), "utf8").then(JSON.parse),
+    readFile(new URL("../catalog/lesson-releases.json", import.meta.url)),
   ]);
   assert.equal(summary.source.fileCount, 9_147);
   assert.equal(summary.source.totalBytes, 3_214_585_414);
@@ -219,6 +342,78 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
   assert.equal(summary.references.keyterm.unreferencedExisting, 16);
   assert.equal(summary.migration.complete, 0);
   assert.match(summary.discrepancies[0].explanation, /Cubed_root\.swf/);
+  assert.deepEqual(currentSourceProfile, {
+    schemaVersion: 1,
+    artifactType: "help-math-current-source-profile",
+    expected: {
+      files: summary.source.fileCount,
+      totalBytes: summary.source.totalBytes,
+      checksumSetSha256: summary.source.checksumSetSha256,
+      sourceExtensions: summary.source.extensions,
+      swf: summary.source.extensions.swf,
+      fla: summary.source.extensions.fla,
+      mp3: summary.source.extensions.mp3,
+      xml: summary.source.extensions.xml,
+      courseXml: summary.xml.courseFiles,
+      swfByCollection: {
+        course: summary.swf.byCollection.course,
+        keyterm: summary.swf.byCollection.keyterm,
+        formula: summary.swf.byCollection.formula,
+        unknown: summary.swf.byCollection.unknown,
+      },
+      uniqueSwfAssets: summary.swf.uniqueAssets,
+      duplicateGroups: summary.swf.duplicateGroups,
+      duplicatePlacements: summary.swf.duplicatePlacements,
+      pairedSwfFla: summary.pairing.pairedSwfFla,
+      swfOnly: summary.pairing.swfOnly,
+      flaOnly: summary.pairing.flaOnly,
+      compoundBinaryFla: summary.fla.compoundBinary,
+      zipArchiveFla: summary.fla.zipArchive,
+      unrecognizedFla: summary.fla.unrecognized,
+      swfFrames: summary.swf.totalFrames,
+      swfHeader: {
+        signatures: summary.swf.signatures,
+        fpsValues: summary.swf.fpsValues,
+        headerParseErrors: summary.swf.headerParseErrors,
+      },
+      courseShells: summary.swf.courseShells,
+      courseReferences: {
+        unique: summary.references.course.unique,
+        resolved: summary.references.course.resolved,
+        missing: summary.references.course.missing,
+        unreferenced: summary.references.course.unreferencedExisting,
+      },
+      keytermReferences: {
+        unique: summary.references.keyterm.unique,
+        resolved: summary.references.keyterm.resolved,
+        missing: summary.references.keyterm.missing,
+        unreferenced: summary.references.keyterm.unreferencedExisting,
+      },
+      lessonReleases: {
+        outputSha256: createHash("sha256").update(lessonReleasesBytes).digest("hex"),
+        releaseCount: lessonReleases.releases.length,
+        totalMembers: lessonReleases.releases.reduce((total, release) => total + release.members.length, 0),
+        releases: lessonReleases.releases.map((release) => ({
+          releaseId: release.releaseId,
+          memberCount: release.members.length,
+        })),
+      },
+      xmlWithBareAmpersands: summary.xml.filesWithBareAmpersands,
+    },
+  });
+  assert.doesNotThrow(() => assertLessonReleaseInvariants(
+    lessonReleases,
+    lessonReleasesBytes,
+    currentSourceProfile.expected.lessonReleases,
+  ));
+  assert.throws(
+    () => assertLessonReleaseInvariants(
+      lessonReleases,
+      lessonReleasesBytes,
+      { ...currentSourceProfile.expected.lessonReleases, outputSha256: "0".repeat(64) },
+    ),
+    /lesson-releases output SHA-256/,
+  );
 
   assert.deepEqual(
     batches.queues.map((queue) => queue.queueId),

@@ -969,7 +969,7 @@ function sanitizeHelper(helperSource) {
   return helper.trim();
 }
 
-function metadataForRuntime(spec) {
+function metadataForRuntime(spec, renderScale = 1) {
   return {
     schemaVersion: 1,
     animationId: spec.animationId,
@@ -982,6 +982,15 @@ function metadataForRuntime(spec) {
       targetSpriteObjectId: spec.ffdecExport.targetSpriteObjectId
     },
     stage: spec.timeline.stage,
+    ...(renderScale === 1 ? {} : {
+      // The host reads this to size the backing store. Absent means 1, which
+      // keeps every unscaled adapter byte-identical to its pre-scaling build.
+      renderScale,
+      requiredCanvas: {
+        width: spec.timeline.stage.width * renderScale,
+        height: spec.timeline.stage.height * renderScale,
+      },
+    }),
     fps: spec.timeline.fps,
     sourceRootTimeline: {
       frameCount: spec.timeline.root.frameCount,
@@ -1428,11 +1437,33 @@ function runtimeStateSource(spec) {
 }`;
 }
 
-export function buildSafeRuntime({helperSource, framesHtml, spec}) {
+export const MAX_ADAPTER_RENDER_SCALE = 3;
+
+/**
+ * The authored coordinate system is preserved at every scale: one
+ * `setTransform(k, 0, 0, k, 0, 0)` is applied ahead of the authored root
+ * transform, and every drawing call after it stays in authored stage units.
+ * Only the device resolution of the backing store changes.
+ *
+ * `scale === 1` deliberately emits the pre-scaling text verbatim, so the
+ * byte-parity gate in AGENTS.md holds by construction rather than by
+ * inspection.
+ */
+function validateRenderScale(scale) {
+  if (!Number.isInteger(scale) || scale < 1 || scale > MAX_ADAPTER_RENDER_SCALE) {
+    throw new Error(
+      `render scale must be an integer between 1 and ${MAX_ADAPTER_RENDER_SCALE}`,
+    );
+  }
+  return scale;
+}
+
+export function buildSafeRuntime({helperSource, framesHtml, spec, scale = 1}) {
+  const renderScale = validateRenderScale(scale);
   validateSpec(spec);
   const helper = sanitizeHelper(helperSource);
   const {definitions, placedFunctions, imageVariables} = extractInlineDefinitions(framesHtml, spec);
-  const metadata = metadataForRuntime(spec);
+  const metadata = metadataForRuntime(spec, renderScale);
   const registryEntries = placedFunctions.map((name) => `${JSON.stringify(name)}: ${name}`).join(",\n        ");
   const imageEntries = imageVariables.join(", ");
   const registryName = JSON.stringify(spec.output.globalRegistry);
@@ -1512,8 +1543,8 @@ function render(targetCanvas, request) {
     if (!targetCanvas || typeof targetCanvas.getContext !== "function") {
         throw new Error("targetCanvas must provide a 2D canvas context");
     }
-    if (targetCanvas.width !== ${spec.timeline.stage.width} || targetCanvas.height !== ${spec.timeline.stage.height}) {
-        throw new Error("targetCanvas must be exactly ${spec.timeline.stage.width}x${spec.timeline.stage.height}");
+    if (targetCanvas.width !== ${spec.timeline.stage.width * renderScale} || targetCanvas.height !== ${spec.timeline.stage.height * renderScale}) {
+        throw new Error("targetCanvas must be exactly ${spec.timeline.stage.width * renderScale}x${spec.timeline.stage.height * renderScale}");
     }
     for (var imageIndex = 0; imageIndex < EMBEDDED_IMAGES.length; imageIndex += 1) {
         if (!EMBEDDED_IMAGES[imageIndex].complete || EMBEDDED_IMAGES[imageIndex].naturalWidth < 1) {
@@ -1533,11 +1564,11 @@ function render(targetCanvas, request) {
 
     var previousCanvas = canvas;
     canvas = targetCanvas;
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.setTransform(${renderScale}, 0, 0, ${renderScale}, 0, 0);
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = ${JSON.stringify(spec.timeline.stage.backgroundColor)};
-    ctx.fillRect(0, 0, targetCanvas.width, targetCanvas.height);
+    ctx.fillRect(0, 0, ${renderScale === 1 ? "targetCanvas.width, targetCanvas.height" : `${spec.timeline.stage.width}, ${spec.timeline.stage.height}`});
     ctx.save();
     try {
         ctx.transform(1, 0, 0, 1, ${spec.timeline.stageRenderOffset.x}, ${spec.timeline.stageRenderOffset.y});

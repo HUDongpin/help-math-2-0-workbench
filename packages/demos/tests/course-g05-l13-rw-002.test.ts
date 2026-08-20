@@ -39,15 +39,21 @@ const rw002BindingSuccessorR2Bytes = 10220;
 const rw002BindingSuccessorR2Sha256 =
   'f49840ffd75fddcedeaac6db6b952e865da335e68182a133885fa024d05f82f8';
 const rw002BindingSuccessorR2StaleRoles = [
+  'englishSourceSchedule',
   'productQaContractTest',
   'productRuntime',
-  'runtimeContract'
+  'runtimeContract',
+  'spanishSourceSchedule',
+  'timeline'
 ] as const;
 const rw002SuccessorDriftRoles = new Set([
+  'englishSourceSchedule',
   'productRuntime',
   'runtimeContract',
   'runtimeHelpers',
-  'productQaContractTest'
+  'productQaContractTest',
+  'spanishSourceSchedule',
+  'timeline'
 ]);
 
 test('RW002 candidate is bound to the preserved source and distinct root/local domains', async () => {
@@ -651,7 +657,6 @@ test('RW002 r2 successor remains immutable dated historical evidence', async () 
     const currentSha256 = sha256(bytes);
     if (bytes.length !== binding.bytes || currentSha256 !== binding.sha256) {
       staleRoles.push(name);
-      assert.notEqual(bytes.length, binding.bytes, `${name}: dated bytes must be stale`);
       assert.notEqual(
         currentSha256,
         binding.sha256,

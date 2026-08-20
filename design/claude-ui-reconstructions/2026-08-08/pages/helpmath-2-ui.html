@@ -1,0 +1,1900 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HELP Math 2.0 — Platform UI</title>
+<style>
+/* ============================================================
+   HELP MATH 2.0 — platform UI direction
+   Palette extends apps/web/app/globals.css :root tokens.
+   Structural device: the tick line. The curriculum's own spine
+   is a linear run of 8 named sections and its core object is
+   the number line, so everything that encodes position —
+   lesson progress, mastery probability, page ordinal — is
+   drawn as a ruled line with ticks.
+   ============================================================ */
+
+:root{
+  /* grounds & neutrals — biased toward navy, not neutral grey */
+  --paper:#fffdf7;
+  --surface:#ffffff;
+  --surface-2:#f4f7fb;
+  --haze:#eaf0f7;
+  --line:#dbe4ee;
+  --line-soft:#e9eef5;
+  --ink:#10203f;
+  --ink-2:#14213d;
+  --ink-soft:#43506a;
+  --ink-mute:#6b7893;
+
+  /* structure & action */
+  --blue:#1768d4;
+  --blue-dark:#0d4fa9;
+  --blue-pale:#eaf4ff;
+  --sky:#cdeafa;
+
+  /* Nova — sampled from the source footer media pod */
+  --nova:#413db0;
+  --nova-cyan:#2fa3d7;
+  --nova-pale:#eeedfb;
+
+  /* semantic, kept separate from the accent */
+  --mint:#2f9c80;
+  --mint-bright:#4fc6a6;
+  --mint-pale:#e8f9f3;
+  --amber:#f8cb4b;
+  --amber-ink:#8a6300;
+  --amber-pale:#fff8d9;
+  --coral:#ef6a5b;
+  --coral-pale:#fff0ec;
+
+  --radius:16px;
+  --radius-s:10px;
+  --shadow:0 18px 45px rgb(16 32 63 / 10%);
+  --shadow-s:0 6px 18px rgb(16 32 63 / 8%);
+  --rail-w:236px;
+
+  --font-display:ui-rounded,"SF Pro Rounded",Fredoka,"Arial Rounded MT Bold","Nunito Sans","Trebuchet MS",system-ui,sans-serif;
+  --font-body:"Nunito Sans","Avenir Next",Avenir,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-data:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+}
+
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#0b1424; --surface:#111d33; --surface-2:#16243d; --haze:#1b2a45;
+    --line:#27395a; --line-soft:#1f2f4c;
+    --ink:#eaf1fb; --ink-2:#dce7f6; --ink-soft:#a9bbd6; --ink-mute:#8698b6;
+    --blue:#5da2f5; --blue-dark:#8cc0ff; --blue-pale:#132a48; --sky:#173350;
+    --nova:#8f8bec; --nova-cyan:#5fc4ec; --nova-pale:#1d2450;
+    --mint:#54c9a6; --mint-bright:#6fdcbb; --mint-pale:#12332c;
+    --amber:#f6cf63; --amber-ink:#f8cb4b; --amber-pale:#33290c;
+    --coral:#ff8b7d; --coral-pale:#3a1f1c;
+    --shadow:0 18px 45px rgb(0 0 0 / 45%);
+    --shadow-s:0 6px 18px rgb(0 0 0 / 35%);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0b1424; --surface:#111d33; --surface-2:#16243d; --haze:#1b2a45;
+  --line:#27395a; --line-soft:#1f2f4c;
+  --ink:#eaf1fb; --ink-2:#dce7f6; --ink-soft:#a9bbd6; --ink-mute:#8698b6;
+  --blue:#5da2f5; --blue-dark:#8cc0ff; --blue-pale:#132a48; --sky:#173350;
+  --nova:#8f8bec; --nova-cyan:#5fc4ec; --nova-pale:#1d2450;
+  --mint:#54c9a6; --mint-bright:#6fdcbb; --mint-pale:#12332c;
+  --amber:#f6cf63; --amber-ink:#f8cb4b; --amber-pale:#33290c;
+  --coral:#ff8b7d; --coral-pale:#3a1f1c;
+  --shadow:0 18px 45px rgb(0 0 0 / 45%);
+  --shadow-s:0 6px 18px rgb(0 0 0 / 35%);
+}
+:root[data-theme="light"]{
+  --paper:#fffdf7; --surface:#ffffff; --surface-2:#f4f7fb; --haze:#eaf0f7;
+  --line:#dbe4ee; --line-soft:#e9eef5;
+  --ink:#10203f; --ink-2:#14213d; --ink-soft:#43506a; --ink-mute:#6b7893;
+  --blue:#1768d4; --blue-dark:#0d4fa9; --blue-pale:#eaf4ff; --sky:#cdeafa;
+  --nova:#413db0; --nova-cyan:#2fa3d7; --nova-pale:#eeedfb;
+  --mint:#2f9c80; --mint-bright:#4fc6a6; --mint-pale:#e8f9f3;
+  --amber:#f8cb4b; --amber-ink:#8a6300; --amber-pale:#fff8d9;
+  --coral:#ef6a5b; --coral-pale:#fff0ec;
+  --shadow:0 18px 45px rgb(16 32 63 / 10%);
+  --shadow-s:0 6px 18px rgb(16 32 63 / 8%);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+/* class-level display must never out-rank the hidden attribute */
+[hidden]{display:none !important}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--font-body);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:700;line-height:1.15;text-wrap:balance;margin:0}
+p{margin:0}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:var(--blue);text-underline-offset:.2em}
+:focus-visible{outline:3px solid var(--coral);outline-offset:2px;border-radius:4px}
+.mono{font-family:var(--font-data);font-variant-numeric:tabular-nums}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- app shell ---------- */
+.app{display:grid;grid-template-columns:var(--rail-w) 1fr;min-height:100vh}
+.rail{
+  background:var(--surface);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;gap:2px;padding:18px 12px 20px;
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+.brand{display:flex;align-items:center;gap:10px;padding:6px 8px 18px}
+.brand__mark{width:34px;height:34px;flex:none}
+.brand__name{font-family:var(--font-display);font-weight:800;font-size:17px;letter-spacing:-.01em;line-height:1.1}
+.brand__name span{display:block;font-family:var(--font-data);font-size:10px;font-weight:500;letter-spacing:.1em;color:var(--ink-mute);text-transform:uppercase}
+
+.rail__group{font-family:var(--font-data);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);padding:16px 10px 6px}
+.navitem{
+  display:flex;align-items:center;gap:11px;width:100%;text-align:left;
+  padding:9px 11px;border-radius:11px;color:var(--ink-soft);font-weight:600;font-size:14.5px;
+  transition:background 120ms ease,color 120ms ease;
+}
+.navitem:hover{background:var(--surface-2);color:var(--ink)}
+.navitem[aria-current="page"]{background:var(--blue-pale);color:var(--blue-dark)}
+.navitem svg{flex:none;width:19px;height:19px;stroke-width:1.9}
+.navitem__tail{margin-left:auto;font-family:var(--font-data);font-size:11px;color:var(--ink-mute)}
+.rail__foot{margin-top:auto;padding:14px 10px 0;border-top:1px solid var(--line-soft);display:grid;gap:10px}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:14px;
+  padding:12px 26px;background:color-mix(in srgb,var(--paper) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line-soft);
+}
+.crumb{font-family:var(--font-data);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute)}
+.topbar__spacer{margin-left:auto}
+.seg{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg button{padding:5px 13px;border-radius:999px;font-size:13px;font-weight:700;color:var(--ink-soft)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-s)}
+.iconbtn{width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink-soft)}
+.iconbtn:hover{color:var(--ink);border-color:var(--ink-mute)}
+.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(140deg,var(--blue),var(--nova));color:#fff;display:grid;place-items:center;font-family:var(--font-display);font-weight:800;font-size:13px}
+
+.main{min-width:0}
+.wrap{padding:26px 26px 72px;max-width:1280px}
+.screen[hidden]{display:none}
+
+/* ---------- primitives ----------
+   Two registers, one rule.
+
+   LEARNER surfaces use the house "sticker": a 2px ink border, a hard offset
+   shadow with no blur, and an asymmetric radius. This is the project's own
+   signature — globals.css authors `box-shadow: Npx Npx 0 var(--ink)` at seven
+   offsets against `2px solid var(--ink)` borders and radii like 9px 4px 9px 4px,
+   while the soft --shadow token is used 3 times in 9,254 lines. It is tactile,
+   high-contrast, and survives a classroom projector.
+
+   TEACHER data surfaces stay quiet — hairline borders, low shadow — because a
+   mastery grid of 24 students needs calm, not eight competing sticker edges. */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-s)}
+.sticker{
+  background:var(--surface);border:2px solid var(--ink);
+  border-radius:16px 6px 16px 6px;box-shadow:5px 5px 0 var(--ink);
+}
+.sticker--sm{border-radius:11px 4px 11px 4px;box-shadow:3px 3px 0 var(--ink)}
+.sticker--lg{border-radius:22px 8px 22px 8px;box-shadow:8px 8px 0 var(--ink)}
+button.sticker{transition:transform 90ms ease,box-shadow 90ms ease}
+button.sticker:hover{transform:translate(-1px,-1px);box-shadow:7px 7px 0 var(--ink)}
+button.sticker:active{transform:translate(3px,3px);box-shadow:2px 2px 0 var(--ink)}
+.pad{padding:20px}
+.stack{display:grid;gap:16px}
+.row{display:flex;align-items:center;gap:10px}
+.eyebrow{font-family:var(--font-data);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute)}
+.lead{color:var(--ink-soft);font-size:16.5px}
+.muted{color:var(--ink-mute);font-size:13.5px}
+.h-xl{font-size:clamp(30px,3.4vw,46px);letter-spacing:-.022em}
+.h-l{font-size:clamp(22px,2.2vw,28px);letter-spacing:-.015em}
+.h-m{font-size:18px;letter-spacing:-.01em}
+.h-s{font-size:15px;letter-spacing:-.005em}
+
+/* Buttons carry the same hard-offset rule. Minimum 48px tall on learner
+   surfaces — the project sets that floor deliberately, above the 24px WCAG
+   minimum, for small hands and shared classroom hardware. */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:48px;padding:11px 20px;border-radius:13px 5px 13px 5px;
+  border:2px solid var(--ink);font-weight:800;font-size:15.5px;
+  font-family:var(--font-display);transition:transform 90ms ease,box-shadow 90ms ease;
+}
+.btn:hover{transform:translate(-1px,-1px)}
+.btn:active{transform:translate(3px,3px)}
+.btn--primary{background:var(--blue);color:#fff;box-shadow:4px 4px 0 var(--ink)}
+.btn--primary:hover{box-shadow:6px 6px 0 var(--ink)}
+.btn--primary:active{box-shadow:1px 1px 0 var(--ink)}
+.btn--nova{background:var(--nova);color:#fff;box-shadow:4px 4px 0 var(--ink)}
+.btn--nova:hover{box-shadow:6px 6px 0 var(--ink)}
+.btn--nova:active{box-shadow:1px 1px 0 var(--ink)}
+.btn--ghost{background:var(--surface);color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.btn--ghost:hover{box-shadow:6px 6px 0 var(--ink)}
+.btn--ghost:active{box-shadow:1px 1px 0 var(--ink)}
+/* Utility scale — teacher and chrome surfaces, where the sticker would shout. */
+.btn--sm{min-height:34px;padding:7px 13px;font-size:13.5px;border-width:1.5px;border-color:var(--line);border-radius:9px;box-shadow:none}
+.btn--sm:hover,.btn--sm:active{box-shadow:none;transform:none;border-color:var(--ink-mute)}
+
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:12.5px;font-weight:700;background:var(--surface-2);color:var(--ink-soft);border:1px solid var(--line)}
+.chip--mint{background:var(--mint-pale);color:var(--mint);border-color:color-mix(in srgb,var(--mint) 35%,transparent)}
+.chip--amber{background:var(--amber-pale);color:var(--amber-ink);border-color:color-mix(in srgb,var(--amber) 55%,transparent)}
+.chip--coral{background:var(--coral-pale);color:var(--coral);border-color:color-mix(in srgb,var(--coral) 40%,transparent)}
+.chip--nova{background:var(--nova-pale);color:var(--nova);border-color:color-mix(in srgb,var(--nova) 30%,transparent)}
+.chip--blue{background:var(--blue-pale);color:var(--blue-dark);border-color:color-mix(in srgb,var(--blue) 30%,transparent)}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+
+/* bilingual term pair — the founding idea of the program, given a visual form */
+.term{display:inline-grid;gap:1px;line-height:1.25}
+.term b{font-family:var(--font-display);font-size:15px;font-weight:700}
+.term i{font-style:normal;font-size:12.5px;color:var(--ink-mute);border-left:2px solid var(--amber);padding-left:6px}
+
+/* ---------- the tick line: one grammar for every position ---------- */
+.tickline{position:relative;height:34px}
+.tickline__rule{position:absolute;left:0;right:0;top:16px;height:2px;background:var(--line);border-radius:2px}
+.tickline__fill{position:absolute;left:0;top:16px;height:2px;background:var(--blue);border-radius:2px}
+.tickline__tick{position:absolute;top:10px;width:2px;height:8px;background:var(--line);transform:translateX(-1px)}
+.tickline__marker{position:absolute;top:8px;width:14px;height:14px;border-radius:50%;background:var(--blue);border:3px solid var(--surface);box-shadow:0 0 0 1.5px var(--blue);transform:translateX(-7px)}
+.tickline__band{position:absolute;top:14px;height:6px;border-radius:3px;background:color-mix(in srgb,var(--blue) 22%,transparent)}
+.tickline__label{position:absolute;top:24px;font-family:var(--font-data);font-size:10px;color:var(--ink-mute);transform:translateX(-50%)}
+
+/* ---------- section spine (lesson navigation) ---------- */
+.spine{display:flex;gap:0;align-items:stretch;background:var(--surface);border:2px solid var(--ink);border-radius:14px 5px 14px 5px;padding:6px;overflow-x:auto;box-shadow:4px 4px 0 var(--ink)}
+.spine__stop{
+  position:relative;flex:1 1 0;min-width:96px;text-align:left;padding:9px 11px 11px;border-radius:10px;
+  display:grid;gap:2px;transition:background 120ms ease;
+}
+.spine__stop:hover{background:var(--surface-2)}
+.spine__stop[aria-current="step"]{background:var(--blue-pale)}
+.spine__code{font-family:var(--font-data);font-size:10px;letter-spacing:.1em;color:var(--ink-mute)}
+.spine__stop[aria-current="step"] .spine__code{color:var(--blue-dark)}
+.spine__title{font-family:var(--font-display);font-weight:700;font-size:13.5px;line-height:1.2}
+.spine__es{font-size:11px;color:var(--ink-mute);line-height:1.2}
+.spine__bar{margin-top:5px;height:4px;border-radius:2px;background:var(--line-soft);overflow:hidden}
+.spine__bar i{display:block;height:100%;background:var(--mint-bright);border-radius:2px}
+.spine__stop[aria-current="step"] .spine__bar i{background:var(--blue)}
+
+/* ---------- lesson stage ----------
+   The plane stays light in both themes on purpose: it is authored artwork on a
+   light ground, and re-tinting it would be a fidelity claim we are not making. */
+.stage{
+  position:relative;aspect-ratio:800/415;width:100%;border-radius:14px;overflow:hidden;
+  background:linear-gradient(180deg,#f7fbff,#e9f2fb);border:2px solid var(--ink);box-shadow:5px 5px 0 var(--ink);
+}
+/* an annotation for this prototype, not learner chrome */
+.stage__aspect{position:absolute;right:12px;bottom:10px;z-index:2;font-family:var(--font-data);font-size:10.5px;color:#5b6b86;background:rgb(255 255 255 / 78%);border-radius:6px;padding:3px 7px}
+.stage > svg{position:absolute;inset:0;width:100%;height:100%}
+
+.transport{display:flex;align-items:center;gap:7px;flex-wrap:wrap;background:var(--surface);border:2px solid var(--ink);border-radius:13px 5px 13px 5px;padding:9px 11px;box-shadow:4px 4px 0 var(--ink)}
+.tbtn{display:inline-flex;align-items:center;gap:6px;min-height:48px;padding:8px 13px;border-radius:11px 4px 11px 4px;font-weight:700;font-size:15px;border:2px solid var(--ink);background:var(--surface);white-space:nowrap;box-shadow:2px 2px 0 var(--ink)}
+.tbtn:hover{box-shadow:4px 4px 0 var(--ink);transform:translate(-1px,-1px)}
+.tbtn:active{box-shadow:1px 1px 0 var(--ink);transform:translate(1px,1px)}
+.tbtn--play{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.tbtn--nova{background:var(--nova);color:#fff;border-color:var(--nova);margin-left:auto}
+.tbtn--icon{padding:8px 11px}
+.transport__progress{flex:1 1 80px;min-width:64px}
+.transport__count{font-family:var(--font-data);font-size:12.5px;color:var(--ink-soft);white-space:nowrap}
+
+/* Words in context — a glossary card anchored where the term was used */
+.hotspot{
+  display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr) auto;gap:14px;align-items:start;
+  background:var(--amber-pale);border:2px solid var(--ink);border-radius:13px 5px 13px 5px;
+  box-shadow:4px 4px 0 var(--ink);padding:12px 14px;
+}
+.hotspot__defs{display:grid;gap:3px;min-width:0}
+
+/* Course map — on demand, never a permanent rail, never auto-opening */
+.overlay{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:24px;background:rgb(16 32 63 / 45%)}
+.overlay__panel{background:var(--surface);width:min(760px,100%);max-height:82vh;display:flex;flex-direction:column;overflow:hidden}
+.overlay__head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:16px 18px;border-bottom:2px solid var(--ink)}
+.overlay__body{overflow-y:auto;min-height:0;padding:14px 18px;display:grid;gap:14px;align-content:start}
+.mapsec{display:grid;gap:6px}
+.mapsec__h{display:flex;align-items:baseline;gap:8px}
+.mapsec__list{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:5px}
+.mapitem{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:9px;border:1px solid var(--line);background:var(--surface);text-align:left;font-size:13px}
+.mapitem:hover{border-color:var(--ink)}
+.mapitem[data-state="current"]{border-color:var(--blue);background:var(--blue-pale);font-weight:700}
+.mapitem[data-state="unavailable"]{opacity:.55;cursor:not-allowed}
+.mapitem__ord{font-family:var(--font-data);font-size:10.5px;color:var(--ink-mute);flex:none;width:44px}
+.mapitem__t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Classroom placement: a full-width voice band, never a 290px column */
+.classband{display:flex;align-items:center;gap:16px;background:var(--nova);color:#fff;border:2px solid var(--ink);border-radius:14px 5px 14px 5px;padding:16px 18px;box-shadow:5px 5px 0 var(--ink)}
+.classband__mic{width:76px;height:76px;border-radius:50%;background:rgb(255 255 255 / 16%);border:2.5px solid rgb(255 255 255 / 55%);display:grid;place-items:center;flex:none}
+.classband__copy{flex:1;min-width:0}
+.classband__ctx{font-family:var(--font-data);font-size:11.5px;opacity:.8;letter-spacing:.05em;text-transform:uppercase}
+.classband__answer{font-family:var(--font-display);font-size:27px;font-weight:700;line-height:1.25;letter-spacing:-.015em;text-wrap:balance}
+.classband__es{font-size:15px;opacity:.82;margin-top:5px}
+
+/* ---------- support drawer ---------- */
+.drawer{background:var(--surface);border:2px solid var(--ink);border-radius:14px 5px 14px 5px;display:flex;flex-direction:column;overflow:hidden;box-shadow:4px 4px 0 var(--ink)}
+.drawer__head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line-soft);background:var(--surface-2)}
+.drawer__tabs{display:flex;gap:4px;padding:8px;border-bottom:1px solid var(--line-soft);background:var(--surface-2)}
+.drawer__tabs button{flex:1;padding:8px 6px;border-radius:9px;font-weight:700;font-size:13.5px;color:var(--ink-soft)}
+.drawer__tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-s)}
+.drawer__body{padding:14px;display:grid;gap:12px;align-content:start;overflow-y:auto;max-height:560px}
+
+.novacontext{display:flex;gap:10px;align-items:flex-start;background:var(--nova-pale);border:1px solid color-mix(in srgb,var(--nova) 22%,transparent);border-radius:11px;padding:10px}
+.novacontext__thumb{width:60px;height:34px;border-radius:5px;background:linear-gradient(140deg,var(--sky),var(--blue-pale));border:1px solid var(--line);flex:none}
+.bubble{border-radius:13px;padding:10px 13px;font-size:14.5px;line-height:1.5;max-width:92%}
+.bubble--nova{background:var(--surface-2);border:1px solid var(--line);border-bottom-left-radius:4px}
+.bubble--me{background:var(--blue);color:#fff;justify-self:end;border-bottom-right-radius:4px}
+.bubble__es{display:block;margin-top:5px;padding-left:8px;border-left:2px solid var(--amber);font-size:13px;color:var(--ink-mute)}
+.bubble--me .bubble__es{color:rgb(255 255 255 / 80%);border-left-color:rgb(255 255 255 / 55%)}
+.starters{display:flex;flex-wrap:wrap;gap:6px}
+.starters button{padding:6px 11px;border-radius:999px;border:1.5px solid var(--line);font-size:13px;font-weight:600;color:var(--ink-soft);background:var(--surface)}
+.starters button:hover{border-color:var(--nova);color:var(--nova)}
+.composer{display:flex;gap:7px;align-items:center;border:1.5px solid var(--line);border-radius:12px;padding:6px 6px 6px 8px;background:var(--surface)}
+.composer input{flex:1;border:0;outline:0;background:transparent;font-size:14.5px;color:var(--ink);min-width:0}
+.mic{width:48px;height:48px;border-radius:50%;background:var(--nova);color:#fff;display:grid;place-items:center;flex:none;box-shadow:0 0 0 5px var(--nova-pale)}
+
+/* ---------- support switches ---------- */
+.switchrow{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:11px;border:1px solid var(--line-soft);background:var(--surface);text-align:left}
+.switchrow:hover{border-color:var(--line)}
+.switchrow__t{flex:1;min-width:0}
+.switch{width:40px;height:23px;border-radius:999px;background:var(--line);position:relative;flex:none;transition:background 140ms ease}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:var(--surface);box-shadow:var(--shadow-s);transition:transform 140ms ease}
+[aria-pressed="true"]>.switch{background:var(--mint)}
+[aria-pressed="true"]>.switch::after{transform:translateX(17px)}
+
+/* ---------- grids ---------- */
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.player{display:grid;grid-template-columns:minmax(0,1fr) 336px;gap:16px;align-items:start}
+.split{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:22px;align-items:start}
+
+/* ---------- lesson cards ---------- */
+.lessoncard{display:grid;gap:9px;padding:16px;text-align:left;border-radius:12px 4px 12px 4px;border:2px solid var(--ink);background:var(--surface);text-align:left;box-shadow:4px 4px 0 var(--ink);transition:transform 90ms ease,box-shadow 90ms ease}
+.lessoncard:hover{transform:translate(-1px,-1px);box-shadow:6px 6px 0 var(--ink)}
+.lessoncard:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+.lessoncard__top{display:flex;align-items:baseline;gap:8px}
+.lessoncard__gl{font-family:var(--font-data);font-size:11px;color:var(--ink-mute);letter-spacing:.06em}
+.lessoncard__meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+
+/* ---------- mastery grid ---------- */
+.mtable{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px}
+.mtable th{text-align:left;font-family:var(--font-data);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;padding:0 6px 9px;vertical-align:bottom}
+.mtable td{padding:5px 6px;border-top:1px solid var(--line-soft);white-space:nowrap}
+.mtable tbody tr:hover{background:var(--surface-2)}
+.mcell{display:flex;align-items:center;gap:7px}
+.mbar{width:44px;height:7px;border-radius:4px;background:var(--line-soft);overflow:hidden;flex:none}
+.mbar i{display:block;height:100%;border-radius:4px}
+.mval{font-family:var(--font-data);font-size:11.5px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.namecell{display:flex;align-items:center;gap:8px;font-weight:700;white-space:nowrap}
+.pill{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-family:var(--font-data);font-size:10px;font-weight:700;color:#fff;flex:none}
+
+/* ---------- home ---------- */
+.hero{position:relative;border-radius:24px 10px 24px 10px;overflow:hidden;background:var(--surface);border:2px solid var(--ink);box-shadow:8px 8px 0 var(--ink)}
+.hero__grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:34px;padding:44px 40px;align-items:center}
+.hero__demo{background:linear-gradient(170deg,#f6fbff,#e6f1fb);border:1px solid var(--line);border-radius:16px;padding:18px}
+:root[data-theme="dark"] .hero__demo{background:linear-gradient(170deg,#152340,#0f1b30)}
+.doors{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--ink);border-radius:16px 6px 16px 6px;overflow:hidden;background:var(--surface);box-shadow:5px 5px 0 var(--ink)}
+.door{padding:20px;text-align:left;border-right:2px solid var(--ink);display:grid;gap:6px;transition:background 120ms ease}
+.door:last-child{border-right:0}
+.door:hover{background:var(--surface-2)}
+.door__ico{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;color:#fff}
+
+.statstrip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:2px solid var(--ink);border-radius:14px 5px 14px 5px;overflow:hidden;background:var(--surface);box-shadow:5px 5px 0 var(--ink)}
+.stat{padding:16px 18px;border-right:2px solid var(--ink)}
+.stat:last-child{border-right:0}
+.stat b{display:block;font-family:var(--font-display);font-size:27px;letter-spacing:-.02em;line-height:1.1}
+
+/* number-line interactive */
+.nlwrap{touch-action:none;user-select:none;cursor:grab}
+.nlwrap:active{cursor:grabbing}
+.nlread{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-top:10px}
+.nlread b{font-family:var(--font-display);font-size:34px;letter-spacing:-.02em;line-height:1}
+
+/* notes screen */
+.note-table{width:100%;border-collapse:collapse;font-size:14px}
+.note-table th{text-align:left;font-family:var(--font-data);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);padding:0 10px 8px;font-weight:600}
+.note-table td{padding:9px 10px;border-top:1px solid var(--line-soft);vertical-align:top}
+.note-table code{font-family:var(--font-data);font-size:12px;background:var(--surface-2);padding:1px 5px;border-radius:4px;color:var(--ink-soft)}
+.scrollx{overflow-x:auto}
+.callout{border-left:3px solid var(--amber);background:var(--amber-pale);padding:13px 16px;border-radius:0 11px 11px 0}
+.callout--nova{border-left-color:var(--nova);background:var(--nova-pale)}
+.callout--mint{border-left-color:var(--mint);background:var(--mint-pale)}
+
+@media (max-width:1180px){
+  .player{grid-template-columns:1fr}
+  .split{grid-template-columns:1fr}
+  .grid-4{grid-template-columns:repeat(2,1fr)}
+  .hero__grid{grid-template-columns:1fr;padding:30px 24px}
+}
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  /* One horizontal scroller, not a six-row wrap that eats the fold. */
+  .rail{
+    position:sticky;top:0;z-index:40;height:auto;flex-direction:row;flex-wrap:nowrap;
+    align-items:center;gap:4px;border-right:0;border-bottom:1px solid var(--line);
+    padding:8px 12px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;
+  }
+  .rail::-webkit-scrollbar{display:none}
+  .rail__group,.navitem__tail{display:none}
+  .rail__foot{margin:0 0 0 4px;padding:0;border-top:0;display:flex;align-items:center;gap:8px;flex:none}
+  .rail__foot .eyebrow,.langnote{display:none}
+  .navitem{flex:none;padding:8px 12px;min-height:44px}
+  .brand{padding:0 10px 0 0;flex:none}
+  .brand__name{font-size:15px}
+  .crumb{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:38vw}
+  .topbar{padding:10px 14px;gap:10px}
+  .seg button{padding:5px 10px;font-size:12.5px}
+  .spine__stop{min-width:118px}
+  /* the plane annotation is desktop-only; at this width it collides with the art */
+  .stage__aspect{display:none}
+  .grid-3,.grid-2,.doors,.statstrip{grid-template-columns:1fr}
+  .door{border-right:0;border-bottom:1px solid var(--line)}
+  .stat{border-right:0;border-bottom:1px solid var(--line)}
+  .wrap{padding:18px 16px 60px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important}
+}
+</style>
+
+<div class="app">
+  <!-- ================= RAIL ================= -->
+  <nav class="rail" aria-label="Main">
+    <div class="brand">
+      <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true">
+        <rect width="40" height="40" rx="11" fill="var(--ink)"/>
+        <line x1="7" y1="20" x2="33" y2="20" stroke="var(--amber)" stroke-width="2.4" stroke-linecap="round"/>
+        <line x1="12" y1="15.5" x2="12" y2="24.5" stroke="var(--mint-bright)" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="20" y1="13" x2="20" y2="27" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>
+        <line x1="28" y1="15.5" x2="28" y2="24.5" stroke="var(--nova-cyan)" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+      <span class="brand__name">HELP Math<span>2.0 platform</span></span>
+    </div>
+
+    <div class="rail__group" data-role="student">Learn</div>
+    <button class="navitem" data-screen="student" data-role="student"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 12l9-8 9 8"/><path d="M5 10.5V20h14v-9.5"/></svg><span data-es="Hoy">Today</span><span class="navitem__tail" data-today-count>3</span></button>
+    <button class="navitem" data-screen="lesson" data-role="student"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg><span data-es="Mi lección">My lesson</span></button>
+    <button class="navitem" data-screen="catalog" data-role="student"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5.5A2.5 2.5 0 016.5 3H20v15H6.5A2.5 2.5 0 004 20.5z"/><path d="M4 18.5V5.5"/></svg><span data-es="Todas las lecciones">All lessons</span><span class="navitem__tail">29</span></button>
+    <button class="navitem" data-screen="words" data-role="student"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h10M4 12h16M4 18h7"/><circle cx="18.5" cy="6" r="2.2"/></svg><span data-es="Banco de palabras">Word bank</span><span class="navitem__tail">761</span></button>
+
+    <div class="rail__group" data-role="teacher" data-es-ui="Enseñar">Teach</div>
+    <button class="navitem" data-screen="teacher" data-role="teacher"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/></svg><span data-es-ui="Panel de clase">Class board</span></button>
+    <button class="navitem" data-screen="prep" data-role="teacher"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 4h9a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V9z"/><path d="M9 4v5H4M8 14h8M8 17.5h5"/></svg><span data-es-ui="Preparación">Lesson prep</span></button>
+    <button class="navitem" data-screen="catalog" data-role="teacher"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5.5A2.5 2.5 0 016.5 3H20v15H6.5A2.5 2.5 0 004 20.5z"/><path d="M4 18.5V5.5"/></svg><span data-es-ui="Currículo">Curriculum</span><span class="navitem__tail">29</span></button>
+
+    <div class="rail__group">Project</div>
+    <button class="navitem" data-screen="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 8v.01M11 12h1v4h1"/></svg>About HELP Math</button>
+    <button class="navitem" data-screen="notes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4h16v12H8l-4 4z"/><path d="M8 9h8M8 12.5h5"/></svg>Design notes</button>
+
+    <div class="rail__foot">
+      <div class="row langctl" style="justify-content:space-between" data-role="student">
+        <span class="eyebrow" data-es="Idioma de la lección">Lesson language</span>
+        <div class="seg" role="group" aria-label="Lesson language">
+          <button data-lang="en" aria-pressed="true">EN</button>
+          <button data-lang="es" aria-pressed="false">ES</button>
+        </div>
+      </div>
+      <div class="row langctl" style="justify-content:space-between" data-role="teacher">
+        <span class="eyebrow" data-es-ui="Tu idioma">Your language</span>
+        <div class="seg" role="group" aria-label="Your interface language">
+          <button data-tlang="en" aria-pressed="true">EN</button>
+          <button data-tlang="es" aria-pressed="false">ES</button>
+        </div>
+      </div>
+      <p class="muted langnote" style="font-size:12px;line-height:1.45" data-role="teacher" data-tlang-note>Your interface only. Your students' lesson language is set separately, per learner.</p>
+      <p class="muted langnote" style="font-size:12px;line-height:1.45" data-role="student" data-lang-note>Spanish shows the words the original lesson files already contain. Where the source has no Spanish, the English is shown and marked.</p>
+    </div>
+  </nav>
+
+  <!-- ================= MAIN ================= -->
+  <div class="main">
+    <header class="topbar">
+      <span class="crumb" data-crumb>HELP Math 2.0</span>
+      <div class="topbar__spacer"></div>
+      <div class="seg" role="group" aria-label="Role">
+        <button data-role-btn="student" aria-pressed="true" data-es-ui="Estudiante">Student</button>
+        <button data-role-btn="teacher" aria-pressed="false" data-es-ui="Docente">Teacher</button>
+      </div>
+      <button class="iconbtn" data-theme-toggle aria-label="Switch light or dark theme">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M18.8 5.2l-1.4 1.4M6.6 17.4l-1.4 1.4"/></svg>
+      </button>
+      <div class="avatar" aria-hidden="true">MR</div>
+    </header>
+
+    <div class="wrap">
+
+<!-- ==================== HOME ==================== -->
+<section class="screen stack" data-screen-panel="home" style="gap:26px">
+  <div class="hero">
+    <div class="hero__grid">
+      <div class="stack" style="gap:18px">
+        <span class="chip chip--blue"><span class="dot"></span>HELP = Help with English Language Proficiency</span>
+        <h1 class="h-xl">See the language inside every math idea.</h1>
+        <p class="lead">HELP Math 2.0 teaches the mathematics and the words for it in the same lesson — 29 lessons across grades&nbsp;3–5, each built on the same eight steps, each carrying its own bilingual vocabulary from the original program.</p>
+        <div class="row" style="flex-wrap:wrap;gap:12px">
+          <button class="btn btn--primary" data-goto="student">Start where I left off</button>
+          <button class="btn btn--ghost" data-goto="catalog">Browse the 29 lessons</button>
+        </div>
+        <p class="muted">Adaptive sequencing, Nova&nbsp;Tutor, and teacher tools sit on top of the restored lessons — they never replace them.</p>
+      </div>
+
+      <div class="hero__demo">
+        <p class="eyebrow" style="margin-bottom:2px">The object this curriculum is built on</p>
+        <p class="h-s" style="margin-bottom:10px">Drag the marker. Grade 4, Lesson 3 — <em style="font-style:normal;color:var(--ink-mute)">Negative Numbers</em></p>
+        <div class="nlwrap" data-numberline>
+          <svg viewBox="0 0 520 120" role="img" aria-label="Interactive number line from negative ten to ten">
+            <rect x="10" y="52" width="245" height="16" rx="4" fill="var(--coral-pale)"/>
+            <rect x="265" y="52" width="245" height="16" rx="4" fill="var(--mint-pale)"/>
+            <line x1="10" y1="60" x2="510" y2="60" stroke="var(--ink-soft)" stroke-width="2.4"/>
+            <g data-nl-ticks></g>
+            <path d="M10 60 l9 -5 v10 z" fill="var(--ink-soft)"/>
+            <path d="M510 60 l-9 -5 v10 z" fill="var(--ink-soft)"/>
+            <g data-nl-marker>
+              <line x1="260" y1="34" x2="260" y2="86" stroke="var(--blue)" stroke-width="2.5"/>
+              <circle cx="260" cy="60" r="11" fill="var(--blue)" stroke="var(--surface)" stroke-width="3.5"/>
+            </g>
+          </svg>
+        </div>
+        <div class="nlread">
+          <b data-nl-value>0</b>
+          <span class="term"><b data-nl-word>Zero</b><i data-nl-word-es>Cero</i></span>
+          <span class="chip chip--nova" data-nl-note>Not positive, not negative</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="statstrip">
+    <div class="stat"><b>29</b><span class="muted">lessons, grades 3–5</span></div>
+    <div class="stat"><b>1,751</b><span class="muted">authored pages</span></div>
+    <div class="stat"><b>8</b><span class="muted">steps in every single lesson</span></div>
+    <div class="stat"><b>761</b><span class="muted">glossary entries · 753 in Spanish</span></div>
+  </div>
+
+  <div class="stack" style="gap:14px">
+    <h2 class="h-l">Three ways in</h2>
+    <div class="doors">
+      <button class="door" data-goto="student">
+        <span class="door__ico" style="background:var(--blue)"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 3l9 5-9 5-9-5z"/><path d="M7 11v4c0 1.5 2.5 3 5 3s5-1.5 5-3v-4"/></svg></span>
+        <h3 class="h-m">I'm a student</h3>
+        <p class="muted">One clear next step, every time you sign in. Your words are always one tap away.</p>
+      </button>
+      <button class="door" data-goto="teacher">
+        <span class="door__ico" style="background:var(--mint)"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 21h10"/></svg></span>
+        <h3 class="h-m">I teach</h3>
+        <p class="muted">See who is stuck and why, pre-teach the vocabulary, and build a sheltered lesson in minutes.</p>
+      </button>
+      <button class="door" data-goto="notes">
+        <span class="door__ico" style="background:var(--nova)"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 4h16v12H8l-4 4z"/><path d="M8 9h8M8 12.5h5"/></svg></span>
+        <h3 class="h-m">I'm evaluating this</h3>
+        <p class="muted">What is built, what is proposed, and the evidence behind every layout decision.</p>
+      </button>
+    </div>
+  </div>
+
+  <div class="split">
+    <div class="card pad stack">
+      <span class="eyebrow">The same eight steps, in every lesson</span>
+      <h2 class="h-l">A shape students can learn once and rely on 29 times</h2>
+      <p class="lead">Every lesson in the archive — all 29, without exception — runs the same eight sections in the same order, with the same bilingual names. That is not a design convention we invented; it is how the program was authored. The interface makes it visible instead of hiding it behind a Next button.</p>
+      <div class="spine" data-spine-demo aria-label="The eight sections of every lesson"></div>
+      <p class="muted">Section names come straight from the lesson source files. <span class="mono">catalog/lessons.json</span> — 29 of 29 lessons share this sequence.</p>
+    </div>
+    <div class="stack">
+      <div class="card pad stack" style="gap:10px">
+        <span class="chip chip--nova">Nova Tutor</span>
+        <h3 class="h-m">Help that already knows where you are</h3>
+        <p class="muted">Nova opens holding the page you're on, the section you're in, and a picture of your screen. A fourth-grader should never have to type their way back to the question.</p>
+        <p class="muted">On <b>Try It</b>, <b>Practice Test</b> and <b>Final Quiz</b>, Nova scaffolds and never answers — enforced in the page context, not in prompt wording.</p>
+      </div>
+      <div class="card pad stack" style="gap:10px">
+        <span class="chip chip--amber">Adaptive path</span>
+        <h3 class="h-m">BKT chooses what's next. Nova chooses how to say it.</h3>
+        <p class="muted">A Bayesian knowledge-tracing estimate per skill decides which lesson section a student sees next. The language model handles explanation, rephrasing, and the student's own questions — it never sets the sequence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== STUDENT: TODAY ==================== -->
+<section class="screen stack" data-screen-panel="student" hidden style="gap:20px">
+  <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:12px">
+    <div>
+      <p class="eyebrow" data-es="Martes · Grado 4">Tuesday · Grade 4</p>
+      <h1 class="h-l" data-greeting>Good morning, Maria.</h1>
+    </div>
+    <div class="row" style="gap:8px">
+      <span class="chip chip--mint"><span class="dot"></span><span data-es="racha de 4 días">4-day streak</span></span>
+      <span class="chip"><span class="dot" style="color:var(--amber)"></span><span data-es="18 min hoy">18 min today</span></span>
+    </div>
+  </div>
+
+  <div class="split">
+    <div class="stack">
+      <!-- next step -->
+      <div class="card pad stack" style="gap:14px;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-pale)">
+        <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+          <span class="chip chip--blue"><span class="dot"></span><span data-es="Tu siguiente paso">Your next step</span></span>
+          <span class="muted mono" data-es="elegido para ti · 12 min">chosen for you · 12 min</span>
+        </div>
+        <div class="row" style="align-items:flex-start;gap:16px;flex-wrap:wrap">
+          <div style="flex:1 1 320px">
+            <p class="eyebrow" data-es="Grado 4 · Lección 3 · Learn It / Apréndelo">Grade 4 · Lesson 3 · Learn It / Apréndelo</p>
+            <h2 class="h-l" style="margin:3px 0 6px">Situations with Negative Numbers: Temperature</h2>
+            <p class="lead" data-es="Continúa en la página 21 de 39, donde te quedaste el viernes.">Pick up on page 21 of 39, where you stopped on Friday.</p>
+          </div>
+          <button class="btn btn--primary" data-goto="lesson"><span data-es="Sigue">Keep going</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h13M13 6l6 6-6 6"/></svg></button>
+        </div>
+        <div>
+          <div class="tickline" data-tickline='{"value":0.538,"ticks":8,"labels":["IR","RW","VB","IN","TI","GS","TS","FQ"]}'></div>
+        </div>
+        <div class="callout callout--nova">
+          <p style="font-size:14.5px" data-es="<b>Por qué esta:</b> respondiste dos preguntas de temperatura contando hacia arriba en vez de hacia abajo. Esta sección vuelve a mostrar el termómetro, más despacio."><b>Why this one:</b> you answered two temperature questions by counting up instead of down. This section shows the thermometer model again, slower.</p>
+        </div>
+      </div>
+
+      <!-- mastery -->
+      <div class="card pad stack" style="gap:12px">
+        <div class="row" style="justify-content:space-between">
+          <h3 class="h-m" data-es="Lo que sabes ahora mismo">What you know right now</h3>
+          <span class="muted mono" data-es="p(dominio) · se actualiza con cada respuesta">p(mastery) · updated after every answer</span>
+        </div>
+        <div class="stack" style="gap:12px" data-mastery-list></div>
+        <details style="margin-top:2px">
+          <summary style="cursor:pointer;font-size:13.5px;color:var(--ink-soft);font-weight:700" data-es="Cómo se calcula este número">How this number is worked out</summary>
+          <div class="stack" style="gap:8px;margin-top:10px">
+            <p class="muted">Each skill carries four Bayesian knowledge-tracing parameters. After every answer the estimate is updated, then the next section is chosen from it.</p>
+            <div class="grid-4" style="gap:8px">
+              <div class="card pad" style="padding:10px"><span class="eyebrow">p(init)</span><b class="mono" style="display:block;font-size:17px">0.24</b></div>
+              <div class="card pad" style="padding:10px"><span class="eyebrow">p(learn)</span><b class="mono" style="display:block;font-size:17px">0.18</b></div>
+              <div class="card pad" style="padding:10px"><span class="eyebrow">p(slip)</span><b class="mono" style="display:block;font-size:17px">0.09</b></div>
+              <div class="card pad" style="padding:10px"><span class="eyebrow">p(guess)</span><b class="mono" style="display:block;font-size:17px">0.21</b></div>
+            </div>
+            <p class="muted">A skill is treated as learned at p&nbsp;≥&nbsp;0.95. Nova is told the estimate but cannot change it.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <div class="stack">
+      <!-- words to review -->
+      <div class="card pad stack" style="gap:12px">
+        <div class="row" style="justify-content:space-between">
+          <h3 class="h-m" data-es="Palabras para recordar">Words to keep</h3>
+          <button class="btn btn--ghost btn--sm" data-goto="words" data-es="Banco de palabras">Word bank</button>
+        </div>
+        <p class="muted" data-es="De <b>Important Words / Palabras importantes</b> en tu lección actual.">From <b>Important Words / Palabras importantes</b> in your current lesson.</p>
+        <div class="stack" style="gap:8px" data-word-review></div>
+      </div>
+
+      <!-- ask nova -->
+      <div class="card pad stack" style="gap:11px;border-color:color-mix(in srgb,var(--nova) 30%,transparent)">
+        <div class="row"><span class="chip chip--nova">Nova Tutor</span></div>
+        <p class="lead" style="font-size:15px" data-es="¿Te trabaste con algo del viernes? Pregunta en inglés o en español — Nova ya tiene la página.">Stuck on something from Friday? Ask in English or Spanish — Nova already has the page.</p>
+        <button class="btn btn--nova" data-goto="lesson">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15a3 3 0 003-3V6a3 3 0 10-6 0v6a3 3 0 003 3z"/><path d="M6 11.5a6 6 0 0012 0M12 18.5V21"/></svg>
+          <span data-es="Pregúntale a Nova">Ask Nova</span>
+        </button>
+      </div>
+
+      <div class="card pad stack" style="gap:9px">
+        <span class="eyebrow" data-es="Terminado hace poco">Finished recently</span>
+        <div class="row" style="gap:9px"><span class="chip chip--mint"><span class="dot"></span>Try It</span><span style="font-size:14px" data-es="4 de 5 correctas">4 of 5 correct</span></div>
+        <div class="row" style="gap:9px"><span class="chip chip--mint"><span class="dot"></span>Important Words</span><span style="font-size:14px" data-es="8 de 8 vistas">8 of 8 seen</span></div>
+        <div class="row" style="gap:9px"><span class="chip"><span class="dot" style="color:var(--ink-mute)"></span>Play It</span><span style="font-size:14px" data-es="sin empezar">not started</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== LESSON PLAYER ==================== -->
+<section class="screen stack" data-screen-panel="lesson" hidden style="gap:14px">
+  <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:12px">
+    <div>
+      <p class="eyebrow">Grade 4 · Lesson 3 · <span class="mono">lesson-g04-l03-negative-numbers</span></p>
+      <h1 class="h-l" data-lesson-title>Negative Numbers</h1>
+    </div>
+    <div class="row" style="gap:8px;flex-wrap:wrap">
+      <div class="seg" role="group" aria-label="Lesson mode">
+        <button data-mode="focus" aria-pressed="true" data-es="Enfoque">Focus</button>
+        <button data-mode="study" aria-pressed="false" data-es="Estudio">Study</button>
+        <button data-mode="classroom" aria-pressed="false" data-es="Aula">Classroom</button>
+      </div>
+      <button class="btn btn--ghost btn--sm" data-goto="student" data-es="Salir de la lección">Leave lesson</button>
+    </div>
+  </div>
+
+  <!-- section spine = the navigation area -->
+  <nav class="spine" data-spine aria-label="Lesson sections"></nav>
+
+  <div class="player">
+    <div class="stack" style="gap:12px">
+      <div class="stage">
+        <span class="stage__aspect mono">authored plane 800 × 415 · 1.928:1</span>
+        <svg viewBox="0 0 800 415" role="img" aria-label="Thermometer showing negative eight degrees beside a number line">
+          <rect width="800" height="415" fill="none"/>
+          <text x="40" y="56" font-family="var(--font-display)" font-size="27" font-weight="700" fill="#12386b">Situations with Negative Numbers: Temperature</text>
+          <text x="40" y="84" font-family="var(--font-body)" font-size="17" fill="#43506a" data-stage-es>Situaciones con números negativos : Temperatura</text>
+
+          <!-- thermometer -->
+          <g transform="translate(96,116)">
+            <rect x="0" y="0" width="34" height="196" rx="17" fill="#fff" stroke="#9db4cf" stroke-width="2.5"/>
+            <circle cx="17" cy="212" r="26" fill="#ef6a5b" stroke="#c94d40" stroke-width="2.5"/>
+            <rect x="8" y="132" width="18" height="76" fill="#ef6a5b"/>
+            <g stroke="#9db4cf" stroke-width="2" font-family="var(--font-data)" font-size="13" fill="#43506a">
+              <line x1="34" y1="24" x2="52" y2="24"/><text x="58" y="29" stroke="none">20°</text>
+              <line x1="34" y1="70" x2="52" y2="70"/><text x="58" y="75" stroke="none">10°</text>
+              <line x1="34" y1="116" x2="58" y2="116" stroke="#12386b" stroke-width="2.6"/><text x="64" y="121" stroke="none" fill="#12386b" font-weight="700">0°</text>
+              <line x1="34" y1="162" x2="52" y2="162"/><text x="58" y="167" stroke="none">−10°</text>
+            </g>
+          </g>
+
+          <!-- number line -->
+          <g transform="translate(300,250)">
+            <rect x="0" y="-9" width="200" height="18" rx="4" fill="#fff0ec"/>
+            <rect x="200" y="-9" width="200" height="18" rx="4" fill="#e8f9f3"/>
+            <line x1="-14" y1="0" x2="414" y2="0" stroke="#14213d" stroke-width="3"/>
+            <path d="M-14 0 l10 -6 v12 z" fill="#14213d"/>
+            <path d="M414 0 l-10 -6 v12 z" fill="#14213d"/>
+            <g stroke="#14213d" stroke-width="2.4" font-family="var(--font-data)" font-size="14" fill="#43506a">
+              <line x1="0" y1="-9" x2="0" y2="9"/><text x="-12" y="30" stroke="none">−20</text>
+              <line x1="100" y1="-9" x2="100" y2="9"/><text x="88" y="30" stroke="none">−10</text>
+              <line x1="200" y1="-13" x2="200" y2="13" stroke-width="3.4"/><text x="194" y="34" stroke="none" fill="#12386b" font-weight="700">0</text>
+              <line x1="300" y1="-9" x2="300" y2="9"/><text x="294" y="30" stroke="none">10</text>
+              <line x1="400" y1="-9" x2="400" y2="9"/><text x="394" y="30" stroke="none">20</text>
+            </g>
+            <g transform="translate(120,0)">
+              <line x1="0" y1="-46" x2="0" y2="0" stroke="#1768d4" stroke-width="3"/>
+              <circle cx="0" cy="0" r="9" fill="#1768d4" stroke="#fff" stroke-width="3"/>
+              <rect x="-38" y="-76" width="76" height="28" rx="8" fill="#1768d4"/>
+              <text x="0" y="-56" text-anchor="middle" font-family="var(--font-data)" font-size="15" font-weight="700" fill="#fff">−8°</text>
+            </g>
+          </g>
+
+          <text x="300" y="352" font-family="var(--font-body)" font-size="18" fill="#14213d">Eight degrees below zero is a <tspan data-hotspot="negative-number" font-weight="700" fill="#0d4fa9" text-decoration="underline" text-decoration-style="dotted" style="cursor:pointer">negative number</tspan>.</text>
+          <text x="300" y="378" font-family="var(--font-body)" font-size="15" fill="#6b7893">Ocho grados bajo cero es un número negativo.</text>
+        </svg>
+
+      </div>
+
+      <!-- Words in context. The term is tappable where it is used, and the card
+           lands under the plane rather than over it — nothing covers the maths. -->
+      <div class="hotspot" data-hotspot-card hidden>
+        <span class="term"><b>Negative number</b><i lang="es">Número negativo</i></span>
+        <span class="hotspot__defs">
+          <span style="font-size:14px">A number that is less than zero. On a number line it sits to the left of zero.</span>
+          <span class="muted" style="font-size:13px" lang="es">Un número que es menor que cero. En la recta numérica está a la izquierda del cero.</span>
+          <span class="muted mono" style="font-size:11px">grade-wide glossary · 761 EN · 753 ES · fails closed when a source link is ambiguous</span>
+        </span>
+        <button class="iconbtn" data-hotspot-close aria-label="Close">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+
+      <div class="transport">
+        <button class="tbtn" aria-label="Previous page"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M15 6l-6 6 6 6"/></svg>Previous</button>
+        <button class="tbtn tbtn--play" data-play><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="7" y="5" width="3.4" height="14" rx="1.2" fill="currentColor" stroke="none"/><rect x="13.6" y="5" width="3.4" height="14" rx="1.2" fill="currentColor" stroke="none"/></svg><span data-play-label>Pause</span></button>
+        <button class="tbtn" aria-label="Next page">Next<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg></button>
+        <div class="transport__progress"><div class="tickline" data-tickline='{"value":0.538,"ticks":39}'></div></div>
+        <span class="transport__count" data-page-count>21 / 39</span>
+        <button class="tbtn tbtn--icon" aria-label="Replay narration"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M4 12a8 8 0 108-8"/><path d="M4 5v5h5"/></svg></button>
+        <button class="tbtn tbtn--icon" aria-label="Narration volume"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.1"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9.5a4 4 0 010 5"/></svg></button>
+        <button class="tbtn tbtn--icon" data-open-map aria-label="Course map"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4L3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5z"/><path d="M9 4v13M15 6.5v13"/></svg></button>
+        <button class="tbtn tbtn--nova" data-ask-nova><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15a3 3 0 003-3V6a3 3 0 10-6 0v6a3 3 0 003 3z"/><path d="M6 11.5a6 6 0 0012 0M12 18.5V21"/></svg>Ask Nova</button>
+      </div>
+
+      <!-- Classroom placement -->
+      <div class="classband" data-classband hidden>
+        <button class="classband__mic" aria-label="Hold to speak to Nova">
+          <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 15a3 3 0 003-3V6a3 3 0 10-6 0v6a3 3 0 003 3z"/><path d="M6 11.5a6 6 0 0012 0M12 18.5V21"/></svg>
+        </button>
+        <div class="classband__copy">
+          <p class="classband__ctx">Nova · Learn It, page 21 of 39 · narration paused</p>
+          <p class="classband__answer">Below zero means we count down past zero. Eight below zero is −8.</p>
+          <p class="classband__es">Bajo cero significa contar hacia abajo pasando el cero. Ocho bajo cero es −8.</p>
+        </div>
+        <button class="btn btn--ghost btn--sm" data-close-band style="color:#fff;border-color:rgb(255 255 255 / 45%);background:transparent">Close</button>
+      </div>
+
+      <p class="muted" data-transport-note>One Previous and one Next in the whole page, and progress reported exactly once. Keyboard support is a HELP Math 2.0 accessibility enhancement, not evidence of Flash keyboard parity.</p>
+    </div>
+
+    <!-- support drawer -->
+    <div class="drawer">
+      <div class="drawer__head" data-drawer-head hidden>
+        <span class="chip chip--nova"><span class="dot"></span>Nova Tutor</span>
+        <button class="iconbtn" data-close-nova aria-label="Close Nova">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="drawer__tabs" role="tablist" aria-label="Support">
+        <button role="tab" aria-selected="true" data-tab="nova">Nova</button>
+        <button role="tab" aria-selected="false" data-tab="read" data-es="Léelo">Read it</button>
+        <button role="tab" aria-selected="false" data-tab="words" data-es="Palabras">Words</button>
+        <button role="tab" aria-selected="false" data-tab="supports" data-es="Apoyos">Supports</button>
+      </div>
+
+      <div class="drawer__body" data-tabpanel="nova" role="tabpanel">
+        <div class="novacontext">
+          <span class="novacontext__thumb" aria-hidden="true"></span>
+          <div>
+            <p style="font-size:13px;font-weight:800;line-height:1.3" data-es="Nova puede ver esta página">Nova can see this page</p>
+            <p class="muted" style="font-size:12px">Learn It · page 21 of 39 · <span class="mono">course-g04-l03-in-009</span></p>
+          </div>
+        </div>
+        <div class="stack" style="gap:9px">
+          <div class="bubble bubble--nova">Look at the thermometer. The red is <b>below</b> the zero line. What number would you write for that?<span class="bubble__es">Mira el termómetro. El rojo está <b>debajo</b> de la línea del cero. ¿Qué número escribirías?</span></div>
+          <div class="bubble bubble--me">negative 8?</div>
+          <div class="bubble bubble--nova">Yes — and we write it <b>−8</b>. The little dash means <i>below zero</i>, not <i>subtract</i>.<span class="bubble__es">Sí — y se escribe <b>−8</b>. La rayita significa <i>bajo cero</i>, no <i>restar</i>.</span></div>
+        </div>
+        <div class="starters">
+          <strong style="width:100%;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute);font-family:var(--font-data)" data-es="Inicios de pregunta">Question starters</strong>
+          <button data-es="Dilo otra vez más despacio">Say it again slower</button>
+          <button>What does <i>below zero</i> mean?</button>
+          <button data-es="Muéstrame otro">Show me another one</button>
+          <button>Explícamelo en español</button>
+        </div>
+        <div class="composer">
+          <input placeholder="Type or speak your question…" aria-label="Ask Nova a question">
+          <button class="iconbtn" aria-label="Send a photo of your paper"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="6.5" width="18" height="13" rx="2.5"/><circle cx="12" cy="13" r="3.6"/><path d="M8 6.5l1.4-2.5h5.2L16 6.5"/></svg></button>
+          <button class="mic" aria-label="Hold to speak to Nova"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15a3 3 0 003-3V6a3 3 0 10-6 0v6a3 3 0 003 3z"/><path d="M6 11.5a6 6 0 0012 0M12 18.5V21"/></svg></button>
+        </div>
+        <p class="muted" style="font-size:12px" data-es="Abrir a Nova pausa la narración de la lección y la devuelve al cerrar. Dos voces a la vez no funciona.">Opening Nova pauses the lesson narration and returns it when you close. Two voices at once is unusable.</p>
+      </div>
+
+      <div class="drawer__body" data-tabpanel="read" role="tabpanel" hidden>
+        <p class="eyebrow" data-es="Lo que dice esta página">What this page says</p>
+        <p style="font-size:15.5px;line-height:1.65;max-width:60ch">A thermometer measures temperature. The zero line is the freezing point of water. When the red column falls <b>below</b> the zero line, the temperature is a <b>negative number</b>.</p>
+        <p style="font-size:15.5px;line-height:1.65;max-width:60ch">Eight degrees below zero is written <b>−8</b>.</p>
+        <div class="callout"><p style="font-size:14px"><b>Sentence frame</b><br>The temperature is ______ degrees below zero, so I write ______.<br><span class="muted">La temperatura es ______ grados bajo cero, entonces escribo ______.</span></p></div>
+        <p class="muted" style="font-size:12px">Transcript is bound to this page's provenance hash. No page is given text it was not authored with.</p>
+      </div>
+
+      <div class="drawer__body" data-tabpanel="words" role="tabpanel" hidden>
+        <p class="eyebrow">Important Words · Palabras importantes</p>
+        <div class="stack" style="gap:8px" data-lesson-words></div>
+        <p class="muted" style="font-size:12px">All eight terms come from this lesson's own vocabulary section in the source files.</p>
+      </div>
+
+      <div class="drawer__body" data-tabpanel="supports" role="tabpanel" hidden>
+        <p class="eyebrow" data-es="Apoyos de instrucción protegida">Sheltered instruction supports</p>
+        <div class="stack" style="gap:8px" data-supports></div>
+        <div class="callout callout--mint"><p style="font-size:13.5px">Your teacher can set these for the whole class, and you can still change them for yourself.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- The fine-grained view stays on demand. A persistent 39-item strip has no
+       legible resting state, and every lesson is a different length. -->
+  <div class="overlay" data-map-overlay hidden>
+    <div class="overlay__panel sticker">
+      <div class="overlay__head">
+        <div>
+          <p class="eyebrow">Course map</p>
+          <h2 class="h-m">Negative Numbers · 39 pages</h2>
+        </div>
+        <button class="iconbtn" data-close-map aria-label="Close course map">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="overlay__body" data-map-body></div>
+      <p class="muted" style="padding:0 18px 16px;font-size:12.5px">Every page carries its section code and ordinal because titles repeat — five pages in <b>Learn It</b> share one title. A page with no registered renderer says so rather than failing on open.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CATALOG ==================== -->
+<section class="screen stack" data-screen-panel="catalog" hidden style="gap:18px">
+  <div>
+    <p class="eyebrow" data-es="Currículo">Curriculum</p>
+    <h1 class="h-l" data-es="29 lecciones, grados 3 a 5">29 lessons, grades 3 to 5</h1>
+    <p class="lead" style="max-width:70ch" data-es="Cada lección tiene las mismas ocho secciones. La disponibilidad se muestra con honestidad: hoy dos lecciones están conectadas al reproductor, una más está convertida y espera su descriptor, y las demás siguen en migración. Los títulos de las lecciones se muestran en inglés porque los archivos originales no traen título en español.">Every lesson carries the same eight sections. Availability is shown honestly: two lessons are wired into the player today, one more is fully converted and waiting on a descriptor, and the rest are still in migration.</p>
+  </div>
+  <div class="row" style="gap:8px;flex-wrap:wrap">
+    <div class="seg" role="group" aria-label="Grade">
+      <button data-grade="all" aria-pressed="true" data-es="Todos">All</button>
+      <button data-grade="3" aria-pressed="false" data-es="Grado 3">Grade 3</button>
+      <button data-grade="4" aria-pressed="false" data-es="Grado 4">Grade 4</button>
+      <button data-grade="5" aria-pressed="false" data-es="Grado 5">Grade 5</button>
+    </div>
+    <div class="seg" role="group" aria-label="Domain" data-domain-filters></div>
+  </div>
+  <div class="grid-3" data-lesson-grid></div>
+</section>
+
+<!-- ==================== WORD BANK ==================== -->
+<section class="screen stack" data-screen-panel="words" hidden style="gap:18px">
+  <div>
+    <p class="eyebrow">Word bank · Banco de palabras</p>
+    <h1 class="h-l" data-es="Cada palabra que enseña este programa, en los dos idiomas">Every word this program teaches, in both languages</h1>
+    <p class="lead" style="max-width:70ch">761 glossary entries in English and 753 in Spanish, plus 402 vocabulary pages across the 29 lessons. Every entry carries a definition in both languages. Nothing here is machine-translated — these are the words the original program authored.</p>
+  </div>
+  <div class="grid-3" data-wordbank></div>
+  <div class="callout"><p style="font-size:14px"><b>Where the source has no Spanish</b>, the English word is shown with a marker instead of an invented translation. Nova may explain a term in Spanish, but its wording is visibly distinguished from authored text and is never written back into the catalog.</p></div>
+</section>
+
+<!-- ==================== TEACHER: CLASS BOARD ==================== -->
+<section class="screen stack" data-screen-panel="teacher" hidden style="gap:18px">
+  <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:12px">
+    <div>
+      <p class="eyebrow" data-es-ui="Período 2 · Grado 4 · 24 estudiantes · 11 designados EL">Period 2 · Grade 4 · 24 students · 11 designated EL</p>
+      <h1 class="h-l" data-es-ui="Panel de clase">Class board</h1>
+    </div>
+    <div class="row" style="gap:8px">
+      <button class="btn btn--ghost btn--sm" data-es-ui="Exportar para la reunión del IEP">Export for IEP meeting</button>
+      <button class="btn btn--primary btn--sm" data-goto="prep" data-es-ui="Planear mañana">Plan tomorrow</button>
+    </div>
+  </div>
+
+  <div class="grid-4">
+    <div class="card pad"><span class="eyebrow" data-es-ui="Trabajando ahora">Working now</span><b class="h-l" style="display:block">19</b><span class="muted" data-es-ui="de 24">of 24</span></div>
+    <div class="card pad"><span class="eyebrow" data-es-ui="Te necesitan hoy">Need you today</span><b class="h-l" style="display:block;color:var(--coral)">4</b><span class="muted" data-es-ui="marcados por motivo, no por puntaje">flagged by reason, not score</span></div>
+    <div class="card pad"><span class="eyebrow" data-es-ui="Dominio de la clase">Class mastery</span><b class="h-l mono" style="display:block">0.61</b><span class="muted" data-es-ui="números negativos">negative numbers</span></div>
+    <div class="card pad"><span class="eyebrow" data-es-ui="Preguntas a Nova">Nova questions</span><b class="h-l" style="display:block">37</b><span class="muted" data-es-ui="esta semana · 12 en español">this week · 12 in Spanish</span></div>
+  </div>
+
+  <div class="split">
+    <div class="card pad stack" style="gap:12px">
+      <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <h2 class="h-m" data-es-ui="Quién sabe qué">Who knows what</h2>
+        <span class="muted mono" data-es-ui="p(dominio) por destreza">p(mastery) per skill</span>
+      </div>
+      <div class="scrollx">
+        <table class="mtable" data-mastery-table>
+          <thead><tr><th data-es-ui="Estudiante">Student</th><th data-es-ui="Recta numérica">Number line</th><th data-es-ui="Números negativos">Negative numbers</th><th data-es-ui="Cero">Zero</th><th data-es-ui="Patrones">Patterns</th><th data-es-ui="Problemas de palabras">Word problems</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="muted" data-es-ui="El color usa las mismas tres bandas que la vista del estudiante, así un número nunca significa dos cosas en este producto.">Colour encodes the same three bands as the student view, so a number never means two things in this product.</p>
+      <p class="muted" data-es-ui="<b>Datos de muestra.</b> Estos estudiantes son inventados para el prototipo. Hoy no existe ni lista de clase, ni almacén de dominio, ni modelo BKT en el código."><b>Sample data.</b> These learners are invented for the prototype. No roster, no mastery store, and no BKT model exists in the codebase today.</p>
+    </div>
+
+    <div class="stack">
+      <div class="card pad stack" style="gap:11px">
+        <h3 class="h-m" data-es-ui="Te necesitan hoy">Needs you today</h3>
+        <div class="stack" style="gap:10px" data-attention></div>
+      </div>
+      <div class="card pad stack" style="gap:10px">
+        <div class="row"><span class="chip chip--nova" data-es-ui="Controles de Nova">Nova controls</span></div>
+        <div class="stack" style="gap:7px" data-nova-controls></div>
+        <p class="muted" style="font-size:12px" data-es-ui="Nova nunca está activa por defecto en modo Aula, y solo guía —sin responder— en Try It, Practice Test y Final Quiz.">Nova is never on by default in Classroom mode, and is scaffolding-only in Try It, Practice Test and Final Quiz.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TEACHER: LESSON PREP ==================== -->
+<section class="screen stack" data-screen-panel="prep" hidden style="gap:18px">
+  <div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:12px">
+    <div>
+      <p class="eyebrow" data-es-ui="Preparación de la lección · Miércoles, 45 minutos">Lesson prep · Wednesday, 45 minutes</p>
+      <h1 class="h-l" data-es-ui='Grado 4, Lección 3 — Negative Numbers <span class="chip chip--coral" style="vertical-align:middle;font-size:11px">título en inglés — la fuente no tiene español</span>'>Grade 4, Lesson 3 — Negative Numbers</h1>
+    </div>
+    <div class="row" style="gap:8px">
+      <button class="btn btn--ghost btn--sm" data-es-ui="Imprimir copia para la pizarra">Print board copy</button>
+      <button class="btn btn--primary btn--sm" data-es-ui="Asignar al Período 2">Assign to Period 2</button>
+    </div>
+  </div>
+
+  <div class="split">
+    <div class="stack">
+      <div class="card pad stack" style="gap:12px">
+        <h2 class="h-m" data-es-ui="Elige lo que ve la clase">Choose what the class sees</h2>
+        <p class="muted" data-es-ui="Las ocho secciones, en el orden de la fuente. Las secciones sin marcar siguen disponibles para cada estudiante por su ruta adaptativa.">All eight sections, in source order. Unchecked sections stay available to individual students through their adaptive path.</p>
+        <div class="stack" style="gap:7px" data-prep-sections></div>
+        <div class="row" style="justify-content:space-between;padding-top:6px;border-top:1px solid var(--line-soft)">
+          <span class="muted" data-es-ui="Seleccionado">Selected</span>
+          <span class="mono" data-prep-total>18 pages · about 26 min</span>
+        </div>
+      </div>
+
+      <div class="card pad stack" style="gap:12px">
+        <h2 class="h-m" data-es-ui="Plan de lección protegida">Sheltered lesson plan</h2>
+        <div class="grid-2" style="gap:12px">
+          <div class="stack" style="gap:5px">
+            <span class="eyebrow" data-es-ui="Objetivo de contenido">Content objective</span>
+            <p style="font-size:14.5px;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--surface-2)">Students will locate positive and negative numbers on a number line and explain what zero separates.</p>
+          </div>
+          <div class="stack" style="gap:5px">
+            <span class="eyebrow" data-es-ui="Objetivo de lenguaje">Language objective</span>
+            <p style="font-size:14.5px;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--surface-2)">Students will describe a temperature using <i>above zero</i> / <i>below zero</i> in a complete sentence.</p>
+          </div>
+        </div>
+        <div class="stack" style="gap:6px">
+          <span class="eyebrow" data-es-ui="Estructuras de oración para la pizarra">Sentence frames for the board</span>
+          <div class="callout"><p style="font-size:14.5px">______ is <b>below</b> zero, so I write ______.<br><span class="muted">______ está <b>bajo</b> cero, entonces escribo ______.</span></p></div>
+          <div class="callout"><p style="font-size:14.5px">On the number line, ______ is to the <b>left of</b> zero.<br><span class="muted">En la recta numérica, ______ está a la <b>izquierda</b> del cero.</span></p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="card pad stack" style="gap:11px">
+        <h3 class="h-m" data-es-ui="Enseña estas palabras antes">Pre-teach these words</h3>
+        <p class="muted" data-es-ui="Tomadas de la sección <b>Important Words</b> de esta misma lección. Marca las que vas a presentar primero.">Drawn from this lesson's own <b>Important Words</b> section. Tick the ones you'll front-load.</p>
+        <div class="stack" style="gap:7px" data-prep-words></div>
+      </div>
+      <div class="card pad stack" style="gap:10px">
+        <h3 class="h-m" data-es-ui="Dónde le costará a esta clase">Where this class will struggle</h3>
+        <div class="stack" style="gap:9px">
+          <div class="callout callout--mint"><p style="font-size:14px" data-es-ui="<b>7 estudiantes</b> ya tienen p ≥ 0.80 en <i>recta numérica</i>. Déjalos empezar en <b>Learn It</b>."><b>7 students</b> already hold p ≥ 0.80 on <i>number line</i>. Let them start at <b>Learn It</b>.</p></div>
+          <div class="callout"><p style="font-size:14px" data-es-ui="<b>9 estudiantes</b> confunden el signo menos con la resta. Las páginas de <i>Owing</i> (IN 10–11) tratan esto directamente."><b>9 students</b> confuse the minus sign with subtraction. The <i>Owing</i> pages (IN 10–11) address this directly.</p></div>
+          <div class="callout" style="border-left-color:var(--coral);background:var(--coral-pale)"><p style="font-size:14px" data-es-ui="<b>4 recién llegados</b> aún no tienen la palabra en inglés para <i>below</i>. Enséñala con el termómetro antes de cualquier texto."><b>4 newcomers</b> have no English word for <i>below</i> yet. Pre-teach with the thermometer before any text.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== DESIGN NOTES ==================== -->
+<section class="screen stack" data-screen-panel="notes" hidden style="gap:22px">
+  <div>
+    <p class="eyebrow">Design notes</p>
+    <h1 class="h-l">Why this interface looks the way it does</h1>
+    <p class="lead" style="max-width:72ch">Every structural decision below is drawn from what is actually in the repository, not from a generic ed-tech pattern. This screen exists so the reasoning can be argued with.</p>
+  </div>
+
+  <div class="card pad stack" style="gap:12px">
+    <h2 class="h-m">The navigation question, answered with the catalog</h2>
+    <p class="lead">A persistent navigation area is right here, and the reason is stronger than usual: <b>all 29 lessons share one identical eight-section sequence</b>. A student learns the shape once and it holds for every lesson in the program.</p>
+    <div class="scrollx">
+      <table class="note-table">
+        <thead><tr><th>Code</th><th>English</th><th>Spanish</th><th>What it is</th><th>Pages, G4 L3</th></tr></thead>
+        <tbody data-notes-sections></tbody>
+      </table>
+    </div>
+    <p class="muted">Source: <span class="mono">catalog/lessons.json</span> — 1 distinct section sequence across 29 lessons. Page titles and Spanish labels: <span class="mono">apps/web/lib/g4-l3-lesson-navigation.ts</span>.</p>
+    <div class="stack" style="gap:10px">
+      <h3 class="h-s">Three reasons a persistent <em style="font-style:normal;text-decoration:underline;text-decoration-style:dotted">page</em> strip fails here</h3>
+      <div class="callout"><p style="font-size:14.5px"><b>Volume.</b> 39 pages in this lesson, 54 in Grade 5 Lesson 4, 80 in Grade 4 Lesson 1, 93 in Grade 3 Lesson 9. A strip of 93 items has no legible resting state at any width.</p></div>
+      <div class="callout"><p style="font-size:14.5px"><b>Imbalance.</b> <i>Learn It</i> carries 21 of Grade 5 Lesson 4's 54 pages while <i>Play It</i> carries exactly 1 — in every lesson in the catalogue. Size the stops proportionally and one section takes 39% of the rail while another takes 2%. The spine uses equal-width stops with the page count written on them instead.</p></div>
+      <div class="callout"><p style="font-size:14.5px"><b>Repetition.</b> Five consecutive pages in this lesson are titled <i>Numbers on the Number Line</i>; five more are titled <i>4 - Step Plan</i>. Titles alone cannot express position, which is why every page reference in the course map carries its section code and ordinal — <span class="mono">IN03</span>, not "page 3".</p></div>
+    </div>
+    <div class="callout callout--mint"><p style="font-size:14.5px"><b>The tradeoff, and its mitigation.</b> A section spine gives orientation — "I am in <i>Learn It</i>, 4 of 8" — at the cost of within-section wayfinding: a learner nine pages into a 21-page section cannot jump to page 14 from the spine. So the fine-grained view stays, as an on-demand overlay that never auto-opens: every page with its ordinal, a ✓ when reviewed, and an explicit unavailable state where no renderer is registered. Persistent navigation is coarse and cheap; on-demand is fine-grained and complete.</p></div>
+  </div>
+
+  <div class="split">
+    <div class="card pad stack" style="gap:11px">
+      <h2 class="h-m">Built today</h2>
+      <ul style="margin:0;padding-left:18px;font-size:14.5px;line-height:1.75;color:var(--ink-soft)">
+        <li>Two lessons wired into the player — G4 L3 and G5 L4</li>
+        <li>The widescreen <span class="mono">modern-wide</span> skin, section spine, and single transport group</li>
+        <li>Nova Tutor's <b>integration contract</b>: page context, transport borrow/return, frame snapshot</li>
+        <li>Locale routing with authored Spanish and an explicit fallback marker</li>
+        <li>A 761-entry English / 753-entry Spanish glossary, shown side by side with A–Z and search</li>
+        <li>Tappable in-stage glossary terms, on three pages so far</li>
+        <li>The readable view — for exactly one page of 39, with a test enforcing that</li>
+        <li>35 Spanish narration tracks for this lesson, 32 of them reachable only in the Spanish locale</li>
+      </ul>
+    </div>
+    <div class="card pad stack" style="gap:11px">
+      <h2 class="h-m">Net-new in this design</h2>
+      <ul style="margin:0;padding-left:18px;font-size:14.5px;line-height:1.75;color:var(--ink-soft)">
+        <li>Student <b>Today</b> surface and the adaptive next-step card</li>
+        <li>BKT mastery estimates and the p(mastery) visual grammar</li>
+        <li>Any connected tutor service — none exists and none is faked</li>
+        <li>Teacher class board, lesson prep, and sheltered planning</li>
+        <li>Accounts, rosters, assignment, and progress storage</li>
+        <li>A picker for the three Nova modes — <span class="mono">?mode=focus|study|classroom</span> validates and fails closed today, but no control reaches it and nothing persists it</li>
+        <li>Dark mode — <span class="mono">viewport.colorScheme</span> is pinned to <span class="mono">light</span> and <span class="mono">prefers-color-scheme</span> appears nowhere in the app</li>
+        <li>A <span class="mono">/courses</span> browser — there is no lessons index route at all</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card pad stack" style="gap:12px">
+    <h2 class="h-m">Constraints this design respects</h2>
+    <div class="scrollx">
+      <table class="note-table">
+        <thead><tr><th>Constraint</th><th>Where it comes from</th><th>How the UI honours it</th></tr></thead>
+        <tbody>
+          <tr><td>Authored stage is 800 × 600; the real teaching plane is <b>800 × 415</b> after the chrome bands</td><td><code>g4-l3-whole-lesson-player-descriptor.ts</code></td><td>Every lesson surface is aspect-locked to 1.928:1 and never letterboxed into a 16:9 box</td></tr>
+          <tr><td>No invented Spanish, ever</td><td><code>missing-page-level-spanish-title</code></td><td>English fallbacks carry a visible marker; Nova's Spanish is styled distinctly and never written back</td></tr>
+          <tr><td>Nova scaffolds, never answers, on assessment sections</td><td><code>TUTOR_ASSESSMENT_SECTIONS = ['TI','TS','FQ']</code></td><td>Enforced in page context; the drawer states it on those pages</td></tr>
+          <tr><td>The tutor and the lesson never speak at once</td><td><code>lib/tutor-integration.ts</code></td><td>Opening Nova pauses narration and returns transport on close</td></tr>
+          <tr><td>Reviewer instruments are not learner chrome</td><td><code>reviewerMode</code> split from <code>candidateMode</code></td><td>No frame inspector or parity notice in any student surface</td></tr>
+          <tr><td>Child voice and photo data engage COPPA and FERPA</td><td>Open owner decision 4</td><td>Nova's data flow is shown on the page as a visible chip; teacher can disable per class</td></tr>
+          <tr><td>Every route is allowlisted; a new path 404s until it is added, in every environment including dev</td><td><code>proxy.ts</code> <code>publicPaths</code></td><td>The lesson browser is called out as a net-new route that needs both <code>proxy.ts</code> and <code>robots.ts</code> changes — today <code>robots.ts</code> disallows both playable lesson URLs</td></tr>
+          <tr><td>Archive nav links are injected in the component, not the content files</td><td><code>site-header.tsx</code></td><td>Any nav change edits <code>content/{en,es}/index.ts</code> <b>and</b> the header, or the archive links orphan</td></tr>
+          <tr><td>Spanish narration exists but nobody has listened and signed off</td><td><code>languageEstablished: false</code></td><td>The support is offered and labelled unverified — never described as confirmed Spanish audio</td></tr>
+          <tr><td>Touch targets are 48px, deliberately above the 24px WCAG floor</td><td><code>globals.css</code> — "small hands, trackpads, and shared classroom hardware"</td><td>Every learner control here is 48px minimum; only teacher utility controls go smaller</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card pad stack" style="gap:12px">
+    <h2 class="h-m">Two language controls, not one</h2>
+    <p class="lead">The learner's <b>lesson language</b> and the teacher's <b>interface language</b> are separate settings, because they answer to different people. A bilingual teacher may work in Spanish while their class reads the lesson in English, or the reverse, and slaving one to the other forces a choice neither person should have to make.</p>
+    <div class="grid-2" style="gap:16px">
+      <div class="callout"><p style="font-size:14.5px"><b>Lesson language</b> — governs lesson content, the section spine, vocabulary, and every student surface. It is the setting the codebase already implements as locale routing, and it is where the no-invented-Spanish discipline binds: an English fallback is shown and marked, never translated.</p></div>
+      <div class="callout callout--mint"><p style="font-size:14.5px"><b>Teacher interface language</b> — governs the class board and lesson prep only. It never changes what a student sees and it never reaches the catalog. Authored vocabulary stays paired in both languages regardless, because a sheltered lesson plan needs both on the board.</p></div>
+    </div>
+    <p class="muted">These design notes stay in English: this screen is a rationale document for the project, not a product surface.</p>
+  </div>
+
+  <div class="card pad stack" style="gap:12px">
+    <h2 class="h-m">The design system</h2>
+    <div class="grid-2" style="gap:20px">
+      <div class="stack" style="gap:9px">
+        <span class="eyebrow">Colour</span>
+        <p class="muted">Extends the existing <span class="mono">:root</span> tokens in <span class="mono">globals.css</span> rather than replacing them. Nova's indigo and cyan are sampled from the source artwork's footer media pod, which keeps the tutor visually distinct from action blue, progress amber, and mastery mint.</p>
+        <p class="muted"><b>The hard-offset edge is the project's own, not an invention.</b> <span class="mono">globals.css</span> authors <span class="mono">box-shadow: Npx Npx 0 var(--ink)</span> at seven offsets against 2px ink borders and asymmetric radii; the soft <span class="mono">--shadow</span> token is used three times in 9,254 lines and <span class="mono">--radius</span> is used none. Learner surfaces take that edge. Teacher data surfaces stay on hairlines — a mastery grid of 24 students needs calm, not 24 competing borders.</p>
+        <div class="row" style="gap:6px;flex-wrap:wrap" data-swatches></div>
+      </div>
+      <div class="stack" style="gap:9px">
+        <span class="eyebrow">Type</span>
+        <p class="muted">A rounded geometric display face echoes the Bauhaus-family type used inside the original lesson artwork, without embedding a licensed font. Body type stays on the project's own Nunito Sans stack; a tabular mono carries every number that has to line up.</p>
+        <p style="font-family:var(--font-display);font-size:30px;font-weight:800;letter-spacing:-.02em">Negative Numbers</p>
+        <p style="font-size:15px">Números negativos — body face, 15px</p>
+        <p class="mono" style="font-size:13px">p(mastery) 0.61 · page 21 / 39 · in-009</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card pad stack" style="gap:10px">
+    <h2 class="h-m">The one motif</h2>
+    <p class="lead">Position is always a ruled line with ticks — lesson progress, section completion, and mastery probability all use it. The curriculum's own core object is the number line and its structure is a linear run of named stops, so one visual grammar covers all three without a student having to learn a second one.</p>
+    <div class="grid-3" style="gap:18px;margin-top:4px">
+      <div class="stack" style="gap:5px"><span class="eyebrow">Lesson progress</span><div class="tickline" data-tickline='{"value":0.538,"ticks":39}'></div></div>
+      <div class="stack" style="gap:5px"><span class="eyebrow">Section spine</span><div class="tickline" data-tickline='{"value":0.5,"ticks":8,"labels":["IR","RW","VB","IN","TI","GS","TS","FQ"]}'></div></div>
+      <div class="stack" style="gap:5px"><span class="eyebrow">p(mastery), with uncertainty</span><div class="tickline" data-tickline='{"value":0.61,"ticks":5,"band":0.14,"labels":["0","","0.5","","1"]}'></div></div>
+    </div>
+  </div>
+
+  <p class="muted" style="max-width:74ch">This is a design prototype. Learner names, mastery values, and Nova's replies are sample data for the purpose of showing the interface. No fidelity, audio, original-runtime, owner, strict-completion, or publication acceptance is claimed or implied anywhere in it.</p>
+</section>
+
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  /* ---------------- real data from the repository ---------------- */
+
+  const SECTIONS = [
+    {code:"IR", en:"Introduction",  es:"Introduction",              what:"Sets up the lesson",               whatEs:"Presenta la lección",              pages:1},
+    {code:"RW", en:"Your World",    es:"Tu mundo",                  what:"Where this shows up in real life", whatEs:"Dónde aparece esto en la vida real", pages:3},
+    {code:"VB", en:"Important Words",es:"Palabras importantes",     what:"Bilingual vocabulary",             whatEs:"Vocabulario bilingüe",            pages:8},
+    {code:"IN", en:"Learn It",      es:"Apréndelo",                 what:"Direct instruction",               whatEs:"Instrucción directa",             pages:11},
+    {code:"TI", en:"Try It",        es:"Inténtalo!",                what:"Guided practice",                  whatEs:"Práctica guiada",                 pages:5},
+    {code:"GS", en:"Play It",       es:"Juégalo",                   what:"Game",                             whatEs:"Juego",                           pages:1},
+    {code:"TS", en:"Practice Test", es:"Plan de los cuatro pasos",  what:"Four-step problem solving",        whatEs:"Resolución en cuatro pasos",      pages:7},
+    {code:"FQ", en:"Final Quiz",    es:"Examen Final",              what:"Assessment",                       whatEs:"Evaluación",                      pages:3},
+  ];
+  const ASSESSMENT = new Set(["TI","TS","FQ"]);
+  // completion state for the sample learner, by section
+  const DONE = {IR:1, RW:1, VB:1, IN:0.55, TI:0.8, GS:0, TS:0, FQ:0};
+
+  const LESSONS = [
+    [3,1,"Place Value","number-sense-place-value",74,16],
+    [3,2,"Addition and Subtraction","integer-operations",70,13],
+    [3,3,"Multiplication","integer-operations",63,10],
+    [3,4,"Division","integer-operations",67,12],
+    [3,5,"Fractions","fractions-decimals-percents",62,11],
+    [3,6,"Decimals & Money","fractions-decimals-percents",56,15],
+    [3,8,"Measurement","measurement-money",61,3],
+    [3,9,"Measurement","measurement-money",93,30],
+    [4,1,"Place Value","number-sense-place-value",80,24],
+    [4,2,"Fractions & Decimals","fractions-decimals-percents",67,21],
+    [4,3,"Negative Numbers","negative-numbers-number-line",39,8],
+    [4,4,"Addition & Subtraction","integer-operations",54,13],
+    [4,5,"Multiplication","integer-operations",53,14],
+    [4,6,"Division","integer-operations",49,12],
+    [4,7,"Factoring","expressions-equations-number-theory",48,12],
+    [4,8,"Mathematical Expressions","expressions-equations-number-theory",46,10],
+    [4,9,"Equations","expressions-equations-number-theory",43,10],
+    [4,10,"Perimeter & Area","geometry-coordinates",46,10],
+    [4,11,"Coordinate Grid","geometry-coordinates",43,9],
+    [4,12,"Geometry","geometry-coordinates",77,35],
+    [5,1,"Working with Decimals and Percents","fractions-decimals-percents",82,25],
+    [5,2,"Percents","fractions-decimals-percents",64,10],
+    [5,3,"Exponents & Prime Factorizations","expressions-equations-number-theory",65,14],
+    [5,4,"Number Lines","negative-numbers-number-line",54,10],
+    [5,5,"Add & Subtract Negative Numbers","negative-numbers-number-line",56,13],
+    [5,6,"Division Skills","integer-operations",40,7],
+    [5,7,"Add, Subtract, Multiply & Divide Decimals","fractions-decimals-percents",55,5],
+    [5,8,"Add & Subtract Fractions","fractions-decimals-percents",71,24],
+    [5,13,"Geometry","geometry-coordinates",73,19],
+  ].map(([grade,lesson,title,domain,pages,vb]) => ({grade,lesson,title,domain,pages,vb}));
+
+  // availability, measured: 2 lessons registered in the player, G5 L5 converted but unregistered
+  const STATUS = {"4-3":"playable","5-4":"playable","5-5":"converted"};
+
+  const DOMAINS = {
+    "number-sense-place-value":["Place value","Valor posicional"],
+    "integer-operations":["Operations","Operaciones"],
+    "fractions-decimals-percents":["Fractions & decimals","Fracciones y decimales"],
+    "measurement-money":["Measurement","Medición"],
+    "negative-numbers-number-line":["Number line","Recta numérica"],
+    "expressions-equations-number-theory":["Expressions","Expresiones"],
+    "geometry-coordinates":["Geometry","Geometría"],
+  };
+  const domainLabel = k => t(DOMAINS[k][0], DOMAINS[k][1]);
+
+  // G4 L3 Important Words, verbatim from the lesson source
+  const WORDS = [
+    {en:"Number Line", es:"Recta numérica"},
+    {en:"Number Line Practice", es:"Práctica de la recta numérica"},
+    {en:"Positive Numbers", es:"Números positivos"},
+    {en:"Negative Numbers", es:"Números negativos"},
+    {en:"Zero", es:"Cero"},
+    {en:"Positive Numbers Practice", es:"Práctica de números positivos"},
+    {en:"Negative Numbers Practice", es:"Práctica de números negativos"},
+    {en:"Pattern", es:"Patrón"},
+  ];
+
+  // Verbatim page titles, in source order. Note the repetition inside IN and TS —
+  // this is why every page reference carries its section code and ordinal.
+  const PAGE_TITLES = [
+    "Introduction",
+    "Page 1","Page 2","Page 3",
+    "Number Line","Number Line Practice","Positive Numbers","Negative Numbers","Zero",
+    "Positive Numbers Practice","Negative Numbers Practice","Pattern",
+    "Numbers on the Number Line","Numbers on the Number Line","Numbers on the Number Line",
+    "Numbers on the Number Line","Numbers on the Number Line","Patterns","Patterns",
+    "Situations with Negative Numbers: Temperature","Situations with Negative Numbers: Temperature",
+    "Situations with Negative Numbers: Owing","Situations with Negative Numbers: Owing",
+    "Question 1","Question 2","Question 3","Question 4","Question 5",
+    "Game 1",
+    "4 - Step Plan","4 - Step Plan","4 - Step Plan","4 - Step Plan","4 - Step Plan",
+    "Question 1","Question 2",
+    "Introduction","Page 1","Page 2",
+  ];
+
+  const MASTERY = [
+    {skill:"Reading a number line", es:"Leer una recta numérica", p:0.88, band:0.06},
+    {skill:"Negative numbers",      es:"Números negativos",       p:0.61, band:0.14},
+    {skill:"Zero as a boundary",    es:"El cero como frontera",   p:0.74, band:0.10},
+    {skill:"Patterns",              es:"Patrones",                p:0.42, band:0.17},
+  ];
+
+  const ROSTER = [
+    {n:"Ana R.",    el:true,  v:[0.94,0.71,0.83,0.55,0.62]},
+    {n:"Brian O.",  el:false, v:[0.88,0.62,0.79,0.44,0.51]},
+    {n:"Carmen L.", el:true,  v:[0.97,0.91,0.95,0.81,0.77]},
+    {n:"Diego M.",  el:true,  v:[0.52,0.28,0.44,0.19,0.23]},
+    {n:"Emily T.",  el:false, v:[0.91,0.84,0.88,0.72,0.69]},
+    {n:"Farah K.",  el:true,  v:[0.66,0.39,0.58,0.31,0.34]},
+    {n:"Grace W.",  el:false, v:[0.79,0.55,0.71,0.48,0.44]},
+    {n:"Hugo S.",   el:true,  v:[0.41,0.22,0.36,0.17,0.15]},
+  ];
+
+  const ATTENTION = [
+    {n:"Hugo S.", tone:"coral",
+     why:["Answered 5 negative-number items by counting up. Same error each time — not a guess.",
+          "Respondió 5 preguntas de números negativos contando hacia arriba. El mismo error cada vez — no es adivinanza."],
+     act:["Sit with the thermometer model","Siéntate con él y el termómetro"]},
+    {n:"Diego M.", tone:"coral",
+     why:["Asked Nova “what is below” four times in Spanish. The word, not the maths.",
+          "Le preguntó a Nova “qué es below” cuatro veces en español. Es la palabra, no la matemática."],
+     act:["Pre-teach below / bajo","Enseña antes below / bajo"]},
+    {n:"Farah K.", tone:"amber",
+     why:["Stopped mid-section twice this week, both times on a text-heavy page.",
+          "Se detuvo a mitad de sección dos veces esta semana, las dos en una página con mucho texto."],
+     act:["Turn on Read it","Activa Read it"]},
+    {n:"Grace W.", tone:"amber",
+     why:["Mastery on Patterns has not moved in six attempts.",
+          "El dominio de Patterns no se ha movido en seis intentos."],
+     act:["Reteach with Play It","Vuelve a enseñar con Play It"]},
+  ];
+
+  const SUPPORTS = [
+    {t:"Bilingual words on screen", d:"Show the Spanish beside every key term", on:true},
+    {t:"Read it", d:"A plain-language version of the page, with sentence frames", on:true},
+    {t:"Read aloud", d:"Narration for text as well as the lesson audio", on:false},
+    {t:"Slower narration", d:"Pause a beat longer between sentences", on:true},
+    {t:"Word bank on questions", d:"The lesson's own terms stay visible during Try It", on:true},
+    {t:"Keep the picture up", d:"The model stays on screen while the question is asked", on:false},
+    {t:"Spanish narration in English lessons", d:"35 Spanish tracks ship with this lesson but only show in the Spanish locale today. Not yet listened to and signed off — labelled as unverified.", on:false},
+  ];
+
+  const NOVA_CONTROLS = [
+    {t:["Nova available in this class","Nova disponible en esta clase"],
+     d:["Off in Classroom mode by default","Apagada por defecto en modo Aula"], on:true},
+    {t:["Voice input","Entrada por voz"],
+     d:["Microphone — needs signed district consent","Micrófono — requiere consentimiento firmado del distrito"], on:false},
+    {t:["Photo of paper","Foto del papel"],
+     d:["Camera — needs signed district consent","Cámara — requiere consentimiento firmado del distrito"], on:false},
+    {t:["Spanish replies","Respuestas en español"],
+     d:["Marked as tutor language, never authored content","Marcadas como lenguaje del tutor, nunca contenido de la fuente"], on:true},
+  ];
+
+  /* ---------------- helpers ---------------- */
+  const $  = (s, r=document) => r.querySelector(s);
+  const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+  const el = (tag, cls, html) => { const n=document.createElement(tag); if(cls) n.className=cls; if(html!=null) n.innerHTML=html; return n; };
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const band = p => p>=0.8 ? "mint" : p>=0.5 ? "amber" : "coral";
+  const bandColor = p => p>=0.8 ? "var(--mint-bright)" : p>=0.5 ? "var(--amber)" : "var(--coral)";
+
+  /* Two independent language settings, because they answer to different people.
+
+     `lang`        — the learner's LESSON language. Governs lesson content, the
+                     section spine, vocabulary and every student surface.
+     `teacherLang` — the teacher's OWN interface language. A bilingual teacher
+                     may work in Spanish while their class reads in English, or
+                     the reverse. Slaving one to the other would force a choice
+                     neither person should have to make. */
+  let lang = "en";
+  let teacherLang = "en";
+  const t  = (en, es) => lang === "es" ? es : en;
+  const tt = (en, es) => teacherLang === "es" ? es : en;
+
+  /* data-es swaps with the lesson language; data-es-ui with the teacher's.
+     The EN original is captured on first switch so returning is lossless. */
+  function swapAttr(attr, active){
+    $$(`[${attr}]`).forEach(n => {
+      const key = attr === "data-es" ? "en" : "enUi";
+      if (n.dataset[key] === undefined) n.dataset[key] = n.innerHTML;
+      n.innerHTML = active === "es"
+        ? n.getAttribute(attr)
+        : n.dataset[key];
+    });
+  }
+  function swapStrings(){
+    swapAttr("data-es", lang);
+    swapAttr("data-es-ui", teacherLang);
+  }
+
+  /* ---------------- tick lines ---------------- */
+  function drawTicklines(root=document){
+    $$("[data-tickline]", root).forEach(node => {
+      const cfg = JSON.parse(node.dataset.tickline);
+      const {value=0, ticks=0, labels=null, band=0, marker=true} = cfg;
+      node.innerHTML = "";
+      node.append(el("div","tickline__rule"));
+      if (band){
+        const b = el("div","tickline__band");
+        const lo = Math.max(0,(value-band))*100, hi = Math.min(1,(value+band))*100;
+        b.style.left = lo+"%"; b.style.width = (hi-lo)+"%";
+        node.append(b);
+      }
+      const fill = el("div","tickline__fill");
+      fill.style.width = Math.round(value*1000)/10 + "%";
+      node.append(fill);
+      for (let i=0;i<ticks;i++){
+        const pos = ticks===1 ? 0 : i/(ticks-1)*100;
+        const tk = el("div","tickline__tick");
+        tk.style.left = pos+"%";
+        node.append(tk);
+        if (labels && labels[i]){
+          const lb = el("div","tickline__label", esc(labels[i]));
+          lb.style.left = pos+"%";
+          node.append(lb);
+        }
+      }
+      if (marker){
+        const m = el("div","tickline__marker");
+        m.style.left = Math.round(value*1000)/10 + "%";
+        node.append(m);
+      }
+    });
+  }
+
+  /* ---------------- section spine ---------------- */
+  function renderSpine(node, {interactive=true, current="IN"} = {}){
+    node.innerHTML = "";
+    SECTIONS.forEach(s => {
+      const b = el("button","spine__stop");
+      if (interactive && s.code === current) b.setAttribute("aria-current","step");
+      const pct = Math.round((DONE[s.code] ?? 0) * 100);
+      b.innerHTML =
+        `<span class="spine__code">${s.code} · ${s.pages}</span>` +
+        `<span class="spine__title">${esc(t(s.en, s.es))}</span>` +
+        `<span class="spine__es">${esc(t(s.es, s.en))}</span>` +
+        `<span class="spine__bar"><i style="width:${pct}%"></i></span>`;
+      if (ASSESSMENT.has(s.code)) b.title = t("Nova scaffolds here, never answers","Nova guía aquí, nunca responde");
+      node.append(b);
+    });
+  }
+
+  /* ---------------- screens ---------------- */
+  let currentScreen = "home";
+  function setCrumb(){
+    const crumbs = {
+      home:"HELP Math 2.0",
+      student: t("Student · Today","Estudiante · Hoy"),
+      lesson:"Grade 4 · Lesson 3 · Negative Numbers",
+      catalog: t("Curriculum · 29 lessons","Currículo · 29 lecciones"),
+      words: t("Word bank","Banco de palabras"),
+      teacher: tt("Teacher · Class board","Docente · Panel de clase"),
+      prep: tt("Teacher · Lesson prep","Docente · Preparación de la lección"),
+      notes:"Design notes",
+    };
+    $("[data-crumb]").textContent = crumbs[currentScreen] || "HELP Math 2.0";
+  }
+  function show(name){
+    currentScreen = name;
+    $$("[data-screen-panel]").forEach(p => p.hidden = p.dataset.screenPanel !== name);
+    $$(".navitem").forEach(n => {
+      if (n.dataset.screen === name) n.setAttribute("aria-current","page");
+      else n.removeAttribute("aria-current");
+    });
+    setCrumb();
+    window.scrollTo({top:0, behavior:"instant"});
+    drawTicklines();
+  }
+  $$(".navitem").forEach(b => b.addEventListener("click", () => show(b.dataset.screen)));
+  $$("[data-goto]").forEach(b => b.addEventListener("click", () => {
+    const s = b.dataset.goto;
+    if (s === "teacher" || s === "prep") setRole("teacher");
+    if (s === "student" || s === "lesson" || s === "words") setRole("student");
+    show(s);
+  }));
+
+  /* ---------------- role ---------------- */
+  function setRole(role){
+    $$("[data-role-btn]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.roleBtn === role)));
+    $$("[data-role]").forEach(n => { n.style.display = n.dataset.role === role ? "" : "none"; });
+    $(".avatar").textContent = role === "teacher" ? "TR" : "MR";
+  }
+  $$("[data-role-btn]").forEach(b => b.addEventListener("click", () => {
+    const r = b.dataset.roleBtn;
+    setRole(r);
+    show(r === "teacher" ? "teacher" : "student");
+  }));
+
+  /* ---------------- theme ---------------- */
+  $("[data-theme-toggle]").addEventListener("click", () => {
+    const cur = document.documentElement.getAttribute("data-theme")
+      || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", cur === "dark" ? "light" : "dark");
+  });
+
+  /* ---------------- language ---------------- */
+  function setLang(next){
+    lang = next;
+    $$("[data-lang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === next)));
+    $("[data-lang-note]").textContent = t(
+      "Spanish shows the words the original lesson files already contain. Where the source has no Spanish, the English is shown and marked.",
+      "El español muestra las palabras que ya contienen los archivos originales. Donde la fuente no tiene español, se muestra el inglés y se marca."
+    );
+    $("[data-greeting]").textContent = t("Good morning, Maria.","Buenos días, María.");
+    // The lesson has no Spanish title in the source, so the English stands in and says so.
+    const title = $("[data-lesson-title]");
+    title.innerHTML = next === "es"
+      ? 'Negative Numbers <span class="chip chip--coral" style="vertical-align:middle;font-size:11px">inglés — la fuente no tiene título en español</span>'
+      : "Negative Numbers";
+    swapStrings();
+    setCrumb();
+    renderAll();
+  }
+  $$("[data-lang]").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+
+  function setTeacherLang(next){
+    teacherLang = next;
+    $$("[data-tlang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.tlang === next)));
+    $("[data-tlang-note]").textContent = tt(
+      "Your interface only. Your students' lesson language is set separately, per learner.",
+      "Solo tu interfaz. El idioma de la lección de tus estudiantes se ajusta por separado, por alumno."
+    );
+    swapStrings();
+    setCrumb();
+    renderAll();
+  }
+  $$("[data-tlang]").forEach(b => b.addEventListener("click", () => setTeacherLang(b.dataset.tlang)));
+
+  /* ---------------- lesson tabs ---------------- */
+  function selectTab(name){
+    $$("[data-tab]").forEach(x => x.setAttribute("aria-selected", String(x.dataset.tab === name)));
+    $$("[data-tabpanel]").forEach(p => p.hidden = p.dataset.tabpanel !== name);
+  }
+  $$("[data-tab]").forEach(b => b.addEventListener("click", () => selectTab(b.dataset.tab)));
+
+  /* ---------------- words in context ---------------- */
+  const hotspotCard = $("[data-hotspot-card]");
+  $$("[data-hotspot]").forEach(n => n.addEventListener("click", () => { hotspotCard.hidden = false; }));
+  $("[data-hotspot-close]").addEventListener("click", () => { hotspotCard.hidden = true; });
+
+  /* ---------------- course map ---------------- */
+  function buildMap(){
+    const body = $("[data-map-body]"); body.innerHTML = "";
+    let ord = 0;
+    SECTIONS.forEach(sec => {
+      const wrap = el("div","mapsec");
+      wrap.innerHTML = `<div class="mapsec__h"><b style="font-family:var(--font-display);font-size:14.5px">${esc(t(sec.en,sec.es))}</b><span class="muted mono" style="font-size:11px">${sec.code} · ${sec.pages} ${sec.pages === 1 ? t("page","página") : t("pages","páginas")}</span></div>`;
+      const list = el("div","mapsec__list");
+      for (let i = 1; i <= sec.pages; i++){
+        ord++;
+        // G4 L3 has 39 active pages of 42 modules; three carry no registered renderer.
+        const unavailable = sec.code === "GS";
+        const current = ord === 21;
+        const b = el("button","mapitem");
+        b.dataset.state = current ? "current" : unavailable ? "unavailable" : "ok";
+        if (unavailable) b.disabled = true;
+        b.innerHTML = `<span class="mapitem__ord">${sec.code}${String(i).padStart(2,"0")}</span>
+          <span class="mapitem__t">${esc(PAGE_TITLES[ord-1] || t("Page","Página") + " " + i)}</span>
+          <span class="muted mono" style="font-size:10.5px">${unavailable ? "—" : ord <= 21 ? "✓" : ord}</span>`;
+        list.append(b);
+      }
+      wrap.append(list);
+      body.append(wrap);
+    });
+  }
+  $("[data-open-map]").addEventListener("click", () => { buildMap(); $("[data-map-overlay]").hidden = false; });
+  $("[data-close-map]").addEventListener("click", () => { $("[data-map-overlay]").hidden = true; });
+  $("[data-map-overlay]").addEventListener("click", e => { if (e.target === e.currentTarget) e.currentTarget.hidden = true; });
+  document.addEventListener("keydown", e => {
+    if (e.key !== "Escape") return;
+    $("[data-map-overlay]").hidden = true;
+    hotspotCard.hidden = true;
+  });
+
+  /* ---------------- transport ---------------- */
+  const play = $("[data-play]");
+  if (play) play.addEventListener("click", () => {
+    const l = $("[data-play-label]");
+    l.textContent = l.textContent === "Pause" ? "Play" : "Pause";
+  });
+
+  /* ---------------- Nova's three placements ----------------
+     focus     — a column that pushes the plane narrower, never overlays it
+     study     — the tutor joins reading and vocabulary in one support region
+     classroom — a full-width voice band; a 290px column is unreadable from the back of a room */
+  let mode = "focus", novaOpen = true;
+  function layout(){
+    const player = $(".player"), drawer = $(".drawer"), band = $("[data-classband]");
+    const tabs = $(".drawer__tabs"), head = $("[data-drawer-head]"), ask = $("[data-ask-nova]");
+
+    band.hidden = mode !== "classroom";
+    if (mode === "classroom"){
+      drawer.hidden = true; ask.hidden = true;
+      player.style.gridTemplateColumns = "1fr";
+    } else if (mode === "focus"){
+      drawer.hidden = !novaOpen; ask.hidden = novaOpen;
+      head.hidden = false; tabs.hidden = true;
+      player.style.gridTemplateColumns = novaOpen ? "" : "1fr";
+      if (novaOpen) selectTab("nova");
+    } else {
+      drawer.hidden = false; ask.hidden = true;
+      head.hidden = true; tabs.hidden = false;
+      player.style.gridTemplateColumns = "";
+    }
+
+    $("[data-transport-note]").textContent = {
+      focus: novaOpen
+        ? "Focus — Nova takes a column and the plane rescales to fit. Shrinking beats occluding: nothing ever covers the maths."
+        : "Focus — the plane has the whole width. One launcher, in the control bar, is the only way in.",
+      study:"Study — one support region holds Nova, the reading, the vocabulary and the supports. Never two competing panels.",
+      classroom:"Classroom — one large push-to-talk and an answer set large enough to read from the back of the room. Nobody types at a whiteboard.",
+    }[mode];
+  }
+  function setMode(next){
+    mode = next;
+    if (next === "focus") novaOpen = true;
+    $$("[data-mode]").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.mode === next)));
+    layout();
+  }
+  $$("[data-mode]").forEach(b => b.addEventListener("click", () => setMode(b.dataset.mode)));
+  $("[data-close-band]").addEventListener("click", () => setMode("focus"));
+  $("[data-close-nova]").addEventListener("click", () => { novaOpen = false; layout(); });
+  $("[data-ask-nova]").addEventListener("click", () => { mode = "focus"; novaOpen = true;
+    $$("[data-mode]").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.mode === "focus"))); layout(); });
+
+  /* ---------------- number line interactive ---------------- */
+  (function numberLine(){
+    const wrap = $("[data-numberline]");
+    if (!wrap) return;
+    const svg = wrap.querySelector("svg");
+    const marker = $("[data-nl-marker]", svg);
+    const ticksG = $("[data-nl-ticks]", svg);
+    const X0 = 20, X1 = 500, MIN = -10, MAX = 10;
+    const toX = v => X0 + (v - MIN) / (MAX - MIN) * (X1 - X0);
+
+    let frag = "";
+    for (let v = MIN; v <= MAX; v++){
+      const x = toX(v), major = v % 5 === 0;
+      frag += `<line x1="${x}" y1="${60 - (major?11:7)}" x2="${x}" y2="${60 + (major?11:7)}" stroke="${v===0?'#12386b':'#43506a'}" stroke-width="${v===0?3:2}"/>`;
+      if (major) frag += `<text x="${x}" y="94" text-anchor="middle" font-family="var(--font-data)" font-size="13" fill="#6b7893">${v}</text>`;
+    }
+    ticksG.innerHTML = frag;
+
+    const WORDS_NL = {
+      "0":  [["Zero","Cero"], ["Not positive, not negative","Ni positivo ni negativo"]],
+      "pos":[["Positive Numbers","Números positivos"], ["To the right of zero","A la derecha del cero"]],
+      "neg":[["Negative Numbers","Números negativos"], ["To the left of zero","A la izquierda del cero"]],
+    };
+
+    function set(v){
+      v = Math.max(MIN, Math.min(MAX, Math.round(v)));
+      marker.setAttribute("transform", `translate(${toX(v) - 260},0)`);
+      $("[data-nl-value]").textContent = v > 0 ? "+" + v : String(v);
+      const key = v === 0 ? "0" : v > 0 ? "pos" : "neg";
+      const [w, note] = WORDS_NL[key];
+      $("[data-nl-word]").textContent = w[0];
+      $("[data-nl-word-es]").textContent = w[1];
+      $("[data-nl-note]").textContent = t(note[0], note[1]);
+    }
+    function fromEvent(e){
+      const r = svg.getBoundingClientRect();
+      const px = ((e.touches ? e.touches[0].clientX : e.clientX) - r.left) / r.width * 520;
+      return MIN + (px - X0) / (X1 - X0) * (MAX - MIN);
+    }
+    let dragging = false;
+    const down = e => { dragging = true; set(fromEvent(e)); e.preventDefault(); };
+    const move = e => { if (dragging) set(fromEvent(e)); };
+    const up   = () => { dragging = false; };
+    wrap.addEventListener("pointerdown", down);
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", up);
+    set(0);
+    window.__nlRefresh = () => set(Number($("[data-nl-value]").textContent.replace("+","")));
+  })();
+
+  /* ---------------- renderers ---------------- */
+  function renderMasteryList(){
+    const box = $("[data-mastery-list]"); if (!box) return;
+    box.innerHTML = "";
+    MASTERY.forEach(m => {
+      const row = el("div","stack");
+      row.style.gap = "3px";
+      row.innerHTML =
+        `<div class="row" style="justify-content:space-between;gap:10px">
+           <span class="term"><b>${esc(t(m.skill,m.es))}</b><i>${esc(t(m.es,m.skill))}</i></span>
+           <span class="row" style="gap:7px">
+             <span class="chip chip--${band(m.p)}"><span class="dot"></span>${m.p>=0.8?t("Solid","Firme"):m.p>=0.5?t("Getting there","Casi"):t("Just starting","Empezando")}</span>
+             <span class="mono" style="font-size:13px">${m.p.toFixed(2)}</span>
+           </span>
+         </div>
+         <div class="tickline" data-tickline='{"value":${m.p},"ticks":5,"band":${m.band},"labels":["0","","0.5","","1"]}'></div>`;
+      box.append(row);
+    });
+    drawTicklines(box);
+  }
+
+  function renderWordReview(){
+    const box = $("[data-word-review]"); if (!box) return;
+    box.innerHTML = "";
+    WORDS.filter(w => !w.en.includes("Practice")).slice(0,5).forEach(w => {
+      const r = el("div","switchrow");
+      r.innerHTML = `<span class="term" style="flex:1"><b>${esc(w.en)}</b><i>${esc(w.es)}</i></span>
+        <button class="btn btn--ghost btn--sm" aria-label="Hear ${esc(w.en)}">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9.5a4 4 0 010 5"/></svg>
+        </button>`;
+      box.append(r);
+    });
+  }
+
+  function renderLessonWords(){
+    const box = $("[data-lesson-words]"); if (!box) return;
+    box.innerHTML = "";
+    WORDS.forEach(w => {
+      const r = el("div","switchrow");
+      r.innerHTML = `<span class="term" style="flex:1"><b>${esc(w.en)}</b><i>${esc(w.es)}</i></span>
+        <span class="chip chip--mint" style="font-size:11px">${t("seen","visto")}</span>`;
+      box.append(r);
+    });
+  }
+
+  function renderSupports(){
+    const box = $("[data-supports]"); if (!box) return;
+    box.innerHTML = "";
+    SUPPORTS.forEach(s => {
+      const b = el("button","switchrow");
+      b.setAttribute("aria-pressed", String(s.on));
+      b.innerHTML = `<span class="switchrow__t"><b style="font-size:14px;display:block">${esc(s.t)}</b><span class="muted" style="font-size:12.5px">${esc(s.d)}</span></span><span class="switch"></span>`;
+      b.addEventListener("click", () => b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") === "true" ? "false" : "true"));
+      box.append(b);
+    });
+  }
+
+  function renderNovaControls(){
+    const box = $("[data-nova-controls]"); if (!box) return;
+    box.innerHTML = "";
+    NOVA_CONTROLS.forEach(s => {
+      const b = el("button","switchrow");
+      b.setAttribute("aria-pressed", String(s.on));
+      b.innerHTML = `<span class="switchrow__t"><b style="font-size:14px;display:block">${esc(tt(s.t[0], s.t[1]))}</b><span class="muted" style="font-size:12.5px">${esc(tt(s.d[0], s.d[1]))}</span></span><span class="switch"></span>`;
+      b.addEventListener("click", () => b.setAttribute("aria-pressed", b.getAttribute("aria-pressed") === "true" ? "false" : "true"));
+      box.append(b);
+    });
+  }
+
+  function renderCatalog(){
+    const grid = $("[data-lesson-grid]"); if (!grid) return;
+    const g = $$("[data-grade]").find(b => b.getAttribute("aria-pressed") === "true")?.dataset.grade || "all";
+    const d = $$("[data-domain]").find(b => b.getAttribute("aria-pressed") === "true")?.dataset.domain || "all";
+    grid.innerHTML = "";
+    LESSONS.filter(L => (g === "all" || String(L.grade) === g) && (d === "all" || L.domain === d)).forEach(L => {
+      const key = `${L.grade}-${L.lesson}`, st = STATUS[key];
+      const card = el("button","lessoncard");
+      const statusChip = st === "playable"
+        ? `<span class="chip chip--mint"><span class="dot"></span>${t("Open now","Disponible")}</span>`
+        : st === "converted"
+        ? `<span class="chip chip--amber"><span class="dot"></span>${t("Converted, not wired","Convertida, sin conectar")}</span>`
+        : `<span class="chip"><span class="dot" style="color:var(--ink-mute)"></span>${t("In migration","En migración")}</span>`;
+      card.innerHTML =
+        `<span class="lessoncard__top"><span class="lessoncard__gl">G${L.grade} · L${L.lesson}</span></span>
+         <h3 class="h-m">${esc(L.title)}</h3>
+         <span class="lessoncard__meta">
+           <span class="chip chip--blue">${esc(domainLabel(L.domain))}</span>
+           ${statusChip}
+         </span>
+         <div class="tickline" data-tickline='{"value":${st==="playable"?0.538:0},"ticks":8,"marker":${st==="playable"}}'></div>
+         <span class="muted mono">${L.pages} ${t("pages","páginas")} · ${L.vb} ${t("word pages","págs. de palabras")} · 8 ${t("sections","secciones")}</span>`;
+      if (st === "playable") card.addEventListener("click", () => show("lesson"));
+      grid.append(card);
+    });
+    drawTicklines(grid);
+  }
+
+  let domainFiltersBound = false;
+  function renderDomainFilters(){
+    const box = $("[data-domain-filters]"); if (!box) return;
+    const active = $$("[data-domain]", box).find(x => x.getAttribute("aria-pressed") === "true")?.dataset.domain || "all";
+    box.innerHTML = "";
+    const all = el("button", null, t("All topics","Todos los temas"));
+    all.dataset.domain = "all"; all.setAttribute("aria-pressed", String(active === "all"));
+    box.append(all);
+    Object.keys(DOMAINS).forEach(k => {
+      const b = el("button", null, esc(domainLabel(k)));
+      b.dataset.domain = k; b.setAttribute("aria-pressed", String(active === k));
+      box.append(b);
+    });
+    if (domainFiltersBound) return;
+    domainFiltersBound = true;
+    box.addEventListener("click", e => {
+      const b = e.target.closest("[data-domain]"); if (!b) return;
+      $$("[data-domain]", box).forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+      renderCatalog();
+    });
+  }
+  $$("[data-grade]").forEach(b => b.addEventListener("click", () => {
+    $$("[data-grade]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    renderCatalog();
+  }));
+
+  function renderWordBank(){
+    const box = $("[data-wordbank]"); if (!box) return;
+    box.innerHTML = "";
+    const groups = [
+      {L:"Grade 4 · Lesson 3 — Negative Numbers", items: WORDS},
+      {L:"Grade 5 · Lesson 4 — Number Lines", items: [
+        {en:"Numbers on a Number Line", es:"Números en la recta numérica"},
+        {en:"Integers", es:"Enteros"},
+        {en:"Zero", es:"Cero"},
+        {en:"Opposites", es:"Opuestos"},
+        {en:"Positive Integers", es:"Enteros positivos"},
+        {en:"Negative Integers", es:"Enteros negativos"},
+        {en:"Integers Practice", es:"Práctica de enteros"},
+      ]},
+      {L:"Tapped inside the lesson · words in context", items: [
+        {en:"Negative number", es:"Número negativo"},
+        {en:"Less than", es:"Menor que"},
+        {en:"Value", es:"Valor"},
+        {en:"Positive", es:"Positivo"},
+        {en:"Negative", es:"Negativo"},
+      ]},
+    ];
+    groups.forEach(g => {
+      const c = el("div","card pad stack");
+      c.style.gap = "10px";
+      c.innerHTML = `<span class="eyebrow">${esc(g.L)}</span>`;
+      g.items.forEach(w => {
+        const r = el("div","switchrow");
+        r.innerHTML = w.es
+          ? `<span class="term" style="flex:1"><b>${esc(w.en)}</b><i>${esc(w.es)}</i></span>`
+          : `<span class="term" style="flex:1"><b>${esc(w.en)}</b><i style="border-left-color:var(--coral);color:var(--coral)">${t("English shown — source has no Spanish","Se muestra inglés — la fuente no tiene español")}</i></span>`;
+        c.append(r);
+      });
+      box.append(c);
+    });
+  }
+
+  function renderMasteryTable(){
+    const tb = $("[data-mastery-table] tbody"); if (!tb) return;
+    tb.innerHTML = "";
+    ROSTER.forEach(s => {
+      const tr = el("tr");
+      const initials = s.n.split(" ").map(x => x[0]).join("");
+      const avg = s.v.reduce((a,b)=>a+b,0)/s.v.length;
+      tr.innerHTML = `<td><span class="namecell"><span class="pill" style="background:${bandColor(avg)}">${esc(initials)}</span>${esc(s.n)}${s.el?' <span class="chip" style="font-size:10px;padding:1px 7px">EL</span>':""}</span></td>` +
+        s.v.map(p => `<td><span class="mcell"><span class="mbar"><i style="width:${Math.round(p*100)}%;background:${bandColor(p)}"></i></span><span class="mval">${p.toFixed(2)}</span></span></td>`).join("");
+      tb.append(tr);
+    });
+  }
+
+  function renderAttention(){
+    const box = $("[data-attention]"); if (!box) return;
+    box.innerHTML = "";
+    ATTENTION.forEach(a => {
+      const c = el("div","callout");
+      if (a.tone === "coral") { c.style.borderLeftColor = "var(--coral)"; c.style.background = "var(--coral-pale)"; }
+      c.innerHTML = `<p style="font-size:14px"><b>${esc(a.n)}</b> — ${esc(tt(a.why[0], a.why[1]))}</p>
+        <p class="muted" style="font-size:12.5px;margin-top:4px">→ ${esc(tt(a.act[0], a.act[1]))}</p>`;
+      box.append(c);
+    });
+  }
+
+  const picked = new Set(["VB","IN","TI"]);
+  const preTaught = new Set(["Number Line","Positive Numbers","Negative Numbers"]);
+  function renderPrep(){
+    const box = $("[data-prep-sections]"); if (!box) return;
+    box.innerHTML = "";
+    SECTIONS.forEach(s => {
+      const b = el("button","switchrow");
+      b.setAttribute("aria-pressed", String(picked.has(s.code)));
+      b.innerHTML = `<span class="switchrow__t">
+          <b style="font-size:14px;display:block">${esc(s.en)} <span class="muted" style="font-weight:400">/ ${esc(s.es)}</span></b>
+          <span class="muted" style="font-size:12.5px">${esc(tt(s.what, s.whatEs))} · ${s.pages} ${s.pages === 1 ? tt("page","página") : tt("pages","páginas")}${ASSESSMENT.has(s.code) ? " · " + tt("Nova scaffolds only","Nova solo guía") : ""}</span>
+        </span><span class="switch"></span>`;
+      b.addEventListener("click", () => {
+        const on = b.getAttribute("aria-pressed") === "true";
+        b.setAttribute("aria-pressed", String(!on));
+        on ? picked.delete(s.code) : picked.add(s.code);
+        const pages = SECTIONS.filter(x => picked.has(x.code)).reduce((a,x) => a + x.pages, 0);
+        $("[data-prep-total]").textContent = `${pages} ${tt("pages","páginas")} · ${tt("about","unos")} ${Math.round(pages*1.45)} min`;
+      });
+      box.append(b);
+    });
+
+    const pagesNow = SECTIONS.filter(x => picked.has(x.code)).reduce((a, x) => a + x.pages, 0);
+    $("[data-prep-total]").textContent = `${pagesNow} ${tt("pages","páginas")} · ${tt("about","unos")} ${Math.round(pagesNow*1.45)} min`;
+
+    const wbox = $("[data-prep-words]"); if (!wbox) return;
+    wbox.innerHTML = "";
+    WORDS.filter(w => !w.en.includes("Practice")).forEach(w => {
+      const b = el("button","switchrow");
+      b.setAttribute("aria-pressed", String(preTaught.has(w.en)));
+      b.innerHTML = `<span class="term" style="flex:1"><b>${esc(w.en)}</b><i>${esc(w.es)}</i></span><span class="switch"></span>`;
+      b.addEventListener("click", () => {
+        const on = b.getAttribute("aria-pressed") === "true";
+        b.setAttribute("aria-pressed", String(!on));
+        on ? preTaught.delete(w.en) : preTaught.add(w.en);
+      });
+      wbox.append(b);
+    });
+  }
+
+  function renderNotes(){
+    const tb = $("[data-notes-sections]"); if (!tb) return;
+    tb.innerHTML = "";
+    SECTIONS.forEach(s => {
+      const tr = el("tr");
+      tr.innerHTML = `<td><code>${s.code}</code></td><td><b>${esc(s.en)}</b></td><td>${esc(s.es)}</td><td class="muted">${esc(s.what)}${ASSESSMENT.has(s.code)?" · <b>assessment</b>":""}</td><td class="mono">${s.pages}</td>`;
+      tb.append(tr);
+    });
+    const sw = $("[data-swatches]"); if (!sw || sw.children.length) return;
+    [["--ink","Ink"],["--blue","Action"],["--nova","Nova"],["--nova-cyan","Nova cyan"],["--mint","Mastery"],["--amber","Progress"],["--coral","Attention"],["--paper","Paper"]]
+      .forEach(([v,l]) => {
+        const c = el("span","chip");
+        c.innerHTML = `<span class="dot" style="background:var(${v});width:11px;height:11px;box-shadow:0 0 0 1px var(--line)"></span>${l}`;
+        sw.append(c);
+      });
+  }
+
+  function renderAll(){
+    renderSpine($("[data-spine]"), {current:"IN"});
+    renderSpine($("[data-spine-demo]"), {interactive:false});
+    renderMasteryList();
+    renderWordReview();
+    renderLessonWords();
+    renderSupports();
+    renderNovaControls();
+    renderDomainFilters();
+    renderCatalog();
+    renderWordBank();
+    renderMasteryTable();
+    renderAttention();
+    renderPrep();
+    renderNotes();
+    drawTicklines();
+    if (window.__nlRefresh) window.__nlRefresh();
+  }
+
+  /* spine click moves the current step */
+  $("[data-spine]").addEventListener("click", e => {
+    const stop = e.target.closest(".spine__stop"); if (!stop) return;
+    const idx = Array.from(stop.parentNode.children).indexOf(stop);
+    const s = SECTIONS[idx];
+    renderSpine($("[data-spine]"), {current: s.code});
+    const before = SECTIONS.slice(0, idx).reduce((a, x) => a + x.pages, 0);
+    $("[data-page-count]").textContent = `${t(s.en, s.es)} · ${t("page","página")} ${before + 1} ${t("of","de")} 39`;
+    const tl = $(".transport__progress .tickline");
+    tl.dataset.tickline = JSON.stringify({value: before / 39, ticks: 39});
+    drawTicklines($(".transport"));
+    if (ASSESSMENT.has(s.code)) selectTab("nova");
+  });
+
+  setRole("student");
+  renderAll();
+  setMode("focus");
+  show("home");
+})();
+</script>

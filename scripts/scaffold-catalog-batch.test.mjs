@@ -66,7 +66,14 @@ test("checked-in batches are unique, bounded, and resolve canonical sources", as
     readFile(new URL("../catalog/animations.json", import.meta.url), "utf8").then(JSON.parse),
   ]);
   const ids = batches.queues.flatMap((queue) => queue.batches.map((batch) => batch.batchId));
-  assert.equal(ids.length, 77);
+  assert.equal(ids.length, 85);
+  assert.deepEqual(
+    ids,
+    Array.from(
+      {length: 85},
+      (_, index) => `batch-${String(index + 1).padStart(3, "0")}`,
+    ),
+  );
   assert.equal(new Set(ids).size, ids.length);
   for (const id of ids) {
     const batch = selectCatalogBatch(batches, id);

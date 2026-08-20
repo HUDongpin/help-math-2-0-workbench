@@ -15,6 +15,53 @@ claims as dated evidence: reverify current files and external state before
 acting. Never expand a current-JavaScript approval into Flash fidelity, audio,
 human visual, owner, strict-completion, or release acceptance.
 
+## Owner Decision: Page-Only Flash Migration Scope — 2026-08-16
+
+This decision supersedes every earlier planning rule that counted one legacy
+Flash course shell per Lesson as a required migration, renderer, strict-
+completion, or release member.
+
+- HELP Math 2.0 already has a modern Lesson Page / My Lesson presentation
+  surface. Its left-side course directory, lesson/page navigation, bottom
+  playback controls, progress, support tools, and surrounding responsive UI are
+  modern product code and remain part of the product.
+- The center region of that modern Lesson Page hosts the JavaScript-based
+  educational animation that replaces the corresponding HELP Math 1.0
+  Flash-based lesson-page animation.
+- The migration target is therefore the active lesson-page animation
+  placements only. For the current G3-G5 catalog this is 1,751 active page
+  occurrences across 29 Lessons: G3 = 546, G4 = 645, and G5 = 560.
+- The 29 legacy course-shell SWFs remain preserved source/history evidence, but
+  they are explicitly outside the implementation, Current-JS coverage,
+  original-runtime/fidelity, audio, human/Owner acceptance, strict-completion,
+  release-membership, and publication denominators. Do not scaffold, rebuild,
+  capture, review, or count them merely to complete a Lesson.
+- A Lesson is page-level Current-JS complete when every active page placement
+  in the source-ordered Lesson sequence has a registered, runnable JavaScript
+  renderer and the modern My Lesson host can present that sequence. A separate
+  JavaScript recreation of the legacy Flash shell is not required.
+- Do not remove the modern Lesson Page host just because an existing React
+  component, CSS class, descriptor, or route contains the word `shell`.
+  `shell` is overloaded in the current codebase: the retained modern product
+  container is different from the excluded legacy Flash course-shell SWF.
+- When a page animation historically called a shell-owned API, implement only
+  the minimal source-evidenced adapter needed by that page inside the modern
+  host. This does not bring the legacy shell back into migration scope.
+- The verified working-tree planning snapshot on 2026-08-16 is 98/1,751
+  registered Current-JS lesson pages, with 1,653 remaining. G4 L3 is 39/39 and
+  G5 L4 is 54/54 at the page-level Current-JS gate. Strict completion remains
+  separately fail-closed at 0.
+- Existing descriptor, coverage, release, ledger, test, report, and package
+  contracts that require `courseShellCount: 1`, add `pages.length + 1`, or
+  report 1,780 members are legacy shell-inclusive contracts. Until they are
+  deliberately refactored and reverified, report their output as superseded
+  planning data rather than the current Owner-approved migration denominator.
+
+The current G3-G5 Current-JS RC target is therefore **1,751/1,751 active
+lesson-page animations registered and integrated into the modern My Lesson
+experience**. Strict fidelity, audio acceptance, human/Owner acceptance,
+strict completion, and publication remain separately reported gates.
+
 ## Historical Office Archive Memory
 
 The historical office-document archive is a private legacy evidence source. It
@@ -299,16 +346,19 @@ Current hash-bound intake facts:
   owner-authorized retention decision; the promotion executor never removes
   recovery evidence.
 
-### Grade 4 Whole-Course Generation Snapshot — 2026-08-02
+### Grade 4 Whole-Course Generation Snapshot — 2026-08-02 (Superseded Scope)
 
-- The catalog-driven Grade 4 planning scope is 645 active pages plus 12 lesson
-  shells, or 657 required renderer members. The current working-tree registry
-  has 41 page renderers and 2 shell renderers, or 43/657; 604 page renderers
-  and 10 shell renderers remain, or 614 members total.
-- Current-JavaScript distribution is L1 = 1 page + 1 shell, L3 = 39 pages + 1
-  shell, and L9 = 1 page; all other Grade 4 lessons are zero. Only L3 is
-  renderer-complete. All 12 Grade 4 lessons are now canonical-source-complete;
-  that source-custody result does not change renderer coverage.
+- This dated snapshot originally counted 645 active pages plus 12 legacy
+  course shells as 657 required renderer members. The 2026-08-16 Owner decision
+  supersedes that denominator. The current Grade 4 migration scope is 645
+  active lesson pages only.
+- At the page-only Current-JavaScript gate, the dated/current registry coverage
+  is 41/645 pages with 604 pages remaining: L1 = 1 page, L3 = 39 pages, and L9
+  = 1 page. Existing shell renderers are excluded from coverage. Only L3 is
+  page-renderer-complete at 39/39.
+- All 12 Grade 4 Lessons retain canonical source custody for their active page
+  SWFs. Historical shell custody remains catalog evidence only and does not
+  expand the page-only renderer or acceptance scope.
 - Use `apps/web/lib/g4-course-catalog-coverage.server.ts` as the dated,
   fail-closed planning entry and recalculate after catalog or registry changes.
   Its descriptors do not automatically register a route or authorize Flash
@@ -585,8 +635,47 @@ Do not skip directly from a screenshot to implementation when an FLA or SWF is a
 - Use Canvas for dense raster animation, particle-heavy scenes, or many rapidly changing sprites. Use a proven engine such as PixiJS or CreateJS when its runtime model materially reduces risk.
 - Use CSS only for layout and small presentation transitions, not as the source of truth for a Flash timeline.
 - Use video only for non-interactive background material and only with explicit approval. Never replace required interaction with a video.
-- Preserve the native Flash coordinate system with a fixed SVG `viewBox` or fixed Canvas backing dimensions and a responsive aspect-ratio wrapper.
+- Preserve the native Flash coordinate system with a fixed SVG `viewBox`, or with a Canvas backing store equal to the authored stage multiplied by an integer device scale, and a responsive aspect-ratio wrapper. All drawing stays in authored stage units; the scale is applied once, ahead of the root transform. See *Integer-Scaled Canvas Backing Store* below.
 - Keep user-facing text inside the original object bounds at every supported viewport.
+
+### Integer-Scaled Canvas Backing Store — 2026-08-08
+
+Owner-accepted amendment to the coordinate-system clause above. Before this date
+the clause required *fixed* Canvas backing dimensions, which is why
+`scripts/build-safe-ffdec-canvas-adapter.mjs` emits a hard
+`targetCanvas must be exactly <w>x<h>` guard. That guard pinned the rendered
+plane to one device pixel per authored pixel, so authored art was drawn at half
+native resolution on a 2x panel and could not be widened at all.
+
+What the amendment permits:
+
+- A backing store of `stage.width * k` by `stage.height * k` for an integer `k`
+  within a range the adapter declares. Non-integer and out-of-range values are
+  still rejected by the guard, with an error naming what was expected.
+- Exactly one `ctx.setTransform(k, 0, 0, k, 0, 0)` applied before the authored
+  root transform. Every subsequent drawing call remains in 800 x 600 authored
+  units. The authored coordinate system is preserved, not replaced.
+- Scaling of pixel-denominated values inside the generated `Filters` block —
+  blur radii in particular — so filtered output matches the unscaled result.
+
+Required condition, not optional:
+
+- `k = 1` output must be byte-identical to the pre-amendment baseline for every
+  page. This is the gate that proves the amendment changed resolution and
+  nothing else. A single differing page blocks the change.
+- `k > 1` output is measured against that baseline under the *Fidelity Standard*
+  thresholds below.
+
+What this amendment does not authorize:
+
+- No change to the authored `stage`, `fps`, `frameCount`, or `durationMs`
+  constants, and no change to the `data-flash-*` identity a stage reports.
+- Embedded bitmaps inside a page renderer do not gain resolution from `k`.
+  Affected pages are enumerated with their bitmap counts and their softness is
+  never described as improved by scaling.
+- No Flash fidelity, audio, human visual, original-runtime, owner,
+  strict-completion, or release acceptance is expanded by this amendment. It is
+  a rendering-resolution decision only.
 
 ## Timeline Contract
 
@@ -611,6 +700,7 @@ A migration is acceptable only when:
 - Text, numbers, formulas, language variants, and layering match the evidence.
 - No label, control, or artwork clips or overflows at native, desktop, and mobile sizes.
 - Designated static keyframes meet normalized RMSE `<= 0.05`; transition frames target `<= 0.08`. A higher value requires visual inspection, a written explanation, and owner acceptance.
+- Where a Canvas backing store is integer-scaled, `k = 1` output is byte-identical to the pre-scaling baseline, and `k > 1` output meets the thresholds above against that same baseline. Resolution-bound embedded bitmaps are listed as known exceptions rather than smoothed over.
 - Replay, keyboard activation, reduced-motion handling, and console/network checks pass.
 - The migration validator passes in strict mode and all checklist boxes are complete.
 

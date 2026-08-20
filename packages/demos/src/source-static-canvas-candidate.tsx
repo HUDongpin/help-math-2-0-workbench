@@ -1,6 +1,12 @@
 "use client";
 
-import React, {useEffect, useMemo, useRef, useState} from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import type {
   AnimationLanguage,
@@ -258,6 +264,7 @@ export function createLatestCanvasRenderCoordinator<
 
 interface PendingCanvasRenderRequest {
   readonly canvas: HTMLCanvasElement;
+  readonly captureReady: boolean;
   readonly renderKey: string;
   readonly visualKey: string;
   readonly identity: Readonly<
@@ -288,6 +295,41 @@ export type SourceStaticCanvasStatus =
   | "updating"
   | "ready"
   | "error";
+
+export interface CanvasCapturePresentationTarget {
+  readonly removeAttribute: (name: string) => void;
+  readonly setAttribute: (name: string, value: string) => void;
+}
+
+/**
+ * Keeps the imperative Canvas bitmap and its evidence-facing DOM contract in
+ * one state transition. React does not re-render after every movie-frame
+ * paint, so successful later paints must restore these attributes directly;
+ * pending paints must also clear stale readiness before the browser can paint.
+ */
+export function applyCanvasCapturePresentationStatus(
+  target: CanvasCapturePresentationTarget,
+  {
+    captureReady,
+    status,
+  }: Readonly<{
+    captureReady: boolean;
+    status: SourceStaticCanvasStatus;
+  }>,
+) {
+  const visualReady = status === "ready";
+  target.setAttribute("data-render-state", status);
+  if (visualReady) {
+    target.setAttribute("data-render-visual", "true");
+  } else {
+    target.removeAttribute("data-render-visual");
+  }
+  if (visualReady && captureReady) {
+    target.setAttribute("data-capture-stage", "true");
+  } else {
+    target.removeAttribute("data-capture-stage");
+  }
+}
 
 export function sourceStaticCanvasVisualKey(state: Readonly<{
   animationId: string;
@@ -1013,6 +1055,62 @@ export function createSourceStaticCanvasCandidate(
       renderedVisualKey: renderedVisualKeyRef.current,
       requestedVisualKey,
     });
+    const captureAttributes = buildCaptureAttributes({
+      canvasStatus: reportedCanvasStatus,
+      entryStateSha256,
+      frame,
+      frameDomain,
+      lang,
+      requirementId,
+      scenario,
+      seed,
+      state: deterministicState,
+      traceId,
+    });
+    const requestedCaptureReady = buildCaptureAttributes({
+      canvasStatus: "ready",
+      entryStateSha256,
+      frame,
+      frameDomain,
+      lang,
+      requirementId,
+      scenario,
+      seed,
+      state: deterministicState,
+      traceId,
+    })["data-capture-stage"] === "true";
+
+    useLayoutEffect(() => {
+      const canvas = canvasRef.current;
+      if (!canvas || renderStatus !== "ready") return;
+      if (renderedRequestKeyRef.current === requestedRenderKey) {
+        canvasStatusRef.current = "ready";
+        applyCanvasCapturePresentationStatus(canvas, {
+          captureReady: requestedCaptureReady,
+          status: "ready",
+        });
+        canvasHostRef.current?.setAttribute("data-canvas-status", "ready");
+        return;
+      }
+      // Keep the last bitmap visible while making it capture-ineligible before
+      // the browser can paint the newly requested frame. This also covers a
+      // request coalesced into an already-running asset preparation.
+      const pendingStatus =
+        canvasStatusRef.current === "ready" ||
+        canvasStatusRef.current === "updating"
+          ? "updating"
+          : "loading";
+      canvasStatusRef.current = pendingStatus;
+      applyCanvasCapturePresentationStatus(canvas, {
+        captureReady: false,
+        status: pendingStatus,
+      });
+      canvasHostRef.current?.setAttribute("data-canvas-status", pendingStatus);
+    }, [
+      renderStatus,
+      requestedCaptureReady,
+      requestedRenderKey,
+    ]);
 
     useEffect(() => {
       const canvas = canvasRef.current;
@@ -1029,6 +1127,7 @@ export function createSourceStaticCanvasCandidate(
       }
       const renderRequest = Object.freeze({
         canvas,
+        captureReady: requestedCaptureReady,
         renderKey: requestedRenderKey,
         visualKey: requestedVisualKey,
         identity: Object.freeze({
@@ -1070,19 +1169,6 @@ export function createSourceStaticCanvasCandidate(
         },
       );
       if (!run.started) return;
-      // Keep the last successfully painted bitmap visible while the next
-      // deterministic frame is prepared. Demoting an already-ready Canvas to
-      // `loading` hid it on every playback tick and exposed the stage's blue
-      // background, producing a rapid full-frame flash. `updating` remains
-      // capture-ineligible, so the retained bitmap cannot be mistaken for
-      // evidence of the requested frame before the new draw completes.
-      const pendingStatus =
-        canvasStatusRef.current === "ready" ||
-        canvasStatusRef.current === "updating"
-          ? "updating"
-          : "loading";
-      canvasStatusRef.current = pendingStatus;
-      canvasHostRef.current?.setAttribute("data-canvas-status", pendingStatus);
       void run.completion
         .then((completedRequest) => {
           if (completedRequest) {
@@ -1093,6 +1179,10 @@ export function createSourceStaticCanvasCandidate(
             // Keep its readiness marker on that same imperative surface;
             // scheduling React state for every frame creates a passive-effect
             // update loop on slower runners even when each paint succeeds.
+            applyCanvasCapturePresentationStatus(completedRequest.canvas, {
+              captureReady: completedRequest.captureReady,
+              status: "ready",
+            });
             canvasHostRef.current?.setAttribute("data-canvas-status", "ready");
             if (canvasPresentationRef.current !== "painted") {
               canvasPresentationRef.current = "painted";
@@ -1106,6 +1196,12 @@ export function createSourceStaticCanvasCandidate(
           renderedRequestKeyRef.current = null;
           renderedVisualKeyRef.current = null;
           canvasStatusRef.current = "error";
+          if (canvasRef.current) {
+            applyCanvasCapturePresentationStatus(canvasRef.current, {
+              captureReady: false,
+              status: "error",
+            });
+          }
           canvasHostRef.current?.setAttribute("data-canvas-status", "error");
           if (canvasPresentationRef.current !== "error") {
             canvasPresentationRef.current = "error";
@@ -1124,6 +1220,7 @@ export function createSourceStaticCanvasCandidate(
       renderStatus,
       renderTraceId,
       renderCoordinator,
+      requestedCaptureReady,
       requestedRenderKey,
       requestedVisualKey,
     ]);
@@ -1184,18 +1281,7 @@ export function createSourceStaticCanvasCandidate(
           ) : (
             <>
               <canvas
-                {...buildCaptureAttributes({
-                  canvasStatus: reportedCanvasStatus,
-                  entryStateSha256,
-                  frame,
-                  frameDomain,
-                  lang,
-                  requirementId,
-                  scenario,
-                  seed,
-                  state: deterministicState,
-                  traceId,
-                })}
+                {...captureAttributes}
                 aria-label={`Source-static ${config.mainFrameDomain} drawing, frame ${deterministicState.frame} of ${config.mainFrameCount}; source control behavior disabled`}
                 className="faithful-stage-wrap"
                 data-course-canvas={config.animationId}

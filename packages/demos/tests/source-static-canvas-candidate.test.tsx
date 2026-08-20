@@ -5,6 +5,7 @@ import {renderToStaticMarkup} from "react-dom/server";
 import test from "node:test";
 
 import {
+  applyCanvasCapturePresentationStatus,
   buildCanvasAssetRequest,
   createLatestCanvasRenderCoordinator,
   createSourceStaticCanvasCandidate,
@@ -257,6 +258,53 @@ test("a retained bitmap is capture-ineligible as soon as a new frame is requeste
     renderedVisualKey,
     requestedVisualKey,
   }), "loading");
+});
+
+test("imperative Canvas presentation transitions restore and revoke the full capture contract", () => {
+  const attributes = new Map<string, string>();
+  const target = {
+    removeAttribute(name: string) {
+      attributes.delete(name);
+    },
+    setAttribute(name: string, value: string) {
+      attributes.set(name, value);
+    },
+  };
+
+  applyCanvasCapturePresentationStatus(target, {
+    captureReady: true,
+    status: "ready",
+  });
+  assert.deepEqual(Object.fromEntries(attributes), {
+    "data-capture-stage": "true",
+    "data-render-state": "ready",
+    "data-render-visual": "true",
+  });
+
+  applyCanvasCapturePresentationStatus(target, {
+    captureReady: true,
+    status: "updating",
+  });
+  assert.deepEqual(Object.fromEntries(attributes), {
+    "data-render-state": "updating",
+  });
+
+  applyCanvasCapturePresentationStatus(target, {
+    captureReady: false,
+    status: "ready",
+  });
+  assert.deepEqual(Object.fromEntries(attributes), {
+    "data-render-state": "ready",
+    "data-render-visual": "true",
+  });
+
+  applyCanvasCapturePresentationStatus(target, {
+    captureReady: false,
+    status: "error",
+  });
+  assert.deepEqual(Object.fromEntries(attributes), {
+    "data-render-state": "error",
+  });
 });
 
 test("Canvas rendering coalesces advancing frames while asset readiness is delayed", async () => {

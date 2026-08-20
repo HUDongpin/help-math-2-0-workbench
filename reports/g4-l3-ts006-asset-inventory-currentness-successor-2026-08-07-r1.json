@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l3-ts006-asset-inventory-currentness-successor",
+  "issuedOn": "2026-08-07",
+  "status": "manifest-inventory-current-historical-approval-and-capture-retained-stale-no-acceptance",
+  "generator": {
+    "path": "scripts/build-g4-l3-ts006-asset-inventory-currentness-successor-2026-08-07-r1.mjs",
+    "bytes": 11241,
+    "sha256": "17e05c7e01dc3e87b8eba46cf89a3a0dfc38fa07b48ff767c5c7d1e4e94a6024"
+  },
+  "predecessorInventory": {
+    "head": "42e7f80ce70aaa3819af2f7158e15f5da5470cce",
+    "path": "migrations/course-g04-l03-ts-006/asset-inventory.csv",
+    "bytes": 1470,
+    "sha256": "916210a15c8e293d9de89b9e2f0c1ad725d411f43ebc4873084fdb2265ed90e7"
+  },
+  "successorInventory": {
+    "path": "migrations/course-g04-l03-ts-006/asset-inventory.csv",
+    "bytes": 1470,
+    "sha256": "3838911e74007727a277223c1dbbf7b2d09d21ea9fb10f024582d92e8d98b9cd"
+  },
+  "exactTransition": {
+    "changedFieldCount": 1,
+    "assetId": "ts006-source-static-canvas-manifest",
+    "field": "sha256",
+    "predecessor": "eea637df94f8c7e9ba149138bcf05426e4f8fec1fc894e2703dc4a9b39a626a0",
+    "successor": "424fb84965b48be6b7ddcd25ed770cac4d9e4e6db7c8e2d599daa295f12222aa",
+    "otherInventoryBytesChanged": false
+  },
+  "currentRenderer": {
+    "manifest": {
+      "path": "public/flash-assets/courses/course-g04-l03-ts-006/manifest.json",
+      "bytes": 46990,
+      "sha256": "424fb84965b48be6b7ddcd25ed770cac4d9e4e6db7c8e2d599daa295f12222aa"
+    },
+    "runtime": {
+      "path": "public/flash-assets/courses/course-g04-l03-ts-006/canvas-renderer.js",
+      "bytes": 358481,
+      "sha256": "162d67f65d72f307d27339d7a5f4d7945936b47854cc0fa8b6055455ac843252"
+    },
+    "candidateReport": {
+      "path": "reports/g4-l3-ts006-current-javascript-candidate.json",
+      "bytes": 47151,
+      "sha256": "f34f5766abe93a42f593b9ef101868320024e798b952b4ffb4a67416bc1a09d8"
+    }
+  },
+  "historicalEvidence": {
+    "currentJavascriptHumanApproval": {
+      "path": "reports/g4-l3-current-javascript-output-human-approval-page-001.json",
+      "bytes": 454747,
+      "sha256": "9c37edff956cb8d0dc902d1c188b483de9707761141e8f7c08f23dc53752fe40"
+    },
+    "implementationCaptureAdoption": {
+      "path": "migrations/course-g04-l03-ts-006/evidence/current-javascript-implementation-capture-adoption.json",
+      "bytes": 3755,
+      "sha256": "adb05629e2c6715528ac2f16fff18902fac551bcf082a5cbf71a70150c1acc01"
+    },
+    "rewritten": false,
+    "currentnessInherited": false,
+    "disposition": "retained immutable historical evidence; current manifest/shared-runtime bytes require fresh capture and later human re-review"
+  },
+  "nextMachineStep": {
+    "currentJavascriptRecaptureAllowed": true,
+    "adoptionIntoHistoricalApprovalAuthorized": false,
+    "freshOutputRootRequired": true,
+    "originalRuntimeRequiredForThisMachineStep": false
+  },
+  "acceptanceEffects": {
+    "implementationAccepted": false,
+    "authoritativeOriginalRuntime": false,
+    "fullFrameRmseAccepted": false,
+    "audioAccepted": false,
+    "interactionAccepted": false,
+    "replayAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "published": false
+  }
+}

@@ -161,7 +161,12 @@ node skills/flash-to-js/scripts/validate_migration.mjs migrations/<animation-id>
 ```
 
 - Rebuild and check the completion and lesson-release ledgers. Never edit generated ledgers by hand.
-- Publish a lesson only when every required placement is strict complete and the atomic lesson-release ledger permits the exact lesson shell and placement set.
+- Publish a lesson only when every required active lesson-page placement is
+  strict complete and the atomic lesson-release ledger permits that exact
+  page-placement set. Under the 2026-08-16 Owner decision in `AGENTS.md`, the
+  legacy Flash course-shell SWF remains source evidence but is not a migration
+  or release member; the modern My Lesson host is validated as product
+  integration rather than recreated as a Flash animation.
 
 Read [lesson-release.md](references/lesson-release.md) before changing product visibility or publication state.
 

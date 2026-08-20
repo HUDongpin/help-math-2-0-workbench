@@ -43,6 +43,23 @@ change JavaScript coverage: 41 page renderers plus two shell renderers remain
 [`reports/g4-active-source-promotion-review-2026-08-02.md`](reports/g4-active-source-promotion-review-2026-08-02.md)
 and the immutable applied receipt in `catalog/source-promotions/`.
 
+<!-- FLA_SWF_COUNTERPART_SUCCESSOR_CURRENT_BEGIN -->
+The 2026-08-07 FLA/SWF counterpart successor is review-gated and has not been
+applied. Its immutable v2 universe contains 620 exact-path counterpart records,
+but no record may enter canonical custody until all pair reviews are terminal,
+publication lineage is hash-bound, and every applicable custody/placement hold
+has a separate signed disposition. No new canonical paired / SWF-only /
+FLA-only numbers are reportable from this pending evidence chain. The
+implementation-final, pre-promotion verification state is frozen separately by
+`npm run source:counterparts:baseline`; `plan`, `preflight`, `promote`, and
+`recover` remain fail-closed until that receipt plus the externally reviewed
+ledger, quiescence, provisional post-state, and independent prepared reviews
+are all current. A prepared transaction must also freeze one deterministic
+native swap executable witness; source, catalog, rollback, and README exchange
+invocations must match its exact bytes and SHA-256. Neither the baseline nor
+the structural universe is copy authorization.
+<!-- FLA_SWF_COUNTERPART_SUCCESSOR_CURRENT_END -->
+
 Machine-readable evidence lives in `catalog/`, including the source manifest,
 placement catalog, canonical assets, duplicate groups, missing and unreferenced
 sources, audio associations, lessons, and batch queues. Exact workstation tool
@@ -130,6 +147,11 @@ The reviewed preview routes are `/demos`, `/demos/conversion-1-2`, and
 The application consumes the reviewed completion ledger and dynamic registry
 from `catalog/` and `packages/demos/`; see `docs/DEPLOYMENT.md` for the required
 monorepo deployment boundary.
+
+Local authentication is a development-only candidate and is not a production
+capability. Its exact Clerk fail-closed requirements and the separately gated
+future Supabase Auth transition are recorded in
+[`docs/AUTH_PROVIDER_TRANSITION.md`](docs/AUTH_PROVIDER_TRANSITION.md).
 
 The earlier two-animation workbench remains available for regression work:
 
