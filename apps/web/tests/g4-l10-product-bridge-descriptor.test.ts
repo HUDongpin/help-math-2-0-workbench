@@ -14,7 +14,7 @@ import {loadCurrentGrade4CourseCatalogCoverage} from '../lib/g4-course-catalog-c
 import {resolveWholeLessonRuntimeSeed} from '../lib/whole-lesson-player-descriptor';
 
 const freezeUrl = new URL(
-  '../../../catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v23.json',
+  '../../../catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v33.json',
   import.meta.url,
 );
 const routeUrl = new URL(
@@ -28,7 +28,7 @@ const shellUrl = new URL(
 );
 const cssUrl = new URL('../app/globals.css', import.meta.url);
 
-test('G4 L10 private descriptor projects exactly fourteen candidates into 46 page-only positions', () => {
+test('G4 L10 private descriptor projects exactly eighteen candidates into 46 page-only positions', () => {
   const descriptor = buildG4L10ProductBridgeDescriptor(
     loadCurrentGrade4CourseCatalogCoverage(),
   );
@@ -59,9 +59,13 @@ test('G4 L10 private descriptor projects exactly fourteen candidates into 46 pag
       {id: 'course-g04-l10-vb-003', ordinal: 7, section: 'VB'},
       {id: 'course-g04-l10-vb-004', ordinal: 8, section: 'VB'},
       {id: 'course-g04-l10-vb-005', ordinal: 9, section: 'VB'},
+      {id: 'course-g04-l10-vb-006', ordinal: 10, section: 'VB'},
+      {id: 'course-g04-l10-vb-007', ordinal: 11, section: 'VB'},
       {id: 'course-g04-l10-vb-008', ordinal: 12, section: 'VB'},
       {id: 'course-g04-l10-vb-010', ordinal: 14, section: 'VB'},
       {id: 'course-g04-l10-vb-011', ordinal: 15, section: 'VB'},
+      {id: 'course-g04-l10-in-008', ordinal: 22, section: 'IN'},
+      {id: 'course-g04-l10-in-009', ordinal: 23, section: 'IN'},
       {id: 'course-g04-l10-in-016', ordinal: 30, section: 'IN'},
       {id: 'course-g04-l10-ts-002', ordinal: 37, section: 'TS'},
       {id: 'course-g04-l10-ts-005', ordinal: 40, section: 'TS'},
@@ -73,7 +77,7 @@ test('G4 L10 private descriptor projects exactly fourteen candidates into 46 pag
     descriptor.pages.filter(
       (page) => page.rendererAvailability.kind === 'unavailable',
     ).length,
-    32,
+    28,
   );
   assert.ok(descriptor.pages.every((page, index) =>
     page.globalPageOrdinal === index + 1 &&
@@ -84,7 +88,7 @@ test('G4 L10 private descriptor projects exactly fourteen candidates into 46 pag
     descriptor.productBridge.selectedAnimationIds,
     G4_L10_PRODUCT_BRIDGE_SELECTED_ANIMATION_IDS,
   );
-  assert.equal(descriptor.productBridge.registeredAnimationCount, 14);
+  assert.equal(descriptor.productBridge.registeredAnimationCount, 18);
   assert.deepEqual(descriptor.productBridge.acceptanceEffects, {
     authoritativeOriginalRuntime: false,
     fidelityAccepted: false,
@@ -116,7 +120,7 @@ test('the descriptor is hash-bound to the freeze and private registry metadata',
   );
   assert.deepEqual(
     freeze.selectedPages
-      .filter((page) => page.selectionStatus === 'v22-frozen-new-batch-attempt')
+      .filter((page) => page.selectionStatus === 'v32-corrected-frozen-new-batch-attempt')
       .map((page) => ({
         animationId: page.animationId,
         globalPageOrdinal: page.globalPageOrdinal,
@@ -124,7 +128,7 @@ test('the descriptor is hash-bound to the freeze and private registry metadata',
         sectionPageOrdinal: page.sectionPageOrdinal,
       })),
     descriptor.pages
-      .filter((page) => page.animationId === 'course-g04-l10-in-016')
+      .filter((page) => page.animationId === 'course-g04-l10-in-008')
       .map((page) => ({
         animationId: page.animationId,
         globalPageOrdinal: page.globalPageOrdinal,
@@ -136,7 +140,7 @@ test('the descriptor is hash-bound to the freeze and private registry metadata',
     assert.deepEqual(animationModuleRegistration(animationId), {
       maturity: 'private-current-js',
       scope: 'private-engineering',
-      calibrationId: 'g4-l10-candidate-to-product-v23',
+      calibrationId: 'g4-l10-candidate-to-product-v33',
     });
   }
 });
@@ -264,6 +268,119 @@ test('IN016 binds its two answer handlers, 3+4 branch seed cycle, and practice c
   );
 });
 
+test('IN009 binds its five glossary handlers and 953-frame fixed-English loop', () => {
+  const descriptor = buildG4L10ProductBridgeDescriptor(
+    loadCurrentGrade4CourseCatalogCoverage(),
+  );
+  const page = descriptor.pages[22]!;
+  assert.equal(page.animationId, 'course-g04-l10-in-009');
+  assert.equal(page.globalPageOrdinal, 23);
+  assert.equal(page.sectionPageOrdinal, 8);
+  assert.equal(page.rendererAvailability.kind, 'registered');
+  if (page.rendererAvailability.kind !== 'registered') {
+    assert.fail('IN009 must be registered inside the private bridge');
+  }
+  assert.equal(page.rendererAvailability.runtimeQuery?.frameDomain, 'sprite-89');
+  assert.equal(page.rendererAvailability.runtimeQuery?.language, 'fixed-en');
+  assert.equal(
+    page.presentation?.pageInteractionCompanionTargetIdSuffix,
+    'in009-glossary-controls',
+  );
+});
+
+test('IN008 binds three source-stage answers, the 3+4 branch seed cycle, and its practice companion', () => {
+  const descriptor = buildG4L10ProductBridgeDescriptor(
+    loadCurrentGrade4CourseCatalogCoverage(),
+  );
+  const page = descriptor.pages[21]!;
+  assert.equal(page.animationId, 'course-g04-l10-in-008');
+  assert.equal(page.globalPageOrdinal, 22);
+  assert.equal(page.sectionPageOrdinal, 7);
+  assert.equal(page.rendererAvailability.kind, 'registered');
+  if (page.rendererAvailability.kind !== 'registered') {
+    assert.fail('IN008 must be registered inside the private bridge');
+  }
+  assert.equal(page.rendererAvailability.runtimeQuery?.frameDomain, 'sprite-210');
+  assert.equal(page.rendererAvailability.runtimeQuery?.language, 'fixed-en');
+  assert.equal(page.rendererAvailability.runtimeQuery?.replaySeedCycle, 12);
+  assert.deepEqual(
+    Array.from({length: 12}, (_, replay) =>
+      resolveWholeLessonRuntimeSeed(page.rendererAvailability, replay)
+    ),
+    ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'],
+  );
+  assert.equal(
+    page.presentation?.pageInteractionCompanionTargetIdSuffix,
+    'in008-practice-controls',
+  );
+  assert.equal(
+    page.presentation?.pageInteractionStageTargetIdSuffix,
+    'in008-answer-handlers',
+  );
+});
+
+test('VB006 binds source-stage answer handlers, 3+4 branch seed cycle, and practice companion', () => {
+  const descriptor = buildG4L10ProductBridgeDescriptor(
+    loadCurrentGrade4CourseCatalogCoverage(),
+  );
+  const page = descriptor.pages[9]!;
+  assert.equal(page.animationId, 'course-g04-l10-vb-006');
+  assert.equal(page.globalPageOrdinal, 10);
+  assert.equal(page.sectionPageOrdinal, 5);
+  assert.equal(page.rendererAvailability.kind, 'registered');
+  if (page.rendererAvailability.kind !== 'registered') {
+    assert.fail('VB006 must be registered inside the private bridge');
+  }
+  assert.equal(page.rendererAvailability.runtimeQuery?.frameDomain, 'sprite-213');
+  assert.equal(page.rendererAvailability.runtimeQuery?.language, 'fixed-en');
+  assert.equal(page.rendererAvailability.runtimeQuery?.replaySeedCycle, 12);
+  assert.deepEqual(
+    Array.from({length: 12}, (_, replay) =>
+      resolveWholeLessonRuntimeSeed(page.rendererAvailability, replay)
+    ),
+    ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'],
+  );
+  assert.equal(
+    page.presentation?.pageInteractionCompanionTargetIdSuffix,
+    'vb006-practice-controls',
+  );
+  assert.equal(
+    page.presentation?.pageInteractionStageTargetIdSuffix,
+    'vb006-arrow-handlers',
+  );
+});
+
+test('VB007 binds source-stage answer handlers, 3+4 branch seed cycle, and practice companion', () => {
+  const descriptor = buildG4L10ProductBridgeDescriptor(
+    loadCurrentGrade4CourseCatalogCoverage(),
+  );
+  const page = descriptor.pages[10]!;
+  assert.equal(page.animationId, 'course-g04-l10-vb-007');
+  assert.equal(page.globalPageOrdinal, 11);
+  assert.equal(page.sectionPageOrdinal, 6);
+  assert.equal(page.rendererAvailability.kind, 'registered');
+  if (page.rendererAvailability.kind !== 'registered') {
+    assert.fail('VB007 must be registered inside the private bridge');
+  }
+  assert.equal(page.rendererAvailability.runtimeQuery?.frameDomain, 'sprite-204');
+  assert.equal(page.rendererAvailability.runtimeQuery?.language, 'fixed-en');
+  assert.equal(page.rendererAvailability.runtimeQuery?.replaySeedCycle, 12);
+  assert.deepEqual(
+    Array.from({length: 12}, (_, replay) =>
+      resolveWholeLessonRuntimeSeed(page.rendererAvailability, replay)
+    ),
+    ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'],
+  );
+  assert.equal(
+    page.presentation?.pageInteractionCompanionTargetIdSuffix,
+    'vb007-practice-controls',
+  );
+  assert.equal(
+    page.presentation?.pageInteractionStageTargetIdSuffix,
+    'vb007-arrow-handlers',
+  );
+});
+
 test('VB010 keeps the source visual fixed-English and binds its five-handler glossary companion', () => {
   const descriptor = buildG4L10ProductBridgeDescriptor(
     loadCurrentGrade4CourseCatalogCoverage(),
@@ -381,6 +498,18 @@ test('all selected glossary pages retain exact bilingual host data', () => {
       es: 'La distancia alrededor de una figura.',
     },
     {
+      id: 'triangle',
+      sourceKeyAttribute: 'Triangle',
+      en: 'A geometric figure with three sides and three angles, in which the sum of 2 sides is greater than the third side. Triangles can be classified according to the measure of its sides or the measure of its angles.',
+      es: 'Figura geométrica que tiene tres lados y tres ángulos, en el cual la suma de dos lados es mayor que el tercer lado. Los triángulos se pueden clasificar según la medida de sus lados o la medida de sus ángulos.',
+    },
+    {
+      id: 'sum',
+      sourceKeyAttribute: 'Sum',
+      en: 'The answer to an addition problem. For example: the sum of 2 + 3 is 5.',
+      es: 'Es la operación de adición. Es también el resultado que obtenemos. Decimos que la suma de 2 + 3 es 5.',
+    },
+    {
       id: 'foot-feet',
       sourceKeyAttribute: 'Foot/Feet',
       en: 'A standard unit of measure for length; 1 ft = 12 in.',
@@ -391,6 +520,12 @@ test('all selected glossary pages retain exact bilingual host data', () => {
       sourceKeyAttribute: 'Area',
       en: 'The amount of surface a shape covers; is found by counting the square units or by using an area formula.',
       es: 'La cantidad de superficie que una figura cubre; se determina contando las unidades cuadradas o usando la fórmula.',
+    },
+    {
+      id: 'surface',
+      sourceKeyAttribute: 'Surface',
+      en: 'The outer or top space of an object.',
+      es: 'El espacio superior o externo de un objeto.',
     },
     {
       id: 'square-unit',

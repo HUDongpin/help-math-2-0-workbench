@@ -132,6 +132,8 @@ const privateProductBridgeIds = new Set([
   "course-g04-l10-vb-003",
   "course-g04-l10-vb-004",
   "course-g04-l10-vb-005",
+  "course-g04-l10-vb-006",
+  "course-g04-l10-vb-007",
   "course-g04-l10-vb-008",
   "course-g04-l10-vb-010",
   "course-g04-l10-vb-011",
@@ -139,6 +141,8 @@ const privateProductBridgeIds = new Set([
   "course-g04-l10-ts-005",
   "course-g04-l10-ts-006",
   "course-g04-l10-fq-001",
+  "course-g04-l10-in-008",
+  "course-g04-l10-in-009",
   "course-g04-l10-in-016",
 ]);
 const candidates = [
@@ -398,6 +402,10 @@ test("twenty-four L10 source-static cores remain fixed-English and acceptance-ne
       candidate.id === "course-g04-l10-vb-008" ||
       candidate.id === "course-g04-l10-vb-010" ||
       candidate.id === "course-g04-l10-vb-011" ||
+      candidate.id === "course-g04-l10-vb-006" ||
+      candidate.id === "course-g04-l10-vb-007" ||
+      candidate.id === "course-g04-l10-in-008" ||
+      candidate.id === "course-g04-l10-in-009" ||
       candidate.id === "course-g04-l10-in-016"
     ) {
       assert.equal(candidate.module.audioCues?.length, 1);
@@ -498,7 +506,7 @@ test("TI003 preserves its exact fractional native stage and 800x600 Canvas backi
   });
 });
 
-test("the private bridge registers only fourteen L10 candidates and no public course", async () => {
+test("the private bridge registers only eighteen L10 candidates and no public course", async () => {
   const publicRegistries = await Promise.all([
     new URL("../prototype-registry.json", import.meta.url),
     new URL("../src/prototype-manifest.ts", import.meta.url),

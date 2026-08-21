@@ -220,7 +220,11 @@ export function DescriptorDrivenWholeLessonPlayer({
     : 0;
   const requiredMemberCount =
     descriptor.course.expectedReleaseMemberCount;
-  const strictCompletion = descriptor.schemaVersion === 1 &&
+  const descriptorMembershipIsValid = descriptor.course.activePageCount ===
+      descriptor.pages.length &&
+    descriptor.course.expectedReleaseMemberCount ===
+      descriptor.pages.length + descriptor.course.courseShellCount;
+  const strictCompletion = descriptorMembershipIsValid &&
     strictCompleteMemberCount === requiredMemberCount;
   const currentJsCandidate =
     registeredPages.length === descriptor.course.activePageCount &&
@@ -629,6 +633,10 @@ export function DescriptorDrivenWholeLessonPlayer({
     currentPage.presentation?.pageInteractionCompanionTargetIdSuffix
       ? `${descriptor.course.domIdPrefix}-${currentPage.presentation.pageInteractionCompanionTargetIdSuffix}`
       : undefined;
+  const pageInteractionStageTargetId =
+    currentPage.presentation?.pageInteractionStageTargetIdSuffix
+      ? `${descriptor.course.domIdPrefix}-${currentPage.presentation.pageInteractionStageTargetIdSuffix}`
+      : undefined;
   const stage = currentRenderer.kind === 'registered'
     ? <AnimationRuntime
         audioEnabled={audioEnabled}
@@ -664,6 +672,7 @@ export function DescriptorDrivenWholeLessonPlayer({
         )}
         paused={paused}
         pageInteractionCompanionTargetId={pageInteractionCompanionTargetId}
+        pageInteractionStageTargetId={pageInteractionStageTargetId}
         presentation="legacy-shell"
         query={{
           frameDomain: currentRenderer.runtimeQuery?.frameDomain,
@@ -888,6 +897,7 @@ export function DescriptorDrivenWholeLessonPlayer({
       onVolumeChange={setVolume}
       pageComplete={runtimeAvailable && reviewed.has(currentPage.animationId)}
       pageInteractionCompanionTargetId={pageInteractionCompanionTargetId}
+      pageInteractionStageTargetId={pageInteractionStageTargetId}
       pageHeading={pageHeading}
       paused={paused}
       playbackFrame={playbackState.frame}

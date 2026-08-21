@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "calibrationId": "g4-l10-candidate-to-product-v28",
+  "frozenAt": "2026-08-21T11:18:00+08:00",
+  "frozenGitHead": "8770c56e2e0e63645df7c209db9b575f8dea1a9c",
+  "status": "immutable-first-sixteen-page-registry-successor",
+  "predecessor": {
+    "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v27.json",
+    "bytes": 22281,
+    "sha256": "2659f2fe21b71a4db917002bc552374412f0fed12d9263f0a058b57c4ba259e0",
+    "preservedConclusions": [
+      "V27 remains the immutable implementation-before freeze for the sole VB006 interactive-understood selection in this batch.",
+      "V28 authorizes no additional candidate beyond VB006 and does not alter any V27 source, handler, random, audio, timeline, Replay, or acceptance boundary.",
+      "The other eight audited candidates remain unregistered and retain their prior risk dispositions without low relabeling."
+    ]
+  },
+  "scope": {
+    "releaseId": "lesson-g04-l10-perimeter-area",
+    "activePageCount": 46,
+    "courseShellCount": 0,
+    "auditedSourceStaticCandidateCount": 24,
+    "privateRegistrationCount": 16,
+    "newCandidateSelectionCount": 1,
+    "newCandidateId": "course-g04-l10-vb-006",
+    "newWorkspaceCount": 0
+  },
+  "selectedPages": [
+    {"animationId": "course-g04-l10-ir-001", "globalPageOrdinal": 1, "sectionCode": "IR", "sectionPageOrdinal": 1, "complexityLane": "behavior-heavy", "selectionStatus": "inherited-from-v26"},
+    {"animationId": "course-g04-l10-rw-004", "globalPageOrdinal": 4, "sectionCode": "RW", "sectionPageOrdinal": 3, "complexityLane": "interactive-understood", "selectionStatus": "inherited-from-v26"},
+    {"animationId": "course-g04-l10-vb-002", "globalPageOrdinal": 6, "sectionCode": "VB", "sectionPageOrdinal": 1, "complexityLane": "interactive-understood", "selectionStatus": "inherited-from-v26"},
+    {"animationId": "course-g04-l10-vb-003", "globalPageOrdinal": 7, "sectionCode": "VB", "sectionPageOrdinal": 2, "complexityLane": "interactive-understood", "selectionStatus": "inherited-from-v26"},
+    {"animationId": "course-g04-l10-vb-004", "globalPageOrdinal": 8, "sectionCode": "VB", "sectionPageOrdinal": 3, "complexityLane": "interactive-understood", "selectionStatus": "inherited-from-v26"},
+    {"animationId": "course-g04-l10-vb-005", "globalPageOrdinal": 9, "sectionCode": "VB", "sectionPageOrdinal": 4, "complexityLane": "interactive-understood", "selectionStatus": "inherited-from-v26"},
+    {
+      "animationId": "course-g04-l10-vb-006",
+      "globalPageOrdinal": 10,
+      "sectionCode": "VB",
+      "sectionPageOrdinal": 5,
+      "complexityLane": "interactive-understood",
+      "priorRiskDisposition": "behavior-heavy-gated",
+      "selectionStatus": "v27-frozen-new-batch-attempt",
+      "sourceFreeze": {
+        "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v27.json",
+        "bytes": 22281,
+        "sha256": "2659f2fe21b71a4db917002bc552374412f0fed12d9263f0a058b57c4ba259e0"
+      },
+      "source": {
+        "swfSha256": "cb9881b4c6b790e4c1b13fa99ee3457b2d5438c261811d22d431b1fc0cefdaa4",
+        "flaSha256": "2c809b81dedda337e6273197eaa29dcdd8275d16b250ed9a48837c3d1e0583e6"
+      },
+      "candidate": {
+        "manifestSha256": "1e564372595d8d2628c7967c6b7f1ccdbf04e188d7f82aebf6fcb349a8ff974c",
+        "canvasRendererSha256": "95bd749be5a31d68bb6ac296efb90b36d1b6784b288ab20db0db226b0867f614",
+        "maintainedModule": {"path": "packages/demos/src/modules/course-g04-l10-vb-006.tsx", "bytes": 23078, "sha256": "3fe17ce82f86634df7bafd484730fd709716a0bc10e660f28be18243f2c15115"},
+        "timelineContract": {"path": "packages/demos/src/timelines/course-g04-l10-vb-006.ts", "bytes": 2989, "sha256": "59f523e10bc6c2a534b8d6334da3e27be319c989cf7280bdcc6468e941d41c2a"},
+        "frameDomain": "sprite-213",
+        "frameCount": 104,
+        "quizStopFrame": 62,
+        "correctContinuationFirstFrame": 63,
+        "correctTerminalFrame": 104
+      },
+      "productBridge": {
+        "hostCapabilities": ["audio", "glossary", "practice-feedback"],
+        "legacyOperations": "blocked",
+        "auditStorage": "memory-only",
+        "storesPersonalData": false,
+        "sourceArrowHandlers": {"wrong": "AnsBtn2/object17/vertical-4-centimeter", "correct": "AnsBtn1/object18/horizontal-9-centimeter"},
+        "stageHandlerSurface": "authored-stage portal plus accessible companion controls",
+        "randomBranchRange": {"wrong": 3, "right": 4},
+        "sourcePresentButHostUnreachableTimelines": ["sprite-73", "sprite-212"],
+        "audio": {
+          "materializer": {"path": "scripts/materialize-g4-l10-vb006-private-audio.mjs", "bytes": 17344, "sha256": "abd8c48e9cf691eb7c4e84df2e855c7a2122ac8defd44e3d57e5959e2e8dae56"},
+          "manifest": {"path": "public/flash-assets/courses/course-g04-l10-vb-006/audio/manifest.json", "bytes": 15202, "sha256": "ee53db2cfb8d315a7ce849fd8203657e6f9fb22ab68bae70483d6f02bfe7dfc6"},
+          "receipt": {"path": "migrations/course-g04-l10-vb-006/audit/private-product-audio-assets.json", "bytes": 15405, "sha256": "8d6ec859461f7aa84c236f300fc04bae683d47a567843e28cfd75cb3f36c4c0d"},
+          "materializedAssetCount": 11,
+          "everyAssetHashProbeAndFullEofDecodePassed": true,
+          "mainContinuationFrameRange": {"first": 63, "last": 104},
+          "listeningAccepted": false,
+          "spokenLanguageAccepted": false
+        },
+        "timelineReachability": {
+          "quizStopFrame": 62,
+          "wrongReturnsToFrame": 62,
+          "correctContinuationFirstFrame": 63,
+          "correctTerminalFrame": 104,
+          "strictDispositionMutated": false
+        },
+        "replay": {
+          "rewindFrame": 1,
+          "clearsOutcomeBranchPhaseTimersContinuationFrameTerminalAndHostState": true,
+          "stopsTimelineInteractiveAndHostAudio": true,
+          "answersReenabledAtFrame": 62
+        }
+      },
+      "preRegistryVerification": {
+        "focusedTests": {"tests": 10, "passed": 10, "failed": 0, "exitCode": 0},
+        "demosTypecheck": {"status": "passed", "exitCode": 0},
+        "audioMaterializerCheck": {"outputCount": 13, "status": "current", "exitCode": 0}
+      }
+    },
+    {"animationId": "course-g04-l10-vb-007", "globalPageOrdinal": 11, "sectionCode": "VB", "sectionPageOrdinal": 6, "complexityLane": "interactive-understood", "selectionStatus": "inherited-from-v26"},
+    {"animationId": "course-g04-l10-vb-008", "globalPageOrdinal": 12, "sectionCode": "VB", "sectionPageOrdinal": 7, "complexityLane": "interactive-understood", "selectionStatus": "inherited-from-v26"},
+    {"animationId": "course-g04-l10-vb-010", "globalPageOrdinal": 14, "sectionCode": "VB", "sectionPageOrdinal": 9, "complexityLane": "interactive-understood", "selectionStatus": "inherited-from-v26"},
+    {"animationId": "course-g04-l10-vb-011", "globalPageOrdinal": 15, "sectionCode": "VB", "sectionPageOrdinal": 10, "complexityLane": "interactive-understood", "selectionStatus": "inherited-from-v26"},
+    {"animationId": "course-g04-l10-in-016", "globalPageOrdinal": 30, "sectionCode": "IN", "sectionPageOrdinal": 15, "complexityLane": "interactive-understood", "selectionStatus": "inherited-from-v26"},
+    {"animationId": "course-g04-l10-ts-002", "globalPageOrdinal": 37, "sectionCode": "TS", "sectionPageOrdinal": 1, "complexityLane": "interactive-understood", "selectionStatus": "inherited-from-v26"},
+    {"animationId": "course-g04-l10-ts-005", "globalPageOrdinal": 40, "sectionCode": "TS", "sectionPageOrdinal": 4, "complexityLane": "interactive-understood", "selectionStatus": "inherited-from-v26"},
+    {"animationId": "course-g04-l10-ts-006", "globalPageOrdinal": 41, "sectionCode": "TS", "sectionPageOrdinal": 5, "complexityLane": "low", "selectionStatus": "inherited-from-v26"},
+    {"animationId": "course-g04-l10-fq-001", "globalPageOrdinal": 44, "sectionCode": "FQ", "sectionPageOrdinal": 1, "complexityLane": "low", "selectionStatus": "inherited-from-v26"}
+  ],
+  "remainingCandidateGate": {
+    "unregisteredCandidateCount": 8,
+    "unregisteredAnimationIds": [
+      "course-g04-l10-fq-002",
+      "course-g04-l10-fq-003",
+      "course-g04-l10-in-006",
+      "course-g04-l10-in-008",
+      "course-g04-l10-in-009",
+      "course-g04-l10-in-011",
+      "course-g04-l10-in-013",
+      "course-g04-l10-ti-003"
+    ],
+    "honestLowLaneCount": 0,
+    "automaticRegistrationAuthorized": false,
+    "lowRelabelAuthorized": false,
+    "behaviorHeavyGate": "Random branches, audio routing, timeline reachability, and Replay engineering behavior must each close before registration."
+  },
+  "registrationPolicy": {
+    "authorizedAnimationIds": ["course-g04-l10-vb-006"],
+    "cumulativeSelectedCount": 16,
+    "privateOnly": true,
+    "publicRegistryMutationAuthorized": false,
+    "automaticRemainderRegistration": false,
+    "relabelRemainderLow": false
+  },
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "behaviorParityAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "spokenLanguageAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "releaseEligible": false,
+    "published": false
+  },
+  "strictAcceptanceEffect": "none"
+}

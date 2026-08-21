@@ -232,6 +232,10 @@ test('descriptor-driven player never mounts or prefetches unavailable renderers'
     component,
     /const pageInteractionCompanionTargetId =\s*currentPage\.presentation\?\.pageInteractionCompanionTargetIdSuffix\s*\? `\$\{descriptor\.course\.domIdPrefix\}-\$\{currentPage\.presentation\.pageInteractionCompanionTargetIdSuffix\}`\s*: undefined;/,
   );
+  assert.match(
+    component,
+    /const pageInteractionStageTargetId =\s*currentPage\.presentation\?\.pageInteractionStageTargetIdSuffix\s*\? `\$\{descriptor\.course\.domIdPrefix\}-\$\{currentPage\.presentation\.pageInteractionStageTargetIdSuffix\}`\s*: undefined;/,
+  );
   assert.doesNotMatch(component, /course-g05-l04-fq-002|course-g05-l04-fq-003/);
   assert.equal(
     (component.match(
@@ -240,13 +244,28 @@ test('descriptor-driven player never mounts or prefetches unavailable renderers'
     2,
     'the same FQ002/FQ003 companion target must reach the runtime and shell host',
   );
+  assert.equal(
+    (component.match(
+      /pageInteractionStageTargetId=\{pageInteractionStageTargetId\}/g,
+    ) ?? []).length,
+    2,
+    'the same source-stage interaction target must reach the runtime and shell host',
+  );
   assert.match(
     shell,
     /data-page-interaction-companion-host="true"[\s\S]*?id=\{pageInteractionCompanionTargetId\}/,
   );
   assert.match(
+    shell,
+    /data-page-interaction-stage-host="true"[\s\S]*?id=\{pageInteractionStageTargetId\}/,
+  );
+  assert.match(
     animationRuntime,
     /<Renderer[\s\S]*?pageInteractionCompanionTargetId=\{pageInteractionCompanionTargetId\}/,
+  );
+  assert.match(
+    animationRuntime,
+    /<Renderer[\s\S]*?pageInteractionStageTargetId=\{pageInteractionStageTargetId\}/,
   );
   assert.match(
     component,
@@ -396,7 +415,10 @@ test('registered whole-lesson routes preserve cross-binding and publication gate
     registeredBranch,
     /wholeLessonDescriptorMatchesNavigation\(\s*courseRegistration\.descriptor,\s*releaseDescriptor,/,
   );
-  assert.match(registeredBranch, /strictCompleteMemberCount=/);
+  assert.match(
+    registeredBranch,
+    /resolveWholeLessonReleaseView\([\s\S]*?strictCompleteMemberCount=\{releaseView\.strictCompleteMemberCount\}/,
+  );
   assert.doesNotMatch(route, /G4_L3_LESSON|G5_L4_ATOMIC_RELEASE_ID/);
   assert.doesNotMatch(route, /isG4L3Lesson|isG5L4ExecutivePreviewEnabled/);
   assert.match(coursePlayer, /registration\.player\.kind === 'preserved-custom'/);

@@ -15,11 +15,11 @@ import type {
 } from './whole-lesson-player-descriptor';
 
 export const G4_L10_PRODUCT_BRIDGE_CALIBRATION_ID =
-  'g4-l10-candidate-to-product-v23';
+  'g4-l10-candidate-to-product-v33';
 export const G4_L10_PRODUCT_BRIDGE_FREEZE_PATH =
-  'catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v23.json';
+  'catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v33.json';
 export const G4_L10_PRODUCT_BRIDGE_FREEZE_SHA256 =
-  '9c8477564ac6a54d3e6ee40e5846e180c482454d40c162fce8960d8386e33882';
+  '48a7a8fa4ba2e6fef39cd2c6af097dbdc2e5797d2d10cb2a5fb703bc45902853';
 
 const selectedPages = Object.freeze({
   'course-g04-l10-ir-001': Object.freeze({
@@ -62,6 +62,24 @@ const selectedPages = Object.freeze({
     pageInteractionCompanionTargetIdSuffix: 'vb005-glossary-controls',
     seed: '0',
   }),
+  'course-g04-l10-vb-006': Object.freeze({
+    frameDomain: 'sprite-213',
+    lane: 'interactive-understood',
+    language: 'fixed-en' as const,
+    pageInteractionCompanionTargetIdSuffix: 'vb006-practice-controls',
+    pageInteractionStageTargetIdSuffix: 'vb006-arrow-handlers',
+    replaySeedCycle: 12,
+    seed: '0',
+  }),
+  'course-g04-l10-vb-007': Object.freeze({
+    frameDomain: 'sprite-204',
+    lane: 'interactive-understood',
+    language: 'fixed-en' as const,
+    pageInteractionCompanionTargetIdSuffix: 'vb007-practice-controls',
+    pageInteractionStageTargetIdSuffix: 'vb007-arrow-handlers',
+    replaySeedCycle: 12,
+    seed: '0',
+  }),
   'course-g04-l10-vb-008': Object.freeze({
     frameDomain: 'sprite-62',
     lane: 'interactive-understood',
@@ -81,6 +99,22 @@ const selectedPages = Object.freeze({
     lane: 'interactive-understood',
     language: 'fixed-en' as const,
     pageInteractionCompanionTargetIdSuffix: 'vb011-glossary-controls',
+    seed: '0',
+  }),
+  'course-g04-l10-in-008': Object.freeze({
+    frameDomain: 'sprite-210',
+    lane: 'interactive-understood',
+    language: 'fixed-en' as const,
+    pageInteractionCompanionTargetIdSuffix: 'in008-practice-controls',
+    pageInteractionStageTargetIdSuffix: 'in008-answer-handlers',
+    replaySeedCycle: 12,
+    seed: '0',
+  }),
+  'course-g04-l10-in-009': Object.freeze({
+    frameDomain: 'sprite-89',
+    lane: 'interactive-understood',
+    language: 'fixed-en' as const,
+    pageInteractionCompanionTargetIdSuffix: 'in009-glossary-controls',
     seed: '0',
   }),
   'course-g04-l10-in-016': Object.freeze({
@@ -125,9 +159,13 @@ export const G4_L10_PRODUCT_BRIDGE_SELECTED_ANIMATION_IDS = Object.freeze([
   'course-g04-l10-vb-003',
   'course-g04-l10-vb-004',
   'course-g04-l10-vb-005',
+  'course-g04-l10-vb-006',
+  'course-g04-l10-vb-007',
   'course-g04-l10-vb-008',
   'course-g04-l10-vb-010',
   'course-g04-l10-vb-011',
+  'course-g04-l10-in-008',
+  'course-g04-l10-in-009',
   'course-g04-l10-in-016',
   'course-g04-l10-ts-002',
   'course-g04-l10-ts-005',
@@ -160,6 +198,26 @@ const glossary: readonly PageOnlyLessonGlossaryEntry[] = Object.freeze([
     source: keyTermsSource,
   }),
   Object.freeze({
+    id: 'triangle',
+    sourceKeyAttribute: 'Triangle',
+    labels: Object.freeze({en: 'Triangle', es: 'Triángulo'}),
+    definitions: Object.freeze({
+      en: 'A geometric figure with three sides and three angles, in which the sum of 2 sides is greater than the third side. Triangles can be classified according to the measure of its sides or the measure of its angles.',
+      es: 'Figura geométrica que tiene tres lados y tres ángulos, en el cual la suma de dos lados es mayor que el tercer lado. Los triángulos se pueden clasificar según la medida de sus lados o la medida de sus ángulos.',
+    }),
+    source: keyTermsSource,
+  }),
+  Object.freeze({
+    id: 'sum',
+    sourceKeyAttribute: 'Sum',
+    labels: Object.freeze({en: 'Sum', es: 'Suma'}),
+    definitions: Object.freeze({
+      en: 'The answer to an addition problem. For example: the sum of 2 + 3 is 5.',
+      es: 'Es la operación de adición. Es también el resultado que obtenemos. Decimos que la suma de 2 + 3 es 5.',
+    }),
+    source: keyTermsSource,
+  }),
+  Object.freeze({
     id: 'foot-feet',
     sourceKeyAttribute: 'Foot/Feet',
     labels: Object.freeze({en: 'Foot/Feet', es: 'Pie (pies)'}),
@@ -176,6 +234,16 @@ const glossary: readonly PageOnlyLessonGlossaryEntry[] = Object.freeze([
     definitions: Object.freeze({
       en: 'The amount of surface a shape covers; is found by counting the square units or by using an area formula.',
       es: 'La cantidad de superficie que una figura cubre; se determina contando las unidades cuadradas o usando la fórmula.',
+    }),
+    source: keyTermsSource,
+  }),
+  Object.freeze({
+    id: 'surface',
+    sourceKeyAttribute: 'Surface',
+    labels: Object.freeze({en: 'Surface', es: 'Superficie'}),
+    definitions: Object.freeze({
+      en: 'The outer or top space of an object.',
+      es: 'El espacio superior o externo de un objeto.',
     }),
     source: keyTermsSource,
   }),
@@ -569,13 +637,17 @@ export function buildG4L10ProductBridgeDescriptor(
           })
         : Object.freeze({
             kind: 'unavailable' as const,
-            reason: 'outside-frozen-fourteen-page-product-bridge',
+            reason: 'outside-frozen-eighteen-page-product-bridge',
           }),
       presentation: selection &&
           'pageInteractionCompanionTargetIdSuffix' in selection
         ? Object.freeze({
             pageInteractionCompanionTargetIdSuffix:
               selection.pageInteractionCompanionTargetIdSuffix,
+            pageInteractionStageTargetIdSuffix:
+              'pageInteractionStageTargetIdSuffix' in selection
+                ? selection.pageInteractionStageTargetIdSuffix
+                : undefined,
           })
         : undefined,
       source: Object.freeze({
@@ -592,7 +664,7 @@ export function buildG4L10ProductBridgeDescriptor(
     selectedInSourceOrder.join('\n') !==
       G4_L10_PRODUCT_BRIDGE_SELECTED_ANIMATION_IDS.join('\n')
   ) {
-    throw new Error('Frozen G4 L10 pages no longer occupy ordinals 1, 4, 6, 7, 8, 9, 12, 14, 15, 30, 37, 40, 41, and 44');
+    throw new Error('Frozen G4 L10 pages no longer occupy ordinals 1, 4, 6, 7, 8, 9, 10, 11, 12, 14, 15, 22, 23, 30, 37, 40, 41, and 44');
   }
 
   return Object.freeze({
@@ -657,7 +729,7 @@ export function buildG4L10ProductBridgeDescriptor(
     glossary,
     productBridge: Object.freeze({
       selectedAnimationIds: G4_L10_PRODUCT_BRIDGE_SELECTED_ANIMATION_IDS,
-      registeredAnimationCount: 14,
+      registeredAnimationCount: 18,
       pageOnlyDescriptorMemberCount: 46,
       acceptanceEffects: Object.freeze({
         authoritativeOriginalRuntime: false,

@@ -7,7 +7,7 @@ import {catalogInputIdentity} from './catalog-cache-identity';
 import {
   G4_L3_ATOMIC_RELEASE_ID,
   deriveLessonReleaseStates,
-  hasExactProtectedAtomicShape,
+  isProtectedAtomicReleaseId,
   isReleasePublished,
   isTargetPublished,
   protectedAtomicReleaseIdForScope,
@@ -49,7 +49,7 @@ const MISSING_REFERENCES_PATH = 'catalog/missing-references.json';
 const G4_L3_PROTECTED_FALLBACK: LessonReleaseDefinition = Object.freeze({
   releaseId: G4_L3_ATOMIC_RELEASE_ID,
   publicationMode: 'atomic',
-  expectedMemberCount: 40,
+  expectedMemberCount: 39,
   scope: Object.freeze({collection: 'course', grade: 4, lesson: 3, excludeNonMembers: true}),
   members: Object.freeze([]),
 });
@@ -169,8 +169,11 @@ function normalizeReleaseDefinitions(value: unknown, animations: readonly Catalo
       definition.scope.grade,
       definition.scope.lesson,
     );
-    if (!hasExactProtectedAtomicShape(definition) ||
-      (protectedReleaseId !== undefined && definition.releaseId !== protectedReleaseId)) {
+    if (
+      (protectedReleaseId !== undefined ||
+        isProtectedAtomicReleaseId(definition.releaseId)) &&
+      definition.releaseId !== protectedReleaseId
+    ) {
       throw new Error(`${definition.releaseId}: invalid protected atomic lesson release definition`);
     }
     return definition;

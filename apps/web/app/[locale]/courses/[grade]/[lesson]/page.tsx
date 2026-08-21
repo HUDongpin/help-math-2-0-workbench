@@ -24,7 +24,10 @@ import {
   resolveWholeLessonHostPresentation,
 } from '@/lib/whole-lesson-host-presentation';
 import {findWholeLessonCourseRegistration} from '@/lib/whole-lesson-course-registry';
-import {wholeLessonDescriptorMatchesNavigation} from '@/lib/whole-lesson-player-descriptor';
+import {
+  resolveWholeLessonReleaseView,
+  wholeLessonDescriptorMatchesNavigation,
+} from '@/lib/whole-lesson-player-descriptor';
 
 // Whole-lesson players mount only after descriptor/release cross-binding and
 // the independent server publication or controlled-preview gate.
@@ -82,10 +85,16 @@ export default async function CoursePage({
       notFound();
     }
 
-    const releaseMemberIds = new Set(releaseDescriptor.memberAnimationIds);
-    const strictCompleteMemberCount = complete.filter(
-      (animation) => releaseMemberIds.has(animation.animationId),
-    ).length;
+    const releaseView = resolveWholeLessonReleaseView(
+      courseRegistration.descriptor,
+      {
+        releaseId: releaseDescriptor.releaseId,
+        releasePublished,
+        strictCompleteAnimationIds: new Set(
+          complete.map((animation) => animation.animationId),
+        ),
+      },
+    );
     // Resolved on the server: a lesson renders the widescreen presentation only
     // when its own descriptor declares support for it and the deployment opts
     // in. Either missing falls back to the legacy composite.
@@ -108,7 +117,7 @@ export default async function CoursePage({
       novaTutorMode={novaTutorMode}
       registration={courseRegistration}
       releasePublished={releasePublished}
-      strictCompleteMemberCount={strictCompleteMemberCount}
+      strictCompleteMemberCount={releaseView.strictCompleteMemberCount}
     />;
   }
 

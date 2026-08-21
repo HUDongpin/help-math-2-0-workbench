@@ -165,6 +165,10 @@ test('G5 L4 navigation is derived from the exact release and XML occurrence orde
   assert.equal(descriptor.titleSpanish, null);
   assert.equal(descriptor.activePageCount, 54);
   assert.equal(descriptor.expectedMemberCount, 55);
+  assert.equal(descriptor.schemaVersion, 1);
+  if (descriptor.schemaVersion !== 1) {
+    throw new Error('legacy G5 L4 fixture unexpectedly built page-only navigation');
+  }
   assert.equal(descriptor.shell.animationId, shell.animationId);
   assert.equal(descriptor.shell.memberOrdinal, 55);
   assert.deepEqual(descriptor.sections.map((section) => [section.code, section.activePageCount]), sectionCounts);
@@ -172,6 +176,38 @@ test('G5 L4 navigation is derived from the exact release and XML occurrence orde
   assert.equal(descriptor.pages[0]?.previousAnimationId, null);
   assert.equal(descriptor.pages[0]?.nextAnimationId, descriptor.pages[1]?.animationId);
   assert.equal(descriptor.pages.at(-1)?.nextAnimationId, null);
+});
+
+test('page-only atomic navigation uses every XML page and has no shell member', () => {
+  const pageOnlyDefinition: LessonReleaseDefinition = {
+    ...definition,
+    releaseId: 'lesson-g05-l04-page-only-test',
+    expectedMemberCount: pages.length,
+    members: definition.members.slice(0, -1),
+  };
+  const descriptor = buildLessonNavigationDescriptor(
+    pageOnlyDefinition,
+    pages,
+  );
+  assert.ok(descriptor);
+  assert.equal(descriptor.schemaVersion, 2);
+  assert.equal(descriptor.courseShellCount, 0);
+  assert.equal(descriptor.expectedMemberCount, 54);
+  assert.equal(descriptor.activePageCount, 54);
+  assert.equal(descriptor.memberAnimationIds.length, 54);
+  assert.equal('shell' in descriptor, false);
+
+  const strictPages = new Set(descriptor.memberAnimationIds);
+  assert.equal(isLessonReleaseOpen(descriptor, {
+    auditPreview: false,
+    completeAnimationIds: new Set(descriptor.memberAnimationIds.slice(0, -1)),
+    releasePublished: true,
+  }), false);
+  assert.equal(isLessonReleaseOpen(descriptor, {
+    auditPreview: false,
+    completeAnimationIds: strictPages,
+    releasePublished: true,
+  }), true);
 });
 
 test('checked-in G5 L5 navigation preserves 56 XML pages, section order, and a terminal shell', async () => {
@@ -200,6 +236,10 @@ test('checked-in G5 L5 navigation preserves 56 XML pages, section order, and a t
   assert.equal(descriptor.titleEnglish, 'Add & Subtract Negative Numbers');
   assert.equal(descriptor.activePageCount, 56);
   assert.equal(descriptor.expectedMemberCount, 57);
+  assert.equal(descriptor.schemaVersion, 1);
+  if (descriptor.schemaVersion !== 1) {
+    throw new Error('checked-in legacy G5 L5 release unexpectedly became page-only');
+  }
   assert.equal(descriptor.shell.animationId, 'shell-course-g05-l05-index-local');
   assert.equal(descriptor.shell.memberOrdinal, 57);
   assert.deepEqual(
@@ -234,6 +274,34 @@ test('checked-in G5 L5 navigation preserves 56 XML pages, section order, and a t
     isLessonReleaseOpen(descriptor, {
       auditPreview: false,
       completeAnimationIds: all,
+      releasePublished: true,
+    }),
+    true,
+  );
+
+  const pageOnlyRelease: LessonReleaseDefinition = {
+    ...release,
+    expectedMemberCount: 56,
+    members: release.members.slice(0, 56),
+  };
+  const pageOnlyDescriptor = buildLessonNavigationDescriptor(
+    pageOnlyRelease,
+    animationDocument.animations,
+  );
+  assert.ok(pageOnlyDescriptor);
+  assert.equal(pageOnlyDescriptor.schemaVersion, 2);
+  assert.equal(pageOnlyDescriptor.courseShellCount, 0);
+  assert.equal(pageOnlyDescriptor.expectedMemberCount, 56);
+  assert.equal(pageOnlyDescriptor.memberAnimationIds.length, 56);
+  assert.equal('shell' in pageOnlyDescriptor, false);
+  assert.deepEqual(
+    pageOnlyDescriptor.pages.map((page) => page.animationId),
+    descriptor.pages.map((page) => page.animationId),
+  );
+  assert.equal(
+    isLessonReleaseOpen(pageOnlyDescriptor, {
+      auditPreview: false,
+      completeAnimationIds: partial,
       releasePublished: true,
     }),
     true,

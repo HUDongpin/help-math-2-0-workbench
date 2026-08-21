@@ -704,8 +704,8 @@ test('course route mounts the whole-lesson player and keeps candidate labeling d
   assert.match(routeSource, /isMigrationStatusDesignerViewRequested\(view\)/);
   assert.match(routeSource, /const auditPreview = developmentAuditPreview;/);
   assert.doesNotMatch(routeSource, /controlledPreview|ExecutivePreview/);
-  assert.match(routeSource, /strictCompleteMemberCount=\{strictCompleteMemberCount\}/);
-  assert.match(routeSource, /releaseMemberIds\.has\(animation\.animationId\)/);
+  assert.match(routeSource, /strictCompleteMemberCount=\{releaseView\.strictCompleteMemberCount\}/);
+  assert.match(routeSource, /resolveWholeLessonReleaseView\(/);
   assert.doesNotMatch(registrySource, /isControlledPreviewEnabled|ControlledCeoPreview/);
   assert.match(
     coursePlayerSource,

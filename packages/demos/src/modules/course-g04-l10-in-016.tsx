@@ -176,6 +176,7 @@ function CompanionPortal({children, targetId}: {children: React.ReactNode; targe
 function CourseG04L10In016PrivateRenderer(props: AnimationRendererProps) {
   const visualHostRef = useRef<HTMLDivElement>(null);
   const timerIds = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const onLessonHostRequestRef = useRef(props.onLessonHostRequest);
   const [canvasReady, setCanvasReady] = useState(false);
   const [requestStatus, setRequestStatus] = useState<"idle" | "accepted" | "blocked">("idle");
   const [practice, setPractice] = useState<PracticeState>(INITIAL_PRACTICE_STATE);
@@ -191,6 +192,10 @@ function CourseG04L10In016PrivateRenderer(props: AnimationRendererProps) {
     }, delayMs);
     timerIds.current.push(timerId);
   }, []);
+
+  useEffect(() => {
+    onLessonHostRequestRef.current = props.onLessonHostRequest;
+  }, [props.onLessonHostRequest]);
 
   useEffect(() => {
     const host = visualHostRef.current;
@@ -219,10 +224,10 @@ function CourseG04L10In016PrivateRenderer(props: AnimationRendererProps) {
     clearTimers();
     setPractice(INITIAL_PRACTICE_STATE);
     setRequestStatus("idle");
-    props.onLessonHostRequest?.({type: "stop-audio"});
-    props.onLessonHostRequest?.({type: "reset-practice-feedback", interactionId: INTERACTION_ID});
+    onLessonHostRequestRef.current?.({type: "stop-audio"});
+    onLessonHostRequestRef.current?.({type: "reset-practice-feedback", interactionId: INTERACTION_ID});
     return clearTimers;
-  }, [clearTimers, props.onLessonHostRequest, props.replay]);
+  }, [clearTimers, props.replay]);
 
   const interactionVisible =
     (props.frameDomain ?? COURSE_G04_L10_IN_016_CONFIG.mainFrameDomain) === COURSE_G04_L10_IN_016_CONFIG.mainFrameDomain &&
@@ -480,7 +485,7 @@ function CourseG04L10In016PrivateRenderer(props: AnimationRendererProps) {
       ref={visualHostRef}
       style={{margin: "0 auto", maxWidth: candidate.movie.stage.width}}
     >
-      <candidate.Renderer {...props} frame={renderFrame} />
+      <candidate.Renderer {...props} frame={renderFrame} state={undefined} />
       {controls ? (
         <CompanionPortal targetId={props.pageInteractionCompanionTargetId}>
           {controls}

@@ -80,6 +80,7 @@ export interface WholeLessonPlayerPage {
   readonly rendererAvailability: WholeLessonRendererAvailability;
   readonly presentation?: Readonly<{
     pageInteractionCompanionTargetIdSuffix: string;
+    pageInteractionStageTargetIdSuffix?: string;
   }>;
   /**
    * Reading support this page offers in the widescreen gutter.
@@ -429,16 +430,20 @@ export interface PageOnlyLessonGlossaryEntry {
 }
 
 /**
- * Private product-bridge descriptor for active lesson-page animations only.
+ * Page-only descriptor for active lesson-page animations only.
  *
  * Unlike the historical whole-lesson release descriptor above, this contract
  * has no legacy course-shell member. It may drive the retained modern My
- * Lesson host in a local calibration route, but it has no release or strict-
- * completion authority.
+ * Lesson host in a local calibration route. A separately reviewed descriptor
+ * may declare the formal course kind, but registration still grants no release
+ * or strict-completion authority; server navigation and release authorities
+ * remain mandatory independent gates.
  */
 export interface PageOnlyLessonPlayerDescriptor {
   readonly schemaVersion: 2;
-  readonly descriptorKind: 'private-page-only-product-bridge';
+  readonly descriptorKind:
+    | 'private-page-only-product-bridge'
+    | 'formal-page-only-course';
   readonly descriptorId: string;
   readonly calibrationId: string;
   readonly releaseId: string;
@@ -521,16 +526,12 @@ export interface WholeLessonReleaseAuthority {
   readonly strictCompleteAnimationIds: ReadonlySet<string>;
 }
 
-export interface WholeLessonNavigationBinding {
+interface WholeLessonNavigationBindingBase {
   readonly releaseId: string;
   readonly grade: number;
   readonly lesson: number;
   readonly expectedMemberCount: number;
   readonly activePageCount: number;
-  readonly courseShellCount: 1;
-  readonly shell: Readonly<{
-    animationId: string;
-  }>;
   readonly pages: readonly Readonly<{
     animationId: string;
     assetId: string;
@@ -541,16 +542,36 @@ export interface WholeLessonNavigationBinding {
   }>[];
 }
 
+export interface LegacyShellLessonNavigationBinding
+  extends WholeLessonNavigationBindingBase {
+  readonly schemaVersion: 1;
+  readonly courseShellCount: 1;
+  readonly shell: Readonly<{
+    animationId: string;
+  }>;
+}
+
+export interface PageOnlyLessonNavigationBinding
+  extends WholeLessonNavigationBindingBase {
+  readonly schemaVersion: 2;
+  readonly courseShellCount: 0;
+}
+
+export type WholeLessonNavigationBinding =
+  | LegacyShellLessonNavigationBinding
+  | PageOnlyLessonNavigationBinding;
+
 /**
  * Cross-binds a client-facing player descriptor to the server-derived atomic
  * release/navigation descriptor. A stale report, reordered XML sequence, or
  * mismatched asset identity therefore fails before the player can mount.
  */
 export function wholeLessonDescriptorMatchesNavigation(
-  descriptor: WholeLessonPlayerDescriptor,
+  descriptor: DescriptorDrivenLessonPlayerDescriptor,
   navigation: WholeLessonNavigationBinding,
 ): boolean {
   if (
+    descriptor.schemaVersion !== navigation.schemaVersion ||
     descriptor.releaseId !== navigation.releaseId ||
     descriptor.course.grade !== navigation.grade ||
     descriptor.course.lesson !== navigation.lesson ||
@@ -558,8 +579,25 @@ export function wholeLessonDescriptorMatchesNavigation(
       navigation.expectedMemberCount ||
     descriptor.course.activePageCount !== navigation.activePageCount ||
     descriptor.course.courseShellCount !== navigation.courseShellCount ||
-    descriptor.course.shellAnimationId !== navigation.shell.animationId ||
     descriptor.pages.length !== navigation.pages.length
+  ) {
+    return false;
+  }
+
+  if (descriptor.schemaVersion === 1) {
+    if (
+      navigation.schemaVersion !== 1 ||
+      descriptor.course.courseShellCount !== 1 ||
+      descriptor.course.expectedReleaseMemberCount !==
+        descriptor.pages.length + 1 ||
+      descriptor.course.shellAnimationId !== navigation.shell.animationId
+    ) {
+      return false;
+    }
+  } else if (
+    navigation.schemaVersion !== 2 ||
+    descriptor.course.courseShellCount !== 0 ||
+    descriptor.course.expectedReleaseMemberCount !== descriptor.pages.length
   ) {
     return false;
   }
@@ -572,10 +610,14 @@ export function wholeLessonDescriptorMatchesNavigation(
       page.globalPageOrdinal === sourcePage.globalPageOrdinal &&
       page.sectionCode === sourcePage.sectionCode &&
       page.sectionPageOrdinal === sourcePage.sectionPageOrdinal &&
-      (page.source.assetId === undefined ||
-        page.source.assetId === sourcePage.assetId) &&
-      (page.source.sourceOccurrence === undefined ||
-        page.source.sourceOccurrence === sourcePage.sourceOccurrence),
+      (descriptor.schemaVersion === 2
+        ? page.source.assetId === sourcePage.assetId
+        : page.source.assetId === undefined ||
+          page.source.assetId === sourcePage.assetId) &&
+      (descriptor.schemaVersion === 2
+        ? page.source.sourceOccurrence === sourcePage.sourceOccurrence
+        : page.source.sourceOccurrence === undefined ||
+          page.source.sourceOccurrence === sourcePage.sourceOccurrence),
     );
   });
 }
@@ -586,7 +628,9 @@ export function wholeLessonDescriptorMatchesNavigation(
  * A registered JavaScript renderer describes implementation availability only.
  * It never supplies strict-completion or publication authority. Public release
  * opens only when an explicit publication authority is present and every
- * unique page plus the course shell is independently strict-complete.
+ * required release member is independently strict-complete. Schema 2 release
+ * membership is page-only; the retained modern My Lesson host is product code,
+ * not a recreated legacy course-shell member.
  */
 export interface WholeLessonReleaseView {
   readonly releaseId: string;
@@ -599,21 +643,24 @@ export interface WholeLessonReleaseView {
 }
 
 export function resolveWholeLessonReleaseView(
-  descriptor: WholeLessonPlayerDescriptor,
+  descriptor: DescriptorDrivenLessonPlayerDescriptor,
   authority: WholeLessonReleaseAuthority,
 ): WholeLessonReleaseView {
   const pageAnimationIds = descriptor.pages.map((page) => page.animationId);
-  const requiredAnimationIds = [
-    ...pageAnimationIds,
-    descriptor.course.shellAnimationId,
-  ];
+  const requiredAnimationIds = descriptor.schemaVersion === 1
+    ? [...pageAnimationIds, descriptor.course.shellAnimationId]
+    : pageAnimationIds;
   const uniqueRequiredAnimationIds = new Set(requiredAnimationIds);
+  const expectedCourseShellCount = descriptor.schemaVersion === 1 ? 1 : 0;
+  const descriptorKindCanEnterRelease = descriptor.schemaVersion === 1 ||
+    descriptor.descriptorKind === 'formal-page-only-course';
   const descriptorMembershipIsValid =
+    descriptorKindCanEnterRelease &&
     authority.releaseId === descriptor.releaseId &&
     descriptor.course.activePageCount === descriptor.pages.length &&
-    descriptor.course.courseShellCount === 1 &&
+    descriptor.course.courseShellCount === expectedCourseShellCount &&
     descriptor.course.expectedReleaseMemberCount ===
-      descriptor.pages.length + descriptor.course.courseShellCount &&
+      requiredAnimationIds.length &&
     uniqueRequiredAnimationIds.size === requiredAnimationIds.length;
   const currentJsPageCount = descriptor.pages.filter(
     (page) => page.rendererAvailability.kind === 'registered',

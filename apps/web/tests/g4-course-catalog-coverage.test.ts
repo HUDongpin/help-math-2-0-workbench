@@ -13,7 +13,7 @@ import {
 const ACTIVE_PAGES = [80, 67, 39, 54, 53, 49, 48, 46, 43, 46, 43, 77];
 const RESOLVED_PAGES = [80, 67, 39, 54, 53, 49, 48, 46, 43, 46, 43, 77];
 const MISSING_SOURCE_PAGES = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-const CURRENT_JS_PAGES = [1, 0, 39, 0, 0, 0, 0, 0, 1, 14, 0, 0];
+const CURRENT_JS_PAGES = [1, 0, 39, 0, 0, 0, 0, 0, 1, 18, 0, 0];
 const CURRENT_JS_SHELLS = [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 test('Grade 4 catalog coverage records the reviewed active-source promotion without expanding acceptance', () => {
@@ -29,12 +29,12 @@ test('Grade 4 catalog coverage records the reviewed active-source promotion with
     requiredMemberCount: 657,
     catalogResolvedPageCount: 645,
     missingSourcePageCount: 0,
-    currentJsPageCount: 55,
-    missingCurrentJsPageCount: 590,
+    currentJsPageCount: 59,
+    missingCurrentJsPageCount: 586,
     currentJsShellCount: 2,
     missingCurrentJsShellCount: 10,
-    currentJsMemberCount: 57,
-    missingCurrentJsMemberCount: 600,
+    currentJsMemberCount: 61,
+    missingCurrentJsMemberCount: 596,
     fullySourceResolvedLessonCount: 12,
     rendererCoverageCompleteLessonCount: 1,
   });
@@ -174,8 +174,8 @@ test('registry changes update coverage counts without fabricating source or acce
   });
   assert.equal(withoutOneRenderer.status, 'valid');
   if (withoutOneRenderer.status !== 'valid') return;
-  assert.equal(withoutOneRenderer.summary.currentJsPageCount, 54);
-  assert.equal(withoutOneRenderer.summary.missingCurrentJsPageCount, 591);
+  assert.equal(withoutOneRenderer.summary.currentJsPageCount, 58);
+  assert.equal(withoutOneRenderer.summary.missingCurrentJsPageCount, 587);
   assert.equal(
     withoutOneRenderer.summary.rendererCoverageCompleteLessonCount,
     0,

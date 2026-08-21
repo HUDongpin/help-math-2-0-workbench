@@ -24,9 +24,16 @@ export const COURSE_G04_L10_IN_009_SOURCE = Object.freeze({
   candidateManifestSha256:
     "71c23af7a69351596146c573f7e41801116947a114a1d65368f52d81af7bde03",
   actionScriptExecuted: false,
-  audioCues: Object.freeze([]),
-  controlsEnabled: false,
-  registered: false,
+  audioCues: Object.freeze([
+    Object.freeze({
+      id: "embedded-stream-0001",
+      sourceTimelineId: "sprite-89",
+      firstFrame: 1,
+      lastFrame: 953,
+    }),
+  ]),
+  controlsEnabled: true,
+  registered: true,
   strictAcceptanceEffect: "none",
 });
 
@@ -55,7 +62,7 @@ export const COURSE_G04_L10_IN_009_CONFIG = Object.freeze({
   rootBeginFrame: 6,
   mainFrameDomain: "sprite-89",
   mainFrameCount: 953,
-  playbackMode: "once",
+  playbackMode: "loop",
   strictCaptureIdentity: true,
   blockedFrameRanges: Object.freeze([]),
   visualMarkers: Object.freeze([
@@ -66,7 +73,7 @@ export const COURSE_G04_L10_IN_009_CONFIG = Object.freeze({
     }),
   ]),
   sourceControlBehaviorLabel:
-    "ActionScript, controls, audio, Spanish visuals, natural runtime, terminal state, Replay, and fidelity are unresolved and disabled",
+    "V29 binds five typed glossary requests, the exact EN loop cue, the exact user-activated ES host track, 953-to-1 product looping, and modern Replay remount behavior; ActionScript execution, natural Adobe runtime, listening acceptance, Replay parity, fidelity, and every release gate remain unresolved",
 } satisfies SourceStaticCanvasCandidateConfig);
 
 export const COURSE_G04_L10_IN_009_AUTHORITY =

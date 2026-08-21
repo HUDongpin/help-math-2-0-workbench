@@ -65,6 +65,27 @@ test("IN016 is one private interactive-understood page with a bounded real host 
   });
 });
 
+test("IN016 resets typed practice state only on Replay, not host callback identity changes", async () => {
+  const source = await readFile(
+    new URL("../src/modules/course-g04-l10-in-016.tsx", import.meta.url),
+    "utf8",
+  );
+  assert.match(source, /const onLessonHostRequestRef = useRef\(props\.onLessonHostRequest\)/);
+  assert.match(source, /onLessonHostRequestRef\.current = props\.onLessonHostRequest/);
+  assert.match(
+    source,
+    /setPractice\(INITIAL_PRACTICE_STATE\);[\s\S]*?onLessonHostRequestRef\.current\?\.\(\{type: "reset-practice-feedback"[\s\S]*?\}, \[clearTimers, props\.replay\]\);/,
+  );
+  assert.doesNotMatch(
+    source,
+    /setPractice\(INITIAL_PRACTICE_STATE\);[\s\S]*?\}, \[clearTimers, props\.onLessonHostRequest, props\.replay\]\);/,
+  );
+  assert.match(
+    source,
+    /<candidate\.Renderer \{\.\.\.props\} frame=\{renderFrame\} state=\{undefined\} \/>/,
+  );
+});
+
 test("IN016 exhausts exactly the shipped shell random(3) and random(4) branch ranges", () => {
   assert.deepEqual(
     COURSE_G04_L10_IN_016_WRONG_BRANCHES.map((branch) => [

@@ -470,6 +470,7 @@ test('G5 L4 player must exactly match the server navigation before mounting', ()
   const descriptor = G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR;
   assert.ok(descriptor);
   const navigation = {
+    schemaVersion: 1 as const,
     releaseId: descriptor.releaseId,
     grade: descriptor.course.grade,
     lesson: descriptor.course.lesson,
