@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 2,
+  "checkedAt": "2026-08-13T21:43:32Z",
+  "status": "pass-no-restricted-payload-in-upload-closure",
+  "purpose": "Persistent, privacy-safe summary of the exact Vercel dry-upload closure used for the final HELP Math learning-platform candidate.",
+  "source": {
+    "vercelCliVersion": "58.11.0",
+    "ephemeralDryManifestPath": "/tmp/help-math-vercel-dry-final-v4.json",
+    "ephemeralDryManifestSha256": "e8c622a9367582cbebc3beb44e0265fe568e80cceb80f324173aceb23d91f8b1",
+    "vercelIgnorePath": ".vercelignore",
+    "vercelIgnoreSha256": "d2b9929356a94174ddcb0562965b071882d0416cb7d414e37882fd3225e6fe12"
+  },
+  "uploadClosure": {
+    "entries": 1405,
+    "directories": 33,
+    "regularFiles": 1372,
+    "regularBytes": 377682526,
+    "symlinks": 0,
+    "canonicalClosure": {
+      "algorithm": "SHA-256 of JSON.stringify over records {path,size,mode,sha-or-null}, sorted by UTF-8 byte order of path",
+      "records": 1405,
+      "sha256": "2631e0dc81a3ce3ebdea7ea42a0694629c579e271d6ebca6f9744dd9d9a0e3dd"
+    }
+  },
+  "restrictedPayloadChecks": {
+    "secretOrPrivatePathsAbsent": [
+      "All API Keys.docx",
+      ".env.local",
+      "apps/web/.env.local",
+      "HELP MATH_ORIGINAL FILES"
+    ],
+    "restrictedRootDescendantPayloadAbsent": [
+      "design/",
+      "migrations/",
+      "output/",
+      "outputs/",
+      "private-archive/",
+      "source-assets/"
+    ],
+    "zeroByteDirectoryMarkersPresent": [
+      "design",
+      "migrations",
+      "output",
+      "outputs",
+      "private-archive",
+      "source-assets"
+    ],
+    "regularFilesBelowRestrictedRoots": [],
+    "symlinksInUploadClosure": [],
+    "excludedWorkspaceSymlink": {
+      "path": "HELP MATH_ORIGINAL FILES",
+      "presentInUploadClosure": false
+    }
+  },
+  "boundary": [
+    "The six named zero-byte entries are directory markers only; no descendant payload from those roots entered the upload closure.",
+    "The dry manifest and this summary contain no API key, password, LRS endpoint, source-archive payload, private-archive payload, or environment-file payload.",
+    "The complete 1,405-record dry manifest remains an ephemeral /tmp artifact and is not duplicated in this receipt; after that artifact is removed, this receipt can verify its known digest and summary but cannot independently re-enumerate the full upload list.",
+    "This receipt binds the upload set only. It does not by itself prove runtime behavior, custom-domain promotion, strict migration completion, or publication approval."
+  ]
+}

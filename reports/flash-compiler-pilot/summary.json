@@ -1,0 +1,320 @@
+{
+  "schemaVersion": 1,
+  "reportId": "help-math-active-page-flash-compiler-pilot-v1",
+  "scope": {
+    "activeLessonPageMembers": 5,
+    "activeCoursePageOccurrenceDenominator": 1751,
+    "legacyCourseShellMembers": 0,
+    "modernCourseUiChanged": false,
+    "sourceAssetsChanged": false
+  },
+  "evidenceRunRoot": "work/flash-compiler-pilot/run-v1",
+  "corpus": {
+    "pilotId": "help-math-active-page-compiler-pilot-v1",
+    "corpusPath": "tools/flash-compiler-pilot/corpus.json",
+    "corpusIdentity": {
+      "bytes": 6982,
+      "sha256": "9adf63e129e784747279d077d80617726549a3e5439d773a9b4892845f21b571",
+      "mode": "0644",
+      "writable": true
+    },
+    "catalogPath": "catalog/animations.json",
+    "catalogIdentity": {
+      "bytes": 6509993,
+      "sha256": "ab27270c1f6a6618bae5e52f6e48ebf3ef646b6232dd087c1c86f755a6a3ce10",
+      "mode": "0644",
+      "writable": true
+    },
+    "members": [
+      {
+        "role": "simple-visual-baseline",
+        "animationId": "course-g03-l01-fq-001",
+        "source": {
+          "path": "HELP_COURSES/ELMGR3/L1/FQ/L1FQ01.swf",
+          "bytes": 26027,
+          "sha256": "b59922b3afee1db215038441d1bcdd255ac7c1a7dd75f4f36eb828c1b21771bb"
+        },
+        "pairedFla": {
+          "path": "HELP_COURSES/ELMGR3/L1/FQ/L1FQ01.fla",
+          "bytes": 400384,
+          "sha256": "1296e7c867fce9fcf7d59f35d4f9b2519d459102b48a02c2d7f807268d889e5c"
+        }
+      },
+      {
+        "role": "paired-fla-193-frame",
+        "animationId": "course-g04-l03-vb-002",
+        "source": {
+          "path": "HELP_COURSES/ELMGR4/L3/VB/L3VB02.swf",
+          "bytes": 69230,
+          "sha256": "0e378f21899cd615107a08a085b4f37b96066e49e409eb9793219f7c953eb4f3"
+        },
+        "pairedFla": {
+          "path": "HELP_COURSES/ELMGR4/L3/VB/L3VB02.fla",
+          "bytes": 435200,
+          "sha256": "e47d05e8ebbd23f9b573ebee9041fca72277a015d76180aae0eefd7a8da65dd0"
+        }
+      },
+      {
+        "role": "paired-fla-203-frame",
+        "animationId": "course-g04-l10-vb-003",
+        "source": {
+          "path": "HELP_COURSES/ELMGR4/L10/VB/L10VB03.swf",
+          "bytes": 97444,
+          "sha256": "96a0c6c9cd7f5813d06e382bcb9dc2b81a0c0127a9865222dea1abba96a8d93d"
+        },
+        "pairedFla": {
+          "path": "HELP_COURSES/ELMGR4/L10/VB/L10VB03.fla",
+          "bytes": 767488,
+          "sha256": "1eccb733544de8eb0fa718cac6a1792e2e58145c737f6170e56268fc212003f7"
+        }
+      },
+      {
+        "role": "active-complex-random-eval-scrollbar",
+        "animationId": "course-g05-l04-ir-001-a662633d",
+        "source": {
+          "path": "HELP_COURSES/ELMGR5/L4/IR/L4RW01.swf",
+          "bytes": 167329,
+          "sha256": "14b8f7639027b324e9411c5d1e753432ed81c1fb3c23e211291c4b53f36c52dd"
+        },
+        "pairedFla": {
+          "path": "HELP_COURSES/ELMGR5/L4/IR/L4RW01.fla",
+          "bytes": 657920,
+          "sha256": "80a7d4b83bfd3566660c7fd9a9b4586edddffd17c473e2fcc2b1a43660a3f4c5"
+        }
+      },
+      {
+        "role": "active-swf-only",
+        "animationId": "course-g05-l05-in-011",
+        "source": {
+          "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN11.swf",
+          "bytes": 126203,
+          "sha256": "8d1b08c83909f421939a225de45f1739dc4488190465c744a27464e5bfbe5f12"
+        },
+        "pairedFla": null
+      }
+    ]
+  },
+  "backendDecision": {
+    "recommendedPrimary": "ffdec-canvas-and-pcode",
+    "recommendedSecondaryStructureParser": "next2d-pinned-legacy-worker",
+    "recommendedSecondaryNormalizedVisualTimelineIr": "openfl-swf-animate-ir",
+    "soleBackendAccepted": false,
+    "productionShape": "FFDec visual generation + shared bounded AVM1 lowerer + nested-frame audio compiler + modern My Lesson host bridge; Next2D/OpenFL as independent checks"
+  },
+  "backendMatrix": [
+    {
+      "backend": "FFDec Canvas + P-code",
+      "role": "recommended-primary-visual-code-generator-and-avm1-front-end",
+      "activePagesParsed": 5,
+      "renderableVisualArtifacts": 5,
+      "structurallyUnblockedVisualIr": 5,
+      "behaviorCompiled": 0,
+      "streamAudioCompiledOrRetained": 0,
+      "deterministicNormalizedOrExecutableOutput": 5,
+      "blockingFinding": "Canvas code omits AVM1 execution, modern host binding, and nested stream-audio playback."
+    },
+    {
+      "backend": "Next2D legacy SWF worker",
+      "role": "recommended-secondary-structure-parser-only",
+      "activePagesParsed": 5,
+      "renderableVisualArtifacts": 0,
+      "structurallyUnblockedVisualIr": 5,
+      "behaviorCompiled": 0,
+      "streamAudioCompiledOrRetained": 0,
+      "deterministicNormalizedOrExecutableOutput": 5,
+      "blockingFinding": "Worker discards AVM1/button actions/background/audio; maintained TypeScript branch has no working SWF importer; consumer is incomplete."
+    },
+    {
+      "backend": "OpenFL SWF Animate IR",
+      "role": "recommended-secondary-normalized-visual-timeline-ir",
+      "activePagesParsed": 5,
+      "renderableVisualArtifacts": 0,
+      "structurallyUnblockedVisualIr": 3,
+      "behaviorCompiled": 0,
+      "streamAudioCompiledOrRetained": 0,
+      "deterministicNormalizedOrExecutableOutput": 5,
+      "blockingFinding": "Morph symbols are omitted on 2/5 pages; AVM1 and audio are absent; no final renderer is generated."
+    }
+  ],
+  "avm1PilotLongTail": {
+    "evidenceKind": "static-occurrence-and-location-classification-not-runtime-reachability",
+    "locationCount": 50,
+    "sourceBytes": 49558,
+    "pcodeBytes": 106891,
+    "opcodeOccurrences": 5779,
+    "boundedBasicOpcodeOccurrences": 5324,
+    "specializedOpcodeOccurrences": 455,
+    "sharedComponentOpcodeOccurrences": 5512,
+    "sharedComponentOpcodeShare": 0.953798,
+    "uniqueSourceContentCount": 16,
+    "uniqueSourceBytes": 25267,
+    "duplicateSourceBytes": 24291,
+    "locationClassificationCounts": {
+      "empty": 4,
+      "pure-stop": 26,
+      "legacy-preloader-boilerplate": 5,
+      "shared-flash-v2-component": 4,
+      "button-modern-host-binding": 9,
+      "page-specific-dynamic-sound-selection": 2
+    },
+    "loweringCounts": {
+      "mechanical": 30,
+      "shared-policy": 5,
+      "shared-hash-bound-adapter": 4,
+      "shared-adapter-plus-data": 9,
+      "page-specific-seeded-rng-and-explicit-clip-map": 2
+    },
+    "pageSpecificDynamicLocations": 2,
+    "pageSpecificDynamicShareOfLocations": 0.04,
+    "buttonPayloads": [
+      {
+        "animationId": "course-g04-l03-vb-002",
+        "path": "DefineButton2_11/BUTTONCONDACTION on(release).as",
+        "keyAttribute": "Number line"
+      },
+      {
+        "animationId": "course-g04-l03-vb-002",
+        "path": "DefineButton2_12/BUTTONCONDACTION on(release).as",
+        "keyAttribute": "Line"
+      },
+      {
+        "animationId": "course-g04-l03-vb-002",
+        "path": "DefineButton2_13/BUTTONCONDACTION on(release).as",
+        "keyAttribute": "Order"
+      },
+      {
+        "animationId": "course-g04-l03-vb-002",
+        "path": "DefineButton2_14/BUTTONCONDACTION on(release).as",
+        "keyAttribute": "Value"
+      },
+      {
+        "animationId": "course-g04-l03-vb-002",
+        "path": "DefineButton2_47/BUTTONCONDACTION on(release).as",
+        "keyAttribute": "Positive number"
+      },
+      {
+        "animationId": "course-g04-l03-vb-002",
+        "path": "DefineButton2_51/BUTTONCONDACTION on(release).as",
+        "keyAttribute": "Negative number"
+      },
+      {
+        "animationId": "course-g04-l10-vb-003",
+        "path": "DefineButton2_10/BUTTONCONDACTION on(release).as",
+        "keyAttribute": "Unit of measurement"
+      },
+      {
+        "animationId": "course-g04-l10-vb-003",
+        "path": "DefineButton2_11/BUTTONCONDACTION on(release).as",
+        "keyAttribute": "Quantity"
+      },
+      {
+        "animationId": "course-g04-l10-vb-003",
+        "path": "DefineButton2_15/BUTTONCONDACTION on(release).as",
+        "keyAttribute": "Length"
+      }
+    ],
+    "sharedComponents": [
+      {
+        "name": "FScrollBarSymbol",
+        "sourceBytes": 13570,
+        "sourceSha256": "5ac9d9e477e7b50808c1805c33473f0e50b0121d0789cd7d208a085007047b8d"
+      },
+      {
+        "name": "FUIComponentSymbol",
+        "sourceBytes": 10244,
+        "sourceSha256": "326219b08e2695ccdd29734ea68a6277cda0549e1e98479be25597ffd9496972"
+      }
+    ],
+    "audioFrameDomainTail": {
+      "pagesWithEmbeddedStreamAudio": 4,
+      "soundStreamHeads": 5,
+      "soundStreamBlocks": 996,
+      "embeddedSoundTags": 1001,
+      "rootFrameClockIsInsufficient": true
+    },
+    "extrapolationToAll1751PagesPermitted": false
+  },
+  "remainingCodexImplementationUnits": [
+    {
+      "id": "legacy-preloader-policy",
+      "scope": "shared-once",
+      "scriptLocationsCovered": 5
+    },
+    {
+      "id": "modern-my-lesson-button-host-adapter",
+      "scope": "shared-once-plus-nine-data-payloads",
+      "scriptLocationsCovered": 9
+    },
+    {
+      "id": "flash-v2-component-adapter-package",
+      "scope": "shared-once-two-hash-bound-components",
+      "scriptLocationsCovered": 4
+    },
+    {
+      "id": "g5-l4-seeded-rng-explicit-clip-map",
+      "scope": "page-specific-one-script-pair",
+      "scriptLocationsCovered": 2
+    },
+    {
+      "id": "nested-stream-audio-compiler",
+      "scope": "non-avm1-cross-cutting-four-pages-five-streams",
+      "scriptLocationsCovered": 0
+    }
+  ],
+  "courseWideAvm1TailStatus": "not-yet-measured-run-the-same-static-classifier-over-all-active-swf-before-extrapolation",
+  "backendSummaryIdentities": {
+    "ffdec": {
+      "path": "work/flash-compiler-pilot/run-v1/ffdec/summary.json",
+      "bytes": 64942,
+      "sha256": "f254cdf0ffe3cc4dcbdb7b54e199764b0eccefa195b92059117fbde728fb2000",
+      "mode": "0444",
+      "writable": false
+    },
+    "next2d": {
+      "path": "work/flash-compiler-pilot/run-v1/next2d/summary.json",
+      "bytes": 11753,
+      "sha256": "2902eb4016c2cc016b31ceb19c7f4f5de2b47e7b8c53ad94a0c10d995494d27b",
+      "mode": "0444",
+      "writable": false
+    },
+    "openfl": {
+      "path": "work/flash-compiler-pilot/run-v1/openfl/summary.json",
+      "bytes": 28710,
+      "sha256": "9dd482b62eb9c6694b0ee06f59a0a6bef2a49e63663664d12f617e117fbb0583",
+      "mode": "0444",
+      "writable": false
+    }
+  },
+  "preexistingWorkbenchBaseline": {
+    "doctor": "PASS",
+    "verifySources": "PASS",
+    "verifyWorkbench": "FAIL-preexisting-stale-catalog-completion-ledger",
+    "fullNpmTest": "FAIL-preexisting-mixed-worktree-stale-artifacts-and-missing-external-paths",
+    "attributionToPilot": false
+  },
+  "evidenceBoundary": {
+    "compilerAndParserMachineEvidenceOnly": true,
+    "runtimeReachabilityClaim": false,
+    "originalRuntimeClaim": false,
+    "visualFidelityClaim": false,
+    "audioSynchronizationClaim": false,
+    "humanOrOwnerAcceptanceClaim": false,
+    "currentJavaScriptRegistrationClaim": false,
+    "releaseOrPublicationClaim": false
+  },
+  "acceptanceEffects": {
+    "sourceCustodyChanged": false,
+    "modernCourseUiChanged": false,
+    "legacyCourseShellConverted": false,
+    "currentJavaScriptRegistered": false,
+    "originalRuntimeAccepted": false,
+    "visualFidelityAccepted": false,
+    "behaviorAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "released": false,
+    "published": false
+  }
+}

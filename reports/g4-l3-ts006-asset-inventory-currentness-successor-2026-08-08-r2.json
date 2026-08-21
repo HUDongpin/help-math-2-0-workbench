@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l3-ts006-asset-inventory-currentness-successor",
+  "issuedOn": "2026-08-08",
+  "revision": "r2",
+  "status": "exact-inventory-transition-current-r1-retained-historical-product-qa-stale-acceptance-neutral",
+  "generator": {
+    "path": "scripts/build-g4-l3-ts006-asset-inventory-currentness-successor-2026-08-08-r2.mjs",
+    "bytes": 13317,
+    "sha256": "70f58f9c46afbe72b6b212d5f553070655bf2c8ae275a1e4fec3b4d53969d92a"
+  },
+  "predecessor": {
+    "r1": {
+      "json": {
+        "path": "reports/g4-l3-ts006-asset-inventory-currentness-successor-2026-08-07-r1.json",
+        "bytes": 3222,
+        "sha256": "4b49ef2bfc76a438db401eeaaefe6d97ff75a1f3db64320dfdd030a0a7271ef3"
+      },
+      "markdown": {
+        "path": "reports/g4-l3-ts006-asset-inventory-currentness-successor-2026-08-07-r1.md",
+        "bytes": 945,
+        "sha256": "33310805f463ac6ce7b0ec390db4bd99bc494b19db71ec6d2c4e7573155de162"
+      },
+      "disposition": "retained immutable predecessor; r2 does not modify or backdate r1"
+    },
+    "headInventory": {
+      "head": "42e7f80ce70aaa3819af2f7158e15f5da5470cce",
+      "path": "migrations/course-g04-l03-ts-006/asset-inventory.csv",
+      "bytes": 1470,
+      "sha256": "916210a15c8e293d9de89b9e2f0c1ad725d411f43ebc4873084fdb2265ed90e7"
+    }
+  },
+  "currentInventory": {
+    "path": "migrations/course-g04-l03-ts-006/asset-inventory.csv",
+    "bytes": 1470,
+    "sha256": "3838911e74007727a277223c1dbbf7b2d09d21ea9fb10f024582d92e8d98b9cd"
+  },
+  "exactTransition": {
+    "changedFieldCount": 1,
+    "assetId": "ts006-source-static-canvas-manifest",
+    "field": "sha256",
+    "predecessor": "eea637df94f8c7e9ba149138bcf05426e4f8fec1fc894e2703dc4a9b39a626a0",
+    "successor": "424fb84965b48be6b7ddcd25ed770cac4d9e4e6db7c8e2d599daa295f12222aa",
+    "otherInventoryBytesChanged": false
+  },
+  "currentRenderer": {
+    "manifest": {
+      "path": "public/flash-assets/courses/course-g04-l03-ts-006/manifest.json",
+      "bytes": 46990,
+      "sha256": "424fb84965b48be6b7ddcd25ed770cac4d9e4e6db7c8e2d599daa295f12222aa"
+    },
+    "runtime": {
+      "path": "public/flash-assets/courses/course-g04-l03-ts-006/canvas-renderer.js",
+      "bytes": 358481,
+      "sha256": "162d67f65d72f307d27339d7a5f4d7945936b47854cc0fa8b6055455ac843252"
+    },
+    "candidateReport": {
+      "path": "reports/g4-l3-ts006-current-javascript-candidate.json",
+      "bytes": 47151,
+      "sha256": "f34f5766abe93a42f593b9ef101868320024e798b952b4ffb4a67416bc1a09d8"
+    }
+  },
+  "historicalEvidence": {
+    "productQa": {
+      "path": "migrations/course-g04-l03-ts-006/evidence/spanish-host-audio-current-js-product-qa.json",
+      "bytes": 16660,
+      "sha256": "0e5833278affa23e686ee106c053a2c159f3f76230e902e43bf8055dd68f1c89",
+      "currentnessInherited": false,
+      "disposition": "retained historical current-JavaScript QA bound to the predecessor inventory; it is not refreshed by r2"
+    },
+    "r1CurrentnessOutput": {
+      "currentnessInherited": false,
+      "disposition": "retained predecessor only; r2 is the current transition receipt"
+    }
+  },
+  "nextMachineStep": {
+    "freshCurrentJavascriptCaptureRequired": true,
+    "historicalHumanApprovalRenewed": false,
+    "originalRuntimeRequiredForThisMachineStep": false
+  },
+  "acceptanceEffects": {
+    "implementationAccepted": false,
+    "authoritativeOriginalRuntime": false,
+    "fullFrameRmseAccepted": false,
+    "audioAccepted": false,
+    "interactionAccepted": false,
+    "replayAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "published": false
+  }
+}

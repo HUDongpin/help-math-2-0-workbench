@@ -24,6 +24,7 @@ const requiredFiles = [
   "skills/flash-to-js/references/fidelity-validation.md",
   "skills/flash-to-js/references/audio-and-review.md",
   "skills/flash-to-js/references/lesson-release.md",
+  "skills/flash-to-js/references/factory-scaleout.md",
   "skills/flash-to-js/scripts/validate_migration.mjs",
   "scripts/build-completion-ledger.mjs",
   "scripts/build-lesson-release-ledger.mjs",
@@ -70,11 +71,15 @@ if (!errors.length) {
     "references/fidelity-validation.md",
     "references/audio-and-review.md",
     "references/lesson-release.md",
+    "references/factory-scaleout.md",
   ]) {
     if (!skill.includes(reference)) errors.push(`SKILL.md does not route Codex to ${reference}`);
   }
   for (const contract of [
-    "current-JS candidate",
+    "unregistered engineering candidate",
+    "registered Current-JS product integration",
+    "Count a page toward page-level Current-JS coverage only at state 3",
+    "externally anchored production-trust path",
     "Ruffle is a versioned forensic reference",
     "assetId = swf-<full-sha256>",
     "audio-inventory.csv",
@@ -112,11 +117,22 @@ if (!errors.length) {
   const sourceIntake = read("skills/flash-to-js/references/source-intake.md");
   requireText(sourceIntake, "cannot replace a preserved shipped SWF", "Source-intake reference");
   requireText(sourceIntake, "Reuse the matching canonical workspace", "Source-intake reference");
+  requireText(sourceIntake, "hash-bound, rollback-safe project intake transaction", "Source-intake reference");
   const runtimeEvidence = read("skills/flash-to-js/references/original-runtime-evidence.md");
   for (const contract of ["outbound networking is denied", "empty Flash SharedObject store", "one SWF in one fresh player process", "fresh storage-capacity preflight", "explicit owner approval"]) requireText(runtimeEvidence, contract, "Original-runtime reference");
   const audioAndReview = read("skills/flash-to-js/references/audio-and-review.md");
   requireText(audioAndReview, "all-keyframe-and-full-frame-diffs", "Audio and review reference");
   requireText(audioAndReview, "Keep audio listening, behavior, and product/accessibility evidence as separately bound gates", "Audio and review reference");
+  const factoryScaleout = read("skills/flash-to-js/references/factory-scaleout.md");
+  for (const contract of [
+    "CONDITIONAL-GO-product",
+    "registered-current-js",
+    "every frozen slice page",
+    "Do not convert the funnel into one ordinal status",
+    "Candidate-to-registration yield",
+    "authorized project-specific license review",
+    "Do not hand-edit generated files",
+  ]) requireText(factoryScaleout, contract, "Factory scale-out reference");
 
   const forwardTest = read("documentation/skill-forward-test.md");
   for (const contract of [

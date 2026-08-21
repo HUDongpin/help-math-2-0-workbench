@@ -649,3 +649,93 @@ test("GS structural adapter uses the canonical lead-in scenario and rejects the 
   assert.equal(result.animationId, "course-g04-l09-gs-002");
   assert.equal(result.localFrames, 653);
 });
+
+test("render scale 1 is byte-identical to the pre-scaling adapter", async () => {
+  // The parity gate from AGENTS.md -> Rendering Decisions -> Integer-Scaled
+  // Canvas Backing Store. Scale 1 must change nothing at all, which is what
+  // makes any k > 1 difference attributable to resolution alone.
+  const {spec, helperSource, framesHtml} = await loadInputs();
+  const implicit = buildSafeRuntime({spec, helperSource, framesHtml});
+  const explicit = buildSafeRuntime({spec, helperSource, framesHtml, scale: 1});
+  assert.equal(explicit.runtime, implicit.runtime);
+  assert.equal(
+    explicit.runtime.includes("ctx.setTransform(1, 0, 0, 1, 0, 0);"),
+    true,
+    "scale 1 must keep the original identity transform text",
+  );
+  assert.equal(
+    explicit.runtime.includes("ctx.fillRect(0, 0, targetCanvas.width, targetCanvas.height);"),
+    true,
+    "scale 1 must keep the original background fill text",
+  );
+});
+
+test("render scale widens the guard and the root transform together", async () => {
+  const {spec, helperSource, framesHtml} = await loadInputs();
+  const {width, height} = spec.timeline.stage;
+  for (const scale of [2, 3]) {
+    const built = buildSafeRuntime({spec, helperSource, framesHtml, scale});
+    assert.match(
+      built.runtime,
+      new RegExp(`targetCanvas\\.width !== ${width * scale} \\|\\| targetCanvas\\.height !== ${height * scale}`),
+      `scale ${scale} guard`,
+    );
+    assert.match(
+      built.runtime,
+      new RegExp(`ctx\\.setTransform\\(${scale}, 0, 0, ${scale}, 0, 0\\);`),
+      `scale ${scale} root transform`,
+    );
+    // After scaling, the background fill must be in authored units or it
+    // paints k times past the stage.
+    assert.match(
+      built.runtime,
+      new RegExp(`ctx\\.fillRect\\(0, 0, ${width}, ${height}\\);`),
+      `scale ${scale} background fill stays in authored units`,
+    );
+    // The authored root offset is untouched: the coordinate system is
+    // preserved, not replaced.
+    assert.match(
+      built.runtime,
+      new RegExp(`ctx\\.transform\\(1, 0, 0, 1, ${spec.timeline.stageRenderOffset.x}, ${spec.timeline.stageRenderOffset.y}\\);`),
+      `scale ${scale} authored offset`,
+    );
+  }
+});
+
+test("render scale rejects values that would break the authored grid", async () => {
+  const {spec, helperSource, framesHtml} = await loadInputs();
+  for (const scale of [0, -1, 1.5, 4, Number.NaN]) {
+    assert.throws(
+      () => buildSafeRuntime({spec, helperSource, framesHtml, scale}),
+      /render scale must be an integer between 1 and 3/,
+      `scale ${scale}`,
+    );
+  }
+});
+
+test("scaling never alters the frame identity a stage reports", async () => {
+  const {spec, helperSource, framesHtml} = await loadInputs();
+  const one = buildSafeRuntime({spec, helperSource, framesHtml, scale: 1});
+  const two = buildSafeRuntime({spec, helperSource, framesHtml, scale: 2});
+
+  // Scaling may declare the backing store it needs, and nothing else. Every
+  // other metadata field -- stage, fps, frame domains, timeline identity --
+  // must be untouched.
+  const {renderScale, requiredCanvas, ...rest} = two.metadata;
+  assert.equal(renderScale, 2);
+  assert.deepEqual(requiredCanvas, {
+    width: spec.timeline.stage.width * 2,
+    height: spec.timeline.stage.height * 2,
+  });
+  assert.deepEqual(rest, one.metadata);
+  assert.equal(one.metadata.renderScale, undefined, 'scale 1 declares nothing');
+  for (const attribute of [
+    "data-flash-frame",
+    "data-flash-frame-domain",
+    "data-flash-root-frame",
+    "data-runtime-scenario",
+    "data-runtime-seed",
+  ]) {
+    assert.equal(two.runtime.includes(attribute), true, attribute);
+  }
+});

@@ -171,7 +171,7 @@ export const COURSE_G04_L03_FQ_002_FUNCTIONAL_MASKING_POLICY = Object.freeze({
     "QuestNo-and-CQ-retain-source-question-id",
   sourceStaticDynamicVisibilityAndCounterParityEstablished: false,
   functionalPresentationMask:
-    "modern-DOM-mask-covers-static-finish-artifact-and-source-counters",
+    "opaque-modern-full-stage-backdrop-hides-source-canvas-visual-layer",
   functionalSequenceCounter: "selected-order-1-through-10",
   deterministicCaptureMask: "none",
   deterministicCaptureCanvas: "preserve-unmodified-source-static-drawing",

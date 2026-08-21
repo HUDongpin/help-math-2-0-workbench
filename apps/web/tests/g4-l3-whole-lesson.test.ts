@@ -27,6 +27,157 @@ test('whole-lesson state starts at the first exact XML placement', () => {
   assert.equal(g4L3CompletionPercent(progress), 0);
 });
 
+test('lesson section spine uses the approved emoji plus text vocabulary', async () => {
+  const [shellSource, globalCss] = await Promise.all([
+    readFile(
+      new URL('../components/legacy-responsive-lesson-shell.tsx', import.meta.url),
+      'utf8',
+    ),
+    readFile(new URL('../app/globals.css', import.meta.url), 'utf8'),
+  ]);
+  for (const [code, emoji] of Object.entries({
+    IR: '👋',
+    RW: '🌍',
+    VB: '💬',
+    IN: '💡',
+    TI: '✏️',
+    GS: '🎲',
+    TS: '📋',
+    FQ: '🏆',
+  })) {
+    assert.match(shellSource, new RegExp(`${code}: '${emoji}'`));
+  }
+  assert.match(
+    shellSource,
+    /aria-hidden="true"[\s\S]*className="lesson-shell2__spine-tick"[\s\S]*\{emoji \?\? section\.code\}[\s\S]*lesson-shell2__spine-name/,
+  );
+  assert.match(
+    shellSource,
+    /aria-label=\{`\$\{spanish \? 'Narración' : 'Narration'\}: \$\{action\}`\}/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__spine button \{[\s\S]*?min-height: 44px;/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__spine-tick \{[\s\S]*?Apple Color Emoji[\s\S]*?font-size: 1rem;/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__spine-mark \{[\s\S]*?color: #b8d1f7;/,
+  );
+});
+
+test('lesson platform header is title-free, auth-aware, bilingual, and theme-persistent', async () => {
+  const [
+    shellSource,
+    globalCss,
+    localeLayoutSource,
+    themeBootstrapSource,
+    courseRouteSource,
+    playerBridgeSource,
+    g4PlayerSource,
+    descriptorPlayerSource,
+  ] = await Promise.all([
+    readFile(
+      new URL('../components/legacy-responsive-lesson-shell.tsx', import.meta.url),
+      'utf8',
+    ),
+    readFile(new URL('../app/globals.css', import.meta.url), 'utf8'),
+    readFile(new URL('../app/[locale]/layout.tsx', import.meta.url), 'utf8'),
+    readFile(
+      new URL('../public/learning-theme-bootstrap.js', import.meta.url),
+      'utf8',
+    ),
+    readFile(
+      new URL('../app/[locale]/courses/[grade]/[lesson]/page.tsx', import.meta.url),
+      'utf8',
+    ),
+    readFile(
+      new URL('../components/whole-lesson-course-player.tsx', import.meta.url),
+      'utf8',
+    ),
+    readFile(
+      new URL('../components/g4-l3-whole-lesson-player.tsx', import.meta.url),
+      'utf8',
+    ),
+    readFile(
+      new URL('../components/descriptor-driven-whole-lesson-player.tsx', import.meta.url),
+      'utf8',
+    ),
+  ]);
+
+  assert.match(shellSource, /data-lesson-platform-header="true"/);
+  assert.match(shellSource, /className="lesson-shell2__platform-brand"/);
+  assert.match(shellSource, /src="\/brand\/help-math-2-logo\.png"/);
+  assert.doesNotMatch(shellSource, /lesson-shell2__learning-nav-context/);
+  assert.doesNotMatch(shellSource, /lesson-shell2__audience-switch/);
+  assert.doesNotMatch(shellSource, /student-workspace|teacher-workspace/);
+  assert.doesNotMatch(shellSource, /Learning workspace role|Rol del espacio de aprendizaje/);
+  assert.match(shellSource, /authStatus === 'disabled'[\s\S]*?\? null/);
+  assert.match(shellSource, /Iniciar sesión[\s\S]*Sign in/);
+  assert.match(shellSource, /Crear cuenta[\s\S]*Create account/);
+  assert.match(shellSource, /Mi cuenta[\s\S]*My account/);
+  assert.match(shellSource, /Cambiar a tema oscuro[\s\S]*Switch to dark theme/);
+  assert.match(shellSource, /Cambiar a tema claro[\s\S]*Switch to light theme/);
+  assert.match(shellSource, /document\.documentElement\.dataset\.learningPlatformTheme = next/);
+  assert.match(shellSource, /ResizeObserver\(updateHeaderOffset\)/);
+  assert.match(shellSource, /--lesson-platform-header-offset/);
+  assert.match(
+    shellSource,
+    /const height = Math\.round\([\s\S]*?header\.getBoundingClientRect\(\)\.height \* 1000[\s\S]*?`\$\{height\}px`/,
+  );
+
+  assert.match(localeLayoutSource, /colorScheme: 'light dark'/);
+  assert.match(
+    localeLayoutSource,
+    /blocking="render"[\s\S]*?src="\/learning-theme-bootstrap\.js"/,
+  );
+  assert.match(
+    themeBootstrapSource,
+    /localStorage\.getItem\('helpmath:learning-workspace-theme:v1'\)/,
+  );
+  assert.match(
+    themeBootstrapSource,
+    /document\.documentElement\.dataset\.learningPlatformTheme = theme/,
+  );
+  assert.match(courseRouteSource, /const authSession = await readAuthSession\(\)/);
+  assert.match(courseRouteSource, /authStatus=\{authSession\.status\}/);
+  for (const source of [playerBridgeSource, g4PlayerSource, descriptorPlayerSource]) {
+    assert.match(source, /authStatus\?: PublicAuthStatus/);
+    assert.match(source, /authStatus=\{authStatus\}/);
+    assert.doesNotMatch(source, /providerSubject|sessionId/);
+  }
+
+  const platformCss = globalCss.slice(globalCss.indexOf(
+    'Learner-platform header and lesson theme.',
+  ));
+  assert.match(platformCss, /--lesson-platform-header-height: 72px/);
+  assert.match(platformCss, /--lesson-platform-on-accent: #171528/);
+  assert.match(
+    platformCss,
+    /data-lesson-platform-header='true'[\s\S]*?grid-template-columns: max-content minmax\(0, 1fr\) 48px/,
+  );
+  assert.match(platformCss, /data-learning-platform-theme='dark'/);
+  assert.match(platformCss, /min-height: 44px/);
+  assert.match(platformCss, /min-height: 48px/);
+  assert.match(
+    platformCss,
+    /padding-top: var\([\s\S]*?--lesson-platform-header-offset/,
+  );
+  assert.match(
+    platformCss,
+    /@media \(max-width: 760px\)[\s\S]*?--lesson-platform-header-height: 128px/,
+  );
+  assert.match(
+    platformCss,
+    /@media \(max-width: 560px\)[\s\S]*?--lesson-platform-header-height: 128px/,
+  );
+  assert.match(platformCss, /env\(safe-area-inset-left\)/);
+  assert.match(platformCss, /env\(safe-area-inset-right\)/);
+});
+
 test('one learner session preserves navigation, progress, language, and replay state', () => {
   const first = G4_L3_LESSON.pages[0]!;
   const second = G4_L3_LESSON.pages[1]!;
@@ -60,6 +211,7 @@ test('legacy bookmark choice offers later placement and No starts at page one wi
   let stopped = createInitialG4L3WholeLessonProgress('en');
   stopped = completeG4L3Page(stopped, first.animationId);
   stopped = visitG4L3Page(stopped, later.animationId);
+  stopped = recordG4L3Replay(stopped, later.animationId);
 
   const candidate = parseG4L3WholeLessonResumeCandidate(
     JSON.stringify(stopped),
@@ -72,6 +224,7 @@ test('legacy bookmark choice offers later placement and No starts at page one wi
   assert.equal(fromBeginning.currentAnimationId, first.animationId);
   assert.deepEqual(fromBeginning.completedAnimationIds, [first.animationId]);
   assert.ok(fromBeginning.visitedAnimationIds.includes(later.animationId));
+  assert.deepEqual(fromBeginning.replayCounts, {[later.animationId]: 1});
   assert.equal(
     parseG4L3WholeLessonResumeCandidate(
       JSON.stringify(fromBeginning),
@@ -148,10 +301,28 @@ test('source-bound resume prompt stays local, explicit, and acceptance-neutral',
     shellSource,
     /data-session-decision-overlay=\{stageOverlayOpen \? 'open' : 'closed'\}/,
   );
+  assert.match(
+    shellSource,
+    /data-session-decision-controls=\{[\s\S]*?stageOverlayBlocksControls \? 'blocked' : 'available'/,
+  );
   assert.match(shellSource, /inert=\{stageOverlayOpen \? true : undefined\}/);
   assert.match(shellSource, /aria-hidden=\{stageOverlayOpen \? true : undefined\}/);
   assert.match(shellSource, /: stageOverlay\}/);
-  assert.match(promptSource, /aria-modal="true"/);
+  assert.match(
+    promptSource,
+    /aria-modal=\{lessonControlsRemainAvailable \? undefined : 'true'\}/,
+  );
+  assert.match(
+    promptSource,
+    /data-lesson-controls-available=\{[\s\S]*?lessonControlsRemainAvailable \? 'true' : 'false'/,
+  );
+  assert.match(promptSource, /if \(lessonControlsRemainAvailable\) return;/);
+  assert.match(playerSource, /lessonControlsRemainAvailable/);
+  assert.match(playerSource, /stageOverlayControlsEnabled=\{resumeDecision === 'prompt'\}/);
+  assert.match(playerSource, /onStageOverlayControlIntent=\{continueFromSavedPositionForControl\}/);
+  assert.match(shellSource, /const stageOverlayBlocksControls = exitPromptOpen \|\|/);
+  assert.match(shellSource, /inert=\{stageOverlayBlocksControls \? true : undefined\}/);
+  assert.match(shellSource, /aria-hidden=\{stageOverlayBlocksControls \? true : undefined\}/);
   assert.match(promptSource, /data-actionscript-executed="false"/);
   assert.match(
     promptSource,
@@ -162,6 +333,26 @@ test('source-bound resume prompt stays local, explicit, and acceptance-neutral',
     /data-resume-functional-authority="modern-local-functional-equivalent"/,
   );
   assert.match(promptSource, /modern-functional-equivalent-source-spanish-absent/);
+  assert.match(
+    promptSource,
+    /modern-functional-equivalent-source-evidence-retained/,
+  );
+  assert.match(promptSource, /Saved on this device/);
+  assert.match(promptSource, /Continue from page/);
+  assert.match(promptSource, /Starting at Page 1 changes only your place/);
+  assert.match(promptSource, /resumePageLabelLanguage/);
+  assert.match(promptSource, /lang=\{resumePageLabelLanguage\}/);
+  assert.match(promptSource, /aria-describedby=\{`\$\{descriptionId\} \$\{locationId\} \$\{noteId\}`\}/);
+  assert.match(
+    playerSource,
+    /resumeFocusAfterDecisionRef\.current = focusPageHeading/,
+  );
+  assert.match(playerSource, /pageHeadingRef\.current\?\.focus\(\{preventScroll: true\}\)/);
+  assert.match(promptSource, /BookOpen/);
+  assert.doesNotMatch(
+    promptSource,
+    /lesson-shell2__resume-source-image|lesson-shell2__resume-source-hit|<img/,
+  );
   assert.match(promptSource, /event\.key === 'Escape'/);
   assert.match(promptSource, /event\.key !== 'Tab'/);
   assert.match(promptSource, /document\.addEventListener\('focusin'/);
@@ -172,9 +363,9 @@ test('source-bound resume prompt stays local, explicit, and acceptance-neutral',
     `${playerSource}\n${promptSource}`,
     /getURL|SharedObject|Bookmark_URL/,
   );
-  assert.match(
+  assert.doesNotMatch(
     globalCss,
-    /\.lesson-shell2__resume-source-image \{[\s\S]*?left: -77\.2375%;[\s\S]*?width: 177\.125%;/,
+    /\.lesson-shell2__resume-source-(?:image|hit)/,
   );
   assert.match(
     globalCss,
@@ -186,7 +377,11 @@ test('source-bound resume prompt stays local, explicit, and acceptance-neutral',
   );
   assert.match(
     globalCss,
-    /\.lesson-shell2__resume-modern-card \{[\s\S]*?max-height: 86%;[\s\S]*?overflow: auto;/,
+    /\.lesson-shell2__resume-modern-card \{[\s\S]*?max-height: min\(88%, calc\(100% - 1rem\)\);[\s\S]*?overflow: auto;/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__resume-modern-actions button \{[\s\S]*?min-height: 50px;/,
   );
 });
 
@@ -260,6 +455,98 @@ test('source-bound Exit prompt preserves the shell visual and replaces legacy ne
   assert.match(shellSource, /requestAnimationFrame\(\(\) => exitTriggerRef\.current\?\.focus\(\)\)/);
   assert.match(shellSource, /data-exit-trigger="legacy-source-hit-area"/);
   assert.match(shellSource, /data-exit-trigger="modern-accessible-control"/);
+  assert.match(shellSource, /data-learning-home-nav="directory"/);
+  assert.match(shellSource, /id="main-content"[\s\S]*?tabIndex=\{-1\}/);
+  assert.match(
+    shellSource,
+    /const learningHomeLabel = spanish[\s\S]*?'Inicio de aprendizaje'[\s\S]*?'Learning home'/,
+  );
+  assert.match(
+    shellSource,
+    /className="lesson-shell2__spine-home"[\s\S]*?renderLearningHomeLink\('directory'\)[\s\S]*?className="lesson-shell2__spine-header"/,
+  );
+  assert.match(
+    shellSource,
+    /data-learning-home-placement=\{placement\}[\s\S]*?data-lesson-nav="learning-home"[\s\S]*?href="\/"/,
+  );
+  assert.match(shellSource, /data-lesson-platform-header="true"/);
+  assert.match(shellSource, /className="lesson-shell2__platform-brand"/);
+  assert.match(shellSource, /src="\/brand\/help-math-2-logo\.png"/);
+  assert.match(
+    shellSource,
+    /aria-hidden="true"[\s\S]*?className="lesson-shell2__learning-home-emoji"[\s\S]*?🏡/,
+  );
+  assert.doesNotMatch(shellSource, /data-learning-mode-switch="three-mode"/);
+  assert.doesNotMatch(shellSource, /data-tutor-mode-link/);
+  assert.doesNotMatch(shellSource, /NOVA_TUTOR_MODES\.map/);
+  assert.match(
+    shellSource,
+    /const novaTutorMode = resolveNovaTutorMode\(requestedNovaTutorMode\)/,
+  );
+  assert.match(shellSource, /const activeModeHref = novaTutorModeHref\(courseHref, 'focus'\)/);
+  assert.match(shellSource, /data-mode-switch-available="false"/);
+  assert.doesNotMatch(shellSource, /Focus mode|Modo de enfoque/);
+  assert.doesNotMatch(shellSource, /lesson-shell2__learning-nav-context/);
+  assert.doesNotMatch(shellSource, /lesson-shell2__audience-switch/);
+  assert.match(shellSource, /data-spine-collapsed=\{spineCollapsed \? 'true' : 'false'\}/);
+  assert.match(shellSource, /data-spine-state=\{spineCollapsed \? 'collapsed' : 'expanded'\}/);
+  assert.match(shellSource, /aria-expanded=\{!spineCollapsed\}/);
+  assert.match(shellSource, /Hide lesson section names/);
+  assert.match(shellSource, /Show lesson section names/);
+  assert.match(shellSource, /setSpineCollapsed\(\(collapsed\) => !collapsed\)/);
+  assert.match(
+    shellSource,
+    /\{modernWide && tutorAvailable \? modernSupportControl : mapControl\}/,
+  );
+  assert.match(
+    globalCss,
+    /\[data-spine-collapsed='true'\] \{[\s\S]*?--lesson-spine-track: 5\.75rem;/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2\[data-host-presentation='modern-wide'\][\s\S]*?--lesson-spine-track: clamp\(9rem, 13vw, 11\.5rem\);/,
+  );
+  assert.match(
+    globalCss,
+    /Final learner-workspace composition\.[\s\S]*?\.lesson-shell2\[data-host-presentation='modern-wide'\] \{[\s\S]*?background: var\(--lesson-platform-bg\);[\s\S]*?border-radius: 0;[\s\S]*?margin: 0;[\s\S]*?padding-inline: 0;[\s\S]*?padding-bottom: 0;[\s\S]*?width: 100%;[\s\S]*?\.lesson-shell2__body \{[\s\S]*?border-radius: 0;[\s\S]*?gap: 0;[\s\S]*?margin: 0;[\s\S]*?max-width: none;[\s\S]*?padding: 0;[\s\S]*?width: 100%;/,
+    'the final cascade must keep the modern Lesson full-bleed with no dark perimeter',
+  );
+  assert.match(
+    globalCss,
+    /@media \(max-width: 680px\) \{[\s\S]*?data-modern-control-presentation='true'[\s\S]*?\.lesson-shell2__spine \{\s*border-radius: 0;/,
+  );
+  assert.match(
+    globalCss,
+    /@media \(max-width: 340px\) \{[\s\S]*?\.lesson-shell2__volume-popover \{[\s\S]*?left: 0;[\s\S]*?right: auto;/,
+  );
+  assert.match(
+    globalCss,
+    /data-lesson-platform-header='true'[\s\S]*?grid-template-columns: max-content minmax\(0, 1fr\) 48px/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__spine-home[\s\S]*?\.lesson-shell2__learning-home-link \{[\s\S]*?justify-content: flex-start;[\s\S]*?width: 100%;/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__spine\[data-spine-state='collapsed'\][\s\S]*?\.lesson-shell2__spine-home[\s\S]*?\.lesson-shell2__learning-home-link \{[\s\S]*?width: 48px;/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__spine\[data-spine-state='collapsed'\][\s\S]*?\.lesson-shell2__spine-name/,
+  );
+  assert.match(
+    globalCss,
+    /button\.lesson-shell2__spine-toggle[\s\S]*?min-height: 44px[\s\S]*?min-width: 44px/,
+  );
+  assert.match(
+    globalCss,
+    /@media \(max-width: 680px\)[\s\S]*?\.lesson-shell2__spine-toggle \{[\s\S]*?display: none !important/,
+  );
+  assert.match(
+    globalCss,
+    /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.lesson-shell2__spine-toggle svg[\s\S]*?transition: none/,
+  );
   assert.match(shellSource, /onClick=\{\(event\) => requestExit\(event\.currentTarget\)\}/);
   assert.match(shellSource, /exitPromptOpen[\s\S]*<LegacyExitPrompt[\s\S]*: stageOverlay\}/);
   assert.match(shellSource, /evidence=\{visualSkin\.exitPrompt\}/);
@@ -277,6 +564,9 @@ test('source-bound Exit prompt preserves the shell visual and replaces legacy ne
   assert.match(promptSource, /body\.style\.overflow = 'hidden'/);
   assert.match(promptSource, /decisionCommittedRef\.current/);
   assert.match(promptSource, /disabled=\{decisionCommitted\}/);
+  assert.match(promptSource, /data-exit-destination="learning-home"/);
+  assert.match(promptSource, /return to the learning home/);
+  assert.match(promptSource, /volver al inicio de aprendizaje/);
   assert.match(promptSource, /naturalWidth ===[\s\S]*evidence\.exporterCanvas\.width/);
   assert.match(promptSource, /modern-functional-equivalent-source-spanish-absent/);
   assert.match(promptSource, /La fuente no incluye una versión visual en español/);
@@ -291,14 +581,59 @@ test('source-bound Exit prompt preserves the shell visual and replaces legacy ne
   }
 
   for (const player of [playerSource, descriptorPlayerSource]) {
-    assert.match(player, /const exitToLibrary = \(\) => window\.location\.assign\(libraryHref\)/);
-    assert.match(player, /onExit=\{exitToLibrary\}/);
-    assert.doesNotMatch(player, /¿Salir de esta lección y volver a la biblioteca\?/);
-    assert.doesNotMatch(player, /Exit this lesson and return to the library\?/);
+    assert.match(player, /const learningHomeHref = spanish \? '\/es' : '\/'/);
+    assert.match(player, /window\.location\.assign\(learningHomeHref\)/);
+    assert.match(player, /const exitToLearningHome = \(\) => window\.location\.assign\(learningHomeHref\)/);
+    assert.match(player, /onExit=\{exitToLearningHome\}/);
+    assert.doesNotMatch(player, /libraryHref|exitToLibrary/);
   }
+  assert.doesNotMatch(promptSource, /return to the (?:local course )?library|volver a la biblioteca/);
   assert.doesNotMatch(
     `${playerSource}\n${descriptorPlayerSource}\n${promptSource}\n${shellSource}`,
     /Report_URL|Bookmark_URL|Student_ID|Class_ID|getURL|fscommand|parent\.close/,
+  );
+
+  const platformHeaderCssIndex = globalCss.indexOf(
+    'Learner-platform header and lesson theme.',
+  );
+  assert.ok(platformHeaderCssIndex >= 0);
+  const platformHeaderCss = globalCss.slice(platformHeaderCssIndex);
+  assert.match(platformHeaderCss, /--lesson-platform-header-height: 72px/);
+  assert.match(
+    platformHeaderCss,
+    /padding-top: var\([\s\S]*?--lesson-platform-header-offset/,
+  );
+  assert.match(
+    platformHeaderCss,
+    /@media \(max-width: 760px\)[\s\S]*?--lesson-platform-header-height: 128px/,
+  );
+  assert.match(
+    platformHeaderCss,
+    /@media \(max-width: 560px\)[\s\S]*?--lesson-platform-header-height: 128px/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__learning-home-link \{[\s\S]*?min-height: 44px;/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__learning-home-link:focus-visible \{[\s\S]*?box-shadow: inset 0 0 0 3px #ffcc00;[\s\S]*?outline: 0;/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__learning-home-emoji \{[\s\S]*?border-radius: 10px;[\s\S]*?flex: 0 0 32px;[\s\S]*?"Apple Color Emoji"[\s\S]*?height: 32px;[\s\S]*?width: 32px;/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__legacy-header \{[\s\S]*?z-index: 40;/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__scrim \{[\s\S]*?z-index: 50;/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__side-panel \{[\s\S]*?z-index: 52;/,
   );
 
   assert.match(globalCss, /\.lesson-shell2__exit-prompt \{[\s\S]*z-index: 20;/);
@@ -342,7 +677,7 @@ test('all 39 learner pages can be completed without changing strict migration au
   assert.equal(G4_L3_LESSON.acceptance.ownerAccepted, false);
 });
 
-test('course route mounts the whole-lesson player while keeping candidate labeling', async () => {
+test('course route mounts the whole-lesson player and keeps candidate labeling designer-only', async () => {
   const [routeSource, coursePlayerSource, registrySource, playerSource] = await Promise.all([
     readFile(
       new URL('../app/[locale]/courses/[grade]/[lesson]/page.tsx', import.meta.url),
@@ -362,23 +697,22 @@ test('course route mounts the whole-lesson player while keeping candidate labeli
     ),
   ]);
   assert.match(routeSource, /<WholeLessonCoursePlayer/);
-  assert.match(routeSource, /candidateMode=\{auditPreview \|\| !releasePublished\}/);
-  assert.match(routeSource, /controlledPreview=\{controlledPreview\}/);
-  assert.match(routeSource, /strictCompleteMemberCount=\{strictCompleteMemberCount\}/);
-  assert.match(routeSource, /releaseMemberIds\.has\(animation\.animationId\)/);
   assert.match(
-    registrySource,
-    /isControlledPreviewEnabled: isG4L3ControlledCeoPreviewEnabled/,
+    routeSource,
+    /candidateMode=\{designerView && \(auditPreview \|\| !releasePublished\)\}/,
   );
+  assert.match(routeSource, /isMigrationStatusDesignerViewRequested\(view\)/);
+  assert.match(routeSource, /const auditPreview = developmentAuditPreview;/);
+  assert.doesNotMatch(routeSource, /controlledPreview|ExecutivePreview/);
+  assert.match(routeSource, /strictCompleteMemberCount=\{releaseView\.strictCompleteMemberCount\}/);
+  assert.match(routeSource, /resolveWholeLessonReleaseView\(/);
+  assert.doesNotMatch(registrySource, /isControlledPreviewEnabled|ControlledCeoPreview/);
   assert.match(
     coursePlayerSource,
     /registration\.player\.kind === 'preserved-custom'/,
   );
   assert.match(coursePlayerSource, /<G4L3WholeLessonPlayer/);
-  assert.match(
-    coursePlayerSource,
-    /controlledPreview=\{controlledPreview\}/,
-  );
+  assert.doesNotMatch(coursePlayerSource, /controlledPreview/);
   assert.match(playerSource, /data-lesson-player="g4-l3-whole-lesson-mvp"/);
   assert.match(playerSource, /data-progress-kind="learner-session"/);
   assert.match(playerSource, /data-current-replay-count=/);
@@ -457,7 +791,7 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   assert.match(shellSource, /window\.visualViewport\?\.addEventListener\('resize'/);
   assert.match(shellSource, /data-legacy-chrome-evidence=\{visualSkin\.chromeEvidence\}/);
   assert.match(descriptorSource, /root-frames\/frame-0049\.png/);
-  assert.match(descriptorSource, /header: Object\.freeze\(\{height: 109\}\)/);
+  assert.match(descriptorSource, /header: Object\.freeze\(\{\s*height: 109,/);
   assert.match(descriptorSource, /footer: Object\.freeze\(\{height: 76\}\)/);
   assert.match(descriptorSource, /layoutId: 'help-math-course-shell-800x600-v1'/);
   assert.match(descriptorSource, /817e599de43a7924f0a93791e950c8781755692371945a5b7ea4cdd2ad26c58e/);
@@ -548,7 +882,7 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   );
   assert.match(
     shellSource,
-    /const companionCanRemainVisible = activeTool === null \|\| toolOverlay;[\s\S]*?const wideFunctionalCompanion =[\s\S]*?wideViewportAvailable[\s\S]*?layoutPolicy\.layoutMode === 'wide-functional'[\s\S]*?companionCanRemainVisible/,
+    /const companionCanRemainVisible = activeTool === null \|\| toolOverlay \|\|\s*calculatorInSpine;[\s\S]*?const wideFunctionalCompanion =[\s\S]*?wideViewportAvailable[\s\S]*?layoutPolicy\.layoutMode === 'wide-functional'[\s\S]*?companionCanRemainVisible/,
   );
   assert.match(
     shellSource,
@@ -560,7 +894,7 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   );
   assert.match(
     shellSource,
-    /const modernControlPresentation = resolveModernControlPresentation\(\{\s*accessibleControlFallback,\s*coarsePointerAvailable,\s*companionCanRemainVisible,\s*\}\);/,
+    /const modernControlPresentation = resolveModernControlPresentation\(\{\s*accessibleControlFallback,\s*coarsePointerAvailable,\s*companionCanRemainVisible,\s*modernWidePresentation: modernWide,\s*\}\);/,
   );
   // The wide companion is a layout signal only. Electing the modern surface
   // from viewport width alone is what put a second labelled copy of every
@@ -568,6 +902,18 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   assert.doesNotMatch(
     shellSource,
     /resolveModernControlPresentation\(\{[^}]*wideFunctionalCompanion/,
+  );
+  // `modernWidePresentation` is admissible for the opposite reason: in that
+  // presentation no chrome is drawn, so there are no source hit regions for a
+  // labelled control to duplicate. It must come from the descriptor-declared
+  // presentation, never from a viewport measurement.
+  assert.match(
+    shellSource,
+    /const modernWide = visualSkin\.presentation === 'modern-wide';/,
+  );
+  assert.doesNotMatch(
+    shellSource,
+    /const modernWide =[^;]*(?:innerWidth|matchMedia|wideViewportAvailable|layoutPolicy)/,
   );
   assert.match(
     shellSource,
@@ -617,14 +963,17 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   );
   assert.match(
     shellSource,
-    /const toolOpened = activeTool !== null && previousActiveTool === null;[\s\S]*?const toolBecameModal =[\s\S]*?toolOverlay && !previousToolOverlay;[\s\S]*?if \(toolOpened \|\| toolBecameModal\) toolCloseRef\.current\?\.focus\(\);/,
+    /const toolChanged =[\s\S]*?activeTool !== null && activeTool !== previousActiveTool;[\s\S]*?const toolBecameModal =[\s\S]*?toolOverlay && !previousToolOverlay;[\s\S]*?if \(toolChanged \|\| toolBecameModal\) \{[\s\S]*?const target = calculatorInSpine[\s\S]*?spineCalculatorCloseRef\.current[\s\S]*?toolCloseRef\.current;[\s\S]*?target\?\.focus\(\);/,
   );
   assert.match(
     shellSource,
     /data-wide-functional-companion=\{wideFunctionalCompanion \? 'true' : 'false'\}/,
   );
   assert.match(shellSource, /const supportModalOpen = mapModalOpen \|\| toolModalOpen;/);
-  assert.match(shellSource, /const backgroundUnavailable = stageOverlayOpen \|\| supportModalOpen;/);
+  assert.match(
+    shellSource,
+    /const backgroundUnavailable = stageOverlayOpen \|\| supportModalOpen \|\|\s*tutorPanelModal;/,
+  );
   assert.match(shellSource, /\.filter\(isVisibleOverlayControl\)/);
   assert.match(shellSource, /element\.closest\('\[hidden\], \[inert\], \[aria-hidden="true"\]'\)/);
   assert.match(shellSource, /element\.tabIndex < 0/);
@@ -633,7 +982,7 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   assert.match(shellSource, /!activeOverlay\.contains\(document\.activeElement\)/);
   assert.equal(
     shellSource.match(/data-responsive-focus-fallback="true"/g)?.length,
-    2,
+    3,
   );
   assert.match(
     shellSource,
@@ -650,7 +999,7 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   );
   assert.match(
     shellSource,
-    /\.lesson-shell2__page-heading h1[\s\S]*?const target = restorableTool && activeTool === restorableTool &&[\s\S]*?!toolOverlay[\s\S]*?\? toolCloseRef\.current[\s\S]*?: heading;[\s\S]*?target\.focus\(\{preventScroll: true\}\)[\s\S]*?sessionStorage\.removeItem\(LANGUAGE_ROUTE_FOCUS_INTENT_KEY\)/,
+    /\.lesson-shell2__page-heading h1[\s\S]*?const target = restorableTool && activeTool === restorableTool &&[\s\S]*?\(!toolOverlay \|\| restorableToolInSpine\)[\s\S]*?\? restorableToolInSpine[\s\S]*?spineCalculatorCloseRef\.current[\s\S]*?toolCloseRef\.current[\s\S]*?: heading;[\s\S]*?target\.focus\(\{preventScroll: true\}\)[\s\S]*?sessionStorage\.removeItem\(LANGUAGE_ROUTE_FOCUS_INTENT_KEY\)/,
   );
   assert.match(shellSource, /aria-label=\{spanish \? 'Progreso de la lección' : 'Lesson completion'\}/);
   assert.match(layoutSource, /'wide-functional'/);
@@ -681,7 +1030,7 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   );
   assert.match(
     shellSource,
-    /data-frame-inspection-action=\{playbackInspectionActive[\s\S]*?'resume-current-js-from-inspected-frame'/,
+    /data-frame-inspection-action=\{frameInspectionActive[\s\S]*?'resume-current-js-from-inspected-frame'/,
   );
   assert.match(shellSource, /Continue from frame/);
   assert.match(shellSource, /data-shell-layout=\{visualSkin\.layoutId\}/);
@@ -702,25 +1051,56 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   assert.match(shellSource, /lesson-shell2__legacy-navigation-state--over/);
   assert.match(playerSource, /if \(!nextPage && lessonFinished\) return;/);
   assert.match(playerSource, /nextDisabled=\{!nextPage && lessonFinished\}/);
-  assert.match(playerSource, /Lesson review finished/);
+  assert.match(playerSource, /Lesson finished/);
   assert.match(descriptorSource, /hasAnimationModule\(animationId\)/);
   assert.match(playerSource, /strictCompleteMemberCount === G4_L3_REQUIRED_MEMBER_COUNT/);
-  assert.match(shellSource, /href=\{courseHref\}/);
+  assert.match(shellSource, /const activeModeHref = novaTutorModeHref\(courseHref, 'focus'\)/);
+  assert.equal(shellSource.match(/href=\{activeModeHref\}/g)?.length, 3);
   assert.doesNotMatch(shellSource, /href="\/courses\/4\/3"/);
   assert.match(shellSource, /data-tool-origin="modern-functional-equivalent"/);
   assert.match(
     shellSource,
-    /data-support-tool-playback="modern-support-open-forces-pause-restores-prior-state"/,
+    /data-support-tool-playback="support-tools-pause-restore-nova-independent"/,
   );
   assert.match(
     shellSource,
-    /reconcileSupportPlayback\(\s*\(open && mapOverlay\) \|\| activeTool !== null,/,
+    /const supportPauseSessionRef = useRef<SupportPauseSession \| null>\(null\);/,
   );
   assert.match(
     shellSource,
-    /reconcileSupportPlayback\(\s*\(mapOpen && mapOverlay\) \|\| nextTool !== null,/,
+    /reconcileSupportPauseSession\(\{\s*currentPage,\s*paused,\s*playbackInspectionActive: frameInspectionActive,\s*session: supportPauseSessionRef\.current,\s*supportOpen,\s*\}\)/,
   );
+  assert.match(shellSource, /data-tutor-playback="independent"/);
+  assert.match(
+    shellSource,
+    /onTutorEngagementChange\?\.\(tutorVisible\);/,
+    'Nova open/close engagement remains available to LRS telemetry',
+  );
+  assert.match(
+    shellSource,
+    /const pauseControl = <button[\s\S]*?disabled=\{!runtimeAvailable \|\| supportOpen\}[\s\S]*?onPausedChange\(!paused\)/,
+    'the wide Pause control remains operable while Nova is open',
+  );
+  assert.doesNotMatch(shellSource, /resolveTutorTransport|tutorHeldPausedRef|effectiveOpen/);
+  assert.doesNotMatch(shellSource, /Narration paused while Nova support is open/);
+  assert.doesNotMatch(shellSource, /data-tutor-pause-notice/);
+  assert.doesNotMatch(shellSource, /reconcileSupportPlayback/);
   assert.match(shellSource, /toolOverlay && mapOpen && activeTool/);
+  assert.match(
+    playerSource,
+    /paused=\{paused \|\| resumeDecision !== 'resolved'\}/,
+  );
+  assert.doesNotMatch(
+    playerSource,
+    /paused=\{paused \|\| tutorEngaged/,
+    'Nova engagement is telemetry only and cannot pause the runtime or shell',
+  );
+  assert.match(
+    playerSource,
+    /support: \{\s*kind: 'nova-tutor',\s*action: engaged \? 'opened' : 'closed',\s*\}/,
+    'Nova Focus, Study, and Classroom still record opened/closed support events',
+  );
+  assert.match(playerSource, /onTutorEngagementChange=\{handleTutorEngagementChange\}/);
   assert.match(playerSource, /data-animation-id=\{page\.animationId\}/);
   assert.match(playerSource, /data-global-page-ordinal=\{page\.globalPageOrdinal\}/);
   assert.match(playerSource, /data-section-code=\{page\.sectionCode\}/);
@@ -735,6 +1115,102 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   assert.match(runtimeSource, /data-runtime-transport=/);
   assert.match(runtimeSource, /data-source-transport-parity="not-established"/);
   assert.match(runtimeSource, /data-runtime-volume=/);
+
+  // Narration has a designed home in the chrome, so the runtime no longer
+  // drops an unstyled button over the artwork when autoplay is refused. It
+  // reports state up and takes a play/stop command back, the same shape the
+  // host already uses to drive a seek.
+  assert.match(
+    runtimeSource,
+    /presentation === 'legacy-shell'\s*\?\s*null/,
+    'the legacy shell owns narration; the runtime adds no floating control',
+  );
+  assert.doesNotMatch(runtimeSource, /runtime-toolbar--legacy-audio/);
+  assert.doesNotMatch(globalCss, /runtime-toolbar--legacy-audio/);
+  assert.match(
+    runtimeSource,
+    /export type AnimationRuntimeNarrationStatus =\s*'unavailable'\s*\| 'waiting'\s*\| 'idle'\s*\| 'interactive'\s*\| 'playing'\s*\| 'blocked';/,
+  );
+  assert.match(
+    runtimeSource,
+    /readonly narration: AnimationRuntimeNarrationStatus;/,
+  );
+  assert.match(
+    runtimeSource,
+    /narrationRequest\?: AnimationRuntimeNarrationRequest \| null;/,
+  );
+  // Status is derived, never guessed: an unavailable page can never report
+  // playing, and a refused autoplay stops presenting itself as blocked once
+  // the learner has answered it.
+  assert.match(
+    runtimeSource,
+    /const narration: AnimationRuntimeNarrationStatus = !audioAvailable\s*\?\s*'unavailable'\s*:\s*narrationSounding\s*\?\s*'playing'\s*:\s*currentAutoplayBlockedCue && !narrationGestureGiven\s*\?\s*'blocked'\s*:\s*narrationTracks\.length > 0\s*\?\s*'idle'\s*:\s*interactiveAudioAssets\.length > 0\s*\?\s*'interactive'\s*:\s*'waiting';/,
+  );
+  assert.match(
+    runtimeSource,
+    /const narrationSounding =\s*timelineAudioSounding \|\|\s*playingNarrationTrackId !== null \|\|\s*playingInteractiveAudioId !== null;/,
+    'a timeline cue, narration track, or source-exact interactive clip all count as audio sounding',
+  );
+
+  // The reusable control reads one status and keeps one command path.
+  assert.match(shellSource, /data-narration-status=\{narrationStatus\}/);
+  assert.equal(
+    shellSource.match(/className="lesson-shell2__narration"/g)?.length,
+    1,
+    'one reusable narration control definition serves allowed presentations',
+  );
+  // Focus modern-wide hides narration only for pages with no audio surface.
+  // A blocked or playable bridge cue must remain actionable in the toolbar
+  // because Focus also hides the persistent session bar.
+  assert.equal(
+    shellSource.match(/data-responsive-focus-key="narration"/g)?.length,
+    1,
+    'the focus key belongs to the shared control, not to each placement',
+  );
+  assert.equal(
+    shellSource.match(/<LessonNarrationControl/g)?.length,
+    2,
+    'the session bar and conditionally allowed compact placement share one component',
+  );
+  assert.match(
+    shellSource,
+    /className="lesson-shell2__session-bar"[\s\S]*?<LessonNarrationControl[\s\S]*?surface="persistent"/,
+    'the session bar placement declares its own focus surface',
+  );
+  assert.match(
+    shellSource,
+    /className="lesson-shell2__modern-toolbar"[\s\S]*?\{modernWide && novaTutorMode === 'focus' &&\s*narrationStatus === 'unavailable'\s*\? null\s*: <LessonNarrationControl/,
+    'Focus modern-wide must hide unavailable narration and keep real audio actionable',
+  );
+  assert.match(
+    shellSource,
+    /data-narration-announcement="true"/,
+    'a refused autoplay arrives silently and has to be announced',
+  );
+  for (const status of [
+    'unavailable',
+    'waiting',
+    'idle',
+    'blocked',
+    'playing',
+  ]) {
+    assert.match(
+      globalCss,
+      new RegExp(
+        `\\.lesson-shell2__narration\\[data-narration-status='${status}'\\]`,
+      ),
+      `${status} needs its own treatment, or the control cannot reflect state`,
+    );
+  }
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__narration \{[\s\S]*?min-height: 48px;/,
+  );
+  assert.match(
+    globalCss,
+    /@media \(prefers-reduced-motion: reduce\) \{[\s\S]*?\.lesson-shell2__narration\[data-narration-status='playing'\][\s\S]*?animation: none;/,
+  );
+
   assert.match(runtimeSource, /'--flash-stage-aspect'/);
   assert.match(globalCss, /\.lesson-shell2__stage \{\s*aspect-ratio: var\(--lesson-stage-aspect, 4 \/ 3\);/);
   assert.match(globalCss, /\.lesson-shell2__legacy-stage \{\s*aspect-ratio: var\(--lesson-stage-aspect\);/);
@@ -766,7 +1242,7 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   );
   assert.match(
     globalCss,
-    /data-modern-control-presentation='true'[\s\S]*?min-height: 44px;[\s\S]*?min-width: 44px;/,
+    /data-modern-control-presentation='true'[\s\S]*?min-height: 48px;[\s\S]*?min-width: 48px;/,
   );
   assert.match(
     globalCss,
@@ -812,22 +1288,31 @@ test('responsive lesson shell preserves the authored stage and separates modern 
     globalCss,
     /grid-template-columns:\s*minmax\(\s*280px,\s*min\(\s*var\(--lesson-stage-viewport-fit-width\),\s*var\(--lesson-short-landscape-css-stage-cap\)\s*\)\s*\)\s*minmax\(0, 1fr\)/,
   );
-  // The labelled action row itself is never hidden: it is the surface that
-  // carries navigation once the authored stage hit areas go inert.
-  assert.doesNotMatch(
-    globalCss.slice(globalCss.indexOf('/* Responsive HELP Math lesson shell.')),
-    /\.lesson-shell2__learning-actions \{[^}]*display:\s*none/,
+  // Exactly one Back and one Next reach the learner. The action row now holds
+  // nothing but that pair, so while the authored stage hit areas are the live
+  // control surface the row is a duplicate and stands down. Exactly one rule
+  // is allowed to hide it, and it is that gate: the row must come back, in
+  // full, once the hit areas go inert and it becomes the only navigation.
+  assert.equal(
+    (globalCss.match(
+      /\.lesson-shell2__learning-actions \{\s*display: none;/g,
+    ) ?? []).length,
+    1,
   );
-  // Exactly one Back and one Next reach the learner. While the authored hit
-  // areas are live, the labelled duplicates below the stage are suppressed;
-  // the review action inside the same row is not.
   assert.match(
     globalCss,
-    /\.lesson-shell2\[data-legacy-hit-control-mode='active-visible-stage'\]\s*:is\(\s*\.lesson-shell2__learning-actions-previous,\s*\.lesson-shell2__learning-actions-next\s*\) \{\s*display: none;/,
+    /\.lesson-shell2\[data-legacy-hit-control-mode='active-visible-stage'\]\s*\.lesson-shell2__learning-actions \{\s*display: none;/,
+  );
+  // Progress is reported by the strip, not by a control. Nothing between
+  // Previous and Next renders a third button.
+  assert.doesNotMatch(shellSource, /completionAction/);
+  assert.match(
+    shellSource,
+    /data-lesson-nav="action-previous"[\s\S]{0,400}?data-lesson-nav="action-next"/,
   );
   assert.doesNotMatch(
-    globalCss,
-    /\.lesson-shell2\[data-legacy-hit-control-mode='active-visible-stage'\][\s\S]{0,240}?lesson-shell2__learning-actions \{\s*display: none;/,
+    shellSource,
+    /data-lesson-nav="action-previous"[\s\S]{0,400}?aria-pressed[\s\S]{0,400}?data-lesson-nav="action-next"/,
   );
 });
 
@@ -937,7 +1422,32 @@ test('short landscape keeps progress, evidence, and the focused page title', asy
   );
   assert.match(
     shellSource,
-    /<progress[\s\S]*?aria-label=\{spanish[\s\S]*?'Lesson completion'[\s\S]*?aria-valuetext=\{`\$\{completionPercent\}% · \$\{completionLabel\}`\}/,
+    /className="lesson-shell2__modern-completion"[\s\S]*?data-progress-scope="section"[\s\S]*?<input[\s\S]*?className="lesson-shell2__tab-scrubber"[\s\S]*?data-progress-model="interactive-section-position"[\s\S]*?max=\{normalizedSectionPageCount\}[\s\S]*?sectionProgress\.onPageSelect\(Number\(event\.currentTarget\.value\)\)[\s\S]*?type="range"[\s\S]*?value=\{normalizedSectionPage\}/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__modern-completion \.lesson-shell2__tab-scrubber \{[\s\S]*?#405d76[\s\S]*?min-height: 48px;[\s\S]*?width: 100%;/,
+  );
+  assert.match(
+    shellSource,
+    /sectionProgress: LessonShellSectionProgress;[\s\S]*?const sectionScrubberPercent = normalizedSectionPageCount <= 1/,
+  );
+  assert.doesNotMatch(
+    shellSource,
+    /interactive-page-position|lesson-shell2__page-scrubber|data-journey-percent|through journey|del recorrido/,
+  );
+  assert.doesNotMatch(
+    shellSource,
+    /className="lesson-shell2__section-scrubber"/,
+  );
+  assert.doesNotMatch(shellSource, /Page animation|Animación de esta página/);
+  assert.doesNotMatch(
+    shellSource,
+    /data-progress-model="current-page-animation-playhead"/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__modern-completion\[data-progress-scope='section'\] \{[\s\S]*?display: flex !important;[\s\S]*?min-height: 48px;/,
   );
   assert.match(
     globalCss,
@@ -1112,26 +1622,33 @@ test('wide contemporary displays pair the native stage with source-bound context
   );
   assert.match(
     wideRailCss,
-    /\.lesson-shell2__modern-toolbar[\s\S]*?:is\(button, label, a\) \{[\s\S]*?min-height: 44px;[\s\S]*?min-width: 44px;/,
+    /\.lesson-shell2__modern-toolbar[\s\S]*?:is\(button, label, a\) \{[\s\S]*?min-height: 48px;[\s\S]*?min-width: 48px;/,
   );
   assert.match(
     wideRailCss,
     /\.lesson-shell2__learning-actions \{[\s\S]*?grid-column: 2;[\s\S]*?grid-template-columns: repeat\(2, minmax\(0, 1fr\)\);/,
   );
+  // The row is exactly Previous and Next, so both sit on one line in the wide
+  // rail. Nothing is stacked underneath them any more.
   assert.match(
     wideRailCss,
-    /> button:nth-child\(2\) \{[\s\S]*?grid-column: 2;[\s\S]*?grid-row: 1;/,
+    /\.lesson-shell2__learning-actions-next \{[\s\S]*?grid-column: 2;[\s\S]*?grid-row: 1;/,
   );
-  assert.match(
-    wideRailCss,
-    /\.lesson-shell2__learning-actions-next \{[\s\S]*?grid-column: 1 \/ -1;[\s\S]*?grid-row: 2;/,
-  );
+  assert.doesNotMatch(wideRailCss, /> button:nth-child\(2\) \{/);
   assert.match(
     wideRailCss,
     /\.lesson-shell2__finished,[\s\S]*?\.lesson-shell2__learning-support \{[\s\S]*?grid-column: 1 \/ -1;[\s\S]*?grid-row: 5;/,
   );
+  // On a wide legacy display the session bar reports progress, so the toolbar
+  // strip must stay hidden or progress appears twice. The widescreen
+  // presentation hides the session bar instead and is governed by its own
+  // paired invariant, so its rules are excluded here rather than exempted.
+  const legacyWideRules = wideRailCss
+    .split('}')
+    .filter((rule) => !rule.includes("[data-host-presentation='modern-wide']"))
+    .join('}');
   assert.doesNotMatch(
-    wideRailCss,
+    legacyWideRules,
     /\.lesson-shell2__modern-completion \{[\s\S]*?display: (?:grid|flex|block);/,
   );
 });
@@ -1221,13 +1738,27 @@ test('compact landscape and short-wide chrome preserve parity disclosure and usa
     shellSource,
     /lesson-shell2__modern-transport-summary[\s\S]*?<label className="lesson-shell2__modern-timeline">/,
   );
+  // The parity disclosure and the association that points at it must be gated
+  // by the same flag. If they ever diverge the toolbar carries a dangling
+  // aria-describedby to a paragraph that was not rendered.
   assert.match(
     shellSource,
-    /aria-describedby=\{candidateMode \? transportBoundaryId : undefined\}[\s\S]*?className="lesson-shell2__modern-toolbar"/,
+    /aria-describedby=\{reviewerMode \? transportBoundaryId : undefined\}[\s\S]*?className="lesson-shell2__modern-toolbar"/,
+  );
+  assert.match(
+    shellSource,
+    /\{reviewerMode\s*\?\s*<p\s*className="lesson-shell2__transport-boundary"/,
   );
   assert.match(
     shellSource,
     /className="lesson-shell2__transport-boundary"[\s\S]*?id=\{transportBoundaryId\}/,
+  );
+  // Release status is disclosed on its own terms and must not be dragged into
+  // the instrument gate: every lesson is a candidate today, so gating the
+  // instruments on candidateMode showed them to every audience.
+  assert.doesNotMatch(
+    shellSource,
+    /aria-describedby=\{candidateMode \? transportBoundaryId/,
   );
 
   assert.match(
@@ -1278,5 +1809,80 @@ test('compact landscape and short-wide chrome preserve parity disclosure and usa
   assert.match(
     globalCss,
     /\.lesson-shell2__stage \.reduced-motion-note \{[\s\S]*?pointer-events: none;/,
+  );
+});
+
+test('the lesson title is live text on the header chrome, not a painted glyph', async () => {
+  const [shellSource, playerSource, globalCss] = await Promise.all([
+    readFile(
+      new URL(
+        '../components/legacy-responsive-lesson-shell.tsx',
+        import.meta.url,
+      ),
+      'utf8',
+    ),
+    readFile(
+      new URL('../components/g4-l3-whole-lesson-player.tsx', import.meta.url),
+      'utf8',
+    ),
+    readFile(new URL('../app/globals.css', import.meta.url), 'utf8'),
+  ]);
+
+  // The title is rendered from the source-bound label, carrying its own `lang`
+  // so the language layer and a screen reader both see the real string.
+  assert.match(
+    shellSource,
+    /className="lesson-shell2__chrome-lesson-title"[\s\S]*?<span lang=\{courseContext\.courseTitle\.sourceLanguage\}>\s*\{courseContext\.courseTitle\.text\}/,
+  );
+  assert.match(
+    shellSource,
+    /data-chrome-title-source-field=\{chromeTitleBand\.sourceField\}/,
+  );
+  assert.match(
+    shellSource,
+    /data-chrome-title-english-fallback=\{[\s\S]*?courseContext\.courseTitle\.usesEnglishFallback/,
+  );
+  // No hardcoded title anywhere in the shell: the string comes from the source.
+  assert.doesNotMatch(shellSource, /Counting on Numbers/);
+
+  // The band geometry travels as a percentage of the authored plane, the same
+  // mechanism the chrome clips already use.
+  assert.match(shellSource, /'--lesson-chrome-title-top': `\$\{/);
+  assert.match(shellSource, /'--lesson-chrome-title-size': `\$\{/);
+  assert.match(shellSource, /\}cqw`/);
+  assert.match(
+    playerSource,
+    /chromeTitleBand:\s*G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR\.visualSkin\.header\.title,/,
+  );
+
+  // The artwork stays artwork: both chrome images keep an empty alt inside an
+  // aria-hidden layer, and the live text sits above them but below the source
+  // hit areas so it can never swallow a control.
+  assert.match(
+    shellSource,
+    /aria-hidden="true"\s*className="lesson-shell2__source-chrome"/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__chrome-lesson-title \{[\s\S]*?z-index: 6;/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__chrome-lesson-title \{[\s\S]*?pointer-events: none;/,
+  );
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__chrome-lesson-title > span \{[\s\S]*?user-select: text;/,
+  );
+
+  // Text on the artwork has to scale with the artwork, which needs the stage to
+  // be a query container.
+  assert.match(
+    globalCss,
+    /\.lesson-shell2__legacy-stage \{[\s\S]*?container-type: inline-size;/,
+  );
+  assert.match(
+    globalCss,
+    /font-size: clamp\(\.7rem, var\(--lesson-chrome-title-size, 3\.125cqw\), 2rem\);/,
   );
 });

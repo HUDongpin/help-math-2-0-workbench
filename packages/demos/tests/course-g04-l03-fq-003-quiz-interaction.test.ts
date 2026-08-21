@@ -8,6 +8,9 @@ import fq003, {
   COURSE_G04_L03_FQ_003_SOURCE_CONTRACT,
 } from "../src/modules/course-g04-l03-fq-003";
 import {
+  COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT,
+} from "../src/modules/course-g04-l03-fq-002";
+import {
   COURSE_G04_L03_FQ_003_INTERACTION_AUTHORITY,
   COURSE_G04_L03_FQ_003_INTERACTION_SOURCE,
   COURSE_G04_L03_FQ_003_QUESTION_ORDER,
@@ -21,6 +24,13 @@ import type {
   CourseG04L03Fq002InteractionState,
   CourseG04L03Fq002OptionId,
 } from "../src/timelines/course-g04-l03-fq-002-quiz-interaction";
+import {
+  COURSE_G04_L03_FQ_002_QUESTIONS,
+} from "../src/timelines/course-g04-l03-fq-002-quiz-interaction";
+import {
+  COURSE_G04_L03_TS_007_CHOICES,
+  COURSE_G04_L03_TS_007_QUESTION,
+} from "../src/timelines/course-g04-l03-ts-007-practice-question-interaction";
 
 const atomicAnswer = (
   state: CourseG04L03Fq002InteractionState,
@@ -231,6 +241,18 @@ test("FQ003 binds evidence without raising any acceptance gate", () => {
     "none",
   );
   assert.equal(
+    COURSE_G04_L03_FQ_003_SOURCE_CONTRACT.ownerDirectedCrossPlacement,
+    COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT,
+  );
+  assert.deepEqual(COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT, {
+    finalQuizQuestionId: 8,
+    sourceAnimationId: "course-g04-l03-ts-007",
+    sourceSectionCode: "TS",
+    placement: "owner-directed-current-javascript-cross-placement",
+    finalQuizSourceVisualParityEffect: "none",
+    strictAcceptanceEffect: "none",
+  });
+  assert.equal(
     COURSE_G04_L03_FQ_003_SOURCE_CONTRACT.sourceLegacyGradePresentationLabel,
     "Legacy source performance level",
   );
@@ -258,7 +280,28 @@ test("FQ003 functional renderer exposes 25-question responsive controls", () => 
     /data-current-js-functional-host-frame-window="1-43"/,
   );
   assert.match(markup, /data-current-js-functional-overlay="course-g04-l03-fq-003-quiz"/);
+  assert.match(
+    markup,
+    /data-modern-source-visual-cover="full-stage-opaque"/,
+  );
+  assert.match(
+    markup,
+    /<rect fill="#b8d8f7" height="600" width="800" x="0" y="0"/,
+  );
+  assert.match(
+    markup,
+    /data-source-canvas-visual-exposure="hidden-behind-modern-backdrop"/,
+  );
   assert.match(markup, /Question 1 of 25/);
+  assert.match(
+    markup,
+    /course-g04-l03-fq-002-stage-panel course-g04-l03-fq-002-stage-panel--wide/,
+  );
+  assert.match(
+    markup,
+    /\.course-g04-l03-fq-002-stage-panel \{[\s\S]*?left: 50%;[\s\S]*?top: 66px;[\s\S]*?transform: translateX\(-50%\);[\s\S]*?width: 564px;/,
+  );
+  assert.doesNotMatch(markup, /left: 397px/);
   assert.match(markup, /data-source-lms-enabled="false"/);
   assert.doesNotMatch(markup, /data-owner-accepted="true"/);
 
@@ -276,6 +319,14 @@ test("FQ003 functional renderer exposes 25-question responsive controls", () => 
     deterministicMarkup,
     /data-current-js-functional-overlay=/,
   );
+  assert.doesNotMatch(
+    deterministicMarkup,
+    /data-modern-source-visual-cover=/,
+  );
+  assert.match(
+    deterministicMarkup,
+    /data-source-canvas-visual-exposure="source-only"/,
+  );
 
   const hostStopMarkup = renderToStaticMarkup(createElement(fq003.Renderer, {
     frame: 43,
@@ -288,5 +339,44 @@ test("FQ003 functional renderer exposes 25-question responsive controls", () => 
   assert.match(
     hostStopMarkup,
     /data-current-js-functional-overlay="course-g04-l03-fq-003-quiz"/,
+  );
+});
+
+test("FQ003 keeps source Q8 scoring while presenting the requested TS007 visual", () => {
+  const sourceQuestion = COURSE_G04_L03_FQ_002_QUESTIONS[7];
+  assert.ok(sourceQuestion);
+  assert.equal(sourceQuestion.id, 8);
+  assert.equal(sourceQuestion.correctOptionId, "B");
+  assert.equal(sourceQuestion.questionFrame, 9);
+  assert.deepEqual(sourceQuestion.contextText, ["–5", "0", "5"]);
+
+  assert.equal(
+    COURSE_G04_L03_TS_007_QUESTION.prompt,
+    "Which symbol is located at −2 on the number line?",
+  );
+  assert.equal(COURSE_G04_L03_TS_007_QUESTION.correctChoiceId, "B");
+  assert.deepEqual(
+    COURSE_G04_L03_TS_007_CHOICES.map(({id, symbol, numberLineLocation, correct}) => ({
+      id,
+      symbol,
+      numberLineLocation,
+      correct,
+    })),
+    [
+      {id: "A", symbol: "green circle", numberLineLocation: -4, correct: false},
+      {id: "B", symbol: "orange-red heart", numberLineLocation: -2, correct: true},
+      {id: "C", symbol: "pink square", numberLineLocation: 2, correct: false},
+      {id: "D", symbol: "cyan triangle", numberLineLocation: 4, correct: false},
+    ],
+  );
+  assert.ok(
+    COURSE_G04_L03_FQ_003_SOURCE_CONTRACT.currentJavascriptInteractionScope
+      .includes(
+        "Q8-owner-directed-current-javascript-cross-placement-from-course-g04-l03-ts-007",
+      ),
+  );
+  assert.equal(
+    COURSE_G04_L03_FQ_003_SOURCE_CONTRACT.sourceReviewVisualParityEstablished,
+    false,
   );
 });

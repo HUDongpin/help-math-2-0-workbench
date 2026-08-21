@@ -71,17 +71,19 @@ static int matches_expected(
     (uintmax_t)observed->st_ino == expected_inode;
 }
 
-static int open_bound_directory(
+static int open_bound_entry(
   const int parent_fd,
   const char *name,
+  const int expect_directory,
   struct stat *bound,
-  int *directory_fd
+  int *entry_fd
 ) {
   struct stat at_path;
+  const int kind_flags = expect_directory ? O_DIRECTORY : 0;
   const int opened = openat(
     parent_fd,
     name,
-    O_RDONLY | O_DIRECTORY | O_NOFOLLOW | O_CLOEXEC
+    O_RDONLY | kind_flags | O_NOFOLLOW | O_CLOEXEC
   );
   if (opened < 0) return -1;
   if (fstat(opened, bound) != 0) {
@@ -90,7 +92,8 @@ static int open_bound_directory(
     errno = saved_errno;
     return -1;
   }
-  if (!S_ISDIR(bound->st_mode)) {
+  if ((expect_directory && !S_ISDIR(bound->st_mode)) ||
+      (!expect_directory && (!S_ISREG(bound->st_mode) || bound->st_nlink != 1))) {
     (void)close(opened);
     errno = ENOTDIR;
     return -1;
@@ -101,20 +104,44 @@ static int open_bound_directory(
     errno = saved_errno;
     return -1;
   }
-  if (!S_ISDIR(at_path.st_mode) || !same_node(bound, &at_path)) {
+  if ((expect_directory && !S_ISDIR(at_path.st_mode)) ||
+      (!expect_directory && (!S_ISREG(at_path.st_mode) || at_path.st_nlink != 1)) ||
+      !same_node(bound, &at_path)) {
     (void)close(opened);
     errno = ESTALE;
     return -1;
   }
-  *directory_fd = opened;
+  *entry_fd = opened;
   return 0;
 }
 
+#ifdef HELP_MATH_SWAP_TEST_SENTINEL
+static int wait_at_final_pathname_race_sentinel(void) {
+  const char ready = 'R';
+  char proceed = '\0';
+  if (write(3, &ready, 1) != 1) return -1;
+  if (read(4, &proceed, 1) != 1 || proceed != 'G') {
+    errno = ECANCELED;
+    return -1;
+  }
+  return 0;
+}
+#endif
+
 int main(int argc, char **argv) {
-  if (argc != 10) {
+  if (argc != 10 && argc != 11) {
     return fail_message(
       "expected parent, two child names, and the three expected dev/inode pairs"
     );
+  }
+
+  int expect_directory = 1;
+  if (argc == 11) {
+    if (strcmp(argv[10], "regular-file") == 0) {
+      expect_directory = 0;
+    } else if (strcmp(argv[10], "directory") != 0) {
+      return fail_message("entry kind must be directory or regular-file");
+    }
   }
 
   const char *parent = argv[1];
@@ -168,28 +195,35 @@ int main(int argc, char **argv) {
     result = fail_message("allowed parent identity changed before swap");
     goto cleanup;
   }
-  if (open_bound_directory(parent_fd, first_name, &first_stat, &first_fd) != 0) {
-    result = fail_errno("open first directory without following links");
+  if (open_bound_entry(parent_fd, first_name, expect_directory, &first_stat, &first_fd) != 0) {
+    result = fail_errno("open first entry without following links");
     goto cleanup;
   }
-  if (open_bound_directory(parent_fd, second_name, &second_stat, &second_fd) != 0) {
-    result = fail_errno("open second directory without following links");
+  if (open_bound_entry(parent_fd, second_name, expect_directory, &second_stat, &second_fd) != 0) {
+    result = fail_errno("open second entry without following links");
     goto cleanup;
   }
   if (!matches_expected(&first_stat, expected_first_device, expected_first_inode) ||
       !matches_expected(&second_stat, expected_second_device, expected_second_inode)) {
-    result = fail_message("a child directory identity changed before swap");
+    result = fail_message("a child entry identity changed before swap");
     goto cleanup;
   }
   if (parent_stat.st_dev != first_stat.st_dev ||
       parent_stat.st_dev != second_stat.st_dev) {
-    result = fail_message("allowed parent and child directories are not on one device");
+    result = fail_message("allowed parent and child entries are not on one device");
     goto cleanup;
   }
   if (same_node(&first_stat, &second_stat)) {
-    result = fail_message("the child names resolve to the same directory inode");
+    result = fail_message("the child names resolve to the same inode");
     goto cleanup;
   }
+
+#ifdef HELP_MATH_SWAP_TEST_SENTINEL
+  if (wait_at_final_pathname_race_sentinel() != 0) {
+    result = fail_errno("wait at final pathname race sentinel");
+    goto cleanup;
+  }
+#endif
 
   const unsigned int flags =
     RENAME_SWAP | RENAME_NOFOLLOW_ANY | RENAME_RESOLVE_BENEATH;
@@ -206,10 +240,14 @@ int main(int argc, char **argv) {
 
   if (fstatat(parent_fd, first_name, &first_at_path, AT_SYMLINK_NOFOLLOW) != 0 ||
       fstatat(parent_fd, second_name, &second_at_path, AT_SYMLINK_NOFOLLOW) != 0) {
-    result = fail_errno("verify swapped directory names");
+    result = fail_errno("verify swapped entry names");
     goto cleanup;
   }
-  if (!S_ISDIR(first_at_path.st_mode) || !S_ISDIR(second_at_path.st_mode) ||
+  if ((expect_directory &&
+       (!S_ISDIR(first_at_path.st_mode) || !S_ISDIR(second_at_path.st_mode))) ||
+      (!expect_directory &&
+       (!S_ISREG(first_at_path.st_mode) || !S_ISREG(second_at_path.st_mode) ||
+        first_at_path.st_nlink != 1 || second_at_path.st_nlink != 1)) ||
       !same_node(&first_at_path, &second_stat) ||
       !same_node(&second_at_path, &first_stat)) {
     result = fail_message("renameatx_np returned without the required exchanged identities");

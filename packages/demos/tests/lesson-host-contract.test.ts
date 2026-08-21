@@ -44,6 +44,7 @@ test('lesson host defaults to an ephemeral fail-closed audit session', () => {
       pointsPossible: 0,
       scoredQuestionIds: [],
     },
+    practiceFeedback: null,
   });
   assert.equal(session.dispatch({type: 'set-language', language: 'es'}).status, 'blocked');
   assert.equal(session.snapshot().language, 'en');
@@ -69,6 +70,13 @@ test('explicit audit capabilities update memory only and retain no raw answer da
     pointsAwarded: 1,
     pointsPossible: 1,
   }).status, 'allowed');
+  assert.equal(session.dispatch({
+    type: 'record-practice-feedback',
+    interactionId: 'same-area-or-perimeter',
+    outcome: 'incorrect',
+    branchIndex: 2,
+    branchCount: 3,
+  }).status, 'allowed');
 
   const state = session.snapshot();
   assert.equal(state.storage, 'memory-only');
@@ -82,10 +90,56 @@ test('explicit audit capabilities update memory only and retain no raw answer da
     scoredQuestionIds: ['q1'],
   });
   assert.equal('answer' in state.fqScore, false);
+  assert.deepEqual(state.practiceFeedback, {
+    interactionId: 'same-area-or-perimeter',
+    outcome: 'incorrect',
+    branchIndex: 2,
+    branchCount: 3,
+  });
+  assert.equal('answer' in state.practiceFeedback!, false);
 
   const freshSession = host({enabledCapabilities: LESSON_HOST_CAPABILITIES});
   assert.equal(freshSession.snapshot().language, 'en');
   assert.equal(freshSession.snapshot().fqScore.attempted, 0);
+  assert.equal(freshSession.snapshot().practiceFeedback, null);
+});
+
+test('practice feedback is bounded, branch-specific, and requires an explicit reset', () => {
+  const session = host({enabledCapabilities: ['practice-feedback']});
+  assert.equal(session.dispatch({
+    type: 'record-practice-feedback',
+    interactionId: 'same-area-or-perimeter',
+    outcome: 'correct',
+    branchIndex: 4,
+    branchCount: 4,
+  }).status, 'allowed');
+  const duplicate = session.dispatch({
+    type: 'record-practice-feedback',
+    interactionId: 'same-area-or-perimeter',
+    outcome: 'incorrect',
+    branchIndex: 1,
+    branchCount: 3,
+  });
+  assert.equal(duplicate.status, 'blocked');
+  if (duplicate.status === 'blocked') {
+    assert.equal(duplicate.code, 'practice-feedback-active');
+  }
+  assert.equal(session.dispatch({
+    type: 'reset-practice-feedback',
+    interactionId: 'different-interaction',
+  }).status, 'blocked');
+  assert.equal(session.dispatch({
+    type: 'reset-practice-feedback',
+    interactionId: 'same-area-or-perimeter',
+  }).status, 'allowed');
+  assert.equal(session.snapshot().practiceFeedback, null);
+  assert.equal(session.dispatch({
+    type: 'record-practice-feedback',
+    interactionId: 'same-area-or-perimeter',
+    outcome: 'incorrect',
+    branchIndex: 4,
+    branchCount: 3,
+  }).status, 'blocked');
 });
 
 test('published mode stays closed until the atomic release is published', () => {

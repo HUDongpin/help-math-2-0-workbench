@@ -169,6 +169,7 @@ export function LegacyExitPrompt({
         : 'lesson-shell2__exit-prompt--modern',
     ].join(' ')}
     data-actionscript-executed="false"
+    data-exit-destination="learning-home"
     data-exit-functional-authority="modern-app-local-functional-equivalent"
     data-external-legacy-endpoint-executed="false"
     data-legacy-bookmark-url-executed="false"
@@ -208,8 +209,8 @@ export function LegacyExitPrompt({
     </h2>
     <p className="sr-only" id={descriptionId}>
       {spanish
-        ? 'Confirma si quieres salir de esta lección y volver a la biblioteca. No mantiene la lección abierta.'
-        : `${evidence?.sourceEnglishText ?? 'Exit this lesson and return to the library?'} Yes returns to the local course library. No keeps this lesson open.`}
+        ? 'Confirma si quieres salir de esta lección y volver al inicio de aprendizaje. Sí vuelve al inicio; No mantiene esta lección abierta.'
+        : `${evidence?.sourceEnglishText ?? 'Exit this lesson?'} Yes returns to the learning home. No keeps this lesson open.`}
     </p>
 
     {useSourceVisual && evidence
@@ -240,7 +241,7 @@ export function LegacyExitPrompt({
             width={evidence.exporterCanvas.width}
           />
           <button
-            aria-label="Yes — exit this lesson and return to the library"
+            aria-label="Yes — exit this lesson and return to the learning home"
             className="lesson-shell2__exit-source-hit"
             data-exit-choice="exit"
             data-source-button-character-id={
@@ -271,9 +272,8 @@ export function LegacyExitPrompt({
         </>
       : <div className="lesson-shell2__exit-modern-card">
           <p>{spanish
-            ? '¿Seguro que quieres salir de esta lección y volver a la biblioteca?'
-            : evidence?.sourceEnglishText ??
-              'Exit this lesson and return to the library?'}</p>
+            ? '¿Seguro que quieres salir de esta lección y volver al inicio de aprendizaje?'
+            : 'Exit this lesson and return to the learning home?'}</p>
           <small>{spanish
             ? 'La fuente no incluye una versión visual en español; esta es una traducción local moderna.'
             : evidence

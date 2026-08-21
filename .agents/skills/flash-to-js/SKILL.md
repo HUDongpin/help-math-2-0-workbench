@@ -1,6 +1,6 @@
 ---
 name: flash-to-js
-description: Discover the canonical project workflow for evidence-led Flash FLA/SWF migration to HTML5 JavaScript. Use for catalog-backed source intake, Ruffle forensic references, original-runtime and full-frame evidence, audio and immutable review gates, strict completion, and atomic lesson release in this project.
+description: Discover the canonical project workflow for evidence-led Flash FLA/SWF migration to HTML5 JavaScript. Use for catalog-backed source intake, compiler-assisted factory calibration and scale-out, Current-JS registration and modern My Lesson integration, public-tool provenance and licensing boundaries, Ruffle forensic references, original-runtime and full-frame evidence, audio and immutable review gates, strict completion, and atomic lesson release in this project.
 ---
 
 # Flash To JavaScript

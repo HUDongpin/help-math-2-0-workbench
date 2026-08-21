@@ -364,7 +364,7 @@ export function LegalPage({content}: {content: LegalContent}) {
       </Section>
       <Section className="section--compact">
         <Container>
-          <Callout {...content.contact} tone="paper" />
+          <Callout body={content.contact.body} title={content.contact.title} tone="paper" />
         </Container>
       </Section>
     </>

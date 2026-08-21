@@ -1,6 +1,12 @@
 "use client";
 
-import React, {useEffect, useReducer, useRef, useState} from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import type {Dispatch, DragEvent} from "react";
 import {createPortal} from "react-dom";
 
@@ -72,11 +78,9 @@ function isVisible(element: HTMLElement | null): element is HTMLElement {
 function StageInteractionSurface({
   dispatch,
   interaction,
-  wrongCloseRef,
 }: {
   dispatch: Dispatch<CourseG04L03Vb003InteractionAction>;
   interaction: CourseG04L03Vb003InteractionState;
-  wrongCloseRef: React.RefObject<HTMLButtonElement | null>;
 }) {
   const locked = interaction.mode !== "ready";
   const startDrag = (
@@ -162,6 +166,7 @@ function StageInteractionSurface({
                   <button
                     aria-label={`Select ${spokenNumber(item)} to move`}
                     aria-pressed={selected}
+                    data-vb003-source-item-id={item.id}
                     data-source-instance={item.sourceInstance}
                     draggable={!locked}
                     onClick={() => dispatch({
@@ -274,55 +279,6 @@ function StageInteractionSurface({
             );
           })}
 
-          {interaction.mode === "wrong-feedback" ? (
-            <div
-              aria-describedby="course-g04-l03-vb-003-stage-wrong-text"
-              aria-labelledby="course-g04-l03-vb-003-stage-wrong-title"
-              aria-modal="true"
-              role="dialog"
-              style={{
-                background: "#ffffcc",
-                border: "1px solid #6a6231",
-                boxSizing: "border-box",
-                color: "#000",
-                height: 66,
-                left: 182,
-                padding: "12px 118px 10px 18px",
-                pointerEvents: "auto",
-                position: "absolute",
-                top: 258,
-                width: 464,
-              }}
-            >
-              <strong id="course-g04-l03-vb-003-stage-wrong-title" style={visuallyHiddenStyle}>
-                Try again
-              </strong>
-              <span
-                id="course-g04-l03-vb-003-stage-wrong-text"
-                style={{fontSize: 16, lineHeight: 1.25}}
-              >{COURSE_G04_L03_VB_003_WRONG_FEEDBACK}</span>
-              <button
-                onClick={() => dispatch({type: "close-wrong-feedback"})}
-                ref={wrongCloseRef}
-                style={{
-                  background: "linear-gradient(#ffad17, #e95c00)",
-                  border: "2px solid #fff1cb",
-                  borderRadius: 4,
-                  color: "#fff",
-                  font: `700 16px ${SOURCE_FONT}`,
-                  height: 44,
-                  margin: 0,
-                  padding: 0,
-                  position: "absolute",
-                  right: 8,
-                  top: 10,
-                  width: 100,
-                }}
-                type="button"
-              >Close</button>
-            </div>
-          ) : null}
-
           {interaction.mode === "completed" ? (
             <div
               aria-live="polite"
@@ -362,11 +318,9 @@ function StageInteractionSurface({
 function MobileInteractionSurface({
   dispatch,
   interaction,
-  wrongCloseRef,
 }: {
   dispatch: Dispatch<CourseG04L03Vb003InteractionAction>;
   interaction: CourseG04L03Vb003InteractionState;
-  wrongCloseRef: React.RefObject<HTMLButtonElement | null>;
 }) {
   const locked = interaction.mode !== "ready";
   const selected = COURSE_G04_L03_VB_003_DRAG_ITEMS.find(
@@ -398,6 +352,7 @@ function MobileInteractionSurface({
             return (
               <button
                 aria-pressed={interaction.selectedItemId === item.id}
+                data-vb003-source-item-id={item.id}
                 disabled={locked || placed}
                 key={item.id}
                 onClick={() => dispatch({
@@ -432,26 +387,6 @@ function MobileInteractionSurface({
         </div>
       </fieldset>
 
-      {interaction.mode === "wrong-feedback" ? (
-        <div
-          aria-describedby="course-g04-l03-vb-003-mobile-wrong-text"
-          aria-labelledby="course-g04-l03-vb-003-mobile-wrong-title"
-          aria-modal="true"
-          className="course-g04-l03-vb-003-mobile-dialog"
-          role="dialog"
-        >
-          <strong id="course-g04-l03-vb-003-mobile-wrong-title">Try again</strong>
-          <p id="course-g04-l03-vb-003-mobile-wrong-text">
-            {COURSE_G04_L03_VB_003_WRONG_FEEDBACK}
-          </p>
-          <button
-            onClick={() => dispatch({type: "close-wrong-feedback"})}
-            ref={wrongCloseRef}
-            type="button"
-          >Close</button>
-        </div>
-      ) : null}
-
       {interaction.mode === "completed" ? (
         <div
           aria-live="polite"
@@ -462,6 +397,37 @@ function MobileInteractionSurface({
           <p>Use Replay to practice again or Next to continue.</p>
         </div>
       ) : null}
+    </section>
+  );
+}
+
+function WrongFeedbackCard({
+  closeRef,
+  onClose,
+}: {
+  closeRef: React.RefObject<HTMLButtonElement | null>;
+  onClose: () => void;
+}) {
+  return (
+    <section
+      aria-describedby="course-g04-l03-vb-003-feedback-copy"
+      aria-labelledby="course-g04-l03-vb-003-feedback-title"
+      className="course-g04-l03-vb-003-feedback-card"
+      data-current-js-feedback-placement="companion-outside-authored-stage"
+      data-source-feedback-text="exact-define-text-character-98"
+      data-strict-acceptance-effect="none"
+      role="alertdialog"
+    >
+      <span aria-hidden="true" className="course-g04-l03-vb-003-feedback-icon">
+        i
+      </span>
+      <div>
+        <strong id="course-g04-l03-vb-003-feedback-title">Try again</strong>
+        <p id="course-g04-l03-vb-003-feedback-copy">
+          {COURSE_G04_L03_VB_003_WRONG_FEEDBACK}
+        </p>
+      </div>
+      <button onClick={onClose} ref={closeRef} type="button">Close</button>
     </section>
   );
 }
@@ -487,13 +453,14 @@ function CourseG04L03Vb003InteractionOverlay({
   );
   const [companionTarget, setCompanionTarget] =
     useState<HTMLElement | null>(null);
-  const stageWrongCloseRef = useRef<HTMLButtonElement>(null);
-  const mobileWrongCloseRef = useRef<HTMLButtonElement>(null);
+  const wrongCloseRef = useRef<HTMLButtonElement>(null);
+  const lastAttemptedItemRef = useRef<CourseG04L03Vb003ItemId | null>(null);
   const correctFeedbackRemainingMs = useRef(
     COURSE_G04_L03_VB_003_CURRENT_JS_TIMING.correctFeedbackMs,
   );
 
   useEffect(() => {
+    lastAttemptedItemRef.current = null;
     dispatch({type: "replay"});
   }, [replay, seed]);
 
@@ -542,20 +509,63 @@ function CourseG04L03Vb003InteractionOverlay({
   useEffect(() => {
     if (interaction.mode !== "wrong-feedback") return;
     const frame = window.requestAnimationFrame(() => {
-      const preferredClose = isVisible(mobileWrongCloseRef.current)
-        ? mobileWrongCloseRef.current
-        : stageWrongCloseRef.current;
-      preferredClose?.focus();
+      wrongCloseRef.current?.focus();
     });
     return () => window.cancelAnimationFrame(frame);
   }, [interaction.mode]);
 
+  const dispatchInteraction = useCallback<
+    Dispatch<CourseG04L03Vb003InteractionAction>
+  >((action) => {
+      if (action.type === "select-item") {
+        lastAttemptedItemRef.current = action.itemId;
+      } else if (action.type === "drop-item" && action.itemId) {
+        lastAttemptedItemRef.current = action.itemId;
+      }
+      dispatch(action);
+    }, []);
+
+  const closeWrongFeedback = useCallback(() => {
+    const attemptedItemId = lastAttemptedItemRef.current;
+    dispatch({type: "close-wrong-feedback"});
+    window.requestAnimationFrame(() => {
+      const candidates = attemptedItemId
+        ? document.querySelectorAll<HTMLButtonElement>(
+            `[data-vb003-source-item-id="${attemptedItemId}"]`,
+          )
+        : document.querySelectorAll<HTMLButtonElement>(
+            "[data-vb003-source-item-id]",
+          );
+      [...candidates].find((candidate) =>
+        !candidate.disabled && isVisible(candidate))?.focus();
+    });
+  }, []);
+
+  useEffect(() => {
+    if (interaction.mode !== "wrong-feedback") return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      event.stopPropagation();
+      closeWrongFeedback();
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [closeWrongFeedback, interaction.mode]);
+
   const mobileSurface = (
-    <MobileInteractionSurface
-      dispatch={dispatch}
-      interaction={interaction}
-      wrongCloseRef={mobileWrongCloseRef}
-    />
+    <>
+      <MobileInteractionSurface
+        dispatch={dispatchInteraction}
+        interaction={interaction}
+      />
+      {interaction.mode === "wrong-feedback" ? (
+        <WrongFeedbackCard
+          closeRef={wrongCloseRef}
+          onClose={closeWrongFeedback}
+        />
+      ) : null}
+    </>
   );
 
   return (
@@ -563,6 +573,72 @@ function CourseG04L03Vb003InteractionOverlay({
       <style>{`
         .course-g04-l03-vb-003-mobile-controls {
           display: none;
+        }
+
+        .course-g04-l03-vb-003-feedback-card {
+          align-items: center;
+          background: linear-gradient(135deg, #f8fbff, #edf5fc);
+          border: 2px solid #8eabc7;
+          border-inline-start: 7px solid #e7a21a;
+          border-radius: 16px;
+          box-shadow: 0 12px 26px rgba(16, 47, 99, .14);
+          box-sizing: border-box;
+          color: #17395f;
+          display: grid;
+          font-family: system-ui, sans-serif;
+          gap: 14px;
+          grid-template-columns: auto minmax(0, 1fr) auto;
+          margin: 12px auto 0;
+          max-width: 800px;
+          padding: 16px;
+          position: static;
+          width: 100%;
+        }
+
+        .course-g04-l03-vb-003-feedback-icon {
+          align-items: center;
+          background: #fff2ce;
+          border: 2px solid #d18a08;
+          border-radius: 999px;
+          color: #7b4b00;
+          display: inline-flex;
+          font: 900 20px/1 system-ui, sans-serif;
+          height: 42px;
+          justify-content: center;
+          width: 42px;
+        }
+
+        .course-g04-l03-vb-003-feedback-card strong {
+          display: block;
+          font-size: 21px;
+          line-height: 1.2;
+          margin-bottom: 3px;
+        }
+
+        .course-g04-l03-vb-003-feedback-card p {
+          font-size: 16px;
+          line-height: 1.45;
+          margin: 0;
+        }
+
+        .course-g04-l03-vb-003-feedback-card button {
+          background: #173f73;
+          border: 2px solid #173f73;
+          border-radius: 999px;
+          color: #fff;
+          font: 800 16px/1 system-ui, sans-serif;
+          min-height: 46px;
+          min-width: 92px;
+          padding: 10px 18px;
+        }
+
+        .course-g04-l03-vb-003-feedback-card button:hover {
+          background: #0d2f5e;
+        }
+
+        .course-g04-l03-vb-003-feedback-card button:focus-visible {
+          outline: 3px solid #ffcc00;
+          outline-offset: 3px;
         }
 
         @media (max-width: 640px), (any-pointer: coarse) and (max-width: 1024px) {
@@ -634,7 +710,6 @@ function CourseG04L03Vb003InteractionOverlay({
             opacity: .58;
           }
 
-          .course-g04-l03-vb-003-mobile-dialog,
           .course-g04-l03-vb-003-mobile-complete {
             background: #ffffcc;
             border: 3px solid #224b8e;
@@ -644,12 +719,10 @@ function CourseG04L03Vb003InteractionOverlay({
             padding: 14px;
           }
 
-          .course-g04-l03-vb-003-mobile-dialog strong,
           .course-g04-l03-vb-003-mobile-complete strong {
             font-size: 22px;
           }
 
-          .course-g04-l03-vb-003-mobile-dialog p,
           .course-g04-l03-vb-003-mobile-complete p {
             font-family: system-ui, sans-serif;
             font-size: 16px;
@@ -667,12 +740,22 @@ function CourseG04L03Vb003InteractionOverlay({
           .course-g04-l03-vb-003-mobile-grid {
             grid-template-columns: repeat(3, minmax(48px, 1fr));
           }
+
+          .course-g04-l03-vb-003-feedback-card {
+            align-items: start;
+            grid-template-columns: auto minmax(0, 1fr);
+            padding: 14px;
+          }
+
+          .course-g04-l03-vb-003-feedback-card button {
+            grid-column: 1 / -1;
+            width: 100%;
+          }
         }
       `}</style>
       <StageInteractionSurface
-        dispatch={dispatch}
+        dispatch={dispatchInteraction}
         interaction={interaction}
-        wrongCloseRef={stageWrongCloseRef}
       />
       {companionTarget
         ? createPortal(mobileSurface, companionTarget)
@@ -733,6 +816,7 @@ export const COURSE_G04_L03_VB_003_SOURCE_CONTRACT = Object.freeze({
     "five-source-bound-drag-items-and-targets",
     "pointer-drag-and-select-then-target-keyboard-alternative",
     "exact-source-wrong-feedback-and-close-retry",
+    "non-occluding-modern-feedback-card-after-authored-stage",
     "source-target-reveal-and-item-hide",
     "five-item-completion-feedback",
     "host-pause-freezes-nominal-correct-feedback-delay",

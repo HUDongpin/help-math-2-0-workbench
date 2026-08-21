@@ -22,7 +22,7 @@ export const COURSE_G04_L10_TI_003_SOURCE = Object.freeze({
   }),
   candidateManifest: "public/flash-assets/courses/course-g04-l10-ti-003/manifest.json",
   candidateManifestSha256:
-    "61b70bd39d71b1e0e536b5b70f623b2141b4915d44c30e21faf006b3d8a9fe0d",
+    "753f681ef666f87c36ee91a419ca1329a49b5ee503e71f82c01991ba08631154",
   actionScriptExecuted: false,
   audioCues: Object.freeze([]),
   controlsEnabled: false,

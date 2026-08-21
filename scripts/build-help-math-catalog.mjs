@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
 import { createHash } from "node:crypto";
-import { createReadStream } from "node:fs";
+import { constants as fsConstants, createReadStream } from "node:fs";
 import {
   lstat,
   mkdir,
+  open,
   opendir,
   readFile,
   realpath,
@@ -19,45 +20,12 @@ const SOURCE_DIRECTORY_NAME = "HELP MATH_ORIGINAL FILES";
 const DEFAULT_OUTPUT = "catalog";
 const DEFAULT_CONCURRENCY = 4;
 const SHA256_PATTERN = /^[a-f0-9]{64}$/;
-
-const KNOWN_COUNTS = Object.freeze({
-  files: 9_147,
-  totalBytes: 3_214_585_414,
-  checksumSetSha256: "30dfa12b7cd76e7200fb89115155e7d32af1356247c07e3a4f79227e93f34875",
-  swf: 2_096,
-  fla: 1_541,
-  mp3: 5_448,
-  xml: 31,
-  courseXml: 29,
-  swfByCollection: {
-    course: 1_587,
-    keyterm: 459,
-    formula: 50,
-  },
-  uniqueSwfAssets: 2_074,
-  duplicatePlacements: 22,
-  pairedSwfFla: 1_344,
-  swfOnly: 752,
-  flaOnly: 197,
-  compoundBinaryFla: 1_540,
-  zipArchiveFla: 1,
-  unrecognizedFla: 0,
-  swfFrames: 34_169,
-  courseShells: 33,
-  courseReferences: {
-    unique: 1_750,
-    resolved: 1_361,
-    missing: 389,
-    unreferenced: 226,
-  },
-  keytermReferences: {
-    unique: 760,
-    resolved: 443,
-    missing: 317,
-    unreferenced: 16,
-  },
-  xmlWithBareAmpersands: 8,
-});
+const CURRENT_SOURCE_PROFILE_FILENAME = "current-source-profile.json";
+const CURRENT_SOURCE_PROFILE_ARTIFACT_TYPE = "help-math-current-source-profile";
+const BASE_CURRENT_SOURCE_PROFILE_SHA256 =
+  "e3c86728b1cef7e47db5f56362fc7fb597025776014415aafc36c4468a15b458";
+const COUNTERPART_SUCCESSOR_APPLIED_RECEIPT_FILENAME =
+  "fla-swf-counterpart-successor-2026-08-07-v2-applied.json";
 
 const SECTION_LABELS = Object.freeze({
   IR: "Introduction",
@@ -1402,46 +1370,432 @@ export function buildLessonReleases({animations, batches, lessons}) {
   return {schemaVersion: 1, releases};
 }
 
-function assertKnownCounts(summary) {
+function isPlainObject(value) {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+
+function assertExactObjectKeys(value, expectedKeys, label) {
+  if (!isPlainObject(value)) throw new Error(`${label} must be a JSON object`);
+  const actualKeys = Object.keys(value).sort(compareText);
+  const approvedKeys = [...expectedKeys].sort(compareText);
+  if (actualKeys.length !== approvedKeys.length || actualKeys.some((key, index) => key !== approvedKeys[index])) {
+    throw new Error(`${label} must contain exactly these keys: ${approvedKeys.join(", ")}`);
+  }
+}
+
+function assertProfileCount(value, label) {
+  if (!Number.isSafeInteger(value) || value < 0) {
+    throw new Error(`${label} must be a non-negative safe integer`);
+  }
+}
+
+function validateCurrentSourceProfile(profile, profilePath) {
+  const label = `Current source profile ${profilePath}`;
+  assertExactObjectKeys(profile, ["schemaVersion", "artifactType", "expected"], label);
+  if (profile.schemaVersion !== 1) throw new Error(`${label} has unsupported schemaVersion ${profile.schemaVersion}`);
+  if (profile.artifactType !== CURRENT_SOURCE_PROFILE_ARTIFACT_TYPE) {
+    throw new Error(`${label} has unsupported artifactType ${JSON.stringify(profile.artifactType)}`);
+  }
+
+  const expectedKeys = [
+    "files",
+    "totalBytes",
+    "checksumSetSha256",
+    "sourceExtensions",
+    "swf",
+    "fla",
+    "mp3",
+    "xml",
+    "courseXml",
+    "swfByCollection",
+    "uniqueSwfAssets",
+    "duplicateGroups",
+    "duplicatePlacements",
+    "pairedSwfFla",
+    "swfOnly",
+    "flaOnly",
+    "compoundBinaryFla",
+    "zipArchiveFla",
+    "unrecognizedFla",
+    "swfFrames",
+    "swfHeader",
+    "courseShells",
+    "courseReferences",
+    "keytermReferences",
+    "lessonReleases",
+    "xmlWithBareAmpersands",
+  ];
+  assertExactObjectKeys(profile.expected, expectedKeys, `${label}.expected`);
+  if (!isPlainObject(profile.expected.sourceExtensions) || Object.keys(profile.expected.sourceExtensions).length === 0) {
+    throw new Error(`${label}.expected.sourceExtensions must be a non-empty JSON object`);
+  }
+  const extensionKeys = Object.keys(profile.expected.sourceExtensions);
+  if (extensionKeys.some((extension) => extension !== "" && !/^[a-z0-9][a-z0-9._-]*$/.test(extension))) {
+    throw new Error(`${label}.expected.sourceExtensions contains an invalid extension key`);
+  }
+  if (extensionKeys.some((extension, index) => extension !== [...extensionKeys].sort(compareText)[index])) {
+    throw new Error(`${label}.expected.sourceExtensions keys must use Unicode code-point order`);
+  }
+  assertExactObjectKeys(profile.expected.swfByCollection, ["course", "keyterm", "formula", "unknown"], `${label}.expected.swfByCollection`);
+  assertExactObjectKeys(profile.expected.swfHeader, ["signatures", "fpsValues", "headerParseErrors"], `${label}.expected.swfHeader`);
+  assertExactObjectKeys(profile.expected.courseReferences, ["unique", "resolved", "missing", "unreferenced"], `${label}.expected.courseReferences`);
+  assertExactObjectKeys(profile.expected.keytermReferences, ["unique", "resolved", "missing", "unreferenced"], `${label}.expected.keytermReferences`);
+  assertExactObjectKeys(profile.expected.lessonReleases, ["outputSha256", "releaseCount", "totalMembers", "releases"], `${label}.expected.lessonReleases`);
+
+  for (const key of expectedKeys) {
+    if ([
+      "checksumSetSha256",
+      "sourceExtensions",
+      "swfByCollection",
+      "swfHeader",
+      "courseReferences",
+      "keytermReferences",
+      "lessonReleases",
+    ].includes(key)) continue;
+    assertProfileCount(profile.expected[key], `${label}.expected.${key}`);
+  }
+  for (const [extension, value] of Object.entries(profile.expected.sourceExtensions)) {
+    assertProfileCount(value, `${label}.expected.sourceExtensions.${JSON.stringify(extension)}`);
+  }
+  for (const [key, value] of Object.entries(profile.expected.swfByCollection)) {
+    assertProfileCount(value, `${label}.expected.swfByCollection.${key}`);
+  }
+  if (!Array.isArray(profile.expected.swfHeader.signatures) ||
+      profile.expected.swfHeader.signatures.some((signature) => typeof signature !== "string" || !/^[A-Z]{3}$/.test(signature)) ||
+      new Set(profile.expected.swfHeader.signatures).size !== profile.expected.swfHeader.signatures.length ||
+      profile.expected.swfHeader.signatures.some((signature, index) => signature !== [...profile.expected.swfHeader.signatures].sort(compareText)[index])) {
+    throw new Error(`${label}.expected.swfHeader.signatures must be unique three-letter uppercase values in Unicode code-point order`);
+  }
+  if (!Array.isArray(profile.expected.swfHeader.fpsValues) ||
+      profile.expected.swfHeader.fpsValues.some((fps) => typeof fps !== "number" || !Number.isFinite(fps) || fps <= 0) ||
+      new Set(profile.expected.swfHeader.fpsValues).size !== profile.expected.swfHeader.fpsValues.length ||
+      profile.expected.swfHeader.fpsValues.some((fps, index) => fps !== [...profile.expected.swfHeader.fpsValues].sort((left, right) => left - right)[index])) {
+    throw new Error(`${label}.expected.swfHeader.fpsValues must be unique positive finite numbers in ascending order`);
+  }
+  assertProfileCount(profile.expected.swfHeader.headerParseErrors, `${label}.expected.swfHeader.headerParseErrors`);
+  for (const group of ["courseReferences", "keytermReferences"]) {
+    for (const [key, value] of Object.entries(profile.expected[group])) {
+      assertProfileCount(value, `${label}.expected.${group}.${key}`);
+    }
+  }
+  if (!SHA256_PATTERN.test(profile.expected.checksumSetSha256)) {
+    throw new Error(`${label}.expected.checksumSetSha256 must be a lowercase SHA-256 digest`);
+  }
+  if (!SHA256_PATTERN.test(profile.expected.lessonReleases.outputSha256)) {
+    throw new Error(`${label}.expected.lessonReleases.outputSha256 must be a lowercase SHA-256 digest`);
+  }
+  assertProfileCount(profile.expected.lessonReleases.releaseCount, `${label}.expected.lessonReleases.releaseCount`);
+  assertProfileCount(profile.expected.lessonReleases.totalMembers, `${label}.expected.lessonReleases.totalMembers`);
+  if (!Array.isArray(profile.expected.lessonReleases.releases)) {
+    throw new Error(`${label}.expected.lessonReleases.releases must be an array`);
+  }
+  const releaseIds = new Set();
+  for (const [index, release] of profile.expected.lessonReleases.releases.entries()) {
+    assertExactObjectKeys(release, ["releaseId", "memberCount"], `${label}.expected.lessonReleases.releases[${index}]`);
+    if (typeof release.releaseId !== "string" || release.releaseId.length === 0 || releaseIds.has(release.releaseId)) {
+      throw new Error(`${label}.expected.lessonReleases.releases[${index}].releaseId must be a unique non-empty string`);
+    }
+    releaseIds.add(release.releaseId);
+    assertProfileCount(release.memberCount, `${label}.expected.lessonReleases.releases[${index}].memberCount`);
+  }
+
+  const expected = profile.expected;
+  const invariants = [
+    ["source extension file total", Object.values(expected.sourceExtensions).reduce((total, count) => total + count, 0), expected.files],
+    ["SWF extension total", expected.sourceExtensions.swf, expected.swf],
+    ["FLA extension total", expected.sourceExtensions.fla, expected.fla],
+    ["MP3 extension total", expected.sourceExtensions.mp3, expected.mp3],
+    ["XML extension total", expected.sourceExtensions.xml, expected.xml],
+    ["SWF collection total", expected.swfByCollection.course + expected.swfByCollection.keyterm + expected.swfByCollection.formula + expected.swfByCollection.unknown, expected.swf],
+    ["unique plus duplicate SWF placements", expected.uniqueSwfAssets + expected.duplicatePlacements, expected.swf],
+    ["paired plus SWF-only placements", expected.pairedSwfFla + expected.swfOnly, expected.swf],
+    ["paired plus FLA-only files", expected.pairedSwfFla + expected.flaOnly, expected.fla],
+    ["FLA container total", expected.compoundBinaryFla + expected.zipArchiveFla + expected.unrecognizedFla, expected.fla],
+    ["course reference resolution total", expected.courseReferences.resolved + expected.courseReferences.missing, expected.courseReferences.unique],
+    ["keyterm reference resolution total", expected.keytermReferences.resolved + expected.keytermReferences.missing, expected.keytermReferences.unique],
+    ["lesson release record total", expected.lessonReleases.releases.length, expected.lessonReleases.releaseCount],
+    ["lesson release member total", expected.lessonReleases.releases.reduce((total, release) => total + release.memberCount, 0), expected.lessonReleases.totalMembers],
+  ];
+  const invalid = invariants.filter(([, actual, approved]) => actual !== approved);
+  if (invalid.length > 0) {
+    throw new Error(`${label} is internally inconsistent:\n${invalid.map(([name, actual, approved]) => `- ${name}: expected ${approved}, got ${actual}`).join("\n")}`);
+  }
+  if (expected.duplicateGroups > expected.duplicatePlacements) {
+    throw new Error(`${label} is internally inconsistent:\n- duplicateGroups ${expected.duplicateGroups} exceeds duplicatePlacements ${expected.duplicatePlacements}`);
+  }
+  return profile;
+}
+
+function sameFileIdentity(left, right) {
+  return left.dev === right.dev && left.ino === right.ino;
+}
+
+function sameFileSnapshot(left, right) {
+  return sameFileIdentity(left, right) &&
+    left.mode === right.mode &&
+    left.nlink === right.nlink &&
+    left.size === right.size &&
+    left.mtimeNs === right.mtimeNs &&
+    left.ctimeNs === right.ctimeNs;
+}
+
+function assertRegularSingleLink(info, profilePath, phase) {
+  if (!info.isFile()) throw new Error(`Current source profile must be a real regular file (${phase}): ${profilePath}`);
+  if (info.nlink !== 1n) throw new Error(`Current source profile must have exactly one hard link (${phase}): ${profilePath}`);
+  if ((info.mode & 0o222n) !== 0n) throw new Error(`Current source profile must be read-only (${phase}): ${profilePath}`);
+}
+
+function serializableFileIdentity(info) {
+  return {
+    dev: info.dev.toString(),
+    ino: info.ino.toString(),
+    mode: Number(info.mode),
+    nlink: Number(info.nlink),
+    size: Number(info.size),
+    mtimeNs: info.mtimeNs.toString(),
+    ctimeNs: info.ctimeNs.toString(),
+  };
+}
+
+async function readImmutableProfileAuthorityReceipt(receiptPath) {
+  const initial = await lstat(receiptPath, { bigint: true }).catch((error) => {
+    if (error?.code === "ENOENT") return null;
+    throw error;
+  });
+  if (initial === null) return null;
+  if (!initial.isFile() || initial.isSymbolicLink() || initial.nlink !== 1n
+    || (initial.mode & 0o222n) !== 0n) {
+    throw new Error(`Current source profile authority receipt is unsafe: ${receiptPath}`);
+  }
+  if (await realpath(receiptPath) !== receiptPath) {
+    throw new Error(`Current source profile authority receipt traverses a symbolic link: ${receiptPath}`);
+  }
+  const handle = await open(receiptPath, fsConstants.O_RDONLY | fsConstants.O_NOFOLLOW);
+  let bytes;
+  try {
+    const before = await handle.stat({ bigint: true });
+    if (!sameFileSnapshot(initial, before)) {
+      throw new Error(`Current source profile authority receipt changed before read: ${receiptPath}`);
+    }
+    bytes = await handle.readFile();
+    const after = await handle.stat({ bigint: true });
+    if (!sameFileSnapshot(before, after)) {
+      throw new Error(`Current source profile authority receipt changed during read: ${receiptPath}`);
+    }
+  } finally {
+    await handle.close();
+  }
+  const final = await lstat(receiptPath, { bigint: true });
+  if (!sameFileSnapshot(initial, final) || final.size !== BigInt(bytes.length)) {
+    throw new Error(`Current source profile authority receipt path changed during read: ${receiptPath}`);
+  }
+  let receipt;
+  try {
+    receipt = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes));
+  } catch (error) {
+    throw new Error(`Current source profile authority receipt is invalid UTF-8 JSON: ${error.message}`);
+  }
+  if (receipt?.schemaVersion !== "help-math-fla-swf-counterpart-successor-applied-receipt/v2"
+    || receipt?.artifactType !== "help-math-fla-swf-counterpart-successor-applied-receipt"
+    || receipt?.lifecycle !== "final"
+    || receipt?.applied !== true
+    || receipt?.reportingGate?.canonicalCountsReportable !== true
+    || receipt?.reportingGate?.observedCanonical !== true
+    || receipt?.expectedCatalogProfile?.path !== CURRENT_SOURCE_PROFILE_FILENAME
+    || !SHA256_PATTERN.test(receipt?.expectedCatalogProfile?.sha256)) {
+    throw new Error("Current source profile authority receipt lacks a final live-observed profile binding");
+  }
+  return {
+    path: receiptPath,
+    bytes: bytes.length,
+    sha256: createHash("sha256").update(bytes).digest("hex"),
+    expectedProfileSha256: receipt.expectedCatalogProfile.sha256,
+  };
+}
+
+async function resolveImplicitProfileAuthority(resolvedOutputRoot, profilePath) {
+  const defaultProfilePath = path.join(resolvedOutputRoot, CURRENT_SOURCE_PROFILE_FILENAME);
+  if (profilePath !== defaultProfilePath) {
+    throw new Error("An explicit expectedProfile requires expectedProfileSha256");
+  }
+  const receiptPath = path.join(
+    resolvedOutputRoot,
+    "source-promotions",
+    COUNTERPART_SUCCESSOR_APPLIED_RECEIPT_FILENAME,
+  );
+  const receipt = await readImmutableProfileAuthorityReceipt(receiptPath);
+  if (receipt) {
+    return {
+      expectedProfileSha256: receipt.expectedProfileSha256,
+      authority: {
+        type: "immutable-applied-successor-receipt",
+        path: receipt.path,
+        bytes: receipt.bytes,
+        sha256: receipt.sha256,
+      },
+    };
+  }
+  return {
+    expectedProfileSha256: BASE_CURRENT_SOURCE_PROFILE_SHA256,
+    authority: {
+      type: "checked-in-base-profile-sha256",
+      sha256: BASE_CURRENT_SOURCE_PROFILE_SHA256,
+    },
+  };
+}
+
+export async function loadCurrentSourceProfile({
+  outputRoot = DEFAULT_OUTPUT,
+  expectedProfile,
+  expectedProfileSha256,
+} = {}) {
+  if (expectedProfile !== undefined && (typeof expectedProfile !== "string" || expectedProfile.length === 0)) {
+    throw new Error("expectedProfile must be a non-empty path string");
+  }
+  if (expectedProfileSha256 !== undefined && !SHA256_PATTERN.test(expectedProfileSha256)) {
+    throw new Error("expectedProfileSha256 must be a lowercase SHA-256 digest");
+  }
+
+  const resolvedOutputRoot = path.resolve(outputRoot);
+  const profilePath = path.resolve(expectedProfile ?? path.join(resolvedOutputRoot, CURRENT_SOURCE_PROFILE_FILENAME));
+  const initialInfo = await lstat(profilePath, { bigint: true }).catch((error) => {
+    if (error?.code === "ENOENT") throw new Error(`Current source profile is missing: ${profilePath}`);
+    throw error;
+  });
+  if (initialInfo.isSymbolicLink()) throw new Error(`Current source profile cannot be a symbolic link: ${profilePath}`);
+  assertRegularSingleLink(initialInfo, profilePath, "before read");
+
+  const initialRealPath = await realpath(profilePath);
+  if (initialRealPath !== profilePath) {
+    throw new Error(`Current source profile path cannot contain symbolic-link components: ${profilePath} -> ${initialRealPath}`);
+  }
+
+  let bytes;
+  let openedInfo;
+  let openedFinalInfo;
+  const handle = await open(profilePath, fsConstants.O_RDONLY | fsConstants.O_NOFOLLOW);
+  try {
+    openedInfo = await handle.stat({ bigint: true });
+    assertRegularSingleLink(openedInfo, profilePath, "opened file");
+    if (!sameFileSnapshot(initialInfo, openedInfo)) {
+      throw new Error(`Current source profile identity changed before read: ${profilePath}`);
+    }
+    bytes = await handle.readFile();
+    openedFinalInfo = await handle.stat({ bigint: true });
+    assertRegularSingleLink(openedFinalInfo, profilePath, "after read");
+    if (!sameFileSnapshot(openedInfo, openedFinalInfo)) {
+      throw new Error(`Current source profile identity changed during read: ${profilePath}`);
+    }
+  } finally {
+    await handle.close();
+  }
+
+  const finalInfo = await lstat(profilePath, { bigint: true });
+  if (finalInfo.isSymbolicLink()) throw new Error(`Current source profile became a symbolic link during read: ${profilePath}`);
+  assertRegularSingleLink(finalInfo, profilePath, "final path");
+  if (!sameFileSnapshot(openedFinalInfo, finalInfo) || finalInfo.size !== BigInt(bytes.length)) {
+    throw new Error(`Current source profile path identity changed during read: ${profilePath}`);
+  }
+  const finalRealPath = await realpath(profilePath);
+  if (finalRealPath !== profilePath) {
+    throw new Error(`Current source profile path changed through a symbolic link during read: ${profilePath} -> ${finalRealPath}`);
+  }
+
+  const sha256 = createHash("sha256").update(bytes).digest("hex");
+  const implicitAuthority = expectedProfileSha256 === undefined
+    ? await resolveImplicitProfileAuthority(resolvedOutputRoot, profilePath)
+    : null;
+  const authorizedSha256 = expectedProfileSha256
+    ?? implicitAuthority.expectedProfileSha256;
+  if (sha256 !== authorizedSha256) {
+    throw new Error(`Current source profile SHA-256 mismatch: expected ${authorizedSha256}, got ${sha256}`);
+  }
+
+  let profile;
+  try {
+    profile = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes));
+  } catch (error) {
+    throw new Error(`Current source profile is not valid UTF-8 JSON: ${profilePath}: ${error.message}`);
+  }
+  validateCurrentSourceProfile(profile, profilePath);
+  return {
+    path: profilePath,
+    bytes: bytes.length,
+    sha256,
+    filesystemIdentity: serializableFileIdentity(finalInfo),
+    authority: implicitAuthority?.authority ?? {
+      type: "explicit-expected-profile-sha256",
+      sha256: authorizedSha256,
+    },
+    profile,
+  };
+}
+
+function assertKnownCounts(summary, knownCounts) {
   const checks = [
-    ["files", summary.source.fileCount, KNOWN_COUNTS.files],
-    ["source bytes", summary.source.totalBytes, KNOWN_COUNTS.totalBytes],
-    ["source checksum set", summary.source.checksumSetSha256, KNOWN_COUNTS.checksumSetSha256],
-    ["SWFs", summary.source.extensions.swf, KNOWN_COUNTS.swf],
-    ["FLAs", summary.source.extensions.fla, KNOWN_COUNTS.fla],
-    ["MP3s", summary.source.extensions.mp3, KNOWN_COUNTS.mp3],
-    ["XML files", summary.source.extensions.xml, KNOWN_COUNTS.xml],
-    ["course XML files", summary.xml.courseFiles, KNOWN_COUNTS.courseXml],
-    ["course SWFs", summary.swf.byCollection.course, KNOWN_COUNTS.swfByCollection.course],
-    ["keyterm SWFs", summary.swf.byCollection.keyterm, KNOWN_COUNTS.swfByCollection.keyterm],
-    ["formula SWFs", summary.swf.byCollection.formula, KNOWN_COUNTS.swfByCollection.formula],
-    ["unique SWF assets", summary.swf.uniqueAssets, KNOWN_COUNTS.uniqueSwfAssets],
-    ["duplicate SWF placements", summary.swf.duplicatePlacements, KNOWN_COUNTS.duplicatePlacements],
-    ["paired SWF/FLA", summary.pairing.pairedSwfFla, KNOWN_COUNTS.pairedSwfFla],
-    ["SWF-only", summary.pairing.swfOnly, KNOWN_COUNTS.swfOnly],
-    ["FLA-only", summary.pairing.flaOnly, KNOWN_COUNTS.flaOnly],
-    ["compound-binary FLAs", summary.fla.compoundBinary, KNOWN_COUNTS.compoundBinaryFla],
-    ["ZIP-archive FLAs", summary.fla.zipArchive, KNOWN_COUNTS.zipArchiveFla],
-    ["unrecognized FLAs", summary.fla.unrecognized, KNOWN_COUNTS.unrecognizedFla],
-    ["SWF frames", summary.swf.totalFrames, KNOWN_COUNTS.swfFrames],
-    ["course/index shells", summary.swf.courseShells, KNOWN_COUNTS.courseShells],
-    ["unique course references", summary.references.course.unique, KNOWN_COUNTS.courseReferences.unique],
-    ["resolved course references", summary.references.course.resolved, KNOWN_COUNTS.courseReferences.resolved],
-    ["missing course references", summary.references.course.missing, KNOWN_COUNTS.courseReferences.missing],
-    ["unreferenced course SWFs", summary.references.course.unreferencedExisting, KNOWN_COUNTS.courseReferences.unreferenced],
-    ["unique keyterm references", summary.references.keyterm.unique, KNOWN_COUNTS.keytermReferences.unique],
-    ["resolved keyterm references", summary.references.keyterm.resolved, KNOWN_COUNTS.keytermReferences.resolved],
-    ["missing keyterm references", summary.references.keyterm.missing, KNOWN_COUNTS.keytermReferences.missing],
-    ["unreferenced keyterm SWFs", summary.references.keyterm.unreferencedExisting, KNOWN_COUNTS.keytermReferences.unreferenced],
-    ["XML files with bare ampersands", summary.xml.filesWithBareAmpersands, KNOWN_COUNTS.xmlWithBareAmpersands],
+    ["files", summary.source.fileCount, knownCounts.files],
+    ["source bytes", summary.source.totalBytes, knownCounts.totalBytes],
+    ["source checksum set", summary.source.checksumSetSha256, knownCounts.checksumSetSha256],
+    ["source extensions", JSON.stringify(summary.source.extensions), JSON.stringify(knownCounts.sourceExtensions)],
+    ["SWFs", summary.source.extensions.swf, knownCounts.swf],
+    ["FLAs", summary.source.extensions.fla, knownCounts.fla],
+    ["MP3s", summary.source.extensions.mp3, knownCounts.mp3],
+    ["XML files", summary.source.extensions.xml, knownCounts.xml],
+    ["course XML files", summary.xml.courseFiles, knownCounts.courseXml],
+    ["course SWFs", summary.swf.byCollection.course, knownCounts.swfByCollection.course],
+    ["keyterm SWFs", summary.swf.byCollection.keyterm, knownCounts.swfByCollection.keyterm],
+    ["formula SWFs", summary.swf.byCollection.formula, knownCounts.swfByCollection.formula],
+    ["unknown-collection SWFs", summary.swf.byCollection.unknown, knownCounts.swfByCollection.unknown],
+    ["unique SWF assets", summary.swf.uniqueAssets, knownCounts.uniqueSwfAssets],
+    ["duplicate SWF groups", summary.swf.duplicateGroups, knownCounts.duplicateGroups],
+    ["duplicate SWF placements", summary.swf.duplicatePlacements, knownCounts.duplicatePlacements],
+    ["paired SWF/FLA", summary.pairing.pairedSwfFla, knownCounts.pairedSwfFla],
+    ["SWF-only", summary.pairing.swfOnly, knownCounts.swfOnly],
+    ["FLA-only", summary.pairing.flaOnly, knownCounts.flaOnly],
+    ["compound-binary FLAs", summary.fla.compoundBinary, knownCounts.compoundBinaryFla],
+    ["ZIP-archive FLAs", summary.fla.zipArchive, knownCounts.zipArchiveFla],
+    ["unrecognized FLAs", summary.fla.unrecognized, knownCounts.unrecognizedFla],
+    ["SWF frames", summary.swf.totalFrames, knownCounts.swfFrames],
+    ["SWF signatures", JSON.stringify(summary.swf.signatures), JSON.stringify(knownCounts.swfHeader.signatures)],
+    ["SWF FPS values", JSON.stringify(summary.swf.fpsValues), JSON.stringify(knownCounts.swfHeader.fpsValues)],
+    ["SWF header parse errors", summary.swf.headerParseErrors, knownCounts.swfHeader.headerParseErrors],
+    ["course/index shells", summary.swf.courseShells, knownCounts.courseShells],
+    ["unique course references", summary.references.course.unique, knownCounts.courseReferences.unique],
+    ["resolved course references", summary.references.course.resolved, knownCounts.courseReferences.resolved],
+    ["missing course references", summary.references.course.missing, knownCounts.courseReferences.missing],
+    ["unreferenced course SWFs", summary.references.course.unreferencedExisting, knownCounts.courseReferences.unreferenced],
+    ["unique keyterm references", summary.references.keyterm.unique, knownCounts.keytermReferences.unique],
+    ["resolved keyterm references", summary.references.keyterm.resolved, knownCounts.keytermReferences.resolved],
+    ["missing keyterm references", summary.references.keyterm.missing, knownCounts.keytermReferences.missing],
+    ["unreferenced keyterm SWFs", summary.references.keyterm.unreferencedExisting, knownCounts.keytermReferences.unreferenced],
+    ["XML files with bare ampersands", summary.xml.filesWithBareAmpersands, knownCounts.xmlWithBareAmpersands],
   ];
   const failures = checks.filter(([, actual, expected]) => actual !== expected);
   if (failures.length) {
     throw new Error(`Known-count verification failed:\n${failures.map(([label, actual, expected]) => `- ${label}: expected ${expected}, got ${actual}`).join("\n")}`);
   }
-  if (summary.swf.headerParseErrors !== 0) throw new Error(`Known-count verification failed: ${summary.swf.headerParseErrors} SWF header parse error(s)`);
-  if (summary.swf.fpsValues.length !== 1 || summary.swf.fpsValues[0] !== 12) {
-    throw new Error(`Known-count verification failed: expected every SWF to use 12 fps, got ${summary.swf.fpsValues.join(", ")}`);
+}
+
+export function assertLessonReleaseInvariants(lessonReleases, lessonReleasesContents, expected) {
+  const releases = lessonReleases.releases.map((release) => ({
+    releaseId: release.releaseId,
+    memberCount: release.members.length,
+  }));
+  const observed = {
+    outputSha256: createHash("sha256").update(lessonReleasesContents).digest("hex"),
+    releaseCount: releases.length,
+    totalMembers: releases.reduce((total, release) => total + release.memberCount, 0),
+    releases,
+  };
+  const checks = [
+    ["lesson-releases output SHA-256", observed.outputSha256, expected.outputSha256],
+    ["lesson release count", observed.releaseCount, expected.releaseCount],
+    ["lesson release member total", observed.totalMembers, expected.totalMembers],
+    ["lesson release identities", JSON.stringify(observed.releases), JSON.stringify(expected.releases)],
+  ];
+  const failures = checks.filter(([, actual, approved]) => actual !== approved);
+  if (failures.length > 0) {
+    throw new Error(`Known-count verification failed:\n${failures.map(([label, actual, approved]) => `- ${label}: expected ${approved}, got ${actual}`).join("\n")}`);
   }
 }
 
@@ -1467,10 +1821,18 @@ export async function buildHelpMathCatalog({
   output = DEFAULT_OUTPUT,
   concurrency = DEFAULT_CONCURRENCY,
   verifyKnownCounts = false,
+  expectedProfile,
+  expectedProfileSha256,
   check = false,
 } = {}) {
   if (!Number.isInteger(concurrency) || concurrency < 1 || concurrency > 32) {
     throw new Error("concurrency must be an integer from 1 to 32");
+  }
+  if (!verifyKnownCounts && (expectedProfile !== undefined || expectedProfileSha256 !== undefined)) {
+    throw new Error("expectedProfile and expectedProfileSha256 require verifyKnownCounts");
+  }
+  if (expectedProfile !== undefined && expectedProfileSha256 === undefined) {
+    throw new Error("An explicit expectedProfile requires expectedProfileSha256");
   }
   const { sourceRoot } = await resolveSourceRoot(source);
   const outputRoot = path.resolve(output);
@@ -1479,6 +1841,9 @@ export async function buildHelpMathCatalog({
   const parentReal = await realpath(path.dirname(outputRoot)).catch(() => path.resolve(path.dirname(outputRoot)));
   const prospectiveOutput = path.join(parentReal, path.basename(outputRoot));
   if (isWithin(sourceRoot, prospectiveOutput)) throw new Error(`Refusing to write catalog files inside the preserved source archive: ${outputRoot}`);
+  const currentSourceProfile = verifyKnownCounts
+    ? await loadCurrentSourceProfile({ outputRoot, expectedProfile, expectedProfileSha256 })
+    : null;
 
   const discovered = await collectFiles(sourceRoot);
   discovered.sort((left, right) => compareText(left.path, right.path));
@@ -1755,7 +2120,7 @@ export async function buildHelpMathCatalog({
     discrepancies,
   };
 
-  if (verifyKnownCounts) assertKnownCounts(summary);
+  if (verifyKnownCounts) assertKnownCounts(summary, currentSourceProfile.profile.expected);
 
   const missingReferences = {
     schemaVersion: 1,
@@ -1804,10 +2169,18 @@ export async function buildHelpMathCatalog({
         titleSpanish: section.titleSpanish,
         pageReferenceCount: section.pages.length,
       })),
-    })),
+      })),
   };
   const batches = buildBatchQueues(assets, { verifyKnownCounts });
   const lessonReleases = buildLessonReleases({animations, batches, lessons});
+  const lessonReleasesContents = json(lessonReleases);
+  if (verifyKnownCounts) {
+    assertLessonReleaseInvariants(
+      lessonReleases,
+      lessonReleasesContents,
+      currentSourceProfile.profile.expected.lessonReleases,
+    );
+  }
 
   const outputs = new Map([
     ["summary.json", json(summary)],
@@ -1822,7 +2195,7 @@ export async function buildHelpMathCatalog({
     ["lessons.json", json(lessons)],
     ["audio-groups.json", json(audioGroups)],
     ["batches.json", json(batches)],
-    ["lesson-releases.json", json(lessonReleases)],
+    ["lesson-releases.json", lessonReleasesContents],
     ["source-files.json", json({ schemaVersion: 1, sourceDirectory: SOURCE_DIRECTORY_NAME, fileCount: sourceFiles.length, totalBytes: summary.source.totalBytes, checksumSetSha256: summary.source.checksumSetSha256, files: sourceFiles })],
     ["source-files.jsonl", jsonl(sourceFiles)],
     ["source-files.csv", renderSourceCsv(sourceFiles)],
@@ -1841,6 +2214,16 @@ export async function buildHelpMathCatalog({
     await Promise.all([...outputs.entries()].map(([filename, contents]) =>
       writeFile(path.join(outputRoot, filename), contents, "utf8")));
   }
+  if (currentSourceProfile) {
+    const recheckedProfile = await loadCurrentSourceProfile({
+      outputRoot,
+      expectedProfile: currentSourceProfile.path,
+      expectedProfileSha256: currentSourceProfile.sha256,
+    });
+    if (JSON.stringify(recheckedProfile.filesystemIdentity) !== JSON.stringify(currentSourceProfile.filesystemIdentity)) {
+      throw new Error(`Current source profile filesystem identity changed during catalog build: ${currentSourceProfile.path}`);
+    }
+  }
 
   return {
     sourceRoot,
@@ -1853,6 +2236,12 @@ export async function buildHelpMathCatalog({
     flaOnly,
     batches,
     lessonReleases,
+    expectedProfile: currentSourceProfile ? {
+      path: currentSourceProfile.path,
+      bytes: currentSourceProfile.bytes,
+      sha256: currentSourceProfile.sha256,
+      filesystemIdentity: currentSourceProfile.filesystemIdentity,
+    } : null,
     check,
     outputFiles: [...outputs.keys()],
   };
@@ -1868,7 +2257,10 @@ Options:
   --source <directory>      Legacy source root; auto-detected when omitted
   --output <directory>      Catalog output directory (default: ${DEFAULT_OUTPUT})
   --concurrency <1-32>      Concurrent hashing/header workers (default: ${DEFAULT_CONCURRENCY})
-  --verify-known-counts     Fail unless the approved full-archive totals match
+  --verify-known-counts     Fail unless the selected current-source profile matches
+  --expected-profile <file> Override <output>/${CURRENT_SOURCE_PROFILE_FILENAME}
+  --expected-profile-sha256 <sha256>
+                            Require the selected profile's exact SHA-256
   --check                   Recompute and byte-check every catalog output without writing
   --help                    Show this help
 `;
@@ -1887,10 +2279,17 @@ function parseArguments(argv) {
       options.check = true;
       continue;
     }
-    if (!new Set(["--source", "--output", "--concurrency"]).has(argument)) throw new Error(`Unknown option: ${argument}`);
+    const optionKeys = new Map([
+      ["--source", "source"],
+      ["--output", "output"],
+      ["--concurrency", "concurrency"],
+      ["--expected-profile", "expectedProfile"],
+      ["--expected-profile-sha256", "expectedProfileSha256"],
+    ]);
+    if (!optionKeys.has(argument)) throw new Error(`Unknown option: ${argument}`);
     const value = argv[index + 1];
     if (!value || value.startsWith("--")) throw new Error(`Missing value for ${argument}`);
-    const key = argument.slice(2);
+    const key = optionKeys.get(argument);
     if (options[key] !== undefined) throw new Error(`Option provided more than once: ${argument}`);
     options[key] = key === "concurrency" ? Number(value) : value;
     index += 1;

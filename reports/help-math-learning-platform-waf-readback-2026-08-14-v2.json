@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 2,
+  "checkedAt": "2026-08-13T21:43:32Z",
+  "status": "pass-active-valid-configuration-readback",
+  "purpose": "Persistent, privacy-safe readback of the Vercel WAF rules protecting the HELP Math Nova and learning-event POST endpoints.",
+  "source": {
+    "ephemeralReadbackPath": "/tmp/help-math-firewall-active-final.json",
+    "ephemeralReadbackSha256": "3f25476e0d6e7326b54bffe37fc2aa00069907c0f2557d3a9480f6dc9b75ee81"
+  },
+  "project": {
+    "projectId": "prj_q3v5Ue0zCL1T9rzTFD21KpNc5tzu",
+    "teamId": "team_i9xhhYXUeYBOCLcfWBjTqlYG",
+    "firewallId": "waf_zZTuHYg69iAL",
+    "firewallEnabled": true,
+    "updatedAt": "2026-08-13T20:38:27.024Z",
+    "draftPresent": false
+  },
+  "rules": [
+    {
+      "id": "rule_nova_tutor_post_global_rate_limit_R3LkRI",
+      "name": "Nova Tutor POST global rate limit",
+      "path": "/api/nova",
+      "method": "POST",
+      "action": "rate_limit",
+      "limit": 12,
+      "windowSeconds": 60,
+      "algorithm": "fixed_window",
+      "key": "ip",
+      "active": true,
+      "valid": true,
+      "validationErrors": null
+    },
+    {
+      "id": "rule_learning_events_post_global_rate_limit_fhJnrq",
+      "name": "Learning events POST global rate limit",
+      "path": "/api/learning-events",
+      "method": "POST",
+      "action": "rate_limit",
+      "limit": 120,
+      "windowSeconds": 60,
+      "algorithm": "fixed_window",
+      "key": "ip",
+      "active": true,
+      "valid": true,
+      "validationErrors": null
+    }
+  ],
+  "applicationLayer": {
+    "sameOriginRequired": true,
+    "perInstanceRequestBudgetsEnabled": true,
+    "novaDefaultRequestsPerMinute": 12,
+    "learningEventsDefaultRequestsPerMinute": 120
+  },
+  "boundary": [
+    "This is an active-configuration readback, not a traffic-volume measurement or a claim that a distributed enforcement probe was executed.",
+    "The Vercel WAF rules complement, rather than replace, the application-layer same-origin checks, exact feature gates, schema limits, and per-instance request budgets.",
+    "No IP address, API key, password, endpoint credential, request body, provider response, or learner event is recorded here."
+  ]
+}

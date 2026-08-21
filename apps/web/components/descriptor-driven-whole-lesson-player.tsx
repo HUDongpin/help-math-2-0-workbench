@@ -1,11 +1,17 @@
 'use client';
 
 import {loadAnimationModule} from '@helpmath/demos/animation-registry';
-import {useEffect, useMemo, useRef, useState} from 'react';
+import {
+  createMemoryOnlyLessonHost,
+  type LessonHostDecision,
+  type LessonHostRequest,
+} from '@helpmath/demos/runtime';
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {
   AnimationRuntime,
   INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE,
+  type AnimationRuntimeNarrationRequest,
   type AnimationRuntimePlaybackState,
   type AnimationRuntimeSeekRequest,
 } from '@/components/animation-runtime';
@@ -14,17 +20,25 @@ import {LegacyKeyTermsBrowser} from '@/components/legacy-key-terms-browser';
 import {
   LegacyResponsiveLessonShell,
   type LegacyLessonShellVisualSkin,
+  type LessonShellSection,
   type LessonShellTool,
 } from '@/components/legacy-responsive-lesson-shell';
-import type {
-  WholeLessonPlayerDescriptor,
-  WholeLessonPlayerLocale,
+import type {WholeLessonHostPresentation} from '@/lib/whole-lesson-host-presentation';
+import {
+  resolveWholeLessonRuntimeSeed,
+  type DescriptorDrivenLessonPlayerDescriptor,
+  type WholeLessonPlayerLocale,
 } from '@/lib/whole-lesson-player-descriptor';
 import {
   appendLegacyLessonHistory,
   takeLegacyLessonHistory,
 } from '@/lib/legacy-shell-controls';
 import {LEGACY_MAP_RAIL_MIN_WIDTH} from '@/lib/legacy-lesson-layout';
+import type {PublicAuthStatus} from '@/lib/auth-session';
+import {
+  tutorPageContext,
+  type NovaTutorMode,
+} from '@/lib/tutor-integration';
 import {
   createInitialWholeLessonSessionProgress,
   parseWholeLessonSessionProgress,
@@ -33,15 +47,36 @@ import {
   visitWholeLessonPage,
 } from '@/lib/whole-lesson-session';
 
+function pageSessionId(
+  page: DescriptorDrivenLessonPlayerDescriptor['pages'][number],
+): string {
+  return page.placementId ?? page.animationId;
+}
+
 function visualSkin(
-  descriptor: WholeLessonPlayerDescriptor,
+  descriptor: DescriptorDrivenLessonPlayerDescriptor,
+  presentation: WholeLessonHostPresentation,
 ): LegacyLessonShellVisualSkin {
+  if (descriptor.schemaVersion === 2) {
+    return Object.freeze({
+      authoredStage: descriptor.stage,
+      presentation: 'modern-wide',
+      chromeAsset: '',
+      chromeEvidence: descriptor.visualSkin.evidence.kind,
+      chromeFooterHeight: 0,
+      chromeHeaderHeight: 0,
+      controlAssets: descriptor.visualSkin.controls,
+      layoutId: descriptor.visualSkin.layoutId,
+    });
+  }
   return Object.freeze({
     authoredStage: descriptor.stage,
+    presentation,
     chromeAsset: descriptor.visualSkin.chromeAsset,
     chromeEvidence: descriptor.visualSkin.evidence.kind,
     chromeFooterHeight: descriptor.visualSkin.footer.height,
     chromeHeaderHeight: descriptor.visualSkin.header.height,
+    chromeTitleBand: descriptor.visualSkin.header.title,
     controlAssets: descriptor.visualSkin.controls,
     backgroundCompanion: descriptor.visualSkin.backgroundCompanion,
     resumePrompt: descriptor.visualSkin.resumePrompt,
@@ -53,8 +88,11 @@ function visualSkin(
 }
 
 function calculatorEvidence(
-  descriptor: WholeLessonPlayerDescriptor,
+  descriptor: DescriptorDrivenLessonPlayerDescriptor,
 ): LegacyCalculatorEvidence {
+  if (descriptor.schemaVersion === 2) {
+    return Object.freeze({behaviorKind: 'modern-support-only'});
+  }
   return Object.freeze({
     behaviorKind: 'ffdec-actionscript-static-candidate',
     sourceAnimationId: descriptor.visualSkin.evidence.sourceAnimationId,
@@ -63,16 +101,26 @@ function calculatorEvidence(
 }
 
 export function DescriptorDrivenWholeLessonPlayer({
+  audioEnabled = false,
+  authStatus = 'disabled',
   candidateMode,
   descriptor,
+  hostPresentation = 'legacy-composite',
   locale,
+  novaTutorMode = 'focus',
   releasePublished,
+  reviewerMode = false,
   strictCompleteMemberCount,
 }: {
+  audioEnabled?: boolean;
+  authStatus?: PublicAuthStatus;
   candidateMode: boolean;
-  descriptor: WholeLessonPlayerDescriptor;
+  descriptor: DescriptorDrivenLessonPlayerDescriptor;
+  hostPresentation?: WholeLessonHostPresentation;
   locale: WholeLessonPlayerLocale;
+  novaTutorMode?: NovaTutorMode;
   releasePublished: boolean;
+  reviewerMode?: boolean;
   strictCompleteMemberCount: number;
 }) {
   const [progress, setProgress] = useState(() =>
@@ -93,17 +141,24 @@ export function DescriptorDrivenWholeLessonPlayer({
   );
   const [seekRequest, setSeekRequest] =
     useState<AnimationRuntimeSeekRequest | null>(null);
+  const [narrationRequest, setNarrationRequest] =
+    useState<AnimationRuntimeNarrationRequest | null>(null);
   const [runtimeEpoch, setRuntimeEpoch] = useState(0);
   const [navigationFocusEpoch, setNavigationFocusEpoch] = useState(0);
   const [tourFinished, setTourFinished] = useState(false);
   const initialPageFocusSkippedRef = useRef(false);
+  const pendingScrubberFocusRef = useRef<
+    'section-scrubber' | null
+  >(null);
   const lessonPlayerRef = useRef<HTMLDivElement>(null);
   const pageHeadingRef = useRef<HTMLHeadingElement>(null);
   const seekRequestIdRef = useRef(0);
+  const narrationRequestIdRef = useRef(0);
   const lessonNavigationHistoryRef = useRef<readonly string[]>([]);
   const currentPage = descriptor.pages.find(
-    (page) => page.animationId === progress.currentAnimationId,
+    (page) => pageSessionId(page) === progress.currentAnimationId,
   ) ?? descriptor.pages[0]!;
+  const currentPageSessionId = pageSessionId(currentPage);
   const currentIndex = currentPage.globalPageOrdinal - 1;
   const previousPage = descriptor.pages[currentIndex - 1] ?? null;
   const nextPage = descriptor.pages[currentIndex + 1] ?? null;
@@ -113,35 +168,91 @@ export function DescriptorDrivenWholeLessonPlayer({
   const currentLabel = currentPage.labels[progress.locale];
   const currentRenderer = currentPage.rendererAvailability;
   const runtimeAvailable = currentRenderer.kind === 'registered';
+  const currentRuntimeSeed = resolveWholeLessonRuntimeSeed(
+    currentRenderer,
+    progress.replayCounts[currentPageSessionId] ?? 0,
+  );
+  const lessonHost = useMemo(() => createMemoryOnlyLessonHost({
+    releaseId: descriptor.releaseId,
+    releaseMemberIds: [...new Set(
+      descriptor.pages.map((page) => page.animationId),
+    )],
+    currentAnimationId: currentPage.animationId,
+    enabledCapabilities: descriptor.schemaVersion === 2
+      ? descriptor.support.lessonHostCapabilities.filter(
+          (capability) => capability !== 'audio' || audioEnabled,
+        )
+      : audioEnabled ? ['audio'] : [],
+    initialLanguage: progress.locale,
+    mode: 'audit',
+    releasePublished: false,
+  }), [audioEnabled, currentPage.animationId, descriptor, progress.locale]);
+  const [, setLessonHostRevision] = useState(0);
+  const lessonHostState = lessonHost.snapshot();
+  const handleLessonHostRequest = useCallback((
+    request: LessonHostRequest,
+  ): LessonHostDecision => {
+    const decision = lessonHost.dispatch(request);
+    setLessonHostRevision((revision) => revision + 1);
+    if (decision.status === 'allowed') {
+      if (request.type === 'open-glossary') setPaused(true);
+      if (request.type === 'close-glossary') setPaused(false);
+    }
+    return decision;
+  }, [lessonHost]);
+  const closeGlossary = useCallback(() => {
+    handleLessonHostRequest({type: 'close-glossary'});
+  }, [handleLessonHostRequest]);
   const reviewed = new Set(progress.reviewedAnimationIds);
   const visited = new Set(progress.visitedAnimationIds);
   const spanish = progress.locale === 'es';
+  const activeGlossaryEntry = descriptor.schemaVersion === 2
+    ? descriptor.glossary.find(
+        (entry) => entry.id === lessonHostState.glossaryEntryId,
+      ) ?? null
+    : null;
   const registeredPages = descriptor.pages.filter(
     (page) => page.rendererAvailability.kind === 'registered',
   );
   const unavailablePageCount = descriptor.pages.length - registeredPages.length;
-  const shellImplementation = descriptor.shellImplementation;
+  const shellImplementation = descriptor.schemaVersion === 1
+    ? descriptor.shellImplementation
+    : undefined;
   const shellCurrentJsCandidate = Boolean(shellImplementation);
   const reviewedRegisteredCount = registeredPages.filter(
-    (page) => reviewed.has(page.animationId),
+    (page) => reviewed.has(pageSessionId(page)),
   ).length;
   const completionPercent = registeredPages.length
     ? Math.round((reviewedRegisteredCount / registeredPages.length) * 100)
     : 0;
   const requiredMemberCount =
     descriptor.course.expectedReleaseMemberCount;
-  const strictCompletion =
+  const descriptorMembershipIsValid = descriptor.course.activePageCount ===
+      descriptor.pages.length &&
+    descriptor.course.expectedReleaseMemberCount ===
+      descriptor.pages.length + descriptor.course.courseShellCount;
+  const strictCompletion = descriptorMembershipIsValid &&
     strictCompleteMemberCount === requiredMemberCount;
   const currentJsCandidate =
     registeredPages.length === descriptor.course.activePageCount &&
-    shellCurrentJsCandidate;
+    (descriptor.schemaVersion === 2 || shellCurrentJsCandidate);
   const pagesBySection = useMemo(() => Object.fromEntries(
     descriptor.sections.map((section) => [
       section.code,
       descriptor.pages.filter((page) => page.sectionCode === section.code),
     ]),
   ), [descriptor]);
-  const skin = useMemo(() => visualSkin(descriptor), [descriptor]);
+  const currentSectionPages = pagesBySection[currentSection.code] ?? [];
+  const currentSectionPageOrdinal = Math.max(
+    1,
+    currentSectionPages.findIndex(
+      (page) => pageSessionId(page) === currentPageSessionId,
+    ) + 1,
+  );
+  const skin = useMemo(
+    () => visualSkin(descriptor, hostPresentation),
+    [descriptor, hostPresentation],
+  );
 
   useEffect(() => {
     let active = true;
@@ -170,11 +281,14 @@ export function DescriptorDrivenWholeLessonPlayer({
   }, [descriptor, locale]);
 
   useEffect(() => {
+    // See the G4 L3 player: a permanent section spine makes an auto-opened
+    // course map a duplicate that covers it.
+    if (hostPresentation === 'modern-wide') return;
     const frame = window.requestAnimationFrame(() => {
       if (window.innerWidth >= LEGACY_MAP_RAIL_MIN_WIDTH) setMapOpen(true);
     });
     return () => window.cancelAnimationFrame(frame);
-  }, []);
+  }, [hostPresentation]);
 
   useEffect(() => {
     if (!hydrated) return;
@@ -203,22 +317,34 @@ export function DescriptorDrivenWholeLessonPlayer({
       initialPageFocusSkippedRef.current = true;
       return;
     }
+    if (pendingScrubberFocusRef.current) {
+      const focusKey = pendingScrubberFocusRef.current;
+      pendingScrubberFocusRef.current = null;
+      const frame = window.requestAnimationFrame(() => {
+        lessonPlayerRef.current
+          ?.querySelector<HTMLInputElement>(
+            `[data-responsive-focus-key="${focusKey}"]`,
+          )
+          ?.focus({preventScroll: true});
+      });
+      return () => window.cancelAnimationFrame(frame);
+    }
     pageHeadingRef.current?.focus();
-  }, [currentPage.animationId, hydrated, navigationFocusEpoch]);
+  }, [currentPageSessionId, hydrated, navigationFocusEpoch]);
 
   const navigateToPage = (
-    animationId: string,
+    pageId: string,
     recordHistory: boolean,
   ) => {
     if (recordHistory) {
       lessonNavigationHistoryRef.current = appendLegacyLessonHistory(
         lessonNavigationHistoryRef.current,
-        currentPage.animationId,
-        animationId,
+        currentPageSessionId,
+        pageId,
       );
     }
     setProgress((value) =>
-      visitWholeLessonPage(value, descriptor, animationId)
+      visitWholeLessonPage(value, descriptor, pageId)
     );
     setNavigationFocusEpoch((value) => value + 1);
     setRuntimeEpoch((value) => value + 1);
@@ -228,61 +354,62 @@ export function DescriptorDrivenWholeLessonPlayer({
     setPaused(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
+    setNarrationRequest(null);
   };
-  const selectPage = (animationId: string) => {
-    navigateToPage(animationId, true);
+  const selectPage = (pageId: string) => {
+    navigateToPage(pageId, true);
+  };
+  const selectSectionPageOrdinal = (sectionPageOrdinal: number) => {
+    const destination = currentSectionPages[sectionPageOrdinal - 1];
+    if (!destination || pageSessionId(destination) === currentPageSessionId) {
+      return;
+    }
+    pendingScrubberFocusRef.current = 'section-scrubber';
+    selectPage(pageSessionId(destination));
   };
 
+  // A page counts as reviewed when its current-JS animation has actually
+  // played through. A position without a registered renderer has nothing to
+  // play and therefore can never be counted.
   const reviewCurrentPage = () => {
-    if (!runtimeAvailable) return;
     setProgress((value) =>
-      reviewWholeLessonPage(value, descriptor, currentPage.animationId)
+      reviewWholeLessonPage(value, descriptor, currentPageSessionId)
     );
   };
 
+  // Next only moves. Stepping past a page never records it as reviewed.
   const advance = () => {
     if (!nextPage && tourFinished) return;
     if (nextPage) {
       lessonNavigationHistoryRef.current = appendLegacyLessonHistory(
         lessonNavigationHistoryRef.current,
-        currentPage.animationId,
-        nextPage.animationId,
+        currentPageSessionId,
+        pageSessionId(nextPage),
+      );
+      setProgress((value) =>
+        visitWholeLessonPage(value, descriptor, pageSessionId(nextPage))
       );
     }
-    setProgress((value) => {
-      const reviewedValue = runtimeAvailable
-        ? reviewWholeLessonPage(
-            value,
-            descriptor,
-            currentPage.animationId,
-          )
-        : value;
-      return nextPage
-        ? visitWholeLessonPage(
-            reviewedValue,
-            descriptor,
-            nextPage.animationId,
-          )
-        : reviewedValue;
-    });
     setRuntimeEpoch((value) => value + 1);
     setMapOpen(false);
     setActiveTool(null);
     setPaused(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
+    setNarrationRequest(null);
     if (!nextPage) setTourFinished(true);
   };
 
   const replayCurrentPage = () => {
     if (!runtimeAvailable) return;
     setProgress((value) =>
-      recordWholeLessonReplay(value, descriptor, currentPage.animationId)
+      recordWholeLessonReplay(value, descriptor, currentPageSessionId)
     );
     setRuntimeEpoch((value) => value + 1);
     setPaused(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
+    setNarrationRequest(null);
   };
 
   const inspectFrame = (frame: number) => {
@@ -301,7 +428,15 @@ export function DescriptorDrivenWholeLessonPlayer({
     setPaused(false);
   };
 
-  const libraryHref = spanish ? '/es/library' : '/library';
+  const toggleNarration = () => {
+    narrationRequestIdRef.current += 1;
+    setNarrationRequest({
+      action: playbackState.narration === 'playing' ? 'stop' : 'play',
+      requestId: narrationRequestIdRef.current,
+    });
+  };
+
+  const learningHomeHref = spanish ? '/es' : '/';
   const returnToPreviousLocation = () => {
     const transition = takeLegacyLessonHistory(
       lessonNavigationHistoryRef.current,
@@ -315,9 +450,9 @@ export function DescriptorDrivenWholeLessonPlayer({
       window.history.back();
       return;
     }
-    window.location.assign(libraryHref);
+    window.location.assign(learningHomeHref);
   };
-  const exitToLibrary = () => window.location.assign(libraryHref);
+  const exitToLearningHome = () => window.location.assign(learningHomeHref);
 
   const restartTour = () => {
     const confirmed = window.confirm(spanish
@@ -335,6 +470,7 @@ export function DescriptorDrivenWholeLessonPlayer({
     setPaused(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
+    setNarrationRequest(null);
     lessonNavigationHistoryRef.current = [];
   };
 
@@ -349,7 +485,10 @@ export function DescriptorDrivenWholeLessonPlayer({
         (page) => page.rendererAvailability.kind === 'registered',
       );
       const sectionReviewed = availableSectionPages.length > 0 &&
-        availableSectionPages.every((page) => reviewed.has(page.animationId));
+        availableSectionPages.every((page) =>
+          reviewed.has(pageSessionId(page))
+        );
+      const firstSectionPage = sectionPages[0]!;
       return <section key={section.code}>
         <h3>
           <button
@@ -359,7 +498,7 @@ export function DescriptorDrivenWholeLessonPlayer({
             className="lesson-shell2__map-section-jump"
             data-complete={sectionReviewed ? 'true' : 'false'}
             data-section-code={section.code}
-            onClick={() => selectPage(section.firstActiveAnimationId)}
+            onClick={() => selectPage(pageSessionId(firstSectionPage))}
             type="button"
           >
             <span aria-hidden="true">{sectionReviewed ? '✓' : section.order}</span>
@@ -370,20 +509,22 @@ export function DescriptorDrivenWholeLessonPlayer({
           {sectionPages.map((page) => {
             const pageLabel = page.labels[progress.locale];
             const available = page.rendererAvailability.kind === 'registered';
-            return <li key={page.animationId}>
+            const pageId = pageSessionId(page);
+            return <li key={pageId}>
               <button
-                aria-current={page.animationId === currentPage.animationId
+                aria-current={pageId === currentPageSessionId
                   ? 'step'
                   : undefined}
                 data-animation-id={page.animationId}
-                data-complete={reviewed.has(page.animationId) ? 'true' : 'false'}
+                data-complete={reviewed.has(pageId) ? 'true' : 'false'}
+                data-placement-id={page.placementId}
                 data-renderer-availability={available ? 'registered' : 'unavailable'}
-                data-visited={visited.has(page.animationId) ? 'true' : 'false'}
-                onClick={() => selectPage(page.animationId)}
+                data-visited={visited.has(pageId) ? 'true' : 'false'}
+                onClick={() => selectPage(pageId)}
                 type="button"
               >
                 <span>{available
-                  ? (reviewed.has(page.animationId)
+                  ? (reviewed.has(pageId)
                       ? '✓'
                       : page.globalPageOrdinal)
                   : '—'}</span>
@@ -406,8 +547,9 @@ export function DescriptorDrivenWholeLessonPlayer({
     {vocabularyPages.map((page) => {
       const label = page.labels[progress.locale];
       const available = page.rendererAvailability.kind === 'registered';
-      return <li key={page.animationId}>
-        <button onClick={() => selectPage(page.animationId)} type="button">
+      const pageId = pageSessionId(page);
+      return <li key={pageId}>
+        <button onClick={() => selectPage(pageId)} type="button">
           <span>{available ? page.globalPageOrdinal : '—'}</span>
           <span lang={label.sourceLanguage}>
             {label.text}
@@ -419,7 +561,31 @@ export function DescriptorDrivenWholeLessonPlayer({
       </li>;
     })}
   </ol>;
-  const keyTermsPanel = shellImplementation
+  const keyTermsPanel = descriptor.schemaVersion === 2
+    ? <div
+        className="lesson-shell2__key-terms"
+        data-key-terms-authority="canonical-grade-four-master-xml"
+      >
+        <p>{spanish
+          ? 'Este puente privado usa únicamente las tres definiciones bilingües exactas solicitadas por VB003.'
+          : 'This private bridge uses only the three exact bilingual definitions requested by VB003.'}</p>
+        <dl>
+          {descriptor.glossary.map((entry) => <div key={entry.id}>
+            <dt>{entry.labels[progress.locale]}</dt>
+            <dd>{entry.definitions[progress.locale]}</dd>
+          </div>)}
+        </dl>
+        <small>{spanish
+          ? 'Fuente ligada por SHA-256: ELKTSG4.xml.'
+          : 'Source bound by SHA-256: ELKTEG4.xml.'}</small>
+        <details>
+          <summary>{spanish
+            ? 'Ver las páginas de Palabras importantes de la lección'
+            : 'View lesson Important Words pages'}</summary>
+          {vocabularyPageList}
+        </details>
+      </div>
+    : shellImplementation
     ? <div
         className="lesson-shell2__key-terms"
         data-key-terms-shell-candidate="source-static-master-dependency"
@@ -480,10 +646,16 @@ export function DescriptorDrivenWholeLessonPlayer({
     currentPage.presentation?.pageInteractionCompanionTargetIdSuffix
       ? `${descriptor.course.domIdPrefix}-${currentPage.presentation.pageInteractionCompanionTargetIdSuffix}`
       : undefined;
+  const pageInteractionStageTargetId =
+    currentPage.presentation?.pageInteractionStageTargetIdSuffix
+      ? `${descriptor.course.domIdPrefix}-${currentPage.presentation.pageInteractionStageTargetIdSuffix}`
+      : undefined;
   const stage = currentRenderer.kind === 'registered'
     ? <AnimationRuntime
+        audioEnabled={audioEnabled}
+        audioLanguage={progress.locale}
         animationId={currentPage.animationId}
-        key={`${currentPage.animationId}:${runtimeEpoch}`}
+        key={`${currentPageSessionId}:${runtimeEpoch}`}
         labels={{
           replay: spanish ? 'Repetir' : 'Replay',
           reduced: spanish
@@ -495,26 +667,31 @@ export function DescriptorDrivenWholeLessonPlayer({
             : 'This lesson module is unavailable.',
           loading: spanish ? 'Cargando página…' : 'Loading page…',
         }}
-        loadedSwfHostAsset={currentPage.source.xmlBackgroundText
+        loadedSwfHostAsset={descriptor.schemaVersion === 1 &&
+          currentPage.source.xmlBackgroundText
           ? descriptor.visualSkin.backgroundCompanion?.loadedSwfHostAsset
           : undefined}
         moduleKey={currentRenderer.moduleKey}
+        narrationRequest={narrationRequest}
+        onLessonHostRequest={handleLessonHostRequest}
+        onPlaybackComplete={reviewCurrentPage}
         onPlaybackStateChange={setPlaybackState}
         onReplay={() => setProgress((value) =>
           recordWholeLessonReplay(
             value,
             descriptor,
-            currentPage.animationId,
+            currentPageSessionId,
           )
         )}
         paused={paused}
         pageInteractionCompanionTargetId={pageInteractionCompanionTargetId}
+        pageInteractionStageTargetId={pageInteractionStageTargetId}
         presentation="legacy-shell"
         query={{
           frameDomain: currentRenderer.runtimeQuery?.frameDomain,
           lang: runtimeLanguage,
           scenario: currentRenderer.runtimeQuery?.scenario,
-          seed: currentRenderer.runtimeQuery?.seed ?? '0',
+          seed: currentRuntimeSeed,
         }}
         seekRequest={seekRequest}
         uiLanguage={progress.locale}
@@ -540,23 +717,94 @@ export function DescriptorDrivenWholeLessonPlayer({
         </div>
       </section>;
 
+  const glossaryOverlay = activeGlossaryEntry
+    ? <section
+        aria-labelledby={`${descriptor.course.domIdPrefix}-glossary-title`}
+        aria-modal="true"
+        className="lesson-shell2__page-only-glossary"
+        data-glossary-entry-id={activeGlossaryEntry.id}
+        data-glossary-storage="memory-only"
+        data-source-key-attribute={activeGlossaryEntry.sourceKeyAttribute}
+        data-source-sha256={activeGlossaryEntry.source[progress.locale].sha256}
+        role="dialog"
+      >
+        <div>
+          <p>{spanish ? 'Glosario' : 'Glossary'}</p>
+          <h2 id={`${descriptor.course.domIdPrefix}-glossary-title`}>
+            {activeGlossaryEntry.labels[progress.locale]}
+          </h2>
+          <p>{activeGlossaryEntry.definitions[progress.locale]}</p>
+          <button autoFocus onClick={closeGlossary} type="button">
+            {spanish ? 'Cerrar y continuar' : 'Close and continue'}
+          </button>
+        </div>
+      </section>
+    : undefined;
+
   const helpPanel = <div className="lesson-shell2__help">
     <p>{spanish
-      ? `Usa Anterior y Siguiente para recorrer las ${descriptor.pages.length} posiciones del XML. ${registeredPages.length} tienen módulos current-JS; ${unavailablePageCount} permanecen explícitamente no disponibles.`
-      : `Use Previous and Next to traverse all ${descriptor.pages.length} XML positions. ${registeredPages.length} have current-JS modules; ${unavailablePageCount} remain explicitly unavailable.`}</p>
+      ? 'Usa Anterior y Siguiente para recorrer esta lección.'
+      : 'Use Previous and Next to move through this lesson.'}</p>
     <p>{spanish
-      ? 'Solo una página con renderer registrado puede marcarse como revisada. El progreso local no modifica la admisión estricta.'
-      : 'Only a page with a registered renderer can be marked reviewed. Local progress never changes strict admission.'}</p>
+      ? 'Una página se completa cuando termina su animación. Tu progreso permanece guardado en este dispositivo.'
+      : 'A page completes when its animation finishes. Your progress stays saved on this device.'}</p>
     <p>{spanish
       ? 'La ayuda moderna no ejecuta vínculos heredados.'
       : 'Modern help does not execute legacy links.'}</p>
   </div>;
 
+  // The shared modern lesson shell owns the learner-facing section spine.
+  // Descriptor-driven lessons already carry the exact section sequence, so
+  // adapt that data here instead of teaching the shell about a specific
+  // grade, lesson, or animation id.
+  const shellSections: LessonShellSection[] = descriptor.sections.map(
+    (section) => {
+      const sectionPages = pagesBySection[section.code] ?? [];
+      const allReviewed = sectionPages.length > 0 && sectionPages.every(
+        (page) => reviewed.has(pageSessionId(page)),
+      );
+      const firstSectionPage = sectionPages[0];
+      return {
+        code: section.code,
+        title: section.labels[progress.locale].text,
+        state: section.code === currentSection.code
+          ? 'current'
+          : allReviewed
+            ? 'complete'
+            : 'upcoming',
+        onSelect: () => firstSectionPage && navigateToPage(
+          pageSessionId(firstSectionPage),
+          true,
+        ),
+      };
+    },
+  );
+  const tutorContext = tutorPageContext({
+    releaseId: descriptor.releaseId,
+    grade: descriptor.course.grade,
+    lesson: descriptor.course.lesson,
+    animationId: currentPage.animationId,
+    sectionCode: currentPage.sectionCode,
+    sectionTitle: sectionLabel.text,
+    globalPageOrdinal: currentPage.globalPageOrdinal,
+    activePageCount: descriptor.course.activePageCount,
+    pageTitle: currentLabel.text,
+    pageTitleEnglish: currentPage.labels.en.text,
+    pageTitleSpanish: currentPage.labels.es.usesEnglishFallback
+      ? null
+      : currentPage.labels.es.text,
+    locale: progress.locale,
+    pageTitleUsesEnglishFallback: currentLabel.usesEnglishFallback,
+  });
+
   return <div
     data-current-animation-id={currentPage.animationId}
+    data-current-placement-id={currentPage.placementId}
     data-current-page={currentPage.globalPageOrdinal}
     data-hydrated={hydrated ? 'true' : 'false'}
-    data-lesson-player="descriptor-driven-whole-lesson-audit"
+    data-lesson-player={descriptor.schemaVersion === 2
+      ? 'descriptor-driven-page-only-product-bridge'
+      : 'descriptor-driven-whole-lesson-audit'}
     data-progress-kind="learner-session"
     data-progress-storage="local-device-only"
     data-renderer-availability={currentRenderer.kind}
@@ -571,28 +819,16 @@ export function DescriptorDrivenWholeLessonPlayer({
     <LegacyResponsiveLessonShell
       activeTool={activeTool}
       audioAvailable={playbackState.audioAvailable}
+      authStatus={authStatus}
       backgroundCompanionVisible={
         currentPage.source.xmlBackgroundText === true
       }
       calculatorEvidence={calculator}
       candidateMode={candidateMode}
-      completionAction={<button
-        aria-pressed={runtimeAvailable
-          ? reviewed.has(currentPage.animationId)
-          : undefined}
-        disabled={!runtimeAvailable}
-        onClick={reviewCurrentPage}
-        type="button"
-      >
-        {!runtimeAvailable
-          ? (spanish ? 'current-JS no disponible' : 'current-JS unavailable')
-          : reviewed.has(currentPage.animationId)
-            ? (spanish ? '✓ Página revisada' : '✓ Page reviewed')
-            : (spanish ? 'Marcar como revisada' : 'Mark reviewed')}
-      </button>}
+      reviewerMode={reviewerMode}
       completionLabel={spanish
-        ? `${reviewedRegisteredCount} de ${registeredPages.length} páginas current-JS revisadas · ${unavailablePageCount} no disponibles`
-        : `${reviewedRegisteredCount} of ${registeredPages.length} current-JS pages reviewed · ${unavailablePageCount} unavailable`}
+        ? `${reviewedRegisteredCount} de ${registeredPages.length} páginas completadas`
+        : `${reviewedRegisteredCount} of ${registeredPages.length} pages complete`}
       completionPercent={completionPercent}
       courseContext={{
         courseTitle: descriptor.course.labels[progress.locale],
@@ -604,25 +840,27 @@ export function DescriptorDrivenWholeLessonPlayer({
       courseHref={descriptor.course.href}
       currentAnimationId={currentPage.animationId}
       currentPage={currentPage.globalPageOrdinal}
-      disclosure={<section
-        aria-label={spanish ? 'Límite de evidencia' : 'Evidence boundary'}
-        className="lesson-shell2__audit-boundary"
-      >
-        <strong>{spanish ? 'Vista local de auditoría' : 'Local audit view'}</strong>
-        <span>{spanish
-          ? `${registeredPages.length}/${descriptor.pages.length} páginas current-JS más ${shellCurrentJsCandidate ? 'un candidato funcional estático del shell' : 'ningún candidato del shell'}; ${strictCompleteMemberCount}/${requiredMemberCount} miembros estrictos; no publicada.`
-          : `${registeredPages.length}/${descriptor.pages.length} current-JS pages plus ${shellCurrentJsCandidate ? 'one source-static functional shell candidate' : 'no shell candidate'}; ${strictCompleteMemberCount}/${requiredMemberCount} strict members; unpublished.`}</span>
-      </section>}
+      disclosure={reviewerMode
+        ? <section
+            aria-label={spanish ? 'Límite de evidencia' : 'Evidence boundary'}
+            className="lesson-shell2__audit-boundary"
+          >
+            <strong>{spanish ? 'Vista local de auditoría' : 'Local audit view'}</strong>
+            <span>{spanish
+              ? `${registeredPages.length}/${descriptor.pages.length} páginas current-JS; los contratos históricos del shell y de admisión estricta permanecen disponibles solo para revisión interna.`
+              : `${registeredPages.length}/${descriptor.pages.length} current-JS pages; historical shell and strict-admission contracts remain available for internal review only.`}</span>
+          </section>
+        : undefined}
       finishedNotice={tourFinished
         ? <section aria-live="polite" className="lesson-shell2__finished">
             <span aria-hidden="true">★</span>
             <div>
               <h2>{spanish
-                ? 'Recorrido XML finalizado'
-                : 'XML tour finished'}</h2>
+                ? 'Lección completada'
+                : 'Lesson complete'}</h2>
               <p>{spanish
-                ? `Revisaste ${reviewedRegisteredCount} de ${registeredPages.length} páginas disponibles. Las ${unavailablePageCount} páginas pendientes no se cuentan como revisadas.`
-                : `You reviewed ${reviewedRegisteredCount} of ${registeredPages.length} available pages. The ${unavailablePageCount} pending pages are not counted as reviewed.`}</p>
+                ? `Completaste ${reviewedRegisteredCount} de ${registeredPages.length} páginas.`
+                : `You completed ${reviewedRegisteredCount} of ${registeredPages.length} pages.`}</p>
             </div>
           </section>
         : undefined}
@@ -635,34 +873,46 @@ export function DescriptorDrivenWholeLessonPlayer({
       locale={progress.locale}
       mapOpen={mapOpen}
       mapPanel={mapPanel}
+      narrationStatus={playbackState.narration}
+      novaTutorMode={novaTutorMode}
+      sections={shellSections}
+      sectionProgress={{
+        code: currentSection.code,
+        currentPage: currentSectionPageOrdinal,
+        label: currentSection.labels[progress.locale].text,
+        onPageSelect: selectSectionPageOrdinal,
+        totalPages: currentSectionPages.length,
+      }}
       nextControlLabel={tourFinished
-        ? (spanish ? 'Recorrido finalizado' : 'Lesson tour finished')
+        ? (spanish ? 'Lección completada' : 'Lesson complete')
         : nextPage
           ? (spanish ? 'Página siguiente' : 'Next page')
           : (spanish ? 'Terminar recorrido' : 'Finish tour')}
       nextDisabled={!nextPage && tourFinished}
       nextLabel={tourFinished
-        ? (spanish ? 'Recorrido finalizado ✓' : 'Lesson tour finished ✓')
+        ? (spanish ? 'Lección completada ✓' : 'Lesson complete ✓')
         : nextPage
-          ? runtimeAvailable
-            ? (spanish ? 'Revisada y siguiente →' : 'Reviewed & next →')
-            : (spanish ? 'Siguiente página →' : 'Next page →')
-          : runtimeAvailable
-            ? (spanish ? 'Revisar y terminar ✓' : 'Review & finish ✓')
-            : (spanish ? 'Terminar recorrido ✓' : 'Finish tour ✓')}
+          ? (spanish ? 'Siguiente →' : 'Next →')
+          : (spanish ? 'Terminar recorrido ✓' : 'Finish tour ✓')}
       onMapOpenChange={setMapOpen}
+      onNarrationToggle={toggleNarration}
       onHeaderBack={returnToPreviousLocation}
-      onExit={exitToLibrary}
+      onExit={exitToLearningHome}
       onNext={advance}
       onPausedChange={setPaused}
       onPlaybackResumeFromInspection={resumeFromInspectedFrame}
       onPlaybackSeek={inspectFrame}
       onPrevious={() =>
-        previousPage && selectPage(previousPage.animationId)}
+        previousPage && selectPage(pageSessionId(previousPage))}
       onReplay={replayCurrentPage}
+      onStageOverlayControlIntent={activeGlossaryEntry
+        ? closeGlossary
+        : undefined}
       onToolChange={setActiveTool}
       onVolumeChange={setVolume}
+      pageComplete={runtimeAvailable && reviewed.has(currentPageSessionId)}
       pageInteractionCompanionTargetId={pageInteractionCompanionTargetId}
+      pageInteractionStageTargetId={pageInteractionStageTargetId}
       pageHeading={pageHeading}
       paused={paused}
       playbackFrame={playbackState.frame}
@@ -684,15 +934,21 @@ export function DescriptorDrivenWholeLessonPlayer({
       }}
       runtimeAvailable={runtimeAvailable}
       stage={stage}
+      stageOverlay={glossaryOverlay}
+      stageOverlayControlsEnabled={Boolean(activeGlossaryEntry)}
       status={<>
         <div>
           <p>
             <strong>{spanish
               ? 'Estado del paquete:'
               : 'Package status:'}</strong>{' '}
-            {spanish
-              ? `Interfaz funcional de auditoría con las ${descriptor.course.activePageCount} páginas registradas y el shell JavaScript; no es una declaración de fidelidad estricta ni de publicación.`
-              : `Functional audit interface with all ${descriptor.course.activePageCount} registered pages and the JavaScript shell; this is not a strict-fidelity or publication claim.`}
+            {descriptor.schemaVersion === 2
+              ? spanish
+                ? `Puente privado page-only: ${registeredPages.length}/${descriptor.course.activePageCount} páginas registradas en el host moderno My Lesson; no es una declaración de fidelidad estricta ni de publicación.`
+                : `Private page-only bridge: ${registeredPages.length}/${descriptor.course.activePageCount} pages registered in the modern My Lesson host; this is not a strict-fidelity or publication claim.`
+              : spanish
+                ? `Interfaz funcional de auditoría con ${registeredPages.length}/${descriptor.course.activePageCount} páginas registradas y el candidato de shell JavaScript; no es una declaración de fidelidad estricta ni de publicación.`
+                : `Functional audit interface with ${registeredPages.length}/${descriptor.course.activePageCount} registered pages and the JavaScript shell candidate; this is not a strict-fidelity or publication claim.`}
           </p>
           <p>{spanish
             ? 'La fidelidad de ejecución original, el audio, la comparación visual, la revisión humana y la aceptación del propietario siguen siendo puertas independientes.'
@@ -703,6 +959,7 @@ export function DescriptorDrivenWholeLessonPlayer({
           : 'Restart tour'}</button>
       </>}
       totalPages={descriptor.course.activePageCount}
+      tutorContext={tutorContext}
       visualSkin={skin}
       volume={volume}
     />

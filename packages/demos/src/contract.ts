@@ -90,7 +90,12 @@ export interface AudioCue {
 
 export interface AudioTrack {
   readonly id: string;
-  readonly language: AnimationLanguage;
+  /**
+   * `shared` exposes one exact source asset in both locale views without
+   * claiming that its spoken language has been established.
+   */
+  readonly language: AnimationLanguage | 'shared';
+  readonly spokenLanguage?: 'undetermined';
   readonly label: string;
   readonly source: string;
   readonly durationMs: number;
@@ -101,6 +106,19 @@ export interface AudioTrack {
   readonly frameDomains?: readonly string[];
   /** Legacy host effect on the active source timeline while this track plays. */
   readonly timelineBehavior?: 'none' | 'pause-while-playing';
+}
+
+/**
+ * A source-bound audio file that a renderer may request only through the
+ * typed lesson-host contract. Unlike a timeline cue or the shell narration
+ * track, this asset belongs to an explicit in-page interaction such as a
+ * question or answer speaker button.
+ */
+export interface InteractiveAudioAsset {
+  readonly id: string;
+  readonly language: AnimationLanguage;
+  readonly source: string;
+  readonly sha256: string;
 }
 
 /**
@@ -120,6 +138,8 @@ export interface AnimationTransportCapability {
 }
 
 export interface AnimationRendererProps {
+  /** Product publication gate; false/absent means no audio may be advertised or requested. */
+  readonly audioEnabled?: boolean;
   /** The runtime-owned, one-indexed Flash frame. */
   readonly frame: number;
   /** Optional only for backward-compatible direct renderer tests. */
@@ -134,11 +154,15 @@ export interface AnimationRendererProps {
   /**
    * Optional language for app-owned responsive controls and accessibility
    * copy. This never changes the source-runtime language, capture identity,
-   * visual evidence, or audio eligibility represented by `lang`.
+   * or visual evidence represented by `lang`. A module may use it only for
+   * explicitly declared, exact product-audio routing that stays independent
+   * from the fixed visual runtime language.
    */
   readonly uiLanguage?: AnimationLanguage;
   readonly seed: number;
   readonly state?: unknown;
+  /** Live product-runtime state for an exact typed interactive audio asset. */
+  readonly activeInteractiveAudioId?: string | null;
   readonly onReplay?: () => void;
   /**
    * Typed modern host intent. The optional trigger stays outside the serializable
@@ -159,6 +183,12 @@ export interface AnimationRendererProps {
    * standalone in-stage fallback when this host is absent.
    */
   readonly pageInteractionCompanionTargetId?: string;
+  /**
+   * Optional host-owned overlay target inside the authored stage plane. This
+   * is for responsive current-JS controls that must remain inside the visible
+   * animation rectangle; it is separate from the below-stage companion host.
+   */
+  readonly pageInteractionStageTargetId?: string;
 }
 
 export interface AnimationModule<State = unknown> {
@@ -191,6 +221,8 @@ export interface AnimationModule<State = unknown> {
   readonly audioCues: readonly AudioCue[];
   /** Host-level audio buttons that were user-triggered rather than timeline cues. */
   readonly audioTracks?: readonly AudioTrack[];
+  /** Exact, user-triggered audio assets addressable by typed lesson-host ID. */
+  readonly interactiveAudioAssets?: readonly InteractiveAudioAsset[];
   /** Explicit, fail-closed modern transport capability. Absence disables seeking. */
   readonly transport?: AnimationTransportCapability;
   /**
@@ -199,7 +231,15 @@ export interface AnimationModule<State = unknown> {
    * calls or external endpoints.
    */
   readonly lessonHost?: LessonHostCapabilityDescriptor;
-  readonly maturity: 'legacy-prototype' | 'strict-complete';
+  /**
+   * `private-current-js` is an engineering registration admitted only to a
+   * private/local product surface. It is implementation availability, never
+   * fidelity, strict-completion, release, or publication authority.
+   */
+  readonly maturity:
+    | 'legacy-prototype'
+    | 'private-current-js'
+    | 'strict-complete';
   readonly Renderer: ComponentType<AnimationRendererProps>;
   readonly getFrameState: (frame: number, context: RuntimeContext) => State;
 }

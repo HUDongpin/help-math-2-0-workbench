@@ -1,6 +1,6 @@
 ---
 name: flash-to-js
-description: Audit and faithfully migrate Adobe Flash FLA/SWF educational content into maintainable HTML5 JavaScript for Next.js/React. Use for catalog-backed source intake, FLA/SWF/ActionScript/timeline/audio audits, Ruffle forensic references, authorized original-runtime trace and full-frame evidence, SVG/Canvas/CreateJS/PixiJS renderer selection, deterministic frame-domain reconstruction, bilingual and audio validation, immutable human and owner review, strict completion ledgers, and atomic lesson release.
+description: Audit and faithfully migrate Adobe Flash FLA/SWF educational content into maintainable HTML5 JavaScript for Next.js/React. Use for catalog-backed source intake, FLA/SWF/ActionScript/timeline/audio audits, compiler-assisted migration-factory calibration and scale-out, Current-JS registration and modern My Lesson integration, public-tool provenance and licensing boundaries, Ruffle forensic references, authorized original-runtime trace and full-frame evidence, SVG/Canvas/CreateJS/PixiJS renderer selection, deterministic frame-domain reconstruction, bilingual and audio validation, immutable human and owner review, strict completion ledgers, and atomic lesson release.
 ---
 
 # Flash To JavaScript
@@ -12,14 +12,17 @@ Recover the authored behavior before choosing a renderer. Preserve source eviden
 Treat these as distinct states. Never promote one into another by implication:
 
 1. `structural/static evidence`: facts extracted from FLA, SWF, catalogs, screenshots, or reports.
-2. `current-JS candidate`: a runnable JavaScript implementation and its deterministic captures.
-3. `authoritative original-runtime evidence`: hash-bound captures from an authorized original runtime for the exact requirement and trace.
-4. `technical comparison`: full-frame manifests, metrics, diffs, behavior, product, and accessibility checks.
-5. `audio acceptance`: source-bound machine evidence plus named-human original-runtime listening when audio is required.
-6. `human visual review`: an immutable record created by the named person who inspected the complete visual evidence.
-7. `owner acceptance`: a separate immutable decision by the owner or authorized representative.
-8. `strict complete`: the strict validator and current completion ledger both pass.
-9. `lesson published`: every required placement in the lesson release is strict complete and the atomic lesson-release ledger permits publication.
+2. `unregistered engineering candidate`: a runnable JavaScript implementation and deterministic captures that have not completed the reviewed product-registration path.
+3. `registered Current-JS product integration`: the reviewed module and assets are in the official registry, the exact active placement is in the source-ordered lesson descriptor, and the modern My Lesson host can present it on the admitted private or product surface.
+4. `authoritative original-runtime evidence`: hash-bound captures from an authorized original runtime for the exact requirement and trace.
+5. `technical comparison`: full-frame manifests, metrics, diffs, behavior, product, and accessibility checks.
+6. `audio acceptance`: source-bound machine evidence plus named-human original-runtime listening when audio is required.
+7. `human visual review`: an immutable record created by the named person who inspected the complete visual evidence.
+8. `owner acceptance`: a separate immutable decision by the owner or authorized representative.
+9. `strict complete`: the strict validator and current completion ledger both pass.
+10. `lesson published`: every required placement is strict complete, the atomic lesson-release ledger is technically eligible, and the externally anchored production-trust path admits the required preview, staged, and owner-promotion decisions.
+
+Count a page toward page-level Current-JS coverage only at state 3. A private or local engineering registration may reach state 3 while states 4 through 10 remain explicitly false or pending. Registration does not grant original-runtime authority, fidelity, audio, human or owner acceptance, strict completion, release, or publication.
 
 Ruffle is a versioned forensic reference and compatibility fallback. It is not an authoritative original-runtime baseline and cannot prove fidelity, audio, interaction causality, human review, owner acceptance, strict completion, or release readiness.
 
@@ -40,7 +43,7 @@ node skills/flash-to-js/scripts/validate_migration.mjs migrations/<animation-id>
 
 For an existing workspace, run only the draft validator command against its canonical path before continuing.
 
-Do not edit files under `source-assets/` or external legacy archives.
+Do not modify or overwrite preserved files under `source-assets/` or external legacy archives. Promote a reviewed new source only through the hash-bound, rollback-safe intake boundary in [source-intake.md](references/source-intake.md); never copy it ad hoc.
 
 ## Select The Evidence Path
 
@@ -51,6 +54,14 @@ Do not edit files under `source-assets/` or external legacy archives.
 - Keep a Ruffle route when useful for observation, but resolve disagreements from FLA/SWF structure and authorized original-runtime evidence.
 
 Read [swf-audit.md](references/swf-audit.md) before extraction or Animate inspection.
+
+## Calibrate A Migration Factory Before Scale-Out
+
+Treat FFDec, swfmill, FFmpeg, Playwright, and similar public tools as a compiler-assisted front end and evidence generator, not as a universal one-click converter to maintainable native JavaScript. Structural export, callable Canvas output, P-code classification, audio decode, and smoke captures remain state 1 or 2 until the product-registration contract is satisfied.
+
+Before lesson-wide or multi-lesson generation, complete a representative product vertical slice across every applicable complexity lane. Route each selected page through source-bound extraction, a compact versioned IR or configuration, a maintainable module or shared adapter, the official registry, the source-ordered lesson descriptor, the private modern My Lesson host, Replay/interaction/audio lifecycle, and desktop/mobile browser QA. Do not authorize engineering scale-out from structural throughput alone.
+
+Read [factory-scaleout.md](references/factory-scaleout.md) before designing, running, measuring, or expanding a compiler-assisted Flash-to-JavaScript factory. Keep the original-runtime, fidelity, audio, human, owner, strict-completion, and publication rules in their existing references fully in force.
 
 ## Audit And Specify Before Rendering
 
@@ -161,12 +172,21 @@ node skills/flash-to-js/scripts/validate_migration.mjs migrations/<animation-id>
 ```
 
 - Rebuild and check the completion and lesson-release ledgers. Never edit generated ledgers by hand.
-- Publish a lesson only when every required placement is strict complete and the atomic lesson-release ledger permits the exact lesson shell and placement set.
+- Treat an eligible atomic lesson-release ledger entry as the technical witness
+  for that exact strict-complete page-placement set, not as publication
+  authority. Publish only through the externally anchored production-trust
+  path required by [lesson-release.md](references/lesson-release.md). Under the
+  2026-08-16 Owner decision in `AGENTS.md`, the
+  legacy Flash course-shell SWF remains source evidence but is not a migration
+  or release member; the modern My Lesson host is validated as product
+  integration rather than recreated as a Flash animation.
 
 Read [lesson-release.md](references/lesson-release.md) before changing product visibility or publication state.
 
 ## Report The Result
 
 Report exact files changed, animation and asset IDs, source paths and hashes, stage/FPS/root and nested frame domains, implementation route, standalone package, test/build results, implementation and original-runtime capture status, full-frame metrics, audio status, accessibility checks, human and owner record status, ledger/release status, and every unresolved exception.
+
+For factory work, also report the operational funnel and measured candidate-to-product costs defined in [factory-scaleout.md](references/factory-scaleout.md). Never use structural compiler coverage or generated-candidate count as the registered Current-JS count.
 
 Do not call a migration one-to-one, faithful, complete, accepted, or published unless the corresponding evidence state above is actually satisfied.

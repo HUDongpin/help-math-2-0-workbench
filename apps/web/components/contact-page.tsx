@@ -2,11 +2,10 @@ import {CircleAlert, ShieldCheck} from 'lucide-react';
 
 import type {ContactContent, Locale} from '@/content/types';
 
-import {ContactForm} from './contact-form';
 import {PageHero} from './page-hero';
 import {Callout, Container, Section} from './ui';
 
-export function ContactPage({content, locale}: {content: ContactContent; locale: Locale}) {
+export function ContactPage({content}: {content: ContactContent; locale: Locale}) {
   return (
     <>
       <PageHero content={content.hero} tone="yellow" />
@@ -17,8 +16,16 @@ export function ContactPage({content, locale}: {content: ContactContent; locale:
       </Section>
       <Section>
         <Container className="contact-layout">
-          <div className="contact-form-shell">
-            <ContactForm content={content} locale={locale} />
+          <div
+            className="contact-form-shell"
+            data-contact-form="disabled"
+            role="status"
+          >
+            <CircleAlert aria-hidden="true" size={38} />
+            <h2 className="mt-4 font-[family-name:var(--font-display)] text-3xl font-bold">
+              {content.form.title}
+            </h2>
+            <p className="mt-3 text-[var(--ink-soft)]">{content.form.intro}</p>
           </div>
           <aside className="contact-safety">
             <ShieldCheck aria-hidden="true" size={38} />

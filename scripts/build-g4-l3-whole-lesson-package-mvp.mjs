@@ -3179,9 +3179,10 @@ run from \`file://\`; the included local Node server is required.
   review, RMSE acceptance, Owner acceptance, strict completion, and public
   release remain pending.
 - The strict lesson ledger remains 0/40 and unpublished.
-- Learner "reviewed" progress in this package is local UI state. It is not
-  migration completion, instructional mastery, an assessment score, or
-  acceptance evidence.
+- Learner page-completion progress in this package is local UI state earned by
+  playing a page's animation to its authored end frame. It is not migration
+  completion, instructional mastery, an assessment score, or acceptance
+  evidence.
 
 This artifact is for local/private controlled preview. Do not publish it to a
 public host or Vercel. A private remote demonstration should keep the server on
@@ -5995,7 +5996,7 @@ export async function smokePackageAt(
           await picker.selectOption(animationId);
           await waitForCurrentAnimation(animationId);
           const trigger = player.locator(
-            '.course-g04-l03-source-glossary-companion '
+            '[data-source-glossary-placement="visible-stage-content-bottom"] '
               + 'button[data-source-key-attribute]:not([disabled])',
           ).first();
           await trigger.waitFor({state: 'visible', timeout: 45_000});
@@ -6426,9 +6427,9 @@ export async function smokePackageAt(
           await terminalRuntime.getAttribute('data-v2-terminal-runtime-marker')
             === 'stable';
         if (
-          finishLabelBefore !== 'Finish review'
+          finishLabelBefore !== 'Finish lesson'
           || finishDisabledBefore
-          || finishLabelAfter !== 'Lesson review finished'
+          || finishLabelAfter !== 'Lesson finished'
           || !finishDisabledAfter
           || !terminalIdempotent
         ) {
@@ -6476,7 +6477,7 @@ export async function smokePackageAt(
       } else {
         await page.getByRole(
           'button',
-          {name: 'Reviewed & next →', exact: true},
+          {name: 'Next →', exact: true},
         ).click();
         await page.locator('[data-current-page="2"]').waitFor();
       }

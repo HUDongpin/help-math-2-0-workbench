@@ -152,8 +152,8 @@ const INPUT_PATHS = Object.freeze({
   wholeLessonShell: "apps/web/components/legacy-responsive-lesson-shell.tsx",
   wholeLessonDescriptor: "apps/web/lib/g4-l3-whole-lesson-player-descriptor.ts",
   wholeLessonState: "apps/web/lib/g4-l3-whole-lesson.ts",
-  controlledPreviewPolicy: "apps/web/lib/g4-l3-controlled-ceo-preview.ts",
-  controlledPreviewBoundary: "apps/web/components/g4-l3-controlled-ceo-preview-boundary.tsx",
+  currentJsShowcasePublication: "apps/web/lib/current-js-showcase-publication.ts",
+  learningPlatformHome: "apps/web/components/learning-platform-home.tsx",
   courseRoute: "apps/web/app/[locale]/courses/[grade]/[lesson]/page.tsx",
   animationRoute: "apps/web/app/[locale]/animations/[animationId]/page.tsx",
   proxy: "apps/web/proxy.ts",
@@ -537,7 +537,7 @@ function nextAnimationId(pageRecord) {
 export function validateWholeLessonPlayerObservation(observation, contract, locale) {
   const failures = [];
   const expectedPageIds = contract.pages.map(({animationId}) => animationId);
-  const observedPageIds = observation.pagePickerOptions.map(({animationId}) => animationId);
+  const observedPageIds = observation.pageNavigationOptions.map(({animationId}) => animationId);
   const expectedSectionCodes = contract.sections.map(({code}) => code);
   const expectedMapRows = contract.pages.map((page) => ({
     animationId: page.animationId,
@@ -556,9 +556,9 @@ export function validateWholeLessonPlayerObservation(observation, contract, loca
   check(failures, observation.currentAnimationId === expectedPageIds[0], `whole-lesson initial animation mismatch: ${observation.currentAnimationId}`);
   check(failures, observation.currentPage === 1, `whole-lesson initial page is ${observation.currentPage}`);
   check(failures, observation.currentReplayCount === 0, `whole-lesson initial Replay count is ${observation.currentReplayCount}`);
-  check(failures, observation.pagePickerValue === expectedPageIds[0], `whole-lesson picker initial value mismatch: ${observation.pagePickerValue}`);
-  check(failures, observation.pagePickerOptions.length === 39, `whole-lesson page picker has ${observation.pagePickerOptions.length} options`);
-  check(failures, JSON.stringify(observedPageIds) === JSON.stringify(expectedPageIds), "whole-lesson page picker order differs from the canonical 39-page contract");
+  check(failures, observation.pageNavigationValue === expectedPageIds[0], `whole-lesson page navigation initial value mismatch: ${observation.pageNavigationValue}`);
+  check(failures, observation.pageNavigationOptions.length === 39, `whole-lesson course map has ${observation.pageNavigationOptions.length} page options`);
+  check(failures, JSON.stringify(observedPageIds) === JSON.stringify(expectedPageIds), "whole-lesson course-map order differs from the canonical 39-page contract");
   check(failures, observation.sectionCodes.length === 8, `whole-lesson section navigation has ${observation.sectionCodes.length} sections`);
   check(failures, JSON.stringify(observation.sectionCodes) === JSON.stringify(expectedSectionCodes), "whole-lesson section order differs from the canonical eight-section contract");
   check(failures, observation.mapRows.length === 39, `whole-lesson course map has ${observation.mapRows.length} rows`);
@@ -626,9 +626,9 @@ function exactPrimaryRuntime(observation, expectedAnimationId, expectedOrdinal) 
 async function observeTerminalCompletion(page, playerSelector, lastAnimationId) {
   return page.locator(playerSelector).evaluate((element, animationId) => {
     const next = element.querySelector('[data-lesson-nav="action-next"]');
-    const completion = element.querySelector(
-      ".lesson-shell2__learning-actions button[aria-pressed]",
-    );
+    // Page completion is reported by the progress strip, not by a control the
+    // learner presses: the strip's page counter carries the state.
+    const completion = element.querySelector(".lesson-shell2__session-page");
     const lastMapRow = element.querySelector(
       `.lesson-shell2__map-content button[data-animation-id="${animationId}"]`,
     );
@@ -638,7 +638,8 @@ async function observeTerminalCompletion(page, playerSelector, lastAnimationId) 
       animationId: element.getAttribute("data-current-animation-id"),
       currentPage: Number(element.getAttribute("data-current-page")),
       nextDisabled: next instanceof HTMLButtonElement ? next.disabled : null,
-      completionPressed: completion?.getAttribute("aria-pressed") ?? null,
+      pageCompleteInStrip: completion?.getAttribute("data-page-complete")
+        ?? null,
       lastMapRowComplete: lastMapRow?.getAttribute("data-complete") ?? null,
       finishedNoticeCount: element.querySelectorAll(
         ".lesson-shell2__finished",
@@ -766,7 +767,7 @@ async function inspectCourseMap(browser, baseUrl, contract, locale, screenshotRo
     failures.push(...controlledPreview.failures);
     const player = await page.locator(playerSelector).evaluate((element) => {
       const shell = element.querySelector(".lesson-shell2");
-      const pagePicker = element.querySelector(".lesson-shell2__page-picker select");
+      const pageButtons = [...element.querySelectorAll(".lesson-shell2__map-content button[data-animation-id]")];
       const legacyStage = element.querySelector(".lesson-shell2__legacy-stage");
       const runtimeShells = [...element.querySelectorAll(".runtime-shell")];
       const runtimeStages = [...element.querySelectorAll(".runtime-stage")];
@@ -791,12 +792,12 @@ async function inspectCourseMap(browser, baseUrl, contract, locale, screenshotRo
         currentAnimationId: element.getAttribute("data-current-animation-id"),
         currentPage: Number(element.getAttribute("data-current-page")),
         currentReplayCount: Number(element.getAttribute("data-current-replay-count")),
-        pagePickerValue: pagePicker?.value ?? null,
-        pagePickerOptions: [...pagePicker?.querySelectorAll("option") ?? []].map((option) => ({
-          animationId: option.value,
-          label: option.textContent?.trim() ?? "",
+        pageNavigationValue: element.getAttribute("data-current-animation-id"),
+        pageNavigationOptions: pageButtons.map((button) => ({
+          animationId: button.getAttribute("data-animation-id"),
+          label: button.textContent?.trim() ?? "",
         })),
-        sectionCodes: [...element.querySelectorAll(".lesson-shell2__section-tabs nav > button")].map(
+        sectionCodes: [...element.querySelectorAll(".lesson-shell2__map-section-jump")].map(
           (button) => button.getAttribute("data-section-code"),
         ),
         mapRows: [...element.querySelectorAll(".lesson-shell2__map-content button[data-animation-id]")].map(
@@ -843,38 +844,38 @@ async function inspectCourseMap(browser, baseUrl, contract, locale, screenshotRo
     invariant(secondPage, "G4 L3 contract is missing page 2");
     invariant(sectionTarget && sectionTargetPage, "G4 L3 contract is missing a non-initial section target");
 
-    await page.locator(".lesson-shell2__page-picker select").selectOption(
-      secondPage.animationId,
-    );
+    await page.locator(
+      `.lesson-shell2__map-content button[data-animation-id="${secondPage.animationId}"]`,
+    ).evaluate((button) => button.click());
     await waitForWholeLessonPage(
       page,
       playerSelector,
       secondPage.animationId,
       secondPage.globalPageOrdinal,
     );
-    const pickerPage1To2Observation = await observeWholeLessonRuntime(
+    const mapPage1To2Observation = await observeWholeLessonRuntime(
       page,
       playerSelector,
     );
-    const pickerPage1To2 = {
-      ...pickerPage1To2Observation,
+    const mapPage1To2 = {
+      ...mapPage1To2Observation,
       fromAnimationId: firstAnimationId,
       toAnimationId: secondPage.animationId,
       passed: exactPrimaryRuntime(
-        pickerPage1To2Observation,
+        mapPage1To2Observation,
         secondPage.animationId,
         secondPage.globalPageOrdinal,
       ),
     };
     check(
       failures,
-      pickerPage1To2.passed,
-      "page picker Page 1 → Page 2 did not preserve one exact live runtime",
+      mapPage1To2.passed,
+      "course-map Page 1 → Page 2 did not preserve one exact live runtime",
     );
 
     await page.locator(
       `${playerSelector} [data-lesson-nav="action-previous"]`,
-    ).click();
+    ).evaluate((button) => button.click());
     await waitForWholeLessonPage(
       page,
       playerSelector,
@@ -902,8 +903,8 @@ async function inspectCourseMap(browser, baseUrl, contract, locale, screenshotRo
     );
 
     await page.locator(
-      `.lesson-shell2__section-tabs button[data-section-code="${sectionTarget.code}"]`,
-    ).click();
+      `.lesson-shell2__map-section-jump[data-section-code="${sectionTarget.code}"]`,
+    ).evaluate((button) => button.click());
     await waitForWholeLessonPage(
       page,
       playerSelector,
@@ -982,7 +983,25 @@ async function inspectCourseMap(browser, baseUrl, contract, locale, screenshotRo
     const finishButton = page.locator(
       `${playerSelector} [data-lesson-nav="action-next"]`,
     );
-    await finishButton.click();
+    // Nothing marks this page complete except watching it. Let page 39 play to
+    // its authored end frame, then confirm the strip and the course map both
+    // picked that up before the tour is finished.
+    await page.locator(
+      `${playerSelector} .runtime-shell[data-runtime-playback-complete="true"]`,
+    ).waitFor({state: "attached", timeout: 30_000});
+    const beforeFinish = await observeTerminalCompletion(
+      page,
+      playerSelector,
+      lastAnimationId,
+    );
+    check(
+      failures,
+      beforeFinish.pageCompleteInStrip === "true"
+        && beforeFinish.lastMapRowComplete === "true"
+        && beforeFinish.finishedNoticeCount === 0,
+      "page 39 did not complete itself when its animation finished",
+    );
+    await finishButton.evaluate((button) => button.click());
     await page.locator(`${playerSelector} .lesson-shell2__finished`).waitFor({
       state: "visible",
       timeout: 10_000,
@@ -1005,6 +1024,7 @@ async function inspectCourseMap(browser, baseUrl, contract, locale, screenshotRo
       lastAnimationId,
     );
     const terminalCompletionIdempotent = {
+      beforeFinish,
       afterFirstFinish,
       afterSecondFinish,
       secondActivationMethod:
@@ -1013,7 +1033,7 @@ async function inspectCourseMap(browser, baseUrl, contract, locale, screenshotRo
         afterFirstFinish.animationId === lastAnimationId
         && afterFirstFinish.currentPage === lastPageOrdinal
         && afterFirstFinish.nextDisabled === true
-        && afterFirstFinish.completionPressed === "true"
+        && afterFirstFinish.pageCompleteInStrip === "true"
         && afterFirstFinish.lastMapRowComplete === "true"
         && afterFirstFinish.finishedNoticeCount === 1
         && afterFirstFinish.runtimeShellCount === 1
@@ -1028,9 +1048,9 @@ async function inspectCourseMap(browser, baseUrl, contract, locale, screenshotRo
       "last-page completion was not idempotent or did not preserve one exact live runtime",
     );
 
-    await page.locator(".lesson-shell2__page-picker select").selectOption(
-      firstAnimationId,
-    );
+    await page.locator(
+      `.lesson-shell2__map-content button[data-animation-id="${firstAnimationId}"]`,
+    ).evaluate((button) => button.click());
     await waitForWholeLessonPage(page, playerSelector, firstAnimationId, 1);
     if (await mapTrigger.getAttribute("aria-expanded") !== "true") {
       await mapTrigger.click();
@@ -1053,14 +1073,14 @@ async function inspectCourseMap(browser, baseUrl, contract, locale, screenshotRo
     const screenshot = await screenshotBinding(page, screenshotRoot, `course-map-${locale}-${profile.viewport.width}x${profile.viewport.height}.png`);
     const interactions = {
       observationKind: "in-course-player-interactions-no-extra-route-visits",
-      pickerPage1To2,
+      mapPage1To2,
       previousToPage1,
       sectionFirstPage,
       mapJump,
       terminalCompletionIdempotent,
       exactlyOnePrimaryRuntimeThroughout: {
         observations: [
-          pickerPage1To2Observation,
+          mapPage1To2Observation,
           previousToPage1Observation,
           sectionFirstPageObservation,
           mapJumpObservation,
@@ -1068,7 +1088,7 @@ async function inspectCourseMap(browser, baseUrl, contract, locale, screenshotRo
           afterSecondFinish,
         ],
         passed: [
-          pickerPage1To2,
+          mapPage1To2,
           previousToPage1,
           sectionFirstPage,
           mapJump,
@@ -1549,13 +1569,13 @@ export function validateReportStructure(report, {expectedArtifactVersion = null}
         || courseMap?.player?.lessonPlayer !== "g4-l3-whole-lesson-mvp"
         || courseMap?.player?.presentation !== "wide-functional-audit-candidate"
         || courseMap?.player?.nativeCompositeStage !== "800x600"
-        || courseMap?.player?.pagePickerOptions?.length !== 39
+        || courseMap?.player?.pageNavigationOptions?.length !== 39
         || courseMap?.map?.observationKind !== "real-course-map-buttons"
         || courseMap?.map?.rowSelector !== ".lesson-shell2__map-content button[data-animation-id]"
         || !realMapShape
         || courseMap?.map?.sectionCodes?.length !== 8
         || interactions?.observationKind !== "in-course-player-interactions-no-extra-route-visits"
-        || interactions?.pickerPage1To2?.passed !== true
+        || interactions?.mapPage1To2?.passed !== true
         || interactions?.previousToPage1?.passed !== true
         || interactions?.sectionFirstPage?.passed !== true
         || interactions?.mapJump?.passed !== true

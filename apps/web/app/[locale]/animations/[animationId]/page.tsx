@@ -4,18 +4,15 @@ import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 
 import {AnimationRuntime} from '@/components/animation-runtime';
-import {G4L3ControlledCeoPreviewBoundary} from '@/components/g4-l3-controlled-ceo-preview-boundary';
 import {G4L3LessonContextNavigation} from '@/components/g4-l3-lesson-navigation';
 import {LessonContextNavigation} from '@/components/lesson-navigation';
 import {Container} from '@/components/ui';
 import {Link} from '@/i18n/navigation';
 import {buildCaptureFrameLinks} from '@/lib/animation-capture-controls';
 import {getCatalog, isAnimationPublished, isLessonReleasePublished} from '@/lib/catalog';
-import {
-  isG4L3ControlledCeoPreviewEnabled,
-  isG4L3ControlledCeoPreviewMember,
-} from '@/lib/g4-l3-controlled-ceo-preview';
+import {G5_L4_SHOWCASE_RELEASE_ID} from '@/lib/current-js-showcase-publication';
 import {G4_L3_LESSON} from '@/lib/g4-l3-lesson-navigation';
+import {isG5L4ShowcaseAudioAuthorized} from '@/lib/g5-l4-preview-asset-policy';
 import {findLessonNavigationForAnimation} from '@/lib/lesson-navigation';
 
 export const dynamic = 'force-dynamic';
@@ -26,9 +23,7 @@ export async function generateMetadata({params}: {params: Promise<{animationId: 
   const {animationId} = await params;
   const catalog = getCatalog();
   const animation = catalog.animations.find((candidate) => candidate.animationId === animationId);
-  const controlledCeoPreview = isG4L3ControlledCeoPreviewEnabled()
-    && isG4L3ControlledCeoPreviewMember(animationId);
-  if (!animation || (process.env.NODE_ENV === 'production' && !isAnimationPublished(catalog, animation) && !controlledCeoPreview)) notFound();
+  if (!animation || (process.env.NODE_ENV === 'production' && !isAnimationPublished(catalog, animation))) notFound();
   return {title: animation.classification.titleDisplay, robots: animation.migration.status === 'complete' ? undefined : {index: false, follow: false}};
 }
 
@@ -36,11 +31,9 @@ export default async function AnimationPage({params, searchParams}: {params: Pro
   const [{locale, animationId}, query] = await Promise.all([params, searchParams]);
   const catalog = getCatalog();
   const animation = catalog.animations.find((item) => item.animationId === animationId);
-  const controlledCeoPreview = isG4L3ControlledCeoPreviewEnabled()
-    && isG4L3ControlledCeoPreviewMember(animationId);
-  if (!animation || (process.env.NODE_ENV === 'production' && !isAnimationPublished(catalog, animation) && !controlledCeoPreview)) notFound();
+  if (!animation || (process.env.NODE_ENV === 'production' && !isAnimationPublished(catalog, animation))) notFound();
   const spanish = locale === 'es';
-  const auditPreview = process.env.NODE_ENV !== 'production' || controlledCeoPreview;
+  const auditPreview = process.env.NODE_ENV !== 'production';
   const completeAnimationIds = new Set(catalog.animations
     .filter((candidate) => candidate.migration.status === 'complete')
     .map((candidate) => candidate.animationId));
@@ -49,6 +42,12 @@ export default async function AnimationPage({params, searchParams}: {params: Pro
   const lessonReleasePublished = lessonDescriptor
     ? isLessonReleasePublished(catalog, lessonDescriptor.releaseId)
     : false;
+  const g5L4AudioScope = lessonDescriptor?.releaseId === G5_L4_SHOWCASE_RELEASE_ID
+    || (
+      animation.classification.grade === 5
+      && animation.classification.lesson === 4
+    );
+  const audioEnabled = !g5L4AudioScope || isG5L4ShowcaseAudioAuthorized();
   const prototype = matchPrototype({animationId, sourcePath: animation.source.path});
   const requestedLanguage = first(query.lang);
   const queryLanguage = requestedLanguage === 'en' || requestedLanguage === 'es' ? requestedLanguage : locale;
@@ -73,7 +72,6 @@ export default async function AnimationPage({params, searchParams}: {params: Pro
   return <main className={captureMode ? 'capture-page' : undefined} id="main-content">
     <header className="animation-header"><Container><div className="animation-breadcrumbs"><Link href="/library">{spanish ? 'Biblioteca' : 'Library'}</Link><span aria-hidden="true">/</span><span>{animation.classification.collection}</span></div><div className="animation-title-row"><div><p className="eyebrow">{animation.classification.grade === 'elementary' ? (spanish ? 'Compartido · Primaria' : 'Shared · Elementary') : `${spanish ? 'Grado' : 'Grade'} ${animation.classification.grade ?? '—'} · ${spanish ? 'Lección' : 'Lesson'} ${animation.classification.lesson ?? '—'}`}</p><h1>{animation.classification.titleDisplay}</h1>{animation.classification.titleRaw !== animation.classification.titleDisplay ? <p className="raw-title">Original: {animation.classification.titleRaw}</p> : null}</div><span className={`status-chip status-chip--${animation.migration.status}`}>{animation.migration.status}</span></div></Container></header>
     <section className="animation-workspace-section"><Container>
-      {controlledCeoPreview && !captureMode ? <G4L3ControlledCeoPreviewBoundary locale={locale} /> : null}
       {prototype && animation.migration.status !== 'complete' ? <div className="prototype-warning" role="note"><strong>{spanish ? 'Prototipo heredado, no migración completa.' : 'Legacy prototype, not a complete migration.'}</strong><span>{spanish ? 'Solo se ofrece en el entorno local de auditoría.' : 'Available only in the local audit environment.'}</span></div> : null}
       {!prototype && animation.migration.status !== 'complete' ? <div className="prototype-warning audit-placeholder-warning" data-audit-placeholder="true" role="note"><strong>{spanish ? 'Marcador de auditoría, no implementación.' : 'Audit placeholder, not an implementation.'}</strong><span>{spanish ? 'Esta ruta solo expone identidad de fuente y navegación de la lección; no afirma conversión, fidelidad ni aceptación.' : 'This route exposes source identity and lesson navigation only; it makes no conversion, fidelity, or acceptance claim.'}</span></div> : null}
       <G4L3LessonContextNavigation animationId={animation.animationId} auditPreview={auditPreview} completeAnimationIds={completeAnimationIds} locale={locale} releasePublished={g4L3ReleasePublished} />
@@ -87,7 +85,7 @@ export default async function AnimationPage({params, searchParams}: {params: Pro
             releasePublished={lessonReleasePublished}
           />
         : null}
-      <AnimationRuntime animationId={animation.animationId} labels={{replay: spanish ? 'Repetir' : 'Replay', reduced: spanish ? 'El movimiento está reducido; se muestra un cuadro estático validado.' : 'Motion is reduced; a validated static frame is shown.', prototype: animation.migration.status === 'complete' ? (spanish ? 'migración estricta' : 'strict migration') : prototype ? (spanish ? 'prototipo heredado' : 'legacy prototype') : (spanish ? 'migración en curso' : 'migration in progress'), unavailable: spanish ? 'El módulo no está disponible.' : 'The module is unavailable.', loading: spanish ? 'Cargando módulo…' : 'Loading module…'}} moduleKey={moduleKey} query={{frame, frameDomain, scenario, lang: captureMode ? requestedLanguage : queryLanguage, seed, requirementId, trace, entryStateSha256, capture, duplicateCaptureIdentity}} />
+      <AnimationRuntime audioEnabled={audioEnabled} animationId={animation.animationId} labels={{replay: spanish ? 'Repetir' : 'Replay', reduced: spanish ? 'El movimiento está reducido; se muestra un cuadro estático validado.' : 'Motion is reduced; a validated static frame is shown.', prototype: animation.migration.status === 'complete' ? (spanish ? 'migración estricta' : 'strict migration') : prototype ? (spanish ? 'prototipo heredado' : 'legacy prototype') : (spanish ? 'migración en curso' : 'migration in progress'), unavailable: spanish ? 'El módulo no está disponible.' : 'The module is unavailable.', loading: spanish ? 'Cargando módulo…' : 'Loading module…'}} moduleKey={moduleKey} query={{frame, frameDomain, scenario, lang: captureMode ? requestedLanguage : queryLanguage, seed, requirementId, trace, entryStateSha256, capture, duplicateCaptureIdentity}} />
       {!captureMode ? <nav aria-label={spanish ? 'Controles de captura determinista' : 'Deterministic capture controls'} className="capture-controls"><div><span>{spanish ? 'Cuadro exacto' : 'Exact frame'}</span>{frameLinks.map((value) => <a href={`?${frameDomainQuery}${traceStateQuery}${scenarioQuery}frame=${value}&lang=${queryLanguage}&seed=${seed ?? '0'}`} key={value}>{value}</a>)}<a href={`?${frameDomainQuery}${traceStateQuery}${scenarioQuery}lang=${queryLanguage}&seed=${seed ?? '0'}`}>{spanish ? 'Reproducir' : 'Live'}</a></div><div><span>{spanish ? 'Idioma' : 'Language'}</span><a aria-current={queryLanguage === 'en' ? 'page' : undefined} href={`?${frameDomainQuery}${traceStateQuery}${scenarioQuery}${frame ? `frame=${frame}&` : ''}lang=en&seed=${seed ?? '0'}`}>English</a><a aria-current={queryLanguage === 'es' ? 'page' : undefined} href={`?${frameDomainQuery}${traceStateQuery}${scenarioQuery}${frame ? `frame=${frame}&` : ''}lang=es&seed=${seed ?? '0'}`}>Español</a></div></nav> : null}
       <aside className="animation-evidence"><div><h2>{spanish ? 'Identidad y fuente' : 'Identity and source'}</h2><dl><div><dt>animationId</dt><dd><code>{animation.animationId}</code></dd></div><div><dt>assetId</dt><dd><code>{animation.assetId}</code></dd></div><div><dt>{spanish ? 'Fuente' : 'Source'}</dt><dd><code>{animation.source.path}</code></dd></div><div><dt>SHA-256</dt><dd><code>{animation.source.sha256 ?? '—'}</code></dd></div></dl></div><div><h2>{spanish ? 'Película' : 'Movie'}</h2><dl><div><dt>{spanish ? 'Escenario' : 'Stage'}</dt><dd>{animation.source.swf.stage?.width ?? '—'} × {animation.source.swf.stage?.height ?? '—'}</dd></div><div><dt>FPS</dt><dd>{animation.source.swf.fps ?? '—'}</dd></div><div><dt>{spanish ? 'Cuadros' : 'Frames'}</dt><dd>{animation.source.swf.frameCount ?? '—'}</dd></div><div><dt>{spanish ? 'Audio exacto' : 'Exact audio'}</dt><dd>{animation.audio.length}</dd></div></dl></div></aside>
       {process.env.NODE_ENV !== 'production' ? <p className="reference-link"><Link href={`/reference/${animation.animationId}`}>{spanish ? 'Abrir referencia SWF local' : 'Open local SWF reference'} ↗</Link></p> : null}

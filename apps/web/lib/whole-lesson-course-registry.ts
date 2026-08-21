@@ -1,10 +1,15 @@
 import {hasAnimationModule} from '@helpmath/demos/animation-registry';
 
-import {isG4L3ControlledCeoPreviewEnabled} from './g4-l3-controlled-ceo-preview';
 import {G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR} from './g4-l3-whole-lesson-player-descriptor';
-import {isG5L4ExecutivePreviewEnabled} from './g5-l4-executive-preview';
+import {G3_L2_WHOLE_LESSON_PLAYER_DESCRIPTOR} from './g3-l2-whole-lesson-player-descriptor';
+import {G5_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR} from './g5-l3-whole-lesson-player-descriptor';
 import {G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR} from './g5-l4-whole-lesson-player-descriptor';
-import type {WholeLessonPlayerDescriptor} from './whole-lesson-player-descriptor';
+import {G5_L5_PRODUCT_BRIDGE_DESCRIPTOR} from './g5-l5-product-bridge-descriptor';
+import type {
+  DescriptorDrivenLessonPlayerDescriptor,
+  PageOnlyLessonPlayerDescriptor,
+  WholeLessonPlayerDescriptor,
+} from './whole-lesson-player-descriptor';
 
 export type WholeLessonCoursePlayer =
   | Readonly<{
@@ -17,24 +22,30 @@ export type WholeLessonCoursePlayer =
     }>;
 
 export interface WholeLessonCourseRegistration {
-  readonly descriptor: WholeLessonPlayerDescriptor;
+  readonly descriptor: DescriptorDrivenLessonPlayerDescriptor;
   readonly player: WholeLessonCoursePlayer;
-  readonly isControlledPreviewEnabled: () => boolean;
 }
 
 export interface WholeLessonCourseRegistrationInput {
-  readonly descriptor: WholeLessonPlayerDescriptor | undefined;
+  readonly descriptor: DescriptorDrivenLessonPlayerDescriptor | undefined;
   readonly player: WholeLessonCoursePlayer;
-  readonly isControlledPreviewEnabled: () => boolean;
 }
 
 function descriptorPagesAreRunnable(
-  descriptor: WholeLessonPlayerDescriptor,
+  descriptor: DescriptorDrivenLessonPlayerDescriptor,
 ): boolean {
   const pageIds = descriptor.pages.map((page) => page.animationId);
+  const placementIds = descriptor.pages.map((page) =>
+    descriptor.schemaVersion === 2
+      ? page.placementId ?? page.animationId
+      : page.animationId
+  );
   if (
     pageIds.length === 0 ||
-    new Set(pageIds).size !== pageIds.length ||
+    placementIds.some((placementId) =>
+      typeof placementId !== 'string' || placementId.length === 0
+    ) ||
+    new Set(placementIds).size !== placementIds.length ||
     descriptor.sections.length === 0 ||
     new Set(descriptor.sections.map((section) => section.code)).size !==
       descriptor.sections.length ||
@@ -51,7 +62,7 @@ function descriptorPagesAreRunnable(
     page.previousAnimationId === (descriptor.pages[index - 1]?.animationId ?? null) &&
     page.nextAnimationId === (descriptor.pages[index + 1]?.animationId ?? null) &&
     page.rendererAvailability.kind === 'registered' &&
-    page.rendererAvailability.moduleKey.length > 0 &&
+    page.rendererAvailability.moduleKey === page.animationId &&
     hasAnimationModule(page.rendererAvailability.moduleKey)
   );
   if (!pagesAreSourceOrdered) return false;
@@ -67,6 +78,46 @@ function descriptorPagesAreRunnable(
         (page, pageIndex) => page.sectionPageOrdinal === pageIndex + 1,
       );
   });
+}
+
+function pageOnlyDescriptorContractIsValid(
+  descriptor: PageOnlyLessonPlayerDescriptor,
+): boolean {
+  const registeredAnimationIds = descriptor.pages.map(
+    (page) => page.animationId,
+  );
+  const acceptanceEffects = descriptor.productBridge.acceptanceEffects;
+  return descriptor.descriptorKind === 'formal-page-only-course' &&
+    descriptor.calibrationId.length > 0 &&
+    descriptor.course.courseShellCount === 0 &&
+    descriptor.course.expectedReleaseMemberCount === descriptor.pages.length &&
+    descriptor.source.sequenceAuthority === 'course-xml-occurrence' &&
+    descriptor.pages.every(
+      (page, index) =>
+        (page.placementId === undefined || page.placementId.length > 0) &&
+        /^swf-[a-f0-9]{64}$/.test(page.source.assetId ?? '') &&
+        page.source.sourceOccurrence === index + 1,
+    ) &&
+    descriptor.visualSkin.kind === 'modern-my-lesson-page-only' &&
+    descriptor.visualSkin.evidence.kind === 'product-owned-modern-my-lesson' &&
+    descriptor.visualSkin.evidence.calibrationId === descriptor.calibrationId &&
+    descriptor.visualSkin.presentations.length === 1 &&
+    descriptor.visualSkin.presentations[0] === 'modern-wide' &&
+    descriptor.productBridge.pageOnlyDescriptorMemberCount ===
+      descriptor.pages.length &&
+    descriptor.productBridge.registeredAnimationCount ===
+      descriptor.pages.length &&
+    descriptor.productBridge.selectedAnimationIds.length ===
+      descriptor.pages.length &&
+    descriptor.productBridge.selectedAnimationIds.every(
+      (animationId, index) => animationId === registeredAnimationIds[index],
+    ) &&
+    !Object.hasOwn(descriptor.course, 'shellAnimationId') &&
+    !Object.hasOwn(descriptor, 'shellImplementation') &&
+    Object.values(acceptanceEffects).every((value) => value === false) &&
+    /^[a-f0-9]{64}$/.test(
+      descriptor.source.candidateFreezeManifestSha256,
+    );
 }
 
 function descriptorDrivenShellIsBound(
@@ -89,38 +140,48 @@ function descriptorDrivenShellIsBound(
 export function buildWholeLessonCourseRegistration({
   descriptor,
   player,
-  isControlledPreviewEnabled,
 }: WholeLessonCourseRegistrationInput): WholeLessonCourseRegistration | undefined {
   if (
     !descriptor ||
-    descriptor.schemaVersion !== 1 ||
     descriptor.course.grade < 1 ||
     descriptor.course.lesson < 1 ||
     descriptor.course.href !==
       `/courses/${descriptor.course.grade}/${descriptor.course.lesson}` ||
     descriptor.course.activePageCount !== descriptor.pages.length ||
-    descriptor.course.courseShellCount !== 1 ||
-    descriptor.course.expectedReleaseMemberCount !==
-      descriptor.pages.length + descriptor.course.courseShellCount ||
-    descriptor.visualSkin.evidence.sourceAnimationId !==
-      descriptor.course.shellAnimationId ||
     !/^[a-f0-9]{64}$/.test(descriptor.source.sourceXmlSha256) ||
-    !/^[a-f0-9]{64}$/.test(descriptor.visualSkin.evidence.sourceSwfSha256) ||
-    !descriptorPagesAreRunnable(descriptor) ||
-    typeof isControlledPreviewEnabled !== 'function'
+    !descriptorPagesAreRunnable(descriptor)
   ) {
+    return undefined;
+  }
+
+  if (descriptor.schemaVersion === 1) {
+    if (
+      descriptor.course.courseShellCount !== 1 ||
+      descriptor.course.expectedReleaseMemberCount !==
+        descriptor.pages.length + descriptor.course.courseShellCount ||
+      descriptor.visualSkin.evidence.sourceAnimationId !==
+        descriptor.course.shellAnimationId ||
+      !/^[a-f0-9]{64}$/.test(
+        descriptor.visualSkin.evidence.sourceSwfSha256,
+      )
+    ) {
+      return undefined;
+    }
+  } else if (!pageOnlyDescriptorContractIsValid(descriptor)) {
     return undefined;
   }
 
   if (
     player.kind === 'preserved-custom' &&
-    descriptor.descriptorId !== player.descriptorId
+    (descriptor.schemaVersion !== 1 ||
+      descriptor.descriptorId !== player.descriptorId)
   ) {
     return undefined;
   }
 
   if (
     player.kind === 'descriptor-driven' &&
+    descriptor.schemaVersion === 1 &&
     !descriptorDrivenShellIsBound(descriptor)
   ) {
     return undefined;
@@ -129,11 +190,14 @@ export function buildWholeLessonCourseRegistration({
   return Object.freeze({
     descriptor,
     player: Object.freeze({...player}),
-    isControlledPreviewEnabled,
   });
 }
 
 const registrations = Object.freeze([
+  buildWholeLessonCourseRegistration({
+    descriptor: G3_L2_WHOLE_LESSON_PLAYER_DESCRIPTOR,
+    player: Object.freeze({kind: 'descriptor-driven'}),
+  }),
   buildWholeLessonCourseRegistration({
     descriptor: G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR,
     player: Object.freeze({
@@ -141,12 +205,18 @@ const registrations = Object.freeze([
       component: 'g4-l3-whole-lesson-player',
       descriptorId: 'whole-lesson-player-g04-l03-v1',
     }),
-    isControlledPreviewEnabled: isG4L3ControlledCeoPreviewEnabled,
+  }),
+  buildWholeLessonCourseRegistration({
+    descriptor: G5_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR,
+    player: Object.freeze({kind: 'descriptor-driven'}),
   }),
   buildWholeLessonCourseRegistration({
     descriptor: G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR,
     player: Object.freeze({kind: 'descriptor-driven'}),
-    isControlledPreviewEnabled: isG5L4ExecutivePreviewEnabled,
+  }),
+  buildWholeLessonCourseRegistration({
+    descriptor: G5_L5_PRODUCT_BRIDGE_DESCRIPTOR,
+    player: Object.freeze({kind: 'descriptor-driven'}),
   }),
 ].filter(
   (registration): registration is WholeLessonCourseRegistration =>

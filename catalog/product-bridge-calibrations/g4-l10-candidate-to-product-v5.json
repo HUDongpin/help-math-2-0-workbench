@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "calibrationId": "g4-l10-candidate-to-product-v5",
+  "frozenAt": "2026-08-21T01:26:11+08:00",
+  "frozenGitHead": "71485baa601fe600e8f63c88fb0139492a4ad31e",
+  "status": "registry-shape-successor",
+  "predecessor": {
+    "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v4.json",
+    "sha256": "65a8a4a4aa6aec8638979cf606d21a477b6a9fcce65e9c47090a1fa6e599ff93",
+    "preservedConclusions": [
+      "V4 remains the immutable implementation-before-freeze for the VB011 interactive-understood batch.",
+      "The remaining 20-candidate audit found zero honest low-lane pages.",
+      "All VB011 source, candidate, handler, glossary, and audio facts remain exactly V4-bound.",
+      "The V5 successor only normalizes the cumulative private selection into the selectedPages array required by the existing registry generator."
+    ]
+  },
+  "scope": {
+    "releaseId": "lesson-g04-l10-perimeter-area",
+    "activePageCount": 46,
+    "courseShellCount": 0,
+    "auditedSourceStaticCandidateCount": 24,
+    "privateRegistrationCountBeforeBatch": 4,
+    "privateRegistrationCountAfterBatch": 5,
+    "newWorkspaceCount": 0
+  },
+  "selectedPages": [
+    {
+      "animationId": "course-g04-l10-ir-001",
+      "globalPageOrdinal": 1,
+      "sectionCode": "IR",
+      "sectionPageOrdinal": 1,
+      "complexityLane": "behavior-heavy",
+      "selectionStatus": "inherited-from-v4-predecessor-chain"
+    },
+    {
+      "animationId": "course-g04-l10-vb-003",
+      "globalPageOrdinal": 7,
+      "sectionCode": "VB",
+      "sectionPageOrdinal": 2,
+      "complexityLane": "interactive-understood",
+      "selectionStatus": "inherited-from-v4-predecessor-chain"
+    },
+    {
+      "animationId": "course-g04-l10-vb-011",
+      "assetId": "swf-dd12bb87cffa76948020b1cfc34163f67fa4062bd286ea571bf4b08473709ba0",
+      "globalPageOrdinal": 15,
+      "sectionCode": "VB",
+      "sectionPageOrdinal": 10,
+      "placementPath": "VB/L10VB11.swf",
+      "workspace": "migrations/course-g04-l10-vb-011",
+      "complexityLane": "interactive-understood",
+      "selectionStatus": "v4-frozen-new-batch-attempt",
+      "v4SourceFreeze": {
+        "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v4.json",
+        "sha256": "65a8a4a4aa6aec8638979cf606d21a477b6a9fcce65e9c47090a1fa6e599ff93"
+      },
+      "source": {
+        "swfSha256": "dd12bb87cffa76948020b1cfc34163f67fa4062bd286ea571bf4b08473709ba0",
+        "flaSha256": "b561dd6e3e1a7ea154094c9d4d58495c7b84111204394d5c97a5e87f362d68fa"
+      },
+      "candidate": {
+        "manifestSha256": "4a3e94f2b0a61abb9edc02238d69b85d4f4742ba8ab9cad25de497a9f920b2b2",
+        "canvasRendererSha256": "0315d7255b5333cbbea8e8d25af42b8c8351a537ab6cd5032b3c5466a58b2947",
+        "frameDomain": "sprite-31",
+        "frameCount": 153,
+        "rootBeginFrame": 6
+      },
+      "hostContract": {
+        "capability": "glossary",
+        "typedRequestCount": 2,
+        "legacyOperations": "blocked",
+        "auditStorage": "memory-only",
+        "storesPersonalData": false
+      },
+      "audio": {
+        "v4MaterializationReceipt": "migrations/course-g04-l10-vb-011/audit/private-product-audio-assets.json",
+        "embeddedEngineeringCueSha256": "ab8c00ecbf6c90d284a295fee5a785fc7e3478490382fcda0b7064be1bfd1e66",
+        "spanishHostTrackSha256": "1508e26d670d3f53a9e5f3d2b3945c8167d1ba8cd0e7a1959bf726fcb203e87f",
+        "spokenLanguageAccepted": false,
+        "audioAccepted": false
+      }
+    },
+    {
+      "animationId": "course-g04-l10-ts-006",
+      "globalPageOrdinal": 41,
+      "sectionCode": "TS",
+      "sectionPageOrdinal": 5,
+      "complexityLane": "low",
+      "selectionStatus": "inherited-from-v4-predecessor-chain"
+    },
+    {
+      "animationId": "course-g04-l10-fq-001",
+      "globalPageOrdinal": 44,
+      "sectionCode": "FQ",
+      "sectionPageOrdinal": 1,
+      "complexityLane": "low",
+      "selectionStatus": "inherited-from-v4-predecessor-chain"
+    }
+  ],
+  "laneRules": {
+    "low": "Explicit source reachability and audio disposition are required before private registration.",
+    "interactive-understood": "Every reachable handler must bind an exact typed modern host contract.",
+    "behavior-heavy": "Random branches, audio routing, timeline reachability, and Replay engineering behavior must be closed before private registration."
+  },
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "behaviorParityAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "releaseEligible": false,
+    "published": false
+  }
+}

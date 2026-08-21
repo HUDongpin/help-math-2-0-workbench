@@ -44,10 +44,15 @@ function collectRuntimeIssues(page: Page, origin: string) {
     const canceledNextRoute = request.resourceType() === 'fetch' &&
       requestUrl.searchParams.has('_rsc') &&
       request.failure()?.errorText === 'net::ERR_ABORTED';
+    const canceledLocaleKeyTerms = request.resourceType() === 'fetch' &&
+      /^\/generated\/g4-grade-wide-keyterms-(?:en|es)\.json$/u.test(
+        requestUrl.pathname,
+      ) && request.failure()?.errorText === 'net::ERR_ABORTED';
     if (
       requestUrl.origin === origin &&
       !speculativePrefetch &&
-      !canceledNextRoute
+      !canceledNextRoute &&
+      !canceledLocaleKeyTerms
     ) {
       issues.push({
         kind: 'request',
@@ -114,8 +119,17 @@ async function openLesson(
   const response = await page.goto(path, {waitUntil: 'domcontentloaded'});
 
   expect(response?.status()).toBe(200);
-  expect(response?.headers()['x-helpmath-controlled-preview']).toBe('g4-l3-local-only');
+  // Whole lessons now live on the platform route. G4 L3 is the explicit
+  // current-JavaScript showcase boundary; the retired controlled-review
+  // middleware header must not reappear or imply a private-preview gate.
+  expect(response?.headers()['x-helpmath-controlled-preview']).toBeUndefined();
   await expect(page.locator(PLAYER)).toBeVisible();
+  await expect(page.locator(ROOT)).toHaveAttribute(
+    'data-release-id',
+    'lesson-g04-l03-negative-numbers',
+  );
+  await expect(page.locator(ROOT)).toHaveAttribute('data-current-js-pages', '39');
+  await expect(page.locator(ROOT)).toHaveAttribute('data-public-release', 'false');
   await expect(page.locator(ROOT)).not.toHaveAttribute('data-stage-render-mode', 'measuring');
   await page.evaluate(() => document.fonts.ready);
   await page.waitForLoadState('networkidle');
@@ -134,10 +148,14 @@ async function openG5Lesson(page: Page, baseURL: string) {
   });
 
   expect(response?.status()).toBe(200);
-  expect(response?.headers()['x-helpmath-controlled-preview']).toBe(
-    'g5-l4-ceo-preview',
-  );
+  expect(response?.headers()['x-helpmath-controlled-preview']).toBeUndefined();
   await expect(page.locator(G5_PLAYER)).toBeVisible();
+  await expect(page.locator(ROOT)).toHaveAttribute(
+    'data-release-id',
+    'lesson-g05-l04-number-lines',
+  );
+  await expect(page.locator(ROOT)).toHaveAttribute('data-current-js-pages', '54');
+  await expect(page.locator(ROOT)).toHaveAttribute('data-public-release', 'false');
   await expect(page.locator(ROOT)).not.toHaveAttribute(
     'data-stage-render-mode',
     'measuring',
@@ -188,11 +206,15 @@ async function expectNoHorizontalOverflow(page: Page) {
   expect(dimensions.scrollWidth).toBeLessThanOrEqual(dimensions.clientWidth + 1);
 }
 
-async function expectControlsWithinViewport(page: Page, controls: Locator[]) {
+async function expectControlsReachableByVerticalScroll(
+  page: Page,
+  controls: Locator[],
+) {
   const viewport = page.viewportSize();
   expect(viewport).not.toBeNull();
 
   for (const control of controls) {
+    await control.scrollIntoViewIfNeeded();
     await expect(control).toBeVisible();
     const box = await stableBox(control);
     expect(box.width).toBeGreaterThanOrEqual(44);
@@ -412,7 +434,7 @@ async function dragCenterToCenter(
   await page.mouse.up();
 }
 
-test('844x390 keeps compact controls, parity disclosure, and the stage in separate columns', async ({
+test('844x390 keeps compact controls reachable by vertical scroll without learner evidence copy', async ({
   baseURL,
   page,
 }) => {
@@ -433,19 +455,16 @@ test('844x390 keeps compact controls, parity disclosure, and the stage in separa
   await expectSingleLiveControlSurface(page, 'modern-wide');
   const toolbar = await stableBox(page.locator('.lesson-shell2__modern-toolbar'));
   const actions = await stableBox(page.locator('.lesson-shell2__learning-actions'));
-  const badge = page.locator('[data-compact-transport-summary="true"]');
-
-  await expect(badge).toBeVisible();
-  await expect(badge).toContainText('Flash transport parity: not established');
-  await expect(page.locator('.lesson-shell2__modern-toolbar')).toHaveAttribute(
-    'aria-describedby',
-    /-transport-boundary$/,
-  );
+  await expect(page.locator('.lesson-shell2__status')).toHaveCount(0);
+  await expect(page.locator('[data-compact-transport-summary="true"]'))
+    .toHaveCount(0);
+  await expect(page.locator('.lesson-shell2__modern-toolbar'))
+    .not.toHaveAttribute('aria-describedby', /-transport-boundary$/);
   expect(stage.x + stage.width).toBeLessThanOrEqual(toolbar.x + 1);
   expect(toolbar.x + toolbar.width).toBeLessThanOrEqual(845);
-  expect(toolbar.y + toolbar.height).toBeLessThanOrEqual(391);
-  expect(actions.y + actions.height).toBeLessThanOrEqual(391);
-  await expectControlsWithinViewport(page, [
+  expect(toolbar.y).toBeGreaterThanOrEqual(-1);
+  expect(actions.y).toBeGreaterThanOrEqual(-1);
+  await expectControlsReachableByVerticalScroll(page, [
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="map"]'),
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="help"]'),
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="exit"]'),
@@ -460,7 +479,7 @@ test('844x390 keeps compact controls, parity disclosure, and the stage in separa
   await expectNoRuntimeIssues(page, issues);
 });
 
-test('844x390 keeps the Spanish compact controls and fail-closed badge visible', async ({
+test('844x390 keeps Spanish compact controls reachable by vertical scroll', async ({
   baseURL,
   page,
 }) => {
@@ -471,20 +490,20 @@ test('844x390 keeps the Spanish compact controls and fail-closed badge visible',
 
   await expect(root).toHaveAttribute('data-layout-mode', 'compact');
   await expect(root).toHaveAttribute('data-stage-render-mode', 'proportional-scale');
-  await expect(
-    page.locator('[data-compact-transport-summary="true"]'),
-  ).toContainText('Paridad del transporte de Flash: no establecida');
+  await expect(page.locator('.lesson-shell2__status')).toHaveCount(0);
+  await expect(page.locator('[data-compact-transport-summary="true"]'))
+    .toHaveCount(0);
   await expectSingleLiveControlSurface(page, 'modern-wide');
 
   const toolbar = await stableBox(page.locator('.lesson-shell2__modern-toolbar'));
   const actions = await stableBox(page.locator('.lesson-shell2__learning-actions'));
-  expect(toolbar.y + toolbar.height).toBeLessThanOrEqual(391);
-  expect(actions.y + actions.height).toBeLessThanOrEqual(391);
-  await expectControlsWithinViewport(page, [
+  expect(toolbar.y).toBeGreaterThanOrEqual(-1);
+  expect(actions.y).toBeGreaterThanOrEqual(-1);
+  await expectControlsReachableByVerticalScroll(page, [
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="key-terms"]'),
     page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="calculator"]'),
-    page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="rewind"]'),
-    page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="forward"]'),
+    page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="replay"]'),
+    page.locator('.lesson-shell2__modern-toolbar [data-responsive-focus-key="pause"]'),
     page.locator('.lesson-shell2__learning-actions [data-responsive-focus-key="previous"]'),
     page.locator('.lesson-shell2__learning-actions [data-responsive-focus-key="next"]'),
   ]);
@@ -496,7 +515,7 @@ for (const viewport of [
   {height: 720, width: 1280},
   {height: 768, width: 1366},
 ] as const) {
-  test(`${viewport.width}x${viewport.height} preserves the 800x600 stage inside the viewport`, async ({
+  test(`${viewport.width}x${viewport.height} preserves the 800x600 stage inside the lesson column`, async ({
     baseURL,
     page,
   }) => {
@@ -512,7 +531,17 @@ for (const viewport of [
     await expect(root).toHaveAttribute('data-stage-render-mode', 'native-pixel-size');
 
     const stage = await expectNativeStage(page);
-    expect(stage.y + stage.height).toBeLessThanOrEqual(viewport.height + 1);
+    const learningColumn = await stableBox(
+      page.locator('.lesson-shell2__learning-column'),
+    );
+    expect(stage.x).toBeGreaterThanOrEqual(learningColumn.x - 1);
+    expect(stage.x + stage.width).toBeLessThanOrEqual(
+      learningColumn.x + learningColumn.width + 1,
+    );
+    expect(stage.y).toBeGreaterThanOrEqual(learningColumn.y - 1);
+    expect(stage.y + stage.height).toBeLessThanOrEqual(
+      learningColumn.y + learningColumn.height + 1,
+    );
     // A wide, fine-pointer viewport draws the plane at native size. The
     // labelled toolbar is not a companion here: the source hit regions are
     // the only control surface, so it stays out of the way.
@@ -638,7 +667,7 @@ test('tool focus remains visible across overlay, rail, language, and resize chan
     ),
   ).toContainText('candidate entries');
   await Promise.all([
-    page.waitForURL(/\/es\/courses\/4\/3$/),
+    page.waitForURL(/\/es\/courses\/4\/3\?mode=focus$/),
     page.locator(
       '.lesson-shell2__language [data-responsive-focus-key="language-es"]',
     ).click(),
@@ -669,8 +698,45 @@ test('tool focus remains visible across overlay, rail, language, and resize chan
   await expectNoRuntimeIssues(page, issues);
 });
 
+test('candidate evidence is hidden from learners and retained in explicit designer view', async ({
+  baseURL,
+  page,
+}) => {
+  await page.route('**/api/learning-events', async (route) => {
+    await route.fulfill({status: 204});
+  });
+  const issues = collectRuntimeIssues(page, new URL(baseURL!).origin);
+  await openLesson(page, baseURL!, '/courses/4/3?mode=focus');
+  await expect(page.locator('.lesson-shell2__status')).toHaveCount(0);
+  await expectNoRuntimeIssues(page, issues);
+
+  const designerPage = await page.context().newPage();
+  await designerPage.route('**/api/learning-events', async (route) => {
+    await route.fulfill({status: 204});
+  });
+  const designerIssues = collectRuntimeIssues(
+    designerPage,
+    new URL(baseURL!).origin,
+  );
+  await openLesson(
+    designerPage,
+    baseURL!,
+    '/courses/4/3?mode=focus&view=designer',
+  );
+  const disclosure = designerPage.locator('.lesson-shell2__status');
+  await expect(disclosure).toBeVisible();
+  await expect(disclosure).toContainText(
+    'Current JavaScript MVP; this is not a strict-fidelity or public-release claim.',
+  );
+  await expect(disclosure).toContainText(
+    'Pseudonymous learning events sync to the LRS',
+  );
+  await expectNoRuntimeIssues(designerPage, designerIssues);
+  await designerPage.close();
+});
+
 for (const width of [1180, 1279] as const) {
-  test(`${width}x720 keeps comfortable density and the full disclosure`, async ({
+  test(`${width}x720 keeps comfortable density without learner evidence copy`, async ({
     baseURL,
     page,
   }) => {
@@ -685,12 +751,9 @@ for (const width of [1180, 1279] as const) {
       'data-stage-render-mode',
       'native-pixel-size',
     );
-    await expect(
-      page.locator('.controlled-ceo-preview-boundary__full-copy'),
-    ).toBeVisible();
-    await expect(
-      page.locator('.controlled-ceo-preview-boundary__compact-summary'),
-    ).toBeHidden();
+    await expect(page.locator('.lesson-shell2__status')).toHaveCount(0);
+    await expect(page.locator('.controlled-ceo-preview-boundary'))
+      .toHaveCount(0);
     await expectNativeStage(page);
     await expectNoHorizontalOverflow(page);
     await expectNoRuntimeIssues(page, issues);

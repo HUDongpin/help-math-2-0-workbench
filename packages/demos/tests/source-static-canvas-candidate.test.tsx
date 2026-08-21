@@ -5,9 +5,24 @@ import {renderToStaticMarkup} from "react-dom/server";
 import test from "node:test";
 
 import {
+  applyCanvasCapturePresentationStatus,
   buildCanvasAssetRequest,
+  createLatestCanvasRenderCoordinator,
   createSourceStaticCanvasCandidate,
+  retainedCanvasStatus,
+  sourceStaticCanvasRenderKey,
+  sourceStaticCanvasVisualKey,
 } from "../src/source-static-canvas-candidate";
+
+function deferred<T>() {
+  let resolve!: (value: T | PromiseLike<T>) => void;
+  let reject!: (reason?: unknown) => void;
+  const promise = new Promise<T>((resolvePromise, rejectPromise) => {
+    resolve = resolvePromise;
+    reject = rejectPromise;
+  });
+  return {promise, reject, resolve};
+}
 
 const candidate = createSourceStaticCanvasCandidate({
   animationId: "course-g04-l03-test-001",
@@ -212,6 +227,189 @@ test("generic source-static state exposes visual markers but never host behavior
   assert.equal(later.audioRendered, false);
 });
 
+test("a retained bitmap is capture-ineligible as soon as a new frame is requested", () => {
+  const rendered = candidate.getFrameState(31, {
+    frameDomain: "sprite-44",
+    scenario: "source-static-frame",
+    lang: "en",
+    seed: 7,
+  });
+  const requested = candidate.getFrameState(32, {
+    frameDomain: "sprite-44",
+    scenario: "source-static-frame",
+    lang: "en",
+    seed: 7,
+  });
+  const renderedVisualKey = sourceStaticCanvasVisualKey(rendered);
+  const requestedVisualKey = sourceStaticCanvasVisualKey(requested);
+  assert.notEqual(renderedVisualKey, requestedVisualKey);
+  assert.equal(retainedCanvasStatus({
+    canvasStatus: "ready",
+    renderedVisualKey,
+    requestedVisualKey,
+  }), "updating");
+  assert.equal(retainedCanvasStatus({
+    canvasStatus: "ready",
+    renderedVisualKey: requestedVisualKey,
+    requestedVisualKey,
+  }), "ready");
+  assert.equal(retainedCanvasStatus({
+    canvasStatus: "loading",
+    renderedVisualKey,
+    requestedVisualKey,
+  }), "loading");
+});
+
+test("imperative Canvas presentation transitions restore and revoke the full capture contract", () => {
+  const attributes = new Map<string, string>();
+  const target = {
+    removeAttribute(name: string) {
+      attributes.delete(name);
+    },
+    setAttribute(name: string, value: string) {
+      attributes.set(name, value);
+    },
+  };
+
+  applyCanvasCapturePresentationStatus(target, {
+    captureReady: true,
+    status: "ready",
+  });
+  assert.deepEqual(Object.fromEntries(attributes), {
+    "data-capture-stage": "true",
+    "data-render-state": "ready",
+    "data-render-visual": "true",
+  });
+
+  applyCanvasCapturePresentationStatus(target, {
+    captureReady: true,
+    status: "updating",
+  });
+  assert.deepEqual(Object.fromEntries(attributes), {
+    "data-render-state": "updating",
+  });
+
+  applyCanvasCapturePresentationStatus(target, {
+    captureReady: false,
+    status: "ready",
+  });
+  assert.deepEqual(Object.fromEntries(attributes), {
+    "data-render-state": "ready",
+    "data-render-visual": "true",
+  });
+
+  applyCanvasCapturePresentationStatus(target, {
+    captureReady: false,
+    status: "error",
+  });
+  assert.deepEqual(Object.fromEntries(attributes), {
+    "data-render-state": "error",
+  });
+});
+
+test("Canvas rendering coalesces advancing frames while asset readiness is delayed", async () => {
+  const readiness = deferred<{readonly asset: "ready"}>();
+  const coordinator = createLatestCanvasRenderCoordinator<
+    Readonly<{frame: number}>,
+    Readonly<{asset: "ready"}>
+  >();
+  const renderedFrames: number[] = [];
+  let prepareCalls = 0;
+
+  coordinator.enqueue({frame: 1});
+  const firstRun = coordinator.run(
+    async () => {
+      prepareCalls += 1;
+      return readiness.promise;
+    },
+    (request) => renderedFrames.push(request.frame),
+  );
+  assert.equal(firstRun.started, true);
+
+  for (let frame = 2; frame <= 20; frame += 1) {
+    coordinator.enqueue({frame});
+    const coalescedRun = coordinator.run(
+      async () => {
+        prepareCalls += 1;
+        return {asset: "ready"};
+      },
+      (request) => renderedFrames.push(request.frame),
+    );
+    assert.equal(coalescedRun.started, false);
+    assert.equal(coalescedRun.completion, firstRun.completion);
+  }
+
+  readiness.resolve({asset: "ready"});
+  assert.deepEqual(await firstRun.completion, {frame: 20});
+  assert.equal(prepareCalls, 1);
+  assert.deepEqual(renderedFrames, [20]);
+
+  coordinator.enqueue({frame: 21});
+  const nextRun = coordinator.run(
+    async () => ({asset: "ready"}),
+    (request) => renderedFrames.push(request.frame),
+  );
+  assert.equal(nextRun.started, true);
+  assert.deepEqual(await nextRun.completion, {frame: 21});
+  assert.deepEqual(renderedFrames, [20, 21]);
+});
+
+test("Canvas rendering drops a late completion after lifecycle cancellation", async () => {
+  const readiness = deferred<{readonly asset: "stale"}>();
+  const coordinator = createLatestCanvasRenderCoordinator<
+    Readonly<{frame: number}>,
+    Readonly<{asset: "ready" | "stale"}>
+  >();
+  const renderedFrames: number[] = [];
+
+  coordinator.enqueue({frame: 1});
+  const staleRun = coordinator.run(
+    async () => readiness.promise,
+    (request) => renderedFrames.push(request.frame),
+  );
+  coordinator.cancel();
+
+  coordinator.enqueue({frame: 2});
+  const currentRun = coordinator.run(
+    async () => ({asset: "ready"}),
+    (request) => renderedFrames.push(request.frame),
+  );
+  assert.equal(currentRun.started, true);
+  assert.deepEqual(await currentRun.completion, {frame: 2});
+  readiness.resolve({asset: "stale"});
+  assert.equal(await staleRun.completion, null);
+  assert.deepEqual(renderedFrames, [2]);
+});
+
+test("Canvas render request keys are stable and include every deterministic trace identity field", () => {
+  const identity = candidate.getFrameState(32, {
+    frameDomain: "sprite-44",
+    scenario: "source-static-frame",
+    lang: "en",
+    seed: 7,
+    requirementId: "req-source-static-32",
+    traceId: "trace-source-static-32",
+    entryStateSha256: "d".repeat(64),
+  });
+  const key = sourceStaticCanvasRenderKey(identity);
+  assert.equal(sourceStaticCanvasRenderKey({...identity}), key);
+
+  for (const changed of [
+    {...identity, animationId: "course-g04-l03-test-999"},
+    {...identity, entryStateSha256: "e".repeat(64)},
+    {...identity, frame: identity.frame + 1},
+    {...identity, frameDomain: "sprite-5"},
+    {...identity, language: "es" as const},
+    {...identity, requirementId: "req-source-static-32-successor"},
+    {...identity, rootFrame: identity.rootFrame + 1},
+    {...identity, scenario: "source-static-frame-successor"},
+    {...identity, seed: identity.seed + 1},
+    {...identity, traceId: "trace-source-static-32-successor"},
+  ]) {
+    assert.notEqual(sourceStaticCanvasRenderKey(changed), key);
+  }
+});
+
 test("generic source-static factory fails closed for Spanish, root, companion, and mismatches", () => {
   const spanish = candidate.getFrameState(1, {
     frameDomain: "sprite-44",
@@ -302,6 +500,20 @@ test("generic capture attributes require full trace identity and disclose disabl
   assert.equal(complete["data-flash-frame-domain"], "sprite-44");
   assert.equal(complete["data-source-marker-visuals"], "opposite");
   assert.equal(complete["data-source-controls-enabled"], "false");
+
+  const updating = candidate.buildCaptureAttributes({
+    canvasStatus: "updating",
+    frame: 32,
+    frameDomain: "sprite-44",
+    lang: "en",
+    scenario: "source-static-frame",
+    seed: 7,
+    state,
+    ...identity,
+  });
+  assert.equal(updating["data-capture-stage"], undefined);
+  assert.equal(updating["data-render-state"], "updating");
+  assert.equal(updating["data-render-visual"], undefined);
 
   const mismatched = candidate.buildCaptureAttributes({
     canvasStatus: "ready",

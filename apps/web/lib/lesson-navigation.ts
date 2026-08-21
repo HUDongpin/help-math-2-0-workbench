@@ -11,6 +11,7 @@ export interface LessonNavigationLabel {
 }
 
 export interface LessonNavigationPage {
+  readonly placementId?: string;
   readonly memberOrdinal: number;
   readonly globalPageOrdinal: number;
   readonly sectionPageOrdinal: number;
@@ -33,8 +34,7 @@ export interface LessonNavigationSection {
   readonly activePageCount: number;
 }
 
-export interface LessonNavigationDescriptor {
-  readonly schemaVersion: 1;
+interface LessonNavigationDescriptorBase {
   readonly releaseId: string;
   readonly grade: number;
   readonly lesson: number;
@@ -42,16 +42,31 @@ export interface LessonNavigationDescriptor {
   readonly titleSpanish: string | null;
   readonly expectedMemberCount: number;
   readonly activePageCount: number;
+  readonly sections: readonly LessonNavigationSection[];
+  readonly pages: readonly LessonNavigationPage[];
+  readonly memberAnimationIds: readonly string[];
+}
+
+export interface LegacyShellLessonNavigationDescriptor
+  extends LessonNavigationDescriptorBase {
+  readonly schemaVersion: 1;
   readonly courseShellCount: 1;
   readonly shell: Readonly<{
     animationId: string;
     assetId: string;
     memberOrdinal: number;
   }>;
-  readonly sections: readonly LessonNavigationSection[];
-  readonly pages: readonly LessonNavigationPage[];
-  readonly memberAnimationIds: readonly string[];
 }
+
+export interface PageOnlyLessonNavigationDescriptor
+  extends LessonNavigationDescriptorBase {
+  readonly schemaVersion: 2;
+  readonly courseShellCount: 0;
+}
+
+export type LessonNavigationDescriptor =
+  | LegacyShellLessonNavigationDescriptor
+  | PageOnlyLessonNavigationDescriptor;
 
 export interface LessonNavigationPublicationOptions {
   readonly auditPreview: boolean;
@@ -86,7 +101,7 @@ export function buildLessonNavigationDescriptor(
     definition.scope.lesson === null ||
     definition.scope.excludeNonMembers !== true ||
     definition.members.length !== definition.expectedMemberCount ||
-    definition.expectedMemberCount < 2) {
+    definition.expectedMemberCount < 1) {
     return undefined;
   }
 
@@ -97,21 +112,36 @@ export function buildLessonNavigationDescriptor(
   });
   if (boundMembers.some((member) => member === null)) return undefined;
 
-  const pageMembers = boundMembers.slice(0, -1);
-  const shellMember = boundMembers.at(-1)!;
-  if (pageMembers.some((entry) => entry!.member.releaseRole !== 'active-xml-referenced-page') ||
-    shellMember!.member.releaseRole !== 'course-shell' ||
-    !shellMember!.animation.flags.shell ||
-    shellMember!.animation.classification.collection !== 'course' ||
-    shellMember!.animation.classification.grade !== definition.scope.grade ||
-    shellMember!.animation.classification.lesson !== definition.scope.lesson) {
+  const pageOnly = boundMembers.every(
+    (entry) => entry!.member.releaseRole === 'active-xml-referenced-page',
+  );
+  const legacyShellMember = pageOnly ? null : boundMembers.at(-1)!;
+  const pageMembers = pageOnly ? boundMembers : boundMembers.slice(0, -1);
+  if (
+    pageMembers.length === 0 ||
+    pageMembers.some(
+      (entry) => entry!.member.releaseRole !== 'active-xml-referenced-page',
+    ) ||
+    (!pageOnly && (
+      legacyShellMember!.member.releaseRole !== 'course-shell' ||
+      !legacyShellMember!.animation.flags.shell ||
+      legacyShellMember!.animation.classification.collection !== 'course' ||
+      legacyShellMember!.animation.classification.grade !==
+        definition.scope.grade ||
+      legacyShellMember!.animation.classification.lesson !==
+        definition.scope.lesson
+    ))
+  ) {
     return undefined;
   }
 
+  const sectionPlacementCounts = new Map<string, number>();
   const preliminaryPages = pageMembers.map((entry, index) => {
     const {animation, member} = entry!;
     const section = animation.classification.section;
-    const occurrence = pageOccurrence(animation);
+    const occurrence = pageOnly
+      ? member.sourceOccurrence ?? pageOccurrence(animation)
+      : pageOccurrence(animation);
     const titleEnglish = nonEmpty(animation.classification.titleEnglish) ??
       nonEmpty(animation.classification.titleDisplay);
     if (animation.classification.collection !== 'course' ||
@@ -119,13 +149,20 @@ export function buildLessonNavigationDescriptor(
       animation.classification.lesson !== definition.scope.lesson ||
       animation.flags.shell ||
       !section || !nonEmpty(section.code) || !nonEmpty(section.titleEnglish) ||
-      !titleEnglish || occurrence !== index + 1) {
+      !titleEnglish || occurrence !== index + 1 ||
+      (member.placementId !== undefined &&
+        (!member.placementId ||
+          member.placementId.trim() !== member.placementId))) {
       return null;
     }
+    const sectionPageOrdinal =
+      (sectionPlacementCounts.get(section.code) ?? 0) + 1;
+    sectionPlacementCounts.set(section.code, sectionPageOrdinal);
     return {
+      placementId: member.placementId,
       memberOrdinal: index + 1,
       globalPageOrdinal: index + 1,
-      sectionPageOrdinal: animation.classification.page?.ordinal ?? 0,
+      sectionPageOrdinal,
       sectionCode: section.code,
       animationId: member.animationId,
       assetId: member.assetId,
@@ -174,6 +211,7 @@ export function buildLessonNavigationDescriptor(
   if (sections.some((section) => section === null)) return undefined;
 
   const pages = pagesWithSource.map((page, index): LessonNavigationPage => Object.freeze({
+    placementId: page.placementId,
     memberOrdinal: page.memberOrdinal,
     globalPageOrdinal: page.globalPageOrdinal,
     sectionPageOrdinal: page.sectionPageOrdinal,
@@ -190,12 +228,11 @@ export function buildLessonNavigationDescriptor(
     ? animationById.get(pagesWithSource[0].animationId)
     : undefined;
   const titleEnglish = nonEmpty(firstAnimation?.classification.lessonTitleDisplay) ??
-    nonEmpty(shellMember!.animation.classification.lessonTitleDisplay) ??
-    nonEmpty(shellMember!.animation.classification.titleEnglish);
+    nonEmpty(legacyShellMember?.animation.classification.lessonTitleDisplay) ??
+    nonEmpty(legacyShellMember?.animation.classification.titleEnglish);
   if (!titleEnglish) return undefined;
 
-  return Object.freeze({
-    schemaVersion: 1,
+  const common = {
     releaseId: definition.releaseId,
     grade: definition.scope.grade,
     lesson: definition.scope.lesson,
@@ -203,15 +240,30 @@ export function buildLessonNavigationDescriptor(
     titleSpanish: null,
     expectedMemberCount: definition.expectedMemberCount,
     activePageCount: pages.length,
-    courseShellCount: 1,
-    shell: Object.freeze({
-      animationId: shellMember!.member.animationId,
-      assetId: shellMember!.member.assetId,
-      memberOrdinal: definition.expectedMemberCount,
-    }),
     sections: Object.freeze(sections as LessonNavigationSection[]),
     pages: Object.freeze(pages),
-    memberAnimationIds: Object.freeze(definition.members.map((member) => member.animationId)),
+    memberAnimationIds: Object.freeze(
+      definition.members.map((member) => member.animationId),
+    ),
+  } as const;
+
+  if (pageOnly) {
+    return Object.freeze({
+      ...common,
+      schemaVersion: 2,
+      courseShellCount: 0,
+    });
+  }
+
+  return Object.freeze({
+    ...common,
+    schemaVersion: 1,
+    courseShellCount: 1,
+    shell: Object.freeze({
+      animationId: legacyShellMember!.member.animationId,
+      assetId: legacyShellMember!.member.assetId,
+      memberOrdinal: definition.expectedMemberCount,
+    }),
   });
 }
 
