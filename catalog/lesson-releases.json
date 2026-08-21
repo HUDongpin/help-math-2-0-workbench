@@ -1363,30 +1363,34 @@
       },
       "expectedCounts": {
         "activeXmlReferencedPages": 56,
-        "courseShells": 1,
-        "members": 57,
+        "uniquePageAnimations": 56,
+        "courseShells": 0,
+        "members": 56,
         "shards": 3
       },
       "scope": {
         "collection": "course",
         "grade": 5,
         "lesson": 5,
-        "excludeNonMembers": true
+        "excludeNonMembers": true,
+        "pageOnly": true,
+        "legacyFlashCourseShellExcluded": true,
+        "modernMyLessonHostRetained": true
       },
       "shards": [
         {
           "shardId": "g05-l05-host-language",
           "batchId": "g05-l05-host-language",
           "ordinal": 1,
-          "parallelGroup": "g05-l05-mvp",
-          "memberCount": 18,
+          "parallelGroup": "g05-l05-page-only",
+          "memberCount": 17,
           "developmentPrerequisites": []
         },
         {
           "shardId": "g05-l05-instruction",
           "batchId": "g05-l05-instruction",
           "ordinal": 2,
-          "parallelGroup": "g05-l05-mvp",
+          "parallelGroup": "g05-l05-page-only",
           "memberCount": 19,
           "developmentPrerequisites": []
         },
@@ -1394,7 +1398,7 @@
           "shardId": "g05-l05-practice-assessment",
           "batchId": "g05-l05-practice-assessment",
           "ordinal": 3,
-          "parallelGroup": "g05-l05-mvp",
+          "parallelGroup": "g05-l05-page-only",
           "memberCount": 20,
           "developmentPrerequisites": []
         }
@@ -1411,7 +1415,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IR/L5RW01.swf",
             "sha256": "03c0a8ef50c79c7c1e672471df3c2d294674ca28a9dd68e0bf1cbffda66bd613"
           },
-          "xmlOccurrence": 1
+          "xmlOccurrence": 1,
+          "placementId": "g05-l05-placement-001"
         },
         {
           "ordinal": 2,
@@ -1424,7 +1429,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/RW/L5RW02.swf",
             "sha256": "2c1988158116954da31fa820e0b5a3f4feddab3ea2e5ce4ec0fe87a96b5d9d33"
           },
-          "xmlOccurrence": 2
+          "xmlOccurrence": 2,
+          "placementId": "g05-l05-placement-002"
         },
         {
           "ordinal": 3,
@@ -1437,7 +1443,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/RW/L5RW03.swf",
             "sha256": "5726f1760ff9378e9141b2e952c919a5c8b9eb76796e8c6a5d222da4378f93ba"
           },
-          "xmlOccurrence": 3
+          "xmlOccurrence": 3,
+          "placementId": "g05-l05-placement-003"
         },
         {
           "ordinal": 4,
@@ -1450,7 +1457,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/RW/L5RW04.swf",
             "sha256": "78b003d025ef66eec5d5f9c7a0729f671067acc3286d05fb81e0930694e7fa30"
           },
-          "xmlOccurrence": 4
+          "xmlOccurrence": 4,
+          "placementId": "g05-l05-placement-004"
         },
         {
           "ordinal": 5,
@@ -1463,7 +1471,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/VB/L5VB02.swf",
             "sha256": "979fe1d9d43068320a1c4881c89a2edbe7fa849c4375704dfb4033d3ec34e855"
           },
-          "xmlOccurrence": 5
+          "xmlOccurrence": 5,
+          "placementId": "g05-l05-placement-005"
         },
         {
           "ordinal": 6,
@@ -1476,7 +1485,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/VB/L5VB03.swf",
             "sha256": "9f3b7475cadeb8f5780d98a047b7bfe2b5aa6d3f90c3cf7206b206bd0bee3eaa"
           },
-          "xmlOccurrence": 6
+          "xmlOccurrence": 6,
+          "placementId": "g05-l05-placement-006"
         },
         {
           "ordinal": 7,
@@ -1489,7 +1499,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/VB/L5VB04.swf",
             "sha256": "b0e87cff11a7d866591194914f687e023a443d73e716fa21d6fbf02d3830539e"
           },
-          "xmlOccurrence": 7
+          "xmlOccurrence": 7,
+          "placementId": "g05-l05-placement-007"
         },
         {
           "ordinal": 8,
@@ -1502,7 +1513,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/VB/L5VB05.swf",
             "sha256": "9ad6420dafab8894853f2f629569ac2f019369d79f413a8e321f5dd9f65f4ac0"
           },
-          "xmlOccurrence": 8
+          "xmlOccurrence": 8,
+          "placementId": "g05-l05-placement-008"
         },
         {
           "ordinal": 9,
@@ -1515,7 +1527,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/VB/L5VB06.swf",
             "sha256": "23763527fb0498187b54c81ef5597d7618f72def7b6418262f5a35465101db8f"
           },
-          "xmlOccurrence": 9
+          "xmlOccurrence": 9,
+          "placementId": "g05-l05-placement-009"
         },
         {
           "ordinal": 10,
@@ -1528,7 +1541,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/VB/L5VB07.swf",
             "sha256": "4154dc07c23b84a88f0e30b158ca599807e203154a121cbf74c642a0c2eba6a6"
           },
-          "xmlOccurrence": 10
+          "xmlOccurrence": 10,
+          "placementId": "g05-l05-placement-010"
         },
         {
           "ordinal": 11,
@@ -1541,7 +1555,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/VB/L5VB08.swf",
             "sha256": "5a5612779481b2ded1e7ccbb32992c1b435ba88358bfa4901d2df8d2a16e3ed4"
           },
-          "xmlOccurrence": 11
+          "xmlOccurrence": 11,
+          "placementId": "g05-l05-placement-011"
         },
         {
           "ordinal": 12,
@@ -1554,7 +1569,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/VB/L5VB09.swf",
             "sha256": "5f3869ddcca1d7cebaf32da74f909d1a8d1716d7efb874a512618c5a0b6cef2f"
           },
-          "xmlOccurrence": 12
+          "xmlOccurrence": 12,
+          "placementId": "g05-l05-placement-012"
         },
         {
           "ordinal": 13,
@@ -1567,7 +1583,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/VB/L5VB10.swf",
             "sha256": "ff6b9fa3dba9ea36dc437b6eacec3d2fb2f08a675d93bac15d0e25e8e30ed5e6"
           },
-          "xmlOccurrence": 13
+          "xmlOccurrence": 13,
+          "placementId": "g05-l05-placement-013"
         },
         {
           "ordinal": 14,
@@ -1580,7 +1597,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/VB/L5VB11.swf",
             "sha256": "fde24d912218c9e20344b4a933aa07ddcf586fc37d3c7c93e018c54abef203ea"
           },
-          "xmlOccurrence": 14
+          "xmlOccurrence": 14,
+          "placementId": "g05-l05-placement-014"
         },
         {
           "ordinal": 15,
@@ -1593,7 +1611,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/VB/L5VB12.swf",
             "sha256": "9530d6f3adb0ed6a3c8fbb5ba22c8084e2f8a20b45a735381574eb78e714abd0"
           },
-          "xmlOccurrence": 15
+          "xmlOccurrence": 15,
+          "placementId": "g05-l05-placement-015"
         },
         {
           "ordinal": 16,
@@ -1606,7 +1625,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/VB/L5VB13.swf",
             "sha256": "cc2b3a405682e3fc684ebdcebc72be044eeb1817839dd6f0f9fe5a4fd1eb9811"
           },
-          "xmlOccurrence": 16
+          "xmlOccurrence": 16,
+          "placementId": "g05-l05-placement-016"
         },
         {
           "ordinal": 17,
@@ -1619,7 +1639,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/VB/L5VB14.swf",
             "sha256": "e2e3615d3934e4cc90281d6c28c7cdb54f60cb0293e924f873878d7f7b753dbb"
           },
-          "xmlOccurrence": 17
+          "xmlOccurrence": 17,
+          "placementId": "g05-l05-placement-017"
         },
         {
           "ordinal": 18,
@@ -1632,7 +1653,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN02.swf",
             "sha256": "5853518abc04ce613e395c26ecaf7e14baa2bf86add1f3212a11ddb6dcad9eea"
           },
-          "xmlOccurrence": 18
+          "xmlOccurrence": 18,
+          "placementId": "g05-l05-placement-018"
         },
         {
           "ordinal": 19,
@@ -1645,7 +1667,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN03.swf",
             "sha256": "16843d9656c750accbdcf8b8f02f96ef5ab0c01619762eae7d12795a65722a14"
           },
-          "xmlOccurrence": 19
+          "xmlOccurrence": 19,
+          "placementId": "g05-l05-placement-019"
         },
         {
           "ordinal": 20,
@@ -1658,7 +1681,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN04.swf",
             "sha256": "8440659a366590d363dda8e44a1e3a2fdd2fc8a5e1ba5aafabdd35c134aea6b4"
           },
-          "xmlOccurrence": 20
+          "xmlOccurrence": 20,
+          "placementId": "g05-l05-placement-020"
         },
         {
           "ordinal": 21,
@@ -1671,7 +1695,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN05.swf",
             "sha256": "5de683c2edc64408a4c1927d2bf90f389f6713d2e040aaf6641d91b29873ccc0"
           },
-          "xmlOccurrence": 21
+          "xmlOccurrence": 21,
+          "placementId": "g05-l05-placement-021"
         },
         {
           "ordinal": 22,
@@ -1684,7 +1709,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN06.swf",
             "sha256": "d980b5143c3b734cc5607db37eb89099dd2848bbb6e0e250d4ae9c75b5eb039f"
           },
-          "xmlOccurrence": 22
+          "xmlOccurrence": 22,
+          "placementId": "g05-l05-placement-022"
         },
         {
           "ordinal": 23,
@@ -1697,7 +1723,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN07.swf",
             "sha256": "be30db847ea9f8f9634cd4e15c34c805b20f2d691283f813c0976dc8be1958f4"
           },
-          "xmlOccurrence": 23
+          "xmlOccurrence": 23,
+          "placementId": "g05-l05-placement-023"
         },
         {
           "ordinal": 24,
@@ -1710,7 +1737,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN08.swf",
             "sha256": "002c3a22a97ea9e90614bb6807b6832048f7fcb07590682673e1396f4d56a2c7"
           },
-          "xmlOccurrence": 24
+          "xmlOccurrence": 24,
+          "placementId": "g05-l05-placement-024"
         },
         {
           "ordinal": 25,
@@ -1723,7 +1751,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN09.swf",
             "sha256": "e46c069d4bc2fa7b44dc53ad067a104e84db924bf9f17781f6d715c7fa5ea4a9"
           },
-          "xmlOccurrence": 25
+          "xmlOccurrence": 25,
+          "placementId": "g05-l05-placement-025"
         },
         {
           "ordinal": 26,
@@ -1736,7 +1765,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN10.swf",
             "sha256": "57959126d5b13ea2831ac3c779fdaf489e8c4e7f405c586561435272239a85a4"
           },
-          "xmlOccurrence": 26
+          "xmlOccurrence": 26,
+          "placementId": "g05-l05-placement-026"
         },
         {
           "ordinal": 27,
@@ -1749,7 +1779,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN11.swf",
             "sha256": "8d1b08c83909f421939a225de45f1739dc4488190465c744a27464e5bfbe5f12"
           },
-          "xmlOccurrence": 27
+          "xmlOccurrence": 27,
+          "placementId": "g05-l05-placement-027"
         },
         {
           "ordinal": 28,
@@ -1762,7 +1793,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN12.swf",
             "sha256": "a6c045b6235195e67aefd48f5ea37deaea250f3a1ab3c75e99f8b1d5932315b3"
           },
-          "xmlOccurrence": 28
+          "xmlOccurrence": 28,
+          "placementId": "g05-l05-placement-028"
         },
         {
           "ordinal": 29,
@@ -1775,7 +1807,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN13.swf",
             "sha256": "87ba609ec15aac759bc708dc5fa67b84e2057accf348bed202a027fbb6cdac64"
           },
-          "xmlOccurrence": 29
+          "xmlOccurrence": 29,
+          "placementId": "g05-l05-placement-029"
         },
         {
           "ordinal": 30,
@@ -1788,7 +1821,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN14.swf",
             "sha256": "0805a9e871e74e253f6bbaf334356c9a9245026286cdd3e450d236d5b37e887a"
           },
-          "xmlOccurrence": 30
+          "xmlOccurrence": 30,
+          "placementId": "g05-l05-placement-030"
         },
         {
           "ordinal": 31,
@@ -1801,7 +1835,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN15.swf",
             "sha256": "03c90b1528f2c73bc5ff4e4a6c6e2e33aa36bcc3208d4d42a4b1d1d560973f96"
           },
-          "xmlOccurrence": 31
+          "xmlOccurrence": 31,
+          "placementId": "g05-l05-placement-031"
         },
         {
           "ordinal": 32,
@@ -1814,7 +1849,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN16.swf",
             "sha256": "229fb0ec81b4fc662b69dc4c4913a327b9c680aca299fbef2540b6f89a96d386"
           },
-          "xmlOccurrence": 32
+          "xmlOccurrence": 32,
+          "placementId": "g05-l05-placement-032"
         },
         {
           "ordinal": 33,
@@ -1827,7 +1863,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN17.swf",
             "sha256": "3be9e6551570f17a7495e4edc2f670b18cd8f61497053e531d060de76111f661"
           },
-          "xmlOccurrence": 33
+          "xmlOccurrence": 33,
+          "placementId": "g05-l05-placement-033"
         },
         {
           "ordinal": 34,
@@ -1840,7 +1877,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN18.swf",
             "sha256": "f315cc518fd7ca50449b0db2f00838042997ca8d9fbff04bd98d52ebf7893609"
           },
-          "xmlOccurrence": 34
+          "xmlOccurrence": 34,
+          "placementId": "g05-l05-placement-034"
         },
         {
           "ordinal": 35,
@@ -1853,7 +1891,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN19.swf",
             "sha256": "2888a14cbeff83f7e6c2e3574e6a887739b5111726658e6d65fa2c37c8aa145f"
           },
-          "xmlOccurrence": 35
+          "xmlOccurrence": 35,
+          "placementId": "g05-l05-placement-035"
         },
         {
           "ordinal": 36,
@@ -1866,7 +1905,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/IN/L5IN20.swf",
             "sha256": "3773661b456c70bfc84e9c5416b959ac6bd0bbb9249478049f0752fd62de9e9d"
           },
-          "xmlOccurrence": 36
+          "xmlOccurrence": 36,
+          "placementId": "g05-l05-placement-036"
         },
         {
           "ordinal": 37,
@@ -1879,7 +1919,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/TI/L5TI02.swf",
             "sha256": "54edc245960ecb1847f0117393601f5ca5644777b1d22f28ab94fcdb195f2a38"
           },
-          "xmlOccurrence": 37
+          "xmlOccurrence": 37,
+          "placementId": "g05-l05-placement-037"
         },
         {
           "ordinal": 38,
@@ -1892,7 +1933,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/TI/L5TI03.swf",
             "sha256": "6b7a4abead6d38a3975bbcfd71f723df35854718219e99351aeff01b53cd250c"
           },
-          "xmlOccurrence": 38
+          "xmlOccurrence": 38,
+          "placementId": "g05-l05-placement-038"
         },
         {
           "ordinal": 39,
@@ -1905,7 +1947,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/TI/L5TI04.swf",
             "sha256": "91dbb6f96a43f9813670c5aa5ffc7d38e5a4f159292103b26e63b363325740a6"
           },
-          "xmlOccurrence": 39
+          "xmlOccurrence": 39,
+          "placementId": "g05-l05-placement-039"
         },
         {
           "ordinal": 40,
@@ -1918,7 +1961,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/TI/L5TI05.swf",
             "sha256": "ee73784b6972524937619ac58b86a0c7f3f2ff9fb2a08aca2ef901ca9c56dc0b"
           },
-          "xmlOccurrence": 40
+          "xmlOccurrence": 40,
+          "placementId": "g05-l05-placement-040"
         },
         {
           "ordinal": 41,
@@ -1931,7 +1975,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/TI/L5TI06.swf",
             "sha256": "faca6a7490f74cc46744476216566b08a5b72a2828ad2251242e3aab63341249"
           },
-          "xmlOccurrence": 41
+          "xmlOccurrence": 41,
+          "placementId": "g05-l05-placement-041"
         },
         {
           "ordinal": 42,
@@ -1944,7 +1989,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/TI/L5TI07.swf",
             "sha256": "566c7ca16798138865adedc2c50f0f5360b91044a90fa7f9f68b63d1a34eb6e0"
           },
-          "xmlOccurrence": 42
+          "xmlOccurrence": 42,
+          "placementId": "g05-l05-placement-042"
         },
         {
           "ordinal": 43,
@@ -1957,7 +2003,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/TI/L5TI08.swf",
             "sha256": "12d721251493bcde5da9009aace68f1cc644ca959b86b7ba8c237d58f369b4cc"
           },
-          "xmlOccurrence": 43
+          "xmlOccurrence": 43,
+          "placementId": "g05-l05-placement-043"
         },
         {
           "ordinal": 44,
@@ -1970,7 +2017,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/TI/L5TI09.swf",
             "sha256": "e5397632f23e139fb130c275fb5215df917a7b53b14289a3194bc2d4bfa3df88"
           },
-          "xmlOccurrence": 44
+          "xmlOccurrence": 44,
+          "placementId": "g05-l05-placement-044"
         },
         {
           "ordinal": 45,
@@ -1983,7 +2031,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/TI/L5TI10.swf",
             "sha256": "a2e6ff0fbe41d35aa71b9bed44235db86314a99499046ec292c5126ce50b3bdc"
           },
-          "xmlOccurrence": 45
+          "xmlOccurrence": 45,
+          "placementId": "g05-l05-placement-045"
         },
         {
           "ordinal": 46,
@@ -1996,7 +2045,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/GS/L5GS02.swf",
             "sha256": "ba769ee78e13c4f757d9b85f12a77cb5379ea6866552c9867988938ff45e31fa"
           },
-          "xmlOccurrence": 46
+          "xmlOccurrence": 46,
+          "placementId": "g05-l05-placement-046"
         },
         {
           "ordinal": 47,
@@ -2009,7 +2059,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/TS/L5TS02.swf",
             "sha256": "8ff02406f8ebb13c66a59212561b2764e71ba8a0c709a3d3eff926d3121a8f39"
           },
-          "xmlOccurrence": 47
+          "xmlOccurrence": 47,
+          "placementId": "g05-l05-placement-047"
         },
         {
           "ordinal": 48,
@@ -2022,7 +2073,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/TS/L5TS03.swf",
             "sha256": "c32346a309928540738395842a224f81fac4e3b4cd98bf2f6c544ef8666a735f"
           },
-          "xmlOccurrence": 48
+          "xmlOccurrence": 48,
+          "placementId": "g05-l05-placement-048"
         },
         {
           "ordinal": 49,
@@ -2035,7 +2087,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/TS/L5TS04.swf",
             "sha256": "a5c007f771acb077ee9b57266407de1a74b162966fc295ab10fc87e1556a1178"
           },
-          "xmlOccurrence": 49
+          "xmlOccurrence": 49,
+          "placementId": "g05-l05-placement-049"
         },
         {
           "ordinal": 50,
@@ -2048,7 +2101,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/TS/L5TS05.swf",
             "sha256": "5c4ad222e8a710acc84d3260ae934a9df8855a9daa22aee3f7ef17717f0aa431"
           },
-          "xmlOccurrence": 50
+          "xmlOccurrence": 50,
+          "placementId": "g05-l05-placement-050"
         },
         {
           "ordinal": 51,
@@ -2061,7 +2115,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/TS/L5TS06.swf",
             "sha256": "c8fb2601bfcd20fa041c2fb8333d142fc046f9d730ddd6df94541c6c8a3f486a"
           },
-          "xmlOccurrence": 51
+          "xmlOccurrence": 51,
+          "placementId": "g05-l05-placement-051"
         },
         {
           "ordinal": 52,
@@ -2074,7 +2129,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/TS/L5TS07.swf",
             "sha256": "e034c05612a1ff93223b4d3071f56b41204518b0cf9d7a4b436323e79b18a588"
           },
-          "xmlOccurrence": 52
+          "xmlOccurrence": 52,
+          "placementId": "g05-l05-placement-052"
         },
         {
           "ordinal": 53,
@@ -2087,7 +2143,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/TS/L5TS08.swf",
             "sha256": "752ec6444203e2faff46a9c711ed76ee54a9f42e1111d9f78aad506cf8cc95d2"
           },
-          "xmlOccurrence": 53
+          "xmlOccurrence": 53,
+          "placementId": "g05-l05-placement-053"
         },
         {
           "ordinal": 54,
@@ -2100,7 +2157,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/FQ/L5FQ01.swf",
             "sha256": "98522023d261a4b024eb54b386a909c12444c870d30bc52604c79654abf74d9b"
           },
-          "xmlOccurrence": 54
+          "xmlOccurrence": 54,
+          "placementId": "g05-l05-placement-054"
         },
         {
           "ordinal": 55,
@@ -2113,7 +2171,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/FQ/L5FQ02.swf",
             "sha256": "1a28dba8c875c62dd655248b6f7ebe0af634ffe5ff174882d306a1f40d3060c3"
           },
-          "xmlOccurrence": 55
+          "xmlOccurrence": 55,
+          "placementId": "g05-l05-placement-055"
         },
         {
           "ordinal": 56,
@@ -2126,20 +2185,8 @@
             "path": "HELP_COURSES/ELMGR5/L5/FQ/L5FQ03.swf",
             "sha256": "43c27a0b81662befa75d09fe042c0379090acee274839316d614c8d66ab0d7d2"
           },
-          "xmlOccurrence": 56
-        },
-        {
-          "ordinal": 57,
-          "animationId": "shell-course-g05-l05-index-local",
-          "assetId": "swf-5375c535f0761ae580f00eeda29c00d34d0de901239a7d2c65acf968a8290c66",
-          "releaseRole": "course-shell",
-          "batchId": "g05-l05-host-language",
-          "shardId": "g05-l05-host-language",
-          "source": {
-            "path": "HELP_COURSES/ELMGR5/L5/index_local.swf",
-            "sha256": "5375c535f0761ae580f00eeda29c00d34d0de901239a7d2c65acf968a8290c66"
-          },
-          "xmlOccurrence": null
+          "xmlOccurrence": 56,
+          "placementId": "g05-l05-placement-056"
         }
       ]
     },
@@ -2809,6 +2856,1048 @@
             "sha256": "050d4181f8d679e6232871371b70aeaa02dbecb4c7e16cfbc732437307cf6072"
           },
           "xmlOccurrence": null
+        }
+      ]
+    },
+    {
+      "releaseOrder": 5,
+      "releaseId": "lesson-g03-l02-addition-subtraction-page-only-current-js",
+      "releaseType": "complete-lesson",
+      "publicationMode": "atomic",
+      "developmentMode": "parallel-shards",
+      "queueId": "release-g03-l02-addition-subtraction-page-only-current-js",
+      "grade": 3,
+      "lesson": 2,
+      "titleDisplay": "Addition and Subtraction",
+      "domain": "integer-operations",
+      "sourceLesson": {
+        "path": "HELP_COURSES/ELMGR3/L2/index.xml",
+        "bytes": 14549,
+        "sha256": "abc87f1335090d1ff1169f94427b4aaa927a0916a1d45565ffa5902f2bf14f27",
+        "sequenceAuthority": "active-course-xml-global-page-order"
+      },
+      "expectedCounts": {
+        "activeXmlReferencedPages": 70,
+        "uniquePageAnimations": 70,
+        "courseShells": 0,
+        "members": 70,
+        "shards": 3
+      },
+      "scope": {
+        "collection": "course",
+        "grade": 3,
+        "lesson": 2,
+        "excludeNonMembers": true,
+        "pageOnly": true,
+        "legacyFlashCourseShellExcluded": true,
+        "modernMyLessonHostRetained": true
+      },
+      "shards": [
+        {
+          "shardId": "g03-l02-host-vocabulary",
+          "batchId": "g03-l02-host-vocabulary",
+          "ordinal": 1,
+          "parallelGroup": "g03-l02-page-only",
+          "memberCount": 18,
+          "developmentPrerequisites": []
+        },
+        {
+          "shardId": "g03-l02-instruction",
+          "batchId": "g03-l02-instruction",
+          "ordinal": 2,
+          "parallelGroup": "g03-l02-page-only",
+          "memberCount": 31,
+          "developmentPrerequisites": []
+        },
+        {
+          "shardId": "g03-l02-practice-assessment",
+          "batchId": "g03-l02-practice-assessment",
+          "ordinal": 3,
+          "parallelGroup": "g03-l02-page-only",
+          "memberCount": 21,
+          "developmentPrerequisites": []
+        }
+      ],
+      "members": [
+        {
+          "ordinal": 1,
+          "placementId": "g03-l02-placement-001",
+          "animationId": "course-g03-l02-ir-001-87689b4b",
+          "assetId": "swf-10d0ca42619150819c3ebe096096449a0c8ff355e6f898e3d2bea3cd5d8bba9a",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-host-vocabulary",
+          "shardId": "g03-l02-host-vocabulary",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IR/L2RW01.swf",
+            "sha256": "10d0ca42619150819c3ebe096096449a0c8ff355e6f898e3d2bea3cd5d8bba9a"
+          },
+          "xmlOccurrence": 1
+        },
+        {
+          "ordinal": 2,
+          "placementId": "g03-l02-placement-002",
+          "animationId": "course-g03-l02-rw-002",
+          "assetId": "swf-ffdac774c9dc565b908ff5ac717c629ce29a7001b6b52009d3176c0ede442973",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-host-vocabulary",
+          "shardId": "g03-l02-host-vocabulary",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/RW/L2RW02.swf",
+            "sha256": "ffdac774c9dc565b908ff5ac717c629ce29a7001b6b52009d3176c0ede442973"
+          },
+          "xmlOccurrence": 2
+        },
+        {
+          "ordinal": 3,
+          "placementId": "g03-l02-placement-003",
+          "animationId": "course-g03-l02-rw-003",
+          "assetId": "swf-b31e341e6057a45405797891575246158a565ce98703648c0a9ff70ecc519112",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-host-vocabulary",
+          "shardId": "g03-l02-host-vocabulary",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/RW/L2RW03.swf",
+            "sha256": "b31e341e6057a45405797891575246158a565ce98703648c0a9ff70ecc519112"
+          },
+          "xmlOccurrence": 3
+        },
+        {
+          "ordinal": 4,
+          "placementId": "g03-l02-placement-004",
+          "animationId": "course-g03-l02-rw-004",
+          "assetId": "swf-5613dcb67532baea7656e32310713a147f7c5c914b9dda02bb042a4b1cc283d6",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-host-vocabulary",
+          "shardId": "g03-l02-host-vocabulary",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/RW/L2RW04.swf",
+            "sha256": "5613dcb67532baea7656e32310713a147f7c5c914b9dda02bb042a4b1cc283d6"
+          },
+          "xmlOccurrence": 4
+        },
+        {
+          "ordinal": 5,
+          "placementId": "g03-l02-placement-005",
+          "animationId": "course-g03-l02-rw-005",
+          "assetId": "swf-46bffa65d7eece1eed64fa57375657b94f04916057e38e84af8d06e1460f8bed",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-host-vocabulary",
+          "shardId": "g03-l02-host-vocabulary",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/RW/L2RW05.swf",
+            "sha256": "46bffa65d7eece1eed64fa57375657b94f04916057e38e84af8d06e1460f8bed"
+          },
+          "xmlOccurrence": 5
+        },
+        {
+          "ordinal": 6,
+          "placementId": "g03-l02-placement-006",
+          "animationId": "course-g03-l02-vb-002",
+          "assetId": "swf-0bff145243add5298e6148f8a5870ca308082d94915ac0e1b05c5584e2c12f4d",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-host-vocabulary",
+          "shardId": "g03-l02-host-vocabulary",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/VB/L2VB02.swf",
+            "sha256": "0bff145243add5298e6148f8a5870ca308082d94915ac0e1b05c5584e2c12f4d"
+          },
+          "xmlOccurrence": 6
+        },
+        {
+          "ordinal": 7,
+          "placementId": "g03-l02-placement-007",
+          "animationId": "course-g03-l02-vb-003",
+          "assetId": "swf-ce096a07e9aef80abc7cd76da6a68107f87ae18cb1faa419befd55272e83ad90",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-host-vocabulary",
+          "shardId": "g03-l02-host-vocabulary",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/VB/L2VB03.swf",
+            "sha256": "ce096a07e9aef80abc7cd76da6a68107f87ae18cb1faa419befd55272e83ad90"
+          },
+          "xmlOccurrence": 7
+        },
+        {
+          "ordinal": 8,
+          "placementId": "g03-l02-placement-008",
+          "animationId": "course-g03-l02-vb-004",
+          "assetId": "swf-74e96cf71ba3f3c253e46aabab48b38fc3213f9c1360823ec7a2f688e77d9d81",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-host-vocabulary",
+          "shardId": "g03-l02-host-vocabulary",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/VB/L2VB04.swf",
+            "sha256": "74e96cf71ba3f3c253e46aabab48b38fc3213f9c1360823ec7a2f688e77d9d81"
+          },
+          "xmlOccurrence": 8
+        },
+        {
+          "ordinal": 9,
+          "placementId": "g03-l02-placement-009",
+          "animationId": "course-g03-l02-vb-005",
+          "assetId": "swf-4f0ee38b6a807cc42ddec7e7e3d3f82f9295ee9c5d076cc1d153dcce18b81bd7",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-host-vocabulary",
+          "shardId": "g03-l02-host-vocabulary",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/VB/L2VB05.swf",
+            "sha256": "4f0ee38b6a807cc42ddec7e7e3d3f82f9295ee9c5d076cc1d153dcce18b81bd7"
+          },
+          "xmlOccurrence": 9
+        },
+        {
+          "ordinal": 10,
+          "placementId": "g03-l02-placement-010",
+          "animationId": "course-g03-l02-vb-006",
+          "assetId": "swf-d2dc00ef48b08bf0ac89c9ddd630ab1b44483f8bd5bf74d9c0729bc13417bfaf",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-host-vocabulary",
+          "shardId": "g03-l02-host-vocabulary",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/VB/L2VB06.swf",
+            "sha256": "d2dc00ef48b08bf0ac89c9ddd630ab1b44483f8bd5bf74d9c0729bc13417bfaf"
+          },
+          "xmlOccurrence": 10
+        },
+        {
+          "ordinal": 11,
+          "placementId": "g03-l02-placement-011",
+          "animationId": "course-g03-l02-vb-007",
+          "assetId": "swf-d06fd772837629881207f7849214cd288870b58f1fc4d137388f7ab375e9bdee",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-host-vocabulary",
+          "shardId": "g03-l02-host-vocabulary",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/VB/L2VB07.swf",
+            "sha256": "d06fd772837629881207f7849214cd288870b58f1fc4d137388f7ab375e9bdee"
+          },
+          "xmlOccurrence": 11
+        },
+        {
+          "ordinal": 12,
+          "placementId": "g03-l02-placement-012",
+          "animationId": "course-g03-l02-vb-008",
+          "assetId": "swf-66d5a1ab4676a0bdd1d85727ceaf7fbd4f98b140a18f54dfb43eb4e95aa9b1ee",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-host-vocabulary",
+          "shardId": "g03-l02-host-vocabulary",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/VB/L2VB08.swf",
+            "sha256": "66d5a1ab4676a0bdd1d85727ceaf7fbd4f98b140a18f54dfb43eb4e95aa9b1ee"
+          },
+          "xmlOccurrence": 12
+        },
+        {
+          "ordinal": 13,
+          "placementId": "g03-l02-placement-013",
+          "animationId": "course-g03-l02-vb-009",
+          "assetId": "swf-96a534c1dd378ab73f4177ae66d59ff12541d5455bac9d8fc2573d28c54b9c41",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-host-vocabulary",
+          "shardId": "g03-l02-host-vocabulary",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/VB/L2VB09.swf",
+            "sha256": "96a534c1dd378ab73f4177ae66d59ff12541d5455bac9d8fc2573d28c54b9c41"
+          },
+          "xmlOccurrence": 13
+        },
+        {
+          "ordinal": 14,
+          "placementId": "g03-l02-placement-014",
+          "animationId": "course-g03-l02-vb-010",
+          "assetId": "swf-6cca268a4f95c12a27f9aa2b772c2d95ed3809e2ee025291c0b7904de836bace",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-host-vocabulary",
+          "shardId": "g03-l02-host-vocabulary",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/VB/L2VB10.swf",
+            "sha256": "6cca268a4f95c12a27f9aa2b772c2d95ed3809e2ee025291c0b7904de836bace"
+          },
+          "xmlOccurrence": 14
+        },
+        {
+          "ordinal": 15,
+          "placementId": "g03-l02-placement-015",
+          "animationId": "course-g03-l02-vb-011",
+          "assetId": "swf-00416348cbb4b3f5439c5d4957da2445de78b6ef3ac3d4efff6592100db6ecb7",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-host-vocabulary",
+          "shardId": "g03-l02-host-vocabulary",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/VB/L2VB11.swf",
+            "sha256": "00416348cbb4b3f5439c5d4957da2445de78b6ef3ac3d4efff6592100db6ecb7"
+          },
+          "xmlOccurrence": 15
+        },
+        {
+          "ordinal": 16,
+          "placementId": "g03-l02-placement-016",
+          "animationId": "course-g03-l02-vb-012",
+          "assetId": "swf-53af849884a4016f022463e612dcf4581ae82ecb03895033bde2a7578cb96ece",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-host-vocabulary",
+          "shardId": "g03-l02-host-vocabulary",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/VB/L2VB12.swf",
+            "sha256": "53af849884a4016f022463e612dcf4581ae82ecb03895033bde2a7578cb96ece"
+          },
+          "xmlOccurrence": 16
+        },
+        {
+          "ordinal": 17,
+          "placementId": "g03-l02-placement-017",
+          "animationId": "course-g03-l02-vb-013",
+          "assetId": "swf-f7e2de8ff4ede29d5c3e8241b045a1f10b390d5ae7f08e878485a1d4d0372085",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-host-vocabulary",
+          "shardId": "g03-l02-host-vocabulary",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/VB/L2VB13.swf",
+            "sha256": "f7e2de8ff4ede29d5c3e8241b045a1f10b390d5ae7f08e878485a1d4d0372085"
+          },
+          "xmlOccurrence": 17
+        },
+        {
+          "ordinal": 18,
+          "placementId": "g03-l02-placement-018",
+          "animationId": "course-g03-l02-vb-014",
+          "assetId": "swf-3125b50f637042dd83057f12bdea98102d013bfd84d813b13435fc15c83fff64",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-host-vocabulary",
+          "shardId": "g03-l02-host-vocabulary",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/VB/L2VB14.swf",
+            "sha256": "3125b50f637042dd83057f12bdea98102d013bfd84d813b13435fc15c83fff64"
+          },
+          "xmlOccurrence": 18
+        },
+        {
+          "ordinal": 19,
+          "placementId": "g03-l02-placement-019",
+          "animationId": "course-g03-l02-in-002",
+          "assetId": "swf-157b7bd4bad9d0ea2d6a4f7d8864440b257e34cf8102d623a5b29765767abe86",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN02.swf",
+            "sha256": "157b7bd4bad9d0ea2d6a4f7d8864440b257e34cf8102d623a5b29765767abe86"
+          },
+          "xmlOccurrence": 19
+        },
+        {
+          "ordinal": 20,
+          "placementId": "g03-l02-placement-020",
+          "animationId": "course-g03-l02-in-003",
+          "assetId": "swf-e09306603a3e2c2a80302e03a816c70ff7bf8a293dabdd4f19ffb2daf643dc33",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN03.swf",
+            "sha256": "e09306603a3e2c2a80302e03a816c70ff7bf8a293dabdd4f19ffb2daf643dc33"
+          },
+          "xmlOccurrence": 20
+        },
+        {
+          "ordinal": 21,
+          "placementId": "g03-l02-placement-021",
+          "animationId": "course-g03-l02-in-004",
+          "assetId": "swf-ccffa1afcac24cf85c6e98da0560678f556b9656f30b3bc3f281402d20f2dfe8",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN04.swf",
+            "sha256": "ccffa1afcac24cf85c6e98da0560678f556b9656f30b3bc3f281402d20f2dfe8"
+          },
+          "xmlOccurrence": 21
+        },
+        {
+          "ordinal": 22,
+          "placementId": "g03-l02-placement-022",
+          "animationId": "course-g03-l02-in-005",
+          "assetId": "swf-bebb965e4b0bb29d302468f49eb670cf2d97ec2beda5592b70370874d422924d",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN05.swf",
+            "sha256": "bebb965e4b0bb29d302468f49eb670cf2d97ec2beda5592b70370874d422924d"
+          },
+          "xmlOccurrence": 22
+        },
+        {
+          "ordinal": 23,
+          "placementId": "g03-l02-placement-023",
+          "animationId": "course-g03-l02-in-006",
+          "assetId": "swf-fdfc091b0e3122444885b1e8e64d0ef2493a18da1cff8ec122d8f69b71d305bc",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN06.swf",
+            "sha256": "fdfc091b0e3122444885b1e8e64d0ef2493a18da1cff8ec122d8f69b71d305bc"
+          },
+          "xmlOccurrence": 23
+        },
+        {
+          "ordinal": 24,
+          "placementId": "g03-l02-placement-024",
+          "animationId": "course-g03-l02-in-007",
+          "assetId": "swf-11e6efab6fe838e6bd1e2ca6b3a8fa26b871111e2bda74502417adb61f6f9db3",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN07.swf",
+            "sha256": "11e6efab6fe838e6bd1e2ca6b3a8fa26b871111e2bda74502417adb61f6f9db3"
+          },
+          "xmlOccurrence": 24
+        },
+        {
+          "ordinal": 25,
+          "placementId": "g03-l02-placement-025",
+          "animationId": "course-g03-l02-in-008",
+          "assetId": "swf-bf97d133db0c07817db0f2e8372582080f0e3d03b17d788efb0ee8dbb55047c9",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN08.swf",
+            "sha256": "bf97d133db0c07817db0f2e8372582080f0e3d03b17d788efb0ee8dbb55047c9"
+          },
+          "xmlOccurrence": 25
+        },
+        {
+          "ordinal": 26,
+          "placementId": "g03-l02-placement-026",
+          "animationId": "course-g03-l02-in-009",
+          "assetId": "swf-e940a49c315b6e535d1fed531960ae03b5a1209e2f9bbb9ac4661865b2e4c55f",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN09.swf",
+            "sha256": "e940a49c315b6e535d1fed531960ae03b5a1209e2f9bbb9ac4661865b2e4c55f"
+          },
+          "xmlOccurrence": 26
+        },
+        {
+          "ordinal": 27,
+          "placementId": "g03-l02-placement-027",
+          "animationId": "course-g03-l02-in-010",
+          "assetId": "swf-d5c21547c8976b217aa741426f44517572a13b9a9387e9a904e97c0301af6737",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN10.swf",
+            "sha256": "d5c21547c8976b217aa741426f44517572a13b9a9387e9a904e97c0301af6737"
+          },
+          "xmlOccurrence": 27
+        },
+        {
+          "ordinal": 28,
+          "placementId": "g03-l02-placement-028",
+          "animationId": "course-g03-l02-in-011",
+          "assetId": "swf-797205934acc64085bfe5a69915d38fe077a4837c54d23b80e21e8758fe21168",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN11.swf",
+            "sha256": "797205934acc64085bfe5a69915d38fe077a4837c54d23b80e21e8758fe21168"
+          },
+          "xmlOccurrence": 28
+        },
+        {
+          "ordinal": 29,
+          "placementId": "g03-l02-placement-029",
+          "animationId": "course-g03-l02-in-012",
+          "assetId": "swf-c5574b347282b31df1bf3d3a189635da10d063f72dc034263ae327eee0e660af",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN12.swf",
+            "sha256": "c5574b347282b31df1bf3d3a189635da10d063f72dc034263ae327eee0e660af"
+          },
+          "xmlOccurrence": 29
+        },
+        {
+          "ordinal": 30,
+          "placementId": "g03-l02-placement-030",
+          "animationId": "course-g03-l02-in-013",
+          "assetId": "swf-072333fc9f3e03654c31c194c4f062996b28af288e2c59087347f09bf4ac3410",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN13.swf",
+            "sha256": "072333fc9f3e03654c31c194c4f062996b28af288e2c59087347f09bf4ac3410"
+          },
+          "xmlOccurrence": 30
+        },
+        {
+          "ordinal": 31,
+          "placementId": "g03-l02-placement-031",
+          "animationId": "course-g03-l02-in-014",
+          "assetId": "swf-6e672ce72fa1921acaad1e47ff1e46d6b0c94eb6dfd14b1ecbfd476aa0e73883",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN14.swf",
+            "sha256": "6e672ce72fa1921acaad1e47ff1e46d6b0c94eb6dfd14b1ecbfd476aa0e73883"
+          },
+          "xmlOccurrence": 31
+        },
+        {
+          "ordinal": 32,
+          "placementId": "g03-l02-placement-032",
+          "animationId": "course-g03-l02-in-015",
+          "assetId": "swf-c7d1742ead3fc8ff5d287af23ab2f02ac9d929e4921f3c7f17963823a81a1588",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN15.swf",
+            "sha256": "c7d1742ead3fc8ff5d287af23ab2f02ac9d929e4921f3c7f17963823a81a1588"
+          },
+          "xmlOccurrence": 32
+        },
+        {
+          "ordinal": 33,
+          "placementId": "g03-l02-placement-033",
+          "animationId": "course-g03-l02-in-016",
+          "assetId": "swf-c4bc7dc6732b9afde40906d66a056e1a44da6a8def8c60b6e93ea44897ba264c",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN16.swf",
+            "sha256": "c4bc7dc6732b9afde40906d66a056e1a44da6a8def8c60b6e93ea44897ba264c"
+          },
+          "xmlOccurrence": 33
+        },
+        {
+          "ordinal": 34,
+          "placementId": "g03-l02-placement-034",
+          "animationId": "course-g03-l02-in-017",
+          "assetId": "swf-fe0a11c8ef00fd1147c985143c908afa587f2d9f645766150790ebbafe3e3866",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN17.swf",
+            "sha256": "fe0a11c8ef00fd1147c985143c908afa587f2d9f645766150790ebbafe3e3866"
+          },
+          "xmlOccurrence": 34
+        },
+        {
+          "ordinal": 35,
+          "placementId": "g03-l02-placement-035",
+          "animationId": "course-g03-l02-in-018",
+          "assetId": "swf-a94c394efa5a0c7355c017c9e2708427726861466a2d09d3e03ce59fb5ffc3bb",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN18.swf",
+            "sha256": "a94c394efa5a0c7355c017c9e2708427726861466a2d09d3e03ce59fb5ffc3bb"
+          },
+          "xmlOccurrence": 35
+        },
+        {
+          "ordinal": 36,
+          "placementId": "g03-l02-placement-036",
+          "animationId": "course-g03-l02-in-019",
+          "assetId": "swf-d6c02aa343b2472e6d770aa50bc6e2103e8fd439ce8cc1702e1400080265b6ab",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN19.swf",
+            "sha256": "d6c02aa343b2472e6d770aa50bc6e2103e8fd439ce8cc1702e1400080265b6ab"
+          },
+          "xmlOccurrence": 36
+        },
+        {
+          "ordinal": 37,
+          "placementId": "g03-l02-placement-037",
+          "animationId": "course-g03-l02-in-020",
+          "assetId": "swf-6667e6981342b4ff87c634f2243d82b9b53a4fa54410f620cc03acc724d40c49",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN20.swf",
+            "sha256": "6667e6981342b4ff87c634f2243d82b9b53a4fa54410f620cc03acc724d40c49"
+          },
+          "xmlOccurrence": 37
+        },
+        {
+          "ordinal": 38,
+          "placementId": "g03-l02-placement-038",
+          "animationId": "course-g03-l02-in-021",
+          "assetId": "swf-7770c9721c6254f47c7640b4a0986e6bb43c30c6b2a55a647ed49c2a79d8361e",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN21.swf",
+            "sha256": "7770c9721c6254f47c7640b4a0986e6bb43c30c6b2a55a647ed49c2a79d8361e"
+          },
+          "xmlOccurrence": 38
+        },
+        {
+          "ordinal": 39,
+          "placementId": "g03-l02-placement-039",
+          "animationId": "course-g03-l02-in-022",
+          "assetId": "swf-f1b70fdb7d3ceb27ef59e7c7eeca2afe39c8dd5965eb08d48debdb5b1f97378e",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN22.swf",
+            "sha256": "f1b70fdb7d3ceb27ef59e7c7eeca2afe39c8dd5965eb08d48debdb5b1f97378e"
+          },
+          "xmlOccurrence": 39
+        },
+        {
+          "ordinal": 40,
+          "placementId": "g03-l02-placement-040",
+          "animationId": "course-g03-l02-in-023",
+          "assetId": "swf-c42cd45cf7fc40580e32c64fe54008861ad3bc9a351d6205949c4b9a08bfbf2e",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN23.swf",
+            "sha256": "c42cd45cf7fc40580e32c64fe54008861ad3bc9a351d6205949c4b9a08bfbf2e"
+          },
+          "xmlOccurrence": 40
+        },
+        {
+          "ordinal": 41,
+          "placementId": "g03-l02-placement-041",
+          "animationId": "course-g03-l02-in-024",
+          "assetId": "swf-1ce310bb9b4a4786e6cb271112c225a4108f24f64ae878a64cbdc446a4561b5f",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN24.swf",
+            "sha256": "1ce310bb9b4a4786e6cb271112c225a4108f24f64ae878a64cbdc446a4561b5f"
+          },
+          "xmlOccurrence": 41
+        },
+        {
+          "ordinal": 42,
+          "placementId": "g03-l02-placement-042",
+          "animationId": "course-g03-l02-in-025",
+          "assetId": "swf-aa4400f638e84e462d89c970412c2b086948cc022bb7cd9b3d81ca6259f5f276",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN25.swf",
+            "sha256": "aa4400f638e84e462d89c970412c2b086948cc022bb7cd9b3d81ca6259f5f276"
+          },
+          "xmlOccurrence": 42
+        },
+        {
+          "ordinal": 43,
+          "placementId": "g03-l02-placement-043",
+          "animationId": "course-g03-l02-in-026",
+          "assetId": "swf-98c30bb4ede61c10a8ca22feaf5a139fcb52d0890026f95cd06d0fe9a9009a49",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN26.swf",
+            "sha256": "98c30bb4ede61c10a8ca22feaf5a139fcb52d0890026f95cd06d0fe9a9009a49"
+          },
+          "xmlOccurrence": 43
+        },
+        {
+          "ordinal": 44,
+          "placementId": "g03-l02-placement-044",
+          "animationId": "course-g03-l02-in-027",
+          "assetId": "swf-6fbcfa812a9d9117a3df878bf2fb5b7ddf8aace0b9320b26423e4b693393a8b2",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN27.swf",
+            "sha256": "6fbcfa812a9d9117a3df878bf2fb5b7ddf8aace0b9320b26423e4b693393a8b2"
+          },
+          "xmlOccurrence": 44
+        },
+        {
+          "ordinal": 45,
+          "placementId": "g03-l02-placement-045",
+          "animationId": "course-g03-l02-in-028",
+          "assetId": "swf-15c401ab12cb2ce29413ec2fc04d73e1f7d783a5c408a9474564c4163cf91deb",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN28.swf",
+            "sha256": "15c401ab12cb2ce29413ec2fc04d73e1f7d783a5c408a9474564c4163cf91deb"
+          },
+          "xmlOccurrence": 45
+        },
+        {
+          "ordinal": 46,
+          "placementId": "g03-l02-placement-046",
+          "animationId": "course-g03-l02-in-029",
+          "assetId": "swf-056316e77d51e3f7b98a99599b63ef1ccf84bdf77f624be68b8e2774ab62e7bf",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN29.swf",
+            "sha256": "056316e77d51e3f7b98a99599b63ef1ccf84bdf77f624be68b8e2774ab62e7bf"
+          },
+          "xmlOccurrence": 46
+        },
+        {
+          "ordinal": 47,
+          "placementId": "g03-l02-placement-047",
+          "animationId": "course-g03-l02-in-030",
+          "assetId": "swf-7cf9eac941cc01b1812d31734d03fbd59dec3f23401970e9622346a299578168",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN30.swf",
+            "sha256": "7cf9eac941cc01b1812d31734d03fbd59dec3f23401970e9622346a299578168"
+          },
+          "xmlOccurrence": 47
+        },
+        {
+          "ordinal": 48,
+          "placementId": "g03-l02-placement-048",
+          "animationId": "course-g03-l02-in-031",
+          "assetId": "swf-9520101f5f286af37fddfce30014eda64bd9caf9b93d24a51edb87912819bf8c",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN31.swf",
+            "sha256": "9520101f5f286af37fddfce30014eda64bd9caf9b93d24a51edb87912819bf8c"
+          },
+          "xmlOccurrence": 48
+        },
+        {
+          "ordinal": 49,
+          "placementId": "g03-l02-placement-049",
+          "animationId": "course-g03-l02-in-032",
+          "assetId": "swf-aa22cffd393b64d1b5f90d257c46a2a7c3041a299a3f97bd486e03b49ae189d4",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-instruction",
+          "shardId": "g03-l02-instruction",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/IN/L2IN32.swf",
+            "sha256": "aa22cffd393b64d1b5f90d257c46a2a7c3041a299a3f97bd486e03b49ae189d4"
+          },
+          "xmlOccurrence": 49
+        },
+        {
+          "ordinal": 50,
+          "placementId": "g03-l02-placement-050",
+          "animationId": "course-g03-l02-ti-002",
+          "assetId": "swf-a1535e6d0734aaa15250445ce40764eac7e0c9026f9ff72de9ac3628dd18244d",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/TI/L2TI02.swf",
+            "sha256": "a1535e6d0734aaa15250445ce40764eac7e0c9026f9ff72de9ac3628dd18244d"
+          },
+          "xmlOccurrence": 50
+        },
+        {
+          "ordinal": 51,
+          "placementId": "g03-l02-placement-051",
+          "animationId": "course-g03-l02-ti-003",
+          "assetId": "swf-826acd1f4169d4f7881fd12b00957e6d19717c61c33dd800993c51553668fd3b",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/TI/L2TI03.swf",
+            "sha256": "826acd1f4169d4f7881fd12b00957e6d19717c61c33dd800993c51553668fd3b"
+          },
+          "xmlOccurrence": 51
+        },
+        {
+          "ordinal": 52,
+          "placementId": "g03-l02-placement-052",
+          "animationId": "course-g03-l02-ti-004",
+          "assetId": "swf-58024c24e6e444d0ffebdcc32b996e8931a6658784df4fd57b84db1d87b5894c",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/TI/L2TI04.swf",
+            "sha256": "58024c24e6e444d0ffebdcc32b996e8931a6658784df4fd57b84db1d87b5894c"
+          },
+          "xmlOccurrence": 52
+        },
+        {
+          "ordinal": 53,
+          "placementId": "g03-l02-placement-053",
+          "animationId": "course-g03-l02-ti-005",
+          "assetId": "swf-54bb0503c899bd16f026aa0d6e229f7879c95adb0b7a9442080abbc49ba6f141",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/TI/L2TI05.swf",
+            "sha256": "54bb0503c899bd16f026aa0d6e229f7879c95adb0b7a9442080abbc49ba6f141"
+          },
+          "xmlOccurrence": 53
+        },
+        {
+          "ordinal": 54,
+          "placementId": "g03-l02-placement-054",
+          "animationId": "course-g03-l02-ti-006",
+          "assetId": "swf-66d4be394416c53347bb5434e67e22445a73e31c5a6d3b808d63895fc8708e78",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/TI/L2TI06.swf",
+            "sha256": "66d4be394416c53347bb5434e67e22445a73e31c5a6d3b808d63895fc8708e78"
+          },
+          "xmlOccurrence": 54
+        },
+        {
+          "ordinal": 55,
+          "placementId": "g03-l02-placement-055",
+          "animationId": "course-g03-l02-ti-007",
+          "assetId": "swf-7bf351af57ef51936cda002ee9ab10275ef026927b5d2043bfaa9e2ff1a2abee",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/TI/L2TI07.swf",
+            "sha256": "7bf351af57ef51936cda002ee9ab10275ef026927b5d2043bfaa9e2ff1a2abee"
+          },
+          "xmlOccurrence": 55
+        },
+        {
+          "ordinal": 56,
+          "placementId": "g03-l02-placement-056",
+          "animationId": "course-g03-l02-ti-008",
+          "assetId": "swf-d51a7fbfabd2826c55aa27df51e594c3d8104fe7eeaf54f9287f293b9e128181",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/TI/L2TI08.swf",
+            "sha256": "d51a7fbfabd2826c55aa27df51e594c3d8104fe7eeaf54f9287f293b9e128181"
+          },
+          "xmlOccurrence": 56
+        },
+        {
+          "ordinal": 57,
+          "placementId": "g03-l02-placement-057",
+          "animationId": "course-g03-l02-ti-009",
+          "assetId": "swf-75948328defd5613ed474527467433bd21fd6ecf6df5fc798e2b9dab7c08a9ee",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/TI/L2TI09.swf",
+            "sha256": "75948328defd5613ed474527467433bd21fd6ecf6df5fc798e2b9dab7c08a9ee"
+          },
+          "xmlOccurrence": 57
+        },
+        {
+          "ordinal": 58,
+          "placementId": "g03-l02-placement-058",
+          "animationId": "course-g03-l02-ti-010",
+          "assetId": "swf-d6a6c4a0917c6d7aff14952c688f0354949cbd59f302ac3ca1d6f5c521f9aef3",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/TI/L2TI10.swf",
+            "sha256": "d6a6c4a0917c6d7aff14952c688f0354949cbd59f302ac3ca1d6f5c521f9aef3"
+          },
+          "xmlOccurrence": 58
+        },
+        {
+          "ordinal": 59,
+          "placementId": "g03-l02-placement-059",
+          "animationId": "course-g03-l02-gs-002",
+          "assetId": "swf-e6c3e5529127a25f2256abc264e894807e1aa6c331af1b52735ab9004bcaafb4",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/GS/L2GS02.swf",
+            "sha256": "e6c3e5529127a25f2256abc264e894807e1aa6c331af1b52735ab9004bcaafb4"
+          },
+          "xmlOccurrence": 59
+        },
+        {
+          "ordinal": 60,
+          "placementId": "g03-l02-placement-060",
+          "animationId": "course-g03-l02-gs-003",
+          "assetId": "swf-cc125d134c48b03c90aa6bc57f68f2173d774c74573fa4331b21492de7830663",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/GS/L2GS03.swf",
+            "sha256": "cc125d134c48b03c90aa6bc57f68f2173d774c74573fa4331b21492de7830663"
+          },
+          "xmlOccurrence": 60
+        },
+        {
+          "ordinal": 61,
+          "placementId": "g03-l02-placement-061",
+          "animationId": "course-g03-l02-ts-002",
+          "assetId": "swf-8acc635a47beda68f6ea54cc81fee89fc677a0af5771ea05c6b98751f78f695e",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/TS/L2TS02.swf",
+            "sha256": "8acc635a47beda68f6ea54cc81fee89fc677a0af5771ea05c6b98751f78f695e"
+          },
+          "xmlOccurrence": 61
+        },
+        {
+          "ordinal": 62,
+          "placementId": "g03-l02-placement-062",
+          "animationId": "course-g03-l02-ts-003",
+          "assetId": "swf-485ed8de19e5c7abe36202f899f055f924d81be0f8b38090df748ff07d25de88",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/TS/L2TS03.swf",
+            "sha256": "485ed8de19e5c7abe36202f899f055f924d81be0f8b38090df748ff07d25de88"
+          },
+          "xmlOccurrence": 62
+        },
+        {
+          "ordinal": 63,
+          "placementId": "g03-l02-placement-063",
+          "animationId": "course-g03-l02-ts-004",
+          "assetId": "swf-71da9150d85ad45affa01a3963e010f1935e54046fccd4d8b485cc86ab969292",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/TS/L2TS04.swf",
+            "sha256": "71da9150d85ad45affa01a3963e010f1935e54046fccd4d8b485cc86ab969292"
+          },
+          "xmlOccurrence": 63
+        },
+        {
+          "ordinal": 64,
+          "placementId": "g03-l02-placement-064",
+          "animationId": "course-g03-l02-ts-005",
+          "assetId": "swf-23e43bb92ec05755706c95575f83457ff53af1ba0608dc81dddbf852dd04758d",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/TS/L2TS05.swf",
+            "sha256": "23e43bb92ec05755706c95575f83457ff53af1ba0608dc81dddbf852dd04758d"
+          },
+          "xmlOccurrence": 64
+        },
+        {
+          "ordinal": 65,
+          "placementId": "g03-l02-placement-065",
+          "animationId": "course-g03-l02-ts-006",
+          "assetId": "swf-2604222b1666480568fc50929f68df43f6a1d8e4cc33fcd4d9d8f973c5187bdb",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/TS/L2TS06.swf",
+            "sha256": "2604222b1666480568fc50929f68df43f6a1d8e4cc33fcd4d9d8f973c5187bdb"
+          },
+          "xmlOccurrence": 65
+        },
+        {
+          "ordinal": 66,
+          "placementId": "g03-l02-placement-066",
+          "animationId": "course-g03-l02-ts-007",
+          "assetId": "swf-43f9fc5ed7c868ff5d7fb4dd9aeecfe75f9c783993a403502ffd74c62989c78e",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/TS/L2TS07.swf",
+            "sha256": "43f9fc5ed7c868ff5d7fb4dd9aeecfe75f9c783993a403502ffd74c62989c78e"
+          },
+          "xmlOccurrence": 66
+        },
+        {
+          "ordinal": 67,
+          "placementId": "g03-l02-placement-067",
+          "animationId": "course-g03-l02-ts-008",
+          "assetId": "swf-cf158f102884f01c71d9eb40bb947a7e5a47960f6a825ee0d9b654ac5f5f3413",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/TS/L2TS08.swf",
+            "sha256": "cf158f102884f01c71d9eb40bb947a7e5a47960f6a825ee0d9b654ac5f5f3413"
+          },
+          "xmlOccurrence": 67
+        },
+        {
+          "ordinal": 68,
+          "placementId": "g03-l02-placement-068",
+          "animationId": "course-g03-l02-fq-001",
+          "assetId": "swf-9a2b2792c6a6dcd6798d4b90f2ffcaa49d6647d8768c695a57e1f219b13f9f8e",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/FQ/L2FQ01.swf",
+            "sha256": "9a2b2792c6a6dcd6798d4b90f2ffcaa49d6647d8768c695a57e1f219b13f9f8e"
+          },
+          "xmlOccurrence": 68
+        },
+        {
+          "ordinal": 69,
+          "placementId": "g03-l02-placement-069",
+          "animationId": "course-g03-l02-fq-002",
+          "assetId": "swf-53b19697daeb115dccfed60821c256abae3845a01cd080e9e2355cc75ae357f5",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/FQ/L2FQ02.swf",
+            "sha256": "53b19697daeb115dccfed60821c256abae3845a01cd080e9e2355cc75ae357f5"
+          },
+          "xmlOccurrence": 69
+        },
+        {
+          "ordinal": 70,
+          "placementId": "g03-l02-placement-070",
+          "animationId": "course-g03-l02-fq-003",
+          "assetId": "swf-affe1b32ac1067c65dfabb88872abbb057b218d3b330a286618149200aaf6a4b",
+          "releaseRole": "active-xml-referenced-page",
+          "batchId": "g03-l02-practice-assessment",
+          "shardId": "g03-l02-practice-assessment",
+          "source": {
+            "path": "HELP_COURSES/ELMGR3/L2/FQ/L2FQ03.swf",
+            "sha256": "affe1b32ac1067c65dfabb88872abbb057b218d3b330a286618149200aaf6a4b"
+          },
+          "xmlOccurrence": 70
         }
       ]
     }

@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict';
 import {afterEach, describe, it} from 'node:test';
+import {POST} from '../app/api/nova/route';
 import {
-  POST,
   isNovaFrameContextEnabled,
   isNovaTutorEnabled,
   isSameOriginNovaRequest,
-} from '../app/api/nova/route';
+} from '../lib/nova-route-support.server';
 import {
   NOVA_OPENROUTER_CANONICAL_MODEL,
   NOVA_OPENROUTER_MODEL,

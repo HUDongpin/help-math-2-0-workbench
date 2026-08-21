@@ -684,9 +684,14 @@ function HostAudioControlsView({disabled, lang, playing, toggle, tracks}: {disab
   if (!tracks.length) return null;
   return <div aria-label={lang === 'es' ? 'Audio narrado' : 'Narration audio'} className="runtime-audio-controls" role="group">
     {tracks.map((track) => {
-      const trackName = lang === 'es'
-        ? track.language === 'es' ? 'audio en español' : 'audio en inglés'
-        : track.language === 'es' ? 'Spanish audio' : 'English audio';
+      const trackName = track.language === 'shared' ||
+          track.spokenLanguage === 'undetermined'
+        ? lang === 'es'
+          ? 'audio de origen (idioma no verificado)'
+          : 'source audio (language unverified)'
+        : lang === 'es'
+          ? track.language === 'es' ? 'audio en español' : 'audio en inglés'
+          : track.language === 'es' ? 'Spanish audio' : 'English audio';
       const label = playing === track.id
         ? lang === 'es' ? `Detener ${trackName}` : `Stop ${trackName}`
         : lang === 'es' ? `Reproducir ${trackName}` : `Play ${trackName}`;

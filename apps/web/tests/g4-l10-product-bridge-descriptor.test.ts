@@ -14,7 +14,7 @@ import {loadCurrentGrade4CourseCatalogCoverage} from '../lib/g4-course-catalog-c
 import {resolveWholeLessonRuntimeSeed} from '../lib/whole-lesson-player-descriptor';
 
 const freezeUrl = new URL(
-  '../../../catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v33.json',
+  '../../../catalog/product-bridge-calibrations/g4-l10-page-only-current-js-46-v1.json',
   import.meta.url,
 );
 const routeUrl = new URL(
@@ -28,7 +28,7 @@ const shellUrl = new URL(
 );
 const cssUrl = new URL('../app/globals.css', import.meta.url);
 
-test('G4 L10 private descriptor projects exactly eighteen candidates into 46 page-only positions', () => {
+test('G4 L10 private descriptor projects all 46 Current-JS pages in exact source order', () => {
   const descriptor = buildG4L10ProductBridgeDescriptor(
     loadCurrentGrade4CourseCatalogCoverage(),
   );
@@ -47,37 +47,14 @@ test('G4 L10 private descriptor projects exactly eighteen candidates into 46 pag
   assert.deepEqual(
     descriptor.pages
       .filter((page) => page.rendererAvailability.kind === 'registered')
-      .map((page) => ({
-        id: page.animationId,
-        ordinal: page.globalPageOrdinal,
-        section: page.sectionCode,
-      })),
-    [
-      {id: 'course-g04-l10-ir-001', ordinal: 1, section: 'IR'},
-      {id: 'course-g04-l10-rw-004', ordinal: 4, section: 'RW'},
-      {id: 'course-g04-l10-vb-002', ordinal: 6, section: 'VB'},
-      {id: 'course-g04-l10-vb-003', ordinal: 7, section: 'VB'},
-      {id: 'course-g04-l10-vb-004', ordinal: 8, section: 'VB'},
-      {id: 'course-g04-l10-vb-005', ordinal: 9, section: 'VB'},
-      {id: 'course-g04-l10-vb-006', ordinal: 10, section: 'VB'},
-      {id: 'course-g04-l10-vb-007', ordinal: 11, section: 'VB'},
-      {id: 'course-g04-l10-vb-008', ordinal: 12, section: 'VB'},
-      {id: 'course-g04-l10-vb-010', ordinal: 14, section: 'VB'},
-      {id: 'course-g04-l10-vb-011', ordinal: 15, section: 'VB'},
-      {id: 'course-g04-l10-in-008', ordinal: 22, section: 'IN'},
-      {id: 'course-g04-l10-in-009', ordinal: 23, section: 'IN'},
-      {id: 'course-g04-l10-in-016', ordinal: 30, section: 'IN'},
-      {id: 'course-g04-l10-ts-002', ordinal: 37, section: 'TS'},
-      {id: 'course-g04-l10-ts-005', ordinal: 40, section: 'TS'},
-      {id: 'course-g04-l10-ts-006', ordinal: 41, section: 'TS'},
-      {id: 'course-g04-l10-fq-001', ordinal: 44, section: 'FQ'},
-    ],
+      .map((page) => page.animationId),
+    G4_L10_PRODUCT_BRIDGE_SELECTED_ANIMATION_IDS,
   );
   assert.equal(
     descriptor.pages.filter(
       (page) => page.rendererAvailability.kind === 'unavailable',
     ).length,
-    28,
+    0,
   );
   assert.ok(descriptor.pages.every((page, index) =>
     page.globalPageOrdinal === index + 1 &&
@@ -88,7 +65,7 @@ test('G4 L10 private descriptor projects exactly eighteen candidates into 46 pag
     descriptor.productBridge.selectedAnimationIds,
     G4_L10_PRODUCT_BRIDGE_SELECTED_ANIMATION_IDS,
   );
-  assert.equal(descriptor.productBridge.registeredAnimationCount, 18);
+  assert.equal(descriptor.productBridge.registeredAnimationCount, 46);
   assert.deepEqual(descriptor.productBridge.acceptanceEffects, {
     authoritativeOriginalRuntime: false,
     fidelityAccepted: false,
@@ -119,28 +96,24 @@ test('the descriptor is hash-bound to the freeze and private registry metadata',
     loadCurrentGrade4CourseCatalogCoverage(),
   );
   assert.deepEqual(
-    freeze.selectedPages
-      .filter((page) => page.selectionStatus === 'v32-corrected-frozen-new-batch-attempt')
-      .map((page) => ({
-        animationId: page.animationId,
-        globalPageOrdinal: page.globalPageOrdinal,
-        sectionCode: page.sectionCode,
-        sectionPageOrdinal: page.sectionPageOrdinal,
-      })),
-    descriptor.pages
-      .filter((page) => page.animationId === 'course-g04-l10-in-008')
-      .map((page) => ({
-        animationId: page.animationId,
-        globalPageOrdinal: page.globalPageOrdinal,
-        sectionCode: page.sectionCode,
-        sectionPageOrdinal: page.sectionPageOrdinal,
-      })),
+    freeze.selectedPages.map((page) => ({
+      animationId: page.animationId,
+      globalPageOrdinal: page.globalPageOrdinal,
+      sectionCode: page.sectionCode,
+      sectionPageOrdinal: page.sectionPageOrdinal,
+    })),
+    descriptor.pages.map((page) => ({
+      animationId: page.animationId,
+      globalPageOrdinal: page.globalPageOrdinal,
+      sectionCode: page.sectionCode,
+      sectionPageOrdinal: page.sectionPageOrdinal,
+    })),
   );
   for (const animationId of G4_L10_PRODUCT_BRIDGE_SELECTED_ANIMATION_IDS) {
     assert.deepEqual(animationModuleRegistration(animationId), {
       maturity: 'private-current-js',
       scope: 'private-engineering',
-      calibrationId: 'g4-l10-candidate-to-product-v33',
+      calibrationId: 'g4-l10-page-only-current-js-46-v1',
     });
   }
 });

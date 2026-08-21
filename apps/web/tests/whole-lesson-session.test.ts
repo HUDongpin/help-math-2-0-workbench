@@ -192,6 +192,37 @@ test('unknown page operations are rejected without widening the allowlist', () =
   );
 });
 
+test('placement ids keep repeated source animations independently navigable', () => {
+  const repeated: WholeLessonSessionDescriptor = {
+    releaseId: 'lesson-g05-l03-page-only',
+    pages: [
+      {placementId: 'placement-045', animationId: 'course-g05-l03-in-028'},
+      {placementId: 'placement-046', animationId: 'course-g05-l03-in-028'},
+    ],
+  };
+  const initial = createInitialWholeLessonSessionProgress(repeated, 'en');
+  const second = reviewWholeLessonPage(
+    visitWholeLessonPage(initial, repeated, 'placement-046'),
+    repeated,
+    'placement-046',
+  );
+  const replayed = recordWholeLessonReplay(
+    second,
+    repeated,
+    'placement-046',
+  );
+
+  assert.equal(initial.currentAnimationId, 'placement-045');
+  assert.equal(replayed.currentAnimationId, 'placement-046');
+  assert.deepEqual(replayed.visitedAnimationIds, [
+    'placement-045',
+    'placement-046',
+  ]);
+  assert.deepEqual(replayed.reviewedAnimationIds, ['placement-046']);
+  assert.deepEqual(replayed.replayCounts, {'placement-046': 1});
+  assert.equal(wholeLessonReviewedPercent(replayed, repeated), 50);
+});
+
 test('invalid descriptors fail closed before session state can be created', () => {
   const duplicated: WholeLessonSessionDescriptor = {
     releaseId: 'lesson-duplicate',

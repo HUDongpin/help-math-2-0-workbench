@@ -166,15 +166,26 @@ test('English home exposes the learning platform and the Grade 4 Lesson 3 entry'
   expectNoRuntimeIssues(issues);
 });
 
-test('Learning Home opens Grade 5 Lesson 4 in the shared HELP Math 2.0 Lesson experience', async ({page}) => {
+test('All Lessons exposes the five page-complete lessons and opens Grade 5 Lesson 4', async ({page}) => {
   await expectDocument(page, '/', 'en');
   await page.getByRole('navigation', {name: 'Learning workspace'})
     .getByRole('button', {name: 'All lessons 73', exact: true})
     .click();
 
-  const lesson = page.getByRole('link', {
-    name: /G5 · L4 Number Lines 54 pages · 8 steps Open/,
-  });
+  for (const {href, pages} of [
+    {href: '/courses/3/2?mode=focus', pages: 70},
+    {href: '/courses/4/3?mode=focus', pages: 39},
+    {href: '/courses/5/3?mode=focus', pages: 65},
+    {href: '/courses/5/4?mode=focus', pages: 54},
+    {href: '/courses/5/5?mode=focus', pages: 56},
+  ]) {
+    const card = page.locator('[data-workspace-screen="lessons"]')
+      .locator(`a[href="${href}"]`);
+    await expect(card, href).toBeVisible();
+    await expect(card, href).toContainText(String(pages));
+  }
+  const lesson = page.locator('[data-workspace-screen="lessons"]')
+    .locator('a[href="/courses/5/4?mode=focus"]');
   await expect(lesson).toHaveAttribute('href', '/courses/5/4?mode=focus');
   await lesson.click();
   await expect(page).toHaveURL(/\/courses\/5\/4\?mode=focus$/u);
@@ -192,6 +203,37 @@ test('Learning Home opens Grade 5 Lesson 4 in the shared HELP Math 2.0 Lesson ex
   await expect(platformHeader.getByRole('button', {name: /Switch to (dark|light) theme/})).toBeVisible();
   expect(await platformHeader.innerText()).not.toContain('Number Lines');
 });
+
+for (const lesson of [
+  {
+    href: '/courses/3/2?mode=focus',
+    pages: '70',
+    releaseId: 'lesson-g03-l02-addition-subtraction-page-only-current-js',
+  },
+  {
+    href: '/courses/5/3?mode=focus',
+    pages: '65',
+    releaseId: 'lesson-g05-l03-exponents-prime-factorizations-page-only',
+  },
+  {
+    href: '/courses/5/5?mode=focus',
+    pages: '56',
+    releaseId: 'lesson-g05-l05-add-subtract-negative-numbers',
+  },
+] as const) {
+  test(`${lesson.releaseId} mounts its first source-ordered animation`, async ({page}) => {
+    const issues = monitorRuntimeIssues(page);
+    await expectDocument(page, lesson.href, 'en');
+    const player = page.locator('[data-lesson-player="descriptor-driven-page-only-product-bridge"]');
+    await expect(player).toHaveAttribute('data-hydrated', 'true');
+    await expect(player).toHaveAttribute('data-renderer-availability', 'registered');
+    const root = page.locator(`[data-release-id="${lesson.releaseId}"]`);
+    await expect(root).toHaveAttribute('data-current-js-pages', lesson.pages);
+    await expect(page.locator('[data-current-page="1"]')).toBeVisible();
+    await expect(player.locator('canvas, img[alt*="Source-static"]').first()).toBeVisible();
+    expectNoRuntimeIssues(issues);
+  });
+}
 
 for (const {height, locale, path, width} of [
   {height: 812, locale: 'en' as const, path: '/', width: 320},
@@ -708,7 +750,7 @@ test('ordinary platform surfaces expose only the environment-required CSP', asyn
   }
 });
 
-test('robots and sitemap publish crawl policy and both locale variants', async ({request}) => {
+test('robots and sitemap publish all five runnable lessons in both locale variants', async ({request}) => {
   const robots = await request.get('/robots.txt');
   expect(robots.status()).toBe(200);
   expect(robots.headers()['content-type']).toContain('text/plain');
@@ -716,12 +758,9 @@ test('robots and sitemap publish crawl policy and both locale variants', async (
   expect(robotsText).toContain('User-Agent: *');
   expect(robotsText).toContain('Disallow: /api/');
   expect(robotsText).toContain('Sitemap: https://www.helpmath.ai/sitemap.xml');
-  if (process.env.CURRENT_JS_SHOWCASE_G5_L4_ENABLED === 'true') {
-    expect(robotsText).not.toContain('Disallow: /courses/5/4');
-    expect(robotsText).not.toContain('Disallow: /es/courses/5/4');
-  } else {
-    expect(robotsText).toContain('Disallow: /courses/5/4');
-    expect(robotsText).toContain('Disallow: /es/courses/5/4');
+  for (const route of ['/courses/3/2', '/courses/4/3', '/courses/5/3', '/courses/5/4', '/courses/5/5']) {
+    expect(robotsText).not.toContain(`Disallow: ${route}`);
+    expect(robotsText).not.toContain(`Disallow: /es${route}`);
   }
 
   const sitemap = await request.get('/sitemap.xml');
@@ -730,14 +769,9 @@ test('robots and sitemap publish crawl policy and both locale variants', async (
   const sitemapText = await sitemap.text();
   expect(sitemapText).toContain('<loc>https://www.helpmath.ai/</loc>');
   expect(sitemapText).toContain('<loc>https://www.helpmath.ai/es</loc>');
-  expect(sitemapText).toContain('<loc>https://www.helpmath.ai/courses/4/3</loc>');
-  expect(sitemapText).toContain('<loc>https://www.helpmath.ai/es/courses/4/3</loc>');
-  if (process.env.CURRENT_JS_SHOWCASE_G5_L4_ENABLED === 'true') {
-    expect(sitemapText).toContain('<loc>https://www.helpmath.ai/courses/5/4</loc>');
-    expect(sitemapText).toContain('<loc>https://www.helpmath.ai/es/courses/5/4</loc>');
-  } else {
-    expect(sitemapText).not.toContain('<loc>https://www.helpmath.ai/courses/5/4</loc>');
-    expect(sitemapText).not.toContain('<loc>https://www.helpmath.ai/es/courses/5/4</loc>');
+  for (const route of ['/courses/3/2', '/courses/4/3', '/courses/5/3', '/courses/5/4', '/courses/5/5']) {
+    expect(sitemapText).toContain(`<loc>https://www.helpmath.ai${route}</loc>`);
+    expect(sitemapText).toContain(`<loc>https://www.helpmath.ai/es${route}</loc>`);
   }
   for (const retiredPath of [
     '/about',

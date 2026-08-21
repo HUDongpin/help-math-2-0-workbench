@@ -23,6 +23,10 @@ import {
   isG5L4ShowcaseAssetAuthorized,
   isG5L4ShowcaseAssetSegments,
 } from '@/lib/g5-l4-preview-asset-policy';
+import {
+  isPageOnlyCurrentJsShowcaseAssetAuthorized,
+  isPageOnlyCurrentJsShowcaseAssetSegments,
+} from '@/lib/page-only-current-js-showcase-asset-policy';
 
 const types: Record<string, string> = {
   '.html': 'text/html; charset=utf-8',
@@ -102,6 +106,16 @@ export async function GET(
   const g4L3ShowcaseAsset = isG4L3ShowcaseAssetSegments(canonicalAsset);
   const policy = classifyG5L4PreviewAsset(canonicalAsset);
   const g5L4ShowcaseAsset = isG5L4ShowcaseAssetSegments(canonicalAsset);
+  const pageOnlyCurrentJsShowcaseAsset =
+    isPageOnlyCurrentJsShowcaseAssetSegments(canonicalAsset);
+
+  if (
+    pageOnlyCurrentJsShowcaseAsset
+    && process.env.NODE_ENV === 'production'
+    && !isPageOnlyCurrentJsShowcaseAssetAuthorized(canonicalAsset)
+  ) {
+    notFound();
+  }
 
   if (
     g4L3ShowcaseAsset

@@ -1,10 +1,8 @@
 import assert from 'node:assert/strict';
 import test, {afterEach} from 'node:test';
 
-import {
-  POST,
-  isSameOriginLearningEventRequest,
-} from '../app/api/learning-events/route';
+import {POST} from '../app/api/learning-events/route';
+import {isSameOriginLearningEventRequest} from '../lib/learning-event-route-support.server';
 import {resetRequestBudgetsForTests} from '../lib/request-budget.server';
 
 const originalFetch = globalThis.fetch;

@@ -13,15 +13,16 @@ import type {
   SourceBoundLabel,
   WholeLessonPlayerPage,
 } from './whole-lesson-player-descriptor';
+import {G4_L10_PAGE_ONLY_CURRENT_JS} from './g4-l10-page-only-current-js.generated';
 
 export const G4_L10_PRODUCT_BRIDGE_CALIBRATION_ID =
-  'g4-l10-candidate-to-product-v33';
+  G4_L10_PAGE_ONLY_CURRENT_JS.calibrationId;
 export const G4_L10_PRODUCT_BRIDGE_FREEZE_PATH =
-  'catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v33.json';
+  G4_L10_PAGE_ONLY_CURRENT_JS.freeze.path;
 export const G4_L10_PRODUCT_BRIDGE_FREEZE_SHA256 =
-  '48a7a8fa4ba2e6fef39cd2c6af097dbdc2e5797d2d10cb2a5fb703bc45902853';
+  G4_L10_PAGE_ONLY_CURRENT_JS.freeze.sha256;
 
-const selectedPages = Object.freeze({
+const preservedProductSelections = Object.freeze({
   'course-g04-l10-ir-001': Object.freeze({
     frameDomain: 'sprite-31',
     lane: 'behavior-heavy',
@@ -152,26 +153,29 @@ const selectedPages = Object.freeze({
   }),
 } as const);
 
-export const G4_L10_PRODUCT_BRIDGE_SELECTED_ANIMATION_IDS = Object.freeze([
-  'course-g04-l10-ir-001',
-  'course-g04-l10-rw-004',
-  'course-g04-l10-vb-002',
-  'course-g04-l10-vb-003',
-  'course-g04-l10-vb-004',
-  'course-g04-l10-vb-005',
-  'course-g04-l10-vb-006',
-  'course-g04-l10-vb-007',
-  'course-g04-l10-vb-008',
-  'course-g04-l10-vb-010',
-  'course-g04-l10-vb-011',
-  'course-g04-l10-in-008',
-  'course-g04-l10-in-009',
-  'course-g04-l10-in-016',
-  'course-g04-l10-ts-002',
-  'course-g04-l10-ts-005',
-  'course-g04-l10-ts-006',
-  'course-g04-l10-fq-001',
-] as const);
+const generatedProductSelections = new Map(
+  G4_L10_PAGE_ONLY_CURRENT_JS.pages.map((page) => [
+    page.animationId,
+    Object.freeze({
+      frameDomain: page.frameDomain,
+      lane: page.complexityLane,
+      language: 'fixed-en' as const,
+      seed: '0',
+    }),
+  ]),
+);
+
+function productSelection(animationId: string) {
+  return preservedProductSelections[
+    animationId as keyof typeof preservedProductSelections
+  ] ?? generatedProductSelections.get(
+    animationId as (typeof G4_L10_PAGE_ONLY_CURRENT_JS.pages)[number]['animationId'],
+  );
+}
+
+export const G4_L10_PRODUCT_BRIDGE_SELECTED_ANIMATION_IDS = Object.freeze(
+  G4_L10_PAGE_ONLY_CURRENT_JS.pages.map((page) => page.animationId),
+);
 
 const keyTermsSource = Object.freeze({
   en: Object.freeze({
@@ -602,9 +606,7 @@ export function buildG4L10ProductBridgeDescriptor(
     if (!animationId || !page.source.assetId || !page.source.swfSha256) {
       throw new Error(`G4 L10 page ${page.globalPageOrdinal} lost canonical source identity`);
     }
-    const selection = selectedPages[
-      animationId as keyof typeof selectedPages
-    ];
+    const selection = productSelection(animationId);
     if (selectedIdSet.has(animationId) && !selection) {
       throw new Error(`${animationId} is selected without a frozen lane`);
     }
@@ -637,7 +639,7 @@ export function buildG4L10ProductBridgeDescriptor(
           })
         : Object.freeze({
             kind: 'unavailable' as const,
-            reason: 'outside-frozen-eighteen-page-product-bridge',
+            reason: 'outside-frozen-page-only-current-js-product-bridge',
           }),
       presentation: selection &&
           'pageInteractionCompanionTargetIdSuffix' in selection
@@ -664,15 +666,15 @@ export function buildG4L10ProductBridgeDescriptor(
     selectedInSourceOrder.join('\n') !==
       G4_L10_PRODUCT_BRIDGE_SELECTED_ANIMATION_IDS.join('\n')
   ) {
-    throw new Error('Frozen G4 L10 pages no longer occupy ordinals 1, 4, 6, 7, 8, 9, 10, 11, 12, 14, 15, 22, 23, 30, 37, 40, 41, and 44');
+    throw new Error('Frozen G4 L10 pages no longer occupy the exact 46-page course-XML source order');
   }
 
   return Object.freeze({
     schemaVersion: 2,
     descriptorKind: 'private-page-only-product-bridge',
-    descriptorId: 'g4-l10-page-only-product-bridge-v1',
+    descriptorId: 'g4-l10-page-only-product-bridge-v2',
     calibrationId: G4_L10_PRODUCT_BRIDGE_CALIBRATION_ID,
-    releaseId: 'private-g4-l10-product-bridge-v1',
+    releaseId: 'private-g4-l10-product-bridge-v2',
     course: Object.freeze({
       grade: 4,
       lesson: 10,
@@ -696,7 +698,7 @@ export function buildG4L10ProductBridgeDescriptor(
     }),
     persistence: Object.freeze({
       schemaVersion: 1,
-      storageKey: 'helpmath:g4-l10-product-bridge:v1',
+      storageKey: 'helpmath:g4-l10-product-bridge:v2',
       scope: 'local-device-only',
       legacyCompatible: false,
     }),
@@ -729,7 +731,7 @@ export function buildG4L10ProductBridgeDescriptor(
     glossary,
     productBridge: Object.freeze({
       selectedAnimationIds: G4_L10_PRODUCT_BRIDGE_SELECTED_ANIMATION_IDS,
-      registeredAnimationCount: 18,
+      registeredAnimationCount: 46,
       pageOnlyDescriptorMemberCount: 46,
       acceptanceEffects: Object.freeze({
         authoritativeOriginalRuntime: false,

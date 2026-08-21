@@ -2,7 +2,10 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR} from '../lib/g4-l3-whole-lesson-player-descriptor';
+import {G3_L2_WHOLE_LESSON_PLAYER_DESCRIPTOR} from '../lib/g3-l2-whole-lesson-player-descriptor';
+import {G5_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR} from '../lib/g5-l3-whole-lesson-player-descriptor';
 import {G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR} from '../lib/g5-l4-whole-lesson-player-descriptor';
+import {G5_L5_PRODUCT_BRIDGE_DESCRIPTOR} from '../lib/g5-l5-product-bridge-descriptor';
 import {
   buildWholeLessonCourseRegistration,
   findWholeLessonCourseRegistration,
@@ -97,11 +100,11 @@ function pageOnlyG5L4Descriptor(): PageOnlyLessonPlayerDescriptor {
   });
 }
 
-test('course registry owns the exact G4 L3 and G5 L4 player bindings', () => {
+test('course registry owns all five page-complete My Lesson bindings', () => {
   const registrations = wholeLessonCourseRegistrations();
 
   assert.equal(Object.isFrozen(registrations), true);
-  assert.equal(registrations.length, 2);
+  assert.equal(registrations.length, 5);
   assert.equal(
     new Set(registrations.map(({descriptor}) => descriptor.releaseId)).size,
     registrations.length,
@@ -124,6 +127,18 @@ test('course registry owns the exact G4 L3 and G5 L4 player bindings', () => {
   assert.ok(g5);
   assert.equal(g5.descriptor, G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR);
   assert.deepEqual(g5.player, {kind: 'descriptor-driven'});
+  assert.equal(
+    findWholeLessonCourseRegistration(3, 2)?.descriptor,
+    G3_L2_WHOLE_LESSON_PLAYER_DESCRIPTOR,
+  );
+  assert.equal(
+    findWholeLessonCourseRegistration(5, 3)?.descriptor,
+    G5_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR,
+  );
+  assert.equal(
+    findWholeLessonCourseRegistration(5, 5)?.descriptor,
+    G5_L5_PRODUCT_BRIDGE_DESCRIPTOR,
+  );
   assert.equal(findWholeLessonCourseRegistration(4, 4), undefined);
   assert.equal(findWholeLessonCourseRegistration('grade-4', 3), undefined);
 });

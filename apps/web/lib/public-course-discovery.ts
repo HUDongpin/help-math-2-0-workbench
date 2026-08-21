@@ -1,41 +1,40 @@
-import {
-  currentJsShowcasePublication,
-  G5_L4_SHOWCASE_RELEASE_ID,
-  type CurrentJsShowcaseEnvironment,
-} from './current-js-showcase-publication';
+export const PUBLIC_CURRENT_JS_LESSON_ROUTES = Object.freeze([
+  '/courses/3/2',
+  '/courses/4/3',
+  '/courses/5/3',
+  '/courses/5/4',
+  '/courses/5/5',
+] as const);
 
 export interface PublicCourseDiscoveryInput {
-  readonly g4L3Available: boolean;
-  readonly env?: CurrentJsShowcaseEnvironment;
+  readonly availableLessonRoutes: readonly string[];
 }
 
 export interface PublicCourseDiscovery {
-  readonly g5L4ShowcaseEnabled: boolean;
   readonly lessonRoutes: readonly string[];
-  readonly g5L4RobotDisallow: readonly string[];
+  readonly robotDisallow: readonly string[];
 }
 
 /**
- * Keeps public discovery aligned with the exact G5 L4 current-JS showcase
- * authorization without expanding the separate strict release ledger.
+ * Keeps crawl discovery aligned with the same exact lesson routes that passed
+ * registration, descriptor/navigation cross-binding, and publication gates.
  */
 export function resolvePublicCourseDiscovery({
-  g4L3Available,
-  env = process.env,
+  availableLessonRoutes,
 }: PublicCourseDiscoveryInput): PublicCourseDiscovery {
-  const g5L4ShowcaseEnabled = currentJsShowcasePublication(
-    G5_L4_SHOWCASE_RELEASE_ID,
-    env,
-  ).enabled;
+  const available = new Set(availableLessonRoutes);
+  const lessonRoutes = PUBLIC_CURRENT_JS_LESSON_ROUTES.filter((route) =>
+    available.has(route)
+  );
+  const unavailableRoutes = PUBLIC_CURRENT_JS_LESSON_ROUTES.filter((route) =>
+    !available.has(route)
+  );
 
   return Object.freeze({
-    g5L4ShowcaseEnabled,
-    lessonRoutes: Object.freeze([
-      ...(g4L3Available ? ['/courses/4/3'] : []),
-      ...(g5L4ShowcaseEnabled ? ['/courses/5/4'] : []),
-    ]),
-    g5L4RobotDisallow: Object.freeze(g5L4ShowcaseEnabled
-      ? []
-      : ['/courses/5/4', '/es/courses/5/4']),
+    lessonRoutes: Object.freeze(lessonRoutes),
+    robotDisallow: Object.freeze(unavailableRoutes.flatMap((route) => [
+      route,
+      `/es${route}`,
+    ])),
   });
 }

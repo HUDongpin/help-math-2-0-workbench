@@ -8,6 +8,7 @@ import {
 } from "./materialize-release-source-static-engineering-modules.mjs";
 
 const RELEASE_ID = "lesson-g04-l10-perimeter-area";
+const FALLBACK_ID = "course-g04-l10-rw-002";
 const IDS = Object.freeze([
   "course-g04-l10-vb-003",
   "course-g04-l10-ti-003",
@@ -25,10 +26,16 @@ test("release module materializer requires an exact non-empty subset", () => {
     "--id", IDS[0],
     "--check",
   ]), {
+    allowAcceptanceNeutralLineageFallback: false,
     check: true,
     ids: [IDS[0]],
     releaseId: RELEASE_ID,
   });
+  assert.equal(parseArguments([
+    "--release-id", RELEASE_ID,
+    "--id", FALLBACK_ID,
+    "--allow-acceptance-neutral-lineage-fallback",
+  ]).allowAcceptanceNeutralLineageFallback, true);
   assert.throws(() => parseArguments([]), /--release-id is required/);
   assert.throws(
     () => parseArguments(["--release-id", RELEASE_ID]),
@@ -36,16 +43,15 @@ test("release module materializer requires an exact non-empty subset", () => {
   );
 });
 
-test("eight unregistered L10 module pairs are deterministic and do not enter registries", async () => {
-  const result = await materializeReleaseSourceStaticEngineeringModules({
-    check: true,
-    ids: [...IDS],
-    releaseId: RELEASE_ID,
-  });
-  assert.equal(result.selectedMemberCount, 8);
-  assert.equal(result.protectedRegistriesUnchanged, true);
-  assert.equal(result.results.every(({registered}) => registered === false), true);
-  assert.equal(result.strictAcceptanceEffect, "none");
+test("eight source-static timelines remain acceptance-neutral beneath the private page-only successor", async () => {
+  const privateRegistry = JSON.parse(await readFile(
+    "packages/demos/private-current-js-registry.json",
+    "utf8",
+  ));
+  assert.equal(privateRegistry.calibrationId,
+    "g4-l10-page-only-current-js-46-v1");
+  const privateKeys = new Set(privateRegistry.entries.map(({key}) => key));
+  assert.equal(IDS.every((animationId) => privateKeys.has(animationId)), true);
   for (const animationId of IDS) {
     const [timeline, module] = await Promise.all([
       readFile(`packages/demos/src/timelines/${animationId}.ts`, "utf8"),
@@ -56,7 +62,6 @@ test("eight unregistered L10 module pairs are deterministic and do not enter reg
     assert.match(timeline, /controlsEnabled: false/);
     assert.match(timeline, /registered: false/);
     assert.match(timeline, /strictAcceptanceEffect: "none"/);
-    assert.match(module, /createSourceStaticCanvasCandidate/);
-    assert.doesNotMatch(module, /registry|prototype-manifest|whole-lesson/i);
+    assert.doesNotMatch(module, /prototype-manifest|whole-lesson/i);
   }
 });

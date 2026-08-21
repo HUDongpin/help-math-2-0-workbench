@@ -1,7 +1,10 @@
 import {hasAnimationModule} from '@helpmath/demos/animation-registry';
 
 import {G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR} from './g4-l3-whole-lesson-player-descriptor';
+import {G3_L2_WHOLE_LESSON_PLAYER_DESCRIPTOR} from './g3-l2-whole-lesson-player-descriptor';
+import {G5_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR} from './g5-l3-whole-lesson-player-descriptor';
 import {G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR} from './g5-l4-whole-lesson-player-descriptor';
+import {G5_L5_PRODUCT_BRIDGE_DESCRIPTOR} from './g5-l5-product-bridge-descriptor';
 import type {
   DescriptorDrivenLessonPlayerDescriptor,
   PageOnlyLessonPlayerDescriptor,
@@ -32,9 +35,17 @@ function descriptorPagesAreRunnable(
   descriptor: DescriptorDrivenLessonPlayerDescriptor,
 ): boolean {
   const pageIds = descriptor.pages.map((page) => page.animationId);
+  const placementIds = descriptor.pages.map((page) =>
+    descriptor.schemaVersion === 2
+      ? page.placementId ?? page.animationId
+      : page.animationId
+  );
   if (
     pageIds.length === 0 ||
-    new Set(pageIds).size !== pageIds.length ||
+    placementIds.some((placementId) =>
+      typeof placementId !== 'string' || placementId.length === 0
+    ) ||
+    new Set(placementIds).size !== placementIds.length ||
     descriptor.sections.length === 0 ||
     new Set(descriptor.sections.map((section) => section.code)).size !==
       descriptor.sections.length ||
@@ -83,6 +94,7 @@ function pageOnlyDescriptorContractIsValid(
     descriptor.source.sequenceAuthority === 'course-xml-occurrence' &&
     descriptor.pages.every(
       (page, index) =>
+        (page.placementId === undefined || page.placementId.length > 0) &&
         /^swf-[a-f0-9]{64}$/.test(page.source.assetId ?? '') &&
         page.source.sourceOccurrence === index + 1,
     ) &&
@@ -183,6 +195,10 @@ export function buildWholeLessonCourseRegistration({
 
 const registrations = Object.freeze([
   buildWholeLessonCourseRegistration({
+    descriptor: G3_L2_WHOLE_LESSON_PLAYER_DESCRIPTOR,
+    player: Object.freeze({kind: 'descriptor-driven'}),
+  }),
+  buildWholeLessonCourseRegistration({
     descriptor: G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR,
     player: Object.freeze({
       kind: 'preserved-custom',
@@ -191,7 +207,15 @@ const registrations = Object.freeze([
     }),
   }),
   buildWholeLessonCourseRegistration({
+    descriptor: G5_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR,
+    player: Object.freeze({kind: 'descriptor-driven'}),
+  }),
+  buildWholeLessonCourseRegistration({
     descriptor: G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR,
+    player: Object.freeze({kind: 'descriptor-driven'}),
+  }),
+  buildWholeLessonCourseRegistration({
+    descriptor: G5_L5_PRODUCT_BRIDGE_DESCRIPTOR,
     player: Object.freeze({kind: 'descriptor-driven'}),
   }),
 ].filter(

@@ -22,7 +22,7 @@ export const COURSE_G04_L10_TS_002_SOURCE = Object.freeze({
   }),
   candidateManifest: "public/flash-assets/courses/course-g04-l10-ts-002/manifest.json",
   candidateManifestSha256:
-    "7ff25515758e7acd693907473054783dba2d4048ba7bf9d225267b13e45d8055",
+    "3dcbe78f2046dd24f518113500449f5d1d7891296681bc34de41fceaf3d3e6a5",
   actionScriptExecuted: false,
   audioCues: Object.freeze([]),
   controlsEnabled: false,
@@ -66,7 +66,7 @@ export const COURSE_G04_L10_TS_002_CONFIG = Object.freeze({
     }),
   ]),
   sourceControlBehaviorLabel:
-    "Source-static core ActionScript remains disabled; the private product wrapper binds three exact glossary handlers and exact EN/ES engineering audio routes while natural Adobe runtime, spoken-language listening, visual fidelity, and acceptance remain unresolved",
+    "ActionScript, controls, audio, Spanish visuals, natural runtime, terminal state, Replay, and fidelity are unresolved and disabled",
 } satisfies SourceStaticCanvasCandidateConfig);
 
 export const COURSE_G04_L10_TS_002_AUTHORITY =

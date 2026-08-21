@@ -47,6 +47,12 @@ import {
   visitWholeLessonPage,
 } from '@/lib/whole-lesson-session';
 
+function pageSessionId(
+  page: DescriptorDrivenLessonPlayerDescriptor['pages'][number],
+): string {
+  return page.placementId ?? page.animationId;
+}
+
 function visualSkin(
   descriptor: DescriptorDrivenLessonPlayerDescriptor,
   presentation: WholeLessonHostPresentation,
@@ -150,8 +156,9 @@ export function DescriptorDrivenWholeLessonPlayer({
   const narrationRequestIdRef = useRef(0);
   const lessonNavigationHistoryRef = useRef<readonly string[]>([]);
   const currentPage = descriptor.pages.find(
-    (page) => page.animationId === progress.currentAnimationId,
+    (page) => pageSessionId(page) === progress.currentAnimationId,
   ) ?? descriptor.pages[0]!;
+  const currentPageSessionId = pageSessionId(currentPage);
   const currentIndex = currentPage.globalPageOrdinal - 1;
   const previousPage = descriptor.pages[currentIndex - 1] ?? null;
   const nextPage = descriptor.pages[currentIndex + 1] ?? null;
@@ -163,7 +170,7 @@ export function DescriptorDrivenWholeLessonPlayer({
   const runtimeAvailable = currentRenderer.kind === 'registered';
   const currentRuntimeSeed = resolveWholeLessonRuntimeSeed(
     currentRenderer,
-    progress.replayCounts[currentPage.animationId] ?? 0,
+    progress.replayCounts[currentPageSessionId] ?? 0,
   );
   const lessonHost = useMemo(() => createMemoryOnlyLessonHost({
     releaseId: descriptor.releaseId,
@@ -213,7 +220,7 @@ export function DescriptorDrivenWholeLessonPlayer({
     : undefined;
   const shellCurrentJsCandidate = Boolean(shellImplementation);
   const reviewedRegisteredCount = registeredPages.filter(
-    (page) => reviewed.has(page.animationId),
+    (page) => reviewed.has(pageSessionId(page)),
   ).length;
   const completionPercent = registeredPages.length
     ? Math.round((reviewedRegisteredCount / registeredPages.length) * 100)
@@ -239,7 +246,7 @@ export function DescriptorDrivenWholeLessonPlayer({
   const currentSectionPageOrdinal = Math.max(
     1,
     currentSectionPages.findIndex(
-      (page) => page.animationId === currentPage.animationId,
+      (page) => pageSessionId(page) === currentPageSessionId,
     ) + 1,
   );
   const skin = useMemo(
@@ -323,21 +330,21 @@ export function DescriptorDrivenWholeLessonPlayer({
       return () => window.cancelAnimationFrame(frame);
     }
     pageHeadingRef.current?.focus();
-  }, [currentPage.animationId, hydrated, navigationFocusEpoch]);
+  }, [currentPageSessionId, hydrated, navigationFocusEpoch]);
 
   const navigateToPage = (
-    animationId: string,
+    pageId: string,
     recordHistory: boolean,
   ) => {
     if (recordHistory) {
       lessonNavigationHistoryRef.current = appendLegacyLessonHistory(
         lessonNavigationHistoryRef.current,
-        currentPage.animationId,
-        animationId,
+        currentPageSessionId,
+        pageId,
       );
     }
     setProgress((value) =>
-      visitWholeLessonPage(value, descriptor, animationId)
+      visitWholeLessonPage(value, descriptor, pageId)
     );
     setNavigationFocusEpoch((value) => value + 1);
     setRuntimeEpoch((value) => value + 1);
@@ -349,16 +356,16 @@ export function DescriptorDrivenWholeLessonPlayer({
     setSeekRequest(null);
     setNarrationRequest(null);
   };
-  const selectPage = (animationId: string) => {
-    navigateToPage(animationId, true);
+  const selectPage = (pageId: string) => {
+    navigateToPage(pageId, true);
   };
   const selectSectionPageOrdinal = (sectionPageOrdinal: number) => {
     const destination = currentSectionPages[sectionPageOrdinal - 1];
-    if (!destination || destination.animationId === currentPage.animationId) {
+    if (!destination || pageSessionId(destination) === currentPageSessionId) {
       return;
     }
     pendingScrubberFocusRef.current = 'section-scrubber';
-    selectPage(destination.animationId);
+    selectPage(pageSessionId(destination));
   };
 
   // A page counts as reviewed when its current-JS animation has actually
@@ -366,7 +373,7 @@ export function DescriptorDrivenWholeLessonPlayer({
   // play and therefore can never be counted.
   const reviewCurrentPage = () => {
     setProgress((value) =>
-      reviewWholeLessonPage(value, descriptor, currentPage.animationId)
+      reviewWholeLessonPage(value, descriptor, currentPageSessionId)
     );
   };
 
@@ -376,11 +383,11 @@ export function DescriptorDrivenWholeLessonPlayer({
     if (nextPage) {
       lessonNavigationHistoryRef.current = appendLegacyLessonHistory(
         lessonNavigationHistoryRef.current,
-        currentPage.animationId,
-        nextPage.animationId,
+        currentPageSessionId,
+        pageSessionId(nextPage),
       );
       setProgress((value) =>
-        visitWholeLessonPage(value, descriptor, nextPage.animationId)
+        visitWholeLessonPage(value, descriptor, pageSessionId(nextPage))
       );
     }
     setRuntimeEpoch((value) => value + 1);
@@ -396,7 +403,7 @@ export function DescriptorDrivenWholeLessonPlayer({
   const replayCurrentPage = () => {
     if (!runtimeAvailable) return;
     setProgress((value) =>
-      recordWholeLessonReplay(value, descriptor, currentPage.animationId)
+      recordWholeLessonReplay(value, descriptor, currentPageSessionId)
     );
     setRuntimeEpoch((value) => value + 1);
     setPaused(false);
@@ -478,7 +485,10 @@ export function DescriptorDrivenWholeLessonPlayer({
         (page) => page.rendererAvailability.kind === 'registered',
       );
       const sectionReviewed = availableSectionPages.length > 0 &&
-        availableSectionPages.every((page) => reviewed.has(page.animationId));
+        availableSectionPages.every((page) =>
+          reviewed.has(pageSessionId(page))
+        );
+      const firstSectionPage = sectionPages[0]!;
       return <section key={section.code}>
         <h3>
           <button
@@ -488,7 +498,7 @@ export function DescriptorDrivenWholeLessonPlayer({
             className="lesson-shell2__map-section-jump"
             data-complete={sectionReviewed ? 'true' : 'false'}
             data-section-code={section.code}
-            onClick={() => selectPage(section.firstActiveAnimationId)}
+            onClick={() => selectPage(pageSessionId(firstSectionPage))}
             type="button"
           >
             <span aria-hidden="true">{sectionReviewed ? '✓' : section.order}</span>
@@ -499,20 +509,22 @@ export function DescriptorDrivenWholeLessonPlayer({
           {sectionPages.map((page) => {
             const pageLabel = page.labels[progress.locale];
             const available = page.rendererAvailability.kind === 'registered';
-            return <li key={page.animationId}>
+            const pageId = pageSessionId(page);
+            return <li key={pageId}>
               <button
-                aria-current={page.animationId === currentPage.animationId
+                aria-current={pageId === currentPageSessionId
                   ? 'step'
                   : undefined}
                 data-animation-id={page.animationId}
-                data-complete={reviewed.has(page.animationId) ? 'true' : 'false'}
+                data-complete={reviewed.has(pageId) ? 'true' : 'false'}
+                data-placement-id={page.placementId}
                 data-renderer-availability={available ? 'registered' : 'unavailable'}
-                data-visited={visited.has(page.animationId) ? 'true' : 'false'}
-                onClick={() => selectPage(page.animationId)}
+                data-visited={visited.has(pageId) ? 'true' : 'false'}
+                onClick={() => selectPage(pageId)}
                 type="button"
               >
                 <span>{available
-                  ? (reviewed.has(page.animationId)
+                  ? (reviewed.has(pageId)
                       ? '✓'
                       : page.globalPageOrdinal)
                   : '—'}</span>
@@ -535,8 +547,9 @@ export function DescriptorDrivenWholeLessonPlayer({
     {vocabularyPages.map((page) => {
       const label = page.labels[progress.locale];
       const available = page.rendererAvailability.kind === 'registered';
-      return <li key={page.animationId}>
-        <button onClick={() => selectPage(page.animationId)} type="button">
+      const pageId = pageSessionId(page);
+      return <li key={pageId}>
+        <button onClick={() => selectPage(pageId)} type="button">
           <span>{available ? page.globalPageOrdinal : '—'}</span>
           <span lang={label.sourceLanguage}>
             {label.text}
@@ -642,7 +655,7 @@ export function DescriptorDrivenWholeLessonPlayer({
         audioEnabled={audioEnabled}
         audioLanguage={progress.locale}
         animationId={currentPage.animationId}
-        key={`${currentPage.animationId}:${runtimeEpoch}`}
+        key={`${currentPageSessionId}:${runtimeEpoch}`}
         labels={{
           replay: spanish ? 'Repetir' : 'Replay',
           reduced: spanish
@@ -667,7 +680,7 @@ export function DescriptorDrivenWholeLessonPlayer({
           recordWholeLessonReplay(
             value,
             descriptor,
-            currentPage.animationId,
+            currentPageSessionId,
           )
         )}
         paused={paused}
@@ -748,8 +761,9 @@ export function DescriptorDrivenWholeLessonPlayer({
     (section) => {
       const sectionPages = pagesBySection[section.code] ?? [];
       const allReviewed = sectionPages.length > 0 && sectionPages.every(
-        (page) => reviewed.has(page.animationId),
+        (page) => reviewed.has(pageSessionId(page)),
       );
+      const firstSectionPage = sectionPages[0];
       return {
         code: section.code,
         title: section.labels[progress.locale].text,
@@ -758,8 +772,8 @@ export function DescriptorDrivenWholeLessonPlayer({
           : allReviewed
             ? 'complete'
             : 'upcoming',
-        onSelect: () => navigateToPage(
-          section.firstActiveAnimationId,
+        onSelect: () => firstSectionPage && navigateToPage(
+          pageSessionId(firstSectionPage),
           true,
         ),
       };
@@ -785,6 +799,7 @@ export function DescriptorDrivenWholeLessonPlayer({
 
   return <div
     data-current-animation-id={currentPage.animationId}
+    data-current-placement-id={currentPage.placementId}
     data-current-page={currentPage.globalPageOrdinal}
     data-hydrated={hydrated ? 'true' : 'false'}
     data-lesson-player={descriptor.schemaVersion === 2
@@ -888,14 +903,14 @@ export function DescriptorDrivenWholeLessonPlayer({
       onPlaybackResumeFromInspection={resumeFromInspectedFrame}
       onPlaybackSeek={inspectFrame}
       onPrevious={() =>
-        previousPage && selectPage(previousPage.animationId)}
+        previousPage && selectPage(pageSessionId(previousPage))}
       onReplay={replayCurrentPage}
       onStageOverlayControlIntent={activeGlossaryEntry
         ? closeGlossary
         : undefined}
       onToolChange={setActiveTool}
       onVolumeChange={setVolume}
-      pageComplete={runtimeAvailable && reviewed.has(currentPage.animationId)}
+      pageComplete={runtimeAvailable && reviewed.has(currentPageSessionId)}
       pageInteractionCompanionTargetId={pageInteractionCompanionTargetId}
       pageInteractionStageTargetId={pageInteractionStageTargetId}
       pageHeading={pageHeading}

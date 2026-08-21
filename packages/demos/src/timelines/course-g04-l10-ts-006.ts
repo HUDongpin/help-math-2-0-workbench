@@ -22,7 +22,7 @@ export const COURSE_G04_L10_TS_006_SOURCE = Object.freeze({
   }),
   candidateManifest: "public/flash-assets/courses/course-g04-l10-ts-006/manifest.json",
   candidateManifestSha256:
-    "698ba38db06bf0978234280c2cf63f358f2ab918f4de56d4b60e75188b663bc6",
+    "55dd306f30c7d784ef63da7a8271817e9f15d117034c057d086f8e842a7f54c0",
   actionScriptExecuted: false,
   audioCues: Object.freeze([]),
   controlsEnabled: false,
@@ -66,7 +66,7 @@ export const COURSE_G04_L10_TS_006_CONFIG = Object.freeze({
     }),
   ]),
   sourceControlBehaviorLabel:
-    "ActionScript, controls, Spanish visuals, natural runtime, terminal state, Replay, and fidelity remain unresolved; the private EN timeline cue and ES user track are source-bound engineering audio mappings, not accepted audio parity",
+    "ActionScript, controls, audio, Spanish visuals, natural runtime, terminal state, Replay, and fidelity are unresolved and disabled",
 } satisfies SourceStaticCanvasCandidateConfig);
 
 export const COURSE_G04_L10_TS_006_AUTHORITY =

@@ -3,6 +3,7 @@ export type WholeLessonSessionLocale = 'en' | 'es';
 export interface WholeLessonSessionDescriptor {
   readonly releaseId: string;
   readonly pages: readonly Readonly<{
+    placementId?: string;
     animationId: string;
   }>[];
 }
@@ -49,7 +50,12 @@ function descriptorPolicy(
     throw new TypeError('Invalid whole-lesson session descriptor');
   }
 
-  const animationIds = pages.map((page) => page?.animationId);
+  // Existing shell-inclusive lessons retain animationId as their session key.
+  // Page-only lessons may provide a placementId when the same animation
+  // binary occurs more than once in the source XML.
+  const animationIds = pages.map((page) =>
+    page?.placementId ?? page?.animationId
+  );
   if (animationIds.some((animationId) =>
     typeof animationId !== 'string' ||
     animationId.length === 0 ||

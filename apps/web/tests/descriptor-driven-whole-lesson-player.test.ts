@@ -167,7 +167,7 @@ test('descriptor-driven player never mounts or prefetches unavailable renderers'
   );
   assert.match(
     component,
-    /pageComplete=\{runtimeAvailable && reviewed\.has\(currentPage\.animationId\)\}/,
+    /pageComplete=\{runtimeAvailable && reviewed\.has\(currentPageSessionId\)\}/,
   );
   assert.match(shell, /data-runtime-available=/);
   assert.doesNotMatch(shell, /<aside[^>]*role=\{mapOverlay \? 'dialog'/);
@@ -362,7 +362,7 @@ test('every Course Map selection owns a focus epoch, including same-page reselec
   );
   assert.match(
     component,
-    /pageHeadingRef\.current\?\.focus\(\);\s*\}, \[currentPage\.animationId, hydrated, navigationFocusEpoch\]\);/,
+    /pageHeadingRef\.current\?\.focus\(\);\s*\}, \[currentPageSessionId, hydrated, navigationFocusEpoch\]\);/,
   );
   assert.match(
     component,

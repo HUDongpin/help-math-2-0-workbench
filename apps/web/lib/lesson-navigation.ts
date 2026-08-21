@@ -11,6 +11,7 @@ export interface LessonNavigationLabel {
 }
 
 export interface LessonNavigationPage {
+  readonly placementId?: string;
   readonly memberOrdinal: number;
   readonly globalPageOrdinal: number;
   readonly sectionPageOrdinal: number;
@@ -134,10 +135,13 @@ export function buildLessonNavigationDescriptor(
     return undefined;
   }
 
+  const sectionPlacementCounts = new Map<string, number>();
   const preliminaryPages = pageMembers.map((entry, index) => {
     const {animation, member} = entry!;
     const section = animation.classification.section;
-    const occurrence = pageOccurrence(animation);
+    const occurrence = pageOnly
+      ? member.sourceOccurrence ?? pageOccurrence(animation)
+      : pageOccurrence(animation);
     const titleEnglish = nonEmpty(animation.classification.titleEnglish) ??
       nonEmpty(animation.classification.titleDisplay);
     if (animation.classification.collection !== 'course' ||
@@ -145,13 +149,20 @@ export function buildLessonNavigationDescriptor(
       animation.classification.lesson !== definition.scope.lesson ||
       animation.flags.shell ||
       !section || !nonEmpty(section.code) || !nonEmpty(section.titleEnglish) ||
-      !titleEnglish || occurrence !== index + 1) {
+      !titleEnglish || occurrence !== index + 1 ||
+      (member.placementId !== undefined &&
+        (!member.placementId ||
+          member.placementId.trim() !== member.placementId))) {
       return null;
     }
+    const sectionPageOrdinal =
+      (sectionPlacementCounts.get(section.code) ?? 0) + 1;
+    sectionPlacementCounts.set(section.code, sectionPageOrdinal);
     return {
+      placementId: member.placementId,
       memberOrdinal: index + 1,
       globalPageOrdinal: index + 1,
-      sectionPageOrdinal: animation.classification.page?.ordinal ?? 0,
+      sectionPageOrdinal,
       sectionCode: section.code,
       animationId: member.animationId,
       assetId: member.assetId,
@@ -200,6 +211,7 @@ export function buildLessonNavigationDescriptor(
   if (sections.some((section) => section === null)) return undefined;
 
   const pages = pagesWithSource.map((page, index): LessonNavigationPage => Object.freeze({
+    placementId: page.placementId,
     memberOrdinal: page.memberOrdinal,
     globalPageOrdinal: page.globalPageOrdinal,
     sectionPageOrdinal: page.sectionPageOrdinal,

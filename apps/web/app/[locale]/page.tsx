@@ -4,8 +4,7 @@ import {notFound} from 'next/navigation';
 import {LearningPlatformWorkspace} from '@/components/learning-platform-workspace';
 import {isLocale} from '@/content';
 import {readAuthSession} from '@/lib/clerk-auth-session.server';
-import {isG4L3LearningEntryAvailable} from '@/lib/g4-l3-learning-entry.server';
-import {isG5L4LearningEntryAvailable} from '@/lib/g5-l4-learning-entry.server';
+import {availableLearningLessons} from '@/lib/learning-lesson-availability.server';
 import {createPageMetadata} from '@/lib/metadata';
 import {
   isMigrationStatusAvailable,
@@ -38,18 +37,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const {locale} = await params;
   if (!isLocale(locale)) notFound();
-  const g4L3Available = isG4L3LearningEntryAvailable();
-  const g5L4Available = isG5L4LearningEntryAvailable();
-  const lessonAvailable = g4L3Available || g5L4Available;
-  const bothLessonsAvailable = g4L3Available && g5L4Available;
+  const availableLessons = availableLearningLessons();
   let description = locale === 'es'
     ? 'Tu espacio bilingüe de HELP Math con práctica, vocabulario, apoyos de aprendizaje y límites de disponibilidad claros.'
     : 'Your bilingual HELP Math workspace with practice, vocabulary, learning supports, and clear availability boundaries.';
-  if (bothLessonsAvailable) {
+  if (availableLessons.length > 1) {
     description = locale === 'es'
-      ? 'Tu plataforma bilingüe de aprendizaje: abre Grade 4 Lesson 3, Negative Numbers, o Grade 5 Lesson 4, Number Lines.'
-      : 'Your bilingual learning platform: open Grade 4 Lesson 3, Negative Numbers, or Grade 5 Lesson 4, Number Lines.';
-  } else if (lessonAvailable) {
+      ? `Tu plataforma bilingüe de aprendizaje: abre ${availableLessons.length} lecciones modernas con animaciones y apoyos para aprender.`
+      : `Your bilingual learning platform: open ${availableLessons.length} modern lessons with animation and learning supports.`;
+  } else if (availableLessons.length === 1) {
     description = locale === 'es'
       ? 'Tu plataforma bilingüe de aprendizaje: abre una lección disponible con animaciones y apoyos para aprender.'
       : 'Your bilingual learning platform: open an available lesson with animation and learning supports.';
@@ -77,13 +73,14 @@ export default async function Home({
   const designerToolsVisible = migrationStatusAvailable
     && isMigrationStatusDesignerViewRequested(query.view);
   const state = workspaceState(query, designerToolsVisible);
-  const g4L3Available = isG4L3LearningEntryAvailable();
-  const g5L4Available = isG5L4LearningEntryAvailable();
+  const availableLessons = availableLearningLessons();
   return <LearningPlatformWorkspace
+    activeLesson={availableLessons.find((lesson) =>
+      lesson.grade === 4 && lesson.lesson === 3
+    ) ?? availableLessons[0] ?? null}
     authStatus={authSession.status}
+    availableLessons={availableLessons}
     designerToolsVisible={designerToolsVisible}
-    g4L3Available={g4L3Available}
-    g5L4Available={g5L4Available}
     initialRole={state.role}
     initialScreen={state.screen}
     key={`${locale}:${state.role}:${state.screen}:${designerToolsVisible ? 'designer' : 'learner'}`}

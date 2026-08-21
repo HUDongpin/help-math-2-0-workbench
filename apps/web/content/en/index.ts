@@ -8,7 +8,7 @@ export const enContent = {
     skipToContent: "Skip to main content",
     statusLabel: "Learning platform preview",
     statusMessage:
-      "Two current-JavaScript lessons are available: Grade 4 Lesson 3, Negative Numbers (39 pages), and Grade 5 Lesson 4, Number Lines (54 pages). This is runnable learning access, not strict Flash fidelity, audio acceptance, Owner acceptance, or publication of the wider curriculum.",
+      "Five current-JavaScript lessons are available with 284 source-ordered page placements: Grade 3 Lesson 2 (70), Grade 4 Lesson 3 (39), and Grade 5 Lessons 3 (65), 4 (54), and 5 (56). This is runnable learning access, not strict Flash fidelity, audio acceptance, Owner acceptance, or publication of the wider curriculum.",
     externalLinkLabel: "Opens in a new tab",
     requiredFieldLabel: "Required",
     navigation: {
@@ -66,7 +66,7 @@ export const enContent = {
         primaryAction: { label: "Explore the demos", href: "/demos" },
         secondaryAction: { label: "Get project support", href: "/support" },
         supportingNote:
-          "The website now offers two runnable current-JavaScript lessons: Grade 4 Lesson 3 with 39 pages and Grade 5 Lesson 4 with 54 pages. Strict Flash fidelity, audio acceptance, Owner acceptance, and publication of the wider curriculum remain separate gates.",
+          "The website now offers five runnable current-JavaScript lessons with 284 source-ordered page placements: G3 L2 (70), G4 L3 (39), G5 L3 (65), G5 L4 (54), and G5 L5 (56). Strict Flash fidelity, audio acceptance, Owner acceptance, and publication of the wider curriculum remain separate gates.",
       },
       status: {
         label: "Project status",
@@ -180,7 +180,7 @@ export const enContent = {
         {
           id: "today",
           eyebrow: "Where we are today",
-          title: "A learning platform with two runnable current-JavaScript lessons",
+          title: "A learning platform with five runnable current-JavaScript lessons",
           paragraphs: [
             "This release makes Grade 4 Lesson 3, Negative Numbers, available with 39 registered current-JavaScript pages and Grade 5 Lesson 4, Number Lines, available with 54 registered current-JavaScript pages in the modern My Lesson experience.",
             "It does not restore the former account system or provide classes, assignments, purchases, teacher dashboards, or formal grades. Strict Flash fidelity, audio acceptance, Owner acceptance, and wider-curriculum publication remain separate gates.",
@@ -324,7 +324,7 @@ export const enContent = {
       teacherRole: {
         title: "Technology supports instruction; educators shape its use.",
         body:
-          "The platform now provides two runnable current-JavaScript lessons totaling 93 registered pages, not a complete released curriculum or an automated teaching system. Strict Flash fidelity, audio acceptance, Owner acceptance, and wider-curriculum publication remain separate gates. Educators remain essential for choosing appropriate tasks, listening to student reasoning, and connecting activities to classroom goals.",
+          "The platform now provides five runnable current-JavaScript lessons totaling 284 source-ordered page placements, not a complete released curriculum or an automated teaching system. Strict Flash fidelity, audio acceptance, Owner acceptance, and wider-curriculum publication remain separate gates. Educators remain essential for choosing appropriate tasks, listening to student reasoning, and connecting activities to classroom goals.",
         action: { label: "Ask an instructional question", href: "/contact?topic=instruction" },
       },
     },
@@ -418,7 +418,7 @@ export const enContent = {
         eyebrow: "What is available now",
         title: "Two runnable lessons, without enrollment",
         paragraphs: [
-          "The learning platform currently offers two current-JavaScript lessons in the modern My Lesson experience: Grade 4 Lesson 3, Negative Numbers, with 39 registered pages, and Grade 5 Lesson 4, Number Lines, with 54 registered pages. They include local browser progress and learning supports, but no placement testing, teacher dashboard, class assignment, enrollment, or formal grade record.",
+          "The learning platform currently offers five current-JavaScript lessons in the modern My Lesson experience: Grade 3 Lesson 2, Addition and Subtraction (70 page placements); Grade 4 Lesson 3, Negative Numbers (39); Grade 5 Lesson 3, Exponents & Prime Factorizations (65); Grade 5 Lesson 4, Number Lines (54); and Grade 5 Lesson 5, Add & Subtract Negative Numbers (56). They include local browser progress and learning supports, but no placement testing, teacher dashboard, class assignment, enrollment, or formal grade record.",
           "The interface is available in English and Spanish, but source media and interactions vary by page and do not form a complete or validated Spanish experience.",
           "These lessons are runnable product access, not strict migration, Flash-fidelity, audio-acceptance, or Owner-acceptance claims. Wider curriculum publication still depends on source audit, rights review, instructional review, accessibility work, original-behavior validation, human review, and Owner acceptance.",
         ],
@@ -612,7 +612,7 @@ export const enContent = {
         eyebrow: "HELP Math support",
         title: "Start with what is available today",
         summary:
-          "The learning platform offers Grade 4 Lesson 3 with 39 current-JavaScript pages and Grade 5 Lesson 4 with 54 current-JavaScript pages, together with local progress and learning supports. Former student and educator accounts are not connected, and this site cannot recover old passwords or historical learning records.",
+          "The learning platform offers five current-JavaScript lessons with 284 source-ordered page placements—G3 L2 (70), G4 L3 (39), G5 L3 (65), G5 L4 (54), and G5 L5 (56)—together with local progress and learning supports. Former student and educator accounts are not connected, and this site cannot recover old passwords or historical learning records.",
         primaryAction: { label: "Contact support", href: "/contact?topic=support" },
         secondaryAction: { label: "Check login status", href: "/login" },
       },
@@ -624,7 +624,14 @@ export const enContent = {
             id: "website",
             title: "Learning platform",
             description:
-              "Available with English and Spanish interface options, two runnable current-JavaScript lessons totaling 93 registered pages, local progress, Nova Tutor, program information, and support. Source media and interactions vary by page.",
+              "Available with English and Spanish interface options, five runnable current-JavaScript lessons totaling 284 source-ordered page placements, local progress, Nova Tutor, program information, and support. Source media and interactions vary by page.",
+            detail: "Available",
+          },
+          {
+            id: "g3-l2",
+            title: "Grade 3 Lesson 2: Addition and Subtraction",
+            description:
+              "All 70 source-ordered page placements are navigable in the modern My Lesson experience. This is not strict Flash fidelity, audio acceptance, Owner acceptance, or publication of the wider curriculum.",
             detail: "Available",
           },
           {
@@ -635,10 +642,24 @@ export const enContent = {
             detail: "Available",
           },
           {
+            id: "g5-l3",
+            title: "Grade 5 Lesson 3: Exponents & Prime Factorizations",
+            description:
+              "All 65 source-ordered page placements are navigable in the modern My Lesson experience. This is not strict Flash fidelity, audio acceptance, Owner acceptance, or publication of the wider curriculum.",
+            detail: "Available",
+          },
+          {
             id: "g5-l4",
             title: "Grade 5 Lesson 4: Number Lines",
             description:
               "All 54 registered pages are navigable in the modern My Lesson experience. This is not strict Flash fidelity, audio acceptance, Owner acceptance, or publication of the wider curriculum.",
+            detail: "Available",
+          },
+          {
+            id: "g5-l5",
+            title: "Grade 5 Lesson 5: Add & Subtract Negative Numbers",
+            description:
+              "All 56 source-ordered page placements are navigable in the modern My Lesson experience. This is not strict Flash fidelity, audio acceptance, Owner acceptance, or publication of the wider curriculum.",
             detail: "Available",
           },
           {
@@ -668,7 +689,7 @@ export const enContent = {
           id: "full-course",
           question: "Is the full HELP Math course available?",
           answer:
-            "Not yet. The current release includes two runnable current-JavaScript lessons—Grade 4 Lesson 3, Negative Numbers (39 pages), and Grade 5 Lesson 4, Number Lines (54 pages)—not the full HELP Math curriculum. This does not establish strict Flash fidelity, audio acceptance, or Owner acceptance; additional lessons require their own source, rights, instructional, accessibility, fidelity, and acceptance reviews.",
+            "Not yet. The current release includes five runnable current-JavaScript lessons—G3 L2 (70 page placements), G4 L3 (39), G5 L3 (65), G5 L4 (54), and G5 L5 (56)—not the full HELP Math curriculum. This does not establish strict Flash fidelity, audio acceptance, or Owner acceptance; additional lessons require their own source, rights, instructional, accessibility, fidelity, and acceptance reviews.",
         },
         {
           id: "student-help",
@@ -831,19 +852,29 @@ export const enContent = {
       },
       hero: {
         eyebrow: "Learning experience",
-        title: "Two lessons are ready to explore",
+        title: "Five lessons are ready to explore",
         summary:
-          "Grade 4 Lesson 3, Negative Numbers, has 39 registered current-JavaScript pages, and Grade 5 Lesson 4, Number Lines, has 54. Running them does not establish strict Flash fidelity, audio acceptance, Owner acceptance, or publication of the wider curriculum.",
+          "Five lessons are runnable in current JavaScript: G3 L2 (70 page placements), G4 L3 (39), G5 L3 (65), G5 L4 (54), and G5 L5 (56). Running them does not establish strict Flash fidelity, audio acceptance, Owner acceptance, or publication of the wider curriculum.",
         primaryAction: { label: "Start the lesson", href: "/courses/4/3?mode=focus" },
         secondaryAction: { label: "How restoration works", href: "/about#preservation" },
       },
       previewNotice: {
         title: "Runnable lessons; strict evidence gates remain open",
         body:
-          "All 39 G4 L3 pages and all 54 G5 L4 pages are navigable in the modern My Lesson experience. This does not establish original-runtime, visual, or audio fidelity, completed human review, Owner acceptance, rights clearance, strict migration completion, or publication of the wider curriculum.",
+          "All 284 source-ordered placements across G3 L2 (70), G4 L3 (39), G5 L3 (65), G5 L4 (54), and G5 L5 (56) are navigable in the modern My Lesson experience. This does not establish original-runtime, visual, or audio fidelity, completed human review, Owner acceptance, rights clearance, strict migration completion, or publication of the wider curriculum.",
       },
       listLabel: "Current availability",
       items: [
+        {
+          id: "g3-l2-addition-subtraction",
+          title: "Grade 3 Lesson 2: Addition and Subtraction",
+          summary: "Explore source-ordered visual explanations and practice for addition and subtraction, use the support tools, and continue from locally saved progress.",
+          conceptLabel: "Lesson",
+          concept: "Addition and subtraction",
+          statusLabel: "Runnable current-JavaScript lesson",
+          statusDetail: "70 of 70 source-ordered page placements are navigable in the modern My Lesson experience; strict evidence and wider-publication gates remain open.",
+          action: { label: "Open the lesson", href: "/courses/3/2?mode=focus" },
+        },
         {
           id: "g4-l3-negative-numbers",
           title: "Grade 4 Lesson 3: Negative Numbers",
@@ -855,6 +886,16 @@ export const enContent = {
           action: { label: "Open the lesson", href: "/courses/4/3?mode=focus" },
         },
         {
+          id: "g5-l3-exponents-prime-factorizations",
+          title: "Grade 5 Lesson 3: Exponents & Prime Factorizations",
+          summary: "Explore exponents and prime factorization across the source-ordered lesson, use the support tools, and continue from locally saved progress.",
+          conceptLabel: "Lesson",
+          concept: "Exponents and prime factorizations",
+          statusLabel: "Runnable current-JavaScript lesson",
+          statusDetail: "65 of 65 source-ordered placements, served by 64 registered animations, are navigable in the modern My Lesson experience; strict evidence and wider-publication gates remain open.",
+          action: { label: "Open the lesson", href: "/courses/5/3?mode=focus" },
+        },
+        {
           id: "g5-l4-number-lines",
           title: "Grade 5 Lesson 4: Number Lines",
           summary: "Explore number lines across eight lesson sections, use the support tools, ask Nova for age-appropriate help, and continue from locally saved progress.",
@@ -863,6 +904,16 @@ export const enContent = {
           statusLabel: "Runnable current-JavaScript lesson",
           statusDetail: "54 of 54 registered pages are navigable in the modern My Lesson experience; strict evidence and wider-publication gates remain open.",
           action: { label: "Open the lesson", href: "/courses/5/4?mode=focus" },
+        },
+        {
+          id: "g5-l5-add-subtract-negative-numbers",
+          title: "Grade 5 Lesson 5: Add & Subtract Negative Numbers",
+          summary: "Work with addition and subtraction of negative numbers across the source-ordered lesson, use the support tools, and continue from locally saved progress.",
+          conceptLabel: "Lesson",
+          concept: "Adding and subtracting negative numbers",
+          statusLabel: "Runnable current-JavaScript lesson",
+          statusDetail: "56 of 56 source-ordered page placements are navigable in the modern My Lesson experience; strict evidence and wider-publication gates remain open.",
+          action: { label: "Open the lesson", href: "/courses/5/5?mode=focus" },
         },
       ],
       quality: {
@@ -992,7 +1043,7 @@ export const enContent = {
           id: "scope",
           title: "1. Scope",
           paragraphs: [
-            "This notice applies to helpmath.ai, including its informational pages, the two runnable current-JavaScript lessons—Grade 4 Lesson 3, Negative Numbers, and Grade 5 Lesson 4, Number Lines—Nova Tutor, learning-event reporting, and the current contact-status page.",
+            "This notice applies to helpmath.ai, including its informational pages, the five runnable current-JavaScript lessons—G3 L2, G4 L3, and G5 L3 through L5—Nova Tutor, learning-event reporting, and the current contact-status page.",
             "The current learning experience has no student or teacher accounts and does not ask for a learner's name, email address, school, class, payment, or teacher profile. It does not authenticate a learner or connect lesson activity to a school record.",
           ],
         },
@@ -1094,7 +1145,7 @@ export const enContent = {
         eyebrow: "Draft terms of use",
         title: "Use the learning experiences thoughtfully",
         summary:
-          "This draft describes proposed terms for the website and its two runnable current-JavaScript lessons: Grade 4 Lesson 3 and Grade 5 Lesson 4. Until owner and legal approval is documented and a final version is published, it does not form a contract, bind a visitor, or grant a license.",
+          "This draft describes proposed terms for the website and its five runnable current-JavaScript lessons: G3 L2, G4 L3, and G5 L3 through L5. Until owner and legal approval is documented and a final version is published, it does not form a contract, bind a visitor, or grant a license.",
       },
       effectiveDateLabel: "Last updated",
       effectiveDate: "August 16, 2026",
@@ -1113,7 +1164,7 @@ export const enContent = {
           id: "service",
           title: "2. What this site provides",
           paragraphs: [
-            "The site provides two runnable current-JavaScript lessons in the modern My Lesson experience: Grade 4 Lesson 3, Negative Numbers, with 39 registered pages, and Grade 5 Lesson 4, Number Lines, with 54 registered pages.",
+            "The site provides five runnable current-JavaScript lessons in the modern My Lesson experience, totaling 284 source-ordered page placements: G3 L2 (70), G4 L3 (39), G5 L3 (65), G5 L4 (54), and G5 L5 (56).",
             "Lesson availability is not proof of strict migration completion, original Flash runtime or visual fidelity, audio fidelity, human or Owner acceptance, rights clearance, or publication of the restored historical curriculum. Those remain separate evidence and release gates.",
             "The site does not currently provide enrollment, named student or educator accounts, schools, classes, assignments, teacher dashboards, official grades, payments, or guaranteed access to the historical program.",
           ],

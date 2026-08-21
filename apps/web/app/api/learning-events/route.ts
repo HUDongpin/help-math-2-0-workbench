@@ -9,7 +9,7 @@ import {
 import {deliverXapiStatement, type LrsDeliveryResult} from '@/lib/lrs-client.server';
 import {loadLrsConfig} from '@/lib/lrs-config.server';
 import {consumeRequestBudget} from '@/lib/request-budget.server';
-import {isSameOriginServerRequest} from '@/lib/same-origin-request.server';
+import {isSameOriginLearningEventRequest} from '@/lib/learning-event-route-support.server';
 import {buildXapiStatement} from '@/lib/xapi-statement';
 
 export const dynamic = 'force-dynamic';
@@ -29,10 +29,6 @@ function jsonResponse(
     new Headers(additionalHeaders).forEach((value, name) => headers.set(name, value));
   }
   return NextResponse.json(body, {status, headers});
-}
-
-export function isSameOriginLearningEventRequest(request: Request): boolean {
-  return isSameOriginServerRequest(request);
 }
 
 async function readBoundedJson(request: Request): Promise<

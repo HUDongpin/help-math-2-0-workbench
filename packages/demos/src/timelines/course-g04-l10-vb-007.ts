@@ -22,20 +22,11 @@ export const COURSE_G04_L10_VB_007_SOURCE = Object.freeze({
   }),
   candidateManifest: "public/flash-assets/courses/course-g04-l10-vb-007/manifest.json",
   candidateManifestSha256:
-    "438c2716c12c91bb0b6975365bf9bc7cdf111b57888325afa5c294dbac589610",
+    "23a9736f943307b800060cabf438988665ae8e0954add436b2d3e84063d3662b",
   actionScriptExecuted: false,
-  audioCues: Object.freeze([
-    Object.freeze({
-      id: "vb007-main",
-      sourceTimelineId: "sprite-204",
-      firstFrame: 10,
-      sourceStopFrame: 61,
-      correctContinuationFirstFrame: 62,
-      terminalFrame: 130,
-    }),
-  ]),
-  controlsEnabled: true,
-  registered: true,
+  audioCues: Object.freeze([]),
+  controlsEnabled: false,
+  registered: false,
   strictAcceptanceEffect: "none",
 });
 
@@ -75,7 +66,7 @@ export const COURSE_G04_L10_VB_007_CONFIG = Object.freeze({
     }),
   ]),
   sourceControlBehaviorLabel:
-    "V25 typed arrow-practice/glossary/audio adapter closes product random branches, stop-61-to-terminal-130 reachability, and Replay engineering; ActionScript execution, natural Adobe runtime, listening acceptance, and fidelity remain unresolved",
+    "ActionScript, controls, audio, Spanish visuals, natural runtime, terminal state, Replay, and fidelity are unresolved and disabled",
 } satisfies SourceStaticCanvasCandidateConfig);
 
 export const COURSE_G04_L10_VB_007_AUTHORITY =

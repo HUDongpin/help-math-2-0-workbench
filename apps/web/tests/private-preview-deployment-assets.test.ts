@@ -15,7 +15,7 @@ const serverAudioRoot = path.resolve(
   '../server-assets/flash-assets/courses',
 );
 const expectedChecksumSetSha256 =
-  'a53d93b81feecd63bcf975fc2379b8ee3a59962120042f9b6309042a5816f733';
+  '52dd1d51335523dc097b0c1a428e897960425ad184069fb023e98e0fcef7ae25';
 const allowedExtensions = new Set(['.js', '.mp3', '.png', '.svg', '.ttf']);
 
 async function walk(directory: string): Promise<string[]> {
@@ -35,7 +35,7 @@ async function walk(directory: string): Promise<string[]> {
   return result;
 }
 
-test('private deployment assets are an exact runtime and hash-bound audio G4 L3 and G5 L4 closure', async () => {
+test('deployment assets are an exact five-lesson Current-JS runtime closure', async () => {
   const [publicFiles, serverAudioFiles] = await Promise.all([
     walk(publicAssetRoot),
     walk(serverAudioRoot),
@@ -53,9 +53,9 @@ test('private deployment assets are an exact runtime and hash-bound audio G4 L3 
     })),
   ].sort((left, right) => left.relative.localeCompare(right.relative));
   const relativeFiles = entries.map(({relative}) => relative);
-  assert.equal(publicFiles.length, 677);
+  assert.equal(publicFiles.length, 929);
   assert.equal(serverAudioFiles.length, 185);
-  assert.equal(entries.length, 862);
+  assert.equal(entries.length, 1114);
   assert.equal(
     relativeFiles.filter((file) =>
       file.startsWith('course-g04-l03-')
@@ -70,14 +70,26 @@ test('private deployment assets are an exact runtime and hash-bound audio G4 L3 
     ).length,
     303,
   );
-  assert.equal(relativeFiles.filter((file) => file.endsWith('/canvas-renderer.js')).length, 93);
+  assert.equal(
+    relativeFiles.filter((file) => file.startsWith('course-g03-l02-')).length,
+    132,
+  );
+  assert.equal(
+    relativeFiles.filter((file) => file.startsWith('course-g05-l03-')).length,
+    64,
+  );
+  assert.equal(
+    relativeFiles.filter((file) => file.startsWith('course-g05-l05-')).length,
+    56,
+  );
+  assert.equal(relativeFiles.filter((file) => file.endsWith('/canvas-renderer.js')).length, 283);
   assert.equal(
     relativeFiles.filter((file) =>
       file === 'course-g04-l03-gs-002/canvas-interaction-base-renderer.js'
     ).length,
     1,
   );
-  assert.equal(relativeFiles.filter((file) => file.endsWith('.mp3')).length, 257);
+  assert.equal(relativeFiles.filter((file) => file.endsWith('.mp3')).length, 319);
   const g5L4AudioFiles = relativeFiles.filter((file) =>
     Object.hasOwn(G5_L4_AUDIO_ASSET_SHA256, file)
   );

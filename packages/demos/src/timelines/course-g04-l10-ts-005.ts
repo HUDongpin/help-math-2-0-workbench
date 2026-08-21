@@ -22,7 +22,7 @@ export const COURSE_G04_L10_TS_005_SOURCE = Object.freeze({
   }),
   candidateManifest: "public/flash-assets/courses/course-g04-l10-ts-005/manifest.json",
   candidateManifestSha256:
-    "2b64f1ce4e3772234c76dd295e6a5d3c900d65abdff2a5f141d1086b5beb7974",
+    "f104fb40bc427442d2781381e27830f381d147dfd8be11f798c3a0211e3a99fa",
   actionScriptExecuted: false,
   audioCues: Object.freeze([]),
   controlsEnabled: false,
@@ -32,7 +32,8 @@ export const COURSE_G04_L10_TS_005_SOURCE = Object.freeze({
 
 export const COURSE_G04_L10_TS_005_CONFIG = Object.freeze({
   animationId: "course-g04-l10-ts-005",
-  title: "4 - Step Plan — private Current-JS glossary engineering bridge",
+  title:
+    "4 - Step Plan — fixed-English source-static engineering candidate",
   sourceSwfSha256: COURSE_G04_L10_TS_005_SOURCE.swfSha256,
   assetSource:
     "/flash-assets/courses/course-g04-l10-ts-005/canvas-renderer.js",
@@ -65,7 +66,7 @@ export const COURSE_G04_L10_TS_005_CONFIG = Object.freeze({
     }),
   ]),
   sourceControlBehaviorLabel:
-    "The source-static core keeps ActionScript disabled; its private maintained wrapper binds the five exact glossary handlers plus source-exact engineering audio while Spanish visuals, natural runtime, Replay parity, fidelity, and audio acceptance remain unresolved",
+    "ActionScript, controls, audio, Spanish visuals, natural runtime, terminal state, Replay, and fidelity are unresolved and disabled",
 } satisfies SourceStaticCanvasCandidateConfig);
 
 export const COURSE_G04_L10_TS_005_AUTHORITY =

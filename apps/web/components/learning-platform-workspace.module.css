@@ -91,18 +91,18 @@
   color-scheme: dark;
 }
 
-:global(body:has([data-learning-platform-home]) .site-header),
-:global(body:has([data-learning-platform-home]) .site-footer) {
+:global(body):has(.platform) :global(.site-header),
+:global(body):has(.platform) :global(.site-footer) {
   display: none;
 }
 
-:global(body:has([data-learning-platform-home])) {
+:global(body):has(.platform) {
   min-width: 0;
   margin: 0;
   background: #f7f5ff;
 }
 
-:global(body:has([data-learning-platform-home][data-theme="dark"])) {
+:global(body):has(.platform.themeDark) {
   background: #171528;
 }
 
@@ -2138,7 +2138,7 @@ a.lessonTile:hover {
 }
 
 @media print {
-  :global(body:has([data-learning-platform-home])) {
+  :global(body):has(.platform) {
     background: #fff;
   }
 

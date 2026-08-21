@@ -70,6 +70,14 @@ export interface WholeLessonPlayerSection {
 }
 
 export interface WholeLessonPlayerPage {
+  /**
+   * Stable identity for one source-ordered placement. Page-only lessons may
+   * reference the same animation binary more than once, so learner progress
+   * must not use animationId as the placement key in that case.
+   */
+  readonly placementId?: string;
+  readonly previousPlacementId?: string | null;
+  readonly nextPlacementId?: string | null;
   readonly globalPageOrdinal: number;
   readonly sectionPageOrdinal: number;
   readonly sectionCode: string;
@@ -533,6 +541,7 @@ interface WholeLessonNavigationBindingBase {
   readonly expectedMemberCount: number;
   readonly activePageCount: number;
   readonly pages: readonly Readonly<{
+    placementId?: string;
     animationId: string;
     assetId: string;
     globalPageOrdinal: number;
@@ -606,6 +615,10 @@ export function wholeLessonDescriptorMatchesNavigation(
     const sourcePage = navigation.pages[index];
     return Boolean(
       sourcePage &&
+      (descriptor.schemaVersion === 2
+        ? (page.placementId ?? page.animationId) ===
+          (sourcePage.placementId ?? sourcePage.animationId)
+        : true) &&
       page.animationId === sourcePage.animationId &&
       page.globalPageOrdinal === sourcePage.globalPageOrdinal &&
       page.sectionCode === sourcePage.sectionCode &&
@@ -661,7 +674,8 @@ export function resolveWholeLessonReleaseView(
     descriptor.course.courseShellCount === expectedCourseShellCount &&
     descriptor.course.expectedReleaseMemberCount ===
       requiredAnimationIds.length &&
-    uniqueRequiredAnimationIds.size === requiredAnimationIds.length;
+    (descriptor.schemaVersion === 2 ||
+      uniqueRequiredAnimationIds.size === requiredAnimationIds.length);
   const currentJsPageCount = descriptor.pages.filter(
     (page) => page.rendererAvailability.kind === 'registered',
   ).length;

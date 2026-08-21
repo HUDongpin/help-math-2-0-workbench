@@ -12,6 +12,7 @@ import {
 } from '@/lib/current-js-showcase-publication';
 import {isG5L4ShowcaseAudioAuthorized} from '@/lib/g5-l4-preview-asset-policy';
 import {findLessonNavigationForRoute} from '@/lib/lesson-navigation';
+import {findPageOnlyCurrentJsNavigationForRoute} from '@/lib/page-only-current-js-navigation.server';
 import {protectedAtomicReleaseIdForScope} from '@/lib/lesson-release-publication';
 import {
   isMigrationStatusAvailable,
@@ -58,7 +59,11 @@ export default async function CoursePage({
   const complete = completeAnimations(catalog);
   const published = publishedAnimations(catalog);
 
-  const releaseDescriptor = findLessonNavigationForRoute(catalog, grade, lessonNumber);
+  const releaseDescriptor = findLessonNavigationForRoute(
+    catalog,
+    grade,
+    lessonNumber,
+  ) ?? findPageOnlyCurrentJsNavigationForRoute(grade, lessonNumber);
   const courseRegistration = findWholeLessonCourseRegistration(grade, lessonNumber);
   const protectedReleaseId = protectedAtomicReleaseIdForScope(Number(grade), lessonNumber);
   if (!releaseDescriptor && protectedReleaseId) notFound();

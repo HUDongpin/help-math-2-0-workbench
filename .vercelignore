@@ -25,6 +25,20 @@ private-archive/
 /apps/site/
 reports/*
 !reports/g5-l4-source-scope-freeze.json
+!reports/g3-l2-cross-grade-factory-audit.json
+!reports/g5-l3-page-only-whole-lesson-source-scope.json
+
+# The web runtime reads only this exact catalog closure. Historical catalog
+# variants, promotion plans, CSV/JSONL exports, and workbench ledgers remain in
+# the repository but are not deployment inputs.
+catalog/**
+!catalog/animations.json
+!catalog/completion-ledger.json
+!catalog/lesson-release-ledger.json
+!catalog/lesson-releases.json
+!catalog/lessons.json
+!catalog/missing-references.json
+!catalog/page-only-current-js-product-releases.json
 
 # Local secrets and owner-provided credential documents must never enter a
 # deployment upload, even when a future CLI version changes ignore precedence.
@@ -45,6 +59,10 @@ apps/web/.next*/
 apps/web/tests/
 apps/web/e2e/
 apps/web/playwright*.ts
+apps/web/tsconfig.tsbuildinfo
+packages/demos/test/
+packages/demos/tests/
+test-results/
 
 # Repository-only operating material.
 .agents/
@@ -56,6 +74,9 @@ docs/
 design/
 skills/
 scripts/
+tools/
+schemas/
+native/
 AGENTS.md
 FILE_MANIFEST.sha256
 PROJECT_MEMORY.md

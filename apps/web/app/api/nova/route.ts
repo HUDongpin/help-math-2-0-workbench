@@ -9,8 +9,12 @@ import {
   NovaProviderError,
   requestNovaTutor,
 } from '@/lib/nova-openrouter.server';
+import {
+  isNovaFrameContextEnabled,
+  isNovaTutorEnabled,
+  isSameOriginNovaRequest,
+} from '@/lib/nova-route-support.server';
 import {consumeRequestBudget} from '@/lib/request-budget.server';
-import {isSameOriginServerRequest} from '@/lib/same-origin-request.server';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -51,18 +55,6 @@ function errorResponse(
 ) {
   return json({ok: false, error: {code, message}, requestId}, status, headers);
 }
-
-export function isNovaTutorEnabled(environment: NodeJS.ProcessEnv = process.env) {
-  return environment.NOVA_TUTOR_ENABLED === 'true';
-}
-
-export function isNovaFrameContextEnabled(
-  environment: NodeJS.ProcessEnv = process.env,
-) {
-  return environment.NOVA_ALLOW_FRAME_CONTEXT === 'true';
-}
-
-export const isSameOriginNovaRequest = isSameOriginServerRequest;
 
 function providerErrorResponse(error: NovaProviderError, requestId: string) {
   switch (error.failure) {

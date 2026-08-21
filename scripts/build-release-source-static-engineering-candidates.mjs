@@ -496,6 +496,7 @@ function validateUnresolvedTargetLineage({
 }
 
 export async function deriveReleaseSourceStaticProfile({
+  allowAcceptanceNeutralLineageFallback = false,
   animationId,
   release,
   root = ROOT,
@@ -562,22 +563,46 @@ export async function deriveReleaseSourceStaticProfile({
     timelineId === target.timelineId);
   invariant(target && machineTarget && scenarioTarget,
     `${animationId}: target timeline is missing from bound evidence`);
-  validateDeclarationReportBoundary(
-    declarationReport,
-    bindings.declarationReport,
-    bindings.declarationGenerator,
-  );
-  const lineageInputs = {
-    animationId,
-    bindings,
-    declarationReport,
-    independentEvidence,
-    migration,
-    target,
-  };
-  const targetLineage = target.disposition === "declared-frame-domain"
-    ? validateDeclaredTargetLineage(lineageInputs)
-    : validateUnresolvedTargetLineage(lineageInputs);
+  let lineageFallback = null;
+  let targetLineage;
+  try {
+    validateDeclarationReportBoundary(
+      declarationReport,
+      bindings.declarationReport,
+      bindings.declarationGenerator,
+    );
+    const lineageInputs = {
+      animationId,
+      bindings,
+      declarationReport,
+      independentEvidence,
+      migration,
+      target,
+    };
+    targetLineage = target.disposition === "declared-frame-domain"
+      ? validateDeclaredTargetLineage(lineageInputs)
+      : validateUnresolvedTargetLineage(lineageInputs);
+  } catch (error) {
+    invariant(
+      allowAcceptanceNeutralLineageFallback,
+      error instanceof Error ? error.message : String(error),
+    );
+    lineageFallback = Object.freeze({
+      reason: error instanceof Error ? error.message : String(error),
+      disposition:
+        "manual-source-static-addressability-only; declaration successor lineage is not promoted",
+      naturalRuntimeEstablished: false,
+      fidelityEffect: "none",
+      acceptanceEffect: "none",
+    });
+    targetLineage = Object.freeze({
+      status: "acceptance-neutral-manual-source-static-fallback",
+      declarationReportPath: bindings.declarationReport.path,
+      declarationReportSha256: bindings.declarationReport.sha256,
+      frameDomainId: target.timelineId,
+      blockerClass: "stale-or-incomplete-declaration-successor-lineage",
+    });
+  }
   invariant(
     target.structuralReachability === "reachable-from-root-placement-graph" &&
       target.frameCount === machineTarget.frameCount &&
@@ -601,11 +626,31 @@ export async function deriveReleaseSourceStaticProfile({
     Number(placement.objectId) === Number(target.sourceObjectId));
   const beginLabel = rootTimeline?.frameLabels?.find(({frame}) =>
     frame === namedPath[0].frame)?.label;
-  invariant(rootTimeline?.frameCount === migration.runtime.frameCount &&
-    hasControlReason(rootTimeline, 1, "script-stop-state") &&
-    hasControlReason(rootTimeline, namedPath[0].frame, "script-stop-state") &&
-    rootPlacement && beginLabel,
-  `${animationId}: root entry structure is incomplete`);
+  const exactRootEntry = Boolean(
+    rootTimeline?.frameCount === migration.runtime.frameCount &&
+      hasControlReason(rootTimeline, 1, "script-stop-state") &&
+      hasControlReason(rootTimeline, namedPath[0].frame, "script-stop-state") &&
+      rootPlacement && beginLabel,
+  );
+  if (!exactRootEntry) {
+    invariant(
+      allowAcceptanceNeutralLineageFallback &&
+        rootTimeline?.frameCount === migration.runtime.frameCount &&
+        rootPlacement && beginLabel,
+      `${animationId}: root entry structure is incomplete`,
+    );
+    lineageFallback = Object.freeze({
+      reason: [
+        lineageFallback?.reason,
+        "root control-state stop proof is incomplete while the exact named placement and begin label remain source-bound",
+      ].filter(Boolean).join("; "),
+      disposition:
+        "manual-source-static-addressability-only; root control-state behavior is not promoted",
+      naturalRuntimeEstablished: false,
+      fidelityEffect: "none",
+      acceptanceEffect: "none",
+    });
+  }
   const exactPlacement = parseDirectRootPlacementFromSwfmill(
     bindings.swfmill.contents,
     {
@@ -686,6 +731,7 @@ export async function deriveReleaseSourceStaticProfile({
       structuralReachability: target.structuralReachability,
       declarationProofLineage: targetLineage,
     }),
+    lineageFallback,
     scenario,
     audio,
   });
@@ -1132,6 +1178,7 @@ function buildManifest({
       sourceStaticFrameDomain: profile.target,
       naturalRuntimeReachabilityEstablished: false,
     },
+    sourceLineageFallback: profile.lineageFallback,
     freshFfdecExport: {
       tool: EXPECTED_FFDEC_VERSION,
       helperBytes: exported.helperBytes,
@@ -1197,10 +1244,18 @@ function buildManifest({
 }
 
 export function parseArguments(argv) {
-  const options = {check: false, ffdec: "ffdec", ids: []};
+  const options = {
+    allowAcceptanceNeutralLineageFallback: false,
+    check: false,
+    ffdec: "ffdec",
+    ids: [],
+  };
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === "--check") options.check = true;
+    else if (argument === "--allow-acceptance-neutral-lineage-fallback") {
+      options.allowAcceptanceNeutralLineageFallback = true;
+    }
     else if (["--release-id", "--id", "--ffdec"].includes(argument)) {
       const value = argv[++index];
       invariant(value && !value.startsWith("-"), `${argument} requires one value`);
@@ -1226,6 +1281,7 @@ export function parseArguments(argv) {
 }
 
 export async function buildReleaseSourceStaticEngineeringCandidates({
+  allowAcceptanceNeutralLineageFallback = false,
   check = false,
   ffdec = "ffdec",
   ids,
@@ -1253,6 +1309,7 @@ export async function buildReleaseSourceStaticEngineeringCandidates({
   const profiles = [];
   for (const animationId of ids) {
     profiles.push(await deriveReleaseSourceStaticProfile({
+      allowAcceptanceNeutralLineageFallback,
       animationId,
       release,
     }));
@@ -1333,6 +1390,7 @@ export async function buildReleaseSourceStaticEngineeringCandidates({
     operation: check ? "check" : "generate",
     releaseId,
     selectedMemberCount: prepared.length,
+    allowAcceptanceNeutralLineageFallback,
     results: prepared.map((candidate) => ({
       animationId: candidate.animationId,
       targetFrameDomain: candidate.profile.target.timelineId,

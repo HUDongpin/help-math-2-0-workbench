@@ -90,7 +90,12 @@ export interface AudioCue {
 
 export interface AudioTrack {
   readonly id: string;
-  readonly language: AnimationLanguage;
+  /**
+   * `shared` exposes one exact source asset in both locale views without
+   * claiming that its spoken language has been established.
+   */
+  readonly language: AnimationLanguage | 'shared';
+  readonly spokenLanguage?: 'undetermined';
   readonly label: string;
   readonly source: string;
   readonly durationMs: number;

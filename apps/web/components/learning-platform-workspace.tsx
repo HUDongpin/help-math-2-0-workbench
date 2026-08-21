@@ -15,6 +15,7 @@ import {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 
 import {Link} from '@/i18n/navigation';
 import type {PublicAuthStatus} from '@/lib/auth-session';
+import type {AvailableLearningLesson} from '@/lib/learning-lesson-availability.server';
 import {
   G4_L3_WHOLE_LESSON_STORAGE_KEY,
   g4L3CompletionPercent,
@@ -505,28 +506,28 @@ function WordsScreen({
 }
 
 function LessonsScreen({
-  g4L3Available,
-  g5L4Available,
+  availableLessons,
   locale,
 }: {
-  g4L3Available: boolean;
-  g5L4Available: boolean;
+  availableLessons: readonly AvailableLearningLesson[];
   locale: G4L3Locale;
 }) {
   const spanish = locale === 'es';
   const [filter, setFilter] = useState<HelpMath1GradeFilter>('all');
   const lessons = LESSON_CATALOG_SAMPLE.filter((lesson) => filter === 'all' || String(lesson.grade) === filter);
   const lessonEmoji = LEARNING_PLATFORM_SAMPLE_BOUNDARY.prototypeUi.lessonEmojiByTitle as Readonly<Record<string, string>>;
-  const bothLessonsAvailable = g4L3Available && g5L4Available;
-  const anyLessonAvailable = g4L3Available || g5L4Available;
+  const availableByKey = new Map(availableLessons.map((lesson) => [
+    `${lesson.grade}-${lesson.lesson}`,
+    lesson,
+  ]));
   let availabilityMessage = spanish
     ? 'El currículo principal de HELP Math 1.0 abarca los grados 3–8. Las lecciones se abrirán aquí cuando sus versiones modernas estén disponibles.'
     : 'HELP Math 1.0’s main curriculum spans Grades 3–8. Lessons will open here as their modern versions become available.';
-  if (bothLessonsAvailable) {
+  if (availableLessons.length > 1) {
     availabilityMessage = spanish
-      ? 'El currículo principal de HELP Math 1.0 abarca los grados 3–8. Las lecciones 3 de grado 4 y 4 de grado 5 están disponibles ahora; las demás se abrirán cuando sus versiones modernas estén listas.'
-      : 'HELP Math 1.0’s main curriculum spans Grades 3–8. Grade 4 Lesson 3 and Grade 5 Lesson 4 are available now; the others will open as their modern versions are ready.';
-  } else if (anyLessonAvailable) {
+      ? `El currículo principal de HELP Math 1.0 abarca los grados 3–8. Ya hay ${availableLessons.length} lecciones modernas disponibles; las demás se abrirán cuando estén listas.`
+      : `HELP Math 1.0’s main curriculum spans Grades 3–8. ${availableLessons.length} modern lessons are available now; the others will open when they are ready.`;
+  } else if (availableLessons.length === 1) {
     availabilityMessage = spanish
       ? 'El currículo principal de HELP Math 1.0 abarca los grados 3–8. Abre una lección disponible; las demás aparecerán cuando sus versiones modernas estén listas.'
       : 'HELP Math 1.0’s main curriculum spans Grades 3–8. Open an available lesson; the others will appear as their modern versions are ready.';
@@ -548,21 +549,18 @@ function LessonsScreen({
       ? <div className={styles.lessonGrid}>
         {lessons.map((lesson) => {
         const key = `${lesson.grade}-${lesson.lesson}`;
-        const g4Entry = key === LEARNING_PLATFORM_SAMPLE_BOUNDARY.lessonEvidenceBoundary.grade4Lesson3.lessonKey;
-        const g5Entry = key === LEARNING_PLATFORM_SAMPLE_BOUNDARY.lessonEvidenceBoundary.grade5Lesson4.lessonKey;
-        let lessonHref: '/courses/4/3?mode=focus' | '/courses/5/4?mode=focus' | null = null;
-        if (g4Entry && g4L3Available) lessonHref = '/courses/4/3?mode=focus';
-        if (g5Entry && g5L4Available) lessonHref = '/courses/5/4?mode=focus';
-        const learnerRunnable = lessonHref !== null;
+        const availableLesson = availableByKey.get(key);
+        const lessonHref = availableLesson?.href ?? null;
+        const learnerRunnable = availableLesson !== undefined;
         const content = <>
           <span className={`${styles.lessonIcon} ${learnerRunnable ? styles.lessonIconOpen : ''}`}><Emoji>{lessonEmoji[lesson.title] ?? '🔢'}</Emoji></span>
           <span className={styles.lessonTileCopy} data-lesson-card-copy>
             <small>G{lesson.grade} · L{lesson.lesson}</small>
             <strong lang="en">{lesson.title}</strong>
-            {spanish && ((g4Entry && !G4_L3_LESSON.titleSpanish) || g5Entry)
+            {spanish && availableLesson && !availableLesson.titleSpanish
               ? <em className={styles.sourceGapLabel}>⚠️ inglés · sin título español en la fuente</em>
               : null}
-            <span>{lesson.pages} {spanish ? 'páginas · 8 pasos' : 'pages · 8 steps'}</span>
+            <span>{availableLesson?.activePageCount ?? lesson.pages} {spanish ? 'páginas · 8 pasos' : 'pages · 8 steps'}</span>
           </span>
           <span className={`${styles.lessonStatus} ${learnerRunnable ? styles.lessonStatusOpen : ''}`} data-lesson-card-status>
             {learnerRunnable ? <><Check aria-hidden="true" size={15} />{spanish ? 'Abrir' : 'Open'}</> : <><LockKeyhole aria-hidden="true" size={15} />{spanish ? 'Muy pronto' : 'Coming soon'}</>}
@@ -708,8 +706,8 @@ function DesignNotesScreen({
     <article className={styles.notesPanel}><h2>Evidence and sample boundaries that remain visible</h2><div className={styles.boundaryGrid}>
       <div><strong>Sample learner state</strong><p>Maria, the four-day streak, five stickers, 21/39, powers, and Nova replies are invented UI data.</p></div>
       <div><strong>Sample teacher state</strong><p>The roster, EL markers, mastery values, attention notes, IEP export, lesson assignment, and controls are invented and produce no real record.</p></div>
-      <div><strong>Current-JS learner access</strong><p>G4 L3 can open in local audit or its exact current-JS showcase mode. G5 L4 can open only through its exact local descriptor-bound gate; it is not publicly published. Current JavaScript access does not prove Flash fidelity, audio acceptance, original runtime, owner acceptance, strict completion, release, or wider publication.</p></div>
-      <div><strong>Future and internal evidence</strong><p>All 29 source-catalog lessons remain visible. The G5 L4 learner tile opens only when its exact local catalog, registration, and descriptor gate passes; public publication remains closed.</p></div>
+      <div><strong>Current-JS learner access</strong><p>Five page-complete lessons—G3 L2, G4 L3, and G5 L3 through L5—can open only after their exact registration, descriptor/navigation, and release or showcase gates pass. Current JavaScript access does not prove Flash fidelity, audio acceptance, original runtime, owner acceptance, strict completion, or wider-curriculum publication.</p></div>
+      <div><strong>Future and internal evidence</strong><p>All 29 source-catalog lessons remain visible. Only the five exact runnable lessons become links; every other lesson stays visibly unavailable until its own page sequence and product gates pass.</p></div>
     </div></article>
     <article className={styles.notesPanel}><h2>Palette and type</h2><div className={styles.palette}>{LEARNING_SECTIONS.map((section) => <span className={tintClass(section.tint)} key={section.code}><i /><b>{section.en}</b></span>)}</div><p>Rounded display type, a readable system body stack, soft lavender ground, white cards, layered shadows, and separate high-contrast text tokens.</p></article>
     <p className={styles.finalBoundary}>Design prototype and local learning-platform implementation. Sample names, powers, stickers, teacher data, and Nova replies remain sample data. No fidelity, audio, original-runtime, owner, strict-completion, deployment, release, or publication acceptance is claimed or implied.</p>
@@ -717,25 +715,28 @@ function DesignNotesScreen({
 }
 
 export function LearningPlatformWorkspace({
+  activeLesson,
   authStatus,
+  availableLessons,
   designerToolsVisible,
-  g4L3Available,
-  g5L4Available,
   initialRole,
   initialScreen,
   locale,
   migrationStatusAvailable,
 }: {
+  activeLesson: AvailableLearningLesson | null;
   authStatus: PublicAuthStatus;
+  availableLessons: readonly AvailableLearningLesson[];
   designerToolsVisible: boolean;
-  g4L3Available: boolean;
-  g5L4Available: boolean;
   initialRole: Role;
   initialScreen: Screen;
   locale: G4L3Locale;
   migrationStatusAvailable: boolean;
 }) {
   const spanish = locale === 'es';
+  const g4L3Available = availableLessons.some(
+    (lesson) => lesson.grade === 4 && lesson.lesson === 3,
+  );
   const [role, setRole] = useState<Role>(initialRole);
   const [screen, setScreen] = useState<Screen>(initialScreen);
   const [theme, setTheme] = useState<Theme>('light');
@@ -851,8 +852,8 @@ export function LearningPlatformWorkspace({
           {role === 'student' ? <>
             <span className={styles.railGroup}>{spanish ? 'Aprender' : 'Learn'}</span>
             <button aria-current={screen === 'today' ? 'page' : undefined} className={styles.navItem} onClick={() => openScreen('today')} type="button"><span className={styles.navIcon}><Emoji>🏡</Emoji></span><span>{spanish ? 'Hoy' : 'Today'}</span><i>{spanish ? '2 pendientes' : '2 to do'}</i></button>
-            {g4L3Available
-              ? <Link className={styles.navItem} href="/courses/4/3?mode=focus"><span className={styles.navIcon}><Emoji>📺</Emoji></span><span>{spanish ? 'Mi lección' : 'My lesson'}</span></Link>
+            {activeLesson
+              ? <Link className={styles.navItem} href={activeLesson.href}><span className={styles.navIcon}><Emoji>📺</Emoji></span><span>{spanish ? 'Mi lección' : 'My lesson'}</span></Link>
               : <span aria-disabled="true" className={`${styles.navItem} ${styles.navItemDisabled}`}><span className={styles.navIcon}><Emoji>📺</Emoji></span><span>{spanish ? 'Mi lección · no disponible' : 'My lesson · unavailable'}</span></span>}
             {studentNav.slice(1).map((item) => <button aria-current={screen === item.screen ? 'page' : undefined} className={styles.navItem} key={item.screen} onClick={() => openScreen(item.screen)} type="button"><span className={styles.navIcon}><Emoji>{item.emoji}</Emoji></span><span>{spanish ? item.es : item.en}</span>{item.tail ? <i>{item.tail}</i> : null}</button>)}
           </> : <>
@@ -907,7 +908,7 @@ export function LearningPlatformWorkspace({
           {screen === 'today' ? <StudentToday browserProgress={browserProgress} flippedWords={flippedWords} g4L3Available={g4L3Available} locale={locale} onFlipWord={flipWord} onOpenWords={() => openScreen('words')} progress={progress} /> : null}
           {screen === 'practice' ? <PracticeScreen locale={locale} /> : null}
           {screen === 'words' ? <WordsScreen designerToolsVisible={designerToolsVisible} flippedWords={flippedWords} locale={locale} onFlipWord={flipWord} /> : null}
-          {screen === 'lessons' ? <LessonsScreen g4L3Available={g4L3Available} g5L4Available={g5L4Available} locale={locale} /> : null}
+          {screen === 'lessons' ? <LessonsScreen availableLessons={availableLessons} locale={locale} /> : null}
           {screen === 'class' ? <TeacherClassScreen locale={locale} onPlan={() => openScreen('prep')} /> : null}
           {screen === 'prep' ? <TeacherPrepScreen locale={locale} /> : null}
           {designerToolsVisible && screen === 'notes' ? <DesignNotesScreen locale={locale} migrationStatusAvailable={migrationStatusAvailable} /> : null}

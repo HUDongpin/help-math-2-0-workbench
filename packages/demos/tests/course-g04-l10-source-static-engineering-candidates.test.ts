@@ -125,26 +125,6 @@ import {COURSE_G04_L10_VB_010_CONFIG} from "../src/timelines/course-g04-l10-vb-0
 import {COURSE_G04_L10_VB_011_CONFIG} from "../src/timelines/course-g04-l10-vb-011";
 
 const ENTRY_STATE = "d".repeat(64);
-const privateProductBridgeIds = new Set([
-  "course-g04-l10-ir-001",
-  "course-g04-l10-rw-004",
-  "course-g04-l10-vb-002",
-  "course-g04-l10-vb-003",
-  "course-g04-l10-vb-004",
-  "course-g04-l10-vb-005",
-  "course-g04-l10-vb-006",
-  "course-g04-l10-vb-007",
-  "course-g04-l10-vb-008",
-  "course-g04-l10-vb-010",
-  "course-g04-l10-vb-011",
-  "course-g04-l10-ts-002",
-  "course-g04-l10-ts-005",
-  "course-g04-l10-ts-006",
-  "course-g04-l10-fq-001",
-  "course-g04-l10-in-008",
-  "course-g04-l10-in-009",
-  "course-g04-l10-in-016",
-]);
 const candidates = [
   {
     id: "course-g04-l10-vb-003",
@@ -380,12 +360,7 @@ function context(frameDomain: string, overrides = {}) {
 test("twenty-four L10 source-static cores remain fixed-English and acceptance-neutral", () => {
   for (const candidate of candidates) {
     assert.equal(candidate.module.key, candidate.id);
-    assert.equal(
-      candidate.module.maturity,
-      privateProductBridgeIds.has(candidate.id)
-        ? "private-current-js"
-        : "legacy-prototype",
-    );
+    assert.equal(candidate.module.maturity, "private-current-js");
     assert.equal(candidate.module.runtime?.frameCount, 10);
     assert.equal(candidate.module.runtime?.defaultFrameDomain,
       candidate.frameDomain);
@@ -506,7 +481,7 @@ test("TI003 preserves its exact fractional native stage and 800x600 Canvas backi
   });
 });
 
-test("the private bridge registers only eighteen L10 candidates and no public course", async () => {
+test("the private bridge registers every audited L10 candidate and no public course", async () => {
   const publicRegistries = await Promise.all([
     new URL("../prototype-registry.json", import.meta.url),
     new URL("../src/prototype-manifest.ts", import.meta.url),
@@ -523,12 +498,7 @@ test("the private bridge registers only eighteen L10 candidates and no public co
     readFile(new URL("../private-current-js-registry.json", import.meta.url), "utf8"),
   ]);
   for (const candidate of candidates) {
-    if (privateProductBridgeIds.has(candidate.id)) {
-      assert.match(generated, new RegExp(candidate.id));
-      assert.match(privateRegistry, new RegExp(candidate.id));
-    } else {
-      assert.doesNotMatch(generated, new RegExp(candidate.id));
-      assert.doesNotMatch(privateRegistry, new RegExp(candidate.id));
-    }
+    assert.match(generated, new RegExp(candidate.id));
+    assert.match(privateRegistry, new RegExp(candidate.id));
   }
 });

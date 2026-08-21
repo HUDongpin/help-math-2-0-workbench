@@ -1,9 +1,11 @@
 import type {MigrationStatus} from './catalog-overlays';
 
 export interface LessonReleaseMember {
+  placementId?: string;
   animationId: string;
   assetId: string;
   releaseRole: 'active-xml-referenced-page' | 'course-shell';
+  sourceOccurrence?: number;
 }
 
 export interface LessonReleaseScope {

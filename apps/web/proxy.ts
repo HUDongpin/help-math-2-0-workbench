@@ -10,7 +10,10 @@ import {
 } from './lib/g4-l3-showcase-asset-policy';
 import {
   currentJsShowcasePublication,
+  G3_L2_SHOWCASE_RELEASE_ID,
+  G5_L3_SHOWCASE_RELEASE_ID,
   G5_L4_SHOWCASE_RELEASE_ID,
+  G5_L5_SHOWCASE_RELEASE_ID,
 } from './lib/current-js-showcase-publication';
 import {
   classifyG4L3HostCompositeAsset,
@@ -30,6 +33,10 @@ import {
   isLocalAuthSessionApiPath,
 } from './lib/local-auth-access';
 import {
+  isPageOnlyCurrentJsShowcaseAssetAuthorized,
+  isPageOnlyCurrentJsShowcaseAssetSegments,
+} from './lib/page-only-current-js-showcase-asset-policy';
+import {
   classifyG5L4PreviewAsset,
   hasExactG5L4AudioDigest,
   hasExactG5L4RuntimeDigest,
@@ -45,6 +52,13 @@ const publicPaths = new Set([
   '/privacy',
   '/terms',
 ]);
+
+const showcaseReleaseIdByCoursePath = Object.freeze({
+  '/courses/3/2': G3_L2_SHOWCASE_RELEASE_ID,
+  '/courses/5/3': G5_L3_SHOWCASE_RELEASE_ID,
+  '/courses/5/4': G5_L4_SHOWCASE_RELEASE_ID,
+  '/courses/5/5': G5_L5_SHOWCASE_RELEASE_ID,
+} as const);
 
 function notFoundResponse() {
   return new NextResponse('Not Found', {
@@ -71,9 +85,14 @@ function isArchivePath(pathname: string, request: NextRequest) {
       );
   }
   if (pathname === '/courses/4/3') return true;
-  if (pathname === '/courses/5/4') {
+  const showcaseReleaseId = showcaseReleaseIdByCoursePath[pathname as
+    | '/courses/3/2'
+    | '/courses/5/3'
+    | '/courses/5/4'
+    | '/courses/5/5'];
+  if (showcaseReleaseId) {
     return currentJsShowcasePublication(
-      G5_L4_SHOWCASE_RELEASE_ID,
+      showcaseReleaseId,
     ).enabled;
   }
   if (process.env.NODE_ENV === 'production') return false;
@@ -167,10 +186,14 @@ function isAllowed(pathname: string, request: NextRequest) {
         ? isG5L4ShowcaseAudioAuthorized()
         : isG5L4ShowcaseAssetAuthorized()
     );
+  const publicPageOnlyCurrentJsShowcaseAsset =
+    isPageOnlyCurrentJsShowcaseAssetSegments(assetSegments)
+    && isPageOnlyCurrentJsShowcaseAssetAuthorized(assetSegments);
   return publicPaths.has(pathname)
     || isArchivePath(pathname, request)
     || publicShowcaseAsset
     || publicG5L4ShowcaseAsset
+    || publicPageOnlyCurrentJsShowcaseAsset
     || (process.env.NODE_ENV !== 'production' && localAuditPath);
 }
 

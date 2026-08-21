@@ -26,6 +26,14 @@ const IDS = Object.freeze([
   "course-g04-l10-vb-008",
   "course-g04-l10-ts-002",
 ]);
+const CURRENT_UPSTREAM_IDS = Object.freeze([
+  "course-g04-l10-ti-003",
+  "course-g04-l10-fq-002",
+  "course-g04-l10-fq-003",
+  "course-g04-l10-in-011",
+  "course-g04-l10-in-013",
+  "course-g04-l10-in-006",
+]);
 const WAVE2_IDS = Object.freeze(IDS.slice(4));
 const WAVE2_VISUAL_SEQUENCE = Object.freeze({
   "course-g04-l10-rw-004": {
@@ -203,11 +211,17 @@ test("release source-static CLI requires an exact release and exact subset", () 
     "--id", IDS[0],
     "--check",
   ]), {
+    allowAcceptanceNeutralLineageFallback: false,
     check: true,
     ffdec: "ffdec",
     ids: [IDS[0]],
     releaseId: RELEASE_ID,
   });
+  assert.equal(parseArguments([
+    "--release-id", RELEASE_ID,
+    "--id", "course-g04-l10-rw-002",
+    "--allow-acceptance-neutral-lineage-fallback",
+  ]).allowAcceptanceNeutralLineageFallback, true);
   assert.throws(() => parseArguments([]), /--release-id is required/);
   assert.throws(
     () => parseArguments(["--release-id", RELEASE_ID]),
@@ -220,6 +234,34 @@ test("release source-static CLI requires an exact release and exact subset", () 
       "--id", IDS[0],
     ]),
     /duplicate --id/,
+  );
+});
+
+test("acceptance-neutral lineage fallback stays explicit and cannot promote runtime or fidelity", async () => {
+  const catalog = JSON.parse(await readFile("catalog/lesson-releases.json", "utf8"));
+  const release = catalog.releases.find(({releaseId}) => releaseId === RELEASE_ID);
+  const animationId = "course-g04-l10-rw-002";
+  await assert.rejects(
+    deriveReleaseSourceStaticProfile({animationId, release}),
+    /declaration successor binding drifted/,
+  );
+  const profile = await deriveReleaseSourceStaticProfile({
+    allowAcceptanceNeutralLineageFallback: true,
+    animationId,
+    release,
+  });
+  assert.deepEqual(profile.lineageFallback, {
+    reason:
+      "course-g04-l10-rw-002: frame-domain disposition: declaration successor binding drifted",
+    disposition:
+      "manual-source-static-addressability-only; declaration successor lineage is not promoted",
+    naturalRuntimeEstablished: false,
+    fidelityEffect: "none",
+    acceptanceEffect: "none",
+  });
+  assert.equal(
+    profile.target.declarationProofLineage.status,
+    "acceptance-neutral-manual-source-static-fallback",
   );
 });
 
@@ -434,16 +476,23 @@ test("wave 2 targets are paired-source, label-free, placement-free, and have at 
   }
 });
 
-test("generated L10 assets remain unregistered, inert, hash-bound, and network-free", async () => {
+test("generated L10 assets remain inert, hash-bound, and network-free beneath private page-only registration", async () => {
   const protectedSources = await Promise.all([
     "packages/demos/prototype-registry.json",
-    "packages/demos/src/registry.generated.ts",
     "packages/demos/src/prototype-manifest.ts",
     "apps/web/lib/whole-lesson-course-registry.ts",
   ].map((path) => readFile(path, "utf8")));
   for (const source of protectedSources) {
     for (const animationId of IDS) assert.doesNotMatch(source, new RegExp(animationId));
   }
+  const privateRegistry = JSON.parse(await readFile(
+    "packages/demos/private-current-js-registry.json",
+    "utf8",
+  ));
+  assert.equal(privateRegistry.calibrationId,
+    "g4-l10-page-only-current-js-46-v1");
+  const privateKeys = new Set(privateRegistry.entries.map(({key}) => key));
+  assert.equal(IDS.every((animationId) => privateKeys.has(animationId)), true);
   for (const animationId of IDS) {
     const base = `public/flash-assets/courses/${animationId}`;
     const [runtime, manifestText] = await Promise.all([
@@ -540,14 +589,14 @@ test("wave 2 full-canvas RGBA sequence census is exact and non-static", async ()
   }
 });
 
-test("eight checked-in L10 assets regenerate deterministically", async () => {
+test("six non-promoted L10 upstream assets regenerate deterministically", async () => {
   const result = await buildReleaseSourceStaticEngineeringCandidates({
     check: true,
-    ids: [...IDS],
+    ids: [...CURRENT_UPSTREAM_IDS],
     releaseId: RELEASE_ID,
   });
   assert.equal(result.operation, "check");
-  assert.equal(result.selectedMemberCount, 8);
+  assert.equal(result.selectedMemberCount, 6);
   assert.equal(result.protectedRegistriesUnchanged, true);
   assert.equal(result.results.every(({registered}) => registered === false), true);
   assert.equal(result.strictAcceptanceEffect, "none");

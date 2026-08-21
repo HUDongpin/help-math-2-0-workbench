@@ -121,6 +121,7 @@ function normalizeReleaseDefinitions(value: unknown, animations: readonly Catalo
   const animationById = new Map(animations.map((animation) => [animation.animationId, animation]));
   const definitions = document.releases.map((entry): LessonReleaseDefinition => {
     const release = rec(entry), expected = rec(release.expectedCounts), scope = rec(release.scope);
+    const pageOnly = scope.pageOnly === true && expected.courseShells === 0;
     if (!str(release.releaseId) || release.publicationMode !== 'atomic' || !Array.isArray(release.members) ||
       !Number.isInteger(expected.members) || Number(expected.members) < 1 ||
       !str(scope.collection) || !Number.isInteger(scope.grade) || !Number.isInteger(scope.lesson) ||
@@ -131,21 +132,32 @@ function normalizeReleaseDefinitions(value: unknown, animations: readonly Catalo
       const member = rec(memberValue);
       const animationId = str(member.animationId), assetId = str(member.assetId);
       const releaseRole = str(member.releaseRole);
+      const placementId = str(member.placementId);
+      const sourceOccurrence = num(member.xmlOccurrence);
       const animation = animationById.get(animationId);
       if (!animationId || !assetId || member.ordinal !== index + 1 ||
         !['active-xml-referenced-page', 'course-shell'].includes(releaseRole) ||
-        animation?.assetId !== assetId) {
+        animation?.assetId !== assetId ||
+        (pageOnly && (releaseRole !== 'active-xml-referenced-page' ||
+          !placementId || sourceOccurrence !== index + 1))) {
         throw new Error(`${str(release.releaseId)}: malformed or stale release member ${index + 1}`);
       }
       return Object.freeze({
+        placementId: placementId || undefined,
         animationId,
         assetId,
         releaseRole: releaseRole as LessonReleaseDefinition['members'][number]['releaseRole'],
+        sourceOccurrence,
       });
     });
-    if (members.length !== expected.members ||
-      new Set(members.map((member) => member.animationId)).size !== members.length ||
-      new Set(members.map((member) => member.assetId)).size !== members.length) {
+    const placementIdentityIsValid = pageOnly
+      ? new Set(members.map((member) => member.placementId)).size ===
+          members.length
+      : new Set(members.map((member) => member.animationId)).size ===
+          members.length &&
+        new Set(members.map((member) => member.assetId)).size ===
+          members.length;
+    if (members.length !== expected.members || !placementIdentityIsValid) {
       throw new Error(`${str(release.releaseId)}: release membership is incomplete or duplicated`);
     }
     const activePages = release.members.filter((member) => rec(member).releaseRole === 'active-xml-referenced-page').length;
@@ -179,8 +191,18 @@ function normalizeReleaseDefinitions(value: unknown, animations: readonly Catalo
     return definition;
   });
   if (new Set(definitions.map((release) => release.releaseId)).size !== definitions.length) throw new Error('Duplicate lesson releaseId');
-  const allMembers = definitions.flatMap((release) => release.members.map((member) => member.animationId));
-  if (new Set(allMembers).size !== allMembers.length) throw new Error('Animation belongs to multiple lesson releases');
+  const releaseIdsByAnimation = new Map<string, Set<string>>();
+  for (const release of definitions) {
+    for (const member of release.members) {
+      const releaseIds = releaseIdsByAnimation.get(member.animationId) ??
+        new Set<string>();
+      releaseIds.add(release.releaseId);
+      releaseIdsByAnimation.set(member.animationId, releaseIds);
+    }
+  }
+  if ([...releaseIdsByAnimation.values()].some((releaseIds) =>
+    releaseIds.size > 1
+  )) throw new Error('Animation belongs to multiple lesson releases');
   return definitions;
 }
 

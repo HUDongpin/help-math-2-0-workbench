@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 import {afterEach, describe, it} from 'node:test';
+import {POST} from '../app/api/contact/route';
 import {
   buildContactEmail,
   DEVELOPMENT_TURNSTILE_TOKEN,
-  POST,
-} from '../app/api/contact/route';
+} from '../lib/contact-route-support.server';
 import {contactRequestSchema} from '../lib/contact-schema';
 
 const envKeys = [

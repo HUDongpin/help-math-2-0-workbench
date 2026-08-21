@@ -13,9 +13,9 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/**/*.test.ts",
-    "test:e2e": "MODERN_WIDE_SHELL_ENABLED=false CURRENT_JS_SHOWCASE_G4_L3_ENABLED=true CURRENT_JS_SHOWCASE_G5_L4_ENABLED=true CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED=true playwright test",
+    "test:e2e": "MODERN_WIDE_SHELL_ENABLED=false CURRENT_JS_SHOWCASE_G3_L2_ENABLED=true CURRENT_JS_SHOWCASE_G4_L3_ENABLED=true CURRENT_JS_SHOWCASE_G5_L3_ENABLED=true CURRENT_JS_SHOWCASE_G5_L4_ENABLED=true CURRENT_JS_SHOWCASE_G5_L5_ENABLED=true CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED=true playwright test",
     "test:e2e:g5-l4-audio-gate-off": "PLAYWRIGHT_PORT=3212 MODERN_WIDE_SHELL_ENABLED=false CURRENT_JS_SHOWCASE_G5_L4_ENABLED=true CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED=false playwright test g5-l4-audio.spec.ts --grep 'gate-off direct FQ route exposes unavailable disabled audio only'",
-    "test:e2e:modern-wide": "MODERN_WIDE_SHELL_ENABLED=true CURRENT_JS_SHOWCASE_G4_L3_ENABLED=true CURRENT_JS_SHOWCASE_G5_L4_ENABLED=true CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED=true playwright test prototype-acceptance.spec.ts modern-wide-geometry.spec.ts canvas-sharpness.spec.ts learning-experience-polish.spec.ts"
+    "test:e2e:modern-wide": "MODERN_WIDE_SHELL_ENABLED=true CURRENT_JS_SHOWCASE_G3_L2_ENABLED=true CURRENT_JS_SHOWCASE_G4_L3_ENABLED=true CURRENT_JS_SHOWCASE_G5_L3_ENABLED=true CURRENT_JS_SHOWCASE_G5_L4_ENABLED=true CURRENT_JS_SHOWCASE_G5_L5_ENABLED=true CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED=true playwright test prototype-acceptance.spec.ts modern-wide-geometry.spec.ts canvas-sharpness.spec.ts learning-experience-polish.spec.ts"
   },
   "dependencies": {
     "@clerk/localizations": "^4.15.2",
