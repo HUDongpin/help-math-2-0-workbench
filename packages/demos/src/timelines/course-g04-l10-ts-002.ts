@@ -66,7 +66,7 @@ export const COURSE_G04_L10_TS_002_CONFIG = Object.freeze({
     }),
   ]),
   sourceControlBehaviorLabel:
-    "ActionScript, controls, audio, Spanish visuals, natural runtime, terminal state, Replay, and fidelity are unresolved and disabled",
+    "Source-static core ActionScript remains disabled; the private product wrapper binds three exact glossary handlers and exact EN/ES engineering audio routes while natural Adobe runtime, spoken-language listening, visual fidelity, and acceptance remain unresolved",
 } satisfies SourceStaticCanvasCandidateConfig);
 
 export const COURSE_G04_L10_TS_002_AUTHORITY =

@@ -140,7 +140,10 @@ export interface LegacyLessonShellVisualSkin {
     width: number;
   }>;
   chromeAsset: string;
-  chromeEvidence: 'ffdec-static-structural-candidate' | 'original-runtime-accepted';
+  chromeEvidence:
+    | 'ffdec-static-structural-candidate'
+    | 'original-runtime-accepted'
+    | 'product-owned-modern-my-lesson';
   chromeFooterHeight: number;
   chromeHeaderHeight: number;
   chromeTitleBand?: WholeLessonChromeTitleBand;
@@ -148,14 +151,16 @@ export interface LegacyLessonShellVisualSkin {
   backgroundCompanion?: WholeLessonBackgroundCompanion;
   exitPrompt?: WholeLessonExitPromptVisualEvidence;
   resumePrompt?: WholeLessonResumePromptVisualEvidence;
-  layoutId: 'help-math-course-shell-800x600-v1';
+  layoutId:
+    | 'help-math-course-shell-800x600-v1'
+    | 'help-math-modern-my-lesson-page-only-v1';
   /**
    * Which host presentation the player resolved for this lesson. Defaults to
    * the legacy composite, so an omitted value renders exactly as before.
    */
   presentation?: WholeLessonHostPresentation;
-  sourceAnimationId: string;
-  sourceSwfSha256: string;
+  sourceAnimationId?: string;
+  sourceSwfSha256?: string;
 }
 
 export interface LessonShellReleaseBoundary {
@@ -3103,7 +3108,8 @@ export function LegacyResponsiveLessonShell({
               value={normalizedSectionPage}
             />
           </div>
-          {modernWide && novaTutorMode === 'focus'
+          {modernWide && novaTutorMode === 'focus' &&
+              narrationStatus === 'unavailable'
             ? null
             : <LessonNarrationControl
                 locale={locale}

@@ -135,6 +135,12 @@ function lessonHostCapabilityForRequest(
   if (request.type === 'record-fq-score' || request.type === 'reset-fq-score') {
     return 'fq-scoring';
   }
+  if (
+    request.type === 'record-practice-feedback' ||
+    request.type === 'reset-practice-feedback'
+  ) {
+    return 'practice-feedback';
+  }
   return null;
 }
 
@@ -1133,6 +1139,9 @@ export function AnimationRuntime({
   if (!animationModule || !context || !runtimeMetadata || !frameDomain || !activeMovie || !playbackContext || !state) return <p aria-live="polite" className="runtime-unavailable">{labels.loading}</p>;
   const Renderer = animationModule.Renderer;
   const onReplay = () => {
+    stopNarrationTrack();
+    stopInteractiveAudio();
+    stopTimelineAudioNow();
     setReplay((value) => value + 1);
     onReplayCallback?.();
   };

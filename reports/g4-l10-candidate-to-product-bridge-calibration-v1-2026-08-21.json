@@ -1,0 +1,236 @@
+{
+  "schemaVersion": 1,
+  "reportId": "g4-l10-candidate-to-product-bridge-calibration-v1",
+  "observedAt": "2026-08-21T00:12:00+08:00",
+  "baselineGitHead": "71485baa601fe600e8f63c88fb0139492a4ad31e",
+  "outcome": "CONDITIONAL_GO_PRIVATE_PRODUCT_BRIDGE_CALIBRATION",
+  "scopeBoundary": "Three frozen G4 L10 active lesson-page placements in a local-only private My Lesson route. This is not Flash fidelity, audio acceptance, human or Owner acceptance, strict completion, release, or publication.",
+  "frozenCalibration": {
+    "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v1.json",
+    "sha256": "c966f850ef4c6706b56904834c39922ddff2c8e7c4c9e51df80bc326e2f7e950",
+    "activePageCount": 46,
+    "courseShellCount": 0,
+    "canonicalSwfCount": 46,
+    "pairedFlaCount": 34,
+    "swfOnlyCount": 12,
+    "preservedWorkspaceCount": 46,
+    "auditedCandidateCount": 24,
+    "registeredCurrentJsCountBefore": 0,
+    "newWorkspaceCount": 0
+  },
+  "yield": {
+    "frozenBridgeAttempts": 3,
+    "privateRegistrationsAfter": 3,
+    "candidateToRegistrationYield": {
+      "numerator": 3,
+      "denominator": 3,
+      "percent": 100
+    },
+    "auditedCandidatePoolConverted": {
+      "numerator": 3,
+      "denominator": 24,
+      "percent": 12.5
+    },
+    "lessonPageCoverage": {
+      "numerator": 3,
+      "denominator": 46,
+      "percent": 6.521739130434782
+    },
+    "publicCourseReleaseRegistrations": 0,
+    "unavailablePageOnlyDescriptorPositions": 43
+  },
+  "selectedPages": [
+    {
+      "animationId": "course-g04-l10-ir-001",
+      "lane": "behavior-heavy",
+      "globalPageOrdinal": 1,
+      "sectionPageOrdinal": 1,
+      "frameDomain": "sprite-31",
+      "frameCount": 136,
+      "bridgeStages": {
+        "reusedPreservedWorkspace": true,
+        "maintainedModule": true,
+        "privateRegistry": true,
+        "pageOnlyDescriptor": true,
+        "modernMyLesson": true,
+        "replay": true,
+        "hostAudio": true,
+        "desktopQa": true,
+        "mobileQa": true
+      },
+      "sourceBehavior": "random(2)",
+      "replaySeedCycle": 2,
+      "audioAssets": [
+        {
+          "path": "public/flash-assets/courses/course-g04-l10-ir-001/audio/embedded-stream-0001.mp3",
+          "sha256": "b731347f2cd4ced88f5f86b21a1339a882821c42def7212b7b8aa15d72f31310",
+          "durationMs": 11337,
+          "seedRemainder": 0
+        },
+        {
+          "path": "public/flash-assets/courses/course-g04-l10-ir-001/audio/embedded-stream-0002.mp3",
+          "sha256": "2112a8b5764792dd64ab2955e55e02b8850e2a677efd8f71e34f91fc608604ad",
+          "durationMs": 11337,
+          "seedRemainder": 1
+        }
+      ],
+      "browserEvidence": "Replay incremented the persisted count from 2 to 3, exposed data-random-selection=seed-modulo-2-remainder-1, and requested embedded-stream-0002.mp3 with HTTP 206 after seed-zero requests for embedded-stream-0001.mp3."
+    },
+    {
+      "animationId": "course-g04-l10-vb-003",
+      "lane": "interactive-understood",
+      "globalPageOrdinal": 7,
+      "sectionPageOrdinal": 2,
+      "frameDomain": "sprite-120",
+      "frameCount": 203,
+      "bridgeStages": {
+        "reusedPreservedWorkspace": true,
+        "maintainedModule": true,
+        "privateRegistry": true,
+        "pageOnlyDescriptor": true,
+        "modernMyLesson": true,
+        "typedGlossaryHost": true,
+        "pauseAndResume": true,
+        "desktopQa": true,
+        "mobileQa": true
+      },
+      "exactSourceTerms": [
+        "Unit of measurement",
+        "Quantity",
+        "Length"
+      ],
+      "hostBoundary": "Typed memory-only glossary request; legacy DoHyperLinks global and endpoint remain blocked.",
+      "auditCorrection": "The frozen sectionPageOrdinal was corrected from an initial assumption of 3 to the source-ordered descriptor value 2; a regression test now binds the freeze to the derived descriptor position."
+    },
+    {
+      "animationId": "course-g04-l10-fq-001",
+      "lane": "low",
+      "globalPageOrdinal": 44,
+      "sectionPageOrdinal": 1,
+      "frameDomain": "sprite-50",
+      "frameCount": 52,
+      "bridgeStages": {
+        "reusedPreservedWorkspace": true,
+        "maintainedModule": true,
+        "privateRegistry": true,
+        "pageOnlyDescriptor": true,
+        "modernMyLesson": true,
+        "replay": true,
+        "desktopQa": true,
+        "mobileQa": true
+      },
+      "interactionBoundary": "No root-reachable interaction is claimed. Exported FScrollBar code remains excluded because the root placement graph does not prove reachability."
+    }
+  ],
+  "productBridge": {
+    "privateRegistryPath": "packages/demos/private-current-js-registry.json",
+    "descriptorPath": "apps/web/lib/g4-l10-product-bridge-descriptor.ts",
+    "routePath": "apps/web/app/[locale]/migration-status/g4-l10-product-bridge/page.tsx",
+    "routeAvailability": "development-only; production calls notFound before rendering",
+    "descriptorOrdering": "46 exact source-ordered active page placements; selected ordinals 1, 7, and 44 registered; the other 43 remain unavailable",
+    "modernHost": "HELP Math 2.0 modern-wide My Lesson, page-only, courseShellCount=0",
+    "session": "Release-isolated local session persists page, review state, locale, and Replay counts",
+    "audioAutoplayFallback": "Focus mode now keeps Narration visible whenever audio exists, so a browser autoplay refusal has an actionable learner gesture.",
+    "mobileLayout": "At 390x844, document scrollWidth=375 with innerWidth=390; the audit boundary stacks vertically and all three selected pages remain usable without horizontal page overflow."
+  },
+  "browserQa": {
+    "tool": "Playwright CLI with headed Chrome",
+    "desktop": {
+      "locale": "en",
+      "selectedPagesPassed": 3,
+      "selectedPagesAttempted": 3,
+      "checks": [
+        "IR001 reaches frame 136, exposes Narration after autoplay refusal, plays source-bound audio, and persists Replay",
+        "VB003 exposes all three source terms, opens the exact definition, pauses the animation while the modal is open, and resumes on close",
+        "FQ001 reaches frame 52 and persists Replay"
+      ]
+    },
+    "mobile": {
+      "viewport": "390x844",
+      "locale": "es",
+      "selectedPagesPassed": 3,
+      "selectedPagesAttempted": 3,
+      "checks": [
+        "IR001 requests both deterministic random audio branches across Replay and keeps Narration actionable",
+        "VB003 exposes Spanish labels and exact Spanish definitions, pauses and resumes, and has no horizontal page overflow",
+        "FQ001 reaches frame 52, replays, persists state, and has no horizontal page overflow"
+      ]
+    },
+    "screenshots": [
+      {
+        "path": "output/playwright/g4-l10-product-bridge/desktop-en-ir001.png",
+        "sha256": "67998f8ace4706c088f01bbb84be8261e9a74a9dec802188b0055e9d1d3370d5"
+      },
+      {
+        "path": "output/playwright/g4-l10-product-bridge/desktop-en-vb003-glossary.png",
+        "sha256": "5fdc4d3427c5a69bb1d669bc25a8c04ffec73e4752d0a6e30d01135e370cd3b3"
+      },
+      {
+        "path": "output/playwright/g4-l10-product-bridge/desktop-en-fq001.png",
+        "sha256": "d9a6861e6a95d6c43492a427816e96c672f5093bbd3a9561075c59dff7772646"
+      },
+      {
+        "path": "output/playwright/g4-l10-product-bridge/mobile-es-vb003-glossary.png",
+        "sha256": "df3103b8fda3359cd427f06643c9e8b4feceb0a7a388d9015e02d5da5dfe3142"
+      },
+      {
+        "path": "output/playwright/g4-l10-product-bridge/mobile-es-ir001-seed1.png",
+        "sha256": "63312494b5c5d12349bb4a1e70c6febc807624e4885bd0f341af598689777592"
+      }
+    ],
+    "nonProductConsoleFindings": [
+      "Clerk __experimental_CheckoutProvider child-key warning in the development provider",
+      "Clerk development-key warning"
+    ],
+    "productAssetRequestFailures": 0
+  },
+  "verification": {
+    "demosTests": {
+      "command": "npx tsx --test --test-reporter=tap test/*.test.mjs tests/**/*.test.ts",
+      "passed": 634,
+      "failed": 0
+    },
+    "webTests": {
+      "command": "npx tsx --test --test-reporter=tap tests/**/*.test.ts",
+      "passed": 369,
+      "failed": 0
+    },
+    "demosTypecheck": "PASS",
+    "webTypecheck": "PASS",
+    "privateRegistryGenerationCheck": "PASS",
+    "ir001AudioExtractionCheck": "PASS: 2 streams, 45136 bytes",
+    "productionRouteGuard": "PASS: NEXT_HTTP_ERROR_FALLBACK;404",
+    "gitDiffCheck": "PASS"
+  },
+  "openGlobalCurrentnessGates": [
+    {
+      "gate": "npm run verify:workbench",
+      "status": "FAIL_CLOSED",
+      "reason": "catalog/completion-ledger.json is stale",
+      "scope": "pre-existing global workbench currentness; not closed by this G4 L10 calibration"
+    },
+    {
+      "gate": "npm run verify:sources",
+      "status": "FAIL_CLOSED",
+      "reason": "99 unexpected source files, beginning in Grade 5 Lesson 4 FQ English-audio paths",
+      "scope": "pre-existing global source-freeze drift outside the selected G4 L10 pages"
+    }
+  ],
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "behaviorParityAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "releaseEligible": false,
+    "published": false
+  },
+  "nextFactoryDecision": {
+    "status": "conditional-go",
+    "authorizedMeaning": "The existing-candidate to private-product bridge is viable for the frozen three-page slice with zero duplicate workspaces and 3/3 successful attempts.",
+    "notAuthorizedMeaning": "Do not auto-register the remaining 21 candidates, claim 24/24 yield, promote any page to public course release, or raise any acceptance gate.",
+    "recommendedNextBatch": "Freeze a separate small batch from the remaining 21 source-static candidates, retain lane-specific audit and exact source order, and keep interactive or behavior-heavy pages out of automated scale-out until each page's reachable source behavior and audio are understood."
+  }
+}

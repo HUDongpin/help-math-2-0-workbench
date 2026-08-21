@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "calibrationId": "g4-l10-candidate-to-product-v7",
+  "frozenAt": "2026-08-21T02:16:04+08:00",
+  "frozenGitHead": "71485baa601fe600e8f63c88fb0139492a4ad31e",
+  "status": "registry-shape-successor",
+  "predecessor": {
+    "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v6.json",
+    "sha256": "4c1bb85bcc3f6d5df6cb339568339688e58ea958fdf2bd35f0abb299f3c0b3b0",
+    "preservedConclusions": [
+      "V6 remains the immutable implementation-before-freeze for the single VB004 interactive-understood attempt.",
+      "Only VB004 is newly authorized; the other eighteen candidates remain unregistered and are not relabeled low.",
+      "All VB004 source, candidate, handler, glossary, audio-input, and host-contract facts remain exactly V6-bound.",
+      "V7 only exposes the cumulative six-page selection shape required by the private registry generator."
+    ]
+  },
+  "scope": {
+    "releaseId": "lesson-g04-l10-perimeter-area",
+    "activePageCount": 46,
+    "courseShellCount": 0,
+    "auditedSourceStaticCandidateCount": 24,
+    "privateRegistrationCountBeforeBatch": 5,
+    "privateRegistrationCountAfterBatch": 6,
+    "newWorkspaceCount": 0
+  },
+  "selectedPages": [
+    {
+      "animationId": "course-g04-l10-ir-001",
+      "globalPageOrdinal": 1,
+      "sectionCode": "IR",
+      "sectionPageOrdinal": 1,
+      "complexityLane": "behavior-heavy",
+      "selectionStatus": "inherited-from-v6-predecessor-chain"
+    },
+    {
+      "animationId": "course-g04-l10-vb-003",
+      "globalPageOrdinal": 7,
+      "sectionCode": "VB",
+      "sectionPageOrdinal": 2,
+      "complexityLane": "interactive-understood",
+      "selectionStatus": "inherited-from-v6-predecessor-chain"
+    },
+    {
+      "animationId": "course-g04-l10-vb-004",
+      "assetId": "swf-f0d0ebfc9abebcfb13e6fb150a8663503330f1fbc2289713a678d64df307e500",
+      "globalPageOrdinal": 8,
+      "sectionCode": "VB",
+      "sectionPageOrdinal": 3,
+      "placementPath": "VB/L10VB04.swf",
+      "workspace": "migrations/course-g04-l10-vb-004",
+      "complexityLane": "interactive-understood",
+      "selectionStatus": "v6-frozen-new-batch-attempt",
+      "v6SourceFreeze": {
+        "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v6.json",
+        "sha256": "4c1bb85bcc3f6d5df6cb339568339688e58ea958fdf2bd35f0abb299f3c0b3b0"
+      },
+      "source": {
+        "swfSha256": "f0d0ebfc9abebcfb13e6fb150a8663503330f1fbc2289713a678d64df307e500",
+        "flaSha256": "d1ba8716790dcec21a5a54990e165c7ac555ad901418ac10d20a3eaaf2b74cf0"
+      },
+      "candidate": {
+        "manifestSha256": "3753bed35db9de6120d386bc33e01ceba90309fbf469712d8d939c8f90a5d77a",
+        "canvasRendererSha256": "6f6c089a92fd28fd1c2d547f51506932af6077935dc867eb86afc22453d52453",
+        "frameDomain": "sprite-45",
+        "frameCount": 213,
+        "rootBeginFrame": 6
+      },
+      "hostContract": {
+        "capability": "glossary",
+        "typedRequestCount": 3,
+        "legacyOperations": "blocked",
+        "auditStorage": "memory-only",
+        "storesPersonalData": false
+      },
+      "audio": {
+        "embeddedEngineeringCueSha256": "71710f405912d55cf4ac1dcf1c39d5b782cd7a4cb987f649c0a9de4f2b1a672d",
+        "spanishHostTrackSha256": "98aeaa8f5d7f1352f215e36c5bc1d8094b9ed761281ba7d53e425eb95e35ee26",
+        "spokenLanguageAccepted": false,
+        "audioAccepted": false
+      }
+    },
+    {
+      "animationId": "course-g04-l10-vb-011",
+      "globalPageOrdinal": 15,
+      "sectionCode": "VB",
+      "sectionPageOrdinal": 10,
+      "complexityLane": "interactive-understood",
+      "selectionStatus": "inherited-from-v6-predecessor-chain"
+    },
+    {
+      "animationId": "course-g04-l10-ts-006",
+      "globalPageOrdinal": 41,
+      "sectionCode": "TS",
+      "sectionPageOrdinal": 5,
+      "complexityLane": "low",
+      "selectionStatus": "inherited-from-v6-predecessor-chain"
+    },
+    {
+      "animationId": "course-g04-l10-fq-001",
+      "globalPageOrdinal": 44,
+      "sectionCode": "FQ",
+      "sectionPageOrdinal": 1,
+      "complexityLane": "low",
+      "selectionStatus": "inherited-from-v6-predecessor-chain"
+    }
+  ],
+  "remainingCandidateGate": {
+    "unregisteredCandidateCount": 18,
+    "honestLowLaneCount": 0,
+    "automaticRegistrationAuthorized": false,
+    "lowRelabelAuthorized": false,
+    "behaviorHeavyGate": "Random branches, audio routing, timeline reachability, and Replay engineering behavior must each close before registration."
+  },
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "behaviorParityAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "releaseEligible": false,
+    "published": false
+  }
+}

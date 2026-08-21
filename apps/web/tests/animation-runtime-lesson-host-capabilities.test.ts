@@ -49,6 +49,28 @@ test('runtime forwards only requests explicitly declared by the module', () => {
   );
 });
 
+test('runtime forwards the bounded practice-feedback contract only when declared', () => {
+  const practiceModule = {
+    lessonHost: {
+      capabilities: ['practice-feedback'],
+      legacyOperations: 'blocked',
+      auditStorage: 'memory-only',
+      storesPersonalData: false,
+    },
+  } as unknown as AnimationModule;
+  assert.equal(moduleDeclaresLessonHostRequest(practiceModule, {
+    type: 'record-practice-feedback',
+    interactionId: 'same-area-or-perimeter',
+    outcome: 'correct',
+    branchIndex: 1,
+    branchCount: 4,
+  }), true);
+  assert.equal(moduleDeclaresLessonHostRequest(keytermModule, {
+    type: 'reset-practice-feedback',
+    interactionId: 'same-area-or-perimeter',
+  }), false);
+});
+
 test('runtime admits only exact hash-bound same-origin interactive audio', () => {
   const exact = {
     id: 'g5-l4-fq-en-q01-question',

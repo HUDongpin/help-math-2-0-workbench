@@ -17,8 +17,8 @@ export interface LegacyCalculatorEvidence {
   readonly behaviorKind:
     | 'ffdec-actionscript-static-candidate'
     | 'modern-support-only';
-  readonly sourceAnimationId: string;
-  readonly sourceSwfSha256: string;
+  readonly sourceAnimationId?: string;
+  readonly sourceSwfSha256?: string;
   readonly panel?: Readonly<{
     asset: string;
     height: number;

@@ -226,7 +226,15 @@ export interface AnimationModule<State = unknown> {
    * calls or external endpoints.
    */
   readonly lessonHost?: LessonHostCapabilityDescriptor;
-  readonly maturity: 'legacy-prototype' | 'strict-complete';
+  /**
+   * `private-current-js` is an engineering registration admitted only to a
+   * private/local product surface. It is implementation availability, never
+   * fidelity, strict-completion, release, or publication authority.
+   */
+  readonly maturity:
+    | 'legacy-prototype'
+    | 'private-current-js'
+    | 'strict-complete';
   readonly Renderer: ComponentType<AnimationRendererProps>;
   readonly getFrameState: (frame: number, context: RuntimeContext) => State;
 }

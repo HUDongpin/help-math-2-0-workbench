@@ -66,7 +66,7 @@ export const COURSE_G04_L10_TS_006_CONFIG = Object.freeze({
     }),
   ]),
   sourceControlBehaviorLabel:
-    "ActionScript, controls, audio, Spanish visuals, natural runtime, terminal state, Replay, and fidelity are unresolved and disabled",
+    "ActionScript, controls, Spanish visuals, natural runtime, terminal state, Replay, and fidelity remain unresolved; the private EN timeline cue and ES user track are source-bound engineering audio mappings, not accepted audio parity",
 } satisfies SourceStaticCanvasCandidateConfig);
 
 export const COURSE_G04_L10_TS_006_AUTHORITY =

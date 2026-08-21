@@ -66,7 +66,7 @@ export const COURSE_G04_L10_VB_004_CONFIG = Object.freeze({
     }),
   ]),
   sourceControlBehaviorLabel:
-    "ActionScript, controls, audio, Spanish visuals, natural runtime, terminal state, Replay, and fidelity are unresolved and disabled",
+    "The source-static core keeps ActionScript disabled; its private maintained wrapper binds the three exact glossary handlers plus source-exact engineering audio while Spanish visuals, natural runtime, terminal state, Replay parity, fidelity, and audio acceptance remain unresolved",
 } satisfies SourceStaticCanvasCandidateConfig);
 
 export const COURSE_G04_L10_VB_004_AUTHORITY =

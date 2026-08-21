@@ -23,6 +23,12 @@ export type WholeLessonRendererAvailability =
       runtimeQuery?: Readonly<{
         frameDomain?: string;
         language: 'route-locale' | 'fixed-en';
+        /**
+         * Advance the deterministic runtime seed on Replay and wrap after the
+         * declared number of source branches. Omit this unless the source
+         * itself proves a finite random branch set that Replay must expose.
+         */
+        replaySeedCycle?: number;
         scenario?: string;
         seed: string;
       }>;
@@ -31,6 +37,29 @@ export type WholeLessonRendererAvailability =
       kind: 'unavailable';
       reason: string;
     }>;
+
+export function resolveWholeLessonRuntimeSeed(
+  renderer: WholeLessonRendererAvailability,
+  replayCount: number,
+): string {
+  if (renderer.kind !== 'registered' || !renderer.runtimeQuery) return '0';
+  const {replaySeedCycle, seed} = renderer.runtimeQuery;
+  if (replaySeedCycle === undefined) return seed;
+  if (!Number.isSafeInteger(replaySeedCycle) || replaySeedCycle < 2) {
+    throw new Error('replaySeedCycle must be a safe integer of at least two');
+  }
+  if (!/^-?\d+$/.test(seed)) {
+    throw new Error('A replay seed cycle requires an integer base seed');
+  }
+  const baseSeed = Number(seed);
+  if (!Number.isSafeInteger(baseSeed)) {
+    throw new Error('A replay seed cycle requires a safe integer base seed');
+  }
+  const normalizedReplayCount = Number.isFinite(replayCount)
+    ? Math.max(0, Math.trunc(replayCount))
+    : 0;
+  return String(baseSeed + (normalizedReplayCount % replaySeedCycle));
+}
 
 export interface WholeLessonPlayerSection {
   readonly order: number;
@@ -386,6 +415,105 @@ export interface WholeLessonPlayerDescriptor {
   readonly sections: readonly WholeLessonPlayerSection[];
   readonly pages: readonly WholeLessonPlayerPage[];
 }
+
+export interface PageOnlyLessonGlossaryEntry {
+  readonly id: string;
+  readonly sourceKeyAttribute: string;
+  readonly labels: Readonly<Record<WholeLessonPlayerLocale, string>>;
+  readonly definitions: Readonly<Record<WholeLessonPlayerLocale, string>>;
+  readonly source: Readonly<Record<WholeLessonPlayerLocale, Readonly<{
+    assetId: 'ELKTEG4.xml' | 'ELKTSG4.xml';
+    path: string;
+    sha256: string;
+  }>>>;
+}
+
+/**
+ * Private product-bridge descriptor for active lesson-page animations only.
+ *
+ * Unlike the historical whole-lesson release descriptor above, this contract
+ * has no legacy course-shell member. It may drive the retained modern My
+ * Lesson host in a local calibration route, but it has no release or strict-
+ * completion authority.
+ */
+export interface PageOnlyLessonPlayerDescriptor {
+  readonly schemaVersion: 2;
+  readonly descriptorKind: 'private-page-only-product-bridge';
+  readonly descriptorId: string;
+  readonly calibrationId: string;
+  readonly releaseId: string;
+  readonly course: Readonly<{
+    grade: number;
+    lesson: number;
+    href: string;
+    domIdPrefix: string;
+    activePageCount: number;
+    courseShellCount: 0;
+    expectedReleaseMemberCount: number;
+    labels: Readonly<Record<WholeLessonPlayerLocale, SourceBoundLabel>>;
+  }>;
+  readonly source: Readonly<{
+    navigationContractPath: string;
+    sourceXmlPath: string;
+    sourceXmlSha256: string;
+    sequenceAuthority: 'course-xml-occurrence';
+    candidateFreezeManifestPath: string;
+    candidateFreezeManifestSha256: string;
+  }>;
+  readonly persistence: Readonly<{
+    schemaVersion: 1;
+    storageKey: string;
+    scope: 'local-device-only';
+    legacyCompatible: false;
+  }>;
+  readonly stage: Readonly<{width: number; height: number}>;
+  readonly support: Readonly<{
+    locales: readonly WholeLessonPlayerLocale[];
+    rendererRegistrySnapshot: 'current-javascript-module-registry';
+    lessonHostCapabilities: readonly (
+      | 'audio'
+      | 'glossary'
+      | 'practice-feedback'
+    )[];
+  }>;
+  readonly visualSkin: Readonly<{
+    kind: 'modern-my-lesson-page-only';
+    layoutId: 'help-math-modern-my-lesson-page-only-v1';
+    presentations: readonly ['modern-wide'];
+    chromeAsset: '';
+    header: Readonly<{height: 0}>;
+    footer: Readonly<{height: 0}>;
+    controls: Readonly<{
+      kind: 'unresolved-modern-functional-equivalent';
+      reason: string;
+    }>;
+    evidence: Readonly<{
+      kind: 'product-owned-modern-my-lesson';
+      calibrationId: string;
+    }>;
+  }>;
+  readonly glossary: readonly PageOnlyLessonGlossaryEntry[];
+  readonly productBridge: Readonly<{
+    selectedAnimationIds: readonly string[];
+    registeredAnimationCount: number;
+    pageOnlyDescriptorMemberCount: number;
+    acceptanceEffects: Readonly<{
+      authoritativeOriginalRuntime: false;
+      fidelityAccepted: false;
+      audioAccepted: false;
+      humanVisualAccepted: false;
+      ownerAccepted: false;
+      strictComplete: false;
+      published: false;
+    }>;
+  }>;
+  readonly sections: readonly WholeLessonPlayerSection[];
+  readonly pages: readonly WholeLessonPlayerPage[];
+}
+
+export type DescriptorDrivenLessonPlayerDescriptor =
+  | WholeLessonPlayerDescriptor
+  | PageOnlyLessonPlayerDescriptor;
 
 export interface WholeLessonReleaseAuthority {
   readonly releaseId: string;

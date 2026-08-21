@@ -32,8 +32,7 @@ export const COURSE_G04_L10_VB_008_SOURCE = Object.freeze({
 
 export const COURSE_G04_L10_VB_008_CONFIG = Object.freeze({
   animationId: "course-g04-l10-vb-008",
-  title:
-    "Perimeter — fixed-English source-static engineering candidate",
+  title: "Perimeter — private Current-JS glossary engineering bridge",
   sourceSwfSha256: COURSE_G04_L10_VB_008_SOURCE.swfSha256,
   assetSource:
     "/flash-assets/courses/course-g04-l10-vb-008/canvas-renderer.js",
@@ -66,7 +65,7 @@ export const COURSE_G04_L10_VB_008_CONFIG = Object.freeze({
     }),
   ]),
   sourceControlBehaviorLabel:
-    "ActionScript, controls, audio, Spanish visuals, natural runtime, terminal state, Replay, and fidelity are unresolved and disabled",
+    "The source-static core keeps ActionScript disabled; its private maintained wrapper binds the eight exact glossary handlers plus source-exact engineering audio while Spanish visuals, natural runtime, Replay parity, fidelity, and audio acceptance remain unresolved",
 } satisfies SourceStaticCanvasCandidateConfig);
 
 export const COURSE_G04_L10_VB_008_AUTHORITY =

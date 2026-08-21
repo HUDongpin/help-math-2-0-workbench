@@ -125,6 +125,22 @@ import {COURSE_G04_L10_VB_010_CONFIG} from "../src/timelines/course-g04-l10-vb-0
 import {COURSE_G04_L10_VB_011_CONFIG} from "../src/timelines/course-g04-l10-vb-011";
 
 const ENTRY_STATE = "d".repeat(64);
+const privateProductBridgeIds = new Set([
+  "course-g04-l10-ir-001",
+  "course-g04-l10-rw-004",
+  "course-g04-l10-vb-002",
+  "course-g04-l10-vb-003",
+  "course-g04-l10-vb-004",
+  "course-g04-l10-vb-005",
+  "course-g04-l10-vb-008",
+  "course-g04-l10-vb-010",
+  "course-g04-l10-vb-011",
+  "course-g04-l10-ts-002",
+  "course-g04-l10-ts-005",
+  "course-g04-l10-ts-006",
+  "course-g04-l10-fq-001",
+  "course-g04-l10-in-016",
+]);
 const candidates = [
   {
     id: "course-g04-l10-vb-003",
@@ -357,14 +373,38 @@ function context(frameDomain: string, overrides = {}) {
   };
 }
 
-test("twenty-four L10 modules remain fixed-English, audio-empty, inert legacy prototypes", () => {
+test("twenty-four L10 source-static cores remain fixed-English and acceptance-neutral", () => {
   for (const candidate of candidates) {
     assert.equal(candidate.module.key, candidate.id);
-    assert.equal(candidate.module.maturity, "legacy-prototype");
+    assert.equal(
+      candidate.module.maturity,
+      privateProductBridgeIds.has(candidate.id)
+        ? "private-current-js"
+        : "legacy-prototype",
+    );
     assert.equal(candidate.module.runtime?.frameCount, 10);
     assert.equal(candidate.module.runtime?.defaultFrameDomain,
       candidate.frameDomain);
-    assert.deepEqual(candidate.module.audioCues, []);
+    if (candidate.id === "course-g04-l10-ir-001") {
+      assert.equal(candidate.module.audioCues?.length, 2);
+    } else if (
+      candidate.id === "course-g04-l10-ts-006" ||
+      candidate.id === "course-g04-l10-ts-002" ||
+      candidate.id === "course-g04-l10-ts-005" ||
+      candidate.id === "course-g04-l10-rw-004" ||
+      candidate.id === "course-g04-l10-vb-002" ||
+      candidate.id === "course-g04-l10-vb-004" ||
+      candidate.id === "course-g04-l10-vb-005" ||
+      candidate.id === "course-g04-l10-vb-008" ||
+      candidate.id === "course-g04-l10-vb-010" ||
+      candidate.id === "course-g04-l10-vb-011" ||
+      candidate.id === "course-g04-l10-in-016"
+    ) {
+      assert.equal(candidate.module.audioCues?.length, 1);
+      assert.equal(candidate.module.audioTracks?.length, 1);
+    } else {
+      assert.deepEqual(candidate.module.audioCues, []);
+    }
     assert.equal(candidate.config.mainFrameCount, candidate.frameCount);
     assert.equal(candidate.config.mainFrameDomain, candidate.frameDomain);
     assert.deepEqual(candidate.config.blockedFrameRanges, []);
@@ -458,16 +498,29 @@ test("TI003 preserves its exact fractional native stage and 800x600 Canvas backi
   });
 });
 
-test("twenty-four L10 engineering candidates are absent from every product registry", async () => {
-  const registries = await Promise.all([
+test("the private bridge registers only fourteen L10 candidates and no public course", async () => {
+  const publicRegistries = await Promise.all([
     new URL("../prototype-registry.json", import.meta.url),
-    new URL("../src/registry.generated.ts", import.meta.url),
     new URL("../src/prototype-manifest.ts", import.meta.url),
     new URL("../../../apps/web/lib/whole-lesson-course-registry.ts", import.meta.url),
   ].map((url) => readFile(url, "utf8")));
-  for (const source of registries) {
+  for (const source of publicRegistries) {
     for (const candidate of candidates) {
       assert.doesNotMatch(source, new RegExp(candidate.id));
+    }
+  }
+
+  const [generated, privateRegistry] = await Promise.all([
+    readFile(new URL("../src/registry.generated.ts", import.meta.url), "utf8"),
+    readFile(new URL("../private-current-js-registry.json", import.meta.url), "utf8"),
+  ]);
+  for (const candidate of candidates) {
+    if (privateProductBridgeIds.has(candidate.id)) {
+      assert.match(generated, new RegExp(candidate.id));
+      assert.match(privateRegistry, new RegExp(candidate.id));
+    } else {
+      assert.doesNotMatch(generated, new RegExp(candidate.id));
+      assert.doesNotMatch(privateRegistry, new RegExp(candidate.id));
     }
   }
 });

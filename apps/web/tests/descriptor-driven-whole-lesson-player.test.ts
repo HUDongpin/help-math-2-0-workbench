@@ -53,7 +53,7 @@ test('descriptor-driven player never mounts or prefetches unavailable renderers'
   );
   assert.match(
     component,
-    /loadedSwfHostAsset=\{currentPage\.source\.xmlBackgroundText/,
+    /loadedSwfHostAsset=\{descriptor\.schemaVersion === 1 &&\s*currentPage\.source\.xmlBackgroundText/,
   );
   assert.match(
     component,
@@ -137,11 +137,11 @@ test('descriptor-driven player never mounts or prefetches unavailable renderers'
   );
   assert.match(
     component,
-    /Functional audit interface with all \$\{descriptor\.course\.activePageCount\} registered pages and the JavaScript shell/,
+    /Functional audit interface with \$\{registeredPages\.length\}\/\$\{descriptor\.course\.activePageCount\} registered pages and the JavaScript shell candidate/,
   );
   assert.match(
     component,
-    /Interfaz funcional de auditoría con las \$\{descriptor\.course\.activePageCount\} páginas registradas y el shell JavaScript/,
+    /Interfaz funcional de auditoría con \$\{registeredPages\.length\}\/\$\{descriptor\.course\.activePageCount\} páginas registradas y el candidato de shell JavaScript/,
   );
   assert.doesNotMatch(component, /unimplemented pages visible/);
   assert.match(
@@ -275,7 +275,10 @@ test('descriptor-driven player never mounts or prefetches unavailable renderers'
     'product audio language must remain independent from fixed visual English',
   );
   assert.match(component, /createMemoryOnlyLessonHost\(\{/);
-  assert.match(component, /enabledCapabilities: audioEnabled \? \['audio'\] : \[\]/);
+  assert.match(
+    component,
+    /enabledCapabilities: descriptor\.schemaVersion === 2[\s\S]*?: audioEnabled \? \['audio'\] : \[\]/,
+  );
   assert.match(component, /audioEnabled=\{audioEnabled\}/);
   assert.match(component, /onLessonHostRequest=\{handleLessonHostRequest\}/);
   assert.match(animationContract, /readonly audioEnabled\?: boolean;/);

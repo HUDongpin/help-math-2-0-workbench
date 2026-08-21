@@ -1159,8 +1159,9 @@ test('responsive lesson shell preserves the authored stage and separates modern 
     1,
     'one reusable narration control definition serves allowed presentations',
   );
-  // Focus modern-wide intentionally keeps narration out of the primary
-  // toolbar. Other presentations retain the reusable compact placement.
+  // Focus modern-wide hides narration only for pages with no audio surface.
+  // A blocked or playable bridge cue must remain actionable in the toolbar
+  // because Focus also hides the persistent session bar.
   assert.equal(
     shellSource.match(/data-responsive-focus-key="narration"/g)?.length,
     1,
@@ -1178,8 +1179,8 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   );
   assert.match(
     shellSource,
-    /className="lesson-shell2__modern-toolbar"[\s\S]*?\{modernWide && novaTutorMode === 'focus'\s*\?\s*null\s*:\s*<LessonNarrationControl/,
-    'the Focus modern-wide toolbar must not render the book-shaped Read it control',
+    /className="lesson-shell2__modern-toolbar"[\s\S]*?\{modernWide && novaTutorMode === 'focus' &&\s*narrationStatus === 'unavailable'\s*\? null\s*: <LessonNarrationControl/,
+    'Focus modern-wide must hide unavailable narration and keep real audio actionable',
   );
   assert.match(
     shellSource,

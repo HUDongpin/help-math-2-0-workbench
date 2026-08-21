@@ -33,7 +33,7 @@ export const COURSE_G04_L10_RW_004_SOURCE = Object.freeze({
 export const COURSE_G04_L10_RW_004_CONFIG = Object.freeze({
   animationId: "course-g04-l10-rw-004",
   title:
-    "Page 3 — fixed-English source-static engineering candidate",
+    "Perimeter and area — fixed-English source-static engineering candidate",
   sourceSwfSha256: COURSE_G04_L10_RW_004_SOURCE.swfSha256,
   assetSource:
     "/flash-assets/courses/course-g04-l10-rw-004/canvas-renderer.js",
@@ -66,7 +66,7 @@ export const COURSE_G04_L10_RW_004_CONFIG = Object.freeze({
     }),
   ]),
   sourceControlBehaviorLabel:
-    "ActionScript, controls, audio, Spanish visuals, natural runtime, terminal state, Replay, and fidelity are unresolved and disabled",
+    "The source-static core keeps ActionScript disabled; its private maintained wrapper binds the three exact glossary handlers plus source-exact engineering audio while Spanish visuals, natural runtime, Replay parity, fidelity, and audio acceptance remain unresolved",
 } satisfies SourceStaticCanvasCandidateConfig);
 
 export const COURSE_G04_L10_RW_004_AUTHORITY =

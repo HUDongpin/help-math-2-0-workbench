@@ -24,9 +24,10 @@ import {
   type LessonShellTool,
 } from '@/components/legacy-responsive-lesson-shell';
 import type {WholeLessonHostPresentation} from '@/lib/whole-lesson-host-presentation';
-import type {
-  WholeLessonPlayerDescriptor,
-  WholeLessonPlayerLocale,
+import {
+  resolveWholeLessonRuntimeSeed,
+  type DescriptorDrivenLessonPlayerDescriptor,
+  type WholeLessonPlayerLocale,
 } from '@/lib/whole-lesson-player-descriptor';
 import {
   appendLegacyLessonHistory,
@@ -47,9 +48,21 @@ import {
 } from '@/lib/whole-lesson-session';
 
 function visualSkin(
-  descriptor: WholeLessonPlayerDescriptor,
+  descriptor: DescriptorDrivenLessonPlayerDescriptor,
   presentation: WholeLessonHostPresentation,
 ): LegacyLessonShellVisualSkin {
+  if (descriptor.schemaVersion === 2) {
+    return Object.freeze({
+      authoredStage: descriptor.stage,
+      presentation: 'modern-wide',
+      chromeAsset: '',
+      chromeEvidence: descriptor.visualSkin.evidence.kind,
+      chromeFooterHeight: 0,
+      chromeHeaderHeight: 0,
+      controlAssets: descriptor.visualSkin.controls,
+      layoutId: descriptor.visualSkin.layoutId,
+    });
+  }
   return Object.freeze({
     authoredStage: descriptor.stage,
     presentation,
@@ -69,8 +82,11 @@ function visualSkin(
 }
 
 function calculatorEvidence(
-  descriptor: WholeLessonPlayerDescriptor,
+  descriptor: DescriptorDrivenLessonPlayerDescriptor,
 ): LegacyCalculatorEvidence {
+  if (descriptor.schemaVersion === 2) {
+    return Object.freeze({behaviorKind: 'modern-support-only'});
+  }
   return Object.freeze({
     behaviorKind: 'ffdec-actionscript-static-candidate',
     sourceAnimationId: descriptor.visualSkin.evidence.sourceAnimationId,
@@ -93,7 +109,7 @@ export function DescriptorDrivenWholeLessonPlayer({
   audioEnabled?: boolean;
   authStatus?: PublicAuthStatus;
   candidateMode: boolean;
-  descriptor: WholeLessonPlayerDescriptor;
+  descriptor: DescriptorDrivenLessonPlayerDescriptor;
   hostPresentation?: WholeLessonHostPresentation;
   locale: WholeLessonPlayerLocale;
   novaTutorMode?: NovaTutorMode;
@@ -145,28 +161,56 @@ export function DescriptorDrivenWholeLessonPlayer({
   const currentLabel = currentPage.labels[progress.locale];
   const currentRenderer = currentPage.rendererAvailability;
   const runtimeAvailable = currentRenderer.kind === 'registered';
+  const currentRuntimeSeed = resolveWholeLessonRuntimeSeed(
+    currentRenderer,
+    progress.replayCounts[currentPage.animationId] ?? 0,
+  );
   const lessonHost = useMemo(() => createMemoryOnlyLessonHost({
     releaseId: descriptor.releaseId,
     releaseMemberIds: [...new Set(
       descriptor.pages.map((page) => page.animationId),
     )],
     currentAnimationId: currentPage.animationId,
-    enabledCapabilities: audioEnabled ? ['audio'] : [],
+    enabledCapabilities: descriptor.schemaVersion === 2
+      ? descriptor.support.lessonHostCapabilities.filter(
+          (capability) => capability !== 'audio' || audioEnabled,
+        )
+      : audioEnabled ? ['audio'] : [],
     initialLanguage: progress.locale,
     mode: 'audit',
     releasePublished: false,
   }), [audioEnabled, currentPage.animationId, descriptor, progress.locale]);
+  const [, setLessonHostRevision] = useState(0);
+  const lessonHostState = lessonHost.snapshot();
   const handleLessonHostRequest = useCallback((
     request: LessonHostRequest,
-  ): LessonHostDecision => lessonHost.dispatch(request), [lessonHost]);
+  ): LessonHostDecision => {
+    const decision = lessonHost.dispatch(request);
+    setLessonHostRevision((revision) => revision + 1);
+    if (decision.status === 'allowed') {
+      if (request.type === 'open-glossary') setPaused(true);
+      if (request.type === 'close-glossary') setPaused(false);
+    }
+    return decision;
+  }, [lessonHost]);
+  const closeGlossary = useCallback(() => {
+    handleLessonHostRequest({type: 'close-glossary'});
+  }, [handleLessonHostRequest]);
   const reviewed = new Set(progress.reviewedAnimationIds);
   const visited = new Set(progress.visitedAnimationIds);
   const spanish = progress.locale === 'es';
+  const activeGlossaryEntry = descriptor.schemaVersion === 2
+    ? descriptor.glossary.find(
+        (entry) => entry.id === lessonHostState.glossaryEntryId,
+      ) ?? null
+    : null;
   const registeredPages = descriptor.pages.filter(
     (page) => page.rendererAvailability.kind === 'registered',
   );
   const unavailablePageCount = descriptor.pages.length - registeredPages.length;
-  const shellImplementation = descriptor.shellImplementation;
+  const shellImplementation = descriptor.schemaVersion === 1
+    ? descriptor.shellImplementation
+    : undefined;
   const shellCurrentJsCandidate = Boolean(shellImplementation);
   const reviewedRegisteredCount = registeredPages.filter(
     (page) => reviewed.has(page.animationId),
@@ -176,11 +220,11 @@ export function DescriptorDrivenWholeLessonPlayer({
     : 0;
   const requiredMemberCount =
     descriptor.course.expectedReleaseMemberCount;
-  const strictCompletion =
+  const strictCompletion = descriptor.schemaVersion === 1 &&
     strictCompleteMemberCount === requiredMemberCount;
   const currentJsCandidate =
     registeredPages.length === descriptor.course.activePageCount &&
-    shellCurrentJsCandidate;
+    (descriptor.schemaVersion === 2 || shellCurrentJsCandidate);
   const pagesBySection = useMemo(() => Object.fromEntries(
     descriptor.sections.map((section) => [
       section.code,
@@ -500,7 +544,31 @@ export function DescriptorDrivenWholeLessonPlayer({
       </li>;
     })}
   </ol>;
-  const keyTermsPanel = shellImplementation
+  const keyTermsPanel = descriptor.schemaVersion === 2
+    ? <div
+        className="lesson-shell2__key-terms"
+        data-key-terms-authority="canonical-grade-four-master-xml"
+      >
+        <p>{spanish
+          ? 'Este puente privado usa únicamente las tres definiciones bilingües exactas solicitadas por VB003.'
+          : 'This private bridge uses only the three exact bilingual definitions requested by VB003.'}</p>
+        <dl>
+          {descriptor.glossary.map((entry) => <div key={entry.id}>
+            <dt>{entry.labels[progress.locale]}</dt>
+            <dd>{entry.definitions[progress.locale]}</dd>
+          </div>)}
+        </dl>
+        <small>{spanish
+          ? 'Fuente ligada por SHA-256: ELKTSG4.xml.'
+          : 'Source bound by SHA-256: ELKTEG4.xml.'}</small>
+        <details>
+          <summary>{spanish
+            ? 'Ver las páginas de Palabras importantes de la lección'
+            : 'View lesson Important Words pages'}</summary>
+          {vocabularyPageList}
+        </details>
+      </div>
+    : shellImplementation
     ? <div
         className="lesson-shell2__key-terms"
         data-key-terms-shell-candidate="source-static-master-dependency"
@@ -578,7 +646,8 @@ export function DescriptorDrivenWholeLessonPlayer({
             : 'This lesson module is unavailable.',
           loading: spanish ? 'Cargando página…' : 'Loading page…',
         }}
-        loadedSwfHostAsset={currentPage.source.xmlBackgroundText
+        loadedSwfHostAsset={descriptor.schemaVersion === 1 &&
+          currentPage.source.xmlBackgroundText
           ? descriptor.visualSkin.backgroundCompanion?.loadedSwfHostAsset
           : undefined}
         moduleKey={currentRenderer.moduleKey}
@@ -600,7 +669,7 @@ export function DescriptorDrivenWholeLessonPlayer({
           frameDomain: currentRenderer.runtimeQuery?.frameDomain,
           lang: runtimeLanguage,
           scenario: currentRenderer.runtimeQuery?.scenario,
-          seed: currentRenderer.runtimeQuery?.seed ?? '0',
+          seed: currentRuntimeSeed,
         }}
         seekRequest={seekRequest}
         uiLanguage={progress.locale}
@@ -625,6 +694,30 @@ export function DescriptorDrivenWholeLessonPlayer({
           <code>{currentPage.animationId}</code>
         </div>
       </section>;
+
+  const glossaryOverlay = activeGlossaryEntry
+    ? <section
+        aria-labelledby={`${descriptor.course.domIdPrefix}-glossary-title`}
+        aria-modal="true"
+        className="lesson-shell2__page-only-glossary"
+        data-glossary-entry-id={activeGlossaryEntry.id}
+        data-glossary-storage="memory-only"
+        data-source-key-attribute={activeGlossaryEntry.sourceKeyAttribute}
+        data-source-sha256={activeGlossaryEntry.source[progress.locale].sha256}
+        role="dialog"
+      >
+        <div>
+          <p>{spanish ? 'Glosario' : 'Glossary'}</p>
+          <h2 id={`${descriptor.course.domIdPrefix}-glossary-title`}>
+            {activeGlossaryEntry.labels[progress.locale]}
+          </h2>
+          <p>{activeGlossaryEntry.definitions[progress.locale]}</p>
+          <button autoFocus onClick={closeGlossary} type="button">
+            {spanish ? 'Cerrar y continuar' : 'Close and continue'}
+          </button>
+        </div>
+      </section>
+    : undefined;
 
   const helpPanel = <div className="lesson-shell2__help">
     <p>{spanish
@@ -685,7 +778,9 @@ export function DescriptorDrivenWholeLessonPlayer({
     data-current-animation-id={currentPage.animationId}
     data-current-page={currentPage.globalPageOrdinal}
     data-hydrated={hydrated ? 'true' : 'false'}
-    data-lesson-player="descriptor-driven-whole-lesson-audit"
+    data-lesson-player={descriptor.schemaVersion === 2
+      ? 'descriptor-driven-page-only-product-bridge'
+      : 'descriptor-driven-whole-lesson-audit'}
     data-progress-kind="learner-session"
     data-progress-storage="local-device-only"
     data-renderer-availability={currentRenderer.kind}
@@ -786,6 +881,9 @@ export function DescriptorDrivenWholeLessonPlayer({
       onPrevious={() =>
         previousPage && selectPage(previousPage.animationId)}
       onReplay={replayCurrentPage}
+      onStageOverlayControlIntent={activeGlossaryEntry
+        ? closeGlossary
+        : undefined}
       onToolChange={setActiveTool}
       onVolumeChange={setVolume}
       pageComplete={runtimeAvailable && reviewed.has(currentPage.animationId)}
@@ -811,15 +909,21 @@ export function DescriptorDrivenWholeLessonPlayer({
       }}
       runtimeAvailable={runtimeAvailable}
       stage={stage}
+      stageOverlay={glossaryOverlay}
+      stageOverlayControlsEnabled={Boolean(activeGlossaryEntry)}
       status={<>
         <div>
           <p>
             <strong>{spanish
               ? 'Estado del paquete:'
               : 'Package status:'}</strong>{' '}
-            {spanish
-              ? `Interfaz funcional de auditoría con las ${descriptor.course.activePageCount} páginas registradas y el shell JavaScript; no es una declaración de fidelidad estricta ni de publicación.`
-              : `Functional audit interface with all ${descriptor.course.activePageCount} registered pages and the JavaScript shell; this is not a strict-fidelity or publication claim.`}
+            {descriptor.schemaVersion === 2
+              ? spanish
+                ? `Puente privado page-only: ${registeredPages.length}/${descriptor.course.activePageCount} páginas registradas en el host moderno My Lesson; no es una declaración de fidelidad estricta ni de publicación.`
+                : `Private page-only bridge: ${registeredPages.length}/${descriptor.course.activePageCount} pages registered in the modern My Lesson host; this is not a strict-fidelity or publication claim.`
+              : spanish
+                ? `Interfaz funcional de auditoría con ${registeredPages.length}/${descriptor.course.activePageCount} páginas registradas y el candidato de shell JavaScript; no es una declaración de fidelidad estricta ni de publicación.`
+                : `Functional audit interface with ${registeredPages.length}/${descriptor.course.activePageCount} registered pages and the JavaScript shell candidate; this is not a strict-fidelity or publication claim.`}
           </p>
           <p>{spanish
             ? 'La fidelidad de ejecución original, el audio, la comparación visual, la revisión humana y la aceptación del propietario siguen siendo puertas independientes.'

@@ -61,6 +61,9 @@ function isReferencePath(pathname: string) {
 }
 
 function isArchivePath(pathname: string, request: NextRequest) {
+  if (pathname === '/migration-status/g4-l10-product-bridge') {
+    return process.env.NODE_ENV !== 'production';
+  }
   if (pathname === '/migration-status') {
     return isMigrationStatusAvailable()
       && isMigrationStatusDesignerViewRequested(
