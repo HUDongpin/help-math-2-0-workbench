@@ -62,50 +62,70 @@ async function privateCurrentJsEntries() {
   const document = await readJson(
     path.join(packageRoot, 'private-current-js-registry.json'),
   );
-  if (
-    document.schemaVersion !== 1 ||
-    document.registryScope !== 'private-engineering' ||
-    typeof document.calibrationId !== 'string' ||
-    !document.calibrationId ||
-    typeof document.freezeManifest !== 'string' ||
-    !document.freezeManifest.startsWith('catalog/product-bridge-calibrations/') ||
-    !Array.isArray(document.entries)
-  ) {
+  const calibrations = document.schemaVersion === 1 &&
+      document.registryScope === 'private-engineering'
+    ? [document]
+    : document.schemaVersion === 2 &&
+        document.registryScope === 'private-engineering' &&
+        Array.isArray(document.calibrations)
+      ? document.calibrations
+      : null;
+  if (!calibrations || calibrations.length === 0) {
     throw new Error(
-      'private-current-js-registry.json must bind a schemaVersion 1 private-engineering calibration and entries array',
+      'private-current-js-registry.json must bind one or more private-engineering calibrations',
     );
   }
-  const freeze = await readJson(
-    path.join(repositoryRoot, document.freezeManifest),
-  );
-  if (
-    freeze.schemaVersion !== 1 ||
-    freeze.calibrationId !== document.calibrationId ||
-    !Array.isArray(freeze.selectedPages)
-  ) {
-    throw new Error('private Current-JS registry freeze manifest is invalid');
-  }
-  const selected = new Map(
-    freeze.selectedPages.map((page) => [
-      page?.animationId,
-      page?.complexityLane,
-    ]),
-  );
-  return document.entries.map((entry) => {
+  const calibrationIds = new Set();
+  const output = [];
+  for (const calibration of calibrations) {
     if (
-      entry?.maturity !== 'private-current-js' ||
-      selected.get(entry?.key) !== entry?.complexityLane
+      typeof calibration?.calibrationId !== 'string' ||
+      !calibration.calibrationId ||
+      typeof calibration.freezeManifest !== 'string' ||
+      !calibration.freezeManifest.startsWith(
+        'catalog/product-bridge-calibrations/',
+      ) ||
+      !Array.isArray(calibration.entries) ||
+      calibrationIds.has(calibration.calibrationId)
     ) {
       throw new Error(
-        `Private registry entry is not frozen by ${document.calibrationId}: ${entry?.key}`,
+        'private Current-JS calibration identity, freeze, or entries are invalid',
       );
     }
-    return {
-      ...entry,
-      scope: 'private-engineering',
-      calibrationId: document.calibrationId,
-    };
-  });
+    calibrationIds.add(calibration.calibrationId);
+    const freeze = await readJson(
+      path.join(repositoryRoot, calibration.freezeManifest),
+    );
+    if (
+      freeze.schemaVersion !== 1 ||
+      freeze.calibrationId !== calibration.calibrationId ||
+      !Array.isArray(freeze.selectedPages)
+    ) {
+      throw new Error('private Current-JS registry freeze manifest is invalid');
+    }
+    const selected = new Map(
+      freeze.selectedPages.map((page) => [
+        page?.animationId,
+        page?.complexityLane,
+      ]),
+    );
+    for (const entry of calibration.entries) {
+      if (
+        entry?.maturity !== 'private-current-js' ||
+        selected.get(entry?.key) !== entry?.complexityLane
+      ) {
+        throw new Error(
+          `Private registry entry is not frozen by ${calibration.calibrationId}: ${entry?.key}`,
+        );
+      }
+      output.push({
+        ...entry,
+        scope: 'private-engineering',
+        calibrationId: calibration.calibrationId,
+      });
+    }
+  }
+  return output;
 }
 
 export async function buildRegistrySource() {
@@ -146,8 +166,9 @@ export async function buildRegistrySource() {
       throw new Error(`Registry module does not exist for ${entry.key}: ${entry.module}`);
     }
   }
-  const loaders = entries.map((entry) =>
-    `  '${entry.key}': () => import('${entry.module}').then(({default: animationModule}) => animationModule)`
+  const loaders = entries.map((entry) => entry.scope === 'private-engineering'
+    ? `  '${entry.key}': () => import('${entry.module}').then(({default: animationModule}) => Object.freeze({...animationModule, maturity: 'private-current-js' as const}))`
+    : `  '${entry.key}': () => import('${entry.module}').then(({default: animationModule}) => animationModule)`
   );
   const registrations = entries.map((entry) =>
     `  '${entry.key}': Object.freeze({maturity: '${entry.maturity}', scope: '${entry.scope}'${entry.calibrationId ? `, calibrationId: '${entry.calibrationId}'` : ''}})`
@@ -158,6 +179,7 @@ export async function buildRegistrySource() {
     '',
     'export type AnimationModuleLoader = () => Promise<AnimationModule>;',
     "export type AnimationRegistryScope = 'prototype' | 'private-engineering' | 'strict-ledger';",
+    'export type AnimationModuleRegistrationScope = AnimationRegistryScope;',
     'export interface AnimationModuleRegistration {',
     "  readonly maturity: AnimationModule['maturity'];",
     '  readonly scope: AnimationRegistryScope;',

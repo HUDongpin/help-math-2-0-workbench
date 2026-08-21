@@ -116,7 +116,13 @@ export interface AudioTrack {
  */
 export interface InteractiveAudioAsset {
   readonly id: string;
-  readonly language: AnimationLanguage;
+  /**
+   * One exact source file may be available to both locale views while its
+   * spoken language remains unestablished. This exposes byte identity only;
+   * it does not grant language or listening acceptance.
+   */
+  readonly language: AnimationLanguage | 'shared';
+  readonly spokenLanguage?: 'undetermined';
   readonly source: string;
   readonly sha256: string;
 }

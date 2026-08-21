@@ -173,6 +173,7 @@ export interface FinalQuizFunctionalRendererConfig {
   readonly createInteractionState: (
     seed?: number,
   ) => CourseG04L03Fq002InteractionState;
+  readonly functionalEntryFrame: number;
   readonly functionalHostFrameEnd: number;
   readonly functionalScope: string;
   readonly getReviewItem: (
@@ -182,9 +183,12 @@ export interface FinalQuizFunctionalRendererConfig {
     state: CourseG04L03Fq002InteractionState,
     action: CourseG04L03Fq002InteractionAction,
   ) => CourseG04L03Fq002InteractionState;
+  readonly resultsDonorFrame: number;
   readonly sourceCandidate: ReturnType<
     typeof createSourceStaticCanvasCandidate
   >;
+  readonly sourceDomain: string;
+  readonly sourceScenario: string;
   readonly resultsGradeLabel: string;
 }
 
@@ -300,6 +304,7 @@ function SourceSymbolTarget({
 
 function sourceFrameForInteraction(
   interaction: CourseG04L03Fq002InteractionState,
+  resultsDonorFrame: number,
 ) {
   if (
     interaction.phase === "question"
@@ -313,7 +318,7 @@ function sourceFrameForInteraction(
   ) {
     return interaction.reviewFrame;
   }
-  return RESULTS_DONOR_FRAME;
+  return resultsDonorFrame;
 }
 
 function focusTargetForInteraction(
@@ -993,12 +998,16 @@ function DisabledSourceIntegrations() {
 export function createCourseG04L03FinalQuizFunctionalRenderer({
   animationId,
   createInteractionState,
+  functionalEntryFrame,
   functionalHostFrameEnd,
   functionalScope,
   getReviewItem,
   reduceInteraction,
+  resultsDonorFrame,
   resultsGradeLabel,
   sourceCandidate,
+  sourceDomain,
+  sourceScenario,
 }: FinalQuizFunctionalRendererConfig) {
   const SourceStaticRenderer = sourceCandidate.Renderer;
 
@@ -1022,18 +1031,18 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
   const lastFocusedControlRef = useRef<string | null>(null);
   const answerTransitionLockRef = useRef(false);
 
-  const requestedFrameDomain = props.frameDomain ?? SOURCE_DOMAIN;
+  const requestedFrameDomain = props.frameDomain ?? sourceDomain;
   const deterministicEvidenceCapture =
     isDeterministicEvidenceCapture(props);
   const interactionEnabled =
-    props.frame >= FUNCTIONAL_ENTRY_FRAME
+    props.frame >= functionalEntryFrame
     && props.frame <= functionalHostFrameEnd
-    && requestedFrameDomain === SOURCE_DOMAIN
-    && props.scenario === SOURCE_SCENARIO
+    && requestedFrameDomain === sourceDomain
+    && props.scenario === sourceScenario
     && props.lang === "en"
     && !deterministicEvidenceCapture;
   const sourceVisualFrame = interactionEnabled
-    ? sourceFrameForInteraction(interaction)
+    ? sourceFrameForInteraction(interaction, resultsDonorFrame)
     : props.frame;
   const donorSourceVisualState = useMemo(
     () =>
@@ -1326,10 +1335,10 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
       data-current-js-controls-enabled={interactionEnabled ? "true" : "false"}
       data-current-js-controls-ready={controlsReady ? "true" : "false"}
       data-current-js-functional-entry={
-        `${SOURCE_DOMAIN}:${FUNCTIONAL_ENTRY_FRAME}:${SOURCE_SCENARIO}:en`
+        `${sourceDomain}:${functionalEntryFrame}:${sourceScenario}:en`
       }
       data-current-js-functional-host-frame-window={
-        `${FUNCTIONAL_ENTRY_FRAME}-${functionalHostFrameEnd}`
+        `${functionalEntryFrame}-${functionalHostFrameEnd}`
       }
       data-current-js-functional-scope={functionalScope}
       data-final-quiz-animation-id={animationId}
@@ -1894,12 +1903,16 @@ export const CourseG04L03Fq002Renderer =
   createCourseG04L03FinalQuizFunctionalRenderer({
     animationId: "course-g04-l03-fq-002",
     createInteractionState: createCourseG04L03Fq002InteractionState,
+    functionalEntryFrame: FUNCTIONAL_ENTRY_FRAME,
     functionalHostFrameEnd: FUNCTIONAL_ENTRY_FRAME,
     functionalScope: "fq002-ten-question-source-bound-final-quiz",
     getReviewItem: getCourseG04L03Fq002ReviewItem,
     reduceInteraction: reduceCourseG04L03Fq002Interaction,
+    resultsDonorFrame: RESULTS_DONOR_FRAME,
     resultsGradeLabel: "Performance level",
     sourceCandidate: candidate,
+    sourceDomain: SOURCE_DOMAIN,
+    sourceScenario: SOURCE_SCENARIO,
   });
 
 export {COURSE_G04_L03_FQ_002_SOURCE};

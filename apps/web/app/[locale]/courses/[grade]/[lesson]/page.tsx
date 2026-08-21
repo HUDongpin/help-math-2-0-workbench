@@ -59,12 +59,22 @@ export default async function CoursePage({
   const complete = completeAnimations(catalog);
   const published = publishedAnimations(catalog);
 
-  const releaseDescriptor = findLessonNavigationForRoute(
-    catalog,
+  const courseRegistration = findWholeLessonCourseRegistration(grade, lessonNumber);
+  const pageOnlyNavigation = findPageOnlyCurrentJsNavigationForRoute(
     grade,
     lessonNumber,
-  ) ?? findPageOnlyCurrentJsNavigationForRoute(grade, lessonNumber);
-  const courseRegistration = findWholeLessonCourseRegistration(grade, lessonNumber);
+  );
+  // A formal schema-2 course must bind to its page-only product manifest even
+  // when a superseded shell-inclusive lesson ledger still exists for the same
+  // grade/lesson. The retained modern My Lesson host is not a legacy shell
+  // member and must not be cross-bound to that historical denominator.
+  const releaseDescriptor = courseRegistration?.descriptor.schemaVersion === 2
+    ? pageOnlyNavigation
+    : findLessonNavigationForRoute(
+        catalog,
+        grade,
+        lessonNumber,
+      ) ?? pageOnlyNavigation;
   const protectedReleaseId = protectedAtomicReleaseIdForScope(Number(grade), lessonNumber);
   if (!releaseDescriptor && protectedReleaseId) notFound();
   if (courseRegistration) {

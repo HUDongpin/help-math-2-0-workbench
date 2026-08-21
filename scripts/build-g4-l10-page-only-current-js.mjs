@@ -12,6 +12,11 @@ import {
 import path from "node:path";
 import {fileURLToPath} from "node:url";
 
+import {
+  privateCurrentJsCalibrationMatches,
+  upsertPrivateCurrentJsCalibration,
+} from "./private-current-js-registry.mjs";
+
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const GENERATOR_PATH = "scripts/build-g4-l10-page-only-current-js.mjs";
 const RELEASE_CATALOG_PATH = "catalog/lesson-releases.json";
@@ -174,12 +179,13 @@ function sourceLabels(section) {
 
 async function build({check = false} = {}) {
   const [releaseCatalog, lessons, predecessor, predecessorBinding,
-    generatorBinding] = await Promise.all([
+    generatorBinding, registryBefore] = await Promise.all([
     readJson(RELEASE_CATALOG_PATH),
     readJson(LESSONS_PATH),
     readJson(PREDECESSOR_FREEZE_PATH),
     bind(PREDECESSOR_FREEZE_PATH),
     bind(GENERATOR_PATH),
+    readJson(PRIVATE_REGISTRY_PATH),
   ]);
   const release = releaseCatalog.releases?.find(({releaseId}) =>
     releaseId === RELEASE_ID);
@@ -341,9 +347,7 @@ async function build({check = false} = {}) {
   await synchronize(FREEZE_PATH, freezeBytes, check);
   const freezeSha256 = sha256(freezeBytes);
 
-  const privateRegistry = {
-    schemaVersion: 1,
-    registryScope: "private-engineering",
+  const privateCalibration = {
     calibrationId: CALIBRATION_ID,
     freezeManifest: FREEZE_PATH,
     entries: pages.map((page) => ({
@@ -353,7 +357,21 @@ async function build({check = false} = {}) {
       complexityLane: page.complexityLane,
     })),
   };
-  await synchronize(PRIVATE_REGISTRY_PATH, jsonBytes(privateRegistry), check);
+  if (check) {
+    invariant(
+      privateCurrentJsCalibrationMatches(registryBefore, privateCalibration),
+      `${PRIVATE_REGISTRY_PATH}: ${CALIBRATION_ID} is stale or absent`,
+    );
+  } else {
+    await synchronize(
+      PRIVATE_REGISTRY_PATH,
+      jsonBytes(upsertPrivateCurrentJsCalibration(
+        registryBefore,
+        privateCalibration,
+      )),
+      false,
+    );
+  }
 
   const data = {
     schemaVersion: 1,

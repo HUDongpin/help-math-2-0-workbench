@@ -7,6 +7,7 @@ import {
 export type {
   AnimationModuleLoader,
   AnimationModuleRegistration,
+  AnimationModuleRegistrationScope,
   AnimationRegistryScope,
 } from './registry.generated';
 export type {AnimationModule, AnimationRendererProps} from './contract';
@@ -17,6 +18,8 @@ export const privateRegisteredAnimationKeys = Object.freeze(
     (key) => animationModuleRegistrations[key]?.scope === 'private-engineering',
   ),
 );
+export const registeredPrivateCurrentJsAnimationKeys =
+  privateRegisteredAnimationKeys;
 
 export function animationModuleRegistration(key: string) {
   return animationModuleRegistrations[key];

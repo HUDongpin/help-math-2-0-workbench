@@ -29,12 +29,16 @@ export const CourseG04L03Fq003Renderer =
   createCourseG04L03FinalQuizFunctionalRenderer({
     animationId: "course-g04-l03-fq-003",
     createInteractionState: createCourseG04L03Fq003InteractionState,
+    functionalEntryFrame: FUNCTIONAL_ENTRY_FRAME,
     functionalHostFrameEnd: 43,
     functionalScope: "fq003-sequential-twenty-five-source-bound-final-quiz",
     getReviewItem: getCourseG04L03Fq003ReviewItem,
     reduceInteraction: reduceCourseG04L03Fq003Interaction,
+    resultsDonorFrame: 43,
     resultsGradeLabel: "Legacy source performance level",
     sourceCandidate: candidate,
+    sourceDomain: SOURCE_DOMAIN,
+    sourceScenario: SOURCE_SCENARIO,
   });
 
 export {COURSE_G04_L03_FQ_003_SOURCE};

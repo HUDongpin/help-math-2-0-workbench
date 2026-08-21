@@ -66,7 +66,7 @@ export interface CourseG04L03Fq002Response {
 
 export interface CourseG04L03Fq002Results {
   readonly score: number;
-  readonly total: 10 | 25;
+  readonly total: number;
   readonly wrong: number;
   readonly grade: CourseG04L03Fq002Grade;
 }

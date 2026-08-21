@@ -11,6 +11,9 @@ import {
 import {
   currentJsShowcasePublication,
   G3_L2_SHOWCASE_RELEASE_ID,
+  G4_L5_PAGE_ONLY_RELEASE_ID,
+  G4_L10_PAGE_ONLY_RELEASE_ID,
+  G4_L11_PAGE_ONLY_RELEASE_ID,
   G5_L3_SHOWCASE_RELEASE_ID,
   G5_L4_SHOWCASE_RELEASE_ID,
   G5_L5_SHOWCASE_RELEASE_ID,
@@ -55,6 +58,9 @@ const publicPaths = new Set([
 
 const showcaseReleaseIdByCoursePath = Object.freeze({
   '/courses/3/2': G3_L2_SHOWCASE_RELEASE_ID,
+  '/courses/4/5': G4_L5_PAGE_ONLY_RELEASE_ID,
+  '/courses/4/10': G4_L10_PAGE_ONLY_RELEASE_ID,
+  '/courses/4/11': G4_L11_PAGE_ONLY_RELEASE_ID,
   '/courses/5/3': G5_L3_SHOWCASE_RELEASE_ID,
   '/courses/5/4': G5_L4_SHOWCASE_RELEASE_ID,
   '/courses/5/5': G5_L5_SHOWCASE_RELEASE_ID,
@@ -75,7 +81,11 @@ function isReferencePath(pathname: string) {
 }
 
 function isArchivePath(pathname: string, request: NextRequest) {
-  if (pathname === '/migration-status/g4-l10-product-bridge') {
+  if (
+    pathname === '/migration-status/g4-l5-product-bridge' ||
+    pathname === '/migration-status/g4-l10-product-bridge' ||
+    pathname === '/migration-status/g4-l11-migration-factory'
+  ) {
     return process.env.NODE_ENV !== 'production';
   }
   if (pathname === '/migration-status') {
@@ -87,6 +97,9 @@ function isArchivePath(pathname: string, request: NextRequest) {
   if (pathname === '/courses/4/3') return true;
   const showcaseReleaseId = showcaseReleaseIdByCoursePath[pathname as
     | '/courses/3/2'
+    | '/courses/4/5'
+    | '/courses/4/10'
+    | '/courses/4/11'
     | '/courses/5/3'
     | '/courses/5/4'
     | '/courses/5/5'];

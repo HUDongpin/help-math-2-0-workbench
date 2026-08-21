@@ -14,7 +14,7 @@ export const G4_L10_PAGE_ONLY_CURRENT_JS = Object.freeze({
   },
   "freeze": {
     "path": "catalog/product-bridge-calibrations/g4-l10-page-only-current-js-46-v1.json",
-    "sha256": "07c7a98db33ee83c372dcfe784c459a0325806511c942160e96ab653569f2c7a"
+    "sha256": "bf7e43e71e0e25d19fedadc5b369aafdb34ba38f50a62ca4bd742aa99581de02"
   },
   "sections": [
     {

@@ -5,6 +5,8 @@ import {
   G5_L5_SHOWCASE_RELEASE_ID,
   type CurrentJsShowcaseEnvironment,
 } from './current-js-showcase-publication';
+import {G4_PAGE_ONLY_RELEASE_METADATA} from
+  './g4-page-only-release-metadata.generated';
 
 /**
  * Exact public runtime-directory closure for the page-only lessons whose
@@ -12,8 +14,13 @@ import {
  * Keeping every directory explicit prevents an enabled lesson from exposing
  * another lesson, a future draft package, or a legacy Flash course shell.
  */
-export const PAGE_ONLY_CURRENT_JS_SHOWCASE_ASSET_DIRECTORIES_BY_RELEASE =
+export const PAGE_ONLY_CURRENT_JS_SHOWCASE_ASSET_DIRECTORIES_BY_RELEASE:
+Readonly<Record<string, readonly string[]>> =
   Object.freeze({
+    ...Object.fromEntries(G4_PAGE_ONLY_RELEASE_METADATA.map((release) => [
+      release.releaseId,
+      Object.freeze([...release.assetDirectories]),
+    ])),
     [G3_L2_SHOWCASE_RELEASE_ID]: Object.freeze([
       'course-g03-l02-fq-001',
       'course-g03-l02-fq-002',
@@ -210,7 +217,7 @@ export const PAGE_ONLY_CURRENT_JS_SHOWCASE_ASSET_DIRECTORIES_BY_RELEASE =
       'course-g05-l05-vb-013',
       'course-g05-l05-vb-014',
     ]),
-  } as const);
+  });
 
 type PageOnlyShowcaseReleaseId = keyof
   typeof PAGE_ONLY_CURRENT_JS_SHOWCASE_ASSET_DIRECTORIES_BY_RELEASE;

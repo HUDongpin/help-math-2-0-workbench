@@ -1,3 +1,9 @@
+import {
+  G4_L5_PAGE_ONLY_RELEASE_ID,
+  G4_L10_PAGE_ONLY_RELEASE_ID,
+  G4_L11_PAGE_ONLY_RELEASE_ID,
+} from './g4-page-only-release-metadata.generated';
+
 /**
  * Explicit public-product authorization for a runnable current-JavaScript
  * lesson that has not passed the separate strict Flash-migration release gate.
@@ -17,10 +23,18 @@ export const G5_L4_SHOWCASE_RELEASE_ID =
   'lesson-g05-l04-number-lines';
 export const G5_L5_SHOWCASE_RELEASE_ID =
   'lesson-g05-l05-add-subtract-negative-numbers';
+export {
+  G4_L5_PAGE_ONLY_RELEASE_ID,
+  G4_L10_PAGE_ONLY_RELEASE_ID,
+  G4_L11_PAGE_ONLY_RELEASE_ID,
+};
 
 const SHOWCASE_ENVIRONMENT_KEY_BY_RELEASE = Object.freeze({
   [G3_L2_SHOWCASE_RELEASE_ID]: 'CURRENT_JS_SHOWCASE_G3_L2_ENABLED',
   [G4_L3_SHOWCASE_RELEASE_ID]: 'CURRENT_JS_SHOWCASE_G4_L3_ENABLED',
+  [G4_L5_PAGE_ONLY_RELEASE_ID]: 'CURRENT_JS_SHOWCASE_G4_L5_ENABLED',
+  [G4_L10_PAGE_ONLY_RELEASE_ID]: 'CURRENT_JS_SHOWCASE_G4_L10_ENABLED',
+  [G4_L11_PAGE_ONLY_RELEASE_ID]: 'CURRENT_JS_SHOWCASE_G4_L11_ENABLED',
   [G5_L3_SHOWCASE_RELEASE_ID]: 'CURRENT_JS_SHOWCASE_G5_L3_ENABLED',
   [G5_L4_SHOWCASE_RELEASE_ID]: 'CURRENT_JS_SHOWCASE_G5_L4_ENABLED',
   [G5_L5_SHOWCASE_RELEASE_ID]: 'CURRENT_JS_SHOWCASE_G5_L5_ENABLED',

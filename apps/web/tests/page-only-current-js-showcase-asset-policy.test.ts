@@ -7,6 +7,9 @@ import {NextRequest} from 'next/server';
 
 import {
   G3_L2_SHOWCASE_RELEASE_ID,
+  G4_L5_PAGE_ONLY_RELEASE_ID,
+  G4_L10_PAGE_ONLY_RELEASE_ID,
+  G4_L11_PAGE_ONLY_RELEASE_ID,
   G5_L3_SHOWCASE_RELEASE_ID,
   G5_L5_SHOWCASE_RELEASE_ID,
 } from '../lib/current-js-showcase-publication';
@@ -44,6 +47,27 @@ async function withEnvironment<T>(
 
 const scopes = Object.freeze([
   Object.freeze({
+    directoryPrefix: 'course-g04-l05-',
+    environmentKey: 'CURRENT_JS_SHOWCASE_G4_L5_ENABLED',
+    expectedDirectories: 51,
+    releaseId: G4_L5_PAGE_ONLY_RELEASE_ID,
+    route: '/courses/4/5',
+  }),
+  Object.freeze({
+    directoryPrefix: 'course-g04-l10-',
+    environmentKey: 'CURRENT_JS_SHOWCASE_G4_L10_ENABLED',
+    expectedDirectories: 46,
+    releaseId: G4_L10_PAGE_ONLY_RELEASE_ID,
+    route: '/courses/4/10',
+  }),
+  Object.freeze({
+    directoryPrefix: 'course-g04-l11-',
+    environmentKey: 'CURRENT_JS_SHOWCASE_G4_L11_ENABLED',
+    expectedDirectories: 42,
+    releaseId: G4_L11_PAGE_ONLY_RELEASE_ID,
+    route: '/courses/4/11',
+  }),
+  Object.freeze({
     directoryPrefix: 'course-g03-l02-',
     environmentKey: 'CURRENT_JS_SHOWCASE_G3_L2_ENABLED',
     expectedDirectories: 70,
@@ -66,7 +90,7 @@ const scopes = Object.freeze([
   }),
 ]);
 
-test('page-only showcase policy binds exactly the 190 registered runtime directories', async () => {
+test('page-only showcase policy binds exactly the 329 registered runtime directories', async () => {
   const courseAssetsRoot = path.join(
     webRoot,
     'public/flash-assets/courses',
@@ -80,8 +104,8 @@ test('page-only showcase policy binds exactly the 190 registered runtime directo
   const allPolicyDirectories = Object.values(
     PAGE_ONLY_CURRENT_JS_SHOWCASE_ASSET_DIRECTORIES_BY_RELEASE,
   ).flat();
-  assert.equal(allPolicyDirectories.length, 190);
-  assert.equal(new Set(allPolicyDirectories).size, 190);
+  assert.equal(allPolicyDirectories.length, 329);
+  assert.equal(new Set(allPolicyDirectories).size, 329);
 
   for (const scope of scopes) {
     const policyDirectories = [

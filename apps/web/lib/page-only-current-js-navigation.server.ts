@@ -1,15 +1,33 @@
 import productReleaseDocument from '../../../catalog/page-only-current-js-product-releases.json' with {type: 'json'};
 
+import {G4_PAGE_ONLY_COURSE_DESCRIPTORS} from
+  './g4-page-only-course-descriptors.server';
 import {G5_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR} from './g5-l3-whole-lesson-player-descriptor';
 import type {PageOnlyLessonNavigationDescriptor} from './lesson-navigation';
+import type {PageOnlyLessonPlayerDescriptor} from
+  './whole-lesson-player-descriptor';
 
 type ProductRelease =
   (typeof productReleaseDocument.releases)[number];
 
+const pageOnlyDescriptors = [
+  ...G4_PAGE_ONLY_COURSE_DESCRIPTORS,
+  G5_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR,
+].filter(
+  (descriptor): descriptor is PageOnlyLessonPlayerDescriptor =>
+    descriptor !== undefined,
+);
+const pageOnlyDescriptorByReleaseId =
+  new Map<string, PageOnlyLessonPlayerDescriptor>(
+    pageOnlyDescriptors.map((descriptor) =>
+      [descriptor.releaseId, descriptor] as const
+    ),
+  );
+
 function buildNavigation(
   release: ProductRelease,
 ): PageOnlyLessonNavigationDescriptor | undefined {
-  const descriptor = G5_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR;
+  const descriptor = pageOnlyDescriptorByReleaseId.get(release.releaseId);
   if (
     !descriptor ||
     productReleaseDocument.schemaVersion !== 1 ||
