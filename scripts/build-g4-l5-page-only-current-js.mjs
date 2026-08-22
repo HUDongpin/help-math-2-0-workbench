@@ -11,6 +11,10 @@ import {
   privateCurrentJsCalibrationMatches,
   upsertPrivateCurrentJsCalibration,
 } from "./private-current-js-registry.mjs";
+import {
+  currentJsCandidateEvidencePath,
+  separatedCurrentJsCandidateStoragePath,
+} from "./current-js-candidate-paths.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const GENERATOR_PATH = "scripts/build-g4-l5-page-only-current-js.mjs";
@@ -488,6 +492,14 @@ async function buildVisual(page, member, detail, check) {
   const runtimePath = `${outputBase}/canvas-renderer.js`;
   const specPath = `${outputBase}/adapter-spec.json`;
   const manifestPath = `${outputBase}/manifest.json`;
+  const runtimeStoragePath =
+    separatedCurrentJsCandidateStoragePath(runtimePath);
+  const specStoragePath = separatedCurrentJsCandidateStoragePath(specPath);
+  const manifestStoragePath = currentJsCandidateEvidencePath(
+    page.animationId,
+    'manifest.json',
+    'v2',
+  );
   const specBytes = jsonBytes(spec.value);
   const manifest = {
     schemaVersion: 1,
@@ -511,11 +523,11 @@ async function buildVisual(page, member, detail, check) {
     acceptanceEffects: ACCEPTANCE_EFFECTS,
   };
   const manifestBytes = jsonBytes(manifest);
-  await synchronize(runtimePath, runtime, check);
-  await synchronize(specPath, specBytes, check);
-  await synchronize(manifestPath, manifestBytes, check);
-  return Object.freeze({target, metadata, runtimePath,
-    runtimeSha256: manifest.runtime.sha256, manifestPath,
+  await synchronize(runtimeStoragePath, runtime, check);
+  await synchronize(specStoragePath, specBytes, check);
+  await synchronize(manifestStoragePath, manifestBytes, check);
+  return Object.freeze({target, metadata, runtimePath: runtimeStoragePath,
+    runtimeSha256: manifest.runtime.sha256, manifestPath: manifestStoragePath,
     manifestSha256: sha256(manifestBytes)});
 }
 

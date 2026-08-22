@@ -12,15 +12,22 @@ test("G4 L10 loads all 46 private Current-JS page modules in frozen source order
     new URL("../private-current-js-registry.json", import.meta.url),
     "utf8",
   )) as {
-    calibrationId: string;
-    entries: Array<{key: string}>;
-    freezeManifest: string;
+    schemaVersion: 2;
+    calibrations: Array<{
+      calibrationId: string;
+      entries: Array<{key: string}>;
+      freezeManifest: string;
+    }>;
   };
-  assert.equal(registry.calibrationId, "g4-l10-page-only-current-js-46-v1");
-  assert.equal(registry.entries.length, 46);
-  assert.equal(new Set(registry.entries.map(({key}) => key)).size, 46);
+  assert.equal(registry.schemaVersion, 2);
+  const calibration = registry.calibrations.find(
+    ({calibrationId}) => calibrationId === "g4-l10-page-only-current-js-46-v1",
+  );
+  assert.ok(calibration);
+  assert.equal(calibration.entries.length, 46);
+  assert.equal(new Set(calibration.entries.map(({key}) => key)).size, 46);
 
-  for (const {key} of registry.entries) {
+  for (const {key} of calibration.entries) {
     const module = await loadAnimationModule(key);
     assert.ok(module, `${key}: module did not load`);
     assert.equal(module.key, key);
@@ -28,7 +35,7 @@ test("G4 L10 loads all 46 private Current-JS page modules in frozen source order
     assert.deepEqual(animationModuleRegistration(key), {
       maturity: "private-current-js",
       scope: "private-engineering",
-      calibrationId: registry.calibrationId,
+      calibrationId: calibration.calibrationId,
     });
   }
 });

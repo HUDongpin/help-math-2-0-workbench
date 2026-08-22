@@ -1,14 +1,14 @@
 "use client";
 
-import {createG5L5PrivateCurrentJsCandidate} from "../g5-l5-private-current-js-candidate";
+import {createG5L5ProductVerticalSliceCandidate} from "../g5-l5-four-page-product-vertical-slice";
 import {COURSE_G05_L05_TS_007_CONFIG, COURSE_G05_L05_TS_007_SOURCE} from "../timelines/course-g05-l05-ts-007";
 
-const candidate = createG5L5PrivateCurrentJsCandidate(COURSE_G05_L05_TS_007_CONFIG, Object.freeze({
+const candidate = createG5L5ProductVerticalSliceCandidate(COURSE_G05_L05_TS_007_CONFIG, Object.freeze({
   calibrationId: "g5-l5-page-only-current-js-56-v1",
   complexityLane: "behavior-heavy",
   sourceBehaviorDecisionIds: Object.freeze(["legacy-shell-animation-transport-hooks","multi-section-choice-feedback-lifecycle"]),
   sourceUserEventPcodeFileCount: 40,
-}));
+}), "multi-section");
 
 export {COURSE_G05_L05_TS_007_SOURCE};
 export const COURSE_G05_L05_TS_007_MOVIE = candidate.movie;

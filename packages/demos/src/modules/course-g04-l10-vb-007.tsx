@@ -12,7 +12,7 @@ import type {
 import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
 import {
   COURSE_G04_L10_VB_007_CONFIG,
-  COURSE_G04_L10_VB_007_SOURCE,
+  COURSE_G04_L10_VB_007_SOURCE as COURSE_G04_L10_VB_007_GENERATED_SOURCE,
 } from "../timelines/course-g04-l10-vb-007";
 
 const CALIBRATION_ID = "g4-l10-candidate-to-product-v25";
@@ -23,6 +23,12 @@ const CORRECT_TERMINAL_FRAME = 130;
 const SOURCE_FPS = 12;
 
 const candidate = createSourceStaticCanvasCandidate(COURSE_G04_L10_VB_007_CONFIG);
+
+export const COURSE_G04_L10_VB_007_SOURCE = Object.freeze({
+  ...COURSE_G04_L10_VB_007_GENERATED_SOURCE,
+  controlsEnabled: true,
+  registered: true,
+});
 
 export const COURSE_G04_L10_VB_007_GLOSSARY_TERMS = Object.freeze([
   Object.freeze({
@@ -339,7 +345,6 @@ const privateModule = Object.freeze({
   Renderer: CourseG04L10Vb007PrivateRenderer,
 });
 
-export {COURSE_G04_L10_VB_007_SOURCE};
 export const COURSE_G04_L10_VB_007_MOVIE = candidate.movie;
 export const COURSE_G04_L10_VB_007_RUNTIME = candidate.runtime;
 export const COURSE_G04_L10_VB_007_SOURCE_CONTRACT = candidate.sourceContract;

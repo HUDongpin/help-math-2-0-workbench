@@ -396,6 +396,8 @@ test("Canvas render request keys are stable and include every deterministic trac
 
   for (const changed of [
     {...identity, animationId: "course-g04-l03-test-999"},
+    {...identity, behaviorCompositeContractId: "test-source-composite-v1"},
+    {...identity, behaviorCompositeState: "question-n1"},
     {...identity, entryStateSha256: "e".repeat(64)},
     {...identity, frame: identity.frame + 1},
     {...identity, frameDomain: "sprite-5"},
@@ -408,6 +410,63 @@ test("Canvas render request keys are stable and include every deterministic trac
   ]) {
     assert.notEqual(sourceStaticCanvasRenderKey(changed), key);
   }
+});
+
+test("behavior-composite identity participates in visual, render, and capture state", () => {
+  const behaviorCandidate = createSourceStaticCanvasCandidate({
+    ...candidate.config,
+    animationId: "course-g04-l03-test-003",
+    assetSource: "/flash-assets/courses/course-g04-l03-test-003/canvas-renderer.js",
+    sourceBehaviorCompositeContractId: "test-source-composite-v1",
+  });
+  const base = behaviorCandidate.getFrameState(2, {
+    frameDomain: "sprite-44",
+    scenario: "source-static-frame",
+    lang: "en",
+    seed: 0,
+    requirementId: "req-composite",
+    traceId: "trace-composite",
+    entryStateSha256: "f".repeat(64),
+  });
+  const composite = Object.freeze({
+    ...base,
+    behaviorCompositeContractId: "test-source-composite-v1",
+    behaviorCompositeState: "question-n1",
+  });
+  assert.notEqual(
+    sourceStaticCanvasVisualKey(base),
+    sourceStaticCanvasVisualKey(composite),
+  );
+  assert.notEqual(
+    sourceStaticCanvasRenderKey(base),
+    sourceStaticCanvasRenderKey(composite),
+  );
+  const attributes = behaviorCandidate.buildCaptureAttributes({
+    canvasStatus: "ready",
+    entryStateSha256: "f".repeat(64),
+    frame: 2,
+    frameDomain: "sprite-44",
+    lang: "en",
+    requirementId: "req-composite",
+    scenario: "source-static-frame",
+    seed: 0,
+    state: composite,
+    traceId: "trace-composite",
+  });
+  assert.equal(
+    attributes["data-behavior-composite-contract"],
+    "test-source-composite-v1",
+  );
+  assert.equal(attributes["data-behavior-composite-state"], "question-n1");
+  assert.throws(
+    () => createSourceStaticCanvasCandidate({
+      ...candidate.config,
+      animationId: "course-g04-l03-test-004",
+      assetSource: "/flash-assets/courses/course-g04-l03-test-004/canvas-renderer.js",
+      sourceBehaviorCompositeContractId: "INVALID",
+    }),
+    /behavior-composite contract ID is invalid/,
+  );
 });
 
 test("generic source-static factory fails closed for Spanish, root, companion, and mismatches", () => {

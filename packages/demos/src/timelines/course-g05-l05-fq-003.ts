@@ -13,7 +13,7 @@ export const COURSE_G05_L05_FQ_003_SOURCE = Object.freeze({
   "rootBeginFrame": 6,
   "sourceOccurrence": 56,
   "candidateManifest": "apps/web/public/flash-assets/courses/course-g05-l05-fq-003/manifest.json",
-  "candidateManifestSha256": "c244548cf3206cc7dd5cb2b7b7770dc93ff7482fb4d40059a1ed17db22fbc018",
+  "candidateManifestSha256": "3bf7e3b5ff14ffdd1e97d10e47c6bb72e2a77f83ef1c65b6b9debb441c36acec",
   "privateRegistrationCalibrationId": "g5-l5-page-only-current-js-56-v1",
   "actionScriptExecuted": false,
   "controlsEnabled": false,
@@ -26,7 +26,8 @@ export const COURSE_G05_L05_FQ_003_CONFIG = Object.freeze({
   "title": "Page 2 — private source-static Current-JS engineering module",
   "sourceSwfSha256": "43c27a0b81662befa75d09fe042c0379090acee274839316d614c8d66ab0d7d2",
   "assetSource": "/flash-assets/courses/course-g05-l05-fq-003/canvas-renderer.js",
-  "assetSha256": "bd74dd381305a31c145b9adb2f16525af2652d5d8fef2c064cc8dbf17c1b4fc4",
+  "assetSha256": "78da700b7cbf20390cdb4b9b7e2aa36c300bb6a456c21c0909c271eefb0d33aa",
+  "sourceBehaviorCompositeContractId": "g5-l5-fq003-source-behavior-composite-v1",
   "stage": {
     "width": 800,
     "height": 600,
@@ -57,5 +58,5 @@ export const COURSE_G05_L05_FQ_003_CONFIG = Object.freeze({
       "lastFrame": 72
     }
   ],
-  "sourceControlBehaviorLabel": "Source-bound private Current-JS frame renderer; AVM1 natural behavior, accepted audio, original-runtime parity, and strict fidelity remain independently pending"
+  "sourceControlBehaviorLabel": "Source-script assignment behavior composite is required for product question/result/review states; AVM1 execution, accepted audio, original-runtime parity, and strict fidelity remain independently pending"
 } satisfies SourceStaticCanvasCandidateConfig);

@@ -7,6 +7,11 @@ import {
   COURSE_G04_L10_IN_009_SOURCE,
 } from "../timelines/course-g04-l10-in-009";
 
+export const COURSE_G04_L10_IN_009_PRIVATE_CONFIG = Object.freeze({
+  ...COURSE_G04_L10_IN_009_CONFIG,
+  playbackMode: "loop" as const,
+});
+
 export const COURSE_G04_L10_IN_009_GLOSSARY_TERMS = Object.freeze([
   Object.freeze({
     id: "area",
@@ -83,7 +88,7 @@ export const COURSE_G04_L10_IN_009_PRIVATE_AUDIO_TRACKS: readonly AudioTrack[] =
   ]);
 
 const candidate = createPrivateSourceStaticGlossaryCandidate(
-  COURSE_G04_L10_IN_009_CONFIG,
+  COURSE_G04_L10_IN_009_PRIVATE_CONFIG,
   Object.freeze({
     calibrationId: "g4-l10-candidate-to-product-v29",
     companionSurfaceId: "g4-l10-in009-glossary",

@@ -4,7 +4,6 @@ import {createHash} from "node:crypto";
 import {
   lstat,
   mkdir,
-  readdir,
   readFile,
   rename,
   writeFile,
@@ -16,6 +15,9 @@ import {
   privateCurrentJsCalibrationMatches,
   upsertPrivateCurrentJsCalibration,
 } from "./private-current-js-registry.mjs";
+import {
+  separatedCurrentJsCandidateStoragePath,
+} from "./current-js-candidate-paths.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const GENERATOR_PATH = "scripts/build-g4-l10-page-only-current-js.mjs";
@@ -102,25 +104,6 @@ async function synchronize(relativePath, bytes, check) {
   const temporary = `${target}.tmp-${process.pid}`;
   await writeFile(temporary, bytes, {flag: "wx"});
   await rename(temporary, target);
-}
-
-async function filesBelow(relativeDirectory) {
-  const results = [];
-  async function visit(relativePath) {
-    const entries = await readdir(projectPath(relativePath), {withFileTypes: true});
-    for (const entry of entries.sort((left, right) =>
-      left.name.localeCompare(right.name))) {
-      const child = `${relativePath}/${entry.name}`;
-      invariant(!entry.isSymbolicLink(), `${child}: symlinks are forbidden`);
-      if (entry.isDirectory()) await visit(child);
-      else {
-        invariant(entry.isFile(), `${child}: special files are forbidden`);
-        results.push(child);
-      }
-    }
-  }
-  await visit(relativeDirectory);
-  return results;
 }
 
 function names(animationId) {
@@ -218,10 +201,14 @@ async function build({check = false} = {}) {
       `public/flash-assets/courses/${member.animationId}/manifest.json`;
     const runtimePath =
       `public/flash-assets/courses/${member.animationId}/canvas-renderer.js`;
+    const manifestStoragePath =
+      separatedCurrentJsCandidateStoragePath(manifestPath);
+    const runtimeStoragePath =
+      separatedCurrentJsCandidateStoragePath(runtimePath);
     const [manifest, manifestBinding, runtimeBinding] = await Promise.all([
-      readJson(manifestPath),
-      bind(manifestPath),
-      bind(runtimePath),
+      readJson(manifestStoragePath),
+      bind(manifestStoragePath),
+      bind(runtimeStoragePath),
     ]);
     const frameDomain = manifest.timeline?.sourceStaticFrameDomain;
     invariant(
@@ -274,15 +261,6 @@ async function build({check = false} = {}) {
   );
 
   for (const page of pages) {
-    const sourceDirectory = `public/flash-assets/courses/${page.animationId}`;
-    for (const sourcePath of await filesBelow(sourceDirectory)) {
-      const suffix = sourcePath.slice("public/".length);
-      await synchronize(
-        `apps/web/public/${suffix}`,
-        await readFile(projectPath(sourcePath)),
-        check,
-      );
-    }
     if (!preserved.has(page.animationId)) {
       await synchronize(
         `packages/demos/src/modules/${page.animationId}.tsx`,

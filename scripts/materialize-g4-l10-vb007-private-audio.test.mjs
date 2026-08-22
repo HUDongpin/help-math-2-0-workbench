@@ -32,7 +32,7 @@ test('VB007 materializer binds the exact source-main continuation after the corr
     durationMs: 5747,
     bytes: 28600,
     sha256: '55aea0a63242d214a9b5b828347236971fc7083334da945d45e31507f2cb56b2',
-    output: 'public/flash-assets/courses/course-g04-l10-vb-007/audio/main-continuation.mp3',
+    output: 'apps/web/candidate-assets/flash-assets/2026-08-22-page-only-candidates-v1/courses/course-g04-l10-vb-007/audio/main-continuation.mp3',
     publicPath: '/flash-assets/courses/course-g04-l10-vb-007/audio/main-continuation.mp3',
   });
 });

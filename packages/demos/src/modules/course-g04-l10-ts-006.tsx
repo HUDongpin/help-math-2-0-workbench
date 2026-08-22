@@ -9,8 +9,14 @@ import {
   COURSE_G04_L10_TS_006_SOURCE,
 } from "../timelines/course-g04-l10-ts-006";
 
+export const COURSE_G04_L10_TS_006_PRIVATE_CONFIG = Object.freeze({
+  ...COURSE_G04_L10_TS_006_CONFIG,
+  sourceControlBehaviorLabel:
+    "source-bound engineering audio mappings, not accepted audio parity; ActionScript, Spanish visuals, natural runtime, terminal state, Replay, and fidelity remain unresolved.",
+});
+
 const candidate = createSourceStaticCanvasCandidate(
-  COURSE_G04_L10_TS_006_CONFIG,
+  COURSE_G04_L10_TS_006_PRIVATE_CONFIG,
 );
 
 export const COURSE_G04_L10_TS_006_PRIVATE_AUDIO_CUES: readonly AudioCue[] =

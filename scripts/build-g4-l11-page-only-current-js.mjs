@@ -4,7 +4,6 @@ import {createHash} from "node:crypto";
 import {
   lstat,
   mkdir,
-  readdir,
   readFile,
   rename,
   writeFile,
@@ -16,6 +15,9 @@ import {
   privateCurrentJsCalibrationMatches,
   upsertPrivateCurrentJsCalibration,
 } from "./private-current-js-registry.mjs";
+import {
+  separatedCurrentJsCandidateStoragePath,
+} from "./current-js-candidate-paths.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const GENERATOR_PATH = "scripts/build-g4-l11-page-only-current-js.mjs";
@@ -98,25 +100,6 @@ async function synchronize(relativePath, bytes, check) {
   const temporary = `${target}.tmp-${process.pid}`;
   await writeFile(temporary, bytes, {flag: "wx"});
   await rename(temporary, target);
-}
-
-async function filesBelow(relativeDirectory) {
-  const results = [];
-  async function visit(directory) {
-    const entries = await readdir(projectPath(directory), {withFileTypes: true});
-    for (const entry of entries.sort((left, right) =>
-      left.name.localeCompare(right.name))) {
-      const child = `${directory}/${entry.name}`;
-      invariant(!entry.isSymbolicLink(), `${child}: symlinks are forbidden`);
-      if (entry.isDirectory()) await visit(child);
-      else {
-        invariant(entry.isFile(), `${child}: special files are forbidden`);
-        results.push(child);
-      }
-    }
-  }
-  await visit(relativeDirectory);
-  return results;
 }
 
 async function frameTarget(animationId) {
@@ -239,16 +222,13 @@ async function build({check = false} = {}) {
     if (member.animationId !== ASSETLESS_PRODUCT_NATIVE_ID) {
       const base = `public/flash-assets/courses/${member.animationId}`;
       asset = Object.freeze({
-        manifest: await bind(`${base}/manifest.json`),
-        runtime: await bind(`${base}/canvas-renderer.js`),
+        manifest: await bind(separatedCurrentJsCandidateStoragePath(
+          `${base}/manifest.json`,
+        )),
+        runtime: await bind(separatedCurrentJsCandidateStoragePath(
+          `${base}/canvas-renderer.js`,
+        )),
       });
-      for (const sourcePath of await filesBelow(base)) {
-        await synchronize(
-          `apps/web/public/${sourcePath.slice("public/".length)}`,
-          await readFile(projectPath(sourcePath)),
-          check,
-        );
-      }
     }
     pages.push(Object.freeze({
       ordinal: member.ordinal,
