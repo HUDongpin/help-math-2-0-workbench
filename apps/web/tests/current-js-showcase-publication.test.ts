@@ -4,6 +4,9 @@ import test from 'node:test';
 import {
   G3_L2_SHOWCASE_RELEASE_ID,
   G4_L3_SHOWCASE_RELEASE_ID,
+  G4_L5_PAGE_ONLY_RELEASE_ID,
+  G4_L10_PAGE_ONLY_RELEASE_ID,
+  G4_L11_PAGE_ONLY_RELEASE_ID,
   G5_L3_SHOWCASE_RELEASE_ID,
   G5_L4_SHOWCASE_RELEASE_ID,
   G5_L5_SHOWCASE_RELEASE_ID,
@@ -44,6 +47,8 @@ test('the opt-in is narrow to the G4 L3 release and never expands strict release
   });
   assert.deepEqual({...publication}, {
     enabled: true,
+    profile: 'production',
+    productionApproved: true,
     releaseId: G4_L3_SHOWCASE_RELEASE_ID,
     scope: 'current-javascript-showcase',
     strictReleaseExpanded: false,
@@ -60,6 +65,8 @@ test('G5 L4 uses its own exact opt-in and never expands strict release', () => {
   );
   assert.deepEqual({...publication}, {
     enabled: true,
+    profile: 'production',
+    productionApproved: true,
     releaseId: G5_L4_SHOWCASE_RELEASE_ID,
     scope: 'current-javascript-showcase',
     strictReleaseExpanded: false,
@@ -70,4 +77,35 @@ test('G5 L4 uses its own exact opt-in and never expands strict release', () => {
   assert.equal(currentJsShowcasePublication('lesson-g05-l04', {
     CURRENT_JS_SHOWCASE_G5_L4_ENABLED: 'true',
   }).enabled, false);
+});
+
+test('candidate lesson flags cannot expand the production release manifest', () => {
+  const cases = [
+    [G4_L5_PAGE_ONLY_RELEASE_ID, 'CURRENT_JS_SHOWCASE_G4_L5_ENABLED'],
+    [G4_L10_PAGE_ONLY_RELEASE_ID, 'CURRENT_JS_SHOWCASE_G4_L10_ENABLED'],
+    [G4_L11_PAGE_ONLY_RELEASE_ID, 'CURRENT_JS_SHOWCASE_G4_L11_ENABLED'],
+  ] as const;
+  for (const [releaseId, environmentKey] of cases) {
+    const production = currentJsShowcasePublication(releaseId, {
+      NODE_ENV: 'production',
+      CURRENT_JS_CANDIDATE_PROFILE_ENABLED: 'true',
+      [environmentKey]: 'true',
+    });
+    assert.deepEqual({...production}, {
+      enabled: false,
+      profile: 'unavailable',
+      productionApproved: false,
+      releaseId,
+      scope: 'current-javascript-showcase',
+      strictReleaseExpanded: false,
+    });
+    const candidate = currentJsShowcasePublication(releaseId, {
+      NODE_ENV: 'development',
+      CURRENT_JS_CANDIDATE_PROFILE_ENABLED: 'true',
+      [environmentKey]: 'true',
+    });
+    assert.equal(candidate.enabled, true);
+    assert.equal(candidate.profile, 'candidate');
+    assert.equal(candidate.productionApproved, false);
+  }
 });

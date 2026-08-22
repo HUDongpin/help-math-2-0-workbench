@@ -3,17 +3,16 @@ import {createHash} from "node:crypto";
 import {readFile} from "node:fs/promises";
 import test from "node:test";
 
+import {readCurrentJsCandidateAsset} from "./current-js-candidate-asset";
+
 import {audioCueMatchesContext, resolveAudioCueTransition} from "../src/runtime";
 import module, {
+  COURSE_G04_L10_TS_006_PRIVATE_CONFIG,
   COURSE_G04_L10_TS_006_PRIVATE_AUDIO_CUES,
   COURSE_G04_L10_TS_006_PRIVATE_AUDIO_TRACKS,
 } from "../src/modules/course-g04-l10-ts-006";
-import {COURSE_G04_L10_TS_006_CONFIG} from "../src/timelines/course-g04-l10-ts-006";
 
-const assetRoot = new URL(
-  "../../../public/flash-assets/courses/course-g04-l10-ts-006/audio/",
-  import.meta.url,
-);
+const assetRoot = "/flash-assets/courses/course-g04-l10-ts-006/audio/";
 const receiptUrl = new URL(
   "../../../migrations/course-g04-l10-ts-006/audit/private-product-audio-assets.json",
   import.meta.url,
@@ -25,11 +24,11 @@ test("TS006 exposes one source-domain EN engineering cue and one ES user track",
   assert.deepEqual(module.audioCues, COURSE_G04_L10_TS_006_PRIVATE_AUDIO_CUES);
   assert.deepEqual(module.audioTracks, COURSE_G04_L10_TS_006_PRIVATE_AUDIO_TRACKS);
   assert.match(
-    COURSE_G04_L10_TS_006_CONFIG.sourceControlBehaviorLabel ?? "",
+    COURSE_G04_L10_TS_006_PRIVATE_CONFIG.sourceControlBehaviorLabel ?? "",
     /source-bound engineering audio mappings, not accepted audio parity/,
   );
   assert.doesNotMatch(
-    COURSE_G04_L10_TS_006_CONFIG.sourceControlBehaviorLabel ?? "",
+    COURSE_G04_L10_TS_006_PRIVATE_CONFIG.sourceControlBehaviorLabel ?? "",
     /audio.*disabled/,
   );
   assert.deepEqual(
@@ -106,8 +105,8 @@ test("TS006 cue is EN-only and Replay rewind restarts the exact cue", () => {
 
 test("TS006 staged audio bytes and receipt stay exact and acceptance-neutral", async () => {
   const [embedded, spanish, receiptBytes] = await Promise.all([
-    readFile(new URL("embedded-stream-0001.mp3", assetRoot)),
-    readFile(new URL("spanish-host-narration.mp3", assetRoot)),
+    readCurrentJsCandidateAsset(assetRoot, "embedded-stream-0001.mp3"),
+    readCurrentJsCandidateAsset(assetRoot, "spanish-host-narration.mp3"),
     readFile(receiptUrl),
   ]);
   assert.equal(embedded.length, 101530);

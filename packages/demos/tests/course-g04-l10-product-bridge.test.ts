@@ -7,6 +7,8 @@ import {fileURLToPath} from 'node:url';
 import {createElement} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 
+import {readCurrentJsCandidateAsset} from './current-js-candidate-asset';
+
 import fq001 from '../src/modules/course-g04-l10-fq-001';
 import ir001, {
   COURSE_G04_L10_IR_001_PRIVATE_AUDIO_CUES,
@@ -439,8 +441,7 @@ test('IR001 selects one hash-bound embedded stream for each seed remainder', asy
 
   for (const cue of COURSE_G04_L10_IR_001_PRIVATE_AUDIO_CUES) {
     assert.ok(cue.sha256);
-    const relativePath = cue.source.split('?')[0]!.replace(/^\//, 'public/');
-    const bytes = await readFile(`${repositoryRoot}${relativePath}`);
+    const bytes = await readCurrentJsCandidateAsset(cue.source.split('?')[0]!);
     assert.equal(createHash('sha256').update(bytes).digest('hex'), cue.sha256);
     assert.equal(cue.spokenLanguage, 'undetermined');
   }
@@ -464,8 +465,7 @@ test('TS005 binds its frame-1 engineering cue to exact staged bytes', async () =
     ).map((candidate) => candidate.id),
     ['embedded-stream-0001'],
   );
-  const relativePath = cue.source.split('?')[0]!.replace(/^\//, 'public/');
-  const bytes = await readFile(`${repositoryRoot}${relativePath}`);
+  const bytes = await readCurrentJsCandidateAsset(cue.source.split('?')[0]!);
   assert.equal(createHash('sha256').update(bytes).digest('hex'), cue.sha256);
 });
 
@@ -487,7 +487,6 @@ test('VB002 binds its frame-4 engineering cue to exact staged bytes', async () =
     ).map((candidate) => candidate.id),
     ['embedded-stream-0001'],
   );
-  const relativePath = cue.source.split('?')[0]!.replace(/^\//, 'public/');
-  const bytes = await readFile(`${repositoryRoot}${relativePath}`);
+  const bytes = await readCurrentJsCandidateAsset(cue.source.split('?')[0]!);
   assert.equal(createHash('sha256').update(bytes).digest('hex'), cue.sha256);
 });

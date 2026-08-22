@@ -3,6 +3,10 @@ import {
   G4_L10_PAGE_ONLY_RELEASE_ID,
   G4_L11_PAGE_ONLY_RELEASE_ID,
 } from './g4-page-only-release-metadata.generated';
+import {
+  currentJsCandidateProfileEnabled,
+  isCurrentJsProductionReleaseApproved,
+} from './current-js-asset-profile';
 
 /**
  * Explicit public-product authorization for a runnable current-JavaScript
@@ -45,6 +49,8 @@ export type CurrentJsShowcaseEnvironment =
 
 export type CurrentJsShowcasePublication = Readonly<{
   enabled: boolean;
+  profile: 'candidate' | 'production' | 'unavailable';
+  productionApproved: boolean;
   releaseId: string;
   scope: 'current-javascript-showcase';
   strictReleaseExpanded: false;
@@ -57,10 +63,18 @@ export function currentJsShowcasePublication(
   const environmentKey = SHOWCASE_ENVIRONMENT_KEY_BY_RELEASE[
     releaseId as keyof typeof SHOWCASE_ENVIRONMENT_KEY_BY_RELEASE
   ];
-  const enabled = environmentKey !== undefined &&
+  const optedIn = environmentKey !== undefined &&
     env[environmentKey] === 'true';
+  const productionApproved =
+    isCurrentJsProductionReleaseApproved(releaseId);
+  const candidateEnabled = currentJsCandidateProfileEnabled(env);
+  const enabled = optedIn && (productionApproved || candidateEnabled);
   return Object.freeze({
     enabled,
+    profile: enabled
+      ? candidateEnabled ? 'candidate' as const : 'production' as const
+      : 'unavailable' as const,
+    productionApproved,
     releaseId,
     scope: 'current-javascript-showcase' as const,
     strictReleaseExpanded: false as const,

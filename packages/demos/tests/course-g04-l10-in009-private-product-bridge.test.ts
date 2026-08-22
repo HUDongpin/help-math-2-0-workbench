@@ -3,6 +3,8 @@ import {createHash} from "node:crypto";
 import {readFile} from "node:fs/promises";
 import test from "node:test";
 
+import {readCurrentJsCandidateAsset} from "./current-js-candidate-asset";
+
 import {
   audioCueMatchesContext,
   frameAtElapsedMs,
@@ -15,10 +17,7 @@ import module, {
   COURSE_G04_L10_IN_009_PRIVATE_AUDIO_TRACKS,
 } from "../src/modules/course-g04-l10-in-009";
 
-const assetRoot = new URL(
-  "../../../public/flash-assets/courses/course-g04-l10-in-009/audio/",
-  import.meta.url,
-);
+const assetRoot = "/flash-assets/courses/course-g04-l10-in-009/audio/";
 const receiptUrl = new URL(
   "../../../migrations/course-g04-l10-in-009/audit/private-product-audio-assets.json",
   import.meta.url,
@@ -145,8 +144,8 @@ test("IN009 Spanish track remains user-activated and pauses the modern timeline"
 
 test("IN009 staged audio bytes and receipt remain exact and acceptance-neutral", async () => {
   const [embedded, spanish, receiptBytes] = await Promise.all([
-    readFile(new URL("embedded-stream-0001.mp3", assetRoot)),
-    readFile(new URL("spanish-host-narration.mp3", assetRoot)),
+    readCurrentJsCandidateAsset(assetRoot, "embedded-stream-0001.mp3"),
+    readCurrentJsCandidateAsset(assetRoot, "spanish-host-narration.mp3"),
     readFile(receiptUrl),
   ]);
   assert.equal(embedded.length, 395070);
@@ -191,5 +190,5 @@ test("modern My Lesson Replay remounts IN009 and resets timeline/audio requests"
     host,
     /const replayCurrentPage = \(\) => \{[\s\S]*?setRuntimeEpoch\(\(value\) => value \+ 1\);[\s\S]*?setPaused\(false\);[\s\S]*?setPlaybackState\(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE\);[\s\S]*?setSeekRequest\(null\);[\s\S]*?setNarrationRequest\(null\);/,
   );
-  assert.match(host, /key=\{`\$\{currentPage\.animationId\}:\$\{runtimeEpoch\}`\}/);
+  assert.match(host, /key=\{`\$\{currentPageSessionId\}:\$\{runtimeEpoch\}`\}/);
 });

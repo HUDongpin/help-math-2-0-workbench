@@ -104,7 +104,7 @@ function isArchivePath(pathname: string, request: NextRequest) {
     | '/courses/5/4'
     | '/courses/5/5'];
   if (showcaseReleaseId) {
-    return currentJsShowcasePublication(
+    return process.env.NODE_ENV !== 'production' || currentJsShowcasePublication(
       showcaseReleaseId,
     ).enabled;
   }

@@ -3,6 +3,8 @@ import {createHash} from "node:crypto";
 import {readFile} from "node:fs/promises";
 import test from "node:test";
 
+import {readCurrentJsCandidateAsset} from "./current-js-candidate-asset";
+
 import {audioCueMatchesContext, resolveAudioCueTransition} from "../src/runtime";
 import module, {
   COURSE_G04_L10_RW_004_GLOSSARY_TERMS,
@@ -10,10 +12,7 @@ import module, {
   COURSE_G04_L10_RW_004_PRIVATE_AUDIO_TRACKS,
 } from "../src/modules/course-g04-l10-rw-004";
 
-const assetRoot = new URL(
-  "../../../public/flash-assets/courses/course-g04-l10-rw-004/audio/",
-  import.meta.url,
-);
+const assetRoot = "/flash-assets/courses/course-g04-l10-rw-004/audio/";
 const receiptUrl = new URL(
   "../../../migrations/course-g04-l10-rw-004/audit/private-product-audio-assets.json",
   import.meta.url,
@@ -123,8 +122,8 @@ test("RW004 Spanish track is user-activated and pauses the modern timeline", () 
 
 test("RW004 staged audio bytes and receipt remain exact and acceptance-neutral", async () => {
   const [embedded, spanish, receiptBytes] = await Promise.all([
-    readFile(new URL("embedded-stream-0001.mp3", assetRoot)),
-    readFile(new URL("spanish-host-narration.mp3", assetRoot)),
+    readCurrentJsCandidateAsset(assetRoot, "embedded-stream-0001.mp3"),
+    readCurrentJsCandidateAsset(assetRoot, "spanish-host-narration.mp3"),
     readFile(receiptUrl),
   ]);
   assert.equal(embedded.length, 543010);

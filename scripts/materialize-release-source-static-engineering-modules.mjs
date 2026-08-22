@@ -8,6 +8,10 @@ import {fileURLToPath} from "node:url";
 import {
   deriveReleaseSourceStaticProfile,
 } from "./build-release-source-static-engineering-candidates.mjs";
+import {
+  isSeparatedCurrentJsCandidateAnimationId,
+  separatedCurrentJsCandidateStoragePath,
+} from "./current-js-candidate-paths.mjs";
 
 const scriptPath = fileURLToPath(import.meta.url);
 const ROOT = path.resolve(path.dirname(scriptPath), "..");
@@ -261,9 +265,17 @@ export async function materializeReleaseSourceStaticEngineeringModules({
       `public/flash-assets/courses/${animationId}/canvas-renderer.js`;
     const manifestPath =
       `public/flash-assets/courses/${animationId}/manifest.json`;
+    const runtimeStoragePath =
+      isSeparatedCurrentJsCandidateAnimationId(animationId)
+        ? separatedCurrentJsCandidateStoragePath(runtimePath)
+        : runtimePath;
+    const manifestStoragePath =
+      isSeparatedCurrentJsCandidateAnimationId(animationId)
+        ? separatedCurrentJsCandidateStoragePath(manifestPath)
+        : manifestPath;
     const [runtimeBinding, manifestBinding] = await Promise.all([
-      readBinding(runtimePath),
-      readBinding(manifestPath),
+      readBinding(runtimeStoragePath),
+      readBinding(manifestStoragePath),
     ]);
     const manifest = JSON.parse(manifestBinding.bytes.toString("utf8"));
     invariant(

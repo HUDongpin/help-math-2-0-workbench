@@ -11,6 +11,9 @@ import {
   resolveDirectNamedAnimationTimeline,
   validateDeclaredTargetLineage,
 } from "./build-release-source-static-engineering-candidates.mjs";
+import {
+  separatedCurrentJsCandidateStoragePath,
+} from "./current-js-candidate-paths.mjs";
 import {technicalManifestSha256} from "./evidence-projections.mjs";
 
 const RELEASE_ID = "lesson-g04-l10-perimeter-area";
@@ -489,15 +492,25 @@ test("generated L10 assets remain inert, hash-bound, and network-free beneath pr
     "packages/demos/private-current-js-registry.json",
     "utf8",
   ));
-  assert.equal(privateRegistry.calibrationId,
-    "g4-l10-page-only-current-js-46-v1");
-  const privateKeys = new Set(privateRegistry.entries.map(({key}) => key));
+  const privateCalibration = privateRegistry.calibrations.find(
+    ({calibrationId}) =>
+      calibrationId === "g4-l10-page-only-current-js-46-v1",
+  );
+  assert(privateCalibration);
+  const privateKeys = new Set(
+    privateCalibration.entries.map(({key}) => key),
+  );
   assert.equal(IDS.every((animationId) => privateKeys.has(animationId)), true);
   for (const animationId of IDS) {
-    const base = `public/flash-assets/courses/${animationId}`;
+    const runtimePath = separatedCurrentJsCandidateStoragePath(
+      `public/flash-assets/courses/${animationId}/canvas-renderer.js`,
+    );
+    const manifestPath = separatedCurrentJsCandidateStoragePath(
+      `public/flash-assets/courses/${animationId}/manifest.json`,
+    );
     const [runtime, manifestText] = await Promise.all([
-      readFile(`${base}/canvas-renderer.js`),
-      readFile(`${base}/manifest.json`, "utf8"),
+      readFile(runtimePath),
+      readFile(manifestPath, "utf8"),
     ]);
     const manifest = JSON.parse(manifestText);
     assert.equal(manifest.output.sha256, sha256(runtime));
@@ -556,7 +569,9 @@ test("generated L10 assets remain inert, hash-bound, and network-free beneath pr
 
 test("TS006 current-JavaScript source-static visual is byte-identical across all 245 local frames", async () => {
   const manifest = JSON.parse(await readFile(
-    "public/flash-assets/courses/course-g04-l10-ts-006/manifest.json",
+    separatedCurrentJsCandidateStoragePath(
+      "public/flash-assets/courses/course-g04-l10-ts-006/manifest.json",
+    ),
     "utf8",
   ));
   const sequence = manifest.browserQa.fullFrameVisualSequence;
@@ -573,7 +588,9 @@ test("TS006 current-JavaScript source-static visual is byte-identical across all
 test("wave 2 full-canvas RGBA sequence census is exact and non-static", async () => {
   for (const animationId of WAVE2_IDS) {
     const manifest = JSON.parse(await readFile(
-      `public/flash-assets/courses/${animationId}/manifest.json`,
+      separatedCurrentJsCandidateStoragePath(
+        `public/flash-assets/courses/${animationId}/manifest.json`,
+      ),
       "utf8",
     ));
     const sequence = manifest.browserQa.fullFrameVisualSequence;

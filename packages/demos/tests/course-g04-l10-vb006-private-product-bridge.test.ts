@@ -3,6 +3,8 @@ import {createHash} from "node:crypto";
 import {readFile} from "node:fs/promises";
 import test from "node:test";
 
+import {readCurrentJsCandidateAsset} from "./current-js-candidate-asset";
+
 import {audioCueMatchesContext, resolveAudioCueTransition} from "../src/runtime";
 import module, {
   COURSE_G04_L10_VB_006_GLOSSARY_TERMS,
@@ -16,10 +18,7 @@ import module, {
   resolveCourseG04L10Vb006FeedbackBranch,
 } from "../src/modules/course-g04-l10-vb-006";
 
-const assetRoot = new URL(
-  "../../../public/flash-assets/courses/course-g04-l10-vb-006/audio/",
-  import.meta.url,
-);
+const assetRoot = "/flash-assets/courses/course-g04-l10-vb-006/audio/";
 const receiptUrl = new URL(
   "../../../migrations/course-g04-l10-vb-006/audit/private-product-audio-assets.json",
   import.meta.url,
@@ -176,7 +175,7 @@ test("VB006 Replay clears feedback timers, continuation frame, host audio, and m
 
 test("VB006 private audio assets are exact and the receipt remains acceptance-neutral", async () => {
   for (const [name, bytes, sha256] of exactAssets) {
-    const observed = await readFile(new URL(name, assetRoot));
+    const observed = await readCurrentJsCandidateAsset(assetRoot, name);
     assert.equal(observed.length, bytes, name);
     assert.equal(createHash("sha256").update(observed).digest("hex"), sha256, name);
   }

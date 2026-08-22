@@ -4,6 +4,7 @@ import {lstat, readdir, readFile} from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
 
+import productionProfile from '../config/current-js-production-assets.v1.json';
 import {G5_L4_AUDIO_ASSET_SHA256} from '../lib/g5-l4-audio-assets.generated';
 
 const publicAssetRoot = path.resolve(
@@ -56,6 +57,19 @@ test('deployment assets are an exact five-lesson Current-JS runtime closure', as
   assert.equal(publicFiles.length, 929);
   assert.equal(serverAudioFiles.length, 185);
   assert.equal(entries.length, 1114);
+  assert.deepEqual(
+    entries.map(({file: _file, relative, root}) => ({
+      assetPath: `courses/${relative}`,
+      relativePath: relative,
+      storageRoot: root,
+    })),
+    productionProfile.entries.map((entry) => ({
+      assetPath: entry.assetPath,
+      relativePath: entry.relativePath,
+      storageRoot: entry.storageRoot,
+    })),
+    'disk paths must equal the exact production manifest, not only its counts',
+  );
   assert.equal(
     relativeFiles.filter((file) =>
       file.startsWith('course-g04-l03-')

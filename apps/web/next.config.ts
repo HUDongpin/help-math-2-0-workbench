@@ -31,6 +31,12 @@ const clerkSyntheticBuild =
     === CLERK_SYNTHETIC_DIST_DIR_AUTHORIZATION
   && process.env.NODE_ENV === 'development'
   && process.env.VERCEL_ENV === undefined;
+const currentJsCandidateQaBuild =
+  process.env.HELP_MATH_CURRENT_JS_CANDIDATE_QA
+    === 'current-js-candidate-profile-v1'
+  && process.env.CURRENT_JS_CANDIDATE_PROFILE_ENABLED === 'true'
+  && process.env.NODE_ENV === 'development'
+  && process.env.VERCEL_ENV === undefined;
 const localClerkAuthBuild = isClerkLocalAuthConfigurationReady(process.env);
 const localClerkScriptSources = localClerkAuthBuild
   ? ' https://*.clerk.accounts.dev https://*.clerk.com https://*.protect.clerk.com'
@@ -184,6 +190,8 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   distDir: clerkSyntheticBuild
     ? CLERK_SYNTHETIC_DIST_DIR
+    : currentJsCandidateQaBuild
+      ? '.next-current-js-candidate-qa'
     : localReferenceDiagnosticBuild
       ? '.next-local-reference-diagnostic'
       : wholeLessonPackageBuild

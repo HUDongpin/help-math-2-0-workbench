@@ -7,6 +7,10 @@ import {
 } from './current-js-showcase-publication';
 import {G4_PAGE_ONLY_RELEASE_METADATA} from
   './g4-page-only-release-metadata.generated';
+import {
+  currentJsAssetRecordsForSegments,
+  selectedCurrentJsAssetRecordForSegments,
+} from './current-js-asset-profile';
 
 /**
  * Exact public runtime-directory closure for the page-only lessons whose
@@ -222,35 +226,27 @@ Readonly<Record<string, readonly string[]>> =
 type PageOnlyShowcaseReleaseId = keyof
   typeof PAGE_ONLY_CURRENT_JS_SHOWCASE_ASSET_DIRECTORIES_BY_RELEASE;
 
-const releaseIdByDirectory = new Map<string, PageOnlyShowcaseReleaseId>();
-for (const [releaseId, directories] of Object.entries(
-  PAGE_ONLY_CURRENT_JS_SHOWCASE_ASSET_DIRECTORIES_BY_RELEASE,
-) as Array<[PageOnlyShowcaseReleaseId, readonly string[]]>) {
-  for (const directory of directories) {
-    if (releaseIdByDirectory.has(directory)) {
-      throw new Error(`Duplicate page-only showcase asset directory: ${directory}`);
-    }
-    releaseIdByDirectory.set(directory, releaseId);
-  }
-}
+const pageOnlyReleaseIds = new Set<PageOnlyShowcaseReleaseId>(
+  Object.keys(PAGE_ONLY_CURRENT_JS_SHOWCASE_ASSET_DIRECTORIES_BY_RELEASE) as
+    PageOnlyShowcaseReleaseId[],
+);
 
 export function pageOnlyCurrentJsShowcaseReleaseIdForAssetSegments(
   asset: readonly string[],
 ): PageOnlyShowcaseReleaseId | undefined {
-  if (
-    asset[0] !== 'courses'
-    || asset.length < 3
-    || asset.some((segment) =>
-      segment.length === 0
-      || segment === '.'
-      || segment === '..'
-      || segment.includes('/')
-      || segment.includes('\\')
-    )
-  ) {
-    return undefined;
+  const records = currentJsAssetRecordsForSegments(asset);
+  const releaseIds = new Set(
+    [records.production?.releaseId, records.candidate?.releaseId]
+      .filter((releaseId): releaseId is PageOnlyShowcaseReleaseId =>
+        releaseId !== undefined && pageOnlyReleaseIds.has(
+          releaseId as PageOnlyShowcaseReleaseId,
+        )
+      ),
+  );
+  if (releaseIds.size > 1) {
+    throw new Error(`Conflicting Current-JS asset release: ${asset.join('/')}`);
   }
-  return releaseIdByDirectory.get(asset[1] ?? '');
+  return [...releaseIds][0];
 }
 
 export function isPageOnlyCurrentJsShowcaseAssetSegments(
@@ -272,7 +268,8 @@ export function isPageOnlyCurrentJsShowcaseAssetAuthorized(
   asset: readonly string[],
   env: CurrentJsShowcaseEnvironment = process.env,
 ) {
-  const releaseId = pageOnlyCurrentJsShowcaseReleaseIdForAssetSegments(asset);
-  return releaseId !== undefined
-    && currentJsShowcasePublication(releaseId, env).enabled;
+  const record = selectedCurrentJsAssetRecordForSegments(asset, env);
+  return record !== undefined
+    && pageOnlyReleaseIds.has(record.releaseId as PageOnlyShowcaseReleaseId)
+    && currentJsShowcasePublication(record.releaseId, env).enabled;
 }
