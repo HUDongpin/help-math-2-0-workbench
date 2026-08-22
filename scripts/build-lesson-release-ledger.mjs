@@ -14,7 +14,7 @@ const DEFAULT_COMPLETION_LEDGER_PATH = path.join(projectRoot, "catalog", "comple
 const DEFAULT_MIGRATIONS_ROOT = path.join(projectRoot, "migrations");
 const DEFAULT_OUTPUT_PATH = path.join(projectRoot, "catalog", "lesson-release-ledger.json");
 const LEDGER_SCHEMA_VERSION = 1;
-const GENERATOR_VERSION = "1.1.0";
+const GENERATOR_VERSION = "1.2.0";
 const SHA256_PATTERN = /^[a-f0-9]{64}$/;
 const GENERATED_MARKER_PATTERN = /^sha256:[a-f0-9]{64}$/;
 
@@ -101,14 +101,13 @@ function validateMember(member, release, index, shardsById) {
     "shardId",
     "source",
     "xmlOccurrence",
+    "placementId",
   ], label);
   invariant(member.ordinal === index + 1, `${label}.ordinal must preserve exact one-indexed lesson order`);
   nonempty(member.animationId, `${label}.animationId`);
   invariant(/^swf-[a-f0-9]{64}$/.test(member.assetId || ""), `${label}.assetId is malformed`);
-  invariant(
-    member.releaseRole === "active-xml-referenced-page" || member.releaseRole === "course-shell",
-    `${label}.releaseRole is invalid`,
-  );
+  invariant(member.releaseRole === "active-xml-referenced-page",
+    `${label}.releaseRole must be an active XML page in page-only scope`);
   nonempty(member.batchId, `${label}.batchId`);
   nonempty(member.shardId, `${label}.shardId`);
   exactKeys(member.source, ["path", "sha256"], `${label}.source`);
@@ -121,14 +120,11 @@ function validateMember(member, release, index, shardsById) {
   invariant(shard, `${label}.shardId does not identify a declared shard`);
   invariant(member.batchId === shard.batchId, `${label}.batchId does not match its shard`);
 
-  if (member.ordinal <= release.expectedCounts.activeXmlReferencedPages) {
-    invariant(member.releaseRole === "active-xml-referenced-page", `${label} must be an active XML page`);
-    invariant(member.xmlOccurrence === member.ordinal, `${label}.xmlOccurrence must equal its active XML ordinal`);
-  } else {
-    invariant(member.ordinal <= release.expectedCounts.members, `${label} exceeds the declared release member count`);
-    invariant(member.releaseRole === "course-shell", `${label} must be the course shell`);
-    invariant(member.xmlOccurrence === null, `${label}.xmlOccurrence must be null for the course shell`);
-  }
+  invariant(member.xmlOccurrence === member.ordinal,
+    `${label}.xmlOccurrence must equal its active XML ordinal`);
+  const expectedPlacementId = `g${String(release.grade).padStart(2, "0")}-l${String(release.lesson).padStart(2, "0")}-placement-${String(member.ordinal).padStart(3, "0")}`;
+  invariant(member.placementId === expectedPlacementId,
+    `${label}.placementId must bind the active XML occurrence`);
 }
 
 function validateRelease(release, index) {
@@ -175,7 +171,7 @@ function validateRelease(release, index) {
 
   exactKeys(
     release.expectedCounts,
-    ["activeXmlReferencedPages", "courseShells", "members", "shards"],
+    ["activeXmlReferencedPages", "uniquePageAnimations", "courseShells", "members", "shards"],
     `${label}.expectedCounts`,
   );
   invariant(
@@ -184,26 +180,40 @@ function validateRelease(release, index) {
     `${label}.expectedCounts.activeXmlReferencedPages is invalid`,
   );
   invariant(
-    Number.isSafeInteger(release.expectedCounts.courseShells) && release.expectedCounts.courseShells > 0,
-    `${label}.expectedCounts.courseShells is invalid`,
+    release.expectedCounts.uniquePageAnimations === release.expectedCounts.activeXmlReferencedPages,
+    `${label}.expectedCounts.uniquePageAnimations must equal active XML pages`,
+  );
+  invariant(
+    release.expectedCounts.courseShells === 0,
+    `${label}.expectedCounts.courseShells must be zero in page-only scope`,
   );
   invariant(
     Number.isSafeInteger(release.expectedCounts.members) &&
-      release.expectedCounts.members ===
-        release.expectedCounts.activeXmlReferencedPages + release.expectedCounts.courseShells,
-    `${label}.expectedCounts.members must equal active pages plus course shells`,
+      release.expectedCounts.members === release.expectedCounts.activeXmlReferencedPages,
+    `${label}.expectedCounts.members must equal active pages in page-only scope`,
   );
   invariant(
     Number.isSafeInteger(release.expectedCounts.shards) && release.expectedCounts.shards > 0,
     `${label}.expectedCounts.shards is invalid`,
   );
 
-  exactKeys(release.scope, ["collection", "grade", "lesson", "excludeNonMembers"], `${label}.scope`);
+  exactKeys(release.scope, [
+    "collection",
+    "grade",
+    "lesson",
+    "excludeNonMembers",
+    "pageOnly",
+    "legacyFlashCourseShellExcluded",
+    "modernMyLessonHostRetained",
+  ], `${label}.scope`);
   invariant(
     release.scope.collection === "course" &&
       release.scope.grade === release.grade &&
       release.scope.lesson === release.lesson &&
-      release.scope.excludeNonMembers === true,
+      release.scope.excludeNonMembers === true &&
+      release.scope.pageOnly === true &&
+      release.scope.legacyFlashCourseShellExcluded === true &&
+      release.scope.modernMyLessonHostRetained === true,
     `${label}.scope does not match the release identity`,
   );
 

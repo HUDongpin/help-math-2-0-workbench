@@ -3,6 +3,7 @@ import productReleaseDocument from '../../../catalog/page-only-current-js-produc
 import {G4_PAGE_ONLY_COURSE_DESCRIPTORS} from
   './g4-page-only-course-descriptors.server';
 import {G5_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR} from './g5-l3-whole-lesson-player-descriptor';
+import {G5_L5_PRODUCT_BRIDGE_DESCRIPTOR} from './g5-l5-product-bridge-descriptor';
 import type {PageOnlyLessonNavigationDescriptor} from './lesson-navigation';
 import type {PageOnlyLessonPlayerDescriptor} from
   './whole-lesson-player-descriptor';
@@ -13,6 +14,7 @@ type ProductRelease =
 const pageOnlyDescriptors = [
   ...G4_PAGE_ONLY_COURSE_DESCRIPTORS,
   G5_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR,
+  G5_L5_PRODUCT_BRIDGE_DESCRIPTOR,
 ].filter(
   (descriptor): descriptor is PageOnlyLessonPlayerDescriptor =>
     descriptor !== undefined,

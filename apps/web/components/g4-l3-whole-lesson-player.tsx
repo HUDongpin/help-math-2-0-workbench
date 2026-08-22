@@ -88,7 +88,7 @@ const G4_L3_LEGACY_VISUAL_SKIN: LegacyLessonShellVisualSkin = Object.freeze({
     G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.visualSkin.evidence.sourceSwfSha256,
 });
 const G4_L3_REQUIRED_MEMBER_COUNT =
-  G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.expectedReleaseMemberCount;
+  G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.activePageCount;
 const G4_L3_RELEASE_MEMBER_IDS = Object.freeze(
   G4_L3_LESSON.pages.map(({animationId}) => animationId),
 );

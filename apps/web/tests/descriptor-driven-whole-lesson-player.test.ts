@@ -124,6 +124,38 @@ test('descriptor-driven player never mounts or prefetches unavailable renderers'
     component,
     /historical shell and strict-admission contracts remain available for internal review only/,
   );
+  assert.match(
+    component,
+    /data-page-runtime-kind=\{runtimeEvidenceBoundary\?\.runtimeKind\}/,
+  );
+  assert.match(
+    component,
+    /data-page-actionscript-execution=\{\s*runtimeEvidenceBoundary\?\.actionScriptExecution\s*\}/,
+  );
+  assert.match(
+    component,
+    /data-page-natural-trace-validation=\{\s*runtimeEvidenceBoundary\?\.naturalTraceValidation\s*\}/,
+  );
+  assert.match(
+    component,
+    /data-page-audio-acceptance=\{runtimeEvidenceBoundary\?\.audioAcceptance\}/,
+  );
+  assert.match(
+    component,
+    /data-page-replay-semantics=\{runtimeEvidenceBoundary\?\.replaySemantics\}/,
+  );
+  assert.match(
+    component,
+    /data-page-runtime-evidence-boundary=\{\s*runtimeEvidenceBoundary\.runtimeKind\s*\}/,
+  );
+  assert.match(
+    component,
+    /Original ActionScript, natural trace, audio, and original Replay semantics are not yet established; Replay only restarts the current renderer\./,
+  );
+  assert.match(
+    component,
+    /El ActionScript original, la traza natural, el audio y la semántica original de Replay aún no están establecidos; Replay solo reinicia el renderizador actual\./,
+  );
   assert.match(component, /Use Previous and Next to move through this lesson\./);
   assert.match(component, /Your progress stays saved on this device\./);
   assert.match(
@@ -430,8 +462,8 @@ test('registered whole-lesson routes preserve cross-binding and publication gate
     2,
     'both whole-lesson adapters must receive the fixed Focus Nova mode',
   );
-  assert.match(registry, /G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR/);
-  assert.match(registry, /G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR/);
+  assert.match(registry, /G4_L3_PAGE_ONLY_COURSE_DESCRIPTOR/);
+  assert.match(registry, /G5_L4_PAGE_ONLY_COURSE_DESCRIPTOR/);
 });
 
 test('the descriptor-driven player forwards the header title band to the shell', async () => {

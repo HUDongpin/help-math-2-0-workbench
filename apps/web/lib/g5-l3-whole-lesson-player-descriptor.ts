@@ -154,6 +154,14 @@ export function buildG5L3WholeLessonPlayerDescriptor(
           kind: 'unavailable' as const,
           reason: 'whole-lesson-renderer-not-source-bound',
         }),
+    runtimeEvidenceBoundary: Object.freeze({
+      runtimeKind: 'source-static-current-js-candidate' as const,
+      actionScriptExecution: 'not-executed' as const,
+      naturalTraceValidation: 'not-established' as const,
+      audioAcceptance: 'not-established' as const,
+      replaySemantics:
+        'renderer-restart-only-source-behavior-not-established' as const,
+    }),
     source: Object.freeze({
       assetId: page.assetId,
       sourceOccurrence: page.sourceOccurrence,

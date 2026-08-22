@@ -7,6 +7,17 @@ import type {
   WholeLessonPlayerPage,
 } from './whole-lesson-player-descriptor';
 
+const G5_L5_FOUR_PAGE_VERTICAL_SLICE_IDS = Object.freeze([
+  'course-g05-l05-rw-003',
+  'course-g05-l05-vb-012',
+  'course-g05-l05-ts-007',
+  'course-g05-l05-fq-003',
+] as const);
+
+const G5_L5_FOUR_PAGE_VERTICAL_SLICE_ID_SET = new Set<string>(
+  G5_L5_FOUR_PAGE_VERTICAL_SLICE_IDS,
+);
+
 function courseLabel(locale: 'en' | 'es'): SourceBoundLabel {
   return locale === 'en'
     ? Object.freeze({
@@ -40,7 +51,10 @@ export function buildG5L5ProductBridgeDescriptor(): PageOnlyLessonPlayerDescript
   );
 
   const pages = G5_L5_PRODUCT_BRIDGE_DATA.pages.map(
-    (page, index): WholeLessonPlayerPage => Object.freeze({
+    (page, index): WholeLessonPlayerPage => {
+      const inProductVerticalSlice =
+        G5_L5_FOUR_PAGE_VERTICAL_SLICE_ID_SET.has(page.animationId);
+      return Object.freeze({
       placementId:
         `g05-l05-placement-${String(index + 1).padStart(3, '0')}`,
       globalPageOrdinal: page.ordinal,
@@ -82,12 +96,47 @@ export function buildG5L5ProductBridgeDescriptor(): PageOnlyLessonPlayerDescript
             kind: 'unavailable' as const,
             reason: 'outside-current-private-product-bridge-freeze',
           }),
+      runtimeEvidenceBoundary: inProductVerticalSlice
+        ? Object.freeze({
+            runtimeKind:
+              'source-script-bound-product-behavior-current-js-candidate' as const,
+            actionScriptExecution: 'not-executed' as const,
+            naturalTraceValidation: 'not-established' as const,
+            audioAcceptance: 'not-established' as const,
+            replaySemantics:
+              'product-complete-state-reset-original-runtime-parity-not-established' as const,
+            productBehavior:
+              'maintained-javascript-state-machine-implemented' as const,
+            productVisualBehaviorComposite: page.animationId ===
+                'course-g05-l05-fq-003'
+              ? 'source-script-assignment-composite-generated-original-runtime-unvalidated' as const
+              : page.animationId === 'course-g05-l05-vb-012' ||
+                  page.animationId === 'course-g05-l05-ts-007'
+                ? 'source-script-behavior-composite-generated-original-runtime-unvalidated' as const
+                : 'not-established' as const,
+          })
+        : Object.freeze({
+            runtimeKind: 'source-static-current-js-candidate' as const,
+            actionScriptExecution: 'not-executed' as const,
+            naturalTraceValidation: 'not-established' as const,
+            audioAcceptance: 'not-established' as const,
+            replaySemantics:
+              'renderer-restart-only-source-behavior-not-established' as const,
+          }),
+      presentation: inProductVerticalSlice &&
+          page.animationId !== 'course-g05-l05-rw-003'
+        ? Object.freeze({
+            pageInteractionCompanionTargetIdSuffix:
+              'four-page-product-vertical-slice-companion',
+          })
+        : undefined,
       source: Object.freeze({
         assetId: page.assetId,
         sourceOccurrence: page.sourceOccurrence,
         spanishTitleStatus: 'missing-page-level-spanish-title' as const,
       }),
-    }),
+      });
+    },
   );
 
   if (pages.length !== 56 || pages.some((page, index) =>
@@ -155,6 +204,20 @@ export function buildG5L5ProductBridgeDescriptor(): PageOnlyLessonPlayerDescript
       ),
       registeredAnimationCount: registeredPages.length,
       pageOnlyDescriptorMemberCount: 56,
+      verticalSlice: Object.freeze({
+        sliceId: 'g5-l5-four-page-product-vertical-slice-v1',
+        selectedAnimationIds: G5_L5_FOUR_PAGE_VERTICAL_SLICE_IDS,
+        behaviorClosure:
+          'three-source-script-behavior-composites-implemented-rw003-static-source-candidate' as const,
+        visualCompositeDisposition:
+          'fq003-vb012-ts007-source-script-behavior-composites-generated-original-runtime-unvalidated' as const,
+        legacyNetworkReporting: 'blocked-memory-only' as const,
+        audioDisposition: 'unresolved-disabled' as const,
+        accessibilityDisposition:
+          'partial-semantic-controls-source-math-canvas-not-accessible' as const,
+        layoutMatrix: 'pass-en-es-desktop-tablet-mobile' as const,
+        scaleDecision: 'no-go-unattended-factory-scale-out' as const,
+      }),
       acceptanceEffects: Object.freeze({
         authoritativeOriginalRuntime: false,
         fidelityAccepted: false,

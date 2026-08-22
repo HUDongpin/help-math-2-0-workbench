@@ -45,6 +45,12 @@ export default defineConfig({
         process.env.MODERN_WIDE_SHELL_ENABLED ?? 'false',
       CURRENT_JS_SHOWCASE_G4_L3_ENABLED:
         process.env.CURRENT_JS_SHOWCASE_G4_L3_ENABLED ?? 'false',
+      CURRENT_JS_SHOWCASE_G4_L5_ENABLED:
+        process.env.CURRENT_JS_SHOWCASE_G4_L5_ENABLED ?? 'false',
+      CURRENT_JS_SHOWCASE_G4_L10_ENABLED:
+        process.env.CURRENT_JS_SHOWCASE_G4_L10_ENABLED ?? 'false',
+      CURRENT_JS_SHOWCASE_G4_L11_ENABLED:
+        process.env.CURRENT_JS_SHOWCASE_G4_L11_ENABLED ?? 'false',
       CURRENT_JS_SHOWCASE_G3_L2_ENABLED:
         process.env.CURRENT_JS_SHOWCASE_G3_L2_ENABLED ?? 'false',
       CURRENT_JS_SHOWCASE_G5_L3_ENABLED:

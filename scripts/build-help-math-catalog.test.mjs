@@ -436,8 +436,8 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
   assert.equal(releaseQueue.titleDisplay, "Negative Numbers");
   assert.equal(releaseQueue.domain, "negative-numbers-number-line");
   assert.equal(releaseQueue.activeXmlReferencedPageAssetCount, 39);
-  assert.equal(releaseQueue.courseShellAssetCount, 1);
-  assert.equal(releaseQueue.canonicalAssetCount, 40);
+  assert.equal(releaseQueue.courseShellAssetCount, 0);
+  assert.equal(releaseQueue.canonicalAssetCount, 39);
   assert.equal(releaseQueue.releasePartCount, 2);
   assert.deepEqual(
     releaseQueue.batches.map((batch) => ({
@@ -450,7 +450,7 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
     })),
     [
       {batchId: "batch-001", canonicalAssetCount: 25, releasePart: 1, releasePartCount: 2, releaseComplete: false, scaffoldingPrerequisite: {kind: "none"}},
-      {batchId: "batch-002", canonicalAssetCount: 15, releasePart: 2, releasePartCount: 2, releaseComplete: true, scaffoldingPrerequisite: {kind: "none"}},
+      {batchId: "batch-002", canonicalAssetCount: 14, releasePart: 2, releasePartCount: 2, releaseComplete: true, scaffoldingPrerequisite: {kind: "none"}},
     ],
   );
   assert.deepEqual(batches.queues[1].batches[0].scaffoldingPrerequisite, {
@@ -459,7 +459,7 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
   });
 
   assert.equal(lessonReleases.schemaVersion, 1);
-  assert.equal(lessonReleases.releases.length, 4);
+  assert.equal(lessonReleases.releases.length, 5);
   const release = lessonReleases.releases.find(({releaseId}) => releaseId === "lesson-g04-l03-negative-numbers");
   assert.ok(release);
   assert.equal(release.releaseOrder, 1);
@@ -474,35 +474,34 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
   });
   assert.deepEqual(release.expectedCounts, {
     activeXmlReferencedPages: 39,
-    courseShells: 1,
-    members: 40,
+    uniquePageAnimations: 39,
+    courseShells: 0,
+    members: 39,
     shards: 2,
   });
-  assert.deepEqual(release.scope, {collection: "course", grade: 4, lesson: 3, excludeNonMembers: true});
+  assert.deepEqual(release.scope, {
+    collection: "course",
+    grade: 4,
+    lesson: 3,
+    excludeNonMembers: true,
+    pageOnly: true,
+    legacyFlashCourseShellExcluded: true,
+    modernMyLessonHostRetained: true,
+  });
   assert.deepEqual(release.shards, [
-    {shardId: "shard-01", batchId: "batch-001", ordinal: 1, parallelGroup: "g04-l03-mvp", memberCount: 25, developmentPrerequisites: []},
-    {shardId: "shard-02", batchId: "batch-002", ordinal: 2, parallelGroup: "g04-l03-mvp", memberCount: 15, developmentPrerequisites: []},
+    {shardId: "shard-01", batchId: "batch-001", ordinal: 1, parallelGroup: "g04-l03-page-only", memberCount: 25, developmentPrerequisites: []},
+    {shardId: "shard-02", batchId: "batch-002", ordinal: 2, parallelGroup: "g04-l03-page-only", memberCount: 14, developmentPrerequisites: []},
   ]);
-  assert.equal(release.members.length, 40);
-  assert.deepEqual(release.members.map((member) => member.ordinal), Array.from({length: 40}, (_, index) => index + 1));
+  assert.equal(release.members.length, 39);
+  assert.deepEqual(release.members.map((member) => member.ordinal), Array.from({length: 39}, (_, index) => index + 1));
   assert.deepEqual(
     release.members.slice(0, 39).map((member) => member.xmlOccurrence),
     Array.from({length: 39}, (_, index) => index + 1),
   );
-  assert.ok(release.members.slice(0, 39).every((member) => member.releaseRole === "active-xml-referenced-page"));
-  assert.deepEqual(release.members.at(-1), {
-    ordinal: 40,
-    animationId: "shell-course-g04-l03-index-local",
-    assetId: "swf-817e599de43a7924f0a93791e950c8781755692371945a5b7ea4cdd2ad26c58e",
-    releaseRole: "course-shell",
-    batchId: "batch-002",
-    shardId: "shard-02",
-    source: {
-      path: "HELP_COURSES/ELMGR4/L3/index_local.swf",
-      sha256: "817e599de43a7924f0a93791e950c8781755692371945a5b7ea4cdd2ad26c58e",
-    },
-    xmlOccurrence: null,
-  });
+  assert.ok(release.members.every((member, index) =>
+    member.releaseRole === "active-xml-referenced-page" &&
+    member.placementId === `g04-l03-placement-${String(index + 1).padStart(3, "0")}`
+  ));
 
   const canonicalByAssetId = new Map(
     catalog.animations
@@ -524,8 +523,9 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
   });
   assert.deepEqual(numberLinesRelease.expectedCounts, {
     activeXmlReferencedPages: 54,
-    courseShells: 1,
-    members: 55,
+    uniquePageAnimations: 54,
+    courseShells: 0,
+    members: 54,
     shards: 3,
   });
   assert.deepEqual(numberLinesRelease.shards, [
@@ -533,15 +533,15 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
       shardId: "g05-l04-host-language",
       batchId: "g05-l04-host-language",
       ordinal: 1,
-      parallelGroup: "g05-l04-mvp",
-      memberCount: 15,
+      parallelGroup: "g05-l04-page-only",
+      memberCount: 14,
       developmentPrerequisites: [],
     },
     {
       shardId: "g05-l04-instruction",
       batchId: "g05-l04-instruction",
       ordinal: 2,
-      parallelGroup: "g05-l04-mvp",
+      parallelGroup: "g05-l04-page-only",
       memberCount: 21,
       developmentPrerequisites: [],
     },
@@ -549,7 +549,7 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
       shardId: "g05-l04-practice-assessment",
       batchId: "g05-l04-practice-assessment",
       ordinal: 3,
-      parallelGroup: "g05-l04-mvp",
+      parallelGroup: "g05-l04-page-only",
       memberCount: 19,
       developmentPrerequisites: [],
     },
@@ -558,23 +558,14 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
     numberLinesRelease.members.slice(0, 54).map(({xmlOccurrence}) => xmlOccurrence),
     Array.from({length: 54}, (_, index) => index + 1),
   );
-  assert.deepEqual(numberLinesRelease.members.at(-1), {
-    ordinal: 55,
-    animationId: "shell-course-g05-l04-index-local",
-    assetId: "swf-7865195a07666e8123bef33f52aea36e06b7e0a9987fbbea605bc92cbe9b0301",
-    releaseRole: "course-shell",
-    batchId: "g05-l04-host-language",
-    shardId: "g05-l04-host-language",
-    source: {
-      path: "HELP_COURSES/ELMGR5/L4/index_local.swf",
-      sha256: "7865195a07666e8123bef33f52aea36e06b7e0a9987fbbea605bc92cbe9b0301",
-    },
-    xmlOccurrence: null,
-  });
+  assert.ok(numberLinesRelease.members.every((member, index) =>
+    member.releaseRole === "active-xml-referenced-page" &&
+    member.placementId === `g05-l04-placement-${String(index + 1).padStart(3, "0")}`
+  ));
   const numberLinesAnimations = numberLinesRelease.members.map((member) => canonicalByAssetId.get(member.assetId));
   assert.ok(numberLinesAnimations.every(Boolean));
   assert.equal(numberLinesAnimations.filter(({pairedFla}) => pairedFla).length, 44);
-  assert.equal(numberLinesAnimations.filter(({pairedFla}) => !pairedFla).length, 11);
+  assert.equal(numberLinesAnimations.filter(({pairedFla}) => !pairedFla).length, 10);
   assert.ok(numberLinesRelease.members.every((member, index) =>
     member.animationId === numberLinesAnimations[index].animationId &&
     member.source.path === numberLinesAnimations[index].source.path &&
@@ -588,7 +579,7 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
   );
   const numberLinesMemberIds = new Set(numberLinesRelease.members.map(({animationId}) => animationId));
   assert.equal(allNumberLinesPlacements.length, 65);
-  assert.equal(allNumberLinesPlacements.filter(({animationId}) => !numberLinesMemberIds.has(animationId)).length, 10);
+  assert.equal(allNumberLinesPlacements.filter(({animationId}) => !numberLinesMemberIds.has(animationId)).length, 11);
 
   const addSubtractRelease = lessonReleases.releases.find(
     ({releaseId}) => releaseId === "lesson-g05-l05-add-subtract-negative-numbers",
@@ -605,8 +596,9 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
   });
   assert.deepEqual(addSubtractRelease.expectedCounts, {
     activeXmlReferencedPages: 56,
-    courseShells: 1,
-    members: 57,
+    uniquePageAnimations: 56,
+    courseShells: 0,
+    members: 56,
     shards: 3,
   });
   assert.deepEqual(addSubtractRelease.shards, [
@@ -614,15 +606,15 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
       shardId: "g05-l05-host-language",
       batchId: "g05-l05-host-language",
       ordinal: 1,
-      parallelGroup: "g05-l05-mvp",
-      memberCount: 18,
+      parallelGroup: "g05-l05-page-only",
+      memberCount: 17,
       developmentPrerequisites: [],
     },
     {
       shardId: "g05-l05-instruction",
       batchId: "g05-l05-instruction",
       ordinal: 2,
-      parallelGroup: "g05-l05-mvp",
+      parallelGroup: "g05-l05-page-only",
       memberCount: 19,
       developmentPrerequisites: [],
     },
@@ -630,7 +622,7 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
       shardId: "g05-l05-practice-assessment",
       batchId: "g05-l05-practice-assessment",
       ordinal: 3,
-      parallelGroup: "g05-l05-mvp",
+      parallelGroup: "g05-l05-page-only",
       memberCount: 20,
       developmentPrerequisites: [],
     },
@@ -639,23 +631,14 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
     addSubtractRelease.members.slice(0, 56).map(({xmlOccurrence}) => xmlOccurrence),
     Array.from({length: 56}, (_, index) => index + 1),
   );
-  assert.deepEqual(addSubtractRelease.members.at(-1), {
-    ordinal: 57,
-    animationId: "shell-course-g05-l05-index-local",
-    assetId: "swf-5375c535f0761ae580f00eeda29c00d34d0de901239a7d2c65acf968a8290c66",
-    releaseRole: "course-shell",
-    batchId: "g05-l05-host-language",
-    shardId: "g05-l05-host-language",
-    source: {
-      path: "HELP_COURSES/ELMGR5/L5/index_local.swf",
-      sha256: "5375c535f0761ae580f00eeda29c00d34d0de901239a7d2c65acf968a8290c66",
-    },
-    xmlOccurrence: null,
-  });
+  assert.ok(addSubtractRelease.members.every((member, index) =>
+    member.releaseRole === "active-xml-referenced-page" &&
+    member.placementId === `g05-l05-placement-${String(index + 1).padStart(3, "0")}`
+  ));
   const addSubtractAnimations = addSubtractRelease.members.map((member) => canonicalByAssetId.get(member.assetId));
   assert.ok(addSubtractAnimations.every(Boolean));
   assert.equal(addSubtractAnimations.filter(({pairedFla}) => pairedFla).length, 49);
-  assert.equal(addSubtractAnimations.filter(({pairedFla}) => !pairedFla).length, 8);
+  assert.equal(addSubtractAnimations.filter(({pairedFla}) => !pairedFla).length, 7);
   assert.ok(addSubtractRelease.members.every((member, index) =>
     member.animationId === addSubtractAnimations[index].animationId &&
     member.source.path === addSubtractAnimations[index].source.path &&
@@ -669,7 +652,7 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
   );
   const addSubtractMemberIds = new Set(addSubtractRelease.members.map(({animationId}) => animationId));
   assert.equal(allAddSubtractPlacements.length, 68);
-  assert.equal(allAddSubtractPlacements.filter(({animationId}) => !addSubtractMemberIds.has(animationId)).length, 11);
+  assert.equal(allAddSubtractPlacements.filter(({animationId}) => !addSubtractMemberIds.has(animationId)).length, 12);
 
   const perimeterAreaRelease = lessonReleases.releases.find(
     ({releaseId}) => releaseId === "lesson-g04-l10-perimeter-area",
@@ -686,8 +669,9 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
   });
   assert.deepEqual(perimeterAreaRelease.expectedCounts, {
     activeXmlReferencedPages: 46,
-    courseShells: 1,
-    members: 47,
+    uniquePageAnimations: 46,
+    courseShells: 0,
+    members: 46,
     shards: 3,
   });
   assert.deepEqual(perimeterAreaRelease.shards, [
@@ -695,15 +679,15 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
       shardId: "g04-l10-host-language",
       batchId: "g04-l10-host-language",
       ordinal: 1,
-      parallelGroup: "g04-l10-mvp",
-      memberCount: 16,
+      parallelGroup: "g04-l10-page-only",
+      memberCount: 15,
       developmentPrerequisites: [],
     },
     {
       shardId: "g04-l10-instruction",
       batchId: "g04-l10-instruction",
       ordinal: 2,
-      parallelGroup: "g04-l10-mvp",
+      parallelGroup: "g04-l10-page-only",
       memberCount: 15,
       developmentPrerequisites: [],
     },
@@ -711,7 +695,7 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
       shardId: "g04-l10-practice-assessment",
       batchId: "g04-l10-practice-assessment",
       ordinal: 3,
-      parallelGroup: "g04-l10-mvp",
+      parallelGroup: "g04-l10-page-only",
       memberCount: 16,
       developmentPrerequisites: [],
     },
@@ -720,25 +704,16 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
     perimeterAreaRelease.members.slice(0, 46).map(({xmlOccurrence}) => xmlOccurrence),
     Array.from({length: 46}, (_, index) => index + 1),
   );
-  assert.deepEqual(perimeterAreaRelease.members.at(-1), {
-    ordinal: 47,
-    animationId: "shell-course-g04-l10-index-local",
-    assetId: "swf-050d4181f8d679e6232871371b70aeaa02dbecb4c7e16cfbc732437307cf6072",
-    releaseRole: "course-shell",
-    batchId: "g04-l10-host-language",
-    shardId: "g04-l10-host-language",
-    source: {
-      path: "HELP_COURSES/ELMGR4/L10/index_local.swf",
-      sha256: "050d4181f8d679e6232871371b70aeaa02dbecb4c7e16cfbc732437307cf6072",
-    },
-    xmlOccurrence: null,
-  });
+  assert.ok(perimeterAreaRelease.members.every((member, index) =>
+    member.releaseRole === "active-xml-referenced-page" &&
+    member.placementId === `g04-l10-placement-${String(index + 1).padStart(3, "0")}`
+  ));
   const perimeterAreaAnimations = perimeterAreaRelease.members.map(
     (member) => canonicalByAssetId.get(member.assetId),
   );
   assert.ok(perimeterAreaAnimations.every(Boolean));
   assert.equal(perimeterAreaAnimations.filter(({pairedFla}) => pairedFla).length, 34);
-  assert.equal(perimeterAreaAnimations.filter(({pairedFla}) => !pairedFla).length, 13);
+  assert.equal(perimeterAreaAnimations.filter(({pairedFla}) => !pairedFla).length, 12);
   assert.ok(perimeterAreaRelease.members.every((member, index) =>
     member.animationId === perimeterAreaAnimations[index].animationId &&
     member.source.path === perimeterAreaAnimations[index].source.path &&
@@ -756,8 +731,26 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
   assert.equal(allPerimeterAreaPlacements.length, 54);
   assert.equal(
     allPerimeterAreaPlacements.filter(({animationId}) => !perimeterAreaMemberIds.has(animationId)).length,
-    7,
+    8,
   );
+
+  const grade3AdditionRelease = lessonReleases.releases.find(
+    ({releaseId}) => releaseId === "lesson-g03-l02-addition-subtraction-page-only-current-js",
+  );
+  assert.ok(grade3AdditionRelease);
+  assert.deepEqual(grade3AdditionRelease.expectedCounts, {
+    activeXmlReferencedPages: 70,
+    uniquePageAnimations: 70,
+    courseShells: 0,
+    members: 70,
+    shards: 3,
+  });
+  assert.equal(grade3AdditionRelease.members.length, 70);
+  assert.ok(grade3AdditionRelease.members.every((member, index) =>
+    member.xmlOccurrence === index + 1 &&
+    member.releaseRole === "active-xml-referenced-page" &&
+    member.placementId === `g03-l02-placement-${String(index + 1).padStart(3, "0")}`
+  ));
 
   const releaseAnimations = releaseQueue.batches.flatMap((batch) => batch.items)
     .map((item) => canonicalByAssetId.get(item.assetId));
@@ -772,7 +765,7 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
   );
   assert.deepEqual(
     releaseAnimations.filter((animation) => animation.flags.shell).map((animation) => animation.animationId),
-    ["shell-course-g04-l03-index-local"],
+    [],
   );
   assert.equal(
     releaseAnimations.filter((animation) => animation.animationId === "course-g04-l03-in-009").length,
@@ -824,9 +817,9 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
     return animation.classification.lesson !== 3;
   }));
   const legacyQueue = batches.queues.find((queue) => queue.queueId === "legacy-exceptions");
-  assert.equal(legacyQueue.canonicalAssetCount, 224);
+  assert.equal(legacyQueue.canonicalAssetCount, 225);
   assert.equal(legacyQueue.batches.length, 9);
-  assert.equal(legacyQueue.batches.at(-1).canonicalAssetCount, 24);
+  assert.equal(legacyQueue.batches.at(-1).canonicalAssetCount, 25);
   const legacyG4L3 = legacyQueue
     .batches.flatMap((batch) => batch.items)
     .map((item) => canonicalByAssetId.get(item.assetId))
@@ -835,11 +828,10 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
       animation.classification.grade === 4 &&
       animation.classification.lesson === 3
     );
-  assert.equal(legacyG4L3.length, 9);
-  assert.ok(legacyG4L3.every((animation) =>
-    animation.flags.unreferenced &&
-    animation.flags.variant &&
-    !animation.flags.shell
+  assert.equal(legacyG4L3.length, 10);
+  assert.equal(legacyG4L3.filter((animation) => animation.flags.shell).length, 1);
+  assert.ok(legacyG4L3.filter((animation) => !animation.flags.shell).every((animation) =>
+    animation.flags.unreferenced && animation.flags.variant
   ));
 
   const releaseAssetIds = new Set(releaseAnimations.map((animation) => animation.assetId));
@@ -875,7 +867,7 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
   const currentRelativeOrder = batches.queues
     .slice(1)
     .flatMap((queue) => queue.batches.flatMap((batch) => batch.items.map((item) => item.assetId)));
-  assert.equal(currentRelativeOrder.length, 2_034);
+  assert.equal(currentRelativeOrder.length, 2_035);
   assert.deepEqual(currentRelativeOrder, previousRelativeOrder);
 
   const batchItems = batches.queues.flatMap((queue) => queue.batches.flatMap((batch) => {

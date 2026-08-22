@@ -33,6 +33,7 @@
     "build:g4:page-only-product-releases": "node scripts/build-g4-page-only-product-releases.mjs",
     "build:g4:page-only-product-releases:check": "node scripts/build-g4-page-only-product-releases.mjs --check",
     "verify:g4:l5-l10-l11:page-only": "node scripts/verify-g4-l5-l10-l11-page-only-integration.mjs",
+    "verify:current-js:426:page-only": "node --import tsx scripts/verify-current-js-426-page-only-baseline.mjs",
     "test:g4:l5-l10-l11:page-only": "node_modules/.bin/tsx --test packages/demos/tests/g4-l5-page-only-current-js.test.ts packages/demos/tests/g4-l11-page-only-current-js.test.ts packages/demos/tests/course-g04-l11-in010-private-product-bridge.test.ts apps/web/tests/g4-l5-product-bridge.test.ts apps/web/tests/g4-l10-product-bridge-descriptor.test.ts apps/web/tests/g4-l11-migration-factory.test.ts apps/web/tests/g4-l5-l10-l11-page-only-course-integration.test.ts",
     "catalog:build": "node scripts/build-help-math-catalog.mjs --output catalog --concurrency 8 --verify-known-counts",
     "source:g4-active:plan:check": "node scripts/build-g4-active-source-promotion-plan.mjs --check",

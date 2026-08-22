@@ -72,6 +72,16 @@ test('G5 L3 descriptor registers every placement while reusing IN028 exactly twi
       page.rendererAvailability.runtimeQuery.scenario === 'source-static-frame' &&
       page.rendererAvailability.runtimeQuery.seed === '0',
   ));
+  assert.ok(descriptor.pages.every((page) =>
+    page.runtimeEvidenceBoundary?.runtimeKind ===
+      'source-static-current-js-candidate' &&
+    page.runtimeEvidenceBoundary.actionScriptExecution === 'not-executed' &&
+    page.runtimeEvidenceBoundary.naturalTraceValidation ===
+      'not-established' &&
+    page.runtimeEvidenceBoundary.audioAcceptance === 'not-established' &&
+    page.runtimeEvidenceBoundary.replaySemantics ===
+      'renderer-restart-only-source-behavior-not-established'
+  ));
   assert.ok(descriptor.pages.every((page) => hasAnimationModule(page.animationId)));
 
   const first = descriptor.pages[44]!;

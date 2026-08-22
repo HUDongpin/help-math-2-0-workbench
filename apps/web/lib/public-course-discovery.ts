@@ -1,6 +1,9 @@
 export const PUBLIC_CURRENT_JS_LESSON_ROUTES = Object.freeze([
   '/courses/3/2',
   '/courses/4/3',
+  '/courses/4/5',
+  '/courses/4/10',
+  '/courses/4/11',
   '/courses/5/3',
   '/courses/5/4',
   '/courses/5/5',

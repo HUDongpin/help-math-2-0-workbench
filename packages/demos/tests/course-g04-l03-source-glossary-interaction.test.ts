@@ -118,13 +118,14 @@ test("source glossary adapters declare only the typed memory-only keyterm host c
   }
 });
 
-test("only VB005, VB006, and RW003 admit the registered keyterm host capability", async () => {
+test("the formal registered lessons expose only the source-bound keyterm host pages", async () => {
   const admitted: string[] = [];
   for (const key of registeredAnimationKeys) {
     const module = await loadAnimationModule(key);
     if (module?.lessonHost?.capabilities.includes("keyterm")) admitted.push(key);
   }
   assert.deepEqual(admitted.sort(), [
+    "course-g03-l02-rw-002",
     "course-g04-l03-rw-003",
     "course-g04-l03-vb-005",
     "course-g04-l03-vb-006",

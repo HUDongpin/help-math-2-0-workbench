@@ -3730,6 +3730,162 @@ body:has(.lesson-shell2) {
   display: contents;
 }
 
+/* G5 L5's four-page factory calibration keeps the hash-bound 800 × 600
+   drawing plane untouched and portals maintained, keyboard-accessible product
+   controls into the modern My Lesson learning column. Direct-runtime views
+   retain a bounded in-stage fallback. */
+.g5-l5-slice {
+  height: 100%;
+  min-height: 0;
+  position: relative;
+  width: 100%;
+}
+
+.g5-l5-slice__source-visual,
+.g5-l5-slice__source-visual > section {
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+}
+
+.g5-l5-slice__source-visual > section {
+  margin: 0;
+  max-width: none;
+}
+
+.g5-l5-slice__companion {
+  background: #f7fbff;
+  border: 1px solid #aac5df;
+  border-radius: .85rem;
+  box-shadow: 0 10px 26px rgb(18 54 86 / 12%);
+  color: #102d42;
+  font-size: clamp(.92rem, 1.8vw, 1rem);
+  min-width: 0;
+  padding: clamp(.75rem, 2vw, 1rem);
+}
+
+.g5-l5-slice__companion--portaled {
+  grid-column: 1 / -1;
+  margin-top: .65rem;
+  width: 100%;
+}
+
+.g5-l5-slice__companion--fallback {
+  bottom: .75rem;
+  left: .75rem;
+  max-height: calc(100% - 1.5rem);
+  overflow: auto;
+  position: absolute;
+  right: .75rem;
+  z-index: 7;
+}
+
+.g5-l5-slice__companion fieldset {
+  border: 0;
+  margin: 0;
+  min-width: 0;
+  padding: 0;
+}
+
+.g5-l5-slice__companion legend {
+  font-weight: 750;
+  margin-bottom: .65rem;
+  padding: 0;
+}
+
+.g5-l5-slice__choice-grid,
+.g5-l5-slice__action-row {
+  display: grid;
+  gap: .55rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.g5-l5-slice__choice-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.g5-l5-slice__action-row {
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  margin-top: .65rem;
+}
+
+.g5-l5-slice__companion button {
+  background: #fff;
+  border: 2px solid #1f5f8e;
+  border-radius: .65rem;
+  color: #153f5d;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 760;
+  min-height: 44px;
+  padding: .55rem .75rem;
+}
+
+.g5-l5-slice__companion button:hover:not(:disabled) {
+  background: #e7f3ff;
+}
+
+.g5-l5-slice__companion button:focus-visible {
+  outline: 3px solid #f4a800;
+  outline-offset: 2px;
+}
+
+.g5-l5-slice__companion button:disabled {
+  cursor: not-allowed;
+  opacity: .58;
+}
+
+.g5-l5-slice__companion p {
+  margin: .55rem 0 0;
+}
+
+.g5-l5-slice__audio-boundary {
+  align-items: center;
+  border-top: 1px solid #c9d9e8;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem .75rem;
+  margin-top: .8rem !important;
+  padding-top: .75rem;
+}
+
+.g5-l5-slice__visual-blocker {
+  margin: 0 0 0.75rem;
+  border: 2px solid #b42318;
+  border-radius: 0.75rem;
+  background: #fff1f0;
+  color: #7a271a;
+  font-weight: 800;
+  line-height: 1.45;
+  padding: 0.75rem 0.875rem;
+}
+
+.g5-l5-slice__audio-boundary span {
+  flex: 1 1 18rem;
+  font-size: .86em;
+}
+
+.g5-l5-slice__help {
+  background: #fff8df;
+  border: 2px solid #d89a00;
+  border-radius: .65rem;
+  margin-top: .75rem;
+  padding: .75rem;
+}
+
+@media (max-width: 520px) {
+  .g5-l5-slice__choice-grid,
+  .g5-l5-slice__choice-grid--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .g5-l5-slice__companion--fallback {
+    bottom: .4rem;
+    left: .4rem;
+    right: .4rem;
+  }
+}
+
 .g5-l4-fq23-question-companion {
   grid-column: 1 / -1;
   margin-top: .65rem;
