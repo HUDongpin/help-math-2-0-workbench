@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {spawnSync} from 'node:child_process';
+import {readFileSync} from 'node:fs';
 import {describe, it} from 'node:test';
 
 const fakeTransportVariables = [
@@ -37,6 +38,17 @@ function importProductionConfig(
 }
 
 describe('Nova fake transport production build guard', () => {
+  it('keeps governed real-route suites out of ordinary Playwright discovery', () => {
+    const configSource = readFileSync(
+      new URL('../playwright.config.ts', import.meta.url),
+      'utf8',
+    );
+    assert.match(
+      configSource,
+      /testIgnore:\s*\[[\s\S]*?'nova-capability-gates\.spec\.ts'[\s\S]*?'nova-full-stack\.spec\.ts'[\s\S]*?'nova-speech-negative\.spec\.ts'/u,
+    );
+  });
+
   for (const variable of fakeTransportVariables) {
     it(`rejects production when ${variable} is defined as an empty string`, () => {
       const result = importProductionConfig({[variable]: ''});

@@ -251,7 +251,7 @@ test('synthetic Clerk execution is excluded from ordinary Playwright and loads o
   assert.doesNotMatch(dedicatedConfig, /loadEnvConfig|@next\/env/u);
   assert.match(
     baseConfig,
-    /testIgnore:\s*'clerk-synthetic-lifecycle\.spec\.ts'/u,
+    /testIgnore:\s*\[[\s\S]*?'clerk-synthetic-lifecycle\.spec\.ts'/u,
   );
   assert.match(
     runnerSource,
