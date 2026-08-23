@@ -1,3 +1,5 @@
+import type {LessonHostRequest} from './lesson-host-contract';
+
 export const G4_L9_P4_SEED = 4092026;
 
 export type G4L9P4Lane =
@@ -20,6 +22,20 @@ export interface G4L9P4AudioIdentity {
   readonly sourceSha256: string;
   readonly candidatePath: string;
   readonly spokenLanguage: 'undetermined';
+  readonly durationMs?: number;
+}
+
+export interface G4L9P4DragBinding {
+  readonly sourceInstance: `Scr${number}`;
+  readonly outcome: 'correct' | 'incorrect';
+}
+
+export interface G4L9P4GlossaryHandler {
+  readonly handlerIndex: number;
+  readonly sourceIntent: string;
+  readonly resolvedKeyAttribute: string;
+  readonly entryId: string;
+  readonly resolution: 'exact-screen-key-term' | 'explicit-source-bound-alias';
 }
 
 export interface G4L9P4PageConfig {
@@ -41,6 +57,11 @@ export interface G4L9P4PageConfig {
   readonly questionCount: number;
   readonly expectedOptionOffset: number;
   readonly audio: G4L9P4AudioIdentity | null;
+  readonly dragBindings?: readonly G4L9P4DragBinding[];
+  readonly glossaryHandlers?: readonly G4L9P4GlossaryHandler[];
+  readonly hostContractSymbols?: readonly string[];
+  readonly randomQuestionAdapter?: 'doGetRndQuest-maintained-seeded-order-v1';
+  readonly scenarioId?: string;
   readonly legacyNetworkPolicy: 'deny-by-default';
   readonly f08ScaleOut: false | 'not-applicable';
 }
@@ -103,6 +124,61 @@ export function expectedG4L9P4Option(
     seed + config.expectedOptionOffset,
   );
   return order[Math.max(0, questionIndex) % order.length]! % 3;
+}
+
+export function g4L9P4DragOutcome(
+  config: G4L9P4PageConfig,
+  sourceInstance: string,
+): G4L9P4DragBinding['outcome'] | undefined {
+  return config.dragBindings?.find(
+    (binding) => binding.sourceInstance === sourceInstance,
+  )?.outcome;
+}
+
+export function createG4L9P4FeedbackHostRequest(
+  config: G4L9P4PageConfig,
+  state: G4L9P4InteractionState,
+  correct: boolean,
+): LessonHostRequest {
+  return config.behavior === 'final-quiz'
+    ? Object.freeze({
+        type: 'record-fq-score' as const,
+        questionId: `${config.animationId}-q${state.questionIndex + 1}`,
+        correct,
+        pointsAwarded: correct ? 1 : 0,
+        pointsPossible: 1,
+      })
+    : Object.freeze({
+        type: 'record-practice-feedback' as const,
+        interactionId: `${config.animationId}-q${state.questionIndex + 1}`,
+        outcome: correct ? 'correct' as const : 'incorrect' as const,
+        // The maintained reducer is zero-based, but the modern host contract
+        // deliberately exposes source branch identity as a one-based value.
+        branchIndex: state.questionIndex + 1,
+        branchCount: config.questionCount,
+      });
+}
+
+export function createG4L9P4ReplayHostRequests(
+  config: G4L9P4PageConfig,
+  state: G4L9P4InteractionState,
+  activeInteractiveAudioId?: string | null,
+): readonly LessonHostRequest[] {
+  const requests: LessonHostRequest[] = [];
+  const audioCueId = `${config.animationId}-narration`;
+  if (
+    config.audio &&
+    (state.audioLifecycle === 'requested' ||
+      activeInteractiveAudioId === audioCueId)
+  ) {
+    requests.push(Object.freeze({type: 'stop-audio', cueId: audioCueId}));
+  }
+  requests.push(
+    config.behavior === 'final-quiz'
+      ? Object.freeze({type: 'reset-fq-score' as const})
+      : Object.freeze({type: 'reset-practice-feedback' as const}),
+  );
+  return Object.freeze(requests);
 }
 
 export function createG4L9P4InteractionState(
@@ -225,7 +301,7 @@ export function getG4L9P4FrameState(
       ? config.frameDomain
       : config.frameDomain,
     rootFrame: Math.min(config.rootFrameCount, 1),
-    scenario: context.scenario || 'p4-product-behavior',
+    scenario: context.scenario || config.scenarioId || 'p4-product-behavior',
     language: context.lang,
     seed: normalizeG4L9P4Seed(context.seed),
     replay: Math.max(0, finiteInteger(context.replay ?? 0)),

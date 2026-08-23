@@ -42,13 +42,17 @@ const PRODUCTION_PROFILE_PATH =
 const CANDIDATE_PROFILE_PATH =
   'apps/web/config/current-js-candidate-assets.v1.json';
 const CANDIDATE_CURRENTNESS_SUCCESSOR_RECEIPT_PATH =
-  'reports/current-js-candidate-assets-currentness-successor-2026-08-23-v2.json';
+  'reports/current-js-candidate-assets-currentness-successor-2026-08-23-v3.json';
 const PREVIOUS_CANDIDATE_CURRENTNESS_SUCCESSOR_RECEIPT_PATH =
-  'reports/current-js-candidate-assets-currentness-successor-2026-08-23-v1.json';
+  'reports/current-js-candidate-assets-currentness-successor-2026-08-23-v2.json';
 const G4_L9_P4_FREEZE_PATH =
   'catalog/g4-l9-p4-representative-slice-freeze-v1.json';
 const G4_L9_P4_GENERATOR_PATH =
   'scripts/build-g4-l9-p4-representative-slice.mjs';
+const G4_L9_P5_FREEZE_PATH =
+  'catalog/g4-l9-p5-f08-occurrence-32-stress-freeze-v1.json';
+const G4_L9_P5_GENERATOR_PATH =
+  'scripts/build-g4-l9-p5-f08-occurrence-32-stress.mjs';
 const G5_BEHAVIOR_CANVAS_GENERATOR_PATH =
   'scripts/build-g5-l5-vb012-ts007-behavior-aware-canvases.mjs';
 const SHARED_ADAPTER_GENERATOR_PATH =
@@ -59,7 +63,7 @@ const G5_BEHAVIOR_CALIBRATION_PATH =
 const EXPECTED = Object.freeze({
   publicBefore: 1339,
   publicExcess: 410,
-  g4CandidateRuntime: 229,
+  g4CandidateRuntime: 231,
   g4CandidateEvidence: 198,
   g5CandidateEvidence: 6,
   workbenchPublicMirrors: 259,
@@ -68,7 +72,7 @@ const EXPECTED = Object.freeze({
   productionTotal: 1114,
   productionChecksumSetSha256:
     '52dd1d51335523dc097b0c1a428e897960425ad184069fb023e98e0fcef7ae25',
-  candidateRuntimeTotal: 232,
+  candidateRuntimeTotal: 234,
   candidateEvidenceTotal: 204,
 });
 
@@ -141,7 +145,7 @@ const HISTORICAL_CURRENTNESS_BINDINGS = Object.freeze([
   }),
   Object.freeze({
     path: PREVIOUS_CANDIDATE_CURRENTNESS_SUCCESSOR_RECEIPT_PATH,
-    sha256: 'eb3a02815348a3d93d9b25e2cc083eeffd82e41434c20aa3d72d6da3954731e5',
+    sha256: '605e5d91495f989ee4ac05dda3e7c1c0898e33f23861e30a3a44c93e50bc9c5b',
   }),
 ]);
 
@@ -165,6 +169,7 @@ const RELEASE_IDS = Object.freeze({
   g4l10: 'lesson-g04-l10-perimeter-area-page-only',
   g4l11: 'lesson-g04-l11-coordinate-grid-page-only',
   g4l9p4: 'private-g4-l9-p4-representative-slice-v1',
+  g4l9p5: 'private-g4-l9-p5-f08-occurrence-32-stress-v1',
   g5l3: 'lesson-g05-l03-exponents-prime-factorizations-page-only',
   g5l4: 'lesson-g05-l04-number-lines',
   g5l5: 'lesson-g05-l05-add-subtract-negative-numbers',
@@ -269,6 +274,7 @@ function releaseIdForRelative(relative, {candidate = false} = {}) {
     || relative.startsWith('shell-course-g04-l03-')
   ) return RELEASE_IDS.g4l3;
   if (relative.startsWith('course-g04-l05-')) return RELEASE_IDS.g4l5;
+  if (relative.startsWith('course-g04-l09-ti-007/')) return RELEASE_IDS.g4l9p5;
   if (relative.startsWith('course-g04-l09-')) return RELEASE_IDS.g4l9p4;
   if (relative.startsWith('course-g04-l10-')) return RELEASE_IDS.g4l10;
   if (relative.startsWith('course-g04-l11-')) return RELEASE_IDS.g4l11;
@@ -481,7 +487,15 @@ async function verifyGeneratedCurrentnessArtifacts() {
 }
 
 async function buildCandidateCurrentnessSuccessorReceipt(candidateProfileBytes) {
-  const [historicalArtifacts, maintainedGenerators, entries, p4Freeze, p4Generator] = await Promise.all([
+  const [
+    historicalArtifacts,
+    maintainedGenerators,
+    entries,
+    p4Freeze,
+    p4Generator,
+    p5Freeze,
+    p5Generator,
+  ] = await Promise.all([
     Promise.all(HISTORICAL_CURRENTNESS_BINDINGS.map(expectedBinding)),
     Promise.all(CURRENTNESS_GENERATOR_BINDINGS.map(expectedBinding)),
     Promise.all(Object.entries(G5_CURRENTNESS_SUCCESSORS)
@@ -491,25 +505,38 @@ async function buildCandidateCurrentnessSuccessorReceipt(candidateProfileBytes) 
       )),
     ordinaryBinding(G4_L9_P4_FREEZE_PATH),
     ordinaryBinding(G4_L9_P4_GENERATOR_PATH),
+    ordinaryBinding(G4_L9_P5_FREEZE_PATH),
+    ordinaryBinding(G4_L9_P5_GENERATOR_PATH),
   ]);
   const candidateProfile = JSON.parse(candidateProfileBytes.toString('utf8'));
   const p4Entries = candidateProfile.entries.filter(
     (entry) => entry.releaseId === RELEASE_IDS.g4l9p4,
   );
   invariant(p4Entries.length === 23, 'G4 L9 P4 candidate asset closure must contain 23 files');
+  const p5Entries = candidateProfile.entries.filter(
+    (entry) => entry.releaseId === RELEASE_IDS.g4l9p5,
+  );
+  invariant(p5Entries.length === 2, 'G4 L9 P5 occurrence-32 candidate asset closure must contain 2 files');
+  invariant(
+    p5Entries.map(({relativePath}) => relativePath).join('\n') === [
+      'course-g04-l09-ti-007/audio/source-narration-undetermined.mp3',
+      'course-g04-l09-ti-007/canvas-renderer.js',
+    ].join('\n'),
+    'G4 L9 P5 occurrence-32 candidate asset paths drifted',
+  );
   return Object.freeze({
     schemaVersion: 1,
     artifactType:
-      'current-js-candidate-assets-currentness-successor-receipt-v2',
+      'current-js-candidate-assets-currentness-successor-receipt-v3',
     appliedAt: '2026-08-23',
     reason:
-      'Preserve the V1 currentness chain while binding the exact G4 L9 P4 private representative-slice runtime assets and the previously regenerated G5 L5 candidates.',
+      'Preserve the V2 currentness chain while binding only the exact G4 L9 P5 bounded F08 occurrence-32 runtime assets; P4 and the regenerated G5 L5 candidates remain frozen.',
     historicalArtifactsRemainFrozen: true,
     currentnessAuthority: Object.freeze({
       scope: 'candidate-runtime-and-generator-bindings-only',
       successorReceipt: CANDIDATE_CURRENTNESS_SUCCESSOR_RECEIPT_PATH,
       legacyCourseShellsIncluded: false,
-      newPageOccurrences: 14,
+      newPageOccurrences: 1,
       privateSourceArchiveReadOrModified: false,
     }),
     historicalArtifacts,
@@ -526,6 +553,27 @@ async function buildCandidateCurrentnessSuccessorReceipt(candidateProfileBytes) 
       courseShellCount: 0,
       legacyNetworkPolicy: 'deny-by-default',
       networkCalls: 0,
+      wholeLessonScaleOut: false,
+      familyF08ScaleOut: false,
+    }),
+    p5Occurrence32: Object.freeze({
+      calibrationId: 'g4-l9-p5-f08-occurrence-32-stress-v1',
+      releaseId: RELEASE_IDS.g4l9p5,
+      placementId: 'g04-l09-placement-032',
+      animationId: 'course-g04-l09-ti-007',
+      sourceOccurrence: 32,
+      freeze: p5Freeze,
+      generator: p5Generator,
+      candidateRuntimeEntries: Object.freeze(p5Entries),
+      candidateRuntimeFileCount: p5Entries.length,
+      sourceAudioDurationMs: 21648,
+      registeredPageCountAfterP5: 15,
+      descriptorPageCount: 43,
+      unavailablePageCountAfterP5: 28,
+      courseShellCount: 0,
+      legacyNetworkPolicy: 'deny-by-default',
+      networkCalls: 0,
+      exactEquivalenceAdmission: false,
       wholeLessonScaleOut: false,
       familyF08ScaleOut: false,
     }),
@@ -552,7 +600,7 @@ async function buildCandidateCurrentnessSuccessorReceipt(candidateProfileBytes) 
       frozenManifestVersions: Object.freeze(['v1', 'v2']),
       registeredCurrentJavaScriptChanged: true,
       productionReleaseExpanded: false,
-      pagesAdded: 14,
+      pagesAdded: 1,
     }),
   });
 }
@@ -1183,6 +1231,7 @@ async function buildProfiles() {
     candidateReleaseIds: Object.freeze([
       RELEASE_IDS.g4l5,
       RELEASE_IDS.g4l9p4,
+      RELEASE_IDS.g4l9p5,
       RELEASE_IDS.g4l10,
       RELEASE_IDS.g4l11,
       RELEASE_IDS.g5l5,

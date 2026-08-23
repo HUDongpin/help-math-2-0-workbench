@@ -1,0 +1,220 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "g4-l9-p5-f08-occurrence-32-bounded-stress-private-current-js-implementation-receipt",
+  "taskId": "HELP-MATH-G4-L9-P5-F08-OCCURRENCE-32-STRESS-GATE-20260823",
+  "recordedAt": "2026-08-24",
+  "base": {
+    "ref": "codex/help-math-g4-l9-p4-14-page-representative-slice-20260823",
+    "commit": "fb7dc21e4ecb9d625cd96eb7822a1bce89c9e076",
+    "parent": "af2a202e48f0db02be75093a9d11b60db1294772",
+    "tree": "df70a0b402f2cdc49dc42da28daf42c241c784a9"
+  },
+  "implementationBranch": "codex/help-math-g4-l9-p5-f08-occurrence-32-stress-gate-20260823",
+  "decision": {
+    "phaseB": "GO_BOUNDED_F08_STRESS_IMPLEMENTATION_COMPLETED",
+    "exactEquivalenceAdmission": false,
+    "f08FamilyScaleOut": false,
+    "fortyThreePageScaleOut": false,
+    "postSliceDecision": "NO_GO_F08_FAMILY_OR_43_PAGE_SCALE_OUT"
+  },
+  "sourceIdentity": {
+    "sourceOccurrence": 32,
+    "placementId": "g04-l09-placement-032",
+    "animationId": "course-g04-l09-ti-007",
+    "sourceSwf": {
+      "path": "HELP_COURSES/ELMGR4/L9/TI/L9TI07.swf",
+      "bytes": 119871,
+      "sha256": "469e14b63de51729334d56c1f51aba732968113b2630ab5b05e702fdc1979c25"
+    },
+    "sourceAudio": {
+      "path": "HELP_COURSES/ELMGR4/L9/SA/L9TI07.mp3",
+      "bytes": 303072,
+      "sha256": "2f5e5d447f2659acec7a67ce8cc4ced1875ce99f5a9385227b1ec4ee0fab4d8c",
+      "durationMs": 21648,
+      "spokenLanguage": "undetermined",
+      "listeningAcceptance": false
+    },
+    "pairedFla": null,
+    "canonicalIdentity": "unique-not-an-alias"
+  },
+  "exactSourceClosure": {
+    "freeze": "catalog/g4-l9-p5-f08-occurrence-32-stress-freeze-v1.json",
+    "freezeSha256": "6b2bfffae4aedf30cea8fa5ec8bcd2e376a057a61b7cfd4af7ef7b0bf5e7d377",
+    "fileCount": 5,
+    "totalBytes": 1185928,
+    "projectionNulBytes": 553,
+    "projectionSha256": "020e7f49fe0d9b9663690051472bc9d130f1ec9df0caacc71e4c9ecfab227a65",
+    "canonicalSourceWritableEntries": 0
+  },
+  "p4Occurrence30Comparison": {
+    "p4AnimationId": "course-g04-l09-ti-005",
+    "p5AnimationId": "course-g04-l09-ti-007",
+    "staticStressMetrics": {
+      "longestNestedDomain": {"occurrence30": 113, "occurrence32": 189},
+      "buttons": {"occurrence30": 17, "occurrence32": 25},
+      "audioTags": {"occurrence30": 213, "occurrence32": 289},
+      "mouseEvents": {"occurrence30": 20, "occurrence32": 28},
+      "navigationActions": {"occurrence30": 55, "occurrence32": 63}
+    },
+    "nonGlossaryCoreActionCount": {"occurrence30": 44, "occurrence32": 44},
+    "nonGlossaryCoreActionMultisetSha256": "c3188e59250e977dee0638de3ce00e8dc50850649e036e3d7018d0cc0b448e57",
+    "projectionSerializationFrozen": true,
+    "identicalCoreMultiset": true,
+    "exactEquivalenceAdmission": false,
+    "reason": "The bounded implementation reuses maintained state-machine semantics while preserving TI007's distinct source identity, larger stress surface, drag bindings, glossary mapping, exact audio, calibration, module, and registration."
+  },
+  "boundedStressContract": {
+    "frameDomain": "sprite-149",
+    "frameCount": 189,
+    "randomAdapter": "doGetRndQuest-maintained-seeded-order-v1",
+    "deterministicSeedAndRandomOrder": true,
+    "dragBindings": {
+      "correct": ["Scr1", "Scr2", "Scr3", "Scr6"],
+      "incorrect": ["Scr4", "Scr5"]
+    },
+    "questionCount": 3,
+    "questionFeedbackScoreFinalRepeatReplay": true,
+    "practiceFeedbackBranchIndexing": "strict-one-based",
+    "firstQuestionPracticeBranchIndex": 1,
+    "replayHostReset": {
+      "practice": "reset-practice-feedback",
+      "finalQuiz": "reset-fq-score",
+      "activeAudio": "stop-audio-before-feedback-reset",
+      "rendererReplayCovered": true,
+      "modernMyLessonReplayCovered": true,
+      "postResetPracticeFeedback": null,
+      "postResetActiveAudioCueId": null,
+      "reanswerAfterReplayAllowed": true
+    },
+    "glossaryHandlers": 19,
+    "resolvedGlossaryEntries": 16,
+    "explicitAliases": {"Mathematical aentence": "Sentence"},
+    "fuzzyGlossaryFallback": false,
+    "hostContractSymbolCount": 21,
+    "hostAdapter": "memory-only-deny-by-default",
+    "legacyGetUrl": "blocked",
+    "legacyReport": "blocked",
+    "networkCalls": 0
+  },
+  "implementationOwnership": {
+    "p5Generator": "scripts/build-g4-l9-p5-f08-occurrence-32-stress.mjs",
+    "generatedTextArtifacts": 13,
+    "exactCopiedAudioAssets": 1,
+    "generatedOutputHandEdited": false,
+    "registryGeneratedTsOwner": "packages/demos/scripts/generate-registry.mjs",
+    "assetConfigAndCurrentnessOwner": "scripts/manage-current-js-asset-profiles.mjs",
+    "ti007AliasesTi005": false,
+    "separateCalibrationId": "g4-l9-p5-f08-occurrence-32-stress-v1",
+    "separateReleaseId": "private-g4-l9-p5-f08-occurrence-32-stress-v1",
+    "p4CalibrationIdRetained": "g4-l9-p4-representative-slice-14-v1"
+  },
+  "productIntegration": {
+    "status": "implemented-private-current-js-verified-bounded-stress",
+    "route": "/migration-status/g4-l9-product-bridge",
+    "modernMyLessonRetained": true,
+    "legacyFlashCourseShellsIncluded": false,
+    "schemaVersion": 2,
+    "courseShellCount": 0,
+    "sourceOrderedDescriptorPages": 43,
+    "privateRegisteredPagesBefore": 14,
+    "privateRegisteredPagesAfter": 15,
+    "privateUnavailablePagesBefore": 29,
+    "privateUnavailablePagesAfter": 28,
+    "formalWholeLessonRegistryExpanded": false,
+    "publicReleaseExpanded": false,
+    "actualDevelopmentRouteStatus": 200,
+    "actualProductionModeRouteStatus": 404
+  },
+  "laneYield": {
+    "factoryAdmitted": 5,
+    "advancedManualAdmittedBefore": 9,
+    "advancedManualAdmittedAfter": 10,
+    "remainingFactory": 22,
+    "remainingAdvancedManual": 7,
+    "modelCostEvidence": "unknown",
+    "humanEffortEvidence": "unknown"
+  },
+  "formalPageOnlyCounts": {
+    "denominator": 1751,
+    "registeredOccurrences": 426,
+    "uniqueRenderers": 425,
+    "formalLessons": 8,
+    "remainingOccurrences": 1325,
+    "schemaVersion": 2,
+    "courseShellCount": 0,
+    "unchanged": true
+  },
+  "generationAndAssetCurrentness": {
+    "p5CurrentnessReceipt": "reports/current-js-candidate-assets-currentness-successor-2026-08-23-v3.json",
+    "p5CurrentnessReceiptBytes": 17217,
+    "p5CurrentnessReceiptSha256": "c27ca1461f631c5e3c032adaec9a95a5a2f32a50f61800a7a8e2c47b16aec229",
+    "productionAssetProfile": {"public": 929, "serverAudio": 185, "total": 1114},
+    "productionAssetChecksumSetSha256": "52dd1d51335523dc097b0c1a428e897960425ad184069fb023e98e0fcef7ae25",
+    "candidateAssetProfile": {"runtime": 234, "evidence": 204},
+    "productionProfileExpandedByP5": false
+  },
+  "p4ImmutableEvidence": {
+    "freezeSha256": "72f9d7af89d689378772a8d259085e10800a88b0f8c5914c8398d61902074ace",
+    "browserReceiptSha256": "c38f5fa579931cecf0940d5c5852bff2baddf9a25c4bba9abfb9e29d5f1fa2c5",
+    "implementationReceiptJsonSha256": "595b33c69d500efe1af34a08e485df46590696b0423984eace33e01d03771f4b",
+    "implementationReceiptMarkdownSha256": "aa917b7dab4216703f6e16a0d5e1f7e52029471ff42e1a041ab2c50778d78492",
+    "screenshotCount": 28,
+    "screenshotProjectionNulBytes": 4172,
+    "screenshotProjectionSha256": "4e224b4bd479e2bd99520946a3c86fb6e1319e9603a930a3253a1616584269da",
+    "modifiedByP5": false
+  },
+  "verification": [
+    {"gate":"P5 generator check","status":"PASS","result":"13 text artifacts + 1 exact audio asset"},
+    {"gate":"P5 generator tests","status":"PASS","result":"3/3"},
+    {"gate":"P4 generator check","status":"PASS","result":"152 text artifacts + 10 exact audio assets"},
+    {"gate":"P4 generator tests","status":"PASS","result":"2/2"},
+    {"gate":"Existing focused compatibility tests","status":"PASS","result":"21/21"},
+    {"gate":"P5 identity, closure, core-equivalence, seed, random, drag, state, glossary, audio, host and network tests","status":"PASS","result":"8/8; strict one-based practice branches; active practice/audio Replay reset; reanswer allowed"},
+    {"gate":"Registry generated check and demos TypeScript","status":"PASS"},
+    {"gate":"Web TypeScript","status":"PASS"},
+    {"gate":"Asset profile manager currentness","status":"PASS","result":"production 1114; candidate runtime 234; candidate evidence 204"},
+    {"gate":"Formal schema-2 page-only verifier","status":"PASS","result":"426 occurrences / 425 unique / 8 Lessons / shell 0"},
+    {"gate":"Workbench doctor","status":"PASS","result":"0 failures / 0 warnings"},
+    {"gate":"Canonical source verifier","status":"PASS","result":"9313 files / 3308484004 bytes / writable 0 / manifest f4de727e98372ca550b9f87220305c8b4d5b226b26e06573ae4ca7c7d40b9549"},
+    {"gate":"Production build","status":"PASS","result":"asset-profile tests 14/14; compile; TypeScript; static generation 30/30; exact route present but production-mode fail-closed"},
+    {"gate":"Actual development route","status":"PASS","result":"EN 200 / ES 200"},
+    {"gate":"Actual production-mode route","status":"PASS","result":"EN 404 / ES 404"},
+    {"gate":"P5 desktop EN and mobile ES browser stress","status":"PASS","result":"1/1; 2 bounded cases; every Drop host-allowed; both Replay entries clear active practice/audio; 13.0s"},
+    {"gate":"P4 desktop EN and mobile ES no-screenshot regression","status":"PASS","result":"1/1; 28 existing cases; 39.0s"}
+  ],
+  "browserEvidence": {
+    "receipt": "reports/g4-l9-p5-f08-occurrence-32-browser-qa-receipt-v1.json",
+    "receiptBytes": 5334,
+    "receiptSha256": "6a0b90307952660db7869e22adda3765f83c1892654e91dcf3307bdc219fcd6a",
+    "desktopEnCases": 1,
+    "mobileEsCases": 1,
+    "screenshots": 2,
+    "screenshotTotalBytes": 227802,
+    "screenshotProjectionNulBytes": 298,
+    "screenshotProjectionSha256": "74e83ad73bae260176e25b8c7c16a03bf96f719369768db203491383c8bb06a7",
+    "screenshotsAloneUsedAsAcceptance": false
+  },
+  "repositoryBoundary": {
+    "authorizedChangedPathCount": 38,
+    "authorizedChangedPathNulBytes": 2346,
+    "authorizedChangedPathSha256": "8476fb862a8feb4c8e5325d5748051fa62c204e6f34af5e604d6f2d387633822",
+    "pathSubstitution": false,
+    "generatedSpill": false,
+    "nextEnvMatchesBase": true,
+    "dependencyOrCanonicalSourceBindingsIncluded": false,
+    "pushPrDeployReleasePublicationPerformed": false,
+    "p6CreatedOrStarted": false,
+    "subagentOrSecondWorkerCreated": false
+  },
+  "independentGates": {
+    "authoritativeOriginalRuntime": "not-established",
+    "technicalOrVisualFidelity": "not-established",
+    "audioListeningAcceptance": "not-established",
+    "humanReview": "not-established",
+    "ownerAcceptance": "not-established",
+    "strictCompletion": "not-established",
+    "formalRelease": "not-established",
+    "publication": "not-established",
+    "productionVerification": "not-established"
+  }
+}

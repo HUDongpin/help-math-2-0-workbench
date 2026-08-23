@@ -5,8 +5,6 @@ import {
   type Locator,
   type Page,
 } from "@playwright/test";
-import { mkdir } from "node:fs/promises";
-import path from "node:path";
 
 const pages = [
   { occurrence: 1, id: "course-g04-l09-ir-001" },
@@ -25,13 +23,6 @@ const pages = [
   { occurrence: 42, id: "course-g04-l09-fq-002" },
 ] as const;
 
-const repositoryRoot = path.resolve(import.meta.dirname, "../../..");
-const screenshotRoot = path.join(repositoryRoot, "reports/browser-qa/g4-l9-p4");
-
-function screenshotName(item: (typeof pages)[number]): string {
-  return `${String(item.occurrence).padStart(3, "0")}-${item.id}.png`;
-}
-
 async function selectAnimation(
   page: Page,
   item: (typeof pages)[number],
@@ -45,10 +36,10 @@ async function selectAnimation(
   await page.evaluate(
     ({ currentAnimationId }) => {
       window.localStorage.setItem(
-        "helpmath:g4-l9-p4-product-bridge:v1",
+        "helpmath:g4-l9-p5-product-bridge:v1",
         JSON.stringify({
           schemaVersion: 1,
-          releaseId: "private-g4-l9-p4-representative-slice-v1",
+          releaseId: "private-g4-l9-p5-f08-occurrence-32-stress-v1",
           currentAnimationId,
           locale: document.documentElement.lang,
           visitedAnimationIds: [currentAnimationId],
@@ -142,7 +133,7 @@ async function exercisePage(
     "data-renderer-availability",
     "registered",
   );
-  await expect(player).toHaveAttribute("data-unavailable-pages", "29");
+  await expect(player).toHaveAttribute("data-unavailable-pages", "28");
   await expect(player).toHaveAttribute(
     "data-page-audio-acceptance",
     "not-established",
@@ -206,13 +197,11 @@ async function runMatrix({
   baseURL,
   locale,
   viewport,
-  outputDirectory,
 }: {
   browser: Browser;
   baseURL: string;
   locale: "en" | "es";
   viewport: { width: number; height: number };
-  outputDirectory: "desktop-en-1440x1000" | "mobile-es-390x844";
 }): Promise<void> {
   const context = await browser.newContext({
     baseURL,
@@ -249,14 +238,9 @@ async function runMatrix({
     "data-hydrated",
     "true",
   );
-  await mkdir(path.join(screenshotRoot, outputDirectory), { recursive: true });
   for (const item of pages) {
-    await test.step(`${outputDirectory} ${item.occurrence} ${item.id}`, async () => {
+    await test.step(`${locale} ${item.occurrence} ${item.id}`, async () => {
       await exercisePage(page, item);
-      await page.screenshot({
-        animations: "disabled",
-        path: path.join(screenshotRoot, outputDirectory, screenshotName(item)),
-      });
     });
   }
   assertNoRuntimeErrors(consoleErrors, pageErrors, forbiddenRequests);
@@ -276,7 +260,7 @@ function assertNoRuntimeErrors(
   ).toEqual([]);
 }
 
-test("14-page P4 private modern My Lesson matrix passes desktop EN and mobile ES", async ({
+test("14-page P4 calibration regression passes desktop EN and mobile ES without rewriting P4 evidence", async ({
   browser,
   baseURL,
 }) => {
@@ -287,13 +271,11 @@ test("14-page P4 private modern My Lesson matrix passes desktop EN and mobile ES
     baseURL: baseURL!,
     locale: "en",
     viewport: { width: 1440, height: 1000 },
-    outputDirectory: "desktop-en-1440x1000",
   });
   await runMatrix({
     browser,
     baseURL: baseURL!,
     locale: "es",
     viewport: { width: 390, height: 844 },
-    outputDirectory: "mobile-es-390x844",
   });
 });

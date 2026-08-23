@@ -18,8 +18,11 @@ import type {
   LessonHostRequest,
 } from "./lesson-host-contract";
 import {
+  createG4L9P4FeedbackHostRequest,
   createG4L9P4InteractionState,
+  createG4L9P4ReplayHostRequests,
   expectedG4L9P4Option,
+  g4L9P4DragOutcome,
   getG4L9P4FrameState,
   reduceG4L9P4Interaction,
   type G4L9P4PageConfig,
@@ -98,6 +101,17 @@ function rendererFor(config: G4L9P4PageConfig) {
     >("loading");
     const [lastHostDecision, setLastHostDecision] = useState<string>("none");
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const replayHostStateRef = useRef({
+      activeInteractiveAudioId: props.activeInteractiveAudioId ?? null,
+      callback: props.onLessonHostRequest,
+      state,
+    });
+    const replayHostClearedRef = useRef(false);
+    replayHostStateRef.current = {
+      activeInteractiveAudioId: props.activeInteractiveAudioId ?? null,
+      callback: props.onLessonHostRequest,
+      state,
+    };
     const deterministicFrame = useMemo(
       () =>
         getG4L9P4FrameState(config, props.frame, {
@@ -120,6 +134,29 @@ function rendererFor(config: G4L9P4PageConfig) {
     useEffect(() => {
       setState(createG4L9P4InteractionState(config, props.seed, replay));
     }, [props.seed, replay]);
+
+    const clearReplayHostState = () => {
+      if (replayHostClearedRef.current) return undefined;
+      const current = replayHostStateRef.current;
+      let decision: LessonHostDecision | void = undefined;
+      for (const request of createG4L9P4ReplayHostRequests(
+        config,
+        current.state,
+        current.activeInteractiveAudioId,
+      )) {
+        decision = hostRequest(current.callback, request);
+      }
+      replayHostClearedRef.current = true;
+      return decision;
+    };
+
+    useEffect(() => () => {
+      // The modern My Lesson Replay control remounts this renderer. Clearing
+      // the exact host channels here gives that outer control the same reset
+      // semantics as the renderer-owned Replay button without broadening the
+      // generic AnimationRuntime contract.
+      clearReplayHostState();
+    }, []);
 
     useEffect(() => {
       const canvas = canvasRef.current;
@@ -154,22 +191,8 @@ function rendererFor(config: G4L9P4PageConfig) {
       setState((value) =>
         reduceG4L9P4Interaction(config, value, { type: "answer", option }),
       );
-      const request: LessonHostRequest =
-        config.behavior === "final-quiz"
-          ? {
-              type: "record-fq-score",
-              questionId: `${config.animationId}-q${state.questionIndex + 1}`,
-              correct,
-              pointsAwarded: correct ? 1 : 0,
-              pointsPossible: 1,
-            }
-          : {
-              type: "record-practice-feedback",
-              interactionId: `${config.animationId}-q${state.questionIndex + 1}`,
-              outcome: correct ? "correct" : "incorrect",
-              branchIndex: state.questionIndex,
-              branchCount: config.questionCount,
-            };
+      replayHostClearedRef.current = false;
+      const request = createG4L9P4FeedbackHostRequest(config, state, correct);
       const decision = hostRequest(props.onLessonHostRequest, request);
       setLastHostDecision(decision?.status ?? "unhandled");
     };
@@ -190,16 +213,32 @@ function rendererFor(config: G4L9P4PageConfig) {
         reduceG4L9P4Interaction(config, value, { type: "next" }),
       );
     };
-    const glossary = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const glossary = (
+      entryId: string,
+      event: React.MouseEvent<HTMLButtonElement>,
+    ) => {
       const decision = hostRequest(
         props.onLessonHostRequest,
-        { type: "open-glossary", entryId: "equation" },
+        { type: "open-glossary", entryId },
         event.currentTarget,
       );
       setLastHostDecision(decision?.status ?? "unhandled");
     };
+    const drag = (sourceInstance: string) => {
+      const outcome = g4L9P4DragOutcome(config, sourceInstance);
+      if (!outcome || state.phase !== "question") return;
+      const expected = expectedG4L9P4Option(
+        config,
+        state.questionIndex,
+        state.seed,
+      );
+      answer(outcome === "correct" ? expected : (expected + 1) % 3);
+    };
     const audio = () => {
       if (!config.audio || !props.audioEnabled) return;
+      if (state.audioLifecycle !== "requested") {
+        replayHostClearedRef.current = false;
+      }
       const request: LessonHostRequest =
         state.audioLifecycle === "requested"
           ? { type: "stop-audio", cueId: `${config.animationId}-narration` }
@@ -227,8 +266,16 @@ function rendererFor(config: G4L9P4PageConfig) {
         reduceG4L9P4Interaction(config, value, { type: "legacy-intent" }),
       );
     };
+    const course = () => {
+      const decision = hostRequest(props.onLessonHostRequest, {
+        type: "navigate",
+        targetAnimationId: config.animationId,
+      });
+      setLastHostDecision(decision?.status ?? "unhandled");
+    };
     const replayPage = () => {
-      hostRequest(props.onLessonHostRequest, { type: "reset-fq-score" });
+      const decision = clearReplayHostState();
+      setLastHostDecision(decision?.status ?? "unhandled");
       setState((value) =>
         reduceG4L9P4Interaction(config, value, {
           type: "replay",
@@ -310,12 +357,26 @@ function rendererFor(config: G4L9P4PageConfig) {
         "data-canvas-status": canvasStatus,
         "data-fidelity-accepted": "false",
         "data-host-decision": lastHostDecision,
+        "data-host-symbol-count": config.hostContractSymbols?.length ?? 0,
         "data-lane": config.lane,
         "data-legacy-network-policy": config.legacyNetworkPolicy,
         "data-network-calls": state.networkCalls,
         "data-original-runtime-validated": "false",
         "data-private-current-js": "true",
         "data-replay": state.replay,
+        "data-question-index": state.questionIndex + 1,
+        "data-score": state.score,
+        "data-attempts": state.attempts,
+        "data-blocked-legacy-intents": state.blockedLegacyIntents,
+        "data-do-get-rnd-quest-adapter": config.randomQuestionAdapter ?? "not-applicable",
+        "data-drag-correct": config.dragBindings
+          ?.filter((binding) => binding.outcome === "correct")
+          .map((binding) => binding.sourceInstance)
+          .join(",") ?? "",
+        "data-drag-incorrect": config.dragBindings
+          ?.filter((binding) => binding.outcome === "incorrect")
+          .map((binding) => binding.sourceInstance)
+          .join(",") ?? "",
         "data-source-occurrence": config.sourceOccurrence,
       },
       createElement(
@@ -341,15 +402,53 @@ function rendererFor(config: G4L9P4PageConfig) {
             `${spanish ? "Pregunta" : "Question"} ${Math.min(state.questionIndex + 1, config.questionCount)} / ${config.questionCount}`,
           ),
           questionControls,
+          state.phase === "question" && config.dragBindings
+            ? createElement(
+                "div",
+                {
+                  className: "g4-l9-p4__drags",
+                  "aria-label": spanish
+                    ? "Controles de arrastre de origen"
+                    : "Source drag controls",
+                },
+                config.dragBindings.map((binding) =>
+                  createElement(
+                    "button",
+                    {
+                      key: binding.sourceInstance,
+                      onClick: () => drag(binding.sourceInstance),
+                      type: "button",
+                    },
+                    `${spanish ? "Soltar" : "Drop"} ${binding.sourceInstance}`,
+                  ),
+                ),
+              )
+            : null,
         ),
       ),
       createElement(
         "nav",
         { "aria-label": spanish ? "Controles de página" : "Page controls" },
-        createElement(
-          "button",
-          { onClick: glossary, type: "button" },
-          spanish ? "Glosario" : "Glossary",
+        (config.glossaryHandlers ?? [
+          {
+            handlerIndex: 1,
+            sourceIntent: "Equation",
+            resolvedKeyAttribute: "Equation",
+            entryId: "equation",
+            resolution: "exact-screen-key-term" as const,
+          },
+        ]).map((handler) =>
+          createElement(
+            "button",
+            {
+              "aria-label": `Glossary ${handler.handlerIndex}: ${handler.sourceIntent}`,
+              key: handler.handlerIndex,
+              onClick: (event: React.MouseEvent<HTMLButtonElement>) =>
+                glossary(handler.entryId, event),
+              type: "button",
+            },
+            `${spanish ? "Glosario" : "Glossary"} ${handler.handlerIndex}`,
+          ),
         ),
         config.audio
           ? createElement(
@@ -373,11 +472,25 @@ function rendererFor(config: G4L9P4PageConfig) {
           { onClick: replayPage, type: "button" },
           spanish ? "Repetir" : "Replay",
         ),
-        config.sectionCode === "FQ"
+        config.sectionCode === "FQ" || config.randomQuestionAdapter
           ? createElement(
               "button",
               { onClick: () => blockLegacy("report"), type: "button" },
               spanish ? "Informe bloqueado" : "Blocked report",
+            )
+          : null,
+        config.randomQuestionAdapter
+          ? createElement(
+              "button",
+              { onClick: () => blockLegacy("getURL"), type: "button" },
+              spanish ? "getURL bloqueado" : "Blocked getURL",
+            )
+          : null,
+        config.randomQuestionAdapter
+          ? createElement(
+              "button",
+              { onClick: course, type: "button" },
+              spanish ? "Curso" : "Course",
             )
           : null,
       ),
@@ -389,7 +502,8 @@ function rendererFor(config: G4L9P4PageConfig) {
         .g4-l9-p4__stage{aspect-ratio:4/3;border-radius:18px;overflow:hidden;position:relative;background:#eef8ff}
         .g4-l9-p4 canvas{display:block;width:100%;height:100%}
         .g4-l9-p4__card{position:absolute;inset:auto 7% 7%;padding:1rem;border:2px solid #154d78;border-radius:16px;background:rgba(255,255,255,.94);box-shadow:0 10px 30px #18365a24}
-        .g4-l9-p4__answers,.g4-l9-p4 nav{display:flex;flex-wrap:wrap;gap:.55rem}
+        .g4-l9-p4__answers,.g4-l9-p4__drags,.g4-l9-p4 nav{display:flex;flex-wrap:wrap;gap:.55rem}
+        .g4-l9-p4 nav{max-height:9rem;overflow:auto;padding:.25rem}
         .g4-l9-p4 button{min-height:44px;padding:.55rem .9rem;border:0;border-radius:999px;background:#0b6da8;color:white;font:inherit;cursor:pointer}
         .g4-l9-p4 button:disabled{background:#789;cursor:not-allowed}
       `,
@@ -400,6 +514,7 @@ function rendererFor(config: G4L9P4PageConfig) {
 
 export function createG4L9P4Module(config: G4L9P4PageConfig): AnimationModule {
   const Renderer = rendererFor(config);
+  const scenarioId = config.scenarioId ?? "p4-product-behavior";
   return Object.freeze({
     key: config.animationId,
     movie: Object.freeze({
@@ -436,15 +551,17 @@ export function createG4L9P4Module(config: G4L9P4PageConfig): AnimationModule {
     reducedMotionFrame: 1,
     scenarios: Object.freeze([
       Object.freeze({
-        id: "p4-product-behavior",
-        label: "P4 deterministic product behavior",
+        id: scenarioId,
+        label: config.scenarioId
+          ? "P5 bounded F08 occurrence-32 stress behavior"
+          : "P4 deterministic product behavior",
         description:
           "Maintained engineering state machine; original-runtime parity is not established.",
       }),
     ]),
     defaultScenarioByFrameDomain: Object.freeze({
-      root: "p4-product-behavior",
-      [config.frameDomain]: "p4-product-behavior",
+      root: scenarioId,
+      [config.frameDomain]: scenarioId,
     }),
     audioCues: Object.freeze([]),
     audioTracks: config.audio
@@ -456,7 +573,9 @@ export function createG4L9P4Module(config: G4L9P4PageConfig): AnimationModule {
             label:
               "Exact source narration (language and listening acceptance undetermined)",
             source: config.audio.candidatePath,
-            durationMs: Math.round((config.frameCount / config.fps) * 1000),
+            durationMs:
+              config.audio.durationMs ??
+              Math.round((config.frameCount / config.fps) * 1000),
             sha256: config.audio.sourceSha256,
             activation: "user" as const,
             visibleWhen: Object.freeze(["en", "es"] as const),
@@ -465,13 +584,42 @@ export function createG4L9P4Module(config: G4L9P4PageConfig): AnimationModule {
           }),
         ])
       : Object.freeze([]),
+    interactiveAudioAssets:
+      config.audio && config.randomQuestionAdapter
+        ? Object.freeze([
+            Object.freeze({
+              id: `${config.animationId}-narration`,
+              language: "en" as const,
+              spokenLanguage: "undetermined" as const,
+              source:
+                `${config.audio.candidatePath}?sha256=${config.audio.sourceSha256}`,
+              sha256: config.audio.sourceSha256,
+            }),
+            Object.freeze({
+              id: `${config.animationId}-narration`,
+              language: "es" as const,
+              spokenLanguage: "undetermined" as const,
+              source:
+                `${config.audio.candidatePath}?sha256=${config.audio.sourceSha256}`,
+              sha256: config.audio.sourceSha256,
+            }),
+          ])
+        : undefined,
     lessonHost: Object.freeze({
-      capabilities: Object.freeze([
-        "audio",
-        "glossary",
-        "fq-scoring",
-        "practice-feedback",
-      ] as const),
+      capabilities: config.randomQuestionAdapter
+        ? Object.freeze([
+            "audio",
+            "glossary",
+            "navigation",
+            "fq-scoring",
+            "practice-feedback",
+          ] as const)
+        : Object.freeze([
+            "audio",
+            "glossary",
+            "fq-scoring",
+            "practice-feedback",
+          ] as const),
       legacyOperations: "blocked",
       auditStorage: "memory-only",
       storesPersonalData: false,

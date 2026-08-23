@@ -9,9 +9,9 @@ import {
 } from '../lib/g4-l9-product-bridge-descriptor';
 import {proxyForRequest} from '../proxy';
 
-const selectedOccurrences = [1, 2, 12, 16, 22, 23, 24, 27, 28, 30, 33, 40, 41, 42];
+const selectedOccurrences = [1, 2, 12, 16, 22, 23, 24, 27, 28, 30, 32, 33, 40, 41, 42];
 
-test('builds the exact source-ordered 43-page private descriptor with 14 admitted pages', () => {
+test('builds the exact source-ordered 43-page private descriptor with 15 admitted pages', () => {
   const descriptor = buildG4L9ProductBridgeDescriptor(
     loadCurrentGrade4CourseCatalogCoverage(),
   );
@@ -19,7 +19,7 @@ test('builds the exact source-ordered 43-page private descriptor with 14 admitte
   assert.equal(descriptor.descriptorKind, 'private-page-only-product-bridge');
   assert.equal(descriptor.course.courseShellCount, 0);
   assert.equal(descriptor.pages.length, 43);
-  assert.equal(descriptor.productBridge.registeredAnimationCount, 14);
+  assert.equal(descriptor.productBridge.registeredAnimationCount, 15);
   assert.equal(descriptor.productBridge.pageOnlyDescriptorMemberCount, 43);
   assert.deepEqual(descriptor.support.lessonHostCapabilities, [
     'audio',
@@ -31,7 +31,7 @@ test('builds the exact source-ordered 43-page private descriptor with 14 admitte
   const registered = descriptor.pages.filter(
     (page) => page.rendererAvailability.kind === 'registered',
   );
-  assert.equal(registered.length, 14);
+  assert.equal(registered.length, 15);
   assert.deepEqual(
     registered.map((page) => page.source.sourceOccurrence),
     selectedOccurrences,
@@ -42,7 +42,26 @@ test('builds the exact source-ordered 43-page private descriptor with 14 admitte
   );
   assert.equal(descriptor.pages.filter(
     (page) => page.rendererAvailability.kind === 'unavailable',
-  ).length, 29);
+  ).length, 28);
+  const occurrence32 = descriptor.pages[31]!;
+  assert.equal(occurrence32.placementId, 'g04-l09-placement-032');
+  assert.equal(occurrence32.animationId, 'course-g04-l09-ti-007');
+  assert.deepEqual(occurrence32.rendererAvailability, {
+    kind: 'registered',
+    moduleKey: 'course-g04-l09-ti-007',
+    runtimeQuery: {
+      frameDomain: 'sprite-149',
+      language: 'fixed-en',
+      replaySeedCycle: 7,
+      scenario: 'p5-f08-occurrence-32-stress',
+      seed: '4092026',
+    },
+  });
+  assert.equal(descriptor.calibrationId,
+    'g4-l9-p5-f08-occurrence-32-stress-v1');
+  assert.equal(descriptor.glossary.length, 16);
+  assert.equal(descriptor.course.courseShellCount, 0);
+  assert.equal(descriptor.productBridge.acceptanceEffects.published, false);
 });
 
 test('keeps all independent acceptance and publication authorities false', () => {

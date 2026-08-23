@@ -64,6 +64,7 @@ test('private registry supports independent lesson calibrations without widening
     'g4-l10-page-only-current-js-46-v1',
     'g4-l11-page-only-current-js-43-v1',
     'g4-l9-p4-representative-slice-14-v1',
+    'g4-l9-p5-f08-occurrence-32-stress-v1',
   ]);
   const l11 = document.calibrations.find(
     (calibration: {calibrationId: string}) =>
@@ -100,4 +101,19 @@ test('private registry supports independent lesson calibrations without widening
       calibrationId: 'g4-l9-p4-representative-slice-14-v1',
     });
   }
+  const g4L9P5 = document.calibrations.find(
+    (calibration: {calibrationId: string}) =>
+      calibration.calibrationId === 'g4-l9-p5-f08-occurrence-32-stress-v1',
+  );
+  assert.deepEqual(g4L9P5.entries, [{
+    key: 'course-g04-l09-ti-007',
+    module: './modules/course-g04-l09-ti-007',
+    maturity: 'private-current-js',
+    complexityLane: 'behavior-heavy',
+  }]);
+  assert.deepEqual(animationModuleRegistration('course-g04-l09-ti-007'), {
+    maturity: 'private-current-js',
+    scope: 'private-engineering',
+    calibrationId: 'g4-l9-p5-f08-occurrence-32-stress-v1',
+  });
 });

@@ -7,7 +7,7 @@ import {buildG4L9ProductBridgeDescriptor} from '@/lib/g4-l9-product-bridge-descr
 import {isMigrationStatusAvailable} from '@/lib/migration-status-access';
 
 export const metadata: Metadata = {
-  title: 'G4 L9 P4 private product bridge',
+  title: 'G4 L9 P5 bounded F08 stress bridge',
   robots: {follow: false, index: false},
 };
 export const dynamic = 'force-dynamic';

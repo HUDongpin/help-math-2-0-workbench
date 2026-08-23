@@ -8,6 +8,7 @@ import type {
   Grade4CourseCoverageLesson,
 } from './g4-course-catalog-coverage';
 import {G4_L9_P4_REPRESENTATIVE_SLICE} from './g4-l9-p4-representative-slice.generated';
+import {G4_L9_P5_F08_OCCURRENCE_32_STRESS} from './g4-l9-p5-f08-occurrence-32-stress.generated';
 import type {
   PageOnlyLessonGlossaryEntry,
   PageOnlyLessonPlayerDescriptor,
@@ -16,38 +17,22 @@ import type {
 } from './whole-lesson-player-descriptor';
 
 export const G4_L9_PRODUCT_BRIDGE_CALIBRATION_ID =
+  G4_L9_P5_F08_OCCURRENCE_32_STRESS.calibrationId;
+export const G4_L9_P4_PRODUCT_BRIDGE_CALIBRATION_ID =
   G4_L9_P4_REPRESENTATIVE_SLICE.calibrationId;
 export const G4_L9_PRODUCT_BRIDGE_SELECTED_ANIMATION_IDS = Object.freeze(
   G4_L9_P4_REPRESENTATIVE_SLICE.pages
-    .filter((page) => page.registered)
+    .filter((page) =>
+      page.registered ||
+      page.sourceOccurrence ===
+        G4_L9_P5_F08_OCCURRENCE_32_STRESS.page.sourceOccurrence,
+    )
     .map((page) => page.animationId),
 );
 
-const keyTermsSource = Object.freeze({
-  en: Object.freeze({
-    assetId: 'ELKTEG4.xml' as const,
-    path: 'source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTEG4.xml',
-    sha256: 'bec389ce286b9a113297dfd87e052f28cf1da2640d93a277f91f669dfb3ef749',
-  }),
-  es: Object.freeze({
-    assetId: 'ELKTSG4.xml' as const,
-    path: 'source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTSG4.xml',
-    sha256: '7f12ce833f1429073a11a3ea0dd9d9964eb773804c18c025bde12552b3be5a00',
-  }),
-});
-
-const glossary: readonly PageOnlyLessonGlossaryEntry[] = Object.freeze([
-  Object.freeze({
-    id: 'equation',
-    sourceKeyAttribute: 'Equation',
-    labels: Object.freeze({en: 'Equation', es: 'Ecuación'}),
-    definitions: Object.freeze({
-      en: 'A mathematical sentence that shows that two expressions are equal.',
-      es: 'Un enunciado matemático que muestra que dos expresiones son iguales.',
-    }),
-    source: keyTermsSource,
-  }),
-]);
+const glossary =
+  G4_L9_P5_F08_OCCURRENCE_32_STRESS.glossary.entries as
+    readonly PageOnlyLessonGlossaryEntry[];
 
 function lessonNine(
   coverage: Grade4CourseCatalogCoverage,
@@ -82,13 +67,19 @@ function courseLabel(text: string, locale: 'en' | 'es'): SourceBoundLabel {
 
 function assertPrivateRegistration(animationId: string): void {
   const registration = animationModuleRegistration(animationId);
+  const expectedCalibration = animationId ===
+    G4_L9_P5_F08_OCCURRENCE_32_STRESS.page.animationId
+    ? G4_L9_P5_F08_OCCURRENCE_32_STRESS.calibrationId
+    : G4_L9_P4_REPRESENTATIVE_SLICE.calibrationId;
   if (
     !hasAnimationModule(animationId) ||
     registration?.maturity !== 'private-current-js' ||
     registration.scope !== 'private-engineering' ||
-    registration.calibrationId !== G4_L9_PRODUCT_BRIDGE_CALIBRATION_ID
+    registration.calibrationId !== expectedCalibration
   ) {
-    throw new Error(`${animationId} is not bound to the frozen G4 L9 P4 private registry`);
+    throw new Error(
+      `${animationId} is not bound to its frozen G4 L9 private calibration`,
+    );
   }
 }
 
@@ -112,7 +103,22 @@ export function buildG4L9ProductBridgeDescriptor(
     ) {
       throw new Error(`G4 L9 source identity drift at occurrence ${page.source.sourceOccurrence}`);
     }
-    const registered = frozen.registered;
+    const isP5Occurrence = frozen.sourceOccurrence ===
+      G4_L9_P5_F08_OCCURRENCE_32_STRESS.page.sourceOccurrence;
+    if (
+      isP5Occurrence &&
+      (
+        animationId !== G4_L9_P5_F08_OCCURRENCE_32_STRESS.page.animationId ||
+        frozen.placementId !==
+          G4_L9_P5_F08_OCCURRENCE_32_STRESS.page.placementId ||
+        frozen.assetId !== G4_L9_P5_F08_OCCURRENCE_32_STRESS.page.assetId ||
+        frozen.sourceSwfSha256 !==
+          G4_L9_P5_F08_OCCURRENCE_32_STRESS.page.sourceSwfSha256
+      )
+    ) {
+      throw new Error('G4 L9 P5 occurrence-32 source identity drifted');
+    }
+    const registered = frozen.registered || isP5Occurrence;
     return Object.freeze({
       placementId: frozen.placementId,
       previousPlacementId: index > 0
@@ -135,18 +141,22 @@ export function buildG4L9ProductBridgeDescriptor(
             kind: 'registered' as const,
             moduleKey: animationId,
             runtimeQuery: Object.freeze({
-              frameDomain: frozen.frameDomain,
+              frameDomain: isP5Occurrence
+                ? G4_L9_P5_F08_OCCURRENCE_32_STRESS.page.frameDomain
+                : frozen.frameDomain,
               language: 'fixed-en' as const,
               replaySeedCycle: animationId === 'course-g04-l09-gs-002' ? 10 : 7,
-              scenario: animationId === 'course-g04-l09-gs-002'
-                ? 'gs002-advanced-product'
-                : 'p4-product-behavior',
+              scenario: isP5Occurrence
+                ? G4_L9_P5_F08_OCCURRENCE_32_STRESS.page.scenario
+                : animationId === 'course-g04-l09-gs-002'
+                  ? 'gs002-advanced-product'
+                  : 'p4-product-behavior',
               seed: '4092026',
             }),
           })
         : Object.freeze({
             kind: 'unavailable' as const,
-            reason: 'outside-frozen-g4-l9-p4-representative-slice',
+            reason: 'outside-frozen-g4-l9-p4-plus-p5-bounded-admissions',
           }),
       runtimeEvidenceBoundary: registered
         ? Object.freeze({
@@ -179,14 +189,14 @@ export function buildG4L9ProductBridgeDescriptor(
   return Object.freeze({
     schemaVersion: 2,
     descriptorKind: 'private-page-only-product-bridge',
-    descriptorId: G4_L9_P4_REPRESENTATIVE_SLICE.descriptorId,
+    descriptorId: G4_L9_P5_F08_OCCURRENCE_32_STRESS.descriptorId,
     calibrationId: G4_L9_PRODUCT_BRIDGE_CALIBRATION_ID,
-    releaseId: 'private-g4-l9-p4-representative-slice-v1',
+    releaseId: G4_L9_P5_F08_OCCURRENCE_32_STRESS.releaseId,
     course: Object.freeze({
       grade: 4,
       lesson: 9,
       href: '/migration-status/g4-l9-product-bridge',
-      domIdPrefix: 'g4-l9-p4-product-bridge',
+      domIdPrefix: 'g4-l9-p5-product-bridge',
       activePageCount: 43,
       courseShellCount: 0,
       expectedReleaseMemberCount: 43,
@@ -200,12 +210,12 @@ export function buildG4L9ProductBridgeDescriptor(
       sourceXmlPath: lesson.source.lessonXmlPath,
       sourceXmlSha256: lesson.source.lessonXmlSha256,
       sequenceAuthority: 'course-xml-occurrence',
-      candidateFreezeManifestPath: G4_L9_P4_REPRESENTATIVE_SLICE.freeze.path,
-      candidateFreezeManifestSha256: G4_L9_P4_REPRESENTATIVE_SLICE.freeze.sha256,
+      candidateFreezeManifestPath: G4_L9_P5_F08_OCCURRENCE_32_STRESS.freeze.path,
+      candidateFreezeManifestSha256: G4_L9_P5_F08_OCCURRENCE_32_STRESS.freeze.sha256,
     }),
     persistence: Object.freeze({
       schemaVersion: 1,
-      storageKey: 'helpmath:g4-l9-p4-product-bridge:v1',
+      storageKey: 'helpmath:g4-l9-p5-product-bridge:v1',
       scope: 'local-device-only',
       legacyCompatible: false,
     }),
@@ -240,7 +250,7 @@ export function buildG4L9ProductBridgeDescriptor(
     glossary,
     productBridge: Object.freeze({
       selectedAnimationIds: G4_L9_PRODUCT_BRIDGE_SELECTED_ANIMATION_IDS,
-      registeredAnimationCount: 14,
+      registeredAnimationCount: 15,
       pageOnlyDescriptorMemberCount: 43,
       acceptanceEffects: Object.freeze({
         authoritativeOriginalRuntime: false,
