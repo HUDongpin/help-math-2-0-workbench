@@ -27,9 +27,6 @@ reports/*
 !reports/g5-l4-source-scope-freeze.json
 !reports/g3-l2-cross-grade-factory-audit.json
 !reports/g5-l3-page-only-whole-lesson-source-scope.json
-!reports/current-js-production-asset-separation-freeze-2026-08-22.json
-!reports/current-js-production-asset-separation-freeze-2026-08-22.json.sha256
-!reports/current-js-candidate-evidence-relocation-applied-2026-08-22.json
 
 # The web runtime reads only this exact catalog closure. Historical catalog
 # variants, promotion plans, CSV/JSONL exports, and workbench ledgers remain in
@@ -54,24 +51,15 @@ All API Keys.docx
 # audio remains deployable under apps/web/server-assets/ and is included only
 # in the protected route's output trace.
 apps/web/.next*/
-apps/web/candidate-assets/**
-!apps/web/candidate-assets/flash-assets
-!apps/web/candidate-assets/flash-assets/2026-08-22-page-only-candidates-v1
-!apps/web/candidate-assets/flash-assets/2026-08-22-page-only-candidates-v1/courses
-!apps/web/candidate-assets/flash-assets/2026-08-22-page-only-candidates-v1/courses/course-g05-l05-fq-003
-!apps/web/candidate-assets/flash-assets/2026-08-22-page-only-candidates-v1/courses/course-g05-l05-fq-003/canvas-renderer.js
-!apps/web/candidate-assets/flash-assets/2026-08-22-page-only-candidates-v1/courses/course-g05-l05-ts-007
-!apps/web/candidate-assets/flash-assets/2026-08-22-page-only-candidates-v1/courses/course-g05-l05-ts-007/canvas-renderer.js
-!apps/web/candidate-assets/flash-assets/2026-08-22-page-only-candidates-v1/courses/course-g05-l05-vb-012
-!apps/web/candidate-assets/flash-assets/2026-08-22-page-only-candidates-v1/courses/course-g05-l05-vb-012/canvas-renderer.js
+apps/web/candidate-assets/
 candidate-evidence/
 
 # Test and browser-automation sources stay in Git and CI. The production build
-# deliberately reruns one exact asset-profile verification closure, so retain
-# only those four tests and keep every other test source out of the upload.
+# deliberately reruns one exact production asset-profile verification closure,
+# so retain only those three tests and keep every other test source out of the
+# upload. Candidate runtime and evidence verification remains a local/CI gate.
 apps/web/tests/*
 !apps/web/tests/private-preview-deployment-assets.test.ts
-!apps/web/tests/current-js-asset-profiles.test.ts
 !apps/web/tests/current-js-showcase-publication.test.ts
 !apps/web/tests/page-only-current-js-showcase-asset-policy.test.ts
 apps/web/e2e/

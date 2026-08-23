@@ -29,18 +29,11 @@ const candidateRoot = path.join(
   candidateProfile.version,
 );
 const requiredVercelBuildInputs = Object.freeze([
-  'reports/current-js-production-asset-separation-freeze-2026-08-22.json',
-  'reports/current-js-production-asset-separation-freeze-2026-08-22.json.sha256',
-  'reports/current-js-candidate-evidence-relocation-applied-2026-08-22.json',
   'scripts/manage-current-js-asset-profiles.mjs',
   'scripts/current-js-candidate-paths.mjs',
   'apps/web/tests/private-preview-deployment-assets.test.ts',
-  'apps/web/tests/current-js-asset-profiles.test.ts',
   'apps/web/tests/current-js-showcase-publication.test.ts',
   'apps/web/tests/page-only-current-js-showcase-asset-policy.test.ts',
-  'apps/web/candidate-assets/flash-assets/2026-08-22-page-only-candidates-v1/courses/course-g05-l05-fq-003/canvas-renderer.js',
-  'apps/web/candidate-assets/flash-assets/2026-08-22-page-only-candidates-v1/courses/course-g05-l05-ts-007/canvas-renderer.js',
-  'apps/web/candidate-assets/flash-assets/2026-08-22-page-only-candidates-v1/courses/course-g05-l05-vb-012/canvas-renderer.js',
 ]);
 
 const digest = (bytes: Buffer) =>
@@ -158,7 +151,7 @@ test('Vercel upload retains the exact source closure required by the asset-profi
   assert(lines.includes('scripts/*'), 'scripts must remain excluded by default');
   assert(lines.includes('apps/web/tests/*'), 'tests must remain excluded by default');
   assert(
-    lines.includes('apps/web/candidate-assets/**'),
+    lines.includes('apps/web/candidate-assets/'),
     'candidate assets must remain excluded by default',
   );
   for (const relativePath of requiredVercelBuildInputs) {
@@ -179,10 +172,32 @@ test('Vercel upload retains the exact source closure required by the asset-profi
     'the build exception must not expose every script or test',
   );
   assert.equal(
-    lines.includes('!apps/web/candidate-assets/**')
-      || lines.includes('!apps/web/candidate-assets/'),
+    lines.some((line) => line.startsWith('!apps/web/candidate-assets/')),
     false,
     'the build exception must not expose every candidate asset',
+  );
+});
+
+test('deployment verification excludes private candidates without weakening the full gate', async () => {
+  const packageJson = JSON.parse(await readFile(
+    path.join(webRoot, 'package.json'),
+    'utf8',
+  )) as {scripts?: Record<string, string>};
+  assert.equal(
+    packageJson.scripts?.build,
+    'npm run verify:asset-profiles:deployment && next build --webpack',
+  );
+  assert.equal(
+    packageJson.scripts?.['verify:asset-profiles:deployment'],
+    'node ../../scripts/manage-current-js-asset-profiles.mjs --check-production && npm run test:asset-profile:deployment',
+  );
+  assert.equal(
+    packageJson.scripts?.['verify:asset-profiles'],
+    'node ../../scripts/manage-current-js-asset-profiles.mjs --check && npm run test:asset-profile:production',
+  );
+  assert.match(
+    packageJson.scripts?.['test:asset-profile:production'] ?? '',
+    /tests\/current-js-asset-profiles\.test\.ts/u,
   );
 });
 

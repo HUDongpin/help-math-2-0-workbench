@@ -964,35 +964,18 @@ async function promoteG4PageOnlyRuntime() {
   }
 }
 
-async function buildProfiles() {
-  const [
-    publicFiles,
-    serverFiles,
-    candidateFiles,
-    freeze,
-    evidenceRelocation,
-  ] = await Promise.all([
+async function buildProductionProfile() {
+  const [publicFiles, serverFiles] = await Promise.all([
     walk(PUBLIC_ROOT),
     walk(SERVER_ROOT),
-    walk(`${CURRENT_JS_CANDIDATE_FLASH_ROOT}/courses`),
-    readVerifiedFreeze(),
-    readVerifiedEvidenceRelocationReceipt(),
   ]);
   invariant(publicFiles.length === CURRENT_PROFILE_EXPECTED.productionPublic,
     `production public count is ${publicFiles.length}`);
   invariant(serverFiles.length === CURRENT_PROFILE_EXPECTED.productionServer,
     `production server count is ${serverFiles.length}`);
-  invariant(candidateFiles.length === CURRENT_PROFILE_EXPECTED.candidateRuntimeTotal,
-    `candidate runtime count is ${candidateFiles.length}`);
   invariant(
     publicFiles.every((file) => ALLOWED_RUNTIME_EXTENSIONS.has(path.extname(file))),
     'production public contains a non-runtime extension',
-  );
-  invariant(
-    candidateFiles.every((file) =>
-      ALLOWED_RUNTIME_EXTENSIONS.has(path.extname(file))
-    ),
-    'candidate runtime root contains evidence or an unsupported extension',
   );
 
   const productionEntries = [
@@ -1013,6 +996,48 @@ async function buildProfiles() {
   invariant(
     productionChecksum === CURRENT_PROFILE_EXPECTED.productionChecksumSetSha256,
     `production checksum is ${productionChecksum}`);
+
+  return Object.freeze({
+    schemaVersion: 1,
+    profileId: 'current-js-production-assets-v1',
+    generatedBy: 'scripts/manage-current-js-asset-profiles.mjs',
+    approvalScope: 'eight-lesson-current-js-production-closure',
+    approvedReleaseIds: Object.freeze([
+      RELEASE_IDS.g3l2,
+      RELEASE_IDS.g4l3,
+      RELEASE_IDS.g4l5,
+      RELEASE_IDS.g4l10,
+      RELEASE_IDS.g4l11,
+      RELEASE_IDS.g5l3,
+      RELEASE_IDS.g5l4,
+      RELEASE_IDS.g5l5,
+    ]),
+    counts: Object.freeze({
+      public: publicFiles.length,
+      serverAudio: serverFiles.length,
+      total: productionEntries.length,
+    }),
+    checksumSetSha256: productionChecksum,
+    entries: productionEntries,
+  });
+}
+
+async function buildProfiles() {
+  const [production, candidateFiles, freeze, evidenceRelocation] =
+    await Promise.all([
+      buildProductionProfile(),
+      walk(`${CURRENT_JS_CANDIDATE_FLASH_ROOT}/courses`),
+      readVerifiedFreeze(),
+      readVerifiedEvidenceRelocationReceipt(),
+    ]);
+  invariant(candidateFiles.length === CURRENT_PROFILE_EXPECTED.candidateRuntimeTotal,
+    `candidate runtime count is ${candidateFiles.length}`);
+  invariant(
+    candidateFiles.every((file) =>
+      ALLOWED_RUNTIME_EXTENSIONS.has(path.extname(file))
+    ),
+    'candidate runtime root contains evidence or an unsupported extension',
+  );
 
   const candidateEntries = (await Promise.all(candidateFiles.map((file) =>
     profileEntry(
@@ -1044,29 +1069,6 @@ async function buildProfiles() {
     );
   }
 
-  const production = Object.freeze({
-    schemaVersion: 1,
-    profileId: 'current-js-production-assets-v1',
-    generatedBy: 'scripts/manage-current-js-asset-profiles.mjs',
-    approvalScope: 'eight-lesson-current-js-production-closure',
-    approvedReleaseIds: Object.freeze([
-      RELEASE_IDS.g3l2,
-      RELEASE_IDS.g4l3,
-      RELEASE_IDS.g4l5,
-      RELEASE_IDS.g4l10,
-      RELEASE_IDS.g4l11,
-      RELEASE_IDS.g5l3,
-      RELEASE_IDS.g5l4,
-      RELEASE_IDS.g5l5,
-    ]),
-    counts: Object.freeze({
-      public: publicFiles.length,
-      serverAudio: serverFiles.length,
-      total: productionEntries.length,
-    }),
-    checksumSetSha256: productionChecksum,
-    entries: productionEntries,
-  });
   const candidate = Object.freeze({
     schemaVersion: 1,
     profileId: 'current-js-candidate-assets-v1',
@@ -1087,6 +1089,20 @@ async function buildProfiles() {
     entries: candidateEntries,
   });
   return {production, candidate};
+}
+
+async function checkProductionProfile() {
+  const production = await buildProductionProfile();
+  const current = await readFile(absolute(PRODUCTION_PROFILE_PATH));
+  invariant(
+    current.equals(jsonBytes(production)),
+    `${PRODUCTION_PROFILE_PATH}: profile is stale`,
+  );
+  return Object.freeze({
+    operation: 'check-production',
+    production: production.counts,
+    productionChecksumSetSha256: production.checksumSetSha256,
+  });
 }
 
 async function writeOrCheckProfiles(check) {
@@ -1115,13 +1131,14 @@ async function writeOrCheckProfiles(check) {
 function parseArguments(argv) {
   invariant(argv.length === 1, 'usage: manage-current-js-asset-profiles.mjs ' +
     '<--snapshot|--apply-separation|--relocate-evidence|' +
-    '--promote-g4-page-only|--write-profiles|--check>');
+    '--promote-g4-page-only|--write-profiles|--check-production|--check>');
   invariant([
     '--snapshot',
     '--apply-separation',
     '--relocate-evidence',
     '--promote-g4-page-only',
     '--write-profiles',
+    '--check-production',
     '--check',
   ].includes(argv[0]), `unknown operation: ${argv[0]}`);
   return argv[0];
@@ -1136,5 +1153,7 @@ const result = operation === '--snapshot'
       ? await relocateEvidence()
       : operation === '--promote-g4-page-only'
         ? await promoteG4PageOnlyRuntime()
-        : await writeOrCheckProfiles(operation === '--check');
+        : operation === '--check-production'
+          ? await checkProductionProfile()
+          : await writeOrCheckProfiles(operation === '--check');
 process.stdout.write(`${JSON.stringify(result, null, 2)}\n`);

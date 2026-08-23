@@ -8,7 +8,7 @@
     "auth:provider-preflight": "tsx scripts/check-clerk-synthetic-provider-preflight.ts",
     "auth:test:synthetic": "tsx scripts/run-clerk-synthetic-registration.ts",
     "dev": "next dev",
-    "build": "npm run verify:asset-profiles && next build --webpack",
+    "build": "npm run verify:asset-profiles:deployment && next build --webpack",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
@@ -19,8 +19,10 @@
     "test:e2e:g5-l4-audio-gate-off": "PLAYWRIGHT_PORT=3212 MODERN_WIDE_SHELL_ENABLED=false CURRENT_JS_SHOWCASE_G5_L4_ENABLED=true CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED=false playwright test g5-l4-audio.spec.ts --grep 'gate-off direct FQ route exposes unavailable disabled audio only'",
     "test:e2e:modern-wide": "NOVA_CLIENT_RENDER_MOCK_ENABLED=true MODERN_WIDE_SHELL_ENABLED=true CURRENT_JS_CANDIDATE_PROFILE_ENABLED=true CURRENT_JS_SHOWCASE_G3_L2_ENABLED=true CURRENT_JS_SHOWCASE_G4_L3_ENABLED=true CURRENT_JS_SHOWCASE_G4_L5_ENABLED=true CURRENT_JS_SHOWCASE_G4_L10_ENABLED=true CURRENT_JS_SHOWCASE_G4_L11_ENABLED=true CURRENT_JS_SHOWCASE_G5_L3_ENABLED=true CURRENT_JS_SHOWCASE_G5_L4_ENABLED=true CURRENT_JS_SHOWCASE_G5_L5_ENABLED=true CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED=true playwright test prototype-acceptance.spec.ts modern-wide-geometry.spec.ts canvas-sharpness.spec.ts learning-experience-polish.spec.ts",
     "test:asset-profile:production": "tsx --test tests/private-preview-deployment-assets.test.ts tests/current-js-asset-profiles.test.ts tests/current-js-showcase-publication.test.ts tests/page-only-current-js-showcase-asset-policy.test.ts",
+    "test:asset-profile:deployment": "tsx --test tests/private-preview-deployment-assets.test.ts tests/current-js-showcase-publication.test.ts tests/page-only-current-js-showcase-asset-policy.test.ts",
     "test:asset-profile:candidate": "CURRENT_JS_CANDIDATE_PROFILE_ENABLED=true tsx --test tests/current-js-asset-profiles.test.ts tests/page-only-current-js-showcase-asset-policy.test.ts",
-    "verify:asset-profiles": "node ../../scripts/manage-current-js-asset-profiles.mjs --check && npm run test:asset-profile:production"
+    "verify:asset-profiles": "node ../../scripts/manage-current-js-asset-profiles.mjs --check && npm run test:asset-profile:production",
+    "verify:asset-profiles:deployment": "node ../../scripts/manage-current-js-asset-profiles.mjs --check-production && npm run test:asset-profile:deployment"
   },
   "dependencies": {
     "@clerk/localizations": "^4.15.2",
