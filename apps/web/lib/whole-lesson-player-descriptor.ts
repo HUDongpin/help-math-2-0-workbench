@@ -509,6 +509,8 @@ export interface PageOnlyLessonPlayerDescriptor {
     lessonHostCapabilities: readonly (
       | 'audio'
       | 'glossary'
+      | 'navigation'
+      | 'fq-scoring'
       | 'practice-feedback'
     )[];
   }>;

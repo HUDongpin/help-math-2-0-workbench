@@ -88,14 +88,14 @@ test('production profile is the exact 929 + 185 deployable byte closure', async 
   }
 });
 
-test('candidate profile holds 209 runtime files and 204 separately frozen evidence files', async () => {
-  assert.deepEqual(candidateProfile.counts, {runtime: 209, evidence: 204});
+test('candidate profile holds 232 runtime files and 204 separately frozen evidence files', async () => {
+  assert.deepEqual(candidateProfile.counts, {runtime: 232, evidence: 204});
   assert.deepEqual(candidateProfile.authority, {
     productionApproved: false,
     releaseEligible: false,
     published: false,
   });
-  assert.equal(currentJsCandidateAssetRecords().length, 209);
+  assert.equal(currentJsCandidateAssetRecords().length, 232);
   const disk = (await walk(path.join(candidateRoot, 'courses')))
     .map((file) => `courses/${path.relative(
       path.join(candidateRoot, 'courses'),

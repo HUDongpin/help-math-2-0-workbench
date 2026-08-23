@@ -83,6 +83,7 @@ function isReferencePath(pathname: string) {
 function isArchivePath(pathname: string, request: NextRequest) {
   if (
     pathname === '/migration-status/g4-l5-product-bridge' ||
+    pathname === '/migration-status/g4-l9-product-bridge' ||
     pathname === '/migration-status/g4-l10-product-bridge' ||
     pathname === '/migration-status/g4-l11-migration-factory'
   ) {

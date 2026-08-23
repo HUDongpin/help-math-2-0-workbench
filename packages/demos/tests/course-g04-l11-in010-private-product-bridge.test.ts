@@ -63,6 +63,7 @@ test('private registry supports independent lesson calibrations without widening
     'g4-l5-page-only-current-js-53-v1',
     'g4-l10-page-only-current-js-46-v1',
     'g4-l11-page-only-current-js-43-v1',
+    'g4-l9-p4-representative-slice-14-v1',
   ]);
   const l11 = document.calibrations.find(
     (calibration: {calibrationId: string}) =>
@@ -72,4 +73,31 @@ test('private registry supports independent lesson calibrations without widening
   assert.ok(l11.entries.some(
     (entry: {key: string}) => entry.key === 'course-g04-l11-in-010',
   ));
+  const g4L9 = document.calibrations.find(
+    (calibration: {calibrationId: string}) =>
+      calibration.calibrationId === 'g4-l9-p4-representative-slice-14-v1',
+  );
+  assert.deepEqual(g4L9.entries, [
+    {key: 'course-g04-l09-ir-001', module: './modules/course-g04-l09-ir-001', maturity: 'private-current-js', complexityLane: 'behavior-heavy'},
+    {key: 'course-g04-l09-rw-002', module: './modules/course-g04-l09-rw-002', maturity: 'private-current-js', complexityLane: 'interactive-understood'},
+    {key: 'course-g04-l09-vb-009', module: './modules/course-g04-l09-vb-009', maturity: 'private-current-js', complexityLane: 'interactive-understood'},
+    {key: 'course-g04-l09-in-003', module: './modules/course-g04-l09-in-003', maturity: 'private-current-js', complexityLane: 'low'},
+    {key: 'course-g04-l09-in-009', module: './modules/course-g04-l09-in-009', maturity: 'private-current-js', complexityLane: 'interactive-understood'},
+    {key: 'course-g04-l09-in-010', module: './modules/course-g04-l09-in-010', maturity: 'private-current-js', complexityLane: 'behavior-heavy'},
+    {key: 'course-g04-l09-in-011', module: './modules/course-g04-l09-in-011', maturity: 'private-current-js', complexityLane: 'interactive-understood'},
+    {key: 'course-g04-l09-ti-002', module: './modules/course-g04-l09-ti-002', maturity: 'private-current-js', complexityLane: 'behavior-heavy'},
+    {key: 'course-g04-l09-ti-003', module: './modules/course-g04-l09-ti-003', maturity: 'private-current-js', complexityLane: 'behavior-heavy'},
+    {key: 'course-g04-l09-ti-005', module: './modules/course-g04-l09-ti-005', maturity: 'private-current-js', complexityLane: 'behavior-heavy'},
+    {key: 'course-g04-l09-gs-002', module: './modules/course-g04-l09-gs-002', maturity: 'private-current-js', complexityLane: 'behavior-heavy'},
+    {key: 'course-g04-l09-ts-008', module: './modules/course-g04-l09-ts-008', maturity: 'private-current-js', complexityLane: 'behavior-heavy'},
+    {key: 'course-g04-l09-fq-001', module: './modules/course-g04-l09-fq-001', maturity: 'private-current-js', complexityLane: 'behavior-heavy'},
+    {key: 'course-g04-l09-fq-002', module: './modules/course-g04-l09-fq-002', maturity: 'private-current-js', complexityLane: 'behavior-heavy'},
+  ]);
+  for (const entry of g4L9.entries as Array<{key: string}>) {
+    assert.deepEqual(animationModuleRegistration(entry.key), {
+      maturity: 'private-current-js',
+      scope: 'private-engineering',
+      calibrationId: 'g4-l9-p4-representative-slice-14-v1',
+    });
+  }
 });

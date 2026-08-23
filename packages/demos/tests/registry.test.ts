@@ -103,7 +103,9 @@ test('generated registry lazily resolves the legacy pilot modules', async () => 
   const equationGame = await loadAnimationModule('course-g04-l09-gs-002');
   assert.equal(equationGame?.key, 'course-g04-l09-gs-002');
   assert.equal(equationGame?.movie.frameCount, 653);
-  assert.equal(equationGame?.playbackEndFrame, 641);
-  assert.equal(equationGame?.maturity, 'legacy-prototype');
+  assert.equal(equationGame?.playbackEndFrame, 653);
+  assert.equal(equationGame?.playbackEndFrameByDomain?.['sprite-787'], 653);
+  assert.ok(equationGame?.scenarios.some(({id}) => id === 'gs002-advanced-product'));
+  assert.equal(equationGame?.maturity, 'private-current-js');
   assert.equal(await loadAnimationModule('not-a-module'), undefined);
 });

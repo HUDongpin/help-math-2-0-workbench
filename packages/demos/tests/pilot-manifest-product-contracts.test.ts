@@ -3,7 +3,11 @@ import {access, readFile} from 'node:fs/promises';
 import test from 'node:test';
 import {fileURLToPath} from 'node:url';
 
-import {loadAnimationModule} from '../src/animation-registry';
+import {
+  animationModuleRegistration,
+  loadAnimationModule,
+  privateRegisteredAnimationKeys,
+} from '../src/animation-registry';
 import {matchPrototype} from '../src/prototype-manifest';
 
 const repositoryRoot = fileURLToPath(new URL('../../../', import.meta.url));
@@ -69,14 +73,32 @@ async function exists(relativePath: string): Promise<void> {
   await access(`${repositoryRoot}${relativePath}`);
 }
 
-test('all ten course and shell pilot manifests bind real product routes and lazy modules without promoting maturity', async () => {
-  const [generatedRegistry, productRoute, referenceRoute, catalogText] = await Promise.all([
+test('nine unaffected prototypes retain their contract while the unique GS002 module is private Current-JS', async () => {
+  const [
+    generatedRegistry,
+    productRoute,
+    referenceRoute,
+    catalogText,
+    prototypeRegistryText,
+    privateRegistryText,
+  ] = await Promise.all([
     readFile(`${repositoryRoot}packages/demos/src/registry.generated.ts`, 'utf8'),
     readFile(`${repositoryRoot}${animationRouteFile}`, 'utf8'),
     readFile(`${repositoryRoot}${referenceRouteFile}`, 'utf8'),
-    readFile(`${repositoryRoot}catalog/animations.json`, 'utf8')
+    readFile(`${repositoryRoot}catalog/animations.json`, 'utf8'),
+    readFile(`${repositoryRoot}packages/demos/prototype-registry.json`, 'utf8'),
+    readFile(`${repositoryRoot}packages/demos/private-current-js-registry.json`, 'utf8'),
   ]);
   const catalog = JSON.parse(catalogText) as AnimationCatalog;
+  const prototypeRegistry = JSON.parse(prototypeRegistryText) as {
+    entries: Array<{key: string}>;
+  };
+  const privateRegistry = JSON.parse(privateRegistryText) as {
+    calibrations: Array<{
+      calibrationId: string;
+      entries: Array<{key: string; maturity: string}>;
+    }>;
+  };
 
   assert.match(productRoute, /matchPrototype/);
   assert.match(productRoute, /<AnimationRuntime/);
@@ -117,9 +139,40 @@ test('all ten course and shell pilot manifests bind real product routes and lazy
       Promise.resolve(matchPrototype({animationId})),
       loadAnimationModule(animationId)
     ]);
-    assert.equal(prototype?.key, animationId);
     assert.equal(module?.key, animationId);
-    assert.equal(module?.maturity, 'legacy-prototype');
+    if (animationId === 'course-g04-l09-gs-002') {
+      assert.equal(prototype?.key, animationId, 'historical manifest metadata remains readable');
+      assert.equal(module?.maturity, 'private-current-js');
+      assert.ok(privateRegisteredAnimationKeys.includes(animationId));
+      assert.equal(
+        prototypeRegistry.entries.some(({key}) => key === animationId),
+        false,
+        'prototype registry must no longer own the promoted GS002 module',
+      );
+      assert.deepEqual(
+        privateRegistry.calibrations.flatMap(({calibrationId, entries}) =>
+          entries.filter(({key}) => key === animationId).map((entry) => ({
+            calibrationId,
+            key: entry.key,
+            maturity: entry.maturity,
+          }))
+        ),
+        [{
+          calibrationId: 'g4-l9-p4-representative-slice-14-v1',
+          key: animationId,
+          maturity: 'private-current-js',
+        }],
+      );
+      assert.deepEqual(animationModuleRegistration(animationId), {
+        maturity: 'private-current-js',
+        scope: 'private-engineering',
+        calibrationId: 'g4-l9-p4-representative-slice-14-v1',
+      });
+    } else {
+      assert.equal(prototype?.key, animationId);
+      assert.equal(module?.maturity, 'legacy-prototype');
+      assert.equal(privateRegisteredAnimationKeys.includes(animationId), false);
+    }
 
     const catalogAnimation = catalog.animations.find((entry) => entry.animationId === animationId);
     assert.ok(catalogAnimation, `${animationId} must resolve through the product catalog`);
