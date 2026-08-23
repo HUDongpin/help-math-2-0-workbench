@@ -7,7 +7,7 @@
 - 发布契约：`docs/NOVA_OPENROUTER.md`
 - 数据边界：本报告不记录任何 secret 值、真实学习者数据、prompt/reply 正文、provider response ID、IP 地址、原始语音或课程帧
 
-本文件用于在修复后逐层填写验收证据，不覆盖原始问题报告，也不把代码完成、自动测试、人审、Owner/法律批准、Preview、staged Production 或正式生产混写成一个“完成”。截至本次收口，修复已形成远端 draft PR，代码 artifact `5fce7424a54f6f11b39c82f7b588d800b298681d` 已完成本地门、Site workspace CI，以及两个受保护 Vercel Preview 的 fail-closed 验收：首次 Preview 证明空 rollout，追加 Preview 在部署级强制 master/frame/speech 关闭的同时打开八课 Current-JS surface，证明八课 EN/ES 路由与 Nova 隐藏状态；两者都没有调用 Provider。另已创建并验收一个使用 Production scope、Nova master-off、未绑定 HELP Math custom domain 的 staged rollback candidate。此前本地私有配置下的八门课英文文字 OpenRouter canary 仍为 8/8，当前 3211 进程又通过一条 typed-text canary。没有向 `www.helpmath.ai` 推广、没有修改 Vercel 项目级环境变量、Firewall 或 drain；Vercel 自动把项目 system alias 指向 staged candidate，这项 alias 变化已单独记录，不能写成“零 alias 变更”。所有真实 canary 只保存无内容 receipt，未保存 prompt/reply 正文或 provider response ID。
+本文件用于在修复后逐层填写验收证据，不覆盖原始问题报告，也不把代码完成、自动测试、人审、Owner/法律批准、Preview、staged Production 或正式生产混写成一个“完成”。截至本次收口，修复已形成远端 draft PR，代码 artifact `5fce7424a54f6f11b39c82f7b588d800b298681d` 已完成本地门、Site workspace CI，以及两个受保护 Vercel Preview 的 fail-closed 验收：首次 Preview 证明空 rollout，追加 Preview 在部署级强制 master/frame/speech 关闭的同时打开八课 Current-JS surface，证明八课 EN/ES 路由与 Nova 隐藏状态；两者都没有调用 Provider。另已创建并验收一个使用 Production scope、Nova master-off、未绑定 HELP Math custom domain 的 staged rollback candidate。此前本地私有配置下的八门课英文文字 OpenRouter canary 仍为 8/8，当前 3211 进程又通过一条 typed-text canary。没有向 `www.helpmath.ai` 推广、没有修改 Vercel 项目级环境变量、Firewall 或 drain；Vercel 曾自动把项目 system alias 指向 staged candidate，alias 解析已恢复到原 production deployment，但 staged inspect 仍保留该 alias 关联显示，严格 metadata reconciliation 尚未关闭。所有真实 canary 只保存无内容 receipt，未保存 prompt/reply 正文或 provider response ID。
 
 ## 1. 当前分层状态
 
@@ -245,6 +245,8 @@ PASS_WITH_WARNING: local real OpenRouter text canary — 8/8 exact Luna；每课
 | `NOVA_MAX_OUTPUT_TOKENS` | 有 | 有 | 值未读 |
 | `NOVA_TUTOR_RATE_LIMIT_PER_MINUTE` | 有 | 有 | 值未读 |
 
+2026-08-24 的 metadata-only 复核显示，Preview 与 Production 的 `OPENROUTER_API_KEY` 是两条分别 target=`preview` / target=`production` 的 sensitive 记录，创建时间不同；其他既有 Nova 配置也分别按环境记录。CLI 对 id 作空值处理，本报告没有读取 secret 值，因此这只能证明 scope entry 分离，不能证明两条 key 的字节一定不同，也不能证明 Preview 有独立预算/限额。真实 Preview Provider canary 继续等待 Owner 对 key/budget 隔离的明确收据。
+
 额外观察：Preview 和 Production 仍存在一组历史 `NOVA_QWEN_*` 名称，包括 server-only API key 名称；本审计未读取任何值。当前仓库范围的检索没有找到这些名称的运行时代码引用。它们不应被当作 Luna fallback。进入正式发布前，应先独立证明不再被任何部署引用，再由明确授权的人员安排退役/轮换；本次没有删除或修改这些远端变量。
 
 ### 8.3 Firewall 与 observability
@@ -315,7 +317,7 @@ PASS_WITH_WARNING: local real OpenRouter text canary — 8/8 exact Luna；每课
 - 保留上一 known-good deployment ID、环境变量名称清单（无值）、release list 的受控值 receipt 和回滚责任人。
 - `PASS_NOVA_OFF`：已用 `--target production --skip-domain` 创建 `dpl_3X3ihfVUF1EEPjVSSkQc7Fgggidr`，deployment-specific overrides 强制 master=false、rollout empty、frame=false、speech=false，并打开八课课程 surface。直接 URL 受 Vercel SSO/noindex 保护。
 - `PASS_NOVA_OFF`：八课 EN/ES 16/16 route=200/modern-wide；真实浏览器 course Nova/file input=0、首页 active Nova=0、warning/error=0；canonical API 返回 503 `NOVA_NOT_CONFIGURED`，requestId `def679c7-0d27-4ba1-9e36-a91108399093`，runtime `attempts=null`/`upstreamStatus=null`，Provider=0。
-- `ALIAS_DISCLOSURE`：Vercel CLI 即使使用 `--skip-domain` 仍把项目 system alias `helpmath-web-…vercel.app` 指向该 staged candidate；`helpmath.ai` 与 `www.helpmath.ai` 均仍解析旧 production deployment `dpl_6pj5sVFj7P1r7M7Cg12DJngSXhhj`，apex 仍 308 到 `www`。因此这是 custom-domain 未推广的 staged candidate，不是“完全无 alias 变化”。
+- `ALIAS_DISCLOSURE`：Vercel CLI 即使使用 `--skip-domain` 仍短暂把项目 system alias `helpmath-web-…vercel.app` 指向该 staged candidate；验收后已用精确旧 deployment URL 把 system alias 的实际解析恢复到 `dpl_6pj5sVFj7P1r7M7Cg12DJngSXhhj`。`helpmath.ai` 与 `www.helpmath.ai` 全程保持旧 production，apex 仍 308 到 `www`。但是 staged deployment 的 `vercel inspect` 仍列出该 system alias，和 alias 自身解析结果不一致；严格 staged metadata reconciliation 因此为 `PENDING`，不能宣称“完全无 alias association”。
 - `PENDING`：Nova-on Production-scoped staged canary、Owner promote 决定、值班/监控和回滚操作者仍未完成；Nova-OFF candidate 只能作为已验证 rollback 候选，不能替代 live staged gate。
 
 ### Gate E — 正式域名与观察窗
@@ -455,7 +457,7 @@ CI 已加入两个独立永久门：`test:nova:server` 与 `test:e2e:nova-full-s
 - 本地 `.env.local` 为本次 canary 临时包含全部八个 release、speech=true、frame=false；这里只记录非秘密开关状态，不记录 release 字符串之外的任何值。它仍被 Git 忽略，且不会改变 `.env.example` 的 master/frame/speech=false、release list 为空默认值。
 - `reports/nova-tutor-local-runtime-canary-2026-08-24.json` 只记录固定 fixture ID、HELP Math requestId、status/duration/attempts/model、reply hash、安全断言与非秘密配置状态；不保存 prompt/reply、provider response ID、headers、IP、frame、audio 或 key。
 - `reports/nova-tutor-eight-course-fail-closed-preview-2026-08-24.json` 记录 protected Preview 的八课 route/browser/build/API 零 Provider 与截图哈希；不保存页面内容或 secret。
-- `reports/nova-tutor-off-staged-production-2026-08-24.json` 记录 Nova-OFF staged deployment、八课 surface、build checksum、API 零 Provider、保护/noindex、custom-domain 不变与 Vercel system-alias 变化；不含任何环境变量值或 secret。
+- `reports/nova-tutor-off-staged-production-2026-08-24.json` 记录 Nova-OFF staged deployment、八课 surface、build checksum、API 零 Provider、保护/noindex、custom-domain 不变，以及 Vercel system alias 的自动赋值与恢复生命周期；不含任何环境变量值或 secret。
 - 最终 production build 后，从 `.env.local` 识别 3 个非空 server-sensitive 值；扫描精确 index 的 15,483 个 tracked 文件和 1,664 个 `.next/static`/`.next/server` 文件，结果为 0 个 exact match。另一个匹配是明确可公开的 Clerk publishable-key 测试 fixture，不属于 server secret；其值未写入报告。
 - `OPENROUTER_API_KEY`、rollout 与 fake-transport 等名称只出现在服务端 `/api/nova` route/chunk，不出现在 `.next/static` 学习者 bundle；没有把配置值或内部失败原因放入公开 capability DTO。
 
