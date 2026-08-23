@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "evidenceKind": "LOCAL_REAL_RUNTIME_CANARY",
+  "recordedAtUtc": "2026-08-23T19:08:46Z",
+  "branch": "codex/help-math-learning-platform-nova-fq",
+  "branchHead": "33b02716b5e04fcb5be59022bdea45cf5aceaff4",
+  "reviewedCodeArtifact": "5fce7424a54f6f11b39c82f7b588d800b298681d",
+  "status": "PASS_WITH_LOCAL_CLERK_WARNING",
+  "promptFixtureId": "negative-number-order-two-sentences-check-question-v1",
+  "route": "/en/courses/4/3?mode=focus",
+  "releaseId": "lesson-g04-l03-negative-numbers",
+  "requestId": "fcbbba92-768e-4d10-9d93-3acb9150b151",
+  "apiStatus": 200,
+  "durationMs": 2417,
+  "attempts": 1,
+  "model": "openai/gpt-5.6-luna",
+  "replySha256": "bd0f8a1fa7ef67850ed95274362eb5359da20a6f735c90c933caf2af9cf387f9",
+  "assertions": {
+    "askNovaVisible": true,
+    "lastReplyVerifiedVisible": true,
+    "requestIdIsUuid": true,
+    "replyNonEmpty": true,
+    "replyMathRelationCorrect": true,
+    "replyHasNoRawExecutableHtml": true,
+    "replyHasNoSensitiveDataSolicitation": true,
+    "frameAbsent": true,
+    "speechNotUsed": true,
+    "localFileInputAbsent": true
+  },
+  "knownBrowserMessages": {
+    "clerkDevelopmentReactKeyErrorCount": 1,
+    "clerkDevelopmentKeyWarningCount": 1,
+    "novaRelated": false,
+    "strictBrowserPass": false
+  },
+  "localConfiguration": {
+    "fileMode": "0600",
+    "masterEnabled": true,
+    "releaseCount": 8,
+    "uniqueReleaseCount": 8,
+    "frameEnabled": false,
+    "speechToDraftEnabled": true,
+    "officialOpenRouterBaseUrl": true,
+    "exactLunaModel": true,
+    "providerKeyPresent": true
+  },
+  "privacy": {
+    "storesPromptOrReplyText": false,
+    "storesProviderResponseId": false,
+    "storesHeadersOrSecrets": false,
+    "storesRawIp": false,
+    "storesFrameOrAudio": false
+  }
+}
