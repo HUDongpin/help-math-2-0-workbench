@@ -22,11 +22,18 @@ export const COURSE_G04_L10_IN_016_SOURCE = Object.freeze({
   }),
   candidateManifest: "public/flash-assets/courses/course-g04-l10-in-016/manifest.json",
   candidateManifestSha256:
-    "c7adaf020e91436aeb1576b8629d52717fb200271ec6cb0ba6855f001e2f2d1a",
+    "84e70246cd13e31d6e09452639b39ae142bc1a5a1de3d238db0c334cdb3e9356",
   actionScriptExecuted: false,
-  audioCues: Object.freeze([]),
-  controlsEnabled: false,
-  registered: false,
+  audioCues: Object.freeze([
+    Object.freeze({
+      id: "in016-main",
+      sourceTimelineId: "sprite-209",
+      firstFrame: 5,
+      sourceStopFrame: 57,
+    }),
+  ]),
+  controlsEnabled: true,
+  registered: true,
   strictAcceptanceEffect: "none",
 });
 
@@ -66,7 +73,7 @@ export const COURSE_G04_L10_IN_016_CONFIG = Object.freeze({
     }),
   ]),
   sourceControlBehaviorLabel:
-    "ActionScript, controls, audio, Spanish visuals, natural runtime, terminal state, Replay, and fidelity are unresolved and disabled",
+    "V22 typed practice/glossary/audio adapter closes product random branches, reachable timelines, and Replay engineering; ActionScript execution, natural Adobe runtime, listening acceptance, and fidelity remain unresolved",
 } satisfies SourceStaticCanvasCandidateConfig);
 
 export const COURSE_G04_L10_IN_016_AUTHORITY =
