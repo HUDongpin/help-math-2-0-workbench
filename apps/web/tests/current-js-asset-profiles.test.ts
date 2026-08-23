@@ -28,10 +28,16 @@ const candidateRoot = path.join(
   'candidate-assets/flash-assets',
   candidateProfile.version,
 );
-const requiredBuildReportInputs = Object.freeze([
+const requiredVercelBuildInputs = Object.freeze([
   'reports/current-js-production-asset-separation-freeze-2026-08-22.json',
   'reports/current-js-production-asset-separation-freeze-2026-08-22.json.sha256',
   'reports/current-js-candidate-evidence-relocation-applied-2026-08-22.json',
+  'scripts/manage-current-js-asset-profiles.mjs',
+  'scripts/current-js-candidate-paths.mjs',
+  'apps/web/tests/private-preview-deployment-assets.test.ts',
+  'apps/web/tests/current-js-asset-profiles.test.ts',
+  'apps/web/tests/current-js-showcase-publication.test.ts',
+  'apps/web/tests/page-only-current-js-showcase-asset-policy.test.ts',
 ]);
 
 const digest = (bytes: Buffer) =>
@@ -140,13 +146,15 @@ test('candidate profile holds 3 alternate runtime files and 204 frozen evidence 
   }
 });
 
-test('Vercel upload retains the exact reports required by the asset-profile build check', async () => {
+test('Vercel upload retains the exact source closure required by the asset-profile build check', async () => {
   const lines = (await readFile(path.join(projectRoot, '.vercelignore'), 'utf8'))
     .split(/\r?\n/u)
     .map((line) => line.trim())
     .filter(Boolean);
   assert(lines.includes('reports/*'), 'reports must remain excluded by default');
-  for (const relativePath of requiredBuildReportInputs) {
+  assert(lines.includes('scripts/*'), 'scripts must remain excluded by default');
+  assert(lines.includes('apps/web/tests/*'), 'tests must remain excluded by default');
+  for (const relativePath of requiredVercelBuildInputs) {
     assert(
       lines.includes(`!${relativePath}`),
       `${relativePath} must be present in the Vercel build upload`,
@@ -157,6 +165,11 @@ test('Vercel upload retains the exact reports required by the asset-profile buil
     lines.includes('!reports/*'),
     false,
     'the build exception must not expose every report',
+  );
+  assert.equal(
+    lines.includes('!scripts/*') || lines.includes('!apps/web/tests/*'),
+    false,
+    'the build exception must not expose every script or test',
   );
 });
 

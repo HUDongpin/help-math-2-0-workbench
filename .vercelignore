@@ -57,11 +57,14 @@ apps/web/.next*/
 apps/web/candidate-assets/
 candidate-evidence/
 
-# Test and browser-automation sources stay in Git and CI, but are not production
-# application inputs. The related local scripts are excluded below as
-# repository-only operating material, so exclude the complete test closure
-# together rather than uploading partial imports to Vercel.
-apps/web/tests/
+# Test and browser-automation sources stay in Git and CI. The production build
+# deliberately reruns one exact asset-profile verification closure, so retain
+# only those four tests and keep every other test source out of the upload.
+apps/web/tests/*
+!apps/web/tests/private-preview-deployment-assets.test.ts
+!apps/web/tests/current-js-asset-profiles.test.ts
+!apps/web/tests/current-js-showcase-publication.test.ts
+!apps/web/tests/page-only-current-js-showcase-asset-policy.test.ts
 apps/web/e2e/
 apps/web/playwright*.ts
 apps/web/tsconfig.tsbuildinfo
@@ -78,7 +81,9 @@ test-results/
 docs/
 design/
 skills/
-scripts/
+scripts/*
+!scripts/manage-current-js-asset-profiles.mjs
+!scripts/current-js-candidate-paths.mjs
 tools/
 schemas/
 native/
