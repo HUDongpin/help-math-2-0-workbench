@@ -1,7 +1,3 @@
-import {createHash} from 'node:crypto';
-import {readFileSync} from 'node:fs';
-import path from 'node:path';
-
 import {
   animationModuleRegistration,
   hasAnimationModule,
@@ -17,7 +13,9 @@ import type {SourceBoundLabel} from './whole-lesson-player-descriptor';
 export const G4_L5_PRODUCT_FACTORY_CALIBRATION_ID =
   'g4-l5-page-only-current-js-53-v1';
 export const G4_L5_PRODUCT_FACTORY_FREEZE_PATH =
-  'catalog/product-bridge-calibrations/g4-l5-page-only-current-js-53-v1.json';
+  G4_L5_PAGE_ONLY_CURRENT_JS.freeze.path;
+export const G4_L5_PRODUCT_FACTORY_FREEZE_SHA256 =
+  G4_L5_PAGE_ONLY_CURRENT_JS.freeze.sha256;
 
 const selectedPages: ReadonlyMap<
   string,
@@ -114,47 +112,6 @@ export interface G4L5ProductBridgeDescriptor {
     released: false;
     published: false;
   }>;
-}
-
-function workspaceRoot(): string {
-  const candidates = [process.cwd(), path.resolve(process.cwd(), '../..')];
-  const root = candidates.find((candidate) => {
-    try {
-      return readFileSync(
-        path.join(candidate, G4_L5_PRODUCT_FACTORY_FREEZE_PATH),
-      ).byteLength > 0;
-    } catch {
-      return false;
-    }
-  });
-  if (!root) throw new Error('Unable to resolve G4 L5 product factory root');
-  return root;
-}
-
-function freezeManifestSha256(): string {
-  const bytes = readFileSync(
-    path.join(workspaceRoot(), G4_L5_PRODUCT_FACTORY_FREEZE_PATH),
-  );
-  const manifest = JSON.parse(bytes.toString('utf8')) as {
-    calibrationId?: unknown;
-    scope?: {
-      activePageCount?: unknown;
-      courseShellCount?: unknown;
-      selectedPageCount?: unknown;
-    };
-    acceptanceEffects?: Record<string, unknown>;
-  };
-  if (
-    manifest.calibrationId !== G4_L5_PRODUCT_FACTORY_CALIBRATION_ID ||
-    manifest.scope?.activePageCount !== 53 ||
-    manifest.scope.courseShellCount !== 0 ||
-    manifest.scope.selectedPageCount !== 53 ||
-    !manifest.acceptanceEffects ||
-    Object.values(manifest.acceptanceEffects).some((value) => value !== false)
-  ) {
-    throw new Error('G4 L5 product factory freeze manifest is not admissible');
-  }
-  return createHash('sha256').update(bytes).digest('hex');
 }
 
 function lessonFive(
@@ -299,7 +256,7 @@ export function buildG4L5ProductBridgeDescriptor(
       sourceXmlSha256: lesson.source.lessonXmlSha256,
       sequenceAuthority: 'course-xml-occurrence',
       candidateFreezeManifestPath: G4_L5_PRODUCT_FACTORY_FREEZE_PATH,
-      candidateFreezeManifestSha256: freezeManifestSha256(),
+      candidateFreezeManifestSha256: G4_L5_PRODUCT_FACTORY_FREEZE_SHA256,
     }),
     sections: Object.freeze(lesson.sections.map((section) => Object.freeze({
       code: section.code,
