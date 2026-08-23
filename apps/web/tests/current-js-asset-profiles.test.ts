@@ -28,6 +28,11 @@ const candidateRoot = path.join(
   'candidate-assets/flash-assets',
   candidateProfile.version,
 );
+const requiredBuildReportInputs = Object.freeze([
+  'reports/current-js-production-asset-separation-freeze-2026-08-22.json',
+  'reports/current-js-production-asset-separation-freeze-2026-08-22.json.sha256',
+  'reports/current-js-candidate-evidence-relocation-applied-2026-08-22.json',
+]);
 
 const digest = (bytes: Buffer) =>
   createHash('sha256').update(bytes).digest('hex');
@@ -133,6 +138,26 @@ test('candidate profile holds 3 alternate runtime files and 204 frozen evidence 
     assert.equal(bytes.length, row.bytes, row.destination);
     assert.equal(digest(bytes), row.sha256, row.destination);
   }
+});
+
+test('Vercel upload retains the exact reports required by the asset-profile build check', async () => {
+  const lines = (await readFile(path.join(projectRoot, '.vercelignore'), 'utf8'))
+    .split(/\r?\n/u)
+    .map((line) => line.trim())
+    .filter(Boolean);
+  assert(lines.includes('reports/*'), 'reports must remain excluded by default');
+  for (const relativePath of requiredBuildReportInputs) {
+    assert(
+      lines.includes(`!${relativePath}`),
+      `${relativePath} must be present in the Vercel build upload`,
+    );
+    await readFile(path.join(projectRoot, relativePath));
+  }
+  assert.equal(
+    lines.includes('!reports/*'),
+    false,
+    'the build exception must not expose every report',
+  );
 });
 
 test('G4 page-only runtime is production-bound while alternate G5 bytes stay candidate-only', () => {
