@@ -1,14 +1,21 @@
 import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {readFile} from 'node:fs/promises';
+import path from 'node:path';
 import test from 'node:test';
 
 import {resolveG4L5RuntimeScenario} from '../components/g4-l5-private-animation-runtime';
 import {
   buildG4L5ProductBridgeDescriptor,
+  G4_L5_PRODUCT_FACTORY_FREEZE_PATH,
+  G4_L5_PRODUCT_FACTORY_FREEZE_SHA256,
   G4_L5_PRODUCT_FACTORY_SELECTED_ANIMATION_IDS,
 } from '../lib/g4-l5-product-bridge-descriptor';
 import {loadG4L5ProductBridgeSourceCoverage} from '../lib/g4-l5-product-bridge-source.server';
 import sourceStaticModule from '../../../packages/demos/src/modules/course-g04-l05-ir-001';
 import productCandidateModule from '../../../packages/demos/src/modules/course-g04-l05-rw-002';
+
+const projectRoot = path.resolve(import.meta.dirname, '../../..');
 
 test('G4 L5 host selects each module frame-domain scenario contract', () => {
   assert.equal(
@@ -56,6 +63,26 @@ test('G4 L5 descriptor binds the exact 53-page source order and all private modu
     descriptor.source.candidateFreezeManifestSha256,
     /^[a-f0-9]{64}$/u,
   );
+  assert.equal(
+    descriptor.source.candidateFreezeManifestSha256,
+    G4_L5_PRODUCT_FACTORY_FREEZE_SHA256,
+  );
+});
+
+test('G4 L5 generated descriptor remains hash-bound without runtime filesystem access', async () => {
+  const bytes = await readFile(path.join(
+    projectRoot,
+    G4_L5_PRODUCT_FACTORY_FREEZE_PATH,
+  ));
+  assert.equal(
+    createHash('sha256').update(bytes).digest('hex'),
+    G4_L5_PRODUCT_FACTORY_FREEZE_SHA256,
+  );
+  const runtimeSource = await readFile(path.join(
+    import.meta.dirname,
+    '../lib/g4-l5-product-bridge-descriptor.ts',
+  ), 'utf8');
+  assert.doesNotMatch(runtimeSource, /node:fs|readFileSync|process\.cwd/u);
 });
 
 test('G4 L5 glossary remains bound to the canonical Grade 4 XML hashes', () => {
