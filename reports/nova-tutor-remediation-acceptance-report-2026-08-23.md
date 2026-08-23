@@ -1,25 +1,25 @@
 # Nova Tutor 修复、发布与验收报告（2026-08-23）
 
-- 报告性质：`LOCAL_REMEDIATION_CANDIDATE_RECEIPT`
-- 当前总状态：`IMPLEMENTED_AND_LOCALLY_VERIFIED / NOT_RELEASED`
-- 只读 Vercel 审计时间：2026-08-23 16:39 CST（UTC+08:00）
+- 报告性质：`REMEDIATION_IMPLEMENTATION_AND_PROTECTED_PREVIEW_RECEIPT`
+- 当前总状态：`IMPLEMENTED_AND_LOCALLY_VERIFIED / PROTECTED_PREVIEW_FAIL_CLOSED_PASS / NOT_RELEASED`
+- Vercel 审计、受保护 Preview 与 CI 收口时间：2026-08-23 23:29 CST（UTC+08:00）
 - 原始故障证据：`reports/nova-tutor-runtime-problem-report-2026-08-23.md`
 - 发布契约：`docs/NOVA_OPENROUTER.md`
 - 数据边界：本报告不记录任何 secret 值、真实学习者数据、prompt/reply 正文、provider response ID、IP 地址、原始语音或课程帧
 
-本文件用于在修复后逐层填写验收证据，不覆盖原始问题报告，也不把代码完成、自动测试、人审、Owner/法律批准、Preview、staged Production 或正式生产混写成一个“完成”。截至本次收口，已使用本地私有配置完成八门课各一次英文文字真实 OpenRouter canary；没有部署、推广、回滚、修改 Vercel 环境变量、修改 Firewall 或创建 drain。真实 canary 只保存无内容 receipt，未保存 prompt/reply 正文或 provider response ID。
+本文件用于在修复后逐层填写验收证据，不覆盖原始问题报告，也不把代码完成、自动测试、人审、Owner/法律批准、Preview、staged Production 或正式生产混写成一个“完成”。截至本次收口，修复已形成远端 draft PR，代码 artifact `5fce7424a54f6f11b39c82f7b588d800b298681d` 已完成本地门、Site workspace CI 和受保护 Vercel Preview 的零课程 fail-closed 验收；该 Preview 没有调用 Provider。此前本地私有配置下的八门课英文文字 OpenRouter canary 仍为 8/8。没有推广、回滚、修改 Vercel 环境变量、修改 Firewall、创建 drain 或改动正式生产。所有真实 canary 只保存无内容 receipt，未保存 prompt/reply 正文或 provider response ID。
 
 ## 1. 当前分层状态
 
 | 层级 | 当前状态 | 可以证明什么 | 还不能证明什么 |
 |---|---|---|---|
 | 原故障复现 | `EVIDENCED_FAIL` | 2026-08-23 线上/本地的 G5 L4 422、图片 503、UI/服务端能力断裂已有真实证据 | 修复是否有效 |
-| 实现 | `IMPLEMENTED_LOCAL_CANDIDATE` | 八课策略、canonical resolver、rollout/capability、frame、speech confirmation、错误、日志与 EN/ES 文档已落盘；八课 426 placements 的 production asset profile 已形成 | 远端 commit/CI、人工/Owner/法律或发布 |
-| 自动测试 | `PASS_ISOLATED_CANDIDATE` | 精确 Git index 的隔离候选树已通过普通 web 409/409、server-only 61/61、modern-wide 54/54、full-stack 74/74、typecheck、lint（0 error）、production build、diff-check 与秘密扫描 | Vercel 构建、人工评审或生产行为 |
+| 实现 | `IMPLEMENTED_REMOTE_DRAFT_PR` | 八课策略、canonical resolver、rollout/capability、frame、speech confirmation、错误、日志与 EN/ES 文档已落盘并推送；八课 426 placements 的 production asset profile 已形成 | 人工/Owner/法律、合并或正式发布 |
+| 自动测试 | `PASS_LOCAL_AND_SITE_WORKSPACE_CI` | web 414/414、server-only 61/61、modern-wide 54/54、full-stack 74/74、typecheck、lint、build、asset profiles、diff-check 和秘密扫描已通过；Site workspace CI 的对应门已通过 | Workbench 的继承迁移台账失败、人工评审或生产行为 |
 | 本地真实 Provider | `8/8_PROVIDER_PASS_WITH_LOCAL_CLERK_WARNING` | 八课各一条英文首屏文字请求经真实本地 `/api/nova` 和 OpenRouter 返回 200、exact Luna、UUID requestId、no-store，2.0–5.6 秒 | 西语、人审、Preview 或无 console warning 的部署验收；本地 Clerk React key warning 与 Nova 无关但仍记录为未关闭观察项 |
 | 人工课程/安全/无障碍评审 | `NOT_RUN` | 无 | 数学质量、儿童安全、EN/ES、学习困难与无障碍适当性 |
 | Owner 与法律 | `NOT_APPROVED` | Privacy/Terms 仍明确标为 DRAFT | 合同、COPPA/FERPA、同意、保留、删除、subprocessor 或公开发布授权 |
-| Vercel Preview | `NOT_DEPLOYED` | 当前项目链接和既有基础变量可被只读查询 | 修复后的 Preview 构建或 live Nova canary |
+| Vercel Preview | `FAIL_CLOSED_PROTECTED_PREVIEW_PASS` | exact code artifact 已部署为 READY protected Preview；G4 L3/G5 L4 EN/ES 不显示 Nova，首页 CTA disabled，直接有效请求在 Provider 前返回 409；无 runtime error | release list 开启后的真实 Provider canary；其余六门当前被独立课程 publication/showcase gate 关闭 |
 | staged Production | `NOT_DEPLOYED` | 无 | Production-scoped 配置下的同一候选 artifact |
 | 正式 Production | `KNOWN_FAIL_BASELINE` | 当前公开版本仍受原问题报告边界约束 | 修复已发布、正式域名已复验、观察窗已通过 |
 
@@ -67,11 +67,12 @@ NOVA_ALLOW_SPEECH_INPUT=false
 最终实现 receipt：
 
 - Git branch：`codex/help-math-learning-platform-nova-fq`
-- 基线 Git HEAD：`93fb79aa16e68d32edb43b864a1c8972d59b219f`；修复已按精确 path/hunk 构造 Git index，仍待创建正式 commit
-- 审核过的文件 allowlist：见本报告第 12 节；没有执行 `git add -A`、reset、stash 或 clean；已有无分支的临时候选 commit 只用于隔离测试，不是交付 commit
-- `git diff --cached --check`：`PASS`；隔离测试候选树完全由当前 index 的 `git write-tree`/`git commit-tree` 生成，未读取未暂存业务文件
+- 基线 Git HEAD：`93fb79aa16e68d32edb43b864a1c8972d59b219f`；本报告验收的代码 artifact：`5fce7424a54f6f11b39c82f7b588d800b298681d`
+- 远端分支：`codex/help-math-learning-platform-nova-fq`；draft PR：[PR #4](https://github.com/HUDongpin/help-math-2-0-workbench/pull/4)
+- 审核过的文件 allowlist：见本报告第 12 节；没有执行 `git add -A`、reset、stash、clean 或覆盖共享工作树中的无关修改
+- `git diff --check`：`PASS`；所有 Nova 提交均通过精确 path/hunk 提交，当前 index 为空
 - 独立 code review：`P0=0`；代码默认关闭候选无 P1；面向学生 Production 的 K–12 人审/隐私法律/Owner 门仍为发布 P1 blocker
-- 未解决工程/外部门：远端 CI、受保护 Preview、可执行生产监控/值班、staged Production、rollback receipt、数学/安全人审与 Owner/法律批准；均不得在 Production 开启前跳过
+- 未解决工程/外部门：六门课程的 Preview publication/showcase 配置、真实 Preview provider canary、可执行生产监控/值班、staged Production、rollback receipt、数学/安全人审与 Owner/法律批准；均不得在 Production 开启前跳过
 
 ## 4. 自动测试证据层级
 
@@ -81,11 +82,12 @@ NOVA_ALLOW_SPEECH_INPUT=false
 |---|---|---|---|
 | 单元/schema | release parser、8 课 canonical lookup、history bounds、media flags、错误与安全最小化 | `test:nova:server` 61/61；含 426 placements × EN/ES = 852 canonical cases、G4 L3 39 页 × EN/ES = 78 custom/formal invariant | `PASS_LOCAL_STUB_ONLY` |
 | provider stub route | 真实 `/api/nova` handler 的请求、响应、body bounds、timeout/429/5xx/model mismatch；不宣称 live provider | 同一 server-only suite 61/61；fake/stub transport；错误路径断言零上游和无内容泄漏 | `PASS_LOCAL_STUB_ONLY` |
-| 普通 web 单测 | React/client、capability、frame/speech helper、fake build guard 与既有 web 回归 | 精确 index 隔离候选执行 `npm test --workspace @helpmath/web` 409/409 | `PASS_LOCAL_CANDIDATE` |
+| 普通 web 单测 | React/client、capability、frame/speech helper、fake build guard、deployment/private asset split 与既有 web 回归 | `npm test --workspace @helpmath/web` 414/414；同一 suite 在 Site workspace CI 通过 | `PASS_LOCAL_AND_CI` |
 | mock browser E2E | 控件、draft、可见性、错误 UI；明确标注 `page.route` bypass | 精确 index 隔离候选 modern-wide `CLIENT_RENDER_MOCK` 54/54 | `PASS_CLIENT_RENDER_ONLY` |
 | unmocked local route | 浏览器没有拦截 `/api/nova`，走真实 schema/canonical route + server fake upstream | 精确 index 隔离候选：67 all-on + 7 fail-closed gates = 74/74 | `PASS_FULL_STACK_FAKE_UPSTREAM` |
 | local live provider | 合成数学问题，经真实 OpenRouter 返回 exact Luna；修复后重新执行 | 八课各一条英文首屏文字 canary；8/8 API/provider PASS；无 frame；收据 `reports/nova-tutor-local-real-canary-2026-08-23.json` | `PASS_WITH_LOCAL_CLERK_WARNING` |
-| Vercel Preview live | Preview URL、Preview env、真实 route/provider/UI、无 secret 的 trace/receipt | `TODO` | `PENDING` |
+| Vercel Preview fail-closed | protected Preview、empty release list、真实 Next RSC/UI/API、零 Provider | deployment `dpl_7b7jYFXoVByaFpEVPJrpZB2eWpnN`；G4 L3/G5 L4 EN/ES 200 且无控件；有效 API 请求 409 | `PASS_NO_PROVIDER` |
+| Vercel Preview live | release list 开启后的 Preview URL、真实 route/provider/UI、无 secret 的 trace/receipt | `TODO` | `PENDING_AUTHORIZATION_AND_CONFIG` |
 | staged Production live | Production env、无正式域名的 exact deployment URL、同一 artifact | `TODO` | `PENDING` |
 | Production domain | `www.helpmath.ai` 最终 smoke、日志/监控观察窗、回滚准备 | `TODO` | `PENDING` |
 
@@ -102,36 +104,40 @@ NOVA_ALLOW_SPEECH_INPUT=false
 
 ```text
 PASS: npm run typecheck --workspace @helpmath/web
-PASS: npm test --workspace @helpmath/web — 409/409（精确 index 隔离候选）
+PASS: npm test --workspace @helpmath/web — 414/414
 PASS: npm run test:nova:server --workspace @helpmath/web — 61/61
 PASS: npm run lint --workspace @helpmath/web — 0 errors, 3 warnings
-PASS: npm run build --workspace @helpmath/web — 14/14 production asset-profile tests + Next.js production build
+PASS: npm run verify:asset-profiles --workspace @helpmath/web — 16/16，production 1,320 files + private candidate 3 runtime/204 evidence
+PASS: npm run verify:asset-profiles:deployment --workspace @helpmath/web — 11/11，production-only closure
+PASS: npm run build --workspace @helpmath/web — production-only asset verification + Next.js production build
 PASS: npm ls sharp --workspace @helpmath/web --depth=0 — sharp@0.35.3 direct dependency
-PASS: git diff --cached --check
+PASS: git diff --check；index 为空
 PASS: exact server-secret scan — 3 sensitive local values，0 exact matches across 15,483 tracked candidate files + 1,664 final build files；0 sensitive env names in `.next/static`
 PASS: FULL_STACK_FAKE_UPSTREAM — 74/74（67 all-on + 7 fail-closed gates）
 PASS_CLIENT_RENDER_ONLY: CLIENT_RENDER_MOCK modern-wide — 54/54
 PASS_WITH_WARNING: local real OpenRouter text canary — 8/8 exact Luna；每课一条英文首屏请求；本地 Clerk dependency React key warning 尚未关闭
 ```
 
-上述自动化 PASS 来自 2026-08-23 由精确 Git index 生成的隔离候选 commit，Node `v24.18.0`、npm `11.16.0`。server suite 与 full-stack suite 使用 fake/stub upstream，不能替代后面单列的真实 OpenRouter canary。全量 lint 只有三个既有 unused-parameter warning。秘密扫描另外发现一个与本地值相同的 `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` 测试 fixture；该值按 Clerk 契约属于浏览器公开标识，不计为 server secret，且报告不记录其值。最终整包仍须取得远端 commit/CI 和外部各门收据；不要只抄最后一行。
+上述自动化 PASS 来自 2026-08-23 的精确提交候选，Node `v24.18.0`、npm `11.16.0`。server suite 与 full-stack suite 使用 fake/stub upstream，不能替代后面单列的真实 OpenRouter canary。全量 lint 只有三个既有 unused-parameter warning。秘密扫描另外发现一个与本地值相同的 `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` 测试 fixture；该值按 Clerk 契约属于浏览器公开标识，不计为 server secret，且报告不记录其值。远端 CI 的 Site workspace 已通过 Nova 所在应用的 lint、typecheck、414/414 unit、61/61 server、build、ordinary/modern-wide/full-stack 浏览器门；同一 workflow 的 Workbench job 因继承的 migration ledger/release expected-count 门失败，未通过改写受保护迁移证据来制造绿色。外部人审和发布各门仍需独立收据；不要只抄最后一行。
+
+远端 CI receipt：[run 32647780088](https://github.com/HUDongpin/help-math-2-0-workbench/actions/runs/32647780088)（head `5fce7424a54f6f11b39c82f7b588d800b298681d`）。[Site workspace job 97214636147](https://github.com/HUDongpin/help-math-2-0-workbench/actions/runs/32647780088/job/97214636147) 在 16m46s 后成功；[Workbench job 97214636102](https://github.com/HUDongpin/help-math-2-0-workbench/actions/runs/32647780088/job/97214636102) 失败，精确原因为 `completion ledger is stale` 与 `lesson releases[0].expectedCounts` 仍是旧字段契约。workflow 总结因此是 failure，而不是全仓绿色；Nova 所在 Site workspace 是 success。该继承失败必须由独立迁移台账工作解决，不能作为 Nova 修复的一部分刷新受保护证据。
 
 ## 5. 八课能力、产品发布与外部验收矩阵
 
 八课都已进入 Nova 的代码策略、canonical resolver 与候选 production asset/publication profile。G4 L5/L10/L11 的 142 个 page-only runtime 已通过 hash-bound promotion receipt 纳入候选 production profile；该 profile 当前精确包含 1,135 个 public 文件与 185 个 server 文件，合计 1,320 个八课部署成员，checksum 为 `54e11e77a8d684fcf9542ba7458c12add3edb1a85c16ac99db756a34ed5c6ad4`。这证明候选构建产品资格，不证明远端部署、Flash fidelity、音频、人审、Owner、strict completion 或 Nova rollout 已开放。
 
-| 课程 | 代码策略与 canonical resolver | Final full-stack fake（EN/ES × 3 页） | 本地真实 Provider 文字 | 候选 Production 产品资格 | Preview real | 人工数学/安全 |
+| 课程 | 代码策略与 canonical resolver | Final full-stack fake（EN/ES × 3 页） | 本地真实 Provider 文字 | 候选 Production 产品资格 | Protected Preview surface | 人工数学/安全 |
 |---|---|---|---|---|---|---|
-| G4 L3 | `LOCAL_PASS` | `PASS_FINAL_CANDIDATE` | `PASS_EN_FIRST_PAGE` | `ELIGIBLE_NOT_RELEASED_BY_NOVA` | `NOT_RUN` | `NOT_RUN` |
-| G5 L4 | `LOCAL_PASS` | `PASS_FINAL_CANDIDATE` | `PASS_EN_FIRST_PAGE` | `ELIGIBLE_NOT_RELEASED_BY_NOVA` | `NOT_RUN` | `NOT_RUN` |
-| G3 L2 | `LOCAL_PASS` | `PASS_FINAL_CANDIDATE` | `PASS_EN_FIRST_PAGE` | `ELIGIBLE_NOT_RELEASED_BY_NOVA` | `NOT_RUN` | `NOT_RUN` |
-| G4 L5 | `LOCAL_PASS` | `PASS_FINAL_CANDIDATE` | `PASS_EN_FIRST_PAGE` | `CANDIDATE_ELIGIBLE_NOT_DEPLOYED` | `NOT_RUN` | `NOT_RUN` |
-| G4 L10 | `LOCAL_PASS` | `PASS_FINAL_CANDIDATE` | `PASS_EN_FIRST_PAGE` | `CANDIDATE_ELIGIBLE_NOT_DEPLOYED` | `NOT_RUN` | `NOT_RUN` |
-| G4 L11 | `LOCAL_PASS` | `PASS_FINAL_CANDIDATE` | `PASS_EN_FIRST_PAGE` | `CANDIDATE_ELIGIBLE_NOT_DEPLOYED` | `NOT_RUN` | `NOT_RUN` |
-| G5 L3 | `LOCAL_PASS` | `PASS_FINAL_CANDIDATE` | `PASS_EN_FIRST_PAGE` | `ELIGIBLE_NOT_RELEASED_BY_NOVA` | `NOT_RUN` | `NOT_RUN` |
-| G5 L5 | `LOCAL_PASS` | `PASS_FINAL_CANDIDATE` | `PASS_EN_FIRST_PAGE` | `ELIGIBLE_NOT_RELEASED_BY_NOVA` | `NOT_RUN` | `NOT_RUN` |
+| G4 L3 | `LOCAL_PASS` | `PASS_FINAL_CANDIDATE` | `PASS_EN_FIRST_PAGE` | `ELIGIBLE_NOT_RELEASED_BY_NOVA` | `EN_ES_200_NOVA_HIDDEN` | `NOT_RUN` |
+| G5 L4 | `LOCAL_PASS` | `PASS_FINAL_CANDIDATE` | `PASS_EN_FIRST_PAGE` | `ELIGIBLE_NOT_RELEASED_BY_NOVA` | `EN_ES_200_NOVA_HIDDEN` | `NOT_RUN` |
+| G3 L2 | `LOCAL_PASS` | `PASS_FINAL_CANDIDATE` | `PASS_EN_FIRST_PAGE` | `ELIGIBLE_NOT_RELEASED_BY_NOVA` | `404_COURSE_PUBLICATION_CLOSED` | `NOT_RUN` |
+| G4 L5 | `LOCAL_PASS` | `PASS_FINAL_CANDIDATE` | `PASS_EN_FIRST_PAGE` | `CANDIDATE_ELIGIBLE_NOT_DEPLOYED` | `404_COURSE_PUBLICATION_CLOSED` | `NOT_RUN` |
+| G4 L10 | `LOCAL_PASS` | `PASS_FINAL_CANDIDATE` | `PASS_EN_FIRST_PAGE` | `CANDIDATE_ELIGIBLE_NOT_DEPLOYED` | `404_COURSE_PUBLICATION_CLOSED` | `NOT_RUN` |
+| G4 L11 | `LOCAL_PASS` | `PASS_FINAL_CANDIDATE` | `PASS_EN_FIRST_PAGE` | `CANDIDATE_ELIGIBLE_NOT_DEPLOYED` | `404_COURSE_PUBLICATION_CLOSED` | `NOT_RUN` |
+| G5 L3 | `LOCAL_PASS` | `PASS_FINAL_CANDIDATE` | `PASS_EN_FIRST_PAGE` | `ELIGIBLE_NOT_RELEASED_BY_NOVA` | `404_COURSE_PUBLICATION_CLOSED` | `NOT_RUN` |
+| G5 L5 | `LOCAL_PASS` | `PASS_FINAL_CANDIDATE` | `PASS_EN_FIRST_PAGE` | `ELIGIBLE_NOT_RELEASED_BY_NOVA` | `404_COURSE_PUBLICATION_CLOSED` | `NOT_RUN` |
 
-`PASS_FINAL_CANDIDATE` 指 8 课 × 2 locale × 3 page selector 的 48 个真实本地 `/api/nova` + server fake-upstream case 已在精确 index 隔离候选上通过；同一列车还通过 G5 L3 重复 animation 的 ordinal 45/46、current-frame、EN/ES speech confirmation、14 个语音负面 case 和七个关闭场景，总计 74/74。`PASS_EN_FIRST_PAGE` 只证明固定英文首屏文字 canary，不扩展为西语、assessment、frame、speech、人审或部署证据。
+`PASS_FINAL_CANDIDATE` 指 8 课 × 2 locale × 3 page selector 的 48 个真实本地 `/api/nova` + server fake-upstream case 已在精确提交候选上通过；同一列车还通过 G5 L3 重复 animation 的 ordinal 45/46、current-frame、EN/ES speech confirmation、14 个语音负面 case 和七个关闭场景，总计 74/74。`PASS_EN_FIRST_PAGE` 只证明固定英文首屏文字 canary，不扩展为西语、assessment、frame、speech、人审或部署证据。Protected Preview 的六个 404 是课程自身的 publication/showcase 配置门，不是 Nova resolver 失败；但它们确实阻止了本轮对八门学习者路由做 Preview surface 验收，所以不能写成八课 Preview PASS。
 
 每次真实 canary 只使用中性合成数学问题。Receipt 可以记录固定 fixture ID，但不记录实际请求或回复正文。
 
@@ -201,7 +207,7 @@ PASS_WITH_WARNING: local real OpenRouter text canary — 8/8 exact Luna；每课
 
 没有上述批准时，代码和测试即使全绿也只能写 `IMPLEMENTED_UNVERIFIED_FOR_RELEASE`。
 
-## 8. Vercel 只读 readiness 审计
+## 8. Vercel readiness 与受保护 Preview 审计
 
 ### 8.1 链接、认证与部署
 
@@ -214,6 +220,10 @@ PASS_WITH_WARNING: local real OpenRouter text canary — 8/8 exact Luna；每课
 | 当前公开别名 | `www.helpmath.ai` 解析到 deployment `dpl_6pj5sVFj7P1r7M7Cg12DJngSXhhj`，状态 `READY`，target `production` |
 | 当前 deployment URL | `helpmath-mdcvbv23q-peter-dongpin-hu-s-projects.vercel.app` |
 | 创建时间 | 2026-08-21 14:52:00.229 UTC；这只是当前旧版本 provenance，不是修复后的部署 |
+| 受保护 Preview | deployment `dpl_7b7jYFXoVByaFpEVPJrpZB2eWpnN`，状态 `READY`，target `preview` |
+| Preview URL | [protected Preview](https://helpmath-2rqheem9k-peter-dongpin-hu-s-projects.vercel.app) |
+| Preview Git 绑定 | `gitCommitSha` 与自定义 `gitSha` 都精确等于 `5fce7424a54f6f11b39c82f7b588d800b298681d` |
+| 保护/noindex | 未认证请求 302 到 Vercel SSO；受保护页面和 `robots.txt` 均有 `x-robots-tag: noindex` |
 
 ### 8.2 Nova 环境变量名称存在性
 
@@ -244,9 +254,18 @@ PASS_WITH_WARNING: local real OpenRouter text canary — 8/8 exact Luna；每课
 
 ### 8.4 Preview 判定
 
-`GO_FOR_FAIL_CLOSED_PROTECTED_PREVIEW_BUILD`，但真实 Provider Preview canary 仍为 `BLOCKED_EXTERNAL_APPROVAL_AND_CONFIG`。
+`PASS_FAIL_CLOSED_PROTECTED_PREVIEW / LIVE_PROVIDER_CANARY_NOT_RUN`。
 
-理由：精确 index 隔离候选已通过 typecheck、unit/server、production build、modern-wide 和 full-stack 浏览器门，项目也已正确链接且既有 OpenRouter/Nova 基础变量名在 Preview 存在，因此可以先创建一个受保护、零课程、fail-closed 的 Preview build。可是新实现的 `NOVA_TUTOR_RELEASE_IDS` 在 Preview 尚不存在，且本任务没有取得“独立 Preview provider key/预算”与 Preview 真实调用的 dated Owner/运维授权；缺失 release list 时所有课程 Nova 都应关闭，不能形成真实 canary。要做首个 text-only Preview canary，必须由授权人员添加 Preview-scoped 最小 release list，并确认 Preview key 与 Production key 隔离；speech/frame 保持 false。当前任务没有进行这些远端变更。
+受保护 Preview 已经实际构建并验收，不再只是 readiness 判断：
+
+- G4 L3 和 G5 L4 的 EN/ES 课程页面均返回 200、`noindex`，HTML 中没有 Ask/Preguntar Nova control、Tutor panel 或 active Nova UI；
+- EN/ES 首页均返回 200，只显示 disabled Nova availability copy，没有 active Talk/Hablar CTA；
+- 对 G4 L3 构造一个格式与 canonical context 有效的同源 `POST /api/nova`，返回 409 `NOVA_COURSE_NOT_AVAILABLE`、`cache-control: no-store`、requestId `1bd81956-fec4-4118-ae67-034778315e2d`；
+- 同一 requestId 的结构化 runtime log 记录 `status=409`、`failure=course-not-available`、`durationMs=209`、`attempts=null`、`upstreamStatus=null`、`framePresent=false`，且没有 message/history/reply/frame 或 secret；
+- 部署后的 runtime error log 查询没有返回 error 记录；本次 Preview 验收没有调用 Provider；
+- 八门课程 route smoke 中 G4 L3、G5 L4 为 200；G3 L2、G4 L5/L10/L11、G5 L3/L5 为 404。后六门被当前 Preview 的独立课程 publication/showcase 配置门关闭，必须先在受控 Preview 中开放这些课程，才能执行八课 Preview surface 与 live provider 矩阵。
+
+因此空/缺失 `NOVA_TUTOR_RELEASE_IDS` 的全栈 fail-closed 契约已在真实 Vercel artifact 上通过；真实 Provider Preview canary 仍是 `BLOCKED_EXTERNAL_APPROVAL_AND_CONFIG`。要做首个 text-only Preview canary，必须由授权人员添加 Preview-scoped 最小 release list，证明 Preview key 与 Production key 隔离，并保持 speech/frame 为 false。当前任务没有进行这些远端配置变更。
 
 0 drains 是发布风险警告而不是 Vercel 构建阻断。进入 staged Production 前至少要确定：由谁监控 Vercel runtime logs、观察多久、触发阈值、谁能推广/回滚；若不创建 drain，就必须有书面的 Dashboard/CLI fallback 值班流程。
 
@@ -268,11 +287,11 @@ PASS_WITH_WARNING: local real OpenRouter text canary — 8/8 exact Luna；每课
 
 ### Gate C — Vercel Preview 单课程
 
-- 只在明确授权后增加 Preview-scoped release list；不得读取或打印 secret 值。
-- 部署 exact commit；记录 deployment ID/URL/build status。
-- 先跑 disabled/omitted 负面测试，再跑一次 G4 L3 text canary；frame/speech 保持 off。
-- 扫描 console/pageerror/failed requests、`/api/nova` 状态和 Vercel runtime error logs。
-- 通过观察窗后，第二个独立批次只新增 G5 L4，验证原 422 修复；不要一次开放其余六课。
+- `PASS`：exact code artifact 已部署；deployment ID/URL/build status/Git SHA 已记录；受 Deployment Protection 和 `noindex` 保护。
+- `PASS`：empty release list 的 disabled/omitted 负面路径已在真实 Next UI/API 上通过，409 发生在 Provider 前，runtime error log 无记录。
+- `PENDING`：只在明确授权后增加 Preview-scoped 最小 release list；不得读取或打印 secret 值；必须确认 Preview key 与 Production key 隔离。
+- `PENDING`：先跑一次 G4 L3 text live canary；frame/speech 保持 off，并扫描 console/pageerror/failed requests、`/api/nova` 和 runtime logs。
+- `PENDING`：G5 L4 作为第二个独立批次验证原 422 修复；其余六课还要先打开各自的 Preview publication/showcase gate，再执行八课矩阵。
 
 ### Gate D — staged Production
 
@@ -334,7 +353,7 @@ PASS_WITH_WARNING: local real OpenRouter text canary — 8/8 exact Luna；每课
 
 只有当实现、自动测试、人审、Owner/法律、Preview、staged Production、正式 Production 与观察窗各自拥有独立 PASS receipt 时，才能把 Nova Tutor 写成“在已批准课程和已批准输入方式上正常运行”。即使那时，也不能扩展成“全部课程、图片、语音或 K–12 法律合规已普遍完成”。
 
-## 12. 本地候选文件边界与收据
+## 12. 候选文件边界与收据
 
 ### 12.1 Nova 新增文件
 
@@ -372,6 +391,7 @@ reports/nova-tutor-remediation-acceptance-report-2026-08-23.md
 
 ```text
 .github/workflows/ci.yml
+.vercelignore
 apps/web/.env.example
 apps/web/app/[locale]/courses/[grade]/[lesson]/page.tsx
 apps/web/app/[locale]/page.tsx
@@ -390,16 +410,20 @@ apps/web/eslint.config.mjs
 apps/web/lib/nova-client.ts
 apps/web/lib/nova-openrouter.server.ts
 apps/web/lib/nova-request-schema.ts
+apps/web/lib/current-js-asset-profile.ts
 apps/web/lib/tutor-integration.ts
 apps/web/next.config.ts
 apps/web/package.json
 apps/web/playwright.config.ts
 apps/web/tests/descriptor-driven-whole-lesson-player.test.ts
+apps/web/tests/current-js-asset-profiles.test.ts
 apps/web/tests/nova-client.test.ts
 apps/web/tests/nova-openrouter-route.test.ts
 apps/web/tests/tutor-integration.test.ts
 docs/NOVA_OPENROUTER.md
 package-lock.json
+scripts/current-js-candidate-paths.mjs
+scripts/manage-current-js-asset-profiles.mjs
 ```
 
 CI 已加入两个独立永久门：`test:nova:server` 与 `test:e2e:nova-full-stack`。`package.json`、lockfile、Next/Playwright 配置同时含其他并行工作 hunk；Nova 所有权只限 server test/full-stack scripts、Sharp 直接依赖、fake-transport production guard 和 capability test env 等明确差异。
@@ -407,7 +431,7 @@ CI 已加入两个独立永久门：`test:nova:server` 与 `test:e2e:nova-full-s
 ### 12.3 保全与无秘密收据
 
 - 本验收报告没有覆盖原问题报告 `reports/nova-tutor-runtime-problem-report-2026-08-23.md`；最终只读审计所见原报告 SHA-256 为 `d729f625f682462ce53a9b7b300e584158bac494a3e14286a98d810932e9e4a9`，自该哈希采样后未观察到变化。原报告当前没有 Git blob 或更早的固定哈希，因此不把这项证据扩展成“自创建以来从未变化”。
-- 没有 reset、stash、clean、切换分支或 `git add -A`。修复通过精确 path 和逐 hunk 方式 stage；收口快照中未暂存的 85 个 tracked 修改及 68 个 untracked entry 仍保留在共享工作树中。没有正式 commit、push、部署、推广或远端配置修改。
+- 没有 reset、stash、clean、切换分支或 `git add -A`。修复通过精确 path 和逐 hunk 方式提交；收口快照中未暂存的 85 个 tracked 修改及 68 个 untracked entry 仍保留在共享工作树中，index 为空。Nova 修复的受控提交已经推送到远端 draft PR #4；只创建并验收了一个 protected Preview，没有推广、回滚、Production 部署或远端配置修改。
 - `apps/web/.env.local` 仍为 mode `0600`，由 `.gitignore` 的 `.env.*` 规则忽略；本报告没有记录其值。
 - 本地 `.env.local` 为本次 canary 临时包含全部八个 release、speech=true、frame=false；这里只记录非秘密开关状态，不记录 release 字符串之外的任何值。它仍被 Git 忽略，且不会改变 `.env.example` 的 master/frame/speech=false、release list 为空默认值。
 - 最终 production build 后，从 `.env.local` 识别 3 个非空 server-sensitive 值；扫描精确 index 的 15,483 个 tracked 文件和 1,664 个 `.next/static`/`.next/server` 文件，结果为 0 个 exact match。另一个匹配是明确可公开的 Clerk publishable-key 测试 fixture，不属于 server secret；其值未写入报告。
@@ -422,4 +446,4 @@ CI 已加入两个独立永久门：`test:nova:server` 与 `test:e2e:nova-full-s
 
 ### 12.4 当前可交付状态
 
-本地代码候选已经通过精确 index 隔离验证，可以创建受控 Git commit 并交给远端 CI/独立 reviewer；但还不能报告为 Preview 或 Production 修复完成。下一项外部动作是：推送同一候选 commit，确认远端 CI，然后创建零课程的受保护 Preview build。只有在取得独立 Preview key/预算、Owner 对 Preview provider 调用与环境变量变更的明确授权后，才可执行 text-only Preview canary。图片和语音仍必须等待独立的 dated Privacy/法律、Owner 与真实设备收据，Production 开关保持关闭。
+代码实现、受控 Git 提交、远端 draft PR、Site workspace CI 与零课程 protected Preview fail-closed 验收已经完成；这仍不等于 Nova 整体发布完成。下一项外部动作是取得独立 Preview key/预算、Owner 对 Preview provider 调用与环境变量变更的明确授权，然后只为 G4 L3 添加 Preview-scoped release ID 并执行 text-only live canary。G5 L4 作为下一独立批次；其余六门还必须先打开各自的 Preview course publication/showcase gate。图片和语音继续等待独立的 dated Privacy/法律、Owner 与真实设备收据，Production 开关保持关闭；staged Production、正式域名、监控观察窗和回滚演练均未执行。
