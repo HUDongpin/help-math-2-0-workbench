@@ -65,7 +65,7 @@ type AudioHarnessRecord = Readonly<{
 }>;
 
 const PLAYER = [
-  '[data-lesson-player="descriptor-driven-whole-lesson-audit"]',
+  '[data-lesson-player="descriptor-driven-page-only-product-bridge"]',
   '[data-hydrated="true"]',
 ].join('');
 const ROOT = 'main.lesson-shell2';
@@ -701,10 +701,7 @@ test.describe('live timeline audio', () => {
 
     const runtime = page.locator(RUNTIME);
     const stage = runtime.locator('.runtime-stage');
-    const narration = page.locator(
-      '[data-responsive-focus-surface="persistent"] '
-      + '[data-responsive-focus-key="narration"]',
-    );
+    const narration = await liveControl(page, 'narration');
     const exactCue = audioReport.normalCandidates.find(
       (candidate) => candidate.animationId === 'course-g05-l04-rw-002',
     )?.embedded.publicPath;
@@ -779,10 +776,7 @@ test('Spanish ordinary-page narration is manual, volume-bound, and visual-langua
     'data-runtime-language',
     'en',
   );
-  const narration = page.locator(
-    '[data-responsive-focus-surface="persistent"] '
-    + '[data-responsive-focus-key="narration"]',
-  );
+  const narration = await liveControl(page, 'narration');
   await expect(narration).toHaveAttribute('data-narration-status', 'idle');
   await narration.click();
   await expect(narration).toHaveAttribute('data-narration-status', 'playing');
@@ -816,7 +810,11 @@ test('Spanish ordinary-page narration is manual, volume-bound, and visual-langua
   records = await audioHarnessSnapshot(page);
   expect(records.at(-1)).toMatchObject({paused: false, playCount: 1});
 
+  const volumeTrigger = await liveControl(page, 'mute');
+  await volumeTrigger.click();
+  await expect(volumeTrigger).toHaveAttribute('aria-expanded', 'true');
   const volume = await liveControl(page, 'volume');
+  await expect(volume).toBeVisible();
   await volume.fill('0.3');
   await expect(runtime).toHaveAttribute('data-runtime-volume', '0.3');
   records = await audioHarnessSnapshot(page);
@@ -858,11 +856,10 @@ test('reduced motion exposes the exact English cue as an on-demand track', async
 
   const runtime = page.locator(RUNTIME);
   await expect(runtime).toHaveAttribute('data-audio-available', 'true');
-  await expect(runtime.locator('.reduced-motion-note')).toBeVisible();
-  const narration = page.locator(
-    '[data-responsive-focus-surface="persistent"] '
-    + '[data-responsive-focus-key="narration"]',
-  );
+  // The preference still controls the runtime; the learner-facing modern-wide
+  // surface deliberately hides the engineering explanation over the lesson.
+  await expect(runtime.locator('.reduced-motion-note')).toBeHidden();
+  const narration = await liveControl(page, 'narration');
   await expect(narration).toHaveAttribute('data-narration-status', 'idle');
   await expect(narration).toBeEnabled();
   await narration.click();

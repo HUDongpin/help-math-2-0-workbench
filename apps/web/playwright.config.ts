@@ -17,10 +17,16 @@ const novaClientRenderMockKey = [
 
 export default defineConfig({
   testDir: './e2e',
-  // External Clerk mutation is reachable only through the dedicated,
-  // redacted, fresh-server launcher. Ordinary browser regression must never
-  // discover it even if authorization variables were left in a shell.
-  testIgnore: 'clerk-synthetic-lifecycle.spec.ts',
+  // External Clerk mutation and Nova's real-route fake-upstream matrix each
+  // have a dedicated, redacted, fresh-server launcher. Ordinary browser
+  // regression must never discover either suite without its authorization
+  // and scenario contract.
+  testIgnore: [
+    'clerk-synthetic-lifecycle.spec.ts',
+    'nova-capability-gates.spec.ts',
+    'nova-full-stack.spec.ts',
+    'nova-speech-negative.spec.ts',
+  ],
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,

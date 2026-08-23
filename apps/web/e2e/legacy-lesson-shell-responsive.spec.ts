@@ -12,7 +12,7 @@ const PLAYER = [
   '[data-resume-decision="resolved"]',
 ].join('');
 const G5_PLAYER = [
-  '[data-lesson-player="descriptor-driven-whole-lesson-audit"]',
+  '[data-lesson-player="descriptor-driven-page-only-product-bridge"]',
   '[data-hydrated="true"]',
 ].join('');
 const ROOT = 'main.lesson-shell2';
