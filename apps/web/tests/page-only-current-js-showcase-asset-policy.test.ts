@@ -91,16 +91,10 @@ const scopes = Object.freeze([
 ]);
 
 test('page-only showcase policy binds exactly the 329 registered runtime directories', async () => {
-  const courseAssetsRoot = path.join(
+  const productionCourseAssetsRoot = path.join(
     webRoot,
     'public/flash-assets/courses',
   );
-  const diskDirectories = (await readdir(courseAssetsRoot, {
-    withFileTypes: true,
-  }))
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name);
-
   const allPolicyDirectories = Object.values(
     PAGE_ONLY_CURRENT_JS_SHOWCASE_ASSET_DIRECTORIES_BY_RELEASE,
   ).flat();
@@ -108,6 +102,11 @@ test('page-only showcase policy binds exactly the 329 registered runtime directo
   assert.equal(new Set(allPolicyDirectories).size, 329);
 
   for (const scope of scopes) {
+    const diskDirectories = (await readdir(productionCourseAssetsRoot, {
+      withFileTypes: true,
+    }))
+      .filter((entry) => entry.isDirectory())
+      .map((entry) => entry.name);
     const policyDirectories = [
       ...PAGE_ONLY_CURRENT_JS_SHOWCASE_ASSET_DIRECTORIES_BY_RELEASE[
         scope.releaseId
@@ -138,6 +137,12 @@ test('page-only showcase asset classification is exact and fails closed', () => 
   assert.equal(isPageOnlyCurrentJsShowcaseAssetPath(
     '/flash-assets/courses/course-g05-l03-fq-003/canvas-renderer.js',
   ), true);
+  assert.equal(isPageOnlyCurrentJsShowcaseAssetPath(
+    '/flash-assets/courses/course-g04-l05-fq-001/manifest.json',
+  ), false);
+  assert.equal(isPageOnlyCurrentJsShowcaseAssetPath(
+    '/flash-assets/courses/course-g04-l05-fq-001/adapter-spec.json',
+  ), false);
   assert.equal(isPageOnlyCurrentJsShowcaseAssetSegments([
     'courses',
     'course-g03-l02-future-draft',
@@ -158,6 +163,21 @@ test('page-only showcase asset classification is exact and fails closed', () => 
   }), false);
   assert.equal(isPageOnlyCurrentJsShowcaseAssetAuthorized(exact, {
     CURRENT_JS_SHOWCASE_G3_L2_ENABLED: 'true',
+  }), true);
+  const candidate = [
+    'courses',
+    'course-g04-l05-fq-001',
+    'canvas-renderer.js',
+  ];
+  assert.equal(isPageOnlyCurrentJsShowcaseAssetAuthorized(candidate, {
+    NODE_ENV: 'production',
+    CURRENT_JS_CANDIDATE_PROFILE_ENABLED: 'true',
+    CURRENT_JS_SHOWCASE_G4_L5_ENABLED: 'true',
+  }), true);
+  assert.equal(isPageOnlyCurrentJsShowcaseAssetAuthorized(candidate, {
+    NODE_ENV: 'development',
+    CURRENT_JS_CANDIDATE_PROFILE_ENABLED: 'true',
+    CURRENT_JS_SHOWCASE_G4_L5_ENABLED: 'true',
   }), true);
 });
 
@@ -187,6 +207,7 @@ test('production proxy admits each page-only course and its exact asset closure 
 
     await withEnvironment({
       NODE_ENV: 'production',
+      CURRENT_JS_CANDIDATE_PROFILE_ENABLED: 'true',
       [scope.environmentKey]: 'true',
     }, async () => {
       assert.equal(
@@ -208,6 +229,35 @@ test('production proxy admits each page-only course and its exact asset closure 
       + 'course-g03-l02-future-draft/canvas-renderer.js',
     ))).status, 404);
   });
+});
+
+test('the three G4 routes stay production-bound outside production too', async () => {
+  for (const scope of scopes.filter(({directoryPrefix}) =>
+    directoryPrefix.startsWith('course-g04-')
+  )) {
+    const firstDirectory =
+      PAGE_ONLY_CURRENT_JS_SHOWCASE_ASSET_DIRECTORIES_BY_RELEASE[
+        scope.releaseId
+      ][0]!;
+    await withEnvironment({
+      NODE_ENV: 'development',
+      CURRENT_JS_CANDIDATE_PROFILE_ENABLED: 'true',
+      [scope.environmentKey]: 'true',
+    }, async () => {
+      assert.equal((await proxyForRequest(new NextRequest(
+        `http://localhost:3000${scope.route}`,
+      ))).status, 200);
+      assert.equal((await proxyForRequest(new NextRequest(
+        'http://localhost:3000/flash-assets/courses/'
+          + `${firstDirectory}/canvas-renderer.js`,
+      ))).status, 200);
+      assert.equal(isPageOnlyCurrentJsShowcaseAssetAuthorized([
+        'courses',
+        firstDirectory,
+        'canvas-renderer.js',
+      ]), true);
+    });
+  }
 });
 
 test('flash asset route repeats the page-only authorization check', async () => {

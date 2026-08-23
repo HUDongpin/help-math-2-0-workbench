@@ -1,0 +1,67 @@
+import assert from 'node:assert/strict';
+import {spawnSync} from 'node:child_process';
+import {describe, it} from 'node:test';
+
+const fakeTransportVariables = [
+  'NOVA_TEST_FAKE_TRANSPORT_AUTHORIZATION',
+  'NOVA_TEST_FAKE_TRANSPORT_ORIGIN',
+  'NOVA_TEST_FAKE_TRANSPORT_RECEIPT_PATH',
+] as const;
+
+function importProductionConfig(
+  variables: Partial<Record<(typeof fakeTransportVariables)[number], string>>,
+) {
+  const environment: NodeJS.ProcessEnv = {
+    ...process.env,
+    NODE_ENV: 'production',
+  };
+  for (const variable of fakeTransportVariables) {
+    delete environment[variable];
+  }
+  Object.assign(environment, variables);
+  return spawnSync(
+    process.execPath,
+    [
+      '--import',
+      'tsx',
+      '--input-type=module',
+      '--eval',
+      "await import('./next.config.ts')",
+    ],
+    {
+      cwd: new URL('..', import.meta.url),
+      encoding: 'utf8',
+      env: environment,
+    },
+  );
+}
+
+describe('Nova fake transport production build guard', () => {
+  for (const variable of fakeTransportVariables) {
+    it(`rejects production when ${variable} is defined as an empty string`, () => {
+      const result = importProductionConfig({[variable]: ''});
+      assert.notEqual(result.status, 0);
+      assert.match(
+        `${result.stdout}\n${result.stderr}`,
+        /Nova full-stack fake transport is forbidden in production builds/u,
+      );
+    });
+  }
+
+  it('rejects a non-empty fake transport authorization before Next can build', () => {
+    const result = importProductionConfig({
+      NOVA_TEST_FAKE_TRANSPORT_AUTHORIZATION:
+        'full-stack-fake-upstream-v1',
+    });
+    assert.notEqual(result.status, 0);
+    assert.match(
+      `${result.stdout}\n${result.stderr}`,
+      /Nova full-stack fake transport is forbidden in production builds/u,
+    );
+  });
+
+  it('does not trigger the fake transport guard when all three variables are absent', () => {
+    const result = importProductionConfig({});
+    assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
+  });
+});

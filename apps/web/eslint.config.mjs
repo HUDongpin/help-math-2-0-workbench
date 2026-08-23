@@ -7,8 +7,10 @@ export default defineConfig([
   ...nextTypeScript,
   globalIgnores([
     ".next/**",
+    ".next-current-js-candidate-qa/**",
     ".next-local-reference-diagnostic/**",
     ".next-*-package*/**",
+    "candidate-assets/flash-assets/**",
     "public/flash-assets/**",
     "next-env.d.ts",
   ]),

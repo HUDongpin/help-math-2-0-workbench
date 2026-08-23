@@ -31,20 +31,22 @@ export function availableLearningLessons(
 
   return Object.freeze(wholeLessonCourseRegistrations().flatMap(
     ({descriptor}) => {
-      const navigation = findLessonNavigationForRoute(
+      const catalogNavigation = findLessonNavigationForRoute(
         catalog,
         descriptor.course.grade,
         descriptor.course.lesson,
-      ) ?? findPageOnlyCurrentJsNavigationForRoute(
+      );
+      const pageOnlyNavigation = findPageOnlyCurrentJsNavigationForRoute(
         descriptor.course.grade,
         descriptor.course.lesson,
       );
-      const descriptorBound = Boolean(
-        navigation && wholeLessonDescriptorMatchesNavigation(
+      const navigation = [catalogNavigation, pageOnlyNavigation].find(
+        (candidate) => candidate && wholeLessonDescriptorMatchesNavigation(
           descriptor,
-          navigation,
+          candidate,
         ),
       );
+      const descriptorBound = Boolean(navigation);
       const releasePublished = isLessonReleasePublished(
         catalog,
         descriptor.releaseId,

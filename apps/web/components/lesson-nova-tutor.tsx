@@ -6,7 +6,7 @@ import {
   useId,
   useRef,
   useState,
-  type ChangeEvent,
+  useSyncExternalStore,
 } from 'react';
 
 import {
@@ -21,15 +21,13 @@ import {
   NOVA_TUTOR_MODEL,
   type NovaTutorModel,
 } from '@/lib/nova-provider-contract';
+import type {NovaClientCapabilities} from '@/lib/nova-capabilities';
 import {
   tutorContextSummary,
   type NovaTutorMode,
   type TutorFrameSnapshot,
   type TutorPageContext,
 } from '@/lib/tutor-integration';
-
-const NOVA_LOCAL_IMAGE_MAX_BYTES = 8 * 1024 * 1024;
-const NOVA_LOCAL_IMAGE_TYPES = new Set(['image/jpeg', 'image/png']);
 
 interface SpeechRecognitionAlternativeLike {
   readonly transcript: string;
@@ -77,6 +75,18 @@ declare global {
   }
 }
 
+function subscribeToSpeechRecognitionAvailability() {
+  return () => undefined;
+}
+
+function speechRecognitionAvailableInBrowser() {
+  return Boolean(window.SpeechRecognition || window.webkitSpeechRecognition);
+}
+
+function speechRecognitionUnavailableOnServer() {
+  return false;
+}
+
 class NovaClientError extends Error {
   constructor(readonly code: string) {
     super(code);
@@ -96,18 +106,20 @@ function PlusIcon() {
   </svg>;
 }
 
-function readLocalImageAsDataUrl(file: File) {
-  return new Promise<string | null>((resolve) => {
-    try {
-      const reader = new FileReader();
-      reader.onerror = () => resolve(null);
-      reader.onabort = () => resolve(null);
-      reader.onload = () => resolve(typeof reader.result === 'string' ? reader.result : null);
-      reader.readAsDataURL(file);
-    } catch {
-      resolve(null);
-    }
-  });
+function tutorPlacementKey(context: TutorPageContext) {
+  return `${context.releaseId}:${context.globalPageOrdinal}:${context.animationId}`;
+}
+
+function frameMatchesContext(
+  frame: TutorFrameSnapshot | null | undefined,
+  context: TutorPageContext,
+): frame is TutorFrameSnapshot {
+  return Boolean(
+    frame &&
+    frame.releaseId === context.releaseId &&
+    frame.globalPageOrdinal === context.globalPageOrdinal &&
+    frame.animationId === context.animationId,
+  );
 }
 
 /**
@@ -141,11 +153,22 @@ function novaErrorMessage(locale: 'en' | 'es', code: string) {
       return spanish
         ? 'Nova está ocupado. Espera un momento e inténtalo de nuevo.'
         : 'Nova is busy. Wait a moment and try again.';
+    case 'NOVA_COURSE_NOT_AVAILABLE':
+      return spanish
+        ? 'Nova no está disponible para esta lección. Sigue usando los apoyos de la página.'
+        : 'Nova is not available for this lesson. Keep using the supports on this page.';
+    case 'NOVA_FRAME_NOT_AVAILABLE':
+      return spanish
+        ? 'No se puede compartir el fotograma actual. Quita el fotograma y envía solo el texto.'
+        : 'The current lesson frame cannot be shared. Remove it and send text only.';
     case 'VALIDATION_ERROR':
+      return spanish
+        ? 'Esta pregunta no coincide con la página actual. Actualiza la lección e inténtalo de nuevo.'
+        : 'This question does not match the current page. Refresh the lesson and try again.';
     case 'REQUEST_TOO_LARGE':
       return spanish
-        ? 'Esta pregunta no pudo enviarse. Acórtala o quita la imagen e inténtalo de nuevo.'
-        : 'This question could not be sent. Shorten it or remove the image and try again.';
+        ? 'Esta pregunta no pudo enviarse. Acórtala o quita el fotograma e inténtalo de nuevo.'
+        : 'This question could not be sent. Shorten it or remove the lesson frame and try again.';
     case 'ORIGIN_DENIED':
       return spanish
         ? 'La comprobación de seguridad de esta sesión falló. Actualiza la página e inténtalo de nuevo.'
@@ -228,7 +251,14 @@ function useNovaConversation({
           message,
           history,
           context,
-          ...(frame ? {frame} : {}),
+          ...(frame ? {frame: {
+            releaseId: frame.releaseId,
+            animationId: frame.animationId,
+            globalPageOrdinal: frame.globalPageOrdinal,
+            dataUrl: frame.dataUrl,
+            width: frame.width,
+            height: frame.height,
+          }} : {}),
         }),
         cache: 'no-store',
         credentials: 'same-origin',
@@ -239,6 +269,7 @@ function useNovaConversation({
       try {
         payload = await response.json();
       } catch {
+        if (response.status === 429) throw new NovaClientError('NOVA_BUSY');
         throw new NovaClientError('INVALID_RESPONSE');
       }
 
@@ -286,19 +317,27 @@ function useNovaConversation({
 
 function useNovaSpeech({
   busy,
+  enabled,
   locale,
   onDraft,
-  onFinal,
   onNotice,
 }: {
   busy: boolean;
+  enabled: boolean;
   locale: 'en' | 'es';
   onDraft: (transcript: string) => void;
-  onFinal: (transcript: string) => void | Promise<void>;
   onNotice: (notice: string) => void;
 }) {
   const [listening, setListening] = useState(false);
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
+  const browserSupportsSpeech = useSyncExternalStore(
+    subscribeToSpeechRecognitionAvailability,
+    speechRecognitionAvailableInBrowser,
+    speechRecognitionUnavailableOnServer,
+  );
+  const availability = enabled && browserSupportsSpeech
+    ? 'available' as const
+    : 'unavailable' as const;
 
   useEffect(() => () => {
     const recognition = recognitionRef.current;
@@ -310,10 +349,34 @@ function useNovaSpeech({
     recognitionRef.current = null;
   }, []);
 
+  useEffect(() => {
+    if (enabled) return;
+    const recognition = recognitionRef.current;
+    if (!recognition) return;
+    recognition.onend = null;
+    recognition.onerror = null;
+    recognition.onresult = null;
+    recognition.abort();
+    recognitionRef.current = null;
+    setListening(false);
+  }, [enabled]);
+
+  const stopListening = useCallback(() => {
+    const recognition = recognitionRef.current;
+    if (!recognition) return;
+    try {
+      recognition.stop();
+    } catch {
+      // A rapid second activation can arrive after the browser has already
+      // begun stopping the same recognition session. Its onend handler owns
+      // the final state cleanup, so there is nothing else to do here.
+    }
+  }, []);
+
   const startListening = useCallback(() => {
-    if (busy) return;
+    if (!enabled || availability !== 'available' || busy) return;
     if (recognitionRef.current) {
-      recognitionRef.current.stop();
+      stopListening();
       return;
     }
 
@@ -332,14 +395,16 @@ function useNovaSpeech({
     recognition.maxAlternatives = 1;
     recognitionRef.current = recognition;
     let latestTranscript = '';
-    let sent = false;
+    let finalized = false;
 
     const finishWithTranscript = () => {
       const transcript = latestTranscript.trim();
-      if (!transcript || sent) return;
-      sent = true;
+      if (!transcript || finalized) return;
+      finalized = true;
       onDraft(transcript);
-      void onFinal(transcript);
+      onNotice(locale === 'es'
+        ? 'Se añadió la transcripción. Revísala y luego pulsa Enviar.'
+        : 'Transcript added. Review it, then press Send.');
     };
 
     recognition.onresult = (event) => {
@@ -357,12 +422,12 @@ function useNovaSpeech({
       }
       if (finalResult) {
         finishWithTranscript();
-        recognition.stop();
+        stopListening();
       }
     };
     recognition.onerror = (event) => {
       if (event.error !== 'aborted') {
-        sent = true;
+        finalized = true;
         const denied = event.error === 'not-allowed' ||
           event.error === 'service-not-allowed' ||
           event.error === 'audio-capture';
@@ -385,8 +450,8 @@ function useNovaSpeech({
       recognition.start();
       setListening(true);
       onNotice(locale === 'es'
-        ? 'Escuchando… HELP Math enviará a Nova solo la transcripción.'
-        : 'Listening… HELP Math will send only the transcript to Nova.');
+        ? 'Escuchando… La transcripción se añadirá como borrador para que la revises.'
+        : 'Listening… The transcript will be added as a draft for your review.');
     } catch {
       recognitionRef.current = null;
       setListening(false);
@@ -394,9 +459,9 @@ function useNovaSpeech({
         ? 'No se pudo iniciar el micrófono. Escribe tu pregunta.'
         : 'The microphone could not start. Type your question instead.');
     }
-  }, [busy, locale, onDraft, onFinal, onNotice]);
+  }, [availability, busy, enabled, locale, onDraft, onNotice, stopListening]);
 
-  return {listening, startListening};
+  return {availability, listening, startListening};
 }
 
 /**
@@ -405,6 +470,7 @@ function useNovaSpeech({
  * application-recorded audio. A frame is sent only after explicit attachment.
  */
 export function LessonNovaTutor({
+  capabilities,
   context,
   frameSnapshot,
   id,
@@ -414,6 +480,7 @@ export function LessonNovaTutor({
   onProviderConfirmed,
   placement = 'focus',
 }: {
+  capabilities: NovaClientCapabilities;
   context: TutorPageContext;
   frameSnapshot: TutorFrameSnapshot | null;
   id: string;
@@ -430,11 +497,11 @@ export function LessonNovaTutor({
   const [framePreparing, setFramePreparing] = useState(false);
   const instanceId = useId().replace(/:/gu, '');
   const closeRef = useRef<HTMLButtonElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const panelRef = useRef<HTMLElement>(null);
   const threadRef = useRef<HTMLDivElement>(null);
-  const frameAnimationRef = useRef(context.animationId);
+  const framePlacementRef = useRef(tutorPlacementKey(context));
+  const placementKey = tutorPlacementKey(context);
   const contextLabel = tutorContextSummary(context);
   const nova = useNovaConversation({
     context,
@@ -442,13 +509,20 @@ export function LessonNovaTutor({
     mode: placement,
     onProviderConfirmed,
   });
-  const currentAttachedFrame = attachedFrame?.animationId === context.animationId
+  const currentFrameSnapshot = capabilities.currentLessonFrame &&
+      frameMatchesContext(frameSnapshot, context)
+    ? frameSnapshot
+    : null;
+  const currentAttachedFrame = capabilities.currentLessonFrame &&
+      frameMatchesContext(attachedFrame, context)
     ? attachedFrame
     : null;
   const sendQuestion = useCallback(async (rawQuestion: string) => {
     const message = rawQuestion.trim();
     if (!message) {
-      setNotice(spanish ? 'Escribe o di una pregunta primero.' : 'Type or say a question first.');
+      setNotice(capabilities.speechToDraft
+        ? (spanish ? 'Escribe o di una pregunta primero.' : 'Type or say a question first.')
+        : (spanish ? 'Escribe una pregunta primero.' : 'Type a question first.'));
       inputRef.current?.focus();
       return;
     }
@@ -459,87 +533,63 @@ export function LessonNovaTutor({
     if (succeeded && frameForRequest) {
       setAttachedFrame(null);
       setNotice(spanish
-        ? 'Nova recibió la imagen de esta pregunta; no quedó adjunta.'
-        : 'Nova received the image for this question; it is no longer attached.');
+        ? 'Nova recibió el fotograma de esta pregunta; ya no está adjunto.'
+        : 'Nova received the lesson frame for this question; it is no longer attached.');
     }
-  }, [currentAttachedFrame, nova, spanish]);
+  }, [capabilities.speechToDraft, currentAttachedFrame, nova, spanish]);
 
   const speech = useNovaSpeech({
     busy: nova.busy,
+    enabled: capabilities.speechToDraft,
     locale,
     onDraft: setQuestion,
-    onFinal: sendQuestion,
     onNotice: setNotice,
   });
 
-  const removeImageAttachment = () => {
+  const removeFrameAttachment = () => {
     setAttachedFrame(null);
     setNotice(spanish
-      ? 'Imagen quitada. No se enviará con la próxima pregunta.'
-      : 'Image removed. It will not be sent with the next question.');
+      ? 'Fotograma quitado. No se enviará con la próxima pregunta.'
+      : 'Lesson frame removed. It will not be sent with the next question.');
   };
 
-  const attachLocalImage = async (file: File | null) => {
-    if (!file || nova.busy || framePreparing) return;
-    // A new explicit choice replaces the prior local attachment. Clear first
-    // so an invalid replacement can never leave an older image silently queued
-    // for the next Nova request.
+  const attachCurrentLessonFrame = async () => {
+    if (
+      !capabilities.currentLessonFrame ||
+      !currentFrameSnapshot ||
+      nova.busy ||
+      framePreparing
+    ) return;
+    const expectedPlacement = tutorPlacementKey(context);
     setAttachedFrame(null);
-    if (!NOVA_LOCAL_IMAGE_TYPES.has(file.type)) {
-      setNotice(spanish
-        ? 'Elige una imagen PNG o JPEG. No se adjuntó nada.'
-        : 'Choose a PNG or JPEG image. Nothing was attached.');
-      return;
-    }
-    if (!file.size || file.size > NOVA_LOCAL_IMAGE_MAX_BYTES) {
-      setNotice(spanish
-        ? 'La imagen debe tener 8 MB o menos. No se adjuntó nada.'
-        : 'The image must be 8 MB or smaller. Nothing was attached.');
-      return;
-    }
-
-    const expectedAnimationId = context.animationId;
     setFramePreparing(true);
-    setNotice(spanish ? 'Preparando la imagen de forma segura…' : 'Preparing the image safely…');
+    setNotice(spanish
+      ? 'Preparando el fotograma actual de la lección…'
+      : 'Preparing the current lesson frame…');
     let prepared: TutorFrameSnapshot | null = null;
     try {
-      const dataUrl = await readLocalImageAsDataUrl(file);
-      if (dataUrl) {
-        prepared = await prepareNovaFrame({
-          animationId: expectedAnimationId,
-          dataUrl,
-          height: 1,
-          width: 1,
-        });
-      }
+      prepared = await prepareNovaFrame(currentFrameSnapshot);
     } catch {
       prepared = null;
     } finally {
       setFramePreparing(false);
     }
-    if (frameAnimationRef.current !== expectedAnimationId) return;
+    if (framePlacementRef.current !== expectedPlacement) return;
     if (!prepared) {
       setNotice(spanish
-        ? 'La imagen no pudo leerse o prepararse de forma segura. No se adjuntó nada.'
-        : 'The image could not be read or prepared safely. Nothing was attached.');
+        ? 'El fotograma actual no pudo prepararse de forma segura. No se adjuntó nada.'
+        : 'The current lesson frame could not be prepared safely. Nothing was attached.');
       return;
     }
     setAttachedFrame(prepared);
     setNotice(spanish
-      ? 'Imagen adjunta solo para la próxima pregunta. Puedes quitarla antes de enviar.'
-      : 'Image attached for the next question only. You can remove it before sending.');
-  };
-
-  const selectLocalImage = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.currentTarget.files?.[0] ?? null;
-    // Clear immediately so choosing the same file again still emits `change`.
-    event.currentTarget.value = '';
-    void attachLocalImage(file);
+      ? 'Fotograma adjunto solo para la próxima pregunta. Puedes quitarlo antes de enviar.'
+      : 'Lesson frame attached for the next question only. You can remove it before sending.');
   };
 
   useEffect(() => {
-    frameAnimationRef.current = context.animationId;
-  }, [context.animationId]);
+    framePlacementRef.current = placementKey;
+  }, [placementKey]);
 
   useEffect(() => {
     const thread = threadRef.current;
@@ -591,7 +641,7 @@ export function LessonNovaTutor({
     aria-busy={nova.busy}
     className="lesson-shell2__nova-panel"
     data-tutor-placement={placement}
-    data-tutor-frame-snapshot={frameSnapshot ? 'available' : 'unavailable'}
+    data-tutor-frame-snapshot={currentFrameSnapshot ? 'available' : 'unavailable'}
     data-tutor-page-title-en={context.pageTitleEnglish}
     data-tutor-page-title-es={context.pageTitleSpanish ?? 'missing-source-title'}
     data-tutor-product-origin="mais-nova-tutor"
@@ -604,7 +654,11 @@ export function LessonNovaTutor({
         : nova.conversation.length
           ? 'active'
           : 'ready-empty'}
-    data-tutor-frame-sharing={currentAttachedFrame ? 'attached-for-next-request' : 'local-not-sent'}
+    data-tutor-frame-sharing={!capabilities.currentLessonFrame
+      ? 'disabled'
+      : currentAttachedFrame
+        ? 'attached-for-next-request'
+        : 'current-frame-not-attached'}
     id={id}
     ref={panelRef}
     role={modal ? 'dialog' : undefined}
@@ -631,31 +685,31 @@ export function LessonNovaTutor({
         <span
           aria-hidden="true"
           data-tutor-current-frame={currentAttachedFrame
-            ? 'attached-image'
-            : frameSnapshot
+            ? 'attached-frame'
+            : currentFrameSnapshot
               ? 'captured'
               : 'placeholder'}
           style={currentAttachedFrame
             ? {backgroundImage: `url(${currentAttachedFrame.dataUrl})`}
-            : frameSnapshot
-              ? {backgroundImage: `url(${frameSnapshot.dataUrl})`}
+            : currentFrameSnapshot
+              ? {backgroundImage: `url(${currentFrameSnapshot.dataUrl})`}
               : undefined}
         />
         <p><b>{currentAttachedFrame
-          ? (spanish ? 'Imagen adjunta para la próxima pregunta' : 'Image attached for the next question')
+          ? (spanish ? 'Fotograma adjunto para la próxima pregunta' : 'Lesson frame attached for the next question')
           : framePreparing
-            ? (spanish ? 'Preparando imagen local' : 'Preparing image locally')
-            : frameSnapshot
+            ? (spanish ? 'Preparando el fotograma actual' : 'Preparing current lesson frame')
+            : currentFrameSnapshot
               ? (spanish ? 'Fotograma disponible · no enviado' : 'Current frame available · not sent')
               : (spanish ? 'Contexto de página listo' : 'Page context ready')}</b>{' '}{contextLabel}</p>
         {currentAttachedFrame
           ? <button
               aria-label={spanish
-                ? 'Quitar la imagen de la próxima pregunta'
-                : 'Remove the image from the next question'}
+                ? 'Quitar el fotograma de la próxima pregunta'
+                : 'Remove the lesson frame from the next question'}
               className="lesson-shell2__nova-context-remove"
               disabled={nova.busy}
-              onClick={removeImageAttachment}
+              onClick={removeFrameAttachment}
               type="button"
             >×</button>
           : null}
@@ -746,40 +800,56 @@ export function LessonNovaTutor({
         />
         <div className="lesson-shell2__nova-input-actions">
           <div className="lesson-shell2__nova-input-tools">
-            <button
-              aria-label={spanish
-                ? 'Adjuntar una imagen o tomar una foto'
-                : 'Attach an image or take a photo'}
-              className="lesson-shell2__nova-attach"
-              disabled={nova.busy || framePreparing}
-              onClick={() => fileInputRef.current?.click()}
-              title={spanish
-                ? 'Elegir una imagen PNG o JPEG; el dispositivo puede ofrecer la cámara'
-                : 'Choose a PNG or JPEG image; your device may offer its camera'}
-              type="button"
-            ><PlusIcon /></button>
-            <input
-              accept="image/png,image/jpeg"
-              className="lesson-shell2__nova-file-input"
-              disabled={nova.busy || framePreparing}
-              hidden
-              onChange={selectLocalImage}
-              ref={fileInputRef}
-              tabIndex={-1}
-              type="file"
-            />
-            <button
-              aria-label={speech.listening
-                ? (spanish ? 'Dejar de escuchar y enviar la transcripción' : 'Stop listening and send the transcript')
-                : (spanish ? 'Preguntar a Nova por voz' : 'Ask Nova by voice')}
-              aria-pressed={speech.listening}
-              className="lesson-shell2__nova-mic"
-              disabled={nova.busy}
-              onClick={speech.startListening}
-              type="button"
-            ><MicrophoneIcon /></button>
+            {capabilities.currentLessonFrame
+              ? <button
+                  aria-label={spanish
+                    ? 'Adjuntar el fotograma actual de la lección'
+                    : 'Attach current lesson frame'}
+                  className="lesson-shell2__nova-attach"
+                  disabled={nova.busy || framePreparing || !currentFrameSnapshot}
+                  onClick={() => void attachCurrentLessonFrame()}
+                  title={currentFrameSnapshot
+                    ? (spanish
+                        ? 'Adjuntar solo el fotograma que ya muestra la lección'
+                        : 'Attach only the frame already shown in this lesson')
+                    : (spanish
+                        ? 'El fotograma actual aún no está disponible'
+                        : 'The current lesson frame is not available yet')}
+                  type="button"
+                ><PlusIcon /></button>
+              : null}
+            {capabilities.speechToDraft
+              ? <>
+                  <button
+                    aria-describedby={`${instanceId}-nova-speech-support`}
+                    aria-label={speech.availability === 'available'
+                      ? speech.listening
+                        ? (spanish ? 'Dejar de escuchar y revisar la transcripción' : 'Stop listening and review transcript')
+                        : (spanish ? 'Dictar un borrador para Nova' : 'Dictate a draft for Nova')
+                      : (spanish
+                          ? 'El dictado no está disponible en este navegador'
+                          : 'Dictation is unavailable in this browser')}
+                    aria-pressed={speech.listening}
+                    className="lesson-shell2__nova-mic"
+                    disabled={nova.busy || speech.availability !== 'available'}
+                    onClick={speech.startListening}
+                    type="button"
+                  ><MicrophoneIcon /></button>
+                  <span className="sr-only" id={`${instanceId}-nova-speech-support`}>
+                    {speech.availability === 'available'
+                      ? (spanish
+                          ? 'La transcripción se añade al campo como borrador editable y no se envía automáticamente.'
+                          : 'The transcript is added to the field as an editable draft and is not sent automatically.')
+                      : (spanish
+                          ? 'Este navegador no ofrece reconocimiento de voz. Escribe tu pregunta.'
+                          : 'This browser does not provide speech recognition. Type your question instead.')}
+                  </span>
+                </>
+              : null}
             <span className="lesson-shell2__nova-input-hint">
-              {spanish ? 'Escribe o di una pregunta' : 'Type or speak a question'}
+              {capabilities.speechToDraft && speech.availability === 'available'
+                ? (spanish ? 'Escribe o dicta un borrador' : 'Type or dictate a draft')
+                : (spanish ? 'Escribe una pregunta' : 'Type a question')}
             </span>
           </div>
           <button
@@ -799,8 +869,9 @@ export function LessonNovaTutor({
   </aside>;
 }
 
-/** Projector-scale Classroom placement with one visible, real voice exchange. */
+/** Projector-scale Classroom placement with text and optional speech-to-draft. */
 export function LessonNovaClassroomBand({
+  capabilities,
   context,
   frameSnapshot,
   id,
@@ -808,6 +879,7 @@ export function LessonNovaClassroomBand({
   onClose,
   onProviderConfirmed,
 }: {
+  capabilities: NovaClientCapabilities;
   context: TutorPageContext;
   frameSnapshot: TutorFrameSnapshot | null;
   id: string;
@@ -819,7 +891,6 @@ export function LessonNovaClassroomBand({
   const contextLabel = tutorContextSummary(context);
   const inputId = useId().replace(/:/gu, '');
   const [question, setQuestion] = useState('');
-  const [speechDraft, setSpeechDraft] = useState('');
   const [speechNotice, setSpeechNotice] = useState('');
   const nova = useNovaConversation({
     context,
@@ -830,36 +901,46 @@ export function LessonNovaClassroomBand({
   const sendQuestion = useCallback(async (rawQuestion: string) => {
     const message = rawQuestion.trim();
     if (!message) {
-      setSpeechNotice(spanish
-        ? 'Escribe o di una pregunta primero.'
-        : 'Type or say a question first.');
+      setSpeechNotice(capabilities.speechToDraft
+        ? (spanish ? 'Escribe o di una pregunta primero.' : 'Type or say a question first.')
+        : (spanish ? 'Escribe una pregunta primero.' : 'Type a question first.'));
       return;
     }
     setQuestion('');
-    setSpeechDraft(message);
     setSpeechNotice('');
     await nova.askNova(message);
-  }, [nova, spanish]);
+  }, [capabilities.speechToDraft, nova, spanish]);
+  const updateSpeechDraft = useCallback((transcript: string) => {
+    setQuestion(transcript);
+  }, []);
   const speech = useNovaSpeech({
     busy: nova.busy,
+    enabled: capabilities.speechToDraft,
     locale,
-    onDraft: setSpeechDraft,
-    onFinal: sendQuestion,
+    onDraft: updateSpeechDraft,
     onNotice: setSpeechNotice,
   });
+  const currentFrameSnapshot = capabilities.currentLessonFrame &&
+      frameMatchesContext(frameSnapshot, context)
+    ? frameSnapshot
+    : null;
   const latestUser = [...nova.conversation].reverse().find((entry) => entry.role === 'user');
   const latestAnswer = [...nova.conversation].reverse().find((entry) => entry.role === 'assistant');
   const answer = nova.busy
     ? (spanish ? 'Nova está pensando…' : 'Nova is thinking…')
-    : nova.error || latestAnswer?.text || speechNotice || (spanish
-        ? 'Usa el micrófono o escribe una pregunta sobre esta página.'
-        : 'Use the microphone or type a question about this page.');
+    : nova.error || latestAnswer?.text || speechNotice || (capabilities.speechToDraft
+      ? (spanish
+          ? 'Usa el micrófono o escribe una pregunta sobre esta página.'
+          : 'Use the microphone or type a question about this page.')
+      : (spanish
+          ? 'Escribe una pregunta sobre esta página.'
+          : 'Type a question about this page.'));
 
   return <section
     aria-label={spanish ? 'Banda de voz de Nova Tutor' : 'Nova Tutor voice band'}
     aria-busy={nova.busy}
     className="lesson-shell2__nova-classroom-band"
-    data-tutor-frame-snapshot={frameSnapshot ? 'available' : 'unavailable'}
+    data-tutor-frame-snapshot={currentFrameSnapshot ? 'available' : 'unavailable'}
     data-tutor-placement="classroom-voice-band"
     data-tutor-model={nova.lastModel ?? 'not-yet-confirmed'}
     data-tutor-provider={nova.lastModel ? NOVA_TUTOR_GATEWAY : 'not-yet-confirmed'}
@@ -870,32 +951,56 @@ export function LessonNovaClassroomBand({
         : nova.lastModel
           ? 'answered'
           : 'ready-empty'}
-    data-tutor-frame-sharing="local-not-sent"
+    data-tutor-frame-sharing={capabilities.currentLessonFrame
+      ? 'current-frame-not-attached'
+      : 'disabled'}
     id={id}
   >
-    <button
-      aria-label={speech.listening
-        ? (spanish ? 'Dejar de escuchar y enviar la transcripción' : 'Stop listening and send the transcript')
-        : (spanish ? 'Preguntar a Nova por voz' : 'Ask Nova by voice')}
-      aria-pressed={speech.listening}
-      className="lesson-shell2__nova-classroom-mic"
-      disabled={nova.busy}
-      onClick={speech.startListening}
-      type="button"
-    ><MicrophoneIcon /></button>
+    {capabilities.speechToDraft
+      ? <>
+          <button
+            aria-describedby={`${inputId}-classroom-speech-support`}
+            aria-label={speech.availability === 'available'
+              ? speech.listening
+                ? (spanish ? 'Dejar de escuchar y revisar la transcripción' : 'Stop listening and review transcript')
+                : (spanish ? 'Dictar un borrador para Nova' : 'Dictate a draft for Nova')
+              : (spanish
+                  ? 'El dictado no está disponible en este navegador'
+                  : 'Dictation is unavailable in this browser')}
+            aria-pressed={speech.listening}
+            className="lesson-shell2__nova-classroom-mic"
+            disabled={nova.busy || speech.availability !== 'available'}
+            onClick={speech.startListening}
+            type="button"
+          ><MicrophoneIcon /></button>
+          <span className="sr-only" id={`${inputId}-classroom-speech-support`}>
+            {speech.availability === 'available'
+              ? (spanish
+                  ? 'La transcripción se añade al campo como borrador editable y no se envía automáticamente.'
+                  : 'The transcript is added to the field as an editable draft and is not sent automatically.')
+              : (spanish
+                  ? 'Este navegador no ofrece reconocimiento de voz. Escribe tu pregunta.'
+                  : 'This browser does not provide speech recognition. Type your question instead.')}
+          </span>
+        </>
+      : null}
     <div className="lesson-shell2__nova-classroom-copy">
       <p className="lesson-shell2__nova-classroom-context">
         <span
           aria-hidden="true"
-          style={frameSnapshot ? {backgroundImage: `url(${frameSnapshot.dataUrl})`} : undefined}
+          style={currentFrameSnapshot
+            ? {backgroundImage: `url(${currentFrameSnapshot.dataUrl})`}
+            : undefined}
         />
-        <b>{frameSnapshot
-          ? (spanish ? 'Fotograma local · no enviado' : 'Local frame · not sent')
+        <b>{currentFrameSnapshot
+          ? (spanish
+              ? 'Fotograma actual · no adjunto'
+              : 'Current frame · not attached')
           : (spanish ? 'Contexto de página listo' : 'Page context ready')}</b>{' '}{contextLabel}
       </p>
       <div aria-live="polite" className="lesson-shell2__nova-classroom-exchange" role="status">
         <p><strong>{spanish ? 'Pregunta del estudiante' : 'Student question'}</strong>
-          <span>{speechDraft || latestUser?.text || (spanish
+          <span>{question || latestUser?.text || (spanish
             ? 'Aún no se registró una pregunta.'
             : 'No question recorded yet.')}</span></p>
         <p className="lesson-shell2__nova-classroom-answer">

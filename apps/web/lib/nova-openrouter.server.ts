@@ -1,5 +1,9 @@
 import {z} from 'zod';
 import {
+  NovaBoundedBodyReadError,
+  readNovaBoundedUtf8Body,
+} from './nova-bounded-body.server';
+import {
   buildOpenRouterHeaders,
   OpenRouterConfigurationError,
   readOpenRouterConfig,
@@ -7,11 +11,13 @@ import {
   type OpenRouterEnvironment,
 } from './openrouter.server';
 import {NOVA_TUTOR_MODEL} from './nova-provider-contract';
-import type {NovaTutorRequest} from './nova-request-schema';
+import type {ResolvedNovaTutorRequest} from
+  './nova-request-resolver.server';
 
 export const NOVA_OPENROUTER_MODEL = NOVA_TUTOR_MODEL;
 export const NOVA_OPENROUTER_CANONICAL_MODEL =
   'openai/gpt-5.6-luna-20260709' as const;
+export const NOVA_MAX_PROVIDER_RESPONSE_BYTES = 256_000;
 
 export interface NovaOpenRouterConfig extends OpenRouterConfig {
   readonly model: typeof NOVA_OPENROUTER_MODEL;
@@ -32,6 +38,7 @@ export type NovaProviderFailureStage =
   | 'http-status'
   | 'content-type'
   | 'json'
+  | 'body-size'
   | 'schema'
   | 'model'
   | 'unsafe-output';
@@ -110,19 +117,26 @@ export function readNovaOpenRouterConfig(
   });
 }
 
-function canonicalContext(request: NovaTutorRequest) {
+function canonicalContext(request: ResolvedNovaTutorRequest) {
   const context = request.context;
+  const spanishTitle = (value: string | null) => value === null
+    ? 'not supplied by the lesson source'
+    : JSON.stringify(value);
   return [
-    `Course: Grade ${context.grade}, Lesson ${context.lesson}, Negative Numbers.`,
+    `Course: Grade ${context.grade}, Lesson ${context.lesson}, ${context.courseTitleEnglish}.`,
+    `Learner-visible course title: ${context.courseTitle}.`,
+    `Trusted course-title sources: English ${JSON.stringify(context.courseTitleEnglish)}; Spanish ${spanishTitle(context.courseTitleSpanish)}; current title uses English fallback: ${context.courseTitleUsesEnglishFallback ? 'yes' : 'no'}.`,
     `Current section: ${context.sectionCode} (${context.sectionTitle}).`,
+    `Trusted section-title sources: English ${JSON.stringify(context.sectionTitleEnglish)}; Spanish ${spanishTitle(context.sectionTitleSpanish)}; current title uses English fallback: ${context.sectionTitleUsesEnglishFallback ? 'yes' : 'no'}.`,
     `Current page: ${context.globalPageOrdinal} of ${context.activePageCount} (${context.pageTitle}).`,
+    `Trusted page-title sources: English ${JSON.stringify(context.pageTitleEnglish)}; Spanish ${spanishTitle(context.pageTitleSpanish)}; current title uses English fallback: ${context.pageTitleUsesEnglishFallback ? 'yes' : 'no'}.`,
     `Current animation: ${context.animationId}.`,
     `Lesson mode: ${request.mode}.`,
   ].join('\n');
 }
 
 /** Build the trusted system instruction; learner text is never interpolated here. */
-export function buildNovaSystemInstruction(request: NovaTutorRequest) {
+export function buildNovaSystemInstruction(request: ResolvedNovaTutorRequest) {
   const language = request.locale === 'es'
     ? 'Respond in clear, age-appropriate Spanish unless the learner explicitly asks for an English term.'
     : 'Respond in clear, age-appropriate English unless the learner explicitly asks for a Spanish term.';
@@ -135,14 +149,14 @@ export function buildNovaSystemInstruction(request: NovaTutorRequest) {
         'If the learner proposes an answer, discuss the strategy without saying whether that exact answer is correct.',
       ].join(' ')
     : [
-        'Teach with short explanations, concrete number-line or temperature examples, and one check-for-understanding question.',
+        'Teach with short explanations, concrete visual or real-world examples, and one check-for-understanding question.',
         'You may work a similar example, but do not pretend to observe actions or information that are not in the trusted context or attached frame.',
       ].join(' ');
 
   return [
-    'You are Nova Tutor, a warm, patient mathematics tutor for a Grade 4 learner.',
+    `You are Nova Tutor, a warm, patient mathematics tutor for a Grade ${request.context.grade} learner.`,
     language,
-    'Focus on negative numbers and the current HELP Math lesson. Keep the response concise and supportive.',
+    `Focus on ${request.context.courseTitle} and the current HELP Math lesson. Keep the response concise and supportive.`,
     'Use plain language, one short step at a time, predictable formatting, and a concrete example before abstract notation.',
     'Format the response as clean Markdown with short paragraphs and real bullet or numbered lists when they improve clarity.',
     'Write mathematical notation as LaTeX using $...$ for inline math and $$...$$ for display math. Never put LaTeX inside a code fence.',
@@ -197,6 +211,35 @@ export function minimizeNovaLearnerText(text: string) {
   );
 }
 
+/*
+ * Keep these patterns request-shaped rather than matching sensitive nouns by
+ * themselves. Words such as "class", "address", "grade", and "direction"
+ * also occur in ordinary mathematics teaching, so a provider reply is blocked
+ * only when it explicitly asks the learner to disclose or upload the data.
+ */
+const PROVIDER_SENSITIVE_DATA_REQUEST_PATTERNS = Object.freeze([
+  /\b(?:send|tell|give|share|provide|type|enter|write)(?:\s+(?:me|us))?\s+(?:(?:your|the|a|an)\s+)?(?:(?:full|legal)\s+name|first\s+and\s+last\s+name|name\s+of\s+your\s+school|school(?:\s+name)?|class(?:room)?(?:\s+(?:name|number|section))?|homeroom|student(?:\s+or\s+school)?\s+(?:id|identification|number)|school\s+(?:id|identification|number))\b/iu,
+  /\b(?:send|tell|give|share|provide|type|enter|write)(?:\s+(?:me|us))?\s+(?:(?:your|the|a|an)\s+)?(?:(?:account\s+)?username|password|passcode|pin|login(?:\s+(?:name|details|credentials))?|credentials)\b/iu,
+  /\b(?:send|tell|give|share|provide|type|enter|write)(?:\s+(?:me|us))?\s+(?:(?:your|the|a|an)\s+)?(?:(?:home|street|mailing)\s+address|date\s+of\s+birth|birthdate|birthday)\b/iu,
+  /\b(?:send|tell|give|share|provide|describe|list)(?:\s+(?:me|us))?\s+(?:(?:your|the|a|an)\s+)?(?:medical\s+(?:information|history|condition)|health\s+information|diagnosis|iep|504(?:\s+plan)?|disabilit(?:y|ies))\b/iu,
+  /\b(?:send|give|share|provide|upload|take|record)(?:\s+(?:me|us))?\s+(?:(?:your|the|a|an)\s+)?(?:photo|picture|selfie|face\s+(?:photo|picture)|image\s+of\s+your\s+face|voice(?:\s+(?:sample|recording|print))?|audio\s+recording)\b/iu,
+  /\b(?:(?:what(?:'s|\s+is)|which\s+is)\s+your\s+(?:(?:full|legal)\s+name|school|class|homeroom|student\s+(?:id|number)|username|password|address|birthdate|birthday|diagnosis|disability)|which\s+school\s+do\s+you\s+(?:attend|go\s+to)|what\s+class\s+are\s+you\s+in|where\s+do\s+you\s+(?:live|go\s+to\s+school)|when\s+is\s+your\s+birthday|do\s+you\s+have\s+(?:an?\s+)?(?:iep|504\s+plan|disability|medical\s+condition))\b/iu,
+  /\b(?:i|we)\s+(?:need|require)\s+your\s+(?:(?:full|legal)\s+name|school|class|student\s+(?:id|number)|username|password|credentials|address|birthdate|birthday|medical\s+information|iep|504\s+plan|disability|photo|picture|voice(?:\s+recording)?)\b/iu,
+  /\b(?:dime|dinos|dame|danos|comparte|comp[aá]rteme|comp[aá]rtenos|env[ií]a|env[ií]ame|env[ií]anos|manda|m[aá]ndame|m[aá]ndanos|proporciona|proporci[oó]name|proporci[oó]nanos|escribe|escr[ií]beme|escr[ií]benos|ingresa|introduce)(?:\s+(?:a\s+m[ií]|conmigo))?\s+(?:(?:tu|su|el|la|un|una)\s+)?(?:nombre\s+(?:completo|legal)|nombre\s+y\s+apellidos?|nombre\s+de\s+(?:tu|su)\s+(?:escuela|colegio)|escuela|colegio|clase|sal[oó]n|aula|(?:id|identificaci[oó]n|n[uú]mero)\s+de\s+estudiante|matr[ií]cula)\b/iu,
+  /\b(?:dime|dinos|dame|danos|comparte|comp[aá]rteme|comp[aá]rtenos|env[ií]a|env[ií]ame|env[ií]anos|manda|m[aá]ndame|m[aá]ndanos|proporciona|proporci[oó]name|proporci[oó]nanos|escribe|escr[ií]beme|escr[ií]benos|ingresa|introduce)(?:\s+(?:a\s+m[ií]|conmigo))?\s+(?:(?:tu|su|el|la|un|una)\s+)?(?:nombre\s+de\s+usuario|usuario|contrase(?:n|ñ)a|clave\s+de\s+acceso|pin|credenciales|datos\s+de\s+inicio\s+de\s+sesi[oó]n)\b/iu,
+  /\b(?:dime|dinos|dame|danos|comparte|comp[aá]rteme|comp[aá]rtenos|env[ií]a|env[ií]ame|env[ií]anos|manda|m[aá]ndame|m[aá]ndanos|proporciona|proporci[oó]name|proporci[oó]nanos|escribe|escr[ií]beme|escr[ií]benos|ingresa|introduce)(?:\s+(?:a\s+m[ií]|conmigo))?\s+(?:(?:tu|su|el|la|un|una)\s+)?(?:direcci[oó]n\s+de\s+(?:tu|su)\s+casa|domicilio|direcci[oó]n\s+postal|fecha\s+de\s+nacimiento|cumplea(?:n|ñ)os)\b/iu,
+  /\b(?:dime|dinos|dame|danos|comparte|comp[aá]rteme|comp[aá]rtenos|env[ií]a|env[ií]ame|env[ií]anos|manda|m[aá]ndame|m[aá]ndanos|proporciona|proporci[oó]name|proporci[oó]nanos|describe|enumera)(?:\s+(?:a\s+m[ií]|conmigo))?\s+(?:(?:tu|su|el|la|un|una)\s+)?(?:informaci[oó]n\s+m[eé]dica|historial\s+m[eé]dico|condici[oó]n\s+m[eé]dica|diagn[oó]stico|iep|plan\s+504|discapacidad)\b/iu,
+  /\b(?:env[ií]a|env[ií]ame|env[ií]anos|manda|m[aá]ndame|m[aá]ndanos|comparte|comp[aá]rteme|comp[aá]rtenos|sube|carga|toma|graba)(?:\s+(?:a\s+m[ií]|conmigo))?\s+(?:(?:tu|su|el|la|un|una)\s+)?(?:foto|fotograf[ií]a|selfie|imagen\s+de\s+(?:tu|su)\s+(?:cara|rostro)|cara|rostro|voz|muestra\s+de\s+voz|grabaci[oó]n\s+de\s+(?:voz|audio))\b/iu,
+  /\b(?:(?:cu[aá]l\s+es|c[oó]mo\s+se\s+llama)\s+(?:tu|su)\s+(?:nombre\s+completo|escuela|colegio|clase|sal[oó]n|aula|usuario|contrase(?:n|ñ)a|domicilio|fecha\s+de\s+nacimiento|diagn[oó]stico|discapacidad)|en\s+qu[eé]\s+(?:escuela|colegio|clase|sal[oó]n|aula)\s+(?:estudias|est[aá]s)|d[oó]nde\s+vives|cu[aá]ndo\s+es\s+tu\s+cumplea(?:n|ñ)os|tienes\s+(?:un|una)\s+(?:iep|plan\s+504|discapacidad|condici[oó]n\s+m[eé]dica))\b/iu,
+  /\b(?:necesito|necesitamos|requiero|requerimos)\s+(?:(?:tu|su)\s+)(?:nombre\s+completo|escuela|colegio|clase|(?:id|n[uú]mero)\s+de\s+estudiante|usuario|contrase(?:n|ñ)a|credenciales|domicilio|fecha\s+de\s+nacimiento|informaci[oó]n\s+m[eé]dica|iep|plan\s+504|discapacidad|foto|fotograf[ií]a|voz|grabaci[oó]n\s+de\s+voz)\b/iu,
+]);
+
+function providerReplyRequestsSensitiveData(reply: string) {
+  return PROVIDER_SENSITIVE_DATA_REQUEST_PATTERNS.some((pattern) =>
+    pattern.test(reply)
+  );
+}
+
 export interface NovaChatCompletionsPayload {
   readonly model: typeof NOVA_OPENROUTER_MODEL;
   readonly messages: readonly OpenRouterChatMessage[];
@@ -211,7 +254,7 @@ export interface NovaChatCompletionsPayload {
 }
 
 export function buildNovaChatCompletionsPayload(
-  request: NovaTutorRequest,
+  request: ResolvedNovaTutorRequest,
   maxOutputTokens: number,
 ): NovaChatCompletionsPayload {
   const messages: OpenRouterChatMessage[] = [
@@ -281,7 +324,7 @@ function extractChatReply(value: unknown) {
   }
   if (
     minimizeNovaLearnerText(reply) !== reply ||
-    /\b(?:send|tell|give|share)\s+me\s+(?:your\s+)?(?:full\s+name|email|phone|address|school|photo|picture)\b/iu.test(reply)
+    providerReplyRequestsSensitiveData(reply)
   ) {
     throw new NovaProviderError('invalid-response', 'unsafe-output');
   }
@@ -294,7 +337,7 @@ export interface NovaOpenRouterRequestOptions {
 }
 
 export async function requestNovaTutor(
-  request: NovaTutorRequest,
+  request: ResolvedNovaTutorRequest,
   options: NovaOpenRouterRequestOptions = {},
 ) {
   const config = options.config ?? readNovaOpenRouterConfig();
@@ -369,14 +412,44 @@ export async function requestNovaTutor(
         );
       }
 
+      const declaredResponseLength = response.headers.get('content-length');
+      if (declaredResponseLength && /^\d+$/.test(declaredResponseLength)) {
+        const declaredBytes = Number(declaredResponseLength);
+        if (
+          !Number.isSafeInteger(declaredBytes) ||
+          declaredBytes > NOVA_MAX_PROVIDER_RESPONSE_BYTES
+        ) {
+          void response.body?.cancel().catch(() => undefined);
+          throw new NovaProviderError(
+            'invalid-response',
+            'body-size',
+            response.status,
+            attempt,
+          );
+        }
+      }
+
       let value: unknown;
       try {
-        const text = await response.text();
-        if (text.length > 256_000) throw new Error('oversized');
-        value = JSON.parse(text);
-      } catch {
+        const boundedBody = await readNovaBoundedUtf8Body(
+          response.body,
+          NOVA_MAX_PROVIDER_RESPONSE_BYTES,
+        );
+        value = JSON.parse(boundedBody.text);
+      } catch (error) {
         if (controller.signal.aborted) {
           throw new NovaProviderError('timeout', 'transport', undefined, attempt);
+        }
+        if (
+          error instanceof NovaBoundedBodyReadError &&
+          error.failure === 'too-large'
+        ) {
+          throw new NovaProviderError(
+            'invalid-response',
+            'body-size',
+            response.status,
+            attempt,
+          );
         }
         throw new NovaProviderError(
           'invalid-response',
@@ -388,6 +461,7 @@ export async function requestNovaTutor(
 
       try {
         return Object.freeze({
+          attempts: attempt,
           reply: extractChatReply(value),
           model: NOVA_OPENROUTER_MODEL,
         });

@@ -4,6 +4,7 @@ import {lstat, readdir, readFile} from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
 
+import productionProfile from '../config/current-js-production-assets.v1.json';
 import {G5_L4_AUDIO_ASSET_SHA256} from '../lib/g5-l4-audio-assets.generated';
 
 const publicAssetRoot = path.resolve(
@@ -15,7 +16,7 @@ const serverAudioRoot = path.resolve(
   '../server-assets/flash-assets/courses',
 );
 const expectedChecksumSetSha256 =
-  '52dd1d51335523dc097b0c1a428e897960425ad184069fb023e98e0fcef7ae25';
+  '54e11e77a8d684fcf9542ba7458c12add3edb1a85c16ac99db756a34ed5c6ad4';
 const allowedExtensions = new Set(['.js', '.mp3', '.png', '.svg', '.ttf']);
 
 async function walk(directory: string): Promise<string[]> {
@@ -35,7 +36,7 @@ async function walk(directory: string): Promise<string[]> {
   return result;
 }
 
-test('deployment assets are an exact five-lesson Current-JS runtime closure', async () => {
+test('deployment assets are an exact eight-lesson Current-JS runtime closure', async () => {
   const [publicFiles, serverAudioFiles] = await Promise.all([
     walk(publicAssetRoot),
     walk(serverAudioRoot),
@@ -53,9 +54,22 @@ test('deployment assets are an exact five-lesson Current-JS runtime closure', as
     })),
   ].sort((left, right) => left.relative.localeCompare(right.relative));
   const relativeFiles = entries.map(({relative}) => relative);
-  assert.equal(publicFiles.length, 929);
+  assert.equal(publicFiles.length, 1135);
   assert.equal(serverAudioFiles.length, 185);
-  assert.equal(entries.length, 1114);
+  assert.equal(entries.length, 1320);
+  assert.deepEqual(
+    entries.map(({file: _file, relative, root}) => ({
+      assetPath: `courses/${relative}`,
+      relativePath: relative,
+      storageRoot: root,
+    })),
+    productionProfile.entries.map((entry) => ({
+      assetPath: entry.assetPath,
+      relativePath: entry.relativePath,
+      storageRoot: entry.storageRoot,
+    })),
+    'disk paths must equal the exact production manifest, not only its counts',
+  );
   assert.equal(
     relativeFiles.filter((file) =>
       file.startsWith('course-g04-l03-')
@@ -82,14 +96,26 @@ test('deployment assets are an exact five-lesson Current-JS runtime closure', as
     relativeFiles.filter((file) => file.startsWith('course-g05-l05-')).length,
     56,
   );
-  assert.equal(relativeFiles.filter((file) => file.endsWith('/canvas-renderer.js')).length, 283);
+  assert.equal(
+    relativeFiles.filter((file) => file.startsWith('course-g04-l05-')).length,
+    51,
+  );
+  assert.equal(
+    relativeFiles.filter((file) => file.startsWith('course-g04-l10-')).length,
+    113,
+  );
+  assert.equal(
+    relativeFiles.filter((file) => file.startsWith('course-g04-l11-')).length,
+    42,
+  );
+  assert.equal(relativeFiles.filter((file) => file.endsWith('/canvas-renderer.js')).length, 418);
   assert.equal(
     relativeFiles.filter((file) =>
       file === 'course-g04-l03-gs-002/canvas-interaction-base-renderer.js'
     ).length,
     1,
   );
-  assert.equal(relativeFiles.filter((file) => file.endsWith('.mp3')).length, 319);
+  assert.equal(relativeFiles.filter((file) => file.endsWith('.mp3')).length, 390);
   const g5L4AudioFiles = relativeFiles.filter((file) =>
     Object.hasOwn(G5_L4_AUDIO_ASSET_SHA256, file)
   );

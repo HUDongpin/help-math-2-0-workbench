@@ -8,7 +8,7 @@ export const esContent = {
     skipToContent: "Ir al contenido principal",
     statusLabel: "Vista previa de la plataforma educativa",
     statusMessage:
-      "Hay cinco lecciones disponibles en JavaScript actual con 284 ubicaciones de página en orden de origen: G3 L2 (70), G4 L3 (39), G5 L3 (65), G5 L4 (54) y G5 L5 (56). Es acceso funcional al aprendizaje, no fidelidad estricta a Flash, aceptación del audio, aceptación del titular ni publicación del currículo más amplio.",
+      "Hay ocho lecciones disponibles en JavaScript actual con 426 ubicaciones de página en orden de origen: G3 L2 (70); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56). Es acceso funcional al aprendizaje, no fidelidad estricta a Flash, aceptación del audio, aceptación del titular ni publicación del currículo más amplio.",
     externalLinkLabel: "Se abre en una pestaña nueva",
     requiredFieldLabel: "Obligatorio",
     navigation: {
@@ -48,7 +48,7 @@ export const esContent = {
       languageNote:
         "La interfaz de la plataforma está disponible en inglés y español. Los medios y las interacciones de origen varían según la página y no forman una experiencia completa ni validada en español.",
       legalNote:
-        "La lección 3 de cuarto grado y la lección 4 de quinto grado son lecciones funcionales en JavaScript actual. La fidelidad estricta a Flash, la aceptación del audio, la aceptación del titular y la publicación del currículo más amplio siguen siendo procesos separados.",
+        "Ocho lecciones completas por páginas—G3 L2; G4 L3, L5, L10 y L11; y G5 L3 a L5—son funcionales en JavaScript actual. La fidelidad estricta a Flash, la aceptación del audio, la aceptación del titular y la publicación del currículo más amplio siguen siendo procesos separados.",
     },
   },
   pages: {
@@ -66,7 +66,7 @@ export const esContent = {
         primaryAction: { label: "Explorar las demostraciones", href: "/es/demos" },
         secondaryAction: { label: "Obtener ayuda con el proyecto", href: "/es/support" },
         supportingNote:
-          "El sitio web ofrece cinco lecciones funcionales en JavaScript actual con 284 ubicaciones de página en orden de origen: G3 L2 (70), G4 L3 (39), G5 L3 (65), G5 L4 (54) y G5 L5 (56). La fidelidad estricta a Flash, la aceptación del audio, la aceptación del titular y la publicación del currículo más amplio siguen siendo procesos separados.",
+          "El sitio web ofrece ocho lecciones funcionales en JavaScript actual con 426 ubicaciones de página en orden de origen: G3 L2 (70); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56). La fidelidad estricta a Flash, la aceptación del audio, la aceptación del titular y la publicación del currículo más amplio siguen siendo procesos separados.",
       },
       status: {
         label: "Estado del proyecto",
@@ -180,9 +180,9 @@ export const esContent = {
         {
           id: "today",
           eyebrow: "Nuestra situación actual",
-          title: "Una plataforma educativa con cinco lecciones funcionales en JavaScript actual",
+          title: "Una plataforma educativa con ocho lecciones funcionales en JavaScript actual",
           paragraphs: [
-          "Esta versión ofrece cinco lecciones en JavaScript actual dentro de la experiencia moderna Mi lección: G3 L2, Suma y resta (70 ubicaciones de página); G4 L3, Números negativos (39); G5 L3, Exponentes y factorizaciones primas (65); G5 L4, Rectas numéricas (54); y G5 L5, Sumar y restar números negativos (56).",
+          "Esta versión ofrece ocho lecciones en JavaScript actual dentro de la experiencia moderna Mi lección: G3 L2, Suma y resta (70 ubicaciones de página); G4 L3, Números negativos (39); G4 L5, Multiplicación (53); G4 L10, Perímetro y área (46); G4 L11, Cuadrícula de coordenadas (43); G5 L3, Exponentes y factorizaciones primas (65); G5 L4, Rectas numéricas (54); y G5 L5, Sumar y restar números negativos (56).",
             "No restaura el antiguo sistema de cuentas ni ofrece clases, tareas, compras, paneles docentes o calificaciones formales. La fidelidad estricta a Flash, la aceptación del audio, la aceptación del titular y la publicación del currículo más amplio siguen siendo puertas separadas.",
           ],
         },
@@ -324,7 +324,7 @@ export const esContent = {
       teacherRole: {
         title: "La tecnología apoya la enseñanza; los educadores orientan su uso.",
         body:
-          "La plataforma ya ofrece cinco lecciones funcionales en JavaScript actual con un total de 284 ubicaciones de página en orden de origen, no un currículo publicado completo ni un sistema docente automatizado. La fidelidad estricta a Flash, la aceptación del audio, la aceptación del titular y la publicación del currículo más amplio siguen siendo procesos separados. Los educadores son esenciales para elegir tareas apropiadas, escuchar el razonamiento del alumnado y conectar las actividades con las metas del aula.",
+          "La plataforma ya ofrece ocho lecciones funcionales en JavaScript actual con un total de 426 ubicaciones de página en orden de origen, no un currículo publicado completo ni un sistema docente automatizado. La fidelidad estricta a Flash, la aceptación del audio, la aceptación del titular y la publicación del currículo más amplio siguen siendo procesos separados. Los educadores son esenciales para elegir tareas apropiadas, escuchar el razonamiento del alumnado y conectar las actividades con las metas del aula.",
         action: { label: "Hacer una consulta didáctica", href: "/es/contact?topic=instruction" },
       },
     },
@@ -416,9 +416,9 @@ export const esContent = {
       availability: {
         id: "availability",
         eyebrow: "Lo que está disponible ahora",
-        title: "Dos lecciones funcionales, sin matrículas",
+        title: "Ocho lecciones funcionales, sin matrículas",
         paragraphs: [
-          "La plataforma ofrece actualmente cinco lecciones en JavaScript actual dentro de la experiencia moderna Mi lección: G3 L2 (70 ubicaciones de página), G4 L3 (39), G5 L3 (65), G5 L4 (54) y G5 L5 (56). Incluyen progreso local del navegador y apoyos de aprendizaje, pero no pruebas de ubicación, paneles docentes, tareas, matrículas ni calificaciones formales.",
+          "La plataforma ofrece actualmente ocho lecciones en JavaScript actual dentro de la experiencia moderna Mi lección: G3 L2 (70 ubicaciones de página); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56). Incluyen progreso local del navegador y apoyos de aprendizaje, pero no pruebas de ubicación, paneles docentes, tareas, matrículas ni calificaciones formales.",
           "La interfaz está disponible en inglés y español, pero los medios y las interacciones de origen varían según la página y no forman una experiencia completa ni validada en español.",
           "Estas lecciones son acceso funcional al producto, no afirmaciones de migración estricta, fidelidad a Flash, aceptación del audio ni aceptación del titular. La publicación de más currículo aún depende de auditorías de fuentes y derechos, revisión didáctica, accesibilidad, validación del comportamiento original, revisión humana y aceptación del titular.",
         ],
@@ -612,7 +612,7 @@ export const esContent = {
         eyebrow: "Asistencia de HELP Math",
         title: "Comienza por lo que está disponible hoy",
         summary:
-          "La plataforma ofrece cinco lecciones en JavaScript actual con 284 ubicaciones de página en orden de origen—G3 L2 (70), G4 L3 (39), G5 L3 (65), G5 L4 (54) y G5 L5 (56)—junto con progreso local y apoyos de aprendizaje. Las cuentas anteriores no están conectadas y este sitio no puede recuperar contraseñas ni registros históricos.",
+          "La plataforma ofrece ocho lecciones en JavaScript actual con 426 ubicaciones de página en orden de origen—G3 L2 (70); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56)—junto con progreso local y apoyos de aprendizaje. Las cuentas anteriores no están conectadas y este sitio no puede recuperar contraseñas ni registros históricos.",
         primaryAction: { label: "Contactar con asistencia", href: "/es/contact?topic=support" },
         secondaryAction: { label: "Comprobar el estado de acceso", href: "/es/login" },
       },
@@ -624,7 +624,7 @@ export const esContent = {
             id: "website",
             title: "Plataforma de aprendizaje",
             description:
-              "Disponible con opciones de interfaz en inglés y español, cinco lecciones funcionales en JavaScript actual con un total de 284 ubicaciones de página en orden de origen, progreso local, Nova Tutor, información del programa y asistencia. Los medios y las interacciones de origen varían según la página.",
+              "Disponible con opciones de interfaz en inglés y español, ocho lecciones funcionales en JavaScript actual con un total de 426 ubicaciones de página en orden de origen, progreso local, Nova Tutor, información del programa y asistencia. Los medios y las interacciones de origen varían según la página.",
             detail: "Disponible",
           },
           {
@@ -689,7 +689,7 @@ export const esContent = {
           id: "full-course",
           question: "¿Está disponible el curso completo de HELP Math?",
           answer:
-            "Todavía no. La versión actual incluye cinco lecciones funcionales en JavaScript actual—G3 L2 (70 ubicaciones de página), G4 L3 (39), G5 L3 (65), G5 L4 (54) y G5 L5 (56)—, no todo el currículo de HELP Math. Esto no demuestra fidelidad estricta a Flash, aceptación del audio ni aceptación del titular; cada lección adicional requiere sus propias revisiones de fuentes, derechos, instrucción, accesibilidad, fidelidad y aceptación.",
+            "Todavía no. La versión actual incluye ocho lecciones funcionales en JavaScript actual—G3 L2 (70 ubicaciones de página); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56)—, no todo el currículo de HELP Math. Esto no demuestra fidelidad estricta a Flash, aceptación del audio ni aceptación del titular; cada lección adicional requiere sus propias revisiones de fuentes, derechos, instrucción, accesibilidad, fidelidad y aceptación.",
         },
         {
           id: "student-help",
@@ -852,16 +852,16 @@ export const esContent = {
       },
       hero: {
         eyebrow: "Experiencia de aprendizaje",
-        title: "Hay cinco lecciones listas para explorar",
+        title: "Hay ocho lecciones listas para explorar",
         summary:
-          "Hay cinco lecciones funcionales en JavaScript actual: G3 L2 (70 ubicaciones de página), G4 L3 (39), G5 L3 (65), G5 L4 (54) y G5 L5 (56). Ejecutarlas no demuestra fidelidad estricta a Flash, aceptación del audio, aceptación del titular ni publicación del currículo más amplio.",
+          "Hay ocho lecciones funcionales en JavaScript actual: G3 L2 (70 ubicaciones de página); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56). Ejecutarlas no demuestra fidelidad estricta a Flash, aceptación del audio, aceptación del titular ni publicación del currículo más amplio.",
         primaryAction: { label: "Comenzar la lección", href: "/es/courses/4/3?mode=focus" },
         secondaryAction: { label: "Cómo funciona la restauración", href: "/es/about#preservation" },
       },
       previewNotice: {
         title: "Lecciones funcionales; las puertas estrictas siguen abiertas",
         body:
-          "Las 284 ubicaciones en orden de origen de G3 L2 (70), G4 L3 (39), G5 L3 (65), G5 L4 (54) y G5 L5 (56) son navegables dentro de la experiencia moderna Mi lección. Esto no establece fidelidad original de ejecución, imagen o audio, revisión humana completa, aceptación del titular, derechos, finalización estricta ni publicación del currículo más amplio.",
+          "Las 426 ubicaciones en orden de origen de G3 L2 (70); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56) son navegables dentro de la experiencia moderna Mi lección. Esto no establece fidelidad original de ejecución, imagen o audio, revisión humana completa, aceptación del titular, derechos, finalización estricta ni publicación del currículo más amplio.",
       },
       listLabel: "Disponibilidad actual",
       items: [
@@ -884,6 +884,36 @@ export const esContent = {
           statusLabel: "Muestra ejecutable",
           statusDetail: "Las 39 páginas registradas son navegables dentro de la experiencia moderna Mi lección; las puertas de evidencia estricta y publicación más amplia siguen abiertas.",
           action: { label: "Abrir la lección", href: "/es/courses/4/3?mode=focus" },
+        },
+        {
+          id: "g4-l5-multiplication",
+          title: "Grade 4 Lesson 5: Multiplication",
+          summary: "Explora la multiplicación en el orden de la lección, usa los apoyos y continúa desde el progreso guardado localmente.",
+          conceptLabel: "Lección",
+          concept: "Multiplicación",
+          statusLabel: "Lección funcional en JavaScript actual",
+          statusDetail: "Las 53 ubicaciones de página en orden de origen son navegables dentro de la experiencia moderna Mi lección; las puertas de evidencia estricta y publicación más amplia siguen abiertas.",
+          action: { label: "Abrir la lección", href: "/es/courses/4/5?mode=focus" },
+        },
+        {
+          id: "g4-l10-perimeter-area",
+          title: "Grade 4 Lesson 10: Perimeter & Area",
+          summary: "Explora el perímetro y el área en el orden de la lección, usa los apoyos y continúa desde el progreso guardado localmente.",
+          conceptLabel: "Lección",
+          concept: "Perímetro y área",
+          statusLabel: "Lección funcional en JavaScript actual",
+          statusDetail: "Las 46 ubicaciones de página en orden de origen son navegables dentro de la experiencia moderna Mi lección; las puertas de evidencia estricta y publicación más amplia siguen abiertas.",
+          action: { label: "Abrir la lección", href: "/es/courses/4/10?mode=focus" },
+        },
+        {
+          id: "g4-l11-coordinate-grid",
+          title: "Grade 4 Lesson 11: Coordinate Grid",
+          summary: "Explora la cuadrícula de coordenadas en el orden de la lección, usa los apoyos y continúa desde el progreso guardado localmente.",
+          conceptLabel: "Lección",
+          concept: "Cuadrícula de coordenadas",
+          statusLabel: "Lección funcional en JavaScript actual",
+          statusDetail: "Las 43 ubicaciones de página en orden de origen son navegables dentro de la experiencia moderna Mi lección; las puertas de evidencia estricta y publicación más amplia siguen abiertas.",
+          action: { label: "Abrir la lección", href: "/es/courses/4/11?mode=focus" },
         },
         {
           id: "g5-l3-exponents-prime-factorizations",
@@ -1032,10 +1062,10 @@ export const esContent = {
         eyebrow: "Borrador del aviso de privacidad",
         title: "Una experiencia educativa diseñada para saber menos sobre ti",
         summary:
-          "Puedes usar la lección 3 de cuarto grado y la lección 4 de quinto grado, ambas en JavaScript actual, sin cuenta, nombre, correo electrónico, escuela, clase, pago ni perfil docente. Este aviso explica qué permanece en tu navegador, qué se envía al almacén de registros de aprendizaje y qué necesita Nova Tutor cuando pides ayuda.",
+          "Puedes usar las ocho lecciones en JavaScript actual sin cuenta, nombre, correo electrónico, escuela, clase, pago ni perfil docente. Nova Tutor solo aparece en los cursos compatibles que HELP Math haya habilitado expresamente. Este aviso explica qué permanece en tu navegador, qué se envía al almacén de registros de aprendizaje y qué necesita Nova cuando confirmas una solicitud de ayuda.",
       },
       effectiveDateLabel: "Última actualización",
-      effectiveDate: "16 de agosto de 2026",
+      effectiveDate: "23 de agosto de 2026",
       reviewNotice:
         "BORRADOR — Requiere revisión del titular y asesoría legal antes de publicarse. Describe el diseño técnico actual; no es una determinación legal ni garantiza el cumplimiento de FERPA, COPPA u otra normativa.",
       sections: [
@@ -1043,7 +1073,7 @@ export const esContent = {
           id: "scope",
           title: "1. Alcance",
           paragraphs: [
-            "Este aviso se aplica a helpmath.ai, incluidas sus páginas informativas, las cinco lecciones funcionales en JavaScript actual—G3 L2, G4 L3 y G5 L3 a L5—, Nova Tutor, el registro de eventos de aprendizaje y la página actual de estado del contacto.",
+            "Este aviso se aplica a helpmath.ai, incluidas sus páginas informativas, las ocho lecciones funcionales en JavaScript actual—G3 L2; G4 L3, L5, L10 y L11; y G5 L3 a L5—, Nova Tutor, el registro de eventos de aprendizaje y la página actual de estado del contacto.",
             "La experiencia educativa actual no tiene cuentas de estudiantes o docentes ni pide el nombre, correo, escuela, clase, pago o perfil docente del estudiante. No autentica al estudiante ni conecta la actividad de la lección con un expediente escolar.",
           ],
         },
@@ -1073,9 +1103,10 @@ export const esContent = {
           id: "nova",
           title: "4. Nova Tutor y entrada por voz",
           paragraphs: [
-            "Cuando pides ayuda a Nova Tutor, el texto que escribes —o la transcripción generada por la función de reconocimiento de voz del navegador— se envía mediante el servidor de HELP Math del mismo origen a OpenRouter para el modelo exacto GPT-5.6 Luna. Si eliges activamente adjuntar la imagen actual del curso, se incluye esa imagen de la lección para que Nova pueda comentar lo que aparece en pantalla.",
-            "HELP Math exige un punto final de retención cero de datos, rechaza la recopilación de datos por el proveedor en cada solicitud de Nova y no conserva la conversación en la plataforma. El audio original del micrófono no se envía a HELP Math y el acceso a la cámara del dispositivo está desactivado; la imagen adjunta procede únicamente de la lección que ya muestra el navegador.",
-            "Tu navegador, sistema operativo o proveedor de reconocimiento de voz puede procesar el audio según sus propios términos antes de devolver una transcripción. OpenRouter y el proveedor del modelo enrutado pueden procesar metadatos de la solicitud o señales de seguridad según los términos aplicables aunque HELP Math solicite retención cero de datos. Evita decir o escribir información personal o sensible.",
+            "Cuando Nova Tutor está habilitado para el curso compatible actual y pides ayuda, HELP Math envía mediante su servidor del mismo origen la pregunta que confirmas, una parte acotada del historial de conversación de esta sesión del navegador y el contexto canónico y fiable del curso y la página actuales. El servidor envía esos datos a OpenRouter para solicitar el modelo exacto GPT-5.6 Luna. Que una lección sea funcional no significa automáticamente que Nova sea compatible con ella.",
+            "Solo se incluye una imagen de la lección cuando el contexto de imagen está habilitado por separado y eliges expresamente «Adjuntar el fotograma actual de la lección» para esa pregunta. En esta versión, Nova no acepta archivos de imagen locales, fotos de la cámara ni cámara o vídeo en directo. El adjunto se prepara únicamente a partir del fotograma de la lección que ya muestra el navegador.",
+            "La entrada por voz es opcional y se habilita por separado. El reconocimiento de voz coloca una transcripción en el borrador de la pregunta para que puedas revisarla o editarla; después debes confirmar el envío. HELP Math recibe la transcripción confirmada, no el audio original del micrófono. Sin embargo, tu navegador, sistema operativo o proveedor de reconocimiento de voz puede recibir y procesar el audio original según sus propios términos antes de devolver la transcripción.",
+            "HELP Math configura cada solicitud de Nova para exigir una ruta apta para retención cero de datos, rechazar la recopilación de datos por el proveedor y requerir compatibilidad con todos los parámetros enviados. Son solicitudes y requisitos de enrutamiento para OpenRouter y el proveedor del modelo enrutado, no una garantía absoluta de que ningún sistema externo procese o conserve metadatos de la solicitud o señales de seguridad. HELP Math no conserva intencionadamente la conversación de Nova en la aplicación. Evita decir o escribir información personal o sensible.",
           ],
         },
         {
@@ -1115,7 +1146,7 @@ export const esContent = {
           id: "choices",
           title: "9. Tus opciones",
           paragraphs: [
-            "Puedes leer las páginas públicas sin iniciar la lección, usar Nova, activar el reconocimiento de voz, adjuntar una imagen del curso ni introducir nada en la página de contacto pausada. Los controles de datos del sitio del navegador pueden borrar el progreso y los eventos en espera de localStorage, los identificadores de sessionStorage y la cookie hm_lrs_anon_v1. Borrar la cookie restablece el identificador seudónimo de eventos futuros, pero borrar los datos del navegador no elimina los eventos ya entregados al LRS.",
+            "Puedes leer las páginas públicas sin iniciar la lección, usar Nova, activar el reconocimiento de voz opcional, adjuntar expresamente la imagen actual de la lección ni introducir nada en la página de contacto pausada. Los controles de datos del sitio del navegador pueden borrar el progreso y los eventos en espera de localStorage, los identificadores de sessionStorage y la cookie hm_lrs_anon_v1. Borrar la cookie restablece el identificador seudónimo de eventos futuros, pero borrar los datos del navegador no elimina los eventos ya entregados al LRS.",
             "El sitio no ofrece actualmente un canal para solicitar acceso, corrección o eliminación de un registro seudónimo. Si se habilita más adelante un canal autorizado para adultos, el aviso revisado deberá explicar cómo presentar la solicitud y cómo se comprobarán la identidad, la ley y los límites del sistema.",
           ],
         },
@@ -1139,16 +1170,16 @@ export const esContent = {
       metadata: {
         title: "Borrador de los términos de uso",
         description:
-          "Consulta el borrador no aprobado de los términos propuestos para HELP Math, sus lecciones en JavaScript actual de cuarto y quinto grado, Nova Tutor y el contenido relacionado.",
+          "Consulta el borrador no aprobado de los términos propuestos para HELP Math, sus ocho lecciones en JavaScript actual, Nova Tutor disponible de forma condicional y el contenido relacionado.",
       },
       hero: {
         eyebrow: "Borrador de los términos de uso",
         title: "Utiliza responsablemente las experiencias educativas",
         summary:
-          "Este borrador describe los términos propuestos para el sitio y sus cinco lecciones funcionales en JavaScript actual: G3 L2, G4 L3 y G5 L3 a L5. Hasta que queden documentadas la aprobación del titular y la revisión legal y se publique una versión final, no constituye contrato, no obliga a quien lo visita ni concede licencia.",
+          "Este borrador describe los términos propuestos para el sitio y sus ocho lecciones funcionales en JavaScript actual: G3 L2; G4 L3, L5, L10 y L11; y G5 L3 a L5. Hasta que queden documentadas la aprobación del titular y la revisión legal y se publique una versión final, no constituye contrato, no obliga a quien lo visita ni concede licencia.",
       },
       effectiveDateLabel: "Última actualización",
-      effectiveDate: "16 de agosto de 2026",
+      effectiveDate: "23 de agosto de 2026",
       reviewNotice:
         "BORRADOR — Requiere revisión del titular y asesoría legal antes de publicarse. Deben confirmarse la entidad responsable, jurisdicción, dirección de contacto, términos de proveedores, condiciones para menores y cualquier licencia específica. Hasta documentar esas aprobaciones, este borrador solo sirve como información para revisión: no constituye contrato, no obliga a quien lo visita ni concede licencia. No garantiza el cumplimiento de FERPA, COPPA u otra normativa.",
       sections: [
@@ -1164,7 +1195,7 @@ export const esContent = {
           id: "service",
           title: "2. Qué ofrece este sitio",
           paragraphs: [
-            "El sitio ofrece cinco lecciones funcionales en JavaScript actual dentro de la experiencia moderna Mi lección, con 284 ubicaciones de página en orden de origen: G3 L2 (70), G4 L3 (39), G5 L3 (65), G5 L4 (54) y G5 L5 (56).",
+            "El sitio ofrece ocho lecciones funcionales en JavaScript actual dentro de la experiencia moderna Mi lección, con 426 ubicaciones de página en orden de origen: G3 L2 (70); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56).",
             "Que las lecciones estén disponibles no demuestra finalización estricta de la migración, fidelidad al Flash original en ejecución o imagen, fidelidad del audio, aceptación humana o del titular, autorización de derechos ni publicación del currículo histórico restaurado. Son puertas de evidencia y publicación independientes.",
             "Actualmente no ofrece matrículas, cuentas nominales de estudiantes o docentes, escuelas, clases, tareas, paneles docentes, calificaciones oficiales, pagos ni acceso garantizado al programa histórico.",
           ],
@@ -1181,8 +1212,10 @@ export const esContent = {
           id: "nova",
           title: "4. Nova Tutor",
           paragraphs: [
-            "Nova Tutor usa OpenRouter para solicitar el modelo exacto GPT-5.6 Luna y responder solicitudes de aprendizaje matemático. Las respuestas de IA pueden ser incompletas o incorrectas y no constituyen calificación oficial, diagnóstico, decisión de ubicación ni sustituyen a un docente o adulto de confianza.",
-            "Envía solo la información necesaria para la pregunta matemática. El reconocimiento de voz del navegador puede convertir tu voz en texto y puedes adjuntar activamente la imagen actual de la lección; la cámara del dispositivo está desactivada. No envíes nombres, datos de contacto, expedientes, contraseñas, información médica ni otro material sensible.",
+            "Nova Tutor solo está disponible en los cursos compatibles que HELP Math haya habilitado expresamente. Que una lección sea funcional no autoriza ni promete por sí solo el acceso a Nova. Cuando está disponible, Nova usa OpenRouter para solicitar el modelo exacto GPT-5.6 Luna y responder solicitudes de aprendizaje matemático. Las respuestas de IA pueden ser incompletas o incorrectas y no constituyen calificación oficial, diagnóstico, decisión de ubicación ni sustituyen a un docente o adulto de confianza.",
+            "Una solicitud confirmada puede incluir tu pregunta actual, una parte acotada del historial de conversación con Nova de esta sesión del navegador y el contexto canónico y fiable del curso y la página. Envía solo la información necesaria para la pregunta matemática. No envíes nombres, datos de contacto, expedientes, contraseñas, información médica ni otro material sensible.",
+            "Si el contexto de imagen está habilitado por separado, puedes elegir expresamente «Adjuntar el fotograma actual de la lección» para una pregunta. Esta versión no acepta archivos de imagen locales, fotos de la cámara ni cámara o vídeo en directo. Si la entrada por voz está habilitada por separado, el reconocimiento produce un borrador editable y no lo envía hasta que lo confirmas; HELP Math recibe la transcripción confirmada, no el audio original, aunque tu navegador, sistema operativo o proveedor de reconocimiento de voz puede procesar el audio del micrófono según sus propios términos.",
+            "HELP Math solicita y exige una ruta de proveedor apta para retención cero de datos y rechaza la recopilación de datos del proveedor en cada solicitud, pero esos controles de enrutamiento de terceros no garantizan de forma absoluta que no se procesen o conserven metadatos de la solicitud o señales de seguridad. Consulta el Borrador del aviso de privacidad para conocer el flujo de datos propuesto y la puerta pendiente de revisión del titular y asesoría legal.",
           ],
         },
         {

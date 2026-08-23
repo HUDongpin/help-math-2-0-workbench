@@ -36,6 +36,10 @@ import {
 import {LEGACY_MAP_RAIL_MIN_WIDTH} from '@/lib/legacy-lesson-layout';
 import type {PublicAuthStatus} from '@/lib/auth-session';
 import {
+  EMPTY_NOVA_CLIENT_CAPABILITIES,
+  type NovaClientCapabilities,
+} from '@/lib/nova-capabilities';
+import {
   tutorPageContext,
   type NovaTutorMode,
 } from '@/lib/tutor-integration';
@@ -107,6 +111,7 @@ export function DescriptorDrivenWholeLessonPlayer({
   descriptor,
   hostPresentation = 'legacy-composite',
   locale,
+  novaCapabilities = EMPTY_NOVA_CLIENT_CAPABILITIES,
   novaTutorMode = 'focus',
   releasePublished,
   reviewerMode = false,
@@ -118,6 +123,7 @@ export function DescriptorDrivenWholeLessonPlayer({
   descriptor: DescriptorDrivenLessonPlayerDescriptor;
   hostPresentation?: WholeLessonHostPresentation;
   locale: WholeLessonPlayerLocale;
+  novaCapabilities?: NovaClientCapabilities;
   novaTutorMode?: NovaTutorMode;
   releasePublished: boolean;
   reviewerMode?: boolean;
@@ -779,23 +785,25 @@ export function DescriptorDrivenWholeLessonPlayer({
       };
     },
   );
-  const tutorContext = tutorPageContext({
-    releaseId: descriptor.releaseId,
-    grade: descriptor.course.grade,
-    lesson: descriptor.course.lesson,
-    animationId: currentPage.animationId,
-    sectionCode: currentPage.sectionCode,
-    sectionTitle: sectionLabel.text,
-    globalPageOrdinal: currentPage.globalPageOrdinal,
-    activePageCount: descriptor.course.activePageCount,
-    pageTitle: currentLabel.text,
-    pageTitleEnglish: currentPage.labels.en.text,
-    pageTitleSpanish: currentPage.labels.es.usesEnglishFallback
-      ? null
-      : currentPage.labels.es.text,
-    locale: progress.locale,
-    pageTitleUsesEnglishFallback: currentLabel.usesEnglishFallback,
-  });
+  const tutorContext = novaCapabilities.text
+    ? tutorPageContext({
+        releaseId: descriptor.releaseId,
+        grade: descriptor.course.grade,
+        lesson: descriptor.course.lesson,
+        animationId: currentPage.animationId,
+        sectionCode: currentPage.sectionCode,
+        sectionTitle: sectionLabel.text,
+        globalPageOrdinal: currentPage.globalPageOrdinal,
+        activePageCount: descriptor.course.activePageCount,
+        pageTitle: currentLabel.text,
+        pageTitleEnglish: currentPage.labels.en.text,
+        pageTitleSpanish: currentPage.labels.es.usesEnglishFallback
+          ? null
+          : currentPage.labels.es.text,
+        locale: progress.locale,
+        pageTitleUsesEnglishFallback: currentLabel.usesEnglishFallback,
+      })
+    : undefined;
 
   return <div
     data-current-animation-id={currentPage.animationId}
@@ -874,6 +882,7 @@ export function DescriptorDrivenWholeLessonPlayer({
       mapOpen={mapOpen}
       mapPanel={mapPanel}
       narrationStatus={playbackState.narration}
+      novaCapabilities={novaCapabilities}
       novaTutorMode={novaTutorMode}
       sections={shellSections}
       sectionProgress={{

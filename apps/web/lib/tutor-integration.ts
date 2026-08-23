@@ -197,11 +197,18 @@ export function tutorContextSummary(context: TutorPageContext) {
 }
 
 export interface TutorFrameSnapshot {
+  readonly releaseId: string;
   readonly animationId: string;
+  readonly globalPageOrdinal: number;
   readonly dataUrl: string;
   readonly width: number;
   readonly height: number;
 }
+
+export type TutorFramePlacement = Readonly<Pick<
+  TutorPageContext,
+  'releaseId' | 'animationId' | 'globalPageOrdinal'
+>>;
 
 export interface TutorFrameCrop {
   readonly left: number;
@@ -253,11 +260,17 @@ function validFrameCrop(
  */
 export function tutorFrameSnapshot(
   canvas: HTMLCanvasElement | null | undefined,
-  animationId: string,
+  placement: TutorFramePlacement,
   crop?: TutorFrameCrop,
 ): TutorFrameSnapshot | null {
   if (!canvas || typeof canvas.toDataURL !== 'function') return null;
   if (!canvas.width || !canvas.height) return null;
+  if (
+    !placement.releaseId ||
+    !placement.animationId ||
+    !Number.isInteger(placement.globalPageOrdinal) ||
+    placement.globalPageOrdinal < 1
+  ) return null;
   try {
     if (crop) {
       if (!validFrameCrop(crop, canvas.width, canvas.height)) return null;
@@ -279,7 +292,7 @@ export function tutorFrameSnapshot(
         crop.height,
       );
       return Object.freeze({
-        animationId,
+        ...placement,
         dataUrl: output.toDataURL('image/png'),
         width: output.width,
         height: output.height,
@@ -292,7 +305,7 @@ export function tutorFrameSnapshot(
       height: canvas.height,
     })) return null;
     return Object.freeze({
-      animationId,
+      ...placement,
       dataUrl: canvas.toDataURL('image/png'),
       width: canvas.width,
       height: canvas.height,
@@ -365,16 +378,27 @@ function copySvgComputedStyles(source: SVGSVGElement, clone: SVGSVGElement) {
   });
 }
 
-function blobToDataUrl(blob: Blob, view: Window) {
-  return new Promise<string | null>((resolve) => {
-    void view;
-    const reader = new FileReader();
-    reader.onerror = () => resolve(null);
-    reader.onload = () => resolve(
-      typeof reader.result === 'string' ? reader.result : null,
-    );
-    reader.readAsDataURL(blob);
-  });
+const BASE64_CHUNK_BYTES = 3 * 8_192;
+
+async function blobToDataUrl(blob: Blob, view: Window) {
+  try {
+    const bytes = new Uint8Array(await blob.arrayBuffer());
+    let base64 = '';
+    // Keep each intermediate binary string bounded. The non-final chunk size
+    // is divisible by three, so independently encoded chunks concatenate to
+    // the same base64 payload as encoding the complete response at once.
+    for (let start = 0; start < bytes.length; start += BASE64_CHUNK_BYTES) {
+      const end = Math.min(start + BASE64_CHUNK_BYTES, bytes.length);
+      let binary = '';
+      for (let index = start; index < end; index += 1) {
+        binary += String.fromCharCode(bytes[index]!);
+      }
+      base64 += view.btoa(binary);
+    }
+    return `data:${blob.type || 'application/octet-stream'};base64,${base64}`;
+  } catch {
+    return null;
+  }
 }
 
 async function inlineSameOriginSvgImages(
@@ -422,10 +446,16 @@ async function inlineSameOriginSvgImages(
  */
 export async function tutorSvgFrameSnapshot(
   svg: SVGSVGElement | null | undefined,
-  animationId: string,
+  placement: TutorFramePlacement,
   crop?: TutorFrameCrop,
 ): Promise<TutorFrameSnapshot | null> {
   if (!svg || typeof XMLSerializer === 'undefined') return null;
+  if (
+    !placement.releaseId ||
+    !placement.animationId ||
+    !Number.isInteger(placement.globalPageOrdinal) ||
+    placement.globalPageOrdinal < 1
+  ) return null;
   const size = svgIntrinsicSize(svg);
   if (!size) return null;
   const effectiveCrop = crop && validFrameCrop(crop, size.width, size.height)
@@ -498,7 +528,7 @@ export async function tutorSvgFrameSnapshot(
       height: output.height,
     })) return null;
     return Object.freeze({
-      animationId,
+      ...placement,
       dataUrl: output.toDataURL('image/png'),
       width: output.width,
       height: output.height,
@@ -513,19 +543,19 @@ export async function tutorSvgFrameSnapshot(
 /** Prefer the painted lesson canvas, then best-effort rasterise inline SVG. */
 export async function tutorStageFrameSnapshot(
   stage: HTMLElement | null | undefined,
-  animationId: string,
+  placement: TutorFramePlacement,
   crop?: TutorFrameCrop,
 ): Promise<TutorFrameSnapshot | null> {
   if (!stage) return null;
   const canvasSnapshot = tutorFrameSnapshot(
     stage.querySelector<HTMLCanvasElement>('canvas'),
-    animationId,
+    placement,
     crop,
   );
   if (canvasSnapshot) return canvasSnapshot;
   return tutorSvgFrameSnapshot(
     stage.querySelector<SVGSVGElement>('svg'),
-    animationId,
+    placement,
     crop,
   );
 }

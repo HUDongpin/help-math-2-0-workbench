@@ -17,6 +17,10 @@ import {Link} from '@/i18n/navigation';
 import type {PublicAuthStatus} from '@/lib/auth-session';
 import type {AvailableLearningLesson} from '@/lib/learning-lesson-availability.server';
 import {
+  EMPTY_NOVA_CLIENT_CAPABILITIES,
+  type NovaClientCapabilities,
+} from '@/lib/nova-capabilities';
+import {
   G4_L3_WHOLE_LESSON_STORAGE_KEY,
   g4L3CompletionPercent,
   parseG4L3WholeLessonProgress,
@@ -195,6 +199,8 @@ function StudentToday({
   flippedWords,
   g4L3Available,
   locale,
+  novaCapabilities,
+  novaCourseHref,
   onFlipWord,
   onOpenWords,
   progress,
@@ -203,6 +209,8 @@ function StudentToday({
   flippedWords: ReadonlySet<string>;
   g4L3Available: boolean;
   locale: G4L3Locale;
+  novaCapabilities: NovaClientCapabilities;
+  novaCourseHref: string | null;
   onFlipWord: (key: string) => void;
   onOpenWords: () => void;
   progress: ProgressSnapshot;
@@ -220,8 +228,13 @@ function StudentToday({
     continue: hasBrowserProgress ? 'Continuar mi lección' : 'Comenzar mi lección',
     greeting: '¡Hola María! ¿Lista para seguir?',
     helper: 'Tu ayudante de matemáticas',
-    helperBody: 'Pregúntame en inglés o en español. La lección puede compartir la página actual con Nova.',
+    helperBody: !novaCapabilities.text
+      ? 'Nova no está disponible en este entorno. Todavía puedes usar los apoyos de la lección.'
+      : novaCapabilities.currentLessonFrame
+        ? 'Pregúntame en inglés o en español. Puedes adjuntar explícitamente el fotograma actual de la lección.'
+        : 'Pregúntame en inglés o en español. Nova recibe tu pregunta y el contexto de la página actual.',
     lessonUnavailable: 'Lección no disponible en este entorno',
+    novaUnavailable: 'Nova no disponible en este entorno',
     next: 'Tu siguiente paso',
     powers: 'Tus poderes matemáticos',
     powersNote: 'Cada respuesta hace crecer un poder matemático.',
@@ -238,8 +251,13 @@ function StudentToday({
     continue: hasBrowserProgress ? 'Continue my lesson' : 'Start my lesson',
     greeting: 'Hi Maria! Ready to keep going?',
     helper: 'Your math helper',
-    helperBody: 'Ask in English or Spanish. The lesson can share the current page with Nova.',
+    helperBody: !novaCapabilities.text
+      ? 'Nova is not available in this environment. You can still use the lesson supports.'
+      : novaCapabilities.currentLessonFrame
+        ? 'Ask in English or Spanish. You can explicitly attach the current lesson frame.'
+        : 'Ask in English or Spanish. Nova receives your question and current page context.',
     lessonUnavailable: 'Lesson unavailable in this environment',
+    novaUnavailable: 'Nova unavailable in this environment',
     next: 'Your next step',
     powers: 'Your math powers',
     powersNote: 'Every answer grows a math power.',
@@ -371,12 +389,13 @@ function StudentToday({
               <div><h2>Nova</h2><p>{copy.helper}</p></div>
             </div>
             <p>{copy.helperBody}</p>
-            {g4L3Available
-              ? <Link className={styles.novaAction} href="/courses/4/3?mode=focus">
+            {novaCourseHref && novaCapabilities.text
+              ? <Link className={styles.novaAction} href={novaCourseHref}>
                   {copy.talk}<ArrowRight aria-hidden="true" size={18} />
                 </Link>
               : <span aria-disabled="true" className={`${styles.novaAction} ${styles.actionDisabled}`}>
-                  {copy.lessonUnavailable}<LockKeyhole aria-hidden="true" size={18} />
+                  {copy.novaUnavailable}
+                  <LockKeyhole aria-hidden="true" size={18} />
                 </span>}
           </article>
 
@@ -706,8 +725,8 @@ function DesignNotesScreen({
     <article className={styles.notesPanel}><h2>Evidence and sample boundaries that remain visible</h2><div className={styles.boundaryGrid}>
       <div><strong>Sample learner state</strong><p>Maria, the four-day streak, five stickers, 21/39, powers, and Nova replies are invented UI data.</p></div>
       <div><strong>Sample teacher state</strong><p>The roster, EL markers, mastery values, attention notes, IEP export, lesson assignment, and controls are invented and produce no real record.</p></div>
-      <div><strong>Current-JS learner access</strong><p>Five page-complete lessons—G3 L2, G4 L3, and G5 L3 through L5—can open only after their exact registration, descriptor/navigation, and release or showcase gates pass. Current JavaScript access does not prove Flash fidelity, audio acceptance, original runtime, owner acceptance, strict completion, or wider-curriculum publication.</p></div>
-      <div><strong>Future and internal evidence</strong><p>All 29 source-catalog lessons remain visible. Only the five exact runnable lessons become links; every other lesson stays visibly unavailable until its own page sequence and product gates pass.</p></div>
+      <div><strong>Current-JS learner access</strong><p>Eight page-complete lessons—G3 L2; G4 L3, L5, L10, and L11; and G5 L3 through L5—can open only after their exact registration, descriptor/navigation, and release or showcase gates pass. Current JavaScript access does not prove Flash fidelity, audio acceptance, original runtime, owner acceptance, strict completion, or wider-curriculum publication.</p></div>
+      <div><strong>Future and internal evidence</strong><p>All 29 source-catalog lessons remain visible. Only the eight exact runnable lessons become links; every other lesson stays visibly unavailable until its own page sequence and product gates pass.</p></div>
     </div></article>
     <article className={styles.notesPanel}><h2>Palette and type</h2><div className={styles.palette}>{LEARNING_SECTIONS.map((section) => <span className={tintClass(section.tint)} key={section.code}><i /><b>{section.en}</b></span>)}</div><p>Rounded display type, a readable system body stack, soft lavender ground, white cards, layered shadows, and separate high-contrast text tokens.</p></article>
     <p className={styles.finalBoundary}>Design prototype and local learning-platform implementation. Sample names, powers, stickers, teacher data, and Nova replies remain sample data. No fidelity, audio, original-runtime, owner, strict-completion, deployment, release, or publication acceptance is claimed or implied.</p>
@@ -723,6 +742,8 @@ export function LearningPlatformWorkspace({
   initialScreen,
   locale,
   migrationStatusAvailable,
+  novaCapabilities = EMPTY_NOVA_CLIENT_CAPABILITIES,
+  novaCourseHref = null,
 }: {
   activeLesson: AvailableLearningLesson | null;
   authStatus: PublicAuthStatus;
@@ -732,6 +753,8 @@ export function LearningPlatformWorkspace({
   initialScreen: Screen;
   locale: G4L3Locale;
   migrationStatusAvailable: boolean;
+  novaCapabilities?: NovaClientCapabilities;
+  novaCourseHref?: string | null;
 }) {
   const spanish = locale === 'es';
   const g4L3Available = availableLessons.some(
@@ -905,7 +928,7 @@ export function LearningPlatformWorkspace({
           <button aria-label={theme === 'light' ? (spanish ? 'Cambiar a tema oscuro' : 'Switch to dark theme') : (spanish ? 'Cambiar a tema claro' : 'Switch to light theme')} className={styles.themeButton} onClick={changeTheme} type="button">{theme === 'light' ? <Moon aria-hidden="true" /> : <Sun aria-hidden="true" />}</button>
         </header>
         <main className={styles.workspace} id="main-content" ref={workspaceRef} tabIndex={-1}>
-          {screen === 'today' ? <StudentToday browserProgress={browserProgress} flippedWords={flippedWords} g4L3Available={g4L3Available} locale={locale} onFlipWord={flipWord} onOpenWords={() => openScreen('words')} progress={progress} /> : null}
+          {screen === 'today' ? <StudentToday browserProgress={browserProgress} flippedWords={flippedWords} g4L3Available={g4L3Available} locale={locale} novaCapabilities={novaCapabilities} novaCourseHref={novaCourseHref} onFlipWord={flipWord} onOpenWords={() => openScreen('words')} progress={progress} /> : null}
           {screen === 'practice' ? <PracticeScreen locale={locale} /> : null}
           {screen === 'words' ? <WordsScreen designerToolsVisible={designerToolsVisible} flippedWords={flippedWords} locale={locale} onFlipWord={flipWord} /> : null}
           {screen === 'lessons' ? <LessonsScreen availableLessons={availableLessons} locale={locale} /> : null}

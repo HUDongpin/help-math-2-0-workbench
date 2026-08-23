@@ -10,8 +10,28 @@ import {
   isMigrationStatusAvailable,
   isMigrationStatusDesignerViewRequested,
 } from '@/lib/migration-status-access';
+import {
+  EMPTY_NOVA_CLIENT_CAPABILITIES,
+} from '@/lib/nova-capabilities';
+import {resolveNovaClientCapabilities} from '@/lib/nova-capabilities.server';
+import {
+  isModernWideShellEnabled,
+  resolveWholeLessonHostPresentation,
+} from '@/lib/whole-lesson-host-presentation';
+import {findWholeLessonCourseRegistration} from '@/lib/whole-lesson-course-registry';
 
 type WorkspaceQuery = Record<string, string | string[] | undefined>;
+
+const NOVA_HOME_COURSE_PRIORITY = Object.freeze([
+  [4, 3],
+  [5, 4],
+  [3, 2],
+  [4, 5],
+  [4, 10],
+  [4, 11],
+  [5, 3],
+  [5, 5],
+] as const);
 
 function first(value: string | string[] | undefined) {
   return Array.isArray(value) ? value[0] : value;
@@ -74,6 +94,32 @@ export default async function Home({
     && isMigrationStatusDesignerViewRequested(query.view);
   const state = workspaceState(query, designerToolsVisible);
   const availableLessons = availableLearningLessons();
+  let novaCourseHref: string | null = null;
+  let novaCapabilities = EMPTY_NOVA_CLIENT_CAPABILITIES;
+  for (const [grade, lesson] of NOVA_HOME_COURSE_PRIORITY) {
+    const learnerVisibleLesson = availableLessons.find(
+      (candidate) => candidate.grade === grade && candidate.lesson === lesson,
+    );
+    if (!learnerVisibleLesson) continue;
+    const registration = findWholeLessonCourseRegistration(grade, lesson);
+    if (
+      !registration ||
+      registration.descriptor.releaseId !== learnerVisibleLesson.releaseId
+    ) continue;
+    const capabilities = resolveNovaClientCapabilities({
+      grade,
+      lesson,
+      releaseId: registration.descriptor.releaseId,
+      hostPresentation: resolveWholeLessonHostPresentation({
+        declared: registration.descriptor.visualSkin.presentations,
+        enabled: isModernWideShellEnabled(),
+      }),
+    });
+    if (!capabilities.text) continue;
+    novaCourseHref = learnerVisibleLesson.href;
+    novaCapabilities = capabilities;
+    break;
+  }
   return <LearningPlatformWorkspace
     activeLesson={availableLessons.find((lesson) =>
       lesson.grade === 4 && lesson.lesson === 3
@@ -86,5 +132,7 @@ export default async function Home({
     key={`${locale}:${state.role}:${state.screen}:${designerToolsVisible ? 'designer' : 'learner'}`}
     locale={locale}
     migrationStatusAvailable={migrationStatusAvailable}
+    novaCapabilities={novaCapabilities}
+    novaCourseHref={novaCourseHref}
   />;
 }

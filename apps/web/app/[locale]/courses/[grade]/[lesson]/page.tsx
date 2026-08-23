@@ -19,6 +19,7 @@ import {
   isMigrationStatusDesignerViewRequested,
 } from '@/lib/migration-status-access';
 import {isReviewerInstrumentationEnabled} from '@/lib/reviewer-instrumentation';
+import {resolveNovaClientCapabilities} from '@/lib/nova-capabilities.server';
 import {resolveNovaTutorMode} from '@/lib/tutor-integration';
 import {
   isModernWideShellEnabled,
@@ -60,21 +61,27 @@ export default async function CoursePage({
   const published = publishedAnimations(catalog);
 
   const courseRegistration = findWholeLessonCourseRegistration(grade, lessonNumber);
+  const catalogNavigation = findLessonNavigationForRoute(
+    catalog,
+    grade,
+    lessonNumber,
+  );
   const pageOnlyNavigation = findPageOnlyCurrentJsNavigationForRoute(
     grade,
     lessonNumber,
   );
-  // A formal schema-2 course must bind to its page-only product manifest even
-  // when a superseded shell-inclusive lesson ledger still exists for the same
-  // grade/lesson. The retained modern My Lesson host is not a legacy shell
-  // member and must not be cross-bound to that historical denominator.
-  const releaseDescriptor = courseRegistration?.descriptor.schemaVersion === 2
-    ? pageOnlyNavigation
-    : findLessonNavigationForRoute(
-        catalog,
-        grade,
-        lessonNumber,
-      ) ?? pageOnlyNavigation;
+  // Select the exact navigation that cross-binds to the registered course.
+  // This admits a formal page-only manifest when a superseded catalog release
+  // exists for the same grade/lesson without hiding schema-2 courses whose
+  // current page-only release already lives in the catalog itself.
+  const releaseDescriptor = courseRegistration
+    ? [catalogNavigation, pageOnlyNavigation].find(
+        (candidate) => candidate && wholeLessonDescriptorMatchesNavigation(
+          courseRegistration.descriptor,
+          candidate,
+        ),
+      )
+    : catalogNavigation ?? pageOnlyNavigation;
   const protectedReleaseId = protectedAtomicReleaseIdForScope(Number(grade), lessonNumber);
   if (!releaseDescriptor && protectedReleaseId) notFound();
   if (courseRegistration) {
@@ -117,6 +124,12 @@ export default async function CoursePage({
       declared: courseRegistration.descriptor.visualSkin.presentations,
       enabled: isModernWideShellEnabled(),
     });
+    const novaCapabilities = resolveNovaClientCapabilities({
+      grade: Number(grade),
+      lesson: lessonNumber,
+      releaseId: courseRegistration.descriptor.releaseId,
+      hostPresentation,
+    });
     const authSession = await readAuthSession();
     return <WholeLessonCoursePlayer
       audioEnabled={
@@ -129,6 +142,7 @@ export default async function CoursePage({
       learningEventsEnabled={process.env.LRS_ENABLED === 'true'}
       reviewerMode={isReviewerInstrumentationEnabled()}
       locale={locale}
+      novaCapabilities={novaCapabilities}
       novaTutorMode={novaTutorMode}
       registration={courseRegistration}
       releasePublished={releasePublished}

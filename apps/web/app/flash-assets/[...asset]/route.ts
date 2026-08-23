@@ -6,6 +6,11 @@ import {notFound} from 'next/navigation';
 
 import {getWorkspaceRoot} from '@/lib/catalog';
 import {
+  CURRENT_JS_CANDIDATE_ASSET_VERSION,
+  hasExactCurrentJsAssetBytes,
+  selectedCurrentJsAssetRecordForSegments,
+} from '@/lib/current-js-asset-profile';
+import {
   classifyG4L3HostCompositeAsset,
   hasExactG4L3HostCompositeDigest,
 } from '@/lib/g4-l3-host-composite-asset-policy';
@@ -87,11 +92,18 @@ export async function GET(
   const {asset} = await params;
   if (!hasSafeFlashAssetSegments(asset)) notFound();
   const requestedG5Policy = classifyG5L4PreviewAsset(asset);
+  const exactCurrentJsRecord =
+    selectedCurrentJsAssetRecordForSegments(asset);
+  const storageRoot = exactCurrentJsRecord?.storageRoot;
   const root = path.resolve(
     getWorkspaceRoot(),
-    requestedG5Policy.kind === 'audio'
-      ? 'apps/web/server-assets/flash-assets'
-      : 'public/flash-assets',
+    storageRoot === 'candidate'
+      ? `apps/web/candidate-assets/flash-assets/${CURRENT_JS_CANDIDATE_ASSET_VERSION}`
+      : storageRoot === 'server-audio' || requestedG5Policy.kind === 'audio'
+        ? 'apps/web/server-assets/flash-assets'
+        : storageRoot === 'public'
+          ? 'apps/web/public/flash-assets'
+          : 'public/flash-assets',
   );
   const target = path.resolve(root, ...asset);
   if (
@@ -111,7 +123,10 @@ export async function GET(
 
   if (
     pageOnlyCurrentJsShowcaseAsset
-    && process.env.NODE_ENV === 'production'
+    && (
+      process.env.NODE_ENV === 'production'
+      || exactCurrentJsRecord?.profile === 'candidate'
+    )
     && !isPageOnlyCurrentJsShowcaseAssetAuthorized(canonicalAsset)
   ) {
     notFound();
@@ -198,8 +213,21 @@ export async function GET(
     ) {
       notFound();
     }
+    const digest = sha256(bytes);
+    if (
+      exactCurrentJsRecord
+      && !hasExactCurrentJsAssetBytes(
+        exactCurrentJsRecord,
+        bytes,
+        digest,
+      )
+    ) {
+      notFound();
+    }
     const extension = path.extname(target).toLowerCase();
-    const cacheControl = policy.controlled || g4HostCompositePolicy.controlled
+    const cacheControl = exactCurrentJsRecord?.profile === 'candidate'
+      || policy.controlled
+      || g4HostCompositePolicy.controlled
       ? 'private, no-store, max-age=0'
       : extension === '.html'
         ? 'no-store'

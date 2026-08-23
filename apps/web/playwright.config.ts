@@ -6,6 +6,14 @@ if (!Number.isInteger(port) || port < 1 || port > 65_535) {
 }
 const host = process.env.PLAYWRIGHT_HOST ?? '127.0.0.1';
 const baseURL = `http://${host}:${port}`;
+const novaClientRenderMockEnabled =
+  process.env.NOVA_CLIENT_RENDER_MOCK_ENABLED === 'true';
+const novaClientRenderMockKey = [
+  'sk',
+  'or',
+  'v1',
+  'client-render-mock-only-000000000000',
+].join('-');
 
 export default defineConfig({
   testDir: './e2e',
@@ -43,8 +51,25 @@ export default defineConfig({
       // development server. Production does not expose a review route.
       MODERN_WIDE_SHELL_ENABLED:
         process.env.MODERN_WIDE_SHELL_ENABLED ?? 'false',
+      NOVA_TUTOR_ENABLED: novaClientRenderMockEnabled ? 'true' : 'false',
+      NOVA_TUTOR_RELEASE_IDS: novaClientRenderMockEnabled
+        ? 'lesson-g04-l03-negative-numbers'
+        : '',
+      NOVA_ALLOW_FRAME_CONTEXT: novaClientRenderMockEnabled ? 'true' : 'false',
+      NOVA_ALLOW_SPEECH_INPUT: novaClientRenderMockEnabled ? 'true' : 'false',
+      OPENROUTER_API_KEY: novaClientRenderMockEnabled
+        ? novaClientRenderMockKey
+        : '',
+      OPENROUTER_BASE_URL: 'https://openrouter.ai/api/v1',
+      NOVA_MODEL: 'openai/gpt-5.6-luna',
       CURRENT_JS_SHOWCASE_G4_L3_ENABLED:
         process.env.CURRENT_JS_SHOWCASE_G4_L3_ENABLED ?? 'false',
+      CURRENT_JS_SHOWCASE_G4_L5_ENABLED:
+        process.env.CURRENT_JS_SHOWCASE_G4_L5_ENABLED ?? 'false',
+      CURRENT_JS_SHOWCASE_G4_L10_ENABLED:
+        process.env.CURRENT_JS_SHOWCASE_G4_L10_ENABLED ?? 'false',
+      CURRENT_JS_SHOWCASE_G4_L11_ENABLED:
+        process.env.CURRENT_JS_SHOWCASE_G4_L11_ENABLED ?? 'false',
       CURRENT_JS_SHOWCASE_G3_L2_ENABLED:
         process.env.CURRENT_JS_SHOWCASE_G3_L2_ENABLED ?? 'false',
       CURRENT_JS_SHOWCASE_G5_L3_ENABLED:

@@ -166,7 +166,7 @@ test('English home exposes the learning platform and the Grade 4 Lesson 3 entry'
   expectNoRuntimeIssues(issues);
 });
 
-test('All Lessons exposes the five page-complete lessons and opens Grade 5 Lesson 4', async ({page}) => {
+test('All Lessons exposes the eight page-complete lessons and opens Grade 5 Lesson 4', async ({page}) => {
   await expectDocument(page, '/', 'en');
   await page.getByRole('navigation', {name: 'Learning workspace'})
     .getByRole('button', {name: 'All lessons 73', exact: true})
@@ -175,6 +175,9 @@ test('All Lessons exposes the five page-complete lessons and opens Grade 5 Lesso
   for (const {href, pages} of [
     {href: '/courses/3/2?mode=focus', pages: 70},
     {href: '/courses/4/3?mode=focus', pages: 39},
+    {href: '/courses/4/5?mode=focus', pages: 53},
+    {href: '/courses/4/10?mode=focus', pages: 46},
+    {href: '/courses/4/11?mode=focus', pages: 43},
     {href: '/courses/5/3?mode=focus', pages: 65},
     {href: '/courses/5/4?mode=focus', pages: 54},
     {href: '/courses/5/5?mode=focus', pages: 56},
@@ -190,7 +193,7 @@ test('All Lessons exposes the five page-complete lessons and opens Grade 5 Lesso
   await lesson.click();
   await expect(page).toHaveURL(/\/courses\/5\/4\?mode=focus$/u);
 
-  await expect(page.locator('[data-lesson-player="descriptor-driven-whole-lesson-audit"]'))
+  await expect(page.locator('[data-lesson-player="descriptor-driven-page-only-product-bridge"]'))
     .toHaveAttribute('data-hydrated', 'true');
   const root = page.locator('[data-release-id="lesson-g05-l04-number-lines"]');
   await expect(root).toHaveAttribute('data-current-js-pages', '54');
@@ -211,9 +214,29 @@ for (const lesson of [
     releaseId: 'lesson-g03-l02-addition-subtraction-page-only-current-js',
   },
   {
+    href: '/courses/4/5?mode=focus',
+    pages: '53',
+    releaseId: 'lesson-g04-l05-multiplication-page-only',
+  },
+  {
+    href: '/courses/4/10?mode=focus',
+    pages: '46',
+    releaseId: 'lesson-g04-l10-perimeter-area-page-only',
+  },
+  {
+    href: '/courses/4/11?mode=focus',
+    pages: '43',
+    releaseId: 'lesson-g04-l11-coordinate-grid-page-only',
+  },
+  {
     href: '/courses/5/3?mode=focus',
     pages: '65',
     releaseId: 'lesson-g05-l03-exponents-prime-factorizations-page-only',
+  },
+  {
+    href: '/courses/5/4?mode=focus',
+    pages: '54',
+    releaseId: 'lesson-g05-l04-number-lines',
   },
   {
     href: '/courses/5/5?mode=focus',
@@ -750,7 +773,7 @@ test('ordinary platform surfaces expose only the environment-required CSP', asyn
   }
 });
 
-test('robots and sitemap publish all five runnable lessons in both locale variants', async ({request}) => {
+test('robots and sitemap publish all eight runnable lessons in both locale variants', async ({request}) => {
   const robots = await request.get('/robots.txt');
   expect(robots.status()).toBe(200);
   expect(robots.headers()['content-type']).toContain('text/plain');
@@ -758,7 +781,16 @@ test('robots and sitemap publish all five runnable lessons in both locale varian
   expect(robotsText).toContain('User-Agent: *');
   expect(robotsText).toContain('Disallow: /api/');
   expect(robotsText).toContain('Sitemap: https://www.helpmath.ai/sitemap.xml');
-  for (const route of ['/courses/3/2', '/courses/4/3', '/courses/5/3', '/courses/5/4', '/courses/5/5']) {
+  for (const route of [
+    '/courses/3/2',
+    '/courses/4/3',
+    '/courses/4/5',
+    '/courses/4/10',
+    '/courses/4/11',
+    '/courses/5/3',
+    '/courses/5/4',
+    '/courses/5/5',
+  ]) {
     expect(robotsText).not.toContain(`Disallow: ${route}`);
     expect(robotsText).not.toContain(`Disallow: /es${route}`);
   }
@@ -769,7 +801,16 @@ test('robots and sitemap publish all five runnable lessons in both locale varian
   const sitemapText = await sitemap.text();
   expect(sitemapText).toContain('<loc>https://www.helpmath.ai/</loc>');
   expect(sitemapText).toContain('<loc>https://www.helpmath.ai/es</loc>');
-  for (const route of ['/courses/3/2', '/courses/4/3', '/courses/5/3', '/courses/5/4', '/courses/5/5']) {
+  for (const route of [
+    '/courses/3/2',
+    '/courses/4/3',
+    '/courses/4/5',
+    '/courses/4/10',
+    '/courses/4/11',
+    '/courses/5/3',
+    '/courses/5/4',
+    '/courses/5/5',
+  ]) {
     expect(sitemapText).toContain(`<loc>https://www.helpmath.ai${route}</loc>`);
     expect(sitemapText).toContain(`<loc>https://www.helpmath.ai/es${route}</loc>`);
   }

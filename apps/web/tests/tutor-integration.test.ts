@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
 import test from 'node:test';
 
 import {
@@ -30,6 +31,17 @@ function context(overrides: Partial<Parameters<typeof tutorPageContext>[0]> = {}
     pageTitleSpanish: null,
     locale: 'en',
     ...overrides,
+  });
+}
+
+function framePlacement(
+  animationId = 'course-g04-l03-ts-006',
+  globalPageOrdinal = 34,
+) {
+  return Object.freeze({
+    releaseId: G4_L3_LESSON.releaseId,
+    animationId,
+    globalPageOrdinal,
   });
 }
 
@@ -134,10 +146,15 @@ test('a snapshot is produced for a canvas-backed page', () => {
     height: 600,
     toDataURL: () => 'data:image/png;base64,AAAA',
   } as unknown as HTMLCanvasElement;
-  const shot = tutorFrameSnapshot(canvas, 'course-g04-l03-in-004');
+  const shot = tutorFrameSnapshot(
+    canvas,
+    framePlacement('course-g04-l03-in-004', 19),
+  );
   assert.equal(shot?.width, 800);
   assert.equal(shot?.height, 600);
+  assert.equal(shot?.releaseId, G4_L3_LESSON.releaseId);
   assert.equal(shot?.animationId, 'course-g04-l03-in-004');
+  assert.equal(shot?.globalPageOrdinal, 19);
 });
 
 test('a modern-wide snapshot is cropped to the visible authored content band', () => {
@@ -158,7 +175,7 @@ test('a modern-wide snapshot is cropped to the visible authored content band', (
   } as unknown as HTMLCanvasElement;
   const shot = tutorFrameSnapshot(
     canvas,
-    'course-g04-l03-ts-006',
+    framePlacement(),
     {left: 0, top: 109, width: 800, height: 415},
   );
   assert.equal(shot?.width, 800);
@@ -175,17 +192,22 @@ test('an invalid snapshot crop fails closed', () => {
     toDataURL: () => 'data:image/png;base64,FULL',
   } as unknown as HTMLCanvasElement;
   assert.equal(
-    tutorFrameSnapshot(canvas, 'x', {left: 0, top: 500, width: 800, height: 415}),
+    tutorFrameSnapshot(
+      canvas,
+      framePlacement('x', 1),
+      {left: 0, top: 500, width: 800, height: 415},
+    ),
     null,
   );
 });
 
 test('a page without a renderable frame degrades to context-only support', async () => {
-  assert.equal(tutorFrameSnapshot(null, 'course-g04-l03-vb-004'), null);
-  assert.equal(tutorFrameSnapshot(undefined, 'course-g04-l03-vb-004'), null);
+  const placement = framePlacement('course-g04-l03-vb-004', 11);
+  assert.equal(tutorFrameSnapshot(null, placement), null);
+  assert.equal(tutorFrameSnapshot(undefined, placement), null);
   assert.equal(await tutorStageFrameSnapshot(
     {querySelector: () => null} as unknown as HTMLElement,
-    'course-g04-l03-vb-004',
+    placement,
   ), null);
 });
 
@@ -198,10 +220,146 @@ test('stage capture prefers a painted canvas before attempting SVG fallback', as
   const stage = {
     querySelector: (selector: string) => selector === 'canvas' ? canvas : null,
   } as unknown as HTMLElement;
-  const shot = await tutorStageFrameSnapshot(stage, 'course-g04-l03-vb-004');
+  const shot = await tutorStageFrameSnapshot(
+    stage,
+    framePlacement('course-g04-l03-vb-004', 11),
+  );
   assert.equal(shot?.dataUrl, 'data:image/png;base64,STAGE');
   assert.equal(shot?.width, 800);
   assert.equal(shot?.height, 600);
+  assert.equal(shot?.globalPageOrdinal, 11);
+});
+
+test('SVG frame capture inlines a same-origin image with bounded array-buffer base64', async () => {
+  const bytes = Uint8Array.from(
+    {length: 3 * 8_192 + 1},
+    (_, index) => index % 251,
+  );
+  const expectedDataUrl =
+    `data:image/png;base64,${Buffer.from(bytes).toString('base64')}`;
+  const cloneAttributes = new Map<string, string>();
+  const sourceImage = {
+    getAttribute: (name: string) => name === 'href' ? '/lesson-image.png' : null,
+    getAttributeNS: () => null,
+  };
+  const cloneImage = {
+    setAttribute: (name: string, value: string) => {
+      cloneAttributes.set(name, value);
+    },
+    setAttributeNS: (_namespace: string, name: string, value: string) => {
+      cloneAttributes.set(name, value);
+    },
+  };
+  const clone = {
+    querySelectorAll: (selector: string) => selector === 'image'
+      ? [cloneImage]
+      : [],
+    setAttribute: () => undefined,
+  };
+  const context2d = {
+    drawImage: () => undefined,
+    getImageData: () => ({
+      data: Uint8ClampedArray.from([0, 0, 0, 255]),
+    }),
+  };
+  const output = {
+    width: 0,
+    height: 0,
+    getContext: () => context2d,
+    toDataURL: () => 'data:image/png;base64,SVGFRAME',
+  };
+  class FakeImage {
+    onerror: (() => void) | null = null;
+    onload: (() => void) | null = null;
+
+    set src(_value: string) {
+      this.onload?.();
+    }
+  }
+  const view = {
+    Image: FakeImage,
+    btoa: (binary: string) => Buffer.from(binary, 'latin1').toString('base64'),
+    clearTimeout: () => undefined,
+    fetch: async () => ({
+      blob: async () => new Blob([bytes], {type: 'image/png'}),
+      ok: true,
+    }),
+    getComputedStyle: () => ({getPropertyValue: () => ''}),
+    location: {origin: 'https://helpmath.test'},
+    setTimeout: () => 1,
+  };
+  const document = {
+    baseURI: 'https://helpmath.test/courses/4/3',
+    createElement: () => output,
+    defaultView: view,
+  };
+  const svg = {
+    cloneNode: () => clone,
+    ownerDocument: document,
+    querySelectorAll: (selector: string) => selector === 'image'
+      ? [sourceImage]
+      : [],
+    viewBox: {baseVal: {height: 2, width: 2}},
+  } as unknown as SVGSVGElement;
+
+  const originalSerializer = Object.getOwnPropertyDescriptor(
+    globalThis,
+    'XMLSerializer',
+  );
+  Object.defineProperty(globalThis, 'XMLSerializer', {
+    configurable: true,
+    value: class {
+      serializeToString() {
+        return '<svg xmlns="http://www.w3.org/2000/svg" />';
+      }
+    },
+  });
+  try {
+    const stage = {
+      querySelector: (selector: string) => selector === 'svg' ? svg : null,
+    } as unknown as HTMLElement;
+    const shot = await tutorStageFrameSnapshot(
+      stage,
+      framePlacement('course-g04-l03-ir-001-341242cc', 1),
+    );
+    assert.equal(cloneAttributes.get('href'), expectedDataUrl);
+    assert.equal(cloneAttributes.get('xlink:href'), expectedDataUrl);
+    assert.equal(shot?.dataUrl, 'data:image/png;base64,SVGFRAME');
+  } finally {
+    if (originalSerializer) {
+      Object.defineProperty(globalThis, 'XMLSerializer', originalSerializer);
+    } else {
+      Reflect.deleteProperty(globalThis, 'XMLSerializer');
+    }
+  }
+});
+
+test('Nova frame capture source cannot regress to FileReader APIs', async () => {
+  const source = await readFile(
+    new URL('../lib/tutor-integration.ts', import.meta.url),
+    'utf8',
+  );
+  assert.doesNotMatch(source, /\bFileReader\b|readAsDataURL/u);
+  assert.match(source, /await blob\.arrayBuffer\(\)/u);
+  assert.match(source, /const BASE64_CHUNK_BYTES = 3 \* 8_192/u);
+});
+
+test('frame capture fails closed without a complete placement identity', () => {
+  const canvas = {
+    width: 800,
+    height: 600,
+    toDataURL: () => 'data:image/png;base64,AAAA',
+  } as unknown as HTMLCanvasElement;
+  assert.equal(tutorFrameSnapshot(canvas, {
+    releaseId: '',
+    animationId: 'course-g04-l03-vb-004',
+    globalPageOrdinal: 11,
+  }), null);
+  assert.equal(tutorFrameSnapshot(canvas, {
+    releaseId: G4_L3_LESSON.releaseId,
+    animationId: 'course-g04-l03-vb-004',
+    globalPageOrdinal: 0,
+  }), null);
 });
 
 test('a tainted or empty canvas never takes the lesson down', () => {
@@ -212,10 +370,10 @@ test('a tainted or empty canvas never takes the lesson down', () => {
       throw new Error('tainted');
     },
   } as unknown as HTMLCanvasElement;
-  assert.equal(tutorFrameSnapshot(tainted, 'x'), null);
+  assert.equal(tutorFrameSnapshot(tainted, framePlacement('x', 1)), null);
 
   const empty = {width: 0, height: 0, toDataURL: () => 'data:,'} as unknown as HTMLCanvasElement;
-  assert.equal(tutorFrameSnapshot(empty, 'x'), null);
+  assert.equal(tutorFrameSnapshot(empty, framePlacement('x', 1)), null);
 
   const transparent = {
     width: 2,
@@ -225,7 +383,7 @@ test('a tainted or empty canvas never takes the lesson down', () => {
     }),
     toDataURL: () => 'data:image/png;base64,TRANSPARENT',
   } as unknown as HTMLCanvasElement;
-  assert.equal(tutorFrameSnapshot(transparent, 'x'), null);
+  assert.equal(tutorFrameSnapshot(transparent, framePlacement('x', 1)), null);
 });
 
 /* ---------- availability ---------- */

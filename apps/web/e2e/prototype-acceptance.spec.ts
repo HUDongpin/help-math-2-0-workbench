@@ -1,6 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
 import {expect, test, type Locator, type Page} from '@playwright/test';
-import {fileURLToPath} from 'node:url';
 
 import {
   G4_L3_WHOLE_LESSON_STORAGE_KEY,
@@ -23,12 +22,9 @@ import {
 const MODERN_WIDE = process.env.MODERN_WIDE_SHELL_ENABLED === 'true';
 const ROOT = 'main.lesson-shell2';
 const PLAYER = '[data-lesson-player="g4-l3-whole-lesson-mvp"]';
+const DESCRIPTOR_PLAYER = '[data-lesson-player^="descriptor-driven-"]';
 const SPINE = '.lesson-shell2__spine';
 const BAR = '.lesson-shell2__modern-toolbar';
-const NOVA_TEST_IMAGE = fileURLToPath(new URL(
-  '../public/brand/help-math-2-logo.png',
-  import.meta.url,
-));
 
 const SECTIONS = [
   'Introduction', 'Your World', 'Important Words', 'Learn It',
@@ -87,6 +83,8 @@ interface NovaMockRequest {
   readonly mode: 'focus' | 'study' | 'classroom';
   readonly history: readonly Readonly<{role: 'user' | 'assistant'; text: string}>[];
   readonly frame?: Readonly<{
+    releaseId: string;
+    globalPageOrdinal: number;
     animationId: string;
     dataUrl: string;
     width: number;
@@ -201,9 +199,9 @@ function expectBoundedJpegFrame(request: NovaMockRequest) {
   expect(request.frame!.height).toBeGreaterThan(0);
 }
 
-async function attachTestImageFromPlus(panel: Locator) {
+async function attachCurrentLessonFrame(panel: Locator) {
   const attach = panel.getByRole('button', {
-    name: 'Attach an image or take a photo',
+    name: 'Attach current lesson frame',
     exact: true,
   });
   await expect(attach).toBeVisible();
@@ -212,21 +210,17 @@ async function attachTestImageFromPlus(panel: Locator) {
   expect(attachBox!.width).toBeGreaterThanOrEqual(44);
   expect(attachBox!.height).toBeGreaterThanOrEqual(44);
   await expect(panel.locator('.lesson-shell2__nova-camera')).toHaveCount(0);
-  await expect(panel.locator('input[type="file"]'))
-    .toHaveAttribute('accept', 'image/png,image/jpeg');
-
-  // Drive the hidden native input directly so a Next.js development issue
-  // badge cannot mask the product's attachment pipeline. The static contract
-  // separately locks the visible + trigger to fileInputRef.current.click().
-  await panel.locator('input[type="file"]').setInputFiles(NOVA_TEST_IMAGE);
+  await expect(panel.locator('input[type="file"]')).toHaveCount(0);
+  await expect(attach).toBeEnabled({timeout: 20_000});
+  await attach.click();
 
   await expect(panel).toHaveAttribute(
     'data-tutor-frame-sharing',
     'attached-for-next-request',
   );
-  await expect(panel).toContainText('Image attached for the next question');
+  await expect(panel).toContainText('Lesson frame attached for the next question');
   await expect(panel.getByRole('button', {
-    name: 'Remove the image from the next question',
+    name: 'Remove the lesson frame from the next question',
     exact: true,
   })).toBeVisible();
 }
@@ -585,7 +579,7 @@ async function expectModernFinalQuizPresentation(
   ).filter({hasText: 'Modern reconstruction'})).toHaveCount(1);
 }
 
-test.describe('prototype composition', () => {
+test.describe('CLIENT_RENDER_MOCK · prototype composition', () => {
   test.skip(!MODERN_WIDE, 'MODERN_WIDE_SHELL_ENABLED is not true');
 
   test('the section spine carries the lesson’s own named sequence', async ({page}) => {
@@ -1155,17 +1149,16 @@ test.describe('prototype composition', () => {
       waitUntil: 'domcontentloaded',
     });
     expect(response?.status()).toBe(200);
-    await expect(page.locator(
-      '[data-lesson-player="descriptor-driven-whole-lesson-audit"]',
-    )).toHaveAttribute('data-hydrated', 'true');
+    await expect(page.locator(DESCRIPTOR_PLAYER))
+      .toHaveAttribute('data-hydrated', 'true');
     const root = page.locator(ROOT);
     await expect(root).toHaveAttribute('data-tutor-mode', 'focus');
     await expect(root).toHaveAttribute(
       'data-tutor-placement',
-      'focus-side-column',
+      'unavailable',
     );
     await expect(page.getByRole('button', {name: 'Ask Nova', exact: true}))
-      .toBeVisible();
+      .toHaveCount(0);
     await expect(page.locator('.lesson-shell2__learning-nav'))
       .toHaveAttribute('data-mode-switch-available', 'false');
     await expect(page.locator('.lesson-shell2__mode-switch')).toHaveCount(0);
@@ -1214,9 +1207,8 @@ test.describe('prototype composition', () => {
     await page.goto('/courses/5/4?mode=classroom', {
       waitUntil: 'domcontentloaded',
     });
-    await expect(page.locator(
-      '[data-lesson-player="descriptor-driven-whole-lesson-audit"]',
-    )).toHaveAttribute('data-hydrated', 'true');
+    await expect(page.locator(DESCRIPTOR_PLAYER))
+      .toHaveAttribute('data-hydrated', 'true');
     await expect(page.locator('[data-current-page="2"]')).toBeVisible();
     const reopened = await readProgress(page);
     expect(reopened?.currentAnimationId).toBe(progressed?.currentAnimationId);
@@ -1243,9 +1235,8 @@ test.describe('prototype composition', () => {
     await page.goto('/courses/5/4?mode=classroom', {
       waitUntil: 'domcontentloaded',
     });
-    await expect(page.locator(
-      '[data-lesson-player="descriptor-driven-whole-lesson-audit"]',
-    )).toHaveAttribute('data-hydrated', 'true');
+    await expect(page.locator(DESCRIPTOR_PLAYER))
+      .toHaveAttribute('data-hydrated', 'true');
     const reopenedHome = page.locator(
       '[data-lesson-platform-header="true"] '
       + '[data-responsive-focus-key="platform-home"]',
@@ -1267,9 +1258,8 @@ test.describe('prototype composition', () => {
     }, fallbackUrl).catch(() => undefined);
     await fallbackPage.waitForURL(/\/es\/courses\/5\/4\?mode=classroom$/u);
     expect(await fallbackPage.evaluate(() => window.history.length)).toBe(1);
-    await expect(fallbackPage.locator(
-      '[data-lesson-player="descriptor-driven-whole-lesson-audit"]',
-    )).toHaveAttribute('data-hydrated', 'true');
+    await expect(fallbackPage.locator(DESCRIPTOR_PLAYER))
+      .toHaveAttribute('data-hydrated', 'true');
     const spanishHome = fallbackPage.locator(
       '[data-lesson-platform-header="true"] '
       + '[data-responsive-focus-key="platform-home"]',
@@ -1720,9 +1710,14 @@ test.describe('prototype composition', () => {
     await expect(page.locator(
       `${BAR} [data-responsive-focus-key="study-support"]`,
     )).toHaveCount(0);
-    await expect(page.locator(
+    // Focus has no persistent session rail, so an audio-capable lesson keeps
+    // exactly one compact Narration action in the toolbar. It is a transport
+    // control, not the removed second reading/support destination.
+    const narration = page.locator(
       `${BAR} [data-responsive-focus-key="narration"]`,
-    )).toHaveCount(0);
+    );
+    await expect(narration).toHaveCount(1);
+    await expect(narration).toBeVisible();
     await expect(page.getByRole('button', {name: 'Read it', exact: true}))
       .toHaveCount(0);
   });
@@ -1835,7 +1830,7 @@ test.describe('prototype composition', () => {
     );
     expect(blocking, JSON.stringify(blocking, null, 2)).toEqual([]);
 
-    await attachTestImageFromPlus(panel);
+    await attachCurrentLessonFrame(panel);
 
     const question = panel.getByRole('textbox', {name: 'Type a question for Nova'});
     await question.fill('Help me understand 4 - Step Plan.');
@@ -1846,6 +1841,9 @@ test.describe('prototype composition', () => {
     expect(quickPrompt.mode).toBe('focus');
     expect(quickPrompt.history).toEqual([]);
     expectBoundedJpegFrame(quickPrompt);
+    expect(quickPrompt.frame?.releaseId)
+      .toBe('lesson-g04-l03-negative-numbers');
+    expect(quickPrompt.frame?.globalPageOrdinal).toBe(34);
     expect(quickPrompt.frame?.animationId).toBe('course-g04-l03-ts-006');
     await expect(panel.getByText(
       'Mock Nova reply: Help me understand 4 - Step Plan.',
@@ -1857,10 +1855,10 @@ test.describe('prototype composition', () => {
     await expect(page.locator(ROOT)).toHaveAttribute('data-tutor-model', 'openai/gpt-5.6-luna');
     await expect(panel).toHaveAttribute(
       'data-tutor-frame-sharing',
-      'local-not-sent',
+      'current-frame-not-attached',
     );
     await expect(panel.getByRole('button', {
-      name: 'Remove the image from the next question',
+      name: 'Remove the lesson frame from the next question',
       exact: true,
     })).toHaveCount(0);
 
@@ -1879,7 +1877,12 @@ test.describe('prototype composition', () => {
       {exact: true},
     )).toBeVisible();
 
-    await panel.getByRole('button', {name: 'Ask Nova by voice'}).click();
+    await panel.getByRole('button', {name: 'Dictate a draft for Nova'}).click();
+    await expect(question).toHaveValue('How does the number line help?');
+    await expect(panel.locator('.lesson-shell2__nova-notice'))
+      .toHaveText('Transcript added. Review it, then press Send.');
+    expect(requests).toHaveLength(2);
+    await panel.getByRole('button', {name: 'Send question to Nova'}).click();
     const voice = await waitForNovaRequest(requests, 3);
     expect(voice.message).toBe('How does the number line help?');
     expect(voice.mode).toBe('focus');
@@ -2093,28 +2096,19 @@ test.describe('prototype composition', () => {
     expect(await page.evaluate(() => document.documentElement.scrollWidth))
       .toBeLessThanOrEqual(await page.evaluate(() => document.documentElement.clientWidth + 1));
 
-    await attachTestImageFromPlus(panel);
-    await panel.locator('input[type="file"]').setInputFiles({
-      buffer: Buffer.from('not an image', 'utf8'),
-      mimeType: 'text/plain',
-      name: 'notes.txt',
-    });
-    await expect(panel).toHaveAttribute('data-tutor-frame-sharing', 'local-not-sent');
-    await expect(panel.locator('.lesson-shell2__nova-notice'))
-      .toContainText('Choose a PNG or JPEG image. Nothing was attached.');
+    await expect(panel.locator('input[type="file"]')).toHaveCount(0);
     await expect(panel.getByRole('button', {
-      name: 'Remove the image from the next question',
+      name: 'Attach current lesson frame',
+      exact: true,
+    })).toBeDisabled();
+    await expect(panel).toHaveAttribute(
+      'data-tutor-frame-sharing',
+      'current-frame-not-attached',
+    );
+    await expect(panel.getByRole('button', {
+      name: 'Remove the lesson frame from the next question',
       exact: true,
     })).toHaveCount(0);
-
-    await attachTestImageFromPlus(panel);
-    const remove = panel.getByRole('button', {
-      name: 'Remove the image from the next question',
-      exact: true,
-    });
-    await remove.click();
-    await expect(panel).toHaveAttribute('data-tutor-frame-sharing', 'local-not-sent');
-    await expect(remove).toHaveCount(0);
 
     await page.setViewportSize({width: 320, height: 720});
     const compact = await panel.evaluate((element) => {
@@ -2380,7 +2374,10 @@ test.describe('prototype composition', () => {
   });
 
   test('narrow Focus is a modal sheet with scrim, inert background, and trapped focus', async ({page}) => {
-    await openLesson(page, {width: 375, height: 812});
+    await installMockSpeechRecognition(page, 'A reviewed speech draft');
+    await openLesson(page, {width: 1920, height: 1080});
+    await goToPage34(page);
+    await page.setViewportSize({width: 375, height: 812});
     const launcher = page.getByRole('button', {name: 'Ask Nova', exact: true});
     await launcher.click();
 
@@ -2400,14 +2397,16 @@ test.describe('prototype composition', () => {
     );
     await expect(dialog.getByRole('button', {name: 'Close Nova'})).toBeFocused();
 
-    const lastControl = dialog.getByRole('button', {name: 'Ask Nova by voice'});
+    const lastControl = dialog.getByRole('button', {
+      name: 'Dictate a draft for Nova',
+    });
     await lastControl.focus();
     await page.keyboard.press('Tab');
     await expect(dialog.getByRole('button', {name: 'Close Nova'})).toBeFocused();
 
     const question = dialog.getByRole('textbox', {name: 'Type a question for Nova'});
     const attach = dialog.getByRole('button', {
-      name: 'Attach an image or take a photo',
+      name: 'Attach current lesson frame',
     });
     const send = dialog.getByRole('button', {name: 'Send question to Nova'});
     await question.fill('A local keyboard-order check');

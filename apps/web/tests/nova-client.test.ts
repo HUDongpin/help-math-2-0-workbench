@@ -49,6 +49,64 @@ describe('Nova client request boundaries', () => {
     ), false);
   });
 
+  it('preserves exact placement identity while preparing the current lesson frame', async () => {
+    const priorDocument = Object.getOwnPropertyDescriptor(globalThis, 'document');
+    const priorImage = Object.getOwnPropertyDescriptor(globalThis, 'Image');
+    class ReadyFrameImage {
+      decoding = 'async';
+      naturalHeight = 600;
+      naturalWidth = 800;
+      onerror: (() => void) | null = null;
+      onload: (() => void) | null = null;
+
+      set src(_value: string) {
+        queueMicrotask(() => this.onload?.());
+      }
+    }
+    Object.defineProperty(globalThis, 'Image', {
+      configurable: true,
+      value: ReadyFrameImage,
+    });
+    Object.defineProperty(globalThis, 'document', {
+      configurable: true,
+      value: {
+        createElement: () => ({
+          getContext: () => ({
+            drawImage: () => undefined,
+            fillRect: () => undefined,
+            fillStyle: '',
+          }),
+          height: 0,
+          toDataURL: () => 'data:image/jpeg;base64,AAAA',
+          width: 0,
+        }),
+      },
+    });
+
+    try {
+      assert.deepEqual(await prepareNovaFrame({
+        releaseId: 'lesson-g04-l03-negative-numbers',
+        animationId: 'course-g04-l03-rw-003',
+        globalPageOrdinal: 7,
+        dataUrl: 'data:image/png;base64,AAAA',
+        height: 600,
+        width: 800,
+      }), {
+        releaseId: 'lesson-g04-l03-negative-numbers',
+        animationId: 'course-g04-l03-rw-003',
+        globalPageOrdinal: 7,
+        dataUrl: 'data:image/jpeg;base64,AAAA',
+        height: 360,
+        width: 480,
+      });
+    } finally {
+      if (priorDocument) Object.defineProperty(globalThis, 'document', priorDocument);
+      else Reflect.deleteProperty(globalThis, 'document');
+      if (priorImage) Object.defineProperty(globalThis, 'Image', priorImage);
+      else Reflect.deleteProperty(globalThis, 'Image');
+    }
+  });
+
   it('fails closed when a browser refuses to draw an attached frame', async () => {
     const priorDocument = Object.getOwnPropertyDescriptor(globalThis, 'document');
     const priorImage = Object.getOwnPropertyDescriptor(globalThis, 'Image');
@@ -86,7 +144,9 @@ describe('Nova client request boundaries', () => {
 
     try {
       assert.equal(await prepareNovaFrame({
+        releaseId: 'lesson-g04-l03-negative-numbers',
         animationId: 'course-g04-l03-rw-003',
+        globalPageOrdinal: 7,
         dataUrl: 'data:image/png;base64,AAAA',
         height: 600,
         width: 800,
@@ -130,7 +190,9 @@ describe('Nova client request boundaries', () => {
 
     try {
       assert.equal(await prepareNovaFrame({
+        releaseId: 'lesson-g04-l03-negative-numbers',
         animationId: 'course-g04-l03-rw-003',
+        globalPageOrdinal: 7,
         dataUrl: 'data:image/jpeg;base64,AAAA',
         height: 13_000,
         width: 13_000,
@@ -144,7 +206,7 @@ describe('Nova client request boundaries', () => {
     }
   });
 
-  it('keeps one Nova conversation surface with a bounded native image picker', async () => {
+  it('keeps one Nova surface with explicit lesson-frame sharing and speech-to-draft', async () => {
     const [source, styles, client] = await Promise.all([
       readFile(new URL('../components/lesson-nova-tutor.tsx', import.meta.url), 'utf8'),
       readFile(new URL('../app/globals.css', import.meta.url), 'utf8'),
@@ -170,8 +232,13 @@ describe('Nova client request boundaries', () => {
     assert.doesNotMatch(source, /Read it|Leer de nuevo|Words in this lesson|Palabras de esta lección/);
     assert.doesNotMatch(source, /The conversation is not saved|La conversación no se guarda/);
     assert.match(source, /notice \|\| nova\.error[\s\S]*lesson-shell2__nova-notice/);
-    assert.match(source, /NOVA_LOCAL_IMAGE_MAX_BYTES = 8 \* 1024 \* 1024/);
-    assert.match(source, /accept="image\/png,image\/jpeg"/);
+    assert.match(source, /NOVA_COURSE_NOT_AVAILABLE/);
+    assert.match(source, /NOVA_FRAME_NOT_AVAILABLE/);
+    assert.match(source, /Nova is not available for this lesson/);
+    assert.match(source, /Nova no está disponible para esta lección/);
+    assert.match(source, /The current lesson frame cannot be shared/);
+    assert.match(source, /No se puede compartir el fotograma actual/);
+    assert.match(source, /response\.status === 429[\s\S]*NOVA_BUSY/);
     assert.match(source, /className="lesson-shell2__nova-attach"/);
     assert.match(source, /function PlusIcon/);
     assert.match(source, /<textarea[\s\S]*rows=\{5\}/);
@@ -179,16 +246,32 @@ describe('Nova client request boundaries', () => {
     assert.match(source, /Hola, soy el profesor Nova ✦, tu tutor de IA\./);
     assert.doesNotMatch(source, /A connection is not claimed until a real response is received/);
     assert.doesNotMatch(source, /No se afirma una conexión hasta recibir una respuesta real/);
-    assert.match(source, /Adjuntar una imagen o tomar una foto/);
-    assert.match(source, /Preguntar a Nova por voz/);
+    assert.match(source, /Attach current lesson frame/);
+    assert.match(source, /Adjuntar el fotograma actual de la lección/);
+    assert.match(source, /current-frame-not-attached/);
+    assert.doesNotMatch(source, /local-not-sent|Local frame|Fotograma local/);
+    assert.match(source, /releaseId: frame\.releaseId/);
+    assert.match(source, /globalPageOrdinal: frame\.globalPageOrdinal/);
+    assert.match(source, /enabled: capabilities\.speechToDraft/);
+    assert.match(source, /Transcript added\. Review it, then press Send\./);
+    assert.match(source, /setQuestion\(transcript\)/);
+    assert.match(source, /speech\.availability !== 'available'/);
+    assert.match(source, /Dictation is unavailable in this browser/);
+    assert.match(source, /aria-describedby=\{`\$\{instanceId\}-nova-speech-support`\}/);
+    assert.match(source, /aria-describedby=\{`\$\{inputId\}-classroom-speech-support`\}/);
+    assert.doesNotMatch(source, /onFinal|sendQuestion\(transcript\)/);
+    assert.ok(
+      [...source.matchAll(/void sendQuestion\(question\)/g)].length >= 2,
+      'Focus and Classroom must both retain an explicit submit path',
+    );
     assert.match(
       source,
       /className="lesson-shell2__nova-attach"[\s\S]*className="lesson-shell2__nova-mic"[\s\S]*className="lesson-shell2__nova-send"/,
     );
-    assert.match(source, /className="lesson-shell2__nova-file-input"[\s\S]*hidden/);
-    assert.match(source, /type="file"/);
-    assert.match(source, /event\.currentTarget\.value = ''/);
-    assert.doesNotMatch(source, /getUserMedia|mediaDevices|CameraIcon|lesson-shell2__nova-camera/);
+    assert.doesNotMatch(
+      source,
+      /type="file"|accept="image\/|readLocalImage|NOVA_LOCAL_IMAGE|getUserMedia|mediaDevices|CameraIcon|lesson-shell2__nova-camera/,
+    );
     assert.match(styles, /--lesson-nova-inline-space: clamp\(1\.25rem, 1\.8vw, 1\.75rem\)/);
     assert.match(styles, /--lesson-nova-panel-track: 27\.1875rem/);
     assert.match(styles, /\.lesson-shell2__nova-orbit-halo/);

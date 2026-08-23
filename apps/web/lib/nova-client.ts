@@ -162,7 +162,9 @@ export async function prepareNovaFrame(
       dataUrl.length <= NOVA_PREPARED_FRAME_DATA_URL_CHARACTERS
     ) {
       return Object.freeze({
+        releaseId: frame.releaseId,
         animationId: frame.animationId,
+        globalPageOrdinal: frame.globalPageOrdinal,
         dataUrl,
         width,
         height,

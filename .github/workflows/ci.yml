@@ -91,6 +91,9 @@ jobs:
       - name: Test site
         run: npm test
 
+      - name: Test Nova server invariants
+        run: npm run test:nova:server --workspace @helpmath/web
+
       - name: Build site
         run: npm run build
 
@@ -105,3 +108,6 @@ jobs:
 
       - name: Run modern-wide lesson and Nova acceptance tests
         run: npm run test:e2e:modern-wide --workspace @helpmath/web
+
+      - name: Run Nova full-stack fake-upstream tests
+        run: npm run test:e2e:nova-full-stack --workspace @helpmath/web

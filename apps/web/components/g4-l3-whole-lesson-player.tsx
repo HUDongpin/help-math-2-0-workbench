@@ -37,6 +37,10 @@ import {
   getG4L3SectionLabel,
   type G4L3Locale,
 } from '@/lib/g4-l3-lesson-navigation';
+import {
+  EMPTY_NOVA_CLIENT_CAPABILITIES,
+  type NovaClientCapabilities,
+} from '@/lib/nova-capabilities';
 import {G4_L3_PAGE_36_READABLE_VIEW_SPEC} from '@/lib/g4-l3-readable-view';
 import {G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR} from '@/lib/g4-l3-whole-lesson-player-descriptor';
 import {
@@ -88,7 +92,7 @@ const G4_L3_LEGACY_VISUAL_SKIN: LegacyLessonShellVisualSkin = Object.freeze({
     G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.visualSkin.evidence.sourceSwfSha256,
 });
 const G4_L3_REQUIRED_MEMBER_COUNT =
-  G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.expectedReleaseMemberCount;
+  G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.activePageCount;
 const G4_L3_RELEASE_MEMBER_IDS = Object.freeze(
   G4_L3_LESSON.pages.map(({animationId}) => animationId),
 );
@@ -142,6 +146,7 @@ export function G4L3WholeLessonPlayer({
   hostPresentation = 'legacy-composite',
   learningEventsEnabled = false,
   locale,
+  novaCapabilities = EMPTY_NOVA_CLIENT_CAPABILITIES,
   novaTutorMode = 'focus',
   releasePublished,
   reviewerMode = false,
@@ -152,6 +157,7 @@ export function G4L3WholeLessonPlayer({
   hostPresentation?: WholeLessonHostPresentation;
   learningEventsEnabled?: boolean;
   locale: G4L3Locale;
+  novaCapabilities?: NovaClientCapabilities;
   novaTutorMode?: NovaTutorMode;
   releasePublished: boolean;
   reviewerMode?: boolean;
@@ -847,21 +853,23 @@ export function G4L3WholeLessonPlayer({
   const currentSectionPosition = currentSectionPages.findIndex(
     (page) => page.animationId === currentPage.animationId,
   ) + 1;
-  const tutorContext = tutorPageContext({
-    releaseId: G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.releaseId,
-    grade: G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.grade,
-    lesson: G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.lesson,
-    animationId: currentPage.animationId,
-    sectionCode: currentPage.sectionCode,
-    sectionTitle: currentSectionLabel.text,
-    globalPageOrdinal: currentPage.globalPageOrdinal,
-    activePageCount: G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.activePageCount,
-    pageTitle: currentLabel.text,
-    pageTitleEnglish: currentPage.titleEnglish,
-    pageTitleSpanish: currentPage.titleSpanish,
-    locale: progress.language,
-    pageTitleUsesEnglishFallback: currentLabel.usesEnglishFallback,
-  });
+  const tutorContext = novaCapabilities.text
+    ? tutorPageContext({
+        releaseId: G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.releaseId,
+        grade: G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.grade,
+        lesson: G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.lesson,
+        animationId: currentPage.animationId,
+        sectionCode: currentPage.sectionCode,
+        sectionTitle: currentSectionLabel.text,
+        globalPageOrdinal: currentPage.globalPageOrdinal,
+        activePageCount: G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.activePageCount,
+        pageTitle: currentLabel.text,
+        pageTitleEnglish: currentPage.titleEnglish,
+        pageTitleSpanish: currentPage.titleSpanish,
+        locale: progress.language,
+        pageTitleUsesEnglishFallback: currentLabel.usesEnglishFallback,
+      })
+    : undefined;
   const pageHeading = <div>
     <p lang={currentSectionLabel.sourceLanguage}>
       {currentSectionLabel.text}
@@ -1096,6 +1104,7 @@ export function G4L3WholeLessonPlayer({
         totalPages: currentSectionPages.length,
       }}
       narrationStatus={playbackState.narration}
+      novaCapabilities={novaCapabilities}
       novaTutorMode={novaTutorMode}
       nextControlLabel={lessonFinished
         ? allPagesComplete

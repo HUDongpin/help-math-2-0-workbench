@@ -41,6 +41,10 @@ import {
   type NovaTutorModel,
 } from '@/lib/nova-provider-contract';
 import {
+  EMPTY_NOVA_CLIENT_CAPABILITIES,
+  type NovaClientCapabilities,
+} from '@/lib/nova-capabilities';
+import {
   wholeLessonContentPlane,
   type WholeLessonHostPresentation,
 } from '@/lib/whole-lesson-host-presentation';
@@ -643,6 +647,7 @@ export function LegacyResponsiveLessonShell({
   mapOpen,
   mapPanel,
   narrationStatus,
+  novaCapabilities = EMPTY_NOVA_CLIENT_CAPABILITIES,
   novaTutorMode: requestedNovaTutorMode = 'focus',
   nextControlLabel,
   nextDisabled,
@@ -711,6 +716,7 @@ export function LegacyResponsiveLessonShell({
   mapOpen: boolean;
   mapPanel: ReactNode;
   narrationStatus: AnimationRuntimeNarrationStatus;
+  novaCapabilities?: NovaClientCapabilities;
   novaTutorMode?: NovaTutorMode;
   nextControlLabel: string;
   nextDisabled: boolean;
@@ -800,9 +806,28 @@ export function LegacyResponsiveLessonShell({
     useState<NovaTutorMode | null>(null);
   const [confirmedTutorProvider, setConfirmedTutorProvider] =
     useState<NovaTutorModel | null>(null);
+  const tutorAnimationId = tutorContext?.animationId;
+  const tutorGlobalPageOrdinal = tutorContext?.globalPageOrdinal;
+  const tutorReleaseId = tutorContext?.releaseId;
+  const tutorFramePlacement = useMemo(() =>
+    tutorAnimationId && tutorGlobalPageOrdinal && tutorReleaseId
+    ? Object.freeze({
+        releaseId: tutorReleaseId,
+        animationId: tutorAnimationId,
+        globalPageOrdinal: tutorGlobalPageOrdinal,
+      })
+    : null, [
+      tutorAnimationId,
+      tutorGlobalPageOrdinal,
+      tutorReleaseId,
+    ]);
   const activeTutorSnapshot =
-    tutorSnapshotMode === novaTutorMode &&
-      tutorSnapshot?.animationId === currentAnimationId
+    novaCapabilities.currentLessonFrame &&
+      tutorSnapshotMode === novaTutorMode &&
+      tutorFramePlacement &&
+      tutorSnapshot?.releaseId === tutorFramePlacement.releaseId &&
+      tutorSnapshot.globalPageOrdinal === tutorFramePlacement.globalPageOrdinal &&
+      tutorSnapshot.animationId === tutorFramePlacement.animationId
     ? tutorSnapshot
     : null;
   const stageOverlayOpen = Boolean(stageOverlay) || exitPromptOpen;
@@ -880,7 +905,7 @@ export function LegacyResponsiveLessonShell({
   // fully opaque, so nothing drawn beneath it is visible in the legacy
   // presentation either.
   const modernWide = visualSkin.presentation === 'modern-wide';
-  const tutorAvailable = modernWide && Boolean(tutorContext);
+  const tutorAvailable = modernWide && novaCapabilities.text && Boolean(tutorContext);
   const tutorOpenForMode = tutorOpen &&
     tutorOpenMode === novaTutorMode;
   const studySupportOpenForMode = studySupportOpen &&
@@ -1088,7 +1113,11 @@ export function LegacyResponsiveLessonShell({
   };
 
   useEffect(() => {
-    if (!tutorSurfaceVisible) return;
+    if (
+      !tutorSurfaceVisible ||
+      !novaCapabilities.currentLessonFrame ||
+      !tutorFramePlacement
+    ) return;
     let cancelled = false;
     let captureTimeout = 0;
     let capturedAtLeastOnce = false;
@@ -1102,7 +1131,7 @@ export function LegacyResponsiveLessonShell({
       if (cancelled) return;
       const nextSnapshot = await tutorStageFrameSnapshot(
         legacyStageRef.current,
-        currentAnimationId,
+        tutorFramePlacement,
         modernWide
           ? {
               left: 0,
@@ -1117,7 +1146,9 @@ export function LegacyResponsiveLessonShell({
         capturedAtLeastOnce = true;
         setTutorSnapshotMode(novaTutorMode);
         setTutorSnapshot((currentSnapshot) =>
-          currentSnapshot?.animationId === nextSnapshot.animationId &&
+          currentSnapshot?.releaseId === nextSnapshot.releaseId &&
+          currentSnapshot.globalPageOrdinal === nextSnapshot.globalPageOrdinal &&
+          currentSnapshot.animationId === nextSnapshot.animationId &&
           currentSnapshot.dataUrl === nextSnapshot.dataUrl
             ? currentSnapshot
             : nextSnapshot
@@ -1144,9 +1175,10 @@ export function LegacyResponsiveLessonShell({
     };
   }, [
     contentPlane,
-    currentAnimationId,
     modernWide,
+    novaCapabilities.currentLessonFrame,
     novaTutorMode,
+    tutorFramePlacement,
     tutorSnapshotRevision,
     tutorSurfaceVisible,
   ]);
@@ -3120,7 +3152,7 @@ export function LegacyResponsiveLessonShell({
               />}
           {modernWide ? replayControl : null}
           {volumeControl}
-          {modernWide && tutorContext
+          {tutorAvailable && tutorContext
             ? <button
                 aria-controls={tutorPanelId}
                 aria-expanded={tutorVisible}
@@ -3298,10 +3330,11 @@ export function LegacyResponsiveLessonShell({
               type="button"
             />
             <LessonNovaTutor
+              capabilities={novaCapabilities}
               context={tutorContext}
               frameSnapshot={activeTutorSnapshot}
               id={tutorPanelId}
-              key={`${novaTutorMode}:${currentAnimationId}`}
+              key={`${novaTutorMode}:${tutorContext.releaseId}:${tutorContext.globalPageOrdinal}:${tutorContext.animationId}`}
               locale={locale}
               modal={tutorPanelModal}
               onClose={closeTutor}
@@ -3313,9 +3346,11 @@ export function LegacyResponsiveLessonShell({
 
       {classroomBandVisible && tutorContext
         ? <LessonNovaClassroomBand
+            capabilities={novaCapabilities}
             context={tutorContext}
             frameSnapshot={activeTutorSnapshot}
             id={tutorPanelId}
+            key={`${novaTutorMode}:${tutorContext.releaseId}:${tutorContext.globalPageOrdinal}:${tutorContext.animationId}`}
             locale={locale}
             onClose={closeTutor}
             onProviderConfirmed={setConfirmedTutorProvider}

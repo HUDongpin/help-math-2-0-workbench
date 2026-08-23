@@ -3,6 +3,10 @@ import test from 'node:test';
 
 import {G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR} from '../lib/g4-l3-whole-lesson-player-descriptor';
 import {
+  G4_L3_PAGE_ONLY_COURSE_DESCRIPTOR,
+  G5_L4_PAGE_ONLY_COURSE_DESCRIPTOR,
+} from '../lib/g4-l3-g5-l4-page-only-course-descriptors.server';
+import {
   G4_L5_PAGE_ONLY_COURSE_DESCRIPTOR,
   G4_L10_PAGE_ONLY_COURSE_DESCRIPTOR,
   G4_L11_PAGE_ONLY_COURSE_DESCRIPTOR,
@@ -121,16 +125,20 @@ test('course registry owns all eight page-complete My Lesson bindings', () => {
 
   const g4 = findWholeLessonCourseRegistration(4, 3);
   assert.ok(g4);
-  assert.equal(g4.descriptor, G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR);
+  assert.equal(g4.descriptor, G4_L3_PAGE_ONLY_COURSE_DESCRIPTOR);
+  assert.equal(g4.descriptor.schemaVersion, 2);
+  assert.equal(g4.descriptor.course.courseShellCount, 0);
   assert.deepEqual(g4.player, {
     kind: 'preserved-custom',
     component: 'g4-l3-whole-lesson-player',
-    descriptorId: 'whole-lesson-player-g04-l03-v1',
+    descriptorId: 'g4-l3-formal-page-only-course-v1',
   });
 
   const g5 = findWholeLessonCourseRegistration('5', '04');
   assert.ok(g5);
-  assert.equal(g5.descriptor, G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR);
+  assert.equal(g5.descriptor, G5_L4_PAGE_ONLY_COURSE_DESCRIPTOR);
+  assert.equal(g5.descriptor.schemaVersion, 2);
+  assert.equal(g5.descriptor.course.courseShellCount, 0);
   assert.deepEqual(g5.player, {kind: 'descriptor-driven'});
   assert.equal(
     findWholeLessonCourseRegistration(3, 2)?.descriptor,
@@ -161,7 +169,8 @@ test('course registry owns all eight page-complete My Lesson bindings', () => {
 });
 
 test('registration validation fails closed on descriptor and preserved-player drift', () => {
-  const descriptor = G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR;
+  const descriptor = G4_L3_PAGE_ONLY_COURSE_DESCRIPTOR;
+  assert.ok(descriptor);
 
   assert.equal(
     buildWholeLessonCourseRegistration({
@@ -189,7 +198,7 @@ test('registration validation fails closed on descriptor and preserved-player dr
       player: {
         kind: 'preserved-custom',
         component: 'g4-l3-whole-lesson-player',
-        descriptorId: 'whole-lesson-player-g04-l03-v1',
+        descriptorId: 'g4-l3-formal-page-only-course-v1',
       },
     }),
     undefined,

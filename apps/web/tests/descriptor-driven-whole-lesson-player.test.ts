@@ -83,7 +83,10 @@ test('descriptor-driven player never mounts or prefetches unavailable renderers'
     /const shellSections: LessonShellSection\[\] = descriptor\.sections\.map/,
   );
   assert.match(component, /sections=\{shellSections\}/);
-  assert.match(component, /const tutorContext = tutorPageContext\(\{/);
+  assert.match(
+    component,
+    /const tutorContext = novaCapabilities\.text\s*\? tutorPageContext\(\{/,
+  );
   assert.match(component, /novaTutorMode=\{novaTutorMode\}/);
   assert.match(component, /tutorContext=\{tutorContext\}/);
   assert.match(
@@ -93,7 +96,7 @@ test('descriptor-driven player never mounts or prefetches unavailable renderers'
   );
   assert.match(
     shell,
-    /const tutorAvailable = modernWide && Boolean\(tutorContext\)/,
+    /const tutorAvailable = modernWide && novaCapabilities\.text && Boolean\(tutorContext\)/,
   );
   assert.doesNotMatch(shell, /data-learning-mode-switch="three-mode"/);
   assert.match(shell, /data-mode-switch-available="false"/);
@@ -430,8 +433,8 @@ test('registered whole-lesson routes preserve cross-binding and publication gate
     2,
     'both whole-lesson adapters must receive the fixed Focus Nova mode',
   );
-  assert.match(registry, /G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR/);
-  assert.match(registry, /G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR/);
+  assert.match(registry, /G4_L3_PAGE_ONLY_COURSE_DESCRIPTOR/);
+  assert.match(registry, /G5_L4_PAGE_ONLY_COURSE_DESCRIPTOR/);
 });
 
 test('the descriptor-driven player forwards the header title band to the shell', async () => {

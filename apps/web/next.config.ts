@@ -31,6 +31,17 @@ const clerkSyntheticBuild =
     === CLERK_SYNTHETIC_DIST_DIR_AUTHORIZATION
   && process.env.NODE_ENV === 'development'
   && process.env.VERCEL_ENV === undefined;
+const currentJsCandidateQaBuild =
+  process.env.HELP_MATH_CURRENT_JS_CANDIDATE_QA
+    === 'current-js-candidate-profile-v1'
+  && process.env.CURRENT_JS_CANDIDATE_PROFILE_ENABLED === 'true'
+  && process.env.NODE_ENV === 'development'
+  && process.env.VERCEL_ENV === undefined;
+const novaFullStackFakeTransportRequested = [
+  process.env.NOVA_TEST_FAKE_TRANSPORT_AUTHORIZATION,
+  process.env.NOVA_TEST_FAKE_TRANSPORT_ORIGIN,
+  process.env.NOVA_TEST_FAKE_TRANSPORT_RECEIPT_PATH,
+].some((value) => value !== undefined);
 const localClerkAuthBuild = isClerkLocalAuthConfigurationReady(process.env);
 const localClerkScriptSources = localClerkAuthBuild
   ? ' https://*.clerk.accounts.dev https://*.clerk.com https://*.protect.clerk.com'
@@ -47,6 +58,14 @@ const localClerkFrameSources = localClerkAuthBuild
 if (g4L3WholeLessonPackageBuild && g5L4WholeLessonPackageBuild) {
   throw new Error(
     'G4 L3 and G5 L4 standalone package builds are mutually exclusive.',
+  );
+}
+if (
+  process.env.NODE_ENV === 'production' &&
+  novaFullStackFakeTransportRequested
+) {
+  throw new Error(
+    'Nova full-stack fake transport is forbidden in production builds.',
   );
 }
 if (
@@ -184,6 +203,8 @@ const nextConfig: NextConfig = {
   devIndicators: false,
   distDir: clerkSyntheticBuild
     ? CLERK_SYNTHETIC_DIST_DIR
+    : currentJsCandidateQaBuild
+      ? '.next-current-js-candidate-qa'
     : localReferenceDiagnosticBuild
       ? '.next-local-reference-diagnostic'
       : wholeLessonPackageBuild
