@@ -1,0 +1,229 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "page-only-autonomous-linked-worktree-resolver-repair-receipt",
+  "taskId": "HELP-MATH-PAGE-ONLY-AUTONOMOUS-LINKED-WORKTREE-RESOLVER-REPAIR-20260824",
+  "status": "POSTCOMMIT_GO_EXACT_2_PATH_RESOLVER_REPAIR",
+  "recordedAtUtc": "2026-08-24T14:30:00Z",
+  "scope": {
+    "purpose": "Make bare local-workspace imports resolve from the exact current linked worktree before Node can follow an ancestor checkout workspace link.",
+    "localWorkspacePrecedenceOnly": true,
+    "sharedThirdPartyDependenciesRemainLockBound": true,
+    "outsideCurrentWorktreeOrSharedNodeModulesFailsClosed": true,
+    "linkedWorktreeToolingResolutionBehaviorChanged": true,
+    "deployedLearnerRuntimeChanged": false,
+    "rendererOrLessonChanged": false,
+    "legacyFlashCourseShellImplementationCount": 0
+  },
+  "git": {
+    "worktree": "/Volumes/WestWorld/HELP MATH 2.0/work/page-only-autonomous-integration",
+    "branch": "codex/help-math-page-only-autonomous-20260824",
+    "subjectCommit": "fb0941178039bd6e1c58fff4151dfa7e4d7ed6e4",
+    "subjectParent": "134f05dbafd2bd5ded0687d69ae6577db3f076a6",
+    "subjectTree": "3c0cf5e88b855015f77f1c6c54316d158371fcca",
+    "subject": "Fix linked-worktree workspace resolution",
+    "cleanImmediatelyAfterSubjectCommitBeforeReceiptCreation": true,
+    "worktreeAtReceiptReview": "exactly one untracked receipt path",
+    "changedPathProjection": {
+      "serialization": "git diff --name-only -z HEAD^ HEAD in Git C-locale order",
+      "pathCount": 2,
+      "bytes": 105,
+      "sha256": "ee1cabc30ce3326b347f61535140cf38d67a01adb44c980cd57950bc8a7a3a0d",
+      "missingPaths": [],
+      "extraPaths": [],
+      "paths": [
+        "scripts/register-worktree-shared-dependencies.mjs",
+        "scripts/register-worktree-shared-dependencies.test.mjs"
+      ]
+    },
+    "files": [
+      {
+        "path": "scripts/register-worktree-shared-dependencies.mjs",
+        "gitMode": "100644",
+        "gitBlob": "045c7b36fbb91a4729a2417de85cafbf43cee85b",
+        "sha256": "698a68e6a3f0bad78d4eab29c72b0548faa70dea7b9c89394cbb98b24542d8fb"
+      },
+      {
+        "path": "scripts/register-worktree-shared-dependencies.test.mjs",
+        "gitMode": "100644",
+        "gitBlob": "c23af6853ebd6e53ee602f722751a8b16312c563",
+        "sha256": "0b1ba8a8d659e44d230e940b0a89aa3ddcb80cf3fa04b1ea62c3bb7a09939029"
+      }
+    ],
+    "diffCheck": "PASS"
+  },
+  "rootCause": {
+    "symptomBeforeRepair": "The G4 L9 private product-bridge descriptor saw the dirty ancestor checkout's @helpmath/demos registry and failed 2 of 3 tests even though the subject worktree contained the correct registry.",
+    "mechanismBeforeRepair": "The resolve hook called nextResolve first and consulted the exact current-worktree workspace map only after ERR_MODULE_NOT_FOUND. Because this worktree is nested below another checkout with an installed workspace link, Node found that ancestor link and never threw.",
+    "classification": "linked-worktree dependency isolation defect",
+    "occurrence29BehaviorFailure": false,
+    "sourceOrRendererFailure": false
+  },
+  "repairContract": {
+    "bareSpecifierDetection": true,
+    "currentWorktreeWorkspaceMapRunsBeforeNextResolve": true,
+    "nonBareSpecifiersUseNodeResolution": true,
+    "nodeBuiltinsRemainAllowed": true,
+    "sharedDependencyFallbackUsesSharedAnchor": true,
+    "sharedDependencyLockIdentityRequired": true,
+    "workspaceLinksFromAnotherCheckoutRefused": true,
+    "unexportedWorkspaceSubpathsRefused": true,
+    "workspaceExportEscapesRefused": true,
+    "unexpectedExternalFileResolutionRefused": true
+  },
+  "postCommitIndependentController": {
+    "decision": "POSTCOMMIT_GO_EXACT_2_PATH_RESOLVER_REPAIR",
+    "writeActionsPerformedByController": false,
+    "identity": "PASS",
+    "cleanWorktree": "PASS",
+    "exactPathAllowlist": "PASS",
+    "diffCheck": "PASS",
+    "resolverTests": {
+      "passed": 8,
+      "total": 8
+    },
+    "resolutionIdentity": {
+      "workspaceSpecifier": "@helpmath/demos/animation-registry",
+      "workspaceUrl": "file:///Volumes/WestWorld/HELP%20MATH%202.0/work/page-only-autonomous-integration/packages/demos/src/animation-registry.ts",
+      "workspaceIsExactCurrentWorktree": true,
+      "sharedThirdPartySpecifier": "tsx",
+      "sharedThirdPartyUrl": "file:///Volumes/WestWorld/HELP%20MATH%202.0/node_modules/tsx/dist/loader.mjs",
+      "builtinSpecifier": "fs",
+      "builtinUrl": "node:fs"
+    },
+    "focusedRegression": {
+      "g4L9ProductBridgeDescriptor": {
+        "passed": 3,
+        "total": 3
+      },
+      "g4L5ProductBridge": {
+        "passed": 4,
+        "total": 4
+      }
+    }
+  },
+  "preCommitGateEvidence": {
+    "p5_1GeneratorAndFinalReceiptCurrentness": {
+      "status": "PASS"
+    },
+    "p5_1GeneratorTests": {
+      "passed": 4,
+      "total": 4
+    },
+    "p5_1FocusedBehaviorReplayAndAudioTests": {
+      "passed": 6,
+      "total": 6
+    },
+    "formalPageOnlyBaseline": {
+      "status": "PASS",
+      "scopeDenominator": 1751,
+      "registeredPageOccurrences": 426,
+      "uniqueRenderers": 425,
+      "registeredLessons": 8,
+      "schemaVersion": 2,
+      "courseShellCount": 0
+    },
+    "pageOnlyControlLedgerCurrentness": "PASS",
+    "sourceCustodyVerifier": "PASS",
+    "assetProfiles": {
+      "full": {
+        "passed": 15,
+        "total": 15
+      },
+      "deployment": {
+        "passed": 6,
+        "total": 6
+      },
+      "candidate": {
+        "passed": 9,
+        "total": 9
+      }
+    },
+    "demosTypecheck": "PASS",
+    "webTypecheck": "PASS",
+    "productionWebBuild": "PASS",
+    "workbenchVerifier": "PASS"
+  },
+  "broadSuiteBaseline": {
+    "allGreenClaimed": false,
+    "focusedResolverRepairRegressionDetected": false,
+    "broadFailureCausalityEstablished": false,
+    "parentComparisonOrBoundLogAvailable": false,
+    "demos": {
+      "passed": 739,
+      "failed": 5,
+      "total": 744,
+      "g4L9Failures": 0,
+      "observedFailures": [
+        "G3 L8 RE01 baseline PNG absent from the integration artifact set.",
+        "G4 L1 IR001 baseline PNG absent from the integration artifact set.",
+        "G4 L3 IR001 audio count is 420 while the stale expectation is 292.",
+        "G4 L3 TS006 embedded audio file is absent.",
+        "G4 L3 main-timeline audio count is 420 while the stale expectation is 292."
+      ],
+      "causalityDisposition": "Observed during the resolver-repair review, but no parent-run comparison or hash-bound log was retained; this receipt does not label them as predating the repair."
+    },
+    "web": {
+      "passed": 420,
+      "failed": 3,
+      "total": 423,
+      "g4L9ProductBridgeDescriptorPassed": 3,
+      "observedFailures": [
+        {
+          "testPath": "apps/web/tests/clerk-synthetic-otp.test.ts",
+          "testName": "pinned Playwright internal zones suppress channel instrumentation",
+          "observed": "ENOENT for worktree-local node_modules/playwright-core/lib/coreBundle.js while exact-lock shared dependency mode is active.",
+          "classification": "shared-mode fixture-path incompatibility"
+        },
+        {
+          "testPath": "apps/web/tests/g4-course-catalog-coverage.test.ts",
+          "testName": "Grade 4 catalog coverage records the reviewed active-source promotion without expanding acceptance",
+          "observed": "Correct subject-local registry resolution produces currentJsPageCount 198, missingCurrentJsPageCount 447, currentJsMemberCount 200, and missingCurrentJsMemberCount 457; the test expects 183, 462, 185, and 472.",
+          "classification": "downstream stale assertion surfaced by correct subject-local resolver",
+          "surfacedByCorrectSubjectLocalResolution": true
+        },
+        {
+          "testPath": "apps/web/tests/g4-course-catalog-coverage.test.ts",
+          "testName": "registry changes update coverage counts without fabricating source or acceptance",
+          "observed": "After removing one renderer, correct subject-local registry resolution produces currentJsPageCount 197 while the test expects 182.",
+          "classification": "downstream stale assertion surfaced by correct subject-local resolver",
+          "surfacedByCorrectSubjectLocalResolution": true
+        }
+      ]
+    },
+    "disposition": "The three web failures and five demos failures remain observed, unbound broad-suite debt and prevent any whole-repository-green claim. The two G4 coverage failures are a downstream consequence of seeing the correct current registry and require a separate test-currentness decision. The Clerk fixture failure requires a separate shared-mode path decision. None changes the focused 8/8 resolver, exact resolution identity, G4 L9 3/3, or G4 L5 4/4 result accepted for this exact two-path commit."
+  },
+  "executionBoundary": {
+    "linkedWorktreeCommandsMustLoadBootstrap": "node --import ./scripts/register-worktree-shared-dependencies.mjs ...",
+    "receiptVerifiedResolverAndDescriptorCommandsLoadedBootstrap": true,
+    "allPackageAndWorkspaceScriptsExplicitlyLoadBootstrap": false,
+    "unverifiedDirectScriptFormsRemain": [
+      "root scripts that invoke node_modules/.bin/tsx directly",
+      "apps/web scripts that invoke tsx or next directly",
+      "packages/demos scripts that invoke tsx directly"
+    ],
+    "plainNpxFromThisNestedWorktreeIsNotAcceptedAsSubjectLocalResolutionEvidence": true,
+    "cleanCiWithNpmCiUsesRealLocalNodeModulesAndDisablesSharedMode": true
+  },
+  "migrationStateUnaffected": {
+    "g4L9PrivateAdmittedOccurrences": 16,
+    "g4L9RemainingOccurrences": 27,
+    "g4L9FormalRegisteredOccurrences": 0,
+    "globalFormalRegisteredPageOccurrences": 426,
+    "strictComplete": 0,
+    "releaseOrPublicationChanged": false,
+    "deploymentChanged": false
+  },
+  "authorizationBoundary": {
+    "occurrence20Authorized": false,
+    "f08FamilyScaleOutAuthorized": false,
+    "remaining27BulkAuthorized": false,
+    "wholeLesson43PageScaleOutAuthorized": false,
+    "p6Authorized": false,
+    "formalRegistrationAuthorized": false,
+    "strictCompletionAuthorized": false,
+    "releaseAuthorized": false,
+    "publicationAuthorized": false,
+    "productionDeploymentAuthorized": false,
+    "nextSingleTask": "Independent P5.1 Phase-B Controller rerun on clean resolver-repair commit fb0941178039bd6e1c58fff4151dfa7e4d7ed6e4, including browser visual and network receipt review."
+  }
+}
