@@ -1,10 +1,11 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { deflateSync } from "node:zlib";
-import { chmod, link, mkdtemp, mkdir, readFile, realpath, rm, symlink, writeFile } from "node:fs/promises";
+import { chmod, link, lstat, mkdtemp, mkdir, readFile, realpath, rm, symlink, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
 import {
   assertLessonReleaseInvariants,
@@ -300,6 +301,322 @@ test("loads only a hash-bound, real, single-link current-source profile", async 
   }
 });
 
+test("binds the current G5 L4 FQ source profile to the approved historical source-only transaction", async () => {
+  const projectRoot = fileURLToPath(new URL("..", import.meta.url));
+  const receiptPath = path.join(
+    projectRoot,
+    "catalog/source-promotions/g5-l4-fq-audio-source-profile-reconciliation-v1.json",
+  );
+  const reviewPath = path.join(
+    projectRoot,
+    "catalog/source-promotions/g5-l4-fq-audio-promotion-review-v1.json",
+  );
+  const sourceRoot = path.join(
+    projectRoot,
+    "source-assets/flash/HELP MATH_ORIGINAL FILES",
+  );
+  const [receiptBytes, reviewBytes] = await Promise.all([
+    readFile(receiptPath),
+    readFile(reviewPath),
+  ]);
+  const receipt = JSON.parse(receiptBytes);
+  const review = JSON.parse(reviewBytes);
+
+  assert.equal(receipt.schemaVersion, 1);
+  assert.equal(receipt.artifactType, "g5-l4-fq-audio-source-profile-reconciliation");
+  assert.equal(receipt.status, "verified-current-branch-source-custody-reconciliation");
+  assert.deepEqual(receipt.observedCanonicalSource, {
+    fileCount: 9244,
+    totalBytes: 3219753760,
+    checksumSetSha256: "10173f6dd19e934901a1188ba45d8e22423dbac3212b8f2560e90e2fd536bfcc",
+    manifestSha256: "aee72ac1f1c0d0d28f07d36186fb2b049ca0f64a130b61f6a1a3a8a99c5a2fad",
+    currentSourceProfilePath: "catalog/current-source-profile.json",
+    currentSourceProfileBytes: 2084,
+    currentSourceProfileSha256: "a7d8a1bbfd8105a408b8bc2f56c109f4a07f560b42d6964d5577138c86b83caf",
+  });
+  assert.equal(receipt.historicalTransaction.decision.sha256,
+    "de481d6a6ceec4759bf2c4cf7f224a9c12385fb552ac1c3599165a015baa3b32");
+  assert.equal(receipt.historicalTransaction.appliedReceipt.sha256,
+    "7626e32dd38b04e29c4440afe640367d308a0b17e5079e32790ed702dcfa7595");
+  assert.equal(receipt.recordBinding.recordCount, 97);
+  assert.equal(receipt.recordBinding.totalBytes, 5168346);
+  assert.equal(receipt.recordBinding.appliedReceiptRecordSetSha256,
+    "0fece5539ee8379781bca32cc77206ce5972c430e1b0d4eb454ce2d37672282f");
+  assert.equal(createHash("sha256").update(reviewBytes).digest("hex"),
+    receipt.recordBinding.currentReviewArtifactSha256);
+
+  const records = review.records
+    .map(({id, language, canonicalPath, bytes, sha256}) => ({
+      id,
+      language,
+      canonicalPath,
+      bytes,
+      sha256,
+    }))
+    .sort((left, right) => left.canonicalPath < right.canonicalPath
+      ? -1
+      : left.canonicalPath > right.canonicalPath ? 1 : 0);
+  assert.equal(records.length, 97);
+  assert.equal(records.reduce((sum, record) => sum + record.bytes, 0), 5168346);
+  assert.equal(createHash("sha256").update(JSON.stringify(records)).digest("hex"),
+    receipt.recordBinding.currentPhysicalObservationRecordSetSha256);
+  for (const record of records) {
+    const sourcePath = path.join(sourceRoot, ...record.canonicalPath.split("/"));
+    const [bytes, information] = await Promise.all([readFile(sourcePath), lstat(sourcePath)]);
+    assert.equal(information.isFile(), true, record.canonicalPath);
+    assert.equal(information.isSymbolicLink(), false, record.canonicalPath);
+    assert.equal(information.mode & 0o222, 0, record.canonicalPath);
+    assert.equal(bytes.length, record.bytes, record.canonicalPath);
+    assert.equal(createHash("sha256").update(bytes).digest("hex"), record.sha256,
+      record.canonicalPath);
+  }
+  assert.equal(receipt.acceptanceEffect.canonicalSourcePromoted, true);
+  assert.ok(Object.entries(receipt.acceptanceEffect)
+    .filter(([key]) => key !== "canonicalSourcePromoted")
+    .every(([, value]) => value === false));
+});
+
+test("binds the canonical G5 L3 source promotion to the reviewed 43-file copy set", async () => {
+  const projectRoot = fileURLToPath(new URL("..", import.meta.url));
+  const promotionRoot = path.join(projectRoot, "catalog/source-promotions");
+  const sourceRoot = path.join(
+    projectRoot,
+    "source-assets/flash/HELP MATH_ORIGINAL FILES",
+  );
+  const [receiptBytes, successorBytes, planBytes] = await Promise.all([
+    readFile(path.join(
+      promotionRoot,
+      "g5-l3-active-source-promotion-main-applied-v1.json",
+    )),
+    readFile(path.join(
+      promotionRoot,
+      "g5-l3-active-source-promotion-main-successor-v1.json",
+    )),
+    readFile(path.join(
+      promotionRoot,
+      "g5-l3-active-source-promotion-2026-08-21.json",
+    )),
+  ]);
+  const receipt = JSON.parse(receiptBytes);
+  const successor = JSON.parse(successorBytes);
+  const plan = JSON.parse(planBytes);
+
+  assert.equal(
+    receipt.artifactType,
+    "help-math-g5-l3-main-source-promotion-applied-receipt",
+  );
+  assert.deepEqual(receipt.scope, {grade: 5, lesson: 3, pageOnly: true});
+  assert.equal(receipt.canonicalBoundary.canonicalProjectWideSourcePromoted, true);
+  assert.equal(receipt.canonicalBoundary.mainCheckoutModified, true);
+  assert.equal(receipt.canonicalBoundary.legacyFlashCourseShellExcluded, true);
+  assert.equal(
+    createHash("sha256").update(planBytes).digest("hex"),
+    receipt.plan.sha256,
+  );
+  assert.equal(
+    createHash("sha256").update(successorBytes).digest("hex"),
+    receipt.currentnessSuccessor.sha256,
+  );
+  assert.equal(successor.mode, "plan-only-no-source-mutation");
+  assert.equal(successor.transaction.copyTransactionReady, true);
+  assert.equal(successor.transaction.copyTransactionConflictCount, 0);
+  assert.equal(successor.transaction.allPreReviewHoldsResolved, true);
+  assert.deepEqual(receipt.copied, {
+    copiedFileCount: 43,
+    copiedBytes: 51396667,
+  });
+  assert.deepEqual(receipt.postchecks.freeze, {
+    fileCount: 9287,
+    totalBytes: 3271150427,
+    manifestSha256: "2bc7bf524436cc21616648bac9b5d3596db862be22be43929708f9433a5897c7",
+    readOnlyEnforced: true,
+    writableEntriesAfterFreeze: 0,
+  });
+  assert.equal(
+    receipt.postchecks.source.checksumSetSha256,
+    "c916317555e7e5f5aa667b8b200b081d8ee91fd436957673bc0b41711984b247",
+  );
+  assert.equal(receipt.postchecks.promotedMissingReferences, 0);
+
+  const records = [...plan.copyRecords].sort((left, right) =>
+    left.canonicalPath < right.canonicalPath
+      ? -1
+      : left.canonicalPath > right.canonicalPath ? 1 : 0);
+  assert.equal(records.length, 43);
+  assert.equal(records.filter(({sourceType}) => sourceType === "active-page-swf").length, 24);
+  assert.equal(records.filter(({sourceType}) => sourceType === "same-path-fla").length, 19);
+  assert.equal(records.reduce((sum, record) => sum + record.bytes, 0), 51396667);
+  const recordSet = records
+    .map(({canonicalPath, bytes, sha256}) =>
+      `${canonicalPath}\t${bytes}\t${sha256}\n`)
+    .join("");
+  assert.equal(
+    createHash("sha256").update(recordSet).digest("hex"),
+    receipt.plan.copyRecordSetSha256,
+  );
+  for (const record of records) {
+    const sourcePath = path.join(sourceRoot, ...record.canonicalPath.split("/"));
+    const [bytes, information] = await Promise.all([readFile(sourcePath), lstat(sourcePath)]);
+    assert.equal(information.isFile(), true, record.canonicalPath);
+    assert.equal(information.isSymbolicLink(), false, record.canonicalPath);
+    assert.equal(information.mode & 0o222, 0, record.canonicalPath);
+    assert.equal(bytes.length, record.bytes, record.canonicalPath);
+    assert.equal(
+      createHash("sha256").update(bytes).digest("hex"),
+      record.sha256,
+      record.canonicalPath,
+    );
+  }
+  assert.equal(receipt.acceptanceEffects.canonicalProjectWideSourcePromotion, true);
+  assert.ok(Object.entries(receipt.acceptanceEffects)
+    .filter(([key]) => key !== "canonicalProjectWideSourcePromotion")
+    .every(([, value]) => value === false));
+});
+
+test("binds the canonical G5 L2 source promotion to its exact two-page gap", async () => {
+  const projectRoot = fileURLToPath(new URL("..", import.meta.url));
+  const promotionRoot = path.join(projectRoot, "catalog/source-promotions");
+  const sourceRoot = path.join(
+    projectRoot,
+    "source-assets/flash/HELP MATH_ORIGINAL FILES",
+  );
+  const [receiptBytes, planBytes] = await Promise.all([
+    readFile(path.join(
+      promotionRoot,
+      "g5-l2-active-source-promotion-main-applied-v1.json",
+    )),
+    readFile(path.join(promotionRoot, "g5-l2-active-source-promotion-v1.json")),
+  ]);
+  const receipt = JSON.parse(receiptBytes);
+  const plan = JSON.parse(planBytes);
+  assert.equal(
+    receipt.artifactType,
+    "help-math-g5-l2-main-source-promotion-applied-receipt",
+  );
+  assert.deepEqual(receipt.scope, {grade: 5, lesson: 2, pageOnly: true});
+  assert.equal(createHash("sha256").update(planBytes).digest("hex"), receipt.plan.sha256);
+  assert.deepEqual(receipt.copied, {copiedFileCount: 3, copiedBytes: 6631132});
+  assert.equal(receipt.postchecks.freeze.fileCount, 9290);
+  assert.equal(receipt.postchecks.freeze.totalBytes, 3277781559);
+  assert.equal(
+    receipt.postchecks.freeze.manifestSha256,
+    "b98ce8fbf09860f19f96f57f99834fea1486d58d2cc7b578e06e99ecce775162",
+  );
+  assert.equal(receipt.postchecks.freeze.writableEntriesAfterFreeze, 0);
+  assert.equal(receipt.postchecks.promotedMissingReferences, 0);
+  assert.equal(plan.copyRecords.length, 3);
+  assert.equal(plan.copyRecords.filter(({sourceType}) =>
+    sourceType === "active-page-swf").length, 2);
+  assert.equal(plan.copyRecords.filter(({sourceType}) =>
+    sourceType === "same-path-fla").length, 1);
+  for (const record of plan.copyRecords) {
+    const sourcePath = path.join(sourceRoot, ...record.canonicalPath.split("/"));
+    const [bytes, information] = await Promise.all([readFile(sourcePath), lstat(sourcePath)]);
+    assert.equal(information.isFile(), true, record.canonicalPath);
+    assert.equal(information.isSymbolicLink(), false, record.canonicalPath);
+    assert.equal(information.mode & 0o222, 0, record.canonicalPath);
+    assert.equal(bytes.length, record.bytes, record.canonicalPath);
+    assert.equal(createHash("sha256").update(bytes).digest("hex"), record.sha256,
+      record.canonicalPath);
+  }
+  assert.equal(receipt.acceptanceEffects.canonicalProjectWideSourcePromotion, true);
+  assert.equal(receipt.acceptanceEffects.wholeLessonActivePageSourceCoverage, "64/64");
+  assert.equal(receipt.acceptanceEffects.audioDependencyClosureEstablished, false);
+  for (const key of [
+    "currentJavaScriptRegistered",
+    "originalRuntimeAccepted",
+    "visualFidelityAccepted",
+    "audioAccepted",
+    "humanVisualAccepted",
+    "ownerAccepted",
+    "strictComplete",
+    "released",
+    "published",
+  ]) assert.equal(receipt.acceptanceEffects[key], false, key);
+});
+
+test("binds the canonical G5 L6 source promotion to its exact thirteen-page gap", async () => {
+  const projectRoot = fileURLToPath(new URL("..", import.meta.url));
+  const promotionRoot = path.join(projectRoot, "catalog/source-promotions");
+  const sourceRoot = path.join(
+    projectRoot,
+    "source-assets/flash/HELP MATH_ORIGINAL FILES",
+  );
+  const [receiptBytes, planBytes] = await Promise.all([
+    readFile(path.join(
+      promotionRoot,
+      "g5-l6-active-source-promotion-main-applied-v1.json",
+    )),
+    readFile(path.join(promotionRoot, "g5-l6-active-source-promotion-v1.json")),
+  ]);
+  const receipt = JSON.parse(receiptBytes);
+  const plan = JSON.parse(planBytes);
+  assert.equal(
+    receipt.artifactType,
+    "help-math-g5-l6-main-source-promotion-applied-receipt",
+  );
+  assert.deepEqual(receipt.scope, {grade: 5, lesson: 6, pageOnly: true});
+  assert.equal(createHash("sha256").update(planBytes).digest("hex"), receipt.plan.sha256);
+  assert.deepEqual(receipt.copied, {
+    copiedFileCount: 23,
+    copiedBytes: 30702445,
+    activePageSwfs: 13,
+    samePathFlas: 10,
+  });
+  assert.deepEqual(receipt.postchecks.freeze, {
+    fileCount: 9313,
+    totalBytes: 3308484004,
+    manifestSha256: "f4de727e98372ca550b9f87220305c8b4d5b226b26e06573ae4ca7c7d40b9549",
+    readOnlyEnforced: true,
+    writableEntriesAfterFreeze: 0,
+  });
+  assert.equal(
+    receipt.postchecks.source.checksumSetSha256,
+    "d2593c9e69cc7d24261bafdfade23427fef2e1eacb21ff5882cc1242438fcb0a",
+  );
+  assert.equal(receipt.updatedProfile.sha256,
+    "1639b96e11a3cf1ef8c1c04403ee1f1d6537e0426b6d9dd6139bf39a507e06c4");
+  assert.equal(receipt.postchecks.promotedMissingReferences, 0);
+  assert.equal(receipt.postchecks.wholeLessonActivePageSourceCoverage, "40/40");
+  assert.equal(plan.copyRecords.length, 23);
+  assert.equal(plan.copyRecords.filter(({sourceType}) =>
+    sourceType === "active-page-swf").length, 13);
+  assert.equal(plan.copyRecords.filter(({sourceType}) =>
+    sourceType === "same-path-fla").length, 10);
+  const recordSet = [...plan.copyRecords]
+    .sort((left, right) => left.canonicalPath < right.canonicalPath ? -1 :
+      left.canonicalPath > right.canonicalPath ? 1 : 0)
+    .map(({canonicalPath, bytes, sha256}) =>
+      `${canonicalPath}\t${bytes}\t${sha256}\n`)
+    .join("");
+  assert.equal(createHash("sha256").update(recordSet).digest("hex"),
+    receipt.plan.copyRecordSetSha256);
+  for (const record of plan.copyRecords) {
+    const sourcePath = path.join(sourceRoot, ...record.canonicalPath.split("/"));
+    const [bytes, information] = await Promise.all([readFile(sourcePath), lstat(sourcePath)]);
+    assert.equal(information.isFile(), true, record.canonicalPath);
+    assert.equal(information.isSymbolicLink(), false, record.canonicalPath);
+    assert.equal(information.mode & 0o222, 0, record.canonicalPath);
+    assert.equal(bytes.length, record.bytes, record.canonicalPath);
+    assert.equal(createHash("sha256").update(bytes).digest("hex"), record.sha256,
+      record.canonicalPath);
+  }
+  assert.equal(receipt.acceptanceEffects.canonicalProjectWideSourcePromotion, true);
+  assert.equal(receipt.acceptanceEffects.wholeLessonActivePageSourceCoverage, "40/40");
+  assert.equal(receipt.acceptanceEffects.audioDependencyClosureEstablished, false);
+  for (const key of [
+    "currentJavaScriptRegistered",
+    "originalRuntimeAccepted",
+    "visualFidelityAccepted",
+    "audioAccepted",
+    "humanVisualAccepted",
+    "ownerAccepted",
+    "strictComplete",
+    "released",
+    "published",
+  ]) assert.equal(receipt.acceptanceEffects[key], false, key);
+});
+
 test("the checked-in full-archive catalog records the evidence-grounded known totals", async () => {
   const [summary, batches, lessonReleases, catalog, assetCatalog, currentSourceProfile, lessonReleasesBytes] = await Promise.all([
     readFile(new URL("../catalog/summary.json", import.meta.url), "utf8").then(JSON.parse),
@@ -310,32 +627,32 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
     readFile(new URL("../catalog/current-source-profile.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../catalog/lesson-releases.json", import.meta.url)),
   ]);
-  assert.equal(summary.source.fileCount, 9_147);
-  assert.equal(summary.source.totalBytes, 3_214_585_414);
+  assert.equal(summary.source.fileCount, 9_313);
+  assert.equal(summary.source.totalBytes, 3_308_484_004);
   assert.equal(
     summary.source.checksumSetSha256,
-    "30dfa12b7cd76e7200fb89115155e7d32af1356247c07e3a4f79227e93f34875",
+    "d2593c9e69cc7d24261bafdfade23427fef2e1eacb21ff5882cc1242438fcb0a",
   );
-  assert.equal(summary.source.extensions.swf, 2_096);
-  assert.equal(summary.source.extensions.fla, 1_541);
-  assert.equal(summary.source.extensions.mp3, 5_448);
-  assert.equal(summary.swf.uniqueAssets, 2_074);
-  assert.equal(summary.swf.duplicateGroups, 22);
-  assert.equal(summary.swf.duplicatePlacements, 22);
-  assert.equal(summary.pairing.pairedSwfFla, 1_344);
-  assert.equal(summary.pairing.swfOnly, 752);
-  assert.equal(summary.pairing.flaOnly, 197);
+  assert.equal(summary.source.extensions.swf, 2_135);
+  assert.equal(summary.source.extensions.fla, 1_571);
+  assert.equal(summary.source.extensions.mp3, 5_545);
+  assert.equal(summary.swf.uniqueAssets, 2_112);
+  assert.equal(summary.swf.duplicateGroups, 23);
+  assert.equal(summary.swf.duplicatePlacements, 23);
+  assert.equal(summary.pairing.pairedSwfFla, 1_375);
+  assert.equal(summary.pairing.swfOnly, 760);
+  assert.equal(summary.pairing.flaOnly, 196);
   assert.deepEqual(summary.fla, {
-    files: 1_541,
-    compoundBinary: 1_540,
+    files: 1_571,
+    compoundBinary: 1_570,
     zipArchive: 1,
     unrecognized: 0,
   });
-  assert.equal(summary.swf.totalFrames, 34_169);
+  assert.equal(summary.swf.totalFrames, 34_566);
   assert.equal(summary.swf.courseShells, 33);
   assert.deepEqual(summary.swf.fpsValues, [12]);
-  assert.equal(summary.references.course.resolved, 1_361);
-  assert.equal(summary.references.course.missing, 389);
+  assert.equal(summary.references.course.resolved, 1_400);
+  assert.equal(summary.references.course.missing, 350);
   assert.equal(summary.references.course.unreferencedExisting, 226);
   assert.equal(summary.references.keyterm.resolved, 443);
   assert.equal(summary.references.keyterm.missing, 317);
@@ -778,8 +1095,8 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
   ));
 
   const grade4Active = batches.queues.find((queue) => queue.queueId === "grade-4-active");
-  assert.equal(batches.canonicalAssetCount, 2_074);
-  assert.equal(batches.batchCount, 85);
+  assert.equal(batches.canonicalAssetCount, 2_112);
+  assert.equal(batches.batchCount, 87);
   assert.equal(grade4Active.canonicalAssetCount, 606);
   assert.equal(grade4Active.batches.length, 25);
   assert.equal(grade4Active.batches.at(-1).canonicalAssetCount, 6);
@@ -817,9 +1134,9 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
     return animation.classification.lesson !== 3;
   }));
   const legacyQueue = batches.queues.find((queue) => queue.queueId === "legacy-exceptions");
-  assert.equal(legacyQueue.canonicalAssetCount, 225);
+  assert.equal(legacyQueue.canonicalAssetCount, 224);
   assert.equal(legacyQueue.batches.length, 9);
-  assert.equal(legacyQueue.batches.at(-1).canonicalAssetCount, 25);
+  assert.equal(legacyQueue.batches.at(-1).canonicalAssetCount, 24);
   const legacyG4L3 = legacyQueue
     .batches.flatMap((batch) => batch.items)
     .map((item) => canonicalByAssetId.get(item.assetId))
@@ -867,13 +1184,13 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
   const currentRelativeOrder = batches.queues
     .slice(1)
     .flatMap((queue) => queue.batches.flatMap((batch) => batch.items.map((item) => item.assetId)));
-  assert.equal(currentRelativeOrder.length, 2_035);
+  assert.equal(currentRelativeOrder.length, 2_073);
   assert.deepEqual(currentRelativeOrder, previousRelativeOrder);
 
   const batchItems = batches.queues.flatMap((queue) => queue.batches.flatMap((batch) => {
     assert.ok(batch.canonicalAssetCount <= 25);
     return batch.items;
   }));
-  assert.equal(batchItems.length, 2_074);
-  assert.equal(new Set(batchItems.map((item) => item.assetId)).size, 2_074);
+  assert.equal(batchItems.length, 2_112);
+  assert.equal(new Set(batchItems.map((item) => item.assetId)).size, 2_112);
 });

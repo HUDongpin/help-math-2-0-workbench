@@ -23,7 +23,7 @@ const SHA256_PATTERN = /^[a-f0-9]{64}$/;
 const CURRENT_SOURCE_PROFILE_FILENAME = "current-source-profile.json";
 const CURRENT_SOURCE_PROFILE_ARTIFACT_TYPE = "help-math-current-source-profile";
 const BASE_CURRENT_SOURCE_PROFILE_SHA256 =
-  "5a2ea0aaa58915f1bce340b17b75e4d023d8689655e8f8345d8bb8a4544286b9";
+  "1639b96e11a3cf1ef8c1c04403ee1f1d6537e0426b6d9dd6139bf39a507e06c4";
 const COUNTERPART_SUCCESSOR_APPLIED_RECEIPT_FILENAME =
   "fla-swf-counterpart-successor-2026-08-07-v2-applied.json";
 

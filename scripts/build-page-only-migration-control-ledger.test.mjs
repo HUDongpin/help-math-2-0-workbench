@@ -49,12 +49,12 @@ test("builds the exact page-only denominator in deterministic source order", asy
   }
 });
 
-test("joins 1,361 resolved and 390 missing source occurrences without collapsing IN028", async () => {
+test("joins 1,401 resolved and 350 missing source occurrences without collapsing IN028", async () => {
   const ledger = await ledgerPromise;
   assert.deepEqual(ledger.summary.sourceCustody, {
-    resolvedOccurrences: 1_361,
-    missingOccurrences: 390,
-    uniqueMissingExpectedPaths: 389,
+    resolvedOccurrences: 1_401,
+    missingOccurrences: 350,
+    uniqueMissingExpectedPaths: 350,
     joinedOccurrences: 1_751,
     physicalFreeze: ledger.summary.sourceCustody.physicalFreeze,
   });
@@ -66,16 +66,21 @@ test("joins 1,361 resolved and 390 missing source occurrences without collapsing
   const shared = ledger.rows.filter(({sharedRendererGroup}) =>
     sharedRendererGroup !== null);
   assert.deepEqual(shared.map(({grade, lesson, sourceOccurrence,
-    expectedSwfPath, uniqueRendererId}) => ({
+    sectionPageOrdinal, expectedSwfPath, uniqueRendererId}) => ({
     grade,
     lesson,
     sourceOccurrence,
+    sectionPageOrdinal,
     expectedSwfPath,
     uniqueRendererId,
-  })), [45, 46].map((sourceOccurrence) => ({
+  })), [
+    {sourceOccurrence: 45, sectionPageOrdinal: 27},
+    {sourceOccurrence: 46, sectionPageOrdinal: 28},
+  ].map(({sourceOccurrence, sectionPageOrdinal}) => ({
     grade: 5,
     lesson: 3,
     sourceOccurrence,
+    sectionPageOrdinal,
     expectedSwfPath: "HELP_COURSES/ELMGR5/L3/IN/L3IN28.swf",
     uniqueRendererId: "course-g05-l03-in-028",
   })));
@@ -83,7 +88,7 @@ test("joins 1,361 resolved and 390 missing source occurrences without collapsing
 
 test("retains exactly 426 registered occurrences, 425 renderers, and eight Lessons", async () => {
   const ledger = await ledgerPromise;
-  assert.equal(ledger.generator.version, "1.1.0");
+  assert.equal(ledger.generator.version, "1.2.0");
   assert.equal(ledger.provenance.currentnessSuccessor.formalBaselineChanged,
     false);
   const registeredRows = ledger.rows.filter(

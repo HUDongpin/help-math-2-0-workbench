@@ -27,8 +27,8 @@
       "reports/page-only-migration-control-dashboard.md"
     ],
     "path": "scripts/build-page-only-migration-control-ledger.mjs",
-    "sha256": "895510121e23063fd0d30512ef2be4b53f2844aae05884ae40685b47f3146184",
-    "version": "1.1.0"
+    "sha256": "a2dde55405c9d79a6f361673591b39c736b04c0822ee6fdea427d30cd5e8f1f5",
+    "version": "1.2.0"
   },
   "grades": [
     {
@@ -63,8 +63,8 @@
       "registeredCurrentJs": 175,
       "registeredUniqueRenderers": 174,
       "remaining": 385,
-      "sourceMissing": 142,
-      "sourceResolved": 418,
+      "sourceMissing": 102,
+      "sourceResolved": 458,
       "strictComplete": 0
     }
   ],
@@ -539,8 +539,8 @@
       "registeredUniqueRenderers": 0,
       "released": 0,
       "remaining": 64,
-      "sourceMissing": 2,
-      "sourceResolved": 62,
+      "sourceMissing": 0,
+      "sourceResolved": 64,
       "sourceXmlPath": "HELP_COURSES/ELMGR5/L2/index.xml",
       "strictComplete": 0,
       "title": "Percents",
@@ -562,8 +562,8 @@
       "registeredUniqueRenderers": 64,
       "released": 0,
       "remaining": 0,
-      "sourceMissing": 25,
-      "sourceResolved": 40,
+      "sourceMissing": 0,
+      "sourceResolved": 65,
       "sourceXmlPath": "HELP_COURSES/ELMGR5/L3/index.xml",
       "strictComplete": 0,
       "title": "Exponents & Prime Factorizations",
@@ -616,8 +616,8 @@
       "registeredUniqueRenderers": 0,
       "released": 0,
       "remaining": 40,
-      "sourceMissing": 13,
-      "sourceResolved": 27,
+      "sourceMissing": 0,
+      "sourceResolved": 40,
       "sourceXmlPath": "HELP_COURSES/ELMGR5/L6/index.xml",
       "strictComplete": 0,
       "title": "Division Skills",
@@ -711,9 +711,9 @@
     "basePredecessor": "93fb79aa16e68d32edb43b864a1c8972d59b219f",
     "currentnessSuccessor": {
       "formalBaselineChanged": false,
-      "id": "HELP-MATH-P1-1751-PAGE-ONLY-LEDGER-CURRENTNESS-SUCCESSOR-20260824",
-      "predecessorGeneratorVersion": "1.0.0",
-      "reason": "Rebind current generated/private input bytes and the regenerated strict/release diagnostics ledgers while preserving the P1 formal baseline."
+      "id": "HELP-MATH-C0-SOURCE-CUSTODY-CONVERGENCE-SUCCESSOR-20260824",
+      "predecessorGeneratorVersion": "1.1.0",
+      "reason": "Rebind the 9,313-file source profile and regenerated catalog joins while preserving the 426-occurrence formal Current-JS baseline."
     },
     "externalInputBoundary": "Plan/receipt bytes are preflight-bound external frozen evidence; generation consumes the hash-bound repository inputs below.",
     "inputPlan": {
@@ -742,13 +742,13 @@
         "authority": "authoritative-current-input",
         "path": "catalog/animations.json",
         "role": "resolved canonical course-page source join",
-        "sha256": "ab27270c1f6a6618bae5e52f6e48ebf3ef646b6232dd087c1c86f755a6a3ce10"
+        "sha256": "2be0540abfba517a83b3e62b141bf71e5849e4a395de26fc2286e7673a10fe65"
       },
       {
         "authority": "authoritative-current-input",
         "path": "catalog/missing-references.json",
         "role": "missing canonical course-page source join",
-        "sha256": "80159400ba05e6b32ceb1b3a24e8dbe839ffcf049af08403adf5049296416136"
+        "sha256": "1e315a35df38ce83cc06e0929b4356d0a132e80ea58a2b5c130c8541fb84fce4"
       },
       {
         "authority": "authoritative-current-input",
@@ -209237,14 +209237,13 @@
       "uniqueRendererId": null
     },
     {
-      "assetId": null,
+      "assetId": "swf-2ab6eb4912e457130de1cf0880a6fcd010b52d7acc511ca7ca9b00eeaf0b02bb",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "current-js-not-registered",
         "complexity-unclassified",
         "implementation-lane-unclassified",
@@ -209326,7 +209325,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -209362,12 +209361,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L2/GS/L2GS02.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L2/GS/L2GS02.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 54,
       "sourceXml": {
@@ -209384,7 +209383,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "2ab6eb4912e457130de1cf0880a6fcd010b52d7acc511ca7ca9b00eeaf0b02bb",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -210651,14 +210650,13 @@
       "uniqueRendererId": null
     },
     {
-      "assetId": null,
+      "assetId": "swf-7e121a21e1bf4fc98ac483fee74b32633d8ce70078f4c9931fcf2ebeb291ecbc",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "current-js-not-registered",
         "complexity-unclassified",
         "implementation-lane-unclassified",
@@ -210730,7 +210728,10 @@
         "state": "not-established"
       },
       "pageTitle": "Page 1",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L2/FQ/L2FQ02.fla",
+        "sha256": "a3d12f65b4fe4894a9557d1281486274c5be71aae3e31871ffbe3fd6db17ab84"
+      },
       "placementId": "g05-l02-placement-063",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -210740,7 +210741,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -210776,12 +210777,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L2/FQ/L2FQ02.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L2/FQ/L2FQ02.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 63,
       "sourceXml": {
@@ -210798,7 +210799,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "7e121a21e1bf4fc98ac483fee74b32633d8ce70078f4c9931fcf2ebeb291ecbc",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -210962,14 +210963,13 @@
       "uniqueRendererId": null
     },
     {
-      "assetId": null,
+      "assetId": "swf-35c6279f9fce95c63a8a0d59f8f5da9646ec6bba75ffe8b5faf6a7f6f358f19d",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -210991,7 +210991,7 @@
         },
         "state": "superseded-by-formal-registration"
       },
-      "catalogAnimationId": "course-g05-l03-ir-001",
+      "catalogAnimationId": "course-g05-l03-ir-001-c420d2ff",
       "catalogOccurrenceOrdinal": 1338,
       "complexity": {
         "classified": false,
@@ -211040,7 +211040,10 @@
         "state": "not-established"
       },
       "pageTitle": "Introduction",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/IR/L3RW01.fla",
+        "sha256": "446e9a731cd739b9a5118340651c275628d6efc71c4b5c9b32de14dc10f7f439"
+      },
       "placementId": "g05-l03-placement-001",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -211050,7 +211053,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -211090,12 +211093,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IR/L3RW01.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IR/L3RW01.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 1,
       "sourceXml": {
@@ -211112,7 +211115,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "35c6279f9fce95c63a8a0d59f8f5da9646ec6bba75ffe8b5faf6a7f6f358f19d",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -213855,14 +213858,13 @@
       "uniqueRendererId": "course-g05-l03-vb-015"
     },
     {
-      "assetId": null,
+      "assetId": "swf-7e87f101d993198a56afb549cbfd7061a39c35d40774cfa334ff694a6948ac29",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -213933,7 +213935,10 @@
         "state": "not-established"
       },
       "pageTitle": "Understanding Exponents",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/IN/L3IN02.fla",
+        "sha256": "2a9b3c4ba3a17644795438c80ef6a2f259bbe78e985399c5b574e2d9a8c08e52"
+      },
       "placementId": "g05-l03-placement-019",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -213943,7 +213948,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -213983,12 +213988,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN02.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN02.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 19,
       "sourceXml": {
@@ -214005,7 +214010,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "7e87f101d993198a56afb549cbfd7061a39c35d40774cfa334ff694a6948ac29",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -214014,14 +214019,13 @@
       "uniqueRendererId": "course-g05-l03-in-002"
     },
     {
-      "assetId": null,
+      "assetId": "swf-6e60cef217879f4d9c5639b1187e5e9d188268888407fb831e07626543496a1b",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -214092,7 +214096,10 @@
         "state": "not-established"
       },
       "pageTitle": "Understanding Exponents",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/IN/L3IN03.fla",
+        "sha256": "5c64f16273a9ca7859af5fbbc7693d65a2b3cbd6bccb7aeecc1cced9e95d8263"
+      },
       "placementId": "g05-l03-placement-020",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -214102,7 +214109,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -214142,12 +214149,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN03.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN03.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 20,
       "sourceXml": {
@@ -214164,7 +214171,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "6e60cef217879f4d9c5639b1187e5e9d188268888407fb831e07626543496a1b",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -214173,14 +214180,13 @@
       "uniqueRendererId": "course-g05-l03-in-003"
     },
     {
-      "assetId": null,
+      "assetId": "swf-a541f0957ec40f7f6204f09c3da6fd18ae697bbe02da4e8a38ea9b51353a6bf3",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -214251,7 +214257,10 @@
         "state": "not-established"
       },
       "pageTitle": "Understanding Exponents",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/IN/L3IN04.fla",
+        "sha256": "838691b5c5ec16bce4dcfc5d77dba77bf441be2853584fdf469636c9b6c8393a"
+      },
       "placementId": "g05-l03-placement-021",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -214261,7 +214270,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -214301,12 +214310,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN04.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN04.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 21,
       "sourceXml": {
@@ -214323,7 +214332,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "a541f0957ec40f7f6204f09c3da6fd18ae697bbe02da4e8a38ea9b51353a6bf3",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -214490,14 +214499,13 @@
       "uniqueRendererId": "course-g05-l03-in-005"
     },
     {
-      "assetId": null,
+      "assetId": "swf-4b49d5efc905b81e949ce49d4092f0b87f6bfaad3142f25c6aed2fbd1b31a348",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -214568,7 +214576,10 @@
         "state": "not-established"
       },
       "pageTitle": "Understanding Exponents - Squared Numbers",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/IN/L3IN06.fla",
+        "sha256": "3e5564163a5576e21027b838e6a3e86ce444fffb41813340c0b455904631eeef"
+      },
       "placementId": "g05-l03-placement-023",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -214578,7 +214589,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -214618,12 +214629,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN06.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN06.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 23,
       "sourceXml": {
@@ -214640,7 +214651,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "4b49d5efc905b81e949ce49d4092f0b87f6bfaad3142f25c6aed2fbd1b31a348",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -214807,14 +214818,13 @@
       "uniqueRendererId": "course-g05-l03-in-007"
     },
     {
-      "assetId": null,
+      "assetId": "swf-407b1cc146ed8dfc657e1e7eae224f4c9a44a2565a3434e08d33f4bf99a11f4c",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -214885,7 +214895,10 @@
         "state": "not-established"
       },
       "pageTitle": "Computing Exponents",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/IN/L3IN08.fla",
+        "sha256": "de9b089f93376345e568a1eada56738a869ebd0ad88423f69424ad3a6cfb1b11"
+      },
       "placementId": "g05-l03-placement-025",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -214895,7 +214908,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -214935,12 +214948,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN08.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN08.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 25,
       "sourceXml": {
@@ -214957,7 +214970,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "407b1cc146ed8dfc657e1e7eae224f4c9a44a2565a3434e08d33f4bf99a11f4c",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -214966,14 +214979,13 @@
       "uniqueRendererId": "course-g05-l03-in-008"
     },
     {
-      "assetId": null,
+      "assetId": "swf-12d59503dd50126a71e87599bad8b9fec15fd1ca0df6a12e34f1b462e6103e06",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -215054,7 +215066,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -215094,12 +215106,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN09.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN09.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 26,
       "sourceXml": {
@@ -215116,7 +215128,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "12d59503dd50126a71e87599bad8b9fec15fd1ca0df6a12e34f1b462e6103e06",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -215441,14 +215453,13 @@
       "uniqueRendererId": "course-g05-l03-in-011"
     },
     {
-      "assetId": null,
+      "assetId": "swf-7799b262e1202833010ec6897d53adb8a44318eeb364be56deef82839570240b",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -215519,7 +215530,10 @@
         "state": "not-established"
       },
       "pageTitle": "Factors of Whole Numbers",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/IN/L3IN12.fla",
+        "sha256": "0fc9c58163ce96a1fe3cf3be659b1a789b7ccd2095d06834e066edb1a308d253"
+      },
       "placementId": "g05-l03-placement-029",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -215529,7 +215543,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -215569,12 +215583,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN12.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN12.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 29,
       "sourceXml": {
@@ -215591,7 +215605,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "7799b262e1202833010ec6897d53adb8a44318eeb364be56deef82839570240b",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -215758,14 +215772,13 @@
       "uniqueRendererId": "course-g05-l03-in-013"
     },
     {
-      "assetId": null,
+      "assetId": "swf-693d17246fa04dcff45739df1a41d7ef2b64857a67f8a4745cec60db565a3322",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -215846,7 +215859,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -215886,12 +215899,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN14.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN14.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 31,
       "sourceXml": {
@@ -215908,7 +215921,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "693d17246fa04dcff45739df1a41d7ef2b64857a67f8a4745cec60db565a3322",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -215917,14 +215930,13 @@
       "uniqueRendererId": "course-g05-l03-in-014"
     },
     {
-      "assetId": null,
+      "assetId": "swf-622161f524469d4ef83692e9b1fffc1af06a978d3800886b5ad56a2a8197b3da",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -215995,7 +216007,10 @@
         "state": "not-established"
       },
       "pageTitle": "Factors of Whole Numbers Practice",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/IN/L3IN15.fla",
+        "sha256": "38055037f9fbbbcd89e8bb40f7d059acd71e1d12579c71ff8d573a36b34a678b"
+      },
       "placementId": "g05-l03-placement-032",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -216005,7 +216020,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -216045,12 +216060,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN15.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN15.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 32,
       "sourceXml": {
@@ -216067,7 +216082,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "622161f524469d4ef83692e9b1fffc1af06a978d3800886b5ad56a2a8197b3da",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -216076,14 +216091,13 @@
       "uniqueRendererId": "course-g05-l03-in-015"
     },
     {
-      "assetId": null,
+      "assetId": "swf-20bba4a338c10005508cef8a4d619848342f56e0c6a5cdc93cbed6e31ab6dc4d",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -216154,7 +216168,10 @@
         "state": "not-established"
       },
       "pageTitle": "Prime of Whole Numbers",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/IN/L3IN16.fla",
+        "sha256": "633285ad0fe532e9a84dc4ea36c8a4f6c3aa74b47faba1976073bf387059588a"
+      },
       "placementId": "g05-l03-placement-033",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -216164,7 +216181,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -216204,12 +216221,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN16.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN16.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 33,
       "sourceXml": {
@@ -216226,7 +216243,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "20bba4a338c10005508cef8a4d619848342f56e0c6a5cdc93cbed6e31ab6dc4d",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -216551,14 +216568,13 @@
       "uniqueRendererId": "course-g05-l03-in-018"
     },
     {
-      "assetId": null,
+      "assetId": "swf-dcb4087cb535503f0ad092346fde5047cd942ec0a7418ff09e2e48260b6634fe",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -216629,7 +216645,10 @@
         "state": "not-established"
       },
       "pageTitle": "Prime-Factorizations-Composite Numbers",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/IN/L3IN19.fla",
+        "sha256": "d5569a334311d323b84a26e34fc8934c8f04c17d4a98611f9360f4e2bf47de09"
+      },
       "placementId": "g05-l03-placement-036",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -216639,7 +216658,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -216679,12 +216698,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN19.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN19.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 36,
       "sourceXml": {
@@ -216701,7 +216720,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "dcb4087cb535503f0ad092346fde5047cd942ec0a7418ff09e2e48260b6634fe",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -216710,14 +216729,13 @@
       "uniqueRendererId": "course-g05-l03-in-019"
     },
     {
-      "assetId": null,
+      "assetId": "swf-e65fc28b6fc7e973ab4e0f30a328322cbfc22c4845998055b8c32d63468624df",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -216788,7 +216806,10 @@
         "state": "not-established"
       },
       "pageTitle": "Prime-Factorizations-Composite Numbers",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/IN/L3IN20.fla",
+        "sha256": "364cd4a8457b988ad189d83677f24d8b276fb393c1a839edc90184aea729df19"
+      },
       "placementId": "g05-l03-placement-037",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -216798,7 +216819,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -216838,12 +216859,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN20.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN20.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 37,
       "sourceXml": {
@@ -216860,7 +216881,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "e65fc28b6fc7e973ab4e0f30a328322cbfc22c4845998055b8c32d63468624df",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -217185,14 +217206,13 @@
       "uniqueRendererId": "course-g05-l03-in-022"
     },
     {
-      "assetId": null,
+      "assetId": "swf-1b213ae60a4893e31399040fb5abc1cb8d990b6d364185e3e798825bb0bd206a",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -217263,7 +217283,10 @@
         "state": "not-established"
       },
       "pageTitle": "Prime-Factorizations-Factor Trees",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/IN/L3IN23.fla",
+        "sha256": "5920b7d779e60bc83db0ecc65b83b8f42190e19eb42ccffc1b8245e0d8ec41f0"
+      },
       "placementId": "g05-l03-placement-040",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -217273,7 +217296,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -217313,12 +217336,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN23.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN23.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 40,
       "sourceXml": {
@@ -217335,7 +217358,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "1b213ae60a4893e31399040fb5abc1cb8d990b6d364185e3e798825bb0bd206a",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -217344,14 +217367,13 @@
       "uniqueRendererId": "course-g05-l03-in-023"
     },
     {
-      "assetId": null,
+      "assetId": "swf-575c1155067be4556f9bdec976e5d81d4b23432852fb0be871d96c331e3cb6a9",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -217422,7 +217444,10 @@
         "state": "not-established"
       },
       "pageTitle": "Prime-Factorizations",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/IN/L3IN24.fla",
+        "sha256": "eb227510e1ab9cecd9bd2c3b6803637a1537387359b48c79de04a399bd4ca818"
+      },
       "placementId": "g05-l03-placement-041",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -217432,7 +217457,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -217472,12 +217497,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN24.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN24.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 41,
       "sourceXml": {
@@ -217494,7 +217519,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "575c1155067be4556f9bdec976e5d81d4b23432852fb0be871d96c331e3cb6a9",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -217503,14 +217528,13 @@
       "uniqueRendererId": "course-g05-l03-in-024"
     },
     {
-      "assetId": null,
+      "assetId": "swf-d7678b6fbb7c8d48bb0ca602d2170912140dfa07d56d239e0b4ffba51ef6bc6b",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -217581,7 +217605,10 @@
         "state": "not-established"
       },
       "pageTitle": "Prime-Factorizations",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/IN/L3IN25.fla",
+        "sha256": "296e2e153cca0af44f8e354fbe125503bb15fa98f57440d00c0e8c7462022243"
+      },
       "placementId": "g05-l03-placement-042",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -217591,7 +217618,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -217631,12 +217658,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN25.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN25.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 42,
       "sourceXml": {
@@ -217653,7 +217680,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "d7678b6fbb7c8d48bb0ca602d2170912140dfa07d56d239e0b4ffba51ef6bc6b",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -217662,14 +217689,13 @@
       "uniqueRendererId": "course-g05-l03-in-025"
     },
     {
-      "assetId": null,
+      "assetId": "swf-afce93ffb2c880075d2bb5f6f6da10feaa4a80c5ed19c5697543221a0b151fa4",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -217740,7 +217766,10 @@
         "state": "not-established"
       },
       "pageTitle": "Prime Factorization Practice",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/IN/L3IN26.fla",
+        "sha256": "9b7b0dce018692d1b7dfadd4dca01c4bd177a1a2d67911b3f3b713aee9e2d77f"
+      },
       "placementId": "g05-l03-placement-043",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -217750,7 +217779,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -217790,12 +217819,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN26.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN26.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 43,
       "sourceXml": {
@@ -217812,7 +217841,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "afce93ffb2c880075d2bb5f6f6da10feaa4a80c5ed19c5697543221a0b151fa4",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -217821,14 +217850,13 @@
       "uniqueRendererId": "course-g05-l03-in-026"
     },
     {
-      "assetId": null,
+      "assetId": "swf-dd05e0548d9cbf5f67ca9f0af09ebe4ef78dc2b920088838991ff8d6b6d83824",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -217899,7 +217927,10 @@
         "state": "not-established"
       },
       "pageTitle": "Prime Factorizations Using Exponents",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/IN/L3IN27.fla",
+        "sha256": "d7fcc4202a780fc9211426dce21126ae9022511f326300ebc0cb114f408289c7"
+      },
       "placementId": "g05-l03-placement-044",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -217909,7 +217940,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -217949,12 +217980,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN27.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN27.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 44,
       "sourceXml": {
@@ -217971,7 +218002,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "dd05e0548d9cbf5f67ca9f0af09ebe4ef78dc2b920088838991ff8d6b6d83824",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -217980,14 +218011,13 @@
       "uniqueRendererId": "course-g05-l03-in-027"
     },
     {
-      "assetId": null,
+      "assetId": "swf-c2c3c4148cd85179dd82c9d7efc149e6d5b6ca193392f1a77f00ea64369d2fe2",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -218058,7 +218088,10 @@
         "state": "not-established"
       },
       "pageTitle": "Prime Factorizations Using Exponents",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/IN/L3IN28.fla",
+        "sha256": "1cd8be8d7019abcd1dcf58e7d209e40fa064a47efe0a1ede2a379f4271a9756c"
+      },
       "placementId": "g05-l03-placement-045",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -218068,7 +218101,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -218108,12 +218141,12 @@
       "sharedRendererGroup": "course-g05-l03-in-028",
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN28.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN28.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 45,
       "sourceXml": {
@@ -218130,7 +218163,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "c2c3c4148cd85179dd82c9d7efc149e6d5b6ca193392f1a77f00ea64369d2fe2",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -218139,14 +218172,13 @@
       "uniqueRendererId": "course-g05-l03-in-028"
     },
     {
-      "assetId": null,
+      "assetId": "swf-c2c3c4148cd85179dd82c9d7efc149e6d5b6ca193392f1a77f00ea64369d2fe2",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -218216,8 +218248,11 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "pageTitle": "Prime Factorizations Using Exponents Practice",
-      "pairedFla": null,
+      "pageTitle": "Prime Factorizations Using Exponents",
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/IN/L3IN28.fla",
+        "sha256": "1cd8be8d7019abcd1dcf58e7d209e40fa064a47efe0a1ede2a379f4271a9756c"
+      },
       "placementId": "g05-l03-placement-046",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -218227,7 +218262,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -218267,12 +218302,12 @@
       "sharedRendererGroup": "course-g05-l03-in-028",
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN28.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN28.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 46,
       "sourceXml": {
@@ -218289,7 +218324,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "c2c3c4148cd85179dd82c9d7efc149e6d5b6ca193392f1a77f00ea64369d2fe2",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -218298,14 +218333,13 @@
       "uniqueRendererId": "course-g05-l03-in-028"
     },
     {
-      "assetId": null,
+      "assetId": "swf-b465537749366473edd49ff7587acb54a88c96b57287d7a9c46732b2b40e699c",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -218376,7 +218410,10 @@
         "state": "not-established"
       },
       "pageTitle": "Question 1",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/TI/L3TI02.fla",
+        "sha256": "57a6c0e99606c0a3ecc641851fc13beb0e275ffea5e3b7a7aab80fa8c2653ba1"
+      },
       "placementId": "g05-l03-placement-047",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -218386,7 +218423,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -218426,12 +218463,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/TI/L3TI02.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/TI/L3TI02.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 47,
       "sourceXml": {
@@ -218448,7 +218485,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "b465537749366473edd49ff7587acb54a88c96b57287d7a9c46732b2b40e699c",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -218776,14 +218813,13 @@
       "uniqueRendererId": "course-g05-l03-ti-004"
     },
     {
-      "assetId": null,
+      "assetId": "swf-e9cbc2dd4f1e0f8a5c4de8b3f22b18647e9e8b59a2949499601408d1648482d0",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -218854,7 +218890,10 @@
         "state": "not-established"
       },
       "pageTitle": "Question 4",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/TI/L3TI05.fla",
+        "sha256": "1c8f46170b311e836fca55ef971300e9dd7719507d4b3ce27080e8843c7dcb0e"
+      },
       "placementId": "g05-l03-placement-050",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -218864,7 +218903,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -218904,12 +218943,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/TI/L3TI05.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/TI/L3TI05.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 50,
       "sourceXml": {
@@ -218926,7 +218965,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "e9cbc2dd4f1e0f8a5c4de8b3f22b18647e9e8b59a2949499601408d1648482d0",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -219251,14 +219290,13 @@
       "uniqueRendererId": "course-g05-l03-ti-007"
     },
     {
-      "assetId": null,
+      "assetId": "swf-0ab5ba1eebaaa89be81a0c65dd06230fa80611382e24843498d11f81a6bad612",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -219329,7 +219367,10 @@
         "state": "not-established"
       },
       "pageTitle": "Question 7",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L3/TI/L3TI08.fla",
+        "sha256": "a5227311ef1c8237c780d2669340772d196fb95ade018e07af4d5c49d600ca2f"
+      },
       "placementId": "g05-l03-placement-053",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -219339,7 +219380,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -219379,12 +219420,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/TI/L3TI08.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/TI/L3TI08.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 53,
       "sourceXml": {
@@ -219401,7 +219442,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "0ab5ba1eebaaa89be81a0c65dd06230fa80611382e24843498d11f81a6bad612",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -219410,14 +219451,13 @@
       "uniqueRendererId": "course-g05-l03-ti-008"
     },
     {
-      "assetId": null,
+      "assetId": "swf-77ef46d46aaf3073a7c15ace8f1d3ffa2342dcf54dd859dd2c2dd6b0abe4dc95",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -219498,7 +219538,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -219538,12 +219578,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/TI/L3TI09.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/TI/L3TI09.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 54,
       "sourceXml": {
@@ -219560,7 +219600,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "77ef46d46aaf3073a7c15ace8f1d3ffa2342dcf54dd859dd2c2dd6b0abe4dc95",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -219569,14 +219609,13 @@
       "uniqueRendererId": "course-g05-l03-ti-009"
     },
     {
-      "assetId": null,
+      "assetId": "swf-39315e9f4b692c97a4556ca63f909d0b799928e89924787ef00a29cc00afa92d",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "complexity-unclassified",
         "implementation-lane-unclassified",
         "original-runtime-not-established",
@@ -219657,7 +219696,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -219697,12 +219736,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L3/GS/L3GS02.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L3/GS/L3GS02.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 55,
       "sourceXml": {
@@ -219719,7 +219758,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "39315e9f4b692c97a4556ca63f909d0b799928e89924787ef00a29cc00afa92d",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -241083,14 +241122,13 @@
       "uniqueRendererId": null
     },
     {
-      "assetId": null,
+      "assetId": "swf-6a316b608e88fbf6103226c87e7fd62534726235fe62da5cb7382ecf8a04e317",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "current-js-not-registered",
         "complexity-unclassified",
         "implementation-lane-unclassified",
@@ -241172,7 +241210,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -241208,12 +241246,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN04.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN04.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 14,
       "sourceXml": {
@@ -241230,7 +241268,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "6a316b608e88fbf6103226c87e7fd62534726235fe62da5cb7382ecf8a04e317",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -241394,14 +241432,13 @@
       "uniqueRendererId": null
     },
     {
-      "assetId": null,
+      "assetId": "swf-a8637326824ad2a416d9afe201ae89787d23a7a5298a051ac551b4a9774044e0",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "current-js-not-registered",
         "complexity-unclassified",
         "implementation-lane-unclassified",
@@ -241473,7 +241510,10 @@
         "state": "not-established"
       },
       "pageTitle": "Long Division Practice with One-Digit Divisors",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L6/IN/L6IN06.fla",
+        "sha256": "4c78eea85a262d26d3a3b4d2de287a00014d9ea9a5c58ee524849150621c3b8a"
+      },
       "placementId": "g05-l06-placement-016",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -241483,7 +241523,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -241519,12 +241559,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN06.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN06.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 16,
       "sourceXml": {
@@ -241541,7 +241581,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "a8637326824ad2a416d9afe201ae89787d23a7a5298a051ac551b4a9774044e0",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -241550,14 +241590,13 @@
       "uniqueRendererId": null
     },
     {
-      "assetId": null,
+      "assetId": "swf-bd637f8c8c7b87e75c3a56fd5e4293cdb7efd5f8f7f90dcf14dd46a597b35591",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "current-js-not-registered",
         "complexity-unclassified",
         "implementation-lane-unclassified",
@@ -241629,7 +241668,10 @@
         "state": "not-established"
       },
       "pageTitle": "Long Division Check with Multiplication",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L6/IN/L6IN07.fla",
+        "sha256": "84dca05d42d0e0fcbcfa70d52dacb431aa47232d8948b2feec61172af4317003"
+      },
       "placementId": "g05-l06-placement-017",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -241639,7 +241681,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -241675,12 +241717,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN07.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN07.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 17,
       "sourceXml": {
@@ -241697,7 +241739,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "bd637f8c8c7b87e75c3a56fd5e4293cdb7efd5f8f7f90dcf14dd46a597b35591",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -241706,14 +241748,13 @@
       "uniqueRendererId": null
     },
     {
-      "assetId": null,
+      "assetId": "swf-73e2101205d9d09768c50fc57e55c809c6fc61f65a6720f45b1a04c68a7e27cb",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "current-js-not-registered",
         "complexity-unclassified",
         "implementation-lane-unclassified",
@@ -241785,7 +241826,10 @@
         "state": "not-established"
       },
       "pageTitle": "2-Digit Divisors",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L6/IN/L6IN08.fla",
+        "sha256": "38e51b445d12cfdd1b1819bcdb70262ac9e38bf9219a05f5d699be1458f85896"
+      },
       "placementId": "g05-l06-placement-018",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -241795,7 +241839,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -241831,12 +241875,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN08.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN08.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 18,
       "sourceXml": {
@@ -241853,7 +241897,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "73e2101205d9d09768c50fc57e55c809c6fc61f65a6720f45b1a04c68a7e27cb",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -241862,14 +241906,13 @@
       "uniqueRendererId": null
     },
     {
-      "assetId": null,
+      "assetId": "swf-9ff9d22edfd822cbed292e0e1a3b0301b93a268a8a978eff015efe9c99a4afb4",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "current-js-not-registered",
         "complexity-unclassified",
         "implementation-lane-unclassified",
@@ -241941,7 +241984,10 @@
         "state": "not-established"
       },
       "pageTitle": "2-Digit Divisors",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L6/IN/L6IN09.fla",
+        "sha256": "df2b9021a20860e41e89b7716f6371ddedbc31f109c0e7d26f6b982ab6816ff0"
+      },
       "placementId": "g05-l06-placement-019",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -241951,7 +241997,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -241987,12 +242033,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN09.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN09.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 19,
       "sourceXml": {
@@ -242009,7 +242055,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "9ff9d22edfd822cbed292e0e1a3b0301b93a268a8a978eff015efe9c99a4afb4",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -242018,14 +242064,13 @@
       "uniqueRendererId": null
     },
     {
-      "assetId": null,
+      "assetId": "swf-824b5094c448e8f96cd3339f61b54937d797d51ec2f655f3c83451acf24426ee",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "current-js-not-registered",
         "complexity-unclassified",
         "implementation-lane-unclassified",
@@ -242097,7 +242142,10 @@
         "state": "not-established"
       },
       "pageTitle": "2-Digit Divisors",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L6/IN/L6IN10.fla",
+        "sha256": "6e76d8d1cef68397134063779634c5d6e7050c3e503014f25e01db82f5f06ff4"
+      },
       "placementId": "g05-l06-placement-020",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -242107,7 +242155,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -242143,12 +242191,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN10.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN10.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 20,
       "sourceXml": {
@@ -242165,7 +242213,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "824b5094c448e8f96cd3339f61b54937d797d51ec2f655f3c83451acf24426ee",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -242329,14 +242377,13 @@
       "uniqueRendererId": null
     },
     {
-      "assetId": null,
+      "assetId": "swf-705d0bf15ab15c3020116230a3463b75e4395532ca96feea30c2efa89355b43d",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "current-js-not-registered",
         "complexity-unclassified",
         "implementation-lane-unclassified",
@@ -242418,7 +242465,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -242454,12 +242501,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN12.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN12.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 22,
       "sourceXml": {
@@ -242476,7 +242523,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "705d0bf15ab15c3020116230a3463b75e4395532ca96feea30c2efa89355b43d",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -242485,14 +242532,13 @@
       "uniqueRendererId": null
     },
     {
-      "assetId": null,
+      "assetId": "swf-794721967a3e6be2dfc73bed153fa215eae865c8f939809faff4a8f328056212",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "current-js-not-registered",
         "complexity-unclassified",
         "implementation-lane-unclassified",
@@ -242564,7 +242610,10 @@
         "state": "not-established"
       },
       "pageTitle": "Quotients With Zero Practice",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L6/IN/L6IN13.fla",
+        "sha256": "27db594998ea07c1dba10c9eafae3f4da3b7721da4d645730cff2eb6b8936854"
+      },
       "placementId": "g05-l06-placement-023",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -242574,7 +242623,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -242610,12 +242659,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN13.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN13.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 23,
       "sourceXml": {
@@ -242632,7 +242681,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "794721967a3e6be2dfc73bed153fa215eae865c8f939809faff4a8f328056212",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -242641,14 +242690,13 @@
       "uniqueRendererId": null
     },
     {
-      "assetId": null,
+      "assetId": "swf-5cc000fd07bf7d6aea68469df9517f73522423984f219734582b8e1eaef8eb5e",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "current-js-not-registered",
         "complexity-unclassified",
         "implementation-lane-unclassified",
@@ -242720,7 +242768,10 @@
         "state": "not-established"
       },
       "pageTitle": "Dividends With Zero",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L6/IN/L6IN14.fla",
+        "sha256": "51b0613ab890d74f06f01846171a49c6dd8ca51bc3c82cac4c61735eda259fbc"
+      },
       "placementId": "g05-l06-placement-024",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -242730,7 +242781,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -242766,12 +242817,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN14.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN14.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 24,
       "sourceXml": {
@@ -242788,7 +242839,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "5cc000fd07bf7d6aea68469df9517f73522423984f219734582b8e1eaef8eb5e",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -242797,14 +242848,13 @@
       "uniqueRendererId": null
     },
     {
-      "assetId": null,
+      "assetId": "swf-ab29d19f5028294d415f17a0a5acd9d5491685a4ac0df1a29fe06da4132cd35a",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "current-js-not-registered",
         "complexity-unclassified",
         "implementation-lane-unclassified",
@@ -242876,7 +242926,10 @@
         "state": "not-established"
       },
       "pageTitle": "Division Problems",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L6/IN/L6IN15.fla",
+        "sha256": "7fb97f856fb77e7481ac6e5d4504c67d373171425a7d6e07b7bf488bbf5de322"
+      },
       "placementId": "g05-l06-placement-025",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -242886,7 +242939,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -242922,12 +242975,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN15.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L6/IN/L6IN15.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 25,
       "sourceXml": {
@@ -242944,7 +242997,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "ab29d19f5028294d415f17a0a5acd9d5491685a4ac0df1a29fe06da4132cd35a",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -243421,14 +243474,13 @@
       "uniqueRendererId": null
     },
     {
-      "assetId": null,
+      "assetId": "swf-598b2e5883e043a56ec0da19ea8456507c75a84353f2551be83ae6e7b3b85e15",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "current-js-not-registered",
         "complexity-unclassified",
         "implementation-lane-unclassified",
@@ -243510,7 +243562,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -243546,12 +243598,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L6/GS/L6GS02.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L6/GS/L6GS02.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 29,
       "sourceXml": {
@@ -243568,7 +243620,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "598b2e5883e043a56ec0da19ea8456507c75a84353f2551be83ae6e7b3b85e15",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -244838,14 +244890,13 @@
       "uniqueRendererId": null
     },
     {
-      "assetId": null,
+      "assetId": "swf-675677cb12cade7cd06bff6561878a3feef392bb4c9cd0d76a7ca02d62a4fb9c",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "current-js-not-registered",
         "complexity-unclassified",
         "implementation-lane-unclassified",
@@ -244917,7 +244968,10 @@
         "state": "not-established"
       },
       "pageTitle": "Introduction",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L6/FQ/L6FQ01.fla",
+        "sha256": "34601353b12735c8365eff9f5c1ade4940934cc1c101691380ff7be2efbd7ddb"
+      },
       "placementId": "g05-l06-placement-038",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -244927,7 +244981,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -244963,12 +245017,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L6/FQ/L6FQ01.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L6/FQ/L6FQ01.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 38,
       "sourceXml": {
@@ -244985,7 +245039,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "675677cb12cade7cd06bff6561878a3feef392bb4c9cd0d76a7ca02d62a4fb9c",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -244994,14 +245048,13 @@
       "uniqueRendererId": null
     },
     {
-      "assetId": null,
+      "assetId": "swf-a1da2d4d0a25502953451ba8f98e504fd2d4d324fead19325980b887b8dea2cd",
       "audio": {
         "evidence": "Catalog audio presence does not establish cue correctness or human listening acceptance.",
         "satisfied": false,
         "state": "not-established"
       },
       "blockers": [
-        "missing-canonical-source",
         "current-js-not-registered",
         "complexity-unclassified",
         "implementation-lane-unclassified",
@@ -245073,7 +245126,10 @@
         "state": "not-established"
       },
       "pageTitle": "Page 1",
-      "pairedFla": null,
+      "pairedFla": {
+        "path": "HELP_COURSES/ELMGR5/L6/FQ/L6FQ02.fla",
+        "sha256": "9eaed046b0432462da998f195b28fcc415a4871395f02f669ec0781f88d5b832"
+      },
       "placementId": "g05-l06-placement-039",
       "production": {
         "evidence": "No Preview/Staging/Production deployment or production verification is authorized or evidenced.",
@@ -245083,7 +245139,7 @@
       "provenance": {
         "baselineReceiptSha256": "5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028",
         "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-        "occurrenceJoinPath": "catalog/missing-references.json",
+        "occurrenceJoinPath": "catalog/animations.json",
         "predecessorHead": "60f356be9b34cabd3ca1aad15b6dd00babfc7e35",
         "sourceOrderPath": "catalog/lessons.json"
       },
@@ -245119,12 +245175,12 @@
       "sharedRendererGroup": null,
       "sourceCustody": {
         "evidence": {
-          "canonicalSwfPath": null,
+          "canonicalSwfPath": "HELP_COURSES/ELMGR5/L6/FQ/L6FQ02.swf",
           "expectedSwfPath": "HELP_COURSES/ELMGR5/L6/FQ/L6FQ02.swf",
-          "joinPath": "catalog/missing-references.json"
+          "joinPath": "catalog/animations.json"
         },
-        "satisfied": false,
-        "state": "missing-canonical-source"
+        "satisfied": true,
+        "state": "resolved-canonical"
       },
       "sourceOccurrence": 39,
       "sourceXml": {
@@ -245141,7 +245197,7 @@
         "satisfied": false,
         "state": "not-established"
       },
-      "swfSha256": null,
+      "swfSha256": "a1da2d4d0a25502953451ba8f98e504fd2d4d324fead19325980b887b8dea2cd",
       "technicalFidelity": {
         "evidence": "Current-JS/source presence does not establish original-runtime technical fidelity.",
         "satisfied": false,
@@ -276515,7 +276571,7 @@
     },
     "sourceCustody": {
       "joinedOccurrences": 1751,
-      "missingOccurrences": 390,
+      "missingOccurrences": 350,
       "physicalFreeze": {
         "boundary": "Physical custody does not override the authoritative occurrence join or prove implementation/acceptance.",
         "fileCount": 9313,
@@ -276526,8 +276582,8 @@
         "totalBytes": 3308484004,
         "writableEntries": 0
       },
-      "resolvedOccurrences": 1361,
-      "uniqueMissingExpectedPaths": 389
+      "resolvedOccurrences": 1401,
+      "uniqueMissingExpectedPaths": 350
     },
     "strictCompletion": {
       "boundary": "The strict workspace diagnostics ledger is consumed as evidence only and is not the 1,751-occurrence denominator.",

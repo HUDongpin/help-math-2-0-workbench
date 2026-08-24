@@ -29,7 +29,7 @@ export const PREDECESSOR_HEAD =
 export const BASE_PREDECESSOR =
   "93fb79aa16e68d32edb43b864a1c8972d59b219f";
 export const CURRENTNESS_SUCCESSOR_ID =
-  "HELP-MATH-P1-1751-PAGE-ONLY-LEDGER-CURRENTNESS-SUCCESSOR-20260824";
+  "HELP-MATH-C0-SOURCE-CUSTODY-CONVERGENCE-SUCCESSOR-20260824";
 export const INPUT_PLAN = Object.freeze({
   path: "/Volumes/WestWorld/HELP MATH 2.0-g4-l5-l10-l11-integration/reports/help-math-426-page-only-baseline-input-plan-2026-08-22.json",
   sha256: "6d181ad88f0c0cd0e6094a4fff2ac4056a883f442e402b3aa9c69ac8c94a4764",
@@ -43,7 +43,7 @@ export const INPUT_RECEIPT = Object.freeze({
 });
 
 const LEDGER_SCHEMA_VERSION = 1;
-const GENERATOR_VERSION = "1.1.0";
+const GENERATOR_VERSION = "1.2.0";
 const DEFAULT_LEDGER_PATH = path.join(
   projectRoot,
   "catalog",
@@ -59,9 +59,9 @@ const EXPECTED = Object.freeze({
   lessonCount: 29,
   occurrenceCount: 1_751,
   gradeOccurrences: Object.freeze({"3": 546, "4": 645, "5": 560}),
-  resolvedSourceOccurrences: 1_361,
-  missingSourceOccurrences: 390,
-  uniqueMissingExpectedPaths: 389,
+  resolvedSourceOccurrences: 1_401,
+  missingSourceOccurrences: 350,
+  uniqueMissingExpectedPaths: 350,
   registeredOccurrences: 426,
   registeredUniqueRenderers: 425,
   registeredLessons: 8,
@@ -142,12 +142,12 @@ const AUTHORITATIVE_INPUTS = Object.freeze([
   }),
   Object.freeze({
     path: "catalog/animations.json",
-    expectedSha256: "ab27270c1f6a6618bae5e52f6e48ebf3ef646b6232dd087c1c86f755a6a3ce10",
+    expectedSha256: "2be0540abfba517a83b3e62b141bf71e5849e4a395de26fc2286e7673a10fe65",
     role: "resolved canonical course-page source join",
   }),
   Object.freeze({
     path: "catalog/missing-references.json",
-    expectedSha256: "80159400ba05e6b32ceb1b3a24e8dbe839ffcf049af08403adf5049296416136",
+    expectedSha256: "1e315a35df38ce83cc06e0929b4356d0a132e80ea58a2b5c130c8541fb84fce4",
     role: "missing canonical course-page source join",
   }),
   Object.freeze({
@@ -474,7 +474,8 @@ function buildSourceOccurrences({lessonsDocument, animationsDocument,
         sourceOccurrence: reference.occurrence,
         sectionCode: section.code,
         sectionOrdinal: section.number,
-        sectionPageOrdinal: animation.classification.page.ordinal,
+        catalogSectionPageOrdinal: animation.classification.page.ordinal,
+        sectionPageOrdinal: null,
         pageTitle: animation.classification.titleDisplay
           ?? animation.classification.titleRaw
           ?? null,
@@ -521,7 +522,8 @@ function buildSourceOccurrences({lessonsDocument, animationsDocument,
         sourceOccurrence: occurrence.occurrence,
         sectionCode: occurrence.section.code,
         sectionOrdinal: occurrence.section.number,
-        sectionPageOrdinal: occurrence.page.ordinal,
+        catalogSectionPageOrdinal: occurrence.page.ordinal,
+        sectionPageOrdinal: null,
         pageTitle: occurrence.page.titleRaw ?? null,
         expectedSwfPath: missing.expectedPath,
         sourceState: "missing-canonical-source",
@@ -541,6 +543,27 @@ function buildSourceOccurrences({lessonsDocument, animationsDocument,
   rows.sort((left, right) => left.grade - right.grade
     || left.lesson - right.lesson
     || left.sourceOccurrence - right.sourceOccurrence);
+
+  const sectionOccurrenceCounts = new Map();
+  for (const row of rows) {
+    const sectionKey = `${row.grade}:${row.lesson}:${row.sectionCode}`;
+    const occurrenceOrdinal = (sectionOccurrenceCounts.get(sectionKey) ?? 0) + 1;
+    sectionOccurrenceCounts.set(sectionKey, occurrenceOrdinal);
+    row.sectionPageOrdinal = occurrenceOrdinal;
+
+    if (row.catalogSectionPageOrdinal !== occurrenceOrdinal) {
+      invariant(
+        row.grade === 5
+          && row.lesson === 3
+          && row.sourceOccurrence === 46
+          && row.expectedSwfPath ===
+            "HELP_COURSES/ELMGR5/L3/IN/L3IN28.swf"
+          && row.catalogSectionPageOrdinal === 27
+          && occurrenceOrdinal === 28,
+        `${row.expectedSwfPath}: catalog/occurrence section ordinal drift`,
+      );
+    }
+  }
   invariant(rows.length === EXPECTED.occurrenceCount,
     `expected ${EXPECTED.occurrenceCount} occurrence rows, found ${rows.length}`);
   invariant(resolvedSourceOccurrences === EXPECTED.resolvedSourceOccurrences,
@@ -1492,7 +1515,7 @@ export function validateLedgerContract(ledger) {
   invariant(ledger.taskId === TASK_ID, "ledger taskId drifted");
   invariant(
     ledger.provenance?.currentnessSuccessor?.id === CURRENTNESS_SUCCESSOR_ID
-      && ledger.provenance.currentnessSuccessor.predecessorGeneratorVersion === "1.0.0"
+      && ledger.provenance.currentnessSuccessor.predecessorGeneratorVersion === "1.1.0"
       && ledger.provenance.currentnessSuccessor.formalBaselineChanged === false,
     "ledger currentness-successor provenance drifted",
   );
@@ -1784,10 +1807,10 @@ export async function buildLedger() {
       repositoryInputs: inputBindings,
       currentnessSuccessor: {
         id: CURRENTNESS_SUCCESSOR_ID,
-        predecessorGeneratorVersion: "1.0.0",
+        predecessorGeneratorVersion: "1.1.0",
         formalBaselineChanged: false,
         reason:
-          "Rebind current generated/private input bytes and the regenerated strict/release diagnostics ledgers while preserving the P1 formal baseline.",
+          "Rebind the 9,313-file source profile and regenerated catalog joins while preserving the 426-occurrence formal Current-JS baseline.",
       },
     },
     scope: {

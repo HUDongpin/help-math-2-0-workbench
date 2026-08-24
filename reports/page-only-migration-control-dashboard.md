@@ -2,7 +2,7 @@
 # HELP Math 1,751-page Page-Only migration control dashboard
 
 - Task: `HELP-MATH-P1-1751-PAGE-ONLY-MIGRATION-CONTROL-LEDGER-20260823`
-- Currentness successor: `HELP-MATH-P1-1751-PAGE-ONLY-LEDGER-CURRENTNESS-SUCCESSOR-20260824` (formal baseline changed = false)
+- Currentness successor: `HELP-MATH-C0-SOURCE-CUSTODY-CONVERGENCE-SUCCESSOR-20260824` (formal baseline changed = false)
 - Predecessor: `60f356be9b34cabd3ca1aad15b6dd00babfc7e35`
 - Scope: **29 Lessons / 1,751 active page occurrences / 0 legacy course shells**
 
@@ -26,7 +26,7 @@ The baseline remains **426 / 1,751 occurrences** and **425 unique renderers**. T
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | G3 | 8 | 546 | 298 | 248 | 2 | 70 | 70 | 476 | 0 |
 | G4 | 12 | 645 | 645 | 0 | 17 | 181 | 181 | 464 | 0 |
-| G5 | 9 | 560 | 418 | 142 | 1 | 175 | 174 | 385 | 0 |
+| G5 | 9 | 560 | 458 | 102 | 1 | 175 | 174 | 385 | 0 |
 
 ## Per-Lesson control table
 
@@ -53,19 +53,19 @@ The baseline remains **426 / 1,751 occurrences** and **425 unique renderers**. T
 | G4 L11 | Coordinate Grid | 43 | 43 | 0 | 0 | 43 | 0 | 43 | 0 | registered baseline |
 | G4 L12 | Geometry | 77 | 77 | 0 | 0 | 0 | 77 | 0 | 0 | W1 |
 | G5 L1 | Working with Decimals and Percents | 82 | 56 | 26 | 0 | 0 | 82 | 0 | 0 | W3 |
-| G5 L2 | Percents | 64 | 62 | 2 | 0 | 0 | 64 | 0 | 0 | W2 |
-| G5 L3 | Exponents & Prime Factorizations | 65 | 40 | 25 | 0 | 65 | 0 | 65 | 0 | registered baseline |
+| G5 L2 | Percents | 64 | 64 | 0 | 0 | 0 | 64 | 0 | 0 | W2 |
+| G5 L3 | Exponents & Prime Factorizations | 65 | 65 | 0 | 0 | 65 | 0 | 65 | 0 | registered baseline |
 | G5 L4 | Number Lines | 54 | 54 | 0 | 0 | 54 | 0 | 54 | 0 | registered baseline |
 | G5 L5 | Add & Subtract Negative Numbers | 56 | 56 | 0 | 0 | 56 | 0 | 56 | 0 | registered baseline |
-| G5 L6 | Division Skills | 40 | 27 | 13 | 0 | 0 | 40 | 0 | 0 | W2 |
+| G5 L6 | Division Skills | 40 | 40 | 0 | 0 | 0 | 40 | 0 | 0 | W2 |
 | G5 L7 | Add, Subtract, Multiply & Divide Decimals | 55 | 27 | 28 | 0 | 0 | 55 | 0 | 0 | W3 |
 | G5 L8 | Add & Subtract Fractions | 71 | 23 | 48 | 0 | 0 | 71 | 0 | 0 | W3 |
 | G5 L13 | Geometry | 73 | 73 | 0 | 1 | 0 | 73 | 0 | 0 | W2 |
 
 ## Source custody
 
-- Occurrence join: **1,361 resolved + 390 missing = 1,751**.
-- Missing identities: **389 unique expected paths / 390 occurrences**.
+- Occurrence join: **1,401 resolved + 350 missing = 1,751**.
+- Missing identities: **350 unique expected paths / 350 occurrences**.
 - Frozen physical source evidence: 9,313 files, 3,308,484,004 bytes, manifest `f4de727e98372ca550b9f87220305c8b4d5b226b26e06573ae4ca7c7d40b9549`, read-only, 0 writable entries.
 - Physical source custody does not override the catalog occurrence join and never proves implementation, runtime fidelity, review, release, or production.
 
@@ -81,9 +81,6 @@ Lessons with catalog source gaps:
 | G3 L8 | Measurement | 26 | 35 |
 | G3 L9 | Measurement | 64 | 29 |
 | G5 L1 | Working with Decimals and Percents | 26 | 56 |
-| G5 L2 | Percents | 2 | 62 |
-| G5 L3 | Exponents & Prime Factorizations | 25 | 40 |
-| G5 L6 | Division Skills | 13 | 27 |
 | G5 L7 | Add, Subtract, Multiply & Divide Decimals | 28 | 27 |
 | G5 L8 | Add & Subtract Fractions | 48 | 23 |
 
@@ -156,7 +153,7 @@ Reason: first not-formally-registered Lesson in Owner-supplied W1 ordering. This
 
 ## Blocker categories and authorization needs
 
-- 390 occurrence rows retain `missing-canonical-source`.
+- 350 occurrence rows retain `missing-canonical-source`.
 - 1,553 occurrence rows retain `complexity-unclassified`.
 - 1,704 occurrence rows retain `implementation-lane-unclassified`.
 - 20 candidate-only occurrences require an exact formal Lesson registration before they can count as Current-JS.
@@ -174,6 +171,6 @@ Authorization still required:
 
 - Input plan: `/Volumes/WestWorld/HELP MATH 2.0-g4-l5-l10-l11-integration/reports/help-math-426-page-only-baseline-input-plan-2026-08-22.json` / `6d181ad88f0c0cd0e6094a4fff2ac4056a883f442e402b3aa9c69ac8c94a4764`.
 - Frozen P0 receipt: `/Volumes/WestWorld/HELP MATH 2.0-g4-l5-l10-l11-integration/artifacts/handoffs/help-math-p0-426-page-only-baseline-final-receipt-2026-08-23.json` / `5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028`.
-- Currentness successor: `HELP-MATH-P1-1751-PAGE-ONLY-LEDGER-CURRENTNESS-SUCCESSOR-20260824`; predecessor generator 1.0.0; formal baseline unchanged.
-- Generator: `scripts/build-page-only-migration-control-ledger.mjs` / `895510121e23063fd0d30512ef2be4b53f2844aae05884ae40685b47f3146184`.
+- Currentness successor: `HELP-MATH-C0-SOURCE-CUSTODY-CONVERGENCE-SUCCESSOR-20260824`; predecessor generator 1.1.0; formal baseline unchanged.
+- Generator: `scripts/build-page-only-migration-control-ledger.mjs` / `a2dde55405c9d79a6f361673591b39c736b04c0822ee6fdea427d30cd5e8f1f5`.
 - Canonical JSON: `catalog/page-only-migration-control-ledger.json`.
