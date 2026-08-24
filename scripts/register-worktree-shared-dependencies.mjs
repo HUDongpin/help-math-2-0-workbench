@@ -208,30 +208,32 @@ function createSharedDependencyContext({
 
 function createResolveHook(context) {
   return function resolve(specifier, resolveContext, nextResolve) {
+    const isBare = !specifier.startsWith(".")
+      && !specifier.startsWith("/")
+      && !specifier.startsWith("#")
+      && !/^[a-z][a-z+.-]*:/iu.test(specifier);
+    if (!isBare) return nextResolve(specifier, resolveContext);
+
+    const workspaceResolution = resolveLocalWorkspace(specifier, context);
+    if (workspaceResolution) return workspaceResolution;
+
+    let result;
     try {
-      return nextResolve(specifier, resolveContext);
+      result = nextResolve(specifier, resolveContext);
     } catch (error) {
-      const isBare = !specifier.startsWith(".")
-        && !specifier.startsWith("/")
-        && !specifier.startsWith("#")
-        && !/^[a-z][a-z+.-]*:/iu.test(specifier);
-      if (error?.code !== "ERR_MODULE_NOT_FOUND" || !isBare) throw error;
-
-      const workspaceResolution = resolveLocalWorkspace(specifier, context);
-      if (workspaceResolution) return workspaceResolution;
-
-      const result = nextResolve(specifier, {
+      if (error?.code !== "ERR_MODULE_NOT_FOUND") throw error;
+      result = nextResolve(specifier, {
         ...resolveContext,
         parentURL: context.anchorUrl,
       });
-      if (!result?.url?.startsWith("file:")) {
-        throw new Error(`Shared dependency ${specifier} did not resolve to a local file URL`);
-      }
-      const resolvedPath = fileURLToPath(result.url);
-      const key = packageLockKeyForResolvedPath(resolvedPath, context.sharedNodeModules);
-      if (!key) {
-        throw new Error(`Refusing dependency ${specifier} outside shared node_modules: ${resolvedPath}`);
-      }
+    }
+    if (result?.url?.startsWith("node:")) return result;
+    if (!result?.url?.startsWith("file:")) {
+      throw new Error(`Shared dependency ${specifier} did not resolve to a local file URL`);
+    }
+    const resolvedPath = fileURLToPath(result.url);
+    const key = packageLockKeyForResolvedPath(resolvedPath, context.sharedNodeModules);
+    if (key) {
       assertLockIdentityMatches(
         context.currentLock.packages?.[key],
         context.sharedLock.packages?.[key],
@@ -239,6 +241,15 @@ function createResolveHook(context) {
       );
       return result;
     }
+
+    const relativeToCurrent = path.relative(context.currentRoot, resolvedPath);
+    if (!relativeToCurrent.startsWith(`..${path.sep}`)
+        && !path.isAbsolute(relativeToCurrent)) {
+      return result;
+    }
+    throw new Error(
+      `Refusing dependency ${specifier} outside the current worktree and shared node_modules: ${resolvedPath}`,
+    );
   };
 }
 

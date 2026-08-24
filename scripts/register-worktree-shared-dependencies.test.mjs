@@ -10,6 +10,7 @@ import {
   activeContext,
   assertDependencyMetadataMatches,
   assertLockIdentityMatches,
+  createResolveHook,
   createSharedDependencyContext,
   packageLockKeyForResolvedPath,
   resolveLocalWorkspace,
@@ -84,11 +85,51 @@ test("resolves workspace exports from the current worktree, never the shared che
     activeContext,
   );
   assert.ok(resolution?.url.startsWith("file:"));
-  assert.match(resolution.url, /codex\/worktrees\/e355/u);
-  assert.doesNotMatch(resolution.url, /Volumes\/WestWorld/u);
+  assert.equal(
+    fileURLToPath(resolution.url),
+    path.join(projectRoot, "packages/demos/src/animation-registry.ts"),
+  );
   assert.throws(
     () => resolveLocalWorkspace("@helpmath/demos/not-exported", activeContext),
     /does not export/u,
+  );
+});
+
+test("resolve hook prefers the current workspace before an ancestor workspace link", () => {
+  if (!activeContext.enabled) return;
+  let fallbackCalls = 0;
+  const resolution = createResolveHook(activeContext)(
+    "@helpmath/demos/animation-registry",
+    {parentURL: import.meta.url},
+    () => {
+      fallbackCalls += 1;
+      return {url: "file:///unexpected-shared-workspace-link"};
+    },
+  );
+  assert.equal(fallbackCalls, 0);
+  assert.equal(
+    fileURLToPath(resolution.url),
+    path.join(projectRoot, "packages/demos/src/animation-registry.ts"),
+  );
+});
+
+test("bootstrap resolves workspace imports to this exact worktree in a clean child", () => {
+  if (!activeContext.enabled) return;
+  const bootstrap = path.join(scriptDirectory, "register-worktree-shared-dependencies.mjs");
+  const output = execFileSync(process.execPath, [
+    "--import",
+    bootstrap,
+    "--input-type=module",
+    "--eval",
+    "console.log(import.meta.resolve('@helpmath/demos/animation-registry'))",
+  ], {
+    cwd: projectRoot,
+    encoding: "utf8",
+    env: {...process.env, NODE_OPTIONS: ""},
+  });
+  assert.equal(
+    fileURLToPath(output.trim()),
+    path.join(projectRoot, "packages/demos/src/animation-registry.ts"),
   );
 });
 
