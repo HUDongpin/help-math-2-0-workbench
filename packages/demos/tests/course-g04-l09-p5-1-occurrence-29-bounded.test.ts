@@ -21,7 +21,9 @@ import {
 } from '../src/g4-l9-p4-state-machines';
 import {createMemoryOnlyLessonHost} from '../src/lesson-host-contract';
 import module from '../src/modules/course-g04-l09-ti-004';
+import comparisonModule from '../src/modules/course-g04-l09-ti-007';
 import {COURSE_G04_L09_TI_004_CONFIG as config} from '../src/timelines/course-g04-l09-ti-004';
+import {COURSE_G04_L09_TI_007_CONFIG as comparisonConfig} from '../src/timelines/course-g04-l09-ti-007';
 
 const repositoryRoot = fileURLToPath(new URL('../../../', import.meta.url));
 const animationId = 'course-g04-l09-ti-004';
@@ -205,6 +207,75 @@ test('preserves all 12 source glossary handlers and only the explicit typo alias
   assert.match(markup, /data-drag-incorrect="Scr1,Scr6"/u);
   assert.match(markup, /data-try-count="0"/u);
   assert.match(markup, /data-terminal="false"/u);
+});
+
+test('keeps the occurrence-29 source canvas and required controls in exact flow regions', async () => {
+  const markup = renderToStaticMarkup(createElement(module.Renderer, {
+    audioEnabled: true,
+    frame: 1,
+    frameDomain: config.frameDomain,
+    lang: 'en',
+    scenario: config.scenarioId!,
+    seed: 4092026,
+  }));
+  assert.match(markup, /data-product-layout="source-controls-flow-v2"/u);
+  assert.match(markup, /data-source-controls-layout="separate-flow-regions"/u);
+  assert.match(markup, /data-source-safe-region="true"/u);
+  assert.match(markup, /data-interaction-panel="true"/u);
+  assert.match(markup, /data-required-control-surface="true"/u);
+  assert.equal(
+    (markup.match(/data-p5-1-required-control=/gu) ?? []).length,
+    14,
+  );
+  const requiredControlProjection = [...markup.matchAll(
+    /data-p5-1-required-control="([^"]+)"/gu,
+  )].map((match) => match[1]);
+  assert.deepEqual(requiredControlProjection, [
+    ...Array.from(
+      {length: 12},
+      (_, index) => `glossary-${String(index + 1).padStart(2, '0')}`,
+    ),
+    'audio',
+    'replay',
+  ]);
+  assert.equal(new Set(requiredControlProjection).size, 14);
+  assert.ok(
+    markup.indexOf('data-source-safe-region="true"') <
+      markup.indexOf('data-interaction-panel="true"'),
+    'source-safe canvas precedes the interaction panel in document flow',
+  );
+  assert.ok(
+    markup.indexOf('data-interaction-panel="true"') <
+      markup.indexOf('data-required-control-surface="true"'),
+    'interaction panel precedes required page controls in document flow',
+  );
+
+  const comparisonMarkup = renderToStaticMarkup(createElement(
+    comparisonModule.Renderer,
+    {
+      audioEnabled: true,
+      frame: 1,
+      frameDomain: comparisonConfig.frameDomain,
+      lang: 'en',
+      scenario: comparisonConfig.scenarioId!,
+      seed: 4092026,
+    },
+  ));
+  assert.doesNotMatch(comparisonMarkup, /source-controls-flow-v2/u);
+  assert.doesNotMatch(comparisonMarkup, /data-source-safe-region/u);
+  assert.doesNotMatch(comparisonMarkup, /data-interaction-panel/u);
+  assert.doesNotMatch(comparisonMarkup, /data-p5-1-required-control/u);
+
+  const hostCss = await readFile(
+    `${repositoryRoot}apps/web/app/globals.css`,
+    'utf8',
+  );
+  const exactIdentity =
+    ".g4-l9-p4[data-animation-id='course-g04-l09-ti-004'][data-source-occurrence='29'][data-random-cycle-adapter='rndAudio-source-array-seeded-cycle-v1'][data-product-layout='source-controls-flow-v2']";
+  assert.ok(hostCss.includes(exactIdentity));
+  assert.match(hostCss, /aspect-ratio: auto;/u);
+  assert.match(hostCss, /overflow: visible;/u);
+  assert.match(hostCss, /\.reduced-motion-note \{/u);
 });
 
 test('binds exact machine-decoded audio while keeping listening acceptance false', async () => {

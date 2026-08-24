@@ -184,6 +184,11 @@ function rendererFor(config: G4L9P4PageConfig) {
     }, [deterministicFrame]);
 
     const spanish = props.uiLanguage === "es";
+    const sourceControlsFlowLayout =
+      config.animationId === "course-g04-l09-ti-004" &&
+      config.sourceOccurrence === 29 &&
+      config.randomCycle?.adapter ===
+        "rndAudio-source-array-seeded-cycle-v1";
     const answer = (option: number) => {
       const correct =
         option ===
@@ -387,6 +392,9 @@ function rendererFor(config: G4L9P4PageConfig) {
         "data-network-calls": state.networkCalls,
         "data-original-runtime-validated": "false",
         "data-private-current-js": "true",
+        "data-product-layout": sourceControlsFlowLayout
+          ? "source-controls-flow-v2"
+          : undefined,
         "data-replay": state.replay,
         "data-question-index": state.questionIndex + 1,
         "data-score": state.score,
@@ -415,16 +423,29 @@ function rendererFor(config: G4L9P4PageConfig) {
       },
       createElement(
         "div",
-        { className: "g4-l9-p4__stage" },
+        {
+          className: "g4-l9-p4__stage",
+          "data-source-controls-layout": sourceControlsFlowLayout
+            ? "separate-flow-regions"
+            : undefined,
+        },
         createElement("canvas", {
           "aria-label": `${config.pageTitle} source-bound Current-JS candidate`,
+          "data-source-safe-region": sourceControlsFlowLayout
+            ? "true"
+            : undefined,
           height: 600,
           ref: canvasRef,
           width: 800,
         }),
         createElement(
           "div",
-          { className: "g4-l9-p4__card" },
+          {
+            className: "g4-l9-p4__card",
+            "data-interaction-panel": sourceControlsFlowLayout
+              ? "true"
+              : undefined,
+          },
           createElement(
             "p",
             null,
@@ -467,7 +488,12 @@ function rendererFor(config: G4L9P4PageConfig) {
       ),
       createElement(
         "nav",
-        { "aria-label": spanish ? "Controles de página" : "Page controls" },
+        {
+          "aria-label": spanish ? "Controles de página" : "Page controls",
+          "data-required-control-surface": sourceControlsFlowLayout
+            ? "true"
+            : undefined,
+        },
         (config.glossaryHandlers ?? [
           {
             handlerIndex: 1,
@@ -481,6 +507,9 @@ function rendererFor(config: G4L9P4PageConfig) {
             "button",
             {
               "aria-label": `Glossary ${handler.handlerIndex}: ${handler.sourceIntent}`,
+              "data-p5-1-required-control": sourceControlsFlowLayout
+                ? `glossary-${String(handler.handlerIndex).padStart(2, "0")}`
+                : undefined,
               key: handler.handlerIndex,
               onClick: (event: React.MouseEvent<HTMLButtonElement>) =>
                 glossary(handler.entryId, event),
@@ -493,6 +522,9 @@ function rendererFor(config: G4L9P4PageConfig) {
           ? createElement(
               "button",
               {
+                "data-p5-1-required-control": sourceControlsFlowLayout
+                  ? "audio"
+                  : undefined,
                 disabled: !props.audioEnabled,
                 onClick: audio,
                 type: "button",
@@ -508,7 +540,13 @@ function rendererFor(config: G4L9P4PageConfig) {
           : null,
         createElement(
           "button",
-          { onClick: replayPage, type: "button" },
+          {
+            "data-p5-1-required-control": sourceControlsFlowLayout
+              ? "replay"
+              : undefined,
+            onClick: replayPage,
+            type: "button",
+          },
           spanish ? "Repetir" : "Replay",
         ),
         config.sectionCode === "FQ" || config.randomQuestionAdapter
