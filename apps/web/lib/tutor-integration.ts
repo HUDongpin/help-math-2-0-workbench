@@ -226,6 +226,44 @@ function canvasRegionHasVisiblePixel(
   // keep the historical path below. In-browser capture fails closed when the
   // canvas exists but has not painted a single visible pixel yet.
   if (typeof canvas.getContext !== 'function') return true;
+
+  // Lesson renderers normally create their own 2D context before Nova ever
+  // inspects the stage. Passing willReadFrequently on a later getContext call
+  // cannot change that already-created context and still produces Chromium's
+  // repeated-read warning. Sample through a private probe canvas whose first
+  // context request carries the readback hint; this also keeps Nova from
+  // changing renderer-owned context attributes.
+  const probe = canvas.ownerDocument?.createElement('canvas');
+  if (probe) {
+    probe.width = region.width;
+    probe.height = region.height;
+    const probeContext = probe.getContext('2d', {willReadFrequently: true});
+    if (!probeContext) return false;
+    probeContext.drawImage(
+      canvas,
+      region.left,
+      region.top,
+      region.width,
+      region.height,
+      0,
+      0,
+      region.width,
+      region.height,
+    );
+    const pixels = probeContext.getImageData(
+      0,
+      0,
+      region.width,
+      region.height,
+    ).data;
+    for (let index = 3; index < pixels.length; index += 4) {
+      if (pixels[index] !== 0) return true;
+    }
+    return false;
+  }
+
+  // Small unit-test doubles may not expose ownerDocument. Keep their
+  // historical direct-read path while real browser capture uses the probe.
   const context = canvas.getContext('2d', {willReadFrequently: true});
   if (!context) return false;
   const pixels = context.getImageData(
@@ -508,7 +546,7 @@ export async function tutorSvgFrameSnapshot(
     const output = document.createElement('canvas');
     output.width = region.width;
     output.height = region.height;
-    const context = output.getContext('2d');
+    const context = output.getContext('2d', {willReadFrequently: true});
     if (!context) return null;
     context.drawImage(
       image,

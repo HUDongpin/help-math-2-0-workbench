@@ -15,6 +15,7 @@ export const NOVA_REQUEST_LIMITS = Object.freeze({
 export const novaLocales = ['en', 'es'] as const;
 export const novaModes = ['focus', 'study', 'classroom'] as const;
 export const novaHistoryRoles = ['user', 'assistant'] as const;
+export const novaInputMethods = ['typed', 'speech-to-draft'] as const;
 
 const releaseIdSchema = z
   .string()
@@ -145,6 +146,10 @@ export const novaTutorRequestSchema = z
   .object({
     locale: z.enum(novaLocales),
     mode: z.enum(novaModes).optional().default('focus'),
+    // This optional, privacy-safe provenance marker exists only so the route
+    // can distinguish confirmed speech-to-draft use in content-free logs.
+    // It never authorizes speech, carries no audio, and is not sent upstream.
+    inputMethod: z.enum(novaInputMethods).optional().default('typed'),
     message: z
       .string()
       .trim()
@@ -211,6 +216,9 @@ export function novaTransportValidationIsTooLarge(error: z.ZodError) {
 export type NovaTutorTransportRequest = z.infer<
   typeof novaTutorRequestSchema
 >;
+
+export type NovaTutorInputMethod =
+  (typeof novaInputMethods)[number];
 
 /** @deprecated Prefer NovaTutorTransportRequest at the browser boundary. */
 export type NovaTutorRequest = NovaTutorTransportRequest;

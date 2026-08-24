@@ -23,6 +23,7 @@ import {
   type NovaTutorModel,
 } from '@/lib/nova-provider-contract';
 import type {NovaClientCapabilities} from '@/lib/nova-capabilities';
+import type {NovaTutorInputMethod} from '@/lib/nova-request-schema';
 import {
   tutorContextSummary,
   type NovaTutorMode,
@@ -249,6 +250,7 @@ function useNovaConversation({
   const askNova = useCallback(async (
     rawMessage: string,
     frame?: TutorFrameSnapshot,
+    inputMethod: NovaTutorInputMethod = 'typed',
   ) => {
     const message = rawMessage.trim().slice(0, 1_200);
     if (!message || busyRef.current) return false;
@@ -271,6 +273,10 @@ function useNovaConversation({
           message,
           history,
           context,
+          // Preserve the historical typed-text wire shape. Only a transcript
+          // that reached the explicit Send action carries this content-free
+          // provenance marker; no raw audio ever enters the request.
+          ...(inputMethod === 'speech-to-draft' ? {inputMethod} : {}),
           ...(frame ? {frame: {
             releaseId: frame.releaseId,
             animationId: frame.animationId,
@@ -396,11 +402,19 @@ function useNovaSpeech({
     }
   }, []);
 
-  const confirmDraftSend = useCallback(() => {
-    if (!speechDraftReadyRef.current) return;
+  const confirmDraftSend = useCallback((): NovaTutorInputMethod => {
+    if (!speechDraftReadyRef.current) return 'typed';
     speechDraftReadyRef.current = false;
     recordNovaSpeechStatus('confirmed-send', locale);
+    return 'speech-to-draft';
   }, [locale]);
+
+  const reconcileDraftOrigin = useCallback((draft: string) => {
+    // Ordinary edits still belong to the learner-confirmed speech-to-draft
+    // workflow. Clearing the field ends that provenance so later typed text
+    // is not mislabeled as voice input in server observability.
+    if (!draft.trim()) speechDraftReadyRef.current = false;
+  }, []);
 
   const startListening = useCallback(() => {
     if (!enabled || availability !== 'available' || busy) return;
@@ -506,7 +520,13 @@ function useNovaSpeech({
     }
   }, [availability, busy, enabled, locale, onDraft, onNotice, stopListening]);
 
-  return {availability, confirmDraftSend, listening, startListening};
+  return {
+    availability,
+    confirmDraftSend,
+    listening,
+    reconcileDraftOrigin,
+    startListening,
+  };
 }
 
 /**
@@ -578,11 +598,11 @@ export function LessonNovaTutor({
       inputRef.current?.focus();
       return;
     }
-    speech.confirmDraftSend();
+    const inputMethod = speech.confirmDraftSend();
     setQuestion('');
     setNotice('');
     const frameForRequest = currentAttachedFrame ?? undefined;
-    const succeeded = await nova.askNova(message, frameForRequest);
+    const succeeded = await nova.askNova(message, frameForRequest, inputMethod);
     if (succeeded && frameForRequest) {
       setAttachedFrame(null);
       setNotice(spanish
@@ -829,7 +849,9 @@ export function LessonNovaTutor({
           id={`${instanceId}-nova-question`}
           maxLength={1200}
           onChange={(event) => {
-            setQuestion(event.target.value);
+            const nextQuestion = event.target.value;
+            speech.reconcileDraftOrigin(nextQuestion);
+            setQuestion(nextQuestion);
             setNotice('');
           }}
           onKeyDown={(event) => {
@@ -962,10 +984,10 @@ export function LessonNovaClassroomBand({
         : (spanish ? 'Escribe una pregunta primero.' : 'Type a question first.'));
       return;
     }
-    speech.confirmDraftSend();
+    const inputMethod = speech.confirmDraftSend();
     setQuestion('');
     setSpeechNotice('');
-    await nova.askNova(message);
+    await nova.askNova(message, undefined, inputMethod);
   }, [capabilities.speechToDraft, nova, spanish, speech]);
   const currentFrameSnapshot = capabilities.currentLessonFrame &&
       frameMatchesContext(frameSnapshot, context)
@@ -1073,7 +1095,9 @@ export function LessonNovaClassroomBand({
           id={`${inputId}-classroom-question`}
           maxLength={1200}
           onChange={(event) => {
-            setQuestion(event.target.value);
+            const nextQuestion = event.target.value;
+            speech.reconcileDraftOrigin(nextQuestion);
+            setQuestion(nextQuestion);
             setSpeechNotice('');
           }}
           placeholder={spanish ? 'Escribe una pregunta' : 'Type a question'}

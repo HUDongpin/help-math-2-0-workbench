@@ -283,6 +283,22 @@ still required. During canary and the first observation window, monitor
 safe error counts without logging prompts, replies, raw audio, frames, provider
 IDs, IP addresses, or learner data.
 
+Every `/api/nova` completion writes one content-free structured record. Its
+allowlisted fields are the event and local request ID; deployment, commit, and
+environment identifiers; canonical release, grade, lesson, locale, and
+assessment state; `capability` (`text`, `image`, `voice`, or `null` before a
+valid request is parsed) and `framePresent`; status, duration, attempts,
+failure stage, upstream status, exact model, and request byte count. `image`
+means the current-lesson-frame request path, not local photo upload. `voice`
+means the browser marked an explicitly sent, learner-reviewed
+`speech-to-draft` transcript; it is untrusted observability metadata, never an
+authorization input or proof about the browser/OS speech provider. The marker
+is not passed to OpenRouter, and HELP Math still receives no raw audio. When a
+voice-origin draft also has a current frame, `capability=voice` and
+`framePresent=true` preserve both facts. The browser may separately emit only
+allowlisted speech workflow status and locale; it must never log the transcript
+or question.
+
 Official references:
 
 - [OpenRouter Quickstart](https://openrouter.ai/docs/quickstart)

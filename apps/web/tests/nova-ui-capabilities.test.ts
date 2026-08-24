@@ -96,6 +96,9 @@ describe('Nova client capability gates', () => {
     );
     assert.match(tutor, /recordNovaSpeechStatus\('draft-ready', locale\)/);
     assert.match(tutor, /recordNovaSpeechStatus\('confirmed-send', locale\)/);
+    assert.match(tutor, /inputMethod === 'speech-to-draft'/);
+    assert.match(tutor, /return 'speech-to-draft'/);
+    assert.match(tutor, /if \(!draft\.trim\(\)\) speechDraftReadyRef\.current = false/);
     assert.doesNotMatch(
       tutor,
       /track\('nova_speech_status', \{[^}]*transcript/,

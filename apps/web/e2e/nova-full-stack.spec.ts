@@ -576,6 +576,11 @@ test.describe.serial('FULL_STACK_FAKE_UPSTREAM media confirmation', () => {
           ? 'Revísala y luego pulsa Enviar'
           : 'Review it, then press Send',
       );
+      const reviewedDraft = locale === 'es'
+        ? `${transcript} Explícalo brevemente.`
+        : `${transcript} Please keep it brief.`;
+      await textbox.fill(reviewedDraft);
+      await expect(textbox).toHaveValue(reviewedDraft);
       expect(apiRequests).toEqual([]);
       const preSendAnalytics = await readNovaAnalyticsEvents(page);
       expect(novaSpeechStatuses(preSendAnalytics)).toContain('draft-ready');
@@ -595,7 +600,8 @@ test.describe.serial('FULL_STACK_FAKE_UPSTREAM media confirmation', () => {
       expect(response.status()).toBe(200);
       expect(apiRequests).toHaveLength(1);
       const request = response.request().postDataJSON() as Record<string, unknown>;
-      expect(request.message).toBe(transcript);
+      expect(request.message).toBe(reviewedDraft);
+      expect(request.inputMethod).toBe('speech-to-draft');
       expect(JSON.stringify(request)).not.toMatch(/audio|voice|blob/iu);
       const postSendAnalytics = await readNovaAnalyticsEvents(page);
       expect(novaSpeechStatuses(postSendAnalytics)).toContain('confirmed-send');

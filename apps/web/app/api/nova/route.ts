@@ -113,6 +113,7 @@ export async function POST(request: Request) {
     : null;
   let requestMetadata: Readonly<{
     assessment: boolean | null;
+    capability: 'text' | 'image' | 'voice' | null;
     framePresent: boolean | null;
     grade: number | null;
     lesson: number | null;
@@ -120,6 +121,7 @@ export async function POST(request: Request) {
     releaseId: string | null;
   }> = Object.freeze({
     assessment: null,
+    capability: null,
     framePresent: null,
     grade: null,
     lesson: null,
@@ -154,6 +156,7 @@ export async function POST(request: Request) {
       lesson: requestMetadata.lesson,
       locale: requestMetadata.locale,
       assessment: requestMetadata.assessment,
+      capability: requestMetadata.capability,
       framePresent: requestMetadata.framePresent,
       status,
       durationMs: Date.now() - requestStartedAt,
@@ -287,6 +290,15 @@ export async function POST(request: Request) {
   }
   requestMetadata = Object.freeze({
     assessment: parsed.data.context.assessment,
+    // `speech-to-draft` is an untrusted, privacy-safe observability marker,
+    // never an authorization input. The request still contains only confirmed
+    // text; HELP Math never receives raw audio. `framePresent` independently
+    // records a current-frame attachment when both capabilities are combined.
+    capability: parsed.data.inputMethod === 'speech-to-draft'
+      ? 'voice'
+      : parsed.data.frame === undefined
+        ? 'text'
+        : 'image',
     framePresent: parsed.data.frame !== undefined,
     grade: parsed.data.context.grade,
     lesson: parsed.data.context.lesson,

@@ -157,6 +157,45 @@ test('a snapshot is produced for a canvas-backed page', () => {
   assert.equal(shot?.globalPageOrdinal, 19);
 });
 
+test('visible-pixel probing owns a readback-optimized canvas context', () => {
+  let sourceContextCalls = 0;
+  let contextOptions: CanvasRenderingContext2DSettings | undefined;
+  let drawArguments: readonly unknown[] = [];
+  const probe = {
+    width: 0,
+    height: 0,
+    getContext: (
+      _type: string,
+      options?: CanvasRenderingContext2DSettings,
+    ) => {
+      contextOptions = options;
+      return {
+        drawImage: (...args: readonly unknown[]) => { drawArguments = args; },
+        getImageData: () => ({
+          data: Uint8ClampedArray.from([0, 0, 0, 255]),
+        }),
+      };
+    },
+  };
+  const canvas = {
+    width: 2,
+    height: 2,
+    getContext: () => {
+      sourceContextCalls += 1;
+      return null;
+    },
+    ownerDocument: {createElement: () => probe},
+    toDataURL: () => 'data:image/png;base64,READBACK',
+  } as unknown as HTMLCanvasElement;
+
+  const shot = tutorFrameSnapshot(canvas, framePlacement('readback', 1));
+
+  assert.equal(shot?.dataUrl, 'data:image/png;base64,READBACK');
+  assert.equal(sourceContextCalls, 0);
+  assert.deepEqual(contextOptions, {willReadFrequently: true});
+  assert.deepEqual(drawArguments, [canvas, 0, 0, 2, 2, 0, 0, 2, 2]);
+});
+
 test('a modern-wide snapshot is cropped to the visible authored content band', () => {
   let drawArguments: readonly unknown[] = [];
   const output = {
