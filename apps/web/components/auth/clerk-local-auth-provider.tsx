@@ -3,6 +3,7 @@ import {ClerkProvider} from '@clerk/nextjs';
 import type {ReactNode} from 'react';
 
 import type {AppLocale} from '@/i18n/routing';
+import {readFamilyAuthProviderMode} from '@/lib/family/auth-provider-config';
 import {isLocalAuthEnabled, localizedAuthPath} from '@/lib/local-auth-access';
 
 export function ClerkLocalAuthProvider({
@@ -12,7 +13,10 @@ export function ClerkLocalAuthProvider({
   children: ReactNode;
   locale: AppLocale;
 }>) {
-  if (!isLocalAuthEnabled()) return children;
+  if (
+    !isLocalAuthEnabled()
+    || readFamilyAuthProviderMode() !== 'clerk-development'
+  ) return children;
 
   return <ClerkProvider
     dynamic

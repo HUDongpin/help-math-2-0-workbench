@@ -1,4 +1,6 @@
 import {defineConfig, devices} from '@playwright/test';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
 
 const port = Number(process.env.PLAYWRIGHT_PORT ?? 3211);
 if (!Number.isInteger(port) || port < 1 || port > 65_535) {
@@ -12,13 +14,18 @@ export default defineConfig({
   // External Clerk mutation is reachable only through the dedicated,
   // redacted, fresh-server launcher. Ordinary browser regression must never
   // discover it even if authorization variables were left in a shell.
-  testIgnore: 'clerk-synthetic-lifecycle.spec.ts',
+  testIgnore: [
+    'clerk-synthetic-lifecycle.spec.ts',
+    ...(process.env.FAMILY_INTEGRATION_E2E_ENABLED === 'true'
+      ? []
+      : ['family-portal-integration.spec.ts']),
+  ],
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 2 : undefined,
   reporter: [['line']],
-  outputDir: '/tmp/helpmath-site-playwright-results',
+  outputDir: join(tmpdir(), 'helpmath-site-playwright-results'),
   expect: {
     timeout: 10_000,
   },
@@ -39,6 +46,19 @@ export default defineConfig({
       // Clerk instance. The destructive provider lifecycle has a separate,
       // explicitly authorized launcher and Playwright configuration.
       CLERK_LOCAL_AUTH_ENABLED: 'false',
+      // Family browser coverage uses only the isolated in-memory synthetic
+      // tenant. No provider, database, email, or real recipient is reachable.
+      FAMILY_PORTAL_ENABLED:
+        process.env.FAMILY_PORTAL_ENABLED ?? 'true',
+      FAMILY_MESSAGING_ENABLED:
+        process.env.FAMILY_MESSAGING_ENABLED ?? 'true',
+      FAMILY_SYNTHETIC_DEMO_ENABLED:
+        process.env.FAMILY_SYNTHETIC_DEMO_ENABLED ?? 'true',
+      FAMILY_EMAIL_NOTIFICATIONS_ENABLED:
+        process.env.FAMILY_EMAIL_NOTIFICATIONS_ENABLED ?? 'false',
+      FAMILY_INVITATION_RECIPIENT_POLICY:
+        process.env.FAMILY_INVITATION_RECIPIENT_POLICY
+          ?? 'synthetic-invalid-only',
       // The browser suite exercises unfinished candidates only in a local
       // development server. Production does not expose a review route.
       MODERN_WIDE_SHELL_ENABLED:

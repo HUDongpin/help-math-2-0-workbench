@@ -10,6 +10,15 @@ import {
   currentJsShowcasePublication,
   G5_L4_SHOWCASE_RELEASE_ID,
 } from '@/lib/current-js-showcase-publication';
+import {readLearningAssignmentLaunch} from
+  '@/lib/family/learning-assignment-launch.server';
+import {recordAssignmentLearningEventsV2} from
+  '@/lib/family/learning-events-v2-action';
+import {
+  learningAssignmentLaunchMatchesCourse,
+  learningAssignmentLocatorSchema,
+  type LearningAssignmentLaunch,
+} from '@/lib/family/learning-events-v2-contract';
 import {isG5L4ShowcaseAudioAuthorized} from '@/lib/g5-l4-preview-asset-policy';
 import {findLessonNavigationForRoute} from '@/lib/lesson-navigation';
 import {findPageOnlyCurrentJsNavigationForRoute} from '@/lib/page-only-current-js-navigation.server';
@@ -41,12 +50,13 @@ export default async function CoursePage({
 }: {
   params: Promise<{locale: 'en' | 'es'; grade: string; lesson: string}>;
   searchParams: Promise<{
+    assignment?: string | string[];
     mode?: string | string[];
     view?: string | string[];
   }>;
 }) {
   const {locale, grade, lesson} = await params;
-  const {mode, view} = await searchParams;
+  const {assignment, mode, view} = await searchParams;
   const novaTutorMode = resolveNovaTutorMode(mode);
   const designerView = isMigrationStatusAvailable()
     && isMigrationStatusDesignerViewRequested(view);
@@ -123,6 +133,24 @@ export default async function CoursePage({
       declared: courseRegistration.descriptor.visualSkin.presentations,
       enabled: isModernWideShellEnabled(),
     });
+    let familyLearningLaunch: LearningAssignmentLaunch | undefined;
+    if (assignment !== undefined) {
+      if (
+        Array.isArray(assignment)
+        || !learningAssignmentLocatorSchema.safeParse(assignment).success
+        || courseRegistration.player.kind !== 'preserved-custom'
+      ) notFound();
+      try {
+        familyLearningLaunch = await readLearningAssignmentLaunch(assignment);
+      } catch {
+        notFound();
+      }
+      if (!learningAssignmentLaunchMatchesCourse(familyLearningLaunch, {
+        href: courseRegistration.descriptor.course.href,
+        pages: courseRegistration.descriptor.pages,
+        releaseId: courseRegistration.descriptor.releaseId,
+      })) notFound();
+    }
     const authSession = await readAuthSession();
     return <WholeLessonCoursePlayer
       audioEnabled={
@@ -131,11 +159,15 @@ export default async function CoursePage({
       }
       authStatus={authSession.status}
       candidateMode={designerView && (auditPreview || !releasePublished)}
+      familyLearningLaunch={familyLearningLaunch}
       hostPresentation={hostPresentation}
       learningEventsEnabled={process.env.LRS_ENABLED === 'true'}
       reviewerMode={isReviewerInstrumentationEnabled()}
       locale={locale}
       novaTutorMode={novaTutorMode}
+      onRecordFamilyLearningEventsAction={familyLearningLaunch
+        ? recordAssignmentLearningEventsV2
+        : undefined}
       registration={courseRegistration}
       releasePublished={releasePublished}
       strictCompleteMemberCount={releaseView.strictCompleteMemberCount}

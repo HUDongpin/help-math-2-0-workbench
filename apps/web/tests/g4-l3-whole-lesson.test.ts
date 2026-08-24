@@ -583,10 +583,17 @@ test('source-bound Exit prompt preserves the shell visual and replaces legacy ne
   for (const player of [playerSource, descriptorPlayerSource]) {
     assert.match(player, /const learningHomeHref = spanish \? '\/es' : '\/'/);
     assert.match(player, /window\.location\.assign\(learningHomeHref\)/);
-    assert.match(player, /const exitToLearningHome = \(\) => window\.location\.assign\(learningHomeHref\)/);
     assert.match(player, /onExit=\{exitToLearningHome\}/);
     assert.doesNotMatch(player, /libraryHref|exitToLibrary/);
   }
+  assert.match(
+    descriptorPlayerSource,
+    /const exitToLearningHome = \(\) => window\.location\.assign\(learningHomeHref\)/,
+  );
+  assert.match(
+    playerSource,
+    /const exitToLearningHome = \(\) => \{[\s\S]*?recordLessonExit\(\);[\s\S]*?flushLearningEvents\(\{keepalive: true\}\);[\s\S]*?flushFamilyLearningEvents\(\);[\s\S]*?window\.location\.assign\(learningHomeHref\);[\s\S]*?\};/,
+  );
   assert.doesNotMatch(promptSource, /return to the (?:local course )?library|volver a la biblioteca/);
   assert.doesNotMatch(
     `${playerSource}\n${descriptorPlayerSource}\n${promptSource}\n${shellSource}`,

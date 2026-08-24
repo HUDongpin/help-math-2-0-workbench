@@ -1117,9 +1117,8 @@ async function expectApplicationSession(page: Page, signedIn: boolean) {
 
   if (signedIn) {
     expect(response.status()).toBe(200);
-    expect(Object.keys(body).sort()).toEqual(['ok', 'provider', 'status']);
+    expect(Object.keys(body).sort()).toEqual(['ok', 'status']);
     expect(body.ok).toBe(true);
-    expect(body.provider).toBe('clerk');
     expect(body.status).toBe('signed-in');
     return;
   }

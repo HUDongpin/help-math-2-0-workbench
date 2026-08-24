@@ -35,7 +35,8 @@ test('local auth UI is bilingual, non-indexable, accessible, and fail closed', a
 
   for (const route of [signInRoute, signUpRoute, accountRoute]) {
     assert.match(route, /robots: \{follow: false, index: false\}/u);
-    assert.match(route, /!isLocale\(locale\) \|\| !isLocalAuthEnabled\(\)/u);
+    assert.match(route, /!isLocale\(locale\)/u);
+    assert.match(route, /FamilyAuth|readFamilyAuthProviderMode/u);
     assert.match(route, /locale === 'es'/u);
   }
 
@@ -54,7 +55,7 @@ test('local auth UI is bilingual, non-indexable, accessible, and fail closed', a
   assert.match(authPage, /No uses credenciales históricas de HELP Math\./u);
   assert.match(authPage, /id="main-content" tabIndex=\{-1\}/u);
 
-  assert.match(authProvider, /if \(!isLocalAuthEnabled\(\)\) return children;/u);
+  assert.match(authProvider, /readFamilyAuthProviderMode\(\) !== 'clerk-development'/u);
 
   assert.match(authUi, /fontSize: '16px'/u);
   assert.match(authUi, /localizedAuthPath\(locale, '\/sign-up'\)/u);

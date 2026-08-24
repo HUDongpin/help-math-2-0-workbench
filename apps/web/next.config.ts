@@ -167,6 +167,15 @@ const embeddedCourseAdapterHeaders = [
   {key: 'X-Frame-Options', value: 'SAMEORIGIN'}
 ];
 
+const protectedFamilyHeaders = [
+  {key: 'Cache-Control', value: 'private, no-store, max-age=0'},
+  {
+    key: 'X-Robots-Tag',
+    value: 'noindex, nofollow, noarchive, noimageindex',
+  },
+  {key: 'Vary', value: 'Cookie, Authorization'},
+];
+
 const legacyRedirects: NonNullable<NextConfig['redirects']> = async () => [
   {source: '/Home.htm', destination: '/', permanent: true},
   {source: '/About.htm', destination: '/about', permanent: true},
@@ -188,6 +197,9 @@ const nextConfig: NextConfig = {
   // Keep the learner-facing local preview free of the development badge so
   // screenshot and projector review reflect the actual course surface.
   devIndicators: false,
+  experimental: {
+    authInterrupts: true,
+  },
   distDir: clerkSyntheticBuild
     ? CLERK_SYNTHETIC_DIST_DIR
     : currentJsCandidateQaBuild
@@ -246,7 +258,18 @@ const nextConfig: NextConfig = {
             value: 'noindex, nofollow, noarchive, noimageindex',
           },
         ],
-      }
+      },
+      {source: '/family/:path*', headers: protectedFamilyHeaders},
+      {source: '/en/family/:path*', headers: protectedFamilyHeaders},
+      {source: '/es/family/:path*', headers: protectedFamilyHeaders},
+      {source: '/teacher/messages/:path*', headers: protectedFamilyHeaders},
+      {source: '/en/teacher/messages/:path*', headers: protectedFamilyHeaders},
+      {source: '/es/teacher/messages/:path*', headers: protectedFamilyHeaders},
+      {source: '/admin/family-access/:path*', headers: protectedFamilyHeaders},
+      {source: '/en/admin/family-access/:path*', headers: protectedFamilyHeaders},
+      {source: '/es/admin/family-access/:path*', headers: protectedFamilyHeaders},
+      {source: '/api/cron/family-notifications', headers: protectedFamilyHeaders},
+      {source: '/api/webhooks/resend', headers: protectedFamilyHeaders},
     ];
   },
   redirects: legacyRedirects

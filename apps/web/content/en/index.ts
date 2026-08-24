@@ -612,7 +612,7 @@ export const enContent = {
         eyebrow: "HELP Math support",
         title: "Start with what is available today",
         summary:
-          "The learning platform offers eight current-JavaScript lessons with 426 source-ordered page placements—G3 L2 (70); G4 L3 (39), L5 (53), L10 (46), and L11 (43); and G5 L3 (65), L4 (54), and L5 (56)—together with local progress and learning supports. Former student and educator accounts are not connected, and this site cannot recover old passwords or historical learning records.",
+          "The public learning platform offers eight current-JavaScript lessons with 426 source-ordered page placements—G3 L2 (70); G4 L3 (39), L5 (53), L10 (46), and L11 (43); and G5 L3 (65), L4 (54), and L5 (56)—together with local progress and learning supports. A separate, protected Family Portal candidate is available only when an authorized school enables it and sends a verified invitation. Former accounts remain disconnected, and this site cannot recover old passwords or historical learning records.",
         primaryAction: { label: "Contact support", href: "/contact?topic=support" },
         secondaryAction: { label: "Check login status", href: "/login" },
       },
@@ -664,10 +664,10 @@ export const enContent = {
           },
           {
             id: "accounts",
-            title: "Student and educator accounts",
+            title: "School-invited Family Portal candidate",
             description:
-              "Login, classes, assignments, purchases, and progress reporting are not active on the modern site.",
-            detail: "Not available",
+              "The protected candidate supports school-verified parent or guardian invitations, read-only family progress, assignments, and private teacher messages for explicitly enabled tenants. It is default-off, does not permit self-claiming a child, and is not connected to former HELP Math accounts.",
+            detail: "Protected candidate · Default off",
           },
         ],
       },
@@ -678,6 +678,12 @@ export const enContent = {
           question: "Can I use my old HELP Math username and password?",
           answer:
             "No. The modern public site is not connected to the former account system. Do not enter or email an old password. An adult may contact support with an organization name and non-sensitive account context.",
+        },
+        {
+          id: "family-access",
+          question: "How does a parent or guardian get Family Portal access?",
+          answer:
+            "There is no public sign-up or child-claim flow. When the protected candidate is enabled, a school or district administrator must first verify the relationship and send a one-time invitation to the adult's verified email address. Access can be revoked by the school or relinquished by the adult, and historical HELP Math credentials are never imported.",
         },
         {
           id: "flash",
@@ -713,7 +719,7 @@ export const enContent = {
       contact: {
         title: "Still need help?",
         body:
-          "Contact intake is paused. This link opens the current availability status; HELP Math does not currently collect or send a support request through this site.",
+          "General public contact intake is paused. In an authorized Family Portal pilot, account, access, correction, deletion, or relationship disputes must use the school-controlled support route shown after sign-in; the portal is not the only channel for education-record rights. Do not send passwords or student records through the public contact page.",
         action: { label: "Check contact availability", href: "/contact?topic=support" },
       },
     },
@@ -727,8 +733,8 @@ export const enContent = {
         eyebrow: "Account access",
         title: "The former HELP Math login is not active here",
         summary:
-          "This site is a public modernization preview. It has no student or educator sign-in form and is not connected to the historical account database.",
-        primaryAction: { label: "Contact account support", href: "/contact?topic=account-access" },
+          "Historical HELP Math accounts remain disconnected and cannot be recovered here. A separate protected sign-in candidate exists only for current school-authorized users and invited parents or guardians when their tenant and identity release gates are enabled.",
+        primaryAction: { label: "Check protected sign-in", href: "/sign-in" },
         secondaryAction: { label: "Review demo availability", href: "/demos" },
       },
       alert: {
@@ -744,27 +750,27 @@ export const enContent = {
             id: "student",
             title: "I am a student",
             description:
-              "Read the public project information without signing in. Ask a parent, guardian, teacher, or another trusted adult to contact us about an old account or other project support.",
+              "Read the public project information without signing in. A current school assignment may provide protected learner access, but never use a former password or another person's invitation.",
             action: { label: "Explore the project", href: "/about" },
           },
           {
             id: "educator",
             title: "I am an educator or school representative",
             description:
-              "Contact the project using your work email and organization name. Describe the kind of access or historical account information you need without sharing student data.",
-            action: { label: "Request support", href: "/contact?topic=account-access" },
+              "Use protected sign-in only when your current school role has been provisioned in the application. Former educator accounts, rosters, and passwords are not imported.",
+            action: { label: "Check protected sign-in", href: "/sign-in" },
           },
           {
             id: "family",
             title: "I am a parent or guardian",
             description:
-              "Tell us the school or organization connected with the former program and how we can help. Leave out passwords and student records.",
-            action: { label: "Contact the project", href: "/contact?topic=family-support" },
+              "If your current school sent a verified Family invitation, use the protected sign-in route with that exact email. Without an invitation, contact the school through its established channel; HELP Math does not offer public child claiming.",
+            action: { label: "Use an invitation", href: "/sign-in" },
           },
         ],
       },
       safetyNote:
-        "If another website asks for your old HELP Math password, stop and confirm the web address with a trusted adult or your school. The official modern public site does not ask visitors to sign in.",
+        "Never enter an old HELP Math password. The protected candidate may ask an authorized user to sign in through the configured identity provider, but roles and child relationships come only from the application and school authorization—not editable profile metadata or historical credentials.",
     },
     contact: {
       metadata: {
@@ -1056,16 +1062,16 @@ export const enContent = {
       metadata: {
         title: "Draft Privacy Notice",
         description:
-          "Read the draft explanation of how HELP Math handles local lesson state, pseudonymous learning events, Nova Tutor requests, paused contact status, and limited technical data.",
+          "Read the unapproved draft explanation of how HELP Math handles public local lesson state and, when explicitly enabled, the protected school-invited Family Portal candidate.",
       },
       hero: {
         eyebrow: "Draft privacy notice",
-        title: "A learning preview designed to know less about you",
+        title: "Public learning and protected family access have different data boundaries",
         summary:
-          "You can use the Grade 4 Lesson 3 and Grade 5 Lesson 4 current-JavaScript lessons without an account, name, email address, school, class, payment, or teacher profile. This notice explains what stays in your browser, what is sent to the learning record store, and what Nova Tutor needs when you ask for help.",
+          "Public lessons remain available without a named learner account. A separate Family Portal candidate processes school-authorized account, relationship, assignment, progress, and message data only for explicitly enabled tenants. This draft distinguishes those two modes and still requires Owner, privacy, and legal approval before any real-family launch.",
       },
       effectiveDateLabel: "Last updated",
-      effectiveDate: "August 16, 2026",
+      effectiveDate: "August 23, 2026",
       reviewNotice:
         "DRAFT — Owner and legal review required before publication. This notice describes the current technical design; it is not a legal determination or a guarantee of FERPA, COPPA, or other regulatory compliance.",
       sections: [
@@ -1073,8 +1079,17 @@ export const enContent = {
           id: "scope",
           title: "1. Scope",
           paragraphs: [
-            "This notice applies to helpmath.ai, including its informational pages, the eight runnable current-JavaScript lessons—G3 L2; G4 L3, L5, L10, and L11; and G5 L3 through L5—Nova Tutor, learning-event reporting, and the current contact-status page.",
-            "The current learning experience has no student or teacher accounts and does not ask for a learner's name, email address, school, class, payment, or teacher profile. It does not authenticate a learner or connect lesson activity to a school record.",
+            "This notice applies to helpmath.ai, including its informational pages, the eight runnable current-JavaScript lessons—G3 L2; G4 L3, L5, L10, and L11; and G5 L3 through L5—Nova Tutor, learning-event reporting, the current contact-status page, and the protected Family Portal candidate when its release gates are explicitly enabled.",
+            "The ordinary public lesson experience does not require a named learner account and does not connect browser-local progress to a school record. The protected Family Portal is a separate school-invited surface: it may authenticate authorized adults and enrolled learners and process the minimum tenant, school, relationship, assignment, projection, notification, and message data needed for the enabled service.",
+          ],
+        },
+        {
+          id: "family-portal",
+          title: "1A. Protected Family Portal candidate",
+          paragraphs: [
+            "There is no public guardian self-registration or child-claim flow. A school or district administrator must verify the adult relationship in its own controlled process and issue a one-time invitation to the adult's exact verified email address. HELP Math stores an application authorization relationship and applies tenant, role, current-enrollment, and active-link checks on every protected read and mutation.",
+            "The family workspace can show only the selected authorized child's assignments, explanatory progress bands, recent activity, teacher-approved support guidance, school announcements, and the guardian's own private message threads. It does not expose raw learning events, raw model probabilities, answer keys, free-text student answers, Nova conversations, IEP or diagnosis labels, other guardians' private threads, or other students' records.",
+            "The current implementation is a staged candidate protected by global and tenant feature flags. Synthetic testing uses fictional people and the reserved helpmath.invalid domain. Real family access remains prohibited until the applicable privacy, legal, district, security, accessibility, retention, Owner, deployment, and production-verification gates are independently approved.",
           ],
         },
         {
@@ -1095,8 +1110,8 @@ export const enContent = {
           ],
           bullets: [
             "Learning events do not contain a Nova Tutor prompt or reply, a free-text answer, raw speech, a photo, or a captured course frame.",
-            "The current Grade 4 Lesson 3 and Grade 5 Lesson 4 players do not emit practice-result events. If a compatible closed-result integration is enabled later, its contract permits only allowlisted fields such as outcome, attempt number, and lesson page; this notice must be reviewed before launch.",
-            "The platform does not currently turn these events into a teacher dashboard, grade, placement result, or automated educational decision.",
+            "The anonymous public event path remains separate from the account-authorized LearningEventV2 candidate. Old anonymous events and browser-local progress are never automatically attached to a later student account. When a school-authorized assignment integration is explicitly enabled, the server derives the tenant and learner, validates the published lesson object, and stores only closed allowlisted activity fields for explainable progress projections.",
+            "The Family Portal does not display raw BKT probabilities or make an official grade, placement result, diagnosis, or automated educational decision. Skill bands require versioned, instructionally reviewed projection rules and show insufficient evidence when the evidence threshold is not met.",
           ],
         },
         {
@@ -1112,8 +1127,8 @@ export const enContent = {
           id: "contact-and-technical",
           title: "5. Contact and technical information",
           paragraphs: [
-            "The learning showcase does not ask for your name or email address. The contact page is currently a status page: it does not accept, collect, verify, or send a name, email address, organization, role, topic, or message. Do not enter information there. A future adult contact flow may process those fields only after documented owner authorization, legal review, production-credential authorization, and an updated privacy review.",
-            "Vercel and related network services may process limited technical information needed to deliver and protect the site, such as request time, page, browser or device information, approximate network location, and IP address. Cloudflare Turnstile and Resend are not used by the currently paused contact flow. If a future adult contact flow is explicitly authorized and configured, Turnstile may process anti-abuse signals and Resend may deliver the message; neither provider is required for ordinary use of the learning showcase.",
+            "The public contact page remains a status page and does not accept a support message. Inside an enabled Family Portal, a guardian and the child's current teacher or authorized staff member may exchange bounded, plain-text, asynchronous messages. Messages have no attachments or rich text, are private to the thread participants by default, cannot be edited by the sender, and must not be used for emergencies, passwords, complete records, health information, or other highly sensitive material.",
+            "Vercel and related network services may process limited technical information needed to deliver and protect the site, such as request time, page, browser or device information, approximate network location, and IP address. When the protected portal is enabled, the configured identity provider and Supabase may process authentication and application data; Resend may deliver invitation, security, new-message, or opt-in weekly-summary email. Email bodies do not include a child's name, grade, skill result, due date, or message text.",
           ],
         },
         {
@@ -1128,7 +1143,7 @@ export const enContent = {
           id: "providers",
           title: "7. Service providers and disclosure",
           paragraphs: [
-            "The current learning-platform candidate uses Vercel for website hosting, Learning Locker for the xAPI LRS, and OpenRouter plus an eligible routed model provider for Nova Tutor. The paused contact flow currently uses neither Cloudflare Turnstile nor Resend. A future adult contact flow may use them only after documented owner authorization, legal review, and production-credential authorization. Each enabled provider may process data under its own terms and configured retention periods.",
+            "The current learning-platform candidate uses Vercel for website hosting, Learning Locker for the anonymous xAPI LRS, and OpenRouter plus an eligible routed model provider for Nova Tutor. The protected Family Portal candidate additionally uses Supabase for application data and its reviewed authentication path, and may use Resend for privacy-minimized transactional email only when the email release gate is explicitly enabled. Each enabled provider may process data under its own terms, contracts, regions, and configured retention periods; the final subprocessor list and data-processing terms require independent approval before real-family use.",
             "The current technical design does not include selling personal information. The owner and legal reviewer must confirm that statement against actual operations before publication. Information may be disclosed when needed to operate or protect the service, provide support, comply with law, or complete an organizational transition with appropriate safeguards.",
           ],
         },
@@ -1137,8 +1152,8 @@ export const enContent = {
           title: "8. Retention and security",
           paragraphs: [
             "Local lesson state remains until you clear it or the browser removes it. The lesson-event session UUID and sequence counter remain only for the current browser-tab session. Queued events are eligible for retry for seven days and are removed on the next app load after that window; if the app is never opened again, expired serialized records may remain in localStorage until site data is cleared.",
-            "The pseudonymous-Actor seed cookie has a maximum age of 180 days. Clearing that cookie resets the identifier used for future events. Successfully delivered events follow the LRS operator's configured retention. The paused contact page creates no contact message to retain. If an adult contact flow is authorized later, its reviewed notice must state the applicable message and provider retention periods; hosting logs and other enabled-provider records follow their applicable periods.",
-            "We use safeguards including same-origin APIs, restricted server credentials, a one-way pseudonymous Actor identifier, and closed learning-event fields. No browser storage, form, or internet transmission can be guaranteed completely secure.",
+            "The pseudonymous-Actor seed cookie has a maximum age of 180 days. Clearing that cookie resets the identifier used for future anonymous events. Successfully delivered anonymous events follow the LRS operator's configured retention. Family Portal invitations, relationships, projections, messages, notification records, identity mappings, and audit events follow the approved tenant retention policy and applicable legal hold or rights-request workflow. Synthetic family messages are scheduled for deletion after 30 days; real messaging remains disabled when an approved tenant retention policy is absent.",
+            "Safeguards in the candidate include same-origin APIs, restricted server credentials, verified-email invitations, one-use token digests, encryption for delivery addresses and tokens, tenant-scoped opaque IDs, row-level security, service-layer authorization, idempotent mutations, immutable audit records, notification claim leases, safe logs, and immediate relationship revocation. No browser storage, database, form, or internet transmission can be guaranteed completely secure.",
           ],
         },
         {
@@ -1146,7 +1161,7 @@ export const enContent = {
           title: "9. Your choices",
           paragraphs: [
             "You can read public pages without starting the lesson, using Nova, enabling speech recognition, attaching a course frame, or entering anything on the paused contact page. Browser site-data controls can clear localStorage progress and queued events, sessionStorage identifiers, and the hm_lrs_anon_v1 cookie. Clearing the cookie resets the pseudonymous identifier used for future events, but clearing browser data does not delete events already delivered to the LRS.",
-            "The site currently provides no channel for an access, correction, or deletion request about a pseudonymous learning record. If an authorized adult contact channel is enabled later, the reviewed notice must explain how to make a request and how identity, law, and system limits will be verified.",
+            "Inside an enabled Family Portal, a guardian can turn new-message email on or off, explicitly opt in to or leave the weekly summary, relinquish a child relationship, review authorized schools and children, and start an access, correction, deletion, or relationship-dispute request. Those requests enter a school or operations-controlled workflow and do not directly alter a child's school record. The portal is a convenience channel, not the only route for rights available under applicable law.",
           ],
         },
         {
@@ -1154,14 +1169,14 @@ export const enContent = {
           title: "10. International visitors and changes",
           paragraphs: [
             "Our providers may process information in the United States and other locations. Privacy rights and transfer requirements vary by location.",
-            "We will update the date and this notice before introducing materially different practices, including accounts, named learner profiles, school rosters, payments, teacher dashboards, or new vendors and data flows.",
+            "This draft now describes the implemented Family Portal candidate, but that description is not permission to process real family or student data. We will revise and obtain the required approvals for the actual tenant, identity provider, subprocessor, retention, school-notice or consent model, and jurisdiction before any real-family pilot.",
           ],
         },
       ],
       contact: {
-        title: "Privacy request channel unavailable",
+        title: "Use the authorized school privacy channel",
         body:
-          "The contact page currently shows availability status only and does not collect or send a privacy request. Do not enter a student's name, school record, Nova conversation, or other information there.",
+          "The public contact page does not collect or send a privacy request. In an authorized Family Portal pilot, use the school-controlled request route shown after sign-in or the school's existing FERPA/privacy channel. Do not place a student's full record, Nova conversation, password, or other highly sensitive information in a portal message.",
         action: { label: "Check contact availability", href: "/contact?topic=privacy" },
       },
     },
@@ -1169,16 +1184,16 @@ export const enContent = {
       metadata: {
         title: "Draft Terms of Use",
         description:
-          "Read the unapproved draft terms proposed for HELP Math, its Grade 4 Lesson 3 and Grade 5 Lesson 4 current-JavaScript lessons, Nova Tutor, and related content.",
+          "Read the unapproved draft terms proposed for HELP Math public learning experiences and the default-off, school-invited Family Portal candidate.",
       },
       hero: {
         eyebrow: "Draft terms of use",
         title: "Use the learning experiences thoughtfully",
         summary:
-          "This draft describes proposed terms for the website and its eight runnable current-JavaScript lessons: G3 L2; G4 L3, L5, L10, and L11; and G5 L3 through L5. Until owner and legal approval is documented and a final version is published, it does not form a contract, bind a visitor, or grant a license.",
+          "This draft describes proposed terms for the public website, its eight runnable current-JavaScript lessons, and the separate school-invited Family Portal candidate. Until Owner and legal approval is documented and a final version is published, it does not form a contract, bind a visitor, authorize real-family use, or grant a license.",
       },
       effectiveDateLabel: "Last updated",
-      effectiveDate: "August 16, 2026",
+      effectiveDate: "August 23, 2026",
       reviewNotice:
         "DRAFT — Owner and legal review required before publication. The governing entity, jurisdiction, contact address, vendor terms, child-user terms, and any showcase-specific license must be confirmed. Until those approvals are documented, this draft is review information only: it does not form a contract, bind a visitor, or grant a license. These terms do not guarantee FERPA, COPPA, or other regulatory compliance.",
       sections: [
@@ -1187,7 +1202,7 @@ export const enContent = {
           title: "1. Draft status and eligibility",
           paragraphs: [
             "This document is provided for owner and legal review. Before those approvals are documented and a final version is published, visiting the candidate does not constitute acceptance of this draft, and this draft grants no permission or license.",
-            "Contact intake is currently unavailable. If an adult contact flow is authorized later, it must remain adult-directed and students should ask a teacher, parent, guardian, or another trusted adult for help.",
+            "Public contact intake remains unavailable. Family Portal access, when explicitly enabled for an authorized pilot, is available only to an adult whose school has verified the relationship and issued an invitation to the adult's verified email. It is not a public registration or child-claim service.",
           ],
         },
         {
@@ -1196,15 +1211,15 @@ export const enContent = {
           paragraphs: [
             "The site provides eight runnable current-JavaScript lessons in the modern My Lesson experience, totaling 426 source-ordered page placements: G3 L2 (70); G4 L3 (39), L5 (53), L10 (46), and L11 (43); and G5 L3 (65), L4 (54), and L5 (56).",
             "Lesson availability is not proof of strict migration completion, original Flash runtime or visual fidelity, audio fidelity, human or Owner acceptance, rights clearance, or publication of the restored historical curriculum. Those remain separate evidence and release gates.",
-            "The site does not currently provide enrollment, named student or educator accounts, schools, classes, assignments, teacher dashboards, official grades, payments, or guaranteed access to the historical program.",
+            "The public lesson surface does not provide enrollment, official grades, payments, or guaranteed access to the historical program. The protected Family Portal candidate can present an authorized child's current assignments, explanatory progress projections, school announcements, and private teacher messages for an explicitly enabled tenant; it is not a transcript, report card, diagnostic service, or entitlement to any historical record.",
           ],
         },
         {
           id: "progress-and-events",
           title: "3. Progress and learning events",
           paragraphs: [
-            "The progress display is stored in the current browser and is not a verified transcript, grade, school record, or cross-device account history. Clearing browser storage may reset it.",
-            "The site sends pseudonymous xAPI events for lesson lifecycle, page views, page completion, and support-tool use to a Learning Locker LRS. The current player does not emit practice-result events. Learning events do not include names, email addresses, Nova conversations, free-text answers, raw voice, photos, or course-frame images. See the Privacy Notice for details and choices.",
+            "Ordinary public lesson progress remains stored in the current browser and is not a verified transcript, grade, school record, or cross-device account history. Clearing browser storage may reset it, and that old local state is never automatically attached to a later student account.",
+            "The public site can send pseudonymous closed-format lesson events to a Learning Locker LRS. Separately, an explicitly enabled school assignment may send an authorized, server-attributed LearningEventV2 record for explainable progress projections. The Family Portal displays only bounded family DTOs and explanatory bands, never raw events, exact mastery probabilities, answer keys, free-text answers, Nova conversations, raw voice, photos, or course-frame images. See the Privacy Notice for details and choices.",
           ],
         },
         {
@@ -1223,6 +1238,7 @@ export const enContent = {
           ],
           bullets: [
             "Do not interfere with the site, bypass security or access controls, or overload its services.",
+            "Do not try to claim a child, use another person's invitation, switch tenants or children without authorization, enumerate identifiers, or access another guardian's message thread.",
             "Do not use automated systems to scrape, copy, or redistribute the archive or demonstrations at scale without written permission.",
             "Do not upload malicious code, impersonate someone, probe provider credentials, or use Nova or any future contact flow for spam, abuse, or unlawful activity.",
             "Do not submit another person's records, passwords, identifying information, or other sensitive material.",
@@ -1241,6 +1257,7 @@ export const enContent = {
           title: "7. Educational context",
           paragraphs: [
             "Grade 4 Lesson 3 and Grade 5 Lesson 4 are current-JavaScript learning experiences, not a complete released curriculum, validated diagnostic instrument, individualized intervention, or substitute for an educator's judgment.",
+            "Family Portal progress bands, assignment states, printable family summaries, and teacher messages are informational learning supports. They are not official grades, transcripts, emergency services, medical or safety channels, or a substitute for contacting the school through its required records and support procedures.",
             "Descriptions of historical research, awards, standards alignment, scope, or features are identified as archival context unless the site expressly states that a current claim has been verified.",
           ],
         },
@@ -1255,7 +1272,7 @@ export const enContent = {
           id: "links",
           title: "9. Third-party services and links",
           paragraphs: [
-            "The learning-platform candidate relies on Vercel, Learning Locker, OpenRouter, and an eligible routed model provider. If the separate adult contact flow is configured, it may also use Cloudflare and Resend. The applicable terms and privacy practices of any enabled provider govern its services; a link does not mean HELP Math endorses all third-party content.",
+            "The platform candidate depends on Vercel, Learning Locker, OpenRouter, and an eligible routed model provider. The protected Family Portal candidate additionally depends on its configured authentication path, Supabase, and, when explicitly enabled, Resend transactional email. Applicable contracts, provider terms, and privacy practices govern their services; a link does not mean HELP Math endorses all third-party content.",
           ],
         },
         {
@@ -1270,7 +1287,7 @@ export const enContent = {
           id: "changes",
           title: "11. Changes to these terms",
           paragraphs: [
-            "This draft may change during owner and legal review. A final version, if approved, must show its effective date. Materially different services—including accounts, school rosters, subscriptions, payments, teacher dashboards, or named student-data processing—require revised, approved terms and privacy information before launch.",
+            "This draft may change during Owner and legal review. A final version, if approved, must show its effective date and the responsible entity, jurisdiction, school terms, rights-request route, retention, and applicable subprocessors. The implemented Family Portal candidate does not authorize a real-family pilot until those terms and the independent district, privacy, security, accessibility, Owner, deployment, and production gates pass.",
           ],
         },
       ],

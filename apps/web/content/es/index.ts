@@ -612,7 +612,7 @@ export const esContent = {
         eyebrow: "Asistencia de HELP Math",
         title: "Comienza por lo que está disponible hoy",
         summary:
-          "La plataforma ofrece ocho lecciones en JavaScript actual con 426 ubicaciones de página en orden de origen—G3 L2 (70); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56)—junto con progreso local y apoyos de aprendizaje. Las cuentas anteriores no están conectadas y este sitio no puede recuperar contraseñas ni registros históricos.",
+          "La plataforma pública ofrece ocho lecciones en JavaScript actual con 426 ubicaciones de página en orden de origen—G3 L2 (70); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56)—junto con progreso local y apoyos. Existe aparte un candidato protegido de Familia, disponible solo cuando una escuela autorizada lo habilita y envía una invitación verificada. Las cuentas anteriores siguen desconectadas y este sitio no puede recuperar contraseñas ni registros históricos.",
         primaryAction: { label: "Contactar con asistencia", href: "/es/contact?topic=support" },
         secondaryAction: { label: "Comprobar el estado de acceso", href: "/es/login" },
       },
@@ -664,10 +664,10 @@ export const esContent = {
           },
           {
             id: "accounts",
-            title: "Cuentas de estudiantes y educadores",
+            title: "Candidato de Familia por invitación escolar",
             description:
-              "El sitio moderno no ofrece acceso, clases, tareas, compras ni informes de progreso.",
-            detail: "No disponible",
+              "El candidato protegido admite invitaciones verificadas por la escuela para madres, padres o tutores, progreso familiar de solo lectura, tareas y mensajes privados con docentes en tenants habilitados expresamente. Está desactivado de forma predeterminada, no permite reclamar menores por cuenta propia y no se conecta con cuentas anteriores.",
+            detail: "Candidato protegido · Desactivado",
           },
         ],
       },
@@ -678,6 +678,12 @@ export const esContent = {
           question: "¿Puedo usar mi antiguo usuario y contraseña de HELP Math?",
           answer:
             "No. El sitio público moderno no está conectado al antiguo sistema de cuentas. No introduzcas ni envíes una contraseña anterior. Un adulto puede contactar con asistencia indicando la organización y un contexto no sensible.",
+        },
+        {
+          id: "family-access",
+          question: "¿Cómo obtiene acceso una madre, un padre o un tutor?",
+          answer:
+            "No hay registro público ni un flujo para reclamar a un menor. Cuando se habilita el candidato protegido, un administrador escolar o distrital debe verificar primero la relación y enviar una invitación de un solo uso al correo verificado exacto del adulto. La escuela puede revocar el acceso y el adulto puede renunciar a él; nunca se importan credenciales históricas de HELP Math.",
         },
         {
           id: "flash",
@@ -713,7 +719,7 @@ export const esContent = {
       contact: {
         title: "¿Todavía necesitas ayuda?",
         body:
-          "La recepción de contactos está pausada. Este enlace abre el estado actual de disponibilidad; HELP Math no recopila ni envía actualmente solicitudes de asistencia mediante este sitio.",
+          "La recepción pública general está pausada. En un piloto autorizado de Familia, las solicitudes de cuenta, acceso, corrección, eliminación o disputa de relación deben usar la vía controlada por la escuela que aparece tras iniciar sesión; el portal no es el único canal para ejercer derechos sobre expedientes educativos. No envíes contraseñas ni expedientes por la página pública.",
         action: { label: "Consultar disponibilidad de contacto", href: "/es/contact?topic=support" },
       },
     },
@@ -727,8 +733,8 @@ export const esContent = {
         eyebrow: "Acceso a cuentas",
         title: "El antiguo acceso de HELP Math no está activo aquí",
         summary:
-          "Este sitio es una versión preliminar pública de la modernización. No tiene formulario de acceso para estudiantes o educadores ni está conectado con la base de datos histórica.",
-        primaryAction: { label: "Consultar sobre una cuenta", href: "/es/contact?topic=account-access" },
+          "Las cuentas históricas siguen desconectadas y no pueden recuperarse aquí. Existe aparte un candidato de acceso protegido solo para usuarios actuales autorizados por la escuela y madres, padres o tutores invitados cuando se habilitan las puertas del tenant y de identidad.",
+        primaryAction: { label: "Comprobar el acceso protegido", href: "/es/sign-in" },
         secondaryAction: { label: "Revisar la disponibilidad", href: "/es/demos" },
       },
       alert: {
@@ -744,27 +750,27 @@ export const esContent = {
             id: "student",
             title: "Soy estudiante",
             description:
-              "Consulta la información pública del proyecto sin iniciar sesión. Pide a un adulto de confianza que contacte por una cuenta antigua u otra asistencia del proyecto.",
+              "Consulta la información pública sin iniciar sesión. Una tarea escolar actual puede ofrecer acceso protegido, pero nunca uses una contraseña anterior ni la invitación de otra persona.",
             action: { label: "Explorar el proyecto", href: "/es/about" },
           },
           {
             id: "educator",
             title: "Soy educador o representante escolar",
             description:
-              "Contacta desde tu correo de trabajo e indica la organización. Describe el tipo de acceso o información histórica que necesitas sin compartir datos de estudiantes.",
-            action: { label: "Solicitar asistencia", href: "/es/contact?topic=account-access" },
+              "Usa el acceso protegido solo si tu función escolar actual ha sido provisionada en la aplicación. No se importan cuentas docentes, listas ni contraseñas anteriores.",
+            action: { label: "Comprobar el acceso protegido", href: "/es/sign-in" },
           },
           {
             id: "family",
             title: "Soy madre, padre o tutor",
             description:
-              "Indica la escuela u organización vinculada con el programa anterior y cómo podemos ayudar. No incluyas contraseñas ni expedientes.",
-            action: { label: "Contactar con el proyecto", href: "/es/contact?topic=family-support" },
+              "Si tu escuela actual envió una invitación verificada de Familia, usa el acceso protegido con ese correo exacto. Sin invitación, contacta con la escuela por su canal establecido; HELP Math no permite reclamar menores públicamente.",
+            action: { label: "Usar una invitación", href: "/es/sign-in" },
           },
         ],
       },
       safetyNote:
-        "Si otro sitio pide tu antigua contraseña de HELP Math, detente y confirma la dirección web con un adulto de confianza o con tu escuela. El sitio público oficial no pide iniciar sesión.",
+        "Nunca introduzcas una contraseña antigua de HELP Math. El candidato protegido puede pedir a una persona autorizada que acceda mediante el proveedor configurado, pero los roles y relaciones con menores proceden solo de la aplicación y de la autorización escolar, no de metadatos editables ni credenciales históricas.",
     },
     contact: {
       metadata: {
@@ -1056,16 +1062,16 @@ export const esContent = {
       metadata: {
         title: "Borrador del aviso de privacidad",
         description:
-          "Consulta el borrador que explica cómo HELP Math gestiona el estado local de la lección, los eventos seudónimos, las solicitudes a Nova Tutor, el contacto pausado y datos técnicos limitados.",
+          "Consulta el borrador no aprobado que explica cómo HELP Math gestiona el estado local de las lecciones públicas y, cuando se habilita expresamente, el candidato protegido de Familia por invitación escolar.",
       },
       hero: {
         eyebrow: "Borrador del aviso de privacidad",
-        title: "Una experiencia educativa diseñada para saber menos sobre ti",
+        title: "El aprendizaje público y el acceso familiar protegido tienen límites de datos distintos",
         summary:
-          "Puedes usar la lección 3 de cuarto grado y la lección 4 de quinto grado, ambas en JavaScript actual, sin cuenta, nombre, correo electrónico, escuela, clase, pago ni perfil docente. Este aviso explica qué permanece en tu navegador, qué se envía al almacén de registros de aprendizaje y qué necesita Nova Tutor cuando pides ayuda.",
+          "Las lecciones públicas siguen disponibles sin una cuenta nominal del estudiante. Un candidato separado de Familia procesa datos de cuenta, relación, tareas, progreso y mensajes autorizados por la escuela solo para tenants habilitados expresamente. Este borrador distingue ambos modos y aún requiere aprobación del titular, privacidad y asesoría legal antes de cualquier lanzamiento para familias reales.",
       },
       effectiveDateLabel: "Última actualización",
-      effectiveDate: "16 de agosto de 2026",
+      effectiveDate: "23 de agosto de 2026",
       reviewNotice:
         "BORRADOR — Requiere revisión del titular y asesoría legal antes de publicarse. Describe el diseño técnico actual; no es una determinación legal ni garantiza el cumplimiento de FERPA, COPPA u otra normativa.",
       sections: [
@@ -1073,8 +1079,17 @@ export const esContent = {
           id: "scope",
           title: "1. Alcance",
           paragraphs: [
-            "Este aviso se aplica a helpmath.ai, incluidas sus páginas informativas, las ocho lecciones funcionales en JavaScript actual—G3 L2; G4 L3, L5, L10 y L11; y G5 L3 a L5—, Nova Tutor, el registro de eventos de aprendizaje y la página actual de estado del contacto.",
-            "La experiencia educativa actual no tiene cuentas de estudiantes o docentes ni pide el nombre, correo, escuela, clase, pago o perfil docente del estudiante. No autentica al estudiante ni conecta la actividad de la lección con un expediente escolar.",
+            "Este aviso se aplica a helpmath.ai, incluidas sus páginas informativas, las ocho lecciones funcionales en JavaScript actual—G3 L2; G4 L3, L5, L10 y L11; y G5 L3 a L5—, Nova Tutor, el registro de eventos, la página de estado del contacto y el candidato protegido de Familia cuando se habilitan expresamente sus puertas de publicación.",
+            "La experiencia pública ordinaria no exige una cuenta nominal del estudiante ni conecta el progreso local del navegador con un expediente escolar. Familia es una superficie separada por invitación escolar: puede autenticar a adultos autorizados y estudiantes matriculados y tratar el mínimo de datos de tenant, escuela, relación, tareas, proyecciones, notificaciones y mensajes necesarios para el servicio habilitado.",
+          ],
+        },
+        {
+          id: "family-portal",
+          title: "1A. Candidato protegido de Familia",
+          paragraphs: [
+            "No existe registro público de tutores ni un flujo para reclamar a un menor. Un administrador escolar o distrital debe verificar la relación mediante su propio proceso controlado y emitir una invitación de un solo uso al correo verificado exacto del adulto. HELP Math conserva una autorización de aplicación y comprueba tenant, rol, matrícula vigente y relación activa en cada lectura y cambio protegidos.",
+            "El espacio familiar solo puede mostrar tareas, bandas explicativas de progreso, actividad reciente, apoyo aprobado por docentes, anuncios escolares y los hilos privados del tutor para el menor seleccionado y autorizado. No muestra eventos en bruto, probabilidades crudas de modelos, soluciones, respuestas libres del estudiante, conversaciones con Nova, etiquetas IEP o diagnósticas, hilos privados de otros tutores ni expedientes de otros estudiantes.",
+            "La implementación actual es un candidato por fases protegido por controles globales y del tenant. Las pruebas sintéticas usan personas ficticias y el dominio reservado helpmath.invalid. El acceso de familias reales sigue prohibido hasta aprobar de manera independiente las puertas de privacidad, legal, distrito, seguridad, accesibilidad, conservación, titular, despliegue y verificación de producción.",
           ],
         },
         {
@@ -1095,8 +1110,8 @@ export const esContent = {
           ],
           bullets: [
             "Los eventos no contienen preguntas ni respuestas de Nova Tutor, respuestas de texto libre, voz sin procesar, fotos ni capturas de la lección.",
-            "Los reproductores actuales de la lección 3 de cuarto grado y la lección 4 de quinto grado no emiten eventos con resultados de ejercicios. Si más adelante se habilita una integración compatible de resultados cerrados, su contrato solo permitirá campos autorizados como resultado, número de intento y página de la lección; este aviso deberá revisarse antes del lanzamiento.",
-            "Actualmente la plataforma no convierte estos eventos en panel docente, calificación, resultado de ubicación ni decisión educativa automatizada.",
+            "La vía pública anónima permanece separada del candidato LearningEventV2 autorizado por cuenta. Los eventos anónimos anteriores y el progreso local nunca se asocian automáticamente a una cuenta estudiantil posterior. Cuando se habilita expresamente una tarea escolar autorizada, el servidor deriva tenant y estudiante, valida el objeto de lección publicado y conserva solo campos cerrados permitidos para proyecciones explicables.",
+            "Familia no muestra probabilidades BKT en bruto ni produce una calificación oficial, ubicación, diagnóstico o decisión automatizada. Las bandas requieren reglas versionadas y revisadas pedagógicamente y muestran evidencia insuficiente cuando no se alcanza el umbral.",
           ],
         },
         {
@@ -1112,8 +1127,8 @@ export const esContent = {
           id: "contact-and-technical",
           title: "5. Información de contacto y técnica",
           paragraphs: [
-            "La experiencia educativa no pide tu nombre ni correo. La página de contacto es actualmente una página de estado: no acepta, recopila, verifica ni envía nombre, correo, organización, función, tema o mensaje. No introduzcas información. Un futuro flujo para adultos solo podrá procesar esos campos tras documentar la autorización del titular, la revisión legal, la autorización de credenciales de producción y una revisión actualizada de privacidad.",
-            "Vercel y servicios de red relacionados pueden procesar datos técnicos limitados necesarios para entregar y proteger el sitio, como hora, página, navegador o dispositivo, ubicación aproximada de red y dirección IP. El flujo de contacto actualmente pausado no usa Cloudflare Turnstile ni Resend. Si se autoriza y configura expresamente un futuro flujo para adultos, Turnstile puede procesar señales contra el abuso y Resend puede entregar el mensaje; ninguno es necesario para el uso ordinario de la experiencia educativa.",
+            "La página pública de contacto sigue siendo solo informativa y no acepta solicitudes. Dentro de Familia habilitado, un tutor y el docente actual del menor o personal autorizado pueden intercambiar mensajes asíncronos de texto simple y longitud limitada. No admiten adjuntos ni texto enriquecido, son privados para participantes por defecto, no pueden ser editados por quien los envía y no deben usarse para emergencias, contraseñas, expedientes completos, datos médicos o material altamente sensible.",
+            "Vercel y servicios de red relacionados pueden tratar datos técnicos limitados para entregar y proteger el sitio, como hora, página, navegador o dispositivo, ubicación aproximada de red y dirección IP. Cuando se habilita el portal, el proveedor de identidad configurado y Supabase pueden tratar autenticación y datos de aplicación; Resend puede entregar invitaciones, avisos de seguridad, alertas de mensajes o resúmenes semanales voluntarios. Los correos no incluyen nombre del menor, calificación, habilidad, fecha límite ni texto del mensaje.",
           ],
         },
         {
@@ -1128,7 +1143,7 @@ export const esContent = {
           id: "providers",
           title: "7. Proveedores y divulgación",
           paragraphs: [
-            "El candidato actual de la plataforma usa Vercel para alojar el sitio, Learning Locker para el LRS xAPI y OpenRouter más un proveedor de modelo enrutado elegible para Nova Tutor. El contacto pausado no usa actualmente Cloudflare Turnstile ni Resend. Un futuro flujo para adultos solo podrá usarlos tras documentar la autorización del titular, la revisión legal y la autorización de credenciales de producción. Cada proveedor habilitado puede procesar datos según sus propios términos y periodos configurados de conservación.",
+            "El candidato usa Vercel para alojar, Learning Locker para el LRS xAPI anónimo y OpenRouter más un proveedor elegible para Nova Tutor. Familia usa además Supabase para datos de aplicación y su vía revisada de autenticación, y puede usar Resend para correo transaccional minimizado solo cuando esa puerta está habilitada expresamente. Cada proveedor puede tratar datos según contratos, regiones, términos y plazos configurados; la lista final de subencargados y los términos de tratamiento requieren aprobación independiente antes de uso con familias reales.",
             "El diseño técnico actual no incluye la venta de información personal. El titular y quien realice la revisión legal deben confirmar esa afirmación frente a las operaciones reales antes de publicarla. La información puede divulgarse cuando sea necesario para operar o proteger el servicio, prestar asistencia, cumplir la ley o completar una transición organizativa con salvaguardas adecuadas.",
           ],
         },
@@ -1137,8 +1152,8 @@ export const esContent = {
           title: "8. Conservación y seguridad",
           paragraphs: [
             "El estado local de la lección permanece hasta que lo borras o el navegador lo elimina. El UUID de sesión para eventos y el contador de secuencia permanecen solo durante la sesión de la pestaña actual. Los eventos en espera pueden reintentarse durante siete días y se eliminan cuando la aplicación vuelve a cargarse después de ese periodo; si nunca vuelves a abrirla, los registros serializados vencidos pueden permanecer en localStorage hasta que se borren los datos del sitio.",
-            "La cookie con la semilla del Actor seudónimo tiene una duración máxima de 180 días. Borrarla restablece el identificador utilizado para eventos futuros. Los eventos entregados siguen el periodo configurado por el operador del LRS. La página de contacto pausada no crea mensajes que conservar. Si se autoriza más adelante un flujo para adultos, su aviso revisado deberá indicar los periodos de conservación del mensaje y de los proveedores; los registros de alojamiento y de otros proveedores habilitados siguen sus periodos correspondientes.",
-            "Usamos medidas como API del mismo origen, credenciales restringidas en el servidor, un Actor seudónimo unidireccional y campos cerrados para eventos. Ningún almacenamiento del navegador, formulario o transmisión por internet puede garantizarse como completamente seguro.",
+            "La cookie del Actor seudónimo dura como máximo 180 días. Borrarla restablece el identificador para futuros eventos anónimos. Los eventos entregados siguen la conservación del LRS. Invitaciones, relaciones, proyecciones, mensajes, notificaciones, mapas de identidad y auditorías de Familia siguen la política aprobada del tenant y cualquier retención legal o solicitud de derechos. Los mensajes familiares sintéticos se programan para borrarse a los 30 días; los mensajes reales permanecen desactivados si falta una política aprobada.",
+            "Las salvaguardias del candidato incluyen API del mismo origen, credenciales restringidas, invitaciones a correo verificado, tokens de un uso conservados como resumen, cifrado de direcciones y tokens de entrega, identificadores opacos por tenant, RLS, autorización de servicio, cambios idempotentes, auditoría inmutable, leases de notificación, registros seguros y revocación inmediata. Ningún sistema puede garantizar seguridad absoluta.",
           ],
         },
         {
@@ -1146,7 +1161,7 @@ export const esContent = {
           title: "9. Tus opciones",
           paragraphs: [
             "Puedes leer las páginas públicas sin iniciar la lección, usar Nova, activar el reconocimiento de voz, adjuntar una imagen del curso ni introducir nada en la página de contacto pausada. Los controles de datos del sitio del navegador pueden borrar el progreso y los eventos en espera de localStorage, los identificadores de sessionStorage y la cookie hm_lrs_anon_v1. Borrar la cookie restablece el identificador seudónimo de eventos futuros, pero borrar los datos del navegador no elimina los eventos ya entregados al LRS.",
-            "El sitio no ofrece actualmente un canal para solicitar acceso, corrección o eliminación de un registro seudónimo. Si se habilita más adelante un canal autorizado para adultos, el aviso revisado deberá explicar cómo presentar la solicitud y cómo se comprobarán la identidad, la ley y los límites del sistema.",
+            "Dentro de Familia habilitado, un tutor puede activar o desactivar alertas de mensajes, aceptar expresamente o dejar el resumen semanal, renunciar a una relación, revisar escuelas y menores autorizados e iniciar una solicitud de acceso, corrección, eliminación o disputa. Estas solicitudes entran en un flujo controlado por la escuela u operaciones y no modifican directamente el expediente. El portal es un canal de conveniencia, no la única vía para derechos aplicables.",
           ],
         },
         {
@@ -1154,14 +1169,14 @@ export const esContent = {
           title: "10. Visitantes internacionales y cambios",
           paragraphs: [
             "Nuestros proveedores pueden procesar información en Estados Unidos y otros lugares. Los derechos y requisitos de transferencia varían por ubicación.",
-            "Actualizaremos la fecha y este aviso antes de introducir prácticas sustancialmente distintas, incluidas cuentas, perfiles nominales, listas escolares, pagos, paneles docentes o nuevos proveedores y flujos de datos.",
+            "Este borrador describe ahora el candidato implementado de Familia, pero no autoriza tratar datos de familias o estudiantes reales. Revisaremos y obtendremos las aprobaciones necesarias para tenant, identidad, subencargados, conservación, modelo escolar de aviso o consentimiento y jurisdicción antes de cualquier piloto real.",
           ],
         },
       ],
       contact: {
-        title: "Canal de solicitudes de privacidad no disponible",
+        title: "Usa el canal de privacidad autorizado por la escuela",
         body:
-          "La página de contacto solo muestra el estado de disponibilidad y no recopila ni envía solicitudes de privacidad. No introduzcas allí nombres de estudiantes, expedientes escolares, conversaciones con Nova ni otra información.",
+          "La página pública no recopila ni envía solicitudes de privacidad. En un piloto autorizado de Familia, usa la vía controlada por la escuela que aparece tras iniciar sesión o su canal FERPA/privacidad existente. No coloques expedientes completos, conversaciones con Nova, contraseñas ni información altamente sensible en un mensaje.",
         action: { label: "Consultar disponibilidad de contacto", href: "/es/contact?topic=privacy" },
       },
     },
@@ -1169,16 +1184,16 @@ export const esContent = {
       metadata: {
         title: "Borrador de los términos de uso",
         description:
-          "Consulta el borrador no aprobado de los términos propuestos para HELP Math, sus lecciones en JavaScript actual de cuarto y quinto grado, Nova Tutor y el contenido relacionado.",
+          "Consulta el borrador no aprobado de los términos propuestos para las experiencias públicas de HELP Math y el candidato de Familia, desactivado por defecto y disponible por invitación escolar.",
       },
       hero: {
         eyebrow: "Borrador de los términos de uso",
         title: "Utiliza responsablemente las experiencias educativas",
         summary:
-          "Este borrador describe los términos propuestos para el sitio y sus ocho lecciones funcionales en JavaScript actual: G3 L2; G4 L3, L5, L10 y L11; y G5 L3 a L5. Hasta que queden documentadas la aprobación del titular y la revisión legal y se publique una versión final, no constituye contrato, no obliga a quien lo visita ni concede licencia.",
+          "Este borrador describe los términos propuestos para el sitio público, sus ocho lecciones en JavaScript actual y el candidato separado de Familia por invitación escolar. Hasta documentar la aprobación del titular y legal y publicar una versión final, no constituye contrato, no obliga, no autoriza uso con familias reales ni concede licencia.",
       },
       effectiveDateLabel: "Última actualización",
-      effectiveDate: "16 de agosto de 2026",
+      effectiveDate: "23 de agosto de 2026",
       reviewNotice:
         "BORRADOR — Requiere revisión del titular y asesoría legal antes de publicarse. Deben confirmarse la entidad responsable, jurisdicción, dirección de contacto, términos de proveedores, condiciones para menores y cualquier licencia específica. Hasta documentar esas aprobaciones, este borrador solo sirve como información para revisión: no constituye contrato, no obliga a quien lo visita ni concede licencia. No garantiza el cumplimiento de FERPA, COPPA u otra normativa.",
       sections: [
@@ -1187,7 +1202,7 @@ export const esContent = {
           title: "1. Estado del borrador y requisitos",
           paragraphs: [
             "Este documento se ofrece para revisión del titular y asesoría legal. Antes de documentar esas aprobaciones y publicar una versión final, visitar el candidato no supone aceptar este borrador y el borrador no concede permiso ni licencia.",
-            "La recepción de contactos no está disponible actualmente. Si se autoriza más adelante un flujo para adultos, deberá seguir dirigido a adultos y el alumnado deberá pedir ayuda a un docente, padre, madre, tutor u otro adulto de confianza.",
+            "La recepción pública sigue sin estar disponible. El acceso a Familia, cuando se habilita para un piloto autorizado, solo corresponde a un adulto cuya escuela haya verificado la relación y enviado una invitación a su correo verificado. No es un servicio público de registro ni de reclamación de menores.",
           ],
         },
         {
@@ -1196,15 +1211,15 @@ export const esContent = {
           paragraphs: [
             "El sitio ofrece ocho lecciones funcionales en JavaScript actual dentro de la experiencia moderna Mi lección, con 426 ubicaciones de página en orden de origen: G3 L2 (70); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56).",
             "Que las lecciones estén disponibles no demuestra finalización estricta de la migración, fidelidad al Flash original en ejecución o imagen, fidelidad del audio, aceptación humana o del titular, autorización de derechos ni publicación del currículo histórico restaurado. Son puertas de evidencia y publicación independientes.",
-            "Actualmente no ofrece matrículas, cuentas nominales de estudiantes o docentes, escuelas, clases, tareas, paneles docentes, calificaciones oficiales, pagos ni acceso garantizado al programa histórico.",
+            "La superficie pública no ofrece matrículas, calificaciones oficiales, pagos ni acceso garantizado al programa histórico. El candidato protegido de Familia puede presentar tareas, proyecciones explicativas, anuncios y mensajes privados del menor autorizado para un tenant habilitado; no es expediente, boletín oficial, servicio diagnóstico ni derecho a registros históricos.",
           ],
         },
         {
           id: "progress-and-events",
           title: "3. Progreso y eventos de aprendizaje",
           paragraphs: [
-            "El progreso se guarda en el navegador actual y no constituye certificado, calificación, expediente escolar ni historial de cuenta entre dispositivos. Borrar los datos del navegador puede restablecerlo.",
-            "El sitio envía a un LRS de Learning Locker eventos xAPI seudónimos del ciclo de la lección, vistas y finalización de páginas y uso de herramientas de apoyo. El reproductor actual no emite resultados de ejercicios. Los eventos no incluyen nombres, correos, conversaciones con Nova, respuestas de texto libre, voz original, fotos ni imágenes de la lección. Consulta el Aviso de privacidad para conocer detalles y opciones.",
+            "El progreso público ordinario permanece en el navegador y no constituye certificado, calificación, expediente ni historial entre dispositivos. Borrar datos puede restablecerlo, y ese estado local anterior nunca se asocia automáticamente a una cuenta estudiantil posterior.",
+            "El sitio público puede enviar eventos seudónimos de formato cerrado a Learning Locker. Por separado, una tarea escolar habilitada expresamente puede enviar LearningEventV2 autorizado y atribuido por el servidor para proyecciones explicables. Familia solo muestra DTO familiares limitados y bandas explicativas, nunca eventos en bruto, probabilidades exactas, soluciones, respuestas libres, conversaciones con Nova, voz original, fotos ni imágenes del curso. Consulta el Aviso de privacidad.",
           ],
         },
         {
@@ -1223,6 +1238,7 @@ export const esContent = {
           ],
           bullets: [
             "No interfieras con el sitio, eludas medidas de seguridad o acceso ni sobrecargues los servicios.",
+            "No intentes reclamar a un menor, usar la invitación de otra persona, cambiar de tenant o menor sin autorización, enumerar identificadores ni acceder al hilo privado de otro tutor.",
             "No uses sistemas automatizados para extraer, copiar o redistribuir a gran escala el archivo o las demostraciones sin permiso escrito.",
             "No cargues código malicioso, suplantes a alguien, investigues credenciales de proveedores ni uses Nova o cualquier futuro flujo de contacto para abuso, correo basura o actividades ilícitas.",
             "No envíes expedientes, contraseñas, información identificativa ni otro material sensible de otra persona.",
@@ -1241,6 +1257,7 @@ export const esContent = {
           title: "7. Contexto educativo",
           paragraphs: [
             "La lección 3 de cuarto grado y la lección 4 de quinto grado son experiencias educativas en JavaScript actual, no un currículo publicado completo, instrumento diagnóstico validado, intervención individualizada ni sustituto del criterio docente.",
+            "Las bandas de progreso, estados de tareas, resúmenes familiares imprimibles y mensajes docentes son apoyos informativos. No son calificaciones oficiales, expedientes, servicios de emergencia, canales médicos o de seguridad ni sustituyen los procedimientos obligatorios de la escuela.",
             "Las descripciones históricas de investigación, premios, alineación, alcance o funciones se identifican como contexto archivado salvo que el sitio afirme expresamente una verificación actual.",
           ],
         },
@@ -1255,7 +1272,7 @@ export const esContent = {
           id: "links",
           title: "9. Servicios y enlaces de terceros",
           paragraphs: [
-            "El candidato de la plataforma depende de Vercel, Learning Locker, OpenRouter y un proveedor de modelo enrutado elegible. Si se configura el flujo separado de contacto para adultos, también puede usar Cloudflare y Resend. Los términos y prácticas de privacidad aplicables de cada proveedor habilitado rigen sus servicios; un enlace no significa que HELP Math respalde todo su contenido.",
+            "El candidato depende de Vercel, Learning Locker, OpenRouter y un proveedor de modelo elegible. Familia depende además de la vía configurada de autenticación, Supabase y, cuando se habilita expresamente, correo transaccional de Resend. Sus contratos, términos y prácticas de privacidad aplicables rigen sus servicios; un enlace no implica respaldo de todo contenido externo.",
           ],
         },
         {
@@ -1270,7 +1287,7 @@ export const esContent = {
           id: "changes",
           title: "11. Cambios en estos términos",
           paragraphs: [
-            "Este borrador puede cambiar durante la revisión del titular y legal. Una versión final, si se aprueba, deberá mostrar su fecha de vigencia. Servicios sustancialmente distintos —cuentas, listas escolares, suscripciones, pagos, paneles docentes o tratamiento de datos nominales de estudiantes— requieren términos e información de privacidad revisados y aprobados antes de su lanzamiento.",
+            "Este borrador puede cambiar durante la revisión del titular y legal. Una versión final deberá indicar fecha de vigencia, entidad responsable, jurisdicción, condiciones escolares, vía de derechos, conservación y subencargados. El candidato implementado de Familia no autoriza un piloto real hasta aprobar las puertas independientes de distrito, privacidad, seguridad, accesibilidad, titular, despliegue y producción.",
           ],
         },
       ],

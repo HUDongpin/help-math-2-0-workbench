@@ -119,9 +119,176 @@
   color: #1768d4;
 }
 
+.supabaseCard {
+  background: #fff;
+  border: 2px solid #d7e1ee;
+  border-radius: 28px;
+  box-shadow: 0 18px 44px rgb(29 62 105 / 12%);
+  color: #14213d;
+  max-width: 560px;
+  padding: clamp(24px, 5vw, 42px);
+  width: 100%;
+}
+
+.supabaseHeading > span {
+  color: #1768d4;
+  display: block;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.supabaseHeading h1 {
+  font-size: clamp(30px, 5vw, 42px);
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  margin: 8px 0 10px;
+}
+
+.supabaseHeading p,
+.authBoundary {
+  color: #52657d;
+  line-height: 1.6;
+}
+
+.supabaseHeading p {
+  margin: 0;
+}
+
+.authForm {
+  display: grid;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.authForm label {
+  display: grid;
+  gap: 7px;
+  text-align: left;
+}
+
+.authForm label > span {
+  font-size: 15px;
+  font-weight: 850;
+}
+
+.authForm input {
+  background: #fff;
+  border: 2px solid #aebed1;
+  border-radius: 14px;
+  color: #14213d;
+  font: inherit;
+  min-height: 48px;
+  padding: 10px 13px;
+  width: 100%;
+}
+
+.authForm input:focus-visible {
+  border-color: #1768d4;
+  box-shadow: 0 0 0 3px rgb(23 104 212 / 20%);
+  outline: 0;
+}
+
+.authForm small {
+  color: #52657d;
+}
+
+.authForm > button {
+  background: #1768d4;
+  border: 2px solid #1768d4;
+  border-radius: 999px;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+  min-height: 48px;
+  padding: 10px 20px;
+}
+
+.authForm > button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.authMessage {
+  border-radius: 12px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 10px 12px;
+}
+
+.authMessage[data-status='error'] {
+  background: #fff0ef;
+  color: #8c2823;
+}
+
+.authMessage[data-status='success'] {
+  background: #e8f8f1;
+  color: #155e46;
+}
+
+.authLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 20px;
+}
+
+.authLinks a {
+  color: #1768d4;
+  font-weight: 800;
+  min-height: 44px;
+  padding-block: 10px;
+  text-underline-offset: 4px;
+}
+
+.authBoundary {
+  border-top: 1px solid #d7e1ee;
+  font-size: 14px;
+  margin: 14px 0 0;
+  padding-top: 16px;
+}
+
+.sessionControls {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.sessionControls form {
+  display: contents;
+}
+
+.sessionControls p {
+  flex-basis: 100%;
+  font-size: 14px;
+  margin: 4px 0 0;
+}
+
+.dangerButton {
+  align-items: center;
+  background: #fff0ef;
+  border: 2px solid #a7342f;
+  border-radius: 999px;
+  color: #8c2823;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-weight: 850;
+  justify-content: center;
+  min-height: 46px;
+  padding: 10px 20px;
+}
+
 .accountActions a:focus-visible,
 .intro a:focus-visible,
-.signOutButton:focus-visible {
+.signOutButton:focus-visible,
+.dangerButton:focus-visible,
+.authLinks a:focus-visible,
+.authForm > button:focus-visible {
   box-shadow: 0 0 0 2px #fff, 0 0 0 5px #14213d;
   outline: 0;
 }

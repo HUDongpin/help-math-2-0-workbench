@@ -36,6 +36,19 @@ import {
   isLocalAuthSessionApiPath,
 } from './lib/local-auth-access';
 import {
+  isFamilyAuthEnabled,
+  readFamilyAuthProviderMode,
+} from './lib/family/auth-provider-config';
+import {refreshFamilySupabaseAuthSession} from './lib/family/supabase-auth-proxy';
+import {
+  isFamilyCronApiPath,
+  isFamilyExternalApiPath,
+  isFamilyInvitationEntryPath,
+  isFamilyPortalPath,
+  isFamilyWebhookApiPath,
+  readFamilyFeatureFlags,
+} from './lib/family/feature-flags';
+import {
   isPageOnlyCurrentJsShowcaseAssetAuthorized,
   isPageOnlyCurrentJsShowcaseAssetSegments,
 } from './lib/page-only-current-js-showcase-asset-policy';
@@ -70,6 +83,7 @@ function notFoundResponse() {
   return new NextResponse('Not Found', {
     status: 404,
     headers: {
+      'Cache-Control': 'private, no-store, max-age=0',
       'Content-Type': 'text/plain; charset=utf-8',
       'X-Robots-Tag': 'noindex, nofollow',
     },
@@ -132,9 +146,28 @@ function localeFreePath(pathname: string) {
 }
 
 function isAllowed(pathname: string, request: NextRequest) {
+  const familyFlags = readFamilyFeatureFlags();
+  if (isFamilyCronApiPath(pathname)) {
+    // The bearer-protected worker must remain reachable for retention and
+    // expired-lease cleanup after an incident disables the product flags.
+    return true;
+  }
+  if (isFamilyWebhookApiPath(pathname)) {
+    // Delivery/suppression feedback remains a compliance input after outbound
+    // email is disabled. The Route Handler still requires an exact signature.
+    return true;
+  }
+  if (isFamilyPortalPath(pathname)) {
+    return familyFlags.portalEnabled
+      && (familyFlags.syntheticDemoEnabled || isFamilyAuthEnabled());
+  }
   if (
-    isLocalAuthEnabled()
+    isFamilyAuthEnabled()
     && (isLocalAuthPath(pathname) || isLocalAuthSessionApiPath(pathname))
+  ) return true;
+  if (
+    pathname === '/auth/callback'
+    && readFamilyAuthProviderMode() === 'supabase'
   ) return true;
   if (isReferencePath(pathname)) {
     return isLocalReferenceDiagnosticRequestAllowed({
@@ -224,6 +257,16 @@ function protectLocalReferenceDiagnosticResponse(response: NextResponse) {
   return response;
 }
 
+function protectFamilyResponse(response: NextResponse) {
+  response.headers.set('Cache-Control', 'private, no-store, max-age=0');
+  response.headers.set(
+    'X-Robots-Tag',
+    'noindex, nofollow, noarchive, noimageindex',
+  );
+  response.headers.set('Vary', 'Cookie, Authorization');
+  return response;
+}
+
 export async function proxyForRequest(request: NextRequest) {
   const originalPath = normalizePath(request.nextUrl.pathname);
   const normalizedLocaleFree = normalizePath(localeFreePath(originalPath));
@@ -234,11 +277,17 @@ export async function proxyForRequest(request: NextRequest) {
   // 404s before their own integrity policy can evaluate them.
   const localeFreeAsset = originalPath.startsWith('/flash-assets/');
   const localeFreeAuthApi = isLocalAuthSessionApiPath(originalPath);
+  const localeFreeFamilyAuthCallback = originalPath === '/auth/callback';
+  const localeFreeFamilyApi = isFamilyExternalApiPath(originalPath);
   const localePrefixed = originalPath === '/en'
     || originalPath.startsWith('/en/')
     || originalPath === '/es'
     || originalPath.startsWith('/es/');
-  const response = localePrefixed || localeFreeAsset || localeFreeAuthApi
+  const response = localePrefixed
+    || localeFreeAsset
+    || localeFreeAuthApi
+    || localeFreeFamilyAuthCallback
+    || localeFreeFamilyApi
     ? NextResponse.next()
     : (() => {
         const rewritten = request.nextUrl.clone();
@@ -249,11 +298,24 @@ export async function proxyForRequest(request: NextRequest) {
   if (isReferencePath(normalizedLocaleFree)) {
     return protectLocalReferenceDiagnosticResponse(response);
   }
+  if (
+    isFamilyPortalPath(normalizedLocaleFree)
+    || isFamilyExternalApiPath(normalizedLocaleFree)
+  ) return protectFamilyResponse(response);
   return response;
 }
 
 const clerkAwareProxy = clerkMiddleware(
-  (_auth, request) => proxyForRequest(request),
+  async (auth, request) => {
+    const originalPath = normalizePath(request.nextUrl.pathname);
+    const normalizedLocaleFree = normalizePath(localeFreePath(originalPath));
+    if (
+      isFamilyPortalPath(normalizedLocaleFree)
+      && !readFamilyFeatureFlags().syntheticDemoEnabled
+      && !isFamilyInvitationEntryPath(normalizedLocaleFree)
+    ) await auth.protect();
+    return proxyForRequest(request);
+  },
 );
 
 export function normalizeLocalClerkMiddlewareResponse(
@@ -285,13 +347,31 @@ export default async function proxy(
   event?: NextFetchEvent,
 ): Promise<Response> {
   if (isLocalAuthSessionApiPath(request.nextUrl.pathname)) {
-    if (!isLocalAuthEnabled() || !event) return NextResponse.next();
+    if (
+      readFamilyAuthProviderMode() === 'clerk-development'
+      && isLocalAuthEnabled()
+      && event
+    ) {
+      const response = await clerkAwareProxy(request, event) ?? NextResponse.next();
+      return normalizeLocalClerkMiddlewareResponse(response, request.nextUrl);
+    }
+  }
+  if (
+    readFamilyAuthProviderMode() === 'clerk-development'
+    && isLocalAuthEnabled()
+    && event
+  ) {
     const response = await clerkAwareProxy(request, event) ?? NextResponse.next();
     return normalizeLocalClerkMiddlewareResponse(response, request.nextUrl);
   }
-  if (!isLocalAuthEnabled() || !event) return proxyForRequest(request);
-  const response = await clerkAwareProxy(request, event) ?? NextResponse.next();
-  return normalizeLocalClerkMiddlewareResponse(response, request.nextUrl);
+  const response = await proxyForRequest(request);
+  if (
+    readFamilyAuthProviderMode() === 'supabase'
+    && response.status < 400
+  ) {
+    return refreshFamilySupabaseAuthSession({request, response});
+  }
+  return response;
 }
 
 export const config = {
@@ -299,5 +379,7 @@ export const config = {
     '/((?!api|_next|_vercel|.*\\..*).*)',
     '/flash-assets/:path*',
     '/api/auth/session',
+    '/api/cron/family-notifications',
+    '/api/webhooks/resend',
   ],
 };

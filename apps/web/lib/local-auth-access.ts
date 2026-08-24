@@ -10,8 +10,10 @@ const LOOPBACK_HOSTS = new Set(['127.0.0.1', 'localhost', '[::1]']);
 
 export const LOCAL_AUTH_PATHS = Object.freeze([
   '/account',
+  '/recover',
   '/sign-in',
   '/sign-up',
+  '/update-password',
 ] as const);
 export const LOCAL_AUTH_SESSION_API_PATH = '/api/auth/session';
 

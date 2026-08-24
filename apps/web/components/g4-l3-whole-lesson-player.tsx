@@ -28,8 +28,14 @@ import {
   type LessonShellSection,
   type LessonShellTool,
 } from '@/components/legacy-responsive-lesson-shell';
+import {useFamilyLearningEventV2Recorder} from
+  '@/hooks/use-family-learning-event-v2-recorder';
 import {useLearningEventRecorder} from '@/hooks/use-learning-event-recorder';
 import type {PublicAuthStatus} from '@/lib/auth-session';
+import type {
+  LearningAssignmentLaunch,
+  RecordAssignmentLearningEventsV2Action,
+} from '@/lib/family/learning-events-v2-contract';
 import {
   G4_L3_LESSON,
   findG4L3Page,
@@ -139,20 +145,24 @@ function learningSupportKind(tool: Exclude<LessonShellTool, null>) {
 export function G4L3WholeLessonPlayer({
   authStatus = 'disabled',
   candidateMode,
+  familyLearningLaunch,
   hostPresentation = 'legacy-composite',
   learningEventsEnabled = false,
   locale,
   novaTutorMode = 'focus',
+  onRecordFamilyLearningEventsAction,
   releasePublished,
   reviewerMode = false,
   strictCompleteMemberCount,
 }: {
   authStatus?: PublicAuthStatus;
   candidateMode: boolean;
+  familyLearningLaunch?: LearningAssignmentLaunch;
   hostPresentation?: WholeLessonHostPresentation;
   learningEventsEnabled?: boolean;
   locale: G4L3Locale;
   novaTutorMode?: NovaTutorMode;
+  onRecordFamilyLearningEventsAction?: RecordAssignmentLearningEventsV2Action;
   releasePublished: boolean;
   reviewerMode?: boolean;
   strictCompleteMemberCount: number;
@@ -223,6 +233,9 @@ export function G4L3WholeLessonPlayer({
     completedCount === G4_L3_LESSON.activePageCount;
   const completionPercent = g4L3CompletionPercent(progress);
   const spanish = progress.language === 'es';
+  const familyLearningEventsEnabled = Boolean(
+    familyLearningLaunch && onRecordFamilyLearningEventsAction,
+  );
   const currentLearningProgress = useMemo(
     () => learningEventProgress(progress),
     [progress],
@@ -237,6 +250,16 @@ export function G4L3WholeLessonPlayer({
     locale: progress.language,
     mode: novaTutorMode,
     presentation: hostPresentation,
+  });
+  const {
+    flush: flushFamilyLearningEvents,
+    pendingCount: pendingFamilyLearningEventCount,
+    record: recordFamilyLearningEvent,
+    status: familyLearningEventStatus,
+  } = useFamilyLearningEventV2Recorder({
+    action: onRecordFamilyLearningEventsAction,
+    launch: familyLearningLaunch,
+    locale: progress.language,
   });
   const learningEventContextRef = useRef({
     activeTool,
@@ -319,9 +342,13 @@ export function G4L3WholeLessonPlayer({
         progress: learningContext.progress,
         support: {kind: 'key-terms', action: 'opened'},
       });
+      recordFamilyLearningEvent({
+        animationId: hostAnimationId,
+        eventType: 'support_opened',
+      });
     }
     return decision;
-  }, [lessonHost]);
+  }, [lessonHost, recordFamilyLearningEvent]);
   const handleShellToolChange = useCallback((tool: LessonShellTool) => {
     const returnFocusTarget = pageInteractionReturnFocusRef.current;
     pageInteractionReturnFocusRef.current = null;
@@ -346,6 +373,10 @@ export function G4L3WholeLessonPlayer({
           progress: learningContext.progress,
           support: {kind: learningSupportKind(tool), action: 'opened'},
         });
+        recordFamilyLearningEvent({
+          animationId: learningContext.animationId,
+          eventType: 'support_opened',
+        });
       }
     }
     setActiveTool(tool);
@@ -355,7 +386,7 @@ export function G4L3WholeLessonPlayer({
         returnFocusTarget.focus({preventScroll: true});
       }
     });
-  }, [activeTool, lessonHost]);
+  }, [activeTool, lessonHost, recordFamilyLearningEvent]);
   const handleMapOpenChange = useCallback((open: boolean) => {
     if (open !== mapOpen) {
       const learningContext = learningEventContextRef.current;
@@ -365,9 +396,15 @@ export function G4L3WholeLessonPlayer({
         progress: learningContext.progress,
         support: {kind: 'lesson-map', action: open ? 'opened' : 'closed'},
       });
+      if (open) {
+        recordFamilyLearningEvent({
+          animationId: learningContext.animationId,
+          eventType: 'support_opened',
+        });
+      }
     }
     setMapOpen(open);
-  }, [mapOpen]);
+  }, [mapOpen, recordFamilyLearningEvent]);
   const handleTutorEngagementChange = useCallback((engaged: boolean) => {
     if (engaged !== tutorEngaged) {
       const learningContext = learningEventContextRef.current;
@@ -380,9 +417,15 @@ export function G4L3WholeLessonPlayer({
           action: engaged ? 'opened' : 'closed',
         },
       });
+      if (engaged) {
+        recordFamilyLearningEvent({
+          animationId: learningContext.animationId,
+          eventType: 'support_opened',
+        });
+      }
     }
     setTutorEngaged(engaged);
-  }, [tutorEngaged]);
+  }, [recordFamilyLearningEvent, tutorEngaged]);
   const beginLearningLifecycle = useCallback((
     nextProgress: G4L3WholeLessonProgress,
     resumed: boolean,
@@ -394,14 +437,22 @@ export function G4L3WholeLessonPlayer({
         type: 'lesson.initialized',
         progress: nextLearningProgress,
       });
+      recordFamilyLearningEvent({
+        animationId: nextProgress.currentAnimationId,
+        eventType: 'lesson_started',
+      });
     }
     if (resumed) {
       recordLearningEvent({
         type: 'lesson.resumed',
         progress: nextLearningProgress,
       });
+      recordFamilyLearningEvent({
+        animationId: nextProgress.currentAnimationId,
+        eventType: 'lesson_resumed',
+      });
     }
-  }, [recordLearningEvent]);
+  }, [recordFamilyLearningEvent, recordLearningEvent]);
   const recordLessonExit = useCallback(() => {
     if (lessonExitRecordedRef.current) return;
     lessonExitRecordedRef.current = true;
@@ -411,7 +462,11 @@ export function G4L3WholeLessonPlayer({
       page: {animationId: learningContext.animationId},
       progress: learningContext.progress,
     });
-  }, []);
+    recordFamilyLearningEvent({
+      animationId: learningContext.animationId,
+      eventType: 'lesson_exited',
+    });
+  }, [recordFamilyLearningEvent]);
 
   useEffect(() => {
     let active = true;
@@ -490,20 +545,29 @@ export function G4L3WholeLessonPlayer({
       page: {animationId: currentAnimationId},
       progress: currentLearningProgress,
     });
+    recordFamilyLearningEvent({
+      animationId: currentAnimationId,
+      eventType: 'page_visited',
+    });
   }, [
     currentAnimationId,
     currentLearningProgress,
     hydrated,
     progress.language,
+    recordFamilyLearningEvent,
     recordLearningEvent,
     resumeDecision,
   ]);
 
   useEffect(() => {
-    if (!learningEventsEnabled) return;
+    if (
+      !learningEventsEnabled
+      && !(familyLearningLaunch && onRecordFamilyLearningEventsAction)
+    ) return;
     const handlePageHide = () => {
       recordLessonExit();
       void flushLearningEvents({keepalive: true});
+      void flushFamilyLearningEvents();
     };
     const handlePageShow = (event: PageTransitionEvent) => {
       if (!event.persisted) return;
@@ -512,7 +576,12 @@ export function G4L3WholeLessonPlayer({
         type: 'lesson.resumed',
         progress: currentLearningProgress,
       });
+      recordFamilyLearningEvent({
+        animationId: currentAnimationId,
+        eventType: 'lesson_resumed',
+      });
       void flushLearningEvents();
+      void flushFamilyLearningEvents();
     };
     window.addEventListener('pagehide', handlePageHide);
     window.addEventListener('pageshow', handlePageShow);
@@ -522,8 +591,13 @@ export function G4L3WholeLessonPlayer({
     };
   }, [
     currentLearningProgress,
+    currentAnimationId,
+    familyLearningLaunch,
+    flushFamilyLearningEvents,
     flushLearningEvents,
     learningEventsEnabled,
+    onRecordFamilyLearningEventsAction,
+    recordFamilyLearningEvent,
     recordLearningEvent,
     recordLessonExit,
   ]);
@@ -608,6 +682,10 @@ export function G4L3WholeLessonPlayer({
         page: {animationId: currentAnimationId},
         progress: learningEventProgress(nextProgress),
       });
+      recordFamilyLearningEvent({
+        animationId: currentAnimationId,
+        eventType: 'page_reviewed',
+      });
     }
     setProgress((value) => completeG4L3Page(value, currentAnimationId));
   };
@@ -681,6 +759,12 @@ export function G4L3WholeLessonPlayer({
         action: playbackState.narration === 'playing' ? 'closed' : 'used',
       },
     });
+    if (playbackState.narration !== 'playing') {
+      recordFamilyLearningEvent({
+        animationId: currentAnimationId,
+        eventType: 'support_opened',
+      });
+    }
     narrationRequestIdRef.current += 1;
     setNarrationRequest({
       action: playbackState.narration === 'playing' ? 'stop' : 'play',
@@ -740,7 +824,12 @@ export function G4L3WholeLessonPlayer({
     }
     window.location.assign(learningHomeHref);
   };
-  const exitToLearningHome = () => window.location.assign(learningHomeHref);
+  const exitToLearningHome = () => {
+    recordLessonExit();
+    void flushLearningEvents({keepalive: true});
+    void flushFamilyLearningEvents();
+    window.location.assign(learningHomeHref);
+  };
 
   const restartLesson = () => {
     const confirmed = window.confirm(spanish
@@ -751,6 +840,10 @@ export function G4L3WholeLessonPlayer({
     recordLearningEvent({
       type: 'lesson.initialized',
       progress: learningEventProgress(nextProgress),
+    });
+    recordFamilyLearningEvent({
+      animationId: nextProgress.currentAnimationId,
+      eventType: 'lesson_started',
     });
     lastLearningPageViewRef.current = null;
     setProgress(nextProgress);
@@ -941,9 +1034,13 @@ export function G4L3WholeLessonPlayer({
     <p>{spanish
       ? 'Usa Anterior y Siguiente para recorrer las 39 páginas en orden. Repetir reinicia solamente la página actual.'
       : 'Use Previous and Next to move through all 39 pages in order. Replay resets only the current page.'}</p>
-    <p>{spanish
-      ? 'Cada página se marca como completa cuando termina su animación; no hay nada que pulsar. La barra de progreso se guarda en este navegador y los eventos se sincronizan de forma seudónima con el LRS cuando está disponible.'
-      : 'Each page marks itself complete when its animation finishes; there is nothing to press. The progress bar is stored in this browser, while pseudonymous events sync to the LRS when available.'}</p>
+    <p>{familyLearningEventsEnabled
+      ? spanish
+        ? `Cada página se marca como completa cuando termina su animación; no hay nada que pulsar. La barra visual de progreso se guarda solamente en este dispositivo. Por separado, la actividad autorizada de esta tarea se envía a la cuenta escolar protegida para actualizar su proyección; el progreso local guardado no se carga.${learningEventsEnabled ? ' Cuando está disponible, los eventos seudónimos también pueden sincronizarse por separado con el LRS.' : ''}`
+        : `Each page marks itself complete when its animation finishes; there is nothing to press. The visual progress bar is stored only on this device. Separately, authorized activity for this assignment is sent to the school-protected account to update its projection; saved local progress is not uploaded.${learningEventsEnabled ? ' When available, pseudonymous events may also sync separately to the LRS.' : ''}`
+      : spanish
+        ? 'Cada página se marca como completa cuando termina su animación; no hay nada que pulsar. La barra de progreso se guarda en este navegador y los eventos se sincronizan de forma seudónima con el LRS cuando está disponible.'
+        : 'Each page marks itself complete when its animation finishes; there is nothing to press. The progress bar is stored in this browser, while pseudonymous events sync to the LRS when available.'}</p>
     <p>{spanish
       ? 'Este panel accesible reemplaza de forma segura el antiguo enlace de ayuda externo; no ejecuta URLs heredadas.'
       : 'This accessible panel safely replaces the legacy external help link; it does not execute legacy URLs.'}</p>
@@ -1024,8 +1121,15 @@ export function G4L3WholeLessonPlayer({
     data-learning-event-pending={pendingLearningEventCount}
     data-learning-event-status={learningEventStatus}
     data-learning-record-sync={learningEventsEnabled ? 'xapi-lrs' : 'disabled'}
+    data-family-learning-event-pending={pendingFamilyLearningEventCount}
+    data-family-learning-event-status={familyLearningEventStatus}
+    data-family-learning-record-sync={familyLearningEventsEnabled
+      ? 'assignment-v2'
+      : 'disabled'}
     data-progress-kind="learner-session"
-    data-progress-storage="local-device-only"
+    data-progress-storage={familyLearningEventsEnabled
+      ? 'local-ui-plus-authorized-events'
+      : 'local-device-only'}
     data-resume-decision={resumeDecision}
     data-source-stop-hold={
       sourceStopHold?.animationId === currentAnimationId ? 'true' : 'false'
@@ -1171,9 +1275,13 @@ export function G4L3WholeLessonPlayer({
               ? 'MVP actual de JavaScript; no es una declaración de fidelidad estricta ni de publicación pública.'
               : 'Current JavaScript MVP; this is not a strict-fidelity or public-release claim.'}
           </p>
-          <p>{spanish
-            ? 'La barra de progreso permanece en este navegador. Los eventos de aprendizaje se sincronizan de forma seudónima con el LRS; no incluyen conversaciones de Nova, voz, fotos ni respuestas de texto libre.'
-            : 'The progress bar stays in this browser. Pseudonymous learning events sync to the LRS; they exclude Nova conversations, voice, photos, and free-text answers.'}</p>
+          <p>{familyLearningEventsEnabled
+            ? spanish
+              ? `La barra visual de progreso permanece en este dispositivo. Por separado, los tipos de eventos autorizados de esta tarea se sincronizan con la proyección de la cuenta escolar protegida; el progreso local guardado no se carga. Estos eventos no incluyen conversaciones de Nova, voz, fotos ni respuestas de texto libre.${learningEventsEnabled ? ' De forma independiente, los eventos seudónimos también pueden sincronizarse con el LRS cuando está disponible.' : ''}`
+              : `The visual progress bar stays on this device. Separately, authorized event types for this assignment sync to the school-protected account projection; saved local progress is not uploaded. These events exclude Nova conversations, voice, photos, and free-text answers.${learningEventsEnabled ? ' Independently, pseudonymous events may also sync to the LRS when available.' : ''}`
+            : spanish
+              ? 'La barra de progreso permanece en este navegador. Los eventos de aprendizaje se sincronizan de forma seudónima con el LRS; no incluyen conversaciones de Nova, voz, fotos ni respuestas de texto libre.'
+              : 'The progress bar stays in this browser. Pseudonymous learning events sync to the LRS; they exclude Nova conversations, voice, photos, and free-text answers.'}</p>
           <p data-learning-record-indicator={learningEventStatus}>{spanish
             ? `Registro de aprendizaje: ${
                 learningEventStatus === 'synced' ? 'sincronizado'

@@ -1,8 +1,8 @@
 import type {Metadata, Viewport} from 'next';
 import {notFound} from 'next/navigation';
-import {Analytics} from '@vercel/analytics/next';
 
 import {ClerkLocalAuthProvider} from '@/components/auth/clerk-local-auth-provider';
+import {PrivacySafeAnalytics} from '@/components/privacy-safe-analytics';
 import {SiteFooter} from '@/components/site-footer';
 import {SiteHeader} from '@/components/site-header';
 import {getSiteContent} from '@/content';
@@ -81,7 +81,7 @@ export default async function LocaleLayout({
             <SiteFooter content={content} locale={appLocale} />
           </LocaleProvider>
         </ClerkLocalAuthProvider>
-        {process.env.NODE_ENV === 'production' ? <Analytics /> : null}
+        {process.env.NODE_ENV === 'production' ? <PrivacySafeAnalytics /> : null}
       </body>
     </html>
   );

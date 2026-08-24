@@ -3,9 +3,15 @@ import {notFound, redirect} from 'next/navigation';
 
 import {ClerkSignOutControl} from '@/components/auth/clerk-auth-ui';
 import {LocalAccountPage} from '@/components/auth/local-auth-page';
+import {SupabaseAccountControls} from '@/components/auth/supabase-account-controls';
 import {isLocale} from '@/content';
-import {readAuthSession} from '@/lib/clerk-auth-session.server';
-import {isLocalAuthEnabled, localizedAuthPath} from '@/lib/local-auth-access';
+import {localizedFamilyAuthPath} from '@/lib/family/auth-flow';
+import {
+  isFamilyAuthEnabled,
+  readFamilyAuthProviderMode,
+} from '@/lib/family/auth-provider-config';
+import {readFamilyAuthSession} from '@/lib/family/family-auth-session.server';
+import {localizedAuthPath} from '@/lib/local-auth-access';
 
 export async function generateMetadata({
   params,
@@ -27,17 +33,23 @@ export default async function AccountPage({
   params: Promise<{locale: string}>;
 }) {
   const {locale} = await params;
-  if (!isLocale(locale) || !isLocalAuthEnabled()) notFound();
+  const provider = readFamilyAuthProviderMode();
+  if (!isLocale(locale) || !isFamilyAuthEnabled()) notFound();
 
-  const session = await readAuthSession();
+  const session = await readFamilyAuthSession();
   if (session.status !== 'signed-in') {
     const target = new URLSearchParams({
       redirect_url: localizedAuthPath(locale, '/account'),
     });
-    redirect(`${localizedAuthPath(locale, '/sign-in')}?${target.toString()}`);
+    redirect(`${localizedFamilyAuthPath(locale, '/sign-in')}?${target.toString()}`);
   }
 
-  return <LocalAccountPage locale={locale}>
-    <ClerkSignOutControl locale={locale} />
+  return <LocalAccountPage
+    locale={locale}
+    provider={provider === 'supabase' ? 'supabase' : 'clerk'}
+  >
+    {provider === 'supabase'
+      ? <SupabaseAccountControls locale={locale} />
+      : <ClerkSignOutControl locale={locale} />}
   </LocalAccountPage>;
 }

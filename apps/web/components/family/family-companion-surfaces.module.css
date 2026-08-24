@@ -1,0 +1,1439 @@
+.companion {
+  --bg: #f6f5fb;
+  --card: #ffffff;
+  --card-soft: #fbfaff;
+  --ink: #292741;
+  --ink-soft: #5c5773;
+  --ink-faint: #6d6883;
+  --line: #e4e0ed;
+  --blue: #4668df;
+  --blue-dark: #284bb3;
+  --blue-soft: #e9eeff;
+  --mint: #0b7055;
+  --mint-soft: #e1f6ef;
+  --sun: #865000;
+  --sun-soft: #fff0d4;
+  --grape: #7b4eae;
+  --grape-soft: #f2e9fb;
+  --red: #ad4648;
+  --red-soft: #ffebeb;
+  --shadow: 0 2px 5px rgb(41 39 65 / 5%), 0 16px 38px rgb(41 39 65 / 8%);
+  min-height: 100vh;
+  overflow: clip;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Nunito Sans", "Avenir Next", Avenir, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  color-scheme: light dark;
+}
+
+:global(body):has(.companion) :global(.site-header),
+:global(body):has(.companion) :global(.site-footer) {
+  display: none;
+}
+
+:global(body):has(.companion) {
+  min-width: 320px;
+  margin: 0;
+  background: #f6f5fb;
+}
+
+.companion *,
+.companion *::before,
+.companion *::after {
+  box-sizing: border-box;
+}
+
+.companion h1,
+.companion h2,
+.companion h3,
+.companion p {
+  margin: 0;
+}
+
+.companion h1,
+.companion h2,
+.companion h3,
+.brand strong {
+  font-family: ui-rounded, "SF Pro Rounded", Fredoka, "Arial Rounded MT Bold", "Avenir Next Rounded Pro", "Nunito Sans", system-ui, sans-serif;
+  text-wrap: balance;
+}
+
+.companion button,
+.companion input,
+.companion select,
+.companion textarea,
+.companion a {
+  color: inherit;
+  font: inherit;
+}
+
+.companion button,
+.companion a {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.companion button {
+  cursor: pointer;
+}
+
+.companion a {
+  text-decoration: none;
+}
+
+.companion :focus-visible {
+  border-radius: 9px;
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  min-height: 72px;
+  align-items: center;
+  gap: 20px;
+  padding: 10px clamp(18px, 4vw, 54px);
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  backdrop-filter: blur(15px);
+}
+
+.brand {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand > span {
+  display: grid;
+  width: 43px;
+  height: 43px;
+  flex: 0 0 43px;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 13px;
+  background: var(--blue-soft);
+  box-shadow: var(--shadow);
+}
+
+.brand img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+
+.brand > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  line-height: 1.18;
+}
+
+.brand strong {
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.brand strong b {
+  color: var(--blue);
+  font: inherit;
+}
+
+.brand small {
+  color: var(--ink-faint);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.tenant {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--card-soft);
+  color: var(--ink-soft);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.tenant svg {
+  width: 16px;
+  color: var(--blue-dark);
+}
+
+.language {
+  display: inline-flex;
+  padding: 3px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card-soft);
+}
+
+.language a {
+  display: grid;
+  min-width: 39px;
+  min-height: 34px;
+  place-items: center;
+  border-radius: 7px;
+  color: var(--ink-soft);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.language a[aria-current="true"] {
+  background: var(--card);
+  color: var(--blue-dark);
+  box-shadow: 0 2px 8px rgb(41 39 65 / 10%);
+}
+
+.main {
+  width: min(100%, 1400px);
+  margin-inline: auto;
+  padding: clamp(24px, 4vw, 54px);
+}
+
+.pageHeading {
+  max-width: 790px;
+  margin-bottom: 22px;
+}
+
+.pageHeading h1 {
+  font-size: clamp(31px, 4.4vw, 50px);
+  letter-spacing: -.035em;
+  line-height: 1.06;
+}
+
+.pageHeading p {
+  max-width: 720px;
+  margin-top: 9px;
+  color: var(--ink-soft);
+  font-size: clamp(15px, 1.8vw, 18px);
+}
+
+.syntheticBoundary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 15px 17px;
+  border: 1px solid color-mix(in srgb, var(--mint) 30%, var(--line));
+  border-radius: 15px;
+  background: var(--mint-soft);
+}
+
+.syntheticBoundary > svg {
+  width: 21px;
+  color: var(--mint);
+}
+
+.syntheticBoundary > div {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 6px 9px;
+}
+
+.syntheticBoundary span {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--mint);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.syntheticBoundary strong {
+  font-size: 13px;
+}
+
+.syntheticBoundary p {
+  grid-column: 1 / -1;
+  color: var(--ink-soft);
+  font-size: 12px;
+}
+
+.announcementComposer {
+  margin-bottom: 24px;
+  padding: clamp(18px, 3vw, 26px);
+  border: 1px solid color-mix(in srgb, var(--blue) 22%, var(--line));
+  border-radius: 20px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.announcementComposer > header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+}
+
+.announcementComposer > header > svg {
+  width: 23px;
+  color: var(--blue-dark);
+}
+
+.announcementComposer h2 {
+  font-size: clamp(20px, 2.5vw, 26px);
+}
+
+.announcementComposer header p,
+.announcementPrivacyNote {
+  margin-top: 4px;
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+
+.announcementComposer fieldset {
+  display: grid;
+  grid-template-columns: minmax(170px, .65fr) minmax(220px, 1fr) minmax(280px, 1.6fr) auto;
+  align-items: end;
+  gap: 14px;
+  margin: 18px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.announcementComposer fieldset:disabled {
+  opacity: .62;
+}
+
+.announcementComposer label {
+  display: grid;
+  min-width: 0;
+  gap: 6px;
+}
+
+.announcementComposer label > span {
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.announcementComposer input,
+.announcementComposer select,
+.announcementComposer textarea {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--card-soft);
+  color: var(--ink);
+  padding: 10px 12px;
+}
+
+.announcementComposer textarea {
+  min-height: 94px;
+  resize: vertical;
+}
+
+.announcementComposer label small {
+  color: var(--ink-faint);
+  font-size: 10px;
+  text-align: right;
+}
+
+.announcementComposer fieldset > button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 15px;
+  border: 0;
+  border-radius: 11px;
+  background: var(--blue-dark);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.announcementComposer fieldset > button svg,
+.announcementPrivacyNote svg {
+  width: 16px;
+}
+
+.announcementComposer fieldset > button:disabled {
+  cursor: not-allowed;
+  opacity: .48;
+}
+
+.announcementPrivacyNote {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+.formStatus {
+  margin-top: 10px !important;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--blue-soft);
+  color: var(--blue-dark);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.inboxLayout {
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+  min-height: 660px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.threadList {
+  min-width: 0;
+  border-right: 1px solid var(--line);
+  background: var(--card-soft);
+}
+
+.threadList > header {
+  display: grid;
+  min-height: 65px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.threadList > header svg {
+  width: 19px;
+  color: var(--blue-dark);
+}
+
+.threadList > header strong {
+  font-size: 12px;
+}
+
+.threadList > header b {
+  display: grid;
+  min-width: 23px;
+  height: 23px;
+  place-items: center;
+  padding-inline: 6px;
+  border-radius: 999px;
+  background: var(--grape);
+  color: #fff;
+  font-size: 10px;
+}
+
+.threadList > button {
+  position: relative;
+  display: grid;
+  width: 100%;
+  min-height: 112px;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+  padding: 16px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+}
+
+.threadList > button:hover {
+  background: var(--card);
+}
+
+.threadList > button[aria-current="true"] {
+  background: var(--blue-soft);
+  box-shadow: inset 4px 0 0 var(--blue);
+}
+
+.unreadThread::after {
+  position: absolute;
+  top: 18px;
+  right: 14px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--grape);
+  content: '';
+}
+
+.threadList > button > span {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--blue-soft);
+  color: var(--blue-dark);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.threadList > button > div:nth-child(2) {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.threadList > button strong,
+.threadList > button small,
+.threadList > button p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.threadList > button strong {
+  padding-right: 12px;
+  font-size: 12px;
+}
+
+.threadList > button small {
+  margin-top: 1px;
+  color: var(--ink-faint);
+  font-size: 10px;
+}
+
+.threadList > button p {
+  margin-top: 7px;
+  color: var(--ink-soft);
+  font-size: 12px;
+}
+
+.threadFlags {
+  display: flex;
+  grid-column: 2;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.threadFlags i {
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: var(--grape-soft);
+  color: var(--grape);
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 850;
+}
+
+.conversationPanel {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.conversationHeader {
+  display: flex;
+  min-height: 86px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.conversationHeader > div:first-child {
+  min-width: 0;
+}
+
+.conversationHeader span {
+  color: var(--blue-dark);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.conversationHeader h2 {
+  overflow: hidden;
+  margin-top: 2px;
+  font-size: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.conversationHeader p {
+  color: var(--ink-faint);
+  font-size: 11px;
+}
+
+.conversationHeader > div:last-child {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 7px;
+}
+
+.conversationHeader button,
+.composer button,
+.adminCard form > button,
+.accessActions button,
+.invitationActions button,
+.outcomeCard button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card-soft);
+  color: var(--ink-soft);
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.conversationHeader button:hover,
+.accessActions button:hover,
+.outcomeCard button:hover {
+  border-color: var(--blue);
+  color: var(--blue-dark);
+}
+
+.conversationHeader button svg,
+.composer button svg,
+.adminCard form > button svg,
+.accessActions button svg,
+.invitationActions button svg,
+.outcomeCard button svg {
+  width: 16px;
+}
+
+.messageStream {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 310px;
+  padding: 24px;
+  background:
+    linear-gradient(var(--card-soft), var(--card-soft)),
+    radial-gradient(circle, var(--line) 1px, transparent 1px);
+  background-size: auto, 22px 22px;
+}
+
+.messageStream article {
+  width: min(78%, 690px);
+  padding: 13px 15px;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  background: var(--card);
+  box-shadow: 0 2px 8px rgb(41 39 65 / 5%);
+}
+
+.messageStream article.mine {
+  align-self: flex-end;
+  border-color: color-mix(in srgb, var(--blue) 24%, var(--line));
+  border-radius: 15px 15px 4px;
+  background: var(--blue-soft);
+}
+
+.messageStream article.theirs {
+  align-self: flex-start;
+  border-radius: 15px 15px 15px 4px;
+}
+
+.messageStream article span {
+  color: var(--ink-faint);
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.messageStream article p {
+  margin-top: 4px;
+  font-size: 13px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.composer {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 17px 20px 20px;
+  border-top: 1px solid var(--line);
+  background: var(--card);
+}
+
+.composer label {
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.composer textarea,
+.adminCard input,
+.adminCard select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card-soft);
+  color: var(--ink);
+}
+
+.composer textarea {
+  min-height: 86px;
+  resize: vertical;
+  padding: 10px 11px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.composer > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.composer small {
+  color: var(--ink-faint);
+  font-size: 9px;
+}
+
+.composer button,
+.adminCard form > button,
+.invitationActions button:first-child {
+  border-color: var(--blue);
+  background: var(--blue);
+  color: #fff;
+}
+
+.composer button:disabled,
+.invitationActions button:disabled {
+  cursor: not-allowed;
+  opacity: .45;
+}
+
+.closedState {
+  display: flex;
+  min-height: 100px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-top: 1px solid var(--line);
+  background: var(--card-soft);
+  color: var(--ink-soft);
+  font-size: 12px;
+}
+
+.closedState svg {
+  width: 18px;
+  color: var(--mint);
+}
+
+.closedState > div {
+  display: flex;
+  max-width: 560px;
+  flex-direction: column;
+}
+
+.closedState p {
+  margin-top: 2px;
+  color: var(--ink-faint);
+  font-size: 10px;
+  text-align: center;
+}
+
+.adminGrid {
+  display: grid;
+  grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
+  align-items: start;
+  gap: 18px;
+}
+
+.adminCard {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.adminCard > header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  padding: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.adminCard > header > span {
+  display: grid;
+  width: 41px;
+  height: 41px;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--blue-soft);
+  color: var(--blue-dark);
+}
+
+.adminCard > header svg {
+  width: 20px;
+}
+
+.adminCard > header h2 {
+  font-size: 18px;
+}
+
+.adminCard > header p {
+  margin-top: 4px;
+  color: var(--ink-soft);
+  font-size: 12px;
+}
+
+.adminCard form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.adminCard form label {
+  margin: 14px 0 5px;
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.adminCard form label:first-child {
+  margin-top: 0;
+}
+
+.adminCard input,
+.adminCard select {
+  min-height: 45px;
+  padding: 9px 11px;
+  font-size: 13px;
+}
+
+.adminCard input[aria-invalid="true"] {
+  border-color: var(--red);
+}
+
+.adminCard form > small {
+  margin-top: 5px;
+  color: var(--ink-faint);
+  font-size: 9px;
+}
+
+.formError {
+  min-height: 18px;
+  margin-top: 3px !important;
+  color: var(--red);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.adminCard form > button {
+  margin-top: 10px;
+}
+
+.accessList {
+  display: flex;
+  flex-direction: column;
+}
+
+.accessList article {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-top: 1px solid var(--line);
+}
+
+.accessList article:first-child {
+  border-top: 0;
+}
+
+.accessAvatar {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--grape-soft);
+  color: var(--grape);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.accessIdentity,
+.accessStatus {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.accessIdentity strong,
+.accessIdentity small,
+.accessIdentity p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.accessIdentity strong {
+  font-size: 12px;
+}
+
+.accessIdentity small,
+.accessIdentity p,
+.accessStatus small {
+  color: var(--ink-faint);
+  font-size: 9px;
+}
+
+.accessIdentity p {
+  margin-top: 2px;
+}
+
+.accessStatus {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.accessStatus > span {
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.accessStatus > span[data-status="pending"] {
+  background: var(--sun-soft);
+  color: var(--sun);
+}
+
+.accessStatus > span[data-status="accepted"] {
+  background: var(--mint-soft);
+  color: var(--mint);
+}
+
+.accessStatus > span[data-status="revoked"] {
+  background: var(--red-soft);
+  color: var(--red);
+}
+
+.accessStatus small {
+  margin-top: 3px;
+}
+
+.accessActions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.accessActions button {
+  white-space: nowrap;
+}
+
+.acceptMain {
+  width: min(100%, 860px);
+}
+
+.invitationCard {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+
+.invitationIdentity {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  padding: clamp(22px, 4vw, 32px);
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(135deg, var(--card) 0%, var(--blue-soft) 150%);
+}
+
+.invitationIdentity > span {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  border-radius: 18px;
+  background: var(--blue);
+  color: #fff;
+}
+
+.invitationIdentity svg {
+  width: 28px;
+}
+
+.invitationIdentity small {
+  color: var(--blue-dark);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.invitationIdentity h2 {
+  margin-top: 2px;
+  font-size: 25px;
+}
+
+.invitationIdentity p {
+  color: var(--ink-soft);
+  font-size: 12px;
+}
+
+.invitationCard dl {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  padding: 20px clamp(22px, 4vw, 32px);
+  border-bottom: 1px solid var(--line);
+}
+
+.invitationCard dl > div {
+  min-width: 0;
+  padding: 4px 18px;
+  border-left: 1px solid var(--line);
+}
+
+.invitationCard dl > div:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.invitationCard dt {
+  color: var(--ink-faint);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.invitationCard dd {
+  overflow: hidden;
+  margin: 4px 0 0;
+  font-size: 11px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.safetyPanel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  margin: 22px clamp(22px, 4vw, 32px) 0;
+  padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--mint) 26%, var(--line));
+  border-radius: 14px;
+  background: var(--mint-soft);
+}
+
+.safetyPanel > svg {
+  width: 20px;
+  color: var(--mint);
+}
+
+.safetyPanel h3 {
+  font-size: 14px;
+}
+
+.safetyPanel ul {
+  margin: 7px 0 0;
+  padding-left: 18px;
+  color: var(--ink-soft);
+  font-size: 11px;
+}
+
+.safetyPanel li + li {
+  margin-top: 4px;
+}
+
+.confirmation {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 11px;
+  margin: 18px clamp(22px, 4vw, 32px) 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--card-soft);
+  cursor: pointer;
+}
+
+.confirmation input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.confirmation > span {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border: 2px solid var(--line);
+  border-radius: 6px;
+  background: var(--card);
+  color: transparent;
+}
+
+.confirmation > span svg {
+  width: 15px;
+}
+
+.confirmation input:checked + span {
+  border-color: var(--blue);
+  background: var(--blue);
+  color: #fff;
+}
+
+.confirmation input:focus-visible + span {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.confirmation strong {
+  padding-top: 1px;
+  font-size: 12px;
+}
+
+.invitationActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  padding: 20px clamp(22px, 4vw, 32px) 28px;
+}
+
+.invitationActions button:first-child {
+  flex: 1;
+}
+
+.acceptError {
+  min-height: 22px;
+  padding: 0 clamp(22px, 4vw, 32px) 18px;
+  color: var(--red);
+  font-size: 11px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.outcomeCard {
+  display: flex;
+  min-height: 430px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(28px, 7vw, 64px);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--card);
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.outcomeCard > svg {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 18px;
+  padding: 13px;
+  border-radius: 17px;
+  background: var(--mint-soft);
+  color: var(--mint);
+}
+
+.outcomeCard h1 {
+  font-size: clamp(27px, 4vw, 39px);
+}
+
+.outcomeCard p {
+  max-width: 580px;
+  margin-top: 8px;
+  color: var(--ink-soft);
+}
+
+.outcomeCard button {
+  margin-top: 22px;
+}
+
+.primaryLink {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 7px;
+  margin-top: 22px;
+  padding: 9px 15px;
+  border-radius: 10px;
+  background: var(--blue);
+  color: #fff !important;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.primaryLink svg {
+  width: 16px;
+}
+
+.srOnly {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  clip: rect(0 0 0 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .companion {
+    --bg: #171624;
+    --card: #222031;
+    --card-soft: #29263a;
+    --ink: #f4f2fa;
+    --ink-soft: #d1cde0;
+    --ink-faint: #aaa5bf;
+    --line: #3c3852;
+    --blue: #8499f1;
+    --blue-dark: #bdc8ff;
+    --blue-soft: #2b3257;
+    --mint: #77d9bb;
+    --mint-soft: #173d33;
+    --sun: #f0bc69;
+    --sun-soft: #423015;
+    --grape: #c59be8;
+    --grape-soft: #38254b;
+    --red: #ff9a9d;
+    --red-soft: #4d2629;
+    --shadow: 0 2px 5px rgb(0 0 0 / 25%), 0 16px 38px rgb(0 0 0 / 28%);
+  }
+
+  :global(body):has(.companion) {
+    background: #171624;
+  }
+
+  .syntheticBoundary span,
+  .threadList > header b,
+  .composer button,
+  .announcementComposer fieldset > button,
+  .adminCard form > button,
+  .invitationActions button:first-child,
+  .invitationIdentity > span,
+  .confirmation input:checked + span,
+  .primaryLink {
+    color: #171624 !important;
+  }
+}
+
+@media (max-width: 980px) {
+  .announcementComposer fieldset {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .announcementBodyField {
+    grid-column: 1 / -1;
+  }
+
+  .inboxLayout,
+  .adminGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .threadList {
+    display: flex;
+    overflow-x: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .threadList > header {
+    display: none;
+  }
+
+  .threadList > button {
+    min-width: 270px;
+    border-right: 1px solid var(--line);
+    border-bottom: 0;
+  }
+
+  .threadList > button[aria-current="true"] {
+    box-shadow: inset 0 -4px 0 var(--blue);
+  }
+
+  .accessCard {
+    order: -1;
+  }
+}
+
+@media (max-width: 720px) {
+  .header {
+    gap: 10px;
+    padding-inline: 14px;
+  }
+
+  .tenant {
+    display: none;
+  }
+
+  .main {
+    padding: 23px 15px 34px;
+  }
+
+  .syntheticBoundary > div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .syntheticBoundary span {
+    justify-self: start;
+  }
+
+  .syntheticBoundary p {
+    grid-column: auto;
+  }
+
+  .announcementComposer fieldset {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .announcementBodyField {
+    grid-column: auto;
+  }
+
+  .conversationHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .conversationHeader > div:last-child {
+    justify-content: flex-start;
+  }
+
+  .messageStream {
+    padding: 17px;
+  }
+
+  .messageStream article {
+    width: 90%;
+  }
+
+  .accessList article {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .accessStatus {
+    align-items: flex-start;
+    grid-column: 2;
+    text-align: left;
+  }
+
+  .accessActions {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+
+  .invitationCard dl {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .invitationCard dl > div,
+  .invitationCard dl > div:first-child {
+    padding: 0 0 12px;
+    border-bottom: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .invitationCard dl > div:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand > div small {
+    display: none;
+  }
+
+  .language a {
+    min-width: 36px;
+  }
+
+  .pageHeading h1 {
+    font-size: 31px;
+  }
+
+  .syntheticBoundary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .syntheticBoundary > svg {
+    display: none;
+  }
+
+  .inboxLayout {
+    border-radius: 15px;
+  }
+
+  .composer > div,
+  .invitationActions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .composer button,
+  .invitationActions button {
+    width: 100%;
+  }
+
+  .accessList article {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .accessStatus,
+  .accessActions {
+    grid-column: 2;
+    grid-row: auto;
+    justify-self: start;
+  }
+
+  .invitationIdentity {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .invitationIdentity > span {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .companion *,
+  .companion *::before,
+  .companion *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
