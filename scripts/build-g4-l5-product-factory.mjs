@@ -5,6 +5,9 @@ import {copyFile, mkdir, readFile, stat, writeFile} from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
+import {currentJsCandidateRuntimePath} from
+  './current-js-candidate-paths.mjs';
+
 const scriptPath = fileURLToPath(import.meta.url);
 const workspaceRoot = path.resolve(path.dirname(scriptPath), '..');
 const irPath = path.join(workspaceRoot, 'tools/g4-l5-ffdec-canvas-pcode-product-factory/product-ir.json');
@@ -169,7 +172,10 @@ async function materializeAudio(ir, check) {
     const sourceRelative = `source-assets/flash/HELP MATH_ORIGINAL FILES/${member.audio.sourcePath}`;
     const sourceBytes = await exactFile(sourceRelative, member.audio.sha256);
     invariant(sourceBytes.byteLength === member.audio.bytes, `${member.animationId} audio byte count drifted`);
-    const destinationRelative = `apps/web/public/flash-assets/courses/${member.animationId}/audio/source-narration-undetermined.mp3`;
+    const destinationRelative = currentJsCandidateRuntimePath(
+      member.animationId,
+      'audio/source-narration-undetermined.mp3',
+    );
     const destination = path.join(workspaceRoot, destinationRelative);
     if (check) {
       await exactFile(destinationRelative, member.audio.sha256);

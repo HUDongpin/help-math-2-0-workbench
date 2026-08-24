@@ -1,5 +1,6 @@
 'use client';
 
+import {track} from '@vercel/analytics';
 import {
   useCallback,
   useEffect,
@@ -68,6 +69,17 @@ interface SpeechRecognitionLike {
 
 type SpeechRecognitionConstructor = new () => SpeechRecognitionLike;
 
+type NovaSpeechTelemetryStatus =
+  | 'aborted'
+  | 'confirmed-send'
+  | 'draft-ready'
+  | 'listening-started'
+  | 'network-error'
+  | 'no-speech'
+  | 'permission-denied'
+  | 'recognition-error'
+  | 'start-failed';
+
 declare global {
   interface Window {
     SpeechRecognition?: SpeechRecognitionConstructor;
@@ -85,6 +97,14 @@ function speechRecognitionAvailableInBrowser() {
 
 function speechRecognitionUnavailableOnServer() {
   return false;
+}
+
+function recordNovaSpeechStatus(
+  status: NovaSpeechTelemetryStatus,
+  locale: 'en' | 'es',
+) {
+  // Never add transcript, question, context, course, or learner identity here.
+  track('nova_speech_status', {locale, status});
 }
 
 class NovaClientError extends Error {
@@ -330,6 +350,7 @@ function useNovaSpeech({
 }) {
   const [listening, setListening] = useState(false);
   const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
+  const speechDraftReadyRef = useRef(false);
   const browserSupportsSpeech = useSyncExternalStore(
     subscribeToSpeechRecognitionAvailability,
     speechRecognitionAvailableInBrowser,
@@ -340,6 +361,7 @@ function useNovaSpeech({
     : 'unavailable' as const;
 
   useEffect(() => () => {
+    speechDraftReadyRef.current = false;
     const recognition = recognitionRef.current;
     if (!recognition) return;
     recognition.onend = null;
@@ -351,6 +373,7 @@ function useNovaSpeech({
 
   useEffect(() => {
     if (enabled) return;
+    speechDraftReadyRef.current = false;
     const recognition = recognitionRef.current;
     if (!recognition) return;
     recognition.onend = null;
@@ -372,6 +395,12 @@ function useNovaSpeech({
       // the final state cleanup, so there is nothing else to do here.
     }
   }, []);
+
+  const confirmDraftSend = useCallback(() => {
+    if (!speechDraftReadyRef.current) return;
+    speechDraftReadyRef.current = false;
+    recordNovaSpeechStatus('confirmed-send', locale);
+  }, [locale]);
 
   const startListening = useCallback(() => {
     if (!enabled || availability !== 'available' || busy) return;
@@ -402,6 +431,8 @@ function useNovaSpeech({
       if (!transcript || finalized) return;
       finalized = true;
       onDraft(transcript);
+      speechDraftReadyRef.current = true;
+      recordNovaSpeechStatus('draft-ready', locale);
       onNotice(locale === 'es'
         ? 'Se añadió la transcripción. Revísala y luego pulsa Enviar.'
         : 'Transcript added. Review it, then press Send.');
@@ -426,11 +457,23 @@ function useNovaSpeech({
       }
     };
     recognition.onerror = (event) => {
+      const denied = event.error === 'not-allowed' ||
+        event.error === 'service-not-allowed' ||
+        event.error === 'audio-capture';
+      recordNovaSpeechStatus(
+        denied
+          ? 'permission-denied'
+          : event.error === 'no-speech'
+            ? 'no-speech'
+            : event.error === 'network'
+              ? 'network-error'
+              : event.error === 'aborted'
+                ? 'aborted'
+                : 'recognition-error',
+        locale,
+      );
       if (event.error !== 'aborted') {
         finalized = true;
-        const denied = event.error === 'not-allowed' ||
-          event.error === 'service-not-allowed' ||
-          event.error === 'audio-capture';
         onNotice(denied
           ? (locale === 'es'
               ? 'El navegador no permitió el micrófono. Permite el acceso o escribe tu pregunta.'
@@ -449,19 +492,21 @@ function useNovaSpeech({
     try {
       recognition.start();
       setListening(true);
+      recordNovaSpeechStatus('listening-started', locale);
       onNotice(locale === 'es'
         ? 'Escuchando… La transcripción se añadirá como borrador para que la revises.'
         : 'Listening… The transcript will be added as a draft for your review.');
     } catch {
       recognitionRef.current = null;
       setListening(false);
+      recordNovaSpeechStatus('start-failed', locale);
       onNotice(locale === 'es'
         ? 'No se pudo iniciar el micrófono. Escribe tu pregunta.'
         : 'The microphone could not start. Type your question instead.');
     }
   }, [availability, busy, enabled, locale, onDraft, onNotice, stopListening]);
 
-  return {availability, listening, startListening};
+  return {availability, confirmDraftSend, listening, startListening};
 }
 
 /**
@@ -517,6 +562,13 @@ export function LessonNovaTutor({
       frameMatchesContext(attachedFrame, context)
     ? attachedFrame
     : null;
+  const speech = useNovaSpeech({
+    busy: nova.busy,
+    enabled: capabilities.speechToDraft,
+    locale,
+    onDraft: setQuestion,
+    onNotice: setNotice,
+  });
   const sendQuestion = useCallback(async (rawQuestion: string) => {
     const message = rawQuestion.trim();
     if (!message) {
@@ -526,6 +578,7 @@ export function LessonNovaTutor({
       inputRef.current?.focus();
       return;
     }
+    speech.confirmDraftSend();
     setQuestion('');
     setNotice('');
     const frameForRequest = currentAttachedFrame ?? undefined;
@@ -536,15 +589,7 @@ export function LessonNovaTutor({
         ? 'Nova recibió el fotograma de esta pregunta; ya no está adjunto.'
         : 'Nova received the lesson frame for this question; it is no longer attached.');
     }
-  }, [capabilities.speechToDraft, currentAttachedFrame, nova, spanish]);
-
-  const speech = useNovaSpeech({
-    busy: nova.busy,
-    enabled: capabilities.speechToDraft,
-    locale,
-    onDraft: setQuestion,
-    onNotice: setNotice,
-  });
+  }, [capabilities.speechToDraft, currentAttachedFrame, nova, spanish, speech]);
 
   const removeFrameAttachment = () => {
     setAttachedFrame(null);
@@ -752,6 +797,7 @@ export function LessonNovaTutor({
               <strong>{entry.role === 'assistant'
                 ? 'Nova'
                 : (spanish ? 'Tú' : 'You')}</strong>
+              {' '}
               {entry.role === 'assistant'
                 ? <NovaMarkdown text={entry.text} />
                 : <span>{entry.text}</span>}
@@ -898,18 +944,6 @@ export function LessonNovaClassroomBand({
     mode: 'classroom',
     onProviderConfirmed,
   });
-  const sendQuestion = useCallback(async (rawQuestion: string) => {
-    const message = rawQuestion.trim();
-    if (!message) {
-      setSpeechNotice(capabilities.speechToDraft
-        ? (spanish ? 'Escribe o di una pregunta primero.' : 'Type or say a question first.')
-        : (spanish ? 'Escribe una pregunta primero.' : 'Type a question first.'));
-      return;
-    }
-    setQuestion('');
-    setSpeechNotice('');
-    await nova.askNova(message);
-  }, [capabilities.speechToDraft, nova, spanish]);
   const updateSpeechDraft = useCallback((transcript: string) => {
     setQuestion(transcript);
   }, []);
@@ -920,6 +954,19 @@ export function LessonNovaClassroomBand({
     onDraft: updateSpeechDraft,
     onNotice: setSpeechNotice,
   });
+  const sendQuestion = useCallback(async (rawQuestion: string) => {
+    const message = rawQuestion.trim();
+    if (!message) {
+      setSpeechNotice(capabilities.speechToDraft
+        ? (spanish ? 'Escribe o di una pregunta primero.' : 'Type or say a question first.')
+        : (spanish ? 'Escribe una pregunta primero.' : 'Type a question first.'));
+      return;
+    }
+    speech.confirmDraftSend();
+    setQuestion('');
+    setSpeechNotice('');
+    await nova.askNova(message);
+  }, [capabilities.speechToDraft, nova, spanish, speech]);
   const currentFrameSnapshot = capabilities.currentLessonFrame &&
       frameMatchesContext(frameSnapshot, context)
     ? frameSnapshot

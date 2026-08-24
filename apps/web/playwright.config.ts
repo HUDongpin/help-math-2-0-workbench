@@ -25,6 +25,7 @@ export default defineConfig({
     'clerk-synthetic-lifecycle.spec.ts',
     'nova-capability-gates.spec.ts',
     'nova-full-stack.spec.ts',
+    'nova-provider-failure.spec.ts',
     'nova-speech-negative.spec.ts',
   ],
   fullyParallel: true,

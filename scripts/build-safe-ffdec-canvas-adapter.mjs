@@ -51,6 +51,13 @@ function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
 
+function isColorRgba(value) {
+  return Array.isArray(value) && value.length === 4 &&
+    value.slice(0, 3).every((channel) =>
+      Number.isSafeInteger(channel) && channel >= 0 && channel <= 255) &&
+    Number.isFinite(value[3]) && value[3] >= 0 && value[3] <= 1;
+}
+
 function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -85,6 +92,260 @@ function resolveProjectPath(root, relativePath, label) {
   const resolved = path.resolve(root, relativePath);
   assert(resolved.startsWith(`${root}${path.sep}`), `${label}: path escapes the project root`);
   return resolved;
+}
+
+function validateBehaviorCompositeContract(spec) {
+  const contract = spec.runtimeContract?.sourceBehaviorComposite;
+  if (contract === undefined) return;
+  assert(
+    contract && typeof contract === "object" &&
+      /^[a-z0-9-]+-v\d+$/.test(contract.contractId || ""),
+    "adapter spec: invalid source behavior-composite contract id",
+  );
+  assert(
+    contract.requiredByCandidateSession === true,
+    "adapter spec: source behavior composite must be required by the candidate session",
+  );
+  assert(
+    /^[a-f0-9]{64}$/.test(contract.sourceContractFingerprintSha256 || ""),
+    "adapter spec: source behavior-composite contract fingerprint is invalid",
+  );
+  assert(
+    Array.isArray(contract.states) && contract.states.length >= 2,
+    "adapter spec: source behavior composite needs at least two states",
+  );
+  const stateIds = new Set();
+  const referencedFunctions = new Set();
+  const referencedDynamicTextFunctions = new Set();
+  for (const state of contract.states) {
+    assert(
+      state && typeof state === "object" &&
+        /^[a-z0-9-]+$/.test(state.stateId || "") &&
+        !stateIds.has(state.stateId),
+      "adapter spec: invalid or duplicate behavior-composite state id",
+    );
+    stateIds.add(state.stateId);
+    assert(
+      Array.isArray(state.allowedLocalFrames) &&
+        state.allowedLocalFrames.length > 0 &&
+        state.allowedLocalFrames.every((frame, index, values) =>
+          Number.isSafeInteger(frame) && frame >= 1 &&
+          frame <= spec.timeline.local.frameCount &&
+          (index === 0 || frame > values[index - 1])),
+      `adapter spec: ${state.stateId} behavior-composite local frames are invalid`,
+    );
+    for (const key of ["hiddenFunctions", "forceOpaqueFunctions"]) {
+      assert(
+        Array.isArray(state[key]) &&
+          state[key].every((name, index, values) =>
+            /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(name) &&
+            values.indexOf(name) === index),
+        `adapter spec: ${state.stateId} ${key} is invalid`,
+      );
+      state[key].forEach((name) => referencedFunctions.add(name));
+    }
+    assert(
+      state.frameOverrides && typeof state.frameOverrides === "object" &&
+        !Array.isArray(state.frameOverrides),
+      `adapter spec: ${state.stateId} frameOverrides must be an object`,
+    );
+    for (const [name, frame] of Object.entries(state.frameOverrides)) {
+      assert(
+        /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(name) &&
+          Number.isSafeInteger(frame) && frame >= 0,
+        `adapter spec: ${state.stateId} frame override is invalid`,
+      );
+      referencedFunctions.add(name);
+    }
+    const translationOverrides = state.translationOverrides ?? {};
+    assert(
+      translationOverrides && typeof translationOverrides === "object" &&
+        !Array.isArray(translationOverrides),
+      `adapter spec: ${state.stateId} translationOverrides must be an object`,
+    );
+    for (const [name, translation] of Object.entries(translationOverrides)) {
+      assert(
+        /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(name) &&
+          translation && typeof translation === "object" &&
+          !Array.isArray(translation) &&
+          Object.keys(translation).sort().join(",") === "x,y" &&
+          Number.isFinite(translation.x) && Number.isFinite(translation.y),
+        `adapter spec: ${state.stateId} translation override is invalid`,
+      );
+      referencedFunctions.add(name);
+    }
+    const dynamicTextOverrides = state.dynamicTextOverrides ?? {};
+    assert(
+      dynamicTextOverrides && typeof dynamicTextOverrides === "object" &&
+        !Array.isArray(dynamicTextOverrides),
+      `adapter spec: ${state.stateId} dynamicTextOverrides must be an object`,
+    );
+    for (const [name, override] of Object.entries(dynamicTextOverrides)) {
+      const value = typeof override === "string" ? override : override?.value;
+      assert(
+        /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(name) &&
+          typeof value === "string" && value.length > 0,
+        `adapter spec: ${state.stateId} dynamic-text override is invalid`,
+      );
+      if (typeof override !== "string") {
+        assert(
+          override && typeof override === "object" && !Array.isArray(override) &&
+            Object.keys(override).every((key) =>
+              ["value", "colorRgba", "borderColorRgba"].includes(key)) &&
+            (override.colorRgba === undefined || isColorRgba(override.colorRgba)) &&
+            (override.borderColorRgba === undefined ||
+              isColorRgba(override.borderColorRgba)),
+          `adapter spec: ${state.stateId} dynamic-text style override is invalid`,
+        );
+      }
+      referencedDynamicTextFunctions.add(name);
+    }
+    const rgbOverrides = state.rgbOverrides ?? {};
+    assert(
+      rgbOverrides && typeof rgbOverrides === "object" &&
+        !Array.isArray(rgbOverrides),
+      `adapter spec: ${state.stateId} rgbOverrides must be an object`,
+    );
+    for (const [name, rgb] of Object.entries(rgbOverrides)) {
+      assert(
+        /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(name) &&
+          Array.isArray(rgb) && rgb.length === 3 &&
+          rgb.every((channel) =>
+            Number.isSafeInteger(channel) && channel >= 0 && channel <= 255),
+        `adapter spec: ${state.stateId} RGB override is invalid`,
+      );
+      referencedFunctions.add(name);
+    }
+    assert(
+      state.hiddenFunctions.every((name) =>
+        !state.forceOpaqueFunctions.includes(name)),
+      `adapter spec: ${state.stateId} cannot hide and force-opaque the same function`,
+    );
+    assert(
+      state.hiddenFunctions.every((name) =>
+        !Object.hasOwn(translationOverrides, name)),
+      `adapter spec: ${state.stateId} cannot hide and translate the same function`,
+    );
+    assert(
+      state.hiddenFunctions.every((name) => !Object.hasOwn(rgbOverrides, name)),
+      `adapter spec: ${state.stateId} cannot hide and recolor the same function`,
+    );
+  }
+  assert(
+    contract.functionEvidence &&
+      typeof contract.functionEvidence === "object" &&
+      !Array.isArray(contract.functionEvidence),
+    "adapter spec: source behavior-composite function evidence is required",
+  );
+  assert(
+    JSON.stringify(Object.keys(contract.functionEvidence).sort()) ===
+      JSON.stringify([...referencedFunctions].sort()),
+    "adapter spec: source behavior-composite function evidence set changed",
+  );
+  for (const [name, evidence] of Object.entries(contract.functionEvidence)) {
+    assert(
+      Number.isSafeInteger(evidence.objectId) && evidence.objectId > 0 &&
+        name === `sprite${evidence.objectId}` &&
+        Number.isSafeInteger(evidence.frameCount) && evidence.frameCount > 0 &&
+        Number.isSafeInteger(evidence.expectedPlacementCount) &&
+        evidence.expectedPlacementCount > 0,
+      `adapter spec: ${name} behavior-composite function evidence is invalid`,
+    );
+    for (const state of contract.states) {
+      if (Object.hasOwn(state.frameOverrides, name)) {
+        assert(
+          state.frameOverrides[name] < evidence.frameCount,
+          `adapter spec: ${state.stateId} ${name} frame override is outside its source timeline`,
+        );
+      }
+    }
+  }
+  const dynamicTextFields = contract.dynamicTextFields ?? {};
+  assert(
+    dynamicTextFields && typeof dynamicTextFields === "object" &&
+      !Array.isArray(dynamicTextFields),
+    "adapter spec: source behavior-composite dynamicTextFields must be an object",
+  );
+  assert(
+    JSON.stringify(Object.keys(dynamicTextFields).sort()) ===
+      JSON.stringify([...referencedDynamicTextFunctions].sort()),
+    "adapter spec: source behavior-composite dynamic-text field set changed",
+  );
+  for (const [name, field] of Object.entries(dynamicTextFields)) {
+    assert(
+      field && typeof field === "object" && !Array.isArray(field) &&
+        Number.isSafeInteger(field.objectId) && field.objectId > 0 &&
+        name === `text${field.objectId}` &&
+        Number.isSafeInteger(field.expectedPlacementCount) &&
+        field.expectedPlacementCount > 0 &&
+        typeof field.expectedEmptyFunction === "boolean",
+      `adapter spec: ${name} dynamic-text field evidence is invalid`,
+    );
+    const bounds = field.boundsTwips;
+    assert(
+      bounds && typeof bounds === "object" && !Array.isArray(bounds) &&
+        Object.keys(bounds).sort().join(",") === "bottom,left,right,top" &&
+        [bounds.left, bounds.right, bounds.top, bounds.bottom]
+          .every(Number.isFinite) &&
+        bounds.left < bounds.right && bounds.top < bounds.bottom,
+      `adapter spec: ${name} dynamic-text bounds are invalid`,
+    );
+    const font = field.font;
+    assert(
+      font && typeof font === "object" && !Array.isArray(font) &&
+        Number.isSafeInteger(font.objectId) && font.objectId > 0 &&
+        font.functionName === `font${font.objectId}` &&
+        typeof font.sourceName === "string" && font.sourceName.length > 0 &&
+        Number.isSafeInteger(font.unitsPerEm) && font.unitsPerEm > 0 &&
+        Number.isFinite(font.heightTwips) && font.heightTwips > 0 &&
+        Number.isFinite(font.baselineTwips) &&
+        isColorRgba(font.colorRgba),
+      `adapter spec: ${name} dynamic-text font evidence is invalid`,
+    );
+    const deviceFontReconstruction = font.renderingMode ===
+      "source-device-font-reconstruction-pending-original-runtime";
+    if (deviceFontReconstruction) {
+      assert(
+        field.sourceUsesDeviceFont === true &&
+          typeof font.currentJsFontFamily === "string" &&
+          font.currentJsFontFamily.length > 0 &&
+          Number.isFinite(font.currentJsFontSizeTwips) &&
+          font.currentJsFontSizeTwips > 0 &&
+          typeof font.sourceEmbeddedGlyphCoverageCompleteForAllowedValues ===
+            "boolean",
+        `adapter spec: ${name} device-font reconstruction boundary is invalid`,
+      );
+    } else {
+      assert(
+        font.renderingMode === undefined &&
+          font.advances && typeof font.advances === "object" &&
+          !Array.isArray(font.advances) &&
+          Object.keys(font.advances).length > 0 &&
+          Object.entries(font.advances).every(([character, advance]) =>
+            [...character].length === 1 && Number.isFinite(advance) && advance > 0),
+        `adapter spec: ${name} dynamic-text advances are invalid`,
+      );
+    }
+    assert(
+      Array.isArray(field.allowedValues) && field.allowedValues.length > 0 &&
+        field.allowedValues.every((value, index, values) =>
+          typeof value === "string" && value.length > 0 &&
+          values.indexOf(value) === index &&
+          (deviceFontReconstruction || [...value].every((character) =>
+            Object.hasOwn(font.advances, character)))),
+      `adapter spec: ${name} dynamic-text allowed values are invalid`,
+    );
+    for (const state of contract.states) {
+      const override = (state.dynamicTextOverrides ?? {})[name];
+      if (override !== undefined) {
+        const value = typeof override === "string" ? override : override.value;
+        assert(
+          field.allowedValues.includes(value),
+          `adapter spec: ${state.stateId} ${name} dynamic-text value is outside its source allowlist`,
+        );
+      }
+    }
+  }
 }
 
 function validateSpec(spec) {
@@ -454,6 +715,7 @@ function validateSpec(spec) {
   assert(spec.timeline.root.placementPixels.y === spec.timeline.root.placementTwips.y / 20, "adapter spec: root Y twips/pixels disagree");
   assert(Math.abs(spec.timeline.stageRenderOffset.x - (spec.timeline.root.placementPixels.x - spec.ffdecExport.exportInternalTranslation.x)) < 1e-9, "adapter spec: stage X offset does not preserve the root placement");
   assert(Math.abs(spec.timeline.stageRenderOffset.y - (spec.timeline.root.placementPixels.y - spec.ffdecExport.exportInternalTranslation.y)) < 1e-9, "adapter spec: stage Y offset does not preserve the root placement");
+  validateBehaviorCompositeContract(spec);
   return spec;
 }
 
@@ -838,6 +1100,67 @@ function extractInlineDefinitions(framesHtml, spec) {
   const definedFunctions = new Set([...definitions.matchAll(/function\s+([A-Za-z_$][A-Za-z0-9_$]*)\s*\(/g)].map((match) => match[1]));
   for (const name of placed) assert(definedFunctions.has(name), `frames export: placed function ${name} is undefined`);
   assert(definedFunctions.has(spec.ffdecExport.targetSpriteFunction), "frames export: target sprite function is undefined");
+  const behaviorComposite = spec.runtimeContract.sourceBehaviorComposite;
+  if (behaviorComposite) {
+    for (const [functionName, evidence] of Object.entries(
+      behaviorComposite.functionEvidence,
+    )) {
+      assert(
+        placed.includes(functionName) && definedFunctions.has(functionName),
+        `frames export: behavior-composite function is unavailable: ${functionName}`,
+      );
+      const placementPattern = new RegExp(
+        `place\\("${escapeRegExp(functionName)}",`,
+        "g",
+      );
+      const placementCount = [...definitions.matchAll(placementPattern)].length;
+      assert(
+        placementCount === evidence.expectedPlacementCount,
+        `frames export: ${functionName} expected ${evidence.expectedPlacementCount} placement(s), observed ${placementCount}`,
+      );
+      const headerPattern = new RegExp(
+        `function\\s+${escapeRegExp(functionName)}` +
+          `\\(ctx,ctrans,frame,ratio,time\\)\\{[\\s\\S]*?` +
+          `var frame_cnt = (\\d+);`,
+      );
+      const header = definitions.match(headerPattern);
+      assert(
+        header && Number(header[1]) === evidence.frameCount,
+        `frames export: ${functionName} source frame count changed`,
+      );
+    }
+    for (const [functionName, field] of Object.entries(
+      behaviorComposite.dynamicTextFields ?? {},
+    )) {
+      assert(
+        placed.includes(functionName) && definedFunctions.has(functionName),
+        `frames export: behavior-composite dynamic-text field is unavailable: ${functionName}`,
+      );
+      const placementPattern = new RegExp(
+        `place\\("${escapeRegExp(functionName)}",`,
+        "g",
+      );
+      const placementCount = [...definitions.matchAll(placementPattern)].length;
+      assert(
+        placementCount === field.expectedPlacementCount,
+        `frames export: ${functionName} expected ${field.expectedPlacementCount} placement(s), observed ${placementCount}`,
+      );
+      const emptyFunctionPattern = new RegExp(
+        `function\\s+${escapeRegExp(functionName)}` +
+          `\\(ctx,ctrans,frame,ratio,time\\)\\{\\s*\\}`,
+      );
+      assert(
+        field.expectedEmptyFunction
+          ? emptyFunctionPattern.test(definitions)
+          : !emptyFunctionPattern.test(definitions),
+        `frames export: ${functionName} source dynamic-text function disposition changed`,
+      );
+      assert(
+        definedFunctions.has(field.font.functionName),
+        `frames export: ${functionName} source font function is unavailable: ${field.font.functionName}`,
+      );
+    }
+  }
   if (spec.runtimeContract.sourceLocalNumberLineQuiz) {
     assert(definedFunctions.has(
       spec.runtimeContract.sourceLocalNumberLineQuiz.font.functionName,
@@ -917,7 +1240,7 @@ function extractInlineDefinitions(framesHtml, spec) {
   return {definitions, placedFunctions: placed, imageVariables: imageNames};
 }
 
-function sanitizeHelper(helperSource) {
+function sanitizeHelper(helperSource, spec) {
   let helper = helperSource.replace(/\r\n?/g, "\n");
   helper = replaceExactlyOnce(helper, "Filters = {};", "var Filters = {};", "FFDec helper global");
   helper = replaceExactlyOnce(
@@ -927,7 +1250,97 @@ function sanitizeHelper(helperSource) {
     "FFDec helper document-body workaround"
   );
 
-  const safeDispatcher = `var placeRaw = function (obj, canvas, ctx, matrix, ctrans, blendMode, frame, ratio, time) {
+  const compositeDispatcher = spec.runtimeContract.sourceBehaviorComposite
+    ? `    var behaviorComposite = ACTIVE_BEHAVIOR_COMPOSITE;
+    if (behaviorComposite !== null && behaviorComposite.hiddenFunctions[obj] === true) {
+        return;
+    }
+    if (behaviorComposite !== null &&
+        Object.prototype.hasOwnProperty.call(behaviorComposite.translationOverrides, obj)) {
+        var translationOverride = behaviorComposite.translationOverrides[obj];
+        activeMatrix = matrix.slice(0);
+        activeMatrix[4] = translationOverride.x;
+        activeMatrix[5] = translationOverride.y;
+    }
+    if (behaviorComposite !== null &&
+        Object.prototype.hasOwnProperty.call(behaviorComposite.dynamicTextOverrides, obj)) {
+        hasDynamicTextOverride = true;
+        dynamicTextValue = behaviorComposite.dynamicTextOverrides[obj];
+    }
+`
+    : "";
+  const compositeFrame = spec.runtimeContract.sourceBehaviorComposite
+    ? `    var activeFrame = behaviorComposite !== null &&
+        Object.prototype.hasOwnProperty.call(behaviorComposite.frameOverrides, obj)
+        ? behaviorComposite.frameOverrides[obj]
+        : frame;
+    if (behaviorComposite !== null && behaviorComposite.forceOpaqueFunctions[obj] === true) {
+        activeTransform = new cxform(
+            activeTransform.r_add,
+            activeTransform.g_add,
+            activeTransform.b_add,
+            0,
+            activeTransform.r_mult,
+            activeTransform.g_mult,
+            activeTransform.b_mult,
+            256
+        );
+    }
+    if (behaviorComposite !== null &&
+        Object.prototype.hasOwnProperty.call(behaviorComposite.rgbOverrides, obj)) {
+        var rgbOverride = behaviorComposite.rgbOverrides[obj];
+        activeTransform = new cxform(
+            rgbOverride[0],
+            rgbOverride[1],
+            rgbOverride[2],
+            activeTransform.a_add,
+            0,
+            0,
+            0,
+            activeTransform.a_mult
+        );
+    }
+`
+    : "    var activeFrame = frame;\n";
+  const safeDispatcher = spec.runtimeContract.sourceBehaviorComposite
+    ? `var placeRaw = function (obj, canvas, ctx, matrix, ctrans, blendMode, frame, ratio, time) {
+    var activeMatrix = matrix;
+    var hasDynamicTextOverride = false;
+    var dynamicTextValue = null;
+${compositeDispatcher}
+    var renderer = SAFE_OBJECTS[obj];
+    if (typeof renderer !== "function") {
+        throw new Error("Blocked unknown FFDec drawing object: " + obj);
+    }
+    ctx.save();
+    ctx.transform(activeMatrix[0], activeMatrix[1], activeMatrix[2], activeMatrix[3], activeMatrix[4], activeMatrix[5]);
+    if (blendMode > 1) {
+        var oldctx = ctx;
+        var ncanvas = createCanvas(canvas.width, canvas.height);
+        ctx = ncanvas.getContext("2d");
+        enhanceContext(ctx);
+        ctx.applyTransforms(oldctx._matrix);
+    }
+    var activeTransform = blendMode > 1
+        ? new cxform(0,0,0,0,255,255,255,255)
+        : ctrans;
+${compositeFrame}    if (hasDynamicTextOverride) {
+        var dynamicTextRenderer = SAFE_DYNAMIC_TEXT_RENDERERS[obj];
+        if (typeof dynamicTextRenderer !== "function") {
+            throw new Error("Blocked unknown source dynamic-text field: " + obj);
+        }
+        dynamicTextRenderer(ctx,activeTransform,dynamicTextValue);
+    } else {
+        renderer(ctx,activeTransform,activeFrame,ratio,time);
+    }
+    if (blendMode > 1) {
+        BlendModes.blendCanvas(ctrans.applyToImage(ncanvas), canvas, canvas, blendMode);
+        ctx = oldctx;
+    }
+    ctx.restore();
+}
+`
+    : `var placeRaw = function (obj, canvas, ctx, matrix, ctrans, blendMode, frame, ratio, time) {
     var renderer = SAFE_OBJECTS[obj];
     if (typeof renderer !== "function") {
         throw new Error("Blocked unknown FFDec drawing object: " + obj);
@@ -1059,7 +1472,22 @@ function metadataForRuntime(spec, renderScale = 1) {
     supportedLanguages: spec.runtimeContract.supportedLanguages,
     seedMapping: spec.runtimeContract.seedMapping,
     visualLocalization: spec.runtimeContract.visualLocalization ?? null,
-    audioRendering: "not-included"
+    audioRendering: "not-included",
+    ...(spec.runtimeContract.sourceBehaviorComposite
+      ? {sourceBehaviorComposite: {
+          contractId: spec.runtimeContract.sourceBehaviorComposite.contractId,
+          sourceContractFingerprintSha256:
+            spec.runtimeContract.sourceBehaviorComposite
+              .sourceContractFingerprintSha256,
+          requiredByCandidateSession: true,
+          stateIds: spec.runtimeContract.sourceBehaviorComposite.states
+            .map(({stateId}) => stateId),
+          dynamicTextFieldIds: Object.keys(
+            spec.runtimeContract.sourceBehaviorComposite.dynamicTextFields ?? {},
+          ),
+          avm1Executed: false,
+        }}
+      : {})
   };
 }
 
@@ -1437,6 +1865,120 @@ function runtimeStateSource(spec) {
 }`;
 }
 
+function behaviorCompositeRuntimeSource(spec) {
+  const contract = spec.runtimeContract.sourceBehaviorComposite;
+  if (!contract) return "";
+  const runtimeContract = {
+    contractId: contract.contractId,
+    states: Object.fromEntries(contract.states.map((state) => [
+      state.stateId,
+      {
+        stateId: state.stateId,
+        allowedLocalFrames: state.allowedLocalFrames,
+        hiddenFunctions: Object.fromEntries(
+          state.hiddenFunctions.map((name) => [name, true]),
+        ),
+        forceOpaqueFunctions: Object.fromEntries(
+          state.forceOpaqueFunctions.map((name) => [name, true]),
+        ),
+        frameOverrides: state.frameOverrides,
+        translationOverrides: state.translationOverrides ?? {},
+        dynamicTextOverrides: state.dynamicTextOverrides ?? {},
+        rgbOverrides: state.rgbOverrides ?? {},
+      },
+    ])),
+  };
+  return `var SOURCE_BEHAVIOR_COMPOSITE = deepFreeze(${JSON.stringify(runtimeContract, null, 2)});
+
+function resolveBehaviorComposite(request, frameState, required) {
+    request = request || {};
+    var contractId = request.behaviorCompositeContractId;
+    var stateId = request.behaviorCompositeState;
+    if (!required && contractId === undefined && stateId === undefined) {
+        return null;
+    }
+    if (!required) {
+        throw new Error("behavior-composite fields require renderComposite()");
+    }
+    if (contractId !== SOURCE_BEHAVIOR_COMPOSITE.contractId) {
+        throw new Error("behavior-composite contract changed: " + contractId);
+    }
+    if (typeof stateId !== "string" ||
+        !Object.prototype.hasOwnProperty.call(SOURCE_BEHAVIOR_COMPOSITE.states, stateId)) {
+        throw new Error("unsupported behavior-composite state: " + stateId);
+    }
+    var composite = SOURCE_BEHAVIOR_COMPOSITE.states[stateId];
+    if (composite.allowedLocalFrames.indexOf(frameState.localFrame) < 0) {
+        throw new Error("behavior-composite state " + stateId +
+            " does not allow local frame " + frameState.localFrame);
+    }
+    return composite;
+}`;
+}
+
+function behaviorCompositeDynamicTextRendererEntries(spec) {
+  const fields = spec.runtimeContract.sourceBehaviorComposite?.dynamicTextFields ?? {};
+  return Object.entries(fields).map(([functionName, field]) => {
+    const font = field.font;
+    const stylePrelude = `    var styledValue = typeof value === "string"
+        ? {value: value}
+        : value;
+    var textValue = styledValue.value;
+    var allowedValues = ${JSON.stringify(field.allowedValues)};
+    if (allowedValues.indexOf(textValue) < 0) {
+        throw new Error("Blocked source dynamic-text value for ${functionName}: " + textValue);
+    }
+    var sourceTextColor = styledValue.colorRgba || ${JSON.stringify(font.colorRgba)};
+    var textColor = tocolor(activeTransform.apply(sourceTextColor.slice(0)));
+`;
+    const borderDrawing = `    if (styledValue.borderColorRgba) {
+        var borderColor = tocolor(activeTransform.apply(
+            styledValue.borderColorRgba.slice(0)));
+        var bounds = ${JSON.stringify(field.boundsTwips)};
+        ctx.save();
+        ctx.strokeStyle = borderColor;
+        ctx.lineWidth = 20;
+        ctx.strokeRect(
+            bounds.left,
+            bounds.top,
+            bounds.right - bounds.left,
+            bounds.bottom - bounds.top
+        );
+        ctx.restore();
+    }
+`;
+    if (font.renderingMode ===
+        "source-device-font-reconstruction-pending-original-runtime") {
+      return `${JSON.stringify(functionName)}: function (ctx, activeTransform, value) {
+${stylePrelude}    ${borderDrawing}    ctx.save();
+    ctx.fillStyle = textColor;
+    ctx.font = ${JSON.stringify(`${font.currentJsFontWeight ?? "normal"} ${font.currentJsFontSizeTwips}px ${font.currentJsFontFamily}`)};
+    ctx.textAlign = "left";
+    ctx.textBaseline = "alphabetic";
+    ctx.fillText(textValue,0,${font.baselineTwips});
+    ctx.restore();
+}`;
+    }
+    const fontScale = font.heightTwips / font.unitsPerEm;
+    return `${JSON.stringify(functionName)}: function (ctx, activeTransform, value) {
+${stylePrelude}    ${borderDrawing}    var advances = ${JSON.stringify(font.advances)};
+    var cursor = 0;
+    for (var index = 0; index < textValue.length; index += 1) {
+        var character = textValue.charAt(index);
+        var advance = advances[character];
+        if (!Number.isFinite(advance)) {
+            throw new Error("Blocked source dynamic-text glyph for ${functionName}: " + character);
+        }
+        ctx.save();
+        ctx.transform(${fontScale},0,0,${fontScale},cursor,${font.baselineTwips});
+        ${font.functionName}(ctx,character,textColor);
+        ctx.restore();
+        cursor += advance;
+    }
+}`;
+  }).join(",\n        ");
+}
+
 export const MAX_ADAPTER_RENDER_SCALE = 3;
 
 /**
@@ -1461,10 +2003,12 @@ function validateRenderScale(scale) {
 export function buildSafeRuntime({helperSource, framesHtml, spec, scale = 1}) {
   const renderScale = validateRenderScale(scale);
   validateSpec(spec);
-  const helper = sanitizeHelper(helperSource);
+  const helper = sanitizeHelper(helperSource, spec);
   const {definitions, placedFunctions, imageVariables} = extractInlineDefinitions(framesHtml, spec);
   const metadata = metadataForRuntime(spec, renderScale);
   const registryEntries = placedFunctions.map((name) => `${JSON.stringify(name)}: ${name}`).join(",\n        ");
+  const dynamicTextRendererEntries =
+    behaviorCompositeDynamicTextRendererEntries(spec);
   const imageEntries = imageVariables.join(", ");
   const registryName = JSON.stringify(spec.output.globalRegistry);
   const animationId = JSON.stringify(spec.animationId);
@@ -1486,13 +2030,83 @@ export function buildSafeRuntime({helperSource, framesHtml, spec, scale = 1}) {
   const gameInitialOverlayCall = spec.runtimeContract.sourceLocalGame
     ? "\n        drawSourceLocalGameInitialState(ctx, state);"
     : "";
+  const behaviorCompositeDefinition = spec.runtimeContract.sourceBehaviorComposite
+    ? `\n\n${behaviorCompositeRuntimeSource(spec)}`
+    : "";
+  const behaviorCompositeResolution = spec.runtimeContract.sourceBehaviorComposite
+    ? "resolveBehaviorComposite(request, state, requireBehaviorComposite)"
+    : "null";
+  const behaviorCompositeResult = spec.runtimeContract.sourceBehaviorComposite
+    ? `
+    if (behaviorComposite !== null) {
+        state = Object.freeze(Object.assign({}, state, {
+            behaviorCompositeContractId: SOURCE_BEHAVIOR_COMPOSITE.contractId,
+            behaviorCompositeState: behaviorComposite.stateId
+        }));
+        if (typeof targetCanvas.setAttribute === "function") {
+            targetCanvas.setAttribute("data-behavior-composite-contract", SOURCE_BEHAVIOR_COMPOSITE.contractId);
+            targetCanvas.setAttribute("data-behavior-composite-state", behaviorComposite.stateId);
+        }
+    } else if (typeof targetCanvas.removeAttribute === "function") {
+        targetCanvas.removeAttribute("data-behavior-composite-contract");
+        targetCanvas.removeAttribute("data-behavior-composite-state");
+    }`
+    : "";
+  const renderCompositeDefinition = spec.runtimeContract.sourceBehaviorComposite
+    ? `
+
+function renderComposite(targetCanvas, request) {
+    return renderInternal(targetCanvas, request, true);
+}`
+    : "";
+  const registryRenderComposite = spec.runtimeContract.sourceBehaviorComposite
+    ? ", renderComposite: renderComposite"
+    : "";
+  const behaviorCompositeGlobals = spec.runtimeContract.sourceBehaviorComposite
+    ? "\nvar SAFE_DYNAMIC_TEXT_RENDERERS = null;\nvar ACTIVE_BEHAVIOR_COMPOSITE = null;"
+    : "";
+  const behaviorCompositeRendererRegistry = spec.runtimeContract.sourceBehaviorComposite
+    ? `SAFE_DYNAMIC_TEXT_RENDERERS = Object.freeze({
+        ${dynamicTextRendererEntries}
+});
+`
+    : "";
+  const renderFunctionHeader = spec.runtimeContract.sourceBehaviorComposite
+    ? "function renderInternal(targetCanvas, request, requireBehaviorComposite) {"
+    : "function render(targetCanvas, request) {";
+  const behaviorCompositeStateResolution = spec.runtimeContract.sourceBehaviorComposite
+    ? `
+    var behaviorComposite = ${behaviorCompositeResolution};`
+    : "";
+  const behaviorCompositePreviousState = spec.runtimeContract.sourceBehaviorComposite
+    ? "\n    var previousBehaviorComposite = ACTIVE_BEHAVIOR_COMPOSITE;"
+    : "";
+  const behaviorCompositeActivation = spec.runtimeContract.sourceBehaviorComposite
+    ? "\n    ACTIVE_BEHAVIOR_COMPOSITE = behaviorComposite;"
+    : "";
+  const renderFinally = spec.runtimeContract.sourceBehaviorComposite
+    ? `        try {
+            ctx.restore();
+        } finally {
+            canvas = previousCanvas;
+            ACTIVE_BEHAVIOR_COMPOSITE = previousBehaviorComposite;
+        }`
+    : `        ctx.restore();
+        canvas = previousCanvas;`;
+  const renderWrapper = spec.runtimeContract.sourceBehaviorComposite
+    ? `
+
+function render(targetCanvas, request) {
+    return renderInternal(targetCanvas, request, false);
+}${renderCompositeDefinition}`
+    : "";
 
   const runtime = `/* Generated by scripts/build-safe-ffdec-canvas-adapter.mjs. */
 /* Engineering candidate only: no strict, human, or owner acceptance is implied. */
 (function (global) {
 "use strict";
 var canvas = null;
-var SAFE_OBJECTS = null;
+var SAFE_OBJECTS = null;${behaviorCompositeGlobals}
 
 ${helper}
 
@@ -1501,7 +2115,7 @@ ${definitions}
 SAFE_OBJECTS = Object.freeze({
         ${registryEntries}
 });
-var EMBEDDED_IMAGES = Object.freeze([${imageEntries}]);
+${behaviorCompositeRendererRegistry}var EMBEDDED_IMAGES = Object.freeze([${imageEntries}]);
 var METADATA = deepFreeze(${JSON.stringify(metadata, null, 2)});
 var readyPromise = null;
 
@@ -1537,9 +2151,9 @@ function ready() {
     return readyPromise;
 }
 
-${runtimeStateSource(spec)}${quizOverlaySource}${patternQuizOverlayDefinition}${gameInitialOverlayDefinition}
+${runtimeStateSource(spec)}${behaviorCompositeDefinition}${quizOverlaySource}${patternQuizOverlayDefinition}${gameInitialOverlayDefinition}
 
-function render(targetCanvas, request) {
+${renderFunctionHeader}
     if (!targetCanvas || typeof targetCanvas.getContext !== "function") {
         throw new Error("targetCanvas must provide a 2D canvas context");
     }
@@ -1551,7 +2165,7 @@ function render(targetCanvas, request) {
             throw new Error("call and await ready() before render()");
         }
     }
-    var state = resolveFrameState(request);
+    var state = resolveFrameState(request);${behaviorCompositeStateResolution}
     var ctx = targetCanvas.getContext("2d");
     if (!ctx) throw new Error("2D canvas context is unavailable");
     var marker = "__helpMathFfdecAssetId";
@@ -1562,8 +2176,8 @@ function render(targetCanvas, request) {
         throw new Error("canvas context was enhanced by a different FFDec adapter");
     }
 
-    var previousCanvas = canvas;
-    canvas = targetCanvas;
+    var previousCanvas = canvas;${behaviorCompositePreviousState}
+    canvas = targetCanvas;${behaviorCompositeActivation}
     ctx.setTransform(${renderScale}, 0, 0, ${renderScale}, 0, 0);
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
@@ -1574,8 +2188,7 @@ function render(targetCanvas, request) {
         ctx.transform(1, 0, 0, 1, ${spec.timeline.stageRenderOffset.x}, ${spec.timeline.stageRenderOffset.y});
         ${spec.ffdecExport.targetSpriteFunction}(ctx, new cxform(0,0,0,0,255,255,255,255), state.exportFrame, 0, 0);${gameInitialOverlayCall}
     } finally {
-        ctx.restore();
-        canvas = previousCanvas;
+${renderFinally}
     }${quizOverlayCall}${patternQuizOverlayCall}
     if (typeof targetCanvas.setAttribute === "function") {
         targetCanvas.setAttribute("data-flash-frame", String(state.localFrame));
@@ -1583,9 +2196,9 @@ function render(targetCanvas, request) {
         targetCanvas.setAttribute("data-flash-root-frame", String(state.rootFrame));
         targetCanvas.setAttribute("data-runtime-scenario", state.scenario);
         targetCanvas.setAttribute("data-runtime-seed", String(state.seed));
-    }
+    }${behaviorCompositeResult}
     return state;
-}
+}${renderWrapper}
 
 var registry = global[${registryName}];
 if (registry === undefined) {
@@ -1597,7 +2210,7 @@ if (registry === undefined) {
 if (Object.prototype.hasOwnProperty.call(registry, ${animationId})) {
     throw new Error("canvas asset is already registered: " + ${animationId});
 }
-registry[${animationId}] = Object.freeze({metadata: METADATA, ready: ready, resolveFrameState: resolveFrameState, render: render});
+registry[${animationId}] = Object.freeze({metadata: METADATA, ready: ready, resolveFrameState: resolveFrameState, render: render${registryRenderComposite}});
 })(globalThis);
 `;
 

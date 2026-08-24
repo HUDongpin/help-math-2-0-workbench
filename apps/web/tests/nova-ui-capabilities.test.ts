@@ -80,4 +80,25 @@ describe('Nova client capability gates', () => {
     assert.match(tutor, /Attach current lesson frame/);
     assert.doesNotMatch(tutor, /type="file"|readLocalImage|getUserMedia|mediaDevices/);
   });
+
+  it('keeps the localized conversation speaker label visually separated from its message', async () => {
+    const tutor = await source('../components/lesson-nova-tutor.tsx');
+
+    assert.match(tutor, /\(spanish \? 'Tú' : 'You'\)\}<\/strong>\s*\{' '\}/);
+  });
+
+  it('records only allowlisted speech workflow status and locale without transcript text', async () => {
+    const tutor = await source('../components/lesson-nova-tutor.tsx');
+
+    assert.match(
+      tutor,
+      /track\('nova_speech_status', \{locale, status\}\)/,
+    );
+    assert.match(tutor, /recordNovaSpeechStatus\('draft-ready', locale\)/);
+    assert.match(tutor, /recordNovaSpeechStatus\('confirmed-send', locale\)/);
+    assert.doesNotMatch(
+      tutor,
+      /track\('nova_speech_status', \{[^}]*transcript/,
+    );
+  });
 });

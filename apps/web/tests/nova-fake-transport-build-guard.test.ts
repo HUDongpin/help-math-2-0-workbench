@@ -5,6 +5,7 @@ import {describe, it} from 'node:test';
 
 const fakeTransportVariables = [
   'NOVA_TEST_FAKE_TRANSPORT_AUTHORIZATION',
+  'NOVA_TEST_FAKE_TRANSPORT_MODE',
   'NOVA_TEST_FAKE_TRANSPORT_ORIGIN',
   'NOVA_TEST_FAKE_TRANSPORT_RECEIPT_PATH',
 ] as const;
@@ -45,7 +46,26 @@ describe('Nova fake transport production build guard', () => {
     );
     assert.match(
       configSource,
-      /testIgnore:\s*\[[\s\S]*?'nova-capability-gates\.spec\.ts'[\s\S]*?'nova-full-stack\.spec\.ts'[\s\S]*?'nova-speech-negative\.spec\.ts'/u,
+      /testIgnore:\s*\[[\s\S]*?'nova-capability-gates\.spec\.ts'[\s\S]*?'nova-full-stack\.spec\.ts'[\s\S]*?'nova-provider-failure\.spec\.ts'[\s\S]*?'nova-speech-negative\.spec\.ts'/u,
+    );
+  });
+
+  it('keeps the modern-wide local worker count aligned with CI', () => {
+    const packageDocument = JSON.parse(readFileSync(
+      new URL('../package.json', import.meta.url),
+      'utf8',
+    )) as {scripts?: Record<string, string>};
+    const configSource = readFileSync(
+      new URL('../playwright.config.ts', import.meta.url),
+      'utf8',
+    );
+    assert.match(
+      packageDocument.scripts?.['test:e2e:modern-wide'] ?? '',
+      /(?:^|\s)--workers=2(?:\s|$)/u,
+    );
+    assert.match(
+      configSource,
+      /workers:\s*process\.env\.CI\s*\?\s*2\s*:\s*undefined/u,
     );
   });
 
@@ -72,7 +92,7 @@ describe('Nova fake transport production build guard', () => {
     );
   });
 
-  it('does not trigger the fake transport guard when all three variables are absent', () => {
+  it('does not trigger the fake transport guard when all four variables are absent', () => {
     const result = importProductionConfig({});
     assert.equal(result.status, 0, `${result.stdout}\n${result.stderr}`);
   });

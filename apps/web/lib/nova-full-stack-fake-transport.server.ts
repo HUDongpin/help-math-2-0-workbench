@@ -9,6 +9,13 @@ import {NOVA_OPENROUTER_MODEL} from './nova-openrouter.server';
 
 export const NOVA_FULL_STACK_FAKE_TRANSPORT_AUTHORIZATION =
   'full-stack-fake-upstream-v1' as const;
+export const NOVA_FULL_STACK_FAKE_TRANSPORT_MODES = [
+  'success',
+  'provider-unavailable',
+] as const;
+
+type NovaFullStackFakeTransportMode =
+  (typeof NOVA_FULL_STACK_FAKE_TRANSPORT_MODES)[number];
 
 const ALLOWED_OPENROUTER_ORIGINS = new Set([
   'https://openrouter.ai',
@@ -41,9 +48,20 @@ function isLoopbackHostname(hostname: string) {
 function fakeTransportRequested(environment: NovaFakeTransportEnvironment) {
   return [
     environment.NOVA_TEST_FAKE_TRANSPORT_AUTHORIZATION,
+    environment.NOVA_TEST_FAKE_TRANSPORT_MODE,
     environment.NOVA_TEST_FAKE_TRANSPORT_ORIGIN,
     environment.NOVA_TEST_FAKE_TRANSPORT_RECEIPT_PATH,
   ].some((value) => value !== undefined && value.trim() !== '');
+}
+
+function readResponseMode(
+  value: string | undefined,
+): NovaFullStackFakeTransportMode {
+  if (
+    value === 'success' ||
+    value === 'provider-unavailable'
+  ) return value;
+  return invalidConfiguration('response-mode');
 }
 
 function readReceiptPath(value: string | undefined) {
@@ -146,6 +164,9 @@ export function resolveNovaFullStackFakeFetch(input: Readonly<{
   const receiptPath = readReceiptPath(
     environment.NOVA_TEST_FAKE_TRANSPORT_RECEIPT_PATH,
   );
+  const responseMode = readResponseMode(
+    environment.NOVA_TEST_FAKE_TRANSPORT_MODE,
+  );
 
   let attempt = 0;
   return (async (target: URL | RequestInfo, init?: RequestInit) => {
@@ -168,13 +189,14 @@ export function resolveNovaFullStackFakeFetch(input: Readonly<{
     }
 
     const receiptId = randomUUID();
+    const responseStatus = responseMode === 'provider-unavailable' ? 503 : 200;
     const receipt = Object.freeze({
       schemaVersion: 1,
       evidenceKind: 'FULL_STACK_FAKE_UPSTREAM',
       receiptId,
       requestId: input.requestId,
       model: NOVA_OPENROUTER_MODEL,
-      status: 200,
+      status: responseStatus,
       attempt,
       requestBytes: Buffer.byteLength(String(init.body), 'utf8'),
       framePresent: framePresent(body),
@@ -184,6 +206,16 @@ export function resolveNovaFullStackFakeFetch(input: Readonly<{
       flag: 'a',
       mode: 0o600,
     });
+
+    if (responseMode === 'provider-unavailable') {
+      return new Response(JSON.stringify({error: 'synthetic-provider-unavailable'}), {
+        status: responseStatus,
+        headers: {
+          'content-type': 'application/json',
+          'x-helpmath-fake-upstream-receipt-id': receiptId,
+        },
+      });
+    }
 
     return new Response(JSON.stringify({
       model: NOVA_OPENROUTER_MODEL,

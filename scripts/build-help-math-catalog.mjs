@@ -23,7 +23,7 @@ const SHA256_PATTERN = /^[a-f0-9]{64}$/;
 const CURRENT_SOURCE_PROFILE_FILENAME = "current-source-profile.json";
 const CURRENT_SOURCE_PROFILE_ARTIFACT_TYPE = "help-math-current-source-profile";
 const BASE_CURRENT_SOURCE_PROFILE_SHA256 =
-  "e3c86728b1cef7e47db5f56362fc7fb597025776014415aafc36c4468a15b458";
+  "1639b96e11a3cf1ef8c1c04403ee1f1d6537e0426b6d9dd6139bf39a507e06c4";
 const COUNTERPART_SUCCESSOR_APPLIED_RECEIPT_FILENAME =
   "fla-swf-counterpart-successor-2026-08-07-v2-applied.json";
 
@@ -63,6 +63,7 @@ export const LESSON_RELEASE_DEFINITIONS = Object.freeze([
     publicationMode: "atomic",
     developmentMode: "parallel-shards",
     sequenceAuthority: "active-course-xml-global-page-order",
+    pageOnly: true,
     grade: 4,
     lesson: 3,
     titleDisplay: "Negative Numbers",
@@ -73,16 +74,16 @@ export const LESSON_RELEASE_DEFINITIONS = Object.freeze([
     shellAnimationId: "shell-course-g04-l03-index-local",
     shellSourceSha256: "817e599de43a7924f0a93791e950c8781755692371945a5b7ea4cdd2ad26c58e",
     expectedActiveXmlReferencedPageAssetCount: 39,
-    expectedCourseShellAssetCount: 1,
+    expectedCourseShellAssetCount: 0,
     expectedPairedSwfFlaCount: 29,
-    expectedSwfOnlyCount: 11,
-    catalogQueueBinding: true,
+    expectedSwfOnlyCount: 10,
+    catalogQueueBinding: false,
     shards: Object.freeze([
       Object.freeze({
         shardId: "shard-01",
         batchId: "batch-001",
         ordinal: 1,
-        parallelGroup: "g04-l03-mvp",
+        parallelGroup: "g04-l03-page-only",
         memberCount: 25,
         firstXmlOccurrence: 1,
         lastXmlOccurrence: 25,
@@ -92,11 +93,11 @@ export const LESSON_RELEASE_DEFINITIONS = Object.freeze([
         shardId: "shard-02",
         batchId: "batch-002",
         ordinal: 2,
-        parallelGroup: "g04-l03-mvp",
-        memberCount: 15,
+        parallelGroup: "g04-l03-page-only",
+        memberCount: 14,
         firstXmlOccurrence: 26,
         lastXmlOccurrence: 39,
-        includeShell: true,
+        includeShell: false,
       }),
     ]),
   }),
@@ -108,6 +109,7 @@ export const LESSON_RELEASE_DEFINITIONS = Object.freeze([
     publicationMode: "atomic",
     developmentMode: "parallel-shards",
     sequenceAuthority: "active-course-xml-global-page-order",
+    pageOnly: true,
     grade: 5,
     lesson: 4,
     titleDisplay: "Number Lines",
@@ -118,26 +120,26 @@ export const LESSON_RELEASE_DEFINITIONS = Object.freeze([
     shellAnimationId: "shell-course-g05-l04-index-local",
     shellSourceSha256: "7865195a07666e8123bef33f52aea36e06b7e0a9987fbbea605bc92cbe9b0301",
     expectedActiveXmlReferencedPageAssetCount: 54,
-    expectedCourseShellAssetCount: 1,
+    expectedCourseShellAssetCount: 0,
     expectedPairedSwfFlaCount: 44,
-    expectedSwfOnlyCount: 11,
+    expectedSwfOnlyCount: 10,
     catalogQueueBinding: false,
     shards: Object.freeze([
       Object.freeze({
         shardId: "g05-l04-host-language",
         batchId: "g05-l04-host-language",
         ordinal: 1,
-        parallelGroup: "g05-l04-mvp",
-        memberCount: 15,
+        parallelGroup: "g05-l04-page-only",
+        memberCount: 14,
         firstXmlOccurrence: 1,
         lastXmlOccurrence: 14,
-        includeShell: true,
+        includeShell: false,
       }),
       Object.freeze({
         shardId: "g05-l04-instruction",
         batchId: "g05-l04-instruction",
         ordinal: 2,
-        parallelGroup: "g05-l04-mvp",
+        parallelGroup: "g05-l04-page-only",
         memberCount: 21,
         firstXmlOccurrence: 15,
         lastXmlOccurrence: 35,
@@ -147,7 +149,7 @@ export const LESSON_RELEASE_DEFINITIONS = Object.freeze([
         shardId: "g05-l04-practice-assessment",
         batchId: "g05-l04-practice-assessment",
         ordinal: 3,
-        parallelGroup: "g05-l04-mvp",
+        parallelGroup: "g05-l04-page-only",
         memberCount: 19,
         firstXmlOccurrence: 36,
         lastXmlOccurrence: 54,
@@ -163,6 +165,7 @@ export const LESSON_RELEASE_DEFINITIONS = Object.freeze([
     publicationMode: "atomic",
     developmentMode: "parallel-shards",
     sequenceAuthority: "active-course-xml-global-page-order",
+    pageOnly: true,
     grade: 5,
     lesson: 5,
     titleDisplay: "Add & Subtract Negative Numbers",
@@ -173,26 +176,26 @@ export const LESSON_RELEASE_DEFINITIONS = Object.freeze([
     shellAnimationId: "shell-course-g05-l05-index-local",
     shellSourceSha256: "5375c535f0761ae580f00eeda29c00d34d0de901239a7d2c65acf968a8290c66",
     expectedActiveXmlReferencedPageAssetCount: 56,
-    expectedCourseShellAssetCount: 1,
+    expectedCourseShellAssetCount: 0,
     expectedPairedSwfFlaCount: 49,
-    expectedSwfOnlyCount: 8,
+    expectedSwfOnlyCount: 7,
     catalogQueueBinding: false,
     shards: Object.freeze([
       Object.freeze({
         shardId: "g05-l05-host-language",
         batchId: "g05-l05-host-language",
         ordinal: 1,
-        parallelGroup: "g05-l05-mvp",
-        memberCount: 18,
+        parallelGroup: "g05-l05-page-only",
+        memberCount: 17,
         firstXmlOccurrence: 1,
         lastXmlOccurrence: 17,
-        includeShell: true,
+        includeShell: false,
       }),
       Object.freeze({
         shardId: "g05-l05-instruction",
         batchId: "g05-l05-instruction",
         ordinal: 2,
-        parallelGroup: "g05-l05-mvp",
+        parallelGroup: "g05-l05-page-only",
         memberCount: 19,
         firstXmlOccurrence: 18,
         lastXmlOccurrence: 36,
@@ -202,7 +205,7 @@ export const LESSON_RELEASE_DEFINITIONS = Object.freeze([
         shardId: "g05-l05-practice-assessment",
         batchId: "g05-l05-practice-assessment",
         ordinal: 3,
-        parallelGroup: "g05-l05-mvp",
+        parallelGroup: "g05-l05-page-only",
         memberCount: 20,
         firstXmlOccurrence: 37,
         lastXmlOccurrence: 56,
@@ -218,6 +221,7 @@ export const LESSON_RELEASE_DEFINITIONS = Object.freeze([
     publicationMode: "atomic",
     developmentMode: "parallel-shards",
     sequenceAuthority: "active-course-xml-global-page-order",
+    pageOnly: true,
     grade: 4,
     lesson: 10,
     titleDisplay: "Perimeter & Area",
@@ -228,26 +232,26 @@ export const LESSON_RELEASE_DEFINITIONS = Object.freeze([
     shellAnimationId: "shell-course-g04-l10-index-local",
     shellSourceSha256: "050d4181f8d679e6232871371b70aeaa02dbecb4c7e16cfbc732437307cf6072",
     expectedActiveXmlReferencedPageAssetCount: 46,
-    expectedCourseShellAssetCount: 1,
+    expectedCourseShellAssetCount: 0,
     expectedPairedSwfFlaCount: 34,
-    expectedSwfOnlyCount: 13,
+    expectedSwfOnlyCount: 12,
     catalogQueueBinding: false,
     shards: Object.freeze([
       Object.freeze({
         shardId: "g04-l10-host-language",
         batchId: "g04-l10-host-language",
         ordinal: 1,
-        parallelGroup: "g04-l10-mvp",
-        memberCount: 16,
+        parallelGroup: "g04-l10-page-only",
+        memberCount: 15,
         firstXmlOccurrence: 1,
         lastXmlOccurrence: 15,
-        includeShell: true,
+        includeShell: false,
       }),
       Object.freeze({
         shardId: "g04-l10-instruction",
         batchId: "g04-l10-instruction",
         ordinal: 2,
-        parallelGroup: "g04-l10-mvp",
+        parallelGroup: "g04-l10-page-only",
         memberCount: 15,
         firstXmlOccurrence: 16,
         lastXmlOccurrence: 30,
@@ -257,10 +261,65 @@ export const LESSON_RELEASE_DEFINITIONS = Object.freeze([
         shardId: "g04-l10-practice-assessment",
         batchId: "g04-l10-practice-assessment",
         ordinal: 3,
-        parallelGroup: "g04-l10-mvp",
+        parallelGroup: "g04-l10-page-only",
         memberCount: 16,
         firstXmlOccurrence: 31,
         lastXmlOccurrence: 46,
+        includeShell: false,
+      }),
+    ]),
+  }),
+  Object.freeze({
+    releaseOrder: 5,
+    queueId: "release-g03-l02-addition-subtraction-page-only-current-js",
+    releaseId: "lesson-g03-l02-addition-subtraction-page-only-current-js",
+    releaseType: "complete-lesson",
+    publicationMode: "atomic",
+    developmentMode: "parallel-shards",
+    sequenceAuthority: "active-course-xml-global-page-order",
+    pageOnly: true,
+    grade: 3,
+    lesson: 2,
+    titleDisplay: "Addition and Subtraction",
+    domain: "integer-operations",
+    sourceLessonPath: "HELP_COURSES/ELMGR3/L2/index.xml",
+    sourceLessonBytes: 14_549,
+    sourceLessonSha256: "abc87f1335090d1ff1169f94427b4aaa927a0916a1d45565ffa5902f2bf14f27",
+    shellAnimationId: "shell-course-g03-l02-index-local",
+    expectedActiveXmlReferencedPageAssetCount: 70,
+    expectedCourseShellAssetCount: 0,
+    expectedPairedSwfFlaCount: 56,
+    expectedSwfOnlyCount: 14,
+    catalogQueueBinding: false,
+    shards: Object.freeze([
+      Object.freeze({
+        shardId: "g03-l02-host-vocabulary",
+        batchId: "g03-l02-host-vocabulary",
+        ordinal: 1,
+        parallelGroup: "g03-l02-page-only",
+        memberCount: 18,
+        firstXmlOccurrence: 1,
+        lastXmlOccurrence: 18,
+        includeShell: false,
+      }),
+      Object.freeze({
+        shardId: "g03-l02-instruction",
+        batchId: "g03-l02-instruction",
+        ordinal: 2,
+        parallelGroup: "g03-l02-page-only",
+        memberCount: 31,
+        firstXmlOccurrence: 19,
+        lastXmlOccurrence: 49,
+        includeShell: false,
+      }),
+      Object.freeze({
+        shardId: "g03-l02-practice-assessment",
+        batchId: "g03-l02-practice-assessment",
+        ordinal: 3,
+        parallelGroup: "g03-l02-page-only",
+        memberCount: 21,
+        firstXmlOccurrence: 50,
+        lastXmlOccurrence: 70,
         includeShell: false,
       }),
     ]),
@@ -1029,9 +1088,6 @@ function isPriorityLessonReleaseAsset(asset) {
   ) {
     return false;
   }
-  if (asset.canonicalAnimationId === PRIORITY_LESSON_RELEASE.shellAnimationId) {
-    return asset.flags.shell === true;
-  }
   return asset.flags.referenced === true && asset.flags.variant === false && asset.flags.shell === false;
 }
 
@@ -1231,17 +1287,20 @@ export function buildLessonReleases({animations, batches, lessons}) {
       }
     }
 
-    const shellAnimation = canonicalById.get(definition.shellAnimationId);
-    if (
-      !shellAnimation ||
-      shellAnimation.classification?.collection !== "course" ||
-      shellAnimation.classification.grade !== definition.grade ||
-      shellAnimation.classification.lesson !== definition.lesson ||
-      shellAnimation.flags?.shell !== true ||
-      shellAnimation.source?.sha256 !== definition.shellSourceSha256 ||
-      shellAnimation.assetId !== `swf-${definition.shellSourceSha256}`
-    ) {
-      throw new Error(`${definition.releaseId}: course shell binding drifted`);
+    let shellAnimation = null;
+    if (!definition.pageOnly) {
+      shellAnimation = canonicalById.get(definition.shellAnimationId);
+      if (
+        !shellAnimation ||
+        shellAnimation.classification?.collection !== "course" ||
+        shellAnimation.classification.grade !== definition.grade ||
+        shellAnimation.classification.lesson !== definition.lesson ||
+        shellAnimation.flags?.shell !== true ||
+        shellAnimation.source?.sha256 !== definition.shellSourceSha256 ||
+        shellAnimation.assetId !== `swf-${definition.shellSourceSha256}`
+      ) {
+        throw new Error(`${definition.releaseId}: course shell binding drifted`);
+      }
     }
 
     const sourceBindings = [
@@ -1250,7 +1309,9 @@ export function buildLessonReleases({animations, batches, lessons}) {
         xmlOccurrence,
         releaseRole: "active-xml-referenced-page",
       })),
-      {animation: shellAnimation, xmlOccurrence: null, releaseRole: "course-shell"},
+      ...(definition.pageOnly
+        ? []
+        : [{animation: shellAnimation, xmlOccurrence: null, releaseRole: "course-shell"}]),
     ];
     const animationIds = sourceBindings.map(({animation}) => animation.animationId);
     const assetIds = sourceBindings.map(({animation}) => animation.assetId);
@@ -1289,6 +1350,9 @@ export function buildLessonReleases({animations, batches, lessons}) {
           sha256: binding.animation.source.sha256,
         },
         xmlOccurrence: binding.xmlOccurrence,
+        ...(definition.pageOnly ? {
+          placementId: `g${String(definition.grade).padStart(2, "0")}-l${String(definition.lesson).padStart(2, "0")}-placement-${String(binding.xmlOccurrence).padStart(3, "0")}`,
+        } : {}),
       };
     });
     for (const shard of definition.shards) {
@@ -1345,6 +1409,9 @@ export function buildLessonReleases({animations, batches, lessons}) {
       },
       expectedCounts: {
         activeXmlReferencedPages: definition.expectedActiveXmlReferencedPageAssetCount,
+        ...(definition.pageOnly ? {
+          uniquePageAnimations: definition.expectedActiveXmlReferencedPageAssetCount,
+        } : {}),
         courseShells: definition.expectedCourseShellAssetCount,
         members: members.length,
         shards: definition.shards.length,
@@ -1354,6 +1421,11 @@ export function buildLessonReleases({animations, batches, lessons}) {
         grade: definition.grade,
         lesson: definition.lesson,
         excludeNonMembers: true,
+        ...(definition.pageOnly ? {
+          pageOnly: true,
+          legacyFlashCourseShellExcluded: true,
+          modernMyLessonHostRetained: true,
+        } : {}),
       },
       shards: definition.shards.map((shard) => ({
         shardId: shard.shardId,

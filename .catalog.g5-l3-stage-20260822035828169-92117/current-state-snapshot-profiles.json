@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "profiles": [
+    {
+      "releaseId": "lesson-g05-l04-number-lines",
+      "snapshotId": "g5-l4-m0-machine-entry-2026-07-26",
+      "capturePhase": "post-scaffold-pre-authoritative-runtime",
+      "outputDirectory": "reports/current-state-snapshots/g5-l4-m0-machine-entry-2026-07-26",
+      "temporalBoundary": {
+        "requestedBaselineDate": "2026-07-26",
+        "preExistingWork": [
+          "The G5 L4 release definition and fail-closed public-route controls already existed before this snapshot.",
+          "The 55 draft migration workspaces and M0 machine packet were materialized before this snapshot.",
+          "The repository already contained unrelated user work and stale protected G4/legacy evidence bindings."
+        ],
+        "statement": "This is a durable current-state receipt taken before authoritative G5 L4 runtime acquisition or renderer implementation. It is not a pre-change checkout image and must not be represented as one."
+      },
+      "inputArtifacts": [
+        {
+          "logicalId": "snapshot-profile",
+          "artifactType": "current-state-snapshot-profile",
+          "path": "catalog/current-state-snapshot-profiles.json"
+        },
+        {
+          "logicalId": "lesson-release-definition",
+          "artifactType": "lesson-release-manifest",
+          "path": "catalog/lesson-releases.json"
+        },
+        {
+          "logicalId": "source-manifest",
+          "artifactType": "source-sha256-manifest",
+          "path": "catalog/source-manifest.sha256"
+        },
+        {
+          "logicalId": "protected-completion-ledger",
+          "artifactType": "completion-ledger",
+          "path": "catalog/completion-ledger.json"
+        },
+        {
+          "logicalId": "lesson-release-ledger",
+          "artifactType": "lesson-release-ledger",
+          "path": "catalog/lesson-release-ledger.json"
+        },
+        {
+          "logicalId": "prototype-renderer-registry",
+          "artifactType": "renderer-registry",
+          "path": "packages/demos/prototype-registry.json"
+        },
+        {
+          "logicalId": "generated-renderer-registry",
+          "artifactType": "generated-renderer-registry",
+          "path": "packages/demos/src/registry.generated.ts"
+        },
+        {
+          "logicalId": "g5-l4-source-scope",
+          "artifactType": "source-scope-freeze",
+          "path": "reports/g5-l4-source-scope-freeze.json"
+        },
+        {
+          "logicalId": "g5-l4-workspace-readiness",
+          "artifactType": "workspace-readiness",
+          "path": "reports/g5-l4-workspace-readiness.json"
+        },
+        {
+          "logicalId": "g5-l4-m0-machine-packet",
+          "artifactType": "m0-governance-readiness",
+          "path": "reports/g5-l4-m0-governance-readiness.json"
+        },
+        {
+          "logicalId": "root-package",
+          "artifactType": "package-manifest",
+          "path": "package.json"
+        },
+        {
+          "logicalId": "root-lockfile",
+          "artifactType": "package-lock",
+          "path": "package-lock.json"
+        }
+      ],
+      "diagnosticCommands": [
+        {
+          "commandId": "doctor",
+          "argv": ["npm", "run", "doctor"],
+          "scope": "toolchain-diagnostic"
+        },
+        {
+          "commandId": "verify-workbench",
+          "argv": ["npm", "run", "verify:workbench"],
+          "scope": "workbench-diagnostic"
+        },
+        {
+          "commandId": "verify-sources",
+          "argv": ["npm", "run", "verify:sources"],
+          "scope": "source-integrity"
+        },
+        {
+          "commandId": "verify-g5-l4-m0-machine-packet",
+          "argv": ["npm", "run", "verify:g5:l4:m0-machine-packet"],
+          "scope": "release-machine-packet"
+        },
+        {
+          "commandId": "check-protected-completion-ledger",
+          "argv": ["node", "scripts/build-completion-ledger.mjs", "--check"],
+          "scope": "protected-ledger-currentness"
+        },
+        {
+          "commandId": "check-lesson-release-ledger",
+          "argv": ["node", "scripts/build-lesson-release-ledger.mjs", "--check"],
+          "scope": "lesson-release-ledger-currentness"
+        },
+        {
+          "commandId": "root-tests",
+          "argv": ["npm", "test"],
+          "scope": "root-regression"
+        },
+        {
+          "commandId": "demos-tests",
+          "argv": ["npm", "run", "test:demos"],
+          "scope": "demos-regression"
+        },
+        {
+          "commandId": "web-tests",
+          "argv": ["npm", "run", "test:site"],
+          "scope": "product-regression"
+        },
+        {
+          "commandId": "demos-typecheck",
+          "argv": ["npm", "run", "typecheck:demos"],
+          "scope": "demos-type-safety"
+        },
+        {
+          "commandId": "production-build",
+          "argv": ["npm", "run", "build"],
+          "scope": "product-build"
+        }
+      ]
+    }
+  ]
+}

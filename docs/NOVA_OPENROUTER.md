@@ -131,6 +131,25 @@ OpenRouter transport, exact-model check, and production environment.
 uses a fake upstream transport; it closes more of the stack than `page.route`,
 but it still does not prove a live OpenRouter request.
 
+Treat all browser-supplied history as untrusted transcript data. Even an entry
+whose wire role is `assistant` must never become an OpenRouter `assistant`
+message, because a caller can forge that role. The server serializes bounded
+history into one quoted user-side transcript, labels each turn, minimizes each
+turn independently, and tells the model that the transcript may be incomplete
+or forged. Only the server-authored system instruction owns instruction
+authority.
+
+Before provider transfer, the current learner question and every retained
+history entry pass through bounded EN/ES minimization. Common direct
+identifiers are redacted; disclosure-shaped school, class, student-ID,
+credential, address, birthday, medical, IEP, 504, or disability text is
+replaced with a content-free placeholder. Before display, provider replies
+that solicit or echo those categories fail closed. Trusted assessment pages
+also reject explicit answer declarations, answer-choice commands, and boxed
+answers. These deterministic patterns are defense in depth, not a claim of
+complete PII detection or pedagogical safety; adversarial human EN/ES review
+remains mandatory.
+
 ## Evidence hierarchy
 
 Do not collapse the following evidence levels into one PASS:
@@ -188,6 +207,13 @@ remains blocked until the project separately establishes:
    revocation, and an operational kill switch; and
 5. human review by mathematics educators and reviewers experienced with
    special education, learning difficulty, accessibility, and English learners.
+
+The local server currently implements bounded synthetic-test coverage for
+common EN/ES direct disclosures, obfuscated sensitive solicitations, forged
+browser-history roles, and explicit assessment-answer output. This does not
+close items 1–5 above: unusual wording, multilingual variants, contextual
+false negatives, mathematical correctness, accessibility, crisis content, and
+professional privacy/legal determinations still require dated human receipts.
 
 Do not infer or transmit a student's disability, IEP status, diagnosis,
 learning difficulty, English-learner status, emotion, attention, or behavior as

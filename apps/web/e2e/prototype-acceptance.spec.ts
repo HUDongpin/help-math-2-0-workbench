@@ -94,13 +94,25 @@ interface NovaMockRequest {
 
 async function mockNovaApi(
   page: Page,
-  options: Readonly<{delayMs?: number; timeoutMessage?: string}> = {},
+  options: Readonly<{
+    delayMs?: number;
+    nonJsonBusyMessage?: string;
+    timeoutMessage?: string;
+  }> = {},
 ) {
   const requests: NovaMockRequest[] = [];
   await page.route('**/api/nova', async (route) => {
     const request = route.request().postDataJSON() as NovaMockRequest;
     requests.push(request);
     await new Promise((resolve) => setTimeout(resolve, options.delayMs ?? 60));
+    if (request.message === options.nonJsonBusyMessage) {
+      await route.fulfill({
+        body: 'Too Many Requests',
+        contentType: 'text/plain',
+        status: 429,
+      });
+      return;
+    }
     if (request.message === options.timeoutMessage) {
       await route.fulfill({
         body: JSON.stringify({
@@ -1731,7 +1743,10 @@ test.describe('CLIENT_RENDER_MOCK · prototype composition', () => {
   });
 
   test('Ask Nova opens a non-occluding Focus column without taking over playback', async ({page}) => {
-    const requests = await mockNovaApi(page, {timeoutMessage: 'Please timeout.'});
+    const requests = await mockNovaApi(page, {
+      nonJsonBusyMessage: 'Please simulate a firewall busy response.',
+      timeoutMessage: 'Please timeout.',
+    });
     await installMockSpeechRecognition(page, 'How does the number line help?');
     await openLesson(page, {width: 1920, height: 1080});
     await goToPage34(page);
@@ -1900,10 +1915,39 @@ test.describe('CLIENT_RENDER_MOCK · prototype composition', () => {
     await expect(panel.locator('.lesson-shell2__nova-notice'))
       .toHaveText('Nova took too long. Please try again.');
 
+    await question.fill('Please simulate a firewall busy response.');
+    await panel.getByRole('button', {name: 'Send question to Nova'}).click();
+    const busy = await waitForNovaRequest(requests, 5);
+    expect(busy.message).toBe('Please simulate a firewall busy response.');
+    await expect(panel).toHaveAttribute('data-tutor-conversation-state', 'error');
+    await expect(panel.locator('.lesson-shell2__nova-notice'))
+      .toHaveText('Nova is busy. Wait a moment and try again.');
+
     await launcher.click();
     await expect(page.locator(ROOT)).toHaveAttribute('data-tutor-open', 'false');
     await expect(panel).toHaveCount(0);
     await expect(launcher).toBeFocused();
+  });
+
+  test('CLIENT_RENDER_MOCK busy state suppresses duplicate sends', async ({page}) => {
+    const requests = await mockNovaApi(page, {delayMs: 600});
+    await openLesson(page, {width: 1920, height: 1080});
+    await page.getByRole('button', {name: 'Ask Nova', exact: true}).click();
+    const panel = page.locator('.lesson-shell2__nova-panel');
+    const question = panel.getByRole('textbox', {name: 'Type a question for Nova'});
+    const send = panel.getByRole('button', {name: 'Send question to Nova'});
+    await question.fill('Explain one number-line step.');
+    await send.evaluate((button: HTMLButtonElement) => {
+      button.click();
+      button.click();
+    });
+    await expect(send).toBeDisabled();
+    await expect(send).toHaveText('Sending…');
+    await expect(panel.getByText(
+      'Mock Nova reply: Explain one number-line step.',
+      {exact: true},
+    )).toBeVisible();
+    expect(requests).toHaveLength(1);
   });
 
   test('a legacy Study URL stays in Focus with Nova as the only support interface', async ({page}) => {

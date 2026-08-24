@@ -26,6 +26,7 @@ function environment(receiptPath: string) {
     NODE_ENV: 'test',
     NOVA_TEST_FAKE_TRANSPORT_AUTHORIZATION:
       NOVA_FULL_STACK_FAKE_TRANSPORT_AUTHORIZATION,
+    NOVA_TEST_FAKE_TRANSPORT_MODE: 'success',
     NOVA_TEST_FAKE_TRANSPORT_ORIGIN: localOrigin,
     NOVA_TEST_FAKE_TRANSPORT_RECEIPT_PATH: receiptPath,
   } as const;
@@ -130,6 +131,46 @@ describe('Nova full-stack fake upstream transport', () => {
     assert.equal(receipt.model, NOVA_OPENROUTER_MODEL);
     assert.equal(receipt.framePresent, false);
     assert.doesNotMatch(serializedReceipt, /private test learner text/u);
+    unlinkSync(receiptPath);
+  });
+
+  it('can fail every provider attempt without leaking request content', async () => {
+    const receiptDirectory = path.join(tmpdir(), 'helpmath-nova-full-stack');
+    mkdirSync(receiptDirectory, {recursive: true, mode: 0o700});
+    const receiptPath = path.join(
+      receiptDirectory,
+      `${crypto.randomUUID()}.ndjson`,
+    );
+    const requestId = crypto.randomUUID();
+    const fetchImpl = resolveNovaFullStackFakeFetch({
+      environment: {
+        ...environment(receiptPath),
+        NOVA_TEST_FAKE_TRANSPORT_MODE: 'provider-unavailable',
+      },
+      request: localRequest(),
+      requestId,
+    });
+    assert.ok(fetchImpl);
+
+    const response = await fetchImpl(
+      'https://openrouter.ai/api/v1/chat/completions',
+      {
+        body: JSON.stringify({
+          model: NOVA_OPENROUTER_MODEL,
+          messages: [{role: 'user', content: 'private synthetic failure text'}],
+        }),
+        method: 'POST',
+      },
+    );
+    assert.equal(response.status, 503);
+
+    const serializedReceipt = readFileSync(receiptPath, 'utf8');
+    const receipt = JSON.parse(serializedReceipt) as Record<string, unknown>;
+    assert.equal(receipt.requestId, requestId);
+    assert.equal(receipt.status, 503);
+    assert.equal(receipt.framePresent, false);
+    assert.doesNotMatch(serializedReceipt, /private synthetic failure text/u);
+    assert.doesNotMatch(serializedReceipt, /synthetic-provider-unavailable/u);
     unlinkSync(receiptPath);
   });
 });

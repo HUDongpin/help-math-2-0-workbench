@@ -32,10 +32,11 @@ const AUDIO_RUNTIME_AUDIT_SHA256 =
 const SPANISH_SOURCE =
   'source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/SA/L10RW04.mp3';
 const PUBLIC_DIRECTORY =
-  'public/flash-assets/courses/course-g04-l10-rw-004/audio';
+  'apps/web/candidate-assets/flash-assets/2026-08-22-page-only-candidates-v1/courses/course-g04-l10-rw-004/audio';
 const EMBEDDED_OUTPUT = `${PUBLIC_DIRECTORY}/embedded-stream-0001.mp3`;
 const SPANISH_OUTPUT = `${PUBLIC_DIRECTORY}/spanish-host-narration.mp3`;
-const PUBLIC_MANIFEST = `${PUBLIC_DIRECTORY}/manifest.json`;
+const PUBLIC_MANIFEST =
+  `candidate-evidence/current-js/2026-08-22-page-only-candidates-v1/courses/${ANIMATION_ID}/product-candidate-assets-v2/audio/manifest.json`;
 const AUDIT_RECEIPT =
   'migrations/course-g04-l10-rw-004/audit/private-product-audio-assets.json';
 

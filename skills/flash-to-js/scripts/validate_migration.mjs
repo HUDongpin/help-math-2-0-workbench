@@ -33,12 +33,13 @@ import {
   validateSupplementalPartialRequirementBoundary,
 } from "../../../scripts/lib/strict-full-domain-requirement.mjs";
 import {validateRequirementCoverageGroups} from "../../../scripts/lib/trace-frame-selection.mjs";
+import {resolveCurrentJsCandidateAssetBinding} from "../../../scripts/current-js-candidate-asset-binding.mjs";
 
 const scriptPath = fileURLToPath(import.meta.url);
 const projectRoot = path.resolve(path.dirname(scriptPath), "../../..");
 const registrySourceRoot = path.join(projectRoot, "packages", "demos", "src");
 const registryGeneratorPath = path.join(projectRoot, "packages", "demos", "scripts", "generate-registry.mjs");
-export const MIGRATION_VALIDATOR_VERSION = "3.1.0";
+export const MIGRATION_VALIDATOR_VERSION = "3.1.1";
 export const FRAME_DOMAIN_DISPOSITION_RELATIVE_PATH = "audit/frame-domain-disposition.json";
 export const RENDERER_FRAME_DOMAIN_SUPPORT_RELATIVE_PATH = "audit/renderer-frame-domain-support.json";
 export const ADOBE_ANIMATE_AUTHORING_AUDIT_RELATIVE_PATH = "audit/adobe-animate-2021-authoring-audit.json";
@@ -1789,7 +1790,21 @@ export async function validateInventory({ root, manifest, errors }) {
   for (const [index, row] of assets.rows.entries()) {
     const label = `asset-inventory.csv row ${index + 2}`;
     if (!row.asset_id) errors.push(`${label}: asset_id is required`);
-    const filePath = await resolveExistingPath(row.exported_file, projectRoots);
+    let filePath = await resolveExistingPath(row.exported_file, projectRoots);
+    if (!filePath) {
+      try {
+        const candidateBinding = await resolveCurrentJsCandidateAssetBinding({
+          projectRoot,
+          logicalPath: row.exported_file,
+          expectedSha256: isSha256(row.sha256)
+            ? row.sha256.toLowerCase()
+            : undefined,
+        });
+        filePath = candidateBinding?.absolutePath ?? null;
+      } catch (error) {
+        errors.push(`${label}: exported_file candidate binding is invalid (${error.message})`);
+      }
+    }
     if (!filePath) errors.push(`${label}: exported_file does not exist (${row.exported_file || "empty"})`);
     else await verifyChecksum(filePath, row.sha256, label, errors);
     if (!row.license_or_provenance) errors.push(`${label}: license_or_provenance is required`);

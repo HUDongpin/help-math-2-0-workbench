@@ -1,0 +1,1429 @@
+{
+  "schemaVersion": "help-math-fla-swf-counterpart-successor-implementation-baseline/v1",
+  "artifactType": "help-math-fla-swf-counterpart-successor-implementation-baseline",
+  "status": "frozen-implementation-final-pre-promotion-baseline",
+  "capturedAt": "2026-08-07T20:48:28.208Z",
+  "completedAt": "2026-08-07T21:02:02.224Z",
+  "timing": {
+    "classification": "implementation-final-pre-promotion",
+    "preCodeMutationArtifact": false,
+    "preSourceOrCatalogPromotion": true,
+    "caveat": "This unified receipt was materialized after successor implementation edits; it is the final implementation/current-state baseline before any source/catalog promotion, not a retroactively backdated pre-code receipt."
+  },
+  "checkout": {
+    "projectRoot": "/Volumes/WestWorld/HELP MATH 2.0",
+    "branch": "codex/g4-l3-fidelity-finish",
+    "head": "42e7f80ce70aaa3819af2f7158e15f5da5470cce"
+  },
+  "filesystem": {
+    "before": {
+      "volume": {
+        "deviceNode": "/dev/disk7s1",
+        "volumeName": "WestWorld",
+        "fileSystemPersonality": "APFS",
+        "bundleType": "apfs",
+        "containerFreeSpace": "834.5 GB (834488000512 Bytes) (exactly 1629859376 512-Byte-Units)"
+      },
+      "freeSpace": {
+        "filesystem": "/dev/disk7s1",
+        "blocks1024": 976557744,
+        "used1024": 161425764,
+        "available1024": 814929688,
+        "capacity": "17%",
+        "mountedOn": "/Volumes/WestWorld"
+      }
+    },
+    "after": {
+      "volume": {
+        "deviceNode": "/dev/disk7s1",
+        "volumeName": "WestWorld",
+        "fileSystemPersonality": "APFS",
+        "bundleType": "apfs",
+        "containerFreeSpace": "834.5 GB (834483933184 Bytes) (exactly 1629851432 512-Byte-Units)"
+      },
+      "freeSpace": {
+        "filesystem": "/dev/disk7s1",
+        "blocks1024": 976557744,
+        "used1024": 161429720,
+        "available1024": 814925732,
+        "capacity": "17%",
+        "mountedOn": "/Volumes/WestWorld"
+      }
+    }
+  },
+  "tools": {
+    "node": "v24.18.0",
+    "nodeExecutable": {
+      "path": "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/bin/node",
+      "realPath": "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/bin/node",
+      "bytes": 120965360,
+      "sha256": "ee6fb0e015284d83a91e8ec5213f43a157f8a392b58555301682892ba928c04a"
+    },
+    "npm": "11.16.0",
+    "npmCli": {
+      "path": "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/lib/node_modules/npm/bin/npm-cli.js",
+      "realPath": "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/lib/node_modules/npm/bin/npm-cli.js",
+      "bytes": 54,
+      "sha256": "8e5f6f3429f8cdbe693cdc29904e9d5a7b127a494bd15c804bd54c7403bfcbe7"
+    },
+    "git": "git version 2.50.1 (Apple Git-155)",
+    "gitExecutable": {
+      "path": "/usr/bin/git",
+      "realPath": "/usr/bin/git",
+      "bytes": 118928,
+      "sha256": "179301dcb41ea78accc3fa0048a7e6f6710d891945a751a34addd622020c1818"
+    },
+    "commandEnvironment": {
+      "PATH": "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+      "LANG": "C",
+      "LC_ALL": "C",
+      "TMPDIR": "/private/tmp"
+    },
+    "npmProjectConfiguration": {
+      "path": ".npmrc",
+      "status": "absent"
+    },
+    "macOSProductVersion": "26.5.2",
+    "macOSBuildVersion": "25F84",
+    "clangPath": "/Library/Developer/CommandLineTools/usr/bin/clang",
+    "clangVersion": "Apple clang version 21.0.0 (clang-2100.1.1.101)",
+    "macosSdkPath": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+    "python": "Python 3.13.3",
+    "ffmpeg": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers",
+    "ffprobe": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers",
+    "adobeAnimate2021": "21.0.7"
+  },
+  "scopedOwnership": {
+    "definition": "mandatory successor scripts/tests and package/README boundaries; current profile, 17 generated catalog outputs, source-manifest and source-freeze; plus the exact pre-existing immutable successor artifacts captured before this baseline. The receipt is usable only with its post-scan immutable completion marker. Later trusted-registry, signed-ledger, plan, prepared, applied, and no-copy artifacts are self-referential exclusions validated by their own contracts.",
+    "mandatoryPaths": [
+      ".gitignore",
+      "README.md",
+      "package.json",
+      "scripts/build-fla-swf-counterpart-successor-baseline.mjs",
+      "scripts/build-fla-swf-counterpart-successor-baseline.test.mjs",
+      "scripts/build-fla-swf-counterpart-successor-plan.mjs",
+      "scripts/build-fla-swf-counterpart-successor-plan.test.mjs",
+      "scripts/check-fla-swf-counterpart-successor-review.mjs",
+      "scripts/promote-fla-swf-counterpart-successor.mjs",
+      "scripts/promote-fla-swf-counterpart-successor.test.mjs",
+      "scripts/darwin-atomic-directory-swap.test.mjs",
+      "scripts/lib/darwin-atomic-directory-swap.mjs",
+      "scripts/lib/darwin-atomic-directory-swap-native.c",
+      "scripts/lib/fla-swf-counterpart-transaction.mjs",
+      "scripts/build-help-math-catalog.mjs",
+      "scripts/build-help-math-catalog.test.mjs",
+      "scripts/freeze-help-math-sources.mjs",
+      "scripts/freeze-help-math-sources.test.mjs",
+      "catalog/current-source-profile.json",
+      "catalog/source-manifest.sha256",
+      "catalog/source-freeze.json",
+      "catalog/summary.json",
+      "catalog/animations.json",
+      "catalog/animations.jsonl",
+      "catalog/animations.csv",
+      "catalog/assets.json",
+      "catalog/duplicates.json",
+      "catalog/missing-references.json",
+      "catalog/unreferenced.json",
+      "catalog/fla-only.json",
+      "catalog/lessons.json",
+      "catalog/audio-groups.json",
+      "catalog/batches.json",
+      "catalog/lesson-releases.json",
+      "catalog/source-files.json",
+      "catalog/source-files.jsonl",
+      "catalog/source-files.csv",
+      "catalog/source-files.sha256"
+    ],
+    "capturedPromotionArtifacts": [
+      "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-universe.json",
+      "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v1-invalidated.json",
+      "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v1-invalidation-correction-v2.json",
+      "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v2-universe.json"
+    ],
+    "postBaselineExclusions": [
+      "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v2-implementation-baseline.json",
+      "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v2-implementation-baseline-complete.json",
+      "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v2-trusted-reviewer-registry.json",
+      "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v2-pair-review-ledger.json",
+      "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v2-plan.json",
+      "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v2-applied.json",
+      "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v2-no-copy-closure.json",
+      "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v2-prepared-<transaction-id>.json"
+    ],
+    "stable": true,
+    "before": {
+      "records": [
+        {
+          "path": ".gitignore",
+          "bytes": 1954,
+          "sha256": "72a32acbdd69bd9f991cc8cc55e42aea1ef02f3519aca00f0fe7f5461eeccee6",
+          "dev": "16777244",
+          "ino": "73545",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786129209744651501"
+        },
+        {
+          "path": "README.md",
+          "bytes": 14926,
+          "sha256": "3a764dc7fb95b8fa4b913af2e0f61c1cd48600e6c55f43c9f7d98c7233dec136",
+          "dev": "16777244",
+          "ino": "64141",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786133335296352916"
+        },
+        {
+          "path": "catalog/animations.csv",
+          "bytes": 1037650,
+          "sha256": "d04d5603407090e8e7d8a9864f24b46327a9950731adb5580686b0cd35e67f51",
+          "dev": "16777244",
+          "ino": "3930433",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350458902014"
+        },
+        {
+          "path": "catalog/animations.json",
+          "bytes": 6509993,
+          "sha256": "ab27270c1f6a6618bae5e52f6e48ebf3ef646b6232dd087c1c86f755a6a3ce10",
+          "dev": "16777244",
+          "ino": "3930418",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350463691120"
+        },
+        {
+          "path": "catalog/animations.jsonl",
+          "bytes": 4151005,
+          "sha256": "910e89f1e05ec0bc6f3900e7a58f47113d96daa5e2c179e50dd9bf5d7ab4d3e3",
+          "dev": "16777244",
+          "ino": "3930424",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350463210168"
+        },
+        {
+          "path": "catalog/assets.json",
+          "bytes": 4810639,
+          "sha256": "872b61ee60b097ed9a8c44cc083de38cd4d0a69783d96f595a2e54adf7a36aa9",
+          "dev": "16777244",
+          "ino": "3930437",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350463241042"
+        },
+        {
+          "path": "catalog/audio-groups.json",
+          "bytes": 901182,
+          "sha256": "d77b6d7ad654795550435b199310b1b05e4a21ed3f5b5a0bef6f6ea9a53fcce8",
+          "dev": "16777244",
+          "ino": "3930435",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350458854848"
+        },
+        {
+          "path": "catalog/batches.json",
+          "bytes": 496223,
+          "sha256": "c536e390082005414ed501150920929671195f48449f5f8c43051827c20374c9",
+          "dev": "16777244",
+          "ino": "3930427",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350457779153"
+        },
+        {
+          "path": "catalog/current-source-profile.json",
+          "bytes": 1952,
+          "sha256": "e3c86728b1cef7e47db5f56362fc7fb597025776014415aafc36c4468a15b458",
+          "dev": "16777244",
+          "ino": "8151731",
+          "mode": 292,
+          "nlink": 1,
+          "mtimeNs": "1786120954552397980"
+        },
+        {
+          "path": "catalog/duplicates.json",
+          "bytes": 16421,
+          "sha256": "647e3fced285e6fc4dd3511d09c12ba40ab4b5a29329ba1f8c42cd0df1c777a9",
+          "dev": "16777244",
+          "ino": "3930428",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350457578697"
+        },
+        {
+          "path": "catalog/fla-only.json",
+          "bytes": 241110,
+          "sha256": "6881d7a2d1d2e595949478473243256758cd6ffd0ae87f3e9e47776516305586",
+          "dev": "16777244",
+          "ino": "3930441",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350457708321"
+        },
+        {
+          "path": "catalog/lesson-releases.json",
+          "bytes": 115651,
+          "sha256": "d518f812a19b6038e55bca337b7a4f4f96425dd5599f9d07c9f69c8a0a1ae1cf",
+          "dev": "16777244",
+          "ino": "3930439",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350457759862"
+        },
+        {
+          "path": "catalog/lessons.json",
+          "bytes": 59672,
+          "sha256": "96602f48c3c2089ab90d63262645de267a58522dc2bae57ab3e87745f3547905",
+          "dev": "16777244",
+          "ino": "3930403",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350457655030"
+        },
+        {
+          "path": "catalog/missing-references.json",
+          "bytes": 852812,
+          "sha256": "80159400ba05e6b32ceb1b3a24e8dbe839ffcf049af08403adf5049296416136",
+          "dev": "16777244",
+          "ino": "3930406",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350458715100"
+        },
+        {
+          "path": "catalog/source-files.csv",
+          "bytes": 1117915,
+          "sha256": "f06fc96c89172a3dd1f7541d93435827306f7486f8a0c6023857b1e4a2b02a4f",
+          "dev": "16777244",
+          "ino": "3930420",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350459045345"
+        },
+        {
+          "path": "catalog/source-files.json",
+          "bytes": 1894761,
+          "sha256": "c5ba348ea968b4ae7292d86f7624a77ec105bc8f929bd61b4837c59623f33b29",
+          "dev": "16777244",
+          "ino": "3930432",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350459162760"
+        },
+        {
+          "path": "catalog/source-files.jsonl",
+          "bytes": 1498028,
+          "sha256": "d2ef93137efd44eb6c490ddab17d901620595b8d34b7e989cbf2f733b6eb23af",
+          "dev": "16777244",
+          "ino": "3930407",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350459069220"
+        },
+        {
+          "path": "catalog/source-files.sha256",
+          "bytes": 958064,
+          "sha256": "30dfa12b7cd76e7200fb89115155e7d32af1356247c07e3a4f79227e93f34875",
+          "dev": "16777244",
+          "ino": "3930446",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350458918513"
+        },
+        {
+          "path": "catalog/source-freeze.json",
+          "bytes": 435,
+          "sha256": "a03a5bb4e2a0672509fa2c2b9ac9b238b697cce043ccd4c2506e8301f780b6da",
+          "dev": "16777244",
+          "ino": "3930466",
+          "mode": 384,
+          "nlink": 1,
+          "mtimeNs": "1785643353367444083"
+        },
+        {
+          "path": "catalog/source-manifest.sha256",
+          "bytes": 958064,
+          "sha256": "f0a33c8a3d15afd7340e9ea5523385428bae7546bd8d4227a3a8977ab8914318",
+          "dev": "16777244",
+          "ino": "3930467",
+          "mode": 384,
+          "nlink": 1,
+          "mtimeNs": "1785643353367547999"
+        },
+        {
+          "path": "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-universe.json",
+          "bytes": 2739300,
+          "sha256": "e0e3a4787cc52efa036aea18bfa3e2782628e0b5e852757ca5de6b0359b717b9",
+          "dev": "16777244",
+          "ino": "8250285",
+          "mode": 292,
+          "nlink": 1,
+          "mtimeNs": "1786122393143394215"
+        },
+        {
+          "path": "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v1-invalidated.json",
+          "bytes": 1999,
+          "sha256": "832b634ecb13685adf88480e7204db4d83a2bdb7fb767534b3a77ae2673e5213",
+          "dev": "16777244",
+          "ino": "8250306",
+          "mode": 292,
+          "nlink": 1,
+          "mtimeNs": "1786122794759470192"
+        },
+        {
+          "path": "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v1-invalidation-correction-v2.json",
+          "bytes": 2475,
+          "sha256": "485894c97f3227ca97d2ab6c1b14c70d74c0361c4b7b46e8a6858d8ecd9254c0",
+          "dev": "16777244",
+          "ino": "8250663",
+          "mode": 292,
+          "nlink": 1,
+          "mtimeNs": "1786123103420254708"
+        },
+        {
+          "path": "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v2-universe.json",
+          "bytes": 2763439,
+          "sha256": "887122b2abefc3ca7492be3baafc39cfbf4a5f1b0195c11985e41c48482e6098",
+          "dev": "16777244",
+          "ino": "8250309",
+          "mode": 292,
+          "nlink": 1,
+          "mtimeNs": "1786122795763947065"
+        },
+        {
+          "path": "catalog/summary.json",
+          "bytes": 2176,
+          "sha256": "19605dcae06025cfb3de036968f03e7ede8dbc6cbf088a28fccda2ff253818ef",
+          "dev": "16777244",
+          "ino": "3930405",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350457425032"
+        },
+        {
+          "path": "catalog/unreferenced.json",
+          "bytes": 94103,
+          "sha256": "35d2ce28d60752ee1dca54c70f603a35fb9263548742e5b76fb04e875dd50ebd",
+          "dev": "16777244",
+          "ino": "3930436",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350457654696"
+        },
+        {
+          "path": "package.json",
+          "bytes": 82093,
+          "sha256": "dbdbd6768b5178528238ec1054d898fad4bc5ba51d6adad165113508e5771d17",
+          "dev": "16777244",
+          "ino": "73547",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786131253681954789"
+        },
+        {
+          "path": "scripts/build-fla-swf-counterpart-successor-baseline.mjs",
+          "bytes": 70225,
+          "sha256": "bf95dca90a24fc0ad07d3d14acaae8c912981b6e35c6d10ef1bb0f5686190f10",
+          "dev": "16777244",
+          "ino": "8523997",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786135612561841892"
+        },
+        {
+          "path": "scripts/build-fla-swf-counterpart-successor-baseline.test.mjs",
+          "bytes": 27563,
+          "sha256": "136d0449fa644840a8018ac8036f2bb77c32aad3061daca1e37652059ac65f15",
+          "dev": "16777244",
+          "ino": "8523998",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786135619856151842"
+        },
+        {
+          "path": "scripts/build-fla-swf-counterpart-successor-plan.mjs",
+          "bytes": 270562,
+          "sha256": "8cf4162d334b85f10b57ff38de5d7905f2ddde50c49a27087a1bf5cd31ea9dc5",
+          "dev": "16777244",
+          "ino": "8245894",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786134572886463855"
+        },
+        {
+          "path": "scripts/build-fla-swf-counterpart-successor-plan.test.mjs",
+          "bytes": 59733,
+          "sha256": "a90868b412daf2b8c608c288738ed702b010d41d98712ef99cae088a708d5bb7",
+          "dev": "16777244",
+          "ino": "8247282",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786134603555416488"
+        },
+        {
+          "path": "scripts/build-help-math-catalog.mjs",
+          "bytes": 98838,
+          "sha256": "4eaa4a6a552d49e8f93fd47ef86e07dc0526ecb11750797e718a5840e1844d18",
+          "dev": "16777244",
+          "ino": "93369",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786126792646879330"
+        },
+        {
+          "path": "scripts/build-help-math-catalog.test.mjs",
+          "bytes": 38864,
+          "sha256": "24e089f093aec54d2a4a11d565322b2224ce07a77b0189e81eeb1d5e41cf83a7",
+          "dev": "16777244",
+          "ino": "93378",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786126834860943877"
+        },
+        {
+          "path": "scripts/check-fla-swf-counterpart-successor-review.mjs",
+          "bytes": 1089,
+          "sha256": "87e44a7d9ee0f3896197531fe5db506223331fdf19647864f4200cd29ab82e06",
+          "dev": "16777244",
+          "ino": "8250284",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786122383195643560"
+        },
+        {
+          "path": "scripts/darwin-atomic-directory-swap.test.mjs",
+          "bytes": 17855,
+          "sha256": "7d4860112d59d120d8e9e75dd4c5b237ff29ca6ea207632af2f35749f9eacb9c",
+          "dev": "16777244",
+          "ino": "3908584",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786133118784419278"
+        },
+        {
+          "path": "scripts/freeze-help-math-sources.mjs",
+          "bytes": 23628,
+          "sha256": "e6debcdac9948d39206bdcdf847cf22d5fafebc124c043f3531a445860384549",
+          "dev": "16777244",
+          "ino": "3909416",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785638435494494842"
+        },
+        {
+          "path": "scripts/freeze-help-math-sources.test.mjs",
+          "bytes": 8985,
+          "sha256": "f028517944332126d212bb9c837b15cdda9c5e8906b995b0a4e2755f9622390c",
+          "dev": "16777244",
+          "ino": "3909428",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785638421670898372"
+        },
+        {
+          "path": "scripts/lib/darwin-atomic-directory-swap-native.c",
+          "bytes": 8016,
+          "sha256": "041db960d7c7b6150fc01cc821d04e3f19f5178b2fe8fc9f0ba8cd97571ef572",
+          "dev": "16777244",
+          "ino": "3908582",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786130360053316900"
+        },
+        {
+          "path": "scripts/lib/darwin-atomic-directory-swap.mjs",
+          "bytes": 33996,
+          "sha256": "c094017d9ddbfc6a2480fa0b78b42826da9e0cd28bed31ee1a215c4641ff7a9a",
+          "dev": "16777244",
+          "ino": "3908583",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786132742323507471"
+        },
+        {
+          "path": "scripts/lib/fla-swf-counterpart-transaction.mjs",
+          "bytes": 59476,
+          "sha256": "7a7baa60ccc7862b1ab6776d09ae4245baf4ef80975b53e250b9321c11380289",
+          "dev": "16777244",
+          "ino": "8151738",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786134285254584438"
+        },
+        {
+          "path": "scripts/promote-fla-swf-counterpart-successor.mjs",
+          "bytes": 198299,
+          "sha256": "4e5c362d3048aab6f3bb30950ea22ccede932e6d90a644d8b7e623562b059017",
+          "dev": "16777244",
+          "ino": "8245890",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786134792480679573"
+        },
+        {
+          "path": "scripts/promote-fla-swf-counterpart-successor.test.mjs",
+          "bytes": 137602,
+          "sha256": "fe6de5580b9cf3cfd5654e36da9b5838965b49737ef2c0252ea0f5a42682f5ad",
+          "dev": "16777244",
+          "ino": "8245892",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786134804143699077"
+        }
+      ],
+      "identitySha256": "68020d381e91235b99f0686542c5449919969ff3fe3a4d635671b6f248610ffe",
+      "git": {
+        "status": "M .gitignore\n M README.md\n M package.json\n M scripts/build-help-math-catalog.mjs\n M scripts/build-help-math-catalog.test.mjs\n M scripts/darwin-atomic-directory-swap.test.mjs\n M scripts/lib/darwin-atomic-directory-swap-native.c\n M scripts/lib/darwin-atomic-directory-swap.mjs\n?? catalog/current-source-profile.json\n?? catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-universe.json\n?? catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v1-invalidated.json\n?? catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v1-invalidation-correction-v2.json\n?? catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v2-universe.json\n?? scripts/build-fla-swf-counterpart-successor-baseline.mjs\n?? scripts/build-fla-swf-counterpart-successor-baseline.test.mjs\n?? scripts/build-fla-swf-counterpart-successor-plan.mjs\n?? scripts/build-fla-swf-counterpart-successor-plan.test.mjs\n?? scripts/check-fla-swf-counterpart-successor-review.mjs\n?? scripts/lib/fla-swf-counterpart-transaction.mjs\n?? scripts/promote-fla-swf-counterpart-successor.mjs\n?? scripts/promote-fla-swf-counterpart-successor.test.mjs",
+        "staged": "",
+        "worktree": ":100644 100644 816b44c8 00000000 M\t.gitignore\n:100644 100644 8fe2486e 00000000 M\tREADME.md\n:100644 100644 6e22e7c5 00000000 M\tpackage.json\n:100644 100644 28782190 00000000 M\tscripts/build-help-math-catalog.mjs\n:100644 100644 94f649a5 00000000 M\tscripts/build-help-math-catalog.test.mjs\n:100644 100644 1bf2be50 00000000 M\tscripts/darwin-atomic-directory-swap.test.mjs\n:100644 100644 81358fa0 00000000 M\tscripts/lib/darwin-atomic-directory-swap-native.c\n:100644 100644 9b7deef9 00000000 M\tscripts/lib/darwin-atomic-directory-swap.mjs",
+        "untracked": "catalog/current-source-profile.json\ncatalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-universe.json\ncatalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v1-invalidated.json\ncatalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v1-invalidation-correction-v2.json\ncatalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v2-universe.json\nscripts/build-fla-swf-counterpart-successor-baseline.mjs\nscripts/build-fla-swf-counterpart-successor-baseline.test.mjs\nscripts/build-fla-swf-counterpart-successor-plan.mjs\nscripts/build-fla-swf-counterpart-successor-plan.test.mjs\nscripts/check-fla-swf-counterpart-successor-review.mjs\nscripts/lib/fla-swf-counterpart-transaction.mjs\nscripts/promote-fla-swf-counterpart-successor.mjs\nscripts/promote-fla-swf-counterpart-successor.test.mjs",
+        "identitySha256": "2e12205cc1507b7df4634f528ef8b6d8873f16eabbad9d3b62b3826551921c0b"
+      }
+    },
+    "after": {
+      "records": [
+        {
+          "path": ".gitignore",
+          "bytes": 1954,
+          "sha256": "72a32acbdd69bd9f991cc8cc55e42aea1ef02f3519aca00f0fe7f5461eeccee6",
+          "dev": "16777244",
+          "ino": "73545",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786129209744651501"
+        },
+        {
+          "path": "README.md",
+          "bytes": 14926,
+          "sha256": "3a764dc7fb95b8fa4b913af2e0f61c1cd48600e6c55f43c9f7d98c7233dec136",
+          "dev": "16777244",
+          "ino": "64141",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786133335296352916"
+        },
+        {
+          "path": "catalog/animations.csv",
+          "bytes": 1037650,
+          "sha256": "d04d5603407090e8e7d8a9864f24b46327a9950731adb5580686b0cd35e67f51",
+          "dev": "16777244",
+          "ino": "3930433",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350458902014"
+        },
+        {
+          "path": "catalog/animations.json",
+          "bytes": 6509993,
+          "sha256": "ab27270c1f6a6618bae5e52f6e48ebf3ef646b6232dd087c1c86f755a6a3ce10",
+          "dev": "16777244",
+          "ino": "3930418",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350463691120"
+        },
+        {
+          "path": "catalog/animations.jsonl",
+          "bytes": 4151005,
+          "sha256": "910e89f1e05ec0bc6f3900e7a58f47113d96daa5e2c179e50dd9bf5d7ab4d3e3",
+          "dev": "16777244",
+          "ino": "3930424",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350463210168"
+        },
+        {
+          "path": "catalog/assets.json",
+          "bytes": 4810639,
+          "sha256": "872b61ee60b097ed9a8c44cc083de38cd4d0a69783d96f595a2e54adf7a36aa9",
+          "dev": "16777244",
+          "ino": "3930437",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350463241042"
+        },
+        {
+          "path": "catalog/audio-groups.json",
+          "bytes": 901182,
+          "sha256": "d77b6d7ad654795550435b199310b1b05e4a21ed3f5b5a0bef6f6ea9a53fcce8",
+          "dev": "16777244",
+          "ino": "3930435",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350458854848"
+        },
+        {
+          "path": "catalog/batches.json",
+          "bytes": 496223,
+          "sha256": "c536e390082005414ed501150920929671195f48449f5f8c43051827c20374c9",
+          "dev": "16777244",
+          "ino": "3930427",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350457779153"
+        },
+        {
+          "path": "catalog/current-source-profile.json",
+          "bytes": 1952,
+          "sha256": "e3c86728b1cef7e47db5f56362fc7fb597025776014415aafc36c4468a15b458",
+          "dev": "16777244",
+          "ino": "8151731",
+          "mode": 292,
+          "nlink": 1,
+          "mtimeNs": "1786120954552397980"
+        },
+        {
+          "path": "catalog/duplicates.json",
+          "bytes": 16421,
+          "sha256": "647e3fced285e6fc4dd3511d09c12ba40ab4b5a29329ba1f8c42cd0df1c777a9",
+          "dev": "16777244",
+          "ino": "3930428",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350457578697"
+        },
+        {
+          "path": "catalog/fla-only.json",
+          "bytes": 241110,
+          "sha256": "6881d7a2d1d2e595949478473243256758cd6ffd0ae87f3e9e47776516305586",
+          "dev": "16777244",
+          "ino": "3930441",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350457708321"
+        },
+        {
+          "path": "catalog/lesson-releases.json",
+          "bytes": 115651,
+          "sha256": "d518f812a19b6038e55bca337b7a4f4f96425dd5599f9d07c9f69c8a0a1ae1cf",
+          "dev": "16777244",
+          "ino": "3930439",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350457759862"
+        },
+        {
+          "path": "catalog/lessons.json",
+          "bytes": 59672,
+          "sha256": "96602f48c3c2089ab90d63262645de267a58522dc2bae57ab3e87745f3547905",
+          "dev": "16777244",
+          "ino": "3930403",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350457655030"
+        },
+        {
+          "path": "catalog/missing-references.json",
+          "bytes": 852812,
+          "sha256": "80159400ba05e6b32ceb1b3a24e8dbe839ffcf049af08403adf5049296416136",
+          "dev": "16777244",
+          "ino": "3930406",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350458715100"
+        },
+        {
+          "path": "catalog/source-files.csv",
+          "bytes": 1117915,
+          "sha256": "f06fc96c89172a3dd1f7541d93435827306f7486f8a0c6023857b1e4a2b02a4f",
+          "dev": "16777244",
+          "ino": "3930420",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350459045345"
+        },
+        {
+          "path": "catalog/source-files.json",
+          "bytes": 1894761,
+          "sha256": "c5ba348ea968b4ae7292d86f7624a77ec105bc8f929bd61b4837c59623f33b29",
+          "dev": "16777244",
+          "ino": "3930432",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350459162760"
+        },
+        {
+          "path": "catalog/source-files.jsonl",
+          "bytes": 1498028,
+          "sha256": "d2ef93137efd44eb6c490ddab17d901620595b8d34b7e989cbf2f733b6eb23af",
+          "dev": "16777244",
+          "ino": "3930407",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350459069220"
+        },
+        {
+          "path": "catalog/source-files.sha256",
+          "bytes": 958064,
+          "sha256": "30dfa12b7cd76e7200fb89115155e7d32af1356247c07e3a4f79227e93f34875",
+          "dev": "16777244",
+          "ino": "3930446",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350458918513"
+        },
+        {
+          "path": "catalog/source-freeze.json",
+          "bytes": 435,
+          "sha256": "a03a5bb4e2a0672509fa2c2b9ac9b238b697cce043ccd4c2506e8301f780b6da",
+          "dev": "16777244",
+          "ino": "3930466",
+          "mode": 384,
+          "nlink": 1,
+          "mtimeNs": "1785643353367444083"
+        },
+        {
+          "path": "catalog/source-manifest.sha256",
+          "bytes": 958064,
+          "sha256": "f0a33c8a3d15afd7340e9ea5523385428bae7546bd8d4227a3a8977ab8914318",
+          "dev": "16777244",
+          "ino": "3930467",
+          "mode": 384,
+          "nlink": 1,
+          "mtimeNs": "1785643353367547999"
+        },
+        {
+          "path": "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-universe.json",
+          "bytes": 2739300,
+          "sha256": "e0e3a4787cc52efa036aea18bfa3e2782628e0b5e852757ca5de6b0359b717b9",
+          "dev": "16777244",
+          "ino": "8250285",
+          "mode": 292,
+          "nlink": 1,
+          "mtimeNs": "1786122393143394215"
+        },
+        {
+          "path": "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v1-invalidated.json",
+          "bytes": 1999,
+          "sha256": "832b634ecb13685adf88480e7204db4d83a2bdb7fb767534b3a77ae2673e5213",
+          "dev": "16777244",
+          "ino": "8250306",
+          "mode": 292,
+          "nlink": 1,
+          "mtimeNs": "1786122794759470192"
+        },
+        {
+          "path": "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v1-invalidation-correction-v2.json",
+          "bytes": 2475,
+          "sha256": "485894c97f3227ca97d2ab6c1b14c70d74c0361c4b7b46e8a6858d8ecd9254c0",
+          "dev": "16777244",
+          "ino": "8250663",
+          "mode": 292,
+          "nlink": 1,
+          "mtimeNs": "1786123103420254708"
+        },
+        {
+          "path": "catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v2-universe.json",
+          "bytes": 2763439,
+          "sha256": "887122b2abefc3ca7492be3baafc39cfbf4a5f1b0195c11985e41c48482e6098",
+          "dev": "16777244",
+          "ino": "8250309",
+          "mode": 292,
+          "nlink": 1,
+          "mtimeNs": "1786122795763947065"
+        },
+        {
+          "path": "catalog/summary.json",
+          "bytes": 2176,
+          "sha256": "19605dcae06025cfb3de036968f03e7ede8dbc6cbf088a28fccda2ff253818ef",
+          "dev": "16777244",
+          "ino": "3930405",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350457425032"
+        },
+        {
+          "path": "catalog/unreferenced.json",
+          "bytes": 94103,
+          "sha256": "35d2ce28d60752ee1dca54c70f603a35fb9263548742e5b76fb04e875dd50ebd",
+          "dev": "16777244",
+          "ino": "3930436",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785643350457654696"
+        },
+        {
+          "path": "package.json",
+          "bytes": 82093,
+          "sha256": "dbdbd6768b5178528238ec1054d898fad4bc5ba51d6adad165113508e5771d17",
+          "dev": "16777244",
+          "ino": "73547",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786131253681954789"
+        },
+        {
+          "path": "scripts/build-fla-swf-counterpart-successor-baseline.mjs",
+          "bytes": 70225,
+          "sha256": "bf95dca90a24fc0ad07d3d14acaae8c912981b6e35c6d10ef1bb0f5686190f10",
+          "dev": "16777244",
+          "ino": "8523997",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786135612561841892"
+        },
+        {
+          "path": "scripts/build-fla-swf-counterpart-successor-baseline.test.mjs",
+          "bytes": 27563,
+          "sha256": "136d0449fa644840a8018ac8036f2bb77c32aad3061daca1e37652059ac65f15",
+          "dev": "16777244",
+          "ino": "8523998",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786135619856151842"
+        },
+        {
+          "path": "scripts/build-fla-swf-counterpart-successor-plan.mjs",
+          "bytes": 270562,
+          "sha256": "8cf4162d334b85f10b57ff38de5d7905f2ddde50c49a27087a1bf5cd31ea9dc5",
+          "dev": "16777244",
+          "ino": "8245894",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786134572886463855"
+        },
+        {
+          "path": "scripts/build-fla-swf-counterpart-successor-plan.test.mjs",
+          "bytes": 59733,
+          "sha256": "a90868b412daf2b8c608c288738ed702b010d41d98712ef99cae088a708d5bb7",
+          "dev": "16777244",
+          "ino": "8247282",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786134603555416488"
+        },
+        {
+          "path": "scripts/build-help-math-catalog.mjs",
+          "bytes": 98838,
+          "sha256": "4eaa4a6a552d49e8f93fd47ef86e07dc0526ecb11750797e718a5840e1844d18",
+          "dev": "16777244",
+          "ino": "93369",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786126792646879330"
+        },
+        {
+          "path": "scripts/build-help-math-catalog.test.mjs",
+          "bytes": 38864,
+          "sha256": "24e089f093aec54d2a4a11d565322b2224ce07a77b0189e81eeb1d5e41cf83a7",
+          "dev": "16777244",
+          "ino": "93378",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786126834860943877"
+        },
+        {
+          "path": "scripts/check-fla-swf-counterpart-successor-review.mjs",
+          "bytes": 1089,
+          "sha256": "87e44a7d9ee0f3896197531fe5db506223331fdf19647864f4200cd29ab82e06",
+          "dev": "16777244",
+          "ino": "8250284",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786122383195643560"
+        },
+        {
+          "path": "scripts/darwin-atomic-directory-swap.test.mjs",
+          "bytes": 17855,
+          "sha256": "7d4860112d59d120d8e9e75dd4c5b237ff29ca6ea207632af2f35749f9eacb9c",
+          "dev": "16777244",
+          "ino": "3908584",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786133118784419278"
+        },
+        {
+          "path": "scripts/freeze-help-math-sources.mjs",
+          "bytes": 23628,
+          "sha256": "e6debcdac9948d39206bdcdf847cf22d5fafebc124c043f3531a445860384549",
+          "dev": "16777244",
+          "ino": "3909416",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785638435494494842"
+        },
+        {
+          "path": "scripts/freeze-help-math-sources.test.mjs",
+          "bytes": 8985,
+          "sha256": "f028517944332126d212bb9c837b15cdda9c5e8906b995b0a4e2755f9622390c",
+          "dev": "16777244",
+          "ino": "3909428",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1785638421670898372"
+        },
+        {
+          "path": "scripts/lib/darwin-atomic-directory-swap-native.c",
+          "bytes": 8016,
+          "sha256": "041db960d7c7b6150fc01cc821d04e3f19f5178b2fe8fc9f0ba8cd97571ef572",
+          "dev": "16777244",
+          "ino": "3908582",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786130360053316900"
+        },
+        {
+          "path": "scripts/lib/darwin-atomic-directory-swap.mjs",
+          "bytes": 33996,
+          "sha256": "c094017d9ddbfc6a2480fa0b78b42826da9e0cd28bed31ee1a215c4641ff7a9a",
+          "dev": "16777244",
+          "ino": "3908583",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786132742323507471"
+        },
+        {
+          "path": "scripts/lib/fla-swf-counterpart-transaction.mjs",
+          "bytes": 59476,
+          "sha256": "7a7baa60ccc7862b1ab6776d09ae4245baf4ef80975b53e250b9321c11380289",
+          "dev": "16777244",
+          "ino": "8151738",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786134285254584438"
+        },
+        {
+          "path": "scripts/promote-fla-swf-counterpart-successor.mjs",
+          "bytes": 198299,
+          "sha256": "4e5c362d3048aab6f3bb30950ea22ccede932e6d90a644d8b7e623562b059017",
+          "dev": "16777244",
+          "ino": "8245890",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786134792480679573"
+        },
+        {
+          "path": "scripts/promote-fla-swf-counterpart-successor.test.mjs",
+          "bytes": 137602,
+          "sha256": "fe6de5580b9cf3cfd5654e36da9b5838965b49737ef2c0252ea0f5a42682f5ad",
+          "dev": "16777244",
+          "ino": "8245892",
+          "mode": 420,
+          "nlink": 1,
+          "mtimeNs": "1786134804143699077"
+        }
+      ],
+      "identitySha256": "68020d381e91235b99f0686542c5449919969ff3fe3a4d635671b6f248610ffe",
+      "git": {
+        "status": "M .gitignore\n M README.md\n M package.json\n M scripts/build-help-math-catalog.mjs\n M scripts/build-help-math-catalog.test.mjs\n M scripts/darwin-atomic-directory-swap.test.mjs\n M scripts/lib/darwin-atomic-directory-swap-native.c\n M scripts/lib/darwin-atomic-directory-swap.mjs\n?? catalog/current-source-profile.json\n?? catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-universe.json\n?? catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v1-invalidated.json\n?? catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v1-invalidation-correction-v2.json\n?? catalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v2-universe.json\n?? scripts/build-fla-swf-counterpart-successor-baseline.mjs\n?? scripts/build-fla-swf-counterpart-successor-baseline.test.mjs\n?? scripts/build-fla-swf-counterpart-successor-plan.mjs\n?? scripts/build-fla-swf-counterpart-successor-plan.test.mjs\n?? scripts/check-fla-swf-counterpart-successor-review.mjs\n?? scripts/lib/fla-swf-counterpart-transaction.mjs\n?? scripts/promote-fla-swf-counterpart-successor.mjs\n?? scripts/promote-fla-swf-counterpart-successor.test.mjs",
+        "staged": "",
+        "worktree": ":100644 100644 816b44c8 00000000 M\t.gitignore\n:100644 100644 8fe2486e 00000000 M\tREADME.md\n:100644 100644 6e22e7c5 00000000 M\tpackage.json\n:100644 100644 28782190 00000000 M\tscripts/build-help-math-catalog.mjs\n:100644 100644 94f649a5 00000000 M\tscripts/build-help-math-catalog.test.mjs\n:100644 100644 1bf2be50 00000000 M\tscripts/darwin-atomic-directory-swap.test.mjs\n:100644 100644 81358fa0 00000000 M\tscripts/lib/darwin-atomic-directory-swap-native.c\n:100644 100644 9b7deef9 00000000 M\tscripts/lib/darwin-atomic-directory-swap.mjs",
+        "untracked": "catalog/current-source-profile.json\ncatalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-universe.json\ncatalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v1-invalidated.json\ncatalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v1-invalidation-correction-v2.json\ncatalog/source-promotions/fla-swf-counterpart-successor-2026-08-07-v2-universe.json\nscripts/build-fla-swf-counterpart-successor-baseline.mjs\nscripts/build-fla-swf-counterpart-successor-baseline.test.mjs\nscripts/build-fla-swf-counterpart-successor-plan.mjs\nscripts/build-fla-swf-counterpart-successor-plan.test.mjs\nscripts/check-fla-swf-counterpart-successor-review.mjs\nscripts/lib/fla-swf-counterpart-transaction.mjs\nscripts/promote-fla-swf-counterpart-successor.mjs\nscripts/promote-fla-swf-counterpart-successor.test.mjs",
+        "identitySha256": "2e12205cc1507b7df4634f528ef8b6d8873f16eabbad9d3b62b3826551921c0b"
+      }
+    }
+  },
+  "commands": [
+    {
+      "id": "doctor",
+      "commandText": "npm run doctor",
+      "actualExecutable": "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/bin/node",
+      "arguments": [
+        "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/lib/node_modules/npm/bin/npm-cli.js",
+        "--userconfig=/dev/null",
+        "--globalconfig=/private/var/empty/npmrc",
+        "--script-shell=/bin/sh",
+        "--node-options=",
+        "run",
+        "doctor"
+      ],
+      "gateClass": "required-targeted",
+      "startedAt": "2026-08-07T20:48:28.508Z",
+      "completedAt": "2026-08-07T20:48:30.448Z",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "stdout": {
+        "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/01-doctor.stdout.log",
+        "bytes": 1733,
+        "sha256": "9a88c922fad4225e3dbd3ff8c1a0dc7f49039d1f1412c1efefda4944d8d6168b"
+      },
+      "stderr": {
+        "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/01-doctor.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "summary": {
+        "nodeTestSummary": null,
+        "markers": {
+          "staleCompletionLedger": false,
+          "missingExternalOnlineKeyTermsXml": false,
+          "staleTraceSpecification": false
+        }
+      }
+    },
+    {
+      "id": "verify-workbench",
+      "commandText": "npm run verify:workbench",
+      "actualExecutable": "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/bin/node",
+      "arguments": [
+        "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/lib/node_modules/npm/bin/npm-cli.js",
+        "--userconfig=/dev/null",
+        "--globalconfig=/private/var/empty/npmrc",
+        "--script-shell=/bin/sh",
+        "--node-options=",
+        "run",
+        "verify:workbench"
+      ],
+      "gateClass": "separately-reported-repository",
+      "startedAt": "2026-08-07T20:48:30.455Z",
+      "completedAt": "2026-08-07T20:49:33.844Z",
+      "exitCode": 1,
+      "signal": null,
+      "timedOut": false,
+      "stdout": {
+        "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/02-verify-workbench.stdout.log",
+        "bytes": 94,
+        "sha256": "71ef97df2abf33947bc760e346fd77ca246f70405bab9caef2d8ffd01c8548d3"
+      },
+      "stderr": {
+        "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/02-verify-workbench.stderr.log",
+        "bytes": 182,
+        "sha256": "b0aea6a29a6165f03a5c38bbf58d2aec12b7c78c87bcebb49c8a6657ffccf35f"
+      },
+      "summary": {
+        "nodeTestSummary": null,
+        "markers": {
+          "staleCompletionLedger": true,
+          "missingExternalOnlineKeyTermsXml": false,
+          "staleTraceSpecification": false
+        }
+      }
+    },
+    {
+      "id": "verify-sources",
+      "commandText": "npm run verify:sources",
+      "actualExecutable": "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/bin/node",
+      "arguments": [
+        "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/lib/node_modules/npm/bin/npm-cli.js",
+        "--userconfig=/dev/null",
+        "--globalconfig=/private/var/empty/npmrc",
+        "--script-shell=/bin/sh",
+        "--node-options=",
+        "run",
+        "verify:sources"
+      ],
+      "gateClass": "required-targeted",
+      "startedAt": "2026-08-07T20:49:33.871Z",
+      "completedAt": "2026-08-07T20:49:36.311Z",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "stdout": {
+        "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/03-verify-sources.stdout.log",
+        "bytes": 312,
+        "sha256": "198208b8fbd4c0e8afe863869f47e760249858b79e336d616a2950d3a3570ce8"
+      },
+      "stderr": {
+        "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/03-verify-sources.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "summary": {
+        "nodeTestSummary": null,
+        "markers": {
+          "staleCompletionLedger": false,
+          "missingExternalOnlineKeyTermsXml": false,
+          "staleTraceSpecification": false
+        }
+      }
+    },
+    {
+      "id": "catalog-fail-closed-check",
+      "commandText": "node scripts/build-help-math-catalog.mjs --output catalog --concurrency 8 --verify-known-counts --check",
+      "actualExecutable": "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/bin/node",
+      "arguments": [
+        "scripts/build-help-math-catalog.mjs",
+        "--output",
+        "catalog",
+        "--concurrency",
+        "8",
+        "--verify-known-counts",
+        "--check"
+      ],
+      "gateClass": "required-targeted",
+      "startedAt": "2026-08-07T20:49:36.322Z",
+      "completedAt": "2026-08-07T20:49:40.055Z",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "stdout": {
+        "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/04-catalog-fail-closed-check.stdout.log",
+        "bytes": 85,
+        "sha256": "f3354c5ee42213fe08a594b57ffd8c18577009eaa079e4f1d03760fdfd708531"
+      },
+      "stderr": {
+        "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/04-catalog-fail-closed-check.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "summary": {
+        "nodeTestSummary": null,
+        "markers": {
+          "staleCompletionLedger": false,
+          "missingExternalOnlineKeyTermsXml": false,
+          "staleTraceSpecification": false
+        }
+      }
+    },
+    {
+      "id": "targeted-source-catalog-tests",
+      "commandText": "node --test scripts/freeze-help-math-sources.test.mjs scripts/build-help-math-catalog.test.mjs",
+      "actualExecutable": "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/bin/node",
+      "arguments": [
+        "--test",
+        "scripts/freeze-help-math-sources.test.mjs",
+        "scripts/build-help-math-catalog.test.mjs"
+      ],
+      "gateClass": "required-targeted",
+      "startedAt": "2026-08-07T20:49:40.067Z",
+      "completedAt": "2026-08-07T20:49:40.243Z",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "stdout": {
+        "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/05-targeted-source-catalog-tests.stdout.log",
+        "bytes": 1146,
+        "sha256": "111ad79420bc867f7baa09d81ac2683168d9d9f7d4ba5aac248056430b6af600"
+      },
+      "stderr": {
+        "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/05-targeted-source-catalog-tests.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "summary": {
+        "nodeTestSummary": {
+          "tests": 12,
+          "pass": 12,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "markers": {
+          "staleCompletionLedger": false,
+          "missingExternalOnlineKeyTermsXml": false,
+          "staleTraceSpecification": false
+        }
+      }
+    },
+    {
+      "id": "targeted-successor-transaction-tests",
+      "commandText": "node --test scripts/build-fla-swf-counterpart-successor-baseline.test.mjs scripts/build-fla-swf-counterpart-successor-plan.test.mjs scripts/darwin-atomic-directory-swap.test.mjs scripts/promote-fla-swf-counterpart-successor.test.mjs",
+      "actualExecutable": "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/bin/node",
+      "arguments": [
+        "--test",
+        "scripts/build-fla-swf-counterpart-successor-baseline.test.mjs",
+        "scripts/build-fla-swf-counterpart-successor-plan.test.mjs",
+        "scripts/darwin-atomic-directory-swap.test.mjs",
+        "scripts/promote-fla-swf-counterpart-successor.test.mjs"
+      ],
+      "gateClass": "required-targeted",
+      "startedAt": "2026-08-07T20:49:40.254Z",
+      "completedAt": "2026-08-07T20:49:43.564Z",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "stdout": {
+        "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/06-targeted-successor-transaction-tests.stdout.log",
+        "bytes": 8953,
+        "sha256": "5e5518be4b7f7a0be2f27c662dd2ebfc31f58b22cfa7b9b4ca9a9efe5210ea54"
+      },
+      "stderr": {
+        "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/06-targeted-successor-transaction-tests.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "summary": {
+        "nodeTestSummary": {
+          "tests": 89,
+          "pass": 89,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "markers": {
+          "staleCompletionLedger": false,
+          "missingExternalOnlineKeyTermsXml": false,
+          "staleTraceSpecification": false
+        }
+      }
+    },
+    {
+      "id": "full-repository-tests",
+      "commandText": "npm test",
+      "actualExecutable": "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/bin/node",
+      "arguments": [
+        "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/lib/node_modules/npm/bin/npm-cli.js",
+        "--userconfig=/dev/null",
+        "--globalconfig=/private/var/empty/npmrc",
+        "--script-shell=/bin/sh",
+        "--node-options=",
+        "test"
+      ],
+      "gateClass": "separately-reported-repository",
+      "startedAt": "2026-08-07T20:49:43.571Z",
+      "completedAt": "2026-08-07T21:02:02.058Z",
+      "exitCode": 1,
+      "signal": null,
+      "timedOut": false,
+      "stdout": {
+        "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/07-full-repository-tests.stdout.log",
+        "bytes": 2491135,
+        "sha256": "c51e2c011bb79c614922195f29251798ad0c88f895026dcd3056a8676c26850f"
+      },
+      "stderr": {
+        "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/07-full-repository-tests.stderr.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "summary": {
+        "nodeTestSummary": {
+          "tests": 4441,
+          "pass": 3861,
+          "fail": 573,
+          "cancelled": 0,
+          "skipped": 7,
+          "todo": 0
+        },
+        "markers": {
+          "staleCompletionLedger": true,
+          "missingExternalOnlineKeyTermsXml": true,
+          "staleTraceSpecification": true
+        }
+      }
+    }
+  ],
+  "evidenceArtifacts": [
+    {
+      "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/01-doctor.stdout.log",
+      "bytes": 1733,
+      "sha256": "9a88c922fad4225e3dbd3ff8c1a0dc7f49039d1f1412c1efefda4944d8d6168b"
+    },
+    {
+      "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/01-doctor.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/02-verify-workbench.stdout.log",
+      "bytes": 94,
+      "sha256": "71ef97df2abf33947bc760e346fd77ca246f70405bab9caef2d8ffd01c8548d3"
+    },
+    {
+      "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/02-verify-workbench.stderr.log",
+      "bytes": 182,
+      "sha256": "b0aea6a29a6165f03a5c38bbf58d2aec12b7c78c87bcebb49c8a6657ffccf35f"
+    },
+    {
+      "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/03-verify-sources.stdout.log",
+      "bytes": 312,
+      "sha256": "198208b8fbd4c0e8afe863869f47e760249858b79e336d616a2950d3a3570ce8"
+    },
+    {
+      "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/03-verify-sources.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/04-catalog-fail-closed-check.stdout.log",
+      "bytes": 85,
+      "sha256": "f3354c5ee42213fe08a594b57ffd8c18577009eaa079e4f1d03760fdfd708531"
+    },
+    {
+      "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/04-catalog-fail-closed-check.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/05-targeted-source-catalog-tests.stdout.log",
+      "bytes": 1146,
+      "sha256": "111ad79420bc867f7baa09d81ac2683168d9d9f7d4ba5aac248056430b6af600"
+    },
+    {
+      "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/05-targeted-source-catalog-tests.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/06-targeted-successor-transaction-tests.stdout.log",
+      "bytes": 8953,
+      "sha256": "5e5518be4b7f7a0be2f27c662dd2ebfc31f58b22cfa7b9b4ca9a9efe5210ea54"
+    },
+    {
+      "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/06-targeted-successor-transaction-tests.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/07-full-repository-tests.stdout.log",
+      "bytes": 2491135,
+      "sha256": "c51e2c011bb79c614922195f29251798ad0c88f895026dcd3056a8676c26850f"
+    },
+    {
+      "path": "work/fla-swf-counterpart-successor-review/implementation-baseline-attempts/20260807T204828208Z-2e91046f56ca/07-full-repository-tests.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "summary": {
+    "requiredTargetedGatesPassed": true,
+    "separatelyReportedRepositoryCommands": [
+      {
+        "id": "verify-workbench",
+        "exitCode": 1,
+        "summary": {
+          "nodeTestSummary": null,
+          "markers": {
+            "staleCompletionLedger": true,
+            "missingExternalOnlineKeyTermsXml": false,
+            "staleTraceSpecification": false
+          }
+        }
+      },
+      {
+        "id": "full-repository-tests",
+        "exitCode": 1,
+        "summary": {
+          "nodeTestSummary": {
+            "tests": 4441,
+            "pass": 3861,
+            "fail": 573,
+            "cancelled": 0,
+            "skipped": 7,
+            "todo": 0
+          },
+          "markers": {
+            "staleCompletionLedger": true,
+            "missingExternalOnlineKeyTermsXml": true,
+            "staleTraceSpecification": true
+          }
+        }
+      }
+    ],
+    "sourceOrCatalogMutationPerformed": false,
+    "failedAttemptLogsRetention": "retained; this builder never deletes baseline attempts"
+  },
+  "reportingGate": {
+    "canonicalCountsReportable": false,
+    "promotionAuthorized": false,
+    "statement": "This baseline records verification state only and cannot authorize pair review, source copy, directory swap, acceptance, release, publication, or new canonical pairing figures."
+  },
+  "evidenceBoundary": {
+    "sourceCustodyOnly": true,
+    "pairReviewCompleted": false,
+    "javascriptImplementation": false,
+    "originalRuntimeFidelity": false,
+    "audioAcceptance": false,
+    "humanVisualApproval": false,
+    "ownerAcceptance": false,
+    "strictCompletion": false,
+    "lessonRelease": false,
+    "publication": false
+  }
+}

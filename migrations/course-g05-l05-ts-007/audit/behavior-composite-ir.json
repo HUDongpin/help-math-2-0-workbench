@@ -1,0 +1,365 @@
+{
+  "acceptanceEffects": {
+    "audioAccepted": false,
+    "authoritativeOriginalRuntime": false,
+    "behaviorParityAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "published": false,
+    "releaseEligible": false,
+    "strictComplete": false,
+    "visualFidelityAccepted": false
+  },
+  "animationId": "course-g05-l05-ts-007",
+  "artifactFingerprintSha256": "bbaf0868c833902f72477b4c8b4b848decc014aacd386ed320d95b1851de50ff",
+  "artifactType": "source-bound-behavior-composite-ir",
+  "derived": {
+    "answerModel": {
+      "correctOption": 2,
+      "maximumWrongAttempts": 2,
+      "optionCount": 4,
+      "optionPlacements": [
+        {
+          "depth": 254,
+          "frame": 671,
+          "functionName": "sprite157",
+          "name": "AnsBtn1",
+          "objectId": 157
+        },
+        {
+          "depth": 256,
+          "frame": 671,
+          "functionName": "sprite158",
+          "name": "AnsBtn2",
+          "objectId": 158
+        },
+        {
+          "depth": 258,
+          "frame": 671,
+          "functionName": "sprite159",
+          "name": "AnsBtn3",
+          "objectId": 159
+        },
+        {
+          "depth": 260,
+          "frame": 671,
+          "functionName": "sprite160",
+          "name": "AnsBtn4",
+          "objectId": 160
+        }
+      ]
+    },
+    "audio": {
+      "currentJsDisposition": "disabled-pending-original-runtime-traversal-listening-and-audio-acceptance",
+      "embeddedStreamCount": 12
+    },
+    "behaviorKind": "five-stop-multi-section-explanations-help-and-fixed-choice",
+    "legacyHostEffects": [
+      {
+        "disposition": "not executed; typed modern My Lesson companion owns the bounded interaction effect",
+        "source": "disableQuizButton"
+      },
+      {
+        "disposition": "not executed; typed modern My Lesson companion owns the bounded interaction effect",
+        "source": "enableQuizButton"
+      },
+      {
+        "disposition": "not executed; typed modern My Lesson companion owns the bounded interaction effect",
+        "source": "showWrongFeed"
+      },
+      {
+        "disposition": "not executed; typed modern My Lesson companion owns the bounded interaction effect",
+        "source": "showRightFeed"
+      },
+      {
+        "disposition": "not executed; typed modern My Lesson companion owns the bounded interaction effect",
+        "source": "DoHyperLinks"
+      }
+    ],
+    "placements": {
+      "carryForwardFeedback": {
+        "depth": 82,
+        "frame": 628,
+        "functionName": "sprite91",
+        "name": "Mc_Wrong_Feed1",
+        "objectId": 91
+      },
+      "helpPopup": {
+        "depth": 262,
+        "frame": 671,
+        "functionName": "sprite181",
+        "name": "Mc_Popup",
+        "objectId": 181
+      },
+      "rightFeedback": [
+        {
+          "depth": 336,
+          "frame": 671,
+          "functionName": "sprite282",
+          "name": "Mc_Right_Feed5",
+          "objectId": 282
+        },
+        {
+          "depth": 354,
+          "frame": 671,
+          "functionName": "sprite322",
+          "name": "Mc_Right_Feed4",
+          "objectId": 322
+        },
+        {
+          "depth": 393,
+          "frame": 671,
+          "functionName": "sprite348",
+          "name": "Mc_Right_Feed2",
+          "objectId": 348
+        },
+        {
+          "depth": 404,
+          "frame": 671,
+          "functionName": "sprite380",
+          "name": "Mc_Right_Feed3",
+          "objectId": 380
+        },
+        {
+          "depth": 416,
+          "frame": 671,
+          "functionName": "sprite413",
+          "name": "Mc_Right_Feed1",
+          "objectId": 413
+        }
+      ],
+      "section3Explanation": {
+        "depth": 175,
+        "frame": 510,
+        "functionName": "sprite131",
+        "name": "Mc_box1",
+        "objectId": 131
+      },
+      "section4Explanation": {
+        "depth": 247,
+        "frame": 628,
+        "functionName": "sprite154",
+        "name": "Mc_box2",
+        "objectId": 154
+      },
+      "stoppedPopup": {
+        "depth": 425,
+        "frame": 671,
+        "functionName": "sprite437",
+        "name": "Mc_PopUp",
+        "objectId": 437
+      },
+      "wrongFeedback": [
+        {
+          "depth": 301,
+          "frame": 671,
+          "functionName": "sprite191",
+          "name": "Mc_Wrong_Feed3",
+          "objectId": 191
+        },
+        {
+          "depth": 310,
+          "frame": 671,
+          "functionName": "sprite209",
+          "name": "Mc_Wrong_Feed2",
+          "objectId": 209
+        },
+        {
+          "depth": 316,
+          "frame": 671,
+          "functionName": "sprite223",
+          "name": "Mc_Wrong_Feed1",
+          "objectId": 223
+        },
+        {
+          "depth": 327,
+          "frame": 671,
+          "functionName": "sprite251",
+          "name": "Mc_Wrong_Feed4",
+          "objectId": 251
+        }
+      ]
+    },
+    "sourceAssignments": {
+      "correctCompletion": [
+        "showRightFeed()",
+        "right feedback parent.play()"
+      ],
+      "helpOpen": [
+        "Mc_Popup._visible <- true",
+        "quiz controls <- disabled"
+      ],
+      "questionInitial": [
+        "Mc_Popup._visible <- false",
+        "quizTryCount <- 0"
+      ],
+      "section3Initial": [
+        "Mc_box1._visible <- false",
+        "NMHBtn._visible <- false"
+      ],
+      "section3Reveal": [
+        "Mc_box1._visible <- true",
+        "Mc_box1.gotoAndPlay(1)"
+      ],
+      "section4Initial": [
+        "Mc_box2._visible <- false",
+        "NMHBtn._visible <- false"
+      ],
+      "section4Reveal": [
+        "Mc_box2._visible <- true",
+        "Mc_box2.gotoAndPlay(1)"
+      ]
+    },
+    "sourceScripts": {
+      "required": [
+        {
+          "bytes": 90,
+          "path": "DefineSprite_439/frame_245/DoAction.as",
+          "sha256": "e90a35d6efc9f2f1619e1102d87d9c4a603cd96d880ea4580c7674036c653335"
+        },
+        {
+          "bytes": 90,
+          "path": "DefineSprite_439/frame_384/DoAction.as",
+          "sha256": "5b0ca3a74d817856e487b89843263a9b53d94f45ef64fc0171c5ec97c99cd047"
+        },
+        {
+          "bytes": 141,
+          "path": "DefineSprite_439/frame_510/DoAction.as",
+          "sha256": "bee663d0701b6744437afd62edd2968bbbf151a619ffec89a2254d70d58f9a42"
+        },
+        {
+          "bytes": 147,
+          "path": "DefineSprite_439/frame_510/PlaceObject2_48_80/CLIPACTIONRECORD on(release).as",
+          "sha256": "dffa12c4ef3378dedfe95d92bbe44797cb74979c34d972684599ee565aa9637c"
+        },
+        {
+          "bytes": 141,
+          "path": "DefineSprite_439/frame_628/DoAction.as",
+          "sha256": "20b9519c9a97bf41984ddfad10d42724bd360b0b5013b86468dcf692b54681fb"
+        },
+        {
+          "bytes": 147,
+          "path": "DefineSprite_439/frame_628/PlaceObject2_48_80/CLIPACTIONRECORD on(release).as",
+          "sha256": "997ce65ed55f85ca48e203d94baae9f6fe5dca29ac524fc42c1851fa18aa1ce4"
+        },
+        {
+          "bytes": 89,
+          "path": "DefineSprite_439/frame_671/DoAction.as",
+          "sha256": "cae38e342bbf2b4196eb7e0897fe0cdc8bf281d765125330b96451cc8d5affbd"
+        },
+        {
+          "bytes": 101,
+          "path": "DefineButton2_14/BUTTONCONDACTION on(release).as",
+          "sha256": "ee5a85f097026eec1a6fb4ea20b129d9b5ebd149bdf1b65ab1562630cb3734fb"
+        },
+        {
+          "bytes": 91,
+          "path": "DefineButton2_426/BUTTONCONDACTION on(release).as",
+          "sha256": "08e07572e5522d1941a9543b7b7235a66b6b2bc8d902223ed8c178236ef0a6e6"
+        },
+        {
+          "bytes": 98,
+          "path": "DefineButton2_157/BUTTONCONDACTION on(release).as",
+          "sha256": "d3b60dfd6aed8e6f328ea29d443ac813f63dfc074b2b7bbb16e3ca83dcf1d399"
+        },
+        {
+          "bytes": 98,
+          "path": "DefineButton2_158/BUTTONCONDACTION on(release).as",
+          "sha256": "9afe11544854f5819702bfdb2f80cf8736b773735e9f714a14c05b37409d5094"
+        },
+        {
+          "bytes": 98,
+          "path": "DefineButton2_159/BUTTONCONDACTION on(release).as",
+          "sha256": "d3b60dfd6aed8e6f328ea29d443ac813f63dfc074b2b7bbb16e3ca83dcf1d399"
+        },
+        {
+          "bytes": 98,
+          "path": "DefineButton2_160/BUTTONCONDACTION on(release).as",
+          "sha256": "d3b60dfd6aed8e6f328ea29d443ac813f63dfc074b2b7bbb16e3ca83dcf1d399"
+        },
+        {
+          "bytes": 29,
+          "path": "DefineSprite_439/frame_672/DoAction.as",
+          "sha256": "2e150fe0da37a793d8330ab8563e3366278c37c93848faabea3f7bd112e02563"
+        },
+        {
+          "bytes": 8,
+          "path": "DefineSprite_439/frame_690/DoAction.as",
+          "sha256": "c71f185593d153c467266a494ebee471c04c9b64044e6cf491e0d91d739e92fd"
+        }
+      ]
+    },
+    "timeline": {
+      "completeFrame": 690,
+      "continuationFrame": 672,
+      "frameCount": 690,
+      "objectId": 439,
+      "stopFrames": [
+        245,
+        384,
+        510,
+        628,
+        671
+      ]
+    }
+  },
+  "generatedMarker": "sha256:bbaf0868c833902f72477b4c8b4b848decc014aacd386ed320d95b1851de50ff",
+  "parserContract": {
+    "avm1Executed": false,
+    "kind": "ffdec-avm1-plus-swfmill-static-assignments-v1",
+    "unknownAssignmentDisposition": "fail-closed"
+  },
+  "schemaVersion": 1,
+  "sourceBindings": {
+    "audioRuntimeEvidence": {
+      "bytes": 22453,
+      "path": "migrations/course-g05-l05-ts-007/audit/audio-runtime-evidence.json",
+      "sha256": "afb6d78c74c101b2bacf7a2c8df198ff32a7c00b6609eff26abfdf78ac5b5878"
+    },
+    "ffdecCanvasHelper": {
+      "bytes": 52872,
+      "path": "work/g5-l5-ffdec-canvas-pcode-factory/full-v2/members/course-g05-l05-ts-007/canvas/sprites/DefineSprite_439/canvas.js",
+      "sha256": "78256220d01fba044341283703c3923a1ff8ff29499c51f65ab4e6ac825ccb93"
+    },
+    "ffdecFramesHtml": {
+      "bytes": 8216310,
+      "path": "work/g5-l5-ffdec-canvas-pcode-factory/full-v2/members/course-g05-l05-ts-007/canvas/sprites/DefineSprite_439/frames.html",
+      "sha256": "7299d3e6a8be99e462e4dddd2f16d57f9180864a0f25902a12ebd98b3bf09e00"
+    },
+    "ffdecScriptsGzip": {
+      "bytes": 1133,
+      "path": "migrations/course-g05-l05-ts-007/audit/machine/ffdec-scripts.txt.gz",
+      "sha256": "4f2a00bfcb0b9a06f3c765445d24e86be7dedab28a040056fe59bb2449b8c64d"
+    },
+    "migration": {
+      "bytes": 6366,
+      "path": "migrations/course-g05-l05-ts-007/migration.json",
+      "sha256": "fe741acb9ec022c2e0889decb7e9a70500f62d8a6461277b484773db5516162d"
+    },
+    "parserImplementation": {
+      "bytes": 22277,
+      "path": "scripts/lib/g5-l5-representative-behavior-composites.mjs",
+      "sha256": "a78554d63335d797c9c393485fd2c0cc8c77c9578d8a4cb3027aedf2d592b173"
+    },
+    "scenarioInventory": {
+      "bytes": 937444,
+      "path": "migrations/course-g05-l05-ts-007/audit/scenario-inventory.json",
+      "sha256": "4c9a4d34aee8ec55e816166b48b01ff949b1f336a8e90fe49d5b17f576d83cd2"
+    },
+    "scriptInventory": {
+      "bytes": 38221,
+      "path": "migrations/course-g05-l05-ts-007/audit/script-inventory.json",
+      "sha256": "5a6a2a9e66293bd439bbeae6c81aef46ddddca368f0772446c9194811bd74fd4"
+    },
+    "sourceSwf": {
+      "bytes": 529854,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L5/TS/L5TS07.swf",
+      "sha256": "e034c05612a1ff93223b4d3071f56b41204518b0cf9d7a4b436323e79b18a588"
+    },
+    "swfmillXmlGzip": {
+      "bytes": 946720,
+      "path": "migrations/course-g05-l05-ts-007/audit/machine/swfmill.xml.gz",
+      "sha256": "4ab76508528707b32bad26c6611f348cf1e4d4806b4a6ee953939902efcb6df0"
+    }
+  }
+}

@@ -175,6 +175,12 @@ async function openNovaPage(input: Readonly<{
   expect(response?.status()).toBe(200);
   const shell = input.page.locator('main.lesson-shell2');
   await expect(shell).toHaveAttribute('data-host-presentation', 'modern-wide');
+  // The lesson controls are server-rendered before React attaches its event
+  // handlers. Wait for the player's explicit hydration contract so a fast
+  // browser cannot lose the first section, page, or Nova launcher click.
+  await expect(input.page.locator(
+    '[data-lesson-player][data-hydrated="true"]',
+  ).first()).toBeVisible();
   await selectPageOrdinal(
     input.page,
     input.locale,
@@ -246,6 +252,8 @@ async function sendTextQuestion(input: Readonly<{
   });
   expect(request.context.animationId).toBeTruthy();
   expect(request.frame).toBeUndefined();
+  await expect(panel.locator('[data-nova-message-role="user"]').last())
+    .toHaveText(input.locale === 'es' ? /^Tú / : /^You /);
   await expect(panel.locator('[data-nova-message-role="assistant"]'))
     .toContainText('Nova full-stack test reply');
   const receipt = await receiptFor(payload.requestId);
@@ -331,6 +339,40 @@ async function installSpeechRecognition(page: Page, transcript: string) {
   }, transcript);
 }
 
+type NovaAnalyticsEvent = Readonly<{
+  data?: Readonly<Record<string, unknown>>;
+  name?: string;
+}>;
+
+async function installNovaAnalyticsCapture(page: Page) {
+  await page.addInitScript(() => {
+    const target = window as typeof window & {
+      __novaAnalyticsEvents?: unknown[];
+    };
+    target.__novaAnalyticsEvents = [];
+    window.va = (event, properties) => {
+      if (event === 'event') target.__novaAnalyticsEvents?.push(properties);
+    };
+  });
+}
+
+async function readNovaAnalyticsEvents(page: Page) {
+  return page.evaluate(() => {
+    const target = window as typeof window & {
+      __novaAnalyticsEvents?: NovaAnalyticsEvent[];
+    };
+    return target.__novaAnalyticsEvents ?? [];
+  });
+}
+
+function novaSpeechStatuses(events: readonly NovaAnalyticsEvent[]) {
+  return events.flatMap((event) =>
+    event.name === 'nova_speech_status' && typeof event.data?.status === 'string'
+      ? [event.data.status]
+      : []
+  );
+}
+
 test.describe.serial('FULL_STACK_FAKE_UPSTREAM media confirmation', () => {
   test('attaches only the current lesson frame and sends it only after Send', async ({page}) => {
     test.setTimeout(90_000);
@@ -395,12 +437,121 @@ test.describe.serial('FULL_STACK_FAKE_UPSTREAM media confirmation', () => {
     );
   });
 
+  test('removes and clears a frame across close, reopen, and page navigation', async ({page}) => {
+    test.setTimeout(120_000);
+    let panel = await openNovaPage({
+      course: courses[0],
+      locale: 'en',
+      ordinal: 34,
+      page,
+      sectionCode: 'TS',
+    });
+    const apiRequests: string[] = [];
+    page.on('request', (request) => {
+      if (new URL(request.url()).pathname === '/api/nova') {
+        apiRequests.push(request.url());
+      }
+    });
+    const attachCurrentFrame = () => panel.getByRole('button', {
+      name: 'Attach current lesson frame',
+      exact: true,
+    });
+
+    await expect(attachCurrentFrame()).toBeEnabled({timeout: 20_000});
+    await attachCurrentFrame().click();
+    await expect(panel).toHaveAttribute(
+      'data-tutor-frame-sharing',
+      'attached-for-next-request',
+    );
+    await panel.getByRole('button', {
+      name: 'Remove the lesson frame from the next question',
+      exact: true,
+    }).click();
+    await expect(panel).toHaveAttribute(
+      'data-tutor-frame-sharing',
+      'current-frame-not-attached',
+    );
+    expect(apiRequests, 'Remove must remain local').toEqual([]);
+
+    await attachCurrentFrame().click();
+    await expect(panel).toHaveAttribute(
+      'data-tutor-frame-sharing',
+      'attached-for-next-request',
+    );
+    await panel.getByRole('button', {name: 'Close Nova', exact: true}).click();
+    await expect(panel).toBeHidden();
+    expect(apiRequests, 'Close must not send an attached frame').toEqual([]);
+
+    await page.getByRole('button', {name: 'Ask Nova', exact: true}).click();
+    panel = page.locator('.lesson-shell2__nova-panel');
+    await expect(panel).toBeVisible();
+    await expect(panel).toHaveAttribute(
+      'data-tutor-frame-sharing',
+      'current-frame-not-attached',
+    );
+    await expect(panel.getByRole('button', {
+      name: 'Remove the lesson frame from the next question',
+      exact: true,
+    })).toHaveCount(0);
+
+    await panel.getByRole('button', {name: 'Close Nova', exact: true}).click();
+    await page.getByRole('button', {name: 'Next page', exact: true}).click();
+    await expect(page.locator('[data-current-page="35"]:visible').first())
+      .toBeVisible();
+    await page.getByRole('button', {name: 'Ask Nova', exact: true}).click();
+    panel = page.locator('.lesson-shell2__nova-panel');
+    await expect(panel).toBeVisible();
+    await expect(panel).toHaveAttribute(
+      'data-tutor-frame-sharing',
+      'current-frame-not-attached',
+    );
+    await expect(attachCurrentFrame()).toBeEnabled({timeout: 20_000});
+    await attachCurrentFrame().click();
+    await expect(panel).toHaveAttribute(
+      'data-tutor-frame-sharing',
+      'attached-for-next-request',
+    );
+
+    await panel.getByRole('textbox', {name: 'Type a question for Nova'})
+      .fill('Use the newly attached current lesson frame and ask one check question.');
+    const responsePromise = page.waitForResponse((response) =>
+      response.request().method() === 'POST' &&
+      new URL(response.url()).pathname === '/api/nova'
+    );
+    await panel.getByRole('button', {name: 'Send question to Nova'}).click();
+    const response = await responsePromise;
+    expect(response.status()).toBe(200);
+    expect(apiRequests).toHaveLength(1);
+    const request = response.request().postDataJSON() as {
+      frame: {
+        animationId: string;
+        globalPageOrdinal: number;
+        releaseId: string;
+      };
+    };
+    expect(request.frame).toMatchObject({
+      animationId: 'course-g04-l03-ts-007',
+      globalPageOrdinal: 35,
+      releaseId: 'lesson-g04-l03-negative-numbers',
+    });
+    const payload = await response.json() as {requestId: string};
+    expect(await receiptFor(payload.requestId)).toMatchObject({
+      framePresent: true,
+      requestId: payload.requestId,
+    });
+    await expect(panel).toHaveAttribute(
+      'data-tutor-frame-sharing',
+      'current-frame-not-attached',
+    );
+  });
+
   for (const locale of ['en', 'es'] as const) {
     test(`${locale} speech becomes an editable draft before one confirmed request`, async ({page}) => {
       test.setTimeout(90_000);
       const transcript = locale === 'es'
         ? '¿Qué idea matemática muestra esta página?'
         : 'What math idea does this page show?';
+      await installNovaAnalyticsCapture(page);
       await installSpeechRecognition(page, transcript);
       const panel = await openNovaPage({course: courses[0], locale, ordinal: 1, page});
       const apiRequests: string[] = [];
@@ -426,6 +577,10 @@ test.describe.serial('FULL_STACK_FAKE_UPSTREAM media confirmation', () => {
           : 'Review it, then press Send',
       );
       expect(apiRequests).toEqual([]);
+      const preSendAnalytics = await readNovaAnalyticsEvents(page);
+      expect(novaSpeechStatuses(preSendAnalytics)).toContain('draft-ready');
+      expect(novaSpeechStatuses(preSendAnalytics)).not.toContain('confirmed-send');
+      expect(JSON.stringify(preSendAnalytics)).not.toContain(transcript);
 
       const responsePromise = page.waitForResponse((response) =>
         response.request().method() === 'POST' &&
@@ -442,6 +597,9 @@ test.describe.serial('FULL_STACK_FAKE_UPSTREAM media confirmation', () => {
       const request = response.request().postDataJSON() as Record<string, unknown>;
       expect(request.message).toBe(transcript);
       expect(JSON.stringify(request)).not.toMatch(/audio|voice|blob/iu);
+      const postSendAnalytics = await readNovaAnalyticsEvents(page);
+      expect(novaSpeechStatuses(postSendAnalytics)).toContain('confirmed-send');
+      expect(JSON.stringify(postSendAnalytics)).not.toContain(transcript);
     });
   }
 });

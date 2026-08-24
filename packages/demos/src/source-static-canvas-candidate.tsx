@@ -84,6 +84,18 @@ export interface SourceStaticCanvasCandidateConfig {
   readonly blockedFrameRanges?: readonly SourceStaticBlockedFrameRange[];
   readonly visualMarkers?: readonly SourceStaticVisualMarker[];
   readonly sourceControlBehaviorLabel?: string;
+  /**
+   * Exact generated source-script behavior contract required by a maintained
+   * product wrapper. The ordinary source-static renderer never invents a
+   * state for this contract; a caller must supply both contract and state.
+   */
+  readonly sourceBehaviorCompositeContractId?: string;
+  /**
+   * A maintained product wrapper may own the learner-visible evidence
+   * disclosure outside this visual-only layer. Omit/default true for ordinary
+   * source-static engineering candidates.
+   */
+  readonly showEngineeringDisclosure?: boolean;
 }
 
 interface ResolvedSourceStaticCanvasCandidateConfig
@@ -131,6 +143,8 @@ export interface SourceStaticCanvasFrameState {
   readonly naturalRuntimeEstablished: false;
   readonly audioRendered: false;
   readonly sourceSwfSha256: string;
+  readonly behaviorCompositeContractId?: string;
+  readonly behaviorCompositeState?: string;
 }
 
 export interface TraceCaptureIdentity {
@@ -174,18 +188,40 @@ interface CanvasRuntimeState {
   readonly lang: string;
   readonly seed: number;
   readonly audioRendered: false;
+  readonly behaviorCompositeContractId?: string;
+  readonly behaviorCompositeState?: string;
+}
+
+interface CanvasRenderRequest {
+  readonly frame: number;
+  readonly scenario: string;
+  readonly lang: string;
+  readonly seed: number;
+  readonly behaviorCompositeContractId?: string;
+  readonly behaviorCompositeState?: string;
 }
 
 interface CanvasAsset {
   readonly ready: () => Promise<void>;
   readonly render: (
     canvas: HTMLCanvasElement,
-    request: {
-      frame: number;
-      scenario: string;
-      lang: string;
-      seed: number;
-    },
+    request: {frame: number; scenario: string; lang: string; seed: number},
+  ) => unknown;
+}
+
+interface BehaviorAwareCanvasAsset extends CanvasAsset {
+  readonly metadata?: Readonly<{
+    sourceBehaviorComposite?: Readonly<{
+      contractId: string;
+      stateIds: readonly string[];
+    }> | null;
+  }>;
+  readonly renderComposite?: (
+    canvas: HTMLCanvasElement,
+    request: CanvasRenderRequest & Required<Pick<
+      CanvasRenderRequest,
+      "behaviorCompositeContractId" | "behaviorCompositeState"
+    >>,
   ) => unknown;
 }
 
@@ -271,6 +307,8 @@ interface PendingCanvasRenderRequest {
     Pick<
       SourceStaticCanvasFrameState,
       | "entryStateSha256"
+      | "behaviorCompositeContractId"
+      | "behaviorCompositeState"
       | "frame"
       | "frameDomain"
       | "language"
@@ -333,6 +371,8 @@ export function applyCanvasCapturePresentationStatus(
 
 export function sourceStaticCanvasVisualKey(state: Readonly<{
   animationId: string;
+  behaviorCompositeContractId?: string;
+  behaviorCompositeState?: string;
   frame: number;
   frameDomain: string;
   rootFrame: number;
@@ -342,6 +382,8 @@ export function sourceStaticCanvasVisualKey(state: Readonly<{
 }>): string {
   return JSON.stringify([
     state.animationId,
+    state.behaviorCompositeContractId ?? "",
+    state.behaviorCompositeState ?? "",
     state.frame,
     state.frameDomain,
     state.rootFrame,
@@ -353,6 +395,8 @@ export function sourceStaticCanvasVisualKey(state: Readonly<{
 
 export function sourceStaticCanvasRenderKey(state: Readonly<{
   animationId: string;
+  behaviorCompositeContractId?: string;
+  behaviorCompositeState?: string;
   entryStateSha256?: string;
   frame: number;
   frameDomain: string;
@@ -365,6 +409,8 @@ export function sourceStaticCanvasRenderKey(state: Readonly<{
 }>): string {
   return JSON.stringify([
     state.animationId,
+    state.behaviorCompositeContractId ?? "",
+    state.behaviorCompositeState ?? "",
     state.entryStateSha256 ?? "",
     state.frame,
     state.frameDomain,
@@ -391,7 +437,7 @@ export function retainedCanvasStatus({
     : canvasStatus;
 }
 
-const assetPromises = new Map<string, Promise<CanvasAsset>>();
+const assetPromises = new Map<string, Promise<BehaviorAwareCanvasAsset>>();
 
 function invariant(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(message);
@@ -457,6 +503,11 @@ function validateConfig(
     config.assetSha256 === undefined ||
       /^[a-f0-9]{64}$/.test(config.assetSha256),
     "source-static candidate asset SHA-256 is invalid",
+  );
+  invariant(
+    config.sourceBehaviorCompositeContractId === undefined ||
+      /^[a-z0-9-]+-v\d+$/.test(config.sourceBehaviorCompositeContractId),
+    "source-static candidate behavior-composite contract ID is invalid",
   );
   const explicitNativeStage = config.nativeStage;
   const legacyStage = config.stage;
@@ -620,7 +671,9 @@ function isCanvasRuntimeState(value: unknown): value is CanvasRuntimeState {
   );
 }
 
-function loadCanvasAsset(config: ResolvedSourceStaticCanvasCandidateConfig) {
+function loadCanvasAsset(
+  config: ResolvedSourceStaticCanvasCandidateConfig,
+): Promise<BehaviorAwareCanvasAsset> {
   const request = buildCanvasAssetRequest(config);
   const selector = config.assetSha256
     ? `script[data-help-math-canvas-asset="${config.animationId}"][data-help-math-canvas-sha256="${config.assetSha256}"]`
@@ -640,15 +693,15 @@ function loadCanvasAsset(config: ResolvedSourceStaticCanvasCandidateConfig) {
   }
   const registered = window.HELP_MATH_CANVAS_ASSETS?.[config.animationId];
   if (registered && (!config.assetSha256 || exactExisting)) {
-    return Promise.resolve(registered);
+    return Promise.resolve(registered as BehaviorAwareCanvasAsset);
   }
   const existingPromise = assetPromises.get(request.key);
   if (existingPromise) return existingPromise;
-  const promise = new Promise<CanvasAsset>((resolve, reject) => {
+  const promise = new Promise<BehaviorAwareCanvasAsset>((resolve, reject) => {
     const script = existing ?? document.createElement("script");
     const finish = () => {
       const asset = window.HELP_MATH_CANVAS_ASSETS?.[config.animationId];
-      if (asset) resolve(asset);
+      if (asset) resolve(asset as BehaviorAwareCanvasAsset);
       else reject(new Error("Canvas asset did not register the expected animation"));
     };
     script.onload = finish;
@@ -677,6 +730,8 @@ function verifyRenderedIdentity(
   rendered: unknown,
   expected: Pick<
     SourceStaticCanvasFrameState,
+    | "behaviorCompositeContractId"
+    | "behaviorCompositeState"
     | "entryStateSha256"
     | "frame"
     | "frameDomain"
@@ -696,10 +751,16 @@ function verifyRenderedIdentity(
       rendered.scenario === expected.scenario &&
       rendered.lang === expected.language &&
       rendered.seed === expected.seed &&
-      rendered.audioRendered === false,
+      rendered.audioRendered === false &&
+      rendered.behaviorCompositeContractId ===
+        expected.behaviorCompositeContractId &&
+      rendered.behaviorCompositeState === expected.behaviorCompositeState,
     "Canvas asset returned a mismatched deterministic identity",
   );
   const expectedAttributes = {
+    "data-behavior-composite-contract":
+      expected.behaviorCompositeContractId || null,
+    "data-behavior-composite-state": expected.behaviorCompositeState || null,
     "data-flash-entry-state-sha256": expected.entryStateSha256 || null,
     "data-flash-frame": String(expected.frame),
     "data-flash-frame-domain": expected.frameDomain,
@@ -946,6 +1007,9 @@ export function createSourceStaticCanvasCandidate(
       visualReady && identityReady;
     return {
       "data-animation-id": config.animationId,
+      "data-behavior-composite-contract":
+        state.behaviorCompositeContractId || undefined,
+      "data-behavior-composite-state": state.behaviorCompositeState || undefined,
       "data-candidate-status": "source-static-engineering-not-strict",
       "data-capture-identity-status": identityReady ? "verified" : "blocked",
       "data-capture-stage": captureReady ? "true" : undefined,
@@ -1034,6 +1098,9 @@ export function createSourceStaticCanvasCandidate(
     const requestedVisualKey = sourceStaticCanvasVisualKey(deterministicState);
     const requestedRenderKey = sourceStaticCanvasRenderKey(deterministicState);
     const renderedRequestKeyRef = useRef<string | null>(null);
+    const renderBehaviorCompositeContractId =
+      deterministicState.behaviorCompositeContractId;
+    const renderBehaviorCompositeState = deterministicState.behaviorCompositeState;
     const renderEntryStateSha256 = deterministicState.entryStateSha256;
     const renderFrame = deterministicState.frame;
     const renderFrameDomain = deterministicState.frameDomain;
@@ -1047,7 +1114,7 @@ export function createSourceStaticCanvasCandidate(
     const [renderCoordinator] = useState(() =>
       createLatestCanvasRenderCoordinator<
         PendingCanvasRenderRequest,
-        CanvasAsset
+        BehaviorAwareCanvasAsset
       >(),
     );
     const reportedCanvasStatus = retainedCanvasStatus({
@@ -1131,6 +1198,8 @@ export function createSourceStaticCanvasCandidate(
         renderKey: requestedRenderKey,
         visualKey: requestedVisualKey,
         identity: Object.freeze({
+          behaviorCompositeContractId: renderBehaviorCompositeContractId,
+          behaviorCompositeState: renderBehaviorCompositeState,
           entryStateSha256: renderEntryStateSha256,
           frame: renderFrame,
           frameDomain: renderFrameDomain,
@@ -1159,12 +1228,40 @@ export function createSourceStaticCanvasCandidate(
           return asset;
         },
         (request, asset) => {
-          const rendered = asset.render(request.canvas, {
+          const baseRequest = {
             frame: request.identity.frame,
             scenario: request.identity.scenario,
             lang: request.identity.language,
             seed: request.identity.seed,
-          });
+          };
+          const compositeContractId =
+            request.identity.behaviorCompositeContractId;
+          const compositeState = request.identity.behaviorCompositeState;
+          invariant(
+            (compositeContractId === undefined) === (compositeState === undefined),
+            "Canvas behavior-composite contract and state must be supplied together",
+          );
+          const rendered = compositeContractId === undefined
+            ? asset.render(request.canvas, baseRequest)
+            : (() => {
+                invariant(
+                  typeof compositeState === "string",
+                  "Canvas behavior-composite state is required",
+                );
+                invariant(
+                  compositeContractId === config.sourceBehaviorCompositeContractId,
+                  "Canvas behavior-composite contract differs from the candidate config",
+                );
+                invariant(
+                  typeof asset.renderComposite === "function",
+                  "Canvas asset does not implement the required behavior composite",
+                );
+                return asset.renderComposite(request.canvas, {
+                  ...baseRequest,
+                  behaviorCompositeContractId: compositeContractId,
+                  behaviorCompositeState: compositeState,
+                });
+              })();
           verifyRenderedIdentity(request.canvas, rendered, request.identity);
         },
       );
@@ -1209,6 +1306,8 @@ export function createSourceStaticCanvasCandidate(
           }
         });
     }, [
+      renderBehaviorCompositeContractId,
+      renderBehaviorCompositeState,
       renderEntryStateSha256,
       renderFrame,
       renderFrameDomain,
@@ -1316,14 +1415,16 @@ export function createSourceStaticCanvasCandidate(
             </>
           )}
         </div>
-        <p data-source-replay-parity="unvalidated">
-          Engineering preview only.{" "}
-          {mainTimelineAudioCandidate
-            ? "Source-exact main-timeline audio is host-wired as an unaccepted candidate; source controls and behavior"
-            : config.sourceControlBehaviorLabel ?? "Source control behavior and audio"}
-          , Spanish visual parity, Replay parity, original-runtime parity,
-          visual review, and acceptance are not claimed.
-        </p>
+        {config.showEngineeringDisclosure !== false
+          ? <p data-source-replay-parity="unvalidated">
+              Engineering preview only.{" "}
+              {mainTimelineAudioCandidate
+                ? "Source-exact main-timeline audio is host-wired as an unaccepted candidate; source controls and behavior"
+                : config.sourceControlBehaviorLabel ?? "Source control behavior and audio"}
+              , Spanish visual parity, Replay parity, original-runtime parity,
+              visual review, and acceptance are not claimed.
+            </p>
+          : null}
       </section>
     );
   }

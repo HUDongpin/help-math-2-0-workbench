@@ -17,6 +17,7 @@ const allowedScenarios = new Set([
   'media-off',
   'modern-off',
   'provider-invalid',
+  'provider-down',
   'release-empty',
   'rollout-invalid',
 ]);
@@ -61,7 +62,9 @@ export default defineConfig({
   testDir: './e2e',
   testMatch: scenario === 'all-on'
     ? ['nova-full-stack.spec.ts', 'nova-speech-negative.spec.ts']
-    : 'nova-capability-gates.spec.ts',
+    : scenario === 'provider-down'
+      ? 'nova-provider-failure.spec.ts'
+      : 'nova-capability-gates.spec.ts',
   fullyParallel: false,
   forbidOnly: true,
   retries: 0,
@@ -96,6 +99,8 @@ export default defineConfig({
       NOVA_MAX_OUTPUT_TOKENS: '700',
       NOVA_MODEL: 'openai/gpt-5.6-luna',
       NOVA_TEST_FAKE_TRANSPORT_AUTHORIZATION: 'full-stack-fake-upstream-v1',
+      NOVA_TEST_FAKE_TRANSPORT_MODE:
+        scenario === 'provider-down' ? 'provider-unavailable' : 'success',
       NOVA_TEST_FAKE_TRANSPORT_ORIGIN: baseURL,
       NOVA_TEST_FAKE_TRANSPORT_RECEIPT_PATH: novaFullStackReceiptPath,
       NOVA_TIMEOUT_MS: '45000',

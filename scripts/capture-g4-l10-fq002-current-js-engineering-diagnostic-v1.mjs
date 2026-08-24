@@ -69,9 +69,9 @@ const INPUT_PATHS = Object.freeze({
   sourceFla:
     "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/FQ/L10FQ02.fla",
   candidateManifest:
-    "public/flash-assets/courses/course-g04-l10-fq-002/manifest.json",
+    "candidate-evidence/current-js/2026-08-22-page-only-candidates-v1/courses/course-g04-l10-fq-002/product-candidate-assets-v1/manifest.json",
   canvasAsset:
-    "public/flash-assets/courses/course-g04-l10-fq-002/canvas-renderer.js",
+    "apps/web/candidate-assets/flash-assets/2026-08-22-page-only-candidates-v1/courses/course-g04-l10-fq-002/canvas-renderer.js",
   candidateModule:
     "packages/demos/src/modules/course-g04-l10-fq-002.tsx",
   candidateTimeline:

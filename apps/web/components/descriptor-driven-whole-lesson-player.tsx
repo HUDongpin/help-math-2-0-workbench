@@ -173,6 +173,7 @@ export function DescriptorDrivenWholeLessonPlayer({
   )!;
   const currentLabel = currentPage.labels[progress.locale];
   const currentRenderer = currentPage.rendererAvailability;
+  const runtimeEvidenceBoundary = currentPage.runtimeEvidenceBoundary;
   const runtimeAvailable = currentRenderer.kind === 'registered';
   const currentRuntimeSeed = resolveWholeLessonRuntimeSeed(
     currentRenderer,
@@ -816,6 +817,19 @@ export function DescriptorDrivenWholeLessonPlayer({
     data-progress-kind="learner-session"
     data-progress-storage="local-device-only"
     data-renderer-availability={currentRenderer.kind}
+    data-page-runtime-kind={runtimeEvidenceBoundary?.runtimeKind}
+    data-page-actionscript-execution={
+      runtimeEvidenceBoundary?.actionScriptExecution
+    }
+    data-page-natural-trace-validation={
+      runtimeEvidenceBoundary?.naturalTraceValidation
+    }
+    data-page-audio-acceptance={runtimeEvidenceBoundary?.audioAcceptance}
+    data-page-product-behavior={runtimeEvidenceBoundary?.productBehavior}
+    data-page-product-visual-behavior-composite={
+      runtimeEvidenceBoundary?.productVisualBehaviorComposite
+    }
+    data-page-replay-semantics={runtimeEvidenceBoundary?.replaySemantics}
     data-shell-actionscript-executed={shellImplementation ? 'false' : undefined}
     data-shell-current-js-candidate={shellCurrentJsCandidate
       ? 'true'
@@ -962,6 +976,30 @@ export function DescriptorDrivenWholeLessonPlayer({
           <p>{spanish
             ? 'La fidelidad de ejecución original, el audio, la comparación visual, la revisión humana y la aceptación del propietario siguen siendo puertas independientes.'
             : 'Original-runtime fidelity, audio, visual comparison, human review, and owner acceptance remain independent gates.'}</p>
+          {runtimeEvidenceBoundary
+            ? <p data-page-runtime-evidence-boundary={
+                runtimeEvidenceBoundary.runtimeKind
+              }>
+                {runtimeEvidenceBoundary.runtimeKind ===
+                    'source-script-bound-product-behavior-current-js-candidate'
+                  ? runtimeEvidenceBoundary.productVisualBehaviorComposite ===
+                      'source-script-assignment-composite-generated-original-runtime-unvalidated'
+                    ? spanish
+                      ? 'La máquina de estados, el reinicio con Repetir y el compuesto visual derivado de las asignaciones del script fuente están implementados para FQ003; la capa de finalización queda oculta durante las preguntas y se activa solo en el resultado. Sigue siendo un candidato de Current-JS, no una aceptación: la traza natural, el audio, la fidelidad del runtime original, la revisión humana y la aprobación del propietario no están establecidos.'
+                      : 'The state machine, Replay reset, and source-script-assignment visual composite are implemented for FQ003; the finish layer is hidden during questions and activated only for the result. This remains a Current-JS candidate, not acceptance: natural trace, audio, original-runtime fidelity, human review, and Owner approval are unestablished.'
+                    : runtimeEvidenceBoundary.productVisualBehaviorComposite ===
+                        'source-script-behavior-composite-generated-original-runtime-unvalidated'
+                      ? spanish
+                        ? 'La máquina de estados, el reinicio completo con Repetir y el compuesto visual fail-closed derivado de los scripts fuente están implementados para esta página VB/TS. Sigue siendo un candidato de Current-JS, no una aceptación: la ejecución AVM1, la traza natural, la animación de feedback, el audio, la fidelidad del runtime original, la revisión humana y la aprobación del propietario no están establecidos.'
+                        : 'The state machine, complete Replay reset, and fail-closed source-script-derived visual composite are implemented for this VB/TS page. This remains a Current-JS candidate, not acceptance: AVM1 execution, natural trace, feedback animation, audio, original-runtime fidelity, human review, and Owner approval are unestablished.'
+                      : spanish
+                        ? 'Esta página usa un candidato de comportamiento JavaScript mantenible y ligado a los scripts de la fuente. Los controles del producto y el reinicio completo de su estado con Repetir están implementados. El compuesto visual de comportamiento, la traza natural, el audio y la paridad del runtime original aún no están establecidos.'
+                        : 'This page uses a maintainable JavaScript behavior candidate bound to the source scripts. Product controls and complete product-state reset on Replay are implemented. The behavior-aware visual composite, natural trace, audio, and original-runtime parity remain unestablished.'
+                  : spanish
+                    ? 'Esta página usa un candidato JavaScript de fotogramas estáticos ligado a la fuente. El ActionScript original, la traza natural, el audio y la semántica original de Replay aún no están establecidos; Replay solo reinicia el renderizador actual.'
+                    : 'This page uses a source-bound static-frame JavaScript candidate. Original ActionScript, natural trace, audio, and original Replay semantics are not yet established; Replay only restarts the current renderer.'}
+              </p>
+            : null}
         </div>
         <button onClick={restartTour} type="button">{spanish
           ? 'Reiniciar recorrido'

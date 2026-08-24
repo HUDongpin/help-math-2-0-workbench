@@ -62,6 +62,56 @@ lesson-page animations registered and integrated into the modern My Lesson
 experience**. Strict fidelity, audio acceptance, human/Owner acceptance,
 strict completion, and publication remain separately reported gates.
 
+## Owner Decision: Default Migration Production Framework — 2026-08-22
+
+This decision establishes the implementation-routing policy for every HELP
+Math animation migration. It supersedes any earlier implication that either
+direct Codex hand-authoring or compiler output alone is the default production
+method.
+
+- Use the canonical `flash-to-js` compiler-assisted hybrid workflow as the
+  default production framework. The default path includes source-locked public-
+  tool extraction and audit, compact versioned IR or configuration,
+  reproducible generation and caching, maintained product integration, exact
+  Current-JS registration, the modern My Lesson host, and all independent
+  evidence and acceptance gates.
+- Retain direct Codex hand implementation as an authorized advanced lane for
+  `behavior-heavy` or exceptional pages whose source-evidenced behavior cannot
+  be recovered safely through the calibrated factory, or where a maintained
+  React, SVG, Canvas, or equivalent state machine materially improves semantic
+  behavior, accessibility, or maintainability.
+- Treat the advanced manual lane as part of the canonical workflow, never as
+  an exemption from it. It must retain exact source identity and hashes,
+  ActionScript/timeline/audio/host evidence, an explicit complexity
+  classification and lane-selection reason, deterministic state and Replay
+  tests, exact registry/descriptor/My Lesson integration, and the independent
+  original-runtime, fidelity, audio, human, Owner, strict-completion, release,
+  and publication gates.
+- Route `low` pages through the calibrated factory by default. Route
+  `interactive-understood` pages through compiler-assisted extraction plus a
+  maintained shared adapter or source-evidenced state machine. Route
+  `behavior-heavy` and special pages through behavior-first evidence and
+  direct Codex implementation when the representative product slice cannot
+  safely authorize factory generation.
+- Interpret `NO-GO-scale-out` as a prohibition on bulk generation and inflated
+  factory-completion claims, not as a prohibition on further implementation.
+  Freeze the failure evidence, select the smallest bounded advanced-manual
+  task, and recalibrate the representative product slice before expanding that
+  solution or promoting it into shared factory logic.
+- Never hand-edit generated output. If an advanced-manual solution proves
+  reusable, deliberately move the durable behavior into a maintained IR,
+  generator, shared adapter, or product state machine, then regenerate and
+  reverify the affected pages.
+- Do not rewrite an existing source-faithful, maintainable Current-JS page
+  solely to change whether it originated in the older direct-Codex lane or the
+  newer factory lane. Bring it under the current source, registry, My Lesson,
+  testing, evidence, and acceptance contracts instead.
+- Report throughput, model cost, human effort, rework, and product yield
+  separately for the `factory` and `advanced-manual` lanes. Compare the same
+  complexity mix through the complete My Lesson product path before claiming
+  efficiency savings. Neither manual page count nor structural factory output
+  changes the Current-JS definition or any downstream acceptance denominator.
+
 ## Historical Office Archive Memory
 
 The historical office-document archive is a private legacy evidence source. It

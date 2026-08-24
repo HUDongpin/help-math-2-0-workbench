@@ -86,6 +86,29 @@ export interface WholeLessonPlayerPage {
   readonly nextAnimationId: string | null;
   readonly labels: Readonly<Record<WholeLessonPlayerLocale, SourceBoundLabel>>;
   readonly rendererAvailability: WholeLessonRendererAvailability;
+  /**
+   * Learner-visible and machine-readable boundary for an admitted renderer
+   * whose structural JavaScript output is real but whose original Flash
+   * behavior has not yet been established. Omit only when the lesson has a
+   * stronger page-specific runtime contract.
+   */
+  readonly runtimeEvidenceBoundary?: Readonly<{
+    runtimeKind:
+      | 'source-static-current-js-candidate'
+      | 'source-script-bound-product-behavior-current-js-candidate';
+    actionScriptExecution: 'not-executed';
+    naturalTraceValidation: 'not-established';
+    audioAcceptance: 'not-established';
+    replaySemantics:
+      | 'renderer-restart-only-source-behavior-not-established'
+      | 'product-complete-state-reset-original-runtime-parity-not-established';
+    productBehavior?:
+      'maintained-javascript-state-machine-implemented';
+    productVisualBehaviorComposite?:
+      | 'not-established'
+      | 'source-script-behavior-composite-generated-original-runtime-unvalidated'
+      | 'source-script-assignment-composite-generated-original-runtime-unvalidated';
+  }>;
   readonly presentation?: Readonly<{
     pageInteractionCompanionTargetIdSuffix: string;
     pageInteractionStageTargetIdSuffix?: string;
@@ -510,6 +533,20 @@ export interface PageOnlyLessonPlayerDescriptor {
     selectedAnimationIds: readonly string[];
     registeredAnimationCount: number;
     pageOnlyDescriptorMemberCount: number;
+    verticalSlice?: Readonly<{
+      sliceId: string;
+      selectedAnimationIds: readonly string[];
+      behaviorClosure:
+        'three-source-script-behavior-composites-implemented-rw003-static-source-candidate';
+      visualCompositeDisposition:
+        'fq003-vb012-ts007-source-script-behavior-composites-generated-original-runtime-unvalidated';
+      legacyNetworkReporting: 'blocked-memory-only';
+      audioDisposition: 'unresolved-disabled';
+      accessibilityDisposition:
+        'partial-semantic-controls-source-math-canvas-not-accessible';
+      layoutMatrix: 'pass-en-es-desktop-tablet-mobile';
+      scaleDecision: 'no-go-unattended-factory-scale-out';
+    }>;
     acceptanceEffects: Readonly<{
       authoritativeOriginalRuntime: false;
       fidelityAccepted: false;

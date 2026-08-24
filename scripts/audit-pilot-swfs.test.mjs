@@ -16,12 +16,29 @@ import test from "node:test";
 import { gunzipSync } from "node:zlib";
 
 import {
+  G5_L2_BOUNDED_CALIBRATION_IDS,
+  G5_L6_EXTREME_CALIBRATION_IDS,
   auditMigration,
   buildSwfFrameDomainCandidates,
   parseArguments,
   preflightReleaseAuditWorkspaces,
   selectLessonReleaseAuditMembers,
 } from "./audit-pilot-swfs.mjs";
+
+test("keeps the Grade 5 Lesson 2 bounded calibration allowlist exact", () => {
+  assert.deepEqual(G5_L2_BOUNDED_CALIBRATION_IDS, [
+    "course-g05-l02-fq-002",
+    "course-g05-l02-gs-002",
+  ]);
+  assert.equal(Object.isFrozen(G5_L2_BOUNDED_CALIBRATION_IDS), true);
+});
+
+test("keeps the Grade 5 Lesson 6 extreme calibration allowlist exact", () => {
+  assert.deepEqual(G5_L6_EXTREME_CALIBRATION_IDS, [
+    "course-g05-l06-ti-003",
+  ]);
+  assert.equal(Object.isFrozen(G5_L6_EXTREME_CALIBRATION_IDS), true);
+});
 
 function digest(value) {
   return createHash("sha256").update(value).digest("hex");

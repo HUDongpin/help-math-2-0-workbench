@@ -202,7 +202,7 @@ if (!errors.length) {
   }
 
   const validator = read("skills/flash-to-js/scripts/validate_migration.mjs");
-  requireText(validator, 'MIGRATION_VALIDATOR_VERSION = "3.1.0"', "Strict migration validator");
+  requireText(validator, 'MIGRATION_VALIDATOR_VERSION = "3.1.1"', "Strict migration validator");
   requireText(validator, "${label}.decision must be accepted", "Strict migration validator");
   rejectText(validator, "allowNotRequired", "Strict migration validator");
   rejectText(validator, 'validateReview(manifest.acceptance?.ownerReview, "acceptance.ownerReview", { allowNotRequired: true }, errors);', "Strict migration validator");
@@ -212,7 +212,7 @@ if (!errors.length) {
     {cwd: projectRoot, encoding: "utf8"},
   );
   if (templateValidation.status !== 0) errors.push((templateValidation.stdout || templateValidation.stderr || "Migration template draft validation failed").trim());
-  else notes.push("migration template passes validator 3.1.0 draft validation");
+  else notes.push("migration template passes validator 3.1.1 draft validation");
 
   const flashAssets = path.join(projectRoot, "source-assets", "flash");
   const sourceFiles = existsSync(flashAssets) ? readdirSync(flashAssets) : [];

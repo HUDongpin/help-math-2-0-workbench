@@ -39,6 +39,7 @@ const currentJsCandidateQaBuild =
   && process.env.VERCEL_ENV === undefined;
 const novaFullStackFakeTransportRequested = [
   process.env.NOVA_TEST_FAKE_TRANSPORT_AUTHORIZATION,
+  process.env.NOVA_TEST_FAKE_TRANSPORT_MODE,
   process.env.NOVA_TEST_FAKE_TRANSPORT_ORIGIN,
   process.env.NOVA_TEST_FAKE_TRANSPORT_RECEIPT_PATH,
 ].some((value) => value !== undefined);

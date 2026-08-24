@@ -1,12 +1,19 @@
 import {spawnSync} from 'node:child_process';
+import {mkdirSync} from 'node:fs';
 import path from 'node:path';
 
 const playwrightCli = path.resolve(
   process.cwd(),
   '../../node_modules/@playwright/test/cli.js',
 );
+const fullStackTmpDirectory = path.resolve(
+  process.cwd(),
+  '../../work/tmp/nova-full-stack',
+);
+mkdirSync(fullStackTmpDirectory, {recursive: true, mode: 0o700});
 const scenarios = [
   'all-on',
+  'provider-down',
   'master-off',
   'provider-invalid',
   'release-empty',
@@ -36,6 +43,7 @@ for (const [index, scenario] of scenarios.entries()) {
         NOVA_FULL_STACK_SCENARIO: scenario,
         PLAYWRIGHT_PORT: String(port),
         PLAYWRIGHT_REUSE_EXISTING_SERVER: '0',
+        TMPDIR: fullStackTmpDirectory,
       },
       stdio: 'inherit',
     },

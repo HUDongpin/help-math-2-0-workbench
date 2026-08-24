@@ -60,6 +60,15 @@ Select every complexity lane present in the intended batch:
 
 Include relevant language and audio variants. If a lane is genuinely absent, bind that conclusion to the source audit instead of silently omitting it.
 
+The compiler-assisted hybrid workflow is the default production framework, but
+the `behavior-heavy` lane does not require unsafe automatic generation. Retain
+bounded direct Codex hand implementation as the advanced path for
+source-evidenced exceptional behavior, accessibility, or maintainability needs.
+That path remains inside the same source, product-registration, evidence,
+acceptance, and reporting contracts; it is not a bypass around the factory.
+Record the selection reason and smallest bounded implementation scope before
+writing product code.
+
 Require every slice page to traverse this product path:
 
 `source -> extraction -> compact IR/config -> generated candidate -> maintainable module/shared adapter -> official registry -> source-ordered lesson descriptor -> private modern My Lesson -> Replay/interaction/audio lifecycle -> desktop/mobile browser QA`
@@ -84,6 +93,12 @@ Use these decisions:
 - `NO-GO-scale-out`: the high-risk lane has not reached product integration, the run is not reproducible, product registration is manual and unmeasured, generated output is being hand-maintained, tool or schema identity is ambiguous, capacity is unsafe, or an applicable distribution-license boundary is unresolved.
 
 Do not authorize lesson-wide, grade-wide, or catalog-wide scale-out from compiler success rate, file count, screenshot count, or structural wall-clock time alone. Recalibrate when the source family, ActionScript generation, renderer strategy, host contract, generator, IR schema, public-tool version, or page-complexity mix materially changes.
+
+`NO-GO-scale-out` blocks bulk generation and factory-completion claims; it does
+not block a bounded advanced-manual implementation. Freeze the failed slice,
+retain the failure evidence, route the smallest source-evidenced behavior into
+a maintained product state machine, and repeat the representative product
+slice before expanding or promoting that solution into shared factory logic.
 
 ## Bind Public Tools And Licensing
 

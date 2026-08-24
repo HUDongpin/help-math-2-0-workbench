@@ -13,7 +13,7 @@ export const COURSE_G05_L05_VB_012_SOURCE = Object.freeze({
   "rootBeginFrame": 6,
   "sourceOccurrence": 15,
   "candidateManifest": "apps/web/public/flash-assets/courses/course-g05-l05-vb-012/manifest.json",
-  "candidateManifestSha256": "9de89013b0662db390cba5708a7fac31c770f28c18db76f78dc06189e0c60108",
+  "candidateManifestSha256": "7930532d097a3d73c11c52b3df10a97a0073c405e0070330303e5202e1b2e477",
   "privateRegistrationCalibrationId": "g5-l5-page-only-current-js-56-v1",
   "actionScriptExecuted": false,
   "controlsEnabled": true,
@@ -26,7 +26,8 @@ export const COURSE_G05_L05_VB_012_CONFIG = Object.freeze({
   "title": "Opposites — private source-static Current-JS engineering module",
   "sourceSwfSha256": "9530d6f3adb0ed6a3c8fbb5ba22c8084e2f8a20b45a735381574eb78e714abd0",
   "assetSource": "/flash-assets/courses/course-g05-l05-vb-012/canvas-renderer.js",
-  "assetSha256": "783123d115c4eae1f27e6f398efbb6c6f431ef9c9090eb3d62017351f974e16d",
+  "assetSha256": "976d2fa7eedc03d0ef618342b20ef7872b522d2b0815e4824f83c8e94fb71e14",
+  "sourceBehaviorCompositeContractId": "g5-l5-vb012-source-behavior-composite-v1",
   "stage": {
     "width": 800,
     "height": 600,
@@ -57,5 +58,5 @@ export const COURSE_G05_L05_VB_012_CONFIG = Object.freeze({
       "lastFrame": 196
     }
   ],
-  "sourceControlBehaviorLabel": "Source-bound private Current-JS frame renderer; AVM1 natural behavior, accepted audio, original-runtime parity, and strict fidelity remain independently pending"
+  "sourceControlBehaviorLabel": "Source-script visibility and child-frame behavior composite is required for the product fixed-choice states; AVM1 execution, feedback animation, accepted audio, original-runtime parity, and strict fidelity remain independently pending"
 } satisfies SourceStaticCanvasCandidateConfig);

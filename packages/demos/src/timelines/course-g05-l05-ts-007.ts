@@ -13,7 +13,7 @@ export const COURSE_G05_L05_TS_007_SOURCE = Object.freeze({
   "rootBeginFrame": 6,
   "sourceOccurrence": 52,
   "candidateManifest": "apps/web/public/flash-assets/courses/course-g05-l05-ts-007/manifest.json",
-  "candidateManifestSha256": "c584d909ff77a7205822d2eacb771fa60c178a33b54e500525fdddfac9d89a77",
+  "candidateManifestSha256": "55d6a098ee6ab3b95c1604dc1cd90863bd85af8d30214ae739fd30893b829bbe",
   "privateRegistrationCalibrationId": "g5-l5-page-only-current-js-56-v1",
   "actionScriptExecuted": false,
   "controlsEnabled": true,
@@ -26,7 +26,8 @@ export const COURSE_G05_L05_TS_007_CONFIG = Object.freeze({
   "title": "Question 1 — private source-static Current-JS engineering module",
   "sourceSwfSha256": "e034c05612a1ff93223b4d3071f56b41204518b0cf9d7a4b436323e79b18a588",
   "assetSource": "/flash-assets/courses/course-g05-l05-ts-007/canvas-renderer.js",
-  "assetSha256": "f1ddbfd76ad9cd35d9114b13f6b6883a5c58c9311c35ed3c270ac666b032dcd5",
+  "assetSha256": "6cd340026e8ab4641932a5fad24f8cfded6ecf7e541783e868504add816afc72",
+  "sourceBehaviorCompositeContractId": "g5-l5-ts007-source-behavior-composite-v1",
   "stage": {
     "width": 800,
     "height": 600,
@@ -57,5 +58,5 @@ export const COURSE_G05_L05_TS_007_CONFIG = Object.freeze({
       "lastFrame": 690
     }
   ],
-  "sourceControlBehaviorLabel": "Source-bound private Current-JS frame renderer; AVM1 natural behavior, accepted audio, original-runtime parity, and strict fidelity remain independently pending"
+  "sourceControlBehaviorLabel": "Source-script stop, explanation, help, and fixed-choice behavior composite is required for product states; AVM1 execution, feedback animation, accepted audio, original-runtime parity, and strict fidelity remain independently pending"
 } satisfies SourceStaticCanvasCandidateConfig);

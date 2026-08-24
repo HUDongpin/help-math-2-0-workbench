@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "evidenceKind": "PREVIEW_NOVA_ENVIRONMENT_UPDATE",
+  "recordedAtUtc": "2026-08-24T04:55:10Z",
+  "candidateCommit": "22ff85fd7eb6f69e981c8c91692e8ea4d60b5907",
+  "status": "PASS_WRITE_RECEIPT_PENDING_RUNTIME_VALIDATION",
+  "target": "preview",
+  "writes": {
+    "OPENROUTER_API_KEY": {
+      "source": "authorized-local-long-term-key",
+      "sensitive": true,
+      "exitCode": 0,
+      "updatedAt": 1787547288406
+    },
+    "NOVA_ALLOW_FRAME_CONTEXT": {
+      "expectedBoolean": false,
+      "exitCode": 0,
+      "updatedAt": 1787547292498
+    },
+    "NOVA_ALLOW_SPEECH_INPUT": {
+      "expectedBoolean": false,
+      "exitCode": 0,
+      "updatedAt": 1787547296905
+    },
+    "NOVA_TUTOR_RELEASE_IDS": {
+      "expectedReleaseIds": [
+        "lesson-g04-l03-negative-numbers"
+      ],
+      "exitCode": 0,
+      "updatedAt": 1787547301127
+    },
+    "NOVA_TUTOR_ENABLED": {
+      "expectedBoolean": true,
+      "exitCode": 0,
+      "updatedAt": 1787547304909
+    }
+  },
+  "existingPreviewConfiguration": {
+    "modernWide": true,
+    "g4L3Showcase": true,
+    "officialOpenRouterBaseUrl": true,
+    "exactModel": true,
+    "timeoutMs": 45000,
+    "maxOutputTokens": 700,
+    "applicationRateLimitPerMinute": 12
+  },
+  "productionReadonly": {
+    "metadataRecordCountBefore": 33,
+    "metadataRecordCountAfter": 33,
+    "metadataUnchanged": true,
+    "environmentWritten": false
+  },
+  "sensitiveReadback": {
+    "returnsRedactionSentinel": true,
+    "sentinelLength": 11,
+    "actualSecretEqualityCanBeInferred": false,
+    "actualSecretValidityCanBeTestedFromPull": false,
+    "runtimeValidationRequired": true
+  },
+  "provider": {
+    "chatOrCompletionRequestsUsed": 0,
+    "remainingAuthorizedCanaryRequests": 1
+  },
+  "scopeBoundary": {
+    "previewEnvironmentModified": true,
+    "productionEnvironmentModified": false,
+    "productionAliasModified": false,
+    "firewallModified": false,
+    "drainModified": false,
+    "deploymentCreated": false,
+    "promoted": false,
+    "committed": false,
+    "pushed": false
+  },
+  "privacy": {
+    "storesSecretValue": false,
+    "storesSecretHash": false,
+    "storesRedactionSentinelValue": false,
+    "storesPromptOrReplyText": false,
+    "storesProviderRawBody": false
+  }
+}

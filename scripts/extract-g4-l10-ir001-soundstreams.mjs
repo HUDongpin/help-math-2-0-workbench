@@ -19,8 +19,9 @@ const SWFMILL_XML =
 const SWFMILL_XML_SHA256 =
   '4576721429e92b4220835e901a157b998f01f2937d0500df406f222f9d737ff5';
 const PUBLIC_DIRECTORY =
-  'public/flash-assets/courses/course-g04-l10-ir-001/audio';
-const PUBLIC_MANIFEST = `${PUBLIC_DIRECTORY}/manifest.json`;
+  'apps/web/candidate-assets/flash-assets/2026-08-22-page-only-candidates-v1/courses/course-g04-l10-ir-001/audio';
+const PUBLIC_MANIFEST =
+  `candidate-evidence/current-js/2026-08-22-page-only-candidates-v1/courses/${ANIMATION_ID}/product-candidate-assets-v2/audio/manifest.json`;
 const AUDIT_RECEIPT =
   'migrations/course-g04-l10-ir-001/audit/extracted-audio-assets.json';
 

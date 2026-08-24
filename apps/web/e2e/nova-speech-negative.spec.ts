@@ -232,6 +232,12 @@ async function openNova(page: Page, locale: Locale) {
     'data-host-presentation',
     'modern-wide',
   );
+  // The Nova launcher is present in the server-rendered HTML before React
+  // attaches its click handler. Wait for the player's explicit hydration
+  // contract so the first launcher click cannot be lost.
+  await expect(page.locator(
+    '[data-lesson-player][data-hydrated="true"]',
+  ).first()).toBeVisible();
   const launcher = page.getByRole('button', {
     name: locale === 'es' ? 'Preguntar a Nova' : 'Ask Nova',
     exact: true,
@@ -474,6 +480,35 @@ test.describe('FULL_STACK_FAKE_UPSTREAM Nova speech negative and confirmation ma
     await expect.poll(async () => (await speechHarnessState(page)).abortCalls)
       .toBe(1);
     await settleBrowser(page);
+    expect(apiRequests).toHaveLength(0);
+  });
+
+  test('clearing a completed transcript and closing keeps provider calls at zero', async ({page}) => {
+    const transcript = 'Give me one short hint about the number line.';
+    await installSpeechRecognitionHarness(page, {
+      kind: 'final',
+      transcript,
+    });
+    const apiRequests = trackNovaRequests(page);
+    const panel = await openNova(page, 'en');
+    await dictateButton(panel, 'en').click();
+    await expect(questionBox(panel, 'en')).toHaveValue(transcript);
+    await expect(panel.locator('.lesson-shell2__nova-notice')).toContainText(
+      'Review it, then press Send',
+    );
+    expect(apiRequests).toHaveLength(0);
+
+    await questionBox(panel, 'en').fill('');
+    await panel.getByRole('button', {name: 'Close Nova', exact: true}).click();
+    await expect(panel).toBeHidden();
+    await settleBrowser(page);
+    expect(apiRequests, 'cleared or closed drafts must never auto-send')
+      .toHaveLength(0);
+
+    await page.getByRole('button', {name: 'Ask Nova', exact: true}).click();
+    const reopened = page.locator('.lesson-shell2__nova-panel');
+    await expect(reopened).toBeVisible();
+    await expect(questionBox(reopened, 'en')).toHaveValue('');
     expect(apiRequests).toHaveLength(0);
   });
 

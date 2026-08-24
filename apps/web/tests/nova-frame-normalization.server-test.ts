@@ -102,6 +102,45 @@ describe('normalizeNovaTutorFrame', () => {
     }
   });
 
+  it('rejects empty, malformed-base64, SVG, GIF, and WebP envelopes', async () => {
+    const unsupportedBytes = Buffer.from(
+      '<svg xmlns="http://www.w3.org/2000/svg"/>',
+    );
+    const inputs = [
+      frameInput(Buffer.alloc(0), 1, 1),
+      {
+        ...frameInput(Buffer.from([0x89, 0x50, 0x4e, 0x47]), 1, 1),
+        dataUrl: 'data:image/png;base64,%%%=',
+      },
+      frameInput(unsupportedBytes, 1, 1, 'image/svg+xml'),
+      frameInput(
+        Buffer.from(
+          'R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==',
+          'base64',
+        ),
+        1,
+        1,
+        'image/gif',
+      ),
+      frameInput(
+        Buffer.from(
+          'UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEAAUAmJaQAA3AA/v89WAAAAA==',
+          'base64',
+        ),
+        1,
+        1,
+        'image/webp',
+      ),
+    ];
+
+    for (const input of inputs) {
+      await assert.rejects(
+        normalizeNovaTutorFrame(input),
+        NovaFrameNormalizationError,
+      );
+    }
+  });
+
   it('rejects corrupt PNG and JPEG data even when their signatures are present', async () => {
     const corruptPng = Buffer.from([
       0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a,
@@ -142,6 +181,25 @@ describe('normalizeNovaTutorFrame', () => {
       normalizeNovaTutorFrame(frameInput(compressedPixelBomb, 2_049, 2_048)),
       NovaFrameNormalizationError,
     );
+  });
+
+  it('independently rejects either decoded dimension above 2,048 pixels', async () => {
+    for (const [width, height] of [[2_049, 1], [1, 2_049]] as const) {
+      const singleLongSide = await sharp({
+        create: {
+          width,
+          height,
+          channels: 3,
+          background: '#ffffff',
+        },
+      }).png({compressionLevel: 9}).toBuffer();
+      assert.ok(singleLongSide.byteLength <= NOVA_REQUEST_LIMITS.frameBytes);
+
+      await assert.rejects(
+        normalizeNovaTutorFrame(frameInput(singleLongSide, width, height)),
+        NovaFrameNormalizationError,
+      );
+    }
   });
 
   it('rejects a decoded frame whose byte envelope exceeds 18 KiB', async () => {

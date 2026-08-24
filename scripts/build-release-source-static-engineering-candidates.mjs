@@ -28,6 +28,11 @@ import {
 import {
   validateSourceProvenIndependentEvidenceDocument,
 } from "./source-proven-independent-frame-domain-evidence.mjs";
+import {
+  currentJsCandidateEvidencePath,
+  isSeparatedCurrentJsCandidateAnimationId,
+  separatedCurrentJsCandidateStoragePath,
+} from "./current-js-candidate-paths.mjs";
 
 const execFile = promisify(execFileCallback);
 const scriptPath = fileURLToPath(import.meta.url);
@@ -1355,15 +1360,27 @@ export async function buildReleaseSourceStaticEngineeringCandidates({
         safeAdapterBinding,
       });
       const manifestBytes = Buffer.from(stableJson(manifest));
+      const runtimePath = manifest.output.script;
+      const manifestPath =
+        `public/flash-assets/courses/${profile.animationId}/manifest.json`;
+      const separateCandidate =
+        isSeparatedCurrentJsCandidateAnimationId(profile.animationId);
       prepared.push({
         animationId: profile.animationId,
         runtime: {
-          path: manifest.output.script,
+          path: separateCandidate
+            ? separatedCurrentJsCandidateStoragePath(runtimePath)
+            : runtimePath,
           bytes: runtimeBytes,
         },
         manifest: {
-          path:
-            `public/flash-assets/courses/${profile.animationId}/manifest.json`,
+          path: separateCandidate
+            ? currentJsCandidateEvidencePath(
+                profile.animationId,
+                'manifest.json',
+                'v2',
+              )
+            : manifestPath,
           bytes: manifestBytes,
         },
         profile,

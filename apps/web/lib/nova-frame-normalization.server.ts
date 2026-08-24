@@ -101,6 +101,8 @@ export async function normalizeNovaTutorFrame(
     metadata.height !== frame.height ||
     !metadata.width ||
     !metadata.height ||
+    metadata.width > 2_048 ||
+    metadata.height > 2_048 ||
     metadata.width * metadata.height > 2_048 * 2_048
   ) {
     return invalidFrame();
