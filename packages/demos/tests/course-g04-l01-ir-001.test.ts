@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
+import {existsSync} from 'node:fs';
 import {readFile} from 'node:fs/promises';
 import test from 'node:test';
 import {fileURLToPath} from 'node:url';
@@ -23,6 +24,9 @@ import {
 } from '../src/timelines/course-g04-l01-ir-001';
 
 const repositoryRoot = fileURLToPath(new URL('../../../', import.meta.url));
+const privateRootBaselineDirectory =
+  `${repositoryRoot}artifacts/full-frame/pilot-baselines/` +
+  'course-g04-l01-ir-001/adobe-flash-player-32-standalone-default';
 
 function sha256(bytes: Buffer | string): string {
   return createHash('sha256').update(bytes).digest('hex');
@@ -116,7 +120,11 @@ test('IR001 root state addresses all ten authoritative standalone captures exact
   }
 });
 
-test('IR001 public root assets are byte-identical to the hash-bound Adobe baseline', async () => {
+test('IR001 public root assets are byte-identical to the hash-bound Adobe baseline', {
+  skip: existsSync(privateRootBaselineDirectory)
+    ? false
+    : 'private Adobe baseline is not part of a clean hosted checkout',
+}, async () => {
   const baselineBytes = await readFile(
     `${repositoryRoot}${COURSE_G04_L01_IR_001_SOURCE.rootStandaloneBaseline}`
   );

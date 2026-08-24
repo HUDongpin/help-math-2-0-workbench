@@ -87,9 +87,10 @@ test('production routing no longer sends visitors to a review login', async () =
     const course = await proxyForRequest(
       new NextRequest('https://www.helpmath.ai/courses/4/3'),
     );
-    assert.equal(course.status, 200);
+    assert.equal(course.status, 404);
     assert.equal(course.headers.get('location'), null);
     assert.equal(course.headers.get('x-helpmath-controlled-preview'), null);
+    assert.equal(course.headers.get('x-robots-tag'), 'noindex, nofollow');
 
     for (const pathName of [
       '/about',

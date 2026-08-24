@@ -9,7 +9,9 @@ export default defineConfig([
     ".next/**",
     ".next-local-reference-diagnostic/**",
     ".next-*-package*/**",
+    "candidate-assets/**",
     "public/flash-assets/**",
+    "server-assets/**",
     "next-env.d.ts",
   ]),
 ]);

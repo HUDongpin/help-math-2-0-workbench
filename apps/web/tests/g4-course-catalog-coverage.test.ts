@@ -9,12 +9,36 @@ import {
   loadCurrentGrade4CourseCatalogCoverage,
   loadCurrentGrade4CourseCatalogInputs,
 } from '../lib/g4-course-catalog-coverage.server';
+import {findWholeLessonCourseRegistration} from '../lib/whole-lesson-course-registry';
 
 const ACTIVE_PAGES = [80, 67, 39, 54, 53, 49, 48, 46, 43, 46, 43, 77];
 const RESOLVED_PAGES = [80, 67, 39, 54, 53, 49, 48, 46, 43, 46, 43, 77];
 const MISSING_SOURCE_PAGES = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-const CURRENT_JS_PAGES = [1, 0, 39, 0, 53, 0, 0, 0, 1, 46, 43, 0];
-const CURRENT_JS_SHELLS = [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+// These `currentJs*` fields are legacy names for demos-registry loadability.
+// At this tree, 198 = 181 formal page-only occurrences + 17 candidate-only
+// placements (G4 L1: 1; G4 L9: 16). This does not change the project's formal
+// 426/1,751 control-ledger total.
+const FORMAL_CURRENT_JS_PAGES = [0, 0, 39, 0, 53, 0, 0, 0, 0, 46, 43, 0];
+const CANDIDATE_ONLY_PAGES = [1, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0];
+const LOADABLE_DEMO_REGISTRY_PAGES = [1, 0, 39, 0, 53, 0, 0, 0, 16, 46, 43, 0];
+const LOADABLE_DEMO_REGISTRY_SHELLS = [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+const G4_L9_ADDED_LOADABLE_CANDIDATE_IDS = [
+  'course-g04-l09-ir-001',
+  'course-g04-l09-rw-002',
+  'course-g04-l09-vb-009',
+  'course-g04-l09-in-003',
+  'course-g04-l09-in-009',
+  'course-g04-l09-in-010',
+  'course-g04-l09-in-011',
+  'course-g04-l09-ti-002',
+  'course-g04-l09-ti-003',
+  'course-g04-l09-ti-004',
+  'course-g04-l09-ti-005',
+  'course-g04-l09-ti-007',
+  'course-g04-l09-ts-008',
+  'course-g04-l09-fq-001',
+  'course-g04-l09-fq-002',
+] as const;
 
 test('Grade 4 catalog coverage records the reviewed active-source promotion without expanding acceptance', () => {
   const coverage = loadCurrentGrade4CourseCatalogCoverage();
@@ -29,12 +53,12 @@ test('Grade 4 catalog coverage records the reviewed active-source promotion with
     requiredMemberCount: 657,
     catalogResolvedPageCount: 645,
     missingSourcePageCount: 0,
-    currentJsPageCount: 183,
-    missingCurrentJsPageCount: 462,
+    currentJsPageCount: 198,
+    missingCurrentJsPageCount: 447,
     currentJsShellCount: 2,
     missingCurrentJsShellCount: 10,
-    currentJsMemberCount: 185,
-    missingCurrentJsMemberCount: 472,
+    currentJsMemberCount: 200,
+    missingCurrentJsMemberCount: 457,
     fullySourceResolvedLessonCount: 12,
     rendererCoverageCompleteLessonCount: 1,
   });
@@ -59,12 +83,33 @@ test('Grade 4 catalog coverage records the reviewed active-source promotion with
   );
   assert.deepEqual(
     coverage.lessons.map((lesson) => lesson.counts.currentJsPages),
-    CURRENT_JS_PAGES,
+    LOADABLE_DEMO_REGISTRY_PAGES,
   );
   assert.deepEqual(
     coverage.lessons.map((lesson) => lesson.counts.currentJsShells),
-    CURRENT_JS_SHELLS,
+    LOADABLE_DEMO_REGISTRY_SHELLS,
   );
+  assert.equal(FORMAL_CURRENT_JS_PAGES.reduce((sum, count) => sum + count, 0), 181);
+  assert.equal(CANDIDATE_ONLY_PAGES.reduce((sum, count) => sum + count, 0), 17);
+  assert.deepEqual(
+    FORMAL_CURRENT_JS_PAGES.map(
+      (formal, index) => formal + CANDIDATE_ONLY_PAGES[index]!,
+    ),
+    LOADABLE_DEMO_REGISTRY_PAGES,
+  );
+  const lessonNine = findGrade4CourseCoverageLesson(coverage, 9);
+  assert.ok(lessonNine);
+  assert.deepEqual(
+    lessonNine.pages
+      .filter(
+        (page) =>
+          page.rendererAvailability.kind === 'registered' &&
+          page.source.animationId !== 'course-g04-l09-gs-002',
+      )
+      .map((page) => page.source.animationId),
+    G4_L9_ADDED_LOADABLE_CANDIDATE_IDS,
+  );
+  assert.equal(findWholeLessonCourseRegistration(4, 9), undefined);
   assert.deepEqual(
     coverage.lessons
       .filter((lesson) => lesson.readiness.sourceCoverageComplete)
@@ -174,8 +219,8 @@ test('registry changes update coverage counts without fabricating source or acce
   });
   assert.equal(withoutOneRenderer.status, 'valid');
   if (withoutOneRenderer.status !== 'valid') return;
-  assert.equal(withoutOneRenderer.summary.currentJsPageCount, 182);
-  assert.equal(withoutOneRenderer.summary.missingCurrentJsPageCount, 463);
+  assert.equal(withoutOneRenderer.summary.currentJsPageCount, 197);
+  assert.equal(withoutOneRenderer.summary.missingCurrentJsPageCount, 448);
   assert.equal(
     withoutOneRenderer.summary.rendererCoverageCompleteLessonCount,
     0,

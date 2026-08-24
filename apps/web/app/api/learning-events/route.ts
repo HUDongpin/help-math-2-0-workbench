@@ -23,12 +23,26 @@ function jsonResponse(
   setCookieHeader?: string | null,
   additionalHeaders?: HeadersInit,
 ) {
-  const headers = new Headers({'Cache-Control': 'no-store'});
+  const headers = new Headers({
+    'Cache-Control': 'no-store',
+    'X-Robots-Tag': 'noindex, nofollow',
+  });
   if (setCookieHeader) headers.set('Set-Cookie', setCookieHeader);
   if (additionalHeaders) {
     new Headers(additionalHeaders).forEach((value, name) => headers.set(name, value));
   }
   return NextResponse.json(body, {status, headers});
+}
+
+function notFoundResponse() {
+  return new NextResponse('Not Found', {
+    status: 404,
+    headers: {
+      'Cache-Control': 'private, no-store, max-age=0',
+      'Content-Type': 'text/plain; charset=utf-8',
+      'X-Robots-Tag': 'noindex, nofollow',
+    },
+  });
 }
 
 async function readBoundedJson(request: Request): Promise<
@@ -75,6 +89,8 @@ async function mapWithConcurrency<T, R>(
 }
 
 export async function POST(request: Request) {
+  if (process.env.LRS_ENABLED !== 'true') return notFoundResponse();
+
   if (!isSameOriginLearningEventRequest(request)) {
     return jsonResponse({ok: false, error: {code: 'ORIGIN_FORBIDDEN'}}, 403);
   }

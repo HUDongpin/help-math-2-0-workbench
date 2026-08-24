@@ -109,6 +109,7 @@ export function novaTutorModeHref(
   courseHref: string,
   _mode: NovaTutorMode,
 ): string {
+  void _mode;
   const hashIndex = courseHref.indexOf('#');
   const hash = hashIndex >= 0 ? courseHref.slice(hashIndex) : '';
   const withoutHash = hashIndex >= 0 ? courseHref.slice(0, hashIndex) : courseHref;
@@ -130,6 +131,7 @@ export function novaTutorModeHref(
 export function resolveNovaTutorMode(
   _value: string | string[] | undefined,
 ): NovaTutorMode {
+  void _value;
   return 'focus';
 }
 

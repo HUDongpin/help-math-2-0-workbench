@@ -103,23 +103,23 @@ async function runStress({
   await expect(player).toHaveAttribute('data-page-audio-acceptance', 'not-established');
   await expect(player).toHaveAttribute('data-page-actionscript-execution', 'not-executed');
 
-  const module = page.locator(
+  const runtimeModule = page.locator(
     `[data-private-current-js="true"][data-animation-id="${animationId}"]`,
   );
-  const runtimeStage = module.locator('..');
+  const runtimeStage = runtimeModule.locator('..');
   const runtimeShell = runtimeStage.locator('..');
-  await expect(module).toBeVisible();
-  await expect(module).toHaveAttribute('data-source-occurrence', '32');
-  await expect(module).toHaveAttribute(
+  await expect(runtimeModule).toBeVisible();
+  await expect(runtimeModule).toHaveAttribute('data-source-occurrence', '32');
+  await expect(runtimeModule).toHaveAttribute(
     'data-do-get-rnd-quest-adapter',
     'doGetRndQuest-maintained-seeded-order-v1',
   );
-  await expect(module).toHaveAttribute('data-host-symbol-count', '21');
-  await expect(module).toHaveAttribute('data-drag-correct', 'Scr1,Scr2,Scr3,Scr6');
-  await expect(module).toHaveAttribute('data-drag-incorrect', 'Scr4,Scr5');
-  await expect(module).toHaveAttribute('data-network-calls', '0');
-  await expect(module).toHaveAttribute('data-original-runtime-validated', 'false');
-  await expect(module).toHaveAttribute('data-fidelity-accepted', 'false');
+  await expect(runtimeModule).toHaveAttribute('data-host-symbol-count', '21');
+  await expect(runtimeModule).toHaveAttribute('data-drag-correct', 'Scr1,Scr2,Scr3,Scr6');
+  await expect(runtimeModule).toHaveAttribute('data-drag-incorrect', 'Scr4,Scr5');
+  await expect(runtimeModule).toHaveAttribute('data-network-calls', '0');
+  await expect(runtimeModule).toHaveAttribute('data-original-runtime-validated', 'false');
+  await expect(runtimeModule).toHaveAttribute('data-fidelity-accepted', 'false');
   await expect(runtimeStage).toHaveAttribute('data-flash-frame-domain', 'sprite-149');
   await expect(runtimeStage).toHaveAttribute(
     'data-runtime-scenario',
@@ -128,20 +128,20 @@ async function runStress({
   const firstSeed = await runtimeStage.getAttribute('data-runtime-seed');
   expect(firstSeed).toMatch(/^\d+$/u);
 
-  await module.getByRole('button', {
+  await runtimeModule.getByRole('button', {
     name: locale === 'en' ? 'Course' : 'Curso',
     exact: true,
   }).click();
-  await expect(module).toHaveAttribute('data-host-decision', 'allowed');
+  await expect(runtimeModule).toHaveAttribute('data-host-decision', 'allowed');
 
-  expect(await module.locator('[aria-label^="Glossary "]').count()).toBe(19);
+  expect(await runtimeModule.locator('[aria-label^="Glossary "]').count()).toBe(19);
   for (let index = 0; index < glossaryHandlers.length; index += 1) {
     const [sourceIntent, entryId, sourceKey] = glossaryHandlers[index]!;
-    await module.getByRole('button', {
+    await runtimeModule.getByRole('button', {
       name: `Glossary ${index + 1}: ${sourceIntent}`,
       exact: true,
     }).click();
-    await expect(module).toHaveAttribute('data-host-decision', 'allowed');
+    await expect(runtimeModule).toHaveAttribute('data-host-decision', 'allowed');
     const dialog = page.locator(`[data-glossary-entry-id="${entryId}"]`);
     await expect(dialog).toBeVisible();
     await expect(dialog).toHaveAttribute('data-source-key-attribute', sourceKey);
@@ -151,60 +151,60 @@ async function runStress({
     }).click();
   }
 
-  await module.getByRole('button', {
+  await runtimeModule.getByRole('button', {
     name: locale === 'en' ? 'Play audio' : 'Reproducir audio',
     exact: true,
   }).click();
-  await expect(module).toHaveAttribute('data-audio-lifecycle', 'requested');
-  await expect(module).toHaveAttribute('data-host-decision', 'allowed');
+  await expect(runtimeModule).toHaveAttribute('data-audio-lifecycle', 'requested');
+  await expect(runtimeModule).toHaveAttribute('data-host-decision', 'allowed');
   await expect(runtimeShell).toHaveAttribute(
     'data-interactive-audio-playing',
     `${animationId}-narration`,
   );
 
   const correctDrop = locale === 'en' ? 'Drop Scr1' : 'Soltar Scr1';
-  await module.getByRole('button', {name: correctDrop, exact: true}).click();
-  await expect(module).toHaveAttribute('data-host-decision', 'allowed');
-  await expect(module.locator('[data-feedback]')).toBeVisible();
+  await runtimeModule.getByRole('button', {name: correctDrop, exact: true}).click();
+  await expect(runtimeModule).toHaveAttribute('data-host-decision', 'allowed');
+  await expect(runtimeModule.locator('[data-feedback]')).toBeVisible();
 
   const shellReplay = player.locator(
     'button[data-responsive-focus-key="replay"]:visible',
   );
   await expect(shellReplay).toHaveCount(1);
   await shellReplay.click();
-  await expect(module).toHaveAttribute('data-question-index', '1');
-  await expect(module).toHaveAttribute('data-score', '0');
-  await expect(module).toHaveAttribute('data-audio-lifecycle', 'idle');
-  await expect(module.locator('[data-feedback]')).toHaveCount(0);
+  await expect(runtimeModule).toHaveAttribute('data-question-index', '1');
+  await expect(runtimeModule).toHaveAttribute('data-score', '0');
+  await expect(runtimeModule).toHaveAttribute('data-audio-lifecycle', 'idle');
+  await expect(runtimeModule.locator('[data-feedback]')).toHaveCount(0);
   await expect(runtimeShell).not.toHaveAttribute(
     'data-interactive-audio-playing',
     /.+/u,
   );
 
-  await module.getByRole('button', {name: correctDrop, exact: true}).click();
-  await expect(module).toHaveAttribute('data-host-decision', 'allowed');
-  await module.getByRole('button', {
+  await runtimeModule.getByRole('button', {name: correctDrop, exact: true}).click();
+  await expect(runtimeModule).toHaveAttribute('data-host-decision', 'allowed');
+  await runtimeModule.getByRole('button', {
     name: locale === 'en' ? 'Next' : 'Siguiente',
     exact: true,
   }).click();
-  await module.getByRole('button', {
+  await runtimeModule.getByRole('button', {
     name: locale === 'en' ? 'Play audio' : 'Reproducir audio',
     exact: true,
   }).click();
-  await expect(module).toHaveAttribute('data-host-decision', 'allowed');
-  await module.getByRole('button', {
+  await expect(runtimeModule).toHaveAttribute('data-host-decision', 'allowed');
+  await runtimeModule.getByRole('button', {
     name: locale === 'en' ? 'Drop Scr4' : 'Soltar Scr4',
     exact: true,
   }).click();
-  await expect(module).toHaveAttribute('data-host-decision', 'allowed');
-  await module.getByRole('button', {
+  await expect(runtimeModule).toHaveAttribute('data-host-decision', 'allowed');
+  await runtimeModule.getByRole('button', {
     name: locale === 'en' ? 'Replay' : 'Repetir',
     exact: true,
   }).click();
-  await expect(module).toHaveAttribute('data-question-index', '1');
-  await expect(module).toHaveAttribute('data-score', '0');
-  await expect(module).toHaveAttribute('data-audio-lifecycle', 'idle');
-  await expect(module.locator('[data-feedback]')).toHaveCount(0);
+  await expect(runtimeModule).toHaveAttribute('data-question-index', '1');
+  await expect(runtimeModule).toHaveAttribute('data-score', '0');
+  await expect(runtimeModule).toHaveAttribute('data-audio-lifecycle', 'idle');
+  await expect(runtimeModule.locator('[data-feedback]')).toHaveCount(0);
   await expect(runtimeShell).not.toHaveAttribute(
     'data-interactive-audio-playing',
     /.+/u,
@@ -217,48 +217,48 @@ async function runStress({
     ? ['Correct.', 'Try the next question.', 'Correct.']
     : ['Correcto.', 'Inténtalo de nuevo en la próxima pregunta.', 'Correcto.'];
   for (let question = 0; question < 3; question += 1) {
-    await expect(module).toHaveAttribute('data-question-index', String(question + 1));
-    await module.getByRole('button', {name: drops[question]!, exact: true}).click();
-    await expect(module).toHaveAttribute('data-host-decision', 'allowed');
-    await expect(module.locator('[data-feedback]')).toHaveText(feedback[question]!);
-    await expect(module).toHaveAttribute('data-score', String(question < 2 ? 1 : 2));
-    await module.getByRole('button', {
+    await expect(runtimeModule).toHaveAttribute('data-question-index', String(question + 1));
+    await runtimeModule.getByRole('button', {name: drops[question]!, exact: true}).click();
+    await expect(runtimeModule).toHaveAttribute('data-host-decision', 'allowed');
+    await expect(runtimeModule.locator('[data-feedback]')).toHaveText(feedback[question]!);
+    await expect(runtimeModule).toHaveAttribute('data-score', String(question < 2 ? 1 : 2));
+    await runtimeModule.getByRole('button', {
       name: locale === 'en' ? 'Next' : 'Siguiente',
       exact: true,
     }).click();
   }
-  await expect(module.locator('[data-final="true"]')).toContainText('Final: 2/3');
-  await expect(module).toHaveAttribute('data-attempts', '3');
-  await module.locator('[data-final="true"] button').click();
-  await expect(module).toHaveAttribute('data-question-index', '1');
-  await expect(module).toHaveAttribute('data-score', '0');
-  await expect(module).toHaveAttribute('data-attempts', '0');
-  await expect(module.locator('[data-feedback]')).toHaveCount(0);
-  await expect(module.locator('..').locator('..')).toHaveAttribute(
+  await expect(runtimeModule.locator('[data-final="true"]')).toContainText('Final: 2/3');
+  await expect(runtimeModule).toHaveAttribute('data-attempts', '3');
+  await runtimeModule.locator('[data-final="true"] button').click();
+  await expect(runtimeModule).toHaveAttribute('data-question-index', '1');
+  await expect(runtimeModule).toHaveAttribute('data-score', '0');
+  await expect(runtimeModule).toHaveAttribute('data-attempts', '0');
+  await expect(runtimeModule.locator('[data-feedback]')).toHaveCount(0);
+  await expect(runtimeModule.locator('..').locator('..')).toHaveAttribute(
     'data-runtime-replay',
     /[1-9]\d*/u,
   );
 
-  await module.getByRole('button', {
+  await runtimeModule.getByRole('button', {
     name: locale === 'en' ? 'Blocked report' : 'Informe bloqueado',
     exact: true,
   }).click();
-  await module.getByRole('button', {
+  await runtimeModule.getByRole('button', {
     name: locale === 'en' ? 'Blocked getURL' : 'getURL bloqueado',
     exact: true,
   }).click();
-  await expect(module).toHaveAttribute('data-host-decision', 'blocked');
-  await expect(module).toHaveAttribute('data-blocked-legacy-intents', '2');
-  await expect(module).toHaveAttribute('data-network-calls', '0');
+  await expect(runtimeModule).toHaveAttribute('data-host-decision', 'blocked');
+  await expect(runtimeModule).toHaveAttribute('data-blocked-legacy-intents', '2');
+  await expect(runtimeModule).toHaveAttribute('data-network-calls', '0');
 
-  await module.getByRole('button', {
+  await runtimeModule.getByRole('button', {
     name: locale === 'en' ? 'Replay' : 'Repetir',
     exact: true,
   }).click();
-  await expect(module).toHaveAttribute('data-question-index', '1');
-  await expect(module).toHaveAttribute('data-score', '0');
-  await expect(module).toHaveAttribute('data-blocked-legacy-intents', '0');
-  await expect(module).toHaveAttribute('data-network-calls', '0');
+  await expect(runtimeModule).toHaveAttribute('data-question-index', '1');
+  await expect(runtimeModule).toHaveAttribute('data-score', '0');
+  await expect(runtimeModule).toHaveAttribute('data-blocked-legacy-intents', '0');
+  await expect(runtimeModule).toHaveAttribute('data-network-calls', '0');
 
   await page.getByRole('button', {
     name: locale === 'en' ? 'Next page' : 'Página siguiente',

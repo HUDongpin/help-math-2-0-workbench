@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
+import {existsSync} from 'node:fs';
 import {readFile} from 'node:fs/promises';
 import test from 'node:test';
 import {fileURLToPath} from 'node:url';
@@ -30,12 +31,19 @@ import {
 
 const repositoryRoot = fileURLToPath(new URL('../../../', import.meta.url));
 const migrationRoot = `${repositoryRoot}migrations/course-g03-l08-re-001`;
+const privateAdobeFrame =
+  `${repositoryRoot}artifacts/full-frame/pilot-baselines/` +
+  'course-g03-l08-re-001/adobe-flash-player-32-standalone-default/frame-0051.png';
 
 function sha256(bytes: Buffer | string): string {
   return createHash('sha256').update(bytes).digest('hex');
 }
 
-test('RE01 binds the candidate to the preserved SWF and audited evidence', async () => {
+test('RE01 binds the candidate to the preserved SWF and audited evidence', {
+  skip: existsSync(privateAdobeFrame)
+    ? false
+    : 'private Adobe baseline is not part of a clean hosted checkout',
+}, async () => {
   const evidence = [
     [COURSE_G03_L08_RE_001_SOURCE.swf, COURSE_G03_L08_RE_001_SOURCE.swfSha256],
     [

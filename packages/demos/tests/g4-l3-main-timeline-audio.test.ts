@@ -101,7 +101,12 @@ test("every generated audio asset is exact, immutable, and same-origin", async (
       ]);
       assert.equal(sha256(bytes), media.sha256, animationId);
       assert.equal(metadata.nlink, 1, animationId);
-      assert.equal(metadata.mode & 0o777, 0o444, animationId);
+      // Git records only the executable bit. Source workbenches freeze these
+      // files at 0444, while a clean GitHub-hosted checkout materializes 0644.
+      assert.ok(
+        [0o444, 0o644].includes(metadata.mode & 0o777),
+        animationId,
+      );
     }
   }
 });

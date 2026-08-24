@@ -50,7 +50,9 @@ test("IR001 exposes two exact deterministic engineering audio branches", async (
     ]);
     assert.equal(sha256(bytes), cue.sha256);
     assert.equal(metadata.nlink, 1);
-    assert.equal(metadata.mode & 0o777, 0o444);
+    // Git records only the executable bit. Source workbenches freeze these
+    // files at 0444, while a clean GitHub-hosted checkout materializes 0644.
+    assert.ok([0o444, 0o644].includes(metadata.mode & 0o777));
   }
 });
 

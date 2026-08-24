@@ -56,27 +56,27 @@ async function selectAnimation(
   await expect(player).toHaveAttribute("data-current-animation-id", item.id);
 }
 
-async function exerciseGs002(page: Page, module: Locator): Promise<void> {
-  await module.getByRole("button", { name: "Glossary", exact: true }).click();
-  await expect(module).toHaveAttribute("data-host-decision", "allowed");
+async function exerciseGs002(page: Page, runtimeModule: Locator): Promise<void> {
+  await runtimeModule.getByRole("button", { name: "Glossary", exact: true }).click();
+  await expect(runtimeModule).toHaveAttribute("data-host-decision", "allowed");
   const glossary = page.locator('[data-glossary-entry-id="equation"]');
   await expect(glossary).toBeVisible();
   await glossary
     .getByRole("button", { name: /Close and continue|Cerrar y continuar/ })
     .click();
-  await module.getByRole("button", { name: "Course", exact: true }).click();
-  await expect(module).toHaveAttribute("data-host-decision", "allowed");
+  await runtimeModule.getByRole("button", { name: "Course", exact: true }).click();
+  await expect(runtimeModule).toHaveAttribute("data-host-decision", "allowed");
 
-  const runtimeStage = module.locator("..");
+  const runtimeStage = runtimeModule.locator("..");
   const seed = Number(await runtimeStage.getAttribute("data-runtime-seed"));
   expect(Number.isSafeInteger(seed)).toBe(true);
   let expectedScore = 0;
   for (let questionIndex = 1; questionIndex <= 10; questionIndex += 1) {
-    await expect(module).toHaveAttribute(
+    await expect(runtimeModule).toHaveAttribute(
       "data-question-index",
       String(questionIndex),
     );
-    const questionText = await module
+    const questionText = await runtimeModule
       .getByRole("heading", { name: /Seeded question \d+/ })
       .textContent();
     const questionNumber = Number(questionText?.match(/\d+/)?.[0]);
@@ -86,35 +86,35 @@ async function exerciseGs002(page: Page, module: Locator): Promise<void> {
     const selectedOption = chooseCorrect
       ? correctOption
       : (correctOption + 1) % 3;
-    await module
+    await runtimeModule
       .getByRole("button", {
         name: `Option ${String.fromCharCode(65 + selectedOption)}`,
         exact: true,
       })
       .click();
-    await expect(module.locator("[data-feedback]")).toHaveAttribute(
+    await expect(runtimeModule.locator("[data-feedback]")).toHaveAttribute(
       "data-feedback",
       chooseCorrect ? "correct" : "incorrect",
     );
     if (chooseCorrect) expectedScore += 1;
-    await expect(module).toHaveAttribute("data-score", String(expectedScore));
-    await module.getByRole("button", { name: "Next", exact: true }).click();
+    await expect(runtimeModule).toHaveAttribute("data-score", String(expectedScore));
+    await runtimeModule.getByRole("button", { name: "Next", exact: true }).click();
   }
-  await expect(module.locator('[data-final="true"]')).toHaveText(
+  await expect(runtimeModule.locator('[data-final="true"]')).toHaveText(
     `Final · ${expectedScore}/10`,
   );
-  await module.getByRole("button", { name: "Repeat", exact: true }).click();
-  await expect(module).toHaveAttribute("data-question-index", "1");
-  await expect(module).toHaveAttribute("data-score", "0");
-  await module
+  await runtimeModule.getByRole("button", { name: "Repeat", exact: true }).click();
+  await expect(runtimeModule).toHaveAttribute("data-question-index", "1");
+  await expect(runtimeModule).toHaveAttribute("data-score", "0");
+  await runtimeModule
     .getByRole("button", { name: "Blocked report", exact: true })
     .click();
-  await expect(module).toHaveAttribute("data-host-decision", "blocked");
-  await expect(module).toHaveAttribute("data-network-calls", "0");
-  await module.getByRole("button", { name: "Replay", exact: true }).click();
-  await expect(module).toHaveAttribute("data-question-index", "1");
-  await expect(module).toHaveAttribute("data-score", "0");
-  await expect(module).toHaveAttribute("data-network-calls", "0");
+  await expect(runtimeModule).toHaveAttribute("data-host-decision", "blocked");
+  await expect(runtimeModule).toHaveAttribute("data-network-calls", "0");
+  await runtimeModule.getByRole("button", { name: "Replay", exact: true }).click();
+  await expect(runtimeModule).toHaveAttribute("data-question-index", "1");
+  await expect(runtimeModule).toHaveAttribute("data-score", "0");
+  await expect(runtimeModule).toHaveAttribute("data-network-calls", "0");
 }
 
 async function exercisePage(
@@ -142,54 +142,54 @@ async function exercisePage(
     "data-page-actionscript-execution",
     "not-executed",
   );
-  const module = page.locator(
+  const runtimeModule = page.locator(
     `[data-private-current-js="true"][data-animation-id="${item.id}"]`,
   );
-  await expect(module).toBeVisible();
-  await expect(module).toHaveAttribute("data-network-calls", "0");
-  await expect(module).toHaveAttribute(
+  await expect(runtimeModule).toBeVisible();
+  await expect(runtimeModule).toHaveAttribute("data-network-calls", "0");
+  await expect(runtimeModule).toHaveAttribute(
     "data-original-runtime-validated",
     "false",
   );
-  await expect(module).toHaveAttribute("data-fidelity-accepted", "false");
+  await expect(runtimeModule).toHaveAttribute("data-fidelity-accepted", "false");
 
   if (item.id === "course-g04-l09-gs-002") {
-    await exerciseGs002(page, module);
+    await exerciseGs002(page, runtimeModule);
     return;
   }
 
-  const start = module.getByRole("button", { name: /Start|Comenzar/ });
+  const start = runtimeModule.getByRole("button", { name: /Start|Comenzar/ });
   if (await start.count()) await start.click();
-  const answer = module.getByRole("button", { name: /Option A|Opción A/ });
+  const answer = runtimeModule.getByRole("button", { name: /Option A|Opción A/ });
   await expect(answer).toBeEnabled();
   await answer.click();
-  await expect(module.locator("[data-feedback]")).toBeVisible();
+  await expect(runtimeModule.locator("[data-feedback]")).toBeVisible();
 
-  const audio = module.getByRole("button", {
+  const audio = runtimeModule.getByRole("button", {
     name: /Play audio|Reproducir audio/,
   });
   if (await audio.count()) {
     await audio.click();
-    await expect(module).toHaveAttribute("data-audio-lifecycle", "requested");
-    await module
+    await expect(runtimeModule).toHaveAttribute("data-audio-lifecycle", "requested");
+    await runtimeModule
       .getByRole("button", { name: /Stop audio|Detener audio/ })
       .click();
-    await expect(module).toHaveAttribute("data-audio-lifecycle", "stopped");
+    await expect(runtimeModule).toHaveAttribute("data-audio-lifecycle", "stopped");
   }
 
   if (item.id.endsWith("fq-001") || item.id.endsWith("fq-002")) {
-    await module
+    await runtimeModule
       .getByRole("button", { name: /Blocked report|Informe bloqueado/ })
       .click();
-    await expect(module).toHaveAttribute("data-network-calls", "0");
-    await expect(module).toHaveAttribute("data-host-decision", "blocked");
+    await expect(runtimeModule).toHaveAttribute("data-network-calls", "0");
+    await expect(runtimeModule).toHaveAttribute("data-host-decision", "blocked");
   }
 
-  const replay = module.getByRole("button", { name: /Replay|Repetir/ }).last();
+  const replay = runtimeModule.getByRole("button", { name: /Replay|Repetir/ }).last();
   await replay.click();
-  await expect(module).toHaveAttribute("data-network-calls", "0");
-  await expect(module).toHaveAttribute("data-replay", /[1-9]\d*/);
-  await expect(module.locator("[data-feedback]")).toHaveCount(0);
+  await expect(runtimeModule).toHaveAttribute("data-network-calls", "0");
+  await expect(runtimeModule).toHaveAttribute("data-replay", /[1-9]\d*/);
+  await expect(runtimeModule.locator("[data-feedback]")).toHaveCount(0);
 }
 
 async function runMatrix({

@@ -41,8 +41,11 @@ export function loadCurrentGrade4CourseCatalogInputs(): Grade4CourseCatalogCover
 
 /**
  * Current-file entry point for planning, tests, and source-bound descriptor
- * construction. Coverage alone cannot register or publish a course player;
- * the route registry separately validates each formal descriptor.
+ * construction. Its `currentJs*` fields report modules loadable through the
+ * demos registry, including private engineering candidates. They are not the
+ * formal page-only control-ledger count. Coverage alone cannot register or
+ * publish a course player; the route registry separately validates each
+ * formal descriptor.
  */
 export function loadCurrentGrade4CourseCatalogCoverage(): Grade4CourseCatalogCoverage {
   return buildGrade4CourseCatalogCoverage(

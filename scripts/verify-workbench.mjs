@@ -8,6 +8,11 @@ import { fileURLToPath } from "node:url";
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const errors = [];
 const notes = [];
+const supportedArguments = new Set(["--hosted"]);
+for (const argument of process.argv.slice(2)) {
+  if (!supportedArguments.has(argument)) errors.push(`Unsupported argument: ${argument}`);
+}
+const hostedMode = process.argv.includes("--hosted");
 
 const requiredFiles = [
   "AGENTS.md",
@@ -194,7 +199,7 @@ if (!errors.length) {
   rejectText(checklist, "Owner review is hash-bound and accepted, or explicitly marked not required", "Acceptance checklist template");
 
   const packageJson = JSON.parse(read("package.json"));
-  for (const script of ["doctor", "verify:workbench", "scaffold:migration", "capture:keyframes", "capture:coverage-v2", "compare:frames", "compare:full-frames", "ledger:build", "ledger:check", "release-ledger:build", "release-ledger:check"]) {
+  for (const script of ["doctor", "verify:workbench", "verify:workbench:hosted", "scaffold:migration", "capture:keyframes", "capture:coverage-v2", "compare:frames", "compare:full-frames", "ledger:build", "ledger:check", "release-ledger:build", "release-ledger:check"]) {
     if (!packageJson.scripts?.[script]) errors.push(`package.json is missing script: ${script}`);
   }
   for (const dependency of ["@playwright/test", "pixelmatch", "pngjs"]) {
@@ -214,23 +219,31 @@ if (!errors.length) {
   if (templateValidation.status !== 0) errors.push((templateValidation.stdout || templateValidation.stderr || "Migration template draft validation failed").trim());
   else notes.push("migration template passes validator 3.1.0 draft validation");
 
-  const flashAssets = path.join(projectRoot, "source-assets", "flash");
-  const sourceFiles = existsSync(flashAssets) ? readdirSync(flashAssets) : [];
-  if (!sourceFiles.some((name) => name.toLowerCase().endsWith(".fla"))) errors.push("No preserved FLA source found");
-  if (!sourceFiles.some((name) => name.toLowerCase().endsWith(".swf"))) errors.push("No preserved SWF source found");
-  notes.push(`${sourceFiles.filter((name) => /\.(fla|swf)$/i.test(name)).length} preserved Flash source file(s)`);
+  if (hostedMode) {
+    notes.push("preserved-source presence: NOT_RUN_REQUIRES_LOCAL_EVIDENCE");
+  } else {
+    const flashAssets = path.join(projectRoot, "source-assets", "flash");
+    const sourceFiles = existsSync(flashAssets) ? readdirSync(flashAssets) : [];
+    if (!sourceFiles.some((name) => name.toLowerCase().endsWith(".fla"))) errors.push("No preserved FLA source found");
+    if (!sourceFiles.some((name) => name.toLowerCase().endsWith(".swf"))) errors.push("No preserved SWF source found");
+    notes.push(`${sourceFiles.filter((name) => /\.(fla|swf)$/i.test(name)).length} preserved Flash source file(s)`);
+  }
 
   const ledger = JSON.parse(read("catalog/completion-ledger.json"));
   if (ledger.schemaVersion !== 1 || !Array.isArray(ledger.entries) || !Number.isInteger(ledger.summary?.strictComplete)) {
     errors.push("catalog/completion-ledger.json is malformed");
   }
-  const ledgerCheck = spawnSync(process.execPath, [path.join(projectRoot, "scripts", "build-completion-ledger.mjs"), "--check"], {
-    cwd: projectRoot,
-    encoding: "utf8",
-  });
-  if (ledgerCheck.status !== 0) {
-    errors.push((ledgerCheck.stdout || ledgerCheck.stderr || "Completion ledger check failed").trim());
-  } else notes.push("strict completion ledger is current");
+  if (hostedMode) {
+    notes.push("strict completion ledger currentness: NOT_RUN_REQUIRES_LOCAL_EVIDENCE");
+  } else {
+    const ledgerCheck = spawnSync(process.execPath, [path.join(projectRoot, "scripts", "build-completion-ledger.mjs"), "--check"], {
+      cwd: projectRoot,
+      encoding: "utf8",
+    });
+    if (ledgerCheck.status !== 0) {
+      errors.push((ledgerCheck.stdout || ledgerCheck.stderr || "Completion ledger check failed").trim());
+    } else notes.push("strict completion ledger is current");
+  }
 
   const lessonReleases = JSON.parse(read("catalog/lesson-releases.json"));
   if (lessonReleases.schemaVersion !== 1 || !Array.isArray(lessonReleases.releases) || lessonReleases.releases.length < 1) {
@@ -244,14 +257,18 @@ if (!errors.length) {
   ) {
     errors.push("catalog/lesson-release-ledger.json is malformed");
   }
-  const releaseLedgerCheck = spawnSync(
-    process.execPath,
-    [path.join(projectRoot, "scripts", "build-lesson-release-ledger.mjs"), "--check"],
-    {cwd: projectRoot, encoding: "utf8"},
-  );
-  if (releaseLedgerCheck.status !== 0) {
-    errors.push((releaseLedgerCheck.stdout || releaseLedgerCheck.stderr || "Lesson release ledger check failed").trim());
-  } else notes.push("atomic lesson release ledger is current");
+  if (hostedMode) {
+    notes.push("atomic lesson release ledger currentness: NOT_RUN_REQUIRES_LOCAL_EVIDENCE");
+  } else {
+    const releaseLedgerCheck = spawnSync(
+      process.execPath,
+      [path.join(projectRoot, "scripts", "build-lesson-release-ledger.mjs"), "--check"],
+      {cwd: projectRoot, encoding: "utf8"},
+    );
+    if (releaseLedgerCheck.status !== 0) {
+      errors.push((releaseLedgerCheck.stdout || releaseLedgerCheck.stderr || "Lesson release ledger check failed").trim());
+    } else notes.push("atomic lesson release ledger is current");
+  }
 }
 
 if (errors.length) {
@@ -259,7 +276,11 @@ if (errors.length) {
   for (const error of errors) console.error(`- ${error}`);
   process.exitCode = 1;
 } else {
-  console.log("Flash-to-JavaScript workbench verification passed.");
+  console.log(
+    hostedMode
+      ? "Flash-to-JavaScript Hosted workbench structural verification passed."
+      : "Flash-to-JavaScript workbench verification passed.",
+  );
   for (const note of notes) console.log(`- ${note}`);
   console.log(`- ${requiredFiles.length} required workbench artifact(s) present`);
 }

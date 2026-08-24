@@ -28,6 +28,24 @@ Ruffle is a versioned forensic reference and compatibility fallback. It is not a
 
 Legacy `baseline.route` or `baseline.renderer` manifest fields may identify a forensic playback surface; they do not establish strict authority. Coverage-v2 assigns original-runtime authority to each exact requirement and trace.
 
+## Default Production Strategy
+
+Use this compiler-assisted hybrid workflow as the default production framework for HELP Math animation migration. Public tools accelerate source locking, structural extraction, classification, candidate generation, and deterministic QA; Codex implements or reviews maintainable interaction semantics, product state, and the modern My Lesson bridge.
+
+Retain direct Codex hand implementation as the advanced lane for `behavior-heavy` or exceptional pages. Select it only from source-bound complexity evidence, an unsuccessful representative product slice, or a documented product need for a more semantic, accessible, or maintainable React, SVG, Canvas, or equivalent implementation.
+
+Route work as follows:
+
+- `low`: calibrated factory generation by default.
+- `interactive-understood`: compiler-assisted extraction plus a maintained shared adapter or source-evidenced state machine.
+- `behavior-heavy` or exceptional: behavior-first evidence plus bounded direct Codex implementation when safe factory generation is not established.
+
+The advanced manual lane remains inside this Operating Contract. It does not waive source identity, ActionScript/timeline/audio/host analysis, deterministic state and Replay tests, exact registry and source-ordered descriptor membership, modern My Lesson integration, original-runtime and fidelity evidence, audio and human review, owner acceptance, strict completion, release, or publication rules.
+
+Treat `NO-GO-scale-out` as a stop on bulk generation, not a ban on bounded advanced-manual implementation. Preserve the failed slice, record the lane-selection reason, implement the smallest source-evidenced product state, and recalibrate before reuse or expansion. Never hand-edit generated output; promote a reusable manual solution deliberately into the maintained IR, generator, adapter, or product state machine and regenerate.
+
+Do not rewrite a source-faithful, maintainable existing Current-JS page solely to change its implementation origin. Bring it under the current product and evidence contracts. Report factory and advanced-manual throughput, cost, rework, and candidate-to-product yield separately.
+
 ## Initialize
 
 1. Read the project-root `AGENTS.md`, `PROJECT_MEMORY.md`, `documentation/session-memory-export-2026-07-25/INDEX.md`, `README.md`, and `docs/TOOLING.md`.

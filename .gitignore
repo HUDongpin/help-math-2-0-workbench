@@ -56,3 +56,10 @@ HELP MATH_ORIGINAL FILES
 **/.clerk/
 /All API Keys.docx
 .vercel
+
+# Release-controller safety boundaries. These paths are local runtime state or
+# machine/security configuration and must never become repository members.
+.codex-validation-*
+pkcs11.txt
+**/.cache/
+/.launch-control-runtime/

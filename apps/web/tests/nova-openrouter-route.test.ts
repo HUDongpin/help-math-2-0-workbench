@@ -151,9 +151,9 @@ describe('Nova Tutor OpenRouter GPT-5.6 Luna integration', () => {
       else process.env.NOVA_TUTOR_ENABLED = value;
       assert.equal(isNovaTutorEnabled(), false);
       const response = await POST(routeRequest(inputForPage(4)));
-      const body = await response.json();
-      assert.equal(response.status, 503);
-      assert.equal(body.error.code, 'NOVA_NOT_CONFIGURED');
+      assert.equal(response.status, 404);
+      assert.equal(response.headers.get('x-robots-tag'), 'noindex, nofollow');
+      assert.equal(await response.text(), 'Not Found');
     }
     assert.equal(providerCalls, 0);
     process.env.NOVA_TUTOR_ENABLED = 'true';

@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "packageManager": "npm@11.16.0",
   "workspaces": [
     "apps/web",
     "packages/*"
   ],
   "engines": {
-    "node": ">=22 <27"
+    "node": "24.18.0",
+    "npm": "11.16.0"
   },
   "scripts": {
     "dev": "npm run dev --workspace @helpmath/web",
@@ -23,8 +25,16 @@
     "typecheck:demos": "node --import ./scripts/register-worktree-shared-dependencies.mjs scripts/run-worktree-typecheck.mjs --project packages/demos/tsconfig.json --precheck packages/demos/scripts/generate-registry.mjs",
     "test:e2e": "npm run test:e2e --workspace @helpmath/web",
     "test": "node --import ./scripts/register-worktree-shared-dependencies.mjs --test --test-concurrency=4 lib/*.test.mjs scripts/*.test.mjs",
+    "test:workbench:hosted": "node scripts/run-hosted-workbench-tests.mjs",
+    "verify:workbench:hosted-contract": "node scripts/run-hosted-workbench-tests.mjs --check-contract",
     "doctor": "node --import ./scripts/register-worktree-shared-dependencies.mjs scripts/workbench-doctor.mjs",
     "verify:workbench": "node --import ./scripts/register-worktree-shared-dependencies.mjs scripts/verify-workbench.mjs",
+    "verify:workbench:hosted": "node --import ./scripts/register-worktree-shared-dependencies.mjs scripts/verify-workbench.mjs --hosted",
+    "verify:deploy-closure": "node scripts/verify-deploy-closure.mjs",
+    "test:deploy-closure": "node --test scripts/verify-deploy-closure.test.mjs",
+    "verify:launch-control": "node scripts/verify-launch-control.mjs",
+    "verify:launch-go": "node scripts/verify-launch-control.mjs --require-go",
+    "test:launch-control": "node --test scripts/verify-launch-control.test.mjs",
     "verify:sources": "node scripts/freeze-help-math-sources.mjs --verify",
     "worktree:dependencies:check": "node scripts/register-worktree-shared-dependencies.mjs",
     "worktree:sources:check": "node scripts/prepare-linked-worktree-sources.mjs --check",

@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
+import { existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -70,7 +71,11 @@ test("TS006 keeps the 10-frame root and both nested source domains separate", as
   );
 });
 
-test("TS006 binds both unresolved audio candidates by their actual bytes", async () => {
+test("TS006 binds both unresolved audio candidates by their actual bytes", {
+  skip: existsSync(`${repositoryRoot}${embeddedAudioPath}`)
+    ? false
+    : "private embedded-audio evidence is not part of a clean hosted checkout",
+}, async () => {
   const candidates = [
     [
       COURSE_G04_L03_TS_006_SOURCE.associatedAudio,

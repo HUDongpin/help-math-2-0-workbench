@@ -32,7 +32,18 @@ type NovaErrorCode =
 
 const noStoreHeaders = Object.freeze({
   'cache-control': 'no-store, max-age=0',
+  'x-robots-tag': 'noindex, nofollow',
 });
+
+function notFoundResponse() {
+  return new NextResponse('Not Found', {
+    status: 404,
+    headers: {
+      ...noStoreHeaders,
+      'content-type': 'text/plain; charset=utf-8',
+    },
+  });
+}
 
 function json(
   body: unknown,
@@ -94,12 +105,7 @@ export async function POST(request: Request) {
   const requestId = randomUUID();
 
   if (!isNovaTutorEnabled()) {
-    return errorResponse(
-      503,
-      'NOVA_NOT_CONFIGURED',
-      'Nova Tutor is not configured right now.',
-      requestId,
-    );
+    return notFoundResponse();
   }
 
   if (!isSameOriginNovaRequest(request)) {

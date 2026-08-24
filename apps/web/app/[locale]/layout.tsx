@@ -81,7 +81,11 @@ export default async function LocaleLayout({
             <SiteFooter content={content} locale={appLocale} />
           </LocaleProvider>
         </ClerkLocalAuthProvider>
-        {process.env.NODE_ENV === 'production' ? <Analytics /> : null}
+        {process.env.NODE_ENV === 'production'
+          && process.env.VERCEL_ENV
+          && process.env.WEB_ANALYTICS_ENABLED === 'true'
+          ? <Analytics />
+          : null}
       </body>
     </html>
   );

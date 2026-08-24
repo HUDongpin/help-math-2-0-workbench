@@ -107,11 +107,9 @@ describe('POST /api/contact', () => {
     for (const value of [undefined, 'false', 'TRUE', ' true ']) {
       setEnv('CONTACT_FORM_ENABLED', value);
       const response = await POST(request('{not json'));
-      const body = await response.json();
-      assert.equal(response.status, 503);
-      assert.equal(body.ok, false);
-      assert.equal(body.error.code, 'CONTACT_DISABLED');
-      assert.equal(body.error.message, 'Contact submission is not available.');
+      assert.equal(response.status, 404);
+      assert.equal(response.headers.get('x-robots-tag'), 'noindex, nofollow');
+      assert.equal(await response.text(), 'Not Found');
     }
     assert.equal(providerCalls, 0);
   });
@@ -134,15 +132,15 @@ describe('POST /api/contact', () => {
       enableContactForm();
       setEnv(key, undefined);
       const response = await POST(request('{not json'));
-      const body = await response.json();
-      assert.equal(response.status, 503, key);
-      assert.equal(body.error.code, 'CONTACT_DISABLED', key);
+      assert.equal(response.status, 404, key);
+      assert.equal(response.headers.get('x-robots-tag'), 'noindex, nofollow', key);
+      assert.equal(await response.text(), 'Not Found', key);
     }
     enableContactForm();
     setEnv('RESEND_API_KEY', '   ');
     const whitespaceResponse = await POST(request('{not json'));
-    assert.equal(whitespaceResponse.status, 503);
-    assert.equal((await whitespaceResponse.json()).error.code, 'CONTACT_DISABLED');
+    assert.equal(whitespaceResponse.status, 404);
+    assert.equal(await whitespaceResponse.text(), 'Not Found');
     assert.equal(providerCalls, 0);
   });
 
@@ -163,9 +161,8 @@ describe('POST /api/contact', () => {
     enableContactForm();
     setEnv('TURNSTILE_SECRET_KEY', undefined);
     const response = await POST(request(validRequest()));
-    const body = await response.json();
-    assert.equal(response.status, 503);
-    assert.equal(body.error.code, 'CONTACT_DISABLED');
+    assert.equal(response.status, 404);
+    assert.equal(await response.text(), 'Not Found');
   });
 
   it('does not let the local-development simulation bypass complete configuration', async () => {
@@ -175,9 +172,8 @@ describe('POST /api/contact', () => {
     const response = await POST(
       request(validRequest({turnstileToken: DEVELOPMENT_TURNSTILE_TOKEN})),
     );
-    const body = await response.json();
-    assert.equal(response.status, 503);
-    assert.equal(body.error.code, 'CONTACT_DISABLED');
+    assert.equal(response.status, 404);
+    assert.equal(await response.text(), 'Not Found');
   });
 
   it('rejects a failed Turnstile verification before email delivery', async () => {

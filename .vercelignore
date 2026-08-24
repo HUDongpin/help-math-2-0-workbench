@@ -43,8 +43,20 @@ catalog/**
 # Local secrets and owner-provided credential documents must never enter a
 # deployment upload, even when a future CLI version changes ignore precedence.
 All API Keys.docx
-**/.env.local
-**/.env.*.local
+.env
+.env.*
+**/.env
+**/.env.*
+
+# Fail closed on local linked worktrees and machine/security configuration.
+# These exact rules remain mandatory even when the paths are absent from the
+# current release tree, because both appeared in an earlier candidate commit.
+.codex-validation-*
+**/.codex-validation-*
+pkcs11.txt
+**/pkcs11.txt
+**/.cache/
+/.launch-control-runtime/
 
 # Local Next.js output variants are reproducible build caches, not deployment
 # inputs. Public visual runtimes remain under apps/web/public/; exact G5 L4

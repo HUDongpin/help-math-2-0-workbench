@@ -7,7 +7,6 @@ import {
 } from '@/lib/contact-route-support.server';
 
 type ErrorCode =
-  | 'CONTACT_DISABLED'
   | 'BAD_REQUEST'
   | 'VALIDATION_ERROR'
   | 'TURNSTILE_NOT_CONFIGURED'
@@ -41,6 +40,17 @@ function contactFormIsEnabled() {
     CONTACT_CONFIGURATION_KEYS.every((key) => Boolean(process.env[key]?.trim()));
 }
 
+function notFoundResponse() {
+  return new NextResponse('Not Found', {
+    status: 404,
+    headers: {
+      'Cache-Control': 'private, no-store, max-age=0',
+      'Content-Type': 'text/plain; charset=utf-8',
+      'X-Robots-Tag': 'noindex, nofollow',
+    },
+  });
+}
+
 function errorResponse(
   status: number,
   code: ErrorCode,
@@ -69,11 +79,7 @@ export async function POST(request: Request) {
   // authorization and every runtime dependency are explicitly present. This
   // check must remain before body parsing, bot handling, and all provider calls.
   if (!contactFormIsEnabled()) {
-    return errorResponse(
-      503,
-      'CONTACT_DISABLED',
-      'Contact submission is not available.',
-    );
+    return notFoundResponse();
   }
 
   let body: unknown;

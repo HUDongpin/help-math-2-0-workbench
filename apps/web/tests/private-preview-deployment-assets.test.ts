@@ -58,7 +58,7 @@ test('deployment assets are an exact five-lesson Current-JS runtime closure', as
   assert.equal(serverAudioFiles.length, 185);
   assert.equal(entries.length, 1114);
   assert.deepEqual(
-    entries.map(({file: _file, relative, root}) => ({
+    entries.map(({relative, root}) => ({
       assetPath: `courses/${relative}`,
       relativePath: relative,
       storageRoot: root,

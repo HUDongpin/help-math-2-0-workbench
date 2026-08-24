@@ -132,6 +132,24 @@ test('learning-event route rejects missing, cross-origin, and public HTTP origin
   )), false);
 });
 
+test('disabled learning events are indistinguishable from an absent public API', async () => {
+  Reflect.deleteProperty(process.env, 'LRS_ENABLED');
+  let deliveryCalls = 0;
+  globalThis.fetch = async () => {
+    deliveryCalls += 1;
+    return new Response(null, {status: 204});
+  };
+
+  const response = await POST(request(
+    'https://www.helpmath.ai/api/learning-events',
+  ));
+  assert.equal(response.status, 404);
+  assert.equal(response.headers.get('cache-control'), 'private, no-store, max-age=0');
+  assert.equal(response.headers.get('x-robots-tag'), 'noindex, nofollow');
+  assert.equal(await response.text(), 'Not Found');
+  assert.equal(deliveryCalls, 0);
+});
+
 test('learning-event POST rejects missing Origin before LRS delivery', async () => {
   configureLrs();
   let deliveryCalls = 0;
