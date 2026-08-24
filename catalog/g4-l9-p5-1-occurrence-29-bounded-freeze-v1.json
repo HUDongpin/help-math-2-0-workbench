@@ -1,0 +1,195 @@
+{
+  "schemaVersion": 1,
+  "artifactKind": "private-page-only-occurrence-29-bounded-freeze",
+  "taskId": "HELP-MATH-G4-L9-P5-1-OCCURRENCE-29-BOUNDED-IMPLEMENTATION-20260824",
+  "calibrationId": "g4-l9-p5-1-occurrence-29-bounded-v1",
+  "base": {
+    "ref": "codex/help-math-g4-l9-p5-f08-occurrence-32-stress-gate-20260823",
+    "commit": "af33bcecff686dc49e143a698f56fd5e938ff498",
+    "parent": "fb7dc21e4ecb9d625cd96eb7822a1bce89c9e076",
+    "tree": "5f9931d699c5cfe1cfa58fce8c280d79021bd2f1"
+  },
+  "sourceArtifact": {
+    "path": "catalog/g4-l9-page-only-migration-preflight-v1.json",
+    "sha256": "7a6e018b65e9df4dd523d775a9bf7e079644eed083e1e1781e4a41763a3ae2f4"
+  },
+  "p4Calibration": {
+    "calibrationId": "g4-l9-p4-representative-slice-14-v1",
+    "freeze": {
+      "path": "catalog/g4-l9-p4-representative-slice-freeze-v1.json",
+      "sha256": "72f9d7af89d689378772a8d259085e10800a88b0f8c5914c8398d61902074ace"
+    },
+    "registeredPageCount": 14,
+    "immutable": true
+  },
+  "p5Calibration": {
+    "calibrationId": "g4-l9-p5-f08-occurrence-32-stress-v1",
+    "freeze": {
+      "path": "catalog/g4-l9-p5-f08-occurrence-32-stress-freeze-v1.json",
+      "sha256": "6b2bfffae4aedf30cea8fa5ec8bcd2e376a057a61b7cfd4af7ef7b0bf5e7d377"
+    },
+    "generator": {
+      "path": "scripts/build-g4-l9-p5-f08-occurrence-32-stress.mjs",
+      "sha256": "0753300f7fd9e46052ff6202c407efe14f7f60b5de8b359c1aa07311a5907978"
+    },
+    "registeredPageCount": 15,
+    "immutable": true
+  },
+  "selectedPages": [
+    {
+      "sourceOccurrence": 29,
+      "placementId": "g04-l09-placement-029",
+      "animationId": "course-g04-l09-ti-004",
+      "assetId": "swf-aab74a30241e71013cee75fa7e6224fd3e09acc7ca097f713c681b2dd6bec8eb",
+      "sourceSwfPath": "HELP_COURSES/ELMGR4/L9/TI/L9TI04.swf",
+      "sourceSwfSha256": "aab74a30241e71013cee75fa7e6224fd3e09acc7ca097f713c681b2dd6bec8eb",
+      "sourceSwfBytes": 85562,
+      "pairedFla": null,
+      "canonicalIdentity": "unique-not-an-alias",
+      "complexityLane": "behavior-heavy",
+      "implementationLane": "advanced-manual"
+    }
+  ],
+  "exactSourceClosure": {
+    "files": [
+      {
+        "path": "HELP_COURSES/ELMGR4/L9/index.xml",
+        "bytes": 9736,
+        "sha256": "d1d3bdba357f66e252d6201b00cffeed409ea4505233595cedf1f5bfd10722b4",
+        "mode": "0500",
+        "writable": false
+      },
+      {
+        "path": "HELP_COURSES/ELMGR4/L9/SA/L9TI04.mp3",
+        "bytes": 135744,
+        "sha256": "52fe9807f186b5c50ae485bc1d818551290c59204df7d0dda3783b61321d4810",
+        "mode": "0500",
+        "writable": false
+      },
+      {
+        "path": "HELP_COURSES/ELMGR4/L9/TI/L9TI04.swf",
+        "bytes": 85562,
+        "sha256": "aab74a30241e71013cee75fa7e6224fd3e09acc7ca097f713c681b2dd6bec8eb",
+        "mode": "0500",
+        "writable": false
+      },
+      {
+        "path": "HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTEG4.xml",
+        "bytes": 378783,
+        "sha256": "bec389ce286b9a113297dfd87e052f28cf1da2640d93a277f91f669dfb3ef749",
+        "mode": "0500",
+        "writable": false
+      },
+      {
+        "path": "HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTSG4.xml",
+        "bytes": 374466,
+        "sha256": "7f12ce833f1429073a11a3ea0dd9d9964eb773804c18c025bde12552b3be5a00",
+        "mode": "0500",
+        "writable": false
+      }
+    ],
+    "fileCount": 5,
+    "totalBytes": 984291,
+    "projection": {
+      "serialization": "C-locale relative-path NUL decimal-bytes NUL lowercase-sha256 NUL v1",
+      "bytes": 552,
+      "sha256": "094037293057a37c6b479131096e8008636545f471e97c3be169193a6505ece9"
+    }
+  },
+  "boundedImplementationContract": {
+    "frameDomain": "sprite-134",
+    "frameCount": 119,
+    "randomActionSha256": "35d1483d2e70fdaf3a4f73ab44fa89ccf9a867f02b23d9fee13950bd38756662",
+    "terminalActionSha256": "8a2021341dfb52c1a619176e3c2a415f27e1e32d26816da29e250bca292ab9be",
+    "sourceChoices": [
+      "S1",
+      "S2",
+      "S3",
+      "S4"
+    ],
+    "terminalCorrectCount": 4,
+    "coreActionMultisetSha256": "7c00b70187fffbb82726f74f2514ececbd530034120d6095efdba4729c544996",
+    "dragBindings": [
+      {
+        "sourceInstance": "Scr1",
+        "outcome": "incorrect"
+      },
+      {
+        "sourceInstance": "Scr2",
+        "outcome": "correct"
+      },
+      {
+        "sourceInstance": "Scr3",
+        "outcome": "correct"
+      },
+      {
+        "sourceInstance": "Scr4",
+        "outcome": "correct"
+      },
+      {
+        "sourceInstance": "Scr5",
+        "outcome": "correct"
+      },
+      {
+        "sourceInstance": "Scr6",
+        "outcome": "incorrect"
+      }
+    ],
+    "glossaryHandlerCount": 12,
+    "resolvedGlossaryEntryCount": 5,
+    "explicitAliases": {
+      "Mathematical aentence": "Sentence"
+    },
+    "sourceAudioDurationMs": 9696,
+    "hostSymbolCount": 20,
+    "practiceFeedbackBranchIndex": "one-based",
+    "replayHostReset": [
+      "random-cycle",
+      "try-choice-state",
+      "drag-state",
+      "active-audio",
+      "practice-feedback"
+    ],
+    "legacyNetworkPolicy": "deny-by-default"
+  },
+  "productBoundary": {
+    "descriptorKind": "private-page-only-product-bridge",
+    "baselineRegisteredCurrentJs": 15,
+    "registeredCurrentJs": 16,
+    "descriptorPageCount": 43,
+    "unavailablePageCount": 27,
+    "courseShellCount": 0,
+    "factoryAdmitted": 5,
+    "advancedManualAdmitted": 11,
+    "remainingFactory": 22,
+    "remainingAdvancedManual": 5,
+    "formalRegistryMutation": false,
+    "formalCounts": {
+      "denominator": 1751,
+      "occurrences": 426,
+      "uniqueRenderers": 425,
+      "lessons": 8
+    }
+  },
+  "scaleOut": {
+    "exactEquivalenceAdmission": false,
+    "wholeLesson43Pages": false,
+    "familyF08": false,
+    "remainingF08Occurrences": [
+      20
+    ],
+    "decision": "NO_GO_F08_FAMILY_OR_43_PAGE_SCALE_OUT"
+  },
+  "acceptanceEffects": {
+    "privateCurrentJsEngineering": true,
+    "authoritativeOriginalRuntime": false,
+    "technicalFidelity": false,
+    "audioAccepted": false,
+    "humanReview": false,
+    "ownerAcceptance": false,
+    "strictComplete": false,
+    "released": false,
+    "published": false,
+    "productionVerified": false
+  }
+}

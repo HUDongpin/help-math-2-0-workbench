@@ -133,7 +133,7 @@ async function exercisePage(
     "data-renderer-availability",
     "registered",
   );
-  await expect(player).toHaveAttribute("data-unavailable-pages", "28");
+  await expect(player).toHaveAttribute("data-unavailable-pages", "27");
   await expect(player).toHaveAttribute(
     "data-page-audio-acceptance",
     "not-established",

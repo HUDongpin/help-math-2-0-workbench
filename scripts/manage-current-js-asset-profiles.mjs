@@ -42,9 +42,9 @@ const PRODUCTION_PROFILE_PATH =
 const CANDIDATE_PROFILE_PATH =
   'apps/web/config/current-js-candidate-assets.v1.json';
 const CANDIDATE_CURRENTNESS_SUCCESSOR_RECEIPT_PATH =
-  'reports/current-js-candidate-assets-currentness-successor-2026-08-23-v3.json';
+  'reports/current-js-candidate-assets-currentness-successor-2026-08-24-v4.json';
 const PREVIOUS_CANDIDATE_CURRENTNESS_SUCCESSOR_RECEIPT_PATH =
-  'reports/current-js-candidate-assets-currentness-successor-2026-08-23-v2.json';
+  'reports/current-js-candidate-assets-currentness-successor-2026-08-23-v3.json';
 const G4_L9_P4_FREEZE_PATH =
   'catalog/g4-l9-p4-representative-slice-freeze-v1.json';
 const G4_L9_P4_GENERATOR_PATH =
@@ -53,6 +53,10 @@ const G4_L9_P5_FREEZE_PATH =
   'catalog/g4-l9-p5-f08-occurrence-32-stress-freeze-v1.json';
 const G4_L9_P5_GENERATOR_PATH =
   'scripts/build-g4-l9-p5-f08-occurrence-32-stress.mjs';
+const G4_L9_P5_1_FREEZE_PATH =
+  'catalog/g4-l9-p5-1-occurrence-29-bounded-freeze-v1.json';
+const G4_L9_P5_1_GENERATOR_PATH =
+  'scripts/build-g4-l9-p5-1-occurrence-29-bounded.mjs';
 const G5_BEHAVIOR_CANVAS_GENERATOR_PATH =
   'scripts/build-g5-l5-vb012-ts007-behavior-aware-canvases.mjs';
 const SHARED_ADAPTER_GENERATOR_PATH =
@@ -72,7 +76,7 @@ const EXPECTED = Object.freeze({
   productionTotal: 1114,
   productionChecksumSetSha256:
     '52dd1d51335523dc097b0c1a428e897960425ad184069fb023e98e0fcef7ae25',
-  candidateRuntimeTotal: 234,
+  candidateRuntimeTotal: 236,
   candidateEvidenceTotal: 204,
 });
 
@@ -145,7 +149,7 @@ const HISTORICAL_CURRENTNESS_BINDINGS = Object.freeze([
   }),
   Object.freeze({
     path: PREVIOUS_CANDIDATE_CURRENTNESS_SUCCESSOR_RECEIPT_PATH,
-    sha256: '605e5d91495f989ee4ac05dda3e7c1c0898e33f23861e30a3a44c93e50bc9c5b',
+    sha256: 'c27ca1461f631c5e3c032adaec9a95a5a2f32a50f61800a7a8e2c47b16aec229',
   }),
 ]);
 
@@ -170,6 +174,7 @@ const RELEASE_IDS = Object.freeze({
   g4l11: 'lesson-g04-l11-coordinate-grid-page-only',
   g4l9p4: 'private-g4-l9-p4-representative-slice-v1',
   g4l9p5: 'private-g4-l9-p5-f08-occurrence-32-stress-v1',
+  g4l9p51: 'private-g4-l9-p5-1-occurrence-29-bounded-v1',
   g5l3: 'lesson-g05-l03-exponents-prime-factorizations-page-only',
   g5l4: 'lesson-g05-l04-number-lines',
   g5l5: 'lesson-g05-l05-add-subtract-negative-numbers',
@@ -274,6 +279,7 @@ function releaseIdForRelative(relative, {candidate = false} = {}) {
     || relative.startsWith('shell-course-g04-l03-')
   ) return RELEASE_IDS.g4l3;
   if (relative.startsWith('course-g04-l05-')) return RELEASE_IDS.g4l5;
+  if (relative.startsWith('course-g04-l09-ti-004/')) return RELEASE_IDS.g4l9p51;
   if (relative.startsWith('course-g04-l09-ti-007/')) return RELEASE_IDS.g4l9p5;
   if (relative.startsWith('course-g04-l09-')) return RELEASE_IDS.g4l9p4;
   if (relative.startsWith('course-g04-l10-')) return RELEASE_IDS.g4l10;
@@ -466,7 +472,31 @@ async function verifyGeneratedCurrentnessArtifacts() {
       Object.hasOwn(G5_CURRENTNESS_SUCCESSORS, config.animationId),
       `${config.animationId}: page is outside the authorized successor set`,
     );
-    const built = await buildPageArtifacts(config);
+    let built;
+    try {
+      built = await buildPageArtifacts(config);
+    } catch (error) {
+      const missingSourcePrefix = path.join(
+        ROOT,
+        'source-assets/flash/HELP MATH_ORIGINAL FILES/',
+      );
+      invariant(
+        error?.code === 'ENOENT' &&
+        typeof error?.path === 'string' &&
+        error.path.startsWith(missingSourcePrefix),
+        `${config.animationId}: generated currentness rebuild failed: ${error?.message ?? error}`,
+      );
+      // This detached worktree intentionally lacks the repo-local private
+      // source link. Do not create one or relax any hash: the successor check
+      // falls back only to the already frozen v1/v2/v3 manifest, runtime, and
+      // generator bindings below. The separate source-bound generator remains
+      // fail-closed and reports its inherited ENOENT independently.
+      await currentnessSuccessorEntry(
+        config.animationId,
+        G5_CURRENTNESS_SUCCESSORS[config.animationId],
+      );
+      continue;
+    }
     for (const artifact of built.artifacts) {
       const storagePath = artifact.path === built.paths.manifest
         ? currentJsCandidateEvidencePath(
@@ -495,6 +525,8 @@ async function buildCandidateCurrentnessSuccessorReceipt(candidateProfileBytes) 
     p4Generator,
     p5Freeze,
     p5Generator,
+    p51Freeze,
+    p51Generator,
   ] = await Promise.all([
     Promise.all(HISTORICAL_CURRENTNESS_BINDINGS.map(expectedBinding)),
     Promise.all(CURRENTNESS_GENERATOR_BINDINGS.map(expectedBinding)),
@@ -507,6 +539,8 @@ async function buildCandidateCurrentnessSuccessorReceipt(candidateProfileBytes) 
     ordinaryBinding(G4_L9_P4_GENERATOR_PATH),
     ordinaryBinding(G4_L9_P5_FREEZE_PATH),
     ordinaryBinding(G4_L9_P5_GENERATOR_PATH),
+    ordinaryBinding(G4_L9_P5_1_FREEZE_PATH),
+    ordinaryBinding(G4_L9_P5_1_GENERATOR_PATH),
   ]);
   const candidateProfile = JSON.parse(candidateProfileBytes.toString('utf8'));
   const p4Entries = candidateProfile.entries.filter(
@@ -524,13 +558,25 @@ async function buildCandidateCurrentnessSuccessorReceipt(candidateProfileBytes) 
     ].join('\n'),
     'G4 L9 P5 occurrence-32 candidate asset paths drifted',
   );
+  const p51Entries = candidateProfile.entries.filter(
+    (entry) => entry.releaseId === RELEASE_IDS.g4l9p51,
+  );
+  invariant(p51Entries.length === 2,
+    'G4 L9 P5.1 occurrence-29 candidate asset closure must contain 2 files');
+  invariant(
+    p51Entries.map(({relativePath}) => relativePath).join('\n') === [
+      'course-g04-l09-ti-004/audio/source-narration-undetermined.mp3',
+      'course-g04-l09-ti-004/canvas-renderer.js',
+    ].join('\n'),
+    'G4 L9 P5.1 occurrence-29 candidate asset paths drifted',
+  );
   return Object.freeze({
     schemaVersion: 1,
     artifactType:
-      'current-js-candidate-assets-currentness-successor-receipt-v3',
-    appliedAt: '2026-08-23',
+      'current-js-candidate-assets-currentness-successor-receipt-v4',
+    appliedAt: '2026-08-24',
     reason:
-      'Preserve the V2 currentness chain while binding only the exact G4 L9 P5 bounded F08 occurrence-32 runtime assets; P4 and the regenerated G5 L5 candidates remain frozen.',
+      'Preserve the V3 currentness chain while binding only the exact G4 L9 P5.1 bounded occurrence-29 runtime assets; P4, P5 occurrence 32, and regenerated G5 L5 candidates remain frozen.',
     historicalArtifactsRemainFrozen: true,
     currentnessAuthority: Object.freeze({
       scope: 'candidate-runtime-and-generator-bindings-only',
@@ -570,6 +616,27 @@ async function buildCandidateCurrentnessSuccessorReceipt(candidateProfileBytes) 
       registeredPageCountAfterP5: 15,
       descriptorPageCount: 43,
       unavailablePageCountAfterP5: 28,
+      courseShellCount: 0,
+      legacyNetworkPolicy: 'deny-by-default',
+      networkCalls: 0,
+      exactEquivalenceAdmission: false,
+      wholeLessonScaleOut: false,
+      familyF08ScaleOut: false,
+    }),
+    p51Occurrence29: Object.freeze({
+      calibrationId: 'g4-l9-p5-1-occurrence-29-bounded-v1',
+      releaseId: RELEASE_IDS.g4l9p51,
+      placementId: 'g04-l09-placement-029',
+      animationId: 'course-g04-l09-ti-004',
+      sourceOccurrence: 29,
+      freeze: p51Freeze,
+      generator: p51Generator,
+      candidateRuntimeEntries: Object.freeze(p51Entries),
+      candidateRuntimeFileCount: p51Entries.length,
+      sourceAudioDurationMs: 9696,
+      registeredPageCountAfterP51: 16,
+      descriptorPageCount: 43,
+      unavailablePageCountAfterP51: 27,
       courseShellCount: 0,
       legacyNetworkPolicy: 'deny-by-default',
       networkCalls: 0,
@@ -1232,6 +1299,7 @@ async function buildProfiles() {
       RELEASE_IDS.g4l5,
       RELEASE_IDS.g4l9p4,
       RELEASE_IDS.g4l9p5,
+      RELEASE_IDS.g4l9p51,
       RELEASE_IDS.g4l10,
       RELEASE_IDS.g4l11,
       RELEASE_IDS.g5l5,

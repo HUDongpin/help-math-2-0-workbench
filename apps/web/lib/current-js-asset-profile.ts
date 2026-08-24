@@ -74,9 +74,9 @@ if (
 if (
   candidateProfileJson.schemaVersion !== 1
   || candidateProfileJson.profileId !== 'current-js-candidate-assets-v1'
-  || candidateProfileJson.counts.runtime !== 234
+  || candidateProfileJson.counts.runtime !== 236
   || candidateProfileJson.counts.evidence !== 204
-  || candidateProfileJson.entries.length !== 234
+  || candidateProfileJson.entries.length !== 236
   || candidateProfileJson.authority.productionApproved !== false
   || candidateProfileJson.authority.releaseEligible !== false
   || candidateProfileJson.authority.published !== false

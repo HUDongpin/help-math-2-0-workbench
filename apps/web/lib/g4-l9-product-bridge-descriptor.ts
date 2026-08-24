@@ -9,6 +9,7 @@ import type {
 } from './g4-course-catalog-coverage';
 import {G4_L9_P4_REPRESENTATIVE_SLICE} from './g4-l9-p4-representative-slice.generated';
 import {G4_L9_P5_F08_OCCURRENCE_32_STRESS} from './g4-l9-p5-f08-occurrence-32-stress.generated';
+import {G4_L9_P5_1_OCCURRENCE_29_BOUNDED} from './g4-l9-p5-1-occurrence-29-bounded.generated';
 import type {
   PageOnlyLessonGlossaryEntry,
   PageOnlyLessonPlayerDescriptor,
@@ -17,13 +18,15 @@ import type {
 } from './whole-lesson-player-descriptor';
 
 export const G4_L9_PRODUCT_BRIDGE_CALIBRATION_ID =
-  G4_L9_P5_F08_OCCURRENCE_32_STRESS.calibrationId;
+  G4_L9_P5_1_OCCURRENCE_29_BOUNDED.calibrationId;
 export const G4_L9_P4_PRODUCT_BRIDGE_CALIBRATION_ID =
   G4_L9_P4_REPRESENTATIVE_SLICE.calibrationId;
 export const G4_L9_PRODUCT_BRIDGE_SELECTED_ANIMATION_IDS = Object.freeze(
   G4_L9_P4_REPRESENTATIVE_SLICE.pages
     .filter((page) =>
       page.registered ||
+      page.sourceOccurrence ===
+        G4_L9_P5_1_OCCURRENCE_29_BOUNDED.page.sourceOccurrence ||
       page.sourceOccurrence ===
         G4_L9_P5_F08_OCCURRENCE_32_STRESS.page.sourceOccurrence,
     )
@@ -67,10 +70,12 @@ function courseLabel(text: string, locale: 'en' | 'es'): SourceBoundLabel {
 
 function assertPrivateRegistration(animationId: string): void {
   const registration = animationModuleRegistration(animationId);
-  const expectedCalibration = animationId ===
-    G4_L9_P5_F08_OCCURRENCE_32_STRESS.page.animationId
-    ? G4_L9_P5_F08_OCCURRENCE_32_STRESS.calibrationId
-    : G4_L9_P4_REPRESENTATIVE_SLICE.calibrationId;
+  const expectedCalibration =
+    animationId === G4_L9_P5_1_OCCURRENCE_29_BOUNDED.page.animationId
+      ? G4_L9_P5_1_OCCURRENCE_29_BOUNDED.calibrationId
+      : animationId === G4_L9_P5_F08_OCCURRENCE_32_STRESS.page.animationId
+        ? G4_L9_P5_F08_OCCURRENCE_32_STRESS.calibrationId
+        : G4_L9_P4_REPRESENTATIVE_SLICE.calibrationId;
   if (
     !hasAnimationModule(animationId) ||
     registration?.maturity !== 'private-current-js' ||
@@ -105,6 +110,8 @@ export function buildG4L9ProductBridgeDescriptor(
     }
     const isP5Occurrence = frozen.sourceOccurrence ===
       G4_L9_P5_F08_OCCURRENCE_32_STRESS.page.sourceOccurrence;
+    const isP51Occurrence = frozen.sourceOccurrence ===
+      G4_L9_P5_1_OCCURRENCE_29_BOUNDED.page.sourceOccurrence;
     if (
       isP5Occurrence &&
       (
@@ -118,7 +125,20 @@ export function buildG4L9ProductBridgeDescriptor(
     ) {
       throw new Error('G4 L9 P5 occurrence-32 source identity drifted');
     }
-    const registered = frozen.registered || isP5Occurrence;
+    if (
+      isP51Occurrence &&
+      (
+        animationId !== G4_L9_P5_1_OCCURRENCE_29_BOUNDED.page.animationId ||
+        frozen.placementId !==
+          G4_L9_P5_1_OCCURRENCE_29_BOUNDED.page.placementId ||
+        frozen.assetId !== G4_L9_P5_1_OCCURRENCE_29_BOUNDED.page.assetId ||
+        frozen.sourceSwfSha256 !==
+          G4_L9_P5_1_OCCURRENCE_29_BOUNDED.page.sourceSwfSha256
+      )
+    ) {
+      throw new Error('G4 L9 P5.1 occurrence-29 source identity drifted');
+    }
+    const registered = frozen.registered || isP5Occurrence || isP51Occurrence;
     return Object.freeze({
       placementId: frozen.placementId,
       previousPlacementId: index > 0
@@ -141,22 +161,28 @@ export function buildG4L9ProductBridgeDescriptor(
             kind: 'registered' as const,
             moduleKey: animationId,
             runtimeQuery: Object.freeze({
-              frameDomain: isP5Occurrence
-                ? G4_L9_P5_F08_OCCURRENCE_32_STRESS.page.frameDomain
-                : frozen.frameDomain,
+              frameDomain: isP51Occurrence
+                ? G4_L9_P5_1_OCCURRENCE_29_BOUNDED.page.frameDomain
+                : isP5Occurrence
+                  ? G4_L9_P5_F08_OCCURRENCE_32_STRESS.page.frameDomain
+                  : frozen.frameDomain,
               language: 'fixed-en' as const,
-              replaySeedCycle: animationId === 'course-g04-l09-gs-002' ? 10 : 7,
-              scenario: isP5Occurrence
-                ? G4_L9_P5_F08_OCCURRENCE_32_STRESS.page.scenario
-                : animationId === 'course-g04-l09-gs-002'
-                  ? 'gs002-advanced-product'
-                  : 'p4-product-behavior',
+              replaySeedCycle: isP51Occurrence
+                ? 4
+                : animationId === 'course-g04-l09-gs-002' ? 10 : 7,
+              scenario: isP51Occurrence
+                ? G4_L9_P5_1_OCCURRENCE_29_BOUNDED.page.scenario
+                : isP5Occurrence
+                  ? G4_L9_P5_F08_OCCURRENCE_32_STRESS.page.scenario
+                  : animationId === 'course-g04-l09-gs-002'
+                    ? 'gs002-advanced-product'
+                    : 'p4-product-behavior',
               seed: '4092026',
             }),
           })
         : Object.freeze({
             kind: 'unavailable' as const,
-            reason: 'outside-frozen-g4-l9-p4-plus-p5-bounded-admissions',
+            reason: 'outside-frozen-g4-l9-p4-plus-p5-plus-p5-1-bounded-admissions',
           }),
       runtimeEvidenceBoundary: registered
         ? Object.freeze({
@@ -189,8 +215,11 @@ export function buildG4L9ProductBridgeDescriptor(
   return Object.freeze({
     schemaVersion: 2,
     descriptorKind: 'private-page-only-product-bridge',
-    descriptorId: G4_L9_P5_F08_OCCURRENCE_32_STRESS.descriptorId,
+    descriptorId: G4_L9_P5_1_OCCURRENCE_29_BOUNDED.descriptorId,
     calibrationId: G4_L9_PRODUCT_BRIDGE_CALIBRATION_ID,
+    // Keep the private bridge session lineage stable so P5 review progress and
+    // its immutable browser regression remain readable by this bounded
+    // successor. Occurrence 29 still owns a distinct asset-profile release ID.
     releaseId: G4_L9_P5_F08_OCCURRENCE_32_STRESS.releaseId,
     course: Object.freeze({
       grade: 4,
@@ -210,8 +239,8 @@ export function buildG4L9ProductBridgeDescriptor(
       sourceXmlPath: lesson.source.lessonXmlPath,
       sourceXmlSha256: lesson.source.lessonXmlSha256,
       sequenceAuthority: 'course-xml-occurrence',
-      candidateFreezeManifestPath: G4_L9_P5_F08_OCCURRENCE_32_STRESS.freeze.path,
-      candidateFreezeManifestSha256: G4_L9_P5_F08_OCCURRENCE_32_STRESS.freeze.sha256,
+      candidateFreezeManifestPath: G4_L9_P5_1_OCCURRENCE_29_BOUNDED.freeze.path,
+      candidateFreezeManifestSha256: G4_L9_P5_1_OCCURRENCE_29_BOUNDED.freeze.sha256,
     }),
     persistence: Object.freeze({
       schemaVersion: 1,
@@ -250,7 +279,7 @@ export function buildG4L9ProductBridgeDescriptor(
     glossary,
     productBridge: Object.freeze({
       selectedAnimationIds: G4_L9_PRODUCT_BRIDGE_SELECTED_ANIMATION_IDS,
-      registeredAnimationCount: 15,
+      registeredAnimationCount: 16,
       pageOnlyDescriptorMemberCount: 43,
       acceptanceEffects: Object.freeze({
         authoritativeOriginalRuntime: false,

@@ -38,6 +38,14 @@ export interface G4L9P4GlossaryHandler {
   readonly resolution: 'exact-screen-key-term' | 'explicit-source-bound-alias';
 }
 
+export interface G4L9P4RandomCycle {
+  readonly adapter: 'rndAudio-source-array-seeded-cycle-v1';
+  readonly sourceChoices: readonly ['S1', 'S2', 'S3', 'S4'];
+  readonly actionSha256: string;
+  readonly terminalActionSha256: string;
+  readonly terminalCorrectCount: 4;
+}
+
 export interface G4L9P4PageConfig {
   readonly animationId: string;
   readonly placementId: string;
@@ -61,7 +69,9 @@ export interface G4L9P4PageConfig {
   readonly glossaryHandlers?: readonly G4L9P4GlossaryHandler[];
   readonly hostContractSymbols?: readonly string[];
   readonly randomQuestionAdapter?: 'doGetRndQuest-maintained-seeded-order-v1';
+  readonly randomCycle?: G4L9P4RandomCycle;
   readonly scenarioId?: string;
+  readonly scenarioLabel?: string;
   readonly legacyNetworkPolicy: 'deny-by-default';
   readonly f08ScaleOut: false | 'not-applicable';
 }
@@ -76,7 +86,14 @@ export interface G4L9P4InteractionState {
   readonly questionIndex: number;
   readonly score: number;
   readonly attempts: number;
+  readonly tryCount: number;
   readonly feedback: G4L9P4Feedback;
+  readonly choiceOrder: readonly number[];
+  readonly choiceCycleIndex: number;
+  readonly choiceIndex: number;
+  readonly choiceLabel: string;
+  readonly placedCorrect: readonly string[];
+  readonly lastDragSourceInstance: string | null;
   readonly revealed: boolean;
   readonly audioLifecycle: 'idle' | 'requested' | 'stopped' | 'unavailable';
   readonly blockedLegacyIntents: number;
@@ -87,6 +104,7 @@ export type G4L9P4Event =
   | Readonly<{type: 'start'}>
   | Readonly<{type: 'reveal'}>
   | Readonly<{type: 'answer'; option: number}>
+  | Readonly<{type: 'drag'; sourceInstance: string}>
   | Readonly<{type: 'next'}>
   | Readonly<{type: 'replay'; replay: number}>
   | Readonly<{type: 'audio-request'}>
@@ -140,6 +158,16 @@ export function createG4L9P4FeedbackHostRequest(
   state: G4L9P4InteractionState,
   correct: boolean,
 ): LessonHostRequest {
+  if (config.randomCycle) {
+    return Object.freeze({
+      type: 'record-practice-feedback' as const,
+      interactionId:
+        `${config.animationId}-${state.choiceLabel.toLowerCase()}-try${state.tryCount + 1}`,
+      outcome: correct ? 'correct' as const : 'incorrect' as const,
+      branchIndex: state.choiceIndex + 1,
+      branchCount: config.randomCycle.sourceChoices.length,
+    });
+  }
   return config.behavior === 'final-quiz'
     ? Object.freeze({
         type: 'record-fq-score' as const,
@@ -186,6 +214,13 @@ export function createG4L9P4InteractionState(
   seed: number,
   replay = 0,
 ): G4L9P4InteractionState {
+  const choiceOrder = config.randomCycle
+    ? buildG4L9P4SeededOrder(
+        config.randomCycle.sourceChoices.length,
+        seed + config.expectedOptionOffset,
+      )
+    : Object.freeze([] as number[]);
+  const choiceIndex = choiceOrder[0] ?? 0;
   return Object.freeze({
     seed: normalizeG4L9P4Seed(seed),
     replay: Math.max(0, finiteInteger(replay)),
@@ -193,7 +228,14 @@ export function createG4L9P4InteractionState(
     questionIndex: 0,
     score: 0,
     attempts: 0,
+    tryCount: 0,
     feedback: 'idle',
+    choiceOrder,
+    choiceCycleIndex: 0,
+    choiceIndex,
+    choiceLabel: config.randomCycle?.sourceChoices[choiceIndex] ?? '',
+    placedCorrect: Object.freeze([]),
+    lastDragSourceInstance: null,
     revealed: false,
     audioLifecycle: config.audio ? 'idle' : 'unavailable',
     blockedLegacyIntents: 0,
@@ -209,7 +251,9 @@ export function reduceG4L9P4Interaction(
   if (event.type === 'replay') {
     return createG4L9P4InteractionState(
       config,
-      state.seed + Math.max(1, finiteInteger(event.replay, 1)),
+      config.randomCycle
+        ? state.seed
+        : state.seed + Math.max(1, finiteInteger(event.replay, 1)),
       event.replay,
     );
   }
@@ -238,6 +282,39 @@ export function reduceG4L9P4Interaction(
       networkCalls: 0,
     });
   }
+  if (
+    event.type === 'drag' &&
+    config.randomCycle &&
+    state.phase === 'question'
+  ) {
+    const outcome = g4L9P4DragOutcome(config, event.sourceInstance);
+    if (!outcome) return state;
+    const correct = outcome === 'correct';
+    const alreadyPlaced = state.placedCorrect.includes(event.sourceInstance);
+    const placedCorrect = correct && !alreadyPlaced
+      ? Object.freeze([...state.placedCorrect, event.sourceInstance])
+      : state.placedCorrect;
+    const terminal =
+      placedCorrect.length >= config.randomCycle.terminalCorrectCount;
+    const nextCycleIndex = terminal
+      ? state.choiceCycleIndex
+      : (state.choiceCycleIndex + 1) % state.choiceOrder.length;
+    const nextChoiceIndex = state.choiceOrder[nextCycleIndex] ?? 0;
+    return Object.freeze({
+      ...state,
+      attempts: state.attempts + 1,
+      tryCount: state.tryCount + 1,
+      feedback: correct ? 'correct' : 'incorrect',
+      phase: terminal ? 'final' : 'feedback',
+      score: placedCorrect.length,
+      questionIndex: nextCycleIndex,
+      choiceCycleIndex: nextCycleIndex,
+      choiceIndex: nextChoiceIndex,
+      choiceLabel: config.randomCycle.sourceChoices[nextChoiceIndex]!,
+      placedCorrect,
+      lastDragSourceInstance: event.sourceInstance,
+    });
+  }
   if (event.type === 'answer' && state.phase === 'question') {
     const correct = event.option === expectedG4L9P4Option(
       config,
@@ -253,6 +330,14 @@ export function reduceG4L9P4Interaction(
     });
   }
   if (event.type === 'next' && state.phase === 'feedback') {
+    if (config.randomCycle) {
+      return Object.freeze({
+        ...state,
+        phase: 'question',
+        feedback: 'idle',
+        revealed: false,
+      });
+    }
     const last = state.questionIndex + 1 >= config.questionCount;
     return Object.freeze({
       ...state,

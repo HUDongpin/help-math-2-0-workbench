@@ -88,14 +88,14 @@ test('production profile is the exact 929 + 185 deployable byte closure', async 
   }
 });
 
-test('candidate profile holds 234 runtime files and 204 separately frozen evidence files', async () => {
-  assert.deepEqual(candidateProfile.counts, {runtime: 234, evidence: 204});
+test('candidate profile holds 236 runtime files and 204 separately frozen evidence files', async () => {
+  assert.deepEqual(candidateProfile.counts, {runtime: 236, evidence: 204});
   assert.deepEqual(candidateProfile.authority, {
     productionApproved: false,
     releaseEligible: false,
     published: false,
   });
-  assert.equal(currentJsCandidateAssetRecords().length, 234);
+  assert.equal(currentJsCandidateAssetRecords().length, 236);
   const disk = (await walk(path.join(candidateRoot, 'courses')))
     .map((file) => `courses/${path.relative(
       path.join(candidateRoot, 'courses'),
@@ -133,6 +133,29 @@ test('candidate profile holds 234 runtime files and 204 separately frozen eviden
       bytes: 2047,
       sha256:
         'b67b554435b58bf300af896ac2be92c930349ad2610a0d8188f131a2f2dac6b2',
+    },
+  ]);
+  const occurrence29 = candidateProfile.entries.filter(
+    ({releaseId}) =>
+      releaseId === 'private-g4-l9-p5-1-occurrence-29-bounded-v1',
+  );
+  assert.deepEqual(occurrence29.map(({assetPath, bytes, sha256}) => ({
+    assetPath,
+    bytes,
+    sha256,
+  })), [
+    {
+      assetPath:
+        'courses/course-g04-l09-ti-004/audio/source-narration-undetermined.mp3',
+      bytes: 135744,
+      sha256:
+        '52fe9807f186b5c50ae485bc1d818551290c59204df7d0dda3783b61321d4810',
+    },
+    {
+      assetPath: 'courses/course-g04-l09-ti-004/canvas-renderer.js',
+      bytes: 2320,
+      sha256:
+        '768e13522e4c29b621686f22e2c6f9c2e017ff2b314d650d353e6c84272415e6',
     },
   ]);
 

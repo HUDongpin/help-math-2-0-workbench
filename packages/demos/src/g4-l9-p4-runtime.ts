@@ -202,7 +202,7 @@ function rendererFor(config: G4L9P4PageConfig) {
       );
     const next = () => {
       const resetRequest: LessonHostRequest =
-        config.behavior === "final-quiz"
+        config.randomCycle || config.behavior === "final-quiz"
           ? { type: "reset-practice-feedback" }
           : {
               type: "reset-practice-feedback",
@@ -227,6 +227,24 @@ function rendererFor(config: G4L9P4PageConfig) {
     const drag = (sourceInstance: string) => {
       const outcome = g4L9P4DragOutcome(config, sourceInstance);
       if (!outcome || state.phase !== "question") return;
+      if (config.randomCycle) {
+        const correct = outcome === "correct";
+        setState((value) =>
+          reduceG4L9P4Interaction(config, value, {
+            type: "drag",
+            sourceInstance,
+          }),
+        );
+        replayHostClearedRef.current = false;
+        const request = createG4L9P4FeedbackHostRequest(
+          config,
+          state,
+          correct,
+        );
+        const decision = hostRequest(props.onLessonHostRequest, request);
+        setLastHostDecision(decision?.status ?? "unhandled");
+        return;
+      }
       const expected = expectedG4L9P4Option(
         config,
         state.questionIndex,
@@ -292,7 +310,13 @@ function rendererFor(config: G4L9P4PageConfig) {
             { onClick: begin, type: "button" },
             spanish ? "Comenzar" : "Start",
           )
-        : state.phase === "question"
+        : state.phase === "question" && config.randomCycle
+          ? createElement(
+              "p",
+              { "data-source-choice": state.choiceLabel },
+              `${spanish ? "Elección de origen" : "Source choice"}: ${state.choiceLabel}`,
+            )
+          : state.phase === "question"
           ? createElement(
               "div",
               { className: "g4-l9-p4__answers" },
@@ -367,8 +391,18 @@ function rendererFor(config: G4L9P4PageConfig) {
         "data-question-index": state.questionIndex + 1,
         "data-score": state.score,
         "data-attempts": state.attempts,
+        "data-try-count": state.tryCount,
+        "data-choice-index": state.choiceIndex,
+        "data-choice-label": state.choiceLabel,
+        "data-choice-order": state.choiceOrder.join(","),
+        "data-correct-placement-count": state.placedCorrect.length,
+        "data-correct-placements": state.placedCorrect.join(","),
+        "data-last-drag-source-instance": state.lastDragSourceInstance ?? "",
+        "data-terminal": state.phase === "final" ? "true" : "false",
         "data-blocked-legacy-intents": state.blockedLegacyIntents,
         "data-do-get-rnd-quest-adapter": config.randomQuestionAdapter ?? "not-applicable",
+        "data-random-cycle-adapter":
+          config.randomCycle?.adapter ?? "not-applicable",
         "data-drag-correct": config.dragBindings
           ?.filter((binding) => binding.outcome === "correct")
           .map((binding) => binding.sourceInstance)
@@ -399,7 +433,9 @@ function rendererFor(config: G4L9P4PageConfig) {
           createElement(
             "p",
             null,
-            `${spanish ? "Pregunta" : "Question"} ${Math.min(state.questionIndex + 1, config.questionCount)} / ${config.questionCount}`,
+            config.randomCycle
+              ? `${spanish ? "Elección" : "Choice"} ${state.choiceLabel} · ${spanish ? "Intentos" : "Tries"} ${state.tryCount}`
+              : `${spanish ? "Pregunta" : "Question"} ${Math.min(state.questionIndex + 1, config.questionCount)} / ${config.questionCount}`,
           ),
           questionControls,
           state.phase === "question" && config.dragBindings
@@ -416,6 +452,9 @@ function rendererFor(config: G4L9P4PageConfig) {
                     "button",
                     {
                       key: binding.sourceInstance,
+                      disabled: state.placedCorrect.includes(
+                        binding.sourceInstance,
+                      ),
                       onClick: () => drag(binding.sourceInstance),
                       type: "button",
                     },
@@ -552,9 +591,9 @@ export function createG4L9P4Module(config: G4L9P4PageConfig): AnimationModule {
     scenarios: Object.freeze([
       Object.freeze({
         id: scenarioId,
-        label: config.scenarioId
+        label: config.scenarioLabel ?? (config.scenarioId
           ? "P5 bounded F08 occurrence-32 stress behavior"
-          : "P4 deterministic product behavior",
+          : "P4 deterministic product behavior"),
         description:
           "Maintained engineering state machine; original-runtime parity is not established.",
       }),
@@ -585,7 +624,7 @@ export function createG4L9P4Module(config: G4L9P4PageConfig): AnimationModule {
         ])
       : Object.freeze([]),
     interactiveAudioAssets:
-      config.audio && config.randomQuestionAdapter
+      config.audio && (config.randomQuestionAdapter || config.randomCycle)
         ? Object.freeze([
             Object.freeze({
               id: `${config.animationId}-narration`,
@@ -606,7 +645,7 @@ export function createG4L9P4Module(config: G4L9P4PageConfig): AnimationModule {
           ])
         : undefined,
     lessonHost: Object.freeze({
-      capabilities: config.randomQuestionAdapter
+      capabilities: config.randomQuestionAdapter || config.randomCycle
         ? Object.freeze([
             "audio",
             "glossary",

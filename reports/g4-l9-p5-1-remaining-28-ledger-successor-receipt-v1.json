@@ -1,0 +1,402 @@
+{
+  "schemaVersion": 1,
+  "artifactKind": "g4-l9-p5-1-remaining-ledger-successor-correction",
+  "taskId": "HELP-MATH-G4-L9-P5-1-OCCURRENCE-29-BOUNDED-IMPLEMENTATION-20260824",
+  "immutableHistoryRewritten": false,
+  "anchors": {
+    "p3": {
+      "path": "catalog/g4-l9-page-only-migration-preflight-v1.json",
+      "sha256": "7a6e018b65e9df4dd523d775a9bf7e079644eed083e1e1781e4a41763a3ae2f4"
+    },
+    "p4": {
+      "path": "catalog/g4-l9-p4-representative-slice-freeze-v1.json",
+      "sha256": "72f9d7af89d689378772a8d259085e10800a88b0f8c5914c8398d61902074ace"
+    },
+    "p5": {
+      "path": "catalog/g4-l9-p5-f08-occurrence-32-stress-freeze-v1.json",
+      "sha256": "6b2bfffae4aedf30cea8fa5ec8bcd2e376a057a61b7cfd4af7ef7b0bf5e7d377"
+    },
+    "p5Generator": {
+      "path": "scripts/build-g4-l9-p5-f08-occurrence-32-stress.mjs",
+      "sha256": "0753300f7fd9e46052ff6202c407efe14f7f60b5de8b359c1aa07311a5907978"
+    }
+  },
+  "sourceOrdered43RowProjection": {
+    "definition": "P3 canonical row projection",
+    "count": 43,
+    "sha256": "313e6e9b9fb30facd55ecddf74eb039ab8cdb4595f7bd7b145dda67a4f1aa0db"
+  },
+  "correction": {
+    "staleP5Field": "productBoundary.remainingAdvancedManual",
+    "staleP5Value": 7,
+    "reason": "The immutable P5 artifact carried the P4 remaining advanced-manual count and did not subtract admitted occurrence 32.",
+    "correctedAfterP5": 6,
+    "successfulP51Semantics": {
+      "factoryAdmitted": 5,
+      "factoryRemaining": 22,
+      "advancedManualAdmitted": 11,
+      "advancedManualRemaining": 5,
+      "privateRegistered": 16,
+      "privateUnavailable": 27,
+      "formal": {
+        "denominator": 1751,
+        "occurrences": 426,
+        "uniqueRenderers": 425,
+        "lessons": 8
+      }
+    }
+  },
+  "rows": [
+    {
+      "sourceOccurrence": 1,
+      "placementId": "g04-l09-placement-001",
+      "animationId": "course-g04-l09-ir-001",
+      "implementationLane": "advanced-manual",
+      "admitted": true,
+      "admittedBy": "g4-l9-p4-representative-slice-14-v1"
+    },
+    {
+      "sourceOccurrence": 2,
+      "placementId": "g04-l09-placement-002",
+      "animationId": "course-g04-l09-rw-002",
+      "implementationLane": "factory",
+      "admitted": true,
+      "admittedBy": "g4-l9-p4-representative-slice-14-v1"
+    },
+    {
+      "sourceOccurrence": 3,
+      "placementId": "g04-l09-placement-003",
+      "animationId": "course-g04-l09-rw-003",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 4,
+      "placementId": "g04-l09-placement-004",
+      "animationId": "course-g04-l09-rw-004",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 5,
+      "placementId": "g04-l09-placement-005",
+      "animationId": "course-g04-l09-vb-002",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 6,
+      "placementId": "g04-l09-placement-006",
+      "animationId": "course-g04-l09-vb-003",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 7,
+      "placementId": "g04-l09-placement-007",
+      "animationId": "course-g04-l09-vb-004",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 8,
+      "placementId": "g04-l09-placement-008",
+      "animationId": "course-g04-l09-vb-005",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 9,
+      "placementId": "g04-l09-placement-009",
+      "animationId": "course-g04-l09-vb-006",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 10,
+      "placementId": "g04-l09-placement-010",
+      "animationId": "course-g04-l09-vb-007",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 11,
+      "placementId": "g04-l09-placement-011",
+      "animationId": "course-g04-l09-vb-008",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 12,
+      "placementId": "g04-l09-placement-012",
+      "animationId": "course-g04-l09-vb-009",
+      "implementationLane": "factory",
+      "admitted": true,
+      "admittedBy": "g4-l9-p4-representative-slice-14-v1"
+    },
+    {
+      "sourceOccurrence": 13,
+      "placementId": "g04-l09-placement-013",
+      "animationId": "course-g04-l09-vb-010",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 14,
+      "placementId": "g04-l09-placement-014",
+      "animationId": "course-g04-l09-vb-011",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 15,
+      "placementId": "g04-l09-placement-015",
+      "animationId": "course-g04-l09-in-002",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 16,
+      "placementId": "g04-l09-placement-016",
+      "animationId": "course-g04-l09-in-003",
+      "implementationLane": "factory",
+      "admitted": true,
+      "admittedBy": "g4-l9-p4-representative-slice-14-v1"
+    },
+    {
+      "sourceOccurrence": 17,
+      "placementId": "g04-l09-placement-017",
+      "animationId": "course-g04-l09-in-004",
+      "implementationLane": "advanced-manual",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 18,
+      "placementId": "g04-l09-placement-018",
+      "animationId": "course-g04-l09-in-005",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 19,
+      "placementId": "g04-l09-placement-019",
+      "animationId": "course-g04-l09-in-006",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 20,
+      "placementId": "g04-l09-placement-020",
+      "animationId": "course-g04-l09-in-007",
+      "implementationLane": "advanced-manual",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 21,
+      "placementId": "g04-l09-placement-021",
+      "animationId": "course-g04-l09-in-008",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 22,
+      "placementId": "g04-l09-placement-022",
+      "animationId": "course-g04-l09-in-009",
+      "implementationLane": "factory",
+      "admitted": true,
+      "admittedBy": "g4-l9-p4-representative-slice-14-v1"
+    },
+    {
+      "sourceOccurrence": 23,
+      "placementId": "g04-l09-placement-023",
+      "animationId": "course-g04-l09-in-010",
+      "implementationLane": "advanced-manual",
+      "admitted": true,
+      "admittedBy": "g4-l9-p4-representative-slice-14-v1"
+    },
+    {
+      "sourceOccurrence": 24,
+      "placementId": "g04-l09-placement-024",
+      "animationId": "course-g04-l09-in-011",
+      "implementationLane": "factory",
+      "admitted": true,
+      "admittedBy": "g4-l9-p4-representative-slice-14-v1"
+    },
+    {
+      "sourceOccurrence": 25,
+      "placementId": "g04-l09-placement-025",
+      "animationId": "course-g04-l09-in-012",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 26,
+      "placementId": "g04-l09-placement-026",
+      "animationId": "course-g04-l09-in-013",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 27,
+      "placementId": "g04-l09-placement-027",
+      "animationId": "course-g04-l09-ti-002",
+      "implementationLane": "advanced-manual",
+      "admitted": true,
+      "admittedBy": "g4-l9-p4-representative-slice-14-v1"
+    },
+    {
+      "sourceOccurrence": 28,
+      "placementId": "g04-l09-placement-028",
+      "animationId": "course-g04-l09-ti-003",
+      "implementationLane": "advanced-manual",
+      "admitted": true,
+      "admittedBy": "g4-l9-p4-representative-slice-14-v1"
+    },
+    {
+      "sourceOccurrence": 29,
+      "placementId": "g04-l09-placement-029",
+      "animationId": "course-g04-l09-ti-004",
+      "implementationLane": "advanced-manual",
+      "admitted": true,
+      "admittedBy": "g4-l9-p5-1-occurrence-29-bounded-v1"
+    },
+    {
+      "sourceOccurrence": 30,
+      "placementId": "g04-l09-placement-030",
+      "animationId": "course-g04-l09-ti-005",
+      "implementationLane": "advanced-manual",
+      "admitted": true,
+      "admittedBy": "g4-l9-p4-representative-slice-14-v1"
+    },
+    {
+      "sourceOccurrence": 31,
+      "placementId": "g04-l09-placement-031",
+      "animationId": "course-g04-l09-ti-006",
+      "implementationLane": "advanced-manual",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 32,
+      "placementId": "g04-l09-placement-032",
+      "animationId": "course-g04-l09-ti-007",
+      "implementationLane": "advanced-manual",
+      "admitted": true,
+      "admittedBy": "g4-l9-p5-f08-occurrence-32-stress-v1"
+    },
+    {
+      "sourceOccurrence": 33,
+      "placementId": "g04-l09-placement-033",
+      "animationId": "course-g04-l09-gs-002",
+      "implementationLane": "advanced-manual",
+      "admitted": true,
+      "admittedBy": "g4-l9-p4-representative-slice-14-v1"
+    },
+    {
+      "sourceOccurrence": 34,
+      "placementId": "g04-l09-placement-034",
+      "animationId": "course-g04-l09-ts-002",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 35,
+      "placementId": "g04-l09-placement-035",
+      "animationId": "course-g04-l09-ts-003",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 36,
+      "placementId": "g04-l09-placement-036",
+      "animationId": "course-g04-l09-ts-004",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 37,
+      "placementId": "g04-l09-placement-037",
+      "animationId": "course-g04-l09-ts-005",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 38,
+      "placementId": "g04-l09-placement-038",
+      "animationId": "course-g04-l09-ts-006",
+      "implementationLane": "factory",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 39,
+      "placementId": "g04-l09-placement-039",
+      "animationId": "course-g04-l09-ts-007",
+      "implementationLane": "advanced-manual",
+      "admitted": false,
+      "admittedBy": null
+    },
+    {
+      "sourceOccurrence": 40,
+      "placementId": "g04-l09-placement-040",
+      "animationId": "course-g04-l09-ts-008",
+      "implementationLane": "advanced-manual",
+      "admitted": true,
+      "admittedBy": "g4-l9-p4-representative-slice-14-v1"
+    },
+    {
+      "sourceOccurrence": 41,
+      "placementId": "g04-l09-placement-041",
+      "animationId": "course-g04-l09-fq-001",
+      "implementationLane": "advanced-manual",
+      "admitted": true,
+      "admittedBy": "g4-l9-p4-representative-slice-14-v1"
+    },
+    {
+      "sourceOccurrence": 42,
+      "placementId": "g04-l09-placement-042",
+      "animationId": "course-g04-l09-fq-002",
+      "implementationLane": "advanced-manual",
+      "admitted": true,
+      "admittedBy": "g4-l9-p4-representative-slice-14-v1"
+    },
+    {
+      "sourceOccurrence": 43,
+      "placementId": "g04-l09-placement-043",
+      "animationId": "course-g04-l09-fq-003",
+      "implementationLane": "advanced-manual",
+      "admitted": false,
+      "admittedBy": null
+    }
+  ],
+  "scaleOut": {
+    "p3DecisionPreserved": "NO_GO_SCALE_OUT",
+    "p5DecisionPreserved": "NO_GO_F08_FAMILY_OR_43_PAGE_SCALE_OUT",
+    "familyF08": false,
+    "wholeLesson43Pages": false,
+    "nextP6Authorized": false
+  }
+}
