@@ -28,6 +28,12 @@ const candidateRoot = path.join(
   'candidate-assets/flash-assets',
   candidateProfile.version,
 );
+const requiredVercelBuildInputs = Object.freeze([
+  'apps/web/tests/private-preview-deployment-assets.test.ts',
+  'apps/web/tests/current-js-showcase-publication.test.ts',
+  'scripts/manage-current-js-asset-profiles.mjs',
+  'scripts/current-js-candidate-paths.mjs',
+]);
 
 const digest = (bytes: Buffer) =>
   createHash('sha256').update(bytes).digest('hex');
@@ -179,6 +185,48 @@ test('candidate profile holds 236 runtime files and 204 separately frozen eviden
     assert.equal(bytes.length, row.bytes, row.destination);
     assert.equal(digest(bytes), row.sha256, row.destination);
   }
+});
+
+test('Vercel deployment retains only the production asset verification closure', async () => {
+  const lines = (await readFile(path.join(projectRoot, '.vercelignore'), 'utf8'))
+    .split(/\r?\n/u)
+    .map((line) => line.trim())
+    .filter(Boolean);
+  assert(lines.includes('scripts/*'), 'scripts must remain excluded by default');
+  assert(lines.includes('apps/web/tests/*'), 'tests must remain excluded by default');
+  assert(
+    lines.includes('apps/web/candidate-assets/'),
+    'candidate assets must remain excluded from deployment',
+  );
+  for (const relativePath of requiredVercelBuildInputs) {
+    assert(
+      lines.includes(`!${relativePath}`),
+      `${relativePath} must be present in the Vercel build upload`,
+    );
+    await readFile(path.join(projectRoot, relativePath));
+  }
+  assert.equal(
+    lines.some((line) => line.startsWith('!apps/web/candidate-assets/')),
+    false,
+    'the build exception must not expose private candidate assets',
+  );
+
+  const packageJson = JSON.parse(await readFile(
+    path.join(webRoot, 'package.json'),
+    'utf8',
+  )) as {scripts?: Record<string, string>};
+  assert.equal(
+    packageJson.scripts?.build,
+    'npm run verify:asset-profiles:deployment && next build --webpack',
+  );
+  assert.equal(
+    packageJson.scripts?.['verify:asset-profiles:deployment'],
+    'node ../../scripts/manage-current-js-asset-profiles.mjs --check-production && npm run test:asset-profile:deployment',
+  );
+  assert.equal(
+    packageJson.scripts?.['verify:asset-profiles'],
+    'node ../../scripts/manage-current-js-asset-profiles.mjs --check && npm run test:asset-profile:production',
+  );
 });
 
 test('profile selection cannot turn candidate files into production with flags alone', () => {
