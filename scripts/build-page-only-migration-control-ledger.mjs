@@ -28,6 +28,8 @@ export const PREDECESSOR_HEAD =
   "60f356be9b34cabd3ca1aad15b6dd00babfc7e35";
 export const BASE_PREDECESSOR =
   "93fb79aa16e68d32edb43b864a1c8972d59b219f";
+export const CURRENTNESS_SUCCESSOR_ID =
+  "HELP-MATH-P1-1751-PAGE-ONLY-LEDGER-CURRENTNESS-SUCCESSOR-20260824";
 export const INPUT_PLAN = Object.freeze({
   path: "/Volumes/WestWorld/HELP MATH 2.0-g4-l5-l10-l11-integration/reports/help-math-426-page-only-baseline-input-plan-2026-08-22.json",
   sha256: "6d181ad88f0c0cd0e6094a4fff2ac4056a883f442e402b3aa9c69ac8c94a4764",
@@ -41,7 +43,7 @@ export const INPUT_RECEIPT = Object.freeze({
 });
 
 const LEDGER_SCHEMA_VERSION = 1;
-const GENERATOR_VERSION = "1.0.0";
+const GENERATOR_VERSION = "1.1.0";
 const DEFAULT_LEDGER_PATH = path.join(
   projectRoot,
   "catalog",
@@ -65,8 +67,8 @@ const EXPECTED = Object.freeze({
   registeredLessons: 8,
   remainingOccurrences: 1_325,
   courseShellCount: 0,
-  candidateOnlyOccurrences: 5,
-  candidateOnlyUniqueRenderers: 5,
+  candidateOnlyOccurrences: 20,
+  candidateOnlyUniqueRenderers: 20,
   complexityClassified: 198,
   factoryPages: 47,
   advancedManualPages: 0,
@@ -150,12 +152,12 @@ const AUTHORITATIVE_INPUTS = Object.freeze([
   }),
   Object.freeze({
     path: "catalog/completion-ledger.json",
-    expectedSha256: "53baa34d74b22af1e6199f6413d4706ca84786c3fe1c2f31f6c194c80b30aa8b",
+    expectedSha256: "8ec3eba102e8268ed90e9f37eb2221f36ff8d2bf95ea7449d389366188f448d9",
     role: "strict workspace diagnostics evidence only",
   }),
   Object.freeze({
     path: "catalog/lesson-release-ledger.json",
-    expectedSha256: "62733b4c2f2932532bec8eae8a9a7a0213764942e03ff55abee31880cbfbcce5",
+    expectedSha256: "2e824ee6515affe03c1656873300fd760d9ba60443410c738bcafa63a9809ed3",
     role: "atomic release and publication evidence",
   }),
   Object.freeze({
@@ -193,7 +195,7 @@ const SUPPLEMENTAL_INPUTS = Object.freeze([
   }),
   Object.freeze({
     path: "packages/demos/src/registry.generated.ts",
-    expectedSha256: "c29579a33fced3b75fffd372af890e264e465f349dce6496aeaead64d7d830c0",
+    expectedSha256: "12cb1bacf6ce9cd089b1639c8da2e41bcbba1e49eb7983549b8d97a2a0584271",
     role: "runnable module registry",
   }),
   Object.freeze({
@@ -208,7 +210,7 @@ const SUPPLEMENTAL_INPUTS = Object.freeze([
   }),
   Object.freeze({
     path: "apps/web/config/current-js-candidate-assets.v1.json",
-    expectedSha256: "b88760d0b561f16c46d35ab060e737520309363c7c62fc618cf6600bd730268c",
+    expectedSha256: "416df2150e56f658a669a8f1378f6007c2838f16cfcac36cf63f954fd3eba920",
     role: "candidate asset stock and authority boundary",
   }),
   Object.freeze({
@@ -1488,6 +1490,12 @@ export function validateLedgerContract(ledger) {
   invariant(ledger.schemaVersion === LEDGER_SCHEMA_VERSION,
     "ledger schemaVersion drifted");
   invariant(ledger.taskId === TASK_ID, "ledger taskId drifted");
+  invariant(
+    ledger.provenance?.currentnessSuccessor?.id === CURRENTNESS_SUCCESSOR_ID
+      && ledger.provenance.currentnessSuccessor.predecessorGeneratorVersion === "1.0.0"
+      && ledger.provenance.currentnessSuccessor.formalBaselineChanged === false,
+    "ledger currentness-successor provenance drifted",
+  );
   invariant(Array.isArray(ledger.rows)
     && ledger.rows.length === EXPECTED.occurrenceCount,
   `ledger must contain ${EXPECTED.occurrenceCount} rows`);
@@ -1600,7 +1608,7 @@ export function validateLedgerContract(ledger) {
     EXPECTED.candidateOnlyOccurrences
     && ledger.summary.currentJs.candidateOnlyUniqueRenderers ===
       EXPECTED.candidateOnlyUniqueRenderers,
-  "candidate-only inventory drifted");
+  `candidate-only inventory drifted: expected ${EXPECTED.candidateOnlyOccurrences}/${EXPECTED.candidateOnlyUniqueRenderers} occurrence/renderer, found ${ledger.summary.currentJs.candidateOnlyOccurrences}/${ledger.summary.currentJs.candidateOnlyUniqueRenderers}`);
   invariant(ledger.summary.currentJs.candidateToProductYield.state ===
     "not-established"
     && ledger.summary.currentJs.candidateToProductYield.numerator === null
@@ -1699,7 +1707,7 @@ export async function buildLedger() {
     && sourceFreeze.readOnlyEnforced === true
     && sourceFreeze.writableEntriesAfterFreeze === 0,
   "physical source freeze summary drifted");
-  invariant(candidateAssetProfile.counts?.runtime === 209
+  invariant(candidateAssetProfile.counts?.runtime === 236
     && candidateAssetProfile.counts?.evidence === 204
     && candidateAssetProfile.authority?.productionApproved === false
     && candidateAssetProfile.authority?.releaseEligible === false
@@ -1774,6 +1782,13 @@ export async function buildLedger() {
       externalInputBoundary:
         "Plan/receipt bytes are preflight-bound external frozen evidence; generation consumes the hash-bound repository inputs below.",
       repositoryInputs: inputBindings,
+      currentnessSuccessor: {
+        id: CURRENTNESS_SUCCESSOR_ID,
+        predecessorGeneratorVersion: "1.0.0",
+        formalBaselineChanged: false,
+        reason:
+          "Rebind current generated/private input bytes and the regenerated strict/release diagnostics ledgers while preserving the P1 formal baseline.",
+      },
     },
     scope: {
       ownerDecision: "page-only-active-lesson-animation-occurrences",
@@ -1961,6 +1976,7 @@ export function renderDashboard(ledger) {
 # HELP Math 1,751-page Page-Only migration control dashboard
 
 - Task: \`${ledger.taskId}\`
+- Currentness successor: \`${ledger.provenance.currentnessSuccessor.id}\` (formal baseline changed = ${ledger.provenance.currentnessSuccessor.formalBaselineChanged})
 - Predecessor: \`${ledger.provenance.predecessorHead}\`
 - Scope: **${ledger.scope.lessonCount} Lessons / ${ledger.scope.occurrenceCount.toLocaleString("en-US")} active page occurrences / ${ledger.scope.courseShellCount} legacy course shells**
 
@@ -2103,6 +2119,7 @@ ${ledger.authorizationNeeds.map((need) => `- ${need}`).join("\n")}
 
 - Input plan: \`${ledger.provenance.inputPlan.path}\` / \`${ledger.provenance.inputPlan.sha256}\`.
 - Frozen P0 receipt: \`${ledger.provenance.inputReceipt.path}\` / \`${ledger.provenance.inputReceipt.sha256}\`.
+- Currentness successor: \`${ledger.provenance.currentnessSuccessor.id}\`; predecessor generator ${ledger.provenance.currentnessSuccessor.predecessorGeneratorVersion}; formal baseline unchanged.
 - Generator: \`${ledger.generator.path}\` / \`${ledger.generator.sha256}\`.
 - Canonical JSON: \`catalog/page-only-migration-control-ledger.json\`.
 `;
@@ -2178,8 +2195,8 @@ export function parseArguments(argv) {
 
 function usage() {
   return `Usage:
-  node --import tsx scripts/build-page-only-migration-control-ledger.mjs [--json]
-  node --import tsx scripts/build-page-only-migration-control-ledger.mjs --check [--json]
+  npm run ledger:page-only:build -- [--json]
+  npm run ledger:page-only:check -- [--json]
 
 Default mode deterministically generates the canonical 1,751-occurrence JSON
 ledger and its derived Markdown dashboard. --check is byte-for-byte read-only.`;

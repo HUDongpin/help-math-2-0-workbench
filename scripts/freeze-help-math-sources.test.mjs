@@ -6,6 +6,7 @@ import {
   mkdir,
   readFile,
   readdir,
+  realpath,
   rm,
   symlink,
   writeFile,
@@ -19,6 +20,7 @@ import {
   parseArguments,
   parseManifest,
   replaceFreezeFilesAtomically,
+  resolveDefaultVerificationSource,
   serializeManifest,
   verifyCompatibilitySymlink,
   verifyManifest,
@@ -277,6 +279,25 @@ test("compatibility verification accepts only a symlink to the canonical directo
     await assert.rejects(
       verifyCompatibilitySymlink({ compatibility, canonical }),
       /not .*canonical|not \/|not.*source/i,
+    );
+  } finally {
+    await removeFixture(root);
+  }
+});
+
+test("default verification follows a linked-worktree canonical alias without authorizing writes", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "help-math-freeze-worktree-link-"));
+  const canonical = path.join(root, "worktree", "source-assets", "flash", "HELP MATH_ORIGINAL FILES");
+  const compatibility = path.join(root, "worktree", "HELP MATH_ORIGINAL FILES");
+  const sharedSource = path.join(root, "shared", "source-assets", "flash", "HELP MATH_ORIGINAL FILES");
+  try {
+    await mkdir(sharedSource, { recursive: true });
+    await mkdir(path.dirname(canonical), { recursive: true });
+    await symlink(sharedSource, canonical, "dir");
+
+    assert.deepEqual(
+      await resolveDefaultVerificationSource({ canonical, compatibility }),
+      { sourceRoot: await realpath(sharedSource), defaultPaths: false },
     );
   } finally {
     await removeFixture(root);

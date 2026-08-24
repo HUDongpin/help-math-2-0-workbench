@@ -129,6 +129,45 @@ async function resolveSourceRoot() {
   );
 }
 
+async function resolveDefaultVerificationSource({
+  canonical = canonicalPath,
+  compatibility = compatibilityPath,
+} = {}) {
+  const canonicalKind = await pathKind(canonical);
+  if (canonicalKind === "directory") {
+    return { sourceRoot: canonical, defaultPaths: true };
+  }
+  if (canonicalKind === "symlink") {
+    const resolved = await realpath(canonical);
+    const resolvedKind = await pathKind(resolved);
+    if (resolvedKind !== "directory") {
+      throw new Error(
+        `Canonical source alias must resolve to a real directory, not ${resolvedKind}: ${canonical}`,
+      );
+    }
+    return { sourceRoot: resolved, defaultPaths: false };
+  }
+
+  const compatibilityKind = await pathKind(compatibility);
+  if (compatibilityKind === "directory") {
+    return { sourceRoot: compatibility, defaultPaths: false };
+  }
+  if (compatibilityKind === "symlink") {
+    const resolved = await realpath(compatibility);
+    const resolvedKind = await pathKind(resolved);
+    if (resolvedKind !== "directory") {
+      throw new Error(
+        `Compatibility source alias must resolve to a real directory, not ${resolvedKind}: ${compatibility}`,
+      );
+    }
+    return { sourceRoot: resolved, defaultPaths: false };
+  }
+
+  throw new Error(
+    `Cannot find ${legacyName} at ${compatibility} or ${canonical}`,
+  );
+}
+
 function isWithin(parent, candidate) {
   const relative = path.relative(parent, candidate);
   return relative === "" || (!relative.startsWith(`..${path.sep}`) && relative !== "..");
@@ -169,6 +208,14 @@ async function createFreezeContext({
 }
 
 async function contextFromArguments(options) {
+  if (!options.sourceRoot && options.mode === "verify") {
+    const resolved = await resolveDefaultVerificationSource();
+    return createFreezeContext({
+      sourceRoot: resolved.sourceRoot,
+      catalogRoot: options.catalogRoot ?? defaultCatalogRoot,
+      defaultPaths: resolved.defaultPaths && options.defaultPaths,
+    });
+  }
   const sourceRoot = options.sourceRoot ?? await resolveSourceRoot();
   return createFreezeContext({
     sourceRoot,
@@ -722,6 +769,7 @@ export {
   parseArguments,
   parseManifest,
   replaceFreezeFilesAtomically,
+  resolveDefaultVerificationSource,
   serializeManifest,
   verifyCompatibilitySymlink,
   verifyManifest,

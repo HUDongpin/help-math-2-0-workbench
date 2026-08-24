@@ -83,6 +83,9 @@ test("joins 1,361 resolved and 390 missing source occurrences without collapsing
 
 test("retains exactly 426 registered occurrences, 425 renderers, and eight Lessons", async () => {
   const ledger = await ledgerPromise;
+  assert.equal(ledger.generator.version, "1.1.0");
+  assert.equal(ledger.provenance.currentnessSuccessor.formalBaselineChanged,
+    false);
   const registeredRows = ledger.rows.filter(
     ({registeredCurrentJs}) => registeredCurrentJs.satisfied,
   );
@@ -117,7 +120,7 @@ test("keeps candidate stock and every downstream gate independent", async () => 
   const candidateOnly = ledger.rows.filter(
     ({candidate}) => candidate.candidateOnly,
   );
-  assert.equal(candidateOnly.length, 5);
+  assert.equal(candidateOnly.length, 20);
   assert.equal(candidateOnly.every(
     ({registeredCurrentJs}) => !registeredCurrentJs.satisfied), true);
   assert.deepEqual(ledger.summary.currentJs.candidateToProductYield, {

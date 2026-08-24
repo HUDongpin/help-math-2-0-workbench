@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedMarker": "sha256:43e96560ec5466df1619d689807ccbd416c0c784cfe694488e3fa6aecc7713e5",
+  "generatedMarker": "sha256:5f7f11763233d864f34b1850537aabdfe54b846968d766a798aaeef74f340e7b",
   "generator": {
     "path": "scripts/build-completion-ledger.mjs",
     "version": "1.1.0"
@@ -14,12 +14,13 @@
     "migrationsRoot": "migrations"
   },
   "summary": {
-    "migrationDirectories": 285,
+    "migrationDirectories": 300,
     "declaredComplete": 0,
     "strictComplete": 0,
-    "strictFailed": 285,
+    "strictFailed": 300,
     "statusCounts": {
       "blocked": 1,
+      "implemented-unverified": 15,
       "preserved": 212,
       "unreadable": 71,
       "validating": 1
@@ -31,7 +32,7 @@
       "workspace": "migrations/course-g03-l01-ts-008",
       "status": "preserved",
       "manifestSha256": "23a4167024b5180c3bdabab45242e059f80d31b1e27c6c36b17165c4b64d23c9",
-      "errorCount": 210,
+      "errorCount": 225,
       "errors": [
         "status must be 'complete'",
         "acceptance.engineeringReview.decision must be accepted",
@@ -45,7 +46,7 @@
       "workspace": "migrations/course-g03-l01-vb-004",
       "status": "preserved",
       "manifestSha256": "e89ee0f7da065cd07bf43ac76a3024e5ed0a56b8a2c8e73c5533cc3097d3d5ce",
-      "errorCount": 97,
+      "errorCount": 111,
       "errors": [
         "status must be 'complete'",
         "paired-FLA authoring audit working copy: file does not exist (work/animate/read-only-fla-copies/course-g03-l01-vb-004/L1VB04.fla)",
@@ -1053,7 +1054,7 @@
       "workspace": "migrations/course-g03-l06-ti-001",
       "status": "preserved",
       "manifestSha256": "f087b9702eb864d14ed6f4ba00ad165e912522ba5b18c40dc7de34ae5a796cc4",
-      "errorCount": 218,
+      "errorCount": 221,
       "errors": [
         "status must be 'complete'",
         "acceptance.engineeringReview.decision must be accepted",
@@ -1067,7 +1068,7 @@
       "workspace": "migrations/course-g03-l08-re-001",
       "status": "preserved",
       "manifestSha256": "f8d068c9374d652ed2e78eb31bc40aa4448eaab8b7bc47eb31b3eb88892cff62",
-      "errorCount": 92,
+      "errorCount": 98,
       "errors": [
         "status must be 'complete'",
         "acceptance.engineeringReview.decision must be accepted",
@@ -1081,7 +1082,7 @@
       "workspace": "migrations/course-g04-l01-ir-001",
       "status": "preserved",
       "manifestSha256": "80523f3ee182e55e2d179d47ad20a4908fd50bd25e922efdc28a11a9755905d8",
-      "errorCount": 52,
+      "errorCount": 55,
       "errors": [
         "status must be 'complete'",
         "paired-FLA authoring audit working copy: file does not exist (work/animate/read-only-fla-copies/course-g04-l01-ir-001/L1RW01.fla)",
@@ -1249,7 +1250,7 @@
       "workspace": "migrations/course-g04-l03-in-009",
       "status": "preserved",
       "manifestSha256": "32daa9ed0a65f2f60cf47eab920ffc71dafbedebe00628735d9ec53ee34a8d8f",
-      "errorCount": 55,
+      "errorCount": 57,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -1487,7 +1488,7 @@
       "workspace": "migrations/course-g04-l03-ts-006",
       "status": "preserved",
       "manifestSha256": "c065a67ddd72f5426ff3f71fa7ee92db7f5e06bb77dd8801ee0206d57b486590",
-      "errorCount": 46,
+      "errorCount": 47,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -1637,17 +1638,167 @@
       ]
     },
     {
+      "animationId": "course-g04-l09-fq-001",
+      "workspace": "migrations/course-g04-l09-fq-001",
+      "status": "implemented-unverified",
+      "manifestSha256": "715d8d458310ea23bec1ad390b96d0ef061c67e679d9f2076b342b38a1988cb6",
+      "errorCount": 1,
+      "errors": [
+        "Validator threw: Cannot read properties of undefined (reading 'assetInventory')"
+      ]
+    },
+    {
+      "animationId": "course-g04-l09-fq-002",
+      "workspace": "migrations/course-g04-l09-fq-002",
+      "status": "implemented-unverified",
+      "manifestSha256": "bf89a82ffc130dfcc68769e1986b3ac73b3fb7c3004ee513f2f018fd2b33a34c",
+      "errorCount": 1,
+      "errors": [
+        "Validator threw: Cannot read properties of undefined (reading 'assetInventory')"
+      ]
+    },
+    {
       "animationId": "course-g04-l09-gs-002",
       "workspace": "migrations/course-g04-l09-gs-002",
       "status": "preserved",
       "manifestSha256": "12100c34e3799601f83871e33bf802803335a0baebc73215b9648a915e59ad42",
-      "errorCount": 251,
+      "errorCount": 268,
       "errors": [
         "status must be 'complete'",
         "baseline.route must be completed",
         "baseline.routeFile does not exist (empty)",
         "baseline.route and implementation.route must be application routes beginning with /",
         "acceptance.engineeringReview.decision must be accepted"
+      ]
+    },
+    {
+      "animationId": "course-g04-l09-in-003",
+      "workspace": "migrations/course-g04-l09-in-003",
+      "status": "implemented-unverified",
+      "manifestSha256": "f4084f1d17ca481cf6a14f72c2ecafc01f6993aafbfc8af097c4382ed4048ebb",
+      "errorCount": 1,
+      "errors": [
+        "Validator threw: Cannot read properties of undefined (reading 'assetInventory')"
+      ]
+    },
+    {
+      "animationId": "course-g04-l09-in-009",
+      "workspace": "migrations/course-g04-l09-in-009",
+      "status": "implemented-unverified",
+      "manifestSha256": "3627e8da2554d5c594dd0606137445cce5d2e382932dd23e575acad14e9d3376",
+      "errorCount": 1,
+      "errors": [
+        "Validator threw: Cannot read properties of undefined (reading 'assetInventory')"
+      ]
+    },
+    {
+      "animationId": "course-g04-l09-in-010",
+      "workspace": "migrations/course-g04-l09-in-010",
+      "status": "implemented-unverified",
+      "manifestSha256": "441d32568d6bb9282735f5ead2aeb89b0e2390b13e9a4918eebd0677201160ea",
+      "errorCount": 1,
+      "errors": [
+        "Validator threw: Cannot read properties of undefined (reading 'assetInventory')"
+      ]
+    },
+    {
+      "animationId": "course-g04-l09-in-011",
+      "workspace": "migrations/course-g04-l09-in-011",
+      "status": "implemented-unverified",
+      "manifestSha256": "e9fa218c9899a1420003dba4d81e033b109fe53c296c6efbcb3a00e9d103fa2d",
+      "errorCount": 1,
+      "errors": [
+        "Validator threw: Cannot read properties of undefined (reading 'assetInventory')"
+      ]
+    },
+    {
+      "animationId": "course-g04-l09-ir-001",
+      "workspace": "migrations/course-g04-l09-ir-001",
+      "status": "implemented-unverified",
+      "manifestSha256": "493c6dc08961e2c89a7a92eec4d9b5dfc42955974e6f756a45ca0bf5fe9065c7",
+      "errorCount": 1,
+      "errors": [
+        "Validator threw: Cannot read properties of undefined (reading 'assetInventory')"
+      ]
+    },
+    {
+      "animationId": "course-g04-l09-rw-002",
+      "workspace": "migrations/course-g04-l09-rw-002",
+      "status": "implemented-unverified",
+      "manifestSha256": "07ea97081023e9fcf90c26942eb8fec30442bd60c2525190269ab7e58d2e0a80",
+      "errorCount": 1,
+      "errors": [
+        "Validator threw: Cannot read properties of undefined (reading 'assetInventory')"
+      ]
+    },
+    {
+      "animationId": "course-g04-l09-ti-002",
+      "workspace": "migrations/course-g04-l09-ti-002",
+      "status": "implemented-unverified",
+      "manifestSha256": "f32b97dae75547d732287706c3c458797d2383d487e8aa796ba9e2c05ad3095c",
+      "errorCount": 1,
+      "errors": [
+        "Validator threw: Cannot read properties of undefined (reading 'assetInventory')"
+      ]
+    },
+    {
+      "animationId": "course-g04-l09-ti-003",
+      "workspace": "migrations/course-g04-l09-ti-003",
+      "status": "implemented-unverified",
+      "manifestSha256": "6f2e82412cd7ebc39dde5c38a74d7e87011335e336304fdf2080a4e6df595f64",
+      "errorCount": 1,
+      "errors": [
+        "Validator threw: Cannot read properties of undefined (reading 'assetInventory')"
+      ]
+    },
+    {
+      "animationId": "course-g04-l09-ti-004",
+      "workspace": "migrations/course-g04-l09-ti-004",
+      "status": "implemented-unverified",
+      "manifestSha256": "f8ecd870d7eeadca3dba48e7ec6fbfd4ad4abb1340aa9c23853727505e361736",
+      "errorCount": 1,
+      "errors": [
+        "Validator threw: Cannot read properties of undefined (reading 'assetInventory')"
+      ]
+    },
+    {
+      "animationId": "course-g04-l09-ti-005",
+      "workspace": "migrations/course-g04-l09-ti-005",
+      "status": "implemented-unverified",
+      "manifestSha256": "f84ff9c24b589d9294b955f792f6262717e53e3c0ab86239ac539ee143e851c5",
+      "errorCount": 1,
+      "errors": [
+        "Validator threw: Cannot read properties of undefined (reading 'assetInventory')"
+      ]
+    },
+    {
+      "animationId": "course-g04-l09-ti-007",
+      "workspace": "migrations/course-g04-l09-ti-007",
+      "status": "implemented-unverified",
+      "manifestSha256": "98560d3603484368acd5a3cdb33c0876029bb5b012d8351954fa2ea1437a9747",
+      "errorCount": 1,
+      "errors": [
+        "Validator threw: Cannot read properties of undefined (reading 'assetInventory')"
+      ]
+    },
+    {
+      "animationId": "course-g04-l09-ts-008",
+      "workspace": "migrations/course-g04-l09-ts-008",
+      "status": "implemented-unverified",
+      "manifestSha256": "6e6e864c0571251df5f72495d25cd840177ddb61fa43971a64fa38edafef5a52",
+      "errorCount": 1,
+      "errors": [
+        "Validator threw: Cannot read properties of undefined (reading 'assetInventory')"
+      ]
+    },
+    {
+      "animationId": "course-g04-l09-vb-009",
+      "workspace": "migrations/course-g04-l09-vb-009",
+      "status": "implemented-unverified",
+      "manifestSha256": "a8592b640c03e0ebb53a646bc3ca9324cadd7b69d23accc744d122e8f5129d0e",
+      "errorCount": 1,
+      "errors": [
+        "Validator threw: Cannot read properties of undefined (reading 'assetInventory')"
       ]
     },
     {
@@ -1697,7 +1848,7 @@
       "workspace": "migrations/course-g04-l10-gs-002",
       "status": "preserved",
       "manifestSha256": "c8c4bd31f58294093e4decee73137fcbec0cbae5103b536d27e7dca958865ee1",
-      "errorCount": 146,
+      "errorCount": 147,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -1711,7 +1862,7 @@
       "workspace": "migrations/course-g04-l10-in-002",
       "status": "preserved",
       "manifestSha256": "c09e6f37aea8c1bc023e5fe9dce0dd0c1a47b8a8c2b0669ffdfe93ce6f753466",
-      "errorCount": 79,
+      "errorCount": 80,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -1725,7 +1876,7 @@
       "workspace": "migrations/course-g04-l10-in-003",
       "status": "preserved",
       "manifestSha256": "6479b0afb0f12bd9601e895c8d14030374967d469bcc6a6864cb08ce2646bcd0",
-      "errorCount": 89,
+      "errorCount": 90,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -1739,7 +1890,7 @@
       "workspace": "migrations/course-g04-l10-in-004",
       "status": "preserved",
       "manifestSha256": "39d3b34ade7c37e6179ddd8f36b0e82ea559dcd140ab718631c9951f25e43cd7",
-      "errorCount": 79,
+      "errorCount": 80,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -1753,7 +1904,7 @@
       "workspace": "migrations/course-g04-l10-in-005",
       "status": "preserved",
       "manifestSha256": "d8a2b877b8799eb731b4ecdd99ad3af645ea37c28150360f5491ea3600162593",
-      "errorCount": 88,
+      "errorCount": 89,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -1767,7 +1918,7 @@
       "workspace": "migrations/course-g04-l10-in-006",
       "status": "preserved",
       "manifestSha256": "a235c352b3ffb15fc9fd7dd41cf97c3ab951e2cb7b781431623f277f7226f17a",
-      "errorCount": 137,
+      "errorCount": 138,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -1781,7 +1932,7 @@
       "workspace": "migrations/course-g04-l10-in-007",
       "status": "preserved",
       "manifestSha256": "5bc57e4ca2673b6081876a7adc555fc07228904798f3921011893439e42f7166",
-      "errorCount": 91,
+      "errorCount": 92,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -1795,7 +1946,7 @@
       "workspace": "migrations/course-g04-l10-in-008",
       "status": "preserved",
       "manifestSha256": "0286128362ecd40569752a956c3dcb10dd1eb4f541c36ef925b3055de4f176a0",
-      "errorCount": 137,
+      "errorCount": 138,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -1809,7 +1960,7 @@
       "workspace": "migrations/course-g04-l10-in-009",
       "status": "preserved",
       "manifestSha256": "2df6e21ab8fcb75b5898bef4053367270bd6e2de8a90bc15cf29bb06767bac3e",
-      "errorCount": 116,
+      "errorCount": 117,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -1823,7 +1974,7 @@
       "workspace": "migrations/course-g04-l10-in-010",
       "status": "preserved",
       "manifestSha256": "656b5ac0e48d296656a9cd888bf229f47e2bbcaf89437e5601fb246f3f93aabe",
-      "errorCount": 91,
+      "errorCount": 92,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -1837,7 +1988,7 @@
       "workspace": "migrations/course-g04-l10-in-011",
       "status": "preserved",
       "manifestSha256": "265273f0444d4ba4fdf95d759168db9c01d70dee6a95179a82670728d2f1a062",
-      "errorCount": 137,
+      "errorCount": 138,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -1851,7 +2002,7 @@
       "workspace": "migrations/course-g04-l10-in-012",
       "status": "preserved",
       "manifestSha256": "32e3dcff438257202cacf435c2d455aeb612ad8693bd7fd69c827681c59e71d7",
-      "errorCount": 79,
+      "errorCount": 80,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -1865,7 +2016,7 @@
       "workspace": "migrations/course-g04-l10-in-013",
       "status": "preserved",
       "manifestSha256": "c0aa3d155d207afffce3e7d0d2d5f4325ab8a489018000d9c4fee40b8d61e680",
-      "errorCount": 137,
+      "errorCount": 138,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -1879,7 +2030,7 @@
       "workspace": "migrations/course-g04-l10-in-014",
       "status": "preserved",
       "manifestSha256": "cde83df493571839c60f3050c776fcb6b691786787ec19ff00564b21ab06946b",
-      "errorCount": 80,
+      "errorCount": 81,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -1893,7 +2044,7 @@
       "workspace": "migrations/course-g04-l10-in-015",
       "status": "preserved",
       "manifestSha256": "74f599dfc82c435d70ec3b079d2a4c939070bb59157bc48e59172bb7864f346d",
-      "errorCount": 80,
+      "errorCount": 81,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -1907,7 +2058,7 @@
       "workspace": "migrations/course-g04-l10-in-016",
       "status": "preserved",
       "manifestSha256": "4b345534443915b18dada6707bf0a4d9aa63917a747cb08ac44b04efaf12a36d",
-      "errorCount": 137,
+      "errorCount": 138,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -1935,7 +2086,7 @@
       "workspace": "migrations/course-g04-l10-rw-002",
       "status": "preserved",
       "manifestSha256": "07ecb335206ad654c6069d98f6cdb5b7c3051324be111e25d5777d137c71eacd",
-      "errorCount": 119,
+      "errorCount": 120,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -1949,7 +2100,7 @@
       "workspace": "migrations/course-g04-l10-rw-003",
       "status": "preserved",
       "manifestSha256": "d67d7997e93fd4d8f1d4fa712509db33a2a675b645eff8f4d4546a1ef53d4bc5",
-      "errorCount": 94,
+      "errorCount": 95,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -1963,7 +2114,7 @@
       "workspace": "migrations/course-g04-l10-rw-004",
       "status": "preserved",
       "manifestSha256": "8abda128867214271fb8ec8eaf0396bcc60fa81216c93951cbef9c19ce4456f9",
-      "errorCount": 117,
+      "errorCount": 118,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -1977,7 +2128,7 @@
       "workspace": "migrations/course-g04-l10-rw-005",
       "status": "preserved",
       "manifestSha256": "5f35dd9708d338f717d91db0bd454d7244216cd5b0ce0416a9820c3e2c3ad79c",
-      "errorCount": 96,
+      "errorCount": 97,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -1991,7 +2142,7 @@
       "workspace": "migrations/course-g04-l10-ti-002",
       "status": "preserved",
       "manifestSha256": "9c29661b871b0301fe1cb570f1f9eacee1f1379e818270694ec5f40efc41fac1",
-      "errorCount": 126,
+      "errorCount": 127,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -2005,7 +2156,7 @@
       "workspace": "migrations/course-g04-l10-ti-003",
       "status": "preserved",
       "manifestSha256": "f5898b14e1a90aac9314af9dd48a0b80f967a6982b15cb51708d92f7e35fdc33",
-      "errorCount": 109,
+      "errorCount": 110,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2019,7 +2170,7 @@
       "workspace": "migrations/course-g04-l10-ti-004",
       "status": "preserved",
       "manifestSha256": "52c406a88bf093ea66e51435a83043ac19e578142cbb3c6daed3470285bd97ed",
-      "errorCount": 109,
+      "errorCount": 110,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2033,7 +2184,7 @@
       "workspace": "migrations/course-g04-l10-ti-005",
       "status": "preserved",
       "manifestSha256": "4744b3f7864cd0a17b40f3a8346a575c40a5d784c0357604ff51aea2b572f30e",
-      "errorCount": 109,
+      "errorCount": 110,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2047,7 +2198,7 @@
       "workspace": "migrations/course-g04-l10-ti-006",
       "status": "preserved",
       "manifestSha256": "14a35aad1b97de8df8911700538769b6e6ebcc0257e1e639c0c0445713742760",
-      "errorCount": 103,
+      "errorCount": 104,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2061,7 +2212,7 @@
       "workspace": "migrations/course-g04-l10-ts-002",
       "status": "preserved",
       "manifestSha256": "92137fc9cde42d53df10512c77f2060e0606920b9b6e6367312eb5f411d62bd5",
-      "errorCount": 93,
+      "errorCount": 94,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2075,7 +2226,7 @@
       "workspace": "migrations/course-g04-l10-ts-003",
       "status": "preserved",
       "manifestSha256": "ebda9189214ccc2d4a95bea3630a12ce946d10e583b8127a1e48c455c334155c",
-      "errorCount": 81,
+      "errorCount": 82,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2089,7 +2240,7 @@
       "workspace": "migrations/course-g04-l10-ts-004",
       "status": "preserved",
       "manifestSha256": "a18a1978bba8bf15592b1c01077dd28b1164aebe102d881544e4a5270d7346d3",
-      "errorCount": 81,
+      "errorCount": 82,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2103,7 +2254,7 @@
       "workspace": "migrations/course-g04-l10-ts-005",
       "status": "preserved",
       "manifestSha256": "8c1393f006d0cadbbdda3b058ffddb33d595db841886d7b129e2bb38eb6713e3",
-      "errorCount": 81,
+      "errorCount": 82,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2117,7 +2268,7 @@
       "workspace": "migrations/course-g04-l10-ts-006",
       "status": "preserved",
       "manifestSha256": "6e2d5b955e52ac7079b13f9ffe545f4a493292da09883828fe7a33bb60067b88",
-      "errorCount": 81,
+      "errorCount": 82,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2131,7 +2282,7 @@
       "workspace": "migrations/course-g04-l10-ts-007",
       "status": "preserved",
       "manifestSha256": "62a981ef41d274f5ec9b3ad69852d3e7b860db4270cb895085387ca395cc8337",
-      "errorCount": 152,
+      "errorCount": 153,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -2145,7 +2296,7 @@
       "workspace": "migrations/course-g04-l10-ts-008",
       "status": "preserved",
       "manifestSha256": "d7630d31090e204f84d6e93f334d876caf5f7d32428014d7396bb1490afaab6d",
-      "errorCount": 150,
+      "errorCount": 151,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -2159,7 +2310,7 @@
       "workspace": "migrations/course-g04-l10-vb-002",
       "status": "preserved",
       "manifestSha256": "6e2002aa240d78b0c9bdae438c14410e665249d7cfebb81ded49eb25e2d2c163",
-      "errorCount": 81,
+      "errorCount": 82,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2173,7 +2324,7 @@
       "workspace": "migrations/course-g04-l10-vb-003",
       "status": "preserved",
       "manifestSha256": "2450dd99af1806acf04ef4130f4b63001ba785db7b5ae96b3c13080d2a06a585",
-      "errorCount": 94,
+      "errorCount": 95,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2187,7 +2338,7 @@
       "workspace": "migrations/course-g04-l10-vb-004",
       "status": "preserved",
       "manifestSha256": "e8317a2324dffa59b175f785664ef7ff15dbf57af9bce5e34a5f2077a044a95c",
-      "errorCount": 81,
+      "errorCount": 82,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2201,7 +2352,7 @@
       "workspace": "migrations/course-g04-l10-vb-005",
       "status": "preserved",
       "manifestSha256": "13840810a37a0c6de0c37be1f5b61ea12b3db9f85ae57af6e332911dc1d2b892",
-      "errorCount": 81,
+      "errorCount": 82,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2215,7 +2366,7 @@
       "workspace": "migrations/course-g04-l10-vb-006",
       "status": "preserved",
       "manifestSha256": "95604b86878d5900eebbd016c0b33cc0addf62420ee5881bab41f3af7940c44d",
-      "errorCount": 137,
+      "errorCount": 138,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2229,7 +2380,7 @@
       "workspace": "migrations/course-g04-l10-vb-007",
       "status": "preserved",
       "manifestSha256": "927ab59d0340cca03cf4a5f9b6304ab59d79616922fc709897f3fd31a88f965a",
-      "errorCount": 137,
+      "errorCount": 138,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2243,7 +2394,7 @@
       "workspace": "migrations/course-g04-l10-vb-008",
       "status": "preserved",
       "manifestSha256": "535fb5bcc99aa1bd7f7119a53c76d7c61d8205a4872a4f94b17f4eb01c974c30",
-      "errorCount": 81,
+      "errorCount": 82,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2257,7 +2408,7 @@
       "workspace": "migrations/course-g04-l10-vb-009",
       "status": "preserved",
       "manifestSha256": "75d4bef326531d79288ee4cd8a4e14e53a9a352ed4262218bdc22e489bf659b1",
-      "errorCount": 81,
+      "errorCount": 82,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2271,7 +2422,7 @@
       "workspace": "migrations/course-g04-l10-vb-010",
       "status": "preserved",
       "manifestSha256": "e135cc6b49200e79b755f08492b6b7bb62c632c205765dcf88fd901f9147179a",
-      "errorCount": 81,
+      "errorCount": 82,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2285,7 +2436,7 @@
       "workspace": "migrations/course-g04-l10-vb-011",
       "status": "preserved",
       "manifestSha256": "1fb357f106498c91624e3d17488f07533dcaf2dd2ed153351f54b168a328d2e9",
-      "errorCount": 81,
+      "errorCount": 82,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2341,7 +2492,7 @@
       "workspace": "migrations/course-g05-l04-gs-002",
       "status": "preserved",
       "manifestSha256": "6630d53c22b11f07756da3ecda6471acd5755df6d3eda45185e4c1dcafa8d89e",
-      "errorCount": 215,
+      "errorCount": 216,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2355,7 +2506,7 @@
       "workspace": "migrations/course-g05-l04-in-002",
       "status": "preserved",
       "manifestSha256": "ff2175cdefcc76eaf30cfa28e3c30f336627172f410f5c4f569e2510711da85a",
-      "errorCount": 185,
+      "errorCount": 186,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -2369,7 +2520,7 @@
       "workspace": "migrations/course-g05-l04-in-003",
       "status": "preserved",
       "manifestSha256": "a9d6b1c3220808790c886640f49ef19d50a35485ad7539d67724410fd381b408",
-      "errorCount": 131,
+      "errorCount": 132,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2383,7 +2534,7 @@
       "workspace": "migrations/course-g05-l04-in-004",
       "status": "preserved",
       "manifestSha256": "b23a34d1f89e682bbd4f07d6bf2543737ee44de3dfdd498ea167f906f5cb3b9f",
-      "errorCount": 142,
+      "errorCount": 143,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -2397,7 +2548,7 @@
       "workspace": "migrations/course-g05-l04-in-005",
       "status": "preserved",
       "manifestSha256": "ba83ad3f27234533de78a4d88cec253e41493fb0296751af0cd54dc1198f7728",
-      "errorCount": 131,
+      "errorCount": 132,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2411,7 +2562,7 @@
       "workspace": "migrations/course-g05-l04-in-006",
       "status": "preserved",
       "manifestSha256": "e6e35dbd17cae0d6190eb1741f5788f31bedd2be0185e68e0fd2cf9b6ae6ff28",
-      "errorCount": 131,
+      "errorCount": 132,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2425,7 +2576,7 @@
       "workspace": "migrations/course-g05-l04-in-007",
       "status": "preserved",
       "manifestSha256": "1f15a9cb89e4f7fe979e40e380292caa06e59b5c34351c0a4573a1dd513d7f21",
-      "errorCount": 185,
+      "errorCount": 186,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -2439,7 +2590,7 @@
       "workspace": "migrations/course-g05-l04-in-008",
       "status": "preserved",
       "manifestSha256": "1549886214cb2b5ba2d301df2cf40bb5b2905f84ac9fd5a18e349a1c5e40b766",
-      "errorCount": 143,
+      "errorCount": 144,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2453,7 +2604,7 @@
       "workspace": "migrations/course-g05-l04-in-009",
       "status": "preserved",
       "manifestSha256": "edcc02b15310828243023050a480a9d9b0b8c6f61fedc367238655c07d378001",
-      "errorCount": 114,
+      "errorCount": 115,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2467,7 +2618,7 @@
       "workspace": "migrations/course-g05-l04-in-010",
       "status": "preserved",
       "manifestSha256": "73d77f0dda449065b81ea4c8c3ecd3e7912977bd9d182229b79b259858af90b7",
-      "errorCount": 130,
+      "errorCount": 131,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -2481,7 +2632,7 @@
       "workspace": "migrations/course-g05-l04-in-011",
       "status": "preserved",
       "manifestSha256": "c3c4b06fe0c6b9d8427298dda047a04a3ed3a683d926e732e793d2194d28770e",
-      "errorCount": 131,
+      "errorCount": 132,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2495,7 +2646,7 @@
       "workspace": "migrations/course-g05-l04-in-012",
       "status": "preserved",
       "manifestSha256": "c1c916fe60dfa33e257020d4aa3f880f348f81443652bcc9f058e054306bfd44",
-      "errorCount": 186,
+      "errorCount": 187,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2509,7 +2660,7 @@
       "workspace": "migrations/course-g05-l04-in-013",
       "status": "preserved",
       "manifestSha256": "71ca7964f091f274cb67c302be9028f0b8798ad06a6ed9c1c46d5fd90b8b0ae1",
-      "errorCount": 131,
+      "errorCount": 132,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2523,7 +2674,7 @@
       "workspace": "migrations/course-g05-l04-in-014",
       "status": "preserved",
       "manifestSha256": "bb2047c6626b79f1ca86f2cc9a4cb74aeed85df0cf9c140f0119b1de9609bb76",
-      "errorCount": 131,
+      "errorCount": 132,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2537,7 +2688,7 @@
       "workspace": "migrations/course-g05-l04-in-015",
       "status": "preserved",
       "manifestSha256": "dcc9149fcac7563523d5a33c8fe69596283d6bec86d3dd54ef9408c29e8ca123",
-      "errorCount": 114,
+      "errorCount": 115,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2551,7 +2702,7 @@
       "workspace": "migrations/course-g05-l04-in-016",
       "status": "preserved",
       "manifestSha256": "ff0196749e71920ff083835ae0eeb50f40bb1281709f752d467f3c472f4a4c3b",
-      "errorCount": 142,
+      "errorCount": 143,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -2565,7 +2716,7 @@
       "workspace": "migrations/course-g05-l04-in-017",
       "status": "preserved",
       "manifestSha256": "28228c679edc85b0fbce16bac08290f0f26c3ed1afbe4994ca56110bb891cb80",
-      "errorCount": 130,
+      "errorCount": 131,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -2579,7 +2730,7 @@
       "workspace": "migrations/course-g05-l04-in-018",
       "status": "preserved",
       "manifestSha256": "aede9a372a9a7eb28221a06d3e402580bd40578666842caf8e5586f7873195c4",
-      "errorCount": 179,
+      "errorCount": 180,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2593,7 +2744,7 @@
       "workspace": "migrations/course-g05-l04-in-019",
       "status": "preserved",
       "manifestSha256": "5896027ed67e08fa6cf572e4d695e299bbd007a51e898e4059d7a8dccfa8d12e",
-      "errorCount": 131,
+      "errorCount": 132,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2607,7 +2758,7 @@
       "workspace": "migrations/course-g05-l04-in-020",
       "status": "preserved",
       "manifestSha256": "57b35aca99349a2eac475301542c0cf5cb8193a0326522d78c3a998fe4b57f66",
-      "errorCount": 150,
+      "errorCount": 151,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2621,7 +2772,7 @@
       "workspace": "migrations/course-g05-l04-in-021",
       "status": "preserved",
       "manifestSha256": "45de7285bab65838553c70625849289c8be8bedfe22d5fe35b4cdaf3780f5d33",
-      "errorCount": 131,
+      "errorCount": 132,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2635,7 +2786,7 @@
       "workspace": "migrations/course-g05-l04-in-022",
       "status": "preserved",
       "manifestSha256": "a7460e785a43678455be61ea4f099e760470db3cdf3291d06b28e960158a7bd1",
-      "errorCount": 155,
+      "errorCount": 156,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2663,7 +2814,7 @@
       "workspace": "migrations/course-g05-l04-rw-002",
       "status": "preserved",
       "manifestSha256": "8e913a2da62d4a7a4ffe8858a2e80c99b14c4184cff96e98ce862e6cf96826d9",
-      "errorCount": 115,
+      "errorCount": 116,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -2677,7 +2828,7 @@
       "workspace": "migrations/course-g05-l04-rw-003",
       "status": "preserved",
       "manifestSha256": "b43aadacab9ded07f8ac1ce8fac323e230375c9302c3c4e35bdb338e33bfb265",
-      "errorCount": 151,
+      "errorCount": 152,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -2691,7 +2842,7 @@
       "workspace": "migrations/course-g05-l04-rw-004",
       "status": "preserved",
       "manifestSha256": "96fb4b196f234c09c33a6c48086f667e382fc451700f41972071cbd80c9488ab",
-      "errorCount": 211,
+      "errorCount": 212,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -2705,7 +2856,7 @@
       "workspace": "migrations/course-g05-l04-ti-002",
       "status": "preserved",
       "manifestSha256": "5b5ae704668eb5fdab2aacc98f5c80d31e1bc883fe8251b65a4098a7bcba90e3",
-      "errorCount": 142,
+      "errorCount": 143,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -2719,7 +2870,7 @@
       "workspace": "migrations/course-g05-l04-ti-003",
       "status": "preserved",
       "manifestSha256": "050689a2ed9b4bae0394218ac12115f2ae9ca48b01cf02ab6d373c73ff4904ad",
-      "errorCount": 155,
+      "errorCount": 156,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2733,7 +2884,7 @@
       "workspace": "migrations/course-g05-l04-ti-004",
       "status": "preserved",
       "manifestSha256": "4522ad99e9657cdf177448e91e42126b981b9cb80ca9c03f8a434b5fdce3a408",
-      "errorCount": 167,
+      "errorCount": 168,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2747,7 +2898,7 @@
       "workspace": "migrations/course-g05-l04-ti-005",
       "status": "preserved",
       "manifestSha256": "4698190e7947d0da9a0ebc8a66eca352f1a7c104b528ab4afdb5af267fe4109e",
-      "errorCount": 155,
+      "errorCount": 156,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2761,7 +2912,7 @@
       "workspace": "migrations/course-g05-l04-ti-006",
       "status": "preserved",
       "manifestSha256": "64acf172b2ab5393f1c52d5513c2981ee9ffd04839dc3937ce760b9a665ab782",
-      "errorCount": 155,
+      "errorCount": 156,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2775,7 +2926,7 @@
       "workspace": "migrations/course-g05-l04-ti-007",
       "status": "preserved",
       "manifestSha256": "efe590d696d9f7cadeee7e052ae19a9a2235f56b6d0fb6f25ad0ca9037e9c1c0",
-      "errorCount": 155,
+      "errorCount": 156,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2789,7 +2940,7 @@
       "workspace": "migrations/course-g05-l04-ti-008",
       "status": "preserved",
       "manifestSha256": "ab522f1ebe800d14491e6d0a94ac68098a12317e1dc15e87606a84120a085536",
-      "errorCount": 179,
+      "errorCount": 180,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2803,7 +2954,7 @@
       "workspace": "migrations/course-g05-l04-ti-009",
       "status": "preserved",
       "manifestSha256": "7ecbff82c8e8fd9c9ac34b963a5693a827d07a33779edb7b4ccfe765b2b481cf",
-      "errorCount": 167,
+      "errorCount": 168,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2817,7 +2968,7 @@
       "workspace": "migrations/course-g05-l04-ts-002",
       "status": "preserved",
       "manifestSha256": "00b001437cad53016d4f3d41876eff7f2b10441b37b14dc8805551b443d658dc",
-      "errorCount": 138,
+      "errorCount": 139,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2831,7 +2982,7 @@
       "workspace": "migrations/course-g05-l04-ts-003",
       "status": "preserved",
       "manifestSha256": "e2e469f48254f6a95ad62e9193f075440522f830073fce51c85f7edeb0e0d55a",
-      "errorCount": 126,
+      "errorCount": 127,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2845,7 +2996,7 @@
       "workspace": "migrations/course-g05-l04-ts-004",
       "status": "preserved",
       "manifestSha256": "08574a319bff39451f5994d4464ad16458d310ded56676e077b4cf6b0b993c9b",
-      "errorCount": 150,
+      "errorCount": 151,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2859,7 +3010,7 @@
       "workspace": "migrations/course-g05-l04-ts-005",
       "status": "preserved",
       "manifestSha256": "4c370423962ae4e7493ba041467964317901da5bf5f941d2badf4f6f55ba1b72",
-      "errorCount": 138,
+      "errorCount": 139,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2873,7 +3024,7 @@
       "workspace": "migrations/course-g05-l04-ts-006",
       "status": "preserved",
       "manifestSha256": "ae545fa264c7fefd23dbf331fbab41d9b83b6e9894e09e6e9f4c2b6195652bc0",
-      "errorCount": 114,
+      "errorCount": 115,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2887,7 +3038,7 @@
       "workspace": "migrations/course-g05-l04-ts-007",
       "status": "preserved",
       "manifestSha256": "8473631c38f4d08f8f1a18e63b6be843070290cedb85cb3c2f8abeb2848cf8dd",
-      "errorCount": 227,
+      "errorCount": 228,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2901,7 +3052,7 @@
       "workspace": "migrations/course-g05-l04-ts-008",
       "status": "preserved",
       "manifestSha256": "140475ed8785f41342be44208bb26d877e63c546afdcfa4e48f927f52d279506",
-      "errorCount": 215,
+      "errorCount": 216,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2915,7 +3066,7 @@
       "workspace": "migrations/course-g05-l04-vb-002",
       "status": "preserved",
       "manifestSha256": "6d7593b08081c0ea32d7d31dc0365fcffc5c42da04468c0d3588edafc644fde0",
-      "errorCount": 138,
+      "errorCount": 139,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2929,7 +3080,7 @@
       "workspace": "migrations/course-g05-l04-vb-003",
       "status": "preserved",
       "manifestSha256": "a2eb9da846a3f6b774d841f5f0a13e300126ee1afe7a9fc5d386041859efdabe",
-      "errorCount": 143,
+      "errorCount": 144,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2943,7 +3094,7 @@
       "workspace": "migrations/course-g05-l04-vb-004",
       "status": "preserved",
       "manifestSha256": "da1b737dc8d914f888e68ed5957a072f40e35a30f0d1cefddb6b7354a31aa986",
-      "errorCount": 144,
+      "errorCount": 145,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2957,7 +3108,7 @@
       "workspace": "migrations/course-g05-l04-vb-005",
       "status": "preserved",
       "manifestSha256": "ae06f0ba6dcce4f937214eb6ca35c3c42e03397102a44345d1e9437bd2803df9",
-      "errorCount": 126,
+      "errorCount": 127,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2971,7 +3122,7 @@
       "workspace": "migrations/course-g05-l04-vb-006",
       "status": "preserved",
       "manifestSha256": "a65f2043d594f7a7849127f6245ff72a5f71680dc117991e1678f9dc88b529f9",
-      "errorCount": 126,
+      "errorCount": 127,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2985,7 +3136,7 @@
       "workspace": "migrations/course-g05-l04-vb-007",
       "status": "preserved",
       "manifestSha256": "7183e43cbe9120655281a224d06d575e868565fd8267b0610dabd976899acd77",
-      "errorCount": 131,
+      "errorCount": 132,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -2999,7 +3150,7 @@
       "workspace": "migrations/course-g05-l04-vb-008",
       "status": "preserved",
       "manifestSha256": "01b6423f6fa0728d66c2a5bd3de9a1ab165dc298c22c9bb98159a777513e5a20",
-      "errorCount": 114,
+      "errorCount": 115,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3013,7 +3164,7 @@
       "workspace": "migrations/course-g05-l04-vb-009",
       "status": "preserved",
       "manifestSha256": "7509cacbb7a761f432d3dda21f1d9a282497073dc863d9dbf1f2b48aa1356164",
-      "errorCount": 114,
+      "errorCount": 115,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3027,7 +3178,7 @@
       "workspace": "migrations/course-g05-l04-vb-010",
       "status": "preserved",
       "manifestSha256": "a0e5cbb01c584cc55ec8efdfd825222f93ebe95f6c9abd72f2b16c116f6c5774",
-      "errorCount": 143,
+      "errorCount": 144,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3041,7 +3192,7 @@
       "workspace": "migrations/course-g05-l04-vb-011",
       "status": "preserved",
       "manifestSha256": "aae8a86845ea27553e47858ca9280e22c3d8f753696255e7cccf6f073e329c51",
-      "errorCount": 143,
+      "errorCount": 144,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3097,7 +3248,7 @@
       "workspace": "migrations/course-g05-l05-gs-002",
       "status": "preserved",
       "manifestSha256": "9699f9acc3076c489a10ba098f3f70ecc623b9f3a6a2e9533e5b80da9121f869",
-      "errorCount": 44,
+      "errorCount": 45,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -3111,7 +3262,7 @@
       "workspace": "migrations/course-g05-l05-in-002",
       "status": "preserved",
       "manifestSha256": "2c7a7306dc711dd7d6a42264c7d25fbd0ae94e4e62f1bd7bc7ca33ef7eb4d6ad",
-      "errorCount": 44,
+      "errorCount": 45,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -3125,7 +3276,7 @@
       "workspace": "migrations/course-g05-l05-in-003",
       "status": "preserved",
       "manifestSha256": "737c7f0677e897584e2a1669468340fd1227948f62a197d80f5b4fabcec4b0dc",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3139,7 +3290,7 @@
       "workspace": "migrations/course-g05-l05-in-004",
       "status": "preserved",
       "manifestSha256": "42a1f0969381aeb76a8830753f819cdce930ead6e0ec5bc7d62ae59970348694",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3153,7 +3304,7 @@
       "workspace": "migrations/course-g05-l05-in-005",
       "status": "preserved",
       "manifestSha256": "d29c086b9d2b8b5d0d464f7e9291628a63fde48618df5ed243a9e29c7677d1f6",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3167,7 +3318,7 @@
       "workspace": "migrations/course-g05-l05-in-006",
       "status": "preserved",
       "manifestSha256": "3dc8e1672a004a15ce901186c6778fab91557d0692af651782d1f9bacb88416a",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3181,7 +3332,7 @@
       "workspace": "migrations/course-g05-l05-in-007",
       "status": "preserved",
       "manifestSha256": "8488d3dc454544b79e681627134cda606ced47afd2389242b6c042aef4d71031",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3195,7 +3346,7 @@
       "workspace": "migrations/course-g05-l05-in-008",
       "status": "preserved",
       "manifestSha256": "5b8d13d4626487f84c0ccf355907b61382213031513880390089658320a83be0",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3209,7 +3360,7 @@
       "workspace": "migrations/course-g05-l05-in-009",
       "status": "preserved",
       "manifestSha256": "57d307e9dfdad9cefcd32ad9b127c0af576cb681193356f9c81f2002c63f18e2",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3223,7 +3374,7 @@
       "workspace": "migrations/course-g05-l05-in-010",
       "status": "preserved",
       "manifestSha256": "3beb0ebcfb1f226cd0ec61187a8696276c78864d852d32f9c4b8bc551219bb4c",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3237,7 +3388,7 @@
       "workspace": "migrations/course-g05-l05-in-011",
       "status": "preserved",
       "manifestSha256": "33b623cc220605574c27de00e50c307601918da06c84042cb680fc5e1e0a5a74",
-      "errorCount": 44,
+      "errorCount": 45,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -3251,7 +3402,7 @@
       "workspace": "migrations/course-g05-l05-in-012",
       "status": "preserved",
       "manifestSha256": "5321e33ab7f4c63b687ccc2c3f77f9466d50d1ca54ee6824304a46ffa73db9b1",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3265,7 +3416,7 @@
       "workspace": "migrations/course-g05-l05-in-013",
       "status": "preserved",
       "manifestSha256": "4341d1ec2f11fba968f96b038ae1b4f61d340f28f0edee38c369d53854e7d8b1",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3279,7 +3430,7 @@
       "workspace": "migrations/course-g05-l05-in-014",
       "status": "preserved",
       "manifestSha256": "77aa996069924ab156cf5b6e26b9f404ba9bfea4afdd94a7e5692e9593daabce",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3293,7 +3444,7 @@
       "workspace": "migrations/course-g05-l05-in-015",
       "status": "preserved",
       "manifestSha256": "e323b2d80720eac440476d603b822c39aa83cc343fe406eb5ebcb0529ec2069b",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3307,7 +3458,7 @@
       "workspace": "migrations/course-g05-l05-in-016",
       "status": "preserved",
       "manifestSha256": "b0fad7cfaf171a5689030e760f1c36b2791dfc09d5b20592acf2ce23de515586",
-      "errorCount": 44,
+      "errorCount": 45,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -3321,7 +3472,7 @@
       "workspace": "migrations/course-g05-l05-in-017",
       "status": "preserved",
       "manifestSha256": "e499507f6a58f07adbcdacdd22d6c243b406e57e9b64e3ef02c69b5ab9e80bd6",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3335,7 +3486,7 @@
       "workspace": "migrations/course-g05-l05-in-018",
       "status": "preserved",
       "manifestSha256": "e4b4a56ca275e0b749ddaf03051cff122f93cb56e978c4ede20958234bac1bec",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3349,7 +3500,7 @@
       "workspace": "migrations/course-g05-l05-in-019",
       "status": "preserved",
       "manifestSha256": "cab17d8277689b2f2995ec5f3d06199d223fec9341100b10b4aedb2740eb50eb",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3363,7 +3514,7 @@
       "workspace": "migrations/course-g05-l05-in-020",
       "status": "preserved",
       "manifestSha256": "f41aaf0f473cf8b0c4a61060a1c535e0ccd39820ba485aabaaafc816aa6a57ec",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3391,7 +3542,7 @@
       "workspace": "migrations/course-g05-l05-rw-002",
       "status": "preserved",
       "manifestSha256": "549f415eca808e96d5287777e67298d52abfda0d9e9633350ac08a2229e2b161",
-      "errorCount": 44,
+      "errorCount": 45,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -3405,7 +3556,7 @@
       "workspace": "migrations/course-g05-l05-rw-003",
       "status": "preserved",
       "manifestSha256": "12029cdff7f4a45c5c978a6fc48fd8a11235959a9dafce9b4150216c76042cb8",
-      "errorCount": 44,
+      "errorCount": 45,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -3419,7 +3570,7 @@
       "workspace": "migrations/course-g05-l05-rw-004",
       "status": "preserved",
       "manifestSha256": "a5c5601c9ba09fa9b860e82e1fe4569d44b12485e0518e0825419060c8e47b2c",
-      "errorCount": 44,
+      "errorCount": 45,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -3433,7 +3584,7 @@
       "workspace": "migrations/course-g05-l05-ti-002",
       "status": "preserved",
       "manifestSha256": "e80c9497720093a2dbb30720929632f323ca232d23b3cd7331451efd76f1f976",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3447,7 +3598,7 @@
       "workspace": "migrations/course-g05-l05-ti-003",
       "status": "preserved",
       "manifestSha256": "99d1edd1ac3fea0f66ce46a2faf5460865ae30f89e5ea457c40a86f224e4ecd7",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3461,7 +3612,7 @@
       "workspace": "migrations/course-g05-l05-ti-004",
       "status": "preserved",
       "manifestSha256": "de7e53ca5e0bfaa7dabab7969448f086c413674c5983c0f16c394a1e04f8a1e8",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3475,7 +3626,7 @@
       "workspace": "migrations/course-g05-l05-ti-005",
       "status": "preserved",
       "manifestSha256": "b5ad3d6cdacbe7e9567c5e09fdace046cafe9a3768ff5c97f6f34c950636dbef",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3489,7 +3640,7 @@
       "workspace": "migrations/course-g05-l05-ti-006",
       "status": "preserved",
       "manifestSha256": "1f5cfb41220e22158f3c0d8d86b3b405bd7abff2d47a084055023ebef6390b1f",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3503,7 +3654,7 @@
       "workspace": "migrations/course-g05-l05-ti-007",
       "status": "preserved",
       "manifestSha256": "6c5c893269b16e8853cc80d84bd5312dc40e65bb3fa7debea39005e47237e18e",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3517,7 +3668,7 @@
       "workspace": "migrations/course-g05-l05-ti-008",
       "status": "preserved",
       "manifestSha256": "dfa6091608e2c7d74699af29d74a2f30340247cee2196d58fc336f9b037027a1",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3531,7 +3682,7 @@
       "workspace": "migrations/course-g05-l05-ti-009",
       "status": "preserved",
       "manifestSha256": "59ae33497e1c64f78540f1eb437d4bac0268b5b0486b4e2601473cb1e0739aba",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3545,7 +3696,7 @@
       "workspace": "migrations/course-g05-l05-ti-010",
       "status": "preserved",
       "manifestSha256": "af674abc900367898f74d2240c169f9c650f9a083f44f6995070a59b92eab483",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3559,7 +3710,7 @@
       "workspace": "migrations/course-g05-l05-ts-002",
       "status": "preserved",
       "manifestSha256": "226098063a33e8f7693f2920ca07703cd272bed20f6661a03e3f94d0ea0e07ce",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3573,7 +3724,7 @@
       "workspace": "migrations/course-g05-l05-ts-003",
       "status": "preserved",
       "manifestSha256": "222f589c40de771849014c53016e2f29a00d262538a9f074b9f42a8520dd1440",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3587,7 +3738,7 @@
       "workspace": "migrations/course-g05-l05-ts-004",
       "status": "preserved",
       "manifestSha256": "86bb9d66f5762457b6238901a135bf90c2daa5bfbc8a4b73f3bf23569f08aeff",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3601,7 +3752,7 @@
       "workspace": "migrations/course-g05-l05-ts-005",
       "status": "preserved",
       "manifestSha256": "54e260188259d269771135d91927725014e64b55d5546fe340a31b82a1524204",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3615,7 +3766,7 @@
       "workspace": "migrations/course-g05-l05-ts-006",
       "status": "preserved",
       "manifestSha256": "0e49ca0ada1561f4be630e767594af690a3dfe8ab207338e47168b9d49d10795",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3629,7 +3780,7 @@
       "workspace": "migrations/course-g05-l05-ts-007",
       "status": "preserved",
       "manifestSha256": "fe741acb9ec022c2e0889decb7e9a70500f62d8a6461277b484773db5516162d",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3643,7 +3794,7 @@
       "workspace": "migrations/course-g05-l05-ts-008",
       "status": "preserved",
       "manifestSha256": "836a75f97531b00a32464d2a0ced82fbc6fd0f02fe9e80fc2ca95f3d4627c6e4",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3657,7 +3808,7 @@
       "workspace": "migrations/course-g05-l05-vb-002",
       "status": "preserved",
       "manifestSha256": "6909728506df36f12fd900ee655cca6d08f977f09b75f0c6b261c3d16265cfa3",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3671,7 +3822,7 @@
       "workspace": "migrations/course-g05-l05-vb-003",
       "status": "preserved",
       "manifestSha256": "ac4440223e4095961529ebd30b582f523a1e96217e1d7fa1c3f43f517143f1a9",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3685,7 +3836,7 @@
       "workspace": "migrations/course-g05-l05-vb-004",
       "status": "preserved",
       "manifestSha256": "400228d725ceb3e5142905feb380668b1d72b1fed4a7b9330f68a220275311c4",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3699,7 +3850,7 @@
       "workspace": "migrations/course-g05-l05-vb-005",
       "status": "preserved",
       "manifestSha256": "28b2a6a11392fef9435094561c002e4d3f4ff0ffd201f92b4990548543db9142",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3713,7 +3864,7 @@
       "workspace": "migrations/course-g05-l05-vb-006",
       "status": "preserved",
       "manifestSha256": "d4c62d807ac227920ae1d0db1b44e30357205cc76d07ed84e510bdecdbc66dec",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3727,7 +3878,7 @@
       "workspace": "migrations/course-g05-l05-vb-007",
       "status": "preserved",
       "manifestSha256": "e176a385c410dfa2710c49ca1f05d3f25ec5d00513a1959e74ba74e513375a56",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3741,7 +3892,7 @@
       "workspace": "migrations/course-g05-l05-vb-008",
       "status": "preserved",
       "manifestSha256": "5aba7483b64e041c3553ed4c47a24c0c34b0f9d8fa69e439952a9d74df9b103e",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3755,7 +3906,7 @@
       "workspace": "migrations/course-g05-l05-vb-009",
       "status": "preserved",
       "manifestSha256": "6582524f7457c198ea59595b55657a34ecfa0edd33a1005aa93de85dfbeb41e8",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3769,7 +3920,7 @@
       "workspace": "migrations/course-g05-l05-vb-010",
       "status": "preserved",
       "manifestSha256": "4dda3b1a0a0c4ef4a61e93e0912e339b930d13fe69ee718fdb7003e8c8f62aeb",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3783,7 +3934,7 @@
       "workspace": "migrations/course-g05-l05-vb-011",
       "status": "preserved",
       "manifestSha256": "f5e7db1225cd3c0d7e5e6b6b7ef0476acbb07cc4a6a191104167a5629d6317ec",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3797,7 +3948,7 @@
       "workspace": "migrations/course-g05-l05-vb-012",
       "status": "preserved",
       "manifestSha256": "c1be677235aca21e9fb497bc01017bf6862e7d6b67b8b9c6f546a573f3568605",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3811,7 +3962,7 @@
       "workspace": "migrations/course-g05-l05-vb-013",
       "status": "preserved",
       "manifestSha256": "84566ed7447c7ac2b11972955b3540989c39747ffe59bac06495c61355f5bddd",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3825,7 +3976,7 @@
       "workspace": "migrations/course-g05-l05-vb-014",
       "status": "preserved",
       "manifestSha256": "6c261ce7667a9c7a14892b66c52becaee1ae84b71aef9802086d6fc8937a13d2",
-      "errorCount": 45,
+      "errorCount": 46,
       "errors": [
         "status must be 'complete'",
         "Missing required paired-FLA authoring audit: audit/adobe-animate-2021-authoring-audit.json",
@@ -3839,7 +3990,7 @@
       "workspace": "migrations/course-g05-l13-rw-002",
       "status": "preserved",
       "manifestSha256": "471d4ec76cc5ee677157648c91f9d63060854015e153a488d08012007c51878c",
-      "errorCount": 47,
+      "errorCount": 51,
       "errors": [
         "status must be 'complete'",
         "confidence must be high, medium, or low",
@@ -3853,7 +4004,7 @@
       "workspace": "migrations/formula-elementary-conversion-01-01",
       "status": "preserved",
       "manifestSha256": "3fc65c27c9155eecd7958489836a9bc8b5566067b81407b7d7f5c4b7d5e3b6a6",
-      "errorCount": 178,
+      "errorCount": 183,
       "errors": [
         "status must be 'complete'",
         "paired-FLA authoring audit working copy: file does not exist (work/animate/read-only-fla-copies/formula-elementary-conversion-01-01/Conversion_1_1.fla)",
@@ -3867,7 +4018,7 @@
       "workspace": "migrations/formula-elementary-conversion-01-02",
       "status": "preserved",
       "manifestSha256": "41a7d71eb9fe4f156211e5cfaec38545148eb607477d92aed849fd7a880ac725",
-      "errorCount": 202,
+      "errorCount": 207,
       "errors": [
         "status must be 'complete'",
         "paired-FLA authoring audit working copy: file does not exist (work/animate/read-only-fla-copies/formula-elementary-conversion-01-02/Conversion_1_2.fla)",
@@ -3881,7 +4032,7 @@
       "workspace": "migrations/formula-elementary-conversion-01-03",
       "status": "preserved",
       "manifestSha256": "47f2c4c575c41b3187899cf5e2c3215e3c008c774faae74c1c343bb6871d47ee",
-      "errorCount": 208,
+      "errorCount": 213,
       "errors": [
         "status must be 'complete'",
         "paired-FLA authoring audit working copy: file does not exist (work/animate/read-only-fla-copies/formula-elementary-conversion-01-03/Conversion_1_3.fla)",
@@ -3895,7 +4046,7 @@
       "workspace": "migrations/formula-elementary-conversion-01-04",
       "status": "preserved",
       "manifestSha256": "968b1d7830218805e808437bb3b104fe2a7ffe7c3559d08dc2747473e571cdb4",
-      "errorCount": 137,
+      "errorCount": 142,
       "errors": [
         "status must be 'complete'",
         "paired-FLA authoring audit working copy: file does not exist (work/animate/read-only-fla-copies/formula-elementary-conversion-01-04/Conversion_1_4.fla)",
@@ -3909,7 +4060,7 @@
       "workspace": "migrations/keyterm-elementary-acute-angle",
       "status": "blocked",
       "manifestSha256": "f39614b30fe6e58d2fe83cc0f2fa3380addae1beb8bd2600047dcfc2ef084a75",
-      "errorCount": 94,
+      "errorCount": 97,
       "errors": [
         "status must be 'complete'",
         "paired-FLA authoring audit working copy: file does not exist (work/animate/read-only-fla-copies/keyterm-elementary-acute-angle/acute_angle.fla)",
@@ -3923,7 +4074,7 @@
       "workspace": "migrations/keyterm-elementary-computeghgh",
       "status": "validating",
       "manifestSha256": "e689a2485492e77f75d5b043fce5128a3b022036aa11591e7da787e22a32dad0",
-      "errorCount": 54,
+      "errorCount": 56,
       "errors": [
         "status must be 'complete'",
         "paired-FLA authoring audit working copy: file does not exist (work/animate/read-only-fla-copies/keyterm-elementary-computeghgh/computeghgh.fla)",
@@ -3951,7 +4102,7 @@
       "workspace": "migrations/shell-course-g04-l01-index-local",
       "status": "preserved",
       "manifestSha256": "88912836bd7b3f051441044ff211f35dcd4247fbdfa26b44885daff1ade98bdc",
-      "errorCount": 144,
+      "errorCount": 161,
       "errors": [
         "status must be 'complete'",
         "baseline.authority must be completed",
@@ -3965,7 +4116,7 @@
       "workspace": "migrations/shell-course-g04-l03-index-local",
       "status": "preserved",
       "manifestSha256": "2a44d479f6f9b2f3584165f489a0747c00937e0f2798f4f5b997cc46a312c56d",
-      "errorCount": 191,
+      "errorCount": 208,
       "errors": [
         "status must be 'complete'",
         "baseline.authority must be completed",

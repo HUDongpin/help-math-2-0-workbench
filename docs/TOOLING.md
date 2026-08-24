@@ -40,6 +40,40 @@ npm run build
 
 Use the version in `.nvmrc` when a Node version manager is available. Do not copy `node_modules` or `.next` between computers.
 
+### Linked worktrees on the same workstation
+
+A linked Git worktree may intentionally omit the multi-gigabyte source archive
+and `node_modules`. Do not create a `node_modules` symlink. Prepare and verify
+the ignored, read-only source alias explicitly:
+
+```bash
+npm run worktree:sources:link
+npm run worktree:sources:check
+npm run verify:sources
+```
+
+The link command accepts only the source directory under the Git common
+checkout, refuses a conflicting existing path, and never modifies the source.
+`verify:sources` follows that alias only for full hash/read-only verification;
+freeze/write operations still require a real source directory.
+
+For Node-based checks, the worktree can reuse the common checkout's installed
+packages without copying or linking them:
+
+```bash
+npm run worktree:dependencies:check
+npm run doctor
+npm run typecheck:demos
+npm run typecheck
+```
+
+The resolver compares root/workspace dependency metadata and then requires the
+current and installed lock records to match before loading an external package.
+Workspace package imports always resolve to the current worktree. Production
+builds still require a normal local installation or a capacity-safe external
+validation worktree; do not place a dependency or build-output symlink in the
+repository to bypass that requirement.
+
 ## Node.js And Python
 
 Download Node.js from <https://nodejs.org/en/download>. Use the supported LTS line recorded in `.nvmrc`, not an end-of-life release.

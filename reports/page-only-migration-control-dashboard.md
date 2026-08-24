@@ -2,6 +2,7 @@
 # HELP Math 1,751-page Page-Only migration control dashboard
 
 - Task: `HELP-MATH-P1-1751-PAGE-ONLY-MIGRATION-CONTROL-LEDGER-20260823`
+- Currentness successor: `HELP-MATH-P1-1751-PAGE-ONLY-LEDGER-CURRENTNESS-SUCCESSOR-20260824` (formal baseline changed = false)
 - Predecessor: `60f356be9b34cabd3ca1aad15b6dd00babfc7e35`
 - Scope: **29 Lessons / 1,751 active page occurrences / 0 legacy course shells**
 
@@ -24,7 +25,7 @@ The baseline remains **426 / 1,751 occurrences** and **425 unique renderers**. T
 | Grade | Lessons | Occurrences | Resolved source | Missing source | Candidate-only | Current-JS | Unique renderers | Remaining | Strict |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | G3 | 8 | 546 | 298 | 248 | 2 | 70 | 70 | 476 | 0 |
-| G4 | 12 | 645 | 645 | 0 | 2 | 181 | 181 | 464 | 0 |
+| G4 | 12 | 645 | 645 | 0 | 17 | 181 | 181 | 464 | 0 |
 | G5 | 9 | 560 | 418 | 142 | 1 | 175 | 174 | 385 | 0 |
 
 ## Per-Lesson control table
@@ -47,7 +48,7 @@ The baseline remains **426 / 1,751 occurrences** and **425 unique renderers**. T
 | G4 L6 | Division | 49 | 49 | 0 | 0 | 0 | 49 | 0 | 0 | W1 |
 | G4 L7 | Factoring | 48 | 48 | 0 | 0 | 0 | 48 | 0 | 0 | W1 |
 | G4 L8 | Mathematical Expressions | 46 | 46 | 0 | 0 | 0 | 46 | 0 | 0 | W1 |
-| G4 L9 | Equations | 43 | 43 | 0 | 1 | 0 | 43 | 0 | 0 | W1 |
+| G4 L9 | Equations | 43 | 43 | 0 | 16 | 0 | 43 | 0 | 0 | W1 |
 | G4 L10 | Perimeter & Area | 46 | 46 | 0 | 0 | 46 | 0 | 46 | 0 | registered baseline |
 | G4 L11 | Coordinate Grid | 43 | 43 | 0 | 0 | 43 | 0 | 43 | 0 | registered baseline |
 | G4 L12 | Geometry | 77 | 77 | 0 | 0 | 0 | 77 | 0 | 0 | W1 |
@@ -119,9 +120,9 @@ Observed implementation labels retained without promotion:
 
 ## Candidate inventory and yield boundary
 
-- Runnable but not formally registered candidate-only occurrences: **5** (5 unique renderers).
+- Runnable but not formally registered candidate-only occurrences: **20** (20 unique renderers).
 - Formally registered Current-JS occurrences: **426** (425 unique renderers).
-- Candidate asset profile: 209 runtime records / 204 evidence records; production approved = false, release eligible = false, published = false.
+- Candidate asset profile: 236 runtime records / 204 evidence records; production approved = false, release eligible = false, published = false.
 - Candidate-to-product yield: **not established**. Numerator and denominator are null because no single frozen attempted-candidate cohort binds both populations. Candidate stock is never counted as Current-JS.
 
 ## Independent downstream gates
@@ -138,7 +139,7 @@ Observed implementation labels retained without promotion:
 | Released | 0 | false / unpublished |
 | Production verified | 0 | not verified |
 
-Current-JS never implies any later gate. The existing `catalog/completion-ledger.json` remains a 285-directory strict diagnostics ledger with 0 strict passes; it is evidence only, not the 1,751-row denominator.
+Current-JS never implies any later gate. The existing `catalog/completion-ledger.json` remains a 300-directory strict diagnostics ledger with 0 strict passes; it is evidence only, not the 1,751-row denominator.
 
 ## Current wave order
 
@@ -158,7 +159,7 @@ Reason: first not-formally-registered Lesson in Owner-supplied W1 ordering. This
 - 390 occurrence rows retain `missing-canonical-source`.
 - 1,553 occurrence rows retain `complexity-unclassified`.
 - 1,704 occurrence rows retain `implementation-lane-unclassified`.
-- 5 candidate-only occurrences require an exact formal Lesson registration before they can count as Current-JS.
+- 20 candidate-only occurrences require an exact formal Lesson registration before they can count as Current-JS.
 - 1,325 occurrences remain outside formal Current-JS.
 - Original-runtime, technical fidelity, audio, human, Owner, strict, release, and production gates remain independently closed.
 
@@ -173,5 +174,6 @@ Authorization still required:
 
 - Input plan: `/Volumes/WestWorld/HELP MATH 2.0-g4-l5-l10-l11-integration/reports/help-math-426-page-only-baseline-input-plan-2026-08-22.json` / `6d181ad88f0c0cd0e6094a4fff2ac4056a883f442e402b3aa9c69ac8c94a4764`.
 - Frozen P0 receipt: `/Volumes/WestWorld/HELP MATH 2.0-g4-l5-l10-l11-integration/artifacts/handoffs/help-math-p0-426-page-only-baseline-final-receipt-2026-08-23.json` / `5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028`.
-- Generator: `scripts/build-page-only-migration-control-ledger.mjs` / `403ef5a3adb8908a9b34bbafce6560fdf00e4f8d796c3bceb8da6279d62a6d1a`.
+- Currentness successor: `HELP-MATH-P1-1751-PAGE-ONLY-LEDGER-CURRENTNESS-SUCCESSOR-20260824`; predecessor generator 1.0.0; formal baseline unchanged.
+- Generator: `scripts/build-page-only-migration-control-ledger.mjs` / `895510121e23063fd0d30512ef2be4b53f2844aae05884ae40685b47f3146184`.
 - Canonical JSON: `catalog/page-only-migration-control-ledger.json`.
