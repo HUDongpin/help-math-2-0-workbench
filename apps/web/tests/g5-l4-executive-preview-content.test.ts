@@ -510,10 +510,6 @@ const sectionCopy = {
   FQ: {english: 'Final Quiz', spanish: 'Examen Final'}
 } as const;
 
-function escapeRegExp(value: string) {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
 function identityFromAnimationId(animationId: string) {
   const match = animationId.match(/-([a-z]{2})-(\d{3})(?:-[a-f0-9]{8})?$/);
   assert.ok(match, animationId);
@@ -523,7 +519,7 @@ function identityFromAnimationId(animationId: string) {
   };
 }
 
-test('executive preview binds exactly 54 G5 L4 page candidates in release order', () => {
+test('current-JavaScript audit data binds exactly 54 G5 L4 page candidates in release order', () => {
   assert.deepEqual(
     G5_L4_EXECUTIVE_PREVIEW_SCENES.map((scene) => [
       scene.releaseOrdinal,
@@ -689,22 +685,60 @@ test('all 54 preview pages are registry-addressable legacy prototypes with exact
 });
 
 test('titles, sections, ordinals, and source identities remain frozen-source bound', async () => {
-  const [sourceScope, indexXml] = await Promise.all([
-    readFile(
-      new URL(
-        '../../../reports/g5-l4-source-scope-freeze.json',
-        import.meta.url
+  const [
+    sourceScopeBytes,
+    lessonsCatalogBytes,
+    animationsCatalogBytes,
+    sourceFilesCatalogBytes
+  ] = await Promise.all([
+      readFile(
+        new URL(
+          '../../../reports/g5-l4-source-scope-freeze.json',
+          import.meta.url
+        )
       ),
-      'utf8'
-    ).then(JSON.parse),
-    readFile(
-      new URL(
-        '../../../source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L4/index.xml',
-        import.meta.url
-      ),
-      'utf8'
-    )
-  ]);
+      readFile(new URL('../../../catalog/lessons.json', import.meta.url)),
+      readFile(new URL('../../../catalog/animations.json', import.meta.url)),
+      readFile(new URL('../../../catalog/source-files.json', import.meta.url))
+    ]);
+  const sourceScope = JSON.parse(sourceScopeBytes.toString('utf8'));
+  const lessonsCatalog = JSON.parse(lessonsCatalogBytes.toString('utf8'));
+  const animationsCatalog = JSON.parse(animationsCatalogBytes.toString('utf8'));
+  const sourceFilesCatalog = JSON.parse(
+    sourceFilesCatalogBytes.toString('utf8')
+  );
+  const courseXmlPath = 'HELP_COURSES/ELMGR5/L4/index.xml';
+  const courseXmlIdentity = sourceFilesCatalog.files.find(
+    ({path}: {path: string}) => path === courseXmlPath
+  );
+  assert.deepEqual(courseXmlIdentity, {
+    path: courseXmlPath,
+    bytes: 11_841,
+    sha256:
+      'b6f1718da8f5e909cb96c883902009887eb965d41e41588318b4bfb36c8f7a36',
+    extension: 'xml'
+  });
+  assert.deepEqual(sourceScope.inputs.courseXml, {
+    path: courseXmlIdentity.path,
+    bytes: courseXmlIdentity.bytes,
+    sha256: courseXmlIdentity.sha256
+  });
+  assert.equal(
+    createHash('sha256').update(lessonsCatalogBytes).digest('hex'),
+    sourceScope.inputs.lessonsCatalog.sha256
+  );
+  assert.equal(
+    lessonsCatalogBytes.byteLength,
+    sourceScope.inputs.lessonsCatalog.bytes
+  );
+  const lesson = lessonsCatalog.lessons.find(
+    ({path}: {path: string}) => path === courseXmlPath
+  );
+  assert.ok(lesson);
+  assert.equal(lesson.bytes, courseXmlIdentity.bytes);
+  assert.equal(lesson.sha256, courseXmlIdentity.sha256);
+  assert.equal(lesson.sectionCount, 8);
+  assert.equal(lesson.pageReferenceCount, 54);
 
   for (const scene of G5_L4_EXECUTIVE_PREVIEW_SCENES) {
     const identity = identityFromAnimationId(scene.animationId);
@@ -717,6 +751,15 @@ test('titles, sections, ordinals, and source identities remain frozen-source bou
         candidate.animationId === scene.animationId
     );
     assert.ok(member, scene.animationId);
+    const animation = animationsCatalog.animations.find(
+      ({animationId}: {animationId: string}) =>
+        animationId === scene.animationId
+    );
+    assert.ok(animation, scene.animationId);
+    const catalogSection = lesson.sections.find(
+      ({code}: {code: string}) => code === identity.sectionCode
+    );
+    assert.ok(catalogSection, identity.sectionCode);
     assert.equal(member.ordinal, scene.releaseOrdinal);
     assert.equal(member.section, identity.sectionCode);
     assert.equal(scene.sectionCode, identity.sectionCode);
@@ -729,32 +772,33 @@ test('titles, sections, ordinals, and source identities remain frozen-source bou
       scene.sectionSpanish,
       sectionCopy[identity.sectionCode].spanish
     );
+    assert.equal(catalogSection.titleEnglish, scene.sectionEnglish);
+    assert.equal(catalogSection.titleSpanish, scene.sectionSpanish);
+    assert.equal(animation.classification.titleRaw, scene.title);
+    assert.equal(animation.classification.section.code, scene.sectionCode);
+    assert.equal(
+      animation.classification.section.titleEnglish,
+      scene.sectionEnglish
+    );
+    assert.equal(
+      animation.classification.section.titleSpanish,
+      scene.sectionSpanish
+    );
     assert.equal(scene.titleSpanish, member.title.spanish ?? scene.title);
     assert.equal(member.source.swf.sha256, scene.sourceSwfSha256);
     assert.equal(
       member.source.swf.path,
       `HELP_COURSES/ELMGR5/L4/${identity.sectionCode}/${sourceLeaf}.swf`
     );
-
-    const sectionMatch = indexXml.match(
-      new RegExp(
-        `<Section SName="${identity.sectionCode}"[\\s\\S]*?<\\/Section>`
-      )
+    assert.equal(animation.source.path, member.source.swf.path);
+    assert.equal(animation.source.sha256, member.source.swf.sha256);
+    const courseReference = animation.references.courseXml.find(
+      ({sourceXmlPath}: {sourceXmlPath: string}) =>
+        sourceXmlPath === courseXmlPath
     );
-    assert.ok(sectionMatch, identity.sectionCode);
-    const sectionXml = sectionMatch[0];
-    assert.ok(
-      sectionXml.includes(`<English>${scene.sectionEnglish}</English>`)
-    );
-    assert.ok(
-      sectionXml.includes(`<Spanish>${scene.sectionSpanish}</Spanish>`)
-    );
-    assert.match(
-      sectionXml,
-      new RegExp(
-        `<Page Title="${escapeRegExp(scene.title)}"[^>]*>${identity.sectionCode}/${sourceLeaf}\\.swf<\\/Page>`
-      )
-    );
+    assert.ok(courseReference, scene.animationId);
+    assert.equal(courseReference.expectedPath, member.source.swf.path);
+    assert.equal(courseReference.occurrence, scene.releaseOrdinal);
   }
 });
 
@@ -857,8 +901,11 @@ test('open-frame accounting distinguishes full, prefix, dual-sprite, and atlas c
   assert.equal(G5_L4_EXECUTIVE_PREVIEW_BOUNDARY.blockedFrameCount, 3_096);
 });
 
-test('preview authorization cannot promote fidelity, Replay, strict completion, or publication', () => {
-  assert.equal(G5_L4_EXECUTIVE_PREVIEW_BOUNDARY.previewAuthorized, true);
+test('current-JavaScript audit data cannot promote fidelity, Replay, strict completion, or publication', () => {
+  assert.equal(
+    Object.hasOwn(G5_L4_EXECUTIVE_PREVIEW_BOUNDARY, 'previewAuthorized'),
+    false,
+  );
   assert.equal(G5_L4_EXECUTIVE_PREVIEW_BOUNDARY.rootTimelineAccepted, false);
   assert.equal(G5_L4_EXECUTIVE_PREVIEW_BOUNDARY.spanishVisualAccepted, false);
   assert.equal(G5_L4_EXECUTIVE_PREVIEW_BOUNDARY.audioAccepted, false);
@@ -881,71 +928,4 @@ test('preview authorization cannot promote fidelity, Replay, strict completion, 
   assert.equal(G5_L4_EXECUTIVE_PREVIEW_BOUNDARY.strictCompleteCount, 0);
   assert.equal(G5_L4_EXECUTIVE_PREVIEW_BOUNDARY.releaseMemberCount, 55);
   assert.equal(G5_L4_EXECUTIVE_PREVIEW_BOUNDARY.published, false);
-});
-
-test('client renderer stays current-JS-only and labels Replay as a modern reset', async () => {
-  const source = await readFile(
-    new URL('../components/g5-l4-executive-preview.tsx', import.meta.url),
-    'utf8'
-  );
-
-  assert.doesNotMatch(source, /<(?:object|embed)\b|from\s+['"][^'"]*ruffle/i);
-  assert.doesNotMatch(source, /\beval\s*\(|\bFunction\s*\(/);
-  assert.doesNotMatch(
-    source,
-    /\bfetch\s*\(|XMLHttpRequest|WebSocket|EventSource/
-  );
-  assert.match(source, /<AnimationRuntime/);
-  assert.match(source, /scenario: scene\.scenario/);
-  assert.match(source, /lang: 'en'/);
-  assert.match(source, /source-static-current-javascript-preview-not-strict/);
-  assert.match(source, /data-current-js-page-progress="54\/54"/);
-  assert.match(source, /data-current-js-lesson-mvp-progress="55\/55"/);
-  assert.match(source, /data-current-js-source-static-progress="55\/55"/);
-  assert.match(source, /data-canonical-governance-candidate-progress="52\/55"/);
-  assert.match(source, /data-root-timeline-accepted="false"/);
-  assert.match(source, /data-spanish-visual-accepted="false"/);
-  assert.match(source, /data-audio-accepted="false"/);
-  assert.match(source, /data-behavior-accepted="false"/);
-  assert.match(source, /data-source-controls-accepted="false"/);
-  assert.match(source, /data-replay-parity-accepted="false"/);
-  assert.match(source, /data-natural-entry-accepted="false"/);
-  assert.match(source, /data-normalized-rmse-complete="false"/);
-  assert.match(source, /data-original-runtime-accepted="false"/);
-  assert.match(source, /data-original-runtime-natural-entry-accepted="false"/);
-  assert.match(source, /data-human-visual-review-accepted="false"/);
-  assert.match(source, /data-owner-fidelity-accepted="false"/);
-  assert.match(source, /data-release-progress="0\/55"/);
-  assert.match(source, /data-release-published="false"/);
-  assert.match(source, /data-strict-migration-complete="false"/);
-  assert.match(
-    source,
-    /54 runnable, hash-bound current-JavaScript page candidates/
-  );
-  assert.match(source, /13,732\/13,732/);
-  assert.match(source, /Replay resets only the modern preview player/);
-  assert.match(source, /51 source-static single-sprite/);
-  assert.match(source, /one source-static dual-sprite composite/);
-  assert.match(
-    source,
-    /two independent 18-question source-static inspection atlases/
-  );
-  assert.match(
-    source,
-    /The two atlases do not enter canonical migration governance/
-  );
-  assert.match(source, /Strict completion remains 0\/55 and unpublished/);
-  assert.match(
-    source,
-    /Reduced motion is enabled; the deterministic first inspection frame is shown/,
-  );
-  assert.match(
-    source,
-    /El movimiento reducido está activado; se muestra el primer fotograma determinista de inspección/,
-  );
-  assert.doesNotMatch(source, /deterministic terminal frame is shown/);
-  assert.match(source, /animationId === 'course-g05-l04-vb-002'/);
-  assert.match(source, /locale === 'es' \? item\.titleSpanish : item\.title/);
-  assert.doesNotMatch(source, /34\/55|34 of 55|9,744|9\.744|1,882|1\.882/i);
-  assert.doesNotMatch(source, /<SceneVisual|<svg/);
 });

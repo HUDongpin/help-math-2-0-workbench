@@ -267,6 +267,21 @@ test("RW003 capture readiness binds trace identity and discloses disabled contro
   assert.equal(complete["data-runtime-language"], "en");
   assert.equal(complete["data-source-button-visuals"], "positive,negative");
   assert.equal(complete["data-source-controls-enabled"], "false");
+  const updating = buildCourseG04L03Rw003CaptureAttributes({
+    canvasStatus: "updating",
+    entryStateSha256: "a".repeat(64),
+    requirementId: "engineering-source-static-frame-160",
+    state: getCourseG04L03Rw003FrameState(160, {
+      frameDomain: "sprite-49",
+      scenario: "source-static-frame",
+      lang: "en",
+      seed: 7,
+    }),
+    traceId: "engineering-source-static",
+  });
+  assert.equal(updating["data-capture-stage"], undefined);
+  assert.equal(updating["data-render-state"], "updating");
+  assert.equal(updating["data-render-visual"], undefined);
 });
 
 test("RW003 module remains prototype-only and blocked UI states are explicit", async () => {

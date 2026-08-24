@@ -6,6 +6,7 @@ export const LESSON_HOST_CAPABILITIES = Object.freeze([
   'calculator',
   'audio',
   'fq-scoring',
+  'practice-feedback',
 ] as const);
 
 export type LessonHostCapability = (typeof LESSON_HOST_CAPABILITIES)[number];
@@ -73,6 +74,14 @@ export type LessonHostRequest =
     }>
   | Readonly<{type: 'reset-fq-score'}>
   | Readonly<{
+      type: 'record-practice-feedback';
+      interactionId: string;
+      outcome: 'correct' | 'incorrect';
+      branchIndex: number;
+      branchCount: number;
+    }>
+  | Readonly<{type: 'reset-practice-feedback'; interactionId?: string}>
+  | Readonly<{
       type: 'legacy';
       operation: BlockedLegacyHostOperation;
       target?: string;
@@ -95,6 +104,12 @@ export interface LessonHostState {
     pointsPossible: number;
     scoredQuestionIds: readonly string[];
   }>;
+  readonly practiceFeedback: Readonly<{
+    interactionId: string;
+    outcome: 'correct' | 'incorrect';
+    branchIndex: number;
+    branchCount: number;
+  }> | null;
 }
 
 export interface LessonHostAllowedDecision {
@@ -112,7 +127,8 @@ export interface LessonHostBlockedDecision {
     | 'release-not-published'
     | 'navigation-target-not-admitted'
     | 'legacy-operation-blocked'
-    | 'duplicate-question-score';
+    | 'duplicate-question-score'
+    | 'practice-feedback-active';
   readonly reason: string;
   readonly state: LessonHostState;
 }
@@ -159,6 +175,9 @@ function capabilityForRequest(type: string): LessonHostCapability | null {
   if (type === 'open-calculator' || type === 'close-calculator') return 'calculator';
   if (type === 'play-audio' || type === 'stop-audio') return 'audio';
   if (type === 'record-fq-score' || type === 'reset-fq-score') return 'fq-scoring';
+  if (type === 'record-practice-feedback' || type === 'reset-practice-feedback') {
+    return 'practice-feedback';
+  }
   return null;
 }
 
@@ -169,6 +188,9 @@ function freezeState(state: LessonHostState): LessonHostState {
       ...state.fqScore,
       scoredQuestionIds: Object.freeze([...state.fqScore.scoredQuestionIds]),
     }),
+    practiceFeedback: state.practiceFeedback
+      ? Object.freeze({...state.practiceFeedback})
+      : null,
   });
 }
 
@@ -190,6 +212,7 @@ function initialState(config: MemoryOnlyLessonHostConfig): LessonHostState {
       pointsPossible: 0,
       scoredQuestionIds: [],
     },
+    practiceFeedback: null,
   });
 }
 
@@ -347,6 +370,50 @@ export function createMemoryOnlyLessonHost(config: MemoryOnlyLessonHostConfig): 
             scoredQuestionIds: [],
           },
         });
+      } else if (request.type === 'record-practice-feedback') {
+        const branchIndex = request.branchIndex;
+        const branchCount = request.branchCount;
+        if (!validId(request.interactionId) ||
+          (request.outcome !== 'correct' && request.outcome !== 'incorrect') ||
+          typeof branchIndex !== 'number' ||
+          typeof branchCount !== 'number' ||
+          !Number.isSafeInteger(branchIndex) ||
+          !Number.isSafeInteger(branchCount) ||
+          branchCount < 1 ||
+          branchCount > 32 ||
+          branchIndex < 1 ||
+          branchIndex > branchCount) {
+          return blocked(
+            'invalid-request',
+            'Practice feedback must contain a bounded outcome and source branch identity, never a raw answer.',
+          );
+        }
+        if (state.practiceFeedback) {
+          return blocked(
+            'practice-feedback-active',
+            'Practice feedback must be explicitly reset before another outcome is recorded.',
+          );
+        }
+        state = freezeState({
+          ...state,
+          practiceFeedback: {
+            interactionId: request.interactionId,
+            outcome: request.outcome,
+            branchIndex,
+            branchCount,
+          },
+        });
+      } else if (request.type === 'reset-practice-feedback') {
+        if (request.interactionId !== undefined &&
+          (!validId(request.interactionId) ||
+            (state.practiceFeedback !== null &&
+              request.interactionId !== state.practiceFeedback.interactionId))) {
+          return blocked(
+            'invalid-request',
+            'Practice feedback reset must address the active interaction.',
+          );
+        }
+        state = freezeState({...state, practiceFeedback: null});
       }
       return allowed(capability);
     },

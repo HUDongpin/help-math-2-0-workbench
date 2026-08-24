@@ -158,7 +158,8 @@ test('proxy keeps production reference pages 404 by default and admits only flag
       'http://127.0.0.1:3101/about',
       {headers: {host: '127.0.0.1:3101'}},
     ));
-    assert.equal(ordinary.status, 200);
+    assert.equal(ordinary.status, 404);
+    assert.equal(ordinary.headers.get('x-robots-tag'), 'noindex, nofollow');
     assert.doesNotMatch(ordinary.headers.get('content-security-policy') ?? '', /wasm-unsafe-eval/);
   });
 

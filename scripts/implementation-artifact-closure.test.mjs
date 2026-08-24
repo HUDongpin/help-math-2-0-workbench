@@ -348,6 +348,69 @@ test("a public Canvas byte edit stales the closure even when module bytes do not
   assert.notEqual(current.aggregateSha256, initial.aggregateSha256);
 });
 
+test("binds the exact private candidate asset and profile when the legacy public mirror is absent", async (t) => {
+  const input = await fixture();
+  t.after(() => rm(input.projectRoot, {recursive: true, force: true}));
+  const canvas = "window.renderFixture = () => 1;\n";
+  const canvasSha256 = digest(canvas);
+  const assetPath = "courses/course-fixture/canvas-renderer.js";
+  const version = "candidate-fixture-v1";
+  await rm(path.join(
+    input.projectRoot,
+    "public/flash-assets/courses/course-fixture",
+  ), {recursive: true});
+  await write(
+    input.projectRoot,
+    `apps/web/candidate-assets/flash-assets/${version}/${assetPath}`,
+    canvas,
+  );
+  await write(
+    input.projectRoot,
+    "apps/web/config/current-js-candidate-assets.v1.json",
+    `${JSON.stringify({
+      schemaVersion: 1,
+      profileId: "current-js-candidate-assets-v1",
+      version,
+      generatedBy: "fixture",
+      candidateReleaseIds: ["lesson-fixture-page-only"],
+      counts: {runtime: 1, evidence: 0},
+      authority: {
+        productionApproved: false,
+        releaseEligible: false,
+        published: false,
+      },
+      entries: [{
+        assetPath,
+        relativePath: "course-fixture/canvas-renderer.js",
+        storageRoot: "candidate",
+        releaseId: "lesson-fixture-page-only",
+        bytes: Buffer.byteLength(canvas),
+        sha256: canvasSha256,
+      }],
+    }, null, 2)}\n`,
+  );
+  await write(
+    input.workspace,
+    "asset-inventory.csv",
+    `asset_id,exported_file,sha256\nfixture-canvas,public/flash-assets/${assetPath},${canvasSha256}\n`,
+  );
+
+  const closure = await collect(input);
+  const paths = new Set(closure.artifacts.map((artifact) => artifact.path));
+  assert.equal(paths.has(`public/flash-assets/${assetPath}`), false);
+  assert.equal(
+    paths.has(
+      `apps/web/candidate-assets/flash-assets/${version}/${assetPath}`,
+    ),
+    true,
+  );
+  assert.equal(
+    paths.has("apps/web/config/current-js-candidate-assets.v1.json"),
+    true,
+  );
+  assert.deepEqual(implementationArtifactClosureErrors(closure), []);
+});
+
 test("strict capture origins accept only credential-free loopback HTTP", () => {
   for (const value of [
     "http://localhost:3213/animations/demo",

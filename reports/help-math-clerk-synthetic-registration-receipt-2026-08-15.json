@@ -1,0 +1,51 @@
+{
+  "schema": "help-math.clerk-synthetic-registration-receipt.v1",
+  "recordedDate": "2026-08-15",
+  "result": "pass",
+  "terminalRecord": "CLERK_SYNTHETIC_LAUNCHER=PASS",
+  "scope": {
+    "environment": "clerk-development-instance",
+    "locale": "en",
+    "syntheticDataOnly": true,
+    "studentDataUsed": false,
+    "automaticRetryUsed": false
+  },
+  "verifiedLifecycle": [
+    "sign-up",
+    "required-email-verification",
+    "application-session-readback",
+    "account-route-validation",
+    "sign-out",
+    "password-sign-in",
+    "post-sign-in-sign-out",
+    "exact-synthetic-session-revocation-and-user-deletion"
+  ],
+  "postRunState": {
+    "recoveryReceipt": "absent",
+    "runnerLock": "absent",
+    "isolatedBuildDirectory": "absent",
+    "syntheticTemporaryItemCount": 0,
+    "syntheticPortListenerCount": 0,
+    "localLearningSiteRestored": true,
+    "localLearningSiteHttpStatus": 200,
+    "localSignUpRouteHttpStatus": 200
+  },
+  "privacyBoundary": {
+    "credentialValuesRecorded": false,
+    "syntheticEmailRecorded": false,
+    "verificationCodeRecorded": false,
+    "providerIdentifiersRecorded": false,
+    "providerResponseBodyRecorded": false,
+    "tokenOrCookieRecorded": false
+  },
+  "notProven": [
+    "es-locale-lifecycle",
+    "password-recovery",
+    "natural-session-expiry",
+    "forced-session-invalidation",
+    "production-readiness",
+    "child-privacy-or-legal-approval",
+    "supabase-auth-migration",
+    "deployment-or-publication"
+  ]
+}

@@ -4,6 +4,8 @@ import {access, lstat, readFile, readdir, realpath, stat} from "node:fs/promises
 import path from "node:path";
 import ts from "typescript";
 
+import {resolveCurrentJsCandidateAssetBinding} from "./current-js-candidate-asset-binding.mjs";
+
 export const IMPLEMENTATION_ARTIFACT_CLOSURE_SCHEMA_VERSION = 1;
 export const IMPLEMENTATION_ARTIFACT_CLOSURE_ALGORITHM = "sha256-canonical-artifact-and-projection-rows-v2";
 export const IMPLEMENTATION_CAPTURE_SCHEMA_VERSION = 4;
@@ -57,7 +59,10 @@ const PACKAGE_JSON_RUNTIME_FIELDS = Object.freeze([
   "resolutions",
 ]);
 
-const RENDERER_OUTPUT_ROOT = "public/flash-assets/";
+const RENDERER_OUTPUT_ROOTS = Object.freeze([
+  "public/flash-assets/",
+  "apps/web/candidate-assets/flash-assets/",
+]);
 const PROJECTION_MANAGED_GLOBAL_FILES = new Set([
   "catalog/animations.json",
   "packages/demos/prototype-registry.json",
@@ -709,6 +714,32 @@ function publicRendererPath(value) {
   return null;
 }
 
+function isRendererStoragePath(relativePath) {
+  return RENDERER_OUTPUT_ROOTS.some((root) => relativePath.startsWith(root));
+}
+
+async function resolvePublicRendererBinding(projectRoot, binding) {
+  const resolved = await resolveCurrentJsCandidateAssetBinding({
+    projectRoot,
+    logicalPath: binding.path,
+    expectedBytes: binding.bytes,
+    expectedSha256: binding.sha256,
+  });
+  return resolved;
+}
+
+async function bindResolvedCandidateProfile(sourceFiles, projectRoot,
+  resolved) {
+  if (!resolved?.profile?.path) return;
+  const profilePath = path.resolve(projectRoot, resolved.profile.path);
+  await assertRealFileWithinProject(
+    projectRoot,
+    profilePath,
+    "Current-JS candidate asset profile",
+  );
+  sourceFiles.add(profilePath);
+}
+
 async function collectCsvPublicBindings(csvPath) {
   const text = await readFile(csvPath, "utf8");
   const lines = text.split(/\r?\n/).filter((line) => line.trim());
@@ -728,7 +759,7 @@ async function collectCsvPublicBindings(csvPath) {
 
 async function addPublicRendererFile(rows, projectRoot, filePath, {declaredBytes, declaredSha256} = {}) {
   const {relativePath, metadata} = await assertRealFileWithinProject(projectRoot, filePath, "public renderer artifact");
-  invariant(relativePath.startsWith(RENDERER_OUTPUT_ROOT), `Public renderer artifact is outside ${RENDERER_OUTPUT_ROOT}: ${relativePath}`);
+  invariant(isRendererStoragePath(relativePath), `Public renderer artifact is outside the allowed renderer stores: ${relativePath}`);
   const actualSha256 = await sha256File(filePath);
   invariant(!declaredSha256 || declaredSha256 === actualSha256, `${relativePath}: renderer inventory SHA-256 ${declaredSha256} does not match actual ${actualSha256}`);
   invariant(!Number.isInteger(declaredBytes) || declaredBytes === metadata.size, `${relativePath}: renderer inventory byte count ${declaredBytes} does not match actual ${metadata.size}`);
@@ -739,7 +770,7 @@ async function addPublicRendererFile(rows, projectRoot, filePath, {declaredBytes
 
 async function addPublicRendererPath(rows, projectRoot, filePath, binding = {}) {
   const relativePath = projectRelative(projectRoot, filePath);
-  invariant(relativePath.startsWith(RENDERER_OUTPUT_ROOT), `Public renderer path is outside ${RENDERER_OUTPUT_ROOT}: ${relativePath}`);
+  invariant(isRendererStoragePath(relativePath), `Public renderer path is outside the allowed renderer stores: ${relativePath}`);
   const metadata = await lstat(filePath);
   invariant(!metadata.isSymbolicLink(), `Public renderer path must not be a symbolic link: ${relativePath}`);
   if (metadata.isDirectory()) {
@@ -784,9 +815,12 @@ async function collectPublicRendererArtifacts({projectRoot, workspace, manifest,
         if (await exists(path.resolve(projectRoot, animationScoped))) rendererRelative = animationScoped;
         else if (suffixSegments.length <= 1) continue;
       } else if (matchedPath.endsWith("/") && suffixSegments.length <= 1) continue;
-      const rendererPath = path.resolve(projectRoot, rendererRelative);
-      invariant(await exists(rendererPath), `${projectRelative(projectRoot, sourcePath)}: referenced public renderer artifact is missing: ${rendererRelative}`);
-      await addPublicRendererPath(rows, projectRoot, rendererPath);
+      const resolved = await resolvePublicRendererBinding(projectRoot, {
+        path: rendererRelative,
+      });
+      invariant(resolved, `${projectRelative(projectRoot, sourcePath)}: referenced public renderer artifact is missing: ${rendererRelative}`);
+      await bindResolvedCandidateProfile(sourceFiles, projectRoot, resolved);
+      await addPublicRendererPath(rows, projectRoot, resolved.absolutePath);
     }
   }
 
@@ -807,9 +841,14 @@ async function collectPublicRendererArtifacts({projectRoot, workspace, manifest,
     for (const binding of collectEmbeddedFileBindings(inventory)) {
       const rendererRelative = publicRendererPath(binding.path);
       if (!rendererRelative) continue;
-      const rendererPath = path.resolve(projectRoot, rendererRelative);
-      invariant(await exists(rendererPath), `${projectRelative(projectRoot, inventoryPath)}: inventoried public renderer artifact is missing: ${rendererRelative}`);
-      await addPublicRendererPath(rows, projectRoot, rendererPath, {
+      const resolved = await resolvePublicRendererBinding(projectRoot, {
+        path: rendererRelative,
+        bytes: binding.bytes,
+        sha256: binding.sha256,
+      });
+      invariant(resolved, `${projectRelative(projectRoot, inventoryPath)}: inventoried public renderer artifact is missing: ${rendererRelative}`);
+      await bindResolvedCandidateProfile(sourceFiles, projectRoot, resolved);
+      await addPublicRendererPath(rows, projectRoot, resolved.absolutePath, {
         declaredBytes: binding.bytes,
         declaredSha256: binding.sha256,
       });
@@ -822,9 +861,10 @@ async function collectPublicRendererArtifacts({projectRoot, workspace, manifest,
     if (await exists(inventoryPath)) {
       await assertRealFileWithinProject(projectRoot, inventoryPath, "asset inventory");
       for (const binding of await collectCsvPublicBindings(inventoryPath)) {
-        const rendererPath = path.resolve(projectRoot, binding.path);
-        invariant(await exists(rendererPath), `${projectRelative(projectRoot, inventoryPath)}: inventoried public renderer artifact is missing: ${binding.path}`);
-        await addPublicRendererPath(rows, projectRoot, rendererPath, {declaredSha256: binding.sha256});
+        const resolved = await resolvePublicRendererBinding(projectRoot, binding);
+        invariant(resolved, `${projectRelative(projectRoot, inventoryPath)}: inventoried public renderer artifact is missing: ${binding.path}`);
+        await bindResolvedCandidateProfile(sourceFiles, projectRoot, resolved);
+        await addPublicRendererPath(rows, projectRoot, resolved.absolutePath, {declaredSha256: binding.sha256});
       }
     }
   }

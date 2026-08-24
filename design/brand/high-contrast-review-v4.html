@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HELP Math 2.0 — rich-blue logo review v4</title>
+    <link rel="icon" href="helpmath2-favicon.svg" type="image/svg+xml" />
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #14213d;
+        --navy: #12386b;
+        --blue: #1768d4;
+        --paper: #fffdf7;
+        --surface: #ffffff;
+        --line: #dbe4ee;
+        --muted: #526377;
+        --sky: #eaf6fb;
+        --yellow: #f8cb4b;
+        --review-blue: #1768d4;
+        --review-blue-dark: #12386b;
+        --review-mint: #e2fff7;
+        font-family:
+          Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background:
+          radial-gradient(circle at 12% 0%, rgb(205 234 250 / 70%), transparent 34rem),
+          #f4f7fb;
+        color: var(--ink);
+        margin: 0;
+      }
+
+      img {
+        display: block;
+        height: auto;
+        max-width: 100%;
+      }
+
+      .review-bar {
+        background: var(--ink);
+        color: white;
+        font-size: 0.82rem;
+        font-weight: 750;
+        letter-spacing: 0.035em;
+        padding: 0.72rem 1rem;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      main {
+        margin: 0 auto;
+        max-width: 1180px;
+        padding: 3rem 1.25rem 4rem;
+      }
+
+      .eyebrow {
+        color: var(--blue);
+        font-size: 0.78rem;
+        font-weight: 850;
+        letter-spacing: 0.09em;
+        margin: 0 0 0.65rem;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 5vw, 4.3rem);
+        letter-spacing: -0.055em;
+        line-height: 0.98;
+        margin-bottom: 1rem;
+        max-width: 14ch;
+      }
+
+      h2 {
+        font-size: clamp(1.4rem, 3vw, 2.1rem);
+        letter-spacing: -0.035em;
+        margin-bottom: 0.75rem;
+      }
+
+      h3 {
+        font-size: 1.05rem;
+        margin-bottom: 0.4rem;
+      }
+
+      p {
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .intro {
+        align-items: end;
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: minmax(0, 1.45fr) minmax(17rem, 0.75fr);
+        margin-bottom: 2rem;
+      }
+
+      .decision {
+        background: var(--paper);
+        border: 1px solid #f1d681;
+        border-radius: 1.25rem;
+        box-shadow: 0 12px 36px rgb(20 33 61 / 8%);
+        padding: 1.2rem;
+      }
+
+      .decision strong {
+        display: block;
+        font-size: 1.05rem;
+        margin-bottom: 0.35rem;
+      }
+
+      .decision p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+
+      .compare-grid {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 1.5rem;
+        box-shadow: 0 18px 55px rgb(20 33 61 / 8%);
+        overflow: hidden;
+      }
+
+      .card__head {
+        align-items: center;
+        border-bottom: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 1.15rem;
+      }
+
+      .card__head h2 {
+        font-size: 1.1rem;
+        margin: 0;
+      }
+
+      .badge {
+        background: #edf3fa;
+        border-radius: 999px;
+        color: var(--navy);
+        font-size: 0.72rem;
+        font-weight: 800;
+        padding: 0.38rem 0.65rem;
+        text-transform: uppercase;
+      }
+
+      .badge--review {
+        background: #dcfce7;
+        color: #075c47;
+      }
+
+      .logo-stage {
+        align-items: center;
+        background:
+          linear-gradient(45deg, #edf1f6 25%, transparent 25%),
+          linear-gradient(-45deg, #edf1f6 25%, transparent 25%),
+          linear-gradient(45deg, transparent 75%, #edf1f6 75%),
+          linear-gradient(-45deg, transparent 75%, #edf1f6 75%),
+          white;
+        background-position:
+          0 0,
+          0 10px,
+          10px -10px,
+          -10px 0;
+        background-size: 20px 20px;
+        display: flex;
+        justify-content: center;
+        min-height: 430px;
+        padding: 2.25rem;
+      }
+
+      .logo-stage img {
+        width: min(100%, 360px);
+      }
+
+      .card__copy {
+        padding: 1.15rem;
+      }
+
+      .card__copy p {
+        margin-bottom: 0;
+      }
+
+      .section {
+        margin-top: 3.25rem;
+      }
+
+      .size-tests {
+        align-items: end;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+      }
+
+      .size-test {
+        align-items: center;
+        display: grid;
+        gap: 0.7rem;
+        justify-items: center;
+      }
+
+      .size-test span {
+        color: var(--muted);
+        font-size: 0.75rem;
+        font-weight: 750;
+      }
+
+      .size-128 {
+        width: 128px;
+      }
+
+      .size-64 {
+        width: 64px;
+      }
+
+      .size-32 {
+        width: 32px;
+      }
+
+      .header-stack {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .header-label {
+        color: var(--muted);
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        margin: 0 0 0.45rem;
+        text-transform: uppercase;
+      }
+
+      .header-mock {
+        align-items: center;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 0.85rem;
+        display: flex;
+        gap: 1.6rem;
+        min-height: 76px;
+        overflow: hidden;
+        padding: 0 1rem;
+      }
+
+      .header-mock__logo {
+        flex: 0 0 auto;
+        height: 64px;
+        width: 64px;
+      }
+
+      .header-mock__nav {
+        align-items: center;
+        display: flex;
+        gap: 1.1rem;
+        margin-left: auto;
+      }
+
+      .header-mock__nav span {
+        font-size: 0.78rem;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .header-mock__action {
+        background: var(--blue);
+        border-radius: 0.7rem;
+        color: white;
+        padding: 0.72rem 0.85rem;
+      }
+
+      .mobile-grid {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: repeat(2, minmax(0, 320px));
+      }
+
+      .mobile-shell {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 0.85rem;
+        overflow: hidden;
+        width: 100%;
+      }
+
+      .mobile-shell__status {
+        background: #174174;
+        color: white;
+        font-size: 0.72rem;
+        line-height: 1.35;
+        min-height: 72px;
+        padding: 0.7rem 1rem;
+        text-align: center;
+      }
+
+      .mobile-shell .header-mock {
+        border: 0;
+        border-radius: 0;
+        justify-content: space-between;
+      }
+
+      .menu-label {
+        align-items: center;
+        display: flex;
+        font-size: 0.8rem;
+        font-weight: 850;
+        gap: 0.5rem;
+      }
+
+      .menu-icon {
+        display: grid;
+        font-size: 1.45rem;
+        line-height: 1;
+        place-items: center;
+      }
+
+      .palette {
+        display: grid;
+        gap: 0.75rem;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+
+      .swatch {
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 0.8rem;
+        overflow: hidden;
+      }
+
+      .swatch__color {
+        height: 4rem;
+      }
+
+      .swatch__label {
+        color: var(--muted);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.72rem;
+        padding: 0.65rem;
+      }
+
+      .boundary {
+        background: #edf4fb;
+        border-left: 4px solid var(--blue);
+        border-radius: 0.8rem;
+        padding: 1rem 1.1rem;
+      }
+
+      .boundary p {
+        color: var(--ink);
+        margin: 0;
+      }
+
+      @media (max-width: 800px) {
+        main {
+          padding-top: 2rem;
+        }
+
+        .intro,
+        .compare-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .logo-stage {
+          min-height: 320px;
+        }
+
+        .header-mock__nav {
+          display: none;
+        }
+
+        .palette {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 560px) {
+        .mobile-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="review-bar">Local design review only · not adopted · not deployed</div>
+    <main>
+      <section class="intro">
+        <div>
+          <p class="eyebrow">HELP Math 2.0 identity</p>
+          <h1>Make the AI helper unmistakable.</h1>
+          <p>
+            Version 4 rejects the washed-out pale-cyan direction. It keeps the
+            original rich royal-blue-to-navy field and changes only the smaller
+            outlined AI hand to a near-white mint light. The heritage orange,
+            learner gold, white plus, background, glow, hand geometry,
+            letterforms, spacing, and hierarchy are unchanged.
+          </p>
+        </div>
+        <aside class="decision">
+          <strong>Recommended for owner review</strong>
+          <p>
+            The revision directly addresses figure-ground separation at the
+            current 64px header size without changing any public surface.
+          </p>
+        </aside>
+      </section>
+
+      <section class="compare-grid" aria-label="Current and revised logo comparison">
+        <article class="card">
+          <div class="card__head">
+            <h2>Current</h2>
+            <span class="badge">Reference</span>
+          </div>
+          <div class="logo-stage">
+            <img
+              alt="Current HELP Math logo with a mint outlined AI hand on a dark blue field"
+              height="512"
+              src="help-math-2-logo-current-reference.png"
+              width="512"
+            />
+          </div>
+          <div class="card__copy">
+            <h3>Why it weakens at header size</h3>
+            <p>
+              The mint contour crosses the brighter blue portion of the field,
+              where representative clean-edge samples fall to roughly 2.9:1.
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card__head">
+            <h2>Rich-blue v4</h2>
+            <span class="badge badge--review">Review candidate</span>
+          </div>
+          <div class="logo-stage">
+            <img
+              alt="Revised HELP Math logo with a near-white mint outlined AI hand on the original rich blue field"
+              height="512"
+              src="helpmath2-logo-high-contrast-review-v4.svg"
+              width="512"
+            />
+          </div>
+          <div class="card__copy">
+            <h3>What changed</h3>
+            <p>
+              The field does not change. Only the AI contour moves to the
+              palest end of the mint family. The weakest clean-edge AI-hand
+              sample rises from 2.86:1 to 4.51:1 in the deterministic render
+              and 4.57:1 in Chromium. No geometry or typography changed.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <section class="section">
+        <p class="eyebrow">Small-size stress test</p>
+        <h2>The required 64px cut stays readable.</h2>
+        <div class="size-tests">
+          <div class="size-test">
+            <img
+              alt="Revised logo at 128 pixels"
+              class="size-128"
+              height="128"
+              src="helpmath2-logo-high-contrast-review-v4.svg"
+              width="128"
+            />
+            <span>128px</span>
+          </div>
+          <div class="size-test">
+            <img
+              alt="Revised logo at 64 pixels"
+              class="size-64"
+              height="64"
+              src="helpmath2-logo-high-contrast-review-v4.svg"
+              width="64"
+            />
+            <span>64px · intended minimum</span>
+          </div>
+          <div class="size-test">
+            <img
+              alt="Revised logo at 32 pixels for stress testing only"
+              class="size-32"
+              height="32"
+              src="helpmath2-logo-high-contrast-review-v4.svg"
+              width="32"
+            />
+            <span>32px · stress test only</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <p class="eyebrow">Current desktop context</p>
+        <h2>Upper-left header comparison at 64px.</h2>
+        <div class="header-stack">
+          <div>
+            <p class="header-label">Current</p>
+            <div class="header-mock">
+              <img
+                alt="Current logo in a simulated desktop header"
+                class="header-mock__logo"
+                height="64"
+                src="help-math-2-logo-current-reference.png"
+                width="64"
+              />
+              <div class="header-mock__nav" aria-hidden="true">
+                <span>Home</span><span>My lesson</span><span>Progress</span>
+                <span>Learning supports</span><span>Migration</span>
+                <span>Español</span><span class="header-mock__action">Get help</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="header-label">Rich-blue v4</p>
+            <div class="header-mock">
+              <img
+                alt="Revised logo in a simulated desktop header"
+                class="header-mock__logo"
+                height="64"
+                src="helpmath2-logo-high-contrast-review-v4.svg"
+                width="64"
+              />
+              <div class="header-mock__nav" aria-hidden="true">
+                <span>Home</span><span>My lesson</span><span>Progress</span>
+                <span>Learning supports</span><span>Migration</span>
+                <span>Español</span><span class="header-mock__action">Get help</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <p class="eyebrow">Current mobile context</p>
+        <h2>320px header comparison.</h2>
+        <div class="mobile-grid">
+          <div>
+            <p class="header-label">Current</p>
+            <div class="mobile-shell">
+              <div class="mobile-shell__status">
+                <strong>Grade 4 · Lesson 3</strong><br />
+                Negative Numbers: current-JavaScript showcase.
+              </div>
+              <div class="header-mock">
+                <img
+                  alt="Current logo in a simulated 320 pixel mobile header"
+                  class="header-mock__logo"
+                  height="64"
+                  src="help-math-2-logo-current-reference.png"
+                  width="64"
+                />
+                <div class="menu-label" aria-hidden="true">
+                  <svg
+                    aria-hidden="true"
+                    class="menu-icon"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                  >
+                    <path
+                      d="M4 6h16M4 12h16M4 18h16"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-width="2"
+                    />
+                  </svg>
+                  <span>Open navigation</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="header-label">Rich-blue v4</p>
+            <div class="mobile-shell">
+              <div class="mobile-shell__status">
+                <strong>Grade 4 · Lesson 3</strong><br />
+                Negative Numbers: current-JavaScript showcase.
+              </div>
+              <div class="header-mock">
+                <img
+                  alt="Revised logo in a simulated 320 pixel mobile header"
+                  class="header-mock__logo"
+                  height="64"
+                  src="helpmath2-logo-high-contrast-review-v4.svg"
+                  width="64"
+                />
+                <div class="menu-label" aria-hidden="true">
+                  <svg
+                    aria-hidden="true"
+                    class="menu-icon"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    width="24"
+                  >
+                    <path
+                      d="M4 6h16M4 12h16M4 18h16"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-width="2"
+                    />
+                  </svg>
+                  <span>Open navigation</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <p class="eyebrow">Candidate palette</p>
+        <h2>Original field. One foreground correction.</h2>
+        <div class="palette" aria-label="High-contrast candidate colors">
+          <div class="swatch">
+            <div class="swatch__color" style="background: #1768d4"></div>
+            <div class="swatch__label">#1768D4<br />field unchanged</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__color" style="background: #12386b"></div>
+            <div class="swatch__label">#12386B<br />field unchanged</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__color" style="background: #e2fff7"></div>
+            <div class="swatch__label">#E2FFF7<br />AI mint</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__color" style="background: #f0fdfa"></div>
+            <div class="swatch__label">#F0FDFA<br />AI light</div>
+          </div>
+          <div class="swatch">
+            <div class="swatch__color" style="background: #fff"></div>
+            <div class="swatch__label">#FFFFFF<br />AI tip</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section boundary">
+        <p>
+          <strong>Review boundary:</strong> this candidate exists only in the
+          local design folder. The current header PNG, footer, favicon, Open
+          Graph image, lesson-player branding, Git history, and public
+          helpmath.ai site have not been changed by this redesign. The rejected
+          pale-cyan concept is not used by this candidate.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

@@ -12,6 +12,7 @@ export interface LoadedSwfHostAsset {
 }
 
 interface LoadedSwfCanvasAsset {
+  readonly metadata?: Readonly<{renderScale?: number}>;
   readonly ready: () => Promise<void>;
   readonly render: (
     canvas: HTMLCanvasElement,
@@ -198,6 +199,9 @@ export function LoadedSwfHostCanvas({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [status, setStatus] =
     useState<'loading' | 'ready' | 'error'>('loading');
+  // The adapter declares the backing store it was generated for. Absent means
+  // the authored stage at 1x.
+  const [renderScale, setRenderScale] = useState(1);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -208,6 +212,16 @@ export function LoadedSwfHostCanvas({
       .then(async (loadedAsset) => {
         await loadedAsset.ready();
         if (cancelled) return;
+        const declared = loadedAsset.metadata?.renderScale;
+        const scale =
+          Number.isInteger(declared) && (declared as number) >= 1
+            ? (declared as number)
+            : 1;
+        setRenderScale(scale);
+        // The backing store must match what the adapter was generated for, or
+        // its guard rejects the canvas outright.
+        if (canvas.width !== width * scale) canvas.width = width * scale;
+        if (canvas.height !== height * scale) canvas.height = height * scale;
         const rendered = loadedAsset.render(canvas, {
           frame,
           scenario,
@@ -237,10 +251,12 @@ export function LoadedSwfHostCanvas({
     asset,
     frame,
     frameDomain,
+    height,
     lang,
     rootFrame,
     scenario,
     seed,
+    width,
   ]);
 
   return <section
@@ -273,17 +289,23 @@ export function LoadedSwfHostCanvas({
       data-runtime-language={lang}
       data-runtime-scenario={scenario}
       data-runtime-seed={seed}
-      height={height}
+      data-render-scale={renderScale}
+      height={height * renderScale}
       ref={canvasRef}
       role="img"
       style={{
         aspectRatio: `${width} / ${height}`,
+        // Upscaling past the backing store is what makes a canvas page look
+        // soft next to the SVG pages. Cap the box at the pixels that exist;
+        // regenerating the adapter at a higher scale raises this by itself.
+        maxWidth: `${width * renderScale}px`,
+        marginInline: 'auto',
         display: status === 'error' ? 'none' : 'block',
         height: 'auto',
         pointerEvents: 'none',
         width: '100%',
       }}
-      width={width}
+      width={width * renderScale}
     />
     {status === 'loading'
       ? <span aria-live="polite" className="sr-only" role="status">

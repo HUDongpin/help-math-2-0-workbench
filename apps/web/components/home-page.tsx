@@ -92,7 +92,7 @@ export function HomePage({content, locale}: {content: HomeContent; locale: Local
             intro={content.demos.intro}
             title={content.demos.title}
           />
-          <div className="demo-preview-grid">
+          {content.demos.items.length > 0 ? <div className="demo-preview-grid">
             {content.demos.items.map((item, index) => (
               <article className="demo-preview" key={item.id}>
                 <div aria-hidden="true" className={`demo-preview__art demo-preview__art--${index + 1}`}>
@@ -116,7 +116,7 @@ export function HomePage({content, locale}: {content: HomeContent; locale: Local
                 </div>
               </article>
             ))}
-          </div>
+          </div> : null}
           <p className="demo-preview__note">{content.demos.note}</p>
         </Container>
       </Section>

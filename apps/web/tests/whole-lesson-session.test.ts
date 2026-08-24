@@ -92,11 +92,12 @@ test('resume placement is later-page only and starting over preserves review his
     false,
   );
 
-  const stoppedLater = reviewWholeLessonPage(
+  let stoppedLater = reviewWholeLessonPage(
     visitWholeLessonPage(initial, descriptor, second),
     descriptor,
     first,
   );
+  stoppedLater = recordWholeLessonReplay(stoppedLater, descriptor, second);
   assert.equal(
     wholeLessonHasResumablePlacement(stoppedLater, descriptor),
     true,
@@ -109,6 +110,7 @@ test('resume placement is later-page only and starting over preserves review his
   assert.equal(fromBeginning.currentAnimationId, first);
   assert.deepEqual(fromBeginning.reviewedAnimationIds, [first]);
   assert.deepEqual(fromBeginning.visitedAnimationIds, [first, second]);
+  assert.deepEqual(fromBeginning.replayCounts, {[second]: 1});
   assert.equal(
     wholeLessonHasResumablePlacement(fromBeginning, descriptor),
     false,
@@ -188,6 +190,37 @@ test('unknown page operations are rejected without widening the allowlist', () =
     recordWholeLessonReplay(progress, descriptor, unknown),
     progress,
   );
+});
+
+test('placement ids keep repeated source animations independently navigable', () => {
+  const repeated: WholeLessonSessionDescriptor = {
+    releaseId: 'lesson-g05-l03-page-only',
+    pages: [
+      {placementId: 'placement-045', animationId: 'course-g05-l03-in-028'},
+      {placementId: 'placement-046', animationId: 'course-g05-l03-in-028'},
+    ],
+  };
+  const initial = createInitialWholeLessonSessionProgress(repeated, 'en');
+  const second = reviewWholeLessonPage(
+    visitWholeLessonPage(initial, repeated, 'placement-046'),
+    repeated,
+    'placement-046',
+  );
+  const replayed = recordWholeLessonReplay(
+    second,
+    repeated,
+    'placement-046',
+  );
+
+  assert.equal(initial.currentAnimationId, 'placement-045');
+  assert.equal(replayed.currentAnimationId, 'placement-046');
+  assert.deepEqual(replayed.visitedAnimationIds, [
+    'placement-045',
+    'placement-046',
+  ]);
+  assert.deepEqual(replayed.reviewedAnimationIds, ['placement-046']);
+  assert.deepEqual(replayed.replayCounts, {'placement-046': 1});
+  assert.equal(wholeLessonReviewedPercent(replayed, repeated), 50);
 });
 
 test('invalid descriptors fail closed before session state can be created', () => {

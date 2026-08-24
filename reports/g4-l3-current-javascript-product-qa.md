@@ -13,7 +13,7 @@
 - Replay mouse/Enter/Space checks: **39/39**.
 - Axe serious/critical violations: **0** across **82** audits.
 - Console/page/request/HTTP errors: **0/0/0/0**.
-- Ignored same-origin Next.js RSC prefetch cancellations: **2737**.
+- Ignored same-origin Next.js RSC prefetch cancellations: **0**.
 - Horizontal-overflow failures: **0**.
 - Atomic release boundary: **0/40 strict; unpublished**.
 

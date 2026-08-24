@@ -4,12 +4,19 @@ import {lstat, readdir, readFile} from 'node:fs/promises';
 import path from 'node:path';
 import test from 'node:test';
 
-const assetRoot = path.resolve(
+import productionProfile from '../config/current-js-production-assets.v1.json';
+import {G5_L4_AUDIO_ASSET_SHA256} from '../lib/g5-l4-audio-assets.generated';
+
+const publicAssetRoot = path.resolve(
   import.meta.dirname,
   '../public/flash-assets/courses',
 );
+const serverAudioRoot = path.resolve(
+  import.meta.dirname,
+  '../server-assets/flash-assets/courses',
+);
 const expectedChecksumSetSha256 =
-  '2a7f200cbb69a7e1cff8075a61091f4cae953f8b50f2fa4b0557928b9d5e9f78';
+  '54e11e77a8d684fcf9542ba7458c12add3edb1a85c16ac99db756a34ed5c6ad4';
 const allowedExtensions = new Set(['.js', '.mp3', '.png', '.svg', '.ttf']);
 
 async function walk(directory: string): Promise<string[]> {
@@ -29,43 +36,133 @@ async function walk(directory: string): Promise<string[]> {
   return result;
 }
 
-test('private deployment assets are an exact runtime-only G4 L3 and G5 L4 closure', async () => {
-  const files = (await walk(assetRoot)).sort();
-  const relativeFiles = files.map((file) =>
-    path.relative(assetRoot, file).split(path.sep).join('/')
+test('deployment assets are an exact eight-lesson Current-JS runtime closure', async () => {
+  const [publicFiles, serverAudioFiles] = await Promise.all([
+    walk(publicAssetRoot),
+    walk(serverAudioRoot),
+  ]);
+  const entries = [
+    ...publicFiles.map((file) => ({
+      file,
+      relative: path.relative(publicAssetRoot, file).split(path.sep).join('/'),
+      root: 'public' as const,
+    })),
+    ...serverAudioFiles.map((file) => ({
+      file,
+      relative: path.relative(serverAudioRoot, file).split(path.sep).join('/'),
+      root: 'server-audio' as const,
+    })),
+  ].sort((left, right) => left.relative.localeCompare(right.relative));
+  const relativeFiles = entries.map(({relative}) => relative);
+  assert.equal(publicFiles.length, 1135);
+  assert.equal(serverAudioFiles.length, 185);
+  assert.equal(entries.length, 1320);
+  assert.deepEqual(
+    entries.map(({file: _file, relative, root}) => ({
+      assetPath: `courses/${relative}`,
+      relativePath: relative,
+      storageRoot: root,
+    })),
+    productionProfile.entries.map((entry) => ({
+      assetPath: entry.assetPath,
+      relativePath: entry.relativePath,
+      storageRoot: entry.storageRoot,
+    })),
+    'disk paths must equal the exact production manifest, not only its counts',
   );
-  assert.equal(files.length, 676);
   assert.equal(
     relativeFiles.filter((file) =>
       file.startsWith('course-g04-l03-')
       || file.startsWith('shell-course-g04-l03-index-local/')
     ).length,
-    558,
+    559,
   );
   assert.equal(
     relativeFiles.filter((file) =>
       file.startsWith('course-g05-l04-')
       || file.startsWith('shell-course-g05-l04-index-local/')
     ).length,
-    118,
+    303,
   );
-  assert.equal(relativeFiles.filter((file) => file.endsWith('/canvas-renderer.js')).length, 93);
-  assert.equal(relativeFiles.filter((file) => file.endsWith('.mp3')).length, 72);
+  assert.equal(
+    relativeFiles.filter((file) => file.startsWith('course-g03-l02-')).length,
+    132,
+  );
+  assert.equal(
+    relativeFiles.filter((file) => file.startsWith('course-g05-l03-')).length,
+    64,
+  );
+  assert.equal(
+    relativeFiles.filter((file) => file.startsWith('course-g05-l05-')).length,
+    56,
+  );
+  assert.equal(
+    relativeFiles.filter((file) => file.startsWith('course-g04-l05-')).length,
+    51,
+  );
+  assert.equal(
+    relativeFiles.filter((file) => file.startsWith('course-g04-l10-')).length,
+    113,
+  );
+  assert.equal(
+    relativeFiles.filter((file) => file.startsWith('course-g04-l11-')).length,
+    42,
+  );
+  assert.equal(relativeFiles.filter((file) => file.endsWith('/canvas-renderer.js')).length, 418);
+  assert.equal(
+    relativeFiles.filter((file) =>
+      file === 'course-g04-l03-gs-002/canvas-interaction-base-renderer.js'
+    ).length,
+    1,
+  );
+  assert.equal(relativeFiles.filter((file) => file.endsWith('.mp3')).length, 390);
+  const g5L4AudioFiles = relativeFiles.filter((file) =>
+    Object.hasOwn(G5_L4_AUDIO_ASSET_SHA256, file)
+  );
+  assert.equal(g5L4AudioFiles.length, 185);
+  assert.deepEqual(
+    g5L4AudioFiles,
+    Object.keys(G5_L4_AUDIO_ASSET_SHA256).sort(),
+  );
+  assert.equal(
+    publicFiles.some((file) =>
+      Object.hasOwn(
+        G5_L4_AUDIO_ASSET_SHA256,
+        path.relative(publicAssetRoot, file).split(path.sep).join('/'),
+      )
+    ),
+    false,
+    'G5 L4 audio must not exist under Next public static handling',
+  );
+  assert.deepEqual(
+    serverAudioFiles.map((file) =>
+      path.relative(serverAudioRoot, file).split(path.sep).join('/')
+    ).sort(),
+    Object.keys(G5_L4_AUDIO_ASSET_SHA256).sort(),
+  );
   assert.equal(relativeFiles.some((file) => file.endsWith('manifest.json')), false);
   assert(relativeFiles.every((file) => allowedExtensions.has(path.extname(file))));
 
   const rows: string[] = [];
-  for (const [index, file] of files.entries()) {
+  for (const {file, relative, root} of entries) {
     const bytes = await readFile(file);
     rows.push(
-      `${createHash('sha256').update(bytes).digest('hex')} ${bytes.length} ${relativeFiles[index]}`,
+      `${createHash('sha256').update(bytes).digest('hex')} ${bytes.length} ${relative}`,
     );
+    if (Object.hasOwn(G5_L4_AUDIO_ASSET_SHA256, relative)) {
+      assert.equal(root, 'server-audio', relative);
+      assert.equal(
+        createHash('sha256').update(bytes).digest('hex'),
+        G5_L4_AUDIO_ASSET_SHA256[relative],
+        relative,
+      );
+    }
     if (['.js', '.svg'].includes(path.extname(file))) {
       const text = bytes.toString('utf8');
       assert.doesNotMatch(
         text,
         /\/Users\/|\/Volumes\/|private-archive|source-assets|\.fla(?:["'\s]|$)|\.swf(?:["'\s]|$)|EXECUTIVE_PREVIEW_(?:ACCESS_KEY|SESSION_SECRET)\s*[=:]/u,
-        relativeFiles[index],
+        relative,
       );
     }
   }

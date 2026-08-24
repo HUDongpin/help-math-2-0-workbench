@@ -1,0 +1,1183 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "help-math-g5-l3-active-source-promotion-plan",
+  "planDate": "2026-08-21",
+  "mode": "plan-only-no-source-mutation",
+  "scope": {
+    "grade": 5,
+    "lesson": 3,
+    "selection": "canonical lesson-XML active page SWFs currently missing at exact canonical path, their same-path FLA sources, and source-derived reachable audio/XML bindings",
+    "explicitlyExcluded": "all Grade 5 quarantine rows not reached from this active-source dependency closure, including unbound ActionScript and whole-directory audio selection"
+  },
+  "inputs": {
+    "sourceCatalog": {
+      "path": "catalog/source-files.json",
+      "sha256": "c5ba348ea968b4ae7292d86f7624a77ec105bc8f929bd61b4837c59623f33b29",
+      "bytes": 1894761
+    },
+    "animationsCatalog": {
+      "path": "catalog/animations.json",
+      "sha256": "ab27270c1f6a6618bae5e52f6e48ebf3ef646b6232dd087c1c86f755a6a3ce10",
+      "bytes": 6509993
+    },
+    "lessonsCatalog": {
+      "path": "catalog/lessons.json",
+      "sha256": "96602f48c3c2089ab90d63262645de267a58522dc2bae57ab3e87745f3547905",
+      "bytes": 59672
+    },
+    "missingReferences": {
+      "path": "catalog/missing-references.json",
+      "sha256": "80159400ba05e6b32ceb1b3a24e8dbe839ffcf049af08403adf5049296416136",
+      "bytes": 852812
+    },
+    "intakePlan": {
+      "path": "manifests/elmgr5-intake-plan.json",
+      "sha256": "b9fa136fc471f30c2386b1a1f2801bfa7c56a23281cf9feaa6d42b93bb9e2742",
+      "bytes": 4711608
+    },
+    "quarantineManifest": {
+      "path": "manifests/elmgr5-files.json",
+      "sha256": "a9d123185da832814504db1330b97d4596bd875feb864808719451a00418ff80",
+      "bytes": 602457
+    },
+    "intakeReceipt": {
+      "path": "manifests/intake-receipt.json",
+      "sha256": "3633334999488f1df0c95fc7bece4669d7d9db86845f1aeab1924fd560802fd4",
+      "bytes": 7858
+    },
+    "hostAudioEvidence": {
+      "path": "migrations/course-g05-l13-rw-002/audit/audio-runtime-evidence.json",
+      "sha256": "0aea70e9e10702ca3a7ee9608aeee365aae889cf287e731b767f383c3854f1c2",
+      "bytes": 8115
+    },
+    "sourceManifest": {
+      "path": "catalog/source-manifest.sha256",
+      "sha256": "f0a33c8a3d15afd7340e9ea5523385428bae7546bd8d4227a3a8977ab8914318",
+      "bytes": 958064
+    },
+    "hostActionScript": {
+      "path": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+      "bytes": 122477,
+      "sha256": "19a500653e0e71cb8c936373a709f13f6377e74f2d74c57e179a68710a8da08f"
+    },
+    "hostSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+      "bytes": 794543,
+      "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd"
+    }
+  },
+  "evidenceBoundary": {
+    "sourcePromotionOnly": true,
+    "sourceDerivedReachabilityIsRuntimePlaybackProof": false,
+    "audioLanguageContentVerified": false,
+    "audioSynchronizationVerified": false,
+    "flashFidelityEffect": "none",
+    "javascriptImplementationEffect": "none",
+    "humanOrOwnerAcceptanceEffect": "none",
+    "strictCompletionEffect": "none",
+    "publicationEffect": "none",
+    "missingDependencyEffect": "0 absent MP3 paths remain explicit source gaps and audio-fidelity blockers; they are not invented or silently omitted from the expected closure."
+  },
+  "derivation": {
+    "activePages": {
+      "occurrenceCount": 65,
+      "uniquePathCount": 64,
+      "sortedPathSetSha256": "cde2c450b3c0fb19bee8b71bd23ea40b51fcd9d3dd3c27bb3e7f59bdfc1fa2e3"
+    },
+    "activeMissingSwf": {
+      "count": 24,
+      "occurrenceCount": 25,
+      "pathSetSha256": "54df2b34136ffa59c53583a18df1ad036e075137abed662a0a57a3a4866de5b4",
+      "pathSetAlgorithm": "sha256(sorted canonicalPath<LF>)"
+    },
+    "pairedAuthoringSources": {
+      "samePathFlaCount": 20,
+      "swfOnlyCount": 4
+    },
+    "lessonXml": {
+      "boundLessonCount": 1,
+      "canonicalExactCount": 1,
+      "newCopyCount": 0
+    },
+    "audio": {
+      "authority": "pinned indexELM.swf host AVM1 route plus target SWF static quiz contract strings; source-derived reachable, not observed playback",
+      "ordinarySpanishPage": {
+        "route": "sections 2-6 and section 7 except host slide 2; sibling SA/<loaded-SWF-basename>.mp3",
+        "expectedCount": 23
+      },
+      "finalQuiz": {
+        "route": "EN->EA and SP->SA; Q<n>.mp3 and Q<n>A-D.mp3",
+        "targetEvidence": [],
+        "distinctExpectedCount": 0
+      },
+      "totalDistinctExpectedCount": 23
+    }
+  },
+  "transaction": {
+    "copyTransactionReady": true,
+    "copyTransactionConflictCount": 0,
+    "allPreReviewHoldsResolvedInThisPlan": true,
+    "sourceDependencyClosureComplete": true,
+    "missingInputsOutsideCopyTransaction": 0,
+    "reviewPolicy": "Pre-review historical/alias holds are promoted only because this owner-authorized review proves exact active/runtime placement, byte identity, and no conflict; priorDisposition remains on every record.",
+    "expectedPostManifest": {
+      "baseManifestSha256": "f0a33c8a3d15afd7340e9ea5523385428bae7546bd8d4227a3a8977ab8914318",
+      "baseFileCount": 9147,
+      "baseTotalBytes": 3214585414,
+      "addedFileCount": 43,
+      "addedTotalBytes": 51396667,
+      "postFileCount": 9190,
+      "postTotalBytes": 3265982081,
+      "manifestSha256": "fab43474f18fa06f04b6dd61f5c27b901a74ad24027058340bf095d4425cdd6c",
+      "manifestOrdering": "path.localeCompare(otherPath, \"en\") as used by freeze-help-math-sources.mjs",
+      "checksumSetSha256": "4723b6507be5c2165b0d916b4dc3502aa597f3b2fb1bc42acfec2b3a7f312da0",
+      "checksumSetOrdering": "Unicode code-point path order as used by build-help-math-catalog.mjs",
+      "recordsSha256": "f0c0d83bae02f220929b2a9cce271f5c03373a7983c3919d5ef1d0dd674b1e52",
+      "recordsAlgorithm": "sha256(sorted path<TAB>bytes<TAB>sha256<LF>)",
+      "reconstruction": "parse the pinned base source-manifest, add every copyRecords canonicalPath/sha256, sort with the declared ordering, and serialize sha256 two spaces path LF"
+    }
+  },
+  "summary": {
+    "copyRecords": {
+      "count": 43,
+      "totalBytes": 51396667,
+      "bySourceType": {
+        "active-page-swf": 24,
+        "same-path-fla": 19
+      },
+      "bytesBySourceType": {
+        "active-page-swf": 8017979,
+        "same-path-fla": 43378688
+      },
+      "recordSetSha256": "c87ef94d9ac80fbc3c621a8d8037f50c53c83756e0f97aa353a06b126d5b033b",
+      "recordSetAlgorithm": "sha256(sorted canonicalPath<TAB>bytes<TAB>sha256<LF>)"
+    },
+    "existingBindings": {
+      "count": 25,
+      "totalBytes": 9402856,
+      "bySourceType": {
+        "lesson-xml-binding": 1,
+        "runtime-bound-audio": 23,
+        "same-path-fla": 1
+      },
+      "bytesBySourceType": {
+        "lesson-xml-binding": 13336,
+        "runtime-bound-audio": 7658448,
+        "same-path-fla": 1731072
+      },
+      "recordSetSha256": "4025a68d7e24821805ccaedbc458bc72ace3a155f993ccba2b8795447772c532",
+      "recordSetAlgorithm": "sha256(sorted canonicalPath<TAB>bytes<TAB>sha256<LF>)"
+    },
+    "missingDependencies": {
+      "count": 0,
+      "pathSetSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pathSetAlgorithm": "sha256(sorted canonicalPath<LF>)",
+      "byAudioBindingKind": {}
+    },
+    "copyByPriorDisposition": {
+      "candidate-new-source-in-quarantine": 40,
+      "hold-historical-custody-review": 1,
+      "hold-placement-alias-review": 2
+    },
+    "exactKnownCountsEnforced": true
+  },
+  "copyRecords": [
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/GS/L3GS02.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/GS/L3GS02.swf",
+      "bytes": 1186250,
+      "sha256": "39315e9f4b692c97a4556ca63f909d0b799928e89924787ef00a29cc00afa92d",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN02.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN02.fla",
+      "bytes": 5347328,
+      "sha256": "2a9b3c4ba3a17644795438c80ef6a2f259bbe78e985399c5b574e2d9a8c08e52",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN02.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN02.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN02.swf",
+      "bytes": 1214613,
+      "sha256": "7e87f101d993198a56afb549cbfd7061a39c35d40774cfa334ff694a6948ac29",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN03.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN03.fla",
+      "bytes": 2475008,
+      "sha256": "5c64f16273a9ca7859af5fbbc7693d65a2b3cbd6bccb7aeecc1cced9e95d8263",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN03.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN03.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN03.swf",
+      "bytes": 245832,
+      "sha256": "6e60cef217879f4d9c5639b1187e5e9d188268888407fb831e07626543496a1b",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN04.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN04.fla",
+      "bytes": 1809920,
+      "sha256": "838691b5c5ec16bce4dcfc5d77dba77bf441be2853584fdf469636c9b6c8393a",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN04.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN04.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN04.swf",
+      "bytes": 206290,
+      "sha256": "a541f0957ec40f7f6204f09c3da6fd18ae697bbe02da4e8a38ea9b51353a6bf3",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN06.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN06.fla",
+      "bytes": 1029120,
+      "sha256": "3e5564163a5576e21027b838e6a3e86ce444fffb41813340c0b455904631eeef",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN06.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN06.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN06.swf",
+      "bytes": 185114,
+      "sha256": "4b49d5efc905b81e949ce49d4092f0b87f6bfaad3142f25c6aed2fbd1b31a348",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN08.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN08.fla",
+      "bytes": 1869312,
+      "sha256": "de9b089f93376345e568a1eada56738a869ebd0ad88423f69424ad3a6cfb1b11",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN08.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN08.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN08.swf",
+      "bytes": 148491,
+      "sha256": "407b1cc146ed8dfc657e1e7eae224f4c9a44a2565a3434e08d33f4bf99a11f4c",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN09.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN09.swf",
+      "bytes": 804854,
+      "sha256": "12d59503dd50126a71e87599bad8b9fec15fd1ca0df6a12e34f1b462e6103e06",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN12.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN12.fla",
+      "bytes": 1348608,
+      "sha256": "0fc9c58163ce96a1fe3cf3be659b1a789b7ccd2095d06834e066edb1a308d253",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN12.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN12.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN12.swf",
+      "bytes": 30736,
+      "sha256": "7799b262e1202833010ec6897d53adb8a44318eeb364be56deef82839570240b",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN14.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN14.swf",
+      "bytes": 847082,
+      "sha256": "693d17246fa04dcff45739df1a41d7ef2b64857a67f8a4745cec60db565a3322",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN15.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN15.fla",
+      "bytes": 1955328,
+      "sha256": "38055037f9fbbbcd89e8bb40f7d059acd71e1d12579c71ff8d573a36b34a678b",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN15.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN15.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN15.swf",
+      "bytes": 242102,
+      "sha256": "622161f524469d4ef83692e9b1fffc1af06a978d3800886b5ad56a2a8197b3da",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN16.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN16.fla",
+      "bytes": 1905152,
+      "sha256": "633285ad0fe532e9a84dc4ea36c8a4f6c3aa74b47faba1976073bf387059588a",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN16.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN16.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN16.swf",
+      "bytes": 210140,
+      "sha256": "20bba4a338c10005508cef8a4d619848342f56e0c6a5cdc93cbed6e31ab6dc4d",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN19.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN19.fla",
+      "bytes": 2843648,
+      "sha256": "d5569a334311d323b84a26e34fc8934c8f04c17d4a98611f9360f4e2bf47de09",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN19.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN19.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN19.swf",
+      "bytes": 274556,
+      "sha256": "dcb4087cb535503f0ad092346fde5047cd942ec0a7418ff09e2e48260b6634fe",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN20.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN20.fla",
+      "bytes": 1415680,
+      "sha256": "364cd4a8457b988ad189d83677f24d8b276fb393c1a839edc90184aea729df19",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN20.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN20.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN20.swf",
+      "bytes": 118328,
+      "sha256": "e65fc28b6fc7e973ab4e0f30a328322cbfc22c4845998055b8c32d63468624df",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN23.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN23.fla",
+      "bytes": 1874432,
+      "sha256": "5920b7d779e60bc83db0ecc65b83b8f42190e19eb42ccffc1b8245e0d8ec41f0",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN23.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN23.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN23.swf",
+      "bytes": 205942,
+      "sha256": "1b213ae60a4893e31399040fb5abc1cb8d990b6d364185e3e798825bb0bd206a",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN24.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN24.fla",
+      "bytes": 3973632,
+      "sha256": "eb227510e1ab9cecd9bd2c3b6803637a1537387359b48c79de04a399bd4ca818",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN24.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN24.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN24.swf",
+      "bytes": 271939,
+      "sha256": "575c1155067be4556f9bdec976e5d81d4b23432852fb0be871d96c331e3cb6a9",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN25.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN25.fla",
+      "bytes": 3180032,
+      "sha256": "296e2e153cca0af44f8e354fbe125503bb15fa98f57440d00c0e8c7462022243",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN25.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN25.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN25.swf",
+      "bytes": 243973,
+      "sha256": "d7678b6fbb7c8d48bb0ca602d2170912140dfa07d56d239e0b4ffba51ef6bc6b",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN26.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN26.fla",
+      "bytes": 3824640,
+      "sha256": "9b7b0dce018692d1b7dfadd4dca01c4bd177a1a2d67911b3f3b713aee9e2d77f",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN26.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN26.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN26.swf",
+      "bytes": 214132,
+      "sha256": "afce93ffb2c880075d2bb5f6f6da10feaa4a80c5ed19c5697543221a0b151fa4",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN27.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN27.fla",
+      "bytes": 1633280,
+      "sha256": "d7fcc4202a780fc9211426dce21126ae9022511f326300ebc0cb114f408289c7",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN27.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN27.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN27.swf",
+      "bytes": 151597,
+      "sha256": "dd05e0548d9cbf5f67ca9f0af09ebe4ef78dc2b920088838991ff8d6b6d83824",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN28.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN28.fla",
+      "bytes": 1902592,
+      "sha256": "1cd8be8d7019abcd1dcf58e7d209e40fa064a47efe0a1ede2a379f4271a9756c",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN28.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IN/L3IN28.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IN/L3IN28.swf",
+      "bytes": 264456,
+      "sha256": "c2c3c4148cd85179dd82c9d7efc149e6d5b6ca193392f1a77f00ea64369d2fe2",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml",
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IR/L3RW01.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IR/L3RW01.fla",
+      "bytes": 668160,
+      "sha256": "446e9a731cd739b9a5118340651c275628d6efc71c4b5c9b32de14dc10f7f439",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "hold",
+      "priorDisposition": "hold-placement-alias-review",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "reviewed: the active/runtime-bound exact placement is required and its bytes match the recorded alternate canonical placement",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IR/L3RW01.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/IR/L3RW01.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/IR/L3RW01.swf",
+      "bytes": 150309,
+      "sha256": "35c6279f9fce95c63a8a0d59f8f5da9646ec6bba75ffe8b5faf6a7f6f358f19d",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "hold",
+      "priorDisposition": "hold-placement-alias-review",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "reviewed: the active/runtime-bound exact placement is required and its bytes match the recorded alternate canonical placement",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/TI/L3TI02.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/TI/L3TI02.fla",
+      "bytes": 3132416,
+      "sha256": "57a6c0e99606c0a3ecc641851fc13beb0e275ffea5e3b7a7aab80fa8c2653ba1",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/TI/L3TI02.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/TI/L3TI02.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/TI/L3TI02.swf",
+      "bytes": 275091,
+      "sha256": "b465537749366473edd49ff7587acb54a88c96b57287d7a9c46732b2b40e699c",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/TI/L3TI05.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/TI/L3TI05.fla",
+      "bytes": 1190400,
+      "sha256": "1c8f46170b311e836fca55ef971300e9dd7719507d4b3ce27080e8843c7dcb0e",
+      "sourceType": "same-path-fla",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/TI/L3TI05.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/TI/L3TI05.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/TI/L3TI05.swf",
+      "bytes": 183749,
+      "sha256": "e9cbc2dd4f1e0f8a5c4de8b3f22b18647e9e8b59a2949499601408d1648482d0",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/TI/L3TI08.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/TI/L3TI08.swf",
+      "bytes": 252619,
+      "sha256": "0ab5ba1eebaaa89be81a0c65dd06230fa80611382e24843498d11f81a6bad612",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "candidate",
+      "priorDisposition": "candidate-new-source-in-quarantine",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "owner-authorized quarantine bytes occupy the exact active/runtime-bound canonical path and have no recorded conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/TI/L3TI09.swf",
+      "quarantineRelativePath": "verified/ELMGR5/L3/TI/L3TI09.swf",
+      "bytes": 89784,
+      "sha256": "77ef46d46aaf3073a7c15ace8f1d3ffa2342dcf54dd859dd2c2dd6b0abe4dc95",
+      "sourceType": "active-page-swf",
+      "priorIntakeDecision": "hold",
+      "priorDisposition": "hold-historical-custody-review",
+      "reviewDecision": "promote-in-this-transaction",
+      "reviewEvidence": "reviewed: owner-authorized quarantine exact bytes are required at this active/runtime-bound path; the historical duplicate is custody evidence, not a path conflict",
+      "bindingReason": "active-page-swf-referenced-by-canonical-lesson-xml",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/index.xml"
+      ]
+    }
+  ],
+  "existingBindings": [
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3GS02.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3GS02.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3GS02.mp3",
+      "bytes": 626976,
+      "sha256": "2fa9d73a80d4d7bc0504b2c674f5b530083ea59341665402e41bd846b3259b08",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/GS/L3GS02.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3IN02.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3IN02.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3IN02.mp3",
+      "bytes": 607824,
+      "sha256": "3d000ea83223ef4cb349792cfad1f9104dda1f4efd4fb8fb944ff897a89c4eec",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN02.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3IN03.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3IN03.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3IN03.mp3",
+      "bytes": 606480,
+      "sha256": "46d5b361a17a6e3862a6104a42115f3f0afeb9534bad756091441bdda88876a8",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN03.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3IN04.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3IN04.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3IN04.mp3",
+      "bytes": 457632,
+      "sha256": "bdf2bd83d007823641dc258d61392999831e63ce85059265a19a17c9c1a89e6e",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN04.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3IN06.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3IN06.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3IN06.mp3",
+      "bytes": 280224,
+      "sha256": "0ed1abebda6660972191234bbe747cf342b5fecb3e93edcf13bb91f2188a6b56",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN06.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3IN08.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3IN08.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3IN08.mp3",
+      "bytes": 326256,
+      "sha256": "a9705ee55c0aa1c5f64a4e21170ce423ffba8e576ee32dc37371786144b4e67a",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN08.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3IN09.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3IN09.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3IN09.mp3",
+      "bytes": 288960,
+      "sha256": "20a1349b235e712dc55a7d32374e1eaf24a99a3fd9624bad8043b179d3a6a65e",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN09.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3IN12.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3IN12.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3IN12.mp3",
+      "bytes": 90048,
+      "sha256": "b341bd81a0b658a8840cbf41b790b780295d6bb37204d1e3cccf551b66c45c39",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN12.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3IN14.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3IN14.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3IN14.mp3",
+      "bytes": 239904,
+      "sha256": "5eb82a9e9bf43f2246c65f4c5415f94f4eddd246bc06a288d01442b79b3017da",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN14.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3IN15.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3IN15.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3IN15.mp3",
+      "bytes": 383376,
+      "sha256": "6f2e8c80914df77cc68416896f12293664872b13016131c03de3c794f7446d95",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN15.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3IN16.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3IN16.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3IN16.mp3",
+      "bytes": 356160,
+      "sha256": "3c6e0ce52222b6777e14a581c304223587c9845d9c40081c86c2f34070913d8b",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN16.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3IN19.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3IN19.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3IN19.mp3",
+      "bytes": 338352,
+      "sha256": "e171d4e06901bbd7aea9c379f0519cb7c85d83cf2587c9def12c3ef579ddc3c3",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN19.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3IN20.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3IN20.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3IN20.mp3",
+      "bytes": 323904,
+      "sha256": "898786fee6ee7e39d4e2ee08663260bcd213f46b01c9a897f9bf9cc1467b1ddf",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN20.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3IN23.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3IN23.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3IN23.mp3",
+      "bytes": 224112,
+      "sha256": "e00a90837ec595fe1f21cb24d988fabd768fdfa4fe7c386e8d8d176ba8b1c2a4",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN23.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3IN24.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3IN24.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3IN24.mp3",
+      "bytes": 294336,
+      "sha256": "41046d80e3de990f7b749ed48b46e52dff6cef070070e0ace339109669054ab4",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN24.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3IN25.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3IN25.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3IN25.mp3",
+      "bytes": 329616,
+      "sha256": "cbe703324e4672f6cc9a5ee8b3d13e9c62f25aa89104fdf43366da838aa47fe4",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN25.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3IN26.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3IN26.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3IN26.mp3",
+      "bytes": 343728,
+      "sha256": "edb5939503b2ab948edd49b9407f0938cd28c3a7ee61016453b6e98c93834631",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN26.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3IN27.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3IN27.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3IN27.mp3",
+      "bytes": 536256,
+      "sha256": "07548562a89d3454d8d690e21726ef60cf1a8f0e251fa656be0785a14097ae5f",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN27.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3IN28.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3IN28.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3IN28.mp3",
+      "bytes": 269472,
+      "sha256": "5442f3d205403ce36bf5e0662622d27f07c4546bc3178f2b792cfc1e81d2dbda",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN28.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3TI02.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3TI02.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3TI02.mp3",
+      "bytes": 404208,
+      "sha256": "d440f055061c25644c293e8ce1d41c46120bb6e18d4e22f89b807302457c2c0e",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/TI/L3TI02.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3TI05.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3TI05.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3TI05.mp3",
+      "bytes": 85344,
+      "sha256": "df3367285f89c071a145b82b4b4eb23c202903c888a194ac74086b26eefdda15",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/TI/L3TI05.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3TI08.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3TI08.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3TI08.mp3",
+      "bytes": 72912,
+      "sha256": "c0e521fbc82301290a63fd8e890679e87a1edb6d3aad6a66eaeaaf0254978b76",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/TI/L3TI08.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/SA/L3TI09.mp3",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/SA/L3TI09.mp3",
+      "quarantineRelativePath": "verified/ELMGR5/L3/SA/L3TI09.mp3",
+      "bytes": 172368,
+      "sha256": "57f15fe22e61f8c4ad8304e073e78c7d7754583c216e6de1bcc8d2e69a7c0af4",
+      "sourceType": "runtime-bound-audio",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/TI/L3TI09.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/TI/L3TI08.fla",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/TI/L3TI08.fla",
+      "quarantineRelativePath": "verified/ELMGR5/L3/TI/L3TI08.fla",
+      "bytes": 1731072,
+      "sha256": "a5227311ef1c8237c780d2669340772d196fb95ade018e07af4d5c49d600ca2f",
+      "sourceType": "same-path-fla",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "same-canonical-path-stem-authoring-source-for-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/TI/L3TI08.swf"
+      ]
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR5/L3/index.xml",
+      "canonicalPhysicalRelativePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L3/index.xml",
+      "quarantineRelativePath": "verified/ELMGR5/L3/index.xml",
+      "bytes": 13336,
+      "sha256": "577949b297729ef79e5782ea36c6318853fb61a261bb0e72e9aa7b7443479a81",
+      "sourceType": "lesson-xml-binding",
+      "reviewDecision": "retain-existing-canonical",
+      "bindingReason": "canonical-lesson-xml-binds-active-page-swf",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR5/L3/GS/L3GS02.swf",
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN02.swf",
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN03.swf",
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN04.swf",
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN06.swf",
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN08.swf",
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN09.swf",
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN12.swf",
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN14.swf",
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN15.swf",
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN16.swf",
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN19.swf",
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN20.swf",
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN23.swf",
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN24.swf",
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN25.swf",
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN26.swf",
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN27.swf",
+        "HELP_COURSES/ELMGR5/L3/IN/L3IN28.swf",
+        "HELP_COURSES/ELMGR5/L3/IR/L3RW01.swf",
+        "HELP_COURSES/ELMGR5/L3/TI/L3TI02.swf",
+        "HELP_COURSES/ELMGR5/L3/TI/L3TI05.swf",
+        "HELP_COURSES/ELMGR5/L3/TI/L3TI08.swf",
+        "HELP_COURSES/ELMGR5/L3/TI/L3TI09.swf"
+      ]
+    }
+  ],
+  "missingDependencies": []
+}

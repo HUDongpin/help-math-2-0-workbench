@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "private-current-js-product-browser-qa",
+  "animationId": "course-g04-l10-vb-005",
+  "testedAt": "2026-08-21T06:10:53+08:00",
+  "status": "desktop-mobile-engineering-qa-passed-acceptance-neutral",
+  "calibration": {
+    "id": "g4-l10-candidate-to-product-v15",
+    "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v15.json",
+    "sha256": "6d3f5e42a2f45715066fd1daa31d8d9bad5fed67e16c17d651187e9b27f86376"
+  },
+  "route": {
+    "english": "http://127.0.0.1:3213/en/migration-status/g4-l10-product-bridge",
+    "spanish": "http://127.0.0.1:3213/es/migration-status/g4-l10-product-bridge?mode=focus",
+    "visibility": "local-development-only",
+    "releasePublished": false
+  },
+  "browser": {
+    "driver": "Playwright CLI wrapper",
+    "session": "g4l10vb005v15",
+    "presentation": "modern-wide My Lesson page-only host"
+  },
+  "descriptorObservation": {
+    "globalPageOrdinal": 9,
+    "sectionCode": "VB",
+    "sectionPageOrdinal": 4,
+    "registeredPageCount": 10,
+    "activePageCount": 46,
+    "courseShellCount": 0,
+    "publicRegistryEntryCountForG4L10": 0
+  },
+  "desktopEnglish": {
+    "viewport": {"width":1200,"height":830},
+    "terminalFrameObserved": 217,
+    "handlers": [
+      {"button":"Width","dialogHeading":"Width","definition":"A measure of distance from side to side of a shape; often a measure of the short or shorter side of a shape.","pagePausedWhileOpen":true},
+      {"button":"Measure","dialogHeading":"Measure","definition":"To find the size or amount of something using a unit of measurement.","pagePausedWhileOpen":true},
+      {"button":"Distance","dialogHeading":"Distance","definition":"The length of space between one point and another. For example: the distance from the school to the park is 1 mile.","pagePausedWhileOpen":true},
+      {"button":"Side","dialogHeading":"Side","definition":"One of the straight line segments that makes up a polygon. One of the faces of a solid figure.","pagePausedWhileOpen":true},
+      {"button":"Shape","dialogHeading":"Shape","definition":"A form or figure; a mold or pattern used to give form.","pagePausedWhileOpen":true}
+    ],
+    "replayEngineeringSamples": [
+      {"label":"before","frame":217,"productAudioPlaying":false},
+      {"label":"after-click","frame":1,"productAudioPlaying":false},
+      {"label":"after-40ms","frame":1,"productAudioPlaying":false},
+      {"label":"after-300ms","frame":5,"productAudioPlaying":true},
+      {"label":"after-650ms","frame":9,"productAudioPlaying":true}
+    ],
+    "replayDisposition": "The modern Replay host stops the terminal cue, resets the renderer to frame 1, and retriggers the source-bound engineering cue as playback crosses frame 4. This is engineering behavior, not authoritative Flash Replay parity.",
+    "screenshots": [
+      {"path":"output/playwright/g4-l10-vb005-v15/desktop-en-width-dialog-1200x830.png","sha256":"7bbe980399d866582a3746e636745960dbe18cda5d2475120ac875de93025b73"},
+      {"path":"output/playwright/g4-l10-vb005-v15/desktop-en-shape-dialog-1200x830.png","sha256":"53ab26209c7dd078f60c2bfcd2e4cf029caba11b777d8c9ef88b2c9a85b79176"}
+    ]
+  },
+  "mobileSpanish": {
+    "viewport": {"width":390,"height":844},
+    "localizedTitle": "Anchura",
+    "localizedTerms": ["Anchura","Medir","Distancia","Lado","Forma"],
+    "dialog": {
+      "heading": "Anchura",
+      "definition": "Una medida de distancia de un lado a otro lado de una figura; por lo general es la medida del lado más corto de una figura.",
+      "closeControl": "Cerrar y continuar",
+      "closeControlFocused": true,
+      "boundingBoxCssPixels": {"x":8,"y":519.5703125,"width":359,"height":269.25},
+      "horizontalOverflow": false
+    },
+    "spanishHostTrackPauseSamples": {
+      "frameBeforeStart": 188,
+      "frameAfterStart": 188,
+      "frameAfter500ms": 189,
+      "productAudioPlayingAfter500ms": true,
+      "frameAfterStop": 189,
+      "frameAfterStop250ms": 192,
+      "disposition": "At most one in-flight scheduler boundary completed after the user track started; the timeline then remained paused. Stopping the track resumed normal 12 fps progression."
+    },
+    "replayWhileSpanishTrackActive": {
+      "frameBeforeReplay": 217,
+      "productAudioPlayingBeforeReplay": true,
+      "frameImmediatelyAfterReplay": 1,
+      "frameAfter500ms": 7,
+      "productAudioPlayingAfter500ms": false,
+      "disposition": "Replay stops the user-activated Spanish host track and restarts the engineering timeline."
+    },
+    "screenshot": {
+      "path": "output/playwright/g4-l10-vb005-v15/mobile-es-width-dialog-390x844.png",
+      "sha256": "45745f510d344e15f1122a6d1eddaf37ad990a960d751c782ed51a80957b9b59"
+    }
+  },
+  "network": {
+    "vb005Requests": [
+      {"urlPath":"/flash-assets/courses/course-g04-l10-vb-005/canvas-renderer.js?sha256=ebcf3af43c3998c99f8eb34f2af00240b2856a4aea31bf68eb96926f27f8dda9","status":200},
+      {"urlPath":"/flash-assets/courses/course-g04-l10-vb-005/audio/embedded-stream-0001.mp3?sha256=becb287076eea596cb19cded297f390b7c242706367cf1d2bb42bdb2b7b04208","status":206,"requestCountObserved":3},
+      {"urlPath":"/flash-assets/courses/course-g04-l10-vb-005/audio/spanish-host-narration.mp3?sha256=be425939acfbbee527a239ce8a78a798a43d78521ac0b9056ada2074adceb77b","status":206}
+    ],
+    "vb005FailedRequestCount": 0,
+    "legacyHlaNetworkRequestCount": 0
+  },
+  "console": {
+    "vb005RendererOrAudioErrorCount": 0,
+    "preexistingDevelopmentShellDiagnostics": {
+      "errors": 5,
+      "warningsAtFinalSnapshot": 4,
+      "categories": [
+        "Clerk CheckoutProvider child-key development diagnostic",
+        "Clerk telemetry blocked by the existing connect-src policy",
+        "Clerk development-key and preload warnings"
+      ],
+      "boundary": "The five errors were already present on the initial Introduction page before navigation to VB005; no VB005 resource or runtime error was observed."
+    }
+  },
+  "authority": "Local private Current-JS product-engineering QA for one V14-authorized page inside the V15 registry shape.",
+  "authorityBoundary": "This receipt does not establish authoritative original-runtime reachability, Flash behavior parity, visual fidelity, spoken-language or audible-content acceptance, human visual review, Owner acceptance, strict completion, release eligibility, or publication.",
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "behaviorParityAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "releaseEligible": false,
+    "published": false
+  },
+  "strictAcceptanceEffect": "none"
+}

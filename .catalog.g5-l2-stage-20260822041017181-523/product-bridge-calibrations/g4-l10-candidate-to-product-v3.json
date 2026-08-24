@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "calibrationId": "g4-l10-candidate-to-product-v3",
+  "frozenAt": "2026-08-21T00:47:53+08:00",
+  "frozenGitHead": "71485baa601fe600e8f63c88fb0139492a4ad31e",
+  "status": "source-order-correction-successor",
+  "predecessor": {
+    "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v2.json",
+    "sha256": "bf557eca119de797158e34d9e4a458bd0868eb9146b1710232ee7702e699485a",
+    "preservedConclusions": [
+      "TS006 remains the single new low-lane bridge attempt.",
+      "All source, candidate, reachability, audio, and acceptance-boundary hashes remain unchanged.",
+      "The v2 sectionPageOrdinal value remains preserved as invalidated evidence and is not used by the product descriptor."
+    ]
+  },
+  "correction": {
+    "animationId": "course-g04-l10-ts-006",
+    "field": "sectionPageOrdinal",
+    "invalidatedValue": 6,
+    "correctedValue": 5,
+    "basis": "The source-ordered page-only descriptor derives active TS positions from the canonical Lesson XML. TS04 is absent from the active sequence, so TS006 is the fifth active TS placement while remaining global page 41.",
+    "regressionTest": "apps/web/tests/g4-l10-product-bridge-descriptor.test.ts"
+  },
+  "scope": {
+    "releaseId": "lesson-g04-l10-perimeter-area",
+    "activePageCount": 46,
+    "courseShellCount": 0,
+    "auditedSourceStaticCandidateCount": 24,
+    "privateRegistrationCountBeforeBatch": 3,
+    "newBatchAttemptCount": 1,
+    "newWorkspaceCount": 0
+  },
+  "selectedPages": [
+    {
+      "animationId": "course-g04-l10-ir-001",
+      "globalPageOrdinal": 1,
+      "sectionCode": "IR",
+      "sectionPageOrdinal": 1,
+      "complexityLane": "behavior-heavy",
+      "selectionStatus": "inherited-from-v1"
+    },
+    {
+      "animationId": "course-g04-l10-vb-003",
+      "globalPageOrdinal": 7,
+      "sectionCode": "VB",
+      "sectionPageOrdinal": 2,
+      "complexityLane": "interactive-understood",
+      "selectionStatus": "inherited-from-v1"
+    },
+    {
+      "animationId": "course-g04-l10-ts-006",
+      "assetId": "swf-b0ad832f7d755e2f94dddc53e3267414c5d8430ed0e8c28d498cc5ec3c05160e",
+      "globalPageOrdinal": 41,
+      "sectionCode": "TS",
+      "sectionPageOrdinal": 5,
+      "placementPath": "TS/L10TS06.swf",
+      "workspace": "migrations/course-g04-l10-ts-006",
+      "complexityLane": "low",
+      "selectionStatus": "corrected-new-batch-attempt",
+      "source": {
+        "swfSha256": "b0ad832f7d755e2f94dddc53e3267414c5d8430ed0e8c28d498cc5ec3c05160e",
+        "flaSha256": "4991dd4d87468d7c9162a88c94a15b8c7d251bc240e4c855b7b470976e887eb8"
+      },
+      "candidate": {
+        "manifestSha256": "698ba38db06bf0978234280c2cf63f358f2ab918f4de56d4b60e75188b663bc6",
+        "canvasRendererSha256": "ba4ab8464a6351576ee17bcd3ea0a542a0589652b9c6038b1da61328c02b2695",
+        "frameDomain": "sprite-13",
+        "frameCount": 245,
+        "rootBeginFrame": 6
+      },
+      "reachability": {
+        "sourceTimelineId": "sprite-13",
+        "rootFrame": 6,
+        "instanceName": "animation",
+        "unresolvedTimelineCount": 0,
+        "reachableHandlerCount": 0,
+        "randomBranchCount": 0,
+        "externalSideEffectCount": 0
+      },
+      "audio": {
+        "v2MaterializationReceipt": "migrations/course-g04-l10-ts-006/audit/private-product-audio-assets.json",
+        "embeddedEngineeringCueSha256": "d27c65e6bd7b9087b168e2a54ff60568e9481c84bd9996b87ef50392d8cc77e6",
+        "spanishHostTrackSha256": "c0ea9f1cede741945c763707ed89c5be76f651f761209880157bf0c45ded8688",
+        "spokenLanguageAccepted": false,
+        "audioAccepted": false
+      }
+    },
+    {
+      "animationId": "course-g04-l10-fq-001",
+      "globalPageOrdinal": 44,
+      "sectionCode": "FQ",
+      "sectionPageOrdinal": 1,
+      "complexityLane": "low",
+      "selectionStatus": "inherited-from-v1"
+    }
+  ],
+  "laneRules": {
+    "low": "Explicit source reachability and audio disposition are required before private registration.",
+    "interactive-understood": "Every reachable handler must bind an exact typed modern host contract.",
+    "behavior-heavy": "Random branches, audio routing, timeline reachability, and Replay engineering behavior must be closed before private registration."
+  },
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "behaviorParityAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "releaseEligible": false,
+    "published": false
+  }
+}

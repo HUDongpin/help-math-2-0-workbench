@@ -82,7 +82,7 @@ test('G4 L3 adapter retains the source contract and structural-only legacy skin 
     descriptor.visualSkin.layoutId,
     'help-math-course-shell-800x600-v1',
   );
-  assert.deepEqual(descriptor.visualSkin.header, {height: 109});
+  assert.equal(descriptor.visualSkin.header.height, 109);
   assert.deepEqual(descriptor.visualSkin.footer, {height: 76});
   assert.equal(
     descriptor.visualSkin.controls.kind,
@@ -261,4 +261,45 @@ test('release view fails closed and never promotes current JS into strict or pub
   assert.equal(wrongReleaseAuthority.strictCompleteMemberCount, 0);
   assert.equal(wrongReleaseAuthority.strictCompletion, false);
   assert.equal(wrongReleaseAuthority.publicRelease, false);
+});
+
+test('the header chrome carries the lesson title as a source-declared text band', () => {
+  const descriptor = G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR;
+  const band = descriptor.visualSkin.header.title;
+
+  assert.ok(band, 'the header must declare a live lesson title band');
+  assert.equal(band.kind, 'source-declared-lesson-title');
+
+  // The painted wordmark is <CourseName>, which every lesson XML in the
+  // catalogue sets to the same string. The lesson's own name is <NewTitle1>,
+  // and its authored typography is what the band reproduces.
+  assert.equal(band.sourceField, 'NewTitle1');
+  assert.equal(band.fontFamily, 'Verdana');
+  assert.equal(band.fontSize, 25);
+  assert.equal(band.color, '#ffffff');
+
+  // The band has to stay inside the header the chrome actually paints, or the
+  // live text would spill onto the page renderer below it.
+  assert.ok(band.bounds.top >= 0);
+  assert.ok(
+    band.bounds.top + band.bounds.height <= descriptor.visualSkin.header.height,
+  );
+  assert.ok(
+    band.bounds.left + band.bounds.width <= descriptor.stage.width,
+  );
+  assert.match(band.boundsEvidence, /rows 44-107/);
+
+  // The live title is the lesson name, never the painted product wordmark.
+  assert.equal(descriptor.course.labels.en.text, 'Negative Numbers');
+  assert.notEqual(descriptor.course.labels.en.text, 'Counting on Numbers');
+  assert.notEqual(descriptor.course.labels.es.text, 'Counting on Numbers');
+
+  // No Spanish lesson title exists in the source. Rendering the string as text
+  // puts it in the language layer and reports the gap; it does not invent one.
+  assert.equal(descriptor.course.labels.es.sourceLanguage, 'en');
+  assert.equal(descriptor.course.labels.es.usesEnglishFallback, true);
+  assert.equal(
+    descriptor.course.labels.es.sourceStatus,
+    'missing-lesson-level-spanish-title',
+  );
 });

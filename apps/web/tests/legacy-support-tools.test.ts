@@ -1,6 +1,13 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import test from 'node:test';
+import {createElement} from 'react';
+import {renderToStaticMarkup} from 'react-dom/server';
+
+import {
+  LegacyCalculator,
+  type LegacyCalculatorEvidence,
+} from '../components/legacy-calculator';
 
 import {
   reconcileSupportPauseSession,
@@ -64,11 +71,135 @@ test('calculator UI exposes the source-derived keypad without locale rounding', 
     styles,
     /\.lesson-shell2__calculator--source-panel \.lesson-shell2__calculator-keys \{[\s\S]*display: block;[\s\S]*height: 100%;[\s\S]*inset: 0;[\s\S]*width: 100%;/,
   );
-  assert.match(component, /data-source-x=\{sourceBounds\.x\}/);
-  assert.match(component, /data-source-y=\{sourceBounds\.y\}/);
+  assert.match(component, /data-source-x=\{sourceBounds\?\.x\}/);
+  assert.match(component, /data-source-y=\{sourceBounds\?\.y\}/);
   assert.match(
     component,
     /className="lesson-shell2__calculator-frame"[\s\S]*role="group"[\s\S]*tabIndex=\{0\}/,
+  );
+});
+
+test('modern calculator presentation keeps source evidence out of learner copy', () => {
+  const evidence: LegacyCalculatorEvidence = {
+    behaviorKind: 'ffdec-actionscript-static-candidate',
+    panel: {
+      asset: '/private-source-panel.png',
+      height: 488,
+      sha256: 'panel-sha',
+      width: 363,
+    },
+    sourceAnimationId: 'course-g04-l03-shell',
+    sourceSwfSha256: 'swf-sha',
+  };
+  const modernEnglish = renderToStaticMarkup(createElement(LegacyCalculator, {
+    evidence,
+    onRequestClose: () => undefined,
+    presentation: 'modern-support',
+    spanish: false,
+  }));
+  const modernSpanish = renderToStaticMarkup(createElement(LegacyCalculator, {
+    evidence,
+    onRequestClose: () => undefined,
+    presentation: 'modern-support',
+    spanish: true,
+  }));
+  const legacyEvidence = renderToStaticMarkup(createElement(LegacyCalculator, {
+    evidence,
+    onRequestClose: () => undefined,
+    presentation: 'source-evidence',
+    spanish: false,
+  }));
+
+  assert.match(modernEnglish, /data-calculator-presentation="modern-support"/);
+  assert.match(modernEnglish, /data-behavior-authority="modern-support-only"/);
+  assert.match(modernEnglish, /data-apple-basic-contract="inspired-subset-no-conformance-claim"/);
+  assert.match(modernEnglish, /data-ibm-reference-kind="rpg-calculation-specification-not-calculator-ui-standard"/);
+  assert.match(modernEnglish, /data-source-animation-id="course-g04-l03-shell"/);
+  assert.match(modernEnglish, /aria-label="Delete last digit"/);
+  assert.match(modernEnglish, /data-key-label="AC"/);
+  assert.doesNotMatch(modernEnglish, /private-source-panel\.png|<img/);
+  assert.doesNotMatch(
+    modernEnglish,
+    /Functional candidate|original-runtime validation|Keyboard input is|>Memory:/,
+  );
+  assert.match(modernSpanish, /aria-label="Borrar el último dígito"/);
+  assert.doesNotMatch(
+    modernSpanish,
+    /Candidato funcional|ejecución original|El teclado es|>Memoria:/,
+  );
+
+  assert.match(legacyEvidence, /private-source-panel\.png/);
+  assert.match(legacyEvidence, /Functional candidate/);
+  assert.match(legacyEvidence, />Memory:/);
+});
+
+test('modern-wide uses one localized calculator trigger at the spine bottom', async () => {
+  const [shell, styles] = await Promise.all([
+    readFile(
+      new URL('../components/legacy-responsive-lesson-shell.tsx', import.meta.url),
+      'utf8',
+    ),
+    readFile(new URL('../app/globals.css', import.meta.url), 'utf8'),
+  ]);
+
+  assert.match(shell, /const calculatorLabel = spanish \? 'Calculadora' : 'Calculator';/);
+  assert.match(
+    shell,
+    /const calculatorControl = <button[\s\S]*aria-controls=\{sectionSpineAvailable[\s\S]*spineCalculatorPanelId[\s\S]*toolPanelId\}[\s\S]*aria-expanded=\{activeTool === 'calculator'\}[\s\S]*aria-label=\{calculatorLabel\}[\s\S]*aria-pressed=\{activeTool === 'calculator'\}/,
+  );
+  assert.match(
+    shell,
+    /className="lesson-shell2__spine-calculator-icon"[\s\S]*>🧮<\/span>[\s\S]*className="lesson-shell2__spine-calculator-label"/,
+  );
+  assert.match(
+    shell,
+    /className="lesson-shell2__spine-directory"[\s\S]*hidden=\{calculatorInSpine\}[\s\S]*<\/ol>[\s\S]*className="lesson-shell2__spine-tools"[\s\S]*role="group"[\s\S]*\{calculatorControl\}/,
+  );
+  assert.match(
+    shell,
+    /className="lesson-shell2__spine-calculator-panel"[\s\S]*hidden=\{!calculatorInSpine\}[\s\S]*id=\{spineCalculatorPanelId\}[\s\S]*presentation="modern-support"/,
+  );
+  assert.match(
+    shell,
+    /\{sectionSpineAvailable[\s\S]*\? null[\s\S]*: <div hidden=\{activeTool !== 'calculator'\}>/,
+  );
+  assert.equal(
+    shell.match(/data-responsive-focus-key="calculator"/g)?.length,
+    2,
+    'one legacy trigger and one shared modern trigger remain in source',
+  );
+  assert.match(
+    shell,
+    /presentation=\{modernWide\s*\? 'modern-support'\s*: 'source-evidence'\}/,
+  );
+
+  assert.match(
+    styles,
+    /\.lesson-shell2__spine-tools \{[\s\S]*margin-top: auto;/,
+  );
+  assert.match(
+    styles,
+    /\.lesson-shell2__spine button\.lesson-shell2__spine-calculator \{[\s\S]*color: #fff;/,
+  );
+  assert.match(
+    styles,
+    /data-spine-state='collapsed'[\s\S]*\.lesson-shell2__spine-calculator-label[\s\S]*clip-path: inset\(50%\)/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 680px\)[\s\S]*\.lesson-shell2__spine-tools \{[\s\S]*justify-content: flex-start;/,
+  );
+  assert.match(
+    styles,
+    /\.lesson-shell2__spine-calculator-panel[\s\S]*\.lesson-shell2__calculator-keys[\s\S]*grid-template-columns: repeat\(4, minmax\(44px, 1fr\)\);[\s\S]*\.lesson-shell2__calculator-keys[\s\S]*button \{[\s\S]*min-height: 48px;/,
+  );
+  assert.match(
+    styles,
+    /\.lesson-shell2__spine-directory\[hidden\],[\s\S]*\.lesson-shell2__spine-calculator-panel\[hidden\] \{\s*display: none;/,
+  );
+  assert.match(
+    styles,
+    /data-spine-calculator-open='true'[\s\S]*--lesson-spine-track: clamp\(16rem, 22vw, 18rem\);/,
   );
 });
 
@@ -77,14 +208,26 @@ test('calculator stays mounted while hidden so close and reopen preserve state',
     new URL('../components/legacy-responsive-lesson-shell.tsx', import.meta.url),
     'utf8',
   );
-  assert.match(shell, /<div hidden=\{activeTool !== 'calculator'\}>[\s\S]*<LegacyCalculator/);
+  assert.match(
+    shell,
+    /className="lesson-shell2__spine-calculator-panel"[\s\S]*hidden=\{!calculatorInSpine\}[\s\S]*<LegacyCalculator[\s\S]*presentation="modern-support"/,
+  );
+  assert.match(
+    shell,
+    /sectionSpineAvailable[\s\S]*\? null[\s\S]*: <div hidden=\{activeTool !== 'calculator'\}>[\s\S]*<LegacyCalculator/,
+  );
   assert.match(
     shell,
     /activeTool === 'calculator'[\s\S]*\? null[\s\S]*: helpPanel/,
   );
-  assert.doesNotMatch(
+  assert.match(
     shell,
-    /activeTool === 'calculator'[\s\S]*\? <LegacyCalculator/,
+    /const toolModalOpen = sidePanelToolOpen && toolOverlay;[\s\S]*data-tool-open=\{sidePanelToolOpen \? 'true' : 'false'\}/,
+  );
+  assert.match(shell, /role=\{toolModalOpen \? 'dialog' : 'complementary'\}/);
+  assert.match(
+    shell,
+    /activeTool === 'calculator'[\s\S]*\? null[\s\S]*: <div[\s\S]*data-tool-rail-page-context/,
   );
 });
 
@@ -356,7 +499,7 @@ test('support tools collapse the persistent map when their panel becomes an over
     /\[activeTool, mapOpen, onMapOpenChange, toolOverlay\]/,
   );
   assert.match(shell, /role=\{mapOverlay \? 'dialog' : 'complementary'\}/);
-  assert.match(shell, /role=\{toolOverlay \? 'dialog' : 'complementary'\}/);
+  assert.match(shell, /role=\{toolModalOpen \? 'dialog' : 'complementary'\}/);
   assert.match(shell, /ref=\{legacyStageRef\}\s+role="region"/);
 });
 
@@ -478,23 +621,84 @@ test('legacy lesson Back history preserves visit order and duplicates', () => {
   assert.deepEqual(appendLegacyLessonHistory([], 'A', 'A'), []);
 });
 
-test('all support close paths share the reversible pause reconciler', async () => {
+test('support tools keep a reversible pause lease while Nova remains transport-independent', async () => {
   const shell = await readFile(
     new URL('../components/legacy-responsive-lesson-shell.tsx', import.meta.url),
     'utf8',
   );
-  assert.match(shell, /const closeMap = useCallback\(\(\) => \{\s*reconcileSupportPlayback\(activeTool !== null\)/);
   assert.match(
     shell,
-    /const closeTool = useCallback\(\(\) => \{\s*const closingTool = activeTool;\s*const rememberedTrigger = lastToolTriggerRef\.current;\s*reconcileSupportPlayback\(mapOpen && mapOverlay\)/,
+    /const supportPauseSessionRef = useRef<SupportPauseSession \| null>\(null\);/,
   );
+  assert.match(
+    shell,
+    /reconcileSupportPauseSession\(\{\s*currentPage,\s*paused,\s*playbackInspectionActive: frameInspectionActive,\s*session: supportPauseSessionRef\.current,\s*supportOpen,\s*\}\)/,
+  );
+  const pauseLeaseStart = shell.indexOf(
+    'const decision = reconcileSupportPauseSession({',
+  );
+  const pauseLeaseEnd = shell.indexOf(
+    'onTutorEngagementChange?.(tutorVisible)',
+    pauseLeaseStart,
+  );
+  assert.ok(pauseLeaseStart >= 0 && pauseLeaseEnd > pauseLeaseStart);
+  const pauseLeaseSource = shell.slice(pauseLeaseStart, pauseLeaseEnd);
+  assert.match(pauseLeaseSource, /supportOpen/);
+  assert.doesNotMatch(
+    pauseLeaseSource,
+    /tutorVisible|tutorOpen|studySupportOpen|novaTutorMode/,
+    'Focus, Study, and Classroom tutor visibility cannot enter the pause lease',
+  );
+
+  const tutorHandlersStart = shell.indexOf('const dismissTutor = useCallback');
+  const tutorHandlersEnd = shell.indexOf(
+    'const toggleMap = useCallback',
+    tutorHandlersStart,
+  );
+  assert.ok(tutorHandlersStart >= 0 && tutorHandlersEnd > tutorHandlersStart);
+  const tutorHandlersSource = shell.slice(tutorHandlersStart, tutorHandlersEnd);
+  assert.match(tutorHandlersSource, /novaTutorMode === 'study'/);
+  assert.match(tutorHandlersSource, /novaTutorMode === 'focus'/);
+  assert.match(
+    tutorHandlersSource,
+    /else \{\s*setTutorOpenMode\(opening \? 'classroom' : null\);\s*setTutorOpen\(opening\);\s*\}/,
+  );
+  assert.doesNotMatch(
+    tutorHandlersSource,
+    /onPausedChange|setPaused|reconcileSupportPauseSession/,
+    'opening or closing any Nova placement leaves paused unchanged',
+  );
+
+  const pauseControlStart = shell.indexOf('const pauseControl = <button');
+  const pauseControlEnd = shell.indexOf(
+    'const muteControl = <button',
+    pauseControlStart,
+  );
+  assert.ok(pauseControlStart >= 0 && pauseControlEnd > pauseControlStart);
+  const pauseControlSource = shell.slice(pauseControlStart, pauseControlEnd);
+  assert.match(
+    pauseControlSource,
+    /disabled=\{!runtimeAvailable \|\| supportOpen\}/,
+  );
+  assert.doesNotMatch(
+    pauseControlSource,
+    /tutorVisible|tutorOpen|studySupportOpen/,
+    'wide Nova does not disable the learner-owned Pause control',
+  );
+
+  assert.match(shell, /data-tutor-playback="independent"/);
+  assert.match(shell, /onTutorEngagementChange\?\.\(tutorVisible\);/);
+  assert.doesNotMatch(shell, /resolveTutorTransport|tutorHeldPausedRef|effectiveOpen/);
+  assert.doesNotMatch(shell, /Narration paused while Nova support is open/);
+  assert.doesNotMatch(shell, /data-tutor-pause-notice/);
+  assert.doesNotMatch(shell, /reconcileSupportPlayback/);
   assert.match(shell, /if \(activeTool\) \{\s*closeTool\(\);\s*\} else if \(mapOpen\) \{\s*closeMap\(\);/);
   assert.match(shell, /lesson-shell2__scrim--map"[\s\S]*onClick=\{closeMap\}/);
   assert.match(shell, /lesson-shell2__scrim--tool"[\s\S]*onClick=\{closeTool\}/);
   assert.match(shell, /onRequestClose=\{closeTool\}/);
   assert.match(
     shell,
-    /data-support-tool-playback="modern-support-open-forces-pause-restores-prior-state"/,
+    /data-support-tool-playback="support-tools-pause-restore-nova-independent"/,
   );
 });
 
@@ -577,20 +781,20 @@ test('language route focus stays visible while a nonmodal tool rail remains open
 
   assert.match(
     shell,
-    /activeTool !== null && !toolOverlay\s*\? `\$\{LANGUAGE_ROUTE_TOOL_INTENT_PREFIX\}\$\{activeTool\}`\s*: 'page-heading'/,
+    /activeTool !== null && \(!toolOverlay \|\| calculatorInSpine\)\s*\? `\$\{LANGUAGE_ROUTE_TOOL_INTENT_PREFIX\}\$\{activeTool\}`\s*: 'page-heading'/,
   );
   assert.match(
     shell,
-    /if \(restorableTool && !toolOverlay && activeTool !== restorableTool\) \{\s*onToolChange\(restorableTool\);\s*return;/,
+    /const restorableToolInSpine = restorableTool === 'calculator' &&\s*sectionSpineAvailable;[\s\S]*?if \(\s*restorableTool &&\s*\(!toolOverlay \|\| restorableToolInSpine\) &&\s*activeTool !== restorableTool\s*\) \{\s*onToolChange\(restorableTool\);\s*return;/,
   );
   assert.match(
     shell,
-    /const target = restorableTool && activeTool === restorableTool &&\s*!toolOverlay\s*\? toolCloseRef\.current\s*: heading;/,
+    /const target = restorableTool && activeTool === restorableTool &&\s*\(!toolOverlay \|\| restorableToolInSpine\)[\s\S]*?\? restorableToolInSpine[\s\S]*?spineCalculatorCloseRef\.current[\s\S]*?toolCloseRef\.current[\s\S]*?: heading;/,
   );
   assert.match(shell, /if \(!target\) return;\s*target\.focus\(\{preventScroll: true\}\)/);
   assert.match(
     shell,
-    /\}, \[activeTool, onToolChange, stageOverlayOpen, toolOverlay\]\);/,
+    /\}, \[[\s\S]*?activeTool,[\s\S]*?onToolChange,[\s\S]*?sectionSpineAvailable,[\s\S]*?stageOverlayOpen,[\s\S]*?toolOverlay,[\s\S]*?\]\);/,
   );
 });
 
@@ -700,15 +904,15 @@ test('header Back uses lesson visit history before browser fallback and stays di
     assert.match(player, /takeLegacyLessonHistory\(\s*lessonNavigationHistoryRef\.current/);
     assert.match(player, /navigateToPage\(transition\.previousAnimationId, false\)/);
     assert.match(player, /if \(window\.history\.length > 1\) \{\s*window\.history\.back\(\);/);
-    assert.match(player, /window\.location\.assign\(libraryHref\)/);
-    assert.match(player, /const exitToLibrary = \(\) => window\.location\.assign\(libraryHref\)/);
-    assert.match(player, /onExit=\{exitToLibrary\}/);
-    assert.doesNotMatch(player, /Exit this lesson and return to the library\?/);
-    assert.doesNotMatch(player, /¿Salir de esta lección y volver a la biblioteca\?/);
+    assert.match(player, /const learningHomeHref = spanish \? '\/es' : '\/'/);
+    assert.match(player, /window\.location\.assign\(learningHomeHref\)/);
+    assert.match(player, /const exitToLearningHome = \(\) => window\.location\.assign\(learningHomeHref\)/);
+    assert.match(player, /onExit=\{exitToLearningHome\}/);
+    assert.doesNotMatch(player, /libraryHref|exitToLibrary/);
   }
 });
 
-test('legacy volume exposes separate source-derived mute and slider controls', async () => {
+test('volume keeps source controls and uses a vertical modern disclosure', async () => {
   const [shell, styles] = await Promise.all([
     readFile(
       new URL('../components/legacy-responsive-lesson-shell.tsx', import.meta.url),
@@ -725,8 +929,113 @@ test('legacy volume exposes separate source-derived mute and slider controls', a
   assert.match(shell, /className="lesson-shell2__legacy-volume-slider"/);
   assert.match(shell, /lesson-shell-volume-icon-up\.png/);
   assert.match(shell, /lesson-shell-volume-muted-icon-up\.png/);
+  assert.doesNotMatch(shell, /className="lesson-shell2__modern-volume"/);
+  assert.match(shell, /className="lesson-shell2__volume-control"/);
+  assert.match(shell, /className="lesson-shell2__volume-trigger"/);
+  assert.match(shell, /aria-expanded=\{volumeControlOpen\}/);
+  assert.match(shell, /className="lesson-shell2__volume-popover"/);
+  assert.match(shell, /aria-orientation="vertical"/);
+  assert.match(shell, /className="lesson-shell2__vertical-volume"/);
+  assert.match(shell, /className="lesson-shell2__volume-mute-action"/);
+  assert.match(
+    shell,
+    /aria-label=\{volume === 0[\s\S]*?'Restaurar volumen' : 'Restore volume'[\s\S]*?'Restaurar' : 'Restore'/,
+  );
   assert.match(styles, /\.lesson-shell2__legacy-volume-slider \{[\s\S]*height: 45\.454545%;[\s\S]*top: 27\.272727%;/);
   assert.match(styles, /\.lesson-shell2__legacy-volume \{[\s\S]*pointer-events: none;/);
+  assert.match(
+    styles,
+    /\.lesson-shell2__volume-popover \{[\s\S]*?position: absolute;[\s\S]*?width: 116px;/,
+  );
+  assert.match(
+    styles,
+    /\.lesson-shell2__volume-popover \{[\s\S]*?--lesson-volume-track-length: 256px;/,
+  );
+  assert.match(styles, /\.lesson-shell2__modern-toolbar[\s\S]*?> \.lesson-shell2__volume-control[\s\S]*?\.lesson-shell2__vertical-volume[\s\S]*?> input \{[\s\S]*?rotate\(-90deg\)[\s\S]*?width: var\(--lesson-volume-track-length\);/);
+  assert.match(styles, /@media \(max-width: 680px\) \{[\s\S]*?--lesson-volume-track-length: 224px;/);
+  assert.match(styles, /@media \(orientation: landscape\) and \(max-height: 500px\) \{[\s\S]*?--lesson-volume-track-length: clamp\(144px, calc\(100dvh - 174px\), 216px\);[\s\S]*?position: fixed;[\s\S]*?top: 50dvh;/);
+  assert.match(shell, /if \(volumeControlOpen\) \{[\s\S]*?closeVolumeControl\(true\);/);
+});
+
+test('Focus modern-wide omits the separate Read it destination', async () => {
+  const [shell, styles] = await Promise.all([
+    readFile(
+      new URL('../components/legacy-responsive-lesson-shell.tsx', import.meta.url),
+      'utf8',
+    ),
+    readFile(new URL('../app/globals.css', import.meta.url), 'utf8'),
+  ]);
+  assert.doesNotMatch(shell, /spanish \? 'Léelo' : 'Read it'/);
+  assert.doesNotMatch(shell, /Open read support|Abrir apoyo de lectura/);
+  assert.match(
+    shell,
+    /const modernSupportControl = novaTutorMode === 'classroom'[\s\S]*?: novaTutorMode === 'study'[\s\S]*?: null;/,
+    'the reusable support destination remains gated to non-Focus presentations',
+  );
+  assert.match(shell, /className="lesson-shell2__read-support-icon"/);
+  assert.match(shell, /spanish \? 'Apoyo de estudio' : 'Study support'/);
+  assert.match(styles, /\.lesson-shell2__read-support-icon \{[\s\S]*?mask-image:/);
+  assert.doesNotMatch(styles, /M4%205h7v14H4zm9%200h7v14h-7z/);
+});
+
+test('Focus toolbar keeps Replay, Volume, and the MAIS-derived Nova brand in DOM order', async () => {
+  const [shell, tutor, styles] = await Promise.all([
+    readFile(
+      new URL('../components/legacy-responsive-lesson-shell.tsx', import.meta.url),
+      'utf8',
+    ),
+    readFile(new URL('../components/lesson-nova-tutor.tsx', import.meta.url), 'utf8'),
+    readFile(new URL('../app/globals.css', import.meta.url), 'utf8'),
+  ]);
+  const replayIndex = shell.indexOf('{modernWide ? replayControl : null}');
+  const volumeIndex = shell.indexOf('{volumeControl}', replayIndex);
+  const novaIndex = shell.indexOf('data-tutor-brand-origin="mais-mvp-orbit-adaptation"');
+  assert.ok(replayIndex >= 0);
+  assert.ok(volumeIndex > replayIndex);
+  assert.ok(novaIndex > volumeIndex);
+  assert.match(shell, /aria-label=\{spanish \? 'Preguntar a Nova' : 'Ask Nova'\}/);
+  assert.match(shell, /<NovaTutorBrand \/>/);
+  assert.match(tutor, /export function NovaTutorBrand\(\)/);
+  assert.match(tutor, /lesson-shell2__nova-orbit-halo/);
+  assert.match(tutor, /lesson-shell2__nova-brand-name">Nova Tutor/);
+  assert.match(
+    styles,
+    /modern-toolbar > \[data-responsive-focus-key='replay'\] \{\s*order: 5;/,
+  );
+  assert.match(
+    styles,
+    /modern-toolbar > \.lesson-shell2__volume-control \{\s*order: 6;/,
+  );
+  assert.match(
+    styles,
+    /modern-toolbar > \.lesson-shell2__ask-nova \{\s*order: 7;/,
+  );
+});
+
+test('playback control exposes matching Play and Pause actions and icons', async () => {
+  const [shell, styles] = await Promise.all([
+    readFile(
+      new URL('../components/legacy-responsive-lesson-shell.tsx', import.meta.url),
+      'utf8',
+    ),
+    readFile(new URL('../app/globals.css', import.meta.url), 'utf8'),
+  ]);
+  assert.equal(
+    (shell.match(/data-playback-action=\{paused \? 'play' : 'pause'\}/g) ?? [])
+      .length,
+    2,
+    'modern and legacy playback buttons must expose the same state',
+  );
+  assert.match(shell, /spanish \? 'Reproducir animación' : 'Play animation'/);
+  assert.match(shell, /spanish \? 'Pausar animación' : 'Pause animation'/);
+  assert.match(
+    styles,
+    /data-playback-action='pause'\]::before \{[\s\S]*?M8%205h3v14H8zm5%200h3v14h-3z/,
+  );
+  assert.match(
+    styles,
+    /data-playback-action='play'\]::before \{[\s\S]*?M8%205v14l11-7z/,
+  );
 });
 
 test('legacy footer transport hit regions separate the stacked button rows', async () => {

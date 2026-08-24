@@ -9,6 +9,10 @@ import {
 const candidate = createSourceStaticCanvasCandidate(
   COURSE_G04_L10_FQ_003_CONFIG,
 );
+const privateCurrentJsModule = Object.freeze({
+  ...candidate.module,
+  maturity: "private-current-js" as const,
+});
 
 export {COURSE_G04_L10_FQ_003_SOURCE};
 export const COURSE_G04_L10_FQ_003_MOVIE = candidate.movie;
@@ -21,4 +25,4 @@ export const buildCourseG04L10Fq003CaptureAttributes =
   candidate.buildCaptureAttributes;
 export const CourseG04L10Fq003Renderer = candidate.Renderer;
 
-export default candidate.module;
+export default privateCurrentJsModule;

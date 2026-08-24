@@ -7,6 +7,14 @@ export const LEGACY_TOOL_RAIL_MIN_WIDTH = 1800;
 export const LEGACY_NATIVE_STAGE_MIN_CONTAINER_WIDTH = 848;
 export const LEGACY_COMPACT_HEIGHT_MAX = 880;
 export const LEGACY_COMPACT_LANDSCAPE_MAX_WIDTH = 1279;
+/**
+ * Room kept beneath the presented plane for the control bar and page actions,
+ * plus floors so a very short viewport still yields a usable plane rather than
+ * collapsing it to nothing.
+ */
+export const MODERN_WIDE_BOTTOM_RESERVE = 132;
+export const MODERN_WIDE_MIN_PLANE_WIDTH = 280;
+export const MODERN_WIDE_MIN_PLANE_HEIGHT = 180;
 
 export type LegacyLessonLayoutMode =
   | 'legacy-native'
@@ -46,12 +54,19 @@ function positiveFinite(value: number, label: string) {
 export function resolveLegacyLessonLayout({
   authoredStage,
   containerWidth,
+  presentedPlane,
   stageTop,
   viewportHeight,
   viewportWidth,
 }: {
   authoredStage: Readonly<{height: number; width: number}>;
   containerWidth: number;
+  /**
+   * The plane actually shown to the learner. Supplying it switches the policy
+   * from "hold the authored stage at native size" to "grow the presented plane
+   * into whichever axis binds first". Omitted keeps the legacy behaviour.
+   */
+  presentedPlane?: Readonly<{height: number; width: number}>;
   stageTop: number;
   viewportHeight: number;
   viewportWidth: number;
@@ -85,6 +100,49 @@ export function resolveLegacyLessonLayout({
     measuredViewportWidth >= 681 &&
     measuredViewportWidth <= LEGACY_COMPACT_LANDSCAPE_MAX_WIDTH &&
     measuredViewportHeight <= 500;
+
+  // A presented plane binds on both axes: it takes the container width unless
+  // the remaining viewport height would make it taller than the space left
+  // beneath the page chrome, in which case height decides. This deliberately
+  // reverses the native-stage rule below, which never lets remaining height
+  // resize the plane.
+  if (presentedPlane) {
+    const planeWidth = positiveFinite(presentedPlane.width, 'presentedPlane.width');
+    const planeHeight = positiveFinite(
+      presentedPlane.height,
+      'presentedPlane.height',
+    );
+    const availableHeight = Math.max(
+      MODERN_WIDE_MIN_PLANE_HEIGHT,
+      measuredViewportHeight - Math.max(0, stageTop) - MODERN_WIDE_BOTTOM_RESERVE,
+    );
+    const heightBoundWidth = Math.floor(availableHeight * (planeWidth / planeHeight));
+    return Object.freeze({
+      compactLandscape,
+      containerWidth: measuredContainerWidth,
+      layoutMode:
+        measuredViewportWidth >= LEGACY_WIDE_FUNCTIONAL_MIN_WIDTH
+          ? 'wide-functional'
+          : compactLandscape ||
+              measuredContainerWidth < LEGACY_NATIVE_STAGE_MIN_CONTAINER_WIDTH
+            ? 'compact'
+            : 'legacy-native',
+      // The section spine occupies the rail slot in this presentation, so the
+      // course map stays an on-demand overlay. It is still reachable from the
+      // control bar; it simply does not claim a second permanent column.
+      mapPresentation: 'overlay',
+      stageCapWidth: Math.max(
+        MODERN_WIDE_MIN_PLANE_WIDTH,
+        Math.min(measuredContainerWidth, heightBoundWidth),
+      ),
+      toolPresentation:
+        measuredViewportWidth >= LEGACY_TOOL_RAIL_MIN_WIDTH ? 'rail' : 'overlay',
+      workspaceDensity:
+        measuredViewportHeight <= LEGACY_COMPACT_HEIGHT_MAX
+          ? 'compact-height'
+          : 'comfortable',
+    });
+  }
 
   let stageCapWidth = authoredWidth;
   if (compactLandscape) {

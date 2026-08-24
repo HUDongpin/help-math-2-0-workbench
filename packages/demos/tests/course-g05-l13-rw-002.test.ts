@@ -29,13 +29,31 @@ const rw002PredecessorReceiptPath =
   'migrations/course-g05-l13-rw-002/evidence/source-routed-spanish-audio-product-qa.json';
 const rw002PredecessorReceiptSha256 =
   '36bde91455ac750990e50ee18ae42c2d13be24c84ee58f3284034eba09628652';
-const rw002BindingSuccessorPath =
+const rw002BindingSuccessorR1Path =
   'migrations/course-g05-l13-rw-002/evidence/current-javascript-shared-runtime-binding-successor-2026-08-01-r1.json';
+const rw002BindingSuccessorR1Sha256 =
+  'f879c1d1c225247ab6186c05a752e79f51d451f84c4710e7bdf6e6cc358346e4';
+const rw002BindingSuccessorR2Path =
+  'migrations/course-g05-l13-rw-002/evidence/current-javascript-shared-runtime-binding-successor-2026-08-07-r2.json';
+const rw002BindingSuccessorR2Bytes = 10220;
+const rw002BindingSuccessorR2Sha256 =
+  'f49840ffd75fddcedeaac6db6b952e865da335e68182a133885fa024d05f82f8';
+const rw002BindingSuccessorR2StaleRoles = [
+  'englishSourceSchedule',
+  'productQaContractTest',
+  'productRuntime',
+  'runtimeContract',
+  'spanishSourceSchedule',
+  'timeline'
+] as const;
 const rw002SuccessorDriftRoles = new Set([
+  'englishSourceSchedule',
   'productRuntime',
   'runtimeContract',
   'runtimeHelpers',
-  'productQaContractTest'
+  'productQaContractTest',
+  'spanishSourceSchedule',
+  'timeline'
 ]);
 
 test('RW002 candidate is bound to the preserved source and distinct root/local domains', async () => {
@@ -497,10 +515,13 @@ test('RW002 Spanish host-audio product predecessor stays immutable and keeps str
   assert.equal(Object.values(receipt.claims).every((value) => value === false), true);
 });
 
-test('RW002 binding successor validates current bytes without inheriting old browser observations', async () => {
-  const successor = JSON.parse(
-    await readFile(`${repositoryRoot}${rw002BindingSuccessorPath}`, 'utf8')
-  ) as {
+test('RW002 r1 binding successor remains immutable historical evidence', async () => {
+  const successorBytes = await readFile(
+    `${repositoryRoot}${rw002BindingSuccessorR1Path}`
+  );
+  assert.equal(successorBytes.length, 10257);
+  assert.equal(sha256(successorBytes), rw002BindingSuccessorR1Sha256);
+  const successor = JSON.parse(successorBytes.toString('utf8')) as {
     schemaVersion: number;
     artifactType: string;
     animationId: string;
@@ -513,6 +534,76 @@ test('RW002 binding successor validates current bytes without inheriting old bro
       browserObservationsInherited: boolean;
       browserObservationsCurrentForSuccessor: boolean;
     };
+    currentBindings: Record<string, {
+      file: string;
+      bytes: number;
+      sha256: string;
+    }>;
+    machineChecks: {
+      browserQaExecutedForSuccessor: boolean;
+      predecessorBrowserObservationsReusedAsCurrent: boolean;
+    };
+    acceptanceNeutral: boolean;
+    strictAcceptanceEffect: string;
+    acceptanceEffects: Record<string, boolean>;
+    claims: Record<string, boolean>;
+  };
+  const predecessorBytes = await readFile(
+    `${repositoryRoot}${successor.predecessorReceipt.file}`
+  );
+  assert.equal(predecessorBytes.length, successor.predecessorReceipt.bytes);
+  assert.equal(sha256(predecessorBytes), successor.predecessorReceipt.sha256);
+  assert.equal(successor.predecessorReceipt.sha256, rw002PredecessorReceiptSha256);
+  assert.equal(successor.predecessorReceipt.retainedByteForByte, true);
+  assert.equal(successor.predecessorReceipt.browserObservationsInherited, false);
+  assert.equal(successor.predecessorReceipt.browserObservationsCurrentForSuccessor, false);
+  assert.equal(successor.currentBindings.productRuntime?.bytes, 31489);
+  assert.notEqual(
+    sha256(await readFile(`${repositoryRoot}apps/web/components/animation-runtime.tsx`)),
+    successor.currentBindings.productRuntime?.sha256
+  );
+  assert.equal(successor.schemaVersion, 1);
+  assert.equal(
+    successor.artifactType,
+    'g5-l13-rw002-current-javascript-shared-runtime-binding-successor'
+  );
+  assert.equal(successor.animationId, 'course-g05-l13-rw-002');
+  assert.equal(
+    successor.status,
+    'current-javascript-bindings-reconciled-browser-observations-not-revalidated'
+  );
+  assert.equal(successor.machineChecks.browserQaExecutedForSuccessor, false);
+  assert.equal(
+    successor.machineChecks.predecessorBrowserObservationsReusedAsCurrent,
+    false
+  );
+  assert.equal(successor.acceptanceNeutral, true);
+  assert.equal(successor.strictAcceptanceEffect, 'none');
+  assert.equal(
+    Object.values(successor.acceptanceEffects).every((value) => value === false),
+    true
+  );
+  assert.equal(Object.values(successor.claims).every((value) => value === false), true);
+});
+
+test('RW002 r2 successor remains immutable dated historical evidence', async () => {
+  const successorBytes = await readFile(
+    `${repositoryRoot}${rw002BindingSuccessorR2Path}`
+  );
+  assert.equal(successorBytes.length, rw002BindingSuccessorR2Bytes);
+  assert.equal(sha256(successorBytes), rw002BindingSuccessorR2Sha256);
+  const successor = JSON.parse(successorBytes.toString('utf8')) as {
+    schemaVersion: number;
+    artifactType: string;
+    animationId: string;
+    status: string;
+    predecessorSuccessor: {
+      file: string;
+      bytes: number;
+      sha256: string;
+      retainedByteForByte: boolean;
+      browserObservationDisposition: string;
+    };
     driftSummary: {
       changedBindingCount: number;
       unexpectedDriftCount: number;
@@ -522,17 +613,14 @@ test('RW002 binding successor validates current bytes without inheriting old bro
       file: string;
       bytes: number;
       sha256: string;
-      predecessorSha256: string;
-      relationToPredecessor: string;
+      predecessorSuccessorSha256: string;
+      relationToPredecessorSuccessor: string;
     }>;
     changeCharacterization: {
-      authorizedG5L4StaticUiLanguageSeparation: {
+      productRuntime: {
+        causalAttributionEstablishedForCurrentJavascript: boolean;
         originalRuntimeBehaviorInferred: boolean;
         rw002BehavioralEquivalenceEstablished: boolean;
-      };
-      runtimeHelpers: {
-        causalAttributionEstablished: boolean;
-        browserBehaviorEstablished: boolean;
       };
     };
     machineChecks: {
@@ -546,21 +634,41 @@ test('RW002 binding successor validates current bytes without inheriting old bro
     normalPlaybackPage?: unknown;
     deterministicCapturePage?: unknown;
   };
-  const predecessorBytes = await readFile(
-    `${repositoryRoot}${successor.predecessorReceipt.file}`
+  const predecessorSuccessorBytes = await readFile(
+    `${repositoryRoot}${successor.predecessorSuccessor.file}`
   );
-  assert.equal(predecessorBytes.length, successor.predecessorReceipt.bytes);
-  assert.equal(sha256(predecessorBytes), successor.predecessorReceipt.sha256);
-  assert.equal(successor.predecessorReceipt.sha256, rw002PredecessorReceiptSha256);
-  assert.equal(successor.predecessorReceipt.retainedByteForByte, true);
-  assert.equal(successor.predecessorReceipt.browserObservationsInherited, false);
-  assert.equal(successor.predecessorReceipt.browserObservationsCurrentForSuccessor, false);
+  assert.equal(
+    predecessorSuccessorBytes.length,
+    successor.predecessorSuccessor.bytes
+  );
+  assert.equal(
+    sha256(predecessorSuccessorBytes),
+    successor.predecessorSuccessor.sha256
+  );
+  assert.equal(successor.predecessorSuccessor.sha256, rw002BindingSuccessorR1Sha256);
+  assert.equal(successor.predecessorSuccessor.retainedByteForByte, true);
+  assert.equal(
+    successor.predecessorSuccessor.browserObservationDisposition,
+    'none-inherited-none-current'
+  );
+  const staleRoles: string[] = [];
   for (const [name, binding] of Object.entries(successor.currentBindings)) {
     const bytes = await readFile(`${repositoryRoot}${binding.file}`);
-    assert.equal(bytes.length, binding.bytes, `${name}: bytes`);
-    assert.equal(sha256(bytes), binding.sha256, `${name}: SHA-256`);
+    const currentSha256 = sha256(bytes);
+    if (bytes.length !== binding.bytes || currentSha256 !== binding.sha256) {
+      staleRoles.push(name);
+      assert.notEqual(
+        currentSha256,
+        binding.sha256,
+        `${name}: dated SHA-256 must be stale`
+      );
+    } else {
+      assert.equal(bytes.length, binding.bytes, `${name}: bytes`);
+      assert.equal(currentSha256, binding.sha256, `${name}: SHA-256`);
+    }
   }
-  assert.equal(successor.schemaVersion, 1);
+  assert.deepEqual(staleRoles.sort(), [...rw002BindingSuccessorR2StaleRoles]);
+  assert.equal(successor.schemaVersion, 2);
   assert.equal(
     successor.artifactType,
     'g5-l13-rw002-current-javascript-shared-runtime-binding-successor'
@@ -570,8 +678,11 @@ test('RW002 binding successor validates current bytes without inheriting old bro
     successor.status,
     'current-javascript-bindings-reconciled-browser-observations-not-revalidated'
   );
-  assert.deepEqual(successor.driftSummary.changedRoles, [...rw002SuccessorDriftRoles]);
-  assert.equal(successor.driftSummary.changedBindingCount, 4);
+  assert.deepEqual(successor.driftSummary.changedRoles, [
+    'productRuntime',
+    'productQaContractTest'
+  ]);
+  assert.equal(successor.driftSummary.changedBindingCount, 2);
   assert.equal(successor.driftSummary.unexpectedDriftCount, 0);
   assert.equal(successor.machineChecks.browserQaExecutedForSuccessor, false);
   assert.equal(
@@ -579,22 +690,18 @@ test('RW002 binding successor validates current bytes without inheriting old bro
     false
   );
   assert.equal(
-    successor.changeCharacterization.authorizedG5L4StaticUiLanguageSeparation
-      .originalRuntimeBehaviorInferred,
+    successor.changeCharacterization.productRuntime.originalRuntimeBehaviorInferred,
     false
   );
   assert.equal(
-    successor.changeCharacterization.authorizedG5L4StaticUiLanguageSeparation
+    successor.changeCharacterization.productRuntime
       .rw002BehavioralEquivalenceEstablished,
     false
   );
   assert.equal(
-    successor.changeCharacterization.runtimeHelpers.causalAttributionEstablished,
-    false
-  );
-  assert.equal(
-    successor.changeCharacterization.runtimeHelpers.browserBehaviorEstablished,
-    false
+    successor.changeCharacterization.productRuntime
+      .causalAttributionEstablishedForCurrentJavascript,
+    true
   );
   assert.equal(successor.normalPlaybackPage, undefined);
   assert.equal(successor.deterministicCapturePage, undefined);

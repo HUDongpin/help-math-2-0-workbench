@@ -6,6 +6,7 @@ import {fileURLToPath} from "node:url";
 import {Script} from "node:vm";
 
 import {loadAnimationModule} from "../src/animation-registry";
+import {getG5L4PageAudioCandidate} from "../src/g5-l4-audio.generated";
 import in002, {
   COURSE_G05_L04_IN_002_MOVIE,
   COURSE_G05_L04_IN_002_RUNTIME,
@@ -583,8 +584,12 @@ test("eighteen G5 L4 source-static candidates preserve root and nested domains",
     }]);
     assert.equal(candidate.module.runtime, candidate.runtime);
     assert.equal(candidate.module.maturity, "legacy-prototype");
-    assert.equal(candidate.module.audioCues.length, 0);
-    assert.equal(candidate.module.audioTracks, undefined);
+    const audioCandidate = getG5L4PageAudioCandidate(candidate.id);
+    assert.ok(audioCandidate, `${candidate.id}: generated audio candidate`);
+    assert.equal(candidate.module.audioCues, audioCandidate.audioCues);
+    assert.equal(candidate.module.audioTracks, audioCandidate.audioTracks);
+    assert.ok(candidate.module.audioCues.length > 0, candidate.id);
+    assert.ok(candidate.module.audioTracks?.length, candidate.id);
     assert.equal(
       sha256(await readFile(`${repositoryRoot}${candidate.source.swf}`)),
       candidate.source.swfSha256,

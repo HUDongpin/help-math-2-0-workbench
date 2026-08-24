@@ -8,6 +8,10 @@ import {fileURLToPath} from "node:url";
 import {
   deriveReleaseSourceStaticProfile,
 } from "./build-release-source-static-engineering-candidates.mjs";
+import {
+  isSeparatedCurrentJsCandidateAnimationId,
+  separatedCurrentJsCandidateStoragePath,
+} from "./current-js-candidate-paths.mjs";
 
 const scriptPath = fileURLToPath(import.meta.url);
 const ROOT = path.resolve(path.dirname(scriptPath), "..");
@@ -196,10 +200,17 @@ async function emit(relativePath, bytes, check) {
 }
 
 export function parseArguments(argv) {
-  const options = {check: false, ids: []};
+  const options = {
+    allowAcceptanceNeutralLineageFallback: false,
+    check: false,
+    ids: [],
+  };
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === "--check") options.check = true;
+    else if (argument === "--allow-acceptance-neutral-lineage-fallback") {
+      options.allowAcceptanceNeutralLineageFallback = true;
+    }
     else if (["--release-id", "--id"].includes(argument)) {
       const value = argv[++index];
       invariant(value && !value.startsWith("-"), `${argument} requires one value`);
@@ -224,6 +235,7 @@ export function parseArguments(argv) {
 }
 
 export async function materializeReleaseSourceStaticEngineeringModules({
+  allowAcceptanceNeutralLineageFallback = false,
   check = false,
   ids,
   releaseId,
@@ -245,6 +257,7 @@ export async function materializeReleaseSourceStaticEngineeringModules({
   const prepared = [];
   for (const animationId of ids) {
     const profile = await deriveReleaseSourceStaticProfile({
+      allowAcceptanceNeutralLineageFallback,
       animationId,
       release,
     });
@@ -252,9 +265,17 @@ export async function materializeReleaseSourceStaticEngineeringModules({
       `public/flash-assets/courses/${animationId}/canvas-renderer.js`;
     const manifestPath =
       `public/flash-assets/courses/${animationId}/manifest.json`;
+    const runtimeStoragePath =
+      isSeparatedCurrentJsCandidateAnimationId(animationId)
+        ? separatedCurrentJsCandidateStoragePath(runtimePath)
+        : runtimePath;
+    const manifestStoragePath =
+      isSeparatedCurrentJsCandidateAnimationId(animationId)
+        ? separatedCurrentJsCandidateStoragePath(manifestPath)
+        : manifestPath;
     const [runtimeBinding, manifestBinding] = await Promise.all([
-      readBinding(runtimePath),
-      readBinding(manifestPath),
+      readBinding(runtimeStoragePath),
+      readBinding(manifestStoragePath),
     ]);
     const manifest = JSON.parse(manifestBinding.bytes.toString("utf8"));
     invariant(
@@ -318,6 +339,7 @@ export async function materializeReleaseSourceStaticEngineeringModules({
     operation: check ? "check" : "materialize",
     releaseId,
     selectedMemberCount: prepared.length,
+    allowAcceptanceNeutralLineageFallback,
     results: prepared.map((candidate) => ({
       animationId: candidate.animationId,
       timeline: {

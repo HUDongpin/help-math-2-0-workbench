@@ -40,9 +40,9 @@ export function loadCurrentGrade4CourseCatalogInputs(): Grade4CourseCatalogCover
 }
 
 /**
- * Current-file entry point for planning and tests. It is deliberately not
- * imported by the public route registry: coverage alone cannot register or
- * publish a course player.
+ * Current-file entry point for planning, tests, and source-bound descriptor
+ * construction. Coverage alone cannot register or publish a course player;
+ * the route registry separately validates each formal descriptor.
  */
 export function loadCurrentGrade4CourseCatalogCoverage(): Grade4CourseCatalogCoverage {
   return buildGrade4CourseCatalogCoverage(

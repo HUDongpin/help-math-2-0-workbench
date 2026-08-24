@@ -6,9 +6,6 @@ import {
   validateReceiptDocument,
   verifyG5L4CombinedKeytermsProductReferenceSuccessor,
 } from './verify-g5-l4-combined-keyterms-product-reference-successor.mjs';
-import {
-  checkWholeLessonQaSuccessor,
-} from './check-g5-l4-current-js-whole-lesson-product-qa-successor.mjs';
 
 const RECEIPT_URL = new URL(
   '../catalog/owner-authorizations/g5-l4-combined-keyterms-product-reference-successor-2026-07-30.json',
@@ -19,7 +16,7 @@ async function receiptClone() {
   return JSON.parse(await readFile(RECEIPT_URL, 'utf8'));
 }
 
-test('dated authorization remains bounded while r4 binds the current G5 L4 product', async () => {
+test('dated authorization remains bounded after later G5 L4 product revisions', async () => {
   const receipt = await receiptClone();
   validateReceiptDocument(receipt);
   assert.equal(receipt.releaseId, 'lesson-g05-l04-number-lines');
@@ -53,19 +50,18 @@ test('dated authorization remains bounded while r4 binds the current G5 L4 produ
   );
   await assert.rejects(
     verifyG5L4CombinedKeytermsProductReferenceSuccessor(),
-    /legacy-key-terms-browser\.tsx identity changed/,
+    (error) => {
+      assert.match(error.message, /^bound project files identities changed:/);
+      const descriptor =
+        'apps/web/lib/g5-l4-whole-lesson-player-descriptor.ts identity changed';
+      const browser =
+        'apps/web/components/legacy-key-terms-browser.tsx identity changed';
+      assert.match(error.message, new RegExp(descriptor.replaceAll('.', '\\.')));
+      assert.match(error.message, new RegExp(browser.replaceAll('.', '\\.')));
+      assert.ok(error.message.indexOf(descriptor) < error.message.indexOf(browser));
+      return true;
+    },
   );
-  assert.deepEqual(await checkWholeLessonQaSuccessor(), {
-    receiptId:
-      'g5-l4-current-js-whole-lesson-product-qa-successor-2026-08-01-r4',
-    packageId: 'g5-l4-whole-lesson-package-mvp-v6',
-    sourceBindingCount: 23,
-    artifactBindingCount: 3,
-    englishPagesReady: 54,
-    spanishPagesReady: 54,
-    predecessorClaimsCarriedForward: false,
-    strictAcceptanceEffect: 'none',
-  });
 });
 
 test('successor receipt rejects a changed owner-relayed message', async () => {

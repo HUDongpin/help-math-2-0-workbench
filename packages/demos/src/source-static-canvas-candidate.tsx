@@ -1,6 +1,12 @@
 "use client";
 
-import React, {useEffect, useMemo, useRef, useState} from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import type {
   AnimationLanguage,
@@ -16,6 +22,10 @@ import {
   getG4L3MainTimelineAudioCandidate,
   type G4L3MainTimelineAudioCandidate,
 } from "./g4-l3-main-timeline-audio.generated";
+import {
+  getG5L4PageAudioCandidate,
+  type G5L4PageAudioCandidate,
+} from "./g5-l4-audio.generated";
 
 export interface SourceStaticVisualMarker {
   readonly id: string;
@@ -74,6 +84,18 @@ export interface SourceStaticCanvasCandidateConfig {
   readonly blockedFrameRanges?: readonly SourceStaticBlockedFrameRange[];
   readonly visualMarkers?: readonly SourceStaticVisualMarker[];
   readonly sourceControlBehaviorLabel?: string;
+  /**
+   * Exact generated source-script behavior contract required by a maintained
+   * product wrapper. The ordinary source-static renderer never invents a
+   * state for this contract; a caller must supply both contract and state.
+   */
+  readonly sourceBehaviorCompositeContractId?: string;
+  /**
+   * A maintained product wrapper may own the learner-visible evidence
+   * disclosure outside this visual-only layer. Omit/default true for ordinary
+   * source-static engineering candidates.
+   */
+  readonly showEngineeringDisclosure?: boolean;
 }
 
 interface ResolvedSourceStaticCanvasCandidateConfig
@@ -121,6 +143,8 @@ export interface SourceStaticCanvasFrameState {
   readonly naturalRuntimeEstablished: false;
   readonly audioRendered: false;
   readonly sourceSwfSha256: string;
+  readonly behaviorCompositeContractId?: string;
+  readonly behaviorCompositeState?: string;
 }
 
 export interface TraceCaptureIdentity {
@@ -164,19 +188,137 @@ interface CanvasRuntimeState {
   readonly lang: string;
   readonly seed: number;
   readonly audioRendered: false;
+  readonly behaviorCompositeContractId?: string;
+  readonly behaviorCompositeState?: string;
+}
+
+interface CanvasRenderRequest {
+  readonly frame: number;
+  readonly scenario: string;
+  readonly lang: string;
+  readonly seed: number;
+  readonly behaviorCompositeContractId?: string;
+  readonly behaviorCompositeState?: string;
 }
 
 interface CanvasAsset {
   readonly ready: () => Promise<void>;
   readonly render: (
     canvas: HTMLCanvasElement,
-    request: {
-      frame: number;
-      scenario: string;
-      lang: string;
-      seed: number;
-    },
+    request: {frame: number; scenario: string; lang: string; seed: number},
   ) => unknown;
+}
+
+interface BehaviorAwareCanvasAsset extends CanvasAsset {
+  readonly metadata?: Readonly<{
+    sourceBehaviorComposite?: Readonly<{
+      contractId: string;
+      stateIds: readonly string[];
+    }> | null;
+  }>;
+  readonly renderComposite?: (
+    canvas: HTMLCanvasElement,
+    request: CanvasRenderRequest & Required<Pick<
+      CanvasRenderRequest,
+      "behaviorCompositeContractId" | "behaviorCompositeState"
+    >>,
+  ) => unknown;
+}
+
+export interface LatestCanvasRenderRun<TRequest> {
+  readonly started: boolean;
+  readonly completion: Promise<TRequest | null>;
+}
+
+export interface LatestCanvasRenderCoordinator<TRequest, TPrepared> {
+  readonly enqueue: (request: TRequest) => void;
+  readonly run: (
+    prepare: () => Promise<TPrepared>,
+    render: (request: TRequest, prepared: TPrepared) => void,
+  ) => LatestCanvasRenderRun<TRequest>;
+  readonly cancel: () => void;
+}
+
+/**
+ * Coalesces advancing playback frames while an asynchronous Canvas asset is
+ * loading. A slow `asset.ready()` must not let every playback tick cancel its
+ * predecessor before any frame can paint; the one active preparation instead
+ * renders the latest request that it owns.
+ */
+export function createLatestCanvasRenderCoordinator<
+  TRequest,
+  TPrepared,
+>(): LatestCanvasRenderCoordinator<TRequest, TPrepared> {
+  let latestRequest: TRequest | null = null;
+  let activeCompletion: Promise<TRequest | null> | null = null;
+  let generation = 0;
+
+  return Object.freeze({
+    enqueue(request: TRequest) {
+      latestRequest = request;
+    },
+    run(
+      prepare: () => Promise<TPrepared>,
+      render: (request: TRequest, prepared: TPrepared) => void,
+    ) {
+      if (activeCompletion) {
+        return Object.freeze({
+          started: false,
+          completion: activeCompletion,
+        });
+      }
+      const runGeneration = generation;
+      const completion = (async () => {
+        try {
+          const prepared = await prepare();
+          if (generation !== runGeneration) return null;
+          const request = latestRequest;
+          if (request === null) return null;
+          render(request, prepared);
+          return request;
+        } catch (error) {
+          // Lifecycle cancellation makes a late readiness failure stale. A
+          // current failure remains fail-closed and reaches the renderer.
+          if (generation !== runGeneration) return null;
+          throw error;
+        }
+      })();
+      activeCompletion = completion;
+      const clearActive = () => {
+        if (activeCompletion === completion) activeCompletion = null;
+      };
+      void completion.then(clearActive, clearActive);
+      return Object.freeze({started: true, completion});
+    },
+    cancel() {
+      generation += 1;
+      latestRequest = null;
+      activeCompletion = null;
+    },
+  });
+}
+
+interface PendingCanvasRenderRequest {
+  readonly canvas: HTMLCanvasElement;
+  readonly captureReady: boolean;
+  readonly renderKey: string;
+  readonly visualKey: string;
+  readonly identity: Readonly<
+    Pick<
+      SourceStaticCanvasFrameState,
+      | "entryStateSha256"
+      | "behaviorCompositeContractId"
+      | "behaviorCompositeState"
+      | "frame"
+      | "frameDomain"
+      | "language"
+      | "requirementId"
+      | "rootFrame"
+      | "scenario"
+      | "seed"
+      | "traceId"
+    >
+  >;
 }
 
 declare global {
@@ -185,9 +327,117 @@ declare global {
   }
 }
 
-type CanvasStatus = "idle" | "loading" | "ready" | "error";
+export type SourceStaticCanvasStatus =
+  | "idle"
+  | "loading"
+  | "updating"
+  | "ready"
+  | "error";
 
-const assetPromises = new Map<string, Promise<CanvasAsset>>();
+export interface CanvasCapturePresentationTarget {
+  readonly removeAttribute: (name: string) => void;
+  readonly setAttribute: (name: string, value: string) => void;
+}
+
+/**
+ * Keeps the imperative Canvas bitmap and its evidence-facing DOM contract in
+ * one state transition. React does not re-render after every movie-frame
+ * paint, so successful later paints must restore these attributes directly;
+ * pending paints must also clear stale readiness before the browser can paint.
+ */
+export function applyCanvasCapturePresentationStatus(
+  target: CanvasCapturePresentationTarget,
+  {
+    captureReady,
+    status,
+  }: Readonly<{
+    captureReady: boolean;
+    status: SourceStaticCanvasStatus;
+  }>,
+) {
+  const visualReady = status === "ready";
+  target.setAttribute("data-render-state", status);
+  if (visualReady) {
+    target.setAttribute("data-render-visual", "true");
+  } else {
+    target.removeAttribute("data-render-visual");
+  }
+  if (visualReady && captureReady) {
+    target.setAttribute("data-capture-stage", "true");
+  } else {
+    target.removeAttribute("data-capture-stage");
+  }
+}
+
+export function sourceStaticCanvasVisualKey(state: Readonly<{
+  animationId: string;
+  behaviorCompositeContractId?: string;
+  behaviorCompositeState?: string;
+  frame: number;
+  frameDomain: string;
+  rootFrame: number;
+  scenario: string;
+  language: string;
+  seed: number;
+}>): string {
+  return JSON.stringify([
+    state.animationId,
+    state.behaviorCompositeContractId ?? "",
+    state.behaviorCompositeState ?? "",
+    state.frame,
+    state.frameDomain,
+    state.rootFrame,
+    state.scenario,
+    state.language,
+    state.seed,
+  ]);
+}
+
+export function sourceStaticCanvasRenderKey(state: Readonly<{
+  animationId: string;
+  behaviorCompositeContractId?: string;
+  behaviorCompositeState?: string;
+  entryStateSha256?: string;
+  frame: number;
+  frameDomain: string;
+  language: string;
+  requirementId?: string;
+  rootFrame: number;
+  scenario: string;
+  seed: number;
+  traceId?: string;
+}>): string {
+  return JSON.stringify([
+    state.animationId,
+    state.behaviorCompositeContractId ?? "",
+    state.behaviorCompositeState ?? "",
+    state.entryStateSha256 ?? "",
+    state.frame,
+    state.frameDomain,
+    state.language,
+    state.requirementId ?? "",
+    state.rootFrame,
+    state.scenario,
+    state.seed,
+    state.traceId ?? "",
+  ]);
+}
+
+export function retainedCanvasStatus({
+  canvasStatus,
+  renderedVisualKey,
+  requestedVisualKey,
+}: Readonly<{
+  canvasStatus: SourceStaticCanvasStatus;
+  renderedVisualKey: string | null;
+  requestedVisualKey: string;
+}>): SourceStaticCanvasStatus {
+  return canvasStatus === "ready" && renderedVisualKey !== requestedVisualKey
+    ? "updating"
+    : canvasStatus;
+}
+
+const assetPromises = new Map<string, Promise<BehaviorAwareCanvasAsset>>();
 
 function invariant(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(message);
@@ -253,6 +503,11 @@ function validateConfig(
     config.assetSha256 === undefined ||
       /^[a-f0-9]{64}$/.test(config.assetSha256),
     "source-static candidate asset SHA-256 is invalid",
+  );
+  invariant(
+    config.sourceBehaviorCompositeContractId === undefined ||
+      /^[a-z0-9-]+-v\d+$/.test(config.sourceBehaviorCompositeContractId),
+    "source-static candidate behavior-composite contract ID is invalid",
   );
   const explicitNativeStage = config.nativeStage;
   const legacyStage = config.stage;
@@ -416,7 +671,9 @@ function isCanvasRuntimeState(value: unknown): value is CanvasRuntimeState {
   );
 }
 
-function loadCanvasAsset(config: ResolvedSourceStaticCanvasCandidateConfig) {
+function loadCanvasAsset(
+  config: ResolvedSourceStaticCanvasCandidateConfig,
+): Promise<BehaviorAwareCanvasAsset> {
   const request = buildCanvasAssetRequest(config);
   const selector = config.assetSha256
     ? `script[data-help-math-canvas-asset="${config.animationId}"][data-help-math-canvas-sha256="${config.assetSha256}"]`
@@ -436,15 +693,15 @@ function loadCanvasAsset(config: ResolvedSourceStaticCanvasCandidateConfig) {
   }
   const registered = window.HELP_MATH_CANVAS_ASSETS?.[config.animationId];
   if (registered && (!config.assetSha256 || exactExisting)) {
-    return Promise.resolve(registered);
+    return Promise.resolve(registered as BehaviorAwareCanvasAsset);
   }
   const existingPromise = assetPromises.get(request.key);
   if (existingPromise) return existingPromise;
-  const promise = new Promise<CanvasAsset>((resolve, reject) => {
+  const promise = new Promise<BehaviorAwareCanvasAsset>((resolve, reject) => {
     const script = existing ?? document.createElement("script");
     const finish = () => {
       const asset = window.HELP_MATH_CANVAS_ASSETS?.[config.animationId];
-      if (asset) resolve(asset);
+      if (asset) resolve(asset as BehaviorAwareCanvasAsset);
       else reject(new Error("Canvas asset did not register the expected animation"));
     };
     script.onload = finish;
@@ -471,7 +728,20 @@ function loadCanvasAsset(config: ResolvedSourceStaticCanvasCandidateConfig) {
 function verifyRenderedIdentity(
   canvas: HTMLCanvasElement,
   rendered: unknown,
-  expected: SourceStaticCanvasFrameState,
+  expected: Pick<
+    SourceStaticCanvasFrameState,
+    | "behaviorCompositeContractId"
+    | "behaviorCompositeState"
+    | "entryStateSha256"
+    | "frame"
+    | "frameDomain"
+    | "language"
+    | "requirementId"
+    | "rootFrame"
+    | "scenario"
+    | "seed"
+    | "traceId"
+  >,
 ) {
   invariant(
     isCanvasRuntimeState(rendered) &&
@@ -481,10 +751,16 @@ function verifyRenderedIdentity(
       rendered.scenario === expected.scenario &&
       rendered.lang === expected.language &&
       rendered.seed === expected.seed &&
-      rendered.audioRendered === false,
+      rendered.audioRendered === false &&
+      rendered.behaviorCompositeContractId ===
+        expected.behaviorCompositeContractId &&
+      rendered.behaviorCompositeState === expected.behaviorCompositeState,
     "Canvas asset returned a mismatched deterministic identity",
   );
   const expectedAttributes = {
+    "data-behavior-composite-contract":
+      expected.behaviorCompositeContractId || null,
+    "data-behavior-composite-state": expected.behaviorCompositeState || null,
     "data-flash-entry-state-sha256": expected.entryStateSha256 || null,
     "data-flash-frame": String(expected.frame),
     "data-flash-frame-domain": expected.frameDomain,
@@ -551,12 +827,15 @@ function blockerCopy(blocker: SourceStaticCanvasBlocker | null) {
 
 export function createSourceStaticCanvasCandidate(
   suppliedConfig: SourceStaticCanvasCandidateConfig,
-  suppliedAudioCandidate?: G4L3MainTimelineAudioCandidate,
+  suppliedAudioCandidate?:
+    | G4L3MainTimelineAudioCandidate
+    | G5L4PageAudioCandidate,
 ) {
   const config = validateConfig(suppliedConfig);
   const mainTimelineAudioCandidate =
     suppliedAudioCandidate ??
-    getG4L3MainTimelineAudioCandidate(config.animationId);
+    getG4L3MainTimelineAudioCandidate(config.animationId) ??
+    getG5L4PageAudioCandidate(config.animationId);
   const rootScenario = "root-unavailable";
   const mainScenario = "source-static-frame";
   const companionScenario = (id: string) => `${id}-unavailable`;
@@ -679,7 +958,7 @@ export function createSourceStaticCanvasCandidate(
     state,
     traceId,
   }: {
-    canvasStatus: CanvasStatus;
+    canvasStatus: SourceStaticCanvasStatus;
     entryStateSha256: string;
     frame?: number;
     frameDomain?: string;
@@ -728,6 +1007,9 @@ export function createSourceStaticCanvasCandidate(
       visualReady && identityReady;
     return {
       "data-animation-id": config.animationId,
+      "data-behavior-composite-contract":
+        state.behaviorCompositeContractId || undefined,
+      "data-behavior-composite-state": state.behaviorCompositeState || undefined,
       "data-candidate-status": "source-static-engineering-not-strict",
       "data-capture-identity-status": identityReady ? "verified" : "blocked",
       "data-capture-stage": captureReady ? "true" : undefined,
@@ -804,36 +1086,245 @@ export function createSourceStaticCanvasCandidate(
       ],
     );
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [canvasStatus, setCanvasStatus] = useState<CanvasStatus>("idle");
+    const canvasHostRef = useRef<HTMLElement>(null);
+    const canvasStatusRef = useRef<SourceStaticCanvasStatus>("idle");
+    const canvasPresentationRef = useRef<"pending" | "painted" | "error">(
+      "pending",
+    );
+    const [, setCanvasPresentation] = useState<
+      "pending" | "painted" | "error"
+    >("pending");
+    const renderedVisualKeyRef = useRef<string | null>(null);
+    const requestedVisualKey = sourceStaticCanvasVisualKey(deterministicState);
+    const requestedRenderKey = sourceStaticCanvasRenderKey(deterministicState);
+    const renderedRequestKeyRef = useRef<string | null>(null);
+    const renderBehaviorCompositeContractId =
+      deterministicState.behaviorCompositeContractId;
+    const renderBehaviorCompositeState = deterministicState.behaviorCompositeState;
+    const renderEntryStateSha256 = deterministicState.entryStateSha256;
+    const renderFrame = deterministicState.frame;
+    const renderFrameDomain = deterministicState.frameDomain;
+    const renderLanguage = deterministicState.language;
+    const renderRequirementId = deterministicState.requirementId;
+    const renderRootFrame = deterministicState.rootFrame;
+    const renderScenario = deterministicState.scenario;
+    const renderSeed = deterministicState.seed;
+    const renderStatus = deterministicState.status;
+    const renderTraceId = deterministicState.traceId;
+    const [renderCoordinator] = useState(() =>
+      createLatestCanvasRenderCoordinator<
+        PendingCanvasRenderRequest,
+        BehaviorAwareCanvasAsset
+      >(),
+    );
+    const reportedCanvasStatus = retainedCanvasStatus({
+      canvasStatus: canvasStatusRef.current,
+      renderedVisualKey: renderedVisualKeyRef.current,
+      requestedVisualKey,
+    });
+    const captureAttributes = buildCaptureAttributes({
+      canvasStatus: reportedCanvasStatus,
+      entryStateSha256,
+      frame,
+      frameDomain,
+      lang,
+      requirementId,
+      scenario,
+      seed,
+      state: deterministicState,
+      traceId,
+    });
+    const requestedCaptureReady = buildCaptureAttributes({
+      canvasStatus: "ready",
+      entryStateSha256,
+      frame,
+      frameDomain,
+      lang,
+      requirementId,
+      scenario,
+      seed,
+      state: deterministicState,
+      traceId,
+    })["data-capture-stage"] === "true";
+
+    useLayoutEffect(() => {
+      const canvas = canvasRef.current;
+      if (!canvas || renderStatus !== "ready") return;
+      if (renderedRequestKeyRef.current === requestedRenderKey) {
+        canvasStatusRef.current = "ready";
+        applyCanvasCapturePresentationStatus(canvas, {
+          captureReady: requestedCaptureReady,
+          status: "ready",
+        });
+        canvasHostRef.current?.setAttribute("data-canvas-status", "ready");
+        return;
+      }
+      // Keep the last bitmap visible while making it capture-ineligible before
+      // the browser can paint the newly requested frame. This also covers a
+      // request coalesced into an already-running asset preparation.
+      const pendingStatus =
+        canvasStatusRef.current === "ready" ||
+        canvasStatusRef.current === "updating"
+          ? "updating"
+          : "loading";
+      canvasStatusRef.current = pendingStatus;
+      applyCanvasCapturePresentationStatus(canvas, {
+        captureReady: false,
+        status: pendingStatus,
+      });
+      canvasHostRef.current?.setAttribute("data-canvas-status", pendingStatus);
+    }, [
+      renderStatus,
+      requestedCaptureReady,
+      requestedRenderKey,
+    ]);
 
     useEffect(() => {
       const canvas = canvasRef.current;
-      if (!canvas || deterministicState.status !== "ready") {
-        setCanvasStatus("idle");
+      if (!canvas || renderStatus !== "ready") {
+        renderCoordinator.cancel();
+        renderedRequestKeyRef.current = null;
+        renderedVisualKeyRef.current = null;
+        canvasStatusRef.current = "idle";
+        if (canvasPresentationRef.current !== "pending") {
+          canvasPresentationRef.current = "pending";
+          setCanvasPresentation("pending");
+        }
         return;
       }
-      let cancelled = false;
-      setCanvasStatus("loading");
-      loadCanvasAsset(config)
-        .then(async (asset) => {
+      const renderRequest = Object.freeze({
+        canvas,
+        captureReady: requestedCaptureReady,
+        renderKey: requestedRenderKey,
+        visualKey: requestedVisualKey,
+        identity: Object.freeze({
+          behaviorCompositeContractId: renderBehaviorCompositeContractId,
+          behaviorCompositeState: renderBehaviorCompositeState,
+          entryStateSha256: renderEntryStateSha256,
+          frame: renderFrame,
+          frameDomain: renderFrameDomain,
+          language: renderLanguage,
+          requirementId: renderRequirementId,
+          rootFrame: renderRootFrame,
+          scenario: renderScenario,
+          seed: renderSeed,
+          traceId: renderTraceId,
+        }),
+      });
+      // Enqueue before the idempotence check so an in-flight preparation also
+      // observes a request that returns to the currently painted frame.
+      renderCoordinator.enqueue(renderRequest);
+      // A parent may supply a freshly allocated frame-state object on every
+      // render. The exact primitive request key keeps those equivalent renders
+      // idempotent while still redrawing for any visual or trace identity
+      // change required by deterministic capture.
+      if (renderedRequestKeyRef.current === requestedRenderKey) {
+        return;
+      }
+      const run = renderCoordinator.run(
+        async () => {
+          const asset = await loadCanvasAsset(config);
           await asset.ready();
-          if (cancelled) return;
-          const rendered = asset.render(canvas, {
-            frame: deterministicState.frame,
-            scenario: deterministicState.scenario,
-            lang: deterministicState.language,
-            seed: deterministicState.seed,
-          });
-          verifyRenderedIdentity(canvas, rendered, deterministicState);
-          if (!cancelled) setCanvasStatus("ready");
+          return asset;
+        },
+        (request, asset) => {
+          const baseRequest = {
+            frame: request.identity.frame,
+            scenario: request.identity.scenario,
+            lang: request.identity.language,
+            seed: request.identity.seed,
+          };
+          const compositeContractId =
+            request.identity.behaviorCompositeContractId;
+          const compositeState = request.identity.behaviorCompositeState;
+          invariant(
+            (compositeContractId === undefined) === (compositeState === undefined),
+            "Canvas behavior-composite contract and state must be supplied together",
+          );
+          const rendered = compositeContractId === undefined
+            ? asset.render(request.canvas, baseRequest)
+            : (() => {
+                invariant(
+                  typeof compositeState === "string",
+                  "Canvas behavior-composite state is required",
+                );
+                invariant(
+                  compositeContractId === config.sourceBehaviorCompositeContractId,
+                  "Canvas behavior-composite contract differs from the candidate config",
+                );
+                invariant(
+                  typeof asset.renderComposite === "function",
+                  "Canvas asset does not implement the required behavior composite",
+                );
+                return asset.renderComposite(request.canvas, {
+                  ...baseRequest,
+                  behaviorCompositeContractId: compositeContractId,
+                  behaviorCompositeState: compositeState,
+                });
+              })();
+          verifyRenderedIdentity(request.canvas, rendered, request.identity);
+        },
+      );
+      if (!run.started) return;
+      void run.completion
+        .then((completedRequest) => {
+          if (completedRequest) {
+            renderedRequestKeyRef.current = completedRequest.renderKey;
+            renderedVisualKeyRef.current = completedRequest.visualKey;
+            canvasStatusRef.current = "ready";
+            // Canvas painting is imperative and runs at the movie frame rate.
+            // Keep its readiness marker on that same imperative surface;
+            // scheduling React state for every frame creates a passive-effect
+            // update loop on slower runners even when each paint succeeds.
+            applyCanvasCapturePresentationStatus(completedRequest.canvas, {
+              captureReady: completedRequest.captureReady,
+              status: "ready",
+            });
+            canvasHostRef.current?.setAttribute("data-canvas-status", "ready");
+            if (canvasPresentationRef.current !== "painted") {
+              canvasPresentationRef.current = "painted";
+              // One transition render exposes the initially hidden Canvas and
+              // removes its loading copy. Later movie frames stay imperative.
+              setCanvasPresentation("painted");
+            }
+          }
         })
         .catch(() => {
-          if (!cancelled) setCanvasStatus("error");
+          renderedRequestKeyRef.current = null;
+          renderedVisualKeyRef.current = null;
+          canvasStatusRef.current = "error";
+          if (canvasRef.current) {
+            applyCanvasCapturePresentationStatus(canvasRef.current, {
+              captureReady: false,
+              status: "error",
+            });
+          }
+          canvasHostRef.current?.setAttribute("data-canvas-status", "error");
+          if (canvasPresentationRef.current !== "error") {
+            canvasPresentationRef.current = "error";
+            setCanvasPresentation("error");
+          }
         });
-      return () => {
-        cancelled = true;
-      };
-    }, [deterministicState]);
+    }, [
+      renderBehaviorCompositeContractId,
+      renderBehaviorCompositeState,
+      renderEntryStateSha256,
+      renderFrame,
+      renderFrameDomain,
+      renderLanguage,
+      renderRequirementId,
+      renderRootFrame,
+      renderScenario,
+      renderSeed,
+      renderStatus,
+      renderTraceId,
+      renderCoordinator,
+      requestedCaptureReady,
+      requestedRenderKey,
+      requestedVisualKey,
+    ]);
+
+    useEffect(() => () => renderCoordinator.cancel(), [renderCoordinator]);
 
     const blocked =
       deterministicState.status === "blocked"
@@ -845,10 +1336,11 @@ export function createSourceStaticCanvasCandidate(
         data-audio-rendered="false"
         data-authoritative-runtime-validated="false"
         data-candidate-status="source-static-engineering-not-strict"
-        data-canvas-status={blocked ? "blocked" : canvasStatus}
+        data-canvas-status={blocked ? "blocked" : reportedCanvasStatus}
         data-human-visual-review-accepted="false"
         data-interactive-controls-enabled="false"
         data-owner-accepted="false"
+        ref={canvasHostRef}
         data-strict-migration-complete="false"
         style={{
           margin: "0 auto",
@@ -888,18 +1380,7 @@ export function createSourceStaticCanvasCandidate(
           ) : (
             <>
               <canvas
-                {...buildCaptureAttributes({
-                  canvasStatus,
-                  entryStateSha256,
-                  frame,
-                  frameDomain,
-                  lang,
-                  requirementId,
-                  scenario,
-                  seed,
-                  state: deterministicState,
-                  traceId,
-                })}
+                {...captureAttributes}
                 aria-label={`Source-static ${config.mainFrameDomain} drawing, frame ${deterministicState.frame} of ${config.mainFrameCount}; source control behavior disabled`}
                 className="faithful-stage-wrap"
                 data-course-canvas={config.animationId}
@@ -908,19 +1389,24 @@ export function createSourceStaticCanvasCandidate(
                 role="img"
                 style={{
                   aspectRatio: `${config.nativeStage.width} / ${config.nativeStage.height}`,
-                  display: canvasStatus === "ready" ? "block" : "none",
+                  display:
+                    reportedCanvasStatus === "ready" ||
+                      reportedCanvasStatus === "updating"
+                      ? "block"
+                      : "none",
                   height: "auto",
                   pointerEvents: "none",
                   width: "100%",
                 }}
                 width={config.backingStage.width}
               />
-              {canvasStatus === "loading" || canvasStatus === "idle" ? (
+              {reportedCanvasStatus === "loading" ||
+              reportedCanvasStatus === "idle" ? (
                 <span aria-live="polite" role="status">
                   Loading source-static drawing…
                 </span>
               ) : null}
-              {canvasStatus === "error" ? (
+              {reportedCanvasStatus === "error" ? (
                 <p aria-live="assertive" role="alert">
                   The local drawing asset failed safely. No legacy or remote
                   fallback was executed.
@@ -929,14 +1415,16 @@ export function createSourceStaticCanvasCandidate(
             </>
           )}
         </div>
-        <p data-source-replay-parity="unvalidated">
-          Engineering preview only.{" "}
-          {mainTimelineAudioCandidate
-            ? "Source-exact main-timeline audio is host-wired as an unaccepted candidate; source controls and behavior"
-            : config.sourceControlBehaviorLabel ?? "Source control behavior and audio"}
-          , Spanish visual parity, Replay parity, original-runtime parity,
-          visual review, and acceptance are not claimed.
-        </p>
+        {config.showEngineeringDisclosure !== false
+          ? <p data-source-replay-parity="unvalidated">
+              Engineering preview only.{" "}
+              {mainTimelineAudioCandidate
+                ? "Source-exact main-timeline audio is host-wired as an unaccepted candidate; source controls and behavior"
+                : config.sourceControlBehaviorLabel ?? "Source control behavior and audio"}
+              , Spanish visual parity, Replay parity, original-runtime parity,
+              visual review, and acceptance are not claimed.
+            </p>
+          : null}
       </section>
     );
   }
@@ -1004,7 +1492,7 @@ export function createSourceStaticCanvasCandidate(
       : {[config.mainFrameDomain]: config.livePlaybackEndFrame}),
     ...Object.fromEntries(config.companionDomains.map((domain) => [domain.id, 1])),
   });
-  const module: AnimationModule<SourceStaticCanvasFrameState> = Object.freeze({
+  const animationModule: AnimationModule<SourceStaticCanvasFrameState> = Object.freeze({
     key: config.animationId,
     movie,
     runtime,
@@ -1072,6 +1560,6 @@ export function createSourceStaticCanvasCandidate(
     getFrameState,
     buildCaptureAttributes,
     Renderer,
-    module,
+    module: animationModule,
   });
 }

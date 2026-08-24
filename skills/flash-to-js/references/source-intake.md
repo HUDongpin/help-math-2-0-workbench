@@ -7,7 +7,7 @@ Use this reference before scaffolding or importing a source. Preserve provenance
 1. Read the repository catalogs before searching broad external archives.
 2. Match candidate technical assets by SHA-256, not filename.
 3. Keep original FLA and shipped SWF together when both exist.
-4. Copy only reviewed owner-provided sources into `source-assets/flash/`, then record their byte count, SHA-256, original location, custody, and date.
+4. Promote only reviewed owner-provided sources into `source-assets/flash/` through a hash-bound, rollback-safe project intake transaction, then record their byte count, SHA-256, original location, custody, transaction receipt, catalog rebuild, and date. When no reviewed promotion path exists, stop and prepare an intake plan instead of copying ad hoc.
 5. Never edit, recompress, optimize, repair, resave, or overwrite a preserved source.
 
 An exact hash match proves byte identity only. It does not prove authoring lineage, runtime fidelity, acceptance, or release readiness.

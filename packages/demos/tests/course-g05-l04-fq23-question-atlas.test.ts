@@ -12,6 +12,10 @@ import {
   G5_L4_FQ23_SCENARIO,
   G5_L4_FQ23_SOURCE_FRAME_DOMAIN,
 } from "../src/g5-l4-fq23-question-atlas-candidate";
+import {
+  G5_L4_FQ_INTERACTIVE_AUDIO_ASSETS,
+  getG5L4FqInteractiveAudioAsset,
+} from "../src/g5-l4-audio.generated";
 import fq002, {
   COURSE_G05_L04_FQ_002_MOVIE,
   COURSE_G05_L04_FQ_002_RUNTIME,
@@ -35,6 +39,7 @@ import {
   COURSE_G05_L04_FQ_003_CONFIG,
 } from "../src/timelines/course-g05-l04-fq-003";
 import {
+  G5_L4_FQ23_ANSWER_OPTIONS,
   G5_L4_FQ23_CORRECT_OPTIONS,
   G5_L4_FQ23_SOURCE_SCRIPT_EVIDENCE,
   buildG5L4Fq23QuestionOrder,
@@ -121,6 +126,12 @@ test("FQ002/FQ003 modules preserve root metadata and the derived atlas boundary"
     assert.equal(item.module.transport?.strictAcceptanceEffect, "none");
     assert.equal(item.module.maturity, "legacy-prototype");
     assert.deepEqual(item.module.audioCues, []);
+    assert.equal(
+      item.module.interactiveAudioAssets,
+      G5_L4_FQ_INTERACTIVE_AUDIO_ASSETS,
+    );
+    assert.deepEqual(item.module.lessonHost?.capabilities, ["audio"]);
+    assert.equal(item.module.lessonHost?.auditStorage, "memory-only");
     assert.equal(item.sourceContract.livePlaybackEndFrame, 1);
     assert.equal(item.sourceContract.sequentialPlaybackPermitted, false);
     assert.equal(item.sourceContract.sourceSelection.kind, item.selectionKind);
@@ -154,6 +165,10 @@ test("FQ002/FQ003 modules preserve root metadata and the derived atlas boundary"
       false,
     );
     assert.equal(item.sourceContract.strictAcceptanceEffect, "none");
+    assert.equal(
+      item.sourceContract.audioStatus,
+      "source-exact-interactive-assets-current-js-host-wired-listening-and-sync-pending",
+    );
     assert.ok(Object.values(item.acceptance).every((value) => value === false));
     assert.ok(
       Object.values(item.sourceContract.acceptanceEffects)
@@ -414,17 +429,30 @@ test("answer state is immutable and a missing selection cannot advance", () => {
 test("live renderer exposes keyboard-native radio/submit/replay controls while deterministic capture stays an atlas", () => {
   for (const item of cases) {
     const liveMarkup = renderToStaticMarkup(createElement(item.module.Renderer, {
+      audioEnabled: true,
       frame: 1,
       ...readyContext(17),
       entryStateSha256: "",
     }));
     assert.match(liveMarkup, /data-interactive-controls-enabled="true"/);
     assert.match(liveMarkup, /data-current-javascript-question-controls="true"/);
+    assert.match(
+      liveMarkup,
+      new RegExp(
+        `<legend[^>]*><span[^>]*>Question 1 of ${item.presentedQuestionCount}: </span>Choose A, B, C, or D</legend>`,
+        "u",
+      ),
+      "the answer fieldset legend must retain the question position and choice prompt",
+    );
     assert.equal((liveMarkup.match(/type="radio"/g) ?? []).length, 4);
     assert.match(liveMarkup, /Submit answer and continue/);
     assert.match(liveMarkup, /Replay quiz/);
     assert.match(liveMarkup, /data-network-reporting-enabled="false"/);
     assert.match(liveMarkup, /data-exact-avm1-random-order-established="false"/);
+    assert.equal(
+      (liveMarkup.match(/data-interactive-audio-status=/g) ?? []).length,
+      5,
+    );
 
     const captureMarkup = renderToStaticMarkup(createElement(
       item.module.Renderer,
@@ -433,6 +461,72 @@ test("live renderer exposes keyboard-native radio/submit/replay controls while d
     assert.match(captureMarkup, /data-interactive-controls-enabled="false"/);
     assert.doesNotMatch(captureMarkup, /type="radio"/);
     assert.match(captureMarkup, /data-capture-identity-status="verified"/);
+  }
+});
+
+test("FQ speaker buttons request only present exact assets and expose missing files disabled", () => {
+  const requests: unknown[] = [];
+  const onLessonHostRequest = (request: unknown) => {
+    requests.push(request);
+    return {
+      status: "allowed" as const,
+      capability: "audio" as const,
+      auditOnly: true,
+      state: {
+        activeAudioCueId: null,
+      },
+    } as never;
+  };
+  for (const item of cases) {
+    const markup = renderToStaticMarkup(createElement(item.module.Renderer, {
+      audioEnabled: true,
+      frame: 1,
+      ...readyContext(17),
+      entryStateSha256: "",
+      onLessonHostRequest,
+      uiLanguage: "en",
+    }));
+    const present = [
+      getG5L4FqInteractiveAudioAsset("en", 1, null),
+      ...G5_L4_FQ23_ANSWER_OPTIONS.map((option) =>
+        getG5L4FqInteractiveAudioAsset("en", 1, option)),
+    ].filter(Boolean).length;
+    assert.equal(
+      (markup.match(/data-interactive-audio-status="available"/g) ?? []).length,
+      present,
+    );
+    assert.equal(
+      (markup.match(/data-interactive-audio-status="missing"/g) ?? []).length,
+      5 - present,
+    );
+    assert.equal(
+      (markup.match(/data-interactive-audio-status="missing" disabled=""/g) ?? [])
+        .length,
+      5 - present,
+    );
+  }
+  assert.deepEqual(requests, []);
+});
+
+test("FQ audio stays visibly unavailable when the product publication gate is closed", () => {
+  for (const item of cases) {
+    const markup = renderToStaticMarkup(createElement(item.module.Renderer, {
+      frame: 1,
+      ...readyContext(17),
+      entryStateSha256: "",
+      onLessonHostRequest: () => undefined,
+      uiLanguage: "en",
+    }));
+    assert.match(markup, /data-interactive-audio-coverage="publication-gated-off"/);
+    assert.equal(
+      (markup.match(/data-interactive-audio-status="available"/g) ?? []).length,
+      0,
+    );
+    assert.equal(
+      (markup.match(/data-interactive-audio-status="missing" disabled=""/g) ?? [])
+        .length,
+      5,
+    );
   }
 });
 
@@ -445,6 +539,11 @@ test("live FQ controls expose a shell companion and retain an inline fallback", 
   assert.match(
     rendererSource,
     /return companionTarget\s*\? createPortal\(companion, companionTarget\)\s*: companion;/,
+  );
+  assert.match(
+    rendererSource,
+    /if \(!belongsToCurrentQuestion\) \{\s*props\.onLessonHostRequest\(\{type: "stop-audio", cueId: activeId\}\);\s*\}/,
+    "advancing questions or changing audio locale must stop the prior question audio",
   );
 
   for (const item of cases) {

@@ -11,10 +11,10 @@ import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
   AnimationRuntime,
   INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE,
+  type AnimationRuntimeNarrationRequest,
   type AnimationRuntimePlaybackState,
   type AnimationRuntimeSeekRequest,
 } from '@/components/animation-runtime';
-import {G4L3ControlledCeoPreviewBoundary} from '@/components/g4-l3-controlled-ceo-preview-boundary';
 import {G4L3Page36ReadableView} from '@/components/g4-l3-readable-view';
 import type {LegacyCalculatorEvidence} from '@/components/legacy-calculator';
 import {
@@ -25,8 +25,11 @@ import {LegacyResumePrompt} from '@/components/legacy-resume-prompt';
 import {
   LegacyResponsiveLessonShell,
   type LegacyLessonShellVisualSkin,
+  type LessonShellSection,
   type LessonShellTool,
 } from '@/components/legacy-responsive-lesson-shell';
+import {useLearningEventRecorder} from '@/hooks/use-learning-event-recorder';
+import type {PublicAuthStatus} from '@/lib/auth-session';
 import {
   G4_L3_LESSON,
   findG4L3Page,
@@ -34,8 +37,16 @@ import {
   getG4L3SectionLabel,
   type G4L3Locale,
 } from '@/lib/g4-l3-lesson-navigation';
+import {
+  EMPTY_NOVA_CLIENT_CAPABILITIES,
+  type NovaClientCapabilities,
+} from '@/lib/nova-capabilities';
 import {G4_L3_PAGE_36_READABLE_VIEW_SPEC} from '@/lib/g4-l3-readable-view';
 import {G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR} from '@/lib/g4-l3-whole-lesson-player-descriptor';
+import {
+  tutorPageContext,
+  type NovaTutorMode,
+} from '@/lib/tutor-integration';
 import {
   G4_L3_WHOLE_LESSON_STORAGE_KEY,
   completeG4L3Page,
@@ -53,6 +64,7 @@ import {
   takeLegacyLessonHistory,
 } from '@/lib/legacy-shell-controls';
 import {LEGACY_MAP_RAIL_MIN_WIDTH} from '@/lib/legacy-lesson-layout';
+import type {WholeLessonHostPresentation} from '@/lib/whole-lesson-host-presentation';
 
 const G4_L3_LEGACY_VISUAL_SKIN: LegacyLessonShellVisualSkin = Object.freeze({
   authoredStage: G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.stage,
@@ -63,6 +75,8 @@ const G4_L3_LEGACY_VISUAL_SKIN: LegacyLessonShellVisualSkin = Object.freeze({
     G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.visualSkin.footer.height,
   chromeHeaderHeight:
     G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.visualSkin.header.height,
+  chromeTitleBand:
+    G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.visualSkin.header.title,
   controlAssets:
     G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.visualSkin.controls,
   backgroundCompanion:
@@ -78,12 +92,14 @@ const G4_L3_LEGACY_VISUAL_SKIN: LegacyLessonShellVisualSkin = Object.freeze({
     G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.visualSkin.evidence.sourceSwfSha256,
 });
 const G4_L3_REQUIRED_MEMBER_COUNT =
-  G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.expectedReleaseMemberCount;
+  G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.activePageCount;
 const G4_L3_RELEASE_MEMBER_IDS = Object.freeze(
   G4_L3_LESSON.pages.map(({animationId}) => animationId),
 );
 const G4_L3_PAGE_INTERACTION_COMPANION_TARGET_ID =
   `${G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.domIdPrefix}-page-interaction-companion`;
+const G4_L3_PAGE_INTERACTION_STAGE_TARGET_ID =
+  `${G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.domIdPrefix}-page-interaction-stage`;
 const G4_L3_CURRENT_JS_PAGE_COUNT =
   G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.pages.filter(
   (page) => page.rendererAvailability.kind === 'registered',
@@ -111,19 +127,49 @@ type SourceStopHold = Readonly<{
   requestRevision: number;
 }>;
 
+function learningEventProgress(progress: G4L3WholeLessonProgress) {
+  return {
+    completedPages: progress.completedAnimationIds.length,
+    percent: Number(g4L3CompletionPercent(progress).toFixed(2)),
+  } as const;
+}
+
+function learningSupportKind(tool: Exclude<LessonShellTool, null>) {
+  return tool === 'calculator' ? 'calculator' as const
+    : tool === 'key-terms' ? 'key-terms' as const
+      : 'help' as const;
+}
+
 export function G4L3WholeLessonPlayer({
+  authStatus = 'disabled',
   candidateMode,
-  controlledPreview,
+  hostPresentation = 'legacy-composite',
+  learningEventsEnabled = false,
   locale,
+  novaCapabilities = EMPTY_NOVA_CLIENT_CAPABILITIES,
+  novaTutorMode = 'focus',
   releasePublished,
+  reviewerMode = false,
   strictCompleteMemberCount,
 }: {
+  authStatus?: PublicAuthStatus;
   candidateMode: boolean;
-  controlledPreview: boolean;
+  hostPresentation?: WholeLessonHostPresentation;
+  learningEventsEnabled?: boolean;
   locale: G4L3Locale;
+  novaCapabilities?: NovaClientCapabilities;
+  novaTutorMode?: NovaTutorMode;
   releasePublished: boolean;
+  reviewerMode?: boolean;
   strictCompleteMemberCount: number;
 }) {
+  const visualSkin = useMemo<LegacyLessonShellVisualSkin>(
+    () => Object.freeze({
+      ...G4_L3_LEGACY_VISUAL_SKIN,
+      presentation: hostPresentation,
+    }),
+    [hostPresentation],
+  );
   const [progress, setProgress] = useState(
     createInitialG4L3WholeLessonProgress(locale),
   );
@@ -139,6 +185,7 @@ export function G4L3WholeLessonPlayer({
   const [sourceStopHold, setSourceStopHold] =
     useState<SourceStopHold | null>(null);
   const [paused, setPaused] = useState(false);
+  const [tutorEngaged, setTutorEngaged] = useState(false);
   const [volume, setVolume] = useState(.8);
   const [playbackState, setPlaybackState] =
     useState<AnimationRuntimePlaybackState>(
@@ -146,15 +193,25 @@ export function G4L3WholeLessonPlayer({
     );
   const [seekRequest, setSeekRequest] =
     useState<AnimationRuntimeSeekRequest | null>(null);
+  const [narrationRequest, setNarrationRequest] =
+    useState<AnimationRuntimeNarrationRequest | null>(null);
   const [runtimeEpoch, setRuntimeEpoch] = useState(0);
   const [lessonFinished, setLessonFinished] = useState(false);
   const initialPageFocusSkippedRef = useRef(false);
+  const pendingScrubberFocusRef = useRef<
+    'section-scrubber' | null
+  >(null);
+  const resumeFocusAfterDecisionRef = useRef(false);
   const lessonPlayerRef = useRef<HTMLDivElement>(null);
   const pageHeadingRef = useRef<HTMLHeadingElement>(null);
   const seekRequestIdRef = useRef(0);
+  const narrationRequestIdRef = useRef(0);
   const keyTermSelectionRevisionRef = useRef(0);
   const pageInteractionReturnFocusRef = useRef<HTMLElement | null>(null);
   const lessonNavigationHistoryRef = useRef<readonly string[]>([]);
+  const learningLifecycleStartedRef = useRef(false);
+  const lastLearningPageViewRef = useRef<string | null>(null);
+  const lessonExitRecordedRef = useRef(false);
   const currentPage = findG4L3Page(progress.currentAnimationId)
     ?? G4_L3_LESSON.pages[0]!;
   const currentAnimationId = currentPage.animationId;
@@ -168,8 +225,39 @@ export function G4L3WholeLessonPlayer({
   const completed = new Set(progress.completedAnimationIds);
   const visited = new Set(progress.visitedAnimationIds);
   const completedCount = progress.completedAnimationIds.length;
+  const allPagesComplete =
+    completedCount === G4_L3_LESSON.activePageCount;
   const completionPercent = g4L3CompletionPercent(progress);
   const spanish = progress.language === 'es';
+  const currentLearningProgress = useMemo(
+    () => learningEventProgress(progress),
+    [progress],
+  );
+  const {
+    flush: flushLearningEvents,
+    pendingCount: pendingLearningEventCount,
+    record: recordLearningEvent,
+    status: learningEventStatus,
+  } = useLearningEventRecorder({
+    enabled: learningEventsEnabled,
+    locale: progress.language,
+    mode: novaTutorMode,
+    presentation: hostPresentation,
+  });
+  const learningEventContextRef = useRef({
+    activeTool,
+    animationId: currentAnimationId,
+    progress: currentLearningProgress,
+    record: recordLearningEvent,
+  });
+  useEffect(() => {
+    learningEventContextRef.current = {
+      activeTool,
+      animationId: currentAnimationId,
+      progress: currentLearningProgress,
+      record: recordLearningEvent,
+    };
+  }, [activeTool, currentAnimationId, currentLearningProgress, recordLearningEvent]);
   const lessonHostIdentity = `${currentAnimationId}\u0000${progress.language}`;
   const pagesBySection = useMemo(() => Object.fromEntries(
     G4_L3_LESSON.sections.map((section) => [
@@ -229,6 +317,15 @@ export function G4L3WholeLessonPlayer({
       setSeekRequest(null);
     }
     setActiveTool('key-terms');
+    const learningContext = learningEventContextRef.current;
+    if (learningContext.activeTool !== 'key-terms') {
+      learningContext.record({
+        type: 'support.used',
+        page: {animationId: hostAnimationId},
+        progress: learningContext.progress,
+        support: {kind: 'key-terms', action: 'opened'},
+      });
+    }
     return decision;
   }, [lessonHost]);
   const handleShellToolChange = useCallback((tool: LessonShellTool) => {
@@ -238,6 +335,25 @@ export function G4L3WholeLessonPlayer({
       lessonHost.dispatch({type: 'close-keyterm'});
       setKeyTermSelectionRequest(null);
     }
+    if (activeTool !== tool) {
+      const learningContext = learningEventContextRef.current;
+      if (activeTool) {
+        learningContext.record({
+          type: 'support.used',
+          page: {animationId: learningContext.animationId},
+          progress: learningContext.progress,
+          support: {kind: learningSupportKind(activeTool), action: 'closed'},
+        });
+      }
+      if (tool) {
+        learningContext.record({
+          type: 'support.used',
+          page: {animationId: learningContext.animationId},
+          progress: learningContext.progress,
+          support: {kind: learningSupportKind(tool), action: 'opened'},
+        });
+      }
+    }
     setActiveTool(tool);
     if (tool !== null || !returnFocusTarget?.isConnected) return;
     window.requestAnimationFrame(() => {
@@ -246,6 +362,62 @@ export function G4L3WholeLessonPlayer({
       }
     });
   }, [activeTool, lessonHost]);
+  const handleMapOpenChange = useCallback((open: boolean) => {
+    if (open !== mapOpen) {
+      const learningContext = learningEventContextRef.current;
+      learningContext.record({
+        type: 'support.used',
+        page: {animationId: learningContext.animationId},
+        progress: learningContext.progress,
+        support: {kind: 'lesson-map', action: open ? 'opened' : 'closed'},
+      });
+    }
+    setMapOpen(open);
+  }, [mapOpen]);
+  const handleTutorEngagementChange = useCallback((engaged: boolean) => {
+    if (engaged !== tutorEngaged) {
+      const learningContext = learningEventContextRef.current;
+      learningContext.record({
+        type: 'support.used',
+        page: {animationId: learningContext.animationId},
+        progress: learningContext.progress,
+        support: {
+          kind: 'nova-tutor',
+          action: engaged ? 'opened' : 'closed',
+        },
+      });
+    }
+    setTutorEngaged(engaged);
+  }, [tutorEngaged]);
+  const beginLearningLifecycle = useCallback((
+    nextProgress: G4L3WholeLessonProgress,
+    resumed: boolean,
+  ) => {
+    const nextLearningProgress = learningEventProgress(nextProgress);
+    if (!learningLifecycleStartedRef.current) {
+      learningLifecycleStartedRef.current = true;
+      recordLearningEvent({
+        type: 'lesson.initialized',
+        progress: nextLearningProgress,
+      });
+    }
+    if (resumed) {
+      recordLearningEvent({
+        type: 'lesson.resumed',
+        progress: nextLearningProgress,
+      });
+    }
+  }, [recordLearningEvent]);
+  const recordLessonExit = useCallback(() => {
+    if (lessonExitRecordedRef.current) return;
+    lessonExitRecordedRef.current = true;
+    const learningContext = learningEventContextRef.current;
+    learningContext.record({
+      type: 'lesson.exited',
+      page: {animationId: learningContext.animationId},
+      progress: learningContext.progress,
+    });
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -267,6 +439,10 @@ export function G4L3WholeLessonPlayer({
     queueMicrotask(() => {
       if (!active) return;
       if (candidate) {
+        // Keep the saved page behind the decision card. If the learner uses a
+        // lesson control instead of either card action, that control acts on
+        // the page they actually saved rather than silently starting at Page 1.
+        setProgress(candidate);
         setResumeCandidate(candidate);
         setResumeDecision('prompt');
       } else {
@@ -282,11 +458,15 @@ export function G4L3WholeLessonPlayer({
 
   useEffect(() => {
     if (resumeDecision !== 'resolved') return;
+    // The widescreen presentation shows the section spine permanently, so
+    // opening the course map as well duplicates it and covers the spine. The
+    // map stays reachable from the control bar.
+    if (hostPresentation === 'modern-wide') return;
     const frame = window.requestAnimationFrame(() => {
       if (window.innerWidth >= LEGACY_MAP_RAIL_MIN_WIDTH) setMapOpen(true);
     });
     return () => window.cancelAnimationFrame(frame);
-  }, [resumeDecision]);
+  }, [hostPresentation, resumeDecision]);
 
   useEffect(() => {
     if (!hydrated || resumeDecision !== 'resolved') return;
@@ -302,6 +482,59 @@ export function G4L3WholeLessonPlayer({
   }, [hydrated, progress, resumeDecision]);
 
   useEffect(() => {
+    if (!hydrated || resumeDecision !== 'resolved') return;
+    beginLearningLifecycle(progress, false);
+  }, [beginLearningLifecycle, hydrated, progress, resumeDecision]);
+
+  useEffect(() => {
+    if (!hydrated || resumeDecision !== 'resolved') return;
+    const pageViewKey = `${progress.language}:${currentAnimationId}`;
+    if (lastLearningPageViewRef.current === pageViewKey) return;
+    lastLearningPageViewRef.current = pageViewKey;
+    recordLearningEvent({
+      type: 'page.viewed',
+      page: {animationId: currentAnimationId},
+      progress: currentLearningProgress,
+    });
+  }, [
+    currentAnimationId,
+    currentLearningProgress,
+    hydrated,
+    progress.language,
+    recordLearningEvent,
+    resumeDecision,
+  ]);
+
+  useEffect(() => {
+    if (!learningEventsEnabled) return;
+    const handlePageHide = () => {
+      recordLessonExit();
+      void flushLearningEvents({keepalive: true});
+    };
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (!event.persisted) return;
+      lessonExitRecordedRef.current = false;
+      recordLearningEvent({
+        type: 'lesson.resumed',
+        progress: currentLearningProgress,
+      });
+      void flushLearningEvents();
+    };
+    window.addEventListener('pagehide', handlePageHide);
+    window.addEventListener('pageshow', handlePageShow);
+    return () => {
+      window.removeEventListener('pagehide', handlePageHide);
+      window.removeEventListener('pageshow', handlePageShow);
+    };
+  }, [
+    currentLearningProgress,
+    flushLearningEvents,
+    learningEventsEnabled,
+    recordLearningEvent,
+    recordLessonExit,
+  ]);
+
+  useEffect(() => {
     if (nextPage) void loadAnimationModule(nextPage.animationId);
   }, [nextPage]);
 
@@ -311,8 +544,32 @@ export function G4L3WholeLessonPlayer({
       initialPageFocusSkippedRef.current = true;
       return;
     }
+    if (pendingScrubberFocusRef.current) {
+      const focusKey = pendingScrubberFocusRef.current;
+      pendingScrubberFocusRef.current = null;
+      const frame = window.requestAnimationFrame(() => {
+        lessonPlayerRef.current
+          ?.querySelector<HTMLInputElement>(
+            `[data-responsive-focus-key="${focusKey}"]`,
+          )
+          ?.focus({preventScroll: true});
+      });
+      return () => window.cancelAnimationFrame(frame);
+    }
     pageHeadingRef.current?.focus();
   }, [currentPage.animationId, hydrated]);
+
+  useEffect(() => {
+    if (
+      resumeDecision !== 'resolved' ||
+      !resumeFocusAfterDecisionRef.current
+    ) return;
+    resumeFocusAfterDecisionRef.current = false;
+    const frame = window.requestAnimationFrame(() => {
+      pageHeadingRef.current?.focus({preventScroll: true});
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [resumeDecision]);
 
   const navigateToPage = (
     animationId: string,
@@ -334,16 +591,36 @@ export function G4L3WholeLessonPlayer({
     setPaused(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
+    setNarrationRequest(null);
   };
   const selectPage = (animationId: string) => {
     navigateToPage(animationId, true);
   };
-
-  const completeCurrentPage = () => {
-    setProgress((value) => completeG4L3Page(value, currentPage.animationId));
+  const selectSectionPageOrdinal = (sectionPageOrdinal: number) => {
+    const destination = currentSectionPages[sectionPageOrdinal - 1];
+    if (!destination || destination.animationId === currentAnimationId) return;
+    pendingScrubberFocusRef.current = 'section-scrubber';
+    selectPage(destination.animationId);
   };
 
-  const completeAndAdvance = () => {
+  // Completion is earned by watching, never by pressing. The runtime reports
+  // the moment a page's animation reaches its end frame, which is the only
+  // thing that fills the progress strip.
+  const completeCurrentPage = () => {
+    if (!completed.has(currentAnimationId)) {
+      const nextProgress = completeG4L3Page(progress, currentAnimationId);
+      recordLearningEvent({
+        type: 'page.completed',
+        page: {animationId: currentAnimationId},
+        progress: learningEventProgress(nextProgress),
+      });
+    }
+    setProgress((value) => completeG4L3Page(value, currentAnimationId));
+  };
+
+  // Next only moves. It does not also mean "I have finished this page", so a
+  // learner who clicks past a page keeps an honest progress strip.
+  const advanceToNextPage = () => {
     if (!nextPage && lessonFinished) return;
     if (nextPage) {
       lessonNavigationHistoryRef.current = appendLegacyLessonHistory(
@@ -351,13 +628,8 @@ export function G4L3WholeLessonPlayer({
         currentPage.animationId,
         nextPage.animationId,
       );
+      setProgress((value) => visitG4L3Page(value, nextPage.animationId));
     }
-    setProgress((value) => {
-      const completedValue = completeG4L3Page(value, currentPage.animationId);
-      return nextPage
-        ? visitG4L3Page(completedValue, nextPage.animationId)
-        : completedValue;
-    });
     setRuntimeEpoch((value) => value + 1);
     setMapOpen(false);
     resetPageInteractionHost();
@@ -365,7 +637,16 @@ export function G4L3WholeLessonPlayer({
     setPaused(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
-    if (!nextPage) setLessonFinished(true);
+    setNarrationRequest(null);
+    if (!nextPage) {
+      setLessonFinished(true);
+      if (completedCount === G4_L3_LESSON.activePageCount) {
+        recordLearningEvent({
+          type: 'lesson.completed',
+          progress: currentLearningProgress,
+        });
+      }
+    }
   };
 
   const replayCurrentPage = () => {
@@ -376,6 +657,7 @@ export function G4L3WholeLessonPlayer({
     setPaused(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
+    setNarrationRequest(null);
   };
 
   const inspectFrame = (frame: number) => {
@@ -395,9 +677,28 @@ export function G4L3WholeLessonPlayer({
     setPaused(false);
   };
 
+  const toggleNarration = () => {
+    recordLearningEvent({
+      type: 'support.used',
+      page: {animationId: currentAnimationId},
+      progress: currentLearningProgress,
+      support: {
+        kind: 'read-aloud',
+        action: playbackState.narration === 'playing' ? 'closed' : 'used',
+      },
+    });
+    narrationRequestIdRef.current += 1;
+    setNarrationRequest({
+      action: playbackState.narration === 'playing' ? 'stop' : 'play',
+      requestId: narrationRequestIdRef.current,
+    });
+  };
+
   const finishResumeDecision = (
     nextProgress: G4L3WholeLessonProgress,
+    focusPageHeading = true,
   ) => {
+    resumeFocusAfterDecisionRef.current = focusPageHeading;
     setProgress(nextProgress);
     setResumeCandidate(null);
     setResumeDecision('resolved');
@@ -409,18 +710,27 @@ export function G4L3WholeLessonPlayer({
     setPaused(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
+    setNarrationRequest(null);
     lessonNavigationHistoryRef.current = [];
   };
   const continueFromSavedPosition = () => {
     if (!resumeCandidate) return;
+    beginLearningLifecycle(resumeCandidate, true);
     finishResumeDecision(resumeCandidate);
   };
   const startFromBeginning = () => {
     if (!resumeCandidate) return;
-    finishResumeDecision(startG4L3LessonAtBeginning(resumeCandidate));
+    const nextProgress = startG4L3LessonAtBeginning(resumeCandidate);
+    beginLearningLifecycle(nextProgress, false);
+    finishResumeDecision(nextProgress);
+  };
+  const continueFromSavedPositionForControl = () => {
+    if (resumeDecision !== 'prompt' || !resumeCandidate) return;
+    beginLearningLifecycle(resumeCandidate, true);
+    finishResumeDecision(resumeCandidate, false);
   };
 
-  const libraryHref = spanish ? '/es/library' : '/library';
+  const learningHomeHref = spanish ? '/es' : '/';
   const returnToPreviousLocation = () => {
     const transition = takeLegacyLessonHistory(
       lessonNavigationHistoryRef.current,
@@ -434,16 +744,22 @@ export function G4L3WholeLessonPlayer({
       window.history.back();
       return;
     }
-    window.location.assign(libraryHref);
+    window.location.assign(learningHomeHref);
   };
-  const exitToLibrary = () => window.location.assign(libraryHref);
+  const exitToLearningHome = () => window.location.assign(learningHomeHref);
 
   const restartLesson = () => {
     const confirmed = window.confirm(spanish
       ? '¿Reiniciar la lección y borrar el progreso guardado en este navegador?'
       : 'Restart the lesson and clear progress saved in this browser?');
     if (!confirmed) return;
-    setProgress(createInitialG4L3WholeLessonProgress(progress.language));
+    const nextProgress = createInitialG4L3WholeLessonProgress(progress.language);
+    recordLearningEvent({
+      type: 'lesson.initialized',
+      progress: learningEventProgress(nextProgress),
+    });
+    lastLearningPageViewRef.current = null;
+    setProgress(nextProgress);
     setRuntimeEpoch((value) => value + 1);
     setLessonFinished(false);
     setMapOpen(false);
@@ -452,6 +768,7 @@ export function G4L3WholeLessonPlayer({
     setPaused(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
+    setNarrationRequest(null);
     lessonNavigationHistoryRef.current = [];
   };
 
@@ -532,8 +849,35 @@ export function G4L3WholeLessonPlayer({
     currentSection,
     progress.language,
   );
+  const currentSectionPages = pagesBySection[currentSection.code] ?? [];
+  const currentSectionPosition = currentSectionPages.findIndex(
+    (page) => page.animationId === currentPage.animationId,
+  ) + 1;
+  const tutorContext = novaCapabilities.text
+    ? tutorPageContext({
+        releaseId: G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.releaseId,
+        grade: G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.grade,
+        lesson: G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.lesson,
+        animationId: currentPage.animationId,
+        sectionCode: currentPage.sectionCode,
+        sectionTitle: currentSectionLabel.text,
+        globalPageOrdinal: currentPage.globalPageOrdinal,
+        activePageCount: G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.activePageCount,
+        pageTitle: currentLabel.text,
+        pageTitleEnglish: currentPage.titleEnglish,
+        pageTitleSpanish: currentPage.titleSpanish,
+        locale: progress.language,
+        pageTitleUsesEnglishFallback: currentLabel.usesEnglishFallback,
+      })
+    : undefined;
   const pageHeading = <div>
-    <p lang={currentSectionLabel.sourceLanguage}>{currentSectionLabel.text}</p>
+    <p lang={currentSectionLabel.sourceLanguage}>
+      {currentSectionLabel.text}
+      <span aria-hidden="true" className="lesson-shell2__section-position">
+        {' · '}{currentSectionPosition} {spanish ? 'de' : 'of'}{' '}
+        {currentSectionPages.length}
+      </span>
+    </p>
     <h1 lang={currentLabel.sourceLanguage} ref={pageHeadingRef} tabIndex={-1}>{currentLabel.text}</h1>
     {currentLabel.usesEnglishFallback
       ? <p lang="es">La fuente no proporciona un título de página en español; se conserva el título original en inglés.</p>
@@ -559,7 +903,9 @@ export function G4L3WholeLessonPlayer({
               .backgroundCompanion?.loadedSwfHostAsset
           : undefined}
     moduleKey={currentPage.animationId}
+    narrationRequest={narrationRequest}
     onLessonHostRequest={handleLessonHostRequest}
+    onPlaybackComplete={completeCurrentPage}
     onPlaybackStateChange={setPlaybackState}
     onReplay={() => setProgress((value) =>
       recordG4L3Replay(value, currentPage.animationId)
@@ -567,6 +913,7 @@ export function G4L3WholeLessonPlayer({
     pageInteractionCompanionTargetId={
       G4_L3_PAGE_INTERACTION_COMPANION_TARGET_ID
     }
+    pageInteractionStageTargetId={G4_L3_PAGE_INTERACTION_STAGE_TARGET_ID}
     paused={paused || resumeDecision !== 'resolved'}
     presentation="legacy-shell"
     query={{lang: progress.language, seed: '0'}}
@@ -576,21 +923,25 @@ export function G4L3WholeLessonPlayer({
   const resumePage = resumeCandidate
     ? findG4L3Page(resumeCandidate.currentAnimationId)
     : null;
+  const resumePageDisplayLabel = resumePage
+    ? getG4L3PageLabel(resumePage, progress.language)
+    : null;
   const resumePromptEvidence =
     G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.visualSkin.resumePrompt;
   const stageOverlay = resumeDecision === 'prompt' &&
       resumeCandidate &&
       resumePage &&
+      resumePageDisplayLabel &&
       resumePromptEvidence
-    ? <LegacyResumePrompt
+      ? <LegacyResumePrompt
         evidence={resumePromptEvidence}
+        lessonControlsRemainAvailable
         locale={progress.language}
         onContinue={continueFromSavedPosition}
         onStartAtBeginning={startFromBeginning}
         resumePage={resumePage.globalPageOrdinal}
-        resumePageLabel={
-          getG4L3PageLabel(resumePage, progress.language).text
-        }
+        resumePageLabel={resumePageDisplayLabel.text}
+        resumePageLabelLanguage={resumePageDisplayLabel.sourceLanguage}
       />
     : undefined;
 
@@ -599,8 +950,8 @@ export function G4L3WholeLessonPlayer({
       ? 'Usa Anterior y Siguiente para recorrer las 39 páginas en orden. Repetir reinicia solamente la página actual.'
       : 'Use Previous and Next to move through all 39 pages in order. Replay resets only the current page.'}</p>
     <p>{spanish
-      ? 'Abre el Mapa del curso para saltar a cualquier sección o página. “Revisada” guarda progreso solamente en este navegador.'
-      : 'Open the Course Map to jump to any section or page. “Reviewed” stores progress only in this browser.'}</p>
+      ? 'Cada página se marca como completa cuando termina su animación; no hay nada que pulsar. La barra de progreso se guarda en este navegador y los eventos se sincronizan de forma seudónima con el LRS cuando está disponible.'
+      : 'Each page marks itself complete when its animation finishes; there is nothing to press. The progress bar is stored in this browser, while pseudonymous events sync to the LRS when available.'}</p>
     <p>{spanish
       ? 'Este panel accesible reemplaza de forma segura el antiguo enlace de ayuda externo; no ejecuta URLs heredadas.'
       : 'This accessible panel safely replaces the legacy external help link; it does not execute legacy URLs.'}</p>
@@ -636,8 +987,33 @@ export function G4L3WholeLessonPlayer({
           </button>
         </section>
       : undefined;
+  // Which pages offer reading support is a descriptor fact now, not a
+  // comparison the player performs. A lesson that declares it gets the support
+  // slot without this component learning about another animation id.
+  // The spine shows the lesson's own named sequence. State comes from the
+  // pages already completed, so it never asserts progress the learner has not
+  // actually made.
+  const shellSections: LessonShellSection[] = G4_L3_LESSON.sections.map(
+    (section) => {
+      const pages = G4_L3_LESSON.pages.filter(
+        (page) => page.sectionCode === section.code,
+      );
+      const isCurrent = section.code === currentPage.sectionCode;
+      const allComplete = pages.every(
+        (page) => completed.has(page.animationId),
+      );
+      return {
+        code: section.code,
+        title: getG4L3SectionLabel(section, progress.language).text,
+        state: isCurrent ? 'current' : allComplete ? 'complete' : 'upcoming',
+        onSelect: () => navigateToPage(section.firstActiveAnimationId, true),
+      };
+    },
+  );
+  const readableViewDeclaration = G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.pages
+    .find((page) => page.animationId === currentPage.animationId)?.readableView;
   const readableSupport =
-    currentPage.animationId === G4_L3_PAGE_36_READABLE_VIEW_SPEC.animationId
+    readableViewDeclaration?.specId === G4_L3_PAGE_36_READABLE_VIEW_SPEC.animationId
       ? <G4L3Page36ReadableView
           key={`${currentPage.animationId}:${progress.language}`}
           locale={progress.language}
@@ -653,6 +1029,9 @@ export function G4L3WholeLessonPlayer({
     data-current-replay-count={progress.replayCounts[currentPage.animationId] ?? 0}
     data-hydrated={hydrated ? 'true' : 'false'}
     data-lesson-player="g4-l3-whole-lesson-mvp"
+    data-learning-event-pending={pendingLearningEventCount}
+    data-learning-event-status={learningEventStatus}
+    data-learning-record-sync={learningEventsEnabled ? 'xapi-lrs' : 'disabled'}
     data-progress-kind="learner-session"
     data-progress-storage="local-device-only"
     data-resume-decision={resumeDecision}
@@ -665,21 +1044,14 @@ export function G4L3WholeLessonPlayer({
     <LegacyResponsiveLessonShell
       activeTool={activeTool}
       audioAvailable={playbackState.audioAvailable}
+      authStatus={authStatus}
       backgroundCompanionVisible={currentPage.xmlBackgroundText}
       calculatorEvidence={G4_L3_CALCULATOR_EVIDENCE}
       candidateMode={candidateMode}
-      completionAction={<button
-        aria-pressed={completed.has(currentPage.animationId)}
-        onClick={completeCurrentPage}
-        type="button"
-      >
-        {completed.has(currentPage.animationId)
-          ? (spanish ? '✓ Página revisada' : '✓ Page reviewed')
-          : (spanish ? 'Marcar como revisada' : 'Mark reviewed')}
-      </button>}
+      reviewerMode={reviewerMode}
       completionLabel={spanish
-        ? `${completedCount} de ${G4_L3_LESSON.activePageCount} páginas revisadas`
-        : `${completedCount} of ${G4_L3_LESSON.activePageCount} pages reviewed`}
+        ? `${completedCount} de ${G4_L3_LESSON.activePageCount} páginas completas`
+        : `${completedCount} of ${G4_L3_LESSON.activePageCount} pages complete`}
       completionPercent={completionPercent}
       courseContext={{
         courseTitle:
@@ -694,17 +1066,22 @@ export function G4L3WholeLessonPlayer({
       courseHref={G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.href}
       currentAnimationId={currentPage.animationId}
       currentPage={currentPage.globalPageOrdinal}
-      disclosure={controlledPreview
-        ? <G4L3ControlledCeoPreviewBoundary locale={progress.language} />
-        : undefined}
       finishedNotice={lessonFinished
         ? <section aria-live="polite" className="lesson-shell2__finished">
             <span aria-hidden="true">★</span>
             <div>
-              <h2>{spanish ? '¡Lección recorrida!' : 'Lesson journey complete!'}</h2>
-              <p>{spanish
-                ? `Has revisado ${progress.completedAnimationIds.length} de 39 páginas en este navegador.`
-                : `You reviewed ${progress.completedAnimationIds.length} of 39 pages in this browser.`}</p>
+              <h2>{allPagesComplete
+                ? (spanish ? '¡Lección completada!' : 'Lesson complete!')
+                : (spanish
+                    ? 'Llegaste al final del recorrido.'
+                    : 'You reached the end of this journey.')}</h2>
+              <p>{allPagesComplete
+                ? (spanish
+                    ? 'Has completado las 39 páginas en este navegador.'
+                    : 'You completed all 39 pages in this browser.')
+                : (spanish
+                    ? `Has completado ${completedCount} de 39 páginas. Usa el mapa del curso para volver a las páginas que aún están pendientes.`
+                    : `You completed ${completedCount} of 39 pages. Use the course map to return to pages that are still in progress.`)}</p>
             </div>
           </section>
         : undefined}
@@ -718,33 +1095,54 @@ export function G4L3WholeLessonPlayer({
       locale={progress.language}
       mapOpen={mapOpen}
       mapPanel={mapPanel}
+      sections={shellSections}
+      sectionProgress={{
+        code: currentSection.code,
+        currentPage: Math.max(1, currentSectionPosition),
+        label: getG4L3SectionLabel(currentSection, progress.language).text,
+        onPageSelect: selectSectionPageOrdinal,
+        totalPages: currentSectionPages.length,
+      }}
+      narrationStatus={playbackState.narration}
+      novaCapabilities={novaCapabilities}
+      novaTutorMode={novaTutorMode}
       nextControlLabel={lessonFinished
-        ? (spanish
-            ? 'Revisión de la lección finalizada'
-            : 'Lesson review finished')
+        ? allPagesComplete
+          ? (spanish ? 'Lección terminada' : 'Lesson finished')
+          : (spanish ? 'Recorrido finalizado' : 'Journey ended')
         : nextPage
           ? (spanish ? 'Página siguiente' : 'Next page')
-          : (spanish ? 'Terminar revisión' : 'Finish review')}
+          : allPagesComplete
+            ? (spanish ? 'Terminar la lección' : 'Finish lesson')
+            : (spanish ? 'Finalizar este recorrido' : 'Finish this journey')}
       nextDisabled={!nextPage && lessonFinished}
       nextLabel={lessonFinished
-        ? (spanish ? 'Revisión finalizada ✓' : 'Lesson review finished ✓')
+        ? allPagesComplete
+          ? (spanish ? 'Lección terminada ✓' : 'Lesson finished ✓')
+          : (spanish ? 'Recorrido finalizado ✓' : 'Journey ended ✓')
         : nextPage
-          ? (spanish ? 'Revisada y siguiente →' : 'Reviewed & next →')
-          : (spanish ? 'Terminar recorrido ✓' : 'Finish review ✓')}
-      onMapOpenChange={setMapOpen}
+          ? (spanish ? 'Siguiente →' : 'Next →')
+          : allPagesComplete
+            ? (spanish ? 'Terminar ✓' : 'Finish ✓')
+            : (spanish ? 'Finalizar recorrido ✓' : 'End journey ✓')}
+      onMapOpenChange={handleMapOpenChange}
       onHeaderBack={returnToPreviousLocation}
-      onExit={exitToLibrary}
-      onNext={completeAndAdvance}
+      onExit={exitToLearningHome}
+      onNarrationToggle={toggleNarration}
+      onNext={advanceToNextPage}
       onPausedChange={handlePausedChange}
       onPlaybackResumeFromInspection={resumeFromInspectedFrame}
       onPlaybackSeek={inspectFrame}
       onPrevious={() => previousPage && selectPage(previousPage.animationId)}
       onReplay={replayCurrentPage}
       onToolChange={handleShellToolChange}
+      onTutorEngagementChange={handleTutorEngagementChange}
       onVolumeChange={setVolume}
+      pageComplete={completed.has(currentPage.animationId)}
       pageInteractionCompanionTargetId={
         G4_L3_PAGE_INTERACTION_COMPANION_TARGET_ID
       }
+      pageInteractionStageTargetId={G4_L3_PAGE_INTERACTION_STAGE_TARGET_ID}
       pageHeading={pageHeading}
       paused={paused || resumeDecision !== 'resolved'}
       playbackFrame={playbackState.frame}
@@ -770,6 +1168,8 @@ export function G4L3WholeLessonPlayer({
       runtimeAvailable
       stage={stage}
       stageOverlay={stageOverlay}
+      stageOverlayControlsEnabled={resumeDecision === 'prompt'}
+      onStageOverlayControlIntent={continueFromSavedPositionForControl}
       status={<>
         <div>
           <p>
@@ -777,17 +1177,37 @@ export function G4L3WholeLessonPlayer({
                 published-lesson wording it used to carry is unreachable. */}
             <strong>{spanish ? 'Estado del paquete:' : 'Package status:'}</strong>{' '}
             {spanish
-              ? 'MVP JavaScript controlado; no es una declaración de fidelidad estricta ni de publicación pública.'
-              : 'Controlled JavaScript MVP; this is not a strict-fidelity or public-release claim.'}
+              ? 'MVP actual de JavaScript; no es una declaración de fidelidad estricta ni de publicación pública.'
+              : 'Current JavaScript MVP; this is not a strict-fidelity or public-release claim.'}
           </p>
           <p>{spanish
-            ? 'El progreso es local. La fidelidad visual original, el audio, la revisión humana y la aceptación del propietario siguen siendo puertas independientes.'
-            : 'Progress is local. Original visual fidelity, audio, human review, and owner acceptance remain independent gates.'}</p>
+            ? 'La barra de progreso permanece en este navegador. Los eventos de aprendizaje se sincronizan de forma seudónima con el LRS; no incluyen conversaciones de Nova, voz, fotos ni respuestas de texto libre.'
+            : 'The progress bar stays in this browser. Pseudonymous learning events sync to the LRS; they exclude Nova conversations, voice, photos, and free-text answers.'}</p>
+          <p data-learning-record-indicator={learningEventStatus}>{spanish
+            ? `Registro de aprendizaje: ${
+                learningEventStatus === 'synced' ? 'sincronizado'
+                  : learningEventStatus === 'syncing' ? 'sincronizando'
+                    : learningEventStatus === 'offline' ? 'en cola sin conexión'
+                      : learningEventStatus === 'disabled' ? 'no configurado'
+                        : learningEventStatus === 'error' ? 'no disponible'
+                          : pendingLearningEventCount > 0 ? `${pendingLearningEventCount} en cola`
+                            : 'listo'
+              }.`
+            : `Learning record: ${
+                learningEventStatus === 'synced' ? 'synced'
+                  : learningEventStatus === 'syncing' ? 'syncing'
+                    : learningEventStatus === 'offline' ? 'queued offline'
+                      : learningEventStatus === 'disabled' ? 'not configured'
+                        : learningEventStatus === 'error' ? 'unavailable'
+                          : pendingLearningEventCount > 0 ? `${pendingLearningEventCount} queued`
+                            : 'ready'
+              }.`}</p>
         </div>
         <button onClick={restartLesson} type="button">{spanish ? 'Reiniciar toda la lección' : 'Restart entire lesson'}</button>
       </>}
       totalPages={G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.activePageCount}
-      visualSkin={G4_L3_LEGACY_VISUAL_SKIN}
+      tutorContext={tutorContext}
+      visualSkin={visualSkin}
       volume={volume}
     />
   </div>;

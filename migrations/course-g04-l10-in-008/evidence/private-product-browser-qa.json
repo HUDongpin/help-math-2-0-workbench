@@ -1,0 +1,331 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "course-g04-l10-in-008-private-product-browser-qa-v33",
+  "calibrationId": "g4-l10-candidate-to-product-v33",
+  "implementationBeforeCalibrationId": "g4-l10-candidate-to-product-v31",
+  "implementationBeforeCorrectionCalibrationId": "g4-l10-candidate-to-product-v32",
+  "status": "passed-private-product-engineering-browser-qa",
+  "animationId": "course-g04-l10-in-008",
+  "observedAt": "2026-08-21T13:13:52+08:00",
+  "timezone": "Asia/Shanghai",
+  "scope": {
+    "routeEn": "/en/migration-status/g4-l10-product-bridge",
+    "routeEs": "/es/migration-status/g4-l10-product-bridge",
+    "routeVisibility": "private-development-only",
+    "globalPageOrdinal": 22,
+    "activePageCount": 46,
+    "sectionCode": "IN",
+    "sectionPageOrdinal": 7,
+    "complexityLane": "interactive-understood",
+    "priorRiskDisposition": "behavior-heavy-gated",
+    "privateRegistrationCount": 18,
+    "publicRegistrationCount": 0,
+    "unregisteredCandidateCount": 6,
+    "honestLowLaneCountAmongRemainder": 0,
+    "newCandidateSelectionCountInV33": 1,
+    "newWorkspaceCount": 0
+  },
+  "environment": {
+    "tool": "playwright-cli",
+    "browser": "Chromium",
+    "baseUrl": "http://127.0.0.1:3213",
+    "serverMode": "Next.js development server",
+    "desktopBrowserSession": "g4l10in008-desktop",
+    "mobileBrowserSession": "g4l10in008-mobile",
+    "developmentServerClosedAfterQa": true,
+    "browserSessionsClosedAfterQa": true
+  },
+  "implementationBindings": {
+    "preservedFailedClosedFreeze": {
+      "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v31.json",
+      "bytes": 23020,
+      "sha256": "7729ca9cc648c98148d29f1f19adf0ad46a5ce4cec622b6213348dc359cabbd2"
+    },
+    "implementationBeforeCorrectionFreeze": {
+      "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v32.json",
+      "bytes": 6185,
+      "sha256": "428c7d74d997db40d020ab4452d91585241d8c77751a8948ee346c928645a23f"
+    },
+    "currentRegistryFreeze": {
+      "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v33.json",
+      "bytes": 10723,
+      "sha256": "48a7a8fa4ba2e6fef39cd2c6af097dbdc2e5797d2d10cb2a5fb703bc45902853"
+    },
+    "maintainedModule": {
+      "path": "packages/demos/src/modules/course-g04-l10-in-008.tsx",
+      "bytes": 23574,
+      "sha256": "2f7bae618e3ca525f8997651b79a5310955b56dc8bd8f16496082d2fb4b2bea1"
+    },
+    "timelineContract": {
+      "path": "packages/demos/src/timelines/course-g04-l10-in-008.ts",
+      "bytes": 3005,
+      "sha256": "edbe616c57f938f1375b721fde0325d3c1aad8da8a1500eaecb89d61a16288e6"
+    },
+    "lessonHostContract": {
+      "path": "packages/demos/src/lesson-host-contract.ts",
+      "bytes": 16388,
+      "sha256": "23c878622f0a7b0997d76e8d9605d20163dc612a229882f7aec43320aa506ae1"
+    },
+    "animationRuntime": {
+      "path": "apps/web/components/animation-runtime.tsx",
+      "bytes": 51017,
+      "sha256": "0ff262370bd62a6e25657a41845ab847967b3193894462b04235c84f5bf0af19"
+    },
+    "privateRegistry": {
+      "path": "packages/demos/private-current-js-registry.json",
+      "bytes": 3628,
+      "sha256": "a7043c17761b3a8cda93b1486aafc75b8f77c0b801de216fbdaff4b3fabdc9ee"
+    },
+    "generatedRegistry": {
+      "path": "packages/demos/src/registry.generated.ts",
+      "bytes": 30363,
+      "sha256": "665a36fd343d62baba3c6fa37f2d78806f7a9ede81aab18053aef747ef2f9f36"
+    },
+    "pageOnlyDescriptor": {
+      "path": "apps/web/lib/g4-l10-product-bridge-descriptor.ts",
+      "bytes": 28696,
+      "sha256": "75cc7c312c84030d5a68bb39e09cb53091ffafe7dc93ad5a4bee41a20b9bfe6d"
+    },
+    "audioMaterializer": {
+      "path": "scripts/materialize-g4-l10-in008-private-audio.mjs",
+      "bytes": 17698,
+      "sha256": "badf22185849709be9387f2ec7bc20731ee35b38d01938d8ac3b029e85e93aa9"
+    },
+    "audioManifest": {
+      "path": "public/flash-assets/courses/course-g04-l10-in-008/audio/manifest.json",
+      "bytes": 15550,
+      "sha256": "f9de84d13a706d65b1cddfcf24447ae9d7e36b1122864ec2033acdacec98eef1"
+    },
+    "audioReceipt": {
+      "path": "migrations/course-g04-l10-in-008/audit/private-product-audio-assets.json",
+      "bytes": 15753,
+      "sha256": "787320b30ac6e6e46e009009ba7172465542b9a85b9f87cd6581bae66c71bc8d"
+    }
+  },
+  "freezeCorrectionHistory": {
+    "v31Failure": "The first materializer execution rejected an abbreviated sprite-210 full-stream hash before creating any output.",
+    "v31OutputsCreated": false,
+    "v31RegistrationPerformed": false,
+    "v32CorrectionScope": [
+      "complete SHA-256 for the sprite-210 full main stream",
+      "complete SHA-256 for the frame-53-through-129 continuation"
+    ],
+    "v31Rewritten": false,
+    "browserDiscoveredCorrections": []
+  },
+  "pageHandlers": {
+    "expectedSourceHandlerCount": 5,
+    "sourceStageAnswerInstances": ["AnsBtn1", "AnsBtn2", "AnsBtn3"],
+    "answerLabels": ["22 cm", "37 cm", "40 cm"],
+    "correctAnswer": "37 cm",
+    "mainGlossaryLabelsEnglish": ["Perimeter", "Triangle"],
+    "mainGlossaryLabelsSpanish": ["Perímetro", "Triángulo"],
+    "wrongFeedbackGlossaryLabels": ["Perimeter", "distance", "around", "shape", "sum", "measurements", "sides"],
+    "desktopSumDefinitionObserved": "The answer to an addition problem. For example: the sum of 2 + 3 is 5.",
+    "legacyClickRecordRequestsObserved": 0,
+    "legacyHandlerWriteRequestsObserved": 0
+  },
+  "behaviorHeavyGates": {
+    "randomBranches": {
+      "status": "closed-private-product-engineering-deterministic-seed-exhaustion",
+      "pageRandomCallCount": 0,
+      "hostRandomCallCount": 2,
+      "wrongBranchCount": 3,
+      "rightBranchCount": 4,
+      "unitTestExhaustedEveryReachableBranch": true,
+      "desktopWrongBranchBeforeReplay": {"branchIndex": 1, "sourceTimelineId": "sprite-79"},
+      "desktopWrongBranchAfterReplay": {"branchIndex": 2, "sourceTimelineId": "sprite-90"},
+      "replaySeedAdvanceObserved": true,
+      "sourcePresentButUnreachableBranches": ["sprite-51", "sprite-209"],
+      "authoritativeAdobeRandomStateAccepted": false
+    },
+    "audioRouting": {
+      "status": "closed-private-product-engineering-listening-pending",
+      "materializedAudioAssetCount": 11,
+      "fullEofDecodePassedForEveryMaterializedAsset": true,
+      "englishRoute": "embedded-en-main-answer-feedback-close-and-correct-continuation",
+      "spanishRoute": "host-es-or-muted",
+      "mainCue": {
+        "firstBlockFrame": 5,
+        "quizStopFrame": 52,
+        "bytes": 47970,
+        "sha256": "ef5155fcf01f212a2381a273003bf60bb60285b0e0fe3a7b92d9d207b6ad17e3",
+        "statusObserved": 206
+      },
+      "wrongBranch1": {
+        "bytes": 11050,
+        "sha256": "f87ec03bf9163390a117b6ad1ea7c47dab7ea7e729219acff0e0617f6100a9f1",
+        "statusObserved": 206
+      },
+      "wrongBranch2": {
+        "bytes": 11050,
+        "sha256": "d7a98a5d899d27fb01a48d98e1a3957f03edfe8c7f68dddfb40fe552e311c0d0",
+        "statusObserved": 206
+      },
+      "feedbackClose": {
+        "bytes": 1950,
+        "sha256": "ad4a86a727b8d4b5379655258cdffc62f85f89cb460a96565fad27d975a2aa38",
+        "statusObserved": 206
+      },
+      "rightBranch1": {
+        "bytes": 11570,
+        "sha256": "ede0affb88cb9c7d0378514ff027a74e843f5f1cbac3f751820392dd9420d9e8",
+        "statusObserved": 206
+      },
+      "correctContinuation": {
+        "firstFrame": 53,
+        "lastFrame": 129,
+        "bytes": 28210,
+        "sha256": "741ba76391efe55455c13a556c5a239abcbb481c8968281b5ec532b478b272a1",
+        "statusObserved": 206
+      },
+      "spanishHostTrack": {
+        "bytes": 160272,
+        "sha256": "6a9eb69497f5afcc916fca1dd1f6f757bbcff15833402f77c389e9c3f71bf39b",
+        "statusObserved": 206,
+        "activation": "user"
+      },
+      "spanishRuntimeAudioLanguageObserved": "es",
+      "spanishHostTimelinePausedWhilePlayingObserved": true,
+      "spanishAnswerFeedbackTriggeredEmbeddedEnglishAudio": false,
+      "spokenLanguageAccepted": false,
+      "audioListeningAccepted": false
+    },
+    "timelineReachability": {
+      "status": "closed-private-product-engineering",
+      "sourceTimelineId": "sprite-210",
+      "quizStopFrame": 52,
+      "correctContinuationFirstFrame": 53,
+      "terminalFrame": 129,
+      "desktopQuizStopObserved": true,
+      "desktopCorrectFeedbackObserved": {"phase": "right-playing", "branchIndex": 1, "sourceTimelineId": "sprite-178", "renderFrame": 52},
+      "desktopContinuationIntermediateObserved": {"phase": "right-continuing", "renderFrame": 98},
+      "desktopTerminalObserved": {"phase": "complete", "renderFrame": 129},
+      "terminalWasStatePolledRatherThanFixedDelayAssumed": true,
+      "strictFrameDomainDispositionMutated": false,
+      "authoritativeOriginalRuntimeAccepted": false
+    },
+    "replayEngineering": {
+      "status": "closed-private-product-engineering",
+      "trigger": "modern My Lesson runtime epoch remount",
+      "desktopReplayFromCompleteStateObserved": true,
+      "desktopPracticeResetToIdleObserved": true,
+      "desktopAnswerHandlersRestoredObserved": true,
+      "desktopObservedFrameAfterCommandAndSnapshotDelay": 52,
+      "desktopSeedAdvancedFromWrongBranch1ToWrongBranch2": true,
+      "unitTestRewindFrame": 1,
+      "unitTestStopsAllHostAndInteractiveAudio": true,
+      "unitTestClearsFeedbackTimersContinuationAndMemoryOnlyHostState": true,
+      "authoritativeOriginalRuntimeReplayAccepted": false
+    }
+  },
+  "desktopEnglish": {
+    "viewport": {"width": 1200, "height": 900},
+    "routeStatus": 200,
+    "pageLoaded": true,
+    "heading": "Perimeter of Other Shapes",
+    "registeredBoundaryVisible": "18/46",
+    "globalPageOrdinal": 22,
+    "quizStopFrameObserved": 52,
+    "wrongFeedbackAndCloseObserved": true,
+    "correctFeedbackObserved": true,
+    "terminalFrame129Observed": true,
+    "sumGlossaryObserved": true,
+    "replayPracticeResetObserved": true,
+    "horizontalOverflowObserved": false,
+    "screenshots": [
+      {"path": "output/playwright/course-g04-l10-in-008-private-product-qa/desktop-en-quiz-stop.png", "bytes": 165665, "sha256": "6024f0877df42593d3553bfd020d13974e97dd51685abf7f2218d3df5c5a6b69", "pixelWidth": 1185, "pixelHeight": 1177, "visualPurpose": "desktop English source quiz stop, three stage handlers, companion handlers, and private 18/46 boundary", "visuallyInspectedByAgent": true},
+      {"path": "output/playwright/course-g04-l10-in-008-private-product-qa/desktop-en-wrong-feedback.png", "bytes": 175429, "sha256": "82f70543028184a7829fb6d7504aab8c89edf0e9187c2e856690b2c0e241024c", "pixelWidth": 1185, "pixelHeight": 1239, "visualPurpose": "desktop English wrong feedback with source glossary handlers and Try again close contract", "visuallyInspectedByAgent": true},
+      {"path": "output/playwright/course-g04-l10-in-008-private-product-qa/desktop-en-right-feedback.png", "bytes": 364524, "sha256": "9b7ba6e3704e3c123fc1774bf693000f91e0de6d006ca1c75c991932b4f5ebc2", "pixelWidth": 2370, "pixelHeight": 2194, "visualPurpose": "desktop English right-playing state for branch 1", "visuallyInspectedByAgent": true},
+      {"path": "output/playwright/course-g04-l10-in-008-private-product-qa/desktop-en-terminal-frame-129.png", "bytes": 156727, "sha256": "b9650af9c01b12e6069baec654dab3cd8eb8d3c76266fcde01629ab62400c668", "pixelWidth": 1185, "pixelHeight": 1097, "visualPurpose": "desktop English terminal frame 129 and Replay prompt", "visuallyInspectedByAgent": true},
+      {"path": "output/playwright/course-g04-l10-in-008-private-product-qa/desktop-en-glossary-sum.png", "bytes": 177297, "sha256": "6c9d9ad560dffa47d64407a9eabe1ea0916277ab3b6236af55d0779e464e95a6", "pixelWidth": 1185, "pixelHeight": 1239, "visualPurpose": "desktop English Sum glossary opened from wrong-feedback source text", "visuallyInspectedByAgent": true}
+    ]
+  },
+  "mobileSpanish": {
+    "viewport": {"width": 390, "height": 844},
+    "routeStatus": 200,
+    "pageLoaded": true,
+    "heading": "Perímetro de otras figuras",
+    "fixedEnglishSourceVisualBoundaryDisclosed": true,
+    "visibleMainGlossaryLabels": ["Perímetro", "Triángulo"],
+    "localizedProductControlsObserved": true,
+    "sourceWrongFeedbackRetainedInEnglish": true,
+    "spanishNarrationButtonActivated": true,
+    "runtimeAudioLanguageObserved": "es",
+    "hostAudioTimelinePausedWhilePlaying": true,
+    "answerFeedbackEmbeddedAudioPlayingObserved": false,
+    "horizontalOverflowObserved": false,
+    "screenshots": [
+      {"path": "output/playwright/course-g04-l10-in-008-private-product-qa/mobile-es-quiz-stop.png", "bytes": 135989, "sha256": "6f1160afb8f6377bf5e768da679956b87c7603174396aba826000e7297c9ca9c", "pixelWidth": 375, "pixelHeight": 1909, "visualPurpose": "mobile Spanish host, fixed-English source visual, localized glossary labels, source-stage answers, and responsive controls", "visuallyInspectedByAgent": true},
+      {"path": "output/playwright/course-g04-l10-in-008-private-product-qa/mobile-es-wrong-feedback.png", "bytes": 148381, "sha256": "e0a0711b11a408c1d52d5f4a974ecaaa72dc8750554aa96f21773334a0a79b02", "pixelWidth": 375, "pixelHeight": 1993, "visualPurpose": "mobile Spanish product controls with fixed-English source wrong feedback and localized close action", "visuallyInspectedByAgent": true}
+    ]
+  },
+  "network": {
+    "routeStatuses": {"english": 200, "spanish": 200},
+    "canvasRenderer": {"status": 200, "sha256Query": "97c664f3b5971e934b958c3baaafe82e9d254e913a3625364756e308ddf9c53f"},
+    "observedTaskLocalAudioStatuses": [206],
+    "legacyClickRecordRequestsObserved": 0,
+    "legacyHandlerWriteRequestsObserved": 0,
+    "in008RendererOrAudioRequestFailuresObserved": 0
+  },
+  "console": {
+    "in008RendererOrAudioErrorsObserved": 0,
+    "cleanConsoleClaimed": false,
+    "knownDevelopmentEnvironmentNoise": [
+      "Clerk CheckoutProvider React child-key error",
+      "Clerk development-key warning"
+    ],
+    "laterFreshSessionOutsideThePassingQaSessions": "A subsequent extra network-only browser launch hit a Clerk key-mismatch redirect loop; that session was closed and is not used as passing IN008 QA evidence."
+  },
+  "testEvidence": {
+    "audioMaterializer": {"tests": 4, "passed": 4, "failed": 0},
+    "focusedCandidateRegistryDescriptorCoverageAndHost": {"tests": 41, "passed": 41, "failed": 0},
+    "focusedTotal": {"tests": 45, "passed": 45, "failed": 0},
+    "demosTypecheck": "passed",
+    "privateRegistryCurrentness": "passed",
+    "audioMaterializerCheck": "passed-current-thirteen-outputs",
+    "webLint": "passed-zero-errors-two-unrelated-existing-unused-parameter-warnings",
+    "webTypecheck": "failed-only-on-three-pre-existing-next-generated-route-export-contracts"
+  },
+  "reverseBoundaryAudit": {
+    "remainingCandidateBindingFilesRehashed": 18,
+    "remainingCandidateBindingFilesCurrent": true,
+    "remainingCandidatesAbsentFromPrivateGeneratedAndPublicRegistries": true,
+    "publicPrototypeRegistrationCountForIn008": 0,
+    "publicWholeLessonRegistrationCountForG4L10": 0
+  },
+  "remainingCandidateBoundary": {
+    "unregisteredCount": 6,
+    "unregisteredAnimationIds": [
+      "course-g04-l10-fq-002",
+      "course-g04-l10-fq-003",
+      "course-g04-l10-in-006",
+      "course-g04-l10-in-011",
+      "course-g04-l10-in-013",
+      "course-g04-l10-ti-003"
+    ],
+    "honestLowLaneCount": 0,
+    "automaticRegistrationAuthorized": false,
+    "lowRelabelAuthorized": false,
+    "allRemainingDispositions": "behavior-heavy-gated"
+  },
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "behaviorParityAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "spokenLanguageAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "releaseEligible": false,
+    "published": false
+  },
+  "limitations": [
+    "This receipt is local Chromium engineering QA for one private maintained adapter in the modern My Lesson host; it is not Adobe original-runtime evidence.",
+    "Unit tests exhaust all three wrong and four right branches; browser QA samples branch 1 and Replay-advanced branch 2 without converting product engineering closure into Adobe random-state acceptance.",
+    "All eleven staged audio files passed exact hash, media probe, and full EOF decode, and the exercised routes returned partial-content success, but spoken language and listening acceptance remain pending.",
+    "The screenshots were visually inspected for product layout and state, but they are not human visual-fidelity or Owner acceptance.",
+    "V33 registers only IN008 and authorizes no additional candidate among the six-page remainder."
+  ]
+}

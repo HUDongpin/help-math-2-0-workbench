@@ -1923,7 +1923,7 @@ test('package builder contains no public release or private archive intake mode'
   assert.match(source, /data-current-page="1"/);
   assert.match(source, /lesson-shell2__legacy-hit--replay/);
   assert.match(source, /data-current-replay-count="1"/);
-  assert.match(source, /Reviewed & next →/);
+  assert.match(source, /'Next →'/);
   assert.match(
     source,
     /rm\(variant\.archiveShaPath, \{force: true\}\)/,
@@ -1934,7 +1934,7 @@ test('package builder contains no public release or private archive intake mode'
   assert.match(source, /data-lesson-nav="footer-previous"/);
   assert.match(source, /data-lesson-nav="footer-next"/);
   assert.match(source, /en-native-next-\$\{state\}-48x48\.png/);
-  assert.match(source, /finishLabelBefore !== 'Finish review'/);
+  assert.match(source, /finishLabelBefore !== 'Finish lesson'/);
   assert.match(source, /repeatedActivationIdempotent/);
   assert.match(source, /spanishNextLabel !== 'Página siguiente'/);
   assert.match(source, /--v2/);

@@ -3,6 +3,7 @@ import {createElement} from "react";
 import {renderToStaticMarkup} from "react-dom/server";
 import test from "node:test";
 
+import {getG5L4PageAudioCandidate} from "../src/g5-l4-audio.generated";
 import courseVb004, {
   COURSE_G05_L04_VB_004_APP_OWNED_UI_COPY,
   COURSE_G05_L04_VB_004_SOURCE_CONTRACT,
@@ -636,14 +637,17 @@ test("capture, Spanish, and source-controlled frames suppress every modern contr
 
 test("VB004 remains prototype-only with audio, owner, fidelity, and strict gates closed", () => {
   assert.equal(courseVb004.maturity, "legacy-prototype");
-  assert.equal(courseVb004.audioCues.length, 0);
+  const audioCandidate = getG5L4PageAudioCandidate("course-g05-l04-vb-004");
+  assert.ok(audioCandidate);
+  assert.equal(courseVb004.audioCues, audioCandidate.audioCues);
+  assert.equal(courseVb004.audioTracks, audioCandidate.audioTracks);
   assert.equal(
     COURSE_G05_L04_VB_004_SOURCE_CONTRACT.currentJavascriptInteractionStatus,
     "source-script-bound-integers-classification-functional-candidate",
   );
   assert.equal(
     COURSE_G05_L04_VB_004_SOURCE_CONTRACT.audioStatus,
-    "inventoried-unmapped-disabled",
+    "source-exact-host-candidate-listening-and-runtime-sync-pending",
   );
   assert.equal(
     COURSE_G05_L04_VB_004_SOURCE_CONTRACT.sourceFeedbackAudioStatus,

@@ -13,7 +13,9 @@ const RECEIPT_SQL_ARCHIVE_PATH =
   '/Volumes/WestWorld/Extracted_NewHelpProgram_20210203';
 const CURRENT_SQL_ARCHIVE_PATH =
   '/Volumes/WestWorld/HELP MATH Related Files/Extracted_NewHelpProgram_20210203';
-const PHYSICAL_KEYTERMS_ROOT = '/Volumes/WestWorld/HELP_OnlineKeyTerms_XML';
+const RECEIPT_KEYTERMS_ROOT = '/Volumes/WestWorld/HELP_OnlineKeyTerms_XML';
+const CURRENT_KEYTERMS_ROOT =
+  '/Volumes/WestWorld/HELP MATH Related Files/HELP_OnlineKeyTerms_XML';
 const EXACT_MESSAGE =
   'The key terms for all lessons are combined as Middle school keyterms and elementary keyterms... please use that file for the key term reference.  \n\nThis is the file: Extracted_NewHelpProgram_20210203';
 
@@ -147,6 +149,20 @@ async function readExactRegularFile(absolutePath, expected) {
   return bytes;
 }
 
+async function readExactRegularFileSet(entries, label) {
+  const results = await Promise.allSettled(entries.map(({absolutePath, expected}) =>
+    readExactRegularFile(absolutePath, expected)));
+  const failures = results.flatMap((result) =>
+    result.status === 'rejected'
+      ? [result.reason instanceof Error ? result.reason.message : String(result.reason)]
+      : []);
+  invariant(
+    failures.length === 0,
+    `${label} identities changed:\n${failures.map((message) => `- ${message}`).join('\n')}`,
+  );
+  return results.map((result) => result.value);
+}
+
 async function enumerateRelativeFiles(root) {
   const results = [];
   async function visit(directory, relativeDirectory) {
@@ -232,7 +248,7 @@ export function validateReceiptDocument(receipt) {
   );
 
   invariant(
-    receipt.physicalCombinedKeytermsFolder?.path === PHYSICAL_KEYTERMS_ROOT &&
+    receipt.physicalCombinedKeytermsFolder?.path === RECEIPT_KEYTERMS_ROOT &&
       sameJson(receipt.physicalCombinedKeytermsFolder.ignoredNonContentFiles, [
         '.DS_Store',
       ]) &&
@@ -243,7 +259,7 @@ export function validateReceiptDocument(receipt) {
   for (const [index, expected] of EXPECTED_EXTERNAL_FILES.entries()) {
     const entry = receipt.physicalCombinedKeytermsFolder.declaredXmlFileClosure[index];
     invariant(
-      entry.path === path.posix.join(PHYSICAL_KEYTERMS_ROOT, expected.relativePath) &&
+      entry.path === path.posix.join(RECEIPT_KEYTERMS_ROOT, expected.relativePath) &&
         entry.bytes === expected.bytes &&
         entry.sha256 === expected.sha256 &&
         entry.selectedForG5L4Client === false,
@@ -340,7 +356,7 @@ export async function verifyG5L4CombinedKeytermsProductReferenceSuccessor() {
   const receiptBytes = await readFile(projectPath(RECEIPT_PATH));
   const receipt = validateReceiptDocument(JSON.parse(receiptBytes.toString('utf8')));
 
-  const externalRelativePaths = await enumerateRelativeFiles(PHYSICAL_KEYTERMS_ROOT);
+  const externalRelativePaths = await enumerateRelativeFiles(CURRENT_KEYTERMS_ROOT);
   const externalContentRelativePaths = externalRelativePaths.filter(
     (value) => value !== '.DS_Store',
   );
@@ -355,8 +371,10 @@ export async function verifyG5L4CombinedKeytermsProductReferenceSuccessor() {
       ),
     'physical combined KeyTerms folder closure drifted',
   );
-  await Promise.all(EXPECTED_EXTERNAL_FILES.map((entry) =>
-    readExactRegularFile(path.join(PHYSICAL_KEYTERMS_ROOT, entry.relativePath), entry)));
+  await readExactRegularFileSet(EXPECTED_EXTERNAL_FILES.map((entry) => ({
+    absolutePath: path.join(CURRENT_KEYTERMS_ROOT, entry.relativePath),
+    expected: entry,
+  })), 'physical combined KeyTerms files');
 
   const sqlArchiveRelativePaths = await enumerateRelativeFiles(
     CURRENT_SQL_ARCHIVE_PATH,
@@ -370,11 +388,13 @@ export async function verifyG5L4CombinedKeytermsProductReferenceSuccessor() {
     'reported SQL archive filename-only finding drifted',
   );
 
-  const projectBytes = await Promise.all(EXPECTED_PROJECT_FILES.map((entry) =>
-    readExactRegularFile(projectPath(entry.path), entry)));
+  const projectBytes = await readExactRegularFileSet(EXPECTED_PROJECT_FILES.map((entry) => ({
+    absolutePath: projectPath(entry.path),
+    expected: entry,
+  })), 'bound project files');
   invariant(
-    projectBytes[3].equals(await readFile(path.join(PHYSICAL_KEYTERMS_ROOT, 'ELM/ELKTEG4.xml'))) &&
-      projectBytes[4].equals(await readFile(path.join(PHYSICAL_KEYTERMS_ROOT, 'ELM/ELKTSG4.xml'))),
+    projectBytes[3].equals(await readFile(path.join(CURRENT_KEYTERMS_ROOT, 'ELM/ELKTEG4.xml'))) &&
+      projectBytes[4].equals(await readFile(path.join(CURRENT_KEYTERMS_ROOT, 'ELM/ELKTSG4.xml'))),
     'read-only owner-intake copies no longer match the physical ELM sources',
   );
 

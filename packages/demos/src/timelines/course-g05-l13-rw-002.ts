@@ -19,13 +19,13 @@ export const COURSE_G05_L13_RW_002_SOURCE = Object.freeze({
 
 export const COURSE_G05_L13_RW_002_EN_TRACE_SPEC = Object.freeze({
   path: 'migrations/course-g05-l13-rw-002/audit/trace-specs/req-sprite-334-default-en.json',
-  sha256: '9b992c1344f103faa1ef117d6eedc7717d107277d1840b352d08cda201b31f4b',
+  sha256: '83b5389ebdba20cc292e578f94a93ea6ef62384531021a5500d5ee7847009ca0',
   status: 'source-schedule-ready-for-authoritative-execution'
 } as const);
 
 export const COURSE_G05_L13_RW_002_ES_TRACE_SPEC = Object.freeze({
   path: 'migrations/course-g05-l13-rw-002/audit/trace-specs/req-sprite-334-default-es.json',
-  sha256: '93489d567f0e6d0f02a54ad850143b364d6b690d85131c1b85452727eaabe4bf',
+  sha256: 'a75f3a4928744f9935774c01de1e77a91e6b435da745267998013a1bd44bb298',
   status: 'source-schedule-ready-for-authoritative-execution'
 } as const);
 

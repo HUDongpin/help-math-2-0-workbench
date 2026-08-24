@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "directory": "HELP MATH_ORIGINAL FILES",
+    "fileCount": 9244,
+    "totalBytes": 3219753760,
+    "checksumSetSha256": "10173f6dd19e934901a1188ba45d8e22423dbac3212b8f2560e90e2fd536bfcc",
+    "extensions": {
+      "": 4,
+      "as": 21,
+      "fla": 1541,
+      "jpg": 6,
+      "mp3": 5545,
+      "swf": 2096,
+      "xml": 31
+    }
+  },
+  "swf": {
+    "placements": 2096,
+    "uniqueAssets": 2074,
+    "duplicateGroups": 22,
+    "duplicatePlacements": 22,
+    "byCollection": {
+      "course": 1587,
+      "keyterm": 459,
+      "formula": 50,
+      "unknown": 0
+    },
+    "headerParseErrors": 0,
+    "signatures": [
+      "CWS",
+      "FWS"
+    ],
+    "fpsValues": [
+      12
+    ],
+    "totalFrames": 34169,
+    "courseShells": 33
+  },
+  "pairing": {
+    "pairedSwfFla": 1344,
+    "swfOnly": 752,
+    "flaOnly": 197
+  },
+  "fla": {
+    "files": 1541,
+    "compoundBinary": 1540,
+    "zipArchive": 1,
+    "unrecognized": 0
+  },
+  "xml": {
+    "files": 31,
+    "courseFiles": 29,
+    "keytermFiles": 2,
+    "filesWithBareAmpersands": 8
+  },
+  "audio": {
+    "files": 5545,
+    "exactAssociations": 1135,
+    "groupCount": 29
+  },
+  "references": {
+    "course": {
+      "occurrences": 1751,
+      "unique": 1750,
+      "resolved": 1361,
+      "missing": 389,
+      "unreferencedExisting": 226
+    },
+    "keyterm": {
+      "occurrences": 1515,
+      "unique": 760,
+      "resolved": 443,
+      "missing": 317,
+      "unreferencedExisting": 16
+    }
+  },
+  "migration": {
+    "status": "intake-catalog-only",
+    "complete": 0,
+    "discoveredPlacements": 2096,
+    "discoveredCanonicalAssets": 2074
+  },
+  "discrepancies": [
+    {
+      "id": "keyterm-missing-reference-count",
+      "approvedPlanValue": 316,
+      "evidenceCorrectValue": 317,
+      "explanation": "The earlier count skipped Cubed_root.swf because both keyterm XML files spell the attribute as `ExFileName =\"Cubed_root.swf\"` (whitespace before `=`). Tolerant parsing includes it; no matching SWF or FLA exists.",
+      "sourcePaths": [
+        "HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTEG4.xml",
+        "HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTSG4.xml"
+      ]
+    }
+  ]
+}

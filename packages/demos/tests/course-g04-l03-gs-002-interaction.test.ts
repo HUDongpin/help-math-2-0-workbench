@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import {createHash} from "node:crypto";
+import {readFile} from "node:fs/promises";
 import {createElement} from "react";
 import {renderToStaticMarkup} from "react-dom/server";
 import test from "node:test";
@@ -21,6 +23,12 @@ import {
   type CourseG04L03Gs002InteractionState,
   type CourseG04L03Gs002Sign,
 } from "../src/timelines/course-g04-l03-gs-002-interaction";
+import {
+  COURSE_G04_L03_GS_002_INTERACTION_BASE_CONFIG,
+} from "../src/timelines/course-g04-l03-gs-002";
+
+const sha256 = (value: Uint8Array | string) =>
+  createHash("sha256").update(value).digest("hex");
 
 const setSign = (
   state: CourseG04L03Gs002InteractionState,
@@ -61,6 +69,7 @@ test("GS002 preserves the exact source arrays, copy, index direction, and nomina
     missingSign:
       "You need to choose whether the number is positive or negative.",
     missingNumber: "You need to enter the number in the number field.",
+    zeroDistance: "Enter a number from 1 to 14. Zero does not move the ship.",
     lowerBoundary: "The ship can not go any lower.",
     upperBoundary: "The ship can not go any higher.",
   });
@@ -71,7 +80,7 @@ test("GS002 preserves the exact source arrays, copy, index direction, and nomina
   assert.equal(COURSE_G04_L03_GS_002_CURRENT_JS_TIMING.movementStepMs,
     750);
   assert.equal(COURSE_G04_L03_GS_002_CURRENT_JS_TIMING.hitResolutionMs,
-    34_000 / 12);
+    900);
   assert.equal(courseG04L03Gs002ValueAtIndex(0), 7);
   assert.equal(courseG04L03Gs002ValueAtIndex(7), 0);
   assert.equal(courseG04L03Gs002ValueAtIndex(14), -7);
@@ -92,7 +101,7 @@ test("GS002 initial state keeps the existing seed-modulo-fourteen visual mapping
     assert.equal(state.virusIndex, expected);
     assert.equal(state.initialVirusIndex, expected);
     assert.equal(state.drawCount, 1);
-    assert.equal(state.timerDisplay, "00:00:00");
+    assert.equal(state.timerDisplay, "00:04:00");
     assert.equal(state.mode, "ready");
   }
 
@@ -160,16 +169,19 @@ test("GS002 plus moves up, minus moves down, and a legal miss silently re-enable
   assert.equal(minus.mode, "ready");
 });
 
-test("GS002 preserves the source zero-input one-step anomaly without claiming it as good UX", () => {
+test("GS002 rejects zero instead of moving the ship by a hidden extra step", () => {
   let state = createCourseG04L03Gs002InteractionState(0);
   state = setSign(state, "+");
   state = setDistance(state, "0");
   state = submit(state);
-  assert.equal(state.plannedTargetIndex, 7);
+  assert.equal(state.plannedTargetIndex, null);
   assert.equal(state.remainingMoveCount, 0);
-  state = movementStep(state);
-  assert.equal(state.shipIndex, 6);
-  assert.equal(state.mode, "ready");
+  assert.equal(state.shipIndex, 7);
+  assert.equal(state.mode, "feedback");
+  assert.equal(
+    state.feedbackText,
+    COURSE_G04_L03_GS_002_FEEDBACK.zeroDistance,
+  );
   assert.equal(state.score, 0);
 });
 
@@ -195,7 +207,7 @@ test("GS002 hit increments score exactly once and draws a reproducible target ex
   assert.deepEqual(run(), run());
 });
 
-test("GS002 help is modal state while the independent source timer keeps advancing", () => {
+test("GS002 pauses its product timer while the learner reads help", () => {
   let state = createCourseG04L03Gs002InteractionState(0);
   state = reduceCourseG04L03Gs002Interaction(state, {type: "open-help"});
   assert.equal(state.mode, "help");
@@ -207,30 +219,27 @@ test("GS002 help is modal state while the independent source timer keeps advanci
   assert.equal(state.mode, "ready");
 });
 
-test("GS002 timer reproduces the script-specific 04:00, 03:60, and 245th-tick expiry", () => {
+test("GS002 timer shows a standard four-minute countdown and expires on tick 240", () => {
   let state = createCourseG04L03Gs002InteractionState(0);
-  state = timerTick(state);
   assert.equal(state.timerDisplay, "00:04:00");
-  assert.equal(state.timerMinutes, 3);
-  assert.equal(state.timerSeconds, 60);
-
   state = timerTick(state);
-  assert.equal(state.timerDisplay, "00:03:60");
+  assert.equal(state.timerDisplay, "00:03:59");
+  assert.equal(state.timerMinutes, 3);
   assert.equal(state.timerSeconds, 59);
 
-  while (state.timerTickCount < 61) state = timerTick(state);
-  assert.equal(state.timerDisplay, "00:03:01");
+  while (state.timerTickCount < 60) state = timerTick(state);
+  assert.equal(state.timerDisplay, "00:03:00");
   assert.equal(state.timerSeconds, 0);
   state = timerTick(state);
-  assert.equal(state.timerDisplay, "00:03:00");
+  assert.equal(state.timerDisplay, "00:02:59");
   assert.equal(state.timerMinutes, 2);
-  assert.equal(state.timerSeconds, 60);
+  assert.equal(state.timerSeconds, 59);
 
-  while (state.timerTickCount < 244) state = timerTick(state);
+  while (state.timerTickCount < 239) state = timerTick(state);
   assert.equal(state.timerDisplay, "00:00:01");
   assert.equal(state.mode, "ready");
   state = timerTick(state);
-  assert.equal(state.timerTickCount, 245);
+  assert.equal(state.timerTickCount, 240);
   assert.equal(state.timerDisplay, "00:00:00");
   assert.equal(state.mode, "expired");
   assert.equal(timerTick(state), state);
@@ -257,10 +266,10 @@ test("GS002 elapsed-time reducer advances concurrent nominal timer, movement, an
   });
   assert.equal(state.mode, "ready");
   assert.equal(state.drawCount, 2);
-  assert.equal(state.timerTickCount, 8);
+  assert.equal(state.timerTickCount, 6);
 });
 
-test("GS002 New Game and host Replay restore the complete seed-bound current-JS state", () => {
+test("GS002 New Game advances its target while host Replay remains seed-exact", () => {
   const initial = createCourseG04L03Gs002InteractionState(13);
   let changed = setSign(initial, "-");
   changed = setDistance(changed, "1");
@@ -271,8 +280,18 @@ test("GS002 New Game and host Replay restore the complete seed-bound current-JS 
     type: "new-game",
   });
   const replay = reduceCourseG04L03Gs002Interaction(changed, {type: "replay"});
-  assert.deepEqual(newGame, initial);
+  assert.equal(newGame.seed, initial.seed);
+  assert.equal(newGame.shipIndex, 7);
+  assert.equal(newGame.score, 0);
+  assert.equal(newGame.timerDisplay, "00:04:00");
+  assert.equal(newGame.mode, "ready");
+  assert.equal(newGame.drawCount, initial.drawCount + 1);
+  assert.notEqual(newGame.rngState, initial.rngState);
   assert.deepEqual(replay, initial);
+  assert.deepEqual(
+    reduceCourseG04L03Gs002Interaction(changed, {type: "replay", seed: 0}),
+    createCourseG04L03Gs002InteractionState(0),
+  );
 });
 
 test("GS002 state is immutable and every acceptance/audio/runtime claim remains false", () => {
@@ -317,6 +336,92 @@ test("GS002 state is immutable and every acceptance/audio/runtime claim remains 
   );
 });
 
+test("GS002 interaction base successor preserves the hash-bound renderer and stops at source sprite321 case426", async () => {
+  const publicDirectory = new URL(
+    "../../../public/flash-assets/courses/course-g04-l03-gs-002/",
+    import.meta.url,
+  );
+  const webPublicDirectory = new URL(
+    "../../../apps/web/public/flash-assets/courses/course-g04-l03-gs-002/",
+    import.meta.url,
+  );
+  const [
+    preservedRenderer,
+    preservedManifest,
+    successorRenderer,
+    successorWebMirror,
+    successorManifestBytes,
+  ] = await Promise.all([
+    readFile(new URL("canvas-renderer.js", publicDirectory)),
+    readFile(new URL("manifest.json", publicDirectory)),
+    readFile(new URL("canvas-interaction-base-renderer.js", publicDirectory)),
+    readFile(new URL("canvas-interaction-base-renderer.js", webPublicDirectory)),
+    readFile(new URL("interaction-base-manifest.json", publicDirectory)),
+  ]);
+
+  assert.equal(
+    sha256(preservedRenderer),
+    "1c806e2fdeb026edb5b0109ab24bac3689918894b3d7e38fe17503dfbbc1bfb1",
+  );
+  assert.equal(
+    sha256(preservedManifest),
+    "9b86419df3759272b368e91b20e1ba459585f14749e5f90e978fbba4abbc585a",
+  );
+  assert.equal(
+    sha256(successorRenderer),
+    COURSE_G04_L03_GS_002_INTERACTION_BASE_CONFIG.assetSha256,
+  );
+  assert.deepEqual(successorWebMirror, successorRenderer);
+
+  const source = successorRenderer.toString("utf8");
+  assert.match(source, /frame !== 427/);
+  assert.match(source, /sourceSpriteExportFrame: 426/);
+  assert.match(source, /sourceLocalGameInitialStateDrawn: false/);
+  const case426Start = source.indexOf("\t\tcase 426:");
+  const case427Start = source.indexOf("\t\tcase 427:", case426Start);
+  assert.ok(case426Start > 0);
+  assert.ok(case427Start > case426Start);
+  const case426 = source.slice(case426Start, case427Start);
+  assert.doesNotMatch(case426, /place\("sprite48"/);
+  assert.doesNotMatch(case426, /place\("sprite69"/);
+
+  const renderStart = source.indexOf("function render(targetCanvas, request)");
+  const registryStart = source.indexOf(
+    'var registry = global["HELP_MATH_CANVAS_ASSETS"]',
+    renderStart,
+  );
+  assert.ok(renderStart > 0);
+  assert.ok(registryStart > renderStart);
+  const renderFunction = source.slice(renderStart, registryStart);
+  assert.match(
+    renderFunction,
+    /sprite321\(ctx, new cxform\([^\n]+state\.exportFrame/,
+  );
+  assert.doesNotMatch(renderFunction, /drawSourceLocalGameInitialState/);
+  assert.match(
+    renderFunction,
+    /data-current-js-game-base", "source-sprite321-case426-clean-base"/,
+  );
+
+  const successorManifest = JSON.parse(
+    successorManifestBytes.toString("utf8"),
+  );
+  assert.equal(successorManifest.successor.rendererSha256,
+    sha256(successorRenderer));
+  assert.equal(successorManifest.preservedPredecessor.rendererSha256,
+    sha256(preservedRenderer));
+  assert.equal(successorManifest.preservedPredecessor.modifiedBySuccessor,
+    false);
+  assert.equal(successorManifest.compositionContract.callsDrawSourceLocalGameInitialState,
+    false);
+  assert.equal(successorManifest.compositionContract.usesHeuristicPixelInterpolationOrActorErasure,
+    false);
+  assert.equal(successorManifest.acceptance.behaviorParityEstablished, false);
+  assert.equal(successorManifest.acceptance.ownerAccepted, false);
+  assert.equal(successorManifest.acceptance.strictMigrationComplete, false);
+  assert.equal(successorManifest.acceptance.strictAcceptanceEffect, "none");
+});
+
 test("GS002 ordinary English frame-427 playback exposes one viewport-appropriate semantic control surface", () => {
   const markup = renderToStaticMarkup(createElement(gs002.Renderer, {
     frame: 427,
@@ -329,6 +434,14 @@ test("GS002 ordinary English frame-427 playback exposes one viewport-appropriate
   }));
 
   assert.match(markup, /data-current-js-controls-enabled="true"/);
+  assert.match(
+    markup,
+    /data-course-canvas="course-g04-l03-gs-002-interaction-base"/,
+  );
+  assert.doesNotMatch(
+    markup,
+    /data-course-canvas="course-g04-l03-gs-002"/,
+  );
   assert.match(markup, /data-current-js-functional-candidate="true"/);
   assert.match(markup, /aria-label="Move the space ship to the target"/);
   assert.match(markup, /type="radio"/);
@@ -345,11 +458,37 @@ test("GS002 ordinary English frame-427 playback exposes one viewport-appropriate
   assert.match(markup, /course-g04-l03-gs-002-mobile-controls/);
   assert.match(markup, /min-height:\s*48px/);
   assert.match(markup,
-    /data-timing-authority="static-frame-deduction-not-original-runtime-trace"/);
+    /data-timing-authority="current-js-product-clock-and-source-informed-movement-not-original-runtime-trace"/);
+  assert.doesNotMatch(markup, /data-source-sprite-mask=/);
+  assert.match(markup, /course-g04-l03-gs-002-hit-feedback/);
   assert.match(markup,
     /data-source-sprite-sha256="06c707e65cfd9a9c8fd7b13cd1570c12ed9e2185f4c20fbb8e2c532ee00abeaa"/);
   assert.match(markup,
     /data-source-sprite-sha256="4e3f9ed24e5c1b637ef9a56089a58d9c2bdef55d71588825e80fd0efcb8404fe"/);
+  const sourceSpriteImages = [
+    ...markup.matchAll(
+      /<img\b[^>]*data-source-sprite-sha256="[^"]+"[^>]*>/g,
+    ),
+  ].map(([tag]) => tag);
+  assert.equal(sourceSpriteImages.length, 2);
+  for (const tag of sourceSpriteImages) {
+    const declaredSha256 = tag.match(
+      /data-source-sprite-sha256="([a-f0-9]{64})"/,
+    )?.[1];
+    const base64 = tag.match(
+      /src="data:image\/png;base64,([A-Za-z0-9+/=]+)"/,
+    )?.[1];
+    assert.ok(declaredSha256);
+    assert.ok(base64);
+
+    const png = Buffer.from(base64, "base64");
+    assert.equal(png.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
+    assert.equal(
+      png.subarray(-12).toString("hex"),
+      "0000000049454e44ae426082",
+    );
+    assert.equal(sha256(png), declaredSha256);
+  }
   assert.equal(gs002.reducedMotionFrame, 427);
 });
 
@@ -419,6 +558,23 @@ test("GS002 hash-bound capture, Spanish, pre-game, and wrong-domain paths keep i
     assert.doesNotMatch(markup,
       /aria-label="Move the space ship to the target"/);
   }
+
+  const evidenceMarkup = renderToStaticMarkup(createElement(gs002.Renderer, {
+    frame: 427,
+    frameDomain: "sprite-321",
+    scenario: "source-static-frame",
+    lang: "en",
+    seed: 0,
+    entryStateSha256: "a".repeat(64),
+  }));
+  assert.match(
+    evidenceMarkup,
+    /data-course-canvas="course-g04-l03-gs-002"/,
+  );
+  assert.doesNotMatch(
+    evidenceMarkup,
+    /data-course-canvas="course-g04-l03-gs-002-interaction-base"/,
+  );
 });
 
 test("GS002 functional scope advances current JS only and leaves every legacy acceptance boundary false", () => {
@@ -434,12 +590,37 @@ test("GS002 functional scope advances current JS only and leaves every legacy ac
       "exact-source-validation-feedback",
       "nominal-source-frame-deduced-step-movement",
       "hit-scoring-and-deterministic-next-target",
-      "source-script-specific-timer-display-and-expiry",
+      "current-javascript-standard-four-minute-timer-and-expiry",
+      "current-javascript-crisp-single-actor-layer",
+      "source-sprite321-case426-clean-base-without-pixel-interpolation",
+      "current-javascript-visible-hit-and-score-feedback",
       "need-more-help-text-dialog",
       "whole-renderer-new-game-and-host-replay-reset",
       "host-pause-freezes-current-javascript-clock",
       "responsive-mobile-touch-control-surface",
     ],
+  );
+  assert.deepEqual(
+    COURSE_G04_L03_GS_002_SOURCE_CONTRACT.interactionBaseSuccessor,
+    {
+      animationId: "course-g04-l03-gs-002-interaction-base",
+      assetSource:
+        "/flash-assets/courses/course-g04-l03-gs-002/canvas-interaction-base-renderer.js",
+      assetSha256:
+        "7e4d352d925c65b1ba1d3d1329d95c690e27be4e2ed01e6683b10c2c12cd4797",
+      manifestSource:
+        "public/flash-assets/courses/course-g04-l03-gs-002/interaction-base-manifest.json",
+      manifestSha256:
+        "c248508d8e8fc42fc533f90ff2746849c8456b377d2786cedc99a3742e688b7e",
+      publicFrame: 427,
+      sourceSpriteObjectId: 321,
+      sourceSpriteExportFrame: 426,
+      sourceLocalGameInitialStateDrawn: false,
+      reactOwnsActorsTimerAndScore: true,
+      preservedRendererAssetSha256:
+        "1c806e2fdeb026edb5b0109ab24bac3689918894b3d7e38fe17503dfbbc1bfb1",
+      acceptanceEffect: "none",
+    },
   );
   assert.equal(
     COURSE_G04_L03_GS_002_SOURCE_CONTRACT.associatedAudioStatus,

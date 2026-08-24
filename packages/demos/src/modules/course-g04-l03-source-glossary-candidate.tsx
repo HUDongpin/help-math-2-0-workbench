@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useLayoutEffect, useRef, useState} from "react";
 import {createPortal} from "react-dom";
 
 import type {AnimationRendererProps} from "../contract";
@@ -25,6 +25,8 @@ type SourceStaticCandidate<
 const SOURCE_ACTIVITY_SCENARIO = "source-static-frame";
 const SOURCE_FONT =
   '"Arial Rounded MT Bold", "Trebuchet MS", ui-rounded, sans-serif';
+const useClientLayoutEffect =
+  typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 function isDeterministicEvidenceCapture({
   entryStateSha256,
@@ -52,48 +54,42 @@ export function buildCourseG04L03SourceGlossaryHitStyle(
   } as const;
 }
 
-function PageInteractionCompanionPortal({
+function VisibleStageContentPortal({
   children,
   targetId,
 }: {
   children: React.ReactNode;
   targetId?: string;
 }) {
-  const [target, setTarget] = useState<HTMLElement | null>(null);
-  const [resolvedTargetId, setResolvedTargetId] = useState<string | null>(null);
+  const [stageTarget, setStageTarget] = useState<HTMLElement | null>(null);
 
-  useEffect(() => {
+  useClientLayoutEffect(() => {
     if (!targetId) {
-      setTarget(null);
-      setResolvedTargetId(null);
+      setStageTarget(null);
       return;
     }
-    setTarget(document.getElementById(targetId));
-    setResolvedTargetId(targetId);
+    const target = document.getElementById(targetId);
+    setStageTarget(
+      target?.dataset.pageInteractionStageHost === "true" ? target : null,
+    );
   }, [targetId]);
 
-  if (!targetId) return children;
-  if (resolvedTargetId !== targetId) return null;
-  return target ? createPortal(children, target) : children;
+  return stageTarget ? createPortal(children, stageTarget) : children;
 }
 
 function GlossaryTermButtons({
-  companionTargetId,
   config,
   controlsReady,
   frame,
   lang,
   onLessonHostRequest,
-  stage,
   terms,
 }: {
-  companionTargetId?: string;
   config: CourseG04L03SourceGlossaryConfig;
   controlsReady: boolean;
   frame: number;
   lang: "en" | "es";
   onLessonHostRequest: AnimationRendererProps["onLessonHostRequest"];
-  stage: Readonly<{width: number; height: number}>;
   terms: readonly CourseG04L03SourceGlossaryTerm[];
 }) {
   const [requestStatus, setRequestStatus] = useState<
@@ -120,39 +116,35 @@ function GlossaryTermButtons({
     );
   };
 
-  const companion = (
+  return (
     <section
       aria-label={
         lang === "es"
           ? "Términos clave vinculados a esta página"
           : "Key Terms linked from this page"
       }
-      className="course-g04-l03-source-glossary-companion"
+      className="course-g04-l03-source-glossary-stage-surface"
       data-behavior-parity-established="false"
       data-current-js-controls-ready={controlsReady ? "true" : "false"}
       data-glossary-source-authority={config.glossaryAuthority}
       data-glossary-source-disposition={config.glossarySourceDisposition}
       data-page-interaction-companion-surface="source-glossary"
+      data-source-glossary-placement="visible-stage-content-bottom"
       data-source-animation-stop-modeled={
         config.playbackDisposition ?? "host-support-pause-session"
       }
       data-source-host-action={config.sourceAction}
       data-source-term-count={terms.length}
     >
-      <div>
-        <span>HELP Math 2.0</span>
-        <strong>
-          {lang === "es"
-            ? "Explorar términos de esta página"
-            : "Explore this page’s source terms"}
-        </strong>
-        <p>
-          {lang === "es"
-            ? "Abre el panel moderno de Términos clave; no ejecuta ActionScript heredado."
-            : "Opens the modern Key Terms panel without executing legacy ActionScript."}
-        </p>
-      </div>
-      <div role="group">
+      <span className="sr-only">
+        {lang === "es"
+          ? "Abrir un término clave de esta animación"
+          : "Open a Key Term from this animation"}
+      </span>
+      <div
+        aria-label={lang === "es" ? "Términos clave" : "Key Terms"}
+        role="group"
+      >
         {terms.map((term) => (
           <button
             data-source-character-id={term.characterId}
@@ -175,57 +167,6 @@ function GlossaryTermButtons({
       ) : null}
     </section>
   );
-
-  return (
-    <>
-      <div
-        aria-label={lang === "es" ? "Términos de la fuente" : "Source terms"}
-        className="course-g04-l03-source-glossary-stage-hotspots"
-        data-source-hotspot-geometry-authority="static-audit-bounds-candidate"
-        data-source-hotspot-surface="native-stage"
-        role="group"
-        style={{
-          aspectRatio: "4 / 3",
-          left: 0,
-          pointerEvents: "none",
-          position: "absolute",
-          top: 0,
-          width: "100%",
-          zIndex: 3,
-        }}
-      >
-        {terms.map((term) => (
-          <button
-            aria-label={`${lang === "es" ? "Abrir Términos clave" : "Open Key Terms"}: ${term.labels[lang]}`}
-            data-source-character-id={term.characterId}
-            data-source-depth={term.depth}
-            data-source-key-attribute={term.keyAttribute}
-            disabled={!controlsReady}
-            key={term.id}
-            onClick={(event) => openTerm(term.id, event.currentTarget)}
-            style={{
-              ...buildCourseG04L03SourceGlossaryHitStyle(term, stage),
-              background: "transparent",
-              border: 0,
-              boxSizing: "border-box",
-              color: "transparent",
-              cursor: controlsReady ? "pointer" : "default",
-              padding: 0,
-              pointerEvents: "auto",
-              position: "absolute",
-            }}
-            type="button"
-          >
-            {term.labels[lang]}
-          </button>
-        ))}
-      </div>
-
-      <PageInteractionCompanionPortal targetId={companionTargetId}>
-        {companion}
-      </PageInteractionCompanionPortal>
-    </>
-  );
 }
 
 function SourceGlossaryInteraction({
@@ -233,9 +174,8 @@ function SourceGlossaryInteraction({
   frame,
   lang,
   onLessonHostRequest,
-  pageInteractionCompanionTargetId,
+  pageInteractionStageTargetId,
   replay = 0,
-  stage,
   terms,
   visualHostRef,
 }: Pick<
@@ -243,11 +183,10 @@ function SourceGlossaryInteraction({
   | "frame"
   | "lang"
   | "onLessonHostRequest"
-  | "pageInteractionCompanionTargetId"
+  | "pageInteractionStageTargetId"
   | "replay"
 > & {
   config: CourseG04L03SourceGlossaryConfig;
-  stage: Readonly<{width: number; height: number}>;
   terms: readonly CourseG04L03SourceGlossaryTerm[];
   visualHostRef: React.RefObject<HTMLDivElement | null>;
 }) {
@@ -265,7 +204,11 @@ function SourceGlossaryInteraction({
         '[data-candidate-status="source-static-engineering-not-strict"]' +
           "[data-canvas-status]",
       );
-      setCanvasReady(candidate?.dataset.canvasStatus === "ready");
+      const status = candidate?.dataset.canvasStatus;
+      // `updating` retains the last successfully painted bitmap while the next
+      // frame is drawn. Keep glossary controls stable across that atomic visual
+      // handoff; capture readiness remains separately fail-closed on Canvas.
+      setCanvasReady(status === "ready" || status === "updating");
     };
     update();
     const observer = new MutationObserver(update);
@@ -281,143 +224,106 @@ function SourceGlossaryInteraction({
   return (
     <>
       <style>{`
-        .course-g04-l03-source-glossary-stage-hotspots button:focus-visible {
-          background: rgb(255 245 133 / 22%) !important;
-          outline: 5px solid #ffdd29;
-          outline-offset: 2px;
-        }
-
-        .course-g04-l03-source-glossary-companion {
-          background: linear-gradient(155deg, #f7fbff, #e4f3ff);
-          border: 2px solid #225a96;
-          border-radius: 12px;
+        .course-g04-l03-source-glossary-stage-surface {
+          align-content: end;
+          aspect-ratio: 4 / 3;
           box-sizing: border-box;
           color: #17395f;
-          display: none;
+          display: grid;
           font-family: ${SOURCE_FONT};
-          gap: 12px;
-          margin: 12px 0 0;
-          padding: 14px;
+          gap: 6px;
+          bottom: var(--lesson-authored-content-bottom-inset, 0%);
+          left: 0;
+          padding: 0 clamp(8px, 2.25%, 18px) clamp(8px, 2%, 14px);
+          pointer-events: none;
+          position: absolute;
+          width: 100%;
+          z-index: 4;
+        }
+
+        .course-g04-l03-source-glossary-stage-surface > div[role="group"] {
+          backdrop-filter: blur(10px);
+          background: rgb(244 249 255 / 92%);
+          border: 2px solid rgb(34 90 150 / 82%);
+          border-radius: 13px;
+          box-shadow: 0 7px 18px rgb(18 57 106 / 20%);
+          display: grid;
+          gap: clamp(5px, 1.1cqw, 9px);
+          grid-auto-columns: minmax(0, 1fr);
+          grid-auto-flow: column;
+          padding: clamp(5px, 1.1cqw, 9px);
+          pointer-events: auto;
           width: 100%;
         }
 
-        .course-g04-l03-source-glossary-companion span {
-          color: #0758ba;
-          display: block;
-          font-size: 12px;
-          font-weight: 900;
-          letter-spacing: .06em;
-          text-transform: uppercase;
-        }
-
-        .course-g04-l03-source-glossary-companion strong {
-          display: block;
-          font-size: 21px;
-          line-height: 1.15;
-          margin-top: 3px;
-        }
-
-        .course-g04-l03-source-glossary-companion p {
-          font-family: system-ui, sans-serif;
-          font-size: 14px;
-          line-height: 1.35;
-          margin: 5px 0 0;
-        }
-
-        .course-g04-l03-source-glossary-companion > div[role="group"] {
-          display: grid;
-          gap: 9px;
-          grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
-        }
-
-        .course-g04-l03-source-glossary-companion button {
-          background: linear-gradient(#fff6aa, #ffc62b);
-          border: 2px solid #b75a00;
+        .course-g04-l03-source-glossary-stage-surface button {
+          background: linear-gradient(180deg, #fff9d5, #ffe38b);
+          border: 2px solid #8b6a13;
           border-radius: 9px;
           color: #102b70;
           cursor: pointer;
-          font: 800 16px ${SOURCE_FONT};
+          font: 800 clamp(.75rem, 1.8cqw, 1rem) ${SOURCE_FONT};
+          line-height: 1.08;
           min-height: 48px;
-          min-width: 48px;
-          padding: 8px 12px;
+          min-width: 0;
+          overflow-wrap: anywhere;
+          padding: 6px clamp(4px, 1.2cqw, 10px);
         }
 
-        .course-g04-l03-source-glossary-companion button:focus-visible {
-          outline: 4px solid #0758ba;
-          outline-offset: 3px;
+        .course-g04-l03-source-glossary-stage-surface button:hover {
+          background: linear-gradient(180deg, #fffdf0, #ffd95d);
         }
 
-        .course-g04-l03-source-glossary-companion button:disabled {
+        .course-g04-l03-source-glossary-stage-surface button:focus-visible {
+          box-shadow: inset 0 0 0 4px #0758ba;
+          outline: 3px solid #ffcc00;
+          outline-offset: 1px;
+        }
+
+        .course-g04-l03-source-glossary-stage-surface button:disabled {
           cursor: default;
-          opacity: .55;
+          opacity: .58;
         }
 
-        @media (max-width: 640px), (any-pointer: coarse), (min-width: 1280px) {
-          .course-g04-l03-source-glossary-stage-hotspots {
-            display: none;
-          }
-
-          .course-g04-l03-source-glossary-companion {
-            display: grid;
-          }
+        .course-g04-l03-source-glossary-stage-surface > p[role="alert"] {
+          background: rgb(255 246 225 / 96%);
+          border: 1px solid #9a5e10;
+          border-radius: 8px;
+          font: 700 clamp(.68rem, 1.6cqw, .9rem) system-ui, sans-serif;
+          margin: 0;
+          padding: 5px 8px;
+          text-align: center;
         }
 
-        @media (min-width: 1280px) {
-          .lesson-shell2__learning-column:has(
-              > .lesson-shell2__page-interaction-companion
-                .course-g04-l03-source-glossary-companion
-            ) > .lesson-shell2__page-interaction-companion {
-            align-self: start;
-            display: block;
-            grid-column: 2;
-            grid-row: 2;
-            max-height: min(340px, 38vh);
-            min-width: 0;
-            overflow: auto;
-            overscroll-behavior: contain;
-            scrollbar-gutter: stable;
-            width: 100%;
+        @media (max-width: 520px) {
+          .course-g04-l03-source-glossary-stage-surface {
+            padding-bottom: 5px;
+            padding-inline: 5px;
           }
 
-          .lesson-shell2__learning-column:has(
-              > .lesson-shell2__page-interaction-companion
-                .course-g04-l03-source-glossary-companion
-            ) > .lesson-shell2__legacy-stage {
-            grid-row: 1 / span 5;
+          .course-g04-l03-source-glossary-stage-surface > div[role="group"] {
+            border-radius: 9px;
+            gap: 4px;
+            padding: 4px;
           }
 
-          .lesson-shell2__learning-column:has(
-              > .lesson-shell2__page-interaction-companion
-                .course-g04-l03-source-glossary-companion
-            ) > .lesson-shell2__modern-toolbar {
-            grid-row: 3;
-          }
-
-          .lesson-shell2__learning-column:has(
-              > .lesson-shell2__page-interaction-companion
-                .course-g04-l03-source-glossary-companion
-            ) > .lesson-shell2__transport-boundary {
-            grid-row: 4;
-          }
-
-          .lesson-shell2__learning-column:has(
-              > .lesson-shell2__page-interaction-companion
-                .course-g04-l03-source-glossary-companion
-            ) > .lesson-shell2__learning-actions {
-            grid-row: 5;
+          .course-g04-l03-source-glossary-stage-surface button {
+            border-width: 1.5px;
+            min-height: 44px;
+            padding-inline: 3px;
           }
         }
       `}</style>
-      <GlossaryTermButtons
-        companionTargetId={pageInteractionCompanionTargetId}
-        config={config}
-        controlsReady={controlsReady}
-        frame={frame}
-        lang={lang}
-        onLessonHostRequest={onLessonHostRequest}
-        stage={stage}
-        terms={terms}
-      />
+      <VisibleStageContentPortal targetId={pageInteractionStageTargetId}>
+        <GlossaryTermButtons
+          config={config}
+          controlsReady={controlsReady}
+          frame={frame}
+          lang={lang}
+          onLessonHostRequest={onLessonHostRequest}
+          terms={terms}
+        />
+      </VisibleStageContentPortal>
     </>
   );
 }
@@ -471,24 +377,25 @@ export function createCourseG04L03SourceGlossaryCandidate<
           width: "100%",
         }}
       >
-        <div ref={visualHostRef}>
+        <div
+          data-source-glossary-visual-plane="source-static-canvas"
+          ref={visualHostRef}
+          style={{position: "relative"}}
+        >
           <SourceStaticRenderer {...props} />
+          {interactionVisible ? (
+            <SourceGlossaryInteraction
+              config={config}
+              frame={props.frame}
+              lang={props.lang}
+              onLessonHostRequest={props.onLessonHostRequest}
+              pageInteractionStageTargetId={props.pageInteractionStageTargetId}
+              replay={props.replay}
+              terms={terms}
+              visualHostRef={visualHostRef}
+            />
+          ) : null}
         </div>
-        {interactionVisible ? (
-          <SourceGlossaryInteraction
-            config={config}
-            frame={props.frame}
-            lang={props.lang}
-            onLessonHostRequest={props.onLessonHostRequest}
-            pageInteractionCompanionTargetId={
-              props.pageInteractionCompanionTargetId
-            }
-            replay={props.replay}
-            stage={candidate.movie.stage}
-            terms={terms}
-            visualHostRef={visualHostRef}
-          />
-        ) : null}
       </div>
     );
   }
@@ -505,11 +412,11 @@ export function createCourseG04L03SourceGlossaryCandidate<
       deterministicCaptureOverlayEnabled: false,
     }),
     currentJavascriptInteractionScope: Object.freeze([
-      "source-frame-window-bound-hotspots",
-      "source-audit-bounds-candidate-with-44px-responsive-minimum",
+      "source-frame-window-bound-term-controls",
+      "source-audit-bounds-retained-not-rendered",
       "typed-memory-only-keyterm-host-request",
       playbackScope,
-      "wide-right-rail-and-mobile-companion-controls",
+      "current-js-visible-stage-bottom-keyterm-controls",
       "deterministic-capture-overlay-suppression",
     ]),
     sourceCanvasControlStatus: "disabled-preserved-visual-only",

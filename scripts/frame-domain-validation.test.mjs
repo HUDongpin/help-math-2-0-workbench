@@ -5,6 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { gzipSync } from "node:zlib";
 import { PNG } from "pngjs";
 
 import {
@@ -907,9 +908,15 @@ async function createDispositionFixture() {
   const animationId = "course-disposition-fixture";
   const sourceBytes = Buffer.from("source swf fixture\n");
   const swfmillBytes = Buffer.from("hash-bound swfmill fixture\n");
+  const ffdecScriptsBytes = Buffer.from("hash-bound ffdec scripts fixture\n");
+  const ffdecScriptsGzip = gzipSync(ffdecScriptsBytes);
   await writeFile(path.join(root, "source.swf"), sourceBytes);
   await mkdir(path.join(root, "audit", "machine"), { recursive: true });
   await writeFile(path.join(root, "audit", "machine", "swfmill.xml.gz"), swfmillBytes);
+  await writeFile(
+    path.join(root, "audit", "machine", "ffdec-scripts.txt.gz"),
+    ffdecScriptsGzip,
+  );
   const manifest = {
     animationId,
     status: "complete",
@@ -960,6 +967,12 @@ async function createDispositionFixture() {
         excludedPaths: [...TECHNICAL_MANIFEST_PROJECTION.excludedPaths],
       },
       { artifactId: "swfmill-xml", path: "audit/machine/swfmill.xml.gz", sha256: digest(swfmillBytes) },
+      {
+        artifactId: "ffdec-scripts",
+        path: "audit/machine/ffdec-scripts.txt.gz",
+        sha256: digest(ffdecScriptsGzip),
+        uncompressedSha256: digest(ffdecScriptsBytes),
+      },
     ],
     timelineInventory: [
       {

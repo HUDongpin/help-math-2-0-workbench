@@ -1,6 +1,9 @@
 "use client";
 
-import {createCourseG04L03FinalQuizFunctionalRenderer} from "./course-g04-l03-fq-002";
+import {
+  COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT,
+  createCourseG04L03FinalQuizFunctionalRenderer,
+} from "./course-g04-l03-fq-002";
 import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
 import {
   COURSE_G04_L03_FQ_003_INTERACTION_AUTHORITY,
@@ -26,12 +29,16 @@ export const CourseG04L03Fq003Renderer =
   createCourseG04L03FinalQuizFunctionalRenderer({
     animationId: "course-g04-l03-fq-003",
     createInteractionState: createCourseG04L03Fq003InteractionState,
+    functionalEntryFrame: FUNCTIONAL_ENTRY_FRAME,
     functionalHostFrameEnd: 43,
     functionalScope: "fq003-sequential-twenty-five-source-bound-final-quiz",
     getReviewItem: getCourseG04L03Fq003ReviewItem,
     reduceInteraction: reduceCourseG04L03Fq003Interaction,
+    resultsDonorFrame: 43,
     resultsGradeLabel: "Legacy source performance level",
     sourceCandidate: candidate,
+    sourceDomain: SOURCE_DOMAIN,
+    sourceScenario: SOURCE_SCENARIO,
   });
 
 export {COURSE_G04_L03_FQ_003_SOURCE};
@@ -54,7 +61,9 @@ export const COURSE_G04_L03_FQ_003_SOURCE_CONTRACT = Object.freeze({
     "source-shape-atomic-answer-and-immediate-advance",
     "stale-and-double-answer-dispatch-rejected",
     "physical-double-click-answer-transition-lock",
-    "Q7-Q12-source-canvas-pixel-bound-target-and-choice-projection",
+    "Q7-and-Q9-Q12-source-canvas-pixel-bound-target-and-choice-projection",
+    "Q8-owner-directed-current-javascript-cross-placement-from-course-g04-l03-ts-007",
+    "Q8-cross-placement-does-not-establish-final-quiz-source-visual-parity",
     "source-legacy-raw-score-bands-preserved-with-documented-total-mismatch",
     "current-javascript-text-review-previous-next-enhancement",
     "source-question-and-review-frame-donor-projection",
@@ -70,6 +79,7 @@ export const COURSE_G04_L03_FQ_003_SOURCE_CONTRACT = Object.freeze({
   ]),
   interactionAuthority: COURSE_G04_L03_FQ_003_INTERACTION_AUTHORITY,
   interactionSource: COURSE_G04_L03_FQ_003_INTERACTION_SOURCE,
+  ownerDirectedCrossPlacement: COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT,
   sourceStaticDynamicVisibilityAndCounterParityEstablished: false,
   sourceQuestionSelectionParityEstablished: false,
   sourceReviewVisualParityEstablished: false,

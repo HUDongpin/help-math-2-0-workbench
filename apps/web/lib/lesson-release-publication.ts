@@ -1,9 +1,11 @@
 import type {MigrationStatus} from './catalog-overlays';
 
 export interface LessonReleaseMember {
+  placementId?: string;
   animationId: string;
   assetId: string;
   releaseRole: 'active-xml-referenced-page' | 'course-shell';
+  sourceOccurrence?: number;
 }
 
 export interface LessonReleaseScope {
@@ -154,26 +156,30 @@ const PROTECTED_ATOMIC_RELEASE_SHAPES = Object.freeze([
     grade: 4,
     lesson: 3,
     activeXmlReferencedPages: 39,
-    courseShells: 1,
+    courseShells: 0,
   }),
   Object.freeze({
     releaseId: G5_L4_ATOMIC_RELEASE_ID,
     grade: 5,
     lesson: 4,
     activeXmlReferencedPages: 54,
-    courseShells: 1,
+    courseShells: 0,
   }),
   Object.freeze({
     releaseId: G5_L5_ATOMIC_RELEASE_ID,
     grade: 5,
     lesson: 5,
     activeXmlReferencedPages: 56,
-    courseShells: 1,
+    courseShells: 0,
   }),
 ]) satisfies readonly ProtectedAtomicReleaseShape[];
 
 function protectedShapeForReleaseId(releaseId: string): ProtectedAtomicReleaseShape | undefined {
   return PROTECTED_ATOMIC_RELEASE_SHAPES.find((shape) => shape.releaseId === releaseId);
+}
+
+export function isProtectedAtomicReleaseId(releaseId: string): boolean {
+  return protectedShapeForReleaseId(releaseId) !== undefined;
 }
 
 export function protectedAtomicReleaseIdForScope(

@@ -14,7 +14,10 @@ A green build, deterministic renderer audit, current-JS approval, complete imple
 
 ## Release A Lesson Atomically
 
-- Define the lesson shell and exact required placement set in the reviewed lesson-release source.
+- Define the exact required active lesson-page placement set and the modern My
+  Lesson host-integration contract in the reviewed lesson-release source. The
+  preserved legacy Flash course-shell SWF is excluded from migration and
+  release membership under the 2026-08-16 Owner decision in `AGENTS.md`.
 - Require every included animation placement to be strict complete and hash-bound to the current completion ledger.
 - Rebuild and check the lesson-release ledger with `npm run release-ledger:build` and `npm run release-ledger:check`.
 - Treat an eligible `catalog/lesson-release-ledger.json` entry as the technical
@@ -23,7 +26,9 @@ A green build, deterministic renderer audit, current-JS approval, complete imple
 - Open learner-facing routes only after a current `EvidenceReceiptV1` is
   admitted by the externally anchored production trust adapter and binds
   accepted Controlled Preview, Staged, and Owner-promotion decisions.
-- If one required page, shared shell transition, navigation trace, language, audio cue, review, or manifest binding is pending, keep the whole lesson unpublished.
+- If one required page, page-dependent modern-host adapter, navigation trace,
+  language, audio cue, review, or manifest binding is pending, keep the whole
+  lesson unpublished.
 
 Do not expose draft, discovered, current-JS-only, or stale-hash migrations in the public product library. Keep preview, internal status, and learner-facing release surfaces distinct.
 

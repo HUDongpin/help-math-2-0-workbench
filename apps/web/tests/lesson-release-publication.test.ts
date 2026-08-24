@@ -227,7 +227,7 @@ test('controlled nonmembers stay hidden while unrelated strict items retain indi
   }), complete), false);
 });
 
-test('protected G4 L3 shape drift cannot publish even when its forged ledger agrees', () => {
+test('protected G4 L3 page-only shape drift cannot publish even when its forged ledger agrees', () => {
   const pageMembers = Array.from({length: 39}, (_, index) => ({
     animationId: `g4-l3-page-${index + 1}`,
     assetId: `asset-${index + 1}`,
@@ -236,13 +236,9 @@ test('protected G4 L3 shape drift cannot publish even when its forged ledger agr
   const exactDefinition: LessonReleaseDefinition = {
     releaseId: G4_L3_ATOMIC_RELEASE_ID,
     publicationMode: 'atomic',
-    expectedMemberCount: 40,
+    expectedMemberCount: 39,
     scope: {collection: 'course', grade: 4, lesson: 3, excludeNonMembers: true},
-    members: [...pageMembers, {
-      animationId: 'g4-l3-shell',
-      assetId: 'asset-shell',
-      releaseRole: 'course-shell',
-    }],
+    members: pageMembers,
   };
   assert.equal(hasExactG4L3AtomicShape(exactDefinition), true);
   assert.equal(hasExactG4L3AtomicShape({
@@ -251,17 +247,23 @@ test('protected G4 L3 shape drift cannot publish even when its forged ledger agr
   }), false);
   assert.equal(hasExactG4L3AtomicShape({
     ...exactDefinition,
-    members: exactDefinition.members.map((member) => ({
-      ...member,
-      releaseRole: 'active-xml-referenced-page' as const,
-    })),
+    expectedMemberCount: 40,
+    members: [...exactDefinition.members, {
+      animationId: 'g4-l3-shell',
+      assetId: 'asset-shell',
+      releaseRole: 'course-shell' as const,
+    }],
   }), false);
 
-  const driftedMembers = pageMembers;
+  const driftedMembers = [...pageMembers, {
+    animationId: 'g4-l3-shell',
+    assetId: 'asset-shell',
+    releaseRole: 'course-shell' as const,
+  }];
   const driftedDefinition: LessonReleaseDefinition = {
     releaseId: G4_L3_ATOMIC_RELEASE_ID,
     publicationMode: 'atomic',
-    expectedMemberCount: 39,
+    expectedMemberCount: 40,
     scope: {collection: 'course', grade: 4, lesson: 3, excludeNonMembers: true},
     members: driftedMembers,
   };
@@ -269,13 +271,13 @@ test('protected G4 L3 shape drift cannot publish even when its forged ledger agr
   const driftedLedger: LessonReleaseLedgerEntry = {
     releaseId: driftedDefinition.releaseId,
     publicationMode: 'atomic',
-    expectedMemberCount: 39,
-    strictCompleteCount: 39,
+    expectedMemberCount: 40,
+    strictCompleteCount: 40,
     missingCount: 0,
     assetMismatchCount: 0,
     published: true,
     status: 'published',
-    gate: {kind: 'atomic-all-members-strict', requiredCount: 39, admittedCount: 39, open: true},
+    gate: {kind: 'atomic-all-members-strict', requiredCount: 40, admittedCount: 40, open: true},
     members: driftedMembers.map((member) => ({
       animationId: member.animationId,
       assetId: member.assetId,
@@ -290,12 +292,12 @@ test('protected G4 L3 shape drift cannot publish even when its forged ledger agr
     definitions: [driftedDefinition],
     ledgerEntries: [driftedLedger],
   });
-  assert.equal(state?.strictCompleteMemberCount, 39);
+  assert.equal(state?.strictCompleteMemberCount, 40);
   assert.equal(state?.published, false);
   assert.ok(state?.diagnostics.includes('protected atomic lesson release shape is invalid'));
 });
 
-test('protected G5 L4 requires 54 XML pages followed by one exact shell role', () => {
+test('protected G5 L4 requires exactly 54 page-only XML members', () => {
   const pageMembers = Array.from({length: 54}, (_, index) => ({
     animationId: `g5-l4-page-${index + 1}`,
     assetId: `g5-asset-${index + 1}`,
@@ -304,27 +306,29 @@ test('protected G5 L4 requires 54 XML pages followed by one exact shell role', (
   const exact: LessonReleaseDefinition = {
     releaseId: G5_L4_ATOMIC_RELEASE_ID,
     publicationMode: 'atomic',
-    expectedMemberCount: 55,
+    expectedMemberCount: 54,
     scope: {collection: 'course', grade: 5, lesson: 4, excludeNonMembers: true},
-    members: [...pageMembers, {
-      animationId: 'shell-course-g05-l04-index-local',
-      assetId: 'g5-shell-asset',
-      releaseRole: 'course-shell',
-    }],
+    members: pageMembers,
   };
   assert.equal(hasExactG5L4AtomicShape(exact), true);
-  assert.equal(hasExactG5L4AtomicShape({...exact, expectedMemberCount: 54, members: exact.members.slice(0, 54)}), false);
   assert.equal(hasExactG5L4AtomicShape({
     ...exact,
-    members: exact.members.map((member) => ({
-      ...member,
-      releaseRole: 'active-xml-referenced-page' as const,
-    })),
+    expectedMemberCount: 55,
+    members: [...exact.members, {
+      animationId: 'shell-course-g05-l04-index-local',
+      assetId: 'g5-shell-asset',
+      releaseRole: 'course-shell' as const,
+    }],
+  }), false);
+  assert.equal(hasExactG5L4AtomicShape({
+    ...exact,
+    expectedMemberCount: 53,
+    members: exact.members.slice(0, 53),
   }), false);
   assert.equal(hasExactG5L4AtomicShape({...exact, scope: {...exact.scope, lesson: 5}}), false);
 });
 
-test('protected G5 L5 requires 56 XML pages followed by one exact shell role', () => {
+test('protected G5 L5 requires exactly 56 page-only XML members', () => {
   const pageMembers = Array.from({length: 56}, (_, index) => ({
     animationId: `g5-l5-page-${index + 1}`,
     assetId: `g5-l5-asset-${index + 1}`,
@@ -333,25 +337,27 @@ test('protected G5 L5 requires 56 XML pages followed by one exact shell role', (
   const exact: LessonReleaseDefinition = {
     releaseId: G5_L5_ATOMIC_RELEASE_ID,
     publicationMode: 'atomic',
-    expectedMemberCount: 57,
+    expectedMemberCount: 56,
     scope: {collection: 'course', grade: 5, lesson: 5, excludeNonMembers: true},
-    members: [...pageMembers, {
-      animationId: 'shell-course-g05-l05-index-local',
-      assetId: 'g5-l5-shell-asset',
-      releaseRole: 'course-shell',
-    }],
+    members: pageMembers,
   };
   assert.equal(hasExactG5L5AtomicShape(exact), true);
   assert.equal(
-    hasExactG5L5AtomicShape({...exact, expectedMemberCount: 56, members: exact.members.slice(0, 56)}),
+    hasExactG5L5AtomicShape({
+      ...exact,
+      expectedMemberCount: 57,
+      members: [...exact.members, {
+        animationId: 'shell-course-g05-l05-index-local',
+        assetId: 'g5-l5-shell-asset',
+        releaseRole: 'course-shell' as const,
+      }],
+    }),
     false,
   );
   assert.equal(hasExactG5L5AtomicShape({
     ...exact,
-    members: exact.members.map((member) => ({
-      ...member,
-      releaseRole: 'active-xml-referenced-page' as const,
-    })),
+    expectedMemberCount: 55,
+    members: exact.members.slice(0, 55),
   }), false);
   assert.equal(hasExactG5L5AtomicShape({...exact, scope: {...exact.scope, lesson: 4}}), false);
 });

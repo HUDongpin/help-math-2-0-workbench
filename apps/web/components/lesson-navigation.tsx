@@ -70,9 +70,17 @@ export function LessonMap({
   const strictPageCount = descriptor.pages.filter(
     (page) => completeAnimationIds.has(page.animationId),
   ).length;
-  const strictShellCount = completeAnimationIds.has(descriptor.shell.animationId) ? 1 : 0;
-  const shellVisible = auditPreview || releaseOpen;
-  const shellComplete = completeAnimationIds.has(descriptor.shell.animationId);
+  const legacyShell = descriptor.schemaVersion === 1
+    ? descriptor.shell
+    : null;
+  const strictShellCount = legacyShell &&
+      completeAnimationIds.has(legacyShell.animationId)
+    ? 1
+    : 0;
+  const shellVisible = Boolean(legacyShell) && (auditPreview || releaseOpen);
+  const shellComplete = Boolean(
+    legacyShell && completeAnimationIds.has(legacyShell.animationId),
+  );
   const idPrefix = descriptor.releaseId.replace(/[^a-z0-9_-]/gi, '-');
 
   return <div
@@ -82,7 +90,9 @@ export function LessonMap({
     data-course-shell-count={descriptor.courseShellCount}
     data-current-strict-page-count={strictPageCount}
     data-current-strict-shell-count={strictShellCount}
-    data-lesson-contract="release-driven-active-xml-order-v1"
+    data-lesson-contract={descriptor.schemaVersion === 2
+      ? 'release-driven-page-only-active-xml-order-v2'
+      : 'release-driven-active-xml-order-v1'}
     data-release-id={descriptor.releaseId}
     data-release-open={releaseOpen ? 'true' : 'false'}
     data-release-published={releasePublished ? 'true' : 'false'}
@@ -92,26 +102,30 @@ export function LessonMap({
         ? (spanish ? 'Mapa de auditoría neutral respecto a la aceptación' : 'Acceptance-neutral audit map')
         : (spanish ? 'Lección publicada como una unidad completa' : 'Lesson published as one complete unit')}</strong>
       <p>{spanish
-        ? `El release conserva ${descriptor.activePageCount} páginas activas y 1 shell. Solo ${strictPageCount} páginas y ${strictShellCount} shell están admitidos actualmente por el ledger estricto.`
-        : `The release preserves ${descriptor.activePageCount} active pages and 1 shell. Only ${strictPageCount} pages and ${strictShellCount} shell are currently admitted by the strict ledger.`}</p>
+        ? descriptor.schemaVersion === 2
+          ? `El release page-only contiene ${descriptor.activePageCount} páginas activas. El ledger estricto admite actualmente ${strictPageCount} páginas; el shell Flash heredado no es miembro del release.`
+          : `El contrato histórico conserva ${descriptor.activePageCount} páginas activas y 1 shell. Solo ${strictPageCount} páginas y ${strictShellCount} shell están admitidos actualmente por el ledger estricto.`
+        : descriptor.schemaVersion === 2
+          ? `The page-only release contains ${descriptor.activePageCount} active pages. The strict ledger currently admits ${strictPageCount} pages; the legacy Flash shell is not a release member.`
+          : `The historical contract preserves ${descriptor.activePageCount} active pages and 1 shell. Only ${strictPageCount} pages and ${strictShellCount} shell are currently admitted by the strict ledger.`}</p>
       {auditPreview ? <p>{spanish
         ? 'La presencia en este mapa no significa paridad con Flash, aceptación de audio, revisión humana o del propietario, finalización estricta ni publicación.'
         : 'Presence in this map does not mean Flash parity, audio acceptance, human or owner review, strict completion, or publication.'}</p> : null}
     </aside>
 
-    {shellVisible ? <section className="lesson-contract-shell" aria-labelledby={`${idPrefix}-shell-heading`}>
+    {shellVisible && legacyShell ? <section className="lesson-contract-shell" aria-labelledby={`${idPrefix}-shell-heading`}>
       <div>
         <p className="eyebrow">{spanish
-          ? `Shell del curso · elemento ${descriptor.shell.memberOrdinal}`
-          : `Course shell · item ${descriptor.shell.memberOrdinal}`}</p>
+          ? `Shell del curso · elemento ${legacyShell.memberOrdinal}`
+          : `Course shell · item ${legacyShell.memberOrdinal}`}</p>
         <h2 id={`${idPrefix}-shell-heading`}>{spanish ? 'Navegación de la lección' : 'Lesson navigation shell'}</h2>
-        <p><code>{descriptor.shell.animationId}</code></p>
+        <p><code>{legacyShell.animationId}</code></p>
       </div>
       <div>
-        <span className={`status-chip status-chip--${statusFor(statusById, descriptor.shell.animationId)}`}>{statusFor(statusById, descriptor.shell.animationId)}</span>
+        <span className={`status-chip status-chip--${statusFor(statusById, legacyShell.animationId)}`}>{statusFor(statusById, legacyShell.animationId)}</span>
         <Link
           data-audit-placeholder={shellComplete ? undefined : 'true'}
-          href={auditHref(descriptor.shell.animationId, descriptor.releaseId, shellComplete)}
+          href={auditHref(legacyShell.animationId, descriptor.releaseId, shellComplete)}
         >{spanish ? 'Abrir proyección de auditoría del shell' : 'Open shell audit projection'} →</Link>
       </div>
     </section> : null}
@@ -205,7 +219,8 @@ export function LessonContextNavigation({
   releasePublished: boolean;
 }) {
   const page = findLessonPage(descriptor, animationId);
-  const shell = animationId === descriptor.shell.animationId;
+  const shell = descriptor.schemaVersion === 1 &&
+    animationId === descriptor.shell.animationId;
   if (!page && !shell) return null;
 
   const spanish = locale === 'es';

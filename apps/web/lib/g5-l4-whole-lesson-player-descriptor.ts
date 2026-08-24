@@ -591,9 +591,31 @@ export function buildG5L4WholeLessonPlayerDescriptor(
     visualSkin: Object.freeze({
       kind: 'legacy-composite',
       layoutId: 'help-math-course-shell-800x600-v1',
+      // Grade 5 Lesson 4 uses the same responsive HELP Math 2.0 host as the
+      // admitted Grade 4 lesson. This host declaration changes neither the 54
+      // source-bound page renderers nor any fidelity or publication gate.
+      presentations: Object.freeze([
+        'legacy-composite',
+        'modern-wide',
+      ] as const),
       chromeAsset:
         '/flash-assets/courses/shell-course-g05-l04-index-local/root-frames/frame-0049.png',
-      header: Object.freeze({height: 109}),
+      header: Object.freeze({
+        height: 109,
+        title: Object.freeze({
+          kind: 'source-declared-lesson-title',
+          sourceField: 'NewTitle1',
+          fontFamily: 'Verdana',
+          fontSize: 25,
+          color: '#ffffff',
+          bounds: Object.freeze({left: 82, top: 48, width: 712, height: 59}),
+          boundsEvidence:
+            'chrome asset rows 44-107 carry no painted glyph right of x=80, ' +
+            'so the band is the clear header strip below the painted ' +
+            '<CourseName> wordmark, inset to clear the HELP PROGRAM logo on ' +
+            'the left and the header hit areas that end at row 47',
+        }),
+      }),
       footer: Object.freeze({height: 76}),
       controls: Object.freeze({
         kind: 'source-derived-diagnostic-candidate',

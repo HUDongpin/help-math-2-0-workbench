@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l3-g5-l4-strict-ledger-currentness-successor",
+  "issuedOn": "2026-08-07",
+  "revision": "r2",
+  "status": "ledgers-current-ts006-two-diagnostics-closed-strict-zero-publication-zero",
+  "generator": {
+    "path": "scripts/build-g4-l3-g5-l4-strict-ledger-currentness-successor-2026-08-07-r2.mjs",
+    "bytes": 11688,
+    "sha256": "8b7c821a6baae96ada58a474eaab72f705ed6309e953a6cd8f8726cd94b0e5bf"
+  },
+  "predecessorHead": "42e7f80ce70aaa3819af2f7158e15f5da5470cce",
+  "predecessorLedgers": {
+    "completion": {
+      "path": "catalog/completion-ledger.json",
+      "head": "42e7f80ce70aaa3819af2f7158e15f5da5470cce",
+      "bytes": 122550,
+      "sha256": "3b0a159ea3860d383b89582abd605bcfbe8933ae3bdfeb3e19bc42acdaa1f2db"
+    },
+    "lessonRelease": {
+      "path": "catalog/lesson-release-ledger.json",
+      "head": "42e7f80ce70aaa3819af2f7158e15f5da5470cce",
+      "bytes": 102724,
+      "sha256": "1315e554a94a0461d365c50090f91a09e3d83724826d80a006bccbc8159c9fbc"
+    }
+  },
+  "currentLedgers": {
+    "completion": {
+      "path": "catalog/completion-ledger.json",
+      "bytes": 122550,
+      "sha256": "e874a80c71fe3b9e59cee80dbd61ff000aaf3f2ebc537252b0010652a6defefa",
+      "generatedMarker": "sha256:e5e6215027c452ccd9ff3bd63d4cbb386d8bc5c08cf7d5886c22f3a26b8b8374",
+      "migrationDirectories": 215,
+      "strictComplete": 0,
+      "strictFailed": 215
+    },
+    "lessonRelease": {
+      "path": "catalog/lesson-release-ledger.json",
+      "bytes": 102724,
+      "sha256": "45c2a0bfcf1704391e6fac327dd59158fa235afeddc10906b0dc45ba0ab35347",
+      "generatedMarker": "sha256:ab5ef5fdd18771f7fc1cd42664eba7b3bc57a5af3bd9740f8ee2f94d063c780e",
+      "lessonReleaseCount": 4,
+      "publishedLessonReleaseCount": 0
+    }
+  },
+  "exactTransition": {
+    "completionLedger": {
+      "changedSemanticFieldCount": 1,
+      "changedField": "diagnostics[course-g04-l03-ts-006].errorCount",
+      "predecessor": 47,
+      "successor": 45,
+      "generatedMarkerRecomputed": true,
+      "strictEntryAdded": false,
+      "strictEntryRemoved": false
+    },
+    "lessonReleaseLedger": {
+      "changedSemanticFieldCount": 0,
+      "completionLedgerSha256Rebound": true,
+      "completionLedgerGeneratedMarkerRebound": true,
+      "generatedMarkerRecomputed": true,
+      "releaseEntryChanged": false
+    }
+  },
+  "predecessorSuccessors": {
+    "strictGapR1": {
+      "path": "reports/g4-l3-g5-l4-strict-gap-currentness-successor-2026-08-07-r1.json",
+      "bytes": 30322,
+      "sha256": "e3819464138b4e3411b2b19c1633fb3fde1ec3ae6530895b7fa6091d0f45c023"
+    },
+    "currentJavascriptCaptureR1": {
+      "path": "reports/g4-l3-g5-l4-current-js-capture-successor-2026-08-07-r1.json",
+      "bytes": 10035,
+      "sha256": "fd8dc2e6a5cac4325581a3a81b46e22ee837b70076e72f2000876bf6e08fca19"
+    },
+    "developmentEpochClosureR1": {
+      "path": "reports/development-epoch-closure-2026-08-07-r1.json",
+      "bytes": 27247,
+      "sha256": "7e6a97a06887d526de62e9e33da0343ab6554de58131520948d5d9eab4464601"
+    },
+    "rewritten": false
+  },
+  "authority": {
+    "currentLedgerEvidence": true,
+    "currentJavascriptCaptureEvidence": true,
+    "authoritativeOriginalRuntime": false,
+    "fullFrameRmseAccepted": false,
+    "audioAccepted": false,
+    "interactionAccepted": false,
+    "replayAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "releaseAuthorized": false,
+    "published": false
+  }
+}

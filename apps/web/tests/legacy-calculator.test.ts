@@ -5,7 +5,9 @@ import {
   G4_L3_LEGACY_CALCULATOR_KEY_BOUNDS,
   INITIAL_LEGACY_CALCULATOR_STATE,
   legacyCalculatorKeyboardAction,
+  modernCalculatorKeyboardAction,
   reduceLegacyCalculator,
+  reduceModernCalculator,
   type LegacyCalculatorAction,
   type LegacyCalculatorSourceKey,
   type LegacyCalculatorState,
@@ -14,6 +16,15 @@ import {
 function run(actions: readonly LegacyCalculatorAction[]): LegacyCalculatorState {
   return actions.reduce(
     reduceLegacyCalculator,
+    INITIAL_LEGACY_CALCULATOR_STATE,
+  );
+}
+
+function runModern(
+  actions: readonly LegacyCalculatorAction[],
+): LegacyCalculatorState {
+  return actions.reduce(
+    reduceModernCalculator,
     INITIAL_LEGACY_CALCULATOR_STATE,
   );
 }
@@ -127,6 +138,95 @@ test('keyboard mapping is an explicit modern enhancement with a small allowlist'
   assert.deepEqual(legacyCalculatorKeyboardAction('Enter'), {type: 'equals'});
   assert.equal(legacyCalculatorKeyboardAction('Escape'), null);
   assert.equal(legacyCalculatorKeyboardAction('Backspace'), null);
+});
+
+test('modern support repeats equals and replaces a pending operator', () => {
+  assert.equal(runModern([
+    {type: 'digit', digit: '2'},
+    {type: 'operator', operator: '+'},
+    {type: 'digit', digit: '3'},
+    {type: 'equals'},
+    {type: 'equals'},
+  ]).display, '8');
+
+  assert.equal(runModern([
+    {type: 'digit', digit: '2'},
+    {type: 'operator', operator: '+'},
+    {type: 'operator', operator: '*'},
+    {type: 'digit', digit: '3'},
+    {type: 'equals'},
+  ]).display, '6');
+});
+
+test('modern support handles contextual percent and classroom-safe result text', () => {
+  assert.equal(runModern([
+    {type: 'digit', digit: '2'},
+    {type: 'digit', digit: '0'},
+    {type: 'digit', digit: '0'},
+    {type: 'operator', operator: '+'},
+    {type: 'digit', digit: '1'},
+    {type: 'digit', digit: '0'},
+    {type: 'percent'},
+    {type: 'equals'},
+  ]).display, '220');
+
+  assert.equal(runModern([
+    {type: 'decimal'},
+    {type: 'digit', digit: '1'},
+    {type: 'operator', operator: '+'},
+    {type: 'decimal'},
+    {type: 'digit', digit: '2'},
+    {type: 'equals'},
+  ]).display, '0.3');
+
+  assert.equal(runModern([
+    {type: 'digit', digit: '1'},
+    {type: 'operator', operator: '/'},
+    {type: 'digit', digit: '0'},
+    {type: 'equals'},
+  ]).display, 'Error');
+});
+
+test('modern support distinguishes C from AC when zero is an entered operand', () => {
+  const enteredZero = runModern([
+    {type: 'digit', digit: '5'},
+    {type: 'operator', operator: '+'},
+    {type: 'digit', digit: '0'},
+  ]);
+  assert.equal(enteredZero.display, '0');
+  assert.equal(enteredZero.operator, '+');
+  assert.equal(enteredZero.allClearAvailable, false);
+
+  const clearedEntry = reduceModernCalculator(
+    enteredZero,
+    {type: 'clear-display'},
+  );
+  assert.equal(clearedEntry.operator, '+');
+  assert.equal(clearedEntry.allClearAvailable, true);
+  assert.deepEqual(
+    reduceModernCalculator(clearedEntry, {type: 'clear-entry'}),
+    INITIAL_LEGACY_CALCULATOR_STATE,
+  );
+});
+
+test('modern support changes sign, deletes the last digit, and maps delete keys', () => {
+  const state = runModern([
+    {type: 'digit', digit: '1'},
+    {type: 'digit', digit: '2'},
+    {type: 'digit', digit: '3'},
+    {type: 'toggle-sign'},
+    {type: 'delete-last'},
+  ]);
+  assert.equal(state.display, '-12');
+  assert.deepEqual(
+    modernCalculatorKeyboardAction('Backspace'),
+    {type: 'delete-last'},
+  );
+  assert.deepEqual(
+    modernCalculatorKeyboardAction('Delete'),
+    {type: 'delete-last'},
+  );
+  assert.equal(legacyCalculatorKeyboardAction('Delete'), null);
 });
 
 test('all 22 source-panel keys cover their independent source centers and stay in bounds', () => {

@@ -38,8 +38,6 @@ const V2_PROOF =
   `${TRANSACTION_ROOT}/transaction-time-protected-state-proof-v2.json`;
 const PLAN = `${TRANSACTION_ROOT}/plan.json`;
 const COMMIT = `${TRANSACTION_ROOT}/commit.json`;
-const CURRENT_DERIVED_REFRESH =
-  await checkDerivedRefreshReceipt({root: PROJECT_ROOT});
 const HISTORICAL_PROTECTED_FIXTURE_SKIP =
   "v2 proof creation requires transaction-time protected bytes that are no " +
   "longer live; the immutable proof check and verified derived-refresh " +
@@ -158,8 +156,17 @@ test("existing v2 transaction proof check is idempotent and replay-safe",
     const second = await checkTransactionTimeProof({root});
     assert.deepEqual(second, first);
     assert.equal(first.liveProtectedFilesRead, 0);
-    assert.equal(CURRENT_DERIVED_REFRESH.strictComplete, 0);
-    assert.equal(CURRENT_DERIVED_REFRESH.published, false);
-    assert.equal(CURRENT_DERIVED_REFRESH.strictAcceptanceEffect, "none");
-    assert.equal(CURRENT_DERIVED_REFRESH.releaseEffect, "none");
+  });
+
+// The derived-refresh successor replays a dated wave2b transaction against the
+// live tree, so it is the one check here bound to artifacts that legitimately
+// advance. Keep it in its own test: evaluating it at module scope aborted the
+// whole file, discarding the immutable-artifact coverage above.
+test("derived-refresh successor confers no strict, acceptance, or release effect",
+  async () => {
+    const current = await checkDerivedRefreshReceipt({root: PROJECT_ROOT});
+    assert.equal(current.strictComplete, 0);
+    assert.equal(current.published, false);
+    assert.equal(current.strictAcceptanceEffect, "none");
+    assert.equal(current.releaseEffect, "none");
   });

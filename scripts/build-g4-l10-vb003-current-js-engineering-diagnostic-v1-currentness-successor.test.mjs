@@ -1,29 +1,33 @@
 #!/usr/bin/env node
 
 import assert from "node:assert/strict";
-import {
-  chmod,
-  mkdir,
-  mkdtemp,
-  realpath,
-  rm,
-  writeFile,
-} from "node:fs/promises";
-import {tmpdir} from "node:os";
-import path from "node:path";
+import {createHash} from "node:crypto";
+import {lstat, readFile} from "node:fs/promises";
 import test from "node:test";
 
 import {
   REPORT_JSON,
   REPORT_MARKDOWN,
-  buildBundle,
-  checkReport,
+  buildBundle as buildHistoricalBundle,
   parseCliArgs,
-  publishNoClobber,
   validateReport,
 } from "./build-g4-l10-vb003-current-js-engineering-diagnostic-v1-currentness-successor.mjs";
+import {
+  buildBundle as buildRelocationBundle,
+  checkReport as checkRelocationReport,
+} from "./build-g4-l10-vb003-candidate-asset-relocation-successor-v1.mjs";
 
-const bundle = await buildBundle();
+const historicalJsonBytes = await readFile(REPORT_JSON);
+const historicalMarkdownBytes = await readFile(REPORT_MARKDOWN);
+const bundle = {report: JSON.parse(historicalJsonBytes.toString("utf8"))};
+
+function sha256(bytes) {
+  return createHash("sha256").update(bytes).digest("hex");
+}
+
+function modeOf(metadata) {
+  return Number(metadata.mode & 0o777).toString(8).padStart(4, "0");
+}
 
 test("CLI is restricted to dry-run, no-clobber write, or read-only check", () => {
   assert.equal(parseCliArgs(["--dry-run"]), "--dry-run");
@@ -109,23 +113,23 @@ test("successor creates no helper, runtime, review, or acceptance authority", ()
   assert.equal(bundle.report.acceptanceEffect, "none");
 });
 
-test("publication is exact no-clobber, read-only, checkable, and tamper-evident", async () => {
-  const tempRoot = await realpath(await mkdtemp(path.join(tmpdir(),
-    "g4-l10-vb003-currentness-successor-")));
-  try {
-    await mkdir(path.join(tempRoot, "reports"));
-    const published = await publishNoClobber(bundle, {outputRoot: tempRoot});
-    assert.equal(published.disposition, "checked");
-    await assert.rejects(() => publishNoClobber(bundle,
-      {outputRoot: tempRoot}), /refusing overwrite/);
-    const jsonPath = path.join(tempRoot, REPORT_JSON);
-    const markdownPath = path.join(tempRoot, REPORT_MARKDOWN);
-    await chmod(jsonPath, 0o644);
-    await writeFile(jsonPath, `${bundle.json} `);
-    await assert.rejects(() => checkReport(bundle, tempRoot),
-      /bytes changed|SHA-256 changed/);
-    await chmod(markdownPath, 0o644);
-  } finally {
-    await rm(tempRoot, {recursive: true, force: true});
-  }
+test("the v1 successor remains frozen historical evidence and the relocation successor owns currentness", async () => {
+  assert.equal(historicalJsonBytes.length, 71333);
+  assert.equal(sha256(historicalJsonBytes),
+    "3a77a67fd1acff1f673352da59bd5bb8187bdc3a33c416836c2c1d6e5a1a77cd");
+  assert.equal(historicalMarkdownBytes.length, 1449);
+  assert.equal(sha256(historicalMarkdownBytes),
+    "a4010f5bee509bfed42252ed10f65f3cff095bf18cc453069d334c215f246a5c");
+  assert.equal(modeOf(await lstat(REPORT_JSON)), "0444");
+  assert.equal(modeOf(await lstat(REPORT_MARKDOWN)), "0444");
+  await assert.rejects(
+    () => buildHistoricalBundle(),
+    /public\/flash-assets\/courses\/course-g04-l10-vb-003/u,
+  );
+  const current = await buildRelocationBundle();
+  const checked = await checkRelocationReport(current);
+  assert.equal(checked.vb003ErrorCount, 93);
+  assert.equal(checked.strictComplete, 0);
+  assert.equal(checked.publishedReleaseCount, 0);
+  assert.equal(checked.acceptanceEffect, false);
 });

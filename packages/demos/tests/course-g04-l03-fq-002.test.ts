@@ -107,13 +107,21 @@ test("functional entry binds seeded question 7 to source frame 8 and one modern 
   assert.match(markup, /data-functional-mask-phase="question"/);
   assert.match(
     markup,
-    /<rect fill="#b8d8f7" height="430" width="755" x="20" y="100"/,
+    /data-modern-source-visual-cover="full-stage-opaque"/,
+  );
+  assert.match(
+    markup,
+    /<rect fill="#b8d8f7" height="600" width="800" x="0" y="0"/,
   );
   assert.match(
     markup,
     /course-g04-l03-fq-002-stage-panel--wide/,
   );
   assert.match(markup, /data-source-canvas-accessibility-isolated="true"/);
+  assert.match(
+    markup,
+    /data-source-canvas-visual-exposure="hidden-behind-modern-backdrop"/,
+  );
   assert.match(markup, /data-answer-transition-locked="false"/);
   assert.match(
     markup,
@@ -194,6 +202,7 @@ test("non-entry, Spanish, wrong-domain, and capture requests fail closed to sour
     assert.match(markup, /data-current-js-overlay-count="0"/);
     assert.doesNotMatch(markup, /data-current-js-functional-overlay/);
     assert.doesNotMatch(markup, /data-functional-canvas-artifact-mask/);
+    assert.match(markup, /data-source-canvas-visual-exposure="source-only"/);
   }
 });
 
@@ -302,5 +311,11 @@ test("functional contract records masking and modern enhancements while every ac
       .includes(
         "Q7-Q12-source-canvas-pixel-bound-target-and-choice-projection",
       ),
+  );
+  assert.doesNotMatch(
+    JSON.stringify(
+      COURSE_G04_L03_FQ_002_SOURCE_CONTRACT.currentJavascriptInteractionScope,
+    ),
+    /TS007|cross-placement/,
   );
 });

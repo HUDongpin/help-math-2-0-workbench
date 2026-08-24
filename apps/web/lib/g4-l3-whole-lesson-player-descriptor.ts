@@ -6,6 +6,7 @@ import {
   getG4L3SectionLabel,
   type G4L3Locale,
 } from './g4-l3-lesson-navigation';
+import {G4_L3_PAGE_36_READABLE_VIEW_SPEC} from './g4-l3-readable-view';
 import {G4_L3_WHOLE_LESSON_STORAGE_KEY} from './g4-l3-whole-lesson';
 import type {
   SourceBoundLabel,
@@ -64,6 +65,15 @@ const pages = G4_L3_LESSON.pages.map((page) => Object.freeze({
     es: sourceBoundPageLabel(page, 'es'),
   }),
   rendererAvailability: rendererAvailability(page.animationId),
+  // Reading support is declared here rather than decided by the player, so a
+  // second lesson can offer it without editing a component. Only the page with
+  // source-bound crop evidence carries it; nothing is invented for the rest.
+  readableView: page.animationId === G4_L3_PAGE_36_READABLE_VIEW_SPEC.animationId
+    ? Object.freeze({
+        kind: 'source-bound-readable-view' as const,
+        specId: G4_L3_PAGE_36_READABLE_VIEW_SPEC.animationId,
+      })
+    : undefined,
   source: Object.freeze({
     batchId: page.batchId,
     spanishTitleStatus: page.spanishTitleStatus,
@@ -124,9 +134,32 @@ export const G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR =
     visualSkin: Object.freeze({
       kind: 'legacy-composite',
       layoutId: 'help-math-course-shell-800x600-v1',
+      // Grade 4 Lesson 3 is the widescreen pilot. The authored content band is
+      // 800 x 415, derived from this stage minus the 109px header and 76px
+      // footer declared below. Declaring the presentation does not change page
+      // content, provenance, or any acceptance gate.
+      presentations: Object.freeze([
+        'legacy-composite',
+        'modern-wide',
+      ] as const),
       chromeAsset:
         '/flash-assets/courses/shell-course-g04-l03-index-local/root-frames/frame-0049.png',
-      header: Object.freeze({height: 109}),
+      header: Object.freeze({
+        height: 109,
+        title: Object.freeze({
+          kind: 'source-declared-lesson-title',
+          sourceField: 'NewTitle1',
+          fontFamily: 'Verdana',
+          fontSize: 25,
+          color: '#ffffff',
+          bounds: Object.freeze({left: 82, top: 48, width: 712, height: 59}),
+          boundsEvidence:
+            'chrome asset rows 44-107 carry no painted glyph right of x=80, ' +
+            'so the band is the clear header strip below the painted ' +
+            '<CourseName> wordmark, inset to clear the HELP PROGRAM logo on ' +
+            'the left and the header hit areas that end at row 47',
+        }),
+      }),
       footer: Object.freeze({height: 76}),
       controls: Object.freeze({
         kind: 'source-derived-diagnostic-candidate',

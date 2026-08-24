@@ -445,7 +445,7 @@ async function exerciseKeyTerms(page, player, animationId) {
   await picker.selectOption(animationId);
   await waitForCurrentAnimation(page, 'g4-l3-whole-lesson-mvp', animationId);
   const trigger = player.locator(
-    '.course-g04-l03-source-glossary-companion '
+    '[data-source-glossary-placement="visible-stage-content-bottom"] '
       + 'button[data-source-key-attribute]:not([disabled])',
   ).first();
   await trigger.waitFor({state: 'visible', timeout: 45_000});
@@ -706,7 +706,8 @@ async function runBrowserQa() {
       g5Isolation = await g5Player.evaluate((element) => ({
         g4SourceGlossarySurfaceCount: element.querySelectorAll(
           '.course-g04-l03-source-glossary-companion, '
-            + '.course-g04-l03-source-glossary-stage-hotspots',
+            + '.course-g04-l03-source-glossary-stage-hotspots, '
+            + '[data-source-glossary-placement="visible-stage-content-bottom"]',
         ).length,
         g4SourceStopHoldCount: element.querySelectorAll(
           '[data-source-stop-hold="true"]',

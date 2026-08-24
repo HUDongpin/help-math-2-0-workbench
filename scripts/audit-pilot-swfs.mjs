@@ -25,6 +25,19 @@ import { sha256File } from "./create-flash-migration.mjs";
 import {G4_L3_LESSON_AUDIT_IDS} from "./build-course-scenario-inventories.mjs";
 import { PILOT_MIGRATIONS } from "./scaffold-pilot-migrations.mjs";
 
+// These two promoted Grade 5 Lesson 2 members are intentionally approved only
+// for the bounded source-static calibration requested after source custody was
+// established. Approval here does not register a renderer or change any
+// fidelity, audio, acceptance, strict-completion, or release gate.
+export const G5_L2_BOUNDED_CALIBRATION_IDS = Object.freeze([
+  "course-g05-l02-fq-002",
+  "course-g05-l02-gs-002",
+]);
+
+export const G5_L6_EXTREME_CALIBRATION_IDS = Object.freeze([
+  "course-g05-l06-ti-003",
+]);
+
 const scriptPath = fileURLToPath(import.meta.url);
 const projectRoot = path.resolve(path.dirname(scriptPath), "..");
 const DEFAULT_TIMEOUT_MS = 300_000;
@@ -1027,6 +1040,8 @@ export async function auditPilotSwfs({
   const approvedIds = new Set([
     ...PILOT_MIGRATIONS.map(({id}) => id),
     ...G4_L3_LESSON_AUDIT_IDS,
+    ...G5_L2_BOUNDED_CALIBRATION_IDS,
+    ...G5_L6_EXTREME_CALIBRATION_IDS,
   ]);
   invariant(!(releaseId && ids.length), "releaseId and explicit ids are mutually exclusive");
   invariant(!shardId || releaseId, "shardId requires releaseId");

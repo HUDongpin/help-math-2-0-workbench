@@ -22,7 +22,7 @@ export const COURSE_G04_L10_VB_002_SOURCE = Object.freeze({
   }),
   candidateManifest: "public/flash-assets/courses/course-g04-l10-vb-002/manifest.json",
   candidateManifestSha256:
-    "d072709ffc5623b62f1bb7e5f3ebf6a22a6fe104df7cbe3cfbb73713348c3773",
+    "e1c06a467c9cfe5c1e4b55c85712b98623fc44617fca21e1d91570beb099cf05",
   actionScriptExecuted: false,
   audioCues: Object.freeze([]),
   controlsEnabled: false,

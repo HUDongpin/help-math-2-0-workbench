@@ -1,0 +1,389 @@
+{
+  "schemaVersion": "help-math-g4-ledger-successor-promotion-plan/v1",
+  "artifactType": "help-math-g4-runtime-dependency-successor-plan",
+  "planDate": "2026-08-04",
+  "mode": "plan-only-no-executor",
+  "scope": {
+    "grade": 4,
+    "purpose": "evaluate the frozen v7/v8 object union only by complete SHA-256 against current canonical and predecessor Grade 4 evidence",
+    "ledgerObjectUniverse": 6060,
+    "identityRule": "complete lowercase SHA-256 plus byte count",
+    "filenameIdentityAllowed": false,
+    "pathIdentityAllowed": false,
+    "blanketPromotionAllowed": false
+  },
+  "inputs": {
+    "frozenClosure": {
+      "appliedReceipt": {
+        "artifactToken": "frozen-v7-v8-combined-closure",
+        "name": "combined-freeze-applied-receipt-v1.json",
+        "bytes": 8375,
+        "sha256": "fd0ae61d347ab71abdc68581a2fb89761358f7d9fb1f7e5f8dc8326a54d8f751",
+        "outcome": "frozen-read-only-with-unresolved-independent-review"
+      },
+      "recordManifest": {
+        "artifactToken": "frozen-v7-v8-combined-closure",
+        "name": "combined-freeze-manifest-v1.jsonl",
+        "bytes": 3231021,
+        "sha256": "1be3672f9a9337982b6b37cb2bce4a298a2f855a95ac3ba5f31e9443372926a4"
+      },
+      "appliedReceiptSidecar": {
+        "artifactToken": "frozen-v7-v8-combined-closure",
+        "name": "combined-freeze-applied-receipt-v1.sha256",
+        "bytes": 106,
+        "sha256": "fb8c00a90926b2ae2ae6d371781e9dc66e491dab10d2e6b99ea19a1c0c32c750"
+      }
+    },
+    "canonical": {
+      "sourceCatalog": {
+        "path": "catalog/source-files.json",
+        "bytes": 1894761,
+        "sha256": "c5ba348ea968b4ae7292d86f7624a77ec105bc8f929bd61b4837c59623f33b29"
+      },
+      "sourceChecksumSet": {
+        "path": "catalog/source-files.sha256",
+        "bytes": 958064,
+        "sha256": "30dfa12b7cd76e7200fb89115155e7d32af1356247c07e3a4f79227e93f34875"
+      },
+      "sourceManifest": {
+        "path": "catalog/source-manifest.sha256",
+        "bytes": 958064,
+        "sha256": "f0a33c8a3d15afd7340e9ea5523385428bae7546bd8d4227a3a8977ab8914318"
+      },
+      "sourceFreeze": {
+        "path": "catalog/source-freeze.json",
+        "bytes": 435,
+        "sha256": "a03a5bb4e2a0672509fa2c2b9ac9b238b697cce043ccd4c2506e8301f780b6da"
+      }
+    },
+    "predecessorGrade4": {
+      "plan": {
+        "path": "catalog/source-promotions/g4-active-source-promotion-2026-08-02.json",
+        "bytes": 1579380,
+        "sha256": "61fbb021fbab57c427e1c0459c30cf94a88b449d0080c125d616213687833a87"
+      },
+      "appliedReceipt": {
+        "path": "catalog/source-promotions/g4-active-source-promotion-2026-08-02-applied.json",
+        "bytes": 17842,
+        "sha256": "df23e474a6a8ab632b5e7ed6928a485427ed8d1873fb846c2f79d06dfd0c0f72"
+      },
+      "transactionId": "20260802T040219914Z-1635d216a5c2"
+    }
+  },
+  "verifiedEvidence": {
+    "frozenLedger": {
+      "v7ObjectCount": 5793,
+      "v8ObjectCount": 267,
+      "overlapCount": 0,
+      "uniqueSha256Count": 6060,
+      "digestSetSha256": "705c93bd496e8979e14a10b66e3cb376c1f00d9d417a6c4a6acc4790169ac9ed",
+      "rootedObjectSetSha256": "4c788433c8c8a3ceaf1f3b17e709adf1a30f3d4dd607f9e524c7479d0047801d",
+      "rootedObjectAndLedgerSetSha256": "3349bf069781367a07612e988767970f65ae452c5343ca9beb1b916ee0a0ccbd",
+      "byteAuthority": "hash-bound frozen record manifest; no object bytes copied"
+    },
+    "canonical": {
+      "fileCount": 9147,
+      "totalBytes": 3214585414,
+      "uniqueSha256Count": 8845,
+      "uniqueSha256SetSha256": "4e3d7dd5f098cb6138219828e4fcaf645bd7d137038be65007e68d0054ffa8dd",
+      "manifestSha256": "f0a33c8a3d15afd7340e9ea5523385428bae7546bd8d4227a3a8977ab8914318",
+      "checksumSetSha256": "30dfa12b7cd76e7200fb89115155e7d32af1356247c07e3a4f79227e93f34875",
+      "catalogManifestExact": true,
+      "readOnlyEnforced": true
+    },
+    "predecessorGrade4": {
+      "copyRecordCount": 1228,
+      "existingBindingCount": 883,
+      "knownClosureRecordCount": 2111,
+      "knownClosureUniqueSha256Count": 2036,
+      "knownClosureSha256SetSha256": "0b2e6be48a71de39956eeed01e72cd25f38de14f334bc0dc844b8fbd4b26db4f",
+      "knownRuntimeUniqueSha256Count": 1873,
+      "knownRuntimeSha256SetSha256": "ede38ace0f96b08e5be782b3347b3041e302c5f26e1932df2249ba2dd01eeeed",
+      "companionAuthoringRecordCount": 163,
+      "unresolvedSourceCount": 16,
+      "unresolvedPathSetSha256": "439fce1e41ef10591c165f0eed65638d1a7afc81080db182770911bd1d8c4286",
+      "appliedAndCurrentCanonicalBindingsExact": true
+    },
+    "intersections": {
+      "frozenLedgerVsCurrentCanonicalSha256": 0,
+      "frozenLedgerVsPriorG4KnownClosureSha256": 0,
+      "frozenLedgerVsPriorG4KnownRuntimeSha256": 0,
+      "frozenPrivatePlacementMetadataVsPriorG4Closure": 0,
+      "frozenPrivatePlacementMetadataVsRequiredMissingMp3": 0,
+      "requiredMissingMp3ExactSha256Matches": 0
+    }
+  },
+  "decision": {
+    "outcome": "no-exact-sha256-promotion-candidates",
+    "reason": "none of the 6,060 frozen ledger SHA-256 identities intersects current canonical or predecessor Grade 4 closure identities, and no missing MP3 has an expected SHA-256",
+    "promotionRecordCount": 0,
+    "successorPlanMayBeApplied": false
+  },
+  "promotionRecords": [],
+  "requiredUnresolvedSources": [
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q22A.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+      "audioBindingKind": "final-quiz-question-answer",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "placementMetadataExactMatchCount": 0,
+      "status": "required-unresolved-source",
+      "resolution": "no hash-bound source identity is available in the frozen v7/v8 ledger union"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q22B.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+      "audioBindingKind": "final-quiz-question-answer",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "placementMetadataExactMatchCount": 0,
+      "status": "required-unresolved-source",
+      "resolution": "no hash-bound source identity is available in the frozen v7/v8 ledger union"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q22C.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+      "audioBindingKind": "final-quiz-question-answer",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "placementMetadataExactMatchCount": 0,
+      "status": "required-unresolved-source",
+      "resolution": "no hash-bound source identity is available in the frozen v7/v8 ledger union"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q22D.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+      "audioBindingKind": "final-quiz-question-answer",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "placementMetadataExactMatchCount": 0,
+      "status": "required-unresolved-source",
+      "resolution": "no hash-bound source identity is available in the frozen v7/v8 ledger union"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q23A.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+      "audioBindingKind": "final-quiz-question-answer",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "placementMetadataExactMatchCount": 0,
+      "status": "required-unresolved-source",
+      "resolution": "no hash-bound source identity is available in the frozen v7/v8 ledger union"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q23B.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+      "audioBindingKind": "final-quiz-question-answer",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "placementMetadataExactMatchCount": 0,
+      "status": "required-unresolved-source",
+      "resolution": "no hash-bound source identity is available in the frozen v7/v8 ledger union"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q23C.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+      "audioBindingKind": "final-quiz-question-answer",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "placementMetadataExactMatchCount": 0,
+      "status": "required-unresolved-source",
+      "resolution": "no hash-bound source identity is available in the frozen v7/v8 ledger union"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q23D.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+      "audioBindingKind": "final-quiz-question-answer",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+        "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "placementMetadataExactMatchCount": 0,
+      "status": "required-unresolved-source",
+      "resolution": "no hash-bound source identity is available in the frozen v7/v8 ledger union"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/SA/L2IN21.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "audioBindingKind": "ordinary-spanish-page",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/IN/L2IN21.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "placementMetadataExactMatchCount": 0,
+      "status": "required-unresolved-source",
+      "resolution": "no hash-bound source identity is available in the frozen v7/v8 ledger union"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/SA/L2IN22.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "audioBindingKind": "ordinary-spanish-page",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/IN/L2IN22.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "placementMetadataExactMatchCount": 0,
+      "status": "required-unresolved-source",
+      "resolution": "no hash-bound source identity is available in the frozen v7/v8 ledger union"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/SA/L2IN23.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "audioBindingKind": "ordinary-spanish-page",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/IN/L2IN23.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "placementMetadataExactMatchCount": 0,
+      "status": "required-unresolved-source",
+      "resolution": "no hash-bound source identity is available in the frozen v7/v8 ledger union"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/SA/L2IN24.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "audioBindingKind": "ordinary-spanish-page",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/IN/L2IN24.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "placementMetadataExactMatchCount": 0,
+      "status": "required-unresolved-source",
+      "resolution": "no hash-bound source identity is available in the frozen v7/v8 ledger union"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/SA/L2IN25.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "audioBindingKind": "ordinary-spanish-page",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/IN/L2IN25.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "placementMetadataExactMatchCount": 0,
+      "status": "required-unresolved-source",
+      "resolution": "no hash-bound source identity is available in the frozen v7/v8 ledger union"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L2/SA/L2IN26.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "audioBindingKind": "ordinary-spanish-page",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L2/IN/L2IN26.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "placementMetadataExactMatchCount": 0,
+      "status": "required-unresolved-source",
+      "resolution": "no hash-bound source identity is available in the frozen v7/v8 ledger union"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L6/SA/L6GS03.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "audioBindingKind": "ordinary-spanish-page",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L6/GS/L6GS03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "placementMetadataExactMatchCount": 0,
+      "status": "required-unresolved-source",
+      "resolution": "no hash-bound source identity is available in the frozen v7/v8 ledger union"
+    },
+    {
+      "canonicalPath": "HELP_COURSES/ELMGR4/L8/SA/L8GS03.mp3",
+      "sourceType": "runtime-bound-audio",
+      "bindingReason": "host-spanish-page-audio-same-basename-SA",
+      "audioBindingKind": "ordinary-spanish-page",
+      "requiredBy": [
+        "HELP_COURSES/ELMGR4/L8/GS/L8GS03.swf"
+      ],
+      "expectedSha256": null,
+      "ledgerExactSha256MatchCount": 0,
+      "placementMetadataExactMatchCount": 0,
+      "status": "required-unresolved-source",
+      "resolution": "no hash-bound source identity is available in the frozen v7/v8 ledger union"
+    }
+  ],
+  "controls": {
+    "planOnly": true,
+    "executable": false,
+    "executorPresent": false,
+    "sourceAssetsMutationPerformed": false,
+    "sourceAssetsMutationAuthorized": false,
+    "ledgerObjectsCopied": 0,
+    "bulkLedgerPromotionProhibited": true,
+    "futureCandidateRequiresKnownExpectedSha256": true,
+    "futureCandidateRequiresNewReviewedSuccessorPlan": true
+  },
+  "acceptanceEffects": {
+    "canonicalSourcePromotion": false,
+    "sourceDependencyClosure": false,
+    "javascriptImplementation": false,
+    "authoritativeOriginalRuntimeEvidence": false,
+    "runtimeFidelity": false,
+    "audioCorrectnessOrAcceptance": false,
+    "humanVisualAcceptance": false,
+    "ownerAcceptance": false,
+    "strictCompletion": false,
+    "wholeCourseIntegration": false,
+    "publication": false
+  },
+  "privacyBoundary": {
+    "rawLedgerPlacementMetadataIncluded": false,
+    "rawDriveIdsIncluded": false,
+    "rawPrivateClaimsIncluded": false,
+    "personallyIdentifyingInformationIncluded": false,
+    "privateAbsolutePathsIncluded": false,
+    "aggregateIntersectionCountsOnly": true
+  }
+}

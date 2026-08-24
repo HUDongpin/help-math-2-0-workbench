@@ -24,6 +24,10 @@ const lessonsCatalogUrl = new URL(
   '../../../catalog/lessons.json',
   import.meta.url
 );
+const sourceFilesCatalogUrl = new URL(
+  '../../../catalog/source-files.json',
+  import.meta.url
+);
 
 const sha256 = (bytes: Uint8Array) =>
   createHash('sha256').update(bytes).digest('hex');
@@ -225,7 +229,7 @@ test('G5 L4 shell skin and controls stay bound to G5 structural evidence', () =>
     descriptor.visualSkin.chromeAsset,
     '/flash-assets/courses/shell-course-g05-l04-index-local/root-frames/frame-0049.png'
   );
-  assert.deepEqual(descriptor.visualSkin.header, {height: 109});
+  assert.equal(descriptor.visualSkin.header.height, 109);
   assert.deepEqual(descriptor.visualSkin.footer, {height: 76});
   assert.equal(
     descriptor.visualSkin.controls.kind,
@@ -284,6 +288,10 @@ test('G5 L4 shell Key Terms candidate stays exact-source-bound and acceptance-ne
   assert.equal(shell.actionScript.rootFrame, 35);
   assert.equal(shell.actionScript.actionScriptExecuted, false);
 
+  const sourceFilesCatalog = await readFile(
+    sourceFilesCatalogUrl,
+    'utf8'
+  ).then(JSON.parse);
   for (const language of ['en', 'es'] as const) {
     const lessonSource: Readonly<{path: string; present: false}> =
       shell.keyTerms.lessonDeclaredSources[language];
@@ -300,10 +308,62 @@ test('G5 L4 shell Key Terms candidate stays exact-source-bound and acceptance-ne
     );
     assert.equal(lessonSource.present, false);
 
-    const masterBytes = await readFile(
-      new URL(`../../../${masterSource.sourcePath}`, import.meta.url)
+    const canonicalSourcePrefix =
+      'source-assets/flash/HELP MATH_ORIGINAL FILES/';
+    assert.ok(masterSource.sourcePath.startsWith(canonicalSourcePrefix));
+    const catalogPath = masterSource.sourcePath.slice(
+      canonicalSourcePrefix.length
     );
-    assert.equal(sha256(masterBytes), masterSource.sourceSha256);
+    const catalogSource = sourceFilesCatalog.files.find(
+      ({path}: {path: string}) => path === catalogPath
+    );
+    assert.ok(catalogSource, masterSource.sourcePath);
+    assert.equal(catalogSource.extension, 'xml');
+    assert.equal(catalogSource.sha256, masterSource.sourceSha256);
+
+    const generatedBytes = await readFile(
+      new URL(`../public${masterSource.generatedDataUrl}`, import.meta.url)
+    );
+    const generatedDocument = JSON.parse(generatedBytes.toString('utf8'));
+    assert.equal(generatedDocument.schemaVersion, 1);
+    assert.equal(
+      generatedDocument.dataKind,
+      'g5-l4-combined-elementary-keyterms-reference'
+    );
+    assert.equal(generatedDocument.indexLanguage, language);
+    assert.deepEqual(generatedDocument.source.clientSelected, {
+      assetId: masterSource.assetId,
+      path: masterSource.sourcePath,
+      bytes: catalogSource.bytes,
+      sha256: masterSource.sourceSha256,
+      ordering: 'source-file-order'
+    });
+    assert.equal(
+      generatedDocument.counts.clientTermCount,
+      masterSource.extractedEntryCount
+    );
+    assert.equal(
+      generatedDocument.lessonBinding.declaredLessonSpecificSources[language],
+      lessonSource.path
+    );
+    assert.equal(
+      generatedDocument.lessonBinding.declaredLessonSpecificSourcesPresent,
+      false
+    );
+    assert.equal(
+      generatedDocument.lessonBinding.runtimeResolutionVerified,
+      false
+    );
+    assert.equal(generatedDocument.lessonBinding.referenceUseAuthorized, true);
+    assert.equal(
+      generatedDocument.lessonBinding.productDispositionAccepted,
+      true
+    );
+    assert.ok(
+      Object.values(generatedDocument.authority).every(
+        (value) => value === false
+      )
+    );
     assert.equal(masterSource.staticTargetStatus, 'exact-actionscript-string');
   }
   assert.deepEqual(
@@ -410,6 +470,7 @@ test('G5 L4 player must exactly match the server navigation before mounting', ()
   const descriptor = G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR;
   assert.ok(descriptor);
   const navigation = {
+    schemaVersion: 1 as const,
     releaseId: descriptor.releaseId,
     grade: descriptor.course.grade,
     lesson: descriptor.course.lesson,
@@ -487,4 +548,27 @@ test('G5 L4 descriptor builder fails closed on source or acceptance drift', asyn
     }),
     undefined
   );
+});
+
+test('the G5 L4 header chrome carries the lesson title as a source-declared text band', () => {
+  const descriptor = G5_L4_WHOLE_LESSON_PLAYER_DESCRIPTOR;
+  assert.ok(descriptor);
+  const band = descriptor.visualSkin.header.title;
+
+  assert.ok(band, 'the header must declare a live lesson title band');
+  assert.equal(band.kind, 'source-declared-lesson-title');
+  assert.equal(band.sourceField, 'NewTitle1');
+  assert.equal(band.fontFamily, 'Verdana');
+  assert.equal(band.fontSize, 25);
+  assert.equal(band.color, '#ffffff');
+  assert.ok(
+    band.bounds.top + band.bounds.height <= descriptor.visualSkin.header.height,
+  );
+  assert.ok(band.bounds.left + band.bounds.width <= descriptor.stage.width);
+
+  // This chrome paints the same "Counting on Numbers" wordmark as every other
+  // lesson, because it is <CourseName>. The live title is this lesson's own.
+  assert.equal(descriptor.course.labels.en.text, 'Number Lines');
+  assert.notEqual(descriptor.course.labels.en.text, 'Counting on Numbers');
+  assert.notEqual(descriptor.course.labels.es.text, 'Counting on Numbers');
 });

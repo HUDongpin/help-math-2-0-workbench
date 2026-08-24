@@ -22,12 +22,51 @@ and a structured sanitized `TRANSCRIPT.json`.
 - The imported transcripts intentionally exclude internal reasoning,
   system/developer prompts, tool payloads, command output, and secret values.
 
+## Current Project Memory: Page-Only Flash Migration Scope — 2026-08-16
+
+The project Owner explicitly decided that HELP Math 2.0 does not need a
+JavaScript recreation of the legacy Flash course shell for each Lesson. This
+decision supersedes prior shell-inclusive migration and release counts.
+
+- HELP Math 2.0 already has a modern Lesson Page / My Lesson presentation
+  surface. Its left course directory, surrounding responsive layout, lesson and
+  page navigation, bottom playback controls, progress, and support tools remain
+  modern product UI.
+- The center of that modern page hosts the JavaScript animation that replaces
+  the corresponding HELP Math 1.0 Flash lesson-page animation.
+- Current G3-G5 migration denominator: 1,751 active lesson-page animation
+  occurrences across 29 Lessons, not 1,780 members. Grade totals are G3 = 546,
+  G4 = 645, and G5 = 560.
+- The 29 legacy course-shell SWFs stay preserved as source/history evidence but
+  are excluded from implementation, Current-JS coverage, fidelity, audio,
+  human/Owner review, strict completion, release membership, and publication.
+- A Lesson needs all of its active page animations registered and runnable in
+  the modern My Lesson host; it does not need a separately migrated legacy
+  Flash shell.
+- Do not delete or bypass the modern My Lesson host merely because current code
+  names a React component or CSS namespace `shell`. The retained modern host
+  and the excluded legacy Flash shell are different things.
+- If a page depends on a historical shell API, create only the minimal
+  source-evidenced host adapter required for that page.
+- Dated working-tree snapshot, recomputed 2026-08-16: 98/1,751 registered
+  Current-JS lesson pages, 1,653 remaining; G4 L3 = 39/39 and G5 L4 = 54/54
+  page-level Current-JS. Strict completion remains 0.
+- Existing code and generated contracts that still require one shell, compute
+  `pages + 1`, or report 1,780 are known legacy shell-inclusive contracts. They
+  require a separate reviewed refactor before their automated output can be
+  treated as the current page-only planning authority.
+
+Current RC wording: **1,751/1,751 active lesson-page animations registered and
+integrated into the modern My Lesson experience**. Strict fidelity, audio,
+human/Owner acceptance, strict completion, and publication remain separate.
+
 ## Six-session continuity summary
 
-1. **G4 L3 lesson MVP:** 39 lesson pages plus one shell had current JavaScript
-   framework output by the end of the session, but strict lesson acceptance
-   remained 0/40. The user’s acceptance was recorded only for the current
-   JavaScript presentation, not Flash fidelity or final release.
+1. **G4 L3 lesson MVP:** the historical session produced 39 lesson pages plus
+   one shell under the old shell-inclusive contract. The 2026-08-16 Owner
+   decision now defines G4 L3 Current-JS page scope as 39/39; the historical
+   shell remains evidence only and is not a required migration member. Strict
+   page fidelity and final release remain separately unaccepted.
 2. **helpmath.ai:** a modern bilingual marketing/research site and protected
    executive preview were built and hardened in a separate `helpmath-web`
    repository. The final strategic decision in that session was to pivot the
@@ -68,8 +107,10 @@ the actual folder before starting new work, then verify the task’s `cwd`.
 - Preserve `source-assets/` byte-for-byte and verify source hashes before reuse.
 - Use `adapter -> random -> source event -> frame -> operation`; generated
   Canvas/JavaScript output alone does not prove original ActionScript behavior.
-- Keep the lesson shell as a separate 40th item; do not silently count 39 pages
-  as a complete lesson release.
+- Exclude the legacy Flash course shell from the migration and release
+  denominator. For G4 L3, 39/39 registered pages can establish page-level
+  Current-JS coverage, while strict fidelity and publication remain separate.
+  Preserve the historical shell source as evidence without recreating it.
 - Do not use Ruffle or FFDec as the sole authoritative runtime baseline.
 - Do not reuse stale approval records after renderer, timeline, asset, or
   evidence hashes change.
@@ -246,14 +287,13 @@ public product asset.
 
 - CEO review approved the current lesson-player interaction direction, but
   that stakeholder approval does not close Flash fidelity or release gates.
-- Grade 4 contains 12 lesson shells and 645 active lesson-page references, or
-  657 required renderer members. Current canonical source coverage is 657/657
-  after the reviewed active-source promotion and catalog rebuild. This source
-  custody result does not add or authorize a JavaScript renderer.
-- The dated current-working-tree JavaScript registry covers 41 page renderers
-  and 2 shell renderers = 43/657. It still lacks 604 page renderers and 10
-  shell renderers = 614 members. L1 contributes 1 page + 1 shell, L3 contributes
-  39 pages + 1 shell, and L9 contributes 1 page; only L3 is renderer-complete.
+- Grade 4 migration scope is 645 active lesson-page references. The 12 legacy
+  course shells are retained source-custody records but are excluded from the
+  2026-08-16 Owner-approved migration denominator.
+- The dated/current working-tree JavaScript registry covers 41/645 active
+  pages and lacks 604. L1 contributes 1 page, L3 contributes 39 pages, and L9
+  contributes 1 page; only L3 is page-renderer-complete at 39/39. Existing shell
+  renderers do not count toward Current-JS coverage.
 - The product must derive whole-lesson descriptors from the source-backed
   catalog, preserve exact page order and repeated placements, and fail closed
   whenever a page renderer is absent; it must never display a placeholder as
@@ -268,5 +308,5 @@ public product asset.
   baseline, audio decision, fidelity result, strict completion, whole-lesson
   route, or release claim.
 - The 2026-08-02 work starts the full Grade 4 generation program; it does not
-  mean all 645 pages or 12 shells have passed migration, original-runtime,
-  audio, visual, human, owner, strict-completion, or release acceptance.
+  mean all 645 pages have passed migration, original-runtime, audio, visual,
+  human, Owner, strict-completion, or release acceptance.

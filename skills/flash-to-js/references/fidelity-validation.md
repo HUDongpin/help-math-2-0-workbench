@@ -24,6 +24,14 @@ Keep these values identical between baseline and implementation:
   canonical entry-state SHA-256.
 - Cropping rectangle and page padding.
 
+When a Canvas backing store is integer-scaled (see `AGENTS.md` → *Integer-Scaled
+Canvas Backing Store*), hold the device scale factor identical at `k = 1` for the
+byte-parity gate. A `k > 1` capture is not a like-for-like pixel comparison:
+record the scale factor as a difference, downsample the capture to native stage
+size before computing RMSE, and state the resampling filter used. Comparing a
+scaled capture against a native baseline without that step produces a meaningless
+error value.
+
 Record these separately instead of pretending they are identical:
 
 - Authorized original-runtime ID, name, version, executable/toolchain receipt, host, and capture method.

@@ -1,0 +1,329 @@
+{
+  "schemaVersion": 1,
+  "reportId": "g4-l10-candidate-to-product-bridge-calibration-v28-2026-08-21",
+  "observedAt": "2026-08-21T11:31:03+08:00",
+  "baselineGitHead": "8770c56e2e0e63645df7c209db9b575f8dea1a9c",
+  "outcome": "conditional-go-single-vb006-private-product-bridge-all-four-behavior-heavy-engineering-gates-closed",
+  "scopeBoundary": {
+    "ownerApprovedTarget": "active-lesson-pages-only",
+    "g4l10ActivePageCount": 46,
+    "g4l10CourseShellCount": 0,
+    "grade4ActivePageCount": 645,
+    "g3ToG5ActivePageCount": 1751,
+    "legacyCourseShellsInDenominator": false,
+    "privateEngineeringOnly": true
+  },
+  "batch": {
+    "attemptedAnimationIds": [
+      "course-g04-l10-vb-006"
+    ],
+    "successfulAnimationIds": [
+      "course-g04-l10-vb-006"
+    ],
+    "attemptCount": 1,
+    "successCount": 1,
+    "newWorkspaceCount": 0,
+    "workspace": "migrations/course-g04-l10-vb-006",
+    "workspaceDisposition": "reused-preserved-workspace",
+    "automaticRemainderRegistration": false,
+    "relabelRemainderLow": false,
+    "publicRegistryMutation": false
+  },
+  "freezeChain": [
+    {
+      "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v27.json",
+      "role": "immutable-implementation-before-freeze-sole-vb006-selection",
+      "bytes": 22281,
+      "sha256": "2659f2fe21b71a4db917002bc552374412f0fed12d9263f0a058b57c4ba259e0"
+    },
+    {
+      "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v28.json",
+      "role": "immutable-first-sixteen-page-registry-successor-no-additional-selection",
+      "bytes": 9256,
+      "sha256": "7ee3e8cb50f87fcced770b0e505211013a2ef49231268749aa5ae8d47b3dc0d5"
+    }
+  ],
+  "sourceAndCandidate": {
+    "animationId": "course-g04-l10-vb-006",
+    "title": "Length/Width Practice",
+    "globalPageOrdinal": 10,
+    "sectionCode": "VB",
+    "sectionPageOrdinal": 5,
+    "complexityLane": "interactive-understood",
+    "priorRiskDisposition": "behavior-heavy-gated",
+    "swf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/VB/L10VB06.swf",
+      "bytes": 806886,
+      "sha256": "cb9881b4c6b790e4c1b13fa99ee3457b2d5438c261811d22d431b1fc0cefdaa4"
+    },
+    "fla": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/VB/L10VB06.fla",
+      "bytes": 2432000,
+      "sha256": "2c809b81dedda337e6273197eaa29dcdd8275d16b250ed9a48837c3d1e0583e6"
+    },
+    "migrationJsonSha256": "95604b86878d5900eebbd016c0b33cc0addf62420ee5881bab41f3af7940c44d",
+    "scenarioInventorySha256": "19ab86bc234deadbb646bf1a6049d912d612aba405571e55622af14de9904fe5",
+    "frameDomainDispositionSha256": "bdd0df963408ec30a3aab761f308f28a8f99477b03b793b603750f4cf6087919",
+    "audioRuntimeEvidenceSha256": "fa143ae0287758d88a694acf90dcf557437b11f49e3b3ab137eb4c8ef8a56f8a",
+    "candidateManifestSha256": "1e564372595d8d2628c7967c6b7f1ccdbf04e188d7f82aebf6fcb349a8ff974c",
+    "canvasRendererSha256": "95bd749be5a31d68bb6ac296efb90b36d1b6784b288ab20db0db226b0867f614",
+    "frameDomain": "sprite-213",
+    "frameCount": 104,
+    "quizStopFrame": 62,
+    "correctContinuationFirstFrame": 63,
+    "correctTerminalFrame": 104
+  },
+  "sourceHandlers": [
+    {
+      "sourceCharacterId": 10,
+      "sourceKeyAttribute": "Rectangle",
+      "sourceHandlerBodySha256": "ecbceb5c1144eefb2814285b93466ef47fadf02b4b374aa1d6b6f3e5089d5bb6",
+      "typedHostContract": "open-glossary:rectangle"
+    },
+    {
+      "sourceCharacterId": 9,
+      "sourceKeyAttribute": "Length",
+      "sourceHandlerBodySha256": "d4481ebffa6b83402415f08234e1113d51a51c924f3fb97529b82058888bcf14",
+      "typedHostContract": "open-glossary:length"
+    },
+    {
+      "sourceCharacterId": 17,
+      "sourceInstance": "AnsBtn2",
+      "sourceHandlerBodySha256": "b4aa857c8e5164048d6ef6b85e89a798074871cd0fa48e023e62c4a919e27c36",
+      "typedHostContract": "record-practice-feedback:incorrect:branch-count-3"
+    },
+    {
+      "sourceCharacterId": 18,
+      "sourceInstance": "AnsBtn1",
+      "sourceHandlerBodySha256": "eae4d185152e7f61470c9a29a3c1b3037bb5c653723325cc9db4bf3d0cf9e4e8",
+      "typedHostContract": "record-practice-feedback:correct:branch-count-4"
+    },
+    {
+      "sourceCharacterId": 37,
+      "sourceInstance": "BtnClose",
+      "sourceHandlerBodySha256": "d01495fa1517134ea916832054354e9ac10f404bb5320332f8986f0578269ff2",
+      "typedHostContract": "play-feedback-close-and-reset-practice-feedback"
+    }
+  ],
+  "behaviorHeavyGates": {
+    "randomBranches": {
+      "status": "closed-private-product-engineering",
+      "wrongReachableCount": 3,
+      "rightReachableCount": 4,
+      "allReachableBranchesUnitTested": true,
+      "browserObservedWrongBranches": [
+        1,
+        2
+      ],
+      "browserObservedRightBranches": [
+        1
+      ],
+      "sourcePresentHostUnreachableTimelines": [
+        "sprite-73",
+        "sprite-212"
+      ],
+      "adobeRandomStateParityAccepted": false
+    },
+    "audioRouting": {
+      "status": "closed-private-product-engineering-listening-pending",
+      "productReachableEmbeddedStreams": 9,
+      "exactMainContinuation": {
+        "firstFrame": 63,
+        "lastFrame": 104,
+        "blockCount": 42,
+        "durationMs": 3500,
+        "bytes": 17420,
+        "sha256": "e643ab8bab5713139c7ffaf39afcfc6f8242b3a9772c5e6f8bfbc0bed1d7258f"
+      },
+      "spanishHostTrackCount": 1,
+      "hashProbeAndFullEofDecodePassed": true,
+      "browserObservedExactHttp206Assets": [
+        "main-timeline.mp3",
+        "wrong-1.mp3",
+        "feedback-close.mp3",
+        "right-1.mp3",
+        "main-continuation.mp3",
+        "wrong-2.mp3",
+        "spanish-host-narration.mp3"
+      ],
+      "spokenLanguageAccepted": false,
+      "audioListeningAccepted": false
+    },
+    "timelineReachability": {
+      "status": "closed-private-product-engineering",
+      "wrongFlow": "main-canvas-stays-at-62-until-source-close-contract-resets-answers",
+      "correctFlow": "selected-right-feedback-then-exact-parent-continuation-63-through-104",
+      "browserTerminalProductFrame": 104,
+      "browserTerminalCanvasFrame": 104,
+      "browserTerminalCanvasStatus": "ready",
+      "strictUnresolvedDomainCount": 3,
+      "strictDispositionMutated": false,
+      "authoritativeOriginalRuntimeAccepted": false
+    },
+    "replayEngineering": {
+      "status": "closed-private-product-engineering",
+      "browserResetProductFrame": 62,
+      "browserResetPracticePhase": "idle",
+      "browserResetFeedbackBranch": "none",
+      "browserResetAnswerHandlersEnabled": true,
+      "nextWrongBranchAdvancedFrom1To2": true,
+      "audioAndTimerResetUnitTested": true,
+      "authoritativeOriginalRuntimeReplayAccepted": false
+    }
+  },
+  "productBridge": {
+    "maintainedModule": {
+      "path": "packages/demos/src/modules/course-g04-l10-vb-006.tsx",
+      "bytes": 23078,
+      "sha256": "3fe17ce82f86634df7bafd484730fd709716a0bc10e660f28be18243f2c15115"
+    },
+    "timelineContract": {
+      "path": "packages/demos/src/timelines/course-g04-l10-vb-006.ts",
+      "bytes": 2989,
+      "sha256": "59f523e10bc6c2a534b8d6334da3e27be319c989cf7280bdcc6468e941d41c2a"
+    },
+    "privateRegistry": {
+      "path": "packages/demos/private-current-js-registry.json",
+      "bytes": 3246,
+      "sha256": "f1b0475a9e0f3ca5decbe07cb9e398f4156f94c6645ccf6a3220f32d891ad935"
+    },
+    "generatedRegistry": {
+      "path": "packages/demos/src/registry.generated.ts",
+      "bytes": 29791,
+      "sha256": "4bd5d55f6cb0fb2eb4fcff4198792ab8773db58f7cf969ee3e86873cb1ee277a"
+    },
+    "pageOnlyDescriptor": {
+      "path": "apps/web/lib/g4-l10-product-bridge-descriptor.ts",
+      "bytes": 26699,
+      "sha256": "6fe53c34a5c95e18f09cbb160bf1a0dda32ea0ae728d8c999096efc2274da8c9"
+    },
+    "descriptorMemberCount": 46,
+    "privateRegistrationCount": 16,
+    "unavailablePageCount": 30,
+    "publicRegistrationCount": 0,
+    "stageHandlerTargetId": "g4-l10-product-bridge-vb006-arrow-handlers",
+    "companionTargetId": "g4-l10-product-bridge-vb006-practice-controls"
+  },
+  "browserQa": {
+    "receipt": {
+      "path": "migrations/course-g04-l10-vb-006/evidence/private-product-browser-qa.json",
+      "bytes": 12278,
+      "sha256": "4821fd7e20f43d741d4fda611649119dfd5258781d69956a78751755e40add55"
+    },
+    "desktopEnglish": {
+      "viewport": "1200x900",
+      "sourceStageHandlersClicked": true,
+      "tryAgainRestoredIdle": true,
+      "correctContinuation63To104Observed": true,
+      "replayResetAndBranchAdvanceObserved": true,
+      "horizontalOverflow": false
+    },
+    "mobileSpanish": {
+      "viewport": "390x844",
+      "sourceVisualLanguage": "en",
+      "uiLanguage": "es",
+      "spanishHostNarrationRequested": true,
+      "moduleAudioRoute": "host-es-or-muted",
+      "sourceStageWrongHandlerClicked": true,
+      "replayFromOpenWrongFeedbackRestoredIdle": true,
+      "horizontalOverflow": false
+    },
+    "browserDiscoveredCorrections": [],
+    "vb006ResourceFailures": 0,
+    "wholeConsoleCleanClaimed": false
+  },
+  "yield": {
+    "thisBatch": {
+      "numerator": 1,
+      "denominator": 1,
+      "percent": 100
+    },
+    "cumulativeDeliberateAttempts": {
+      "numerator": 16,
+      "denominator": 16,
+      "percent": 100
+    },
+    "auditedCandidatePoolConverted": {
+      "numerator": 16,
+      "denominator": 24,
+      "percent": 66.6667
+    },
+    "g4l10PrivatePageCoverage": {
+      "numerator": 16,
+      "denominator": 46,
+      "percent": 34.7826
+    },
+    "grade4EngineeringCurrentJsPages": {
+      "numerator": 57,
+      "denominator": 645,
+      "percent": 8.8372
+    },
+    "g4l10PublicCourseRegistrations": 0
+  },
+  "remainingCandidateGate": {
+    "preBatchCurrentAuthoritativeCount": 9,
+    "postBatchCount": 8,
+    "historicalEarlierCountWas": 19,
+    "honestLowLaneCount": 0,
+    "unregisteredAnimationIds": [
+      "course-g04-l10-fq-002",
+      "course-g04-l10-fq-003",
+      "course-g04-l10-in-006",
+      "course-g04-l10-in-008",
+      "course-g04-l10-in-009",
+      "course-g04-l10-in-011",
+      "course-g04-l10-in-013",
+      "course-g04-l10-ti-003"
+    ],
+    "reverseBoundaryVerification": {
+      "privateRegistryIntersection": [],
+      "generatedRegistryIntersection": [],
+      "pageOnlyDescriptorSelectedIntersection": [],
+      "publicPrototypeRegistryIntersection": [],
+      "publicG4L10AnimationCount": 0,
+      "publicG4L10WholeLessonRegistrationCount": 0,
+      "status": "passed"
+    },
+    "automaticRegistrationAuthorized": false,
+    "lowRelabelAuthorized": false,
+    "nextBatchRule": "freeze-exactly-one-page-as-interactive-understood-and-bind-every-reachable-handler-to-a-real-typed-host-contract",
+    "behaviorHeavyRule": "random-branches-audio-routing-timeline-reachability-and-replay-engineering-must-close-independently-before-registration"
+  },
+  "verification": {
+    "focusedRegression": {
+      "passed": 55,
+      "failed": 0,
+      "breakdown": {
+        "audioMaterializer": 4,
+        "demosCandidateRegistryAndVb006": 13,
+        "webDescriptorPlayerAndHost": 38
+      }
+    },
+    "demosTypecheck": "passed",
+    "privateRegistryCurrentness": "passed",
+    "audioMaterializerCurrentness": "passed-13-outputs",
+    "webTypecheck": "failed-only-on-pre-existing-next-generated-route-export-contracts-for-contact-learning-events-and-nova",
+    "taskLocalTypeErrorObserved": false,
+    "rootNpmTestBaseline": "failed-before-this-batch-on-unrelated-dirty-tree-currentness-and-governance-failures",
+    "sourceVerificationBaseline": "failed-before-this-batch-on-99-unrelated-g5l4-mp3-paths",
+    "workbenchVerificationBaseline": "failed-before-this-batch-on-stale-catalog-completion-ledger-json"
+  },
+  "globalGates": {
+    "wholeRepositoryGreen": false,
+    "strictCompletion": false,
+    "releaseEligible": false,
+    "productionVerified": false
+  },
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "behaviorParityAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "spokenLanguageAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "releaseEligible": false,
+    "published": false
+  }
+}
