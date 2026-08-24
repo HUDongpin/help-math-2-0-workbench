@@ -17,6 +17,8 @@ type SourceScopeMember = Readonly<{
   animationId: string;
   ordinal: number;
   role: string;
+  section: string;
+  sectionPageOrdinal: number;
 }>;
 
 type AudioAsset = Readonly<{
@@ -65,7 +67,7 @@ type AudioHarnessRecord = Readonly<{
 }>;
 
 const PLAYER = [
-  '[data-lesson-player="descriptor-driven-whole-lesson-audit"]',
+  '[data-lesson-player="descriptor-driven-page-only-product-bridge"]',
   '[data-hydrated="true"]',
 ].join('');
 const ROOT = 'main.lesson-shell2';
@@ -301,15 +303,27 @@ async function openLesson(
   );
 }
 
-async function selectPageFromMap(page: Page, animationId: string) {
-  const root = page.locator(ROOT);
-  if (await root.getAttribute('data-map-open') !== 'true') {
-    await page.locator('[data-course-map-trigger]:visible').click();
-    await expect(root).toHaveAttribute('data-map-open', 'true');
+async function selectPageFromLessonNavigation(
+  page: Page,
+  animationId: string,
+) {
+  const member = lessonPages.find((candidate) =>
+    candidate.animationId === animationId
+  );
+  if (!member) {
+    throw new Error(
+      `${animationId} must remain in the frozen lesson sequence`,
+    );
   }
-  await page.locator(
-    `.lesson-shell2__side-panel--map button[data-animation-id="${animationId}"]`,
-  ).click();
+
+  const section = page.locator(
+    `.lesson-shell2__spine button[data-section-code="${member.section}"]`,
+  );
+  await expect(section).toBeVisible();
+  await section.click();
+  for (let ordinal = 1; ordinal < member.sectionPageOrdinal; ordinal += 1) {
+    await (await liveControl(page, 'next')).click();
+  }
   await expect(page.locator(PLAYER)).toHaveAttribute(
     'data-current-animation-id',
     animationId,
@@ -581,7 +595,7 @@ test('FQ2 and FQ3 expose only exact speakers and clean up play, end, stop, and p
   await openLesson(page);
 
   for (const animationId of [FQ2, FQ3]) {
-    await selectPageFromMap(page, animationId);
+    await selectPageFromLessonNavigation(page, animationId);
     const form = page.locator(
       '[data-current-javascript-question-controls="true"]:visible',
     );
@@ -701,10 +715,7 @@ test.describe('live timeline audio', () => {
 
     const runtime = page.locator(RUNTIME);
     const stage = runtime.locator('.runtime-stage');
-    const narration = page.locator(
-      '[data-responsive-focus-surface="persistent"] '
-      + '[data-responsive-focus-key="narration"]',
-    );
+    const narration = await liveControl(page, 'narration');
     const exactCue = audioReport.normalCandidates.find(
       (candidate) => candidate.animationId === 'course-g05-l04-rw-002',
     )?.embedded.publicPath;
@@ -771,6 +782,9 @@ test('Spanish ordinary-page narration is manual, volume-bound, and visual-langua
     'data-current-animation-id',
     'course-g05-l04-rw-002',
   );
+  expect(await page.evaluate(() =>
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  )).toBe(true);
 
   const runtime = page.locator(RUNTIME);
   await expect(runtime).toHaveAttribute('data-audio-available', 'true');
@@ -779,10 +793,7 @@ test('Spanish ordinary-page narration is manual, volume-bound, and visual-langua
     'data-runtime-language',
     'en',
   );
-  const narration = page.locator(
-    '[data-responsive-focus-surface="persistent"] '
-    + '[data-responsive-focus-key="narration"]',
-  );
+  const narration = await liveControl(page, 'narration');
   await expect(narration).toHaveAttribute('data-narration-status', 'idle');
   await narration.click();
   await expect(narration).toHaveAttribute('data-narration-status', 'playing');
@@ -816,7 +827,11 @@ test('Spanish ordinary-page narration is manual, volume-bound, and visual-langua
   records = await audioHarnessSnapshot(page);
   expect(records.at(-1)).toMatchObject({paused: false, playCount: 1});
 
+  const volumeTrigger = await liveControl(page, 'mute');
+  await volumeTrigger.click();
+  await expect(volumeTrigger).toHaveAttribute('aria-expanded', 'true');
   const volume = await liveControl(page, 'volume');
+  await expect(volume).toBeVisible();
   await volume.fill('0.3');
   await expect(runtime).toHaveAttribute('data-runtime-volume', '0.3');
   records = await audioHarnessSnapshot(page);
@@ -858,11 +873,13 @@ test('reduced motion exposes the exact English cue as an on-demand track', async
 
   const runtime = page.locator(RUNTIME);
   await expect(runtime).toHaveAttribute('data-audio-available', 'true');
-  await expect(runtime.locator('.reduced-motion-note')).toBeVisible();
-  const narration = page.locator(
-    '[data-responsive-focus-surface="persistent"] '
-    + '[data-responsive-focus-key="narration"]',
-  );
+  const reducedMotionNote = runtime.locator('.reduced-motion-note');
+  await expect(reducedMotionNote).toHaveCount(1);
+  await expect(reducedMotionNote).toBeHidden();
+  await expect(page.locator('[data-narration-announcement="true"]'))
+    .toHaveText('The audio is ready. Use Narration to play it.');
+  const narration = await liveControl(page, 'narration');
+  await expect(narration).toBeVisible();
   await expect(narration).toHaveAttribute('data-narration-status', 'idle');
   await expect(narration).toBeEnabled();
   await narration.click();

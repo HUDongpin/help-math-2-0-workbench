@@ -33,7 +33,9 @@
     "generate:registry": "node scripts/generate-registry.mjs",
     "check:registry": "node scripts/generate-registry.mjs --check",
     "typecheck": "npm run check:registry && tsc --noEmit",
-    "test": "npm run check:registry && tsx --test test/*.test.mjs tests/**/*.test.ts"
+    "test": "npm run check:registry && tsx --test test/*.test.mjs tests/**/*.test.ts",
+    "test:hosted": "node scripts/run-hosted-tests.mjs",
+    "verify:hosted-test-contract": "node scripts/run-hosted-tests.mjs --check-contract"
   },
   "peerDependencies": {
     "react": ">=18",

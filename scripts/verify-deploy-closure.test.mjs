@@ -56,12 +56,17 @@ test('every environment-file shape is excluded before a Vercel upload', () => {
   }
 });
 
-test('controller and tool caches remain mandatory deployment exclusions', () => {
+test('controller, security, and Hosted test controls remain mandatory deployment exclusions', () => {
   const rules = parseIgnoreRules(`${REQUIRED_FAIL_CLOSED_RULES.join('\n')}\n`);
   for (const filePath of [
     '.launch-control-runtime/lease.json',
     '.cache/chromium/profile.json',
     'apps/web/.cache/next/pack.gz',
+    '.gitleaks.toml',
+    '.gitleaksignore',
+    'nested/.gitleaksignore',
+    'packages/demos/hosted-tests.v1.json',
+    'packages/demos/scripts/run-hosted-tests.mjs',
   ]) {
     assert.equal(ignoredByRules(filePath, rules), true, filePath);
   }

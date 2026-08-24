@@ -25,33 +25,81 @@ jobs:
       pull-requests: read
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      # Pull-request runs bind the source branch tip, never GitHub's synthetic
+      # merge commit. Push/manual runs bind the event SHA.
+      SECRET_SCAN_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
     steps:
       - name: Check out complete reachable history
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
+          ref: ${{ env.SECRET_SCAN_SHA }}
           fetch-depth: 0
           lfs: false
           persist-credentials: false
 
+      - name: Use repository Node.js version for policy canaries
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+
       - name: Scan the pull-request or push commit range without PR comments
         # gitleaks-action intentionally selects the event's commit range. A
-        # separate, explicitly versioned full-history scan remains a release
-        # gate before staged Production; fetch-depth alone is not that proof.
+        # separate strict tree plus exact-ancestor scan below is authoritative:
+        # the pinned action has no interface for disabling inline/fingerprint
+        # suppressions, so its event-range result alone is never a release gate.
         uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_VERSION: "8.24.3"
+          GITLEAKS_CONFIG: ${{ github.workspace }}/.gitleaks.toml
           GITLEAKS_ENABLE_COMMENTS: "false"
           GITLEAKS_ENABLE_UPLOAD_ARTIFACT: "false"
           GITLEAKS_ENABLE_SUMMARY: "false"
 
-      - name: Scan all reachable Git history with the same pinned engine
-        # The action adds its exact installed binary to GITHUB_PATH. This
-        # second invocation closes the wider release-history gate instead of
-        # misrepresenting the event-range scan above as a full-history scan.
+      - name: Prove the narrow false-positive policy rejects near-miss secrets
+        # The pinned action adds its exact installed binary to GITHUB_PATH.
+        # Runtime canaries prove all five approved non-secret shapes are
+        # detected by default, suppressed only at their exact path/shape, and
+        # that seven neighboring credential shapes still fail.
         run: |
           test "$(gitleaks version)" = "8.24.3"
-          gitleaks detect --source . --redact --exit-code 2 --log-opts="--all"
+          node scripts/verify-gitleaks-policy.mjs
+
+      - name: Scan the exact tracked tree
+        # A hash-bound git archive excludes untracked caches and the .git object
+        # database, so this proves the exact release tree rather than an
+        # incidental runner directory.
+        run: |
+          test "$(git rev-parse HEAD)" = "${SECRET_SCAN_SHA}"
+          snapshot_root="$(mktemp -d "${RUNNER_TEMP}/help-math-gitleaks-head.XXXXXX")"
+          trap 'rm -rf -- "${snapshot_root}"' EXIT
+          git archive "${SECRET_SCAN_SHA}" | tar -x -C "${snapshot_root}"
+          test ! -e "${snapshot_root}/.gitleaksignore"
+          (
+            cd "${snapshot_root}"
+            gitleaks dir . \
+              --config "${GITHUB_WORKSPACE}/.gitleaks.toml" \
+              --ignore-gitleaks-allow \
+              --redact=100 \
+              --exit-code 2
+          )
+
+      - name: Scan the exact release commit and every ancestor
+        # `--all` is deliberately not a release gate: its meaning changes with
+        # the fetched refset and currently includes rejected Nova/stage and
+        # account-lab branches. Those refs belong to a separate repository-wide
+        # inventory. This command binds one exact releasable commit closure.
+        run: |
+          test "$(gitleaks version)" = "8.24.3"
+          test "$(git rev-parse HEAD)" = "${SECRET_SCAN_SHA}"
+          test ! -e .gitleaksignore
+          gitleaks git . \
+            --config .gitleaks.toml \
+            --ignore-gitleaks-allow \
+            --redact=100 \
+            --exit-code 2 \
+            --log-opts="${SECRET_SCAN_SHA}"
 
   supply-chain:
     name: Security and supply chain

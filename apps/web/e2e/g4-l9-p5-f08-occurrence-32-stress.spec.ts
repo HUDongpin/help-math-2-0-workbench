@@ -99,7 +99,7 @@ async function runStress({
   const player = await selectOccurrence32(page);
   await expect(player).toHaveAttribute('data-current-page', '32');
   await expect(player).toHaveAttribute('data-renderer-availability', 'registered');
-  await expect(player).toHaveAttribute('data-unavailable-pages', '28');
+  await expect(player).toHaveAttribute('data-unavailable-pages', '27');
   await expect(player).toHaveAttribute('data-page-audio-acceptance', 'not-established');
   await expect(player).toHaveAttribute('data-page-actionscript-execution', 'not-executed');
 

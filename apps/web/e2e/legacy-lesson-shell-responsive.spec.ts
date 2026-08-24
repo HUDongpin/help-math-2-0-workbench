@@ -5,6 +5,11 @@ type RuntimeIssue = {
   kind: 'console' | 'page' | 'request' | 'response';
   message: string;
 };
+type G5SectionPageTarget = Readonly<{
+  animationId: string;
+  sectionCode: string;
+  sectionPageOrdinal: number;
+}>;
 
 const PLAYER = [
   '[data-lesson-player="g4-l3-whole-lesson-mvp"]',
@@ -12,7 +17,7 @@ const PLAYER = [
   '[data-resume-decision="resolved"]',
 ].join('');
 const G5_PLAYER = [
-  '[data-lesson-player="descriptor-driven-whole-lesson-audit"]',
+  '[data-lesson-player="descriptor-driven-page-only-product-bridge"]',
   '[data-hydrated="true"]',
 ].join('');
 const ROOT = 'main.lesson-shell2';
@@ -166,11 +171,7 @@ async function openG5Lesson(page: Page, baseURL: string) {
   expect(new URL(page.url()).origin).toBe(new URL(baseURL).origin);
 }
 
-/**
- * The course map is the only on-demand page navigation: the authoring-style
- * page dropdown is gone, so jumping to a page means opening the map and
- * picking the page, exactly as a learner would.
- */
+/** Select a page through the Map only where that control is part of the live surface. */
 async function selectPageFromCourseMap(
   page: Page,
   playerSelector: string,
@@ -190,8 +191,31 @@ async function selectPageFromCourseMap(
   );
 }
 
-async function selectG5Page(page: Page, animationId: string) {
-  await selectPageFromCourseMap(page, G5_PLAYER, animationId);
+async function selectG5SectionPage(page: Page, target: G5SectionPageTarget) {
+  const section = page.locator(
+    `.lesson-shell2__spine button[data-section-code="${target.sectionCode}"]`,
+  );
+  await expect(section).toBeVisible();
+  await section.click();
+  const scrubber = await liveControl(page, 'section-scrubber');
+  await expect(scrubber).toBeVisible();
+  await expect(scrubber).toHaveAttribute(
+    'data-section-code',
+    target.sectionCode,
+  );
+  await expect(scrubber).toHaveValue('1');
+  for (
+    let ordinal = 1;
+    ordinal < target.sectionPageOrdinal;
+    ordinal += 1
+  ) {
+    await (await liveControl(page, 'next')).click();
+  }
+  await expect(scrubber).toHaveValue(String(target.sectionPageOrdinal));
+  await expect(page.locator(G5_PLAYER)).toHaveAttribute(
+    'data-current-animation-id',
+    target.animationId,
+  );
 }
 
 async function expectNoHorizontalOverflow(page: Page) {
@@ -767,7 +791,11 @@ test('G5 VB004 supports real mouse drops to the left-hand integer target', async
   await page.setViewportSize({height: 720, width: 1280});
   const issues = collectRuntimeIssues(page, new URL(baseURL!).origin);
   await openG5Lesson(page, baseURL!);
-  await selectG5Page(page, 'course-g05-l04-vb-004');
+  await selectG5SectionPage(page, {
+    animationId: 'course-g05-l04-vb-004',
+    sectionCode: 'VB',
+    sectionPageOrdinal: 3,
+  });
 
   const surface = page.locator(
     '.course-g05-l04-vb004-stage-surface[data-current-js-controls-ready="true"]',
@@ -811,11 +839,25 @@ test('G5 FQ002 and FQ003 advance and Replay to a clean first question', async ({
   const issues = collectRuntimeIssues(page, new URL(baseURL!).origin);
   await openG5Lesson(page, baseURL!);
 
-  for (const {animationId, questionCount} of [
-    {animationId: 'course-g05-l04-fq-002', questionCount: 10},
-    {animationId: 'course-g05-l04-fq-003', questionCount: 18},
+  for (const {animationId, questionCount, sectionCode, sectionPageOrdinal} of [
+    {
+      animationId: 'course-g05-l04-fq-002',
+      questionCount: 10,
+      sectionCode: 'FQ',
+      sectionPageOrdinal: 2,
+    },
+    {
+      animationId: 'course-g05-l04-fq-003',
+      questionCount: 18,
+      sectionCode: 'FQ',
+      sectionPageOrdinal: 3,
+    },
   ] as const) {
-    await selectG5Page(page, animationId);
+    await selectG5SectionPage(page, {
+      animationId,
+      sectionCode,
+      sectionPageOrdinal,
+    });
     const controls = page.locator(
       '[data-current-javascript-question-controls="true"]:visible',
     );

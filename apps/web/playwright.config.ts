@@ -12,13 +12,21 @@ export default defineConfig({
   // External Clerk mutation is reachable only through the dedicated,
   // redacted, fresh-server launcher. Ordinary browser regression must never
   // discover it even if authorization variables were left in a shell.
-  testIgnore: 'clerk-synthetic-lifecycle.spec.ts',
+  testIgnore: [
+    'clerk-synthetic-lifecycle.spec.ts',
+    // Production fail-closed assertions run only against `next start` through
+    // playwright.production.config.ts. Candidate-mode development flags in
+    // this suite deliberately make those assertions inapplicable.
+    'production-smoke.spec.ts',
+  ],
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 2 : undefined,
   reporter: [['line']],
-  outputDir: '/tmp/helpmath-site-playwright-results',
+  outputDir:
+    process.env.PLAYWRIGHT_OUTPUT_DIR ??
+    '/tmp/helpmath-site-playwright-results',
   expect: {
     timeout: 10_000,
   },

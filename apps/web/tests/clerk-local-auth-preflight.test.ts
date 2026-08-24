@@ -229,7 +229,6 @@ test('preflight module has no ambient environment, provider, cookie, or network 
 test('synthetic Clerk execution is excluded from ordinary Playwright and loads one dev env snapshot only in its governed runner', async () => {
   const [
     specSource,
-    baseConfig,
     dedicatedConfig,
     runnerSource,
     nextConfig,
@@ -238,7 +237,6 @@ test('synthetic Clerk execution is excluded from ordinary Playwright and loads o
       path.join(webRoot, 'e2e/clerk-synthetic-lifecycle.spec.ts'),
       'utf8',
     ),
-    readFile(path.join(webRoot, 'playwright.config.ts'), 'utf8'),
     readFile(path.join(webRoot, 'playwright.clerk.config.ts'), 'utf8'),
     readFile(
       path.join(webRoot, 'scripts/run-clerk-synthetic-registration.ts'),
@@ -249,10 +247,11 @@ test('synthetic Clerk execution is excluded from ordinary Playwright and loads o
 
   assert.doesNotMatch(specSource, /loadEnvConfig|@next\/env/u);
   assert.doesNotMatch(dedicatedConfig, /loadEnvConfig|@next\/env/u);
-  assert.match(
-    baseConfig,
-    /testIgnore:\s*'clerk-synthetic-lifecycle\.spec\.ts'/u,
-  );
+  const {default: basePlaywrightConfig} = await import('../playwright.config');
+  assert.deepEqual(basePlaywrightConfig.testIgnore, [
+    'clerk-synthetic-lifecycle.spec.ts',
+    'production-smoke.spec.ts',
+  ]);
   assert.match(
     runnerSource,
     /nextEnv\.loadEnvConfig\(\s*webRoot,\s*true,/u,

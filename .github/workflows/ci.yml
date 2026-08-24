@@ -56,8 +56,11 @@ jobs:
         # never promotes excluded tests to PASS or skip acceptance.
         run: npm run test:workbench:hosted
 
-      - name: Test demo integration package
-        run: npm run test:demos
+      - name: Test repository-contained demo integration profile
+        # The full demos suite remains unchanged and requires repo-excluded
+        # canonical source and private Adobe evidence. This exact partition
+        # reports those files as NOT_RUN_REQUIRES_LOCAL_EVIDENCE, never PASS.
+        run: npm run test:demos:hosted
 
       - name: Type-check demo integration package
         run: npm run typecheck:demos

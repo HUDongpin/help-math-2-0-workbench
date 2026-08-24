@@ -84,13 +84,33 @@ test('production routing no longer sends visitors to a review login', async () =
     );
     assert.equal(demo.status, 404);
 
-    const course = await proxyForRequest(
-      new NextRequest('https://www.helpmath.ai/courses/4/3'),
-    );
-    assert.equal(course.status, 404);
-    assert.equal(course.headers.get('location'), null);
-    assert.equal(course.headers.get('x-helpmath-controlled-preview'), null);
-    assert.equal(course.headers.get('x-robots-tag'), 'noindex, nofollow');
+    const originalG4L3Showcase =
+      process.env.CURRENT_JS_SHOWCASE_G4_L3_ENABLED;
+    try {
+      // The Site job deliberately enables candidate routes for later product
+      // tests. This removal test owns its production-off precondition instead
+      // of inheriting ambient CI state.
+      Reflect.deleteProperty(
+        process.env,
+        'CURRENT_JS_SHOWCASE_G4_L3_ENABLED',
+      );
+      const course = await proxyForRequest(
+        new NextRequest('https://www.helpmath.ai/courses/4/3'),
+      );
+      assert.equal(course.status, 404);
+      assert.equal(course.headers.get('location'), null);
+      assert.equal(course.headers.get('x-helpmath-controlled-preview'), null);
+      assert.equal(course.headers.get('x-robots-tag'), 'noindex, nofollow');
+    } finally {
+      if (originalG4L3Showcase === undefined) {
+        Reflect.deleteProperty(
+          process.env,
+          'CURRENT_JS_SHOWCASE_G4_L3_ENABLED',
+        );
+      } else {
+        process.env.CURRENT_JS_SHOWCASE_G4_L3_ENABLED = originalG4L3Showcase;
+      }
+    }
 
     for (const pathName of [
       '/about',

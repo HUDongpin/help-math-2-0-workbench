@@ -1156,7 +1156,7 @@ test.describe('prototype composition', () => {
     });
     expect(response?.status()).toBe(200);
     await expect(page.locator(
-      '[data-lesson-player="descriptor-driven-whole-lesson-audit"]',
+      '[data-lesson-player="descriptor-driven-page-only-product-bridge"]',
     )).toHaveAttribute('data-hydrated', 'true');
     const root = page.locator(ROOT);
     await expect(root).toHaveAttribute('data-tutor-mode', 'focus');
@@ -1215,7 +1215,7 @@ test.describe('prototype composition', () => {
       waitUntil: 'domcontentloaded',
     });
     await expect(page.locator(
-      '[data-lesson-player="descriptor-driven-whole-lesson-audit"]',
+      '[data-lesson-player="descriptor-driven-page-only-product-bridge"]',
     )).toHaveAttribute('data-hydrated', 'true');
     await expect(page.locator('[data-current-page="2"]')).toBeVisible();
     const reopened = await readProgress(page);
@@ -1244,7 +1244,7 @@ test.describe('prototype composition', () => {
       waitUntil: 'domcontentloaded',
     });
     await expect(page.locator(
-      '[data-lesson-player="descriptor-driven-whole-lesson-audit"]',
+      '[data-lesson-player="descriptor-driven-page-only-product-bridge"]',
     )).toHaveAttribute('data-hydrated', 'true');
     const reopenedHome = page.locator(
       '[data-lesson-platform-header="true"] '
@@ -1268,7 +1268,7 @@ test.describe('prototype composition', () => {
     await fallbackPage.waitForURL(/\/es\/courses\/5\/4\?mode=classroom$/u);
     expect(await fallbackPage.evaluate(() => window.history.length)).toBe(1);
     await expect(fallbackPage.locator(
-      '[data-lesson-player="descriptor-driven-whole-lesson-audit"]',
+      '[data-lesson-player="descriptor-driven-page-only-product-bridge"]',
     )).toHaveAttribute('data-hydrated', 'true');
     const spanishHome = fallbackPage.locator(
       '[data-lesson-platform-header="true"] '
@@ -1720,9 +1720,13 @@ test.describe('prototype composition', () => {
     await expect(page.locator(
       `${BAR} [data-responsive-focus-key="study-support"]`,
     )).toHaveCount(0);
-    await expect(page.locator(
+    const narration = page.locator(
       `${BAR} [data-responsive-focus-key="narration"]`,
-    )).toHaveCount(0);
+    );
+    await expect(narration).toHaveCount(1);
+    await expect(narration).toBeVisible();
+    await expect(narration).toBeEnabled();
+    await expect(narration).toHaveAccessibleName('Narration: Play the audio');
     await expect(page.getByRole('button', {name: 'Read it', exact: true}))
       .toHaveCount(0);
   });
