@@ -17,6 +17,7 @@ export const MANDATORY_HOSTED_TEST_FILES = Object.freeze([
   'lib/conversionTimeline.test.mjs',
   'scripts/build-lesson-release-ledger.test.mjs',
   'scripts/build-page-only-migration-control-ledger.test.mjs',
+  'scripts/build-public-launch-manifest.test.mjs',
   'scripts/completion-ledger.test.mjs',
   'scripts/evidence-projections.test.mjs',
   'scripts/freeze-help-math-sources.test.mjs',
@@ -192,8 +193,8 @@ export function validateHostedWorkbenchContract({
   }
 
   invariant(
-    contract.fullyHostedProfile.expectedTestCount === 127 &&
-      contract.fullyHostedProfile.expectedPassCount === 127 &&
+    contract.fullyHostedProfile.expectedTestCount === 144 &&
+      contract.fullyHostedProfile.expectedPassCount === 144 &&
       contract.fullyHostedProfile.expectedSkipCount === 0,
     'fully Hosted capability floor drifted',
   );

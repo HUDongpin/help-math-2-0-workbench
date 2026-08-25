@@ -173,6 +173,9 @@ jobs:
       - name: Reassert the local-evidence ledger boundary
         run: npm run verify:workbench:hosted
 
+      - name: Verify public launch manifest currentness
+        run: npm run verify:public-launch
+
       - name: Verify public deployment closure
         run: npm run verify:deploy-closure
 
@@ -221,6 +224,9 @@ jobs:
 
       - name: Install locked dependencies
         run: npm ci
+
+      - name: Verify public launch manifest currentness
+        run: npm run verify:public-launch
 
       - name: Verify deployment closure
         run: npm run verify:deploy-closure

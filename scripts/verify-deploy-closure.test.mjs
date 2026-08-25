@@ -29,6 +29,13 @@ source-assets/
     false,
   );
   assert.equal(ignoredByRules('source-assets/flash/source.swf', rules), true);
+  const releaseRules = parseIgnoreRules(
+    `catalog/**\n${REQUIRED_FAIL_CLOSED_RULES.join('\n')}\n`,
+  );
+  assert.equal(
+    ignoredByRules('catalog/public-launch-manifest.v1.json', releaseRules),
+    false,
+  );
 });
 
 test('dangerous paths are classified without reading or reporting values', () => {
