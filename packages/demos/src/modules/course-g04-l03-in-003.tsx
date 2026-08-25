@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useEffect, useRef, useState} from "react";
+import React, {useCallback, useMemo, useRef} from "react";
 
 import type {
   AnimationModule,
@@ -8,6 +8,15 @@ import type {
   RuntimeContext,
 } from "../contract";
 import {getG4L3MainTimelineAudioCandidate} from "../g4-l3-main-timeline-audio.generated";
+import {getAdaptiveCanvasProductionBinding} from "../adaptive-canvas-production-bindings.generated";
+import {
+  resolveAdaptiveCanvasPageAsset,
+  stampAdaptiveCanvasCaptureIdentity,
+  type AdaptiveCanvasAssetDescriptor,
+  type AdaptiveCanvasPresentationStatus,
+  type AdaptiveCanvasRendererBindingProps,
+} from "../adaptive-canvas-presenter";
+import {useAdaptiveCanvasPresenter} from "../use-adaptive-canvas-presenter";
 import {
   COURSE_G04_L03_IN_003_MOVIE,
   COURSE_G04_L03_IN_003_RUNTIME,
@@ -21,6 +30,12 @@ const ASSET_SOURCE =
   "/flash-assets/courses/course-g04-l03-in-003/canvas-renderer.js";
 const AUDIO_CANDIDATE =
   getG4L3MainTimelineAudioCandidate(ANIMATION_ID);
+const LEGACY_CANVAS_ASSET: AdaptiveCanvasAssetDescriptor = Object.freeze({
+  animationId: ANIMATION_ID,
+  assetPath: ASSET_SOURCE,
+});
+const PRODUCTION_CANVAS_BINDING =
+  getAdaptiveCanvasProductionBinding(ANIMATION_ID);
 
 interface CanvasRuntimeState {
   readonly frameDomain: string;
@@ -30,62 +45,6 @@ interface CanvasRuntimeState {
   readonly lang: string;
   readonly seed: number;
   readonly audioRendered: false;
-}
-
-interface CanvasAsset {
-  readonly ready: () => Promise<void>;
-  readonly render: (
-    canvas: HTMLCanvasElement,
-    request: {
-      frame: number;
-      scenario: string;
-      lang: string;
-      seed: number;
-    },
-  ) => unknown;
-}
-
-declare global {
-  interface Window {
-    HELP_MATH_CANVAS_ASSETS?: Record<string, CanvasAsset>;
-  }
-}
-
-let assetLoadPromise: Promise<CanvasAsset> | null = null;
-
-function loadCanvasAsset(): Promise<CanvasAsset> {
-  const registered = window.HELP_MATH_CANVAS_ASSETS?.[ANIMATION_ID];
-  if (registered) return Promise.resolve(registered);
-  if (assetLoadPromise) return assetLoadPromise;
-  assetLoadPromise = new Promise<CanvasAsset>((resolve, reject) => {
-    const existing = document.querySelector<HTMLScriptElement>(
-      `script[data-help-math-canvas-asset="${ANIMATION_ID}"]`,
-    );
-    const script = existing ?? document.createElement("script");
-    const finish = () => {
-      const asset = window.HELP_MATH_CANVAS_ASSETS?.[ANIMATION_ID];
-      if (asset) resolve(asset);
-      else
-        reject(
-          new Error(
-            "Canvas asset loaded without registering the expected animation",
-          ),
-        );
-    };
-    script.onload = finish;
-    script.onerror = () =>
-      reject(new Error("The local Canvas asset could not be loaded"));
-    if (!existing) {
-      script.async = true;
-      script.dataset.helpMathCanvasAsset = ANIMATION_ID;
-      script.src = ASSET_SOURCE;
-      document.head.appendChild(script);
-    } else if (window.HELP_MATH_CANVAS_ASSETS?.[ANIMATION_ID]) finish();
-  }).catch((error) => {
-    assetLoadPromise = null;
-    throw error;
-  });
-  return assetLoadPromise;
 }
 
 function isFrameState(value: unknown): value is CourseG04L03In003FrameState {
@@ -173,7 +132,7 @@ function blockerCopy(state: CourseG04L03In003FrameState): {
   };
 }
 
-type CanvasStatus = "idle" | "loading" | "ready" | "error";
+type CanvasStatus = AdaptiveCanvasPresentationStatus;
 
 export function buildCourseG04L03In003CaptureAttributes({
   canvasStatus,
@@ -210,6 +169,7 @@ export function buildCourseG04L03In003CaptureAttributes({
 }
 
 export function CourseG04L03In003Renderer({
+  adaptiveCanvasBinding,
   entryStateSha256 = "",
   frame,
   frameDomain,
@@ -219,7 +179,7 @@ export function CourseG04L03In003Renderer({
   seed,
   state,
   traceId = "",
-}: AnimationRendererProps) {
+}: AnimationRendererProps & AdaptiveCanvasRendererBindingProps) {
   const deterministicState = isFrameState(state)
     ? state
     : getCourseG04L03In003FrameState(frame, {
@@ -229,44 +189,76 @@ export function CourseG04L03In003Renderer({
         seed,
       });
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [canvasStatus, setCanvasStatus] = useState<CanvasStatus>("idle");
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas || deterministicState.status !== "ready") {
-      setCanvasStatus("idle");
-      return;
-    }
-    let cancelled = false;
-    setCanvasStatus("loading");
-    loadCanvasAsset()
-      .then(async (asset) => {
-        await asset.ready();
-        if (cancelled) return;
-        const rendered = asset.render(canvas, {
-          frame: deterministicState.frame,
-          scenario: deterministicState.scenario,
-          lang: deterministicState.language,
-          seed: deterministicState.seed,
-        });
-        verifyRenderedIdentity(canvas, rendered, deterministicState);
-        if (!cancelled) setCanvasStatus("ready");
-      })
-      .catch(() => {
-        if (!cancelled) setCanvasStatus("error");
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [
+  const canvasHostRef = useRef<HTMLElement>(null);
+  const canvasStageRef = useRef<HTMLDivElement>(null);
+  const canvasAsset = resolveAdaptiveCanvasPageAsset({
+    animationId: ANIMATION_ID,
+    explicitBinding: adaptiveCanvasBinding,
+    legacyAsset: LEGACY_CANVAS_ASSET,
+    productionBinding: PRODUCTION_CANVAS_BINDING,
+  });
+  const renderRequest = useMemo(() => Object.freeze({
+    frame: deterministicState.frame,
+    scenario: deterministicState.scenario,
+    lang: deterministicState.language,
+    seed: deterministicState.seed,
+  }), [
     deterministicState.frame,
-    deterministicState.frameDomain,
     deterministicState.language,
-    deterministicState.rootFrame,
     deterministicState.scenario,
     deterministicState.seed,
-    deterministicState.status,
   ]);
+  const visualKey = JSON.stringify([
+    ANIMATION_ID,
+    deterministicState.frame,
+    deterministicState.frameDomain,
+    deterministicState.rootFrame,
+    deterministicState.scenario,
+    deterministicState.language,
+    deterministicState.seed,
+  ]);
+  const requestKey = JSON.stringify([
+    visualKey,
+    entryStateSha256,
+    requirementId,
+    traceId,
+  ]);
+  const captureIdentityComplete = Boolean(
+    entryStateSha256 && requirementId && traceId,
+  );
+  const verifyPresentedIdentity = useCallback((
+    canvas: HTMLCanvasElement,
+    rendered: unknown,
+  ) => {
+    verifyRenderedIdentity(canvas, rendered, deterministicState);
+    stampAdaptiveCanvasCaptureIdentity(canvas, {
+      entryStateSha256,
+      frame: deterministicState.frame,
+      frameDomain: deterministicState.frameDomain,
+      lang: deterministicState.language,
+      requirementId,
+      rootFrame: deterministicState.rootFrame,
+      scenario: deterministicState.scenario,
+      seed: deterministicState.seed,
+      traceId,
+    });
+  }, [deterministicState, entryStateSha256, requirementId, traceId]);
+  const canvasPresentation = useAdaptiveCanvasPresenter({
+    active: deterministicState.status === "ready",
+    asset: canvasAsset,
+    captureReady: captureIdentityComplete,
+    hostRef: canvasHostRef,
+    nativeHeight: 600,
+    nativeWidth: 800,
+    renderRequest,
+    requestKey,
+    sourceBitmapBound: canvasAsset.sourceBitmapResolutionBound,
+    stageRef: canvasStageRef,
+    verifyRendered: verifyPresentedIdentity,
+    visibleCanvasRef: canvasRef,
+    visualKey,
+  });
+  const canvasStatus = canvasPresentation.status;
 
   const blocked =
     deterministicState.status === "blocked"
@@ -283,9 +275,11 @@ export function CourseG04L03In003Renderer({
       data-human-visual-review-accepted="false"
       data-owner-accepted="false"
       data-strict-migration-complete="false"
+      ref={canvasHostRef}
       style={{margin: "0 auto", maxWidth: 800, width: "100%"}}
     >
       <div
+        ref={canvasStageRef}
         style={{
           aspectRatio: "4 / 3",
           background: "#b8d8f7",
@@ -327,12 +321,25 @@ export function CourseG04L03In003Renderer({
               aria-label={`Source-static sprite-84 drawing, frame ${deterministicState.frame} of 472`}
               className="faithful-stage-wrap"
               data-course-canvas={ANIMATION_ID}
+              data-canvas-backing-height={
+                canvasPresentation.resolution.backingStage.height
+              }
+              data-canvas-backing-width={
+                canvasPresentation.resolution.backingStage.width
+              }
+              data-render-scale={canvasPresentation.resolution.renderScale}
+              data-resolution-ceiling-reached={
+                String(canvasPresentation.resolution.demandCapped)
+              }
+              data-resolution-status={canvasPresentation.resolution.status}
               height={600}
               ref={canvasRef}
               role="img"
               style={{
                 aspectRatio: "4 / 3",
-                display: canvasStatus === "ready" ? "block" : "none",
+                display: canvasPresentation.hasPresentedFrame
+                  ? "block"
+                  : "none",
                 height: "auto",
                 width: "100%",
               }}

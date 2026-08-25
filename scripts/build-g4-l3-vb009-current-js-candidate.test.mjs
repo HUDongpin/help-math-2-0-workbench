@@ -29,8 +29,23 @@ test("VB009 candidate CLI is explicit and fail-closed", () => {
     ffdec: "ffdec",
     python: "python3",
     swfmill: "swfmill",
+    regenerationOnly: false,
+    sourceRoot: null,
     root: ROOT,
   });
+  const regeneration = parseArguments([
+    "--check",
+    "--regeneration-only",
+    "--source-root",
+    "/canonical/source",
+  ], {root: ROOT});
+  assert.equal(regeneration.regenerationOnly, true);
+  assert.equal(regeneration.sourceRoot, "/canonical/source");
+  assert.throws(() => parseArguments(["--regeneration-only"], {root: ROOT}),
+    /requires --check/);
+  assert.throws(() => parseArguments([
+    "--check", "--regeneration-only", "--source-root", "relative/source",
+  ], {root: ROOT}), /absolute --source-root/);
   assert.equal(
     parseArguments(["--ffdec", "/opt/tools/ffdec"], {root: ROOT}).ffdec,
     "/opt/tools/ffdec",

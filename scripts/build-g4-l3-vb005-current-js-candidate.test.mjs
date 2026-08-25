@@ -31,7 +31,22 @@ test("VB005 candidate CLI keeps the write/tool surface explicit", () => {
     python: "python3",
     ffmpeg: "ffmpeg",
     ffprobe: "ffprobe",
+    regenerationOnly: false,
+    sourceRoot: null,
   });
+  const regeneration = parseArguments([
+    "--check",
+    "--regeneration-only",
+    "--source-root",
+    "/canonical/source",
+  ]);
+  assert.equal(regeneration.regenerationOnly, true);
+  assert.equal(regeneration.sourceRoot, "/canonical/source");
+  assert.throws(() => parseArguments(["--regeneration-only"]),
+    /requires --check/);
+  assert.throws(() => parseArguments([
+    "--check", "--regeneration-only", "--source-root", "relative/source",
+  ]), /absolute --source-root/);
   assert.equal(parseArguments(["--ffdec", "/opt/homebrew/bin/ffdec"]).ffdec,
     "/opt/homebrew/bin/ffdec");
   assert.throws(() => parseArguments(["--python"]), /requires a value/);

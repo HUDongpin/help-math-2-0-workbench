@@ -10,9 +10,14 @@ import {
   createLatestCanvasRenderCoordinator,
   createSourceStaticCanvasCandidate,
   retainedCanvasStatus,
+  resolveSourceStaticCanvasProductionConfig,
+  sourceStaticCanvasMayFallbackToK1,
   sourceStaticCanvasRenderKey,
+  sourceStaticCanvasResolutionSelectionKey,
   sourceStaticCanvasVisualKey,
 } from "../src/source-static-canvas-candidate";
+import {selectAdaptiveCanvasResolution} from "../src/adaptive-canvas-resolution";
+import {CanvasPresentationAllocationError} from "../src/adaptive-canvas-presenter";
 
 function deferred<T>() {
   let resolve!: (value: T | PromiseLike<T>) => void;
@@ -50,6 +55,90 @@ const behaviorBoundedCandidate = createSourceStaticCanvasCandidate({
     {firstFrame: 160, lastFrame: 163, reason: "random-dependent-state-unvalidated"},
   ],
   livePlaybackEndFrame: 159,
+});
+
+const adaptiveCandidate = createSourceStaticCanvasCandidate({
+  ...candidate.config,
+  animationId: "course-g04-l03-test-003",
+  assetSource: "/flash-assets/courses/course-g04-l03-test-003/canvas-renderer.js",
+  assetSha256: "b".repeat(64),
+  resolution: Object.freeze({
+    schemaVersion: 1,
+    mode: "adaptive-integer",
+    nativeWidth: 800,
+    nativeHeight: 600,
+    supportedRenderScales: [1, 2],
+  }),
+});
+
+test("production bindings opt historical candidates into one content-addressed adaptive runtime", () => {
+  const historicalConfig = {
+    ...candidate.config,
+    assetSha256: "a".repeat(64),
+    resolution: undefined,
+  };
+  assert.equal(
+    resolveSourceStaticCanvasProductionConfig(historicalConfig, () => null),
+    historicalConfig,
+  );
+
+  const binding = Object.freeze({
+    animationId: historicalConfig.animationId,
+    pageRenderer: true,
+    assetPath: historicalConfig.assetSource,
+    assetSha256: "d".repeat(64),
+    resolution: Object.freeze({
+      schemaVersion: 1,
+      mode: "adaptive-integer",
+      nativeWidth: 800,
+      nativeHeight: 600,
+      supportedRenderScales: Object.freeze([1, 2] as const),
+    }),
+    sourceBitmapResolutionBound: true,
+  } as const);
+  const resolved = resolveSourceStaticCanvasProductionConfig(
+    historicalConfig,
+    () => binding,
+  );
+  assert.equal(resolved.assetSha256, "d".repeat(64));
+  assert.equal(resolved.assetSource, historicalConfig.assetSource);
+  assert.equal(resolved.resolution, binding.resolution);
+  assert.equal(resolved.sourceBitmapResolutionBound, true);
+  assert.equal(historicalConfig.assetSha256, "a".repeat(64));
+});
+
+test("production binding mismatches fail closed before candidate construction", () => {
+  const baseBinding = {
+    animationId: candidate.config.animationId,
+    pageRenderer: true,
+    assetPath: candidate.config.assetSource,
+    assetSha256: "d".repeat(64),
+    resolution: {
+      schemaVersion: 1,
+      mode: "adaptive-integer",
+      nativeWidth: 800,
+      nativeHeight: 600,
+      supportedRenderScales: [1, 2] as const,
+    },
+    sourceBitmapResolutionBound: false,
+  } as const;
+  assert.throws(
+    () =>
+      resolveSourceStaticCanvasProductionConfig(candidate.config, () => ({
+        ...baseBinding,
+        pageRenderer: false,
+      })),
+    /not a page renderer/,
+  );
+  assert.throws(
+    () =>
+      resolveSourceStaticCanvasProductionConfig(candidate.config, () => ({
+        ...baseBinding,
+        assetPath:
+          "/flash-assets/courses/course-g04-l03-wrong/canvas-renderer.js",
+      })),
+    /asset path does not match/,
+  );
 });
 
 test("generic source-static factory keeps root and nested frame domains separate", () => {
@@ -161,6 +250,25 @@ test("hash-bound Canvas requests use digest-specific URL, promise key, and SRI",
   assert.equal(request.crossOrigin, "anonymous");
   assert.match(request.key, new RegExp(`course-g05-l04-vb-002:${digest}`));
 
+  const adaptiveRequest = buildCanvasAssetRequest({
+    animationId: "course-g05-l04-vb-002",
+    assetSource:
+      "/flash-assets/courses/course-g05-l04-vb-002/canvas-renderer.js",
+    assetSha256: digest,
+    resolution: {
+      schemaVersion: 1,
+      mode: "adaptive-integer",
+      nativeWidth: 800,
+      nativeHeight: 600,
+      supportedRenderScales: [1, 2],
+    },
+  });
+  assert.equal(
+    adaptiveRequest.src,
+    `/flash-assets/by-sha256/${digest}/courses/course-g05-l04-vb-002/canvas-renderer.js`,
+  );
+  assert.equal(adaptiveRequest.integrity, request.integrity);
+
   const changed = buildCanvasAssetRequest({
     animationId: "course-g05-l04-vb-002",
     assetSource:
@@ -179,29 +287,94 @@ test("hash-bound Canvas requests use digest-specific URL, promise key, and SRI",
   );
 });
 
-test("Canvas loader assigns digest identity before inserting the script", async () => {
-  const source = await readFile(
+test("Canvas loader delegates exact digest and object binding to the shared loader", async () => {
+  const sourceStatic = await readFile(
     new URL("../src/source-static-canvas-candidate.tsx", import.meta.url),
     "utf8",
   );
-  const digestDataset = source.indexOf(
-    "script.dataset.helpMathCanvasSha256 = config.assetSha256",
+  const presenter = await readFile(
+    new URL("../src/adaptive-canvas-presenter.ts", import.meta.url),
+    "utf8",
   );
-  const integrity = source.indexOf(
+  assert.match(sourceStatic, /loadExactCanvasRegistryScript<CanvasAsset>/);
+  assert.match(sourceStatic, /assetSha256: config\.assetSha256 \?\? null/);
+  assert.match(sourceStatic, /markerAttribute: "data-help-math-canvas-asset"/);
+  assert.match(sourceStatic, /registeredAsset: \(\) =>[\s\S]*?HELP_MATH_CANVAS_ASSETS/);
+  assert.doesNotMatch(sourceStatic, /const registered = window\.HELP_MATH_CANVAS_ASSETS/);
+
+  const digestDataset = presenter.indexOf(
+    "script.dataset.helpMathCanvasSha256 = assetSha256",
+  );
+  const integrity = presenter.indexOf(
     "script.integrity = request.integrity",
   );
-  const crossOrigin = source.indexOf(
+  const crossOrigin = presenter.indexOf(
     "script.crossOrigin = request.crossOrigin",
   );
-  const sourceAssignment = source.indexOf("script.src = request.src");
-  const insertion = source.indexOf("document.head.appendChild(script)");
+  const sourceAssignment = presenter.indexOf("script.src = request.src");
+  const insertion = presenter.indexOf("document.head.appendChild(script)");
   assert.ok(digestDataset >= 0);
   assert.ok(integrity > digestDataset);
   assert.ok(crossOrigin > integrity);
   assert.ok(sourceAssignment > crossOrigin);
   assert.ok(insertion > sourceAssignment);
-  assert.match(source, /assetPromises\.get\(request\.key\)/);
-  assert.match(source, /data-help-math-canvas-sha256/);
+  assert.match(presenter, /exactCanvasScriptBindings\.set\(script, \{asset, loaderKey\}\)/);
+  assert.match(presenter, /asset === registeredBeforeLoad/);
+});
+
+test("source-static fallback is limited to adaptive k2 allocation failures and keyed to the selection", () => {
+  const retina = selectAdaptiveCanvasResolution({
+    authoredStage: {width: 800, height: 600},
+    cssStage: {width: 800, height: 600},
+    devicePixelRatio: 2,
+  });
+  const allocationError = new CanvasPresentationAllocationError(
+    "Canvas allocation denied at 2x",
+  );
+  assert.equal(sourceStaticCanvasMayFallbackToK1({
+    adaptiveEnabled: true,
+    error: allocationError,
+    resolution: retina,
+  }), true);
+  assert.equal(sourceStaticCanvasMayFallbackToK1({
+    adaptiveEnabled: false,
+    error: allocationError,
+    resolution: retina,
+  }), false);
+  assert.equal(sourceStaticCanvasMayFallbackToK1({
+    adaptiveEnabled: true,
+    error: new Error("renderer identity mismatch"),
+    resolution: retina,
+  }), false);
+
+  const native = selectAdaptiveCanvasResolution({
+    authoredStage: {width: 800, height: 600},
+    cssStage: {width: 800, height: 600},
+    devicePixelRatio: 1,
+  });
+  assert.equal(sourceStaticCanvasMayFallbackToK1({
+    adaptiveEnabled: true,
+    error: allocationError,
+    resolution: native,
+  }), false);
+  assert.notEqual(
+    sourceStaticCanvasResolutionSelectionKey(retina),
+    sourceStaticCanvasResolutionSelectionKey(native),
+  );
+});
+
+test("source-static fallback retries the latest coalesced request key and revokes capture", async () => {
+  const source = await readFile(
+    new URL("../src/source-static-canvas-candidate.tsx", import.meta.url),
+    "utf8",
+  );
+  assert.match(source, /attemptedRequest = request/);
+  assert.match(source, /resolution: failedRequest\.resolution/);
+  assert.match(source, /selectionKey: failedRequest\.selectionKey/);
+  assert.match(source, /stagingCanvasRef\.current = null/);
+  assert.match(source, /data-resolution-status",[\s\S]*?"fallback-k1"/);
+  assert.match(source, /captureReady: false/);
+  assert.match(source, /data-resolution-fallback-reason/);
 });
 
 test("generic source-static state exposes visual markers but never host behavior", () => {
@@ -405,9 +578,67 @@ test("Canvas render request keys are stable and include every deterministic trac
     {...identity, scenario: "source-static-frame-successor"},
     {...identity, seed: identity.seed + 1},
     {...identity, traceId: "trace-source-static-32-successor"},
+    {...identity, renderScale: 2 as const},
   ]) {
     assert.notEqual(sourceStaticCanvasRenderKey(changed), key);
   }
+});
+
+test("adaptive metadata controls backing diagnostics without enlarging CSS layout", () => {
+  assert.deepEqual(adaptiveCandidate.config.resolution, {
+    schemaVersion: 1,
+    mode: "adaptive-integer",
+    nativeWidth: 800,
+    nativeHeight: 600,
+    supportedRenderScales: [1, 2],
+  });
+  const state = adaptiveCandidate.getFrameState(32, {
+    frameDomain: "sprite-44",
+    scenario: "source-static-frame",
+    lang: "en",
+    seed: 7,
+    requirementId: "req-adaptive-32",
+    traceId: "trace-adaptive-32",
+    entryStateSha256: "a".repeat(64),
+  });
+  const resolution = selectAdaptiveCanvasResolution({
+    authoredStage: {width: 800, height: 600},
+    cssStage: {width: 800, height: 600},
+    devicePixelRatio: 2,
+  });
+  const attributes = adaptiveCandidate.buildCaptureAttributes({
+    canvasStatus: "ready",
+    entryStateSha256: "a".repeat(64),
+    frame: 32,
+    frameDomain: "sprite-44",
+    lang: "en",
+    requirementId: "req-adaptive-32",
+    scenario: "source-static-frame",
+    seed: 7,
+    resolution,
+    state,
+    traceId: "trace-adaptive-32",
+  });
+  assert.equal(attributes["data-render-scale"], 2);
+  assert.equal(attributes["data-canvas-backing-width"], 1600);
+  assert.equal(attributes["data-canvas-backing-height"], 1200);
+  assert.equal(attributes["data-resolution-status"], "retina");
+  assert.equal(attributes["data-resolution-ceiling-reached"], "false");
+
+  const markup = renderToStaticMarkup(
+    createElement(adaptiveCandidate.Renderer, {
+      frame: 1,
+      frameDomain: "sprite-44",
+      scenario: "source-static-frame",
+      lang: "en",
+      seed: 0,
+    }),
+  );
+  assert.match(markup, /data-render-scale="1"/);
+  assert.match(markup, /data-resolution-status="fallback-k1"/);
+  assert.match(markup, /width="800"/);
+  assert.doesNotMatch(markup, /width="1600"/);
+  assert.doesNotMatch(markup, /max-width:1600/);
 });
 
 test("generic source-static factory fails closed for Spanish, root, companion, and mismatches", () => {
@@ -674,5 +905,34 @@ test("generic factory rejects unsafe or internally inconsistent configurations",
         backingStage: {width: 799, height: 600},
       }),
     /ceil-positive-native-stage-dimensions/,
+  );
+  assert.throws(
+    () =>
+      createSourceStaticCanvasCandidate({
+        ...candidate.config,
+        assetSha256: "c".repeat(64),
+        resolution: {
+          schemaVersion: 1,
+          mode: "adaptive-integer",
+          nativeWidth: 1600,
+          nativeHeight: 1200,
+          supportedRenderScales: [1, 2],
+        },
+      }),
+    /adaptive resolution contract is invalid/,
+  );
+  assert.throws(
+    () =>
+      createSourceStaticCanvasCandidate({
+        ...candidate.config,
+        resolution: {
+          schemaVersion: 1,
+          mode: "adaptive-integer",
+          nativeWidth: 800,
+          nativeHeight: 600,
+          supportedRenderScales: [1, 2],
+        },
+      }),
+    /requires an exact asset SHA-256/,
   );
 });

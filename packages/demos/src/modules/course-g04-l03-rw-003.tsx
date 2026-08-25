@@ -1,17 +1,21 @@
 "use client";
 
-import React, {useEffect, useRef, useState} from "react";
+import React, {useCallback, useMemo, useRef} from "react";
 
 import type {
   AnimationModule,
   AnimationRendererProps,
   RuntimeContext,
 } from "../contract";
+import type {SourceStaticCanvasStatus} from "../source-static-canvas-candidate";
+import {getAdaptiveCanvasProductionBinding} from "../adaptive-canvas-production-bindings.generated";
 import {
-  retainedCanvasStatus,
-  sourceStaticCanvasVisualKey,
-  type SourceStaticCanvasStatus,
-} from "../source-static-canvas-candidate";
+  resolveAdaptiveCanvasPageAsset,
+  stampAdaptiveCanvasCaptureIdentity,
+  type AdaptiveCanvasAssetDescriptor,
+  type AdaptiveCanvasRendererBindingProps,
+} from "../adaptive-canvas-presenter";
+import {useAdaptiveCanvasPresenter} from "../use-adaptive-canvas-presenter";
 import {createCourseG04L03SourceGlossaryCandidate} from "./course-g04-l03-source-glossary-candidate";
 import {
   COURSE_G04_L03_RW_003_GLOSSARY_CONFIG,
@@ -26,6 +30,12 @@ import {
 const ANIMATION_ID = "course-g04-l03-rw-003";
 const ASSET_SOURCE =
   "/flash-assets/courses/course-g04-l03-rw-003/canvas-renderer.js";
+const LEGACY_CANVAS_ASSET: AdaptiveCanvasAssetDescriptor = Object.freeze({
+  animationId: ANIMATION_ID,
+  assetPath: ASSET_SOURCE,
+});
+const PRODUCTION_CANVAS_BINDING =
+  getAdaptiveCanvasProductionBinding(ANIMATION_ID);
 
 interface CanvasRuntimeState {
   readonly frameDomain: string;
@@ -36,62 +46,6 @@ interface CanvasRuntimeState {
   readonly seed: number;
   readonly interactiveStateResolved: false;
   readonly audioRendered: false;
-}
-
-interface CanvasAsset {
-  readonly ready: () => Promise<void>;
-  readonly render: (
-    canvas: HTMLCanvasElement,
-    request: {
-      frame: number;
-      scenario: string;
-      lang: string;
-      seed: number;
-    },
-  ) => unknown;
-}
-
-declare global {
-  interface Window {
-    HELP_MATH_CANVAS_ASSETS?: Record<string, CanvasAsset>;
-  }
-}
-
-let assetLoadPromise: Promise<CanvasAsset> | null = null;
-
-function loadCanvasAsset(): Promise<CanvasAsset> {
-  const registered = window.HELP_MATH_CANVAS_ASSETS?.[ANIMATION_ID];
-  if (registered) return Promise.resolve(registered);
-  if (assetLoadPromise) return assetLoadPromise;
-  assetLoadPromise = new Promise<CanvasAsset>((resolve, reject) => {
-    const existing = document.querySelector<HTMLScriptElement>(
-      `script[data-help-math-canvas-asset="${ANIMATION_ID}"]`,
-    );
-    const script = existing ?? document.createElement("script");
-    const finish = () => {
-      const asset = window.HELP_MATH_CANVAS_ASSETS?.[ANIMATION_ID];
-      if (asset) resolve(asset);
-      else
-        reject(
-          new Error(
-            "Canvas asset loaded without registering the expected animation",
-          ),
-        );
-    };
-    script.onload = finish;
-    script.onerror = () =>
-      reject(new Error("The local Canvas asset could not be loaded"));
-    if (!existing) {
-      script.async = true;
-      script.dataset.helpMathCanvasAsset = ANIMATION_ID;
-      script.src = ASSET_SOURCE;
-      document.head.appendChild(script);
-    } else if (window.HELP_MATH_CANVAS_ASSETS?.[ANIMATION_ID]) finish();
-  }).catch((error) => {
-    assetLoadPromise = null;
-    throw error;
-  });
-  return assetLoadPromise;
 }
 
 function isFrameState(value: unknown): value is CourseG04L03Rw003FrameState {
@@ -224,6 +178,7 @@ export function buildCourseG04L03Rw003CaptureAttributes({
 }
 
 function CourseG04L03Rw003SourceStaticRenderer({
+  adaptiveCanvasBinding,
   entryStateSha256 = "",
   frame,
   frameDomain,
@@ -233,7 +188,7 @@ function CourseG04L03Rw003SourceStaticRenderer({
   seed,
   state,
   traceId = "",
-}: AnimationRendererProps) {
+}: AnimationRendererProps & AdaptiveCanvasRendererBindingProps) {
   const deterministicState = isFrameState(state)
     ? state
     : getCourseG04L03Rw003FrameState(frame, {
@@ -243,73 +198,81 @@ function CourseG04L03Rw003SourceStaticRenderer({
         seed,
       });
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [canvasStatus, setCanvasStatus] =
-    useState<SourceStaticCanvasStatus>("idle");
-  const [renderedVisualKey, setRenderedVisualKey] = useState<string | null>(
-    null,
-  );
-  const requestedVisualKey = sourceStaticCanvasVisualKey({
+  const canvasHostRef = useRef<HTMLElement>(null);
+  const canvasStageRef = useRef<HTMLDivElement>(null);
+  const canvasAsset = resolveAdaptiveCanvasPageAsset({
     animationId: ANIMATION_ID,
-    ...deterministicState,
+    explicitBinding: adaptiveCanvasBinding,
+    legacyAsset: LEGACY_CANVAS_ASSET,
+    productionBinding: PRODUCTION_CANVAS_BINDING,
   });
-  const reportedCanvasStatus = retainedCanvasStatus({
-    canvasStatus,
-    renderedVisualKey,
-    requestedVisualKey,
-  });
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas || deterministicState.status !== "ready") {
-      setRenderedVisualKey(null);
-      setCanvasStatus("idle");
-      return;
-    }
-    let cancelled = false;
-    // The first frame may use the blue loading plane, but an already-painted
-    // frame must stay visible while the next deterministic frame is prepared.
-    // Demoting `ready` to `loading` hid the Canvas on every 12 fps tick and
-    // exposed that plane, producing a full-stage blue flash. `updating` also
-    // withholds capture readiness, so the retained bitmap is never presented
-    // as evidence for the requested frame before the atomic draw completes.
-    setCanvasStatus((current) =>
-      current === "ready" || current === "updating" ? "updating" : "loading",
-    );
-    loadCanvasAsset()
-      .then(async (asset) => {
-        await asset.ready();
-        if (cancelled) return;
-        const rendered = asset.render(canvas, {
-          frame: deterministicState.frame,
-          scenario: deterministicState.scenario,
-          lang: deterministicState.language,
-          seed: deterministicState.seed,
-        });
-        verifyRenderedIdentity(canvas, rendered, deterministicState);
-        if (!cancelled) {
-          setRenderedVisualKey(requestedVisualKey);
-          setCanvasStatus("ready");
-        }
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setRenderedVisualKey(null);
-          setCanvasStatus("error");
-        }
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [
+  const renderRequest = useMemo(() => Object.freeze({
+    frame: deterministicState.frame,
+    scenario: deterministicState.scenario,
+    lang: deterministicState.language,
+    seed: deterministicState.seed,
+  }), [
     deterministicState.frame,
-    deterministicState.frameDomain,
     deterministicState.language,
-    deterministicState.rootFrame,
     deterministicState.scenario,
     deterministicState.seed,
-    deterministicState.status,
-    requestedVisualKey,
   ]);
+  const visualKey = JSON.stringify([
+    ANIMATION_ID,
+    deterministicState.frame,
+    deterministicState.frameDomain,
+    deterministicState.rootFrame,
+    deterministicState.scenario,
+    deterministicState.language,
+    deterministicState.seed,
+  ]);
+  const requestKey = JSON.stringify([
+    visualKey,
+    entryStateSha256,
+    requirementId,
+    traceId,
+  ]);
+  const captureIdentityComplete = Boolean(
+    entryStateSha256 && requirementId && traceId,
+  );
+  const verifyPresentedIdentity = useCallback((
+    canvas: HTMLCanvasElement,
+    rendered: unknown,
+  ) => {
+    verifyRenderedIdentity(canvas, rendered, deterministicState);
+    stampAdaptiveCanvasCaptureIdentity(canvas, {
+      entryStateSha256,
+      frame: deterministicState.frame,
+      frameDomain: deterministicState.frameDomain,
+      lang: deterministicState.language,
+      requirementId,
+      rootFrame: deterministicState.rootFrame,
+      scenario: deterministicState.scenario,
+      seed: deterministicState.seed,
+      traceId,
+    });
+    canvas.setAttribute(
+      "data-source-button-visuals",
+      deterministicState.visibleSourceButtonVisuals.join(","),
+    );
+    canvas.setAttribute("data-source-controls-enabled", "false");
+  }, [deterministicState, entryStateSha256, requirementId, traceId]);
+  const canvasPresentation = useAdaptiveCanvasPresenter({
+    active: deterministicState.status === "ready",
+    asset: canvasAsset,
+    captureReady: captureIdentityComplete,
+    hostRef: canvasHostRef,
+    nativeHeight: 600,
+    nativeWidth: 800,
+    renderRequest,
+    requestKey,
+    sourceBitmapBound: canvasAsset.sourceBitmapResolutionBound,
+    stageRef: canvasStageRef,
+    verifyRendered: verifyPresentedIdentity,
+    visibleCanvasRef: canvasRef,
+    visualKey,
+  });
+  const reportedCanvasStatus = canvasPresentation.status;
 
   const blocked =
     deterministicState.status === "blocked"
@@ -326,10 +289,12 @@ function CourseG04L03Rw003SourceStaticRenderer({
       data-human-visual-review-accepted="false"
       data-interactive-controls-enabled="false"
       data-owner-accepted="false"
+      ref={canvasHostRef}
       data-strict-migration-complete="false"
       style={{margin: "0 auto", maxWidth: 800, width: "100%"}}
     >
       <div
+        ref={canvasStageRef}
         style={{
           aspectRatio: "4 / 3",
           background: "#b8d8f7",
@@ -371,14 +336,24 @@ function CourseG04L03Rw003SourceStaticRenderer({
               aria-label={`Source-static sprite-49 drawing, frame ${deterministicState.frame} of 278; Canvas button behavior disabled`}
               className="faithful-stage-wrap"
               data-course-canvas={ANIMATION_ID}
+              data-canvas-backing-height={
+                canvasPresentation.resolution.backingStage.height
+              }
+              data-canvas-backing-width={
+                canvasPresentation.resolution.backingStage.width
+              }
+              data-render-scale={canvasPresentation.resolution.renderScale}
+              data-resolution-ceiling-reached={
+                String(canvasPresentation.resolution.demandCapped)
+              }
+              data-resolution-status={canvasPresentation.resolution.status}
               height={600}
               ref={canvasRef}
               role="img"
               style={{
                 aspectRatio: "4 / 3",
                 display:
-                  reportedCanvasStatus === "ready" ||
-                    reportedCanvasStatus === "updating"
+                  canvasPresentation.hasPresentedFrame
                     ? "block"
                     : "none",
                 height: "auto",

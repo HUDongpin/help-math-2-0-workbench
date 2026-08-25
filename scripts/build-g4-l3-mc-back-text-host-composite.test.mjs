@@ -1,13 +1,30 @@
 import assert from 'node:assert/strict';
+import {existsSync} from 'node:fs';
 import {readFile} from 'node:fs/promises';
+import path from 'node:path';
 import test from 'node:test';
+import {fileURLToPath} from 'node:url';
 
 import {
+  buildLoadedSwfCanvasAsset,
   buildG4L3McBackTextHostComposite,
   parseArguments,
 } from './build-g4-l3-mc-back-text-host-composite.mjs';
 
-test('Mc_BackText host composite is source-bound and acceptance-neutral', async () => {
+const PROJECT_ROOT = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  '..',
+);
+const PRESERVED_SHELL = path.join(
+  PROJECT_ROOT,
+  'source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/index_local.swf',
+);
+
+test('Mc_BackText host composite is source-bound and acceptance-neutral', {
+  skip: existsSync(PRESERVED_SHELL)
+    ? false
+    : 'full preserved source tree is not mounted in this isolated worktree',
+}, async () => {
   const result = await buildG4L3McBackTextHostComposite();
   const manifest = result.manifest;
 
@@ -52,6 +69,16 @@ test('Mc_BackText host composite is source-bound and acceptance-neutral', async 
     manifest.introductionLoadedSwfHost.backgroundDisposition,
     'ignore-loaded-child-swf-standalone-stage-background',
   );
+  assert.deepEqual(
+    manifest.introductionLoadedSwfHost.adaptiveRuntimeGeneration.resolution,
+    {
+      schemaVersion: 1,
+      mode: 'adaptive-integer',
+      nativeWidth: 800,
+      nativeHeight: 600,
+      supportedRenderScales: [1, 2],
+    },
+  );
   assert.equal(manifest.assets.length, 2);
   assert.ok(manifest.assets.every(
     (asset) => /^[a-f0-9]{64}$/.test(asset.sha256) && asset.bytes > 0,
@@ -92,11 +119,23 @@ test('Mc_BackText host composite is source-bound and acceptance-neutral', async 
   const loadedSwfText = loadedSwf.bytesBuffer.toString('utf8');
   assert.match(
     loadedSwfText,
-    /ctx\.clearRect\(0, 0, targetCanvas\.width, targetCanvas\.height\)/,
+    /ctx\.clearRect\(0, 0, 800, 600\)/,
   );
   assert.doesNotMatch(
     loadedSwfText,
-    /ctx\.fillStyle = "#b8d8f7";\s*ctx\.fillRect\(0, 0, targetCanvas\.width, targetCanvas\.height\)/,
+    /ctx\.fillStyle = "#b8d8f7";\s*ctx\.fillRect\(0, 0, 800, 600\)/,
+  );
+  assert.match(loadedSwfText, /"mode": "adaptive-integer"/);
+  assert.match(loadedSwfText, /"supportedRenderScales": \[\s*1,\s*2\s*\]/);
+  assert.match(loadedSwfText, /request\.renderScale !== 1/);
+  assert.match(loadedSwfText, /request\.renderScale !== 2/);
+  assert.match(
+    loadedSwfText,
+    /targetCanvas\.width !== 800 \* renderScale \|\| targetCanvas\.height !== 600 \* renderScale/,
+  );
+  assert.match(
+    loadedSwfText,
+    /ctx\.setTransform\(renderScale, 0, 0, renderScale, 0, 0\)/,
   );
   assert.match(
     loadedSwfText,
@@ -116,7 +155,7 @@ test('Mc_BackText host composite is source-bound and acceptance-neutral', async 
   );
   assert.match(
     standalone,
-    /ctx\.fillStyle = "#b8d8f7";\s*ctx\.fillRect\(0, 0, targetCanvas\.width, targetCanvas\.height\)/,
+    /ctx\.fillStyle = "#b8d8f7";\s*ctx\.fillRect\(0, 0, (?:targetCanvas\.width, targetCanvas\.height|800, 600)\)/,
   );
   assert.doesNotMatch(
     standalone,
@@ -126,6 +165,62 @@ test('Mc_BackText host composite is source-bound and acceptance-neutral', async 
     standalone,
     /ctx\.transform\(1, 0, 0, 1, -12\.5, 33\.3\)/,
   );
+});
+
+test('loaded-SWF derivation preserves adaptive-v1 and changes only host composition bindings', () => {
+  const source = Buffer.from(`(function () {
+var METADATA = {
+  "resolution": {
+    "schemaVersion": 1,
+    "mode": "adaptive-integer",
+    "nativeWidth": 800,
+    "nativeHeight": 600,
+    "supportedRenderScales": [
+      1,
+      2
+    ]
+  }
+};
+function render(targetCanvas, request) {
+    if (!request || (request.renderScale !== 1 && request.renderScale !== 2)) throw new Error("renderScale must be exactly 1 or 2");
+    var renderScale = request.renderScale;
+    if (targetCanvas.width !== 800 * renderScale || targetCanvas.height !== 600 * renderScale) throw new Error("exact backing");
+    var ctx = targetCanvas.getContext("2d");
+    ctx.setTransform(renderScale, 0, 0, renderScale, 0, 0);
+    ctx.fillStyle = "#b8d8f7";
+    ctx.fillRect(0, 0, 800, 600);
+        ctx.transform(1, 0, 0, 1, -124.5, 98.5);
+}
+if (Object.prototype.hasOwnProperty.call(registry, "course-g04-l03-ir-001-341242cc")) {
+    throw new Error("canvas asset is already registered: " + "course-g04-l03-ir-001-341242cc");
+}
+registry["course-g04-l03-ir-001-341242cc"] = Object.freeze({metadata: METADATA, ready: ready, resolveFrameState: resolveFrameState, render: render});
+})();
+`);
+  const output = buildLoadedSwfCanvasAsset(source).toString('utf8');
+
+  assert.match(output, /"mode": "adaptive-integer"/);
+  assert.match(output, /request\.renderScale !== 1/);
+  assert.match(output, /request\.renderScale !== 2/);
+  assert.match(
+    output,
+    /targetCanvas\.width !== 800 \* renderScale \|\| targetCanvas\.height !== 600 \* renderScale/,
+  );
+  assert.match(output, /ctx\.setTransform\(renderScale, 0, 0, renderScale, 0, 0\)/);
+  assert.match(output, /ctx\.clearRect\(0, 0, 800, 600\)/);
+  assert.match(
+    output,
+    /ctx\.transform\(1, 0, 0, 1, -12\.5, 33\.3\);\s*ctx\.transform\(1, 0, 0, 1, -124\.5, 98\.5\);/,
+  );
+  assert.match(
+    output,
+    /registry\["course-g04-l03-ir-001-341242cc-loaded-swf-host"\]/,
+  );
+  assert.doesNotMatch(
+    output,
+    /registry\["course-g04-l03-ir-001-341242cc"\]/,
+  );
+  assert.doesNotMatch(output, /ctx\.fillRect\(0, 0, 800, 600\)/);
 });
 
 test('Mc_BackText generator modes are explicit and fail closed', () => {

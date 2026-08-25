@@ -52,6 +52,8 @@ test("FQ002/FQ003 dedicated CLI and specifications stay bounded", async () => {
   assert.deepEqual(parseArguments([]), {
     check: false,
     ffdec: "ffdec",
+    regenerationOnly: false,
+    sourceRoot: null,
     specs: [
       "migrations/course-g05-l04-fq-002/audit/question-atlas-current-js-candidate-spec.json",
       "migrations/course-g05-l04-fq-003/audit/question-atlas-current-js-candidate-spec.json",
@@ -65,10 +67,29 @@ test("FQ002/FQ003 dedicated CLI and specifications stay bounded", async () => {
   ]), {
     check: true,
     ffdec: "/opt/homebrew/bin/ffdec",
+    regenerationOnly: false,
+    sourceRoot: null,
     specs: [
       "migrations/course-g05-l04-fq-002/audit/question-atlas-current-js-candidate-spec.json",
     ],
   });
+  assert.deepEqual(parseArguments([
+    "--check", "--regeneration-only",
+    "--source-root", "/canonical-source",
+  ]), {
+    check: true,
+    ffdec: "ffdec",
+    regenerationOnly: true,
+    sourceRoot: "/canonical-source",
+    specs: [
+      "migrations/course-g05-l04-fq-002/audit/question-atlas-current-js-candidate-spec.json",
+      "migrations/course-g05-l04-fq-003/audit/question-atlas-current-js-candidate-spec.json",
+    ],
+  });
+  assert.throws(
+    () => parseArguments(["--regeneration-only"]),
+    /requires --check/,
+  );
   assert.throws(() => parseArguments(["--publish"]), /unknown argument/);
   assert.throws(() => parseArguments(["--spec"]), /requires one value/);
 

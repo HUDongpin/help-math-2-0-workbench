@@ -37,6 +37,10 @@ import {
   isPageOnlyCurrentJsShowcaseAssetSegments,
 } from './lib/page-only-current-js-showcase-asset-policy';
 import {
+  isContentAddressedCanvasAssetBranch,
+  parseContentAddressedCanvasAssetSegments,
+} from './lib/content-addressed-canvas-asset-policy';
+import {
   classifyG5L4PreviewAsset,
   hasExactG5L4AudioDigest,
   hasExactG5L4RuntimeDigest,
@@ -136,9 +140,36 @@ function isAllowed(pathname: string, request: NextRequest) {
   const assetSegments = pathname.startsWith('/flash-assets/')
     ? pathname.slice('/flash-assets/'.length).split('/')
     : [];
+  const contentAddressedCanvas =
+    parseContentAddressedCanvasAssetSegments(assetSegments);
+  if (
+    isContentAddressedCanvasAssetBranch(assetSegments)
+    && !contentAddressedCanvas
+  ) {
+    return false;
+  }
+  // Content-addressed URLs carry integrity in the path, but publication scope
+  // still comes from the exact logical `courses/<id>/...` segments. Feeding
+  // `by-sha256/...` to the legacy policies would incorrectly hide every valid
+  // v2 runtime; feeding the request URL to their query-only digest gates would
+  // incorrectly require a second digest representation.
+  const logicalAssetSegments = contentAddressedCanvas?.logicalSegments
+    ?? assetSegments;
+  const logicalAssetPath = `/flash-assets/${logicalAssetSegments.join('/')}`;
   const g4HostCompositePolicy =
-    classifyG4L3HostCompositeAsset(assetSegments);
-  const g5L4ShowcasePolicy = classifyG5L4PreviewAsset(assetSegments);
+    classifyG4L3HostCompositeAsset(logicalAssetSegments);
+  const g5L4ShowcasePolicy =
+    classifyG5L4PreviewAsset(logicalAssetSegments);
+  // Middleware owns publication scope, not v2 byte identity. The server route
+  // closes the exact IR001 content digest through its active profile and
+  // rehashed bytes; the historical digest remains below for legacy URLs only.
+  if (
+    contentAddressedCanvas?.kind === 'ir001-loaded-host'
+    && process.env.NODE_ENV === 'production'
+    && !isG4L3ShowcaseAssetAuthorized()
+  ) {
+    return false;
+  }
   // Generated audio is independently gated even in local development. This
   // check must run before the local-audit fallback below, or a showcase-only
   // deployment would advertise audio whose route is not publication-safe.
@@ -149,7 +180,8 @@ function isAllowed(pathname: string, request: NextRequest) {
     return false;
   }
   if (
-    g4HostCompositePolicy.controlled
+    !contentAddressedCanvas
+    && g4HostCompositePolicy.controlled
     && !hasExactG4L3HostCompositeDigest(
       request.nextUrl,
       g4HostCompositePolicy.expectedSha256 as string,
@@ -158,7 +190,8 @@ function isAllowed(pathname: string, request: NextRequest) {
     return false;
   }
   if (
-    g5L4ShowcasePolicy.controlled
+    !contentAddressedCanvas
+    && g5L4ShowcasePolicy.controlled
     && (
       (
         g5L4ShowcasePolicy.kind === 'runtime'
@@ -178,17 +211,18 @@ function isAllowed(pathname: string, request: NextRequest) {
   ) {
     return false;
   }
-  const publicShowcaseAsset = isG4L3ShowcaseAssetPath(pathname)
+  const publicShowcaseAsset = isG4L3ShowcaseAssetPath(logicalAssetPath)
     && isG4L3ShowcaseAssetAuthorized();
-  const publicG5L4ShowcaseAsset = isG5L4ShowcaseAssetSegments(assetSegments)
+  const publicG5L4ShowcaseAsset =
+    isG5L4ShowcaseAssetSegments(logicalAssetSegments)
     && (
       g5L4ShowcasePolicy.kind === 'audio'
         ? isG5L4ShowcaseAudioAuthorized()
         : isG5L4ShowcaseAssetAuthorized()
     );
   const publicPageOnlyCurrentJsShowcaseAsset =
-    isPageOnlyCurrentJsShowcaseAssetSegments(assetSegments)
-    && isPageOnlyCurrentJsShowcaseAssetAuthorized(assetSegments);
+    isPageOnlyCurrentJsShowcaseAssetSegments(logicalAssetSegments)
+    && isPageOnlyCurrentJsShowcaseAssetAuthorized(logicalAssetSegments);
   return publicPaths.has(pathname)
     || isArchivePath(pathname, request)
     || publicShowcaseAsset

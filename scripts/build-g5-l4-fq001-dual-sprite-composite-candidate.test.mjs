@@ -36,6 +36,8 @@ test("FQ001 dedicated CLI and specification fail closed", async () => {
   assert.deepEqual(parseArguments([]), {
     check: false,
     ffdec: "ffdec",
+    regenerationOnly: false,
+    sourceRoot: null,
     spec:
       "migrations/course-g05-l04-fq-001/audit/dual-sprite-composite-current-js-candidate-spec.json",
   });
@@ -50,9 +52,26 @@ test("FQ001 dedicated CLI and specification fail closed", async () => {
     {
       check: true,
       ffdec: "/opt/homebrew/bin/ffdec",
+      regenerationOnly: false,
+      sourceRoot: null,
       spec:
         "migrations/course-g05-l04-fq-001/audit/dual-sprite-composite-current-js-candidate-spec.json",
     },
+  );
+  assert.deepEqual(parseArguments([
+    "--check", "--regeneration-only",
+    "--source-root", "/canonical-source",
+  ]), {
+    check: true,
+    ffdec: "ffdec",
+    regenerationOnly: true,
+    sourceRoot: "/canonical-source",
+    spec:
+      "migrations/course-g05-l04-fq-001/audit/dual-sprite-composite-current-js-candidate-spec.json",
+  });
+  assert.throws(
+    () => parseArguments(["--regeneration-only"]),
+    /requires --check/,
   );
   assert.throws(() => parseArguments(["--publish"]), /unknown argument/);
 

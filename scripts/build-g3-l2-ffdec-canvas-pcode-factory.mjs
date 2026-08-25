@@ -151,8 +151,13 @@ async function readJson(relativePath, label) {
   return Object.freeze({value: JSON.parse(await readFile(absolute, "utf8")), path: absolute, identity: await fileIdentity(absolute)});
 }
 
-function parseArguments(argv) {
-  const options = {mode: null, output: null};
+export function parseArguments(argv) {
+  const options = {
+    mode: null,
+    output: null,
+    sourceRoot: null,
+    regenerationOnly: false,
+  };
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === "--mode") {
@@ -165,6 +170,17 @@ function parseArguments(argv) {
       options.output = argv[++index];
       continue;
     }
+    if (argument === "--source-root") {
+      invariant(!options.sourceRoot, "--source-root may be supplied only once");
+      options.sourceRoot = argv[++index];
+      continue;
+    }
+    if (argument === "--regeneration-only") {
+      invariant(!options.regenerationOnly,
+        "--regeneration-only may be supplied only once");
+      options.regenerationOnly = true;
+      continue;
+    }
     throw new Error(`unknown argument: ${argument}`);
   }
   invariant(["calibrate", "extend", "check"].includes(options.mode),
@@ -173,6 +189,10 @@ function parseArguments(argv) {
     "--output is required");
   invariant(options.output === OUTPUT_ROOT || options.output.startsWith(`${OUTPUT_ROOT}/`),
     `--output must be ${OUTPUT_ROOT} or a child path`);
+  if (options.sourceRoot !== null) {
+    invariant(path.isAbsolute(options.sourceRoot),
+      "--source-root must be an absolute path");
+  }
   return Object.freeze(options);
 }
 
@@ -306,11 +326,29 @@ function structuralTimeline(xml) {
   });
 }
 
-async function runCommand({command, args, cwd, stdoutPath, stderrPath, timeoutMs}) {
+async function runCommand({
+  command,
+  args,
+  cwd,
+  stdoutPath,
+  stderrPath,
+  timeoutMs,
+  environment = {},
+  recordedEnvironment = null,
+}) {
   await mkdir(path.dirname(stdoutPath), {recursive: true});
   const startedAt = new Date().toISOString();
   const result = await new Promise((resolve, reject) => {
-    const child = spawn(command, args, {cwd, stdio: ["ignore", "pipe", "pipe"], env: {...process.env, NO_COLOR: "1", FORCE_COLOR: "0"}});
+    const child = spawn(command, args, {
+      cwd,
+      stdio: ["ignore", "pipe", "pipe"],
+      env: {
+        ...process.env,
+        NO_COLOR: "1",
+        FORCE_COLOR: "0",
+        ...environment,
+      },
+    });
     const stdout = [];
     const stderr = [];
     let timedOut = false;
@@ -337,6 +375,7 @@ async function runCommand({command, args, cwd, stdoutPath, stderrPath, timeoutMs
     exitCode: result.code,
     signal: result.signal,
     timedOut: result.timedOut,
+    ...(recordedEnvironment ? {environment: recordedEnvironment} : {}),
     stdout: await fileIdentity(stdoutPath),
     stderr: await fileIdentity(stderrPath),
   });
@@ -409,9 +448,41 @@ async function captureCanvasRoot({canvasHtml, capturesRoot, rootFrameCount}) {
   }
 }
 
-async function validateMemberSource(candidate, sourceRootReal) {
+export async function buildCanvasSmokeEvidence({
+  regenerationOnly,
+  canvasHtml,
+  capturesRoot,
+  rootFrameCount,
+  capture = captureCanvasRoot,
+}) {
+  if (regenerationOnly) {
+    return Object.freeze({
+      headlessCallable: false,
+      browserLaunched: false,
+      captureScope: "deferred-to-post-gate0a-browser-fidelity-gate",
+      regenerationOnly: true,
+      captures: Object.freeze([]),
+    });
+  }
+  return capture({canvasHtml, capturesRoot, rootFrameCount});
+}
+
+function resolveSourceFile(sourceRoot, relativePath, label) {
+  invariant(typeof relativePath === "string" && relativePath.length > 0,
+    `${label}: source-relative path required`);
+  invariant(!path.isAbsolute(relativePath), `${label}: absolute source path forbidden`);
+  const normalized = path.normalize(relativePath);
+  invariant(normalized !== ".." && !normalized.startsWith(`..${path.sep}`),
+    `${label}: source path escapes frozen root`);
+  const resolved = path.resolve(sourceRoot, normalized);
+  invariant(resolved.startsWith(`${sourceRoot}${path.sep}`),
+    `${label}: source path escapes frozen root`);
+  return resolved;
+}
+
+async function validateMemberSource(candidate, sourceRoot, sourceRootReal) {
   const {entry, ordinal} = candidate;
-  const sourcePath = resolveProject(path.posix.join("source-assets/flash/HELP MATH_ORIGINAL FILES", entry.source.path),
+  const sourcePath = resolveSourceFile(sourceRoot, entry.source.path,
     `${entry.animationId} source`);
   const sourceReal = await realpath(sourcePath);
   invariant(sourceReal.startsWith(`${sourceRootReal}${path.sep}`), `${entry.animationId}: source resolves outside frozen root`);
@@ -421,7 +492,7 @@ async function validateMemberSource(candidate, sourceRootReal) {
   invariant(sourceIdentity.writable === false, `${entry.animationId}: source must be read-only`);
   let pairedFla = null;
   if (entry.pairedFla) {
-    const flaPath = resolveProject(path.posix.join("source-assets/flash/HELP MATH_ORIGINAL FILES", entry.pairedFla.path),
+    const flaPath = resolveSourceFile(sourceRoot, entry.pairedFla.path,
       `${entry.animationId} FLA`);
     const flaReal = await realpath(flaPath);
     invariant(flaReal.startsWith(`${sourceRootReal}${path.sep}`), `${entry.animationId}: FLA resolves outside frozen root`);
@@ -433,10 +504,8 @@ async function validateMemberSource(candidate, sourceRootReal) {
   }
   const exactExternalAudio = [];
   for (const association of entry.audio.exact) {
-    const audioPath = resolveProject(
-      path.posix.join("source-assets/flash/HELP MATH_ORIGINAL FILES", association.path),
-      `${entry.animationId} external audio`,
-    );
+    const audioPath = resolveSourceFile(sourceRoot, association.path,
+      `${entry.animationId} external audio`);
     const audioReal = await realpath(audioPath);
     invariant(audioReal.startsWith(`${sourceRootReal}${path.sep}`),
       `${entry.animationId}: external audio resolves outside frozen root`);
@@ -471,13 +540,25 @@ async function validateMemberSource(candidate, sourceRootReal) {
   });
 }
 
-async function buildMember(member, stageRoot) {
+async function buildMember(member, stageRoot, {regenerationOnly}) {
   const memberRoot = path.join(stageRoot, "members", member.animationId);
   const logs = path.join(memberRoot, "logs");
   const swfmillRoot = path.join(memberRoot, "swfmill");
   const canvasRoot = path.join(memberRoot, "canvas");
   const pcodeRoot = path.join(memberRoot, "pcode");
-  await Promise.all([mkdir(logs, {recursive: true}), mkdir(swfmillRoot, {recursive: true})]);
+  const ffdecUserHome = path.join(memberRoot, "ffdec-user-home");
+  await Promise.all([
+    mkdir(logs, {recursive: true}),
+    mkdir(swfmillRoot, {recursive: true}),
+    mkdir(ffdecUserHome, {recursive: true}),
+  ]);
+  const ffdecEnvironment = Object.freeze({
+    JAVA_TOOL_OPTIONS: `-Duser.home="${ffdecUserHome}"`,
+  });
+  const recordedFfdecEnvironment = Object.freeze({
+    javaUserHome: "ffdec-user-home",
+    isolatesUserConfigurationAndLogs: true,
+  });
   const swfmillXml = path.join(swfmillRoot, "source.xml");
   const sourceBefore = await fileIdentity(member.sourcePath, {followSymbolicLink: true});
   const swfmill = await runCommand({
@@ -495,6 +576,8 @@ async function buildMember(member, stageRoot) {
     stdoutPath: path.join(logs, "ffdec-canvas.stdout.txt"),
     stderrPath: path.join(logs, "ffdec-canvas.stderr.txt"),
     timeoutMs: 660_000,
+    environment: ffdecEnvironment,
+    recordedEnvironment: recordedFfdecEnvironment,
   });
   const pcode = await runCommand({
     command: "ffdec",
@@ -503,6 +586,8 @@ async function buildMember(member, stageRoot) {
     stdoutPath: path.join(logs, "ffdec-pcode.stdout.txt"),
     stderrPath: path.join(logs, "ffdec-pcode.stderr.txt"),
     timeoutMs: 660_000,
+    environment: ffdecEnvironment,
+    recordedEnvironment: recordedFfdecEnvironment,
   });
   const [sourceAfter, xml] = await Promise.all([
     fileIdentity(member.sourcePath, {followSymbolicLink: true}),
@@ -517,7 +602,8 @@ async function buildMember(member, stageRoot) {
   const pcodeScriptsInfo = await lstat(pcodeScripts).catch(() => null);
   invariant(pcodeScriptsInfo?.isDirectory(), `${member.animationId}: FFDec P-code scripts are missing`);
   const pcodeText = await recursiveText(pcodeScripts);
-  const canvasSmoke = await captureCanvasRoot({
+  const canvasSmoke = await buildCanvasSmokeEvidence({
+    regenerationOnly,
     canvasHtml: rootCanvas,
     capturesRoot: path.join(memberRoot, "canvas-smoke"),
     rootFrameCount: member.rootFrameCount,
@@ -542,6 +628,7 @@ async function buildMember(member, stageRoot) {
         canvas: await directoryIdentity(canvasRoot),
         pcode: await directoryIdentity(pcodeRoot),
       }),
+      isolatedUserHome: await directoryIdentity(ffdecUserHome),
       canvasSmoke,
     }),
     timeline: structuralTimeline(xml),
@@ -566,17 +653,21 @@ async function buildMember(member, stageRoot) {
   });
 }
 
-async function collectFactoryContext(mode) {
+async function collectFactoryContext(mode, sourceRootOverride = null) {
   const corpus = await readJson(CORPUS_PATH, "factory corpus");
   const catalog = await readJson(corpus.value.inputs.catalogPath, "catalog");
-  const sourceRoot = resolveProject(corpus.value.inputs.sourceRoot, "source root");
+  const sourceRoot = sourceRootOverride === null
+    ? resolveProject(corpus.value.inputs.sourceRoot, "source root")
+    : path.resolve(sourceRootOverride);
   const sourceRootReal = await realpath(sourceRoot);
   const sourceRootInfo = await stat(sourceRoot);
   invariant(sourceRootInfo.isDirectory() && (sourceRootInfo.mode & 0o222) === 0,
     "frozen source root must resolve to a read-only directory");
   const selected = selectFactoryMembers(catalog.value, corpus.value, mode);
   const members = [];
-  for (const candidate of selected) members.push(await validateMemberSource(candidate, sourceRootReal));
+  for (const candidate of selected) {
+    members.push(await validateMemberSource(candidate, sourceRoot, sourceRootReal));
+  }
   return Object.freeze({
     corpus,
     catalog,
@@ -590,14 +681,18 @@ async function collectFactoryContext(mode) {
 async function build(options) {
   const output = resolveProject(options.output, "output");
   invariant(!(await exists(output)), `output already exists: ${options.output}`);
-  const context = await collectFactoryContext(options.mode);
+  const context = await collectFactoryContext(options.mode, options.sourceRoot);
   await mkdir(path.dirname(output), {recursive: true});
   const stage = `${output}.staging-${process.pid}`;
   invariant(!(await exists(stage)), `staging path already exists: ${relativeProject(stage)}`);
   await mkdir(stage, {recursive: false});
   try {
     const results = [];
-    for (const member of context.members) results.push(await buildMember(member, stage));
+    for (const member of context.members) {
+      results.push(await buildMember(member, stage, {
+        regenerationOnly: options.regenerationOnly,
+      }));
+    }
     const runManifest = Object.freeze({
       schemaVersion: 1,
       factoryId: context.corpus.value.factoryId,
@@ -606,12 +701,18 @@ async function build(options) {
       inputLock: Object.freeze({
         corpus: Object.freeze({path: relativeProject(context.corpus.path), ...context.corpus.identity}),
         catalog: Object.freeze({path: relativeProject(context.catalog.path), ...context.catalog.identity}),
-        sourceRoot: relativeProject(context.sourceRoot),
+        sourceRoot: path.isAbsolute(options.sourceRoot ?? "")
+          ? context.sourceRoot
+          : relativeProject(context.sourceRoot),
+        sourceRootReal: context.sourceRootReal,
         factoryScript: Object.freeze({path: relativeProject(SCRIPT_PATH), ...context.factoryScript}),
       }),
       compiler: Object.freeze({
         primaryVisualBackend: "ffdec-canvas-plus-pcode",
         exportProfile: "g3-resource-bounded-frame-sprite-script-image-sound",
+        regenerationOnly: options.regenerationOnly,
+        browserLaunched: !options.regenerationOnly,
+        browserFidelityGateDeferred: options.regenerationOnly,
         legacyFlashCourseShellConverted: false,
         modernMyLessonHostChanged: false,
       }),
@@ -644,7 +745,12 @@ async function check(options) {
   const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
   invariant(manifest.schemaVersion === 1 && (manifest.mode === "calibrate" || manifest.mode === "extend"),
     "run manifest mode is invalid");
-  const context = await collectFactoryContext(manifest.mode);
+  const context = await collectFactoryContext(
+    manifest.mode,
+    options.sourceRoot ?? (path.isAbsolute(manifest.inputLock?.sourceRoot ?? "")
+      ? manifest.inputLock.sourceRoot
+      : null),
+  );
   invariant(manifest.factoryId === context.corpus.value.factoryId, "factory id drifted");
   invariant(manifest.inputLock?.corpus?.sha256 === context.corpus.identity.sha256, "corpus input lock drifted");
   invariant(manifest.inputLock?.catalog?.sha256 === context.catalog.identity.sha256, "catalog input lock drifted");
@@ -669,9 +775,16 @@ async function check(options) {
       `${expected.animationId}: source custody binding drifted`);
     invariant(JSON.stringify(detail.acceptanceEffects) === JSON.stringify(ALL_FALSE_ACCEPTANCE_EFFECTS),
       `${expected.animationId}: acceptance effects must remain all false`);
-    invariant(detail.compiler?.canvasSmoke?.headlessCallable === true &&
-      detail.compiler.canvasSmoke.captures?.length >= 1,
-    `${expected.animationId}: missing FFDec Canvas smoke evidence`);
+    if (manifest.compiler?.regenerationOnly === true) {
+      invariant(detail.compiler?.canvasSmoke?.regenerationOnly === true &&
+        detail.compiler.canvasSmoke.browserLaunched === false &&
+        detail.compiler.canvasSmoke.captures?.length === 0,
+      `${expected.animationId}: regeneration-only browser boundary drifted`);
+    } else {
+      invariant(detail.compiler?.canvasSmoke?.headlessCallable === true &&
+        detail.compiler.canvasSmoke.captures?.length >= 1,
+      `${expected.animationId}: missing FFDec Canvas smoke evidence`);
+    }
     const memberRoot = path.dirname(memberManifest);
     const [canvasInventory, pcodeInventory] = await Promise.all([
       directoryIdentity(path.join(memberRoot, "canvas")),

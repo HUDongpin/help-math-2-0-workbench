@@ -4,12 +4,15 @@ import {readFile} from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
 import {fileURLToPath} from "node:url";
+import {createElement} from "react";
+import {renderToStaticMarkup} from "react-dom/server";
 
 import fq001Module, {
   COURSE_G05_L04_FQ_001_ASSET,
   COURSE_G05_L04_FQ_001_MOVIE,
   COURSE_G05_L04_FQ_001_RUNTIME,
   COURSE_G05_L04_FQ_001_SOURCE_CONTRACT,
+  CourseG05L04Fq001Renderer,
   getCourseG05L04Fq001FrameState,
 } from "../src/modules/course-g05-l04-fq-001";
 import {
@@ -153,6 +156,41 @@ test("FQ001 module remains an acceptance-neutral legacy prototype", () => {
       (value) => value === false,
     ),
   );
+});
+
+test("FQ001 defaults to the historical k1 Canvas until an exact adaptive binding is supplied", () => {
+  const markup = renderToStaticMarkup(createElement(fq001Module.Renderer, {
+    frame: 1,
+    ...READY_CONTEXT,
+  }));
+  assert.match(markup, /data-render-scale="1"/);
+  assert.match(markup, /data-canvas-backing-width="800"/);
+  assert.match(markup, /data-canvas-backing-height="600"/);
+  assert.match(markup, /data-resolution-status="native"/);
+
+  const adaptiveMarkup = renderToStaticMarkup(createElement(
+    CourseG05L04Fq001Renderer,
+    {
+      adaptiveCanvasBinding: {
+        animationId: "course-g05-l04-fq-001",
+        pageRenderer: true,
+        assetPath:
+          "/flash-assets/courses/course-g05-l04-fq-001/canvas-renderer.js",
+        assetSha256: "b".repeat(64),
+        resolution: {
+          schemaVersion: 1,
+          mode: "adaptive-integer",
+          nativeWidth: 800,
+          nativeHeight: 600,
+          supportedRenderScales: [1, 2],
+        },
+      },
+      frame: 1,
+      ...READY_CONTEXT,
+    },
+  ));
+  assert.match(adaptiveMarkup, /data-render-scale="1"/);
+  assert.match(adaptiveMarkup, /data-resolution-status="fallback-k1"/);
 });
 
 test("FQ001 is registered without exposing its fixed companion as a standalone domain", async () => {

@@ -17,6 +17,8 @@ test("G5 L4 source-static CLI is bounded and fail-closed", () => {
     check: false,
     ffdec: "ffdec",
     ids: [...G5_L4_SOURCE_STATIC_IDS],
+    regenerationOnly: false,
+    sourceRoot: null,
   });
   assert.deepEqual(parseArguments([
     "--check",
@@ -26,7 +28,31 @@ test("G5 L4 source-static CLI is bounded and fail-closed", () => {
     check: true,
     ffdec: "/opt/homebrew/bin/ffdec",
     ids: ["course-g05-l04-vb-002"],
+    regenerationOnly: false,
+    sourceRoot: null,
   });
+  assert.deepEqual(parseArguments([
+    "--check",
+    "--regeneration-only",
+    "--source-root", "/canonical-source",
+    "--id", "course-g05-l04-vb-002",
+  ]), {
+    check: true,
+    ffdec: "ffdec",
+    ids: ["course-g05-l04-vb-002"],
+    regenerationOnly: true,
+    sourceRoot: "/canonical-source",
+  });
+  assert.throws(
+    () => parseArguments(["--regeneration-only"]),
+    /requires --check/,
+  );
+  assert.throws(
+    () => parseArguments([
+      "--check", "--regeneration-only", "--source-root", "relative",
+    ]),
+    /absolute --source-root/,
+  );
   assert.throws(
     () => parseArguments(["--id", "course-g05-l04-in-999"]),
     /unsupported animation ID/,

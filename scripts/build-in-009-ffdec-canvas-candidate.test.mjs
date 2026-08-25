@@ -72,9 +72,44 @@ async function loadInputs() {
 test('IN09 candidate CLI is explicit and rejects unknown arguments', () => {
   assert.deepEqual(parseArguments(['--check'], {root: ROOT}), {
     check: true,
-    specPath: SPEC_PATH
+    ffdec: 'ffdec',
+    regenerationOnly: false,
+    sourceRoot: null,
+    specPath: SPEC_PATH,
+    swfmill: 'swfmill'
+  });
+  assert.deepEqual(parseArguments([
+    '--check',
+    '--regeneration-only',
+    '--source-root',
+    '/canonical-source',
+    '--ffdec',
+    '/tools/ffdec',
+    '--swfmill',
+    '/tools/swfmill'
+  ], {root: ROOT}), {
+    check: true,
+    ffdec: '/tools/ffdec',
+    regenerationOnly: true,
+    sourceRoot: '/canonical-source',
+    specPath: SPEC_PATH,
+    swfmill: '/tools/swfmill'
   });
   assert.throws(() => parseArguments(['--spec'], {root: ROOT}), /requires a path/);
+  assert.throws(
+    () => parseArguments(['--regeneration-only'], {root: ROOT}),
+    /requires --check/
+  );
+  assert.throws(
+    () => parseArguments([
+      '--check', '--regeneration-only', '--source-root', 'relative'
+    ], {root: ROOT}),
+    /absolute --source-root/
+  );
+  assert.throws(
+    () => parseArguments(['--source-root', '/canonical-source'], {root: ROOT}),
+    /only valid with --regeneration-only/
+  );
   assert.throws(() => parseArguments(['--unknown'], {root: ROOT}), /Unknown argument/);
 });
 

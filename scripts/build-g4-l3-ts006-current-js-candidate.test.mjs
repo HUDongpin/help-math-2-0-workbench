@@ -30,7 +30,25 @@ const PUBLIC_AUDIO_MANIFEST = "public/flash-assets/audio/courses/manifest.json";
 const sha256 = (value) => createHash("sha256").update(value).digest("hex");
 
 test("TS006 candidate CLI keeps the tool surface explicit", () => {
-  assert.deepEqual(parseArguments(["--check"]), {check: true, ffdec: "ffdec"});
+  assert.deepEqual(parseArguments(["--check"]), {
+    check: true,
+    ffdec: "ffdec",
+    regenerationOnly: false,
+    sourceRoot: null,
+  });
+  const regeneration = parseArguments([
+    "--check",
+    "--regeneration-only",
+    "--source-root",
+    "/canonical/source",
+  ]);
+  assert.equal(regeneration.regenerationOnly, true);
+  assert.equal(regeneration.sourceRoot, "/canonical/source");
+  assert.throws(() => parseArguments(["--regeneration-only"]),
+    /requires --check/);
+  assert.throws(() => parseArguments([
+    "--check", "--regeneration-only", "--source-root", "relative/source",
+  ]), /absolute --source-root/);
   assert.equal(parseArguments(["--ffdec", "/opt/homebrew/bin/ffdec"]).ffdec,
     "/opt/homebrew/bin/ffdec");
   assert.throws(() => parseArguments(["--ffdec"]), /requires a value/);

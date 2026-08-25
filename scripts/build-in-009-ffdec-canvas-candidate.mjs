@@ -2,7 +2,17 @@
 
 import {createHash} from 'node:crypto';
 import {execFile as execFileCallback} from 'node:child_process';
-import {mkdir, readFile, writeFile} from 'node:fs/promises';
+import {
+  lstat,
+  mkdir,
+  mkdtemp,
+  readFile,
+  realpath,
+  rm,
+  writeFile
+} from 'node:fs/promises';
+import {gunzipSync} from 'node:zlib';
+import os from 'node:os';
 import path from 'node:path';
 import {promisify} from 'node:util';
 import {Script} from 'node:vm';
@@ -18,6 +28,9 @@ const DEFAULT_SPEC = 'migrations/course-g04-l03-in-009/audit/canvas-candidate-sp
 const GENERATOR_PATH = 'scripts/build-in-009-ffdec-canvas-candidate.mjs';
 const OUTPUT_REPORT_JSON = 'reports/g4-l3-in009-current-javascript-candidate.json';
 const OUTPUT_REPORT_MARKDOWN = 'reports/g4-l3-in009-current-javascript-candidate.md';
+const V9_PLAN = 'work/adaptive-canvas-production-five.plan.v9.json';
+const CANONICAL_SOURCE_PREFIX =
+  'source-assets/flash/HELP MATH_ORIGINAL FILES/';
 const INTEGRATION_PATHS = Object.freeze([
   'packages/demos/prototype-registry.json',
   'packages/demos/src/modules/course-g04-l03-in-009.tsx',
@@ -131,6 +144,62 @@ function resolveProjectPath(root, relativePath, label) {
   const resolved = path.resolve(root, relativePath);
   assert(resolved.startsWith(`${root}${path.sep}`), `${label}: path escapes project root`);
   return resolved;
+}
+
+function resolveCanonicalSourcePath(sourceRoot, relativePath, label) {
+  assert(typeof sourceRoot === 'string' && path.isAbsolute(sourceRoot),
+    `${label}: canonical source root must be an explicit absolute path`);
+  assert(relativePath.startsWith(CANONICAL_SOURCE_PREFIX),
+    `${label}: source path is outside the canonical archive prefix`);
+  const resolvedRoot = path.resolve(sourceRoot);
+  const resolved = path.resolve(
+    resolvedRoot,
+    relativePath.slice(CANONICAL_SOURCE_PREFIX.length)
+  );
+  assert(resolved.startsWith(`${resolvedRoot}${path.sep}`),
+    `${label}: source path escapes the canonical root`);
+  return resolved;
+}
+
+async function verifiedCanonicalSourceRead(sourceRoot, relativePath,
+  expectedHash, label) {
+  const absolutePath = resolveCanonicalSourcePath(
+    sourceRoot,
+    relativePath,
+    label
+  );
+  const [metadata, canonical, bytes] = await Promise.all([
+    lstat(absolutePath),
+    realpath(absolutePath),
+    readFile(absolutePath)
+  ]);
+  assert(metadata.isFile() && !metadata.isSymbolicLink() &&
+    canonical === absolutePath,
+  `${label}: canonical source must be an ordinary non-symlink file`);
+  const observed = sha256(bytes);
+  assert(observed === expectedHash,
+    `${label}: SHA-256 mismatch; expected ${expectedHash}, observed ${observed}`);
+  return {
+    absolutePath,
+    path: relativePath,
+    bytes,
+    text: bytes.toString('utf8'),
+    sha256: observed
+  };
+}
+
+async function runCommand(command, args, options = {}) {
+  try {
+    return await execFile(command, args, {
+      ...options,
+      maxBuffer: 256 * 1024 * 1024
+    });
+  } catch (error) {
+    const details = [error?.message, error?.stdout, error?.stderr]
+      .filter(Boolean)
+      .join('\n');
+    throw new Error(`${command} ${args.join(' ')} failed${details ? `:\n${details}` : ''}`);
+  }
 }
 
 function replaceExactlyOnce(source, search, replacement, label) {
@@ -404,17 +473,44 @@ function validateControlledFrame637Probe(spec, probe) {
 }
 
 export function parseArguments(argv, {root = ROOT} = {}) {
-  let check = false;
-  let specPath = DEFAULT_SPEC;
+  const options = {
+    check: false,
+    ffdec: 'ffdec',
+    regenerationOnly: false,
+    sourceRoot: null,
+    specPath: DEFAULT_SPEC,
+    swfmill: 'swfmill'
+  };
   for (let index = 0; index < argv.length; index += 1) {
-    if (argv[index] === '--check') check = true;
-    else if (argv[index] === '--spec') {
-      assert(argv[index + 1] && !argv[index + 1].startsWith('--'), '--spec requires a path');
-      specPath = argv[index + 1];
+    const argument = argv[index];
+    if (argument === '--check') options.check = true;
+    else if (argument === '--regeneration-only') {
+      options.regenerationOnly = true;
+    } else if (['--ffdec', '--source-root', '--spec', '--swfmill']
+      .includes(argument)) {
+      assert(argv[index + 1] && !argv[index + 1].startsWith('--'),
+        `${argument} requires a path`);
+      const value = argv[index + 1];
+      if (argument === '--ffdec') options.ffdec = value;
+      else if (argument === '--source-root') options.sourceRoot = value;
+      else if (argument === '--swfmill') options.swfmill = value;
+      else options.specPath = value;
       index += 1;
-    } else throw new Error(`Unknown argument: ${argv[index]}`);
+    } else throw new Error(`Unknown argument: ${argument}`);
   }
-  return {check, specPath: resolveProjectPath(root, specPath, 'spec')};
+  assert(!options.regenerationOnly || options.check,
+    '--regeneration-only requires --check');
+  if (options.regenerationOnly) {
+    assert(options.sourceRoot && path.isAbsolute(options.sourceRoot),
+      '--regeneration-only requires an absolute --source-root');
+  } else {
+    assert(options.sourceRoot === null,
+      '--source-root is only valid with --regeneration-only');
+  }
+  return {
+    ...options,
+    specPath: resolveProjectPath(root, options.specPath, 'spec')
+  };
 }
 
 export function resolveCandidateFrameState(request, spec) {
@@ -1068,11 +1164,294 @@ export function validateIn009CurrentJavascriptCandidateReport(report, expected) 
   return report;
 }
 
-export async function generateIn009CanvasCandidate({root = ROOT, specPath = path.resolve(root, DEFAULT_SPEC), check = false} = {}) {
+async function readIn009V9InputIdentity(root, spec) {
+  const plan = await verifiedRead(
+    root,
+    V9_PLAN,
+    '6ff98b7642c1d3dbb68058d889c0699749050d0cb198ae556d392a8b51bd7a75',
+    'frozen v9 plan'
+  );
+  const parsed = JSON.parse(plan.text);
+  const records = parsed?.payload?.runtimes?.filter(
+    (record) => record.animationId === spec.animationId
+  ) ?? [];
+  assert(records.length === 1,
+    'frozen v9 plan: expected exactly one IN009 runtime');
+  const record = records[0];
+  assert(
+    record.pageRenderer === true &&
+      record.assetPath === spec.output.script.replace(/^public\/flash-assets\//, '') &&
+      record.lane === 'profile-bound-in009-root-bitmap-mask-special-v1' &&
+      Number.isSafeInteger(record.input?.bytes) &&
+      /^[a-f0-9]{64}$/.test(record.input?.sha256 ?? ''),
+    'frozen v9 plan: IN009 identity or input binding changed'
+  );
+  return {plan, record};
+}
+
+async function generateIn009RegenerationOnly({
+  root,
+  spec,
+  specBytes,
+  specPath,
+  sourceRoot,
+  ffdec,
+  swfmill
+}) {
+  assert(sourceRoot && path.isAbsolute(sourceRoot),
+    'regeneration-only requires an explicit absolute canonical source root');
+  const portableSpecPath = portable(path.relative(root, specPath));
+  assert(portableSpecPath && !portableSpecPath.startsWith('../'),
+    'regeneration-only spec must remain inside the isolated worktree');
+  const protectedPaths = [
+    V9_PLAN,
+    GENERATOR_PATH,
+    portableSpecPath,
+    spec.evidence.scenarioInventory,
+    spec.evidence.audioAudit,
+    spec.evidence.swfmillXml,
+    spec.evidence.placementParser,
+    spec.evidence.rootRuntimeBaseline,
+    spec.evidence.ownerHostLocalizationContract,
+    spec.output.script
+  ];
+  const protectedBefore = await snapshotBindings(root, protectedPaths);
+  const [
+    source,
+    associatedAudio,
+    inventory,
+    audioAudit,
+    pinnedSwfmill,
+    parser,
+    rootBaselineFile,
+    ownerContractFile,
+    generator,
+    v9Identity
+  ] = await Promise.all([
+    verifiedCanonicalSourceRead(
+      sourceRoot,
+      spec.source.swf,
+      spec.source.swfSha256,
+      'canonical IN009 source SWF'
+    ),
+    verifiedCanonicalSourceRead(
+      sourceRoot,
+      spec.audioInventory.externalSpanish.path,
+      spec.audioInventory.externalSpanish.sha256,
+      'canonical IN009 Spanish audio'
+    ),
+    verifiedRead(
+      root,
+      spec.evidence.scenarioInventory,
+      spec.evidence.scenarioInventorySha256,
+      'scenario inventory'
+    ),
+    verifiedRead(
+      root,
+      spec.evidence.audioAudit,
+      spec.evidence.audioAuditSha256,
+      'audio audit'
+    ),
+    verifiedRead(
+      root,
+      spec.evidence.swfmillXml,
+      spec.evidence.swfmillXmlSha256,
+      'pinned swfmill XML archive'
+    ),
+    verifiedRead(
+      root,
+      spec.evidence.placementParser,
+      spec.evidence.placementParserSha256,
+      'placement parser'
+    ),
+    verifiedRead(
+      root,
+      spec.evidence.rootRuntimeBaseline,
+      spec.evidence.rootRuntimeBaselineSha256,
+      'root runtime baseline'
+    ),
+    verifiedRead(
+      root,
+      spec.evidence.ownerHostLocalizationContract,
+      spec.evidence.ownerHostLocalizationContractSha256,
+      'owner host/localization contract'
+    ),
+    readObserved(root, GENERATOR_PATH, 'candidate generator'),
+    readIn009V9InputIdentity(root, spec)
+  ]);
+  const ownerContract = validateOwnerHostLocalizationContract(
+    spec,
+    JSON.parse(ownerContractFile.text)
+  );
+  assert(
+    ownerContract.sources.spanishAudio.sourcePath ===
+      spec.audioInventory.externalSpanish.path &&
+      ownerContract.sources.spanishAudio.sha256 === associatedAudio.sha256,
+    'owner host/localization contract: canonical Spanish audio binding changed'
+  );
+  const rootBaseline = JSON.parse(rootBaselineFile.text);
+  const rootFrameAssets = await loadRootFrameAssets(root, spec, rootBaseline);
+  const temporaryRoot = await mkdtemp(
+    path.join(os.tmpdir(), 'help-math-in009-regeneration-only-')
+  );
+  try {
+    const ffdecUserHome = path.join(temporaryRoot, 'ffdec-user-home');
+    const canvasDirectory = path.join(temporaryRoot, 'canvas');
+    const freshSwfmillPath = path.join(temporaryRoot, 'source.xml');
+    await mkdir(ffdecUserHome, {recursive: true});
+    const environment = {
+      ...process.env,
+      JAVA_TOOL_OPTIONS: `-Duser.home="${ffdecUserHome}"`
+    };
+    const canvasExport = await runCommand(ffdec, [
+      '-config', 'packJavaScripts=false',
+      '-onerror', 'abort',
+      '-selectid', String(spec.ffdecExport.targetSpriteObjectId),
+      '-format', 'sprite:canvas',
+      '-export', 'sprite',
+      canvasDirectory,
+      source.absolutePath
+    ], {env: environment});
+    assert(`${canvasExport.stdout}\n${canvasExport.stderr}`
+      .includes(spec.ffdecExport.tool),
+    'fresh FFDec exporter version changed');
+    const exportDirectory = path.join(
+      canvasDirectory,
+      `DefineSprite_${spec.ffdecExport.targetSpriteObjectId}`
+    );
+    await runCommand(swfmill, [
+      'swf2xml', source.absolutePath, freshSwfmillPath
+    ]);
+    const [swfmillVersion, helper, framesHtml, freshSwfmill] =
+      await Promise.all([
+        runCommand(swfmill, ['--version']),
+        readFile(path.join(exportDirectory, 'canvas.js')),
+        readFile(path.join(exportDirectory, 'frames.html')),
+        readFile(freshSwfmillPath)
+      ]);
+    const swfmillVersionText =
+      `${swfmillVersion.stdout}\n${swfmillVersion.stderr}`.trim();
+    assert(swfmillVersionText === 'swfmill 0.3.6',
+      `swfmill version changed: ${swfmillVersionText || '<empty>'}`);
+    assert(
+      sha256(helper) === spec.ffdecExport.helperSha256 &&
+        sha256(framesHtml) === spec.ffdecExport.framesHtmlSha256,
+      'fresh IN009 FFDec Canvas export changed'
+    );
+    const pinnedSwfmillBytes = gunzipSync(pinnedSwfmill.bytes);
+    assert(freshSwfmill.equals(pinnedSwfmillBytes),
+      'fresh IN009 swfmill XML differs from the hash-bound source evidence');
+    const placement = await parsePlacement(
+      parser.absolutePath,
+      freshSwfmillPath
+    );
+    validateCandidateEvidence(
+      spec,
+      JSON.parse(inventory.text),
+      JSON.parse(audioAudit.text),
+      placement
+    );
+    const built = buildSafeRuntime({
+      helperSource: helper.toString('utf8'),
+      framesHtml: framesHtml.toString('utf8'),
+      spec,
+      rootBaseline,
+      rootFrameAssets
+    });
+    const runtimeBytes = Buffer.from(built.runtime);
+    const observedV1 = await verifiedRead(
+      root,
+      spec.output.script,
+      v9Identity.record.input.sha256,
+      'IN009 v1 runtime materialization'
+    );
+    assert(
+      runtimeBytes.equals(observedV1.bytes) &&
+        runtimeBytes.length === v9Identity.record.input.bytes &&
+        sha256(runtimeBytes) === v9Identity.record.input.sha256,
+      'IN009 regenerated runtime differs from the exact v9 input'
+    );
+    const protectedAfter = await snapshotBindings(root, protectedPaths);
+    assert(JSON.stringify(protectedAfter) === JSON.stringify(protectedBefore),
+      'IN009 regeneration-only check changed a protected project file');
+    return {
+      animationId: spec.animationId,
+      check: true,
+      regenerationOnly: true,
+      browserLaunched: false,
+      source: {
+        swf: {
+          path: source.path,
+          bytes: source.bytes.length,
+          sha256: source.sha256
+        },
+        associatedSpanishAudio: {
+          path: associatedAudio.path,
+          bytes: associatedAudio.bytes.length,
+          sha256: associatedAudio.sha256
+        }
+      },
+      spec: {
+        path: portableSpecPath,
+        bytes: specBytes.length,
+        sha256: sha256(specBytes)
+      },
+      generator: binding(generator),
+      freshFfdec: {
+        tool: spec.ffdecExport.tool,
+        targetSpriteObjectId: spec.ffdecExport.targetSpriteObjectId,
+        helper: {bytes: helper.length, sha256: sha256(helper)},
+        framesHtml: {bytes: framesHtml.length, sha256: sha256(framesHtml)}
+      },
+      freshSwfmill: {
+        tool: swfmillVersionText,
+        bytes: freshSwfmill.length,
+        sha256: sha256(freshSwfmill),
+        matchesPinnedUncompressedEvidence: true
+      },
+      runtime: {
+        path: spec.output.script,
+        bytes: runtimeBytes.length,
+        sha256: sha256(runtimeBytes),
+        matchesV1Materialization: true,
+        matchesV9Input: true
+      },
+      spanishAudioBindingClosed: true,
+      strictAcceptanceEffect: 'none'
+    };
+  } finally {
+    await rm(temporaryRoot, {recursive: true, force: true});
+  }
+}
+
+export async function generateIn009CanvasCandidate({
+  root = ROOT,
+  specPath = path.resolve(root, DEFAULT_SPEC),
+  check = false,
+  ffdec = 'ffdec',
+  regenerationOnly = false,
+  sourceRoot = null,
+  swfmill = 'swfmill'
+} = {}) {
   const specBytes = await readFile(specPath);
   const spec = validateSpec(JSON.parse(specBytes));
+  assert(!regenerationOnly || check,
+    'regenerationOnly requires read-only check mode');
+  if (regenerationOnly) {
+    return generateIn009RegenerationOnly({
+      root,
+      spec,
+      specBytes,
+      specPath,
+      sourceRoot,
+      ffdec,
+      swfmill
+    });
+  }
+  assert(sourceRoot === null,
+    'sourceRoot is only valid with regenerationOnly');
   const protectedBefore = await snapshotBindings(root, PROTECTED_PATHS);
-  const [source, inventory, audio, swfmill, parser, controlledProbe, controlledStage, rootBaselineFile, ownerContractFile, helper, frames] = await Promise.all([
+  const [source, inventory, audio, swfmillEvidence, parser, controlledProbe, controlledStage, rootBaselineFile, ownerContractFile, helper, frames] = await Promise.all([
     verifiedRead(root, spec.source.swf, spec.source.swfSha256, 'source SWF'),
     verifiedRead(root, spec.evidence.scenarioInventory, spec.evidence.scenarioInventorySha256, 'scenario inventory'),
     verifiedRead(root, spec.evidence.audioAudit, spec.evidence.audioAuditSha256, 'audio audit'),
@@ -1162,7 +1541,10 @@ export async function generateIn009CanvasCandidate({root = ROOT, specPath = path
     )
   ]);
   const rootFrameAssets = await loadRootFrameAssets(root, spec, rootBaseline);
-  const placement = await parsePlacement(parser.absolutePath, swfmill.absolutePath);
+  const placement = await parsePlacement(
+    parser.absolutePath,
+    swfmillEvidence.absolutePath
+  );
   validateCandidateEvidence(spec, JSON.parse(inventory.text), JSON.parse(audio.text), placement);
   validateControlledFrame637Probe(spec, JSON.parse(controlledProbe.text));
   const built = buildSafeRuntime({
@@ -1175,8 +1557,8 @@ export async function generateIn009CanvasCandidate({root = ROOT, specPath = path
   const runtimeBytes = Buffer.from(built.runtime);
   const outputScript = resolveProjectPath(root, spec.output.script, 'output script');
   const outputManifest = resolveProjectPath(root, spec.output.manifest, 'output manifest');
-  const sourceRoot = path.resolve(root, 'source-assets');
-  assert(!outputScript.startsWith(`${sourceRoot}${path.sep}`) && !outputManifest.startsWith(`${sourceRoot}${path.sep}`), 'outputs may not be under source-assets');
+  const sourceAssetsRoot = path.resolve(root, 'source-assets');
+  assert(!outputScript.startsWith(`${sourceAssetsRoot}${path.sep}`) && !outputManifest.startsWith(`${sourceAssetsRoot}${path.sep}`), 'outputs may not be under source-assets');
   const manifest = {
     schemaVersion: 1,
     animationId: spec.animationId,
@@ -1188,7 +1570,10 @@ export async function generateIn009CanvasCandidate({root = ROOT, specPath = path
       sourceSwf: {path: spec.source.swf, sha256: source.sha256},
       scenarioInventory: {path: spec.evidence.scenarioInventory, sha256: inventory.sha256},
       audioAudit: {path: spec.evidence.audioAudit, sha256: audio.sha256},
-      swfmillXml: {path: spec.evidence.swfmillXml, sha256: swfmill.sha256},
+      swfmillXml: {
+        path: spec.evidence.swfmillXml,
+        sha256: swfmillEvidence.sha256
+      },
       placementParser: {path: spec.evidence.placementParser, sha256: parser.sha256},
       controlledFrame637Probe: {path: spec.evidence.controlledFrame637Probe, sha256: controlledProbe.sha256},
       controlledFrame637Stage: {path: spec.evidence.controlledFrame637Stage, sha256: controlledStage.sha256},
@@ -1437,7 +1822,7 @@ export async function generateIn009CanvasCandidate({root = ROOT, specPath = path
     outputReportMarkdown
   ]) {
     assert(
-      !output.startsWith(`${sourceRoot}${path.sep}`),
+      !output.startsWith(`${sourceAssetsRoot}${path.sep}`),
       'outputs may not be under source-assets'
     );
   }

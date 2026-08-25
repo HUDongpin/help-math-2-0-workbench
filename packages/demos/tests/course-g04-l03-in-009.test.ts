@@ -319,6 +319,10 @@ test("renderer reports exact domain identity and keeps unproven states off Canva
   assert.match(ready, /<canvas[^>]+>/);
   assert.match(ready, /<canvas[^>]+width="800"/);
   assert.match(ready, /<canvas[^>]+height="600"/);
+  assert.match(ready, /data-render-scale="1"/);
+  assert.match(ready, /data-canvas-backing-width="800"/);
+  assert.match(ready, /data-canvas-backing-height="600"/);
+  assert.match(ready, /data-resolution-status="native"/);
   assert.match(ready, /<button[^>]*>Replay<\/button>/);
   assert.match(ready, /source reload intent is known/);
   assert.match(

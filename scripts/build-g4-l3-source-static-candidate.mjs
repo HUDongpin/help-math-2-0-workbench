@@ -21,6 +21,10 @@ import {fileURLToPath} from "node:url";
 
 import {chromium} from "playwright";
 
+import {
+  buildGs002SourceLocalGameContract,
+  gs002SourceContractSemanticProjection,
+} from "./build-g4-l3-gs002-source-local-game-contract.mjs";
 import {buildSafeRuntime} from "./build-safe-ffdec-canvas-adapter.mjs";
 
 const execFile = promisify(execFileCallback);
@@ -28,6 +32,8 @@ const scriptPath = fileURLToPath(import.meta.url);
 const ROOT = path.resolve(path.dirname(scriptPath), "..");
 const REPORT_TYPE = "current-javascript-engineering-candidate";
 const SAFE_ADAPTER_BUILDER = "scripts/build-safe-ffdec-canvas-adapter.mjs";
+const CANONICAL_SOURCE_PREFIX =
+  "source-assets/flash/HELP MATH_ORIGINAL FILES/";
 const COMPLETION_LEDGER = "catalog/completion-ledger.json";
 const HUMAN_APPROVAL = "reports/current-javascript-output-human-approval.json";
 const AUTOPLAY_EVIDENCE_MATERIALIZER =
@@ -126,6 +132,19 @@ function projectPath(relativePath) {
   const relative = path.relative(ROOT, resolved);
   invariant(relative && !relative.startsWith(`..${path.sep}`) &&
     !path.isAbsolute(relative), `path escapes the repository: ${relativePath}`);
+  return resolved;
+}
+
+function boundFilePath(relativePath, sourceRoot = null) {
+  if (sourceRoot === null || !relativePath.startsWith(CANONICAL_SOURCE_PREFIX)) {
+    return projectPath(relativePath);
+  }
+  invariant(path.isAbsolute(sourceRoot), "sourceRoot must be absolute");
+  const suffix = relativePath.slice(CANONICAL_SOURCE_PREFIX.length);
+  const resolvedRoot = path.resolve(sourceRoot);
+  const resolved = path.resolve(resolvedRoot, suffix);
+  invariant(resolved.startsWith(`${resolvedRoot}${path.sep}`),
+    `source path escapes explicit root: ${relativePath}`);
   return resolved;
 }
 
@@ -383,7 +402,7 @@ async function resolveExecutable(command) {
   throw new Error(`executable not found: ${command}`);
 }
 
-async function inspectTool(command, expected, label) {
+async function inspectTool(command, expected, label, environment = null) {
   const invokedPath = await resolveExecutable(command);
   invariant(invokedPath === expected.invokedPath,
     `${label} invoked path changed: ${invokedPath}`);
@@ -393,6 +412,7 @@ async function inspectTool(command, expected, label) {
     run(invokedPath, expected.versionArgs, {
       timeout: 30_000,
       maxBuffer: 8 * 1024 * 1024,
+      ...(environment ? {env: environment} : {}),
     }),
   ]);
   const versionOutput = `${versionResult.stdout}\n${versionResult.stderr}`
@@ -410,8 +430,8 @@ async function inspectTool(command, expected, label) {
   };
 }
 
-async function readBinding(relativePath) {
-  const absolute = projectPath(relativePath);
+async function readBinding(relativePath, {sourceRoot = null} = {}) {
+  const absolute = boundFilePath(relativePath, sourceRoot);
   const metadata = await lstat(absolute);
   invariant(metadata.isFile() && !metadata.isSymbolicLink(),
     `${relativePath} must be a regular non-symlink file`);
@@ -426,12 +446,69 @@ async function readBinding(relativePath) {
   };
 }
 
-async function readPinned(binding, label) {
+async function readPinned(binding, label, {sourceRoot = null} = {}) {
   if (binding === null) return null;
-  const observed = await readBinding(binding.path);
+  const observed = await readBinding(binding.path, {sourceRoot});
   invariant(observed.bytes === binding.bytes && observed.sha256 === binding.sha256,
     `${label} differs from its pinned identity`);
   return observed;
+}
+
+async function readSourceLocalGameContract(binding, {
+  animationId,
+  ffdec,
+  regenerationOnly,
+  sourceRoot,
+} = {}) {
+  if (!binding) return null;
+  if (!(regenerationOnly && animationId === "course-g04-l03-gs-002")) {
+    return readPinned(binding, "source-local game contract");
+  }
+  invariant(binding.path ===
+      "migrations/course-g04-l03-gs-002/audit/source-local-game-initial-contract.json" &&
+    binding.bytes === 19_879 &&
+    binding.sha256 ===
+      "9bc9dd2ad1294da068a33ca404782c128a74210a3f698593d43cf401c33ed9ee",
+  "GS002 stale source-local game descriptor identity changed");
+  const [observed, markdown, fresh] = await Promise.all([
+    readBinding(binding.path),
+    readBinding(
+      "migrations/course-g04-l03-gs-002/audit/source-local-game-initial-contract.md",
+    ),
+    buildGs002SourceLocalGameContract({
+      root: ROOT,
+      ffdec,
+      regenerationOnly: true,
+      sourceRoot,
+    }),
+  ]);
+  invariant(observed.bytes === 19_879 && observed.sha256 ===
+    "8ad35175b671913aca904c27d375b3b918d551fce6ee965a90727b7f6c70c0e2",
+  "GS002 observed source-local game contract identity changed");
+  const currentReport = JSON.parse(observed.contents);
+  invariant(JSON.stringify(
+    gs002SourceContractSemanticProjection(currentReport),
+  ) === JSON.stringify(
+    gs002SourceContractSemanticProjection(fresh.report),
+  ), "GS002 fresh source-local game semantics differ from the observed contract");
+  invariant(markdown.contents.toString("utf8") === fresh.markdown,
+    "GS002 fresh source-local game Markdown differs from the observed contract");
+  return {
+    ...observed,
+    regenerationRebind: {
+      authority: "gate0a-source-first-semantic-descriptor-rebind-only",
+      staleSpecBinding: {
+        path: binding.path,
+        bytes: binding.bytes,
+        sha256: binding.sha256,
+      },
+      observedBinding: withoutContents(observed),
+      freshGenerator: fresh.report.generator,
+      freshSemanticProjectionMatches: true,
+      browserLaunched: false,
+      strictAcceptanceEffect: "none",
+    },
+  };
 }
 
 function withoutContents(binding) {
@@ -828,8 +905,9 @@ function validateEvidence(spec, sourceAudit, authoringAudit,
   }
 }
 
-async function protectedSnapshot(paths) {
-  const files = (await Promise.all([...new Set(paths)].map(readBinding)))
+async function protectedSnapshot(paths, {sourceRoot = null} = {}) {
+  const files = (await Promise.all([...new Set(paths)]
+    .map((filePath) => readBinding(filePath, {sourceRoot}))))
     .map(withoutContents)
     .sort((left, right) => left.path.localeCompare(right.path, "en"));
   return {
@@ -1399,29 +1477,50 @@ export async function checkCandidateReportOutputs({
 }
 
 export function parseArguments(argv) {
-  const options = {check: false, ffdec: "ffdec", specPath: null};
+  const options = {
+    check: false,
+    ffdec: "ffdec",
+    regenerationOnly: false,
+    sourceRoot: null,
+    specPath: null,
+  };
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === "--check") options.check = true;
-    else if (argument === "--ffdec" || argument === "--spec") {
+    else if (argument === "--regeneration-only") {
+      options.regenerationOnly = true;
+    }
+    else if (argument === "--ffdec" || argument === "--spec" ||
+      argument === "--source-root") {
       const value = argv[index + 1];
       invariant(value && !value.startsWith("--"), `${argument} requires a value`);
       if (argument === "--ffdec") options.ffdec = value;
+      else if (argument === "--source-root") options.sourceRoot = value;
       else options.specPath = value;
       index += 1;
     } else if (argument === "--help" || argument === "-h") options.help = true;
     else throw new Error(`unknown argument: ${argument}`);
   }
   if (!options.help) invariant(options.specPath, "--spec is required");
+  invariant(!options.regenerationOnly || options.check,
+    "--regeneration-only requires --check");
+  if (options.sourceRoot !== null) {
+    invariant(path.isAbsolute(options.sourceRoot),
+      "--source-root must be absolute");
+  }
   return options;
 }
 
 export async function generateG4L3SourceStaticCandidate({
   check = false,
   ffdec = "ffdec",
+  regenerationOnly = false,
+  sourceRoot = null,
   specPath,
 } = {}) {
   invariant(specPath, "specPath is required");
+  invariant(!regenerationOnly || check,
+    "regenerationOnly requires the read-only check mode");
   const portableSpecPath = portable(path.relative(ROOT, path.resolve(ROOT, specPath)));
   const specBinding = await readBinding(portableSpecPath);
   const spec = validateSourceStaticCandidateSpec(JSON.parse(specBinding.contents));
@@ -1447,7 +1546,7 @@ export async function generateG4L3SourceStaticCandidate({
       ? [spec.evidence.sourceLocalGameContract.path] : []),
     ...spec.integrationBindings,
   ];
-  const protectedBefore = await protectedSnapshot(protectedPaths);
+  const protectedBefore = await protectedSnapshot(protectedPaths, {sourceRoot});
   // The completion ledger is protected by an exact before/after byte check, but
   // its hash must not be serialized into the candidate outputs. The ledger runs
   // strict migration validation, which reads these outputs; serializing its hash
@@ -1460,9 +1559,9 @@ export async function generateG4L3SourceStaticCandidate({
     generator, safeBuilder,
     ...integrationTail] =
     await Promise.all([
-    readPinned(spec.source.swf, "source SWF"),
-    readPinned(spec.source.fla, "source FLA"),
-    readPinned(spec.source.associatedAudio, "associated audio"),
+    readPinned(spec.source.swf, "source SWF", {sourceRoot}),
+    readPinned(spec.source.fla, "source FLA", {sourceRoot}),
+    readPinned(spec.source.associatedAudio, "associated audio", {sourceRoot}),
     readPinned(spec.evidence.sourceAudit, "source audit"),
     readPinned(spec.evidence.authoringAudit, "authoring audit"),
     readPinned(spec.evidence.mutedRandomVisualDisposition ?? null,
@@ -1473,8 +1572,15 @@ export async function generateG4L3SourceStaticCandidate({
       "source-local number-line quiz contract"),
     readPinned(spec.evidence.sourceLocalPatternQuizContract ?? null,
       "source-local pattern quiz contract"),
-    readPinned(spec.evidence.sourceLocalGameContract ?? null,
-      "source-local game contract"),
+    readSourceLocalGameContract(
+      spec.evidence.sourceLocalGameContract ?? null,
+      {
+        animationId: spec.animationId,
+        ffdec,
+        regenerationOnly,
+        sourceRoot,
+      },
+    ),
     readBinding(portable(path.relative(ROOT, scriptPath))),
     readBinding(SAFE_ADAPTER_BUILDER),
     ...spec.integrationBindings.map(readBinding),
@@ -1497,11 +1603,24 @@ export async function generateG4L3SourceStaticCandidate({
   const integrationBindings = [generator, safeBuilder, ...integrationTail]
     .map(withoutContents)
     .sort((left, right) => left.path.localeCompare(right.path, "en"));
-  const toolchain = {ffdec: await inspectTool(ffdec, EXPECTED_TOOLS.ffdec, "FFDec")};
   const temporaryRoot = await mkdtemp(
     path.join(os.tmpdir(), `help-math-${spec.animationId}-candidate-`),
   );
   try {
+    const ffdecUserHome = path.join(temporaryRoot, "ffdec-user-home");
+    await mkdir(ffdecUserHome, {recursive: true});
+    const ffdecEnvironment = {
+      ...process.env,
+      JAVA_TOOL_OPTIONS: `-Duser.home="${ffdecUserHome}"`,
+    };
+    const toolchain = {
+      ffdec: await inspectTool(
+        ffdec,
+        EXPECTED_TOOLS.ffdec,
+        "FFDec",
+        ffdecEnvironment,
+      ),
+    };
     const canvasDirectory = path.join(temporaryRoot, "canvas");
     const canvasExport = await run(toolchain.ffdec.invokedPath, [
       "-config", "packJavaScripts=false",
@@ -1510,8 +1629,8 @@ export async function generateG4L3SourceStaticCandidate({
       "-format", "sprite:canvas",
       "-export", "sprite",
       canvasDirectory,
-      projectPath(spec.source.swf.path),
-    ]);
+      boundFilePath(spec.source.swf.path, sourceRoot),
+    ], {env: ffdecEnvironment});
     invariant(`${canvasExport.stdout}\n${canvasExport.stderr}`
       .includes(EXPECTED_TOOLS.ffdec.version),
     "fresh FFDec exporter version changed");
@@ -1546,6 +1665,44 @@ export async function generateG4L3SourceStaticCandidate({
       ),
     });
     const runtimeBytes = Buffer.from(built.runtime);
+    if (regenerationOnly) {
+      const observedRuntime = await readBinding(spec.outputs.canvasRuntime);
+      invariant(runtimeBytes.equals(Buffer.from(observedRuntime.contents)),
+        `${spec.animationId}: regenerated runtime differs from v1 materialization`);
+      const protectedAfter = await protectedSnapshot(protectedPaths, {sourceRoot});
+      const completionLedgerAfter = await readBinding(COMPLETION_LEDGER);
+      invariant(protectedBefore.combinedManifestSha256 ===
+        protectedAfter.combinedManifestSha256,
+      "protected bindings changed during regeneration-only check");
+      invariant(completionLedgerBefore.sha256 === completionLedgerAfter.sha256 &&
+        completionLedgerBefore.bytes === completionLedgerAfter.bytes,
+      "completion ledger changed during regeneration-only check");
+      return {
+        animationId: spec.animationId,
+        check: true,
+        regenerationOnly: true,
+        browserLaunched: false,
+        source: withoutContents(sourceSwf),
+        spec: withoutContents(specBinding),
+        generator: withoutContents(generator),
+        safeAdapter: withoutContents(safeBuilder),
+        sourceLocalGameRebind:
+          sourceLocalGameContract?.regenerationRebind ?? null,
+        freshFfdec: {
+          tool: toolchain.ffdec,
+          targetSpriteObjectId: spec.ffdec.targetSpriteObjectId,
+          helper: {bytes: helper.length, sha256: sha256(helper)},
+          framesHtml: {bytes: framesHtml.length, sha256: sha256(framesHtml)},
+        },
+        runtime: {
+          path: spec.outputs.canvasRuntime,
+          bytes: runtimeBytes.length,
+          sha256: sha256(runtimeBytes),
+          matchesV1Materialization: true,
+        },
+        strictAcceptanceEffect: "none",
+      };
+    }
     const browserEvidence = await browserRenderability(built.runtime, spec);
     toolchain.chromium = browserEvidence.browser;
     const source = {
@@ -1623,7 +1780,7 @@ export async function generateG4L3SourceStaticCandidate({
           expectedBaseMarkdownBytes: artifacts.reportMarkdownBytes,
         }),
       ]);
-      const protectedAfter = await protectedSnapshot(protectedPaths);
+      const protectedAfter = await protectedSnapshot(protectedPaths, {sourceRoot});
       const completionLedgerAfter = await readBinding(COMPLETION_LEDGER);
       invariant(protectedBefore.combinedManifestSha256 ===
         protectedAfter.combinedManifestSha256,
@@ -1670,7 +1827,7 @@ export async function generateG4L3SourceStaticCandidate({
       emit(spec.outputs.reportJson, preliminary.reportJsonBytes, false, allowedOutputs),
       emit(spec.outputs.reportMarkdown, preliminary.reportMarkdownBytes, false, allowedOutputs),
     ]);
-    const protectedAfter = await protectedSnapshot(protectedPaths);
+    const protectedAfter = await protectedSnapshot(protectedPaths, {sourceRoot});
     const completionLedgerAfter = await readBinding(COMPLETION_LEDGER);
     invariant(protectedBefore.combinedManifestSha256 ===
       protectedAfter.combinedManifestSha256,
@@ -1725,6 +1882,8 @@ function help() {
     `Options:\n` +
     `  --spec <path>      Hash-bound candidate specification\n` +
     `  --check            Rebuild in memory and verify checked-in outputs\n` +
+    `  --regeneration-only  Run source/FFDec/runtime byte checks without browser fidelity\n` +
+    `  --source-root <path>  Explicit absolute read-only canonical source root\n` +
     `  --ffdec <command>  FFDec launcher (default: ffdec)\n` +
     `  -h, --help         Show this help\n`;
 }

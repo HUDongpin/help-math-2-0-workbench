@@ -1,6 +1,13 @@
 #!/usr/bin/env node
 
-import {mkdtemp, rm} from "node:fs/promises";
+import {
+  lstat,
+  mkdtemp,
+  readFile,
+  realpath,
+  rm,
+  stat,
+} from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
@@ -12,6 +19,8 @@ import {
 
 const scriptPath = fileURLToPath(import.meta.url);
 const ROOT = support.ROOT;
+const CANONICAL_SOURCE_PREFIX =
+  "source-assets/flash/HELP MATH_ORIGINAL FILES/";
 
 export const ANIMATION_ID = "course-g04-l03-gs-002";
 export const SPEC_PATH =
@@ -37,6 +46,50 @@ const VIRUS_LOCATIONS = Object.freeze([
 const ALLOWED_VIRUS_INDICES = Object.freeze([
   0, 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14,
 ]);
+
+function canonicalSourcePath(relativePath, sourceRoot) {
+  support.invariant(typeof sourceRoot === "string" &&
+    path.isAbsolute(sourceRoot),
+  "sourceRoot must be an explicit absolute path");
+  support.invariant(relativePath.startsWith(CANONICAL_SOURCE_PREFIX),
+    `source path is outside the canonical prefix: ${relativePath}`);
+  const resolvedRoot = path.resolve(sourceRoot);
+  const resolved = path.resolve(
+    resolvedRoot,
+    relativePath.slice(CANONICAL_SOURCE_PREFIX.length),
+  );
+  support.invariant(resolved.startsWith(`${resolvedRoot}${path.sep}`),
+    `source path escapes the explicit root: ${relativePath}`);
+  return resolved;
+}
+
+async function readPinnedSource(binding, label, sourceRoot, root = ROOT) {
+  if (sourceRoot === null) return support.readPinned(binding, label, root);
+  support.invariant(binding && typeof binding.path === "string" &&
+    Number.isSafeInteger(binding.bytes) && binding.bytes >= 0 &&
+    /^[a-f0-9]{64}$/.test(binding.sha256 ?? ""),
+  `${label} binding is invalid`);
+  const absolutePath = canonicalSourcePath(binding.path, sourceRoot);
+  const [metadata, resolvedPath, physical, contents] = await Promise.all([
+    lstat(absolutePath),
+    realpath(absolutePath),
+    stat(absolutePath),
+    readFile(absolutePath),
+  ]);
+  support.invariant(metadata.isFile() && !metadata.isSymbolicLink() &&
+    resolvedPath === absolutePath && physical.nlink === 1,
+  `${label} must be an ordinary, non-linked canonical source file`);
+  support.invariant(contents.length === binding.bytes &&
+    support.sha256(contents) === binding.sha256,
+  `${label} differs from its pinned identity`);
+  return {
+    path: binding.path,
+    bytes: contents.length,
+    sha256: support.sha256(contents),
+    contents,
+    absolutePath,
+  };
+}
 
 async function freshStructure({swfmill, python, parserPath, sourcePath,
   outputRoot}) {
@@ -281,6 +334,17 @@ export function buildGs002InitialGameState(structure) {
   };
 }
 
+function sourceReportBinding(binding) {
+  const {contents, absolutePath, ...identity} = binding;
+  return identity;
+}
+
+export function gs002SourceContractSemanticProjection(report) {
+  const projected = structuredClone(report);
+  delete projected.generator;
+  return projected;
+}
+
 export function renderMarkdown(report) {
   return `# G4 L3 GS002 source-local game initial-state contract\n\n` +
     `- Animation: \`${report.animationId}\`\n` +
@@ -295,7 +359,12 @@ export function renderMarkdown(report) {
 export async function buildGs002SourceLocalGameContract({
   root = ROOT, ffdec = "ffdec", swfmill = "swfmill",
   python = "/opt/anaconda3/bin/python3",
+  regenerationOnly = false,
+  sourceRoot = null,
 } = {}) {
+  support.invariant(!regenerationOnly || (sourceRoot &&
+    path.isAbsolute(sourceRoot)),
+  "regenerationOnly requires an explicit absolute sourceRoot");
   const [specBinding, generatorBinding, parserBinding] = await Promise.all([
     support.readBinding(SPEC_PATH, root),
     support.readBinding(support.portable(path.relative(root, scriptPath)), root),
@@ -304,8 +373,8 @@ export async function buildGs002SourceLocalGameContract({
   const spec = JSON.parse(specBinding.contents);
   const [sourceSwf, sourceFla, sourceAudit, authoringAudit,
     ffdecTool, swfmillTool, pythonTool] = await Promise.all([
-    support.readPinned(spec.source.swf, "GS002 source SWF", root),
-    support.readPinned(spec.source.fla, "GS002 source FLA", root),
+    readPinnedSource(spec.source.swf, "GS002 source SWF", sourceRoot, root),
+    readPinnedSource(spec.source.fla, "GS002 source FLA", sourceRoot, root),
     support.readPinned(spec.evidence.sourceAudit, "GS002 source audit", root),
     support.readPinned(spec.evidence.authoringAudit, "GS002 authoring audit", root),
     support.inspectTool(ffdec, support.EXPECTED_TOOLS.ffdec, "FFDec"),
@@ -317,12 +386,13 @@ export async function buildGs002SourceLocalGameContract({
   try {
     const [scripts, structure] = await Promise.all([
       support.freshScripts(ffdecTool,
-        support.projectPath(spec.source.swf.path, root),
+        sourceSwf.absolutePath ?? support.projectPath(spec.source.swf.path, root),
         path.join(temporaryRoot, "scripts")),
       freshStructure({
         swfmill: swfmillTool, python: pythonTool,
         parserPath: support.projectPath(PARSER_PATH, root),
-        sourcePath: support.projectPath(spec.source.swf.path, root),
+        sourcePath: sourceSwf.absolutePath ??
+          support.projectPath(spec.source.swf.path, root),
         outputRoot: temporaryRoot,
       }),
     ]);
@@ -397,8 +467,8 @@ export async function buildGs002SourceLocalGameContract({
       generator: support.withoutContents(generatorBinding),
       parser: support.withoutContents(parserBinding),
       source: {
-        swf: support.withoutContents(sourceSwf),
-        fla: support.withoutContents(sourceFla),
+        swf: sourceReportBinding(sourceSwf),
+        fla: sourceReportBinding(sourceFla),
         sourceAudit: support.withoutContents(sourceAudit),
         authoringAudit: support.withoutContents(authoringAudit),
         structureFingerprintSha256: sourceFacts.structureFingerprintSha256,
@@ -459,8 +529,13 @@ export async function buildGs002SourceLocalGameContract({
       },
       strictAcceptanceEffect: "none",
     };
-    return {report, json: support.stableJson(report),
-      markdown: renderMarkdown(report)};
+    return {
+      report,
+      json: support.stableJson(report),
+      markdown: renderMarkdown(report),
+      regenerationOnly,
+      browserLaunched: false,
+    };
   } finally {
     await rm(temporaryRoot, {recursive: true, force: true});
   }
@@ -468,17 +543,31 @@ export async function buildGs002SourceLocalGameContract({
 
 function parseArguments(argv) {
   const options = {check: false, ffdec: "ffdec", swfmill: "swfmill",
-    python: "/opt/anaconda3/bin/python3"};
+    python: "/opt/anaconda3/bin/python3", regenerationOnly: false,
+    sourceRoot: null};
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === "--check") options.check = true;
-    else if (["--ffdec", "--swfmill", "--python"].includes(argument)) {
+    else if (argument === "--regeneration-only") {
+      options.regenerationOnly = true;
+    } else if (["--ffdec", "--swfmill", "--python", "--source-root"]
+      .includes(argument)) {
       const value = argv[++index];
       support.invariant(value && !value.startsWith("--"),
         `${argument} requires a value`);
-      options[argument.slice(2)] = value;
+      if (argument === "--source-root") options.sourceRoot = value;
+      else options[argument.slice(2)] = value;
     } else if (argument === "-h" || argument === "--help") options.help = true;
     else throw new Error(`Unknown argument: ${argument}`);
+  }
+  support.invariant(!options.regenerationOnly || options.check,
+    "--regeneration-only requires --check");
+  if (options.regenerationOnly) {
+    support.invariant(options.sourceRoot && path.isAbsolute(options.sourceRoot),
+      "--regeneration-only requires an absolute --source-root");
+  } else {
+    support.invariant(options.sourceRoot === null,
+      "--source-root is only valid with --regeneration-only");
   }
   return options;
 }
@@ -488,10 +577,41 @@ async function main() {
   if (options.help) {
     process.stdout.write(
       "node scripts/build-g4-l3-gs002-source-local-game-contract.mjs " +
-      "[--check] [--ffdec <command>] [--swfmill <command>] [--python <command>]\n");
+      "[--check] [--regeneration-only --source-root <absolute-path>] " +
+      "[--ffdec <command>] [--swfmill <command>] [--python <command>]\n");
     return;
   }
   const built = await buildGs002SourceLocalGameContract(options);
+  if (options.regenerationOnly) {
+    const [currentJson, currentMarkdown] = await Promise.all([
+      support.readBinding(OUTPUT_JSON, ROOT),
+      support.readBinding(OUTPUT_MARKDOWN, ROOT),
+    ]);
+    const currentReport = JSON.parse(currentJson.contents);
+    support.invariant(JSON.stringify(
+      gs002SourceContractSemanticProjection(currentReport),
+    ) === JSON.stringify(
+      gs002SourceContractSemanticProjection(built.report),
+    ), "GS002 fresh source contract changed semantically");
+    support.invariant(currentMarkdown.contents.toString("utf8") ===
+      built.markdown,
+    "GS002 source-local contract Markdown changed semantically");
+    process.stdout.write(`${JSON.stringify({
+      animationId: ANIMATION_ID,
+      check: true,
+      regenerationOnly: true,
+      browserLaunched: false,
+      sourceContract: {
+        path: OUTPUT_JSON,
+        bytes: currentJson.bytes,
+        sha256: currentJson.sha256,
+        freshSemanticProjectionMatches: true,
+      },
+      freshGenerator: built.report.generator,
+      strictAcceptanceEffect: "none",
+    }, null, 2)}\n`);
+    return;
+  }
   await Promise.all([
     support.emit(OUTPUT_JSON, built.json, options.check),
     support.emit(OUTPUT_MARKDOWN, built.markdown, options.check),

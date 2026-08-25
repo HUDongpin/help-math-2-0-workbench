@@ -4,9 +4,38 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import test from "node:test";
 
-import {buildG3L2CurrentJsCandidates} from "./build-g3-l2-current-js-candidates.mjs";
+import {
+  buildG3L2CurrentJsCandidates,
+  parseArguments,
+} from "./build-g3-l2-current-js-candidates.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+
+test("G3 L2 Current-JS CLI accepts only explicit read-only regeneration inputs", () => {
+  assert.deepEqual(parseArguments([
+    "--check",
+    "--factory-root",
+    "work/g3-l2-ffdec-canvas-pcode-factory/gate0a-fresh-v2",
+    "--runtime-only",
+    "--source-root",
+    "/canonical/source",
+  ]), {
+    check: true,
+    factoryRoot: "work/g3-l2-ffdec-canvas-pcode-factory/gate0a-fresh-v2",
+    runtimeOnly: true,
+    sourceRoot: "/canonical/source",
+  });
+  assert.throws(() => parseArguments([]), /exactly one/);
+  assert.throws(() => parseArguments([
+    "--check", "--factory-root", "outside/factory",
+  ]), /must be inside/);
+  assert.throws(() => parseArguments([
+    "--check", "--source-root", "relative/source",
+  ]), /must be absolute/);
+  assert.throws(() => parseArguments([
+    "--write", "--runtime-only",
+  ]), /requires --check/);
+});
 
 test("G3 L2 Current-JS generator closes the exact page-only registry projection", async () => {
   const result = await buildG3L2CurrentJsCandidates({check: true});

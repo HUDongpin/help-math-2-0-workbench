@@ -1,4 +1,5 @@
 import type {NextConfig} from 'next';
+import {existsSync, readFileSync} from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
@@ -9,6 +10,114 @@ import {
 } from './lib/clerk-synthetic-execution';
 
 const webDirectory = path.dirname(fileURLToPath(import.meta.url));
+
+const PRODUCTION_CANVAS_RELEASE_IDS = new Set([
+  'lesson-g03-l02-addition-subtraction-page-only-current-js',
+  'lesson-g04-l03-negative-numbers',
+  'lesson-g05-l03-exponents-prime-factorizations-page-only',
+  'lesson-g05-l04-number-lines',
+  'lesson-g05-l05-add-subtract-negative-numbers',
+]);
+const PRODUCTION_PAGE_RENDERER_PATH =
+  /^courses\/course-(?:g03-l02|g04-l03|g05-l03|g05-l04|g05-l05)-[a-z0-9-]+\/canvas-renderer\.js$/;
+const G4_L3_IR001_LOADED_HOST_RENDERER_PATH =
+  'courses/shell-course-g04-l03-index-local/host-composite-assets/'
+  + 'course-g04-l03-ir-001-loaded-swf-canvas-renderer.js';
+
+type TracingProfileEntry = {
+  readonly assetPath: string;
+  readonly relativePath: string;
+  readonly storageRoot: string;
+  readonly releaseId: string;
+};
+
+type TracingProfile = {
+  readonly counts: {
+    readonly public: number;
+    readonly serverAudio: number;
+    readonly total: number;
+  };
+  readonly entries: readonly TracingProfileEntry[];
+};
+
+function readTracingProfile(profilePath: string): TracingProfile {
+  const document: unknown = JSON.parse(readFileSync(profilePath, 'utf8'));
+  if (
+    typeof document !== 'object'
+    || document === null
+    || !('counts' in document)
+    || !('entries' in document)
+  ) {
+    throw new Error(`Invalid Current-JS tracing profile: ${profilePath}`);
+  }
+  return document as TracingProfile;
+}
+
+function rendererPathsFromTracingProfile(
+  profile: TracingProfile,
+  profilePath: string,
+): readonly string[] {
+  if (
+    profile.counts.public !== 929
+    || profile.counts.serverAudio !== 185
+    || profile.counts.total !== 1114
+    || profile.entries.length !== 1114
+  ) {
+    throw new Error(`Unexpected Current-JS tracing counts: ${profilePath}`);
+  }
+  const rendererEntries = profile.entries.filter(({assetPath}) =>
+    assetPath.endsWith('/canvas-renderer.js')
+    || assetPath === G4_L3_IR001_LOADED_HOST_RENDERER_PATH);
+  if (rendererEntries.length !== 284) {
+    throw new Error(`Expected exactly 284 adaptive Canvas runtimes: ${profilePath}`);
+  }
+  const rendererPaths = rendererEntries.map((entry) => {
+    const acceptedPath = PRODUCTION_PAGE_RENDERER_PATH.test(entry.assetPath)
+      || entry.assetPath === G4_L3_IR001_LOADED_HOST_RENDERER_PATH;
+    const acceptedRelativePath = entry.assetPath === `courses/${entry.relativePath}`;
+    if (
+      !acceptedPath
+      || !acceptedRelativePath
+      || entry.storageRoot !== 'public'
+      || !PRODUCTION_CANVAS_RELEASE_IDS.has(entry.releaseId)
+      || /course-g04-l(?:05|10|11)-/.test(entry.assetPath)
+    ) {
+      throw new Error(`Unapproved adaptive Canvas tracing entry: ${entry.assetPath}`);
+    }
+    return entry.assetPath;
+  });
+  if (new Set(rendererPaths).size !== 284) {
+    throw new Error(`Adaptive Canvas tracing paths are not unique: ${profilePath}`);
+  }
+  return Object.freeze([...rendererPaths].sort());
+}
+
+const v1TracingProfilePath = path.join(
+  webDirectory,
+  'config/current-js-production-assets.v1.json',
+);
+const v2TracingProfilePath = path.join(
+  webDirectory,
+  'config/current-js-production-assets.v2.json',
+);
+const v1CanvasRendererPaths = rendererPathsFromTracingProfile(
+  readTracingProfile(v1TracingProfilePath),
+  v1TracingProfilePath,
+);
+if (existsSync(v2TracingProfilePath)) {
+  const v2CanvasRendererPaths = rendererPathsFromTracingProfile(
+    readTracingProfile(v2TracingProfilePath),
+    v2TracingProfilePath,
+  );
+  if (JSON.stringify(v2CanvasRendererPaths) !== JSON.stringify(v1CanvasRendererPaths)) {
+    throw new Error('v2 adaptive Canvas tracing paths differ from immutable v1');
+  }
+}
+export const productionAdaptiveCanvasTracingPaths = Object.freeze(
+  v1CanvasRendererPaths.map(
+    (assetPath) => `../../apps/web/public/flash-assets/${assetPath}`,
+  ),
+);
 const g4L3WholeLessonPackageBuild =
   process.env.G4_L3_WHOLE_LESSON_PACKAGE === '1';
 const g4L3WholeLessonPackageV31Build =
@@ -202,6 +311,8 @@ const nextConfig: NextConfig = {
       '../../catalog/lesson-release-ledger.json',
       '../../catalog/lessons.json',
       '../../reports/g5-l4-source-scope-freeze.json',
+      '../../apps/web/config/current-js-production-assets.v2.json',
+      ...productionAdaptiveCanvasTracingPaths,
       '../../apps/web/server-assets/flash-assets/courses/**/*.mp3',
     ],
   },

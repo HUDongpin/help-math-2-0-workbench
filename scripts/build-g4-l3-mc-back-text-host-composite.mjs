@@ -17,6 +17,8 @@ import {promisify} from 'node:util';
 import {fileURLToPath} from 'node:url';
 import {gunzipSync} from 'node:zlib';
 
+import {buildSafeRuntime} from './build-safe-ffdec-canvas-adapter.mjs';
+
 const SCRIPT_PATH = fileURLToPath(import.meta.url);
 const ROOT = path.resolve(path.dirname(SCRIPT_PATH), '..');
 const execFileAsync = promisify(execFile);
@@ -63,6 +65,15 @@ const INTRODUCTION = Object.freeze({
       '2af6431db3ed786d9b48feec5a649887af92fb219a04e5dbd42e7e4b04087df4',
   }),
 });
+const INTRODUCTION_SOURCE_STATIC_SPEC = Object.freeze({
+  bytes: 5_843,
+  path:
+    'migrations/course-g04-l03-ir-001-341242cc/audit/source-static-current-js-candidate-spec.json',
+  sha256:
+    '6d572176c2f5b538aa30bcdae5aefb018e77c67419f45050082f220735a42181',
+});
+const SAFE_ADAPTER_GENERATOR =
+  'scripts/build-safe-ffdec-canvas-adapter.mjs';
 const SPRITE = Object.freeze({
   characterId: 584,
   exactTagSha256:
@@ -122,9 +133,9 @@ function sha256(bytes) {
   return createHash('sha256').update(bytes).digest('hex');
 }
 
-function projectPath(relativePath) {
-  const resolved = path.resolve(ROOT, relativePath);
-  const relative = path.relative(ROOT, resolved);
+function projectPath(relativePath, projectRoot = ROOT) {
+  const resolved = path.resolve(projectRoot, relativePath);
+  const relative = path.relative(projectRoot, resolved);
   invariant(
     relative &&
       !relative.startsWith(`..${path.sep}`) &&
@@ -134,8 +145,8 @@ function projectPath(relativePath) {
   return resolved;
 }
 
-async function regularFile(relativePath) {
-  const resolved = projectPath(relativePath);
+async function regularFile(relativePath, projectRoot = ROOT) {
+  const resolved = projectPath(relativePath, projectRoot);
   const fileStat = await lstat(resolved);
   invariant(
     fileStat.isFile() && !fileStat.isSymbolicLink(),
@@ -246,6 +257,170 @@ async function extractSpriteSvg(sourcePath) {
   }
 }
 
+function introductionAdapterSpec(candidateSpec) {
+  invariant(
+    candidateSpec.schemaVersion === 1 &&
+      candidateSpec.animationId === INTRODUCTION.animationId &&
+      candidateSpec.source?.swf?.path === INTRODUCTION.sourceSwf.path &&
+      candidateSpec.source.swf.bytes === INTRODUCTION.sourceSwf.bytes &&
+      candidateSpec.source.swf.sha256 === INTRODUCTION.sourceSwf.sha256 &&
+      candidateSpec.ffdec?.targetSpriteObjectId === 27 &&
+      candidateSpec.ffdec.targetSpriteFunction === 'sprite27' &&
+      candidateSpec.timeline?.stage?.width === 800 &&
+      candidateSpec.timeline.stage.height === 600 &&
+      candidateSpec.timeline.stageRenderOffset?.x === -124.5 &&
+      candidateSpec.timeline.stageRenderOffset?.y === 98.5 &&
+      candidateSpec.timeline.local?.frameDomain === 'sprite-27' &&
+      candidateSpec.timeline.local.frameCount === 136 &&
+      candidateSpec.sourceBehaviorBoundary
+        ?.mainFrameBehaviorDependentRanges?.length === 0,
+    'IR001 source-static adaptive generator contract drifted',
+  );
+  return {
+    schemaVersion: 1,
+    animationId: candidateSpec.animationId,
+    classification:
+      'source-static-current-javascript-engineering-candidate-only',
+    source: {
+      swf: candidateSpec.source.swf.path,
+      swfSha256: candidateSpec.source.swf.sha256,
+    },
+    evidence: {
+      scenarioInventorySha256: candidateSpec.evidence.sourceAudit.sha256,
+      audioAuditSha256:
+        candidateSpec.evidence.authoringAudit.sha256,
+    },
+    ffdecExport: {
+      tool: `JPEXS Free Flash Decompiler v.${FFDEC.version}`,
+      helper: 'ephemeral-fresh-ffdec-export/canvas.js',
+      helperSha256: candidateSpec.ffdec.helper.sha256,
+      framesHtml: 'ephemeral-fresh-ffdec-export/frames.html',
+      framesHtmlSha256: candidateSpec.ffdec.framesHtml.sha256,
+      targetSpriteObjectId: candidateSpec.ffdec.targetSpriteObjectId,
+      targetSpriteFunction: candidateSpec.ffdec.targetSpriteFunction,
+      exportCanvas: candidateSpec.ffdec.exportCanvas,
+      exportInternalTranslation:
+        candidateSpec.ffdec.exportInternalTranslation,
+      expectedPlacedFunctionCount:
+        candidateSpec.ffdec.expectedPlacedFunctions.count,
+      expectedPlacedFunctionsSha256:
+        candidateSpec.ffdec.expectedPlacedFunctions.sha256,
+      embeddedImageVariableCount:
+        candidateSpec.ffdec.expectedEmbeddedImages.count,
+      embeddedImageVariablesSha256:
+        candidateSpec.ffdec.expectedEmbeddedImages.sha256,
+    },
+    timeline: {
+      fps: candidateSpec.timeline.fps,
+      stage: candidateSpec.timeline.stage,
+      root: candidateSpec.timeline.root,
+      local: {
+        timelineId: candidateSpec.timeline.local.frameDomain,
+        frameCount: candidateSpec.timeline.local.frameCount,
+        playbackMode: 'once',
+        publicFrameIndexing: 'one-indexed',
+      },
+      stageRenderOffset: candidateSpec.timeline.stageRenderOffset,
+    },
+    runtimeContract: {
+      kind: 'structural-local-frame',
+      scenarios: ['source-static-frame'],
+      defaultScenario: 'source-static-frame',
+      supportedLanguages: ['en'],
+      seedMapping: 'normalized-but-unused-by-source-static-drawing',
+      blockedLocalFrameRanges: [],
+      unresolved: candidateSpec.unresolved,
+    },
+    output: {
+      script: candidateSpec.outputs.canvasRuntime,
+      manifest: candidateSpec.outputs.canvasManifest,
+      globalRegistry: 'HELP_MATH_CANVAS_ASSETS',
+    },
+  };
+}
+
+async function extractAdaptiveIntroductionCanvas(
+  sourcePath,
+  candidateSpec,
+) {
+  const help = await execFileAsync(FFDEC.executable, ['-help'], {
+    maxBuffer: 16 * 1024 * 1024,
+  });
+  invariant(
+    `${help.stdout}\n${help.stderr}`.includes(
+      `JPEXS Free Flash Decompiler v.${FFDEC.version}`,
+    ),
+    `FFDec ${FFDEC.version} is required`,
+  );
+
+  const temporaryDirectory = await mkdtemp(
+    path.join(tmpdir(), 'g4-l3-ir001-adaptive-host-'),
+  );
+  const exportDirectory = path.join(temporaryDirectory, 'sprite-canvas');
+  try {
+    const exported = await execFileAsync(
+      FFDEC.executable,
+      [
+        '-config',
+        'packJavaScripts=false',
+        '-onerror',
+        'abort',
+        '-selectid',
+        String(candidateSpec.ffdec.targetSpriteObjectId),
+        '-format',
+        'sprite:canvas',
+        '-export',
+        'sprite',
+        exportDirectory,
+        sourcePath,
+      ],
+      {maxBuffer: 16 * 1024 * 1024},
+    );
+    invariant(
+      `${exported.stdout}\n${exported.stderr}`.includes(
+        `JPEXS Free Flash Decompiler v.${FFDEC.version}`,
+      ),
+      'fresh IR001 FFDec Canvas export version changed',
+    );
+    const extracted = path.join(
+      exportDirectory,
+      `DefineSprite_${candidateSpec.ffdec.targetSpriteObjectId}`,
+    );
+    const [helperBytes, framesHtmlBytes] = await Promise.all([
+      readFile(path.join(extracted, 'canvas.js')),
+      readFile(path.join(extracted, 'frames.html')),
+    ]);
+    invariant(
+      helperBytes.length === candidateSpec.ffdec.helper.bytes &&
+        sha256(helperBytes) === candidateSpec.ffdec.helper.sha256,
+      'fresh IR001 FFDec Canvas helper drifted',
+    );
+    invariant(
+      framesHtmlBytes.length === candidateSpec.ffdec.framesHtml.bytes &&
+        sha256(framesHtmlBytes) === candidateSpec.ffdec.framesHtml.sha256,
+      'fresh IR001 FFDec Canvas frames drifted',
+    );
+    const built = buildSafeRuntime({
+      helperSource: helperBytes.toString('utf8'),
+      framesHtml: framesHtmlBytes.toString('utf8'),
+      resolutionMode: 'adaptive-v1',
+      spec: introductionAdapterSpec(candidateSpec),
+    });
+    invariant(
+      built.metadata.resolution?.schemaVersion === 1 &&
+        built.metadata.resolution.mode === 'adaptive-integer' &&
+        built.metadata.resolution.nativeWidth === 800 &&
+        built.metadata.resolution.nativeHeight === 600 &&
+        JSON.stringify(built.metadata.resolution.supportedRenderScales) ===
+          JSON.stringify([1, 2]),
+      'fresh IR001 Canvas runtime lacks adaptive-v1 metadata',
+    );
+    return Buffer.from(built.runtime);
+  } finally {
+    await rm(temporaryDirectory, {force: true, recursive: true});
+  }
+}
+
 function buildFullStageBackgroundSvg(rawBytes) {
   let svg = rawBytes.toString('utf8');
   const sourceRoot =
@@ -285,14 +460,14 @@ function buildFullStageBackgroundSvg(rawBytes) {
   return Buffer.from(svg);
 }
 
-function buildLoadedSwfCanvasAsset(sourceBytes) {
+export function buildLoadedSwfCanvasAsset(sourceBytes) {
   let source = sourceBytes.toString('utf8');
   const sourceBackground = [
     '    ctx.fillStyle = "#b8d8f7";',
-    '    ctx.fillRect(0, 0, targetCanvas.width, targetCanvas.height);',
+    '    ctx.fillRect(0, 0, 800, 600);',
   ].join('\n');
   const transparentBackground =
-    '    ctx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);';
+    '    ctx.clearRect(0, 0, 800, 600);';
   invariant(
     source.split(sourceBackground).length === 2,
     'IR001 standalone Canvas background prelude drifted',
@@ -319,39 +494,60 @@ function buildLoadedSwfCanvasAsset(sourceBytes) {
     `registry["${INTRODUCTION.animationId}"] = Object.freeze({metadata: METADATA, ready: ready, resolveFrameState: resolveFrameState, render: render});`;
   const hostRegistration =
     `registry["${INTRODUCTION.loadedSwfRegistryKey}"] = Object.freeze({metadata: METADATA, ready: ready, resolveFrameState: resolveFrameState, render: render});`;
+  const sourceCollisionMessage =
+    `    throw new Error("canvas asset is already registered: " + "${INTRODUCTION.animationId}");`;
+  const hostCollisionMessage =
+    `    throw new Error("canvas asset is already registered: " + "${INTRODUCTION.loadedSwfRegistryKey}");`;
   invariant(
     source.split(sourceGuard).length === 2 &&
-      source.split(sourceRegistration).length === 2,
+      source.split(sourceRegistration).length === 2 &&
+      source.split(sourceCollisionMessage).length === 2,
     'IR001 Canvas registry contract drifted',
   );
   source = source
     .replace(sourceGuard, hostGuard)
-    .replace(sourceRegistration, hostRegistration);
+    .replace(sourceRegistration, hostRegistration)
+    .replace(sourceCollisionMessage, hostCollisionMessage);
   invariant(
-    source.includes(transparentBackground) &&
+    source.includes('"mode": "adaptive-integer"') &&
+      source.includes('"supportedRenderScales": [') &&
+      source.includes('request.renderScale !== 1') &&
+      source.includes('request.renderScale !== 2') &&
+      source.includes(
+        'targetCanvas.width !== 800 * renderScale || targetCanvas.height !== 600 * renderScale',
+      ) &&
+      source.includes(
+        'ctx.setTransform(renderScale, 0, 0, renderScale, 0, 0);',
+      ) &&
+      source.includes(transparentBackground) &&
       source.includes(hostChildPlacement) &&
       source.includes(hostGuard) &&
       source.includes(hostRegistration) &&
+      source.includes(hostCollisionMessage) &&
       !source.includes(sourceBackground),
-    'IR001 loaded-SWF host derivation was incomplete',
+    'IR001 adaptive loaded-SWF host derivation was incomplete',
   );
   return Buffer.from(source);
 }
 
-export async function buildG4L3McBackTextHostComposite() {
+export async function buildG4L3McBackTextHostComposite({
+  preservedSourceRoot = ROOT,
+} = {}) {
   const [
     shell,
     courseXml,
     swfmillAudit,
     introSwf,
-    introCanvas,
+    introCandidateSpec,
+    safeAdapterGenerator,
     generator,
   ] = await Promise.all([
-    regularFile(SHELL.path),
-    regularFile(COURSE_XML.path),
+    regularFile(SHELL.path, preservedSourceRoot),
+    regularFile(COURSE_XML.path, preservedSourceRoot),
     regularFile(SWFMILL_AUDIT.path),
-    regularFile(INTRODUCTION.sourceSwf.path),
-    regularFile(INTRODUCTION.canvasAsset.path),
+    regularFile(INTRODUCTION.sourceSwf.path, preservedSourceRoot),
+    regularFile(INTRODUCTION_SOURCE_STATIC_SPEC.path),
+    regularFile(SAFE_ADAPTER_GENERATOR),
     regularFile(path.relative(ROOT, SCRIPT_PATH)),
   ]);
   assertBoundFile(shell, SHELL, 'G4 L3 shell source');
@@ -359,9 +555,9 @@ export async function buildG4L3McBackTextHostComposite() {
   assertBoundFile(swfmillAudit, SWFMILL_AUDIT, 'G4 L3 swfmill audit');
   assertBoundFile(introSwf, INTRODUCTION.sourceSwf, 'G4 L3 IR001 source');
   assertBoundFile(
-    introCanvas,
-    INTRODUCTION.canvasAsset,
-    'G4 L3 IR001 Canvas asset',
+    introCandidateSpec,
+    INTRODUCTION_SOURCE_STATIC_SPEC,
+    'G4 L3 IR001 source-static candidate spec',
   );
 
   const activeBackgroundPages = validateStaticHostEvidence(
@@ -370,7 +566,14 @@ export async function buildG4L3McBackTextHostComposite() {
   );
   const rawSvg = await extractSpriteSvg(shell.resolved);
   const backgroundSvg = buildFullStageBackgroundSvg(rawSvg);
-  const loadedSwfCanvas = buildLoadedSwfCanvasAsset(introCanvas.bytes);
+  const candidateSpec = JSON.parse(introCandidateSpec.bytes.toString('utf8'));
+  const adaptiveIntroductionCanvas = await extractAdaptiveIntroductionCanvas(
+    introSwf.resolved,
+    candidateSpec,
+  );
+  const loadedSwfCanvas = buildLoadedSwfCanvasAsset(
+    adaptiveIntroductionCanvas,
+  );
   const contentBounds = {
     x: Number(
       (SPRITE.rootPlacementPixels.x - SPRITE.rawSvg.localOrigin.x).toFixed(2),
@@ -444,12 +647,31 @@ export async function buildG4L3McBackTextHostComposite() {
     introductionLoadedSwfHost: {
       animationId: INTRODUCTION.animationId,
       sourceSwf: INTRODUCTION.sourceSwf,
-      standaloneCanvasAsset: INTRODUCTION.canvasAsset,
+      fixedK1CanvasBaseline: INTRODUCTION.canvasAsset,
+      adaptiveRuntimeGeneration: {
+        sourceStaticSpec: INTRODUCTION_SOURCE_STATIC_SPEC,
+        safeAdapterGenerator: {
+          path: SAFE_ADAPTER_GENERATOR,
+          bytes: safeAdapterGenerator.bytes.length,
+          sha256: sha256(safeAdapterGenerator.bytes),
+        },
+        resolution: {
+          schemaVersion: 1,
+          mode: 'adaptive-integer',
+          nativeWidth: 800,
+          nativeHeight: 600,
+          supportedRenderScales: [1, 2],
+        },
+        baseRuntime: {
+          bytes: adaptiveIntroductionCanvas.length,
+          sha256: sha256(adaptiveIntroductionCanvas),
+        },
+      },
       derivedRegistryKey: INTRODUCTION.loadedSwfRegistryKey,
       backgroundDisposition:
         'ignore-loaded-child-swf-standalone-stage-background',
       derivation:
-        'replace the one exact full-stage #b8d8f7 fill prelude with clearRect, prepend the exact shell animation_mc translation (-12.5, 33.3), and change only the global registry key',
+        'generate an adaptive-v1 source-static runtime from the exact SWF and FFDec export, replace the one exact authored 800x600 #b8d8f7 fill prelude with clearRect, prepend the exact shell animation_mc translation (-12.5, 33.3), and change only the global registry key and its collision message',
     },
     ffdec: {
       executable: FFDEC.executable,

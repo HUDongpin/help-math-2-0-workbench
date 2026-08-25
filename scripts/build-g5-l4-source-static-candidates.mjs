@@ -34,6 +34,11 @@ const SAFE_ADAPTER_PATH =
 const COMPLETION_LEDGER = "catalog/completion-ledger.json";
 const LESSON_RELEASE_LEDGER = "catalog/lesson-release-ledger.json";
 const EXPECTED_FFDEC_VERSION = "JPEXS Free Flash Decompiler v.26.2.1";
+const CANONICAL_SOURCE_PREFIX =
+  "source-assets/flash/HELP MATH_ORIGINAL FILES/";
+const V9_PLAN = "work/adaptive-canvas-production-five.plan.v9.json";
+const V9_PLAN_SHA256 =
+  "6ff98b7642c1d3dbb68058d889c0699749050d0cb198ae556d392a8b51bd7a75";
 const ROOT_PRELOADER_NAVIGATION_WITHOUT_STOP_IDS = new Set([
   "course-g05-l04-ts-003",
   "course-g05-l04-ts-004",
@@ -362,6 +367,21 @@ function projectPath(relativePath) {
   return resolved;
 }
 
+function canonicalSourcePath(relativePath, sourceRoot) {
+  invariant(typeof sourceRoot === "string" && path.isAbsolute(sourceRoot),
+    "sourceRoot must be an explicit absolute path");
+  invariant(relativePath.startsWith(CANONICAL_SOURCE_PREFIX),
+    `source path is outside the canonical prefix: ${relativePath}`);
+  const resolvedRoot = path.resolve(sourceRoot);
+  const resolved = path.resolve(
+    resolvedRoot,
+    relativePath.slice(CANONICAL_SOURCE_PREFIX.length),
+  );
+  invariant(resolved.startsWith(`${resolvedRoot}${path.sep}`),
+    `source path escapes the explicit root: ${relativePath}`);
+  return resolved;
+}
+
 async function readBinding(relativePath, expected = {}) {
   const absolutePath = projectPath(relativePath);
   const [metadata, canonical] = await Promise.all([
@@ -389,8 +409,54 @@ async function readBinding(relativePath, expected = {}) {
   return binding;
 }
 
+async function readSourceBinding(relativePath, expected, sourceRoot) {
+  if (sourceRoot === null) return readBinding(relativePath, expected);
+  const absolutePath = canonicalSourcePath(relativePath, sourceRoot);
+  const [metadata, canonical, bytes] = await Promise.all([
+    lstat(absolutePath),
+    realpath(absolutePath),
+    readFile(absolutePath),
+  ]);
+  invariant(metadata.isFile() && !metadata.isSymbolicLink() &&
+    metadata.nlink === 1 && canonical === absolutePath,
+  `${relativePath}: canonical source must be an ordinary non-linked file`);
+  const binding = {
+    path: relativePath,
+    bytes: bytes.length,
+    sha256: sha256(bytes),
+    contents: bytes,
+    absolutePath,
+  };
+  if (expected?.bytes !== undefined) {
+    invariant(binding.bytes === expected.bytes,
+      `${relativePath}: expected ${expected.bytes} bytes, observed ${binding.bytes}`);
+  }
+  if (expected?.sha256 !== undefined) {
+    invariant(binding.sha256 === expected.sha256,
+      `${relativePath}: SHA-256 drifted`);
+  }
+  return binding;
+}
+
+async function readV9Input(animationId, outputPath) {
+  const plan = await readBinding(V9_PLAN, {sha256: V9_PLAN_SHA256});
+  const document = JSON.parse(plan.contents);
+  const records = document?.payload?.runtimes?.filter(
+    (record) => record.animationId === animationId,
+  ) ?? [];
+  invariant(records.length === 1,
+    `${animationId}: expected exactly one frozen v9 runtime`);
+  const record = records[0];
+  invariant(record.pageRenderer === true &&
+    record.assetPath === outputPath.replace(/^public\/flash-assets\//, "") &&
+    Number.isSafeInteger(record.input?.bytes) &&
+    /^[a-f0-9]{64}$/.test(record.input?.sha256 ?? ""),
+  `${animationId}: frozen v9 runtime identity changed`);
+  return {plan: withoutContents(plan), record};
+}
+
 function withoutContents(binding) {
-  const {contents: _contents, ...rest} = binding;
+  const {contents: _contents, absolutePath: _absolutePath, ...rest} = binding;
   return rest;
 }
 
@@ -432,16 +498,26 @@ function renderableLocalFrames(spec) {
 }
 
 export function parseArguments(argv) {
-  const options = {check: false, ffdec: "ffdec", ids: []};
+  const options = {
+    check: false,
+    ffdec: "ffdec",
+    ids: [],
+    regenerationOnly: false,
+    sourceRoot: null,
+  };
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === "--check") options.check = true;
-    else if (argument === "--id" || argument === "--ffdec") {
+    else if (argument === "--regeneration-only") {
+      options.regenerationOnly = true;
+    } else if (argument === "--id" || argument === "--ffdec" ||
+      argument === "--source-root") {
       const value = argv[index + 1];
       invariant(value && !value.startsWith("-"),
         `${argument} requires one value`);
       if (argument === "--id") options.ids.push(value);
-      else options.ffdec = value;
+      else if (argument === "--ffdec") options.ffdec = value;
+      else options.sourceRoot = value;
       index += 1;
     } else if (argument === "--help" || argument === "-h") {
       options.help = true;
@@ -450,6 +526,15 @@ export function parseArguments(argv) {
     }
   }
   if (!options.help) {
+    invariant(!options.regenerationOnly || options.check,
+      "--regeneration-only requires --check");
+    if (options.regenerationOnly) {
+      invariant(options.sourceRoot && path.isAbsolute(options.sourceRoot),
+        "--regeneration-only requires an absolute --source-root");
+    } else {
+      invariant(options.sourceRoot === null,
+        "--source-root is only valid with --regeneration-only");
+    }
     const selected = options.ids.length > 0
       ? options.ids
       : [...G5_L4_SOURCE_STATIC_IDS];
@@ -755,7 +840,7 @@ async function inspectFfdec(command) {
   return {command, version: EXPECTED_FFDEC_VERSION};
 }
 
-async function exportCanvas({ffdec, spec, temporaryRoot}) {
+async function exportCanvas({ffdec, sourceSwf, spec, temporaryRoot}) {
   const canvasRoot = path.join(temporaryRoot, spec.animationId);
   const result = await execFile(ffdec.command, [
     "-config", "packJavaScripts=false",
@@ -764,7 +849,7 @@ async function exportCanvas({ffdec, spec, temporaryRoot}) {
     "-format", "sprite:canvas",
     "-export", "sprite",
     canvasRoot,
-    projectPath(spec.source.swf),
+    sourceSwf.absolutePath ?? projectPath(spec.source.swf),
   ], {
     cwd: ROOT,
     encoding: "utf8",
@@ -1149,7 +1234,18 @@ export async function buildG5L4SourceStaticCandidates({
   check = false,
   ffdec = "ffdec",
   ids = [...G5_L4_SOURCE_STATIC_IDS],
+  regenerationOnly = false,
+  sourceRoot = null,
 } = {}) {
+  invariant(!regenerationOnly || check,
+    "regenerationOnly requires read-only check mode");
+  if (regenerationOnly) {
+    invariant(sourceRoot && path.isAbsolute(sourceRoot),
+      "regenerationOnly requires an explicit absolute sourceRoot");
+  } else {
+    invariant(sourceRoot === null,
+      "sourceRoot is only valid with regenerationOnly");
+  }
   invariant(ids.length > 0, "at least one animation ID is required");
   for (const id of ids) {
     invariant(Object.hasOwn(SPEC_PATHS, id), `unsupported animation ID: ${id}`);
@@ -1162,8 +1258,10 @@ export async function buildG5L4SourceStaticCandidates({
       readBinding(SAFE_ADAPTER_PATH),
     ]);
   const ffdecTool = await inspectFfdec(ffdec);
-  const browser = await chromium.launch({headless: true});
-  const browserVersion = browser.version();
+  const browser = regenerationOnly
+    ? null
+    : await chromium.launch({headless: true});
+  const browserVersion = browser?.version() ?? null;
   const temporaryRoot = await mkdtemp(
     path.join(os.tmpdir(), "help-math-g5-l4-source-static-"),
   );
@@ -1185,20 +1283,20 @@ export async function buildG5L4SourceStaticCandidates({
         boundaryScriptInventory,
         swfmillStructure,
       ] = await Promise.all([
-        readBinding(spec.source.swf, {
+        readSourceBinding(spec.source.swf, {
           bytes: spec.source.swfBytes,
           sha256: spec.source.swfSha256,
-        }),
+        }, sourceRoot),
         flaStatus === "present"
-          ? readBinding(spec.source.fla, {
+          ? readSourceBinding(spec.source.fla, {
               bytes: spec.source.flaBytes,
               sha256: spec.source.flaSha256,
-            })
+            }, sourceRoot)
           : Promise.resolve(null),
-        readBinding(spec.source.associatedAudio, {
+        readSourceBinding(spec.source.associatedAudio, {
           bytes: spec.source.associatedAudioBytes,
           sha256: spec.source.associatedAudioSha256,
-        }),
+        }, sourceRoot),
         readBinding(spec.evidence.prebindingScenarioInventory, {
           sha256: spec.evidence.prebindingScenarioInventorySha256,
         }),
@@ -1255,6 +1353,7 @@ export async function buildG5L4SourceStaticCandidates({
       `${animationId}: immutable antecedent must retain unresolved timelines`);
       const freshExport = await exportCanvas({
         ffdec: ffdecTool,
+        sourceSwf,
         spec,
         temporaryRoot,
       });
@@ -1264,6 +1363,57 @@ export async function buildG5L4SourceStaticCandidates({
         spec: safeAdapterCompatibilitySpec(spec),
       });
       const runtimeBytes = Buffer.from(built.runtime);
+      if (regenerationOnly) {
+        const [v9, observedRuntime] = await Promise.all([
+          readV9Input(animationId, spec.output.script),
+          readBinding(spec.output.script),
+        ]);
+        invariant(
+          observedRuntime.bytes === v9.record.input.bytes &&
+            observedRuntime.sha256 === v9.record.input.sha256 &&
+            runtimeBytes.equals(Buffer.from(observedRuntime.contents)) &&
+            runtimeBytes.length === v9.record.input.bytes &&
+            sha256(runtimeBytes) === v9.record.input.sha256,
+          `${animationId}: regenerated runtime differs from the exact v9 input`,
+        );
+        results.push({
+          animationId,
+          check: true,
+          regenerationOnly: true,
+          browserLaunched: false,
+          sourceSwf: withoutContents(sourceSwf),
+          sourceFla: sourceFla ? withoutContents(sourceFla) : sourceFlaEvidence(spec),
+          associatedAudio: {
+            kind: associatedAudioKind(spec),
+            ...withoutContents(associatedAudio),
+          },
+          spec: withoutContents(specBinding),
+          generator: withoutContents(generatorBinding),
+          safeAdapter: withoutContents(safeAdapterBinding),
+          v9Plan: v9.plan,
+          freshFfdec: {
+            tool: ffdecTool,
+            targetSpriteObjectId: spec.ffdecExport.targetSpriteObjectId,
+            helper: {
+              bytes: freshExport.helper.length,
+              sha256: sha256(freshExport.helper),
+            },
+            framesHtml: {
+              bytes: freshExport.frames.length,
+              sha256: sha256(freshExport.frames),
+            },
+          },
+          runtime: {
+            path: spec.output.script,
+            bytes: runtimeBytes.length,
+            sha256: sha256(runtimeBytes),
+            matchesV1Materialization: true,
+            matchesV9Input: true,
+          },
+          strictAcceptanceEffect: "none",
+        });
+        continue;
+      }
       const browserQa = {
         ...(await runBrowserSweep(browser, built.runtime, spec)),
         browser: `Chromium ${browserVersion}`,
@@ -1331,7 +1481,7 @@ export async function buildG5L4SourceStaticCandidates({
       });
     }
   } finally {
-    await browser.close();
+    if (browser) await browser.close();
     await rm(temporaryRoot, {recursive: true, force: true});
   }
   const [completionAfter, releaseAfter, generatorAfter, safeAdapterAfter] =
@@ -1352,10 +1502,13 @@ export async function buildG5L4SourceStaticCandidates({
   }
   return {
     schemaVersion: 1,
-    operation: check ? "check" : "build",
+    operation: regenerationOnly
+      ? "source-first-regeneration-only-check"
+      : check ? "check" : "build",
     ffdec: ffdecTool.version,
     memberCount: results.length,
     results,
+    browserLaunched: !regenerationOnly,
     strictAcceptanceEffect: "none",
   };
 }
@@ -1365,6 +1518,8 @@ function help() {
     "Options:\n" +
     "  --id <animation-id>  Build one allowlisted candidate (repeatable)\n" +
     "  --check              Rebuild and verify checked-in outputs\n" +
+    "  --regeneration-only  Source-first runtime parity without browser QA\n" +
+    "  --source-root <path> Explicit absolute canonical source root\n" +
     "  --ffdec <command>    FFDec launcher (default: ffdec)\n" +
     "  -h, --help           Show this help\n";
 }

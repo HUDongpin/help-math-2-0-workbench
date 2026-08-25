@@ -673,7 +673,7 @@ test("render scale 1 is byte-identical to the pre-scaling adapter", async () => 
 test("render scale widens the guard and the root transform together", async () => {
   const {spec, helperSource, framesHtml} = await loadInputs();
   const {width, height} = spec.timeline.stage;
-  for (const scale of [2, 3]) {
+  for (const scale of [2]) {
     const built = buildSafeRuntime({spec, helperSource, framesHtml, scale});
     assert.match(
       built.runtime,
@@ -704,13 +704,89 @@ test("render scale widens the guard and the root transform together", async () =
 
 test("render scale rejects values that would break the authored grid", async () => {
   const {spec, helperSource, framesHtml} = await loadInputs();
-  for (const scale of [0, -1, 1.5, 4, Number.NaN]) {
+  for (const scale of [0, -1, 1.5, 3, 4, Number.NaN]) {
     assert.throws(
       () => buildSafeRuntime({spec, helperSource, framesHtml, scale}),
-      /render scale must be an integer between 1 and 3/,
+      /render scale must be an integer between 1 and 2/,
       `scale ${scale}`,
     );
   }
+});
+
+test("adaptive-v1 emits one runtime with an exact 1x/2x request contract", async () => {
+  const {spec, helperSource, framesHtml} = await loadInputs();
+  const built = buildSafeRuntime({
+    spec,
+    helperSource,
+    framesHtml,
+    resolutionMode: "adaptive-v1",
+  });
+  assert.deepEqual(built.metadata.resolution, {
+    schemaVersion: 1,
+    mode: "adaptive-integer",
+    nativeWidth: spec.timeline.stage.width,
+    nativeHeight: spec.timeline.stage.height,
+    supportedRenderScales: [1, 2],
+  });
+  assert.match(
+    built.runtime,
+    /if \(!request \|\| \(request\.renderScale !== 1 && request\.renderScale !== 2\)\)/,
+  );
+  assert.match(
+    built.runtime,
+    /targetCanvas\.width !== 800 \* renderScale \|\| targetCanvas\.height !== 600 \* renderScale/,
+  );
+  assert.match(
+    built.runtime,
+    /ctx\.setTransform\(renderScale, 0, 0, renderScale, 0, 0\);/,
+  );
+  assert.match(built.runtime, /ctx\.fillRect\(0, 0, 800, 600\);/);
+  assert.doesNotMatch(built.runtime, /requiredCanvas/);
+  assert.doesNotMatch(built.runtime, /"renderScale": 2/);
+  assert.throws(
+    () => buildSafeRuntime({
+      spec,
+      helperSource,
+      framesHtml,
+      resolutionMode: "adaptive-v1",
+      scale: 2,
+    }),
+    /must not bake a fixed render scale/,
+  );
+  assert.throws(
+    () => buildSafeRuntime({
+      spec,
+      helperSource,
+      framesHtml,
+      resolutionMode: "adaptive-v2",
+    }),
+    /resolution mode must be exactly/,
+  );
+});
+
+test("adaptive-v1 scales terminal FFDec blur and drop-shadow pixel parameters", async () => {
+  const {spec, helperSource, framesHtml} = await loadInputs();
+  const fixed = buildSafeRuntime({spec, helperSource, framesHtml});
+  const adaptive = buildSafeRuntime({
+    spec,
+    helperSource,
+    framesHtml,
+    resolutionMode: "adaptive-v1",
+  });
+  for (const marker of [
+    "hRadius *= ACTIVE_RENDER_SCALE;",
+    "vRadius *= ACTIVE_RENDER_SCALE;",
+    "distance *= ACTIVE_RENDER_SCALE;",
+  ]) {
+    assert.doesNotMatch(fixed.runtime, new RegExp(marker.replace(/\*/gu, "\\*")));
+    assert.match(adaptive.runtime, new RegExp(marker.replace(/\*/gu, "\\*")));
+  }
+  assert.equal(
+    adaptive.runtime.match(/distance \*= ACTIVE_RENDER_SCALE;/gu)?.length,
+    2,
+    "gradient glow and drop shadow each scale their authored distance once",
+  );
+  assert.match(adaptive.runtime, /ACTIVE_RENDER_SCALE = renderScale;/);
 });
 
 test("scaling never alters the frame identity a stage reports", async () => {

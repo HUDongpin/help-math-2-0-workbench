@@ -4,7 +4,9 @@ import test from "node:test";
 
 import {
   ALL_FALSE_ACCEPTANCE_EFFECTS,
+  buildCanvasSmokeEvidence,
   CORPUS_PATH,
+  parseArguments,
   PROJECT_ROOT,
   selectFactoryMembers,
 } from "./build-g3-l2-ffdec-canvas-pcode-factory.mjs";
@@ -74,4 +76,67 @@ test("factory acceptance effects retain AVM1, audio, fidelity, review, and relea
     released: false,
     published: false,
   });
+});
+
+test("Gate 0A regeneration-only mode accepts an explicit source root and never invokes browser capture", async () => {
+  const options = parseArguments([
+    "--mode",
+    "extend",
+    "--output",
+    "work/g3-l2-ffdec-canvas-pcode-factory/gate0a-fresh-v1",
+    "--source-root",
+    "/canonical/read-only/source-root",
+    "--regeneration-only",
+  ]);
+
+  assert.deepEqual(options, {
+    mode: "extend",
+    output: "work/g3-l2-ffdec-canvas-pcode-factory/gate0a-fresh-v1",
+    sourceRoot: "/canonical/read-only/source-root",
+    regenerationOnly: true,
+  });
+
+  let captureCalls = 0;
+  const evidence = await buildCanvasSmokeEvidence({
+    regenerationOnly: true,
+    canvasHtml: "/not-read/frames.html",
+    capturesRoot: "/not-created/canvas-smoke",
+    rootFrameCount: 3,
+    capture: async () => {
+      captureCalls += 1;
+      throw new Error("browser capture must not run");
+    },
+  });
+
+  assert.equal(captureCalls, 0);
+  assert.deepEqual(evidence, {
+    headlessCallable: false,
+    browserLaunched: false,
+    captureScope: "deferred-to-post-gate0a-browser-fidelity-gate",
+    regenerationOnly: true,
+    captures: [],
+  });
+});
+
+test("standard factory mode retains the browser smoke callback", async () => {
+  let captureCalls = 0;
+  const expected = Object.freeze({headlessCallable: true, captures: [{frame: 1}]});
+  const observed = await buildCanvasSmokeEvidence({
+    regenerationOnly: false,
+    canvasHtml: "/fixture/frames.html",
+    capturesRoot: "/fixture/canvas-smoke",
+    rootFrameCount: 3,
+    capture: async (request) => {
+      captureCalls += 1;
+      assert.deepEqual(request, {
+        canvasHtml: "/fixture/frames.html",
+        capturesRoot: "/fixture/canvas-smoke",
+        rootFrameCount: 3,
+      });
+      return expected;
+    },
+  });
+
+  assert.equal(captureCalls, 1);
+  assert.equal(observed, expected);
 });

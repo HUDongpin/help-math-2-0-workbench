@@ -1,11 +1,19 @@
 "use client";
 
-import React, {useEffect, useMemo, useRef, useState} from "react";
+import React, {useCallback, useMemo, useRef} from "react";
 
 import type {
   AnimationModule,
   AnimationRendererProps,
 } from "../contract";
+import {getAdaptiveCanvasProductionBinding} from "../adaptive-canvas-production-bindings.generated";
+import {
+  resolveAdaptiveCanvasPageAsset,
+  stampAdaptiveCanvasCaptureIdentity,
+  type AdaptiveCanvasAssetDescriptor,
+  type AdaptiveCanvasRendererBindingProps,
+} from "../adaptive-canvas-presenter";
+import {useAdaptiveCanvasPresenter} from "../use-adaptive-canvas-presenter";
 import {
   COURSE_G05_L04_FQ_001_ANIMATION_ID,
   COURSE_G05_L04_FQ_001_ASSET,
@@ -23,21 +31,6 @@ import {
   type CourseG05L04Fq001FrameState,
 } from "../timelines/course-g05-l04-fq-001";
 
-interface Fq001CanvasAsset {
-  readonly metadata: unknown;
-  readonly ready: () => Promise<void>;
-  readonly render: (
-    canvas: HTMLCanvasElement,
-    request: {
-      readonly frame: number;
-      readonly frameDomain: string;
-      readonly scenario: string;
-      readonly lang: string;
-      readonly seed: number;
-    },
-  ) => unknown;
-}
-
 interface Fq001RuntimeState {
   readonly frameDomain: string;
   readonly localFrame: number;
@@ -49,88 +42,18 @@ interface Fq001RuntimeState {
   readonly audioRendered: false;
 }
 
-type CanvasStatus = "idle" | "loading" | "ready" | "error";
-
-const assetPromises = new Map<string, Promise<Fq001CanvasAsset>>();
-
 function invariant(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(message);
 }
 
-function sha256Integrity(hex: string) {
-  let binary = "";
-  for (let index = 0; index < hex.length; index += 2) {
-    binary += String.fromCharCode(
-      Number.parseInt(hex.slice(index, index + 2), 16),
-    );
-  }
-  return `sha256-${btoa(binary)}`;
-}
-
-function canvasRegistry() {
-  return (
-    globalThis as typeof globalThis & {
-      HELP_MATH_CANVAS_ASSETS?: Record<string, Fq001CanvasAsset>;
-    }
-  ).HELP_MATH_CANVAS_ASSETS;
-}
-
-function loadFq001Asset() {
-  const asset = COURSE_G05_L04_FQ_001_ASSET;
-  const key = `${COURSE_G05_L04_FQ_001_ANIMATION_ID}:${asset.sha256}`;
-  const existingPromise = assetPromises.get(key);
-  if (existingPromise) return existingPromise;
-
-  const selector =
-    `script[data-help-math-canvas-asset="${COURSE_G05_L04_FQ_001_ANIMATION_ID}"]` +
-    `[data-help-math-canvas-sha256="${asset.sha256}"]`;
-  const existing = document.querySelector<HTMLScriptElement>(selector);
-  const source = `${asset.source}?sha256=${asset.sha256}`;
-  const expectedAbsoluteSource = new URL(source, document.baseURI).href;
-  const integrity = sha256Integrity(asset.sha256);
-  if (
-    existing &&
-    (existing.src !== expectedAbsoluteSource ||
-      existing.integrity !== integrity ||
-      existing.crossOrigin !== "anonymous")
-  ) {
-    return Promise.reject(
-      new Error("FQ001 Canvas asset has a mismatched integrity binding"),
-    );
-  }
-  const registered = canvasRegistry()?.[COURSE_G05_L04_FQ_001_ANIMATION_ID];
-  if (registered && existing) return Promise.resolve(registered);
-
-  const promise = new Promise<Fq001CanvasAsset>((resolve, reject) => {
-    const script = existing ?? document.createElement("script");
-    const finish = () => {
-      const loaded =
-        canvasRegistry()?.[COURSE_G05_L04_FQ_001_ANIMATION_ID];
-      if (loaded) resolve(loaded);
-      else reject(new Error("FQ001 Canvas asset did not register"));
-    };
-    script.onload = finish;
-    script.onerror = () =>
-      reject(new Error("FQ001 local Canvas asset could not load"));
-    if (!existing) {
-      script.async = true;
-      script.dataset.helpMathCanvasAsset =
-        COURSE_G05_L04_FQ_001_ANIMATION_ID;
-      script.dataset.helpMathCanvasSha256 = asset.sha256;
-      script.integrity = integrity;
-      script.crossOrigin = "anonymous";
-      script.src = source;
-      document.head.appendChild(script);
-    } else if (registered) {
-      finish();
-    }
-  }).catch((error) => {
-    assetPromises.delete(key);
-    throw error;
-  });
-  assetPromises.set(key, promise);
-  return promise;
-}
+const LEGACY_CANVAS_ASSET: AdaptiveCanvasAssetDescriptor = Object.freeze({
+  animationId: COURSE_G05_L04_FQ_001_ANIMATION_ID,
+  assetPath: COURSE_G05_L04_FQ_001_ASSET.source,
+  assetSha256: COURSE_G05_L04_FQ_001_ASSET.sha256,
+});
+const PRODUCTION_CANVAS_BINDING = getAdaptiveCanvasProductionBinding(
+  COURSE_G05_L04_FQ_001_ANIMATION_ID,
+);
 
 function isRuntimeState(value: unknown): value is Fq001RuntimeState {
   return Boolean(
@@ -220,6 +143,7 @@ function blockerCopy(blocker: CourseG05L04Fq001Blocker | null) {
 }
 
 export function CourseG05L04Fq001Renderer({
+  adaptiveCanvasBinding,
   entryStateSha256,
   frame,
   frameDomain,
@@ -228,7 +152,7 @@ export function CourseG05L04Fq001Renderer({
   scenario,
   seed,
   traceId,
-}: AnimationRendererProps) {
+}: AnimationRendererProps & AdaptiveCanvasRendererBindingProps) {
   const deterministicState = useMemo(
     () =>
       getCourseG05L04Fq001FrameState(frame, {
@@ -252,47 +176,72 @@ export function CourseG05L04Fq001Renderer({
     ],
   );
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [canvasStatus, setCanvasStatus] = useState<CanvasStatus>("idle");
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas || deterministicState.status !== "ready") {
-      setCanvasStatus("idle");
-      return;
-    }
-    let cancelled = false;
-    setCanvasStatus("loading");
-    loadFq001Asset()
-      .then(async (asset) => {
-        await asset.ready();
-        if (cancelled) return;
-        const rendered = asset.render(canvas, {
-          frame: deterministicState.frame,
-          frameDomain: COURSE_G05_L04_FQ_001_MAIN_FRAME_DOMAIN,
-          scenario: COURSE_G05_L04_FQ_001_SCENARIO,
-          lang: "en",
-          seed: deterministicState.seed,
-        });
-        verifyRuntimeState(canvas, rendered, deterministicState);
-        const traceAttributes = {
-          "data-flash-entry-state-sha256":
-            deterministicState.entryStateSha256,
-          "data-flash-requirement-id": deterministicState.requirementId,
-          "data-flash-trace-id": deterministicState.traceId,
-        };
-        for (const [name, value] of Object.entries(traceAttributes)) {
-          if (value) canvas.setAttribute(name, value);
-          else canvas.removeAttribute(name);
-        }
-        if (!cancelled) setCanvasStatus("ready");
-      })
-      .catch(() => {
-        if (!cancelled) setCanvasStatus("error");
-      });
-    return () => {
-      cancelled = true;
-    };
+  const canvasHostRef = useRef<HTMLElement>(null);
+  const canvasStageRef = useRef<HTMLDivElement>(null);
+  const canvasAsset = resolveAdaptiveCanvasPageAsset({
+    animationId: COURSE_G05_L04_FQ_001_ANIMATION_ID,
+    explicitBinding: adaptiveCanvasBinding,
+    legacyAsset: LEGACY_CANVAS_ASSET,
+    productionBinding: PRODUCTION_CANVAS_BINDING,
+  });
+  const renderRequest = useMemo(() => Object.freeze({
+    frame: deterministicState.frame,
+    frameDomain: COURSE_G05_L04_FQ_001_MAIN_FRAME_DOMAIN,
+    scenario: COURSE_G05_L04_FQ_001_SCENARIO,
+    lang: "en" as const,
+    seed: deterministicState.seed,
+  }), [deterministicState.frame, deterministicState.seed]);
+  const visualKey = JSON.stringify([
+    COURSE_G05_L04_FQ_001_ANIMATION_ID,
+    deterministicState.frame,
+    COURSE_G05_L04_FQ_001_MAIN_FRAME_DOMAIN,
+    deterministicState.rootFrame,
+    COURSE_G05_L04_FQ_001_SCENARIO,
+    "en",
+    deterministicState.seed,
+  ]);
+  const requestKey = JSON.stringify([
+    visualKey,
+    deterministicState.entryStateSha256,
+    deterministicState.requirementId,
+    deterministicState.traceId,
+  ]);
+  const captureIdentityComplete = hasCompleteCaptureIdentity(
+    deterministicState,
+  );
+  const verifyPresentedIdentity = useCallback((
+    canvas: HTMLCanvasElement,
+    rendered: unknown,
+  ) => {
+    verifyRuntimeState(canvas, rendered, deterministicState);
+    stampAdaptiveCanvasCaptureIdentity(canvas, {
+      entryStateSha256: deterministicState.entryStateSha256,
+      frame: deterministicState.frame,
+      frameDomain: COURSE_G05_L04_FQ_001_MAIN_FRAME_DOMAIN,
+      lang: "en",
+      requirementId: deterministicState.requirementId,
+      rootFrame: deterministicState.rootFrame,
+      scenario: COURSE_G05_L04_FQ_001_SCENARIO,
+      seed: deterministicState.seed,
+      traceId: deterministicState.traceId,
+    });
   }, [deterministicState]);
+  const canvasPresentation = useAdaptiveCanvasPresenter({
+    active: deterministicState.status === "ready",
+    asset: canvasAsset,
+    captureReady: captureIdentityComplete,
+    hostRef: canvasHostRef,
+    nativeHeight: COURSE_G05_L04_FQ_001_STAGE.height,
+    nativeWidth: COURSE_G05_L04_FQ_001_STAGE.width,
+    renderRequest,
+    requestKey,
+    sourceBitmapBound: canvasAsset.sourceBitmapResolutionBound,
+    stageRef: canvasStageRef,
+    verifyRendered: verifyPresentedIdentity,
+    visibleCanvasRef: canvasRef,
+    visualKey,
+  });
+  const canvasStatus = canvasPresentation.status;
 
   const blocked =
     deterministicState.status === "blocked"
@@ -301,7 +250,7 @@ export function CourseG05L04Fq001Renderer({
   const captureReady =
     deterministicState.status === "ready" &&
     canvasStatus === "ready" &&
-    hasCompleteCaptureIdentity(deterministicState);
+    captureIdentityComplete;
 
   return (
     <section
@@ -313,6 +262,7 @@ export function CourseG05L04Fq001Renderer({
       data-human-visual-review-accepted="false"
       data-interactive-controls-enabled="false"
       data-owner-accepted="false"
+      ref={canvasHostRef}
       data-strict-migration-complete="false"
       style={{
         margin: "0 auto",
@@ -321,6 +271,7 @@ export function CourseG05L04Fq001Renderer({
       }}
     >
       <div
+        ref={canvasStageRef}
         style={{
           aspectRatio:
             `${COURSE_G05_L04_FQ_001_STAGE.width} / ` +
@@ -370,6 +321,12 @@ export function CourseG05L04Fq001Renderer({
               }
               data-capture-stage={captureReady ? "true" : undefined}
               data-course-canvas={COURSE_G05_L04_FQ_001_ANIMATION_ID}
+              data-canvas-backing-height={
+                canvasPresentation.resolution.backingStage.height
+              }
+              data-canvas-backing-width={
+                canvasPresentation.resolution.backingStage.width
+              }
               data-fixed-companion-domain={
                 COURSE_G05_L04_FQ_001_FIXED_COMPANION_DOMAIN
               }
@@ -380,6 +337,11 @@ export function CourseG05L04Fq001Renderer({
               data-render-visual={
                 canvasStatus === "ready" ? "true" : undefined
               }
+              data-render-scale={canvasPresentation.resolution.renderScale}
+              data-resolution-ceiling-reached={
+                String(canvasPresentation.resolution.demandCapped)
+              }
+              data-resolution-status={canvasPresentation.resolution.status}
               height={COURSE_G05_L04_FQ_001_STAGE.height}
               ref={canvasRef}
               role="img"
@@ -387,7 +349,9 @@ export function CourseG05L04Fq001Renderer({
                 aspectRatio:
                   `${COURSE_G05_L04_FQ_001_STAGE.width} / ` +
                   COURSE_G05_L04_FQ_001_STAGE.height,
-                display: canvasStatus === "ready" ? "block" : "none",
+                display: canvasPresentation.hasPresentedFrame
+                  ? "block"
+                  : "none",
                 height: "auto",
                 pointerEvents: "none",
                 width: "100%",

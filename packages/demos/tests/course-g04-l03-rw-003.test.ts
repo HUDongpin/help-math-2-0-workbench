@@ -393,6 +393,10 @@ test("RW003 live rendering exposes source-bound terms while deterministic captur
   const positive = renderToStaticMarkup(
     createElement(courseRw003.Renderer, {...common, frame: 120}),
   );
+  assert.match(positive, /data-render-scale="1"/);
+  assert.match(positive, /data-canvas-backing-width="800"/);
+  assert.match(positive, /data-canvas-backing-height="600"/);
+  assert.match(positive, /data-resolution-status="native"/);
   assert.match(positive, /data-current-js-functional-candidate="true"/);
   assert.match(
     positive,

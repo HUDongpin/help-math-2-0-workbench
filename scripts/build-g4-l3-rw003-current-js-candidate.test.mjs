@@ -28,6 +28,8 @@ test("RW003 candidate CLI is explicit and rejects unknown arguments", () => {
     check: true,
     ffdec: "ffdec",
     python: "python3",
+    regenerationOnly: false,
+    sourceRoot: null,
     swfmill: "swfmill",
     root: ROOT,
   });
@@ -37,6 +39,21 @@ test("RW003 candidate CLI is explicit and rejects unknown arguments", () => {
   );
   assert.throws(() => parseArguments(["--python"], {root: ROOT}), /requires a value/);
   assert.throws(() => parseArguments(["--unknown"], {root: ROOT}), /Unknown argument/);
+  assert.deepEqual(parseArguments([
+    "--check", "--regeneration-only", "--source-root", "/canonical/source",
+  ], {root: ROOT}), {
+    check: true,
+    ffdec: "ffdec",
+    python: "python3",
+    regenerationOnly: true,
+    sourceRoot: "/canonical/source",
+    swfmill: "swfmill",
+    root: ROOT,
+  });
+  assert.throws(() => parseArguments(["--regeneration-only"], {root: ROOT}),
+    /requires --check/);
+  assert.throws(() => parseArguments(["--check", "--source-root", "relative"], {root: ROOT}),
+    /only valid with/);
 });
 
 test("RW003 checked-in outputs reproduce from fresh hash-bound source extraction", async () => {

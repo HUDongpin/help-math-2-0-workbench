@@ -18,6 +18,13 @@ import type {
   RuntimeContext,
   RuntimeScenario,
 } from "./contract";
+import {getAdaptiveCanvasProductionBinding} from "./adaptive-canvas-production-bindings.generated";
+import {
+  resolveAdaptiveCanvasPageAsset,
+  type AdaptiveCanvasAssetDescriptor,
+  type AdaptiveCanvasRendererBindingProps,
+} from "./adaptive-canvas-presenter";
+import {useAdaptiveCanvasPresenter} from "./use-adaptive-canvas-presenter";
 import {
   G5_L4_FQ_INTERACTIVE_AUDIO_ASSETS,
   getG5L4FqInteractiveAudioAsset,
@@ -131,19 +138,6 @@ export interface G5L4Fq23QuestionAtlasFrameState {
   readonly sourceSwfSha256: string;
 }
 
-interface CanvasAsset {
-  readonly ready: () => Promise<void>;
-  readonly render: (
-    canvas: HTMLCanvasElement,
-    request: {
-      readonly frame: number;
-      readonly scenario: string;
-      readonly lang: string;
-      readonly seed: number;
-    },
-  ) => unknown;
-}
-
 interface CanvasRuntimeState {
   readonly frameDomain: string;
   readonly localFrame: number;
@@ -154,9 +148,6 @@ interface CanvasRuntimeState {
   readonly seed: number;
   readonly audioRendered: false;
 }
-
-type CanvasStatus = "idle" | "loading" | "ready" | "error";
-const assetPromises = new Map<string, Promise<CanvasAsset>>();
 
 function invariant(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(message);
@@ -222,72 +213,6 @@ function hasCompleteCaptureIdentity(state: G5L4Fq23QuestionAtlasFrameState) {
       /^[A-Za-z0-9][A-Za-z0-9._:-]*$/.test(state.traceId) &&
       /^[a-f0-9]{64}$/.test(state.entryStateSha256),
   );
-}
-
-function sha256Integrity(hex: string) {
-  let binary = "";
-  for (let index = 0; index < hex.length; index += 2) {
-    binary += String.fromCharCode(Number.parseInt(hex.slice(index, index + 2), 16));
-  }
-  return `sha256-${btoa(binary)}`;
-}
-
-function canvasRegistry() {
-  return (
-    globalThis as typeof globalThis & {
-      HELP_MATH_CANVAS_ASSETS?: Record<string, CanvasAsset>;
-    }
-  ).HELP_MATH_CANVAS_ASSETS;
-}
-
-function loadCanvasAsset(config: G5L4Fq23QuestionAtlasConfig) {
-  const key = `${config.animationId}:${config.asset.sha256}`;
-  const cached = assetPromises.get(key);
-  if (cached) return cached;
-  const selector =
-    `script[data-help-math-canvas-asset="${config.animationId}"]` +
-    `[data-help-math-canvas-sha256="${config.asset.sha256}"]`;
-  const existing = document.querySelector<HTMLScriptElement>(selector);
-  const source = `${config.asset.source}?sha256=${config.asset.sha256}`;
-  const expectedSource = new URL(source, document.baseURI).href;
-  const integrity = sha256Integrity(config.asset.sha256);
-  if (
-    existing &&
-    (existing.src !== expectedSource ||
-      existing.integrity !== integrity ||
-      existing.crossOrigin !== "anonymous")
-  ) {
-    return Promise.reject(new Error("Question-atlas asset integrity binding changed"));
-  }
-  const registered = canvasRegistry()?.[config.animationId];
-  if (registered && existing) return Promise.resolve(registered);
-  const promise = new Promise<CanvasAsset>((resolve, reject) => {
-    const script = existing ?? document.createElement("script");
-    const finish = () => {
-      const loaded = canvasRegistry()?.[config.animationId];
-      if (loaded) resolve(loaded);
-      else reject(new Error("Question-atlas Canvas asset did not register"));
-    };
-    script.onload = finish;
-    script.onerror = () =>
-      reject(new Error("Question-atlas local Canvas asset could not load"));
-    if (!existing) {
-      script.async = true;
-      script.dataset.helpMathCanvasAsset = config.animationId;
-      script.dataset.helpMathCanvasSha256 = config.asset.sha256;
-      script.integrity = integrity;
-      script.crossOrigin = "anonymous";
-      script.src = source;
-      document.head.appendChild(script);
-    } else if (registered) {
-      finish();
-    }
-  }).catch((error) => {
-    assetPromises.delete(key);
-    throw error;
-  });
-  assetPromises.set(key, promise);
-  return promise;
 }
 
 function isCanvasRuntimeState(value: unknown): value is CanvasRuntimeState {
@@ -380,6 +305,13 @@ export function createG5L4Fq23QuestionAtlasCandidate(
   suppliedConfig: G5L4Fq23QuestionAtlasConfig,
 ) {
   const config = validateConfig(suppliedConfig);
+  const legacyCanvasAsset: AdaptiveCanvasAssetDescriptor = Object.freeze({
+    animationId: config.animationId,
+    assetPath: config.asset.source,
+    assetSha256: config.asset.sha256,
+  });
+  const productionCanvasBinding =
+    getAdaptiveCanvasProductionBinding(config.animationId);
   const stage = Object.freeze({width: 800, height: 600});
   const movie: MovieMetadata = Object.freeze({
     stage,
@@ -492,7 +424,9 @@ export function createG5L4Fq23QuestionAtlasCandidate(
     action: G5L4Fq23QuestionSequenceAction,
   ) => reduceG5L4Fq23QuestionSequence(config, state, action);
 
-  function Renderer(props: AnimationRendererProps) {
+  function Renderer(
+    props: AnimationRendererProps & AdaptiveCanvasRendererBindingProps,
+  ) {
     const atlasState = useMemo(
       () => getFrameState(props.frame, props),
       [
@@ -594,36 +528,64 @@ export function createG5L4Fq23QuestionAtlasCandidate(
     }, [activeQuestionNumber, atlasState, captureInspection, props]);
     const reviewResponse = getG5L4Fq23ActiveReviewResponse(questionSequence);
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [canvasStatus, setCanvasStatus] = useState<CanvasStatus>("idle");
-    useEffect(() => {
-      const canvas = canvasRef.current;
-      if (
-        !canvas || visualState === null || visualState.status !== "ready" ||
-        visualState.sourceFrame === null
-      ) {
-        setCanvasStatus("idle");
-        return;
+    const canvasHostRef = useRef<HTMLElement>(null);
+    const canvasStageRef = useRef<HTMLDivElement>(null);
+    const canvasAsset = resolveAdaptiveCanvasPageAsset({
+      animationId: config.animationId,
+      explicitBinding: props.adaptiveCanvasBinding,
+      legacyAsset: legacyCanvasAsset,
+      productionBinding: productionCanvasBinding,
+    });
+    const renderableVisualState =
+      visualState?.status === "ready" && visualState.sourceFrame !== null
+        ? visualState
+        : null;
+    const renderRequest = useMemo(() => Object.freeze({
+      frame: renderableVisualState?.sourceFrame ?? 1,
+      scenario: G5_L4_FQ23_SCENARIO,
+      lang: "en" as const,
+      seed: renderableVisualState?.seed ?? 0,
+    }), [renderableVisualState?.seed, renderableVisualState?.sourceFrame]);
+    const visualKey = JSON.stringify([
+      config.animationId,
+      renderableVisualState?.frame ?? null,
+      renderableVisualState?.sourceFrame ?? null,
+      renderableVisualState?.seed ?? null,
+      questionSequence.mode,
+    ]);
+    const requestKey = JSON.stringify([
+      visualKey,
+      renderableVisualState?.entryStateSha256 ?? "",
+      renderableVisualState?.requirementId ?? "",
+      renderableVisualState?.traceId ?? "",
+    ]);
+    const verifyPresentedIdentity = useCallback((
+      canvas: HTMLCanvasElement,
+      rendered: unknown,
+    ) => {
+      if (!renderableVisualState) {
+        throw new Error("Question-atlas visual state became unavailable");
       }
-      let cancelled = false;
-      setCanvasStatus("loading");
-      loadCanvasAsset(config).then(async (asset) => {
-        await asset.ready();
-        if (cancelled) return;
-        const rendered = asset.render(canvas, {
-          frame: visualState.sourceFrame!,
-          scenario: G5_L4_FQ23_SCENARIO,
-          lang: "en",
-          seed: visualState.seed,
-        });
-        verifyInternalAssetState(canvas, rendered, visualState);
-        stampAtlasIdentity(canvas, visualState);
-        if (!cancelled) setCanvasStatus("ready");
-      }).catch(() => {
-        if (!cancelled) setCanvasStatus("error");
-      });
-      return () => { cancelled = true; };
-    }, [visualState]);
-    const captureReady = visualState?.status === "ready" &&
+      verifyInternalAssetState(canvas, rendered, renderableVisualState);
+      stampAtlasIdentity(canvas, renderableVisualState);
+    }, [renderableVisualState]);
+    const canvasPresentation = useAdaptiveCanvasPresenter({
+      active: renderableVisualState !== null,
+      asset: canvasAsset,
+      captureReady: captureInspection,
+      hostRef: canvasHostRef,
+      nativeHeight: 600,
+      nativeWidth: 800,
+      renderRequest,
+      requestKey,
+      sourceBitmapBound: canvasAsset.sourceBitmapResolutionBound,
+      stageRef: canvasStageRef,
+      verifyRendered: verifyPresentedIdentity,
+      visibleCanvasRef: canvasRef,
+      visualKey,
+    });
+    const canvasStatus = canvasPresentation.status;
+    const captureReady = renderableVisualState !== null &&
       canvasStatus === "ready" && captureInspection;
     const replay = useCallback(() => {
       dispatch({type: "replay", seed: props.seed});
@@ -731,15 +693,19 @@ export function createG5L4Fq23QuestionAtlasCandidate(
         data-source-review-visual-parity-established="false"
         data-source-replay-established="false"
         data-strict-migration-complete="false"
+        ref={canvasHostRef}
         style={{margin: "0 auto", maxWidth: 800, width: "100%"}}
       >
-        <div style={{
-          aspectRatio: "800 / 600",
-          background: "#b8d8f7",
-          overflow: "hidden",
-          position: "relative",
-          width: "100%",
-        }}>
+        <div
+          ref={canvasStageRef}
+          style={{
+            aspectRatio: "800 / 600",
+            background: "#b8d8f7",
+            overflow: "hidden",
+            position: "relative",
+            width: "100%",
+          }}
+        >
           {blocked ? (
             <div
               aria-live="polite"
@@ -804,14 +770,27 @@ export function createG5L4Fq23QuestionAtlasCandidate(
                 }
                 data-capture-stage={captureReady ? "true" : undefined}
                 data-course-canvas={config.animationId}
+                data-canvas-backing-height={
+                  canvasPresentation.resolution.backingStage.height
+                }
+                data-canvas-backing-width={
+                  canvasPresentation.resolution.backingStage.width
+                }
                 data-render-state={canvasStatus}
                 data-render-visual={canvasStatus === "ready" ? "true" : undefined}
+                data-render-scale={canvasPresentation.resolution.renderScale}
+                data-resolution-ceiling-reached={
+                  String(canvasPresentation.resolution.demandCapped)
+                }
+                data-resolution-status={canvasPresentation.resolution.status}
                 height={600}
                 ref={canvasRef}
                 role="img"
                 style={{
                   aspectRatio: "800 / 600",
-                  display: canvasStatus === "ready" ? "block" : "none",
+                  display: canvasPresentation.hasPresentedFrame
+                    ? "block"
+                    : "none",
                   height: "auto", pointerEvents: "none", width: "100%",
                 }}
                 width={800}

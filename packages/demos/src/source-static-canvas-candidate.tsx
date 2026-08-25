@@ -26,6 +26,32 @@ import {
   getG5L4PageAudioCandidate,
   type G5L4PageAudioCandidate,
 } from "./g5-l4-audio.generated";
+import {
+  getAdaptiveCanvasProductionBinding,
+  type AdaptiveCanvasProductionBinding,
+} from "./adaptive-canvas-production-bindings.generated";
+import {
+  type AdaptiveCanvasResolutionSelection,
+  type AdaptiveCanvasResolutionV1,
+  type CanvasRenderRequest,
+  type CanvasRenderScale,
+} from "./adaptive-canvas-resolution";
+import {
+  applyAdaptiveCanvasPresentationStatus as applyCanvasCapturePresentationStatus,
+  isCanvasPresentationAllocationError,
+  loadExactCanvasRegistryScript,
+  prepareAdaptiveCanvasStaging as prepareStagingCanvas,
+  presentVerifiedAdaptiveCanvas as presentVerifiedStagingCanvas,
+  verifyAdaptiveCanvasAssetResolution as verifyCanvasAssetResolutionContract,
+  type AdaptiveCanvasPresentationStatus,
+} from "./adaptive-canvas-presenter";
+import {createK1CanvasAllocationFallback} from "./use-adaptive-canvas-presenter";
+import {useAdaptiveCanvasResolution} from "./use-adaptive-canvas-resolution";
+
+export {
+  applyAdaptiveCanvasPresentationStatus as applyCanvasCapturePresentationStatus,
+  presentVerifiedAdaptiveCanvas as presentVerifiedStagingCanvas,
+} from "./adaptive-canvas-presenter";
 
 export interface SourceStaticVisualMarker {
   readonly id: string;
@@ -71,6 +97,9 @@ export interface SourceStaticCanvasCandidateConfig {
   readonly nativeStage?: Readonly<SourceStaticStage>;
   /** Integer Canvas backing dimensions. Required with `nativeStage`. */
   readonly backingStage?: Readonly<SourceStaticBackingStage>;
+  /** Explicit adaptive-v1 support. Its absence keeps the asset fixed at 1x. */
+  readonly resolution?: Readonly<AdaptiveCanvasResolutionV1>;
+  readonly sourceBitmapResolutionBound?: boolean;
   readonly fps: number;
   readonly rootFrameCount: number;
   readonly rootBeginFrame: number;
@@ -97,6 +126,33 @@ interface ResolvedSourceStaticCanvasCandidateConfig
   readonly companionDomains: readonly SourceStaticCompanionDomain[];
   readonly blockedFrameRanges: readonly SourceStaticBlockedFrameRange[];
   readonly visualMarkers: readonly SourceStaticVisualMarker[];
+}
+
+export type AdaptiveCanvasProductionBindingLookup = (
+  animationId: string,
+) => AdaptiveCanvasProductionBinding | null;
+
+export function resolveSourceStaticCanvasProductionConfig(
+  suppliedConfig: SourceStaticCanvasCandidateConfig,
+  lookup: AdaptiveCanvasProductionBindingLookup =
+    getAdaptiveCanvasProductionBinding,
+): SourceStaticCanvasCandidateConfig {
+  const binding = lookup(suppliedConfig.animationId);
+  if (binding === null) return suppliedConfig;
+  invariant(
+    binding.animationId === suppliedConfig.animationId && binding.pageRenderer,
+    "adaptive production binding is not a page renderer",
+  );
+  invariant(
+    binding.assetPath === suppliedConfig.assetSource,
+    "adaptive production binding asset path does not match the candidate",
+  );
+  return Object.freeze({
+    ...suppliedConfig,
+    assetSha256: binding.assetSha256,
+    resolution: binding.resolution,
+    sourceBitmapResolutionBound: binding.sourceBitmapResolutionBound,
+  });
 }
 
 export type SourceStaticCanvasBlocker =
@@ -263,10 +319,14 @@ export function createLatestCanvasRenderCoordinator<
 }
 
 interface PendingCanvasRenderRequest {
-  readonly canvas: HTMLCanvasElement;
+  readonly visibleCanvas: HTMLCanvasElement;
+  readonly stagingCanvas: HTMLCanvasElement;
   readonly captureReady: boolean;
+  readonly fallbackReason: string | null;
   readonly renderKey: string;
+  readonly selectionKey: string;
   readonly visualKey: string;
+  readonly resolution: AdaptiveCanvasResolutionSelection;
   readonly identity: Readonly<
     Pick<
       SourceStaticCanvasFrameState,
@@ -289,46 +349,41 @@ declare global {
   }
 }
 
-export type SourceStaticCanvasStatus =
-  | "idle"
-  | "loading"
-  | "updating"
-  | "ready"
-  | "error";
+export type SourceStaticCanvasStatus = AdaptiveCanvasPresentationStatus;
 
-export interface CanvasCapturePresentationTarget {
-  readonly removeAttribute: (name: string) => void;
-  readonly setAttribute: (name: string, value: string) => void;
+interface SourceStaticCanvasForcedK1Fallback {
+  readonly reason: string;
+  readonly selectionKey: string;
 }
 
-/**
- * Keeps the imperative Canvas bitmap and its evidence-facing DOM contract in
- * one state transition. React does not re-render after every movie-frame
- * paint, so successful later paints must restore these attributes directly;
- * pending paints must also clear stale readiness before the browser can paint.
- */
-export function applyCanvasCapturePresentationStatus(
-  target: CanvasCapturePresentationTarget,
-  {
-    captureReady,
-    status,
-  }: Readonly<{
-    captureReady: boolean;
-    status: SourceStaticCanvasStatus;
-  }>,
-) {
-  const visualReady = status === "ready";
-  target.setAttribute("data-render-state", status);
-  if (visualReady) {
-    target.setAttribute("data-render-visual", "true");
-  } else {
-    target.removeAttribute("data-render-visual");
-  }
-  if (visualReady && captureReady) {
-    target.setAttribute("data-capture-stage", "true");
-  } else {
-    target.removeAttribute("data-capture-stage");
-  }
+export function sourceStaticCanvasResolutionSelectionKey(
+  resolution: AdaptiveCanvasResolutionSelection,
+): string {
+  return JSON.stringify([
+    resolution.nativeWidth,
+    resolution.nativeHeight,
+    resolution.cssStage?.width ?? null,
+    resolution.cssStage?.height ?? null,
+    resolution.devicePixelRatio,
+    resolution.renderScale,
+    resolution.requestedRenderScale,
+    resolution.demandCapped,
+    resolution.sourceBitmapBound,
+  ]);
+}
+
+export function sourceStaticCanvasMayFallbackToK1({
+  adaptiveEnabled,
+  error,
+  resolution,
+}: Readonly<{
+  adaptiveEnabled: boolean;
+  error: unknown;
+  resolution: AdaptiveCanvasResolutionSelection;
+}>): boolean {
+  return adaptiveEnabled &&
+    resolution.renderScale === 2 &&
+    isCanvasPresentationAllocationError(error);
 }
 
 export function sourceStaticCanvasVisualKey(state: Readonly<{
@@ -339,6 +394,7 @@ export function sourceStaticCanvasVisualKey(state: Readonly<{
   scenario: string;
   language: string;
   seed: number;
+  renderScale?: CanvasRenderScale;
 }>): string {
   return JSON.stringify([
     state.animationId,
@@ -348,6 +404,7 @@ export function sourceStaticCanvasVisualKey(state: Readonly<{
     state.scenario,
     state.language,
     state.seed,
+    state.renderScale ?? 1,
   ]);
 }
 
@@ -362,6 +419,7 @@ export function sourceStaticCanvasRenderKey(state: Readonly<{
   scenario: string;
   seed: number;
   traceId?: string;
+  renderScale?: CanvasRenderScale;
 }>): string {
   return JSON.stringify([
     state.animationId,
@@ -374,6 +432,7 @@ export function sourceStaticCanvasRenderKey(state: Readonly<{
     state.scenario,
     state.seed,
     state.traceId ?? "",
+    state.renderScale ?? 1,
   ]);
 }
 
@@ -390,8 +449,6 @@ export function retainedCanvasStatus({
     ? "updating"
     : canvasStatus;
 }
-
-const assetPromises = new Map<string, Promise<CanvasAsset>>();
 
 function invariant(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(message);
@@ -417,7 +474,7 @@ function sha256HexToIntegrity(sha256Hex: string) {
 export function buildCanvasAssetRequest(
   config: Pick<
     SourceStaticCanvasCandidateConfig,
-    "animationId" | "assetSource" | "assetSha256"
+    "animationId" | "assetSource" | "assetSha256" | "resolution"
   >,
 ): CanvasAssetRequest {
   invariant(
@@ -427,11 +484,16 @@ export function buildCanvasAssetRequest(
   );
   const digest = config.assetSha256 ?? null;
   const separator = config.assetSource.includes("?") ? "&" : "?";
+  const adaptiveSource = config.resolution && digest
+    ? `/flash-assets/by-sha256/${digest}/${config.assetSource.slice(
+        "/flash-assets/".length,
+      )}`
+    : null;
   return Object.freeze({
     key: `${config.animationId}:${digest ?? "unbound"}:${config.assetSource}`,
-    src: digest
+    src: adaptiveSource ?? (digest
       ? `${config.assetSource}${separator}sha256=${digest}`
-      : config.assetSource,
+      : config.assetSource),
     integrity: digest ? sha256HexToIntegrity(digest) : null,
     crossOrigin: digest ? "anonymous" : null,
   });
@@ -457,6 +519,10 @@ function validateConfig(
     config.assetSha256 === undefined ||
       /^[a-f0-9]{64}$/.test(config.assetSha256),
     "source-static candidate asset SHA-256 is invalid",
+  );
+  invariant(
+    config.resolution === undefined || config.assetSha256 !== undefined,
+    "adaptive source-static candidate requires an exact asset SHA-256",
   );
   const explicitNativeStage = config.nativeStage;
   const legacyStage = config.stage;
@@ -499,6 +565,23 @@ function validateConfig(
     backingStage.width === Math.ceil(nativeStage.width) &&
       backingStage.height === Math.ceil(nativeStage.height),
     "source-static candidate backing stage must use ceil-positive-native-stage-dimensions",
+  );
+  if (config.resolution !== undefined) {
+    invariant(
+      config.resolution.schemaVersion === 1 &&
+        config.resolution.mode === "adaptive-integer" &&
+        config.resolution.nativeWidth === backingStage.width &&
+        config.resolution.nativeHeight === backingStage.height &&
+        config.resolution.supportedRenderScales.length === 2 &&
+        config.resolution.supportedRenderScales[0] === 1 &&
+        config.resolution.supportedRenderScales[1] === 2,
+      "source-static candidate adaptive resolution contract is invalid",
+    );
+  }
+  invariant(
+    config.sourceBitmapResolutionBound === undefined ||
+      typeof config.sourceBitmapResolutionBound === "boolean",
+    "source-static candidate bitmap resolution boundary must be boolean",
   );
   if (explicitNativeStage) {
     invariant(
@@ -603,6 +686,14 @@ function validateConfig(
     stage: Object.freeze({...nativeStage}),
     nativeStage: Object.freeze({...nativeStage}),
     backingStage: Object.freeze({...backingStage}),
+    ...(config.resolution
+      ? {
+          resolution: Object.freeze({
+            ...config.resolution,
+            supportedRenderScales: Object.freeze([1, 2] as const),
+          }),
+        }
+      : {}),
     companionDomains: Object.freeze([...(config.companionDomains ?? [])]),
     blockedFrameRanges: Object.freeze([...(config.blockedFrameRanges ?? [])]),
     visualMarkers: Object.freeze([...(config.visualMarkers ?? [])]),
@@ -622,54 +713,15 @@ function isCanvasRuntimeState(value: unknown): value is CanvasRuntimeState {
 
 function loadCanvasAsset(config: ResolvedSourceStaticCanvasCandidateConfig) {
   const request = buildCanvasAssetRequest(config);
-  const selector = config.assetSha256
-    ? `script[data-help-math-canvas-asset="${config.animationId}"][data-help-math-canvas-sha256="${config.assetSha256}"]`
-    : `script[data-help-math-canvas-asset="${config.animationId}"]`;
-  const existing = document.querySelector<HTMLScriptElement>(selector);
-  const expectedAbsoluteSource =
-    new URL(request.src, document.baseURI).href;
-  const exactExisting = existing
-    ? existing.src === expectedAbsoluteSource &&
-      existing.integrity === (request.integrity ?? "") &&
-      existing.crossOrigin === request.crossOrigin
-    : false;
-  if (existing && !exactExisting) {
-    return Promise.reject(
-      new Error("Existing Canvas asset script has a mismatched integrity binding"),
-    );
-  }
-  const registered = window.HELP_MATH_CANVAS_ASSETS?.[config.animationId];
-  if (registered && (!config.assetSha256 || exactExisting)) {
-    return Promise.resolve(registered);
-  }
-  const existingPromise = assetPromises.get(request.key);
-  if (existingPromise) return existingPromise;
-  const promise = new Promise<CanvasAsset>((resolve, reject) => {
-    const script = existing ?? document.createElement("script");
-    const finish = () => {
-      const asset = window.HELP_MATH_CANVAS_ASSETS?.[config.animationId];
-      if (asset) resolve(asset);
-      else reject(new Error("Canvas asset did not register the expected animation"));
-    };
-    script.onload = finish;
-    script.onerror = () => reject(new Error("Local Canvas asset could not load"));
-    if (!existing) {
-      script.async = true;
-      script.dataset.helpMathCanvasAsset = config.animationId;
-      if (config.assetSha256) {
-        script.dataset.helpMathCanvasSha256 = config.assetSha256;
-      }
-      if (request.integrity) script.integrity = request.integrity;
-      if (request.crossOrigin) script.crossOrigin = request.crossOrigin;
-      script.src = request.src;
-      document.head.appendChild(script);
-    } else if (window.HELP_MATH_CANVAS_ASSETS?.[config.animationId]) finish();
-  }).catch((error) => {
-    assetPromises.delete(request.key);
-    throw error;
+  return loadExactCanvasRegistryScript<CanvasAsset>({
+    assetSha256: config.assetSha256 ?? null,
+    markerAttribute: "data-help-math-canvas-asset",
+    markerDatasetKey: "helpMathCanvasAsset",
+    registeredAsset: () =>
+      window.HELP_MATH_CANVAS_ASSETS?.[config.animationId],
+    registryKey: config.animationId,
+    request,
   });
-  assetPromises.set(request.key, promise);
-  return promise;
 }
 
 function verifyRenderedIdentity(
@@ -718,6 +770,46 @@ function verifyRenderedIdentity(
       canvas.getAttribute(name) === expectedValue,
       `Canvas asset did not stamp the expected ${name}`,
     );
+  }
+}
+
+const CANVAS_REQUEST_IDENTITY_ATTRIBUTES = Object.freeze([
+  "data-flash-entry-state-sha256",
+  "data-flash-frame",
+  "data-flash-frame-domain",
+  "data-flash-lang",
+  "data-flash-requirement-id",
+  "data-flash-root-frame",
+  "data-flash-scenario",
+  "data-flash-seed",
+  "data-flash-trace-id",
+  "data-runtime-language",
+  "data-runtime-scenario",
+  "data-runtime-seed",
+] as const);
+
+function stampCanvasRequestIdentity(
+  canvas: HTMLCanvasElement,
+  identity: PendingCanvasRenderRequest["identity"],
+) {
+  const values: Readonly<Record<string, string | null>> = {
+    "data-flash-entry-state-sha256": identity.entryStateSha256 || null,
+    "data-flash-frame": String(identity.frame),
+    "data-flash-frame-domain": identity.frameDomain,
+    "data-flash-lang": identity.language,
+    "data-flash-requirement-id": identity.requirementId || null,
+    "data-flash-root-frame": String(identity.rootFrame),
+    "data-flash-scenario": identity.scenario,
+    "data-flash-seed": String(identity.seed),
+    "data-flash-trace-id": identity.traceId || null,
+    "data-runtime-language": identity.language,
+    "data-runtime-scenario": identity.scenario,
+    "data-runtime-seed": String(identity.seed),
+  };
+  for (const name of CANVAS_REQUEST_IDENTITY_ATTRIBUTES) {
+    const value = values[name];
+    if (value === null) canvas.removeAttribute(name);
+    else canvas.setAttribute(name, value);
   }
 }
 
@@ -770,7 +862,9 @@ export function createSourceStaticCanvasCandidate(
     | G4L3MainTimelineAudioCandidate
     | G5L4PageAudioCandidate,
 ) {
-  const config = validateConfig(suppliedConfig);
+  const config = validateConfig(
+    resolveSourceStaticCanvasProductionConfig(suppliedConfig),
+  );
   const mainTimelineAudioCandidate =
     suppliedAudioCandidate ??
     getG4L3MainTimelineAudioCandidate(config.animationId) ??
@@ -894,6 +988,7 @@ export function createSourceStaticCanvasCandidate(
     requirementId,
     scenario,
     seed,
+    resolution,
     state,
     traceId,
   }: {
@@ -905,6 +1000,13 @@ export function createSourceStaticCanvasCandidate(
     requirementId: string;
     scenario?: string;
     seed?: number;
+    resolution?: Pick<
+      AdaptiveCanvasResolutionSelection,
+      | "backingStage"
+      | "demandCapped"
+      | "renderScale"
+      | "status"
+    >;
     state: SourceStaticCanvasFrameState;
     traceId: string;
   }) => {
@@ -944,6 +1046,11 @@ export function createSourceStaticCanvasCandidate(
       && (!config.strictCaptureIdentity || stateDeclaresTraceIdentity);
     const captureReady =
       visualReady && identityReady;
+    const renderScale = resolution?.renderScale ?? 1;
+    const backingWidth =
+      resolution?.backingStage.width ?? config.backingStage.width;
+    const backingHeight =
+      resolution?.backingStage.height ?? config.backingStage.height;
     return {
       "data-animation-id": config.animationId,
       "data-candidate-status": "source-static-engineering-not-strict",
@@ -965,8 +1072,13 @@ export function createSourceStaticCanvasCandidate(
       "data-runtime-language": state.language,
       "data-runtime-scenario": state.scenario,
       "data-runtime-seed": state.seed,
-      "data-canvas-backing-height": config.backingStage.height,
-      "data-canvas-backing-width": config.backingStage.width,
+      "data-render-scale": renderScale,
+      "data-canvas-backing-height": backingHeight,
+      "data-canvas-backing-width": backingWidth,
+      "data-resolution-status": resolution?.status ?? "native",
+      "data-resolution-ceiling-reached": String(
+        resolution?.demandCapped ?? false,
+      ),
       "data-source-marker-visuals": state.visibleSourceMarkers.join(","),
       "data-source-controls-enabled": "false",
     } as const;
@@ -1023,6 +1135,25 @@ export function createSourceStaticCanvasCandidate(
     );
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const canvasHostRef = useRef<HTMLElement>(null);
+    const canvasStageRef = useRef<HTMLDivElement>(null);
+    const stagingCanvasRef = useRef<HTMLCanvasElement | null>(null);
+    const adaptiveResolution = useAdaptiveCanvasResolution({
+      targetRef: canvasStageRef,
+      nativeWidth: config.backingStage.width,
+      nativeHeight: config.backingStage.height,
+      adaptiveEnabled: config.resolution !== undefined,
+      sourceBitmapBound: config.sourceBitmapResolutionBound,
+    });
+    const selectedResolutionKey =
+      sourceStaticCanvasResolutionSelectionKey(adaptiveResolution);
+    const [forcedFallback, setForcedFallback] =
+      useState<SourceStaticCanvasForcedK1Fallback | null>(null);
+    const fallbackActive =
+      forcedFallback?.selectionKey === selectedResolutionKey;
+    const canvasResolution = fallbackActive
+      ? createK1CanvasAllocationFallback(adaptiveResolution)
+      : adaptiveResolution;
+    const fallbackReason = fallbackActive ? forcedFallback.reason : null;
     const canvasStatusRef = useRef<SourceStaticCanvasStatus>("idle");
     const canvasPresentationRef = useRef<"pending" | "painted" | "error">(
       "pending",
@@ -1031,8 +1162,14 @@ export function createSourceStaticCanvasCandidate(
       "pending" | "painted" | "error"
     >("pending");
     const renderedVisualKeyRef = useRef<string | null>(null);
-    const requestedVisualKey = sourceStaticCanvasVisualKey(deterministicState);
-    const requestedRenderKey = sourceStaticCanvasRenderKey(deterministicState);
+    const requestedVisualKey = sourceStaticCanvasVisualKey({
+      ...deterministicState,
+      renderScale: canvasResolution.renderScale,
+    });
+    const requestedRenderKey = sourceStaticCanvasRenderKey({
+      ...deterministicState,
+      renderScale: canvasResolution.renderScale,
+    });
     const renderedRequestKeyRef = useRef<string | null>(null);
     const renderEntryStateSha256 = deterministicState.entryStateSha256;
     const renderFrame = deterministicState.frame;
@@ -1064,6 +1201,7 @@ export function createSourceStaticCanvasCandidate(
       requirementId,
       scenario,
       seed,
+      resolution: canvasResolution,
       state: deterministicState,
       traceId,
     });
@@ -1076,6 +1214,7 @@ export function createSourceStaticCanvasCandidate(
       requirementId,
       scenario,
       seed,
+      resolution: canvasResolution,
       state: deterministicState,
       traceId,
     })["data-capture-stage"] === "true";
@@ -1085,6 +1224,34 @@ export function createSourceStaticCanvasCandidate(
       if (!canvas || renderStatus !== "ready") return;
       if (renderedRequestKeyRef.current === requestedRenderKey) {
         canvasStatusRef.current = "ready";
+        canvas.setAttribute(
+          "data-render-scale",
+          String(canvasResolution.renderScale),
+        );
+        canvas.setAttribute(
+          "data-canvas-backing-width",
+          String(canvas.width),
+        );
+        canvas.setAttribute(
+          "data-canvas-backing-height",
+          String(canvas.height),
+        );
+        canvas.setAttribute(
+          "data-resolution-status",
+          canvasResolution.status,
+        );
+        canvas.setAttribute(
+          "data-resolution-ceiling-reached",
+          String(canvasResolution.demandCapped),
+        );
+        if (fallbackReason) {
+          canvas.setAttribute(
+            "data-resolution-fallback-reason",
+            fallbackReason,
+          );
+        } else {
+          canvas.removeAttribute("data-resolution-fallback-reason");
+        }
         applyCanvasCapturePresentationStatus(canvas, {
           captureReady: requestedCaptureReady,
           status: "ready",
@@ -1107,14 +1274,18 @@ export function createSourceStaticCanvasCandidate(
       });
       canvasHostRef.current?.setAttribute("data-canvas-status", pendingStatus);
     }, [
+      canvasResolution.demandCapped,
+      canvasResolution.renderScale,
+      canvasResolution.status,
+      fallbackReason,
       renderStatus,
       requestedCaptureReady,
       requestedRenderKey,
     ]);
 
     useEffect(() => {
-      const canvas = canvasRef.current;
-      if (!canvas || renderStatus !== "ready") {
+      const visibleCanvas = canvasRef.current;
+      if (!visibleCanvas || renderStatus !== "ready") {
         renderCoordinator.cancel();
         renderedRequestKeyRef.current = null;
         renderedVisualKeyRef.current = null;
@@ -1125,11 +1296,18 @@ export function createSourceStaticCanvasCandidate(
         }
         return;
       }
+      const stagingCanvas =
+        stagingCanvasRef.current ?? document.createElement("canvas");
+      stagingCanvasRef.current = stagingCanvas;
       const renderRequest = Object.freeze({
-        canvas,
+        visibleCanvas,
+        stagingCanvas,
         captureReady: requestedCaptureReady,
+        fallbackReason,
         renderKey: requestedRenderKey,
+        selectionKey: selectedResolutionKey,
         visualKey: requestedVisualKey,
+        resolution: canvasResolution,
         identity: Object.freeze({
           entryStateSha256: renderEntryStateSha256,
           frame: renderFrame,
@@ -1152,20 +1330,53 @@ export function createSourceStaticCanvasCandidate(
       if (renderedRequestKeyRef.current === requestedRenderKey) {
         return;
       }
+      let attemptedRequest: PendingCanvasRenderRequest | null = null;
       const run = renderCoordinator.run(
         async () => {
           const asset = await loadCanvasAsset(config);
           await asset.ready();
+          verifyCanvasAssetResolutionContract(asset, config.resolution);
           return asset;
         },
         (request, asset) => {
-          const rendered = asset.render(request.canvas, {
+          attemptedRequest = request;
+          prepareStagingCanvas(request.stagingCanvas, request.resolution);
+          stampCanvasRequestIdentity(
+            request.stagingCanvas,
+            request.identity,
+          );
+          const canvasRenderRequest: CanvasRenderRequest = {
             frame: request.identity.frame,
             scenario: request.identity.scenario,
             lang: request.identity.language,
             seed: request.identity.seed,
-          });
-          verifyRenderedIdentity(request.canvas, rendered, request.identity);
+            renderScale: request.resolution.renderScale,
+          };
+          const rendered = asset.render(
+            request.stagingCanvas,
+            canvasRenderRequest,
+          );
+          verifyRenderedIdentity(
+            request.stagingCanvas,
+            rendered,
+            request.identity,
+          );
+          presentVerifiedStagingCanvas(
+            request.visibleCanvas,
+            request.stagingCanvas,
+            request.resolution,
+            request.captureReady,
+          );
+          if (request.fallbackReason) {
+            request.visibleCanvas.setAttribute(
+              "data-resolution-fallback-reason",
+              request.fallbackReason,
+            );
+          } else {
+            request.visibleCanvas.removeAttribute(
+              "data-resolution-fallback-reason",
+            );
+          }
         },
       );
       if (!run.started) return;
@@ -1179,10 +1390,13 @@ export function createSourceStaticCanvasCandidate(
             // Keep its readiness marker on that same imperative surface;
             // scheduling React state for every frame creates a passive-effect
             // update loop on slower runners even when each paint succeeds.
-            applyCanvasCapturePresentationStatus(completedRequest.canvas, {
-              captureReady: completedRequest.captureReady,
-              status: "ready",
-            });
+            applyCanvasCapturePresentationStatus(
+              completedRequest.visibleCanvas,
+              {
+                captureReady: completedRequest.captureReady,
+                status: "ready",
+              },
+            );
             canvasHostRef.current?.setAttribute("data-canvas-status", "ready");
             if (canvasPresentationRef.current !== "painted") {
               canvasPresentationRef.current = "painted";
@@ -1192,11 +1406,56 @@ export function createSourceStaticCanvasCandidate(
             }
           }
         })
-        .catch(() => {
+        .catch((error: unknown) => {
+          const failedRequest = attemptedRequest;
+          if (
+            failedRequest &&
+            sourceStaticCanvasMayFallbackToK1({
+              adaptiveEnabled: config.resolution !== undefined,
+              error,
+              resolution: failedRequest.resolution,
+            })
+          ) {
+            const reason = error instanceof Error
+              ? error.message
+              : "Canvas allocation or context failure";
+            canvasStatusRef.current =
+              canvasPresentationRef.current === "painted"
+                ? "updating"
+                : "loading";
+            failedRequest.visibleCanvas.setAttribute(
+              "data-resolution-status",
+              "fallback-k1",
+            );
+            failedRequest.visibleCanvas.setAttribute(
+              "data-resolution-fallback-reason",
+              reason,
+            );
+            applyCanvasCapturePresentationStatus(
+              failedRequest.visibleCanvas,
+              {
+                captureReady: false,
+                status: canvasStatusRef.current,
+              },
+            );
+            canvasHostRef.current?.setAttribute(
+              "data-canvas-status",
+              canvasStatusRef.current,
+            );
+            stagingCanvasRef.current = null;
+            setForcedFallback({
+              reason,
+              selectionKey: failedRequest.selectionKey,
+            });
+            return;
+          }
           renderedRequestKeyRef.current = null;
           renderedVisualKeyRef.current = null;
           canvasStatusRef.current = "error";
           if (canvasRef.current) {
+            canvasRef.current.removeAttribute(
+              "data-resolution-fallback-reason",
+            );
             applyCanvasCapturePresentationStatus(canvasRef.current, {
               captureReady: false,
               status: "error",
@@ -1220,9 +1479,12 @@ export function createSourceStaticCanvasCandidate(
       renderStatus,
       renderTraceId,
       renderCoordinator,
+      canvasResolution,
+      fallbackReason,
       requestedCaptureReady,
       requestedRenderKey,
       requestedVisualKey,
+      selectedResolutionKey,
     ]);
 
     useEffect(() => () => renderCoordinator.cancel(), [renderCoordinator]);
@@ -1250,6 +1512,7 @@ export function createSourceStaticCanvasCandidate(
         }}
       >
         <div
+          ref={canvasStageRef}
           style={{
             aspectRatio: `${config.nativeStage.width} / ${config.nativeStage.height}`,
             background: config.nativeStage.backgroundColor,
@@ -1285,6 +1548,7 @@ export function createSourceStaticCanvasCandidate(
                 aria-label={`Source-static ${config.mainFrameDomain} drawing, frame ${deterministicState.frame} of ${config.mainFrameCount}; source control behavior disabled`}
                 className="faithful-stage-wrap"
                 data-course-canvas={config.animationId}
+                data-resolution-fallback-reason={fallbackReason ?? undefined}
                 height={config.backingStage.height}
                 ref={canvasRef}
                 role="img"

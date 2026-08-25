@@ -47,6 +47,7 @@ const OUTPUT_REPORT_JSON =
 const OUTPUT_REPORT_MARKDOWN =
   "reports/g4-l3-vb006-current-javascript-candidate.md";
 const REPORT_TYPE = "current-javascript-engineering-candidate";
+const V9_PLAN = "work/adaptive-canvas-production-five.plan.v9.json";
 
 const EXPECTED = Object.freeze({
   sourceSwf: Object.freeze({
@@ -222,6 +223,21 @@ function projectPath(relativePath) {
   return resolved;
 }
 
+function boundSourcePath(relativePath, sourceRoot) {
+  invariant(typeof sourceRoot === "string" && path.isAbsolute(sourceRoot),
+    "sourceRoot must be an explicit absolute path");
+  invariant(relativePath.startsWith(`${ARCHIVE_PREFIX}/`),
+    `source path is outside the canonical archive prefix: ${relativePath}`);
+  const resolvedRoot = path.resolve(sourceRoot);
+  const resolved = path.resolve(
+    resolvedRoot,
+    relativePath.slice(`${ARCHIVE_PREFIX}/`.length),
+  );
+  invariant(resolved.startsWith(`${resolvedRoot}${path.sep}`),
+    `source path escapes the explicit source root: ${relativePath}`);
+  return resolved;
+}
+
 function fingerprint(value) {
   return sha256(stableJson(value));
 }
@@ -255,14 +271,18 @@ async function resolveExecutable(command) {
   throw new Error(`executable not found: ${command}`);
 }
 
-async function inspectTool(command, expected, label) {
+async function inspectTool(command, expected, label, environment = null) {
   const invokedPath = await resolveExecutable(command);
   invariant(invokedPath === expected.invokedPath,
     `${label} invoked path changed: ${invokedPath}`);
   const resolvedPath = await realpath(invokedPath);
   const [bytes, versionResult] = await Promise.all([
     readFile(resolvedPath),
-    run(invokedPath, expected.versionArgs, {timeout: 30_000, maxBuffer: 8 * 1024 * 1024}),
+    run(invokedPath, expected.versionArgs, {
+      timeout: 30_000,
+      maxBuffer: 8 * 1024 * 1024,
+      ...(environment ? {env: environment} : {}),
+    }),
   ]);
   const versionOutput = `${versionResult.stdout}\n${versionResult.stderr}`
     .replace(/\u001b\[[0-9;]*m/g, "").trim();
@@ -294,6 +314,45 @@ async function readPinned(relativePath, expected, label) {
   invariant(binding.bytes === expected.bytes && binding.sha256 === expected.sha256,
     `${label} differs from its pinned source identity`);
   return {...binding, contents: await readFile(projectPath(relativePath))};
+}
+
+async function readPinnedSource(relativePath, expected, label, sourceRoot) {
+  const absolute = boundSourcePath(relativePath, sourceRoot);
+  const [metadata, canonical] = await Promise.all([
+    lstat(absolute),
+    realpath(absolute),
+  ]);
+  invariant(metadata.isFile() && !metadata.isSymbolicLink() &&
+    canonical === absolute,
+  `${label} must be an ordinary non-symlink file under the explicit source root`);
+  const contents = await readFile(absolute);
+  const binding = {
+    path: relativePath,
+    bytes: contents.length,
+    sha256: sha256(contents),
+  };
+  invariant(binding.bytes === expected.bytes &&
+    binding.sha256 === expected.sha256,
+  `${label} differs from its pinned source identity`);
+  return {...binding, contents};
+}
+
+async function readV9Identity(animationId) {
+  const bytes = await readFile(projectPath(V9_PLAN));
+  const document = JSON.parse(bytes);
+  const record = document?.payload?.runtimes?.find((candidate) =>
+    candidate.animationId === animationId);
+  invariant(record && record.assetPath ===
+    OUTPUT_SCRIPT.slice("public/flash-assets/".length),
+  `${animationId}: v9 runtime identity is absent or path-mismatched`);
+  return {
+    plan: {path: V9_PLAN, bytes: bytes.length, sha256: sha256(bytes)},
+    animationId: record.animationId,
+    assetPath: record.assetPath,
+    lane: record.lane,
+    input: record.input,
+    output: record.output,
+  };
 }
 
 async function walkBindings(relativeDirectory, nested = "") {
@@ -987,17 +1046,31 @@ export function parseArguments(argv) {
     python: "python3",
     ffmpeg: "ffmpeg",
     ffprobe: "ffprobe",
+    regenerationOnly: false,
+    sourceRoot: null,
   };
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === "--check") options.check = true;
-    else if (["--ffdec", "--swfmill", "--python", "--ffmpeg", "--ffprobe"].includes(argument)) {
+    else if (argument === "--regeneration-only") {
+      options.regenerationOnly = true;
+    }
+    else if (["--ffdec", "--swfmill", "--python", "--ffmpeg", "--ffprobe",
+      "--source-root"].includes(argument)) {
       const value = argv[index + 1];
       invariant(value && !value.startsWith("--"), `${argument} requires a value`);
-      options[argument.slice(2)] = value;
+      if (argument === "--source-root") options.sourceRoot = value;
+      else options[argument.slice(2)] = value;
       index += 1;
     } else if (argument === "--help" || argument === "-h") options.help = true;
     else throw new Error(`unknown argument: ${argument}`);
+  }
+  invariant(!options.regenerationOnly || options.check,
+    "--regeneration-only requires --check");
+  if (options.regenerationOnly) {
+    invariant(typeof options.sourceRoot === "string" &&
+      path.isAbsolute(options.sourceRoot),
+    "--regeneration-only requires an absolute --source-root");
   }
   return options;
 }
@@ -1009,7 +1082,110 @@ export async function generateG4L3Vb006CurrentJsCandidate({
   python = "python3",
   ffmpeg = "ffmpeg",
   ffprobe = "ffprobe",
+  regenerationOnly = false,
+  sourceRoot = null,
 } = {}) {
+  invariant(!regenerationOnly || check,
+    "regenerationOnly requires read-only check mode");
+  if (regenerationOnly) {
+    const [sourceSwf, sourceFla, sourceAssociatedAudio, safeBuilder, generator,
+      v9] = await Promise.all([
+      readPinnedSource(SOURCE_SWF, EXPECTED.sourceSwf, "VB006 source SWF",
+        sourceRoot),
+      readPinnedSource(SOURCE_FLA, EXPECTED.sourceFla, "VB006 source FLA",
+        sourceRoot),
+      readPinnedSource(SOURCE_ASSOCIATED_AUDIO, EXPECTED.associatedAudio,
+        "VB006 associated audio", sourceRoot),
+      readBinding(SAFE_ADAPTER_BUILDER),
+      readBinding(portable(path.relative(ROOT, scriptPath))),
+      readV9Identity(ANIMATION_ID),
+    ]);
+    const temporaryRoot = await mkdtemp(
+      path.join(os.tmpdir(), "help-math-vb006-regeneration-only-"),
+    );
+    try {
+      const ffdecUserHome = path.join(temporaryRoot, "ffdec-user-home");
+      await mkdir(ffdecUserHome, {recursive: true});
+      const environment = {
+        ...process.env,
+        JAVA_TOOL_OPTIONS: `-Duser.home="${ffdecUserHome}"`,
+      };
+      const ffdecTool = await inspectTool(
+        ffdec,
+        EXPECTED_TOOLS.ffdec,
+        "FFDec",
+        environment,
+      );
+      const canvasDirectory = path.join(temporaryRoot, "canvas");
+      const canvasExport = await run(ffdecTool.invokedPath, [
+        "-config", "packJavaScripts=false",
+        "-onerror", "abort",
+        "-selectid", "44",
+        "-format", "sprite:canvas",
+        "-export", "sprite",
+        canvasDirectory,
+        boundSourcePath(SOURCE_SWF, sourceRoot),
+      ], {env: environment});
+      invariant(`${canvasExport.stdout}\n${canvasExport.stderr}`
+        .includes(EXPECTED_TOOLS.ffdec.version),
+      "fresh FFDec exporter version changed");
+      const [helper, framesHtml] = await Promise.all([
+        readFile(path.join(canvasDirectory, "DefineSprite_44", "canvas.js")),
+        readFile(path.join(canvasDirectory, "DefineSprite_44", "frames.html")),
+      ]);
+      invariant(helper.length === EXPECTED.canvasHelper.bytes &&
+        sha256(helper) === EXPECTED.canvasHelper.sha256,
+      "fresh FFDec Canvas helper changed");
+      invariant(framesHtml.length === EXPECTED.canvasFrames.bytes &&
+        sha256(framesHtml) === EXPECTED.canvasFrames.sha256,
+      "fresh FFDec sprite-44 frame export changed");
+      const built = buildSafeRuntime({
+        helperSource: helper.toString("utf8"),
+        framesHtml: framesHtml.toString("utf8"),
+        spec: adapterSpec(),
+      });
+      invariant(built.placedFunctions.length === EXPECTED.placedFunctions.count &&
+        sha256(JSON.stringify(built.placedFunctions)) ===
+          EXPECTED.placedFunctions.sha256 &&
+        built.imageVariables.length === EXPECTED.embeddedImages.count &&
+        sha256(JSON.stringify(built.imageVariables)) ===
+          EXPECTED.embeddedImages.sha256,
+      "safe Canvas adapter allowlists changed");
+      const runtimeBytes = Buffer.from(built.runtime);
+      const observedV1 = await readFile(projectPath(OUTPUT_SCRIPT));
+      invariant(runtimeBytes.equals(observedV1) &&
+        runtimeBytes.length === v9.input.bytes &&
+        sha256(runtimeBytes) === v9.input.sha256,
+      "VB006 regenerated runtime differs from the exact v9 input");
+      return {
+        animationId: ANIMATION_ID,
+        check: true,
+        regenerationOnly: true,
+        browserLaunched: false,
+        sourceSwf: {...sourceSwf, contents: undefined},
+        sourceFla: {...sourceFla, contents: undefined},
+        associatedAudio: {...sourceAssociatedAudio, contents: undefined},
+        generator,
+        safeAdapter: safeBuilder,
+        ffdec: ffdecTool,
+        freshExport: {
+          helper: {bytes: helper.length, sha256: sha256(helper)},
+          framesHtml: {bytes: framesHtml.length, sha256: sha256(framesHtml)},
+        },
+        runtime: {
+          path: OUTPUT_SCRIPT,
+          bytes: runtimeBytes.length,
+          sha256: sha256(runtimeBytes),
+          matchesV1Materialization: true,
+          matchesV9Input: true,
+        },
+        v9,
+        strictAcceptanceEffect: "none",
+      };
+    } finally {
+      await rm(temporaryRoot, {recursive: true, force: true});
+    }
+  }
   const protectedBefore = await protectedSnapshot();
   const completionLedgerBefore = await readBinding(COMPLETION_LEDGER);
   const [sourceSwf, sourceFla, sourceAssociatedAudio, hotspotParser, safeBuilder,
@@ -1162,6 +1338,8 @@ function help() {
   return `Usage: node scripts/build-g4-l3-vb006-current-js-candidate.mjs [options]\n\n` +
     `Options:\n` +
     `  --check              Rebuild every hash-bound artifact in memory and fail if checked-in outputs differ\n` +
+    `  --regeneration-only  Rebuild source/FFDec/runtime bytes without launching a browser\n` +
+    `  --source-root <path> Explicit absolute canonical source root for regeneration-only\n` +
     `  --ffdec <command>    FFDec launcher (default: ffdec)\n` +
     `  --swfmill <command>  swfmill launcher (default: swfmill)\n` +
     `  --python <command>   Python launcher (default: python3)\n` +

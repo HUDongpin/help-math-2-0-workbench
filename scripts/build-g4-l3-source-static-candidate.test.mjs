@@ -305,13 +305,27 @@ test("source-static candidate CLI requires an explicit hash-bound spec", () => {
   assert.deepEqual(parseArguments(["--spec", SPEC_RELATIVE, "--check"]), {
     check: true,
     ffdec: "ffdec",
+    regenerationOnly: false,
+    sourceRoot: null,
     specPath: SPEC_RELATIVE,
   });
+  assert.equal(parseArguments([
+    "--spec", SPEC_RELATIVE, "--check", "--regeneration-only",
+  ]).regenerationOnly, true);
+  assert.equal(parseArguments([
+    "--spec", SPEC_RELATIVE, "--check", "--source-root", "/canonical/source",
+  ]).sourceRoot, "/canonical/source");
   assert.equal(parseArguments([
     "--spec", SPEC_RELATIVE, "--ffdec", "/opt/homebrew/bin/ffdec",
   ]).ffdec, "/opt/homebrew/bin/ffdec");
   assert.throws(() => parseArguments([]), /--spec is required/);
   assert.throws(() => parseArguments(["--spec"]), /requires a value/);
+  assert.throws(() => parseArguments([
+    "--spec", SPEC_RELATIVE, "--regeneration-only",
+  ]), /requires --check/);
+  assert.throws(() => parseArguments([
+    "--spec", SPEC_RELATIVE, "--check", "--source-root", "relative/source",
+  ]), /must be absolute/);
   assert.throws(() => parseArguments(["--unknown"]), /unknown argument/);
 });
 

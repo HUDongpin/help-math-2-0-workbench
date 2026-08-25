@@ -30,6 +30,7 @@ const SOURCE_FLA =
   "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN03.fla";
 const SOURCE_SPANISH_AUDIO =
   "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN03.mp3";
+const SOURCE_PREFIX = "source-assets/flash/HELP MATH_ORIGINAL FILES/";
 const PLACEMENT_PARSER = "scripts/parse-swfmill-g4-l3-static-candidate.py";
 const OUTPUT_SCRIPT =
   "public/flash-assets/courses/course-g04-l03-in-003/canvas-renderer.js";
@@ -109,8 +110,9 @@ function projectPath(relativePath) {
   return resolved;
 }
 
-async function readPinned(relativePath, expectedHash, expectedBytes, label) {
-  const absolutePath = projectPath(relativePath);
+async function readPinned(relativePath, expectedHash, expectedBytes, label,
+  sourceRoot = null) {
+  const absolutePath = sourceBoundPath(relativePath, sourceRoot);
   const bytes = await readFile(absolutePath);
   invariant(
     bytes.length === expectedBytes,
@@ -121,6 +123,12 @@ async function readPinned(relativePath, expectedHash, expectedBytes, label) {
     `${label}: SHA-256 does not match the pinned source identity`,
   );
   return bytes;
+}
+
+function sourceBoundPath(relativePath, sourceRoot = null) {
+  return sourceRoot && relativePath.startsWith(SOURCE_PREFIX)
+    ? path.join(sourceRoot, relativePath.slice(SOURCE_PREFIX.length))
+    : projectPath(relativePath);
 }
 
 async function walkFiles(directory, relative = "") {
@@ -159,18 +167,31 @@ export function parseArguments(argv, {root = ROOT} = {}) {
     check: false,
     ffdec: "ffdec",
     python: "python3",
+    regenerationOnly: false,
+    sourceRoot: null,
     swfmill: "swfmill",
     root,
   };
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === "--check") result.check = true;
-    else if (["--ffdec", "--python", "--swfmill"].includes(argument)) {
+    else if (argument === "--regeneration-only") result.regenerationOnly = true;
+    else if (["--ffdec", "--python", "--swfmill", "--source-root"].includes(argument)) {
       const value = argv[index + 1];
       invariant(value && !value.startsWith("--"), `${argument} requires a value`);
-      result[argument.slice(2)] = value;
+      if (argument === "--source-root") result.sourceRoot = value;
+      else result[argument.slice(2)] = value;
       index += 1;
     } else throw new Error(`Unknown argument: ${argument}`);
+  }
+  invariant(!result.regenerationOnly || result.check,
+    "--regeneration-only requires --check");
+  if (result.regenerationOnly) {
+    invariant(result.sourceRoot && path.isAbsolute(result.sourceRoot),
+      "--regeneration-only requires an absolute --source-root");
+  } else {
+    invariant(result.sourceRoot === null,
+      "--source-root is only valid with --regeneration-only");
   }
   return result;
 }
@@ -442,26 +463,37 @@ export async function generateG4L3In003CurrentJsCandidate({
   check = false,
   ffdec = "ffdec",
   python = "python3",
+  regenerationOnly = false,
+  sourceRoot = null,
   swfmill = "swfmill",
 } = {}) {
+  invariant(!regenerationOnly || check,
+    "regenerationOnly requires read-only check mode");
+  if (regenerationOnly) {
+    invariant(sourceRoot && path.isAbsolute(sourceRoot),
+      "regenerationOnly requires an absolute sourceRoot");
+  }
   const [sourceSwf, sourceFla, spanishAudio, parserBytes] = await Promise.all([
     readPinned(
       SOURCE_SWF,
       EXPECTED.sourceSwfSha256,
       EXPECTED.sourceSwfBytes,
       "source SWF",
+      sourceRoot,
     ),
     readPinned(
       SOURCE_FLA,
       EXPECTED.sourceFlaSha256,
       EXPECTED.sourceFlaBytes,
       "source FLA",
+      sourceRoot,
     ),
     readPinned(
       SOURCE_SPANISH_AUDIO,
       EXPECTED.sourceSpanishAudioSha256,
       EXPECTED.sourceSpanishAudioBytes,
       "associated Spanish audio",
+      sourceRoot,
     ),
     readFile(projectPath(PLACEMENT_PARSER)),
   ]);
@@ -472,10 +504,16 @@ export async function generateG4L3In003CurrentJsCandidate({
 
   const temporaryRoot = await mkdtemp(path.join(os.tmpdir(), "help-math-in003-"));
   try {
+    const ffdecUserHome = path.join(temporaryRoot, "ffdec-user-home");
+    await mkdir(ffdecUserHome, {recursive: true});
+    const ffdecEnvironment = {
+      ...process.env,
+      JAVA_TOOL_OPTIONS: `-Duser.home="${ffdecUserHome}"`,
+    };
     const canvasDirectory = path.join(temporaryRoot, "canvas");
     const scriptsDirectory = path.join(temporaryRoot, "scripts");
     const swfmillXml = path.join(temporaryRoot, "source.xml");
-    const sourcePath = projectPath(SOURCE_SWF);
+    const sourcePath = sourceBoundPath(SOURCE_SWF, sourceRoot);
     const canvasExport = await run(ffdec, [
       "-config",
       "packJavaScripts=false",
@@ -489,7 +527,7 @@ export async function generateG4L3In003CurrentJsCandidate({
       "sprite",
       canvasDirectory,
       sourcePath,
-    ]);
+    ], {env: ffdecEnvironment});
     invariant(
       `${canvasExport.stdout}\n${canvasExport.stderr}`.includes(EXPECTED.ffdecTool),
       "FFDec exporter version changed",
@@ -503,7 +541,7 @@ export async function generateG4L3In003CurrentJsCandidate({
       "script",
       scriptsDirectory,
       sourcePath,
-    ]);
+    ], {env: ffdecEnvironment});
     await run(swfmill, ["swf2xml", sourcePath, swfmillXml]);
     const placementResult = await run(python, [
       projectPath(PLACEMENT_PARSER),
@@ -714,8 +752,22 @@ export async function generateG4L3In003CurrentJsCandidate({
     return {
       animationId: ANIMATION_ID,
       check,
+      regenerationOnly,
+      browserLaunched: false,
+      source: manifest.source,
+      freshFfdec: {
+        tool: EXPECTED.ffdecTool,
+        targetSpriteObjectId: 84,
+        helper: {bytes: helper.length, sha256: sha256(helper)},
+        framesHtml: {bytes: framesHtml.length, sha256: sha256(framesHtml)},
+      },
+      freshSwfmill: {
+        tool: swfmillVersionText,
+        xml: {bytes: swfmillXmlBytes.length, sha256: sha256(swfmillXmlBytes)},
+      },
       status: report.disposition,
       outputScript: report.outputs.canvasRuntime,
+      runtimeMatchesV1Materialization: true,
       outputManifest: report.outputs.canvasManifest,
       report: OUTPUT_REPORT_JSON,
       frameDomain: report.timeline.local,

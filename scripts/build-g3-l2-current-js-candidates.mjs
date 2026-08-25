@@ -24,7 +24,6 @@ import {buildSafeRuntime} from "./build-safe-ffdec-canvas-adapter.mjs";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const FACTORY_ROOT =
   "work/g3-l2-ffdec-canvas-pcode-factory/full";
-const FACTORY_RUN = `${FACTORY_ROOT}/run-manifest.json`;
 const AUDIT_PATH = "reports/g3-l2-cross-grade-factory-audit.json";
 const CATALOG_PATH = "catalog/animations.json";
 const SOURCE_PREFIX =
@@ -72,16 +71,61 @@ async function identity(relativePath) {
   });
 }
 
+async function identityAbsolute(filePath, logicalPath) {
+  invariant(path.isAbsolute(filePath), `${logicalPath}: absolute path required`);
+  const bytes = await readFile(filePath);
+  return Object.freeze({
+    path: logicalPath,
+    bytes: bytes.length,
+    sha256: sha256(bytes),
+  });
+}
+
 async function readJson(relativePath) {
   return JSON.parse(await readFile(absolute(relativePath), "utf8"));
 }
 
-function parseArguments(argv) {
-  invariant(
-    argv.length === 1 && ["--write", "--check"].includes(argv[0]),
-    "usage: build-g3-l2-current-js-candidates.mjs --write|--check",
-  );
-  return Object.freeze({check: argv[0] === "--check"});
+export function parseArguments(argv) {
+  const options = {
+    check: null,
+    factoryRoot: FACTORY_ROOT,
+    runtimeOnly: false,
+    sourceRoot: null,
+  };
+  for (let index = 0; index < argv.length; index += 1) {
+    const argument = argv[index];
+    if (["--write", "--check"].includes(argument)) {
+      invariant(options.check === null,
+        "exactly one of --write or --check is required");
+      options.check = argument === "--check";
+      continue;
+    }
+    if (argument === "--runtime-only") {
+      options.runtimeOnly = true;
+      continue;
+    }
+    if (["--factory-root", "--source-root"].includes(argument)) {
+      const value = argv[++index];
+      invariant(value && !value.startsWith("--"), `${argument} requires a value`);
+      if (argument === "--factory-root") options.factoryRoot = value;
+      else options.sourceRoot = value;
+      continue;
+    }
+    throw new Error(`unknown argument: ${argument}`);
+  }
+  invariant(options.check !== null,
+    "exactly one of --write or --check is required");
+  invariant(!options.runtimeOnly || options.check,
+    "--runtime-only requires --check");
+  invariant(!path.isAbsolute(options.factoryRoot) &&
+    (options.factoryRoot === "work/g3-l2-ffdec-canvas-pcode-factory" ||
+      options.factoryRoot.startsWith("work/g3-l2-ffdec-canvas-pcode-factory/")),
+  "--factory-root must be inside work/g3-l2-ffdec-canvas-pcode-factory");
+  if (options.sourceRoot !== null) {
+    invariant(path.isAbsolute(options.sourceRoot),
+      "--source-root must be absolute");
+  }
+  return Object.freeze(options);
 }
 
 function analyzeFramesHtml(framesHtml, objectId) {
@@ -156,29 +200,38 @@ function sourcePath(relativeSourcePath) {
   return `${SOURCE_PREFIX}/${relativeSourcePath}`;
 }
 
-function audioDurationMs(relativePath) {
+function physicalSourcePath(relativeSourcePath, sourceRoot = null) {
+  if (sourceRoot === null) return absolute(sourcePath(relativeSourcePath));
+  const resolvedRoot = path.resolve(sourceRoot);
+  const resolved = path.resolve(resolvedRoot, relativeSourcePath);
+  invariant(resolved.startsWith(`${resolvedRoot}${path.sep}`),
+    `source path escapes explicit root: ${relativeSourcePath}`);
+  return resolved;
+}
+
+function audioDurationMs(filePath) {
   const output = execFileSync(
     "ffprobe",
     [
       "-v", "error",
       "-show_entries", "format=duration",
       "-of", "default=nw=1:nk=1",
-      absolute(relativePath),
+      filePath,
     ],
     {encoding: "utf8"},
   ).trim();
   const durationMs = Math.round(Number(output) * 1000);
   invariant(
     Number.isSafeInteger(durationMs) && durationMs > 0,
-    `${relativePath}: ffprobe returned an invalid duration`,
+    `${filePath}: ffprobe returned an invalid duration`,
   );
   return durationMs;
 }
 
-function decodeAudioToEof(relativePath) {
+function decodeAudioToEof(filePath) {
   execFileSync(
     "ffmpeg",
-    ["-v", "error", "-i", absolute(relativePath), "-f", "null", "-"],
+    ["-v", "error", "-i", filePath, "-f", "null", "-"],
     {stdio: ["ignore", "ignore", "pipe"]},
   );
 }
@@ -496,7 +549,7 @@ async function writeOrCheck(relativePath, expected, check) {
   await writeFile(absolute(relativePath), bytes);
 }
 
-async function buildAudioCandidate(member, check) {
+async function buildAudioCandidate(member, check, sourceRoot) {
   const association = member.exactExternalAudio[0];
   if (!association) return null;
   invariant(
@@ -507,7 +560,8 @@ async function buildAudioCandidate(member, check) {
     `${member.animationId}: external audio catalog binding changed`,
   );
   const source = sourcePath(association.path);
-  const sourceIdentity = await identity(source);
+  const physicalSource = physicalSourcePath(association.path, sourceRoot);
+  const sourceIdentity = await identityAbsolute(physicalSource, source);
   invariant(
     sourceIdentity.bytes === association.bytes &&
       sourceIdentity.sha256 === association.sha256,
@@ -526,11 +580,11 @@ async function buildAudioCandidate(member, check) {
   } else {
     await mkdir(path.dirname(absolute(output)), {recursive: true});
     const temporaryOutput = `${absolute(output)}.next`;
-    await writeFile(temporaryOutput, await readFile(absolute(source)), {
+    await writeFile(temporaryOutput, await readFile(physicalSource), {
       mode: 0o644,
     });
     await rename(temporaryOutput, absolute(output));
-    decodeAudioToEof(source);
+    decodeAudioToEof(physicalSource);
   }
   return Object.freeze({
     sourcePath: source,
@@ -538,7 +592,7 @@ async function buildAudioCandidate(member, check) {
     outputPath: output,
     bytes: association.bytes,
     sha256: association.sha256,
-    durationMs: audioDurationMs(source),
+    durationMs: audioDurationMs(physicalSource),
   });
 }
 
@@ -553,9 +607,16 @@ function registryText(registry, members) {
   return `${JSON.stringify({schemaVersion: 1, entries: [...retained, ...added]}, null, 2)}\n`;
 }
 
-export async function buildG3L2CurrentJsCandidates({check = false} = {}) {
+export async function buildG3L2CurrentJsCandidates({
+  check = false,
+  factoryRoot = FACTORY_ROOT,
+  runtimeOnly = false,
+  sourceRoot = null,
+} = {}) {
+  invariant(!runtimeOnly || check, "runtimeOnly requires read-only check mode");
+  const factoryRun = `${factoryRoot}/run-manifest.json`;
   const [run, audit, catalog, registry, auditIdentity] = await Promise.all([
-    readJson(FACTORY_RUN),
+    readJson(factoryRun),
     readJson(AUDIT_PATH),
     readJson(CATALOG_PATH),
     readJson(REGISTRY_PATH),
@@ -574,9 +635,20 @@ export async function buildG3L2CurrentJsCandidates({check = false} = {}) {
     const catalogEntry = catalogById.get(runMember.animationId);
     invariant(member && catalogEntry, `${runMember.animationId}: catalog/audit member missing`);
     invariant(member.ordinal === index + 1 && runMember.ordinal === index + 1, `${runMember.animationId}: source order changed`);
-    const memberManifest = await readJson(member.evidence.memberManifest.path);
+    const freshMemberManifestPath = `${factoryRoot}/${runMember.manifestPath}`;
+    const [memberManifest, freshMemberManifestIdentity] = await Promise.all([
+      readJson(freshMemberManifestPath),
+      identity(freshMemberManifestPath),
+    ]);
+    invariant(
+      freshMemberManifestIdentity.bytes === runMember.manifest.bytes &&
+        freshMemberManifestIdentity.sha256 === runMember.manifest.sha256 &&
+        memberManifest.animationId === member.animationId &&
+        memberManifest.source?.before?.sha256 === member.source.sha256,
+      `${member.animationId}: fresh factory member manifest changed`,
+    );
     const objectId = member.target.objectId;
-    const base = `${FACTORY_ROOT}/members/${member.animationId}/canvas/sprites/DefineSprite_${objectId}`;
+    const base = `${factoryRoot}/members/${member.animationId}/canvas/sprites/DefineSprite_${objectId}`;
     const framesPath = `${base}/frames.html`;
     const helperPath = `${base}/canvas.js`;
     const [framesIdentity, helperIdentity, framesHtml] = await Promise.all([
@@ -586,7 +658,9 @@ export async function buildG3L2CurrentJsCandidates({check = false} = {}) {
     ]);
     const analysis = analyzeFramesHtml(framesHtml, objectId);
     invariant(analysis.frameCount === member.target.frameCount, `${member.animationId}: target frame count changed`);
-    const audioCandidate = await buildAudioCandidate(member, check);
+    const audioCandidate = runtimeOnly
+      ? null
+      : await buildAudioCandidate(member, check, sourceRoot);
     const inputs = Object.freeze({
       audit: auditIdentity,
       frames: framesIdentity,
@@ -603,17 +677,21 @@ export async function buildG3L2CurrentJsCandidates({check = false} = {}) {
     const timelinePath = `packages/demos/src/timelines/${member.animationId}.ts`;
     const modulePath = `packages/demos/src/modules/${member.animationId}.tsx`;
     const manifest = candidateManifest(member, spec, runtimeResult, inputs, audioCandidate);
-    await Promise.all([
-      writeOrCheck(specPath, `${JSON.stringify(spec, null, 2)}\n`, check),
-      writeOrCheck(spec.output.script, runtimeResult.runtime, check),
-      writeOrCheck(spec.output.manifest, manifest, check),
-      writeOrCheck(
-        timelinePath,
-        timelineSource(member, catalogEntry, memberManifest, audioCandidate),
-        check,
-      ),
-      writeOrCheck(modulePath, moduleSource(member, audioCandidate), check),
-    ]);
+    if (runtimeOnly) {
+      await writeOrCheck(spec.output.script, runtimeResult.runtime, true);
+    } else {
+      await Promise.all([
+        writeOrCheck(specPath, `${JSON.stringify(spec, null, 2)}\n`, check),
+        writeOrCheck(spec.output.script, runtimeResult.runtime, check),
+        writeOrCheck(spec.output.manifest, manifest, check),
+        writeOrCheck(
+          timelinePath,
+          timelineSource(member, catalogEntry, memberManifest, audioCandidate),
+          check,
+        ),
+        writeOrCheck(modulePath, moduleSource(member, audioCandidate), check),
+      ]);
+    }
     outputs.push(Object.freeze({
       animationId: member.animationId,
       ordinal: member.ordinal,
@@ -630,17 +708,19 @@ export async function buildG3L2CurrentJsCandidates({check = false} = {}) {
     }));
   }
 
-  invariant(
-    outputs.filter(({audio}) => audio).length === EXPECTED_AUDIO_COUNT,
-    "G3 L2 external-audio candidate count changed",
-  );
-  await writeOrCheck(REGISTRY_PATH, registryText(registry, audit.members), check);
+  if (!runtimeOnly) {
+    invariant(
+      outputs.filter(({audio}) => audio).length === EXPECTED_AUDIO_COUNT,
+      "G3 L2 external-audio candidate count changed",
+    );
+    await writeOrCheck(REGISTRY_PATH, registryText(registry, audit.members), check);
+  }
   const receipt = {
     schemaVersion: 1,
     reportType: "g3-l2-page-only-current-javascript-candidate-build",
     lesson: {grade: 3, lesson: 2, activePageCount: EXPECTED_COUNT},
     inputs: {
-      factoryRun: await identity(FACTORY_RUN),
+      factoryRun: await identity(factoryRun),
       crossGradeAudit: auditIdentity,
       catalog: await identity(CATALOG_PATH),
     },
@@ -674,14 +754,30 @@ export async function buildG3L2CurrentJsCandidates({check = false} = {}) {
       published: false,
     },
   };
-  await writeOrCheck(RECEIPT_PATH, `${JSON.stringify(receipt, null, 2)}\n`, check);
-  return Object.freeze({
+  if (!runtimeOnly) {
+    await writeOrCheck(RECEIPT_PATH, `${JSON.stringify(receipt, null, 2)}\n`, check);
+  }
+  const summary = {
     checked: check,
     candidateCount: outputs.length,
-    audioCandidateCount: outputs.filter(({audio}) => audio).length,
+    audioCandidateCount: runtimeOnly
+      ? EXPECTED_AUDIO_COUNT
+      : outputs.filter(({audio}) => audio).length,
     runtimeBytes: receipt.summary.runtimeBytes,
     strictCompleteCount: 0,
-  });
+  };
+  if (runtimeOnly) {
+    summary.runtimeOnly = true;
+    summary.browserLaunched = false;
+    summary.factoryRun = await identity(factoryRun);
+    summary.runtimes = outputs.map(({animationId, ordinal, runtime}) => ({
+      animationId,
+      ordinal,
+      ...runtime,
+      matchesV1Materialization: true,
+    }));
+  }
+  return Object.freeze(summary);
 }
 
 async function main() {

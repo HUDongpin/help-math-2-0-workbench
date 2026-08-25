@@ -917,7 +917,33 @@ function extractInlineDefinitions(framesHtml, spec) {
   return {definitions, placedFunctions: placed, imageVariables: imageNames};
 }
 
-function sanitizeHelper(helperSource) {
+function scalePixelSpaceFilterParameters(helper) {
+  let scaled = replaceExactlyOnce(
+    helper,
+    "Filters.blur = function (canvas, ctx, hRadius, vRadius, iterations, mask, maskType) {",
+    `Filters.blur = function (canvas, ctx, hRadius, vRadius, iterations, mask, maskType) {
+    hRadius *= ACTIVE_RENDER_SCALE;
+    vRadius *= ACTIVE_RENDER_SCALE;`,
+    "FFDec blur pixel-space scale",
+  );
+  scaled = replaceExactlyOnce(
+    scaled,
+    "Filters.gradientGlow = function (srcCanvas, src, blurX, blurY, angle, distance, colors, ratios, type, iterations, strength, knockout) {",
+    `Filters.gradientGlow = function (srcCanvas, src, blurX, blurY, angle, distance, colors, ratios, type, iterations, strength, knockout) {
+    distance *= ACTIVE_RENDER_SCALE;`,
+    "FFDec gradient-glow pixel-space scale",
+  );
+  scaled = replaceExactlyOnce(
+    scaled,
+    "Filters.dropShadow = function (canvas, src, blurX, blurY, angle, distance, color, inner, iterations, strength, knockout) {",
+    `Filters.dropShadow = function (canvas, src, blurX, blurY, angle, distance, color, inner, iterations, strength, knockout) {
+    distance *= ACTIVE_RENDER_SCALE;`,
+    "FFDec drop-shadow pixel-space scale",
+  );
+  return scaled;
+}
+
+function sanitizeHelper(helperSource, {adaptivePixelFilters = false} = {}) {
   let helper = helperSource.replace(/\r\n?/g, "\n");
   helper = replaceExactlyOnce(helper, "Filters = {};", "var Filters = {};", "FFDec helper global");
   helper = replaceExactlyOnce(
@@ -966,10 +992,27 @@ function sanitizeHelper(helperSource) {
     "",
     "FFDec helper resizer"
   );
-  return helper.trim();
+  return (adaptivePixelFilters
+    ? scalePixelSpaceFilterParameters(helper)
+    : helper
+  ).trim();
 }
 
-function metadataForRuntime(spec, renderScale = 1) {
+function adaptiveResolutionMetadata(spec) {
+  return {
+    schemaVersion: 1,
+    mode: "adaptive-integer",
+    nativeWidth: spec.timeline.stage.width,
+    nativeHeight: spec.timeline.stage.height,
+    supportedRenderScales: [1, 2],
+  };
+}
+
+function metadataForRuntime(
+  spec,
+  renderScale = 1,
+  resolutionMode = "fixed",
+) {
   return {
     schemaVersion: 1,
     animationId: spec.animationId,
@@ -982,7 +1025,9 @@ function metadataForRuntime(spec, renderScale = 1) {
       targetSpriteObjectId: spec.ffdecExport.targetSpriteObjectId
     },
     stage: spec.timeline.stage,
-    ...(renderScale === 1 ? {} : {
+    ...(resolutionMode === "adaptive-v1"
+      ? {resolution: adaptiveResolutionMetadata(spec)}
+      : renderScale === 1 ? {} : {
       // The host reads this to size the backing store. Absent means 1, which
       // keeps every unscaled adapter byte-identical to its pre-scaling build.
       renderScale,
@@ -1437,7 +1482,7 @@ function runtimeStateSource(spec) {
 }`;
 }
 
-export const MAX_ADAPTER_RENDER_SCALE = 3;
+export const MAX_ADAPTER_RENDER_SCALE = 2;
 
 /**
  * The authored coordinate system is preserved at every scale: one
@@ -1458,12 +1503,37 @@ function validateRenderScale(scale) {
   return scale;
 }
 
-export function buildSafeRuntime({helperSource, framesHtml, spec, scale = 1}) {
+function validateResolutionMode(resolutionMode) {
+  if (resolutionMode !== "fixed" && resolutionMode !== "adaptive-v1") {
+    throw new Error(
+      'resolution mode must be exactly "fixed" or "adaptive-v1"',
+    );
+  }
+  return resolutionMode;
+}
+
+export function buildSafeRuntime({
+  helperSource,
+  framesHtml,
+  spec,
+  scale = 1,
+  resolutionMode = "fixed",
+}) {
+  const validatedResolutionMode = validateResolutionMode(resolutionMode);
+  if (validatedResolutionMode === "adaptive-v1" && scale !== 1) {
+    throw new Error("adaptive-v1 runtime must not bake a fixed render scale");
+  }
   const renderScale = validateRenderScale(scale);
   validateSpec(spec);
-  const helper = sanitizeHelper(helperSource);
+  const helper = sanitizeHelper(helperSource, {
+    adaptivePixelFilters: validatedResolutionMode === "adaptive-v1",
+  });
   const {definitions, placedFunctions, imageVariables} = extractInlineDefinitions(framesHtml, spec);
-  const metadata = metadataForRuntime(spec, renderScale);
+  const metadata = metadataForRuntime(
+    spec,
+    renderScale,
+    validatedResolutionMode,
+  );
   const registryEntries = placedFunctions.map((name) => `${JSON.stringify(name)}: ${name}`).join(",\n        ");
   const imageEntries = imageVariables.join(", ");
   const registryName = JSON.stringify(spec.output.globalRegistry);
@@ -1492,7 +1562,7 @@ export function buildSafeRuntime({helperSource, framesHtml, spec, scale = 1}) {
 (function (global) {
 "use strict";
 var canvas = null;
-var SAFE_OBJECTS = null;
+var SAFE_OBJECTS = null;${validatedResolutionMode === "adaptive-v1" ? "\nvar ACTIVE_RENDER_SCALE = 1;" : ""}
 
 ${helper}
 
@@ -1543,9 +1613,17 @@ function render(targetCanvas, request) {
     if (!targetCanvas || typeof targetCanvas.getContext !== "function") {
         throw new Error("targetCanvas must provide a 2D canvas context");
     }
-    if (targetCanvas.width !== ${spec.timeline.stage.width * renderScale} || targetCanvas.height !== ${spec.timeline.stage.height * renderScale}) {
-        throw new Error("targetCanvas must be exactly ${spec.timeline.stage.width * renderScale}x${spec.timeline.stage.height * renderScale}");
+${validatedResolutionMode === "adaptive-v1"
+    ? `    if (!request || (request.renderScale !== 1 && request.renderScale !== 2)) {
+        throw new Error("renderScale must be exactly 1 or 2");
     }
+    var renderScale = request.renderScale;
+    if (targetCanvas.width !== ${spec.timeline.stage.width} * renderScale || targetCanvas.height !== ${spec.timeline.stage.height} * renderScale) {
+        throw new Error("targetCanvas must be exactly " + (${spec.timeline.stage.width} * renderScale) + "x" + (${spec.timeline.stage.height} * renderScale) + " for renderScale " + renderScale);
+    }`
+    : `    if (targetCanvas.width !== ${spec.timeline.stage.width * renderScale} || targetCanvas.height !== ${spec.timeline.stage.height * renderScale}) {
+        throw new Error("targetCanvas must be exactly ${spec.timeline.stage.width * renderScale}x${spec.timeline.stage.height * renderScale}");
+    }`}
     for (var imageIndex = 0; imageIndex < EMBEDDED_IMAGES.length; imageIndex += 1) {
         if (!EMBEDDED_IMAGES[imageIndex].complete || EMBEDDED_IMAGES[imageIndex].naturalWidth < 1) {
             throw new Error("call and await ready() before render()");
@@ -1564,11 +1642,11 @@ function render(targetCanvas, request) {
 
     var previousCanvas = canvas;
     canvas = targetCanvas;
-    ctx.setTransform(${renderScale}, 0, 0, ${renderScale}, 0, 0);
+    ${validatedResolutionMode === "adaptive-v1" ? "ACTIVE_RENDER_SCALE = renderScale;\n    " : ""}ctx.setTransform(${validatedResolutionMode === "adaptive-v1" ? "renderScale" : renderScale}, 0, 0, ${validatedResolutionMode === "adaptive-v1" ? "renderScale" : renderScale}, 0, 0);
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = "source-over";
     ctx.fillStyle = ${JSON.stringify(spec.timeline.stage.backgroundColor)};
-    ctx.fillRect(0, 0, ${renderScale === 1 ? "targetCanvas.width, targetCanvas.height" : `${spec.timeline.stage.width}, ${spec.timeline.stage.height}`});
+    ctx.fillRect(0, 0, ${validatedResolutionMode === "fixed" && renderScale === 1 ? "targetCanvas.width, targetCanvas.height" : `${spec.timeline.stage.width}, ${spec.timeline.stage.height}`});
     ctx.save();
     try {
         ctx.transform(1, 0, 0, 1, ${spec.timeline.stageRenderOffset.x}, ${spec.timeline.stageRenderOffset.y});

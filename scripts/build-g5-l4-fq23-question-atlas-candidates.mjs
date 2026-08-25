@@ -42,6 +42,11 @@ const EXPECTED_IDS = new Set([
 const EXPECTED_CLASSIFICATION =
   "source-static-question-atlas-inspection-current-javascript-engineering-candidate-only";
 const EXPECTED_FFDEC_VERSION = "JPEXS Free Flash Decompiler v.26.2.1";
+const CANONICAL_SOURCE_PREFIX =
+  "source-assets/flash/HELP MATH_ORIGINAL FILES/";
+const V9_PLAN = "work/adaptive-canvas-production-five.plan.v9.json";
+const V9_PLAN_SHA256 =
+  "6ff98b7642c1d3dbb68058d889c0699749050d0cb198ae556d392a8b51bd7a75";
 const EXPECTED_SCENARIO = "source-static-question-atlas-inspection";
 const SOURCE_FRAME_DOMAIN = "sprite-694";
 const ATLAS_FRAME_DOMAIN = "sprite-694-question-atlas";
@@ -84,6 +89,21 @@ function projectPath(relativePath, label = "project path") {
     `${label}: path escapes the project`,
   );
   return absolutePath;
+}
+
+function canonicalSourcePath(relativePath, sourceRoot) {
+  invariant(typeof sourceRoot === "string" && path.isAbsolute(sourceRoot),
+    "sourceRoot must be an explicit absolute path");
+  invariant(relativePath.startsWith(CANONICAL_SOURCE_PREFIX),
+    `source path is outside the canonical prefix: ${relativePath}`);
+  const resolvedRoot = path.resolve(sourceRoot);
+  const resolved = path.resolve(
+    resolvedRoot,
+    relativePath.slice(CANONICAL_SOURCE_PREFIX.length),
+  );
+  invariant(resolved.startsWith(`${resolvedRoot}${path.sep}`),
+    `source path escapes the explicit root: ${relativePath}`);
+  return resolved;
 }
 
 function validateEvidenceBinding(spec, pathKey, hashKey, label) {
@@ -328,8 +348,55 @@ async function readBinding(relativePath, expected = {}) {
   return binding;
 }
 
+async function readSourceBinding(relativePath, expected, sourceRoot) {
+  if (sourceRoot === null) return readBinding(relativePath, expected);
+  const absolutePath = canonicalSourcePath(relativePath, sourceRoot);
+  const [metadata, canonical, bytes] = await Promise.all([
+    lstat(absolutePath),
+    realpath(absolutePath),
+    readFile(absolutePath),
+  ]);
+  invariant(metadata.isFile() && !metadata.isSymbolicLink() &&
+    metadata.nlink === 1 && canonical === absolutePath,
+  `${relativePath}: canonical source must be an ordinary non-linked file`);
+  const binding = {
+    path: relativePath,
+    bytes: bytes.length,
+    sha256: sha256(bytes),
+    contents: bytes,
+    absolutePath,
+  };
+  if (expected?.bytes !== undefined) {
+    invariant(binding.bytes === expected.bytes,
+      `${relativePath}: byte count drifted`);
+  }
+  if (expected?.sha256 !== undefined) {
+    invariant(binding.sha256 === expected.sha256,
+      `${relativePath}: SHA-256 drifted`);
+  }
+  return binding;
+}
+
+async function readV9Input(animationId, outputPath) {
+  const plan = await readBinding(V9_PLAN, {sha256: V9_PLAN_SHA256});
+  const document = JSON.parse(plan.contents.toString("utf8"));
+  const records = document?.payload?.runtimes?.filter(
+    (record) => record.animationId === animationId,
+  ) ?? [];
+  invariant(records.length === 1,
+    `${animationId}: expected exactly one frozen v9 runtime`);
+  const record = records[0];
+  invariant(record.pageRenderer === true &&
+    record.assetPath === outputPath.replace(/^public\/flash-assets\//, "") &&
+    record.lane === "profile-bound-safe-ffdec-root-scale-v1" &&
+    Number.isSafeInteger(record.input?.bytes) &&
+    /^[a-f0-9]{64}$/.test(record.input?.sha256 ?? ""),
+  `${animationId}: frozen v9 input binding changed`);
+  return {plan: withoutContents(plan), record};
+}
+
 function withoutContents(binding) {
-  const {contents: _contents, ...metadata} = binding;
+  const {contents: _contents, absolutePath: _absolutePath, ...metadata} = binding;
   return metadata;
 }
 
@@ -357,7 +424,7 @@ async function exportSprite({ffdec, sourceSwf, temporaryRoot}) {
       "-format", "sprite:canvas",
       "-export", "sprite",
       exportRoot,
-      projectPath(sourceSwf, "source SWF"),
+      sourceSwf.absolutePath ?? projectPath(sourceSwf.path, "source SWF"),
     ],
     {
       cwd: ROOT,
@@ -367,7 +434,7 @@ async function exportSprite({ffdec, sourceSwf, temporaryRoot}) {
   );
   invariant(
     `${result.stdout}\n${result.stderr}`.includes(EXPECTED_FFDEC_VERSION),
-    `${sourceSwf}: FFDec export version changed`,
+    `${sourceSwf.path}: FFDec export version changed`,
   );
   const directory = path.join(exportRoot, "DefineSprite_694");
   const [helper, frames] = await Promise.all([
@@ -677,21 +744,25 @@ export async function buildQuestionAtlasCandidate({
   ffdec,
   browser: suppliedBrowser,
   check = false,
+  regenerationOnly = false,
+  sourceRoot = null,
 }) {
+  invariant(!regenerationOnly || check,
+    "regenerationOnly requires read-only check mode");
   const specBinding = await readBinding(specPath);
   const spec = validateQuestionAtlasSpec(
     JSON.parse(specBinding.contents.toString("utf8")),
   );
   const [sourceSwf, sourceFla, migrationManifest, scenario, audio,
     disposition, scripts, swfmill] = await Promise.all([
-    readBinding(spec.source.swf, {
+    readSourceBinding(spec.source.swf, {
       bytes: spec.source.swfBytes,
       sha256: spec.source.swfSha256,
-    }),
-    readBinding(spec.source.fla, {
+    }, sourceRoot),
+    readSourceBinding(spec.source.fla, {
       bytes: spec.source.flaBytes,
       sha256: spec.source.flaSha256,
-    }),
+    }, sourceRoot),
     readBinding(spec.evidence.migrationManifest, {
       sha256: spec.evidence.migrationManifestSha256,
     }),
@@ -729,11 +800,13 @@ export async function buildQuestionAtlasCandidate({
   );
   let ownedBrowser = null;
   try {
-    ownedBrowser = suppliedBrowser ? null : await chromium.launch({headless: true});
+    ownedBrowser = suppliedBrowser || regenerationOnly
+      ? null
+      : await chromium.launch({headless: true});
     const browser = suppliedBrowser ?? ownedBrowser;
     const exported = await exportSprite({
       ffdec,
-      sourceSwf: spec.source.swf,
+      sourceSwf,
       temporaryRoot,
     });
     invariant(
@@ -764,6 +837,59 @@ export async function buildQuestionAtlasCandidate({
     );
     new Script(runtime, {filename: path.basename(spec.output.script)});
     const runtimeBytes = Buffer.from(runtime);
+    if (regenerationOnly) {
+      const [v9, observedRuntime, generator, safeAdapter] = await Promise.all([
+        readV9Input(spec.animationId, spec.output.script),
+        readBinding(spec.output.script),
+        readBinding(GENERATOR_PATH),
+        readBinding(SAFE_ADAPTER_PATH),
+      ]);
+      invariant(
+        observedRuntime.bytes === v9.record.input.bytes &&
+          observedRuntime.sha256 === v9.record.input.sha256 &&
+          runtimeBytes.equals(observedRuntime.contents) &&
+          runtimeBytes.length === v9.record.input.bytes &&
+          sha256(runtimeBytes) === v9.record.input.sha256,
+        `${spec.animationId}: regenerated runtime differs from the exact v9 input`,
+      );
+      return {
+        animationId: spec.animationId,
+        check: true,
+        regenerationOnly: true,
+        browserLaunched: false,
+        sourceSwf: withoutContents(sourceSwf),
+        sourceFla: withoutContents(sourceFla),
+        spec: withoutContents(specBinding),
+        generator: withoutContents(generator),
+        safeAdapter: withoutContents(safeAdapter),
+        v9Plan: v9.plan,
+        freshFfdec: {
+          tool: ffdec,
+          targetSpriteObjectId: spec.ffdecExport.targetSpriteObjectId,
+          helper: {
+            bytes: exported.helper.length,
+            sha256: sha256(exported.helper),
+          },
+          framesHtml: {
+            bytes: exported.frames.length,
+            sha256: sha256(exported.frames),
+          },
+        },
+        transformation: {
+          kind: "source-proven-hidden-instance-suppression",
+          suppressedPlacementCount: suppression.suppressedPlacementCount,
+          transformedFramesHtmlSha256: sha256(suppression.transformed),
+        },
+        runtime: {
+          path: spec.output.script,
+          bytes: runtimeBytes.length,
+          sha256: sha256(runtimeBytes),
+          matchesV1Materialization: true,
+          matchesV9Input: true,
+        },
+        strictAcceptanceEffect: "none",
+      };
+    }
     const browserQa = await runBrowserSweep(browser, runtime, spec);
     const atlas = spec.runtimeContract.publicQuestionAtlas;
     const manifest = {
@@ -904,16 +1030,22 @@ export function parseArguments(argv) {
   const options = {
     check: false,
     ffdec: "ffdec",
+    regenerationOnly: false,
+    sourceRoot: null,
     specs: [...DEFAULT_SPEC_PATHS],
   };
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === "--check") {
       options.check = true;
-    } else if (argument === "--ffdec" || argument === "--spec") {
+    } else if (argument === "--regeneration-only") {
+      options.regenerationOnly = true;
+    } else if (argument === "--ffdec" || argument === "--spec" ||
+      argument === "--source-root") {
       const value = argv[index + 1];
       invariant(value && !value.startsWith("-"), `${argument} requires one value`);
       if (argument === "--ffdec") options.ffdec = value;
+      else if (argument === "--source-root") options.sourceRoot = value;
       else options.specs = [value];
       index += 1;
     } else if (argument === "--help" || argument === "-h") {
@@ -922,6 +1054,15 @@ export function parseArguments(argv) {
       throw new Error(`unknown argument: ${argument}`);
     }
   }
+  invariant(!options.regenerationOnly || options.check,
+    "--regeneration-only requires --check");
+  if (options.regenerationOnly) {
+    invariant(options.sourceRoot && path.isAbsolute(options.sourceRoot),
+      "--regeneration-only requires an absolute --source-root");
+  } else {
+    invariant(options.sourceRoot === null,
+      "--source-root is only valid with --regeneration-only");
+  }
   return options;
 }
 
@@ -929,7 +1070,10 @@ export async function buildQuestionAtlasCandidates(options = {}) {
   const ffdec = await inspectFfdec(options.ffdec ?? "ffdec");
   const specPaths = options.specs ?? [...DEFAULT_SPEC_PATHS];
   const results = [];
-  const browser = await chromium.launch({headless: true});
+  const regenerationOnly = options.regenerationOnly ?? false;
+  const browser = regenerationOnly
+    ? null
+    : await chromium.launch({headless: true});
   try {
     for (const specPath of specPaths) {
       results.push(await buildQuestionAtlasCandidate({
@@ -937,28 +1081,46 @@ export async function buildQuestionAtlasCandidates(options = {}) {
         ffdec,
         browser,
         check: options.check ?? false,
+        regenerationOnly,
+        sourceRoot: options.sourceRoot ?? null,
       }));
     }
   } finally {
-    await browser.close();
+    if (browser) await browser.close();
   }
   invariant(
     specPaths.length !== DEFAULT_SPEC_PATHS.length ||
       new Set(results.map((result) => result.animationId)).size === 2,
     "default question-atlas run did not produce two distinct candidates",
   );
-  if (results.length === 2) {
+  if (results.length === 2 && !regenerationOnly) {
     invariant(
       JSON.stringify(results[0].browserQa.frames.map((frame) => frame.pngSha256)) ===
         JSON.stringify(results[1].browserQa.frames.map((frame) => frame.pngSha256)),
       "FQ002/FQ003 hash-identical source-static drawing exports rendered differently",
     );
+  } else if (results.length === 2) {
+    invariant(
+      results[0].freshFfdec.helper.sha256 ===
+          results[1].freshFfdec.helper.sha256 &&
+        results[0].freshFfdec.framesHtml.sha256 ===
+          results[1].freshFfdec.framesHtml.sha256,
+      "FQ002/FQ003 fresh source-static FFDec exports differ",
+    );
   }
   return {
     check: options.check ?? false,
+    regenerationOnly,
+    browserLaunched: !regenerationOnly,
     ffdec: ffdec.version,
-    chromium: results[0]?.browserQa.browser ?? null,
-    siblingAtlasPixelsEqual: results.length === 2,
+    chromium: results[0]?.browserQa?.browser ?? null,
+    siblingAtlasPixelsEqual: regenerationOnly ? null : results.length === 2,
+    siblingFreshFfdecExportsEqual: regenerationOnly && results.length === 2
+      ? results[0].freshFfdec?.helper.sha256 ===
+          results[1].freshFfdec?.helper.sha256 &&
+        results[0].freshFfdec?.framesHtml.sha256 ===
+          results[1].freshFfdec?.framesHtml.sha256
+      : null,
     results,
   };
 }
@@ -969,6 +1131,8 @@ function usage() {
     "",
     "Options:",
     "  --check         Verify generated runtime, manifest, and report are current",
+    "  --regeneration-only  Source-first runtime parity without browser QA",
+    "  --source-root <path> Explicit absolute canonical source root",
     "  --ffdec <path>  FFDec executable (default: ffdec)",
     "  --spec <path>   Build one allowlisted spec instead of both defaults",
   ].join("\n");

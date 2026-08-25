@@ -35,6 +35,11 @@ const DEFAULT_SPEC =
   "migrations/course-g05-l04-fq-001/audit/dual-sprite-composite-current-js-candidate-spec.json";
 const ANIMATION_ID = "course-g05-l04-fq-001";
 const EXPECTED_FFDEC_VERSION = "JPEXS Free Flash Decompiler v.26.2.1";
+const CANONICAL_SOURCE_PREFIX =
+  "source-assets/flash/HELP MATH_ORIGINAL FILES/";
+const V9_PLAN = "work/adaptive-canvas-production-five.plan.v9.json";
+const V9_PLAN_SHA256 =
+  "6ff98b7642c1d3dbb68058d889c0699749050d0cb198ae556d392a8b51bd7a75";
 const EXPECTED_CLASSIFICATION =
   "source-static-dual-sprite-composite-current-javascript-engineering-candidate-only";
 const EXPECTED_SCENARIO = "source-static-composite-prefix";
@@ -101,6 +106,21 @@ function projectPath(relativePath) {
     `path escapes the project: ${relativePath}`,
   );
   return absolutePath;
+}
+
+function canonicalSourcePath(relativePath, sourceRoot) {
+  invariant(typeof sourceRoot === "string" && path.isAbsolute(sourceRoot),
+    "sourceRoot must be an explicit absolute path");
+  invariant(relativePath.startsWith(CANONICAL_SOURCE_PREFIX),
+    `source path is outside the canonical prefix: ${relativePath}`);
+  const resolvedRoot = path.resolve(sourceRoot);
+  const resolved = path.resolve(
+    resolvedRoot,
+    relativePath.slice(CANONICAL_SOURCE_PREFIX.length),
+  );
+  invariant(resolved.startsWith(`${resolvedRoot}${path.sep}`),
+    `source path escapes the explicit root: ${relativePath}`);
+  return resolved;
 }
 
 function expectedRange(first, last) {
@@ -392,18 +412,28 @@ export function validateFq001CompositeSpec(spec) {
 }
 
 export function parseArguments(argv) {
-  const options = {check: false, ffdec: "ffdec", spec: DEFAULT_SPEC};
+  const options = {
+    check: false,
+    ffdec: "ffdec",
+    regenerationOnly: false,
+    sourceRoot: null,
+    spec: DEFAULT_SPEC,
+  };
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === "--check") {
       options.check = true;
-    } else if (argument === "--ffdec" || argument === "--spec") {
+    } else if (argument === "--regeneration-only") {
+      options.regenerationOnly = true;
+    } else if (argument === "--ffdec" || argument === "--spec" ||
+      argument === "--source-root") {
       const value = argv[index + 1];
       invariant(
         value && !value.startsWith("-"),
         `${argument} requires one value`,
       );
       if (argument === "--ffdec") options.ffdec = value;
+      else if (argument === "--source-root") options.sourceRoot = value;
       else options.spec = value;
       index += 1;
     } else if (argument === "--help" || argument === "-h") {
@@ -411,6 +441,15 @@ export function parseArguments(argv) {
     } else {
       throw new Error(`unknown argument: ${argument}`);
     }
+  }
+  invariant(!options.regenerationOnly || options.check,
+    "--regeneration-only requires --check");
+  if (options.regenerationOnly) {
+    invariant(options.sourceRoot && path.isAbsolute(options.sourceRoot),
+      "--regeneration-only requires an absolute --source-root");
+  } else {
+    invariant(options.sourceRoot === null,
+      "--source-root is only valid with --regeneration-only");
   }
   return options;
 }
@@ -448,8 +487,56 @@ async function readBinding(relativePath, expected = {}) {
   return binding;
 }
 
+async function readSourceBinding(relativePath, expected, sourceRoot) {
+  if (sourceRoot === null) return readBinding(relativePath, expected);
+  const absolutePath = canonicalSourcePath(relativePath, sourceRoot);
+  const [metadata, canonical, bytes] = await Promise.all([
+    lstat(absolutePath),
+    realpath(absolutePath),
+    readFile(absolutePath),
+  ]);
+  invariant(metadata.isFile() && !metadata.isSymbolicLink() &&
+    metadata.nlink === 1 && canonical === absolutePath,
+  `${relativePath}: canonical source must be an ordinary non-linked file`);
+  const binding = {
+    path: relativePath,
+    bytes: bytes.length,
+    sha256: sha256(bytes),
+    contents: bytes,
+    absolutePath,
+  };
+  if (expected?.bytes !== undefined) {
+    invariant(binding.bytes === expected.bytes,
+      `${relativePath}: expected ${expected.bytes} bytes, observed ${binding.bytes}`);
+  }
+  if (expected?.sha256 !== undefined) {
+    invariant(binding.sha256 === expected.sha256,
+      `${relativePath}: SHA-256 drifted`);
+  }
+  return binding;
+}
+
+async function readV9Input(outputPath) {
+  const plan = await readBinding(V9_PLAN, {sha256: V9_PLAN_SHA256});
+  const document = JSON.parse(plan.contents);
+  const records = document?.payload?.runtimes?.filter(
+    (record) => record.animationId === ANIMATION_ID,
+  ) ?? [];
+  invariant(records.length === 1,
+    "FQ001 frozen v9 runtime identity changed");
+  const record = records[0];
+  invariant(record.pageRenderer === true &&
+    record.assetPath === outputPath.replace(/^public\/flash-assets\//, "") &&
+    record.lane ===
+      "profile-bound-g5-l4-fq001-dual-sprite-special-v1" &&
+    Number.isSafeInteger(record.input?.bytes) &&
+    /^[a-f0-9]{64}$/.test(record.input?.sha256 ?? ""),
+  "FQ001 frozen v9 input binding changed");
+  return {plan: withoutContents(plan), record};
+}
+
 function withoutContents(binding) {
-  const {contents: _contents, ...metadata} = binding;
+  const {contents: _contents, absolutePath: _absolutePath, ...metadata} = binding;
   return metadata;
 }
 
@@ -482,7 +569,7 @@ async function exportSprite({ffdec, objectId, sourceSwf, temporaryRoot}) {
       "-export",
       "sprite",
       exportRoot,
-      projectPath(sourceSwf),
+      sourceSwf.absolutePath ?? projectPath(sourceSwf.path),
     ],
     {
       cwd: ROOT,
@@ -1427,8 +1514,19 @@ function buildReport({browserQa, manifest, spec, specBinding}) {
 export async function buildFq001CompositeCandidate({
   check = false,
   ffdec = "ffdec",
+  regenerationOnly = false,
+  sourceRoot = null,
   specPath = DEFAULT_SPEC,
 } = {}) {
+  invariant(!regenerationOnly || check,
+    "regenerationOnly requires read-only check mode");
+  if (regenerationOnly) {
+    invariant(sourceRoot && path.isAbsolute(sourceRoot),
+      "regenerationOnly requires an explicit absolute sourceRoot");
+  } else {
+    invariant(sourceRoot === null,
+      "sourceRoot is only valid with regenerationOnly");
+  }
   const specBinding = await readBinding(specPath);
   const spec = validateFq001CompositeSpec(JSON.parse(specBinding.contents));
   const [
@@ -1444,14 +1542,14 @@ export async function buildFq001CompositeCandidate({
   ] = await Promise.all([
     readBinding(GENERATOR_PATH),
     readBinding(SAFE_ADAPTER_PATH),
-    readBinding(spec.source.swf, {
+    readSourceBinding(spec.source.swf, {
       bytes: spec.source.swfBytes,
       sha256: spec.source.swfSha256,
-    }),
-    readBinding(spec.source.fla, {
+    }, sourceRoot),
+    readSourceBinding(spec.source.fla, {
       bytes: spec.source.flaBytes,
       sha256: spec.source.flaSha256,
-    }),
+    }, sourceRoot),
     readBinding(spec.evidence.scenarioInventory, {
       sha256: spec.evidence.scenarioInventorySha256,
     }),
@@ -1482,19 +1580,21 @@ export async function buildFq001CompositeCandidate({
   const temporaryRoot = await mkdtemp(
     path.join(os.tmpdir(), "help-math-g5-l4-fq001-composite-"),
   );
-  const browser = await chromium.launch({headless: true});
+  const browser = regenerationOnly
+    ? null
+    : await chromium.launch({headless: true});
   try {
     const [primaryRaw, companionRaw] = await Promise.all([
       exportSprite({
         ffdec: ffdecTool,
         objectId: spec.ffdecExport.primary.objectId,
-        sourceSwf: spec.source.swf,
+        sourceSwf,
         temporaryRoot,
       }),
       exportSprite({
         ffdec: ffdecTool,
         objectId: spec.ffdecExport.companion.objectId,
-        sourceSwf: spec.source.swf,
+        sourceSwf,
         temporaryRoot,
       }),
     ]);
@@ -1553,6 +1653,61 @@ export async function buildFq001CompositeCandidate({
       runtime: patched.runtime,
     };
     const runtimeBytes = Buffer.from(built.runtime);
+    if (regenerationOnly) {
+      const [v9, observedRuntime] = await Promise.all([
+        readV9Input(spec.output.script),
+        readBinding(spec.output.script),
+      ]);
+      invariant(
+        observedRuntime.bytes === v9.record.input.bytes &&
+          observedRuntime.sha256 === v9.record.input.sha256 &&
+          runtimeBytes.equals(Buffer.from(observedRuntime.contents)) &&
+          runtimeBytes.length === v9.record.input.bytes &&
+          sha256(runtimeBytes) === v9.record.input.sha256,
+        "FQ001 regenerated runtime differs from the exact v9 input",
+      );
+      return {
+        animationId: spec.animationId,
+        check: true,
+        regenerationOnly: true,
+        browserLaunched: false,
+        sourceSwf: withoutContents(sourceSwf),
+        sourceFla: withoutContents(sourceFla),
+        spec: withoutContents(specBinding),
+        generator: withoutContents(generatorBinding),
+        safeAdapter: withoutContents(safeAdapterBinding),
+        v9Plan: v9.plan,
+        freshFfdec: {
+          tool: ffdecTool,
+          primary: {
+            objectId: spec.ffdecExport.primary.objectId,
+            framesHtml: {
+              bytes: primaryRaw.frames.length,
+              sha256: sha256(primaryRaw.frames),
+            },
+          },
+          companion: {
+            objectId: spec.ffdecExport.companion.objectId,
+            framesHtml: {
+              bytes: companionRaw.frames.length,
+              sha256: sha256(companionRaw.frames),
+            },
+          },
+          helper: {
+            bytes: primaryRaw.helper.length,
+            sha256: sha256(primaryRaw.helper),
+          },
+        },
+        runtime: {
+          path: spec.output.script,
+          bytes: runtimeBytes.length,
+          sha256: sha256(runtimeBytes),
+          matchesV1Materialization: true,
+          matchesV9Input: true,
+        },
+        strictAcceptanceEffect: "none",
+      };
+    }
     const browserQa = await runBrowserSweep(browser, built.runtime, spec);
     const manifest = buildManifest({
       bound,
@@ -1611,7 +1766,7 @@ export async function buildFq001CompositeCandidate({
     };
   } finally {
     await Promise.all([
-      browser.close(),
+      browser ? browser.close() : Promise.resolve(),
       rm(temporaryRoot, {recursive: true, force: true}),
     ]);
   }
@@ -1622,6 +1777,8 @@ function printHelp() {
     "Usage: node scripts/build-g5-l4-fq001-dual-sprite-composite-candidate.mjs [options]\n\n" +
       "Options:\n" +
       "  --check              Verify generated outputs without rewriting them\n" +
+      "  --regeneration-only  Source-first runtime parity without browser QA\n" +
+      "  --source-root <path> Explicit absolute canonical source root\n" +
       "  --ffdec <command>    FFDec launcher (default: ffdec)\n" +
       `  --spec <path>        Dedicated FQ001 specification (default: ${DEFAULT_SPEC})\n`,
   );

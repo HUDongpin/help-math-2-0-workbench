@@ -167,4 +167,18 @@ test("IN003 module is prototype-only and blocked UI states disclose the boundary
   assert.match(spanishMarkup, /data-owner-accepted="false"/);
   assert.match(spanishMarkup, /data-strict-migration-complete="false"/);
   assert.doesNotMatch(spanishMarkup, /<canvas/);
+
+  const readyMarkup = renderToStaticMarkup(
+    createElement(courseIn003.Renderer, {
+      frame: 27,
+      frameDomain: "sprite-84",
+      scenario: "source-static-frame",
+      lang: "en",
+      seed: 7,
+    }),
+  );
+  assert.match(readyMarkup, /data-render-scale="1"/);
+  assert.match(readyMarkup, /data-canvas-backing-width="800"/);
+  assert.match(readyMarkup, /data-canvas-backing-height="600"/);
+  assert.match(readyMarkup, /data-resolution-status="native"/);
 });

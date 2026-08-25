@@ -8,6 +8,7 @@ import {
   mkdtemp,
   readFile,
   readdir,
+  realpath,
   rm,
   stat,
   writeFile,
@@ -24,6 +25,7 @@ import {buildSafeRuntime} from "./build-safe-ffdec-canvas-adapter.mjs";
 const execFile = promisify(execFileCallback);
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const ANIMATION_ID = "course-g04-l03-vb-009";
+const ARCHIVE_PREFIX = "source-assets/flash/HELP MATH_ORIGINAL FILES";
 const SOURCE_SWF =
   "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB09.swf";
 const SOURCE_FLA =
@@ -48,6 +50,7 @@ const OUTPUT_REPORT_JSON =
   "reports/g4-l3-vb009-current-javascript-candidate.json";
 const OUTPUT_REPORT_MARKDOWN =
   "reports/g4-l3-vb009-current-javascript-candidate.md";
+const V9_PLAN = "work/adaptive-canvas-production-five.plan.v9.json";
 
 const EXPECTED = Object.freeze({
   sourceSwfSha256:
@@ -188,10 +191,32 @@ function projectPath(relativePath) {
   return resolved;
 }
 
+function boundSourcePath(relativePath, sourceRoot) {
+  invariant(typeof sourceRoot === "string" && path.isAbsolute(sourceRoot),
+    "sourceRoot must be an explicit absolute path");
+  invariant(relativePath.startsWith(`${ARCHIVE_PREFIX}/`),
+    `source path is outside the canonical archive prefix: ${relativePath}`);
+  const resolvedRoot = path.resolve(sourceRoot);
+  const resolved = path.resolve(
+    resolvedRoot,
+    relativePath.slice(`${ARCHIVE_PREFIX}/`.length),
+  );
+  invariant(resolved.startsWith(`${resolvedRoot}${path.sep}`),
+    `source path escapes the explicit source root: ${relativePath}`);
+  return resolved;
+}
+
 async function readPinned(relativePath, expectedHash, expectedBytes, label) {
   const absolutePath = projectPath(relativePath);
+  return readPinnedAbsolute(absolutePath, expectedHash, expectedBytes, label);
+}
+
+async function readPinnedAbsolute(absolutePath, expectedHash, expectedBytes,
+  label) {
   const [entry, bytes] = await Promise.all([lstat(absolutePath), readFile(absolutePath)]);
   invariant(entry.isFile() && !entry.isSymbolicLink(), `${label}: not a regular file`);
+  invariant(await realpath(absolutePath) === absolutePath,
+    `${label}: symlinked ancestry or path alias is forbidden`);
   const physical = await stat(absolutePath);
   invariant(physical.nlink === 1, `${label}: multiple hard links are not allowed`);
   invariant(
@@ -203,6 +228,34 @@ async function readPinned(relativePath, expectedHash, expectedBytes, label) {
     `${label}: SHA-256 does not match the pinned identity`,
   );
   return bytes;
+}
+
+async function readPinnedSource(relativePath, expectedHash, expectedBytes,
+  label, sourceRoot) {
+  return readPinnedAbsolute(
+    boundSourcePath(relativePath, sourceRoot),
+    expectedHash,
+    expectedBytes,
+    label,
+  );
+}
+
+async function readV9Identity() {
+  const bytes = await readFile(projectPath(V9_PLAN));
+  const document = JSON.parse(bytes);
+  const record = document?.payload?.runtimes?.find((candidate) =>
+    candidate.animationId === ANIMATION_ID);
+  invariant(record && record.assetPath ===
+    OUTPUT_SCRIPT.slice("public/flash-assets/".length),
+  "VB009 v9 runtime identity is absent or path-mismatched");
+  return {
+    plan: {path: V9_PLAN, bytes: bytes.length, sha256: sha256(bytes)},
+    animationId: record.animationId,
+    assetPath: record.assetPath,
+    lane: record.lane,
+    input: record.input,
+    output: record.output,
+  };
 }
 
 async function fileBinding(relativePath) {
@@ -243,17 +296,31 @@ export function parseArguments(argv, {root = ROOT} = {}) {
     ffdec: "ffdec",
     python: "python3",
     swfmill: "swfmill",
+    regenerationOnly: false,
+    sourceRoot: null,
     root,
   };
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === "--check") result.check = true;
-    else if (["--ffdec", "--python", "--swfmill"].includes(argument)) {
+    else if (argument === "--regeneration-only") {
+      result.regenerationOnly = true;
+    }
+    else if (["--ffdec", "--python", "--swfmill", "--source-root"]
+      .includes(argument)) {
       const value = argv[index + 1];
       invariant(value && !value.startsWith("--"), `${argument} requires a value`);
-      result[argument.slice(2)] = value;
+      if (argument === "--source-root") result.sourceRoot = value;
+      else result[argument.slice(2)] = value;
       index += 1;
     } else throw new Error(`Unknown argument: ${argument}`);
+  }
+  invariant(!result.regenerationOnly || result.check,
+    "--regeneration-only requires --check");
+  if (result.regenerationOnly) {
+    invariant(typeof result.sourceRoot === "string" &&
+      path.isAbsolute(result.sourceRoot),
+    "--regeneration-only requires an absolute --source-root");
   }
   return result;
 }
@@ -577,7 +644,11 @@ export async function generateG4L3Vb009CurrentJsCandidate({
   ffdec = "ffdec",
   python = "python3",
   swfmill = "swfmill",
+  regenerationOnly = false,
+  sourceRoot = null,
 } = {}) {
+  invariant(!regenerationOnly || check,
+    "regenerationOnly requires read-only check mode");
   const [
     sourceSwf,
     sourceFla,
@@ -586,19 +657,37 @@ export async function generateG4L3Vb009CurrentJsCandidate({
     parserBytes,
     implementationClosure,
   ] = await Promise.all([
-    readPinned(
+    regenerationOnly ? readPinnedSource(
+      SOURCE_SWF,
+      EXPECTED.sourceSwfSha256,
+      EXPECTED.sourceSwfBytes,
+      "source SWF",
+      sourceRoot,
+    ) : readPinned(
       SOURCE_SWF,
       EXPECTED.sourceSwfSha256,
       EXPECTED.sourceSwfBytes,
       "source SWF",
     ),
-    readPinned(
+    regenerationOnly ? readPinnedSource(
+      SOURCE_FLA,
+      EXPECTED.sourceFlaSha256,
+      EXPECTED.sourceFlaBytes,
+      "source FLA",
+      sourceRoot,
+    ) : readPinned(
       SOURCE_FLA,
       EXPECTED.sourceFlaSha256,
       EXPECTED.sourceFlaBytes,
       "source FLA",
     ),
-    readPinned(
+    regenerationOnly ? readPinnedSource(
+      SOURCE_ASSOCIATED_AUDIO,
+      EXPECTED.sourceAssociatedAudioSha256,
+      EXPECTED.sourceAssociatedAudioBytes,
+      "associated catalog audio",
+      sourceRoot,
+    ) : readPinned(
       SOURCE_ASSOCIATED_AUDIO,
       EXPECTED.sourceAssociatedAudioSha256,
       EXPECTED.sourceAssociatedAudioBytes,
@@ -630,7 +719,8 @@ export async function generateG4L3Vb009CurrentJsCandidate({
     const canvasDirectory = path.join(temporaryRoot, "canvas");
     const scriptsDirectory = path.join(temporaryRoot, "scripts");
     const swfmillXml = path.join(temporaryRoot, "source.xml");
-    const sourcePath = projectPath(SOURCE_SWF);
+    const sourcePath = regenerationOnly ?
+      boundSourcePath(SOURCE_SWF, sourceRoot) : projectPath(SOURCE_SWF);
     const canvasExport = await run(ffdec, [
       "-config",
       "packJavaScripts=false",
@@ -719,6 +809,63 @@ export async function generateG4L3Vb009CurrentJsCandidate({
     );
 
     const runtimeBytes = Buffer.from(built.runtime);
+    if (regenerationOnly) {
+      const [observedV1, v9] = await Promise.all([
+        readFile(projectPath(OUTPUT_SCRIPT)),
+        readV9Identity(),
+      ]);
+      invariant(runtimeBytes.equals(observedV1) &&
+        runtimeBytes.length === v9.input.bytes &&
+        sha256(runtimeBytes) === v9.input.sha256,
+      "VB009 regenerated runtime differs from the exact v9 input");
+      return {
+        animationId: ANIMATION_ID,
+        check: true,
+        regenerationOnly: true,
+        browserLaunched: false,
+        source: {
+          swf: {
+            path: SOURCE_SWF,
+            bytes: sourceSwf.length,
+            sha256: sha256(sourceSwf),
+          },
+          fla: {
+            path: SOURCE_FLA,
+            bytes: sourceFla.length,
+            sha256: sha256(sourceFla),
+          },
+          associatedAudio: {
+            path: SOURCE_ASSOCIATED_AUDIO,
+            bytes: associatedAudio.length,
+            sha256: sha256(associatedAudio),
+          },
+        },
+        sourcePreaudit: {
+          path: SOURCE_PREAUDIT,
+          bytes: sourcePreauditBytes.length,
+          sha256: sha256(sourcePreauditBytes),
+        },
+        implementationClosure,
+        freshExport: {
+          helper: {bytes: helper.length, sha256: sha256(helper)},
+          framesHtml: {bytes: framesHtml.length, sha256: sha256(framesHtml)},
+          scripts: scriptRelativePaths.length,
+          swfmillXml: {
+            bytes: swfmillXmlBytes.length,
+            sha256: sha256(swfmillXmlBytes),
+          },
+        },
+        runtime: {
+          path: OUTPUT_SCRIPT,
+          bytes: runtimeBytes.length,
+          sha256: sha256(runtimeBytes),
+          matchesV1Materialization: true,
+          matchesV9Input: true,
+        },
+        v9,
+        strictAcceptanceEffect: "none",
+      };
+    }
     const swfmillVersionText =
       `${swfmillVersion.stdout}\n${swfmillVersion.stderr}`.trim();
     invariant(

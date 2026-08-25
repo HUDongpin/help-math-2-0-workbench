@@ -28,6 +28,8 @@ test("IN003 candidate CLI is explicit and rejects unknown arguments", () => {
     check: true,
     ffdec: "ffdec",
     python: "python3",
+    regenerationOnly: false,
+    sourceRoot: null,
     swfmill: "swfmill",
     root: ROOT,
   });
@@ -37,6 +39,21 @@ test("IN003 candidate CLI is explicit and rejects unknown arguments", () => {
   );
   assert.throws(() => parseArguments(["--python"], {root: ROOT}), /requires a value/);
   assert.throws(() => parseArguments(["--unknown"], {root: ROOT}), /Unknown argument/);
+  assert.deepEqual(parseArguments([
+    "--check", "--regeneration-only", "--source-root", "/canonical/source",
+  ], {root: ROOT}), {
+    check: true,
+    ffdec: "ffdec",
+    python: "python3",
+    regenerationOnly: true,
+    sourceRoot: "/canonical/source",
+    swfmill: "swfmill",
+    root: ROOT,
+  });
+  assert.throws(() => parseArguments(["--regeneration-only"], {root: ROOT}),
+    /requires --check/);
+  assert.throws(() => parseArguments(["--check", "--source-root", "relative"], {root: ROOT}),
+    /only valid with/);
 });
 
 test("IN003 checked-in outputs reproduce from fresh hash-bound source extraction", async () => {
@@ -93,4 +110,3 @@ test("IN003 manifest and report keep safety and acceptance boundaries fail-close
   assert.match(runtime, /unsupported source-proven language/);
   assert.match(runtime, /HELP_MATH_CANVAS_ASSETS/);
 });
-

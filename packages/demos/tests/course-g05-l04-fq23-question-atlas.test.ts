@@ -435,6 +435,10 @@ test("live renderer exposes keyboard-native radio/submit/replay controls while d
       entryStateSha256: "",
     }));
     assert.match(liveMarkup, /data-interactive-controls-enabled="true"/);
+    assert.match(liveMarkup, /data-render-scale="1"/);
+    assert.match(liveMarkup, /data-canvas-backing-width="800"/);
+    assert.match(liveMarkup, /data-canvas-backing-height="600"/);
+    assert.match(liveMarkup, /data-resolution-status="native"/);
     assert.match(liveMarkup, /data-current-javascript-question-controls="true"/);
     assert.match(
       liveMarkup,
