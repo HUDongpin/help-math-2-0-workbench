@@ -88,6 +88,8 @@ const BOUND_EXTERNAL_RECEIPT_NAMES = Object.freeze([
   'c0002WrongTargetSupersessionSha256',
   'c0003PageOnlySpineReviewSha256',
   'c0004DeployClosureReviewSha256',
+  'c0005ActionRuntimeWarningSuccessorHostedClosureSha256',
+  'c0005ActionRuntimeWarningSuccessorPrecommitReviewSha256',
   'c0005AnimationRuntimeAudioPassiveLoopReviewSha256',
   'c0005ExactHostedSuccessorWarningQuarantineSha256',
   'c0005IntegratedSuccessorIndependentReviewSha256',
@@ -766,6 +768,14 @@ function verifyBoundReceiptReferences({anchors, backlog, externalInputs}) {
     'c0003PageOnlySpineReviewSha256',
   );
   requireTaskArtifact('C0-004-DEPLOY-CLOSURE', 'c0004DeployClosureReviewSha256');
+  requireTaskArtifact(
+    'C0-005-GITHUB-HOSTED-CI',
+    'c0005ActionRuntimeWarningSuccessorHostedClosureSha256',
+  );
+  requireTaskArtifact(
+    'C0-005-GITHUB-HOSTED-CI',
+    'c0005ActionRuntimeWarningSuccessorPrecommitReviewSha256',
+  );
   requireTaskArtifact(
     'C0-005-GITHUB-HOSTED-CI',
     'c0005AnimationRuntimeAudioPassiveLoopReviewSha256',
