@@ -84,6 +84,19 @@ function initialGame(replay: number): GameState {
   });
 }
 
+export function getCourseG04L09Gs002PracticeBranchIndex(
+  questionIndex: number,
+): number {
+  if (
+    !Number.isSafeInteger(questionIndex) ||
+    questionIndex < 0 ||
+    questionIndex >= 10
+  ) {
+    throw new RangeError("GS002 questionIndex must be an integer from 0 through 9");
+  }
+  return questionIndex + 1;
+}
+
 function send(
   callback: AnimationRendererProps["onLessonHostRequest"],
   request: LessonHostRequest,
@@ -176,7 +189,7 @@ export function CourseG04L09Gs002Renderer(props: AnimationRendererProps) {
       type: "record-practice-feedback",
       interactionId: `gs002-q${game.questionIndex + 1}`,
       outcome: correct ? "correct" : "incorrect",
-      branchIndex: game.questionIndex,
+      branchIndex: getCourseG04L09Gs002PracticeBranchIndex(game.questionIndex),
       branchCount: 10,
     });
     setHostDecision(decision?.status ?? "unhandled");

@@ -11,7 +11,9 @@ import {
   loadAnimationModule,
 } from '../src/animation-registry';
 import {createMemoryOnlyLessonHost} from '../src/lesson-host-contract';
-import animationModule from '../src/modules/course-g04-l09-gs-002';
+import animationModule, {
+  getCourseG04L09Gs002PracticeBranchIndex,
+} from '../src/modules/course-g04-l09-gs-002';
 import {
   buildCourseG04L09Gs002QuestionOrder,
   COURSE_G04_L09_GS_002_MOVIE,
@@ -193,4 +195,40 @@ test('typed modern host scores in memory and denies all legacy reporting without
   }
   assert.equal(host.snapshot().storage, 'memory-only');
   assert.equal(host.snapshot().storesPersonalData, false);
+});
+
+test('maps zero-based GS002 question state to the host contract one-based branch identity', () => {
+  const host = createMemoryOnlyLessonHost({
+    releaseId: 'private-g4-l9-p4-representative-slice-v1',
+    releaseMemberIds: [animationId],
+    currentAnimationId: animationId,
+    enabledCapabilities: ['practice-feedback'],
+    mode: 'audit',
+    releasePublished: false,
+  });
+  for (let questionIndex = 0; questionIndex < 10; questionIndex += 1) {
+    const branchIndex = getCourseG04L09Gs002PracticeBranchIndex(questionIndex);
+    assert.equal(branchIndex, questionIndex + 1);
+    const interactionId = `gs002-q${questionIndex + 1}`;
+    assert.equal(host.dispatch({
+      type: 'record-practice-feedback',
+      interactionId,
+      outcome: questionIndex % 2 === 0 ? 'correct' : 'incorrect',
+      branchIndex,
+      branchCount: 10,
+    }).status, 'allowed');
+    assert.equal(host.snapshot().practiceFeedback?.branchIndex, branchIndex);
+    assert.equal(host.dispatch({
+      type: 'reset-practice-feedback',
+      interactionId,
+    }).status, 'allowed');
+  }
+  assert.throws(
+    () => getCourseG04L09Gs002PracticeBranchIndex(-1),
+    /integer from 0 through 9/,
+  );
+  assert.throws(
+    () => getCourseG04L09Gs002PracticeBranchIndex(10),
+    /integer from 0 through 9/,
+  );
 });

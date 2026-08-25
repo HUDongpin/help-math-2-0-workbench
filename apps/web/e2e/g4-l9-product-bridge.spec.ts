@@ -92,6 +92,7 @@ async function exerciseGs002(page: Page, runtimeModule: Locator): Promise<void> 
         exact: true,
       })
       .click();
+    await expect(runtimeModule).toHaveAttribute("data-host-decision", "allowed");
     await expect(runtimeModule.locator("[data-feedback]")).toHaveAttribute(
       "data-feedback",
       chooseCorrect ? "correct" : "incorrect",
@@ -260,7 +261,7 @@ function assertNoRuntimeErrors(
   ).toEqual([]);
 }
 
-test("14-page P4 calibration regression passes desktop EN and mobile ES without rewriting P4 evidence", async ({
+test("14-page P4 calibration regression passes desktop EN without rewriting P4 evidence", async ({
   browser,
   baseURL,
 }) => {
@@ -272,6 +273,14 @@ test("14-page P4 calibration regression passes desktop EN and mobile ES without 
     locale: "en",
     viewport: { width: 1440, height: 1000 },
   });
+});
+
+test("14-page P4 calibration regression passes mobile ES without rewriting P4 evidence", async ({
+  browser,
+  baseURL,
+}) => {
+  test.setTimeout(180_000);
+  expect(baseURL).toBeTruthy();
   await runMatrix({
     browser,
     baseURL: baseURL!,

@@ -50,7 +50,7 @@ test('Hosted demo contract exactly partitions every test without weakening npm t
   assert.equal(result.hosted.length, 66);
   assert.equal(result.localEntries.length, 48);
   assert.equal(result.notExecuted.length, 58);
-  assert.equal(result.expectedTestCount, 426);
+  assert.equal(result.expectedTestCount, 427);
   assert.equal(
     packageJson.scripts.test,
     'npm run check:registry && tsx --test test/*.test.mjs tests/**/*.test.ts',
