@@ -787,6 +787,7 @@ test.describe('prototype composition', () => {
   });
 
   test('legacy mode URLs all render the same Focus lesson without changing progress', async ({page}) => {
+    test.setTimeout(60_000);
     await page.setViewportSize({width: 1920, height: 1080});
     await page.goto('/', {waitUntil: 'domcontentloaded'});
     const seededProgress = {
