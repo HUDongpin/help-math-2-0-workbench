@@ -4,7 +4,8 @@ import {
   type Browser,
   type Locator,
   type Page,
-} from "@playwright/test";
+  type SiteRuntimeIssueGate,
+} from "./runtime-issue-gate";
 
 const pages = [
   { occurrence: 1, id: "course-g04-l09-ir-001" },
@@ -197,11 +198,13 @@ async function runMatrix({
   browser,
   baseURL,
   locale,
+  runtimeIssueGate,
   viewport,
 }: {
   browser: Browser;
   baseURL: string;
   locale: "en" | "es";
+  runtimeIssueGate: SiteRuntimeIssueGate;
   viewport: { width: number; height: number };
 }): Promise<void> {
   const context = await browser.newContext({
@@ -211,6 +214,7 @@ async function runMatrix({
     viewport,
   });
   const page = await context.newPage();
+  runtimeIssueGate.attachPage(page);
   const consoleErrors: string[] = [];
   const pageErrors: string[] = [];
   const forbiddenRequests: string[] = [];
@@ -264,6 +268,7 @@ function assertNoRuntimeErrors(
 test("14-page P4 calibration regression passes desktop EN without rewriting P4 evidence", async ({
   browser,
   baseURL,
+  runtimeIssueGate,
 }) => {
   test.setTimeout(180_000);
   expect(baseURL).toBeTruthy();
@@ -271,6 +276,7 @@ test("14-page P4 calibration regression passes desktop EN without rewriting P4 e
     browser,
     baseURL: baseURL!,
     locale: "en",
+    runtimeIssueGate,
     viewport: { width: 1440, height: 1000 },
   });
 });
@@ -278,6 +284,7 @@ test("14-page P4 calibration regression passes desktop EN without rewriting P4 e
 test("14-page P4 calibration regression passes mobile ES without rewriting P4 evidence", async ({
   browser,
   baseURL,
+  runtimeIssueGate,
 }) => {
   test.setTimeout(180_000);
   expect(baseURL).toBeTruthy();
@@ -285,6 +292,7 @@ test("14-page P4 calibration regression passes mobile ES without rewriting P4 ev
     browser,
     baseURL: baseURL!,
     locale: "es",
+    runtimeIssueGate,
     viewport: { width: 390, height: 844 },
   });
 });

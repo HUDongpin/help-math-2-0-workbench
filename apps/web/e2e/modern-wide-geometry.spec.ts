@@ -1,4 +1,4 @@
-import {expect, test, type Page} from '@playwright/test';
+import {expect, test, type Page} from './runtime-issue-gate';
 
 /**
  * Phase 0 measurement spec for the widescreen presentation.

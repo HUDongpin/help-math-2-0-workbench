@@ -1,4 +1,4 @@
-import {expect, test, type Page} from '@playwright/test';
+import {expect, test, type Page} from './runtime-issue-gate';
 
 /**
  * A canvas-backed page must never be drawn larger than its backing store.

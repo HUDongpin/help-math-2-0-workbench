@@ -99,6 +99,15 @@ type RuntimeAudioCue = AnimationModule['audioCues'][number];
 type InteractiveAudioAsset =
   NonNullable<AnimationModule['interactiveAudioAssets']>[number];
 
+export function reportAudioSoundingTransition(
+  previous: boolean,
+  sounding: boolean,
+  onSounding: (sounding: boolean) => void,
+): boolean {
+  if (sounding !== previous) onSounding(sounding);
+  return sounding;
+}
+
 export function isExactInteractiveAudioAsset(
   asset: InteractiveAudioAsset,
 ): boolean {
@@ -372,11 +381,16 @@ function useFrame(movie: AnimationModule['movie'] | undefined, playbackMode: Ani
 function useAudio(module: AnimationModule | undefined, frame: number, fps: number, frameDomain: string, lang: 'en' | 'es', enabled: boolean, replay: number, scenario: string, seed: number, volume: number, onAutoplayBlocked: (cue: RuntimeAudioCue | null) => void, onSounding: (sounding: boolean) => void = ignoreAudioActivity) {
   const active = useRef<Map<string, HTMLAudioElement>>(new Map()), previous = useRef(0);
   const explicitlyStopped = useRef(false);
+  const lastReportedSounding = useRef(false);
   const safeVolume = Math.max(0, Math.min(1, volume));
   // The host narration control reads timeline cues back as playback state, so
   // every path that adds to or drains `active` has to report the new count.
   const reportSounding = useCallback(() => {
-    onSounding(active.current.size > 0);
+    lastReportedSounding.current = reportAudioSoundingTransition(
+      lastReportedSounding.current,
+      active.current.size > 0,
+      onSounding,
+    );
   }, [onSounding]);
   const stopActive = useCallback(() => {
     onAutoplayBlocked(null);

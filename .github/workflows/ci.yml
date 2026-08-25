@@ -113,13 +113,24 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run browser and accessibility tests
-        run: npm run test:e2e
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run test:e2e 2>&1 | tee "$RUNNER_TEMP/site-ordinary.log"
+          node ../../scripts/verify-site-runtime-log.mjs \
+            "$RUNNER_TEMP/site-ordinary.log"
 
       - name: Run G5 L4 audio gate-off browser test
         run: npm run test:e2e:g5-l4-audio-gate-off --workspace @helpmath/web
 
       - name: Run modern-wide lesson and Nova acceptance tests
-        run: npm run test:e2e:modern-wide --workspace @helpmath/web
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run test:e2e:modern-wide --workspace @helpmath/web 2>&1 \
+            | tee "$RUNNER_TEMP/site-modern-wide.log"
+          node ../../scripts/verify-site-runtime-log.mjs \
+            "$RUNNER_TEMP/site-modern-wide.log"
 
   release-currentness:
     name: Release currentness

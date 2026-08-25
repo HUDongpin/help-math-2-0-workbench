@@ -1,4 +1,10 @@
-import {expect, test, type Browser, type Page} from '@playwright/test';
+import {
+  expect,
+  test,
+  type Browser,
+  type Page,
+  type SiteRuntimeIssueGate,
+} from './runtime-issue-gate';
 import {mkdir} from 'node:fs/promises';
 import path from 'node:path';
 
@@ -46,12 +52,14 @@ async function runStress({
   browser,
   baseURL,
   locale,
+  runtimeIssueGate,
   viewport,
   outputDirectory,
 }: {
   browser: Browser;
   baseURL: string;
   locale: 'en' | 'es';
+  runtimeIssueGate: SiteRuntimeIssueGate;
   viewport: {width: number; height: number};
   outputDirectory: 'desktop-en-1440x1000' | 'mobile-es-390x844';
 }) {
@@ -73,6 +81,7 @@ async function runStress({
     }));
   }, {key: storageKey, release: releaseId, placement: placementId, language: locale});
   const page = await context.newPage();
+  runtimeIssueGate.attachPage(page);
   const consoleErrors: string[] = [];
   const pageErrors: string[] = [];
   const failedRequests: string[] = [];
@@ -291,6 +300,7 @@ async function runStress({
 test('P5 occurrence-32 bounded stress passes desktop EN and mobile ES', async ({
   browser,
   baseURL,
+  runtimeIssueGate,
 }) => {
   test.setTimeout(180_000);
   expect(baseURL).toBeTruthy();
@@ -298,6 +308,7 @@ test('P5 occurrence-32 bounded stress passes desktop EN and mobile ES', async ({
     browser,
     baseURL: baseURL!,
     locale: 'en',
+    runtimeIssueGate,
     viewport: {width: 1440, height: 1000},
     outputDirectory: 'desktop-en-1440x1000',
   });
@@ -305,6 +316,7 @@ test('P5 occurrence-32 bounded stress passes desktop EN and mobile ES', async ({
     browser,
     baseURL: baseURL!,
     locale: 'es',
+    runtimeIssueGate,
     viewport: {width: 390, height: 844},
     outputDirectory: 'mobile-es-390x844',
   });

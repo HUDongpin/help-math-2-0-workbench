@@ -1,4 +1,4 @@
-import {expect, test, type Locator, type Page} from '@playwright/test';
+import {expect, test, type Locator, type Page} from './runtime-issue-gate';
 
 import {G4_L3_WHOLE_LESSON_STORAGE_KEY} from '../lib/g4-l3-whole-lesson';
 
@@ -517,10 +517,54 @@ test('Calculator has one bottom-spine entry and uses the modern learner keypad',
 
 test('GS002 presents one crisp actor layer and a responsive modern game loop', async ({page}) => {
   test.skip(!modernWideShellEnabled, 'Requires the modern-wide lesson shell.');
-  test.setTimeout(70_000);
+  test.setTimeout(120_000);
+  const consoleErrors: string[] = [];
+  const pageErrors: string[] = [];
+  page.on('console', (message) => {
+    if (
+      message.type() === 'error' ||
+      message.text().includes('Maximum update depth exceeded')
+    ) {
+      consoleErrors.push(message.text());
+    }
+  });
+  page.on('pageerror', (error) => pageErrors.push(error.message));
   await page.emulateMedia({reducedMotion: 'no-preference'});
   await openSeededLesson(page, 'course-g04-l03-gs-002');
   await continueLesson(page);
+
+  const runtimeStage = page.locator(
+    '.runtime-stage[data-animation-id="course-g04-l03-gs-002"]',
+  );
+  await expect(runtimeStage).toHaveAttribute(
+    'data-flash-frame-domain',
+    'sprite-321',
+  );
+  const observedFrames = await runtimeStage.evaluate(async (element) => {
+    const frames: number[] = [];
+    const record = () => {
+      const value = Number(element.getAttribute('data-flash-frame'));
+      if (
+        Number.isInteger(value) &&
+        value > 0 &&
+        value !== frames.at(-1)
+      ) {
+        frames.push(value);
+      }
+    };
+    const deadline = performance.now() + 30_000;
+    record();
+    while (frames.length < 60 && performance.now() < deadline) {
+      await new Promise<void>((resolve) =>
+        requestAnimationFrame(() => resolve()));
+      record();
+    }
+    return frames;
+  });
+  expect(observedFrames).toHaveLength(60);
+  for (let index = 1; index < observedFrames.length; index += 1) {
+    expect(observedFrames[index]).toBeGreaterThan(observedFrames[index - 1]!);
+  }
 
   const canvas = page.locator(
     'canvas[data-course-canvas="course-g04-l03-gs-002-interaction-base"]',
@@ -591,6 +635,8 @@ test('GS002 presents one crisp actor layer and a responsive modern game loop', a
     .toBeVisible();
   await expect(page.locator('output[aria-label="Time remaining"]'))
     .not.toContainText(':60');
+  expect(consoleErrors, 'GS002 must not emit runtime console errors').toEqual([]);
+  expect(pageErrors, 'GS002 must not emit uncaught page errors').toEqual([]);
 });
 
 test('Nova replies render Markdown, a text diagram, and LaTeX without literal syntax', async ({page}) => {

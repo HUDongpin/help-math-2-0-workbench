@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import {expect, test, type Locator, type Page} from '@playwright/test';
+import {expect, test, type Locator, type Page} from './runtime-issue-gate';
 import {fileURLToPath} from 'node:url';
 
 import {
@@ -99,6 +99,25 @@ async function mockNovaApi(
   options: Readonly<{delayMs?: number; timeoutMessage?: string}> = {},
 ) {
   const requests: NovaMockRequest[] = [];
+  if (options.timeoutMessage) {
+    await page.addInitScript(() => {
+      const nativeFetch = window.fetch.bind(window);
+      window.fetch = async (...argumentsList) => {
+        const response = await nativeFetch(...argumentsList);
+        if (response.headers.get('x-helpmath-synthetic-client-status') !== '504') {
+          return response;
+        }
+
+        const headers = new Headers(response.headers);
+        headers.delete('x-helpmath-synthetic-client-status');
+        return new Response(await response.text(), {
+          headers,
+          status: 504,
+          statusText: 'Gateway Timeout',
+        });
+      };
+    });
+  }
   await page.route('**/api/nova', async (route) => {
     const request = route.request().postDataJSON() as NovaMockRequest;
     requests.push(request);
@@ -110,7 +129,11 @@ async function mockNovaApi(
           error: {code: 'NOVA_TIMEOUT', message: 'Mock timeout'},
         }),
         contentType: 'application/json',
-        status: 504,
+        // Chromium reports every real 4xx/5xx fetch as console.error. Keep the
+        // network transport successful so the global zero-console gate stays
+        // meaningful, then expose an exact synthetic 504 to the client above.
+        headers: {'x-helpmath-synthetic-client-status': '504'},
+        status: 200,
       });
       return;
     }

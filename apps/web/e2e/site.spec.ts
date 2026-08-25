@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright';
-import {expect, test, type Page} from '@playwright/test';
+import {expect, test, type Page} from './runtime-issue-gate';
 
 import {
   G4_L3_WHOLE_LESSON_STORAGE_KEY,
@@ -725,12 +725,12 @@ test('development-only diagnostic image assets respond with PNG content', async 
   }
 });
 
-test('unknown routes return a non-indexable 404 response', async ({page}) => {
-  const response = await page.goto('/route-that-does-not-exist', {waitUntil: 'networkidle'});
+test('unknown routes return a non-indexable 404 response', async ({request}) => {
+  const response = await request.get('/route-that-does-not-exist');
 
-  expect(response?.status()).toBe(404);
-  expect(response?.headers()['x-robots-tag']).toBe('noindex, nofollow');
-  await expect(page.locator('body')).toHaveText('Not Found');
+  expect(response.status()).toBe(404);
+  expect(response.headers()['x-robots-tag']).toBe('noindex, nofollow');
+  expect(await response.text()).toBe('Not Found');
 });
 
 test('local audit archive fails closed until strict completion ledger entries exist', async ({page}) => {

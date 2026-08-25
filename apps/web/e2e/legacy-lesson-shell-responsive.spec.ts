@@ -1,4 +1,4 @@
-import {expect, test, type Locator, type Page} from '@playwright/test';
+import {expect, test, type Locator, type Page} from './runtime-issue-gate';
 
 type Box = {height: number; width: number; x: number; y: number};
 type RuntimeIssue = {

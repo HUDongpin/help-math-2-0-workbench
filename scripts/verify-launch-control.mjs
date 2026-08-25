@@ -88,6 +88,12 @@ const BOUND_EXTERNAL_RECEIPT_NAMES = Object.freeze([
   'c0002WrongTargetSupersessionSha256',
   'c0003PageOnlySpineReviewSha256',
   'c0004DeployClosureReviewSha256',
+  'c0005AnimationRuntimeAudioPassiveLoopReviewSha256',
+  'c0005IntegratedSuccessorIndependentReviewSha256',
+  'c0005LocalExecutionV2Sha256',
+  'c0005ResponsiveHostedFailureQuarantineSha256',
+  'c0005SiteRuntimeFailClosedGateReviewSha256',
+  'c0005StagedSecretSecurityPrecommitReviewSha256',
   'githubProductionEnvironmentBoundarySha256',
   'ownerInputsSha256',
 ]);
@@ -267,6 +273,50 @@ export function verifyBacklog(backlog) {
             LIFECYCLE_STATES.indexOf(task.requiredTerminalState)
         ),
     ).length,
+  };
+}
+
+export function verifyActiveTaskChangedPathOwnership(backlog, changedPaths) {
+  invariant(Array.isArray(changedPaths), 'working changed paths must be an array');
+  invariant(
+    changedPaths.every((changedPath) => typeof changedPath === 'string' && changedPath.length > 0),
+    'working changed paths must contain non-empty strings',
+  );
+  const uniqueChangedPaths = [...new Set(changedPaths)].sort();
+  invariant(
+    uniqueChangedPaths.length === changedPaths.length,
+    'working changed paths must not contain duplicates',
+  );
+
+  const activeTasks = backlog.tasks.filter(
+    (task) =>
+      typeof task.lease.owner === 'string' &&
+      task.lease.owner.length > 0,
+  );
+  invariant(
+    activeTasks.length <= 1,
+    'release integration permits at most one leased task; found ' + activeTasks.length,
+  );
+  if (uniqueChangedPaths.length === 0) {
+    return {
+      activeTaskId: activeTasks[0]?.taskId ?? null,
+      changedPathCount: 0,
+    };
+  }
+  invariant(
+    activeTasks.length === 1,
+    'dirty release integration requires exactly one active task; found ' + activeTasks.length,
+  );
+  const [activeTask] = activeTasks;
+  const allowlist = new Set(activeTask.changedPathAllowlist);
+  const escapedPaths = uniqueChangedPaths.filter((changedPath) => !allowlist.has(changedPath));
+  invariant(
+    escapedPaths.length === 0,
+    activeTask.taskId + ': changed paths escaped task-local allowlist: ' + escapedPaths.join(','),
+  );
+  return {
+    activeTaskId: activeTask.taskId,
+    changedPathCount: uniqueChangedPaths.length,
   };
 }
 
@@ -715,6 +765,30 @@ function verifyBoundReceiptReferences({anchors, backlog, externalInputs}) {
     'c0003PageOnlySpineReviewSha256',
   );
   requireTaskArtifact('C0-004-DEPLOY-CLOSURE', 'c0004DeployClosureReviewSha256');
+  requireTaskArtifact(
+    'C0-005-GITHUB-HOSTED-CI',
+    'c0005AnimationRuntimeAudioPassiveLoopReviewSha256',
+  );
+  requireTaskArtifact(
+    'C0-005-GITHUB-HOSTED-CI',
+    'c0005IntegratedSuccessorIndependentReviewSha256',
+  );
+  requireTaskArtifact(
+    'C0-005-GITHUB-HOSTED-CI',
+    'c0005LocalExecutionV2Sha256',
+  );
+  requireTaskArtifact(
+    'C0-005-GITHUB-HOSTED-CI',
+    'c0005ResponsiveHostedFailureQuarantineSha256',
+  );
+  requireTaskArtifact(
+    'C0-005-GITHUB-HOSTED-CI',
+    'c0005SiteRuntimeFailClosedGateReviewSha256',
+  );
+  requireTaskArtifact(
+    'C0-005-GITHUB-HOSTED-CI',
+    'c0005StagedSecretSecurityPrecommitReviewSha256',
+  );
   invariant(
     externalInputs.inputs.operatingLegalEntity.privateReceiptSha256 ===
       anchors.boundExternalReceipts.ownerInputsSha256 &&
@@ -726,7 +800,7 @@ function verifyBoundReceiptReferences({anchors, backlog, externalInputs}) {
   );
 }
 
-function verifyRepositoryBindings(anchors) {
+function verifyRepositoryBindings(anchors, backlog) {
   const head = git(['rev-parse', 'HEAD^{commit}']);
   const tree = git(['rev-parse', 'HEAD^{tree}']);
   git(['merge-base', '--is-ancestor', anchors.pageOnlySpine.commit, head]);
@@ -765,15 +839,19 @@ function verifyRepositoryBindings(anchors) {
     'page-only changed path set drifted',
   );
 
-  const releaseChangedPaths = [...new Set([
-    ...git(['diff', '--name-only', `${anchors.releaseIntegration.baseCommit}..HEAD`])
-      .split('\n')
-      .filter(Boolean),
+  const workingChangedPaths = [...new Set([
     ...git(['diff', '--name-only']).split('\n').filter(Boolean),
     ...git(['diff', '--cached', '--name-only']).split('\n').filter(Boolean),
     ...git(['ls-files', '--others', '--exclude-standard'])
       .split('\n')
       .filter(Boolean),
+  ])].sort();
+  const taskOwnership = verifyActiveTaskChangedPathOwnership(backlog, workingChangedPaths);
+  const releaseChangedPaths = [...new Set([
+    ...git(['diff', '--name-only', `${anchors.releaseIntegration.baseCommit}..HEAD`])
+      .split('\n')
+      .filter(Boolean),
+    ...workingChangedPaths,
   ])].sort();
   invariant(
     JSON.stringify(releaseChangedPaths) ===
@@ -797,6 +875,8 @@ function verifyRepositoryBindings(anchors) {
     tree,
     pageOnlyChangedPathCount: changedPaths.length,
     releaseIntegrationChangedPathCount: releaseChangedPaths.length,
+    taskLocalChangedPathCount: taskOwnership.changedPathCount,
+    taskLocalOwnerTaskId: taskOwnership.activeTaskId,
   };
 }
 
@@ -816,7 +896,7 @@ function main() {
   const promotionAuthorization = verifyPromotionAuthorization(
     promotionAuthorizationDocument,
   );
-  const repository = verifyRepositoryBindings(anchors);
+  const repository = verifyRepositoryBindings(anchors, backlog);
   verifyBoundReceiptReferences({anchors, backlog, externalInputs});
   const externalAuthorizationAnchor = verifyExternalAuthorizationAnchor(
     promotionAuthorization,

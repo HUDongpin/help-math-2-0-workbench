@@ -5,7 +5,8 @@ import {
   type Locator,
   type Page,
   type Request,
-} from '@playwright/test';
+  type SiteRuntimeIssueGate,
+} from './runtime-issue-gate';
 import {execFile} from 'node:child_process';
 import {createHash} from 'node:crypto';
 import {
@@ -1420,6 +1421,7 @@ async function runBoundedQa({
   baseURL,
   evidenceBoundary,
   locale,
+  runtimeIssueGate,
   viewport,
   outputDirectory,
 }: {
@@ -1427,6 +1429,7 @@ async function runBoundedQa({
   baseURL: string;
   evidenceBoundary: EvidenceBoundaryReceipt;
   locale: 'en' | 'es';
+  runtimeIssueGate: SiteRuntimeIssueGate;
   viewport: {width: number; height: number};
   outputDirectory: 'desktop-en-1440x1000' | 'mobile-es-390x844';
 }): Promise<CaptureReceipt> {
@@ -1457,6 +1460,7 @@ async function runBoundedQa({
     language: locale,
   });
   const page = await context.newPage();
+  runtimeIssueGate.attachPage(page);
   const consoleErrors: string[] = [];
   const pageErrors: string[] = [];
   const requestLedger: HttpRequestLedgerEntry[] = [];
@@ -1823,6 +1827,7 @@ async function runBoundedQa({
 test('P5.1 occurrence-29 visual remediation passes real modern My Lesson desktop EN and mobile ES', async ({
   browser,
   baseURL,
+  runtimeIssueGate,
 }) => {
   test.setTimeout(300_000);
   test.skip(
@@ -1850,6 +1855,7 @@ test('P5.1 occurrence-29 visual remediation passes real modern My Lesson desktop
       baseURL: baseURL!,
       evidenceBoundary,
       locale: 'en',
+      runtimeIssueGate,
       viewport: {width: 1440, height: 1000},
       outputDirectory: 'desktop-en-1440x1000',
     }),
@@ -1858,6 +1864,7 @@ test('P5.1 occurrence-29 visual remediation passes real modern My Lesson desktop
       baseURL: baseURL!,
       evidenceBoundary,
       locale: 'es',
+      runtimeIssueGate,
       viewport: {width: 390, height: 844},
       outputDirectory: 'mobile-es-390x844',
     }),

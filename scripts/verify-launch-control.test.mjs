@@ -6,6 +6,7 @@ import {
   deriveReleaseReadiness,
   LIFECYCLE_STATES,
   verifyBacklog,
+  verifyActiveTaskChangedPathOwnership,
   verifyExternalAuthorizationAnchor,
   verifyExternalInputStatus,
   verifyPromotionAuthorization,
@@ -145,6 +146,59 @@ test('backlog rejects duplicate task identities and state-machine drift', () => 
         tasks: [task, structuredClone(task)],
       }),
     /duplicate taskId/u,
+  );
+
+  task.lease.owner = 'Root Release Controller';
+  task.changedPathAllowlist = ['catalog/launch-control/backlog.v1.json'];
+  for (const status of [
+    'IMPLEMENTED',
+    'LOCAL_VERIFIED',
+    'INDEPENDENT_REVIEWED',
+    'INTEGRATED',
+  ]) {
+    task.status = status;
+    task.result = status === 'IMPLEMENTED' ? null : 'PASS';
+    assert.deepEqual(
+      verifyActiveTaskChangedPathOwnership(
+        {
+          schemaVersion: 1,
+          releaseId: 'HELP_MATH_2_PUBLIC_LAUNCH_V1',
+          stateMachine: LIFECYCLE_STATES,
+          tasks: [task],
+        },
+        ['catalog/launch-control/backlog.v1.json'],
+      ),
+      {
+        activeTaskId: 'C0-TEST-001',
+        changedPathCount: 1,
+      },
+    );
+  }
+  assert.throws(
+    () => verifyActiveTaskChangedPathOwnership(
+      {
+        schemaVersion: 1,
+        releaseId: 'HELP_MATH_2_PUBLIC_LAUNCH_V1',
+        stateMachine: LIFECYCLE_STATES,
+        tasks: [task],
+      },
+      ['catalog/launch-control/branch-anchors.v1.json'],
+    ),
+    /changed paths escaped task-local allowlist/u,
+  );
+  const competingTask = structuredClone(task);
+  competingTask.taskId = 'C0-TEST-002';
+  assert.throws(
+    () => verifyActiveTaskChangedPathOwnership(
+      {
+        schemaVersion: 1,
+        releaseId: 'HELP_MATH_2_PUBLIC_LAUNCH_V1',
+        stateMachine: LIFECYCLE_STATES,
+        tasks: [task, competingTask],
+      },
+      ['catalog/launch-control/backlog.v1.json'],
+    ),
+    /at most one leased task/u,
   );
 });
 
