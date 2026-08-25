@@ -2,6 +2,12 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import test from 'node:test';
 
+import {
+  loadedSwfCanvasAssetStatusIdentity,
+  resolveLoadedSwfCanvasStatusTransition,
+  type LoadedSwfHostAsset,
+} from '@/components/loaded-swf-host-canvas';
+
 const componentUrl = new URL(
   '../components/loaded-swf-host-canvas.tsx',
   import.meta.url,
@@ -33,6 +39,24 @@ test('loaded-SWF host canvas stays local, hash-bound, and fail-closed', async ()
   assert.match(source, /data-owner-accepted="false"/);
   assert.match(source, /data-strict-migration-complete="false"/);
   assert.match(source, /The local loaded-SWF host drawing failed safely\./);
+  assert.match(
+    source,
+    /const transition = resolveLoadedSwfCanvasStatusTransition\(\s*assetStatusIdentityRef\.current,\s*asset,\s*\);/,
+    'the component must apply the exact-asset status transition helper',
+  );
+  const frameRenderEffectStart = source.indexOf(
+    "  useEffect(() => {\n    const canvas = canvasRef.current;",
+  );
+  const frameRenderEffectEnd = source.indexOf(
+    '\n\n  return <section',
+    frameRenderEffectStart,
+  );
+  assert.ok(frameRenderEffectStart >= 0 && frameRenderEffectEnd >= 0);
+  assert.doesNotMatch(
+    source.slice(frameRenderEffectStart, frameRenderEffectEnd),
+    /setStatus\('loading'\)/,
+    'the frame-dependent render effect must not schedule a loading reset',
+  );
 });
 
 test('a canvas page is never stretched past the pixels behind it', async () => {
@@ -54,4 +78,46 @@ test('a canvas page is never stretched past the pixels behind it', async () => {
   // An adapter that declares nothing renders at the authored stage.
   assert.match(source, /useState\(1\)/);
   assert.match(source, /Number\.isInteger\(declared\) && \(declared as number\) >= 1/);
+});
+
+test('canvas loading status resets only when the exact asset identity changes', () => {
+  const asset: LoadedSwfHostAsset = {
+    registryKey: 'course-g04-l03-host',
+    assetSource: '/flash-assets/course-g04-l03-host.js',
+    assetSha256: 'a'.repeat(64),
+    sourceProvenLanguage: 'en',
+    backgroundDisposition:
+      'ignore-loaded-child-swf-standalone-stage-background',
+  };
+  let assetStatusIdentity = loadedSwfCanvasAssetStatusIdentity(asset);
+  let loadingResetCount = 0;
+
+  for (let redrawCount = 0; redrawCount < 60; redrawCount += 1) {
+    const transition = resolveLoadedSwfCanvasStatusTransition(
+      assetStatusIdentity,
+      {...asset},
+    );
+    assetStatusIdentity = transition.assetStatusIdentity;
+    if (transition.resetToLoading) loadingResetCount += 1;
+  }
+  assert.equal(
+    loadingResetCount,
+    0,
+    '60 frame redraws of the same exact asset must schedule no loading reset',
+  );
+
+  const changedAsset = {...asset, assetSha256: 'b'.repeat(64)};
+  const changed = resolveLoadedSwfCanvasStatusTransition(
+    assetStatusIdentity,
+    changedAsset,
+  );
+  assert.equal(changed.resetToLoading, true);
+  loadingResetCount += Number(changed.resetToLoading);
+
+  const repeated = resolveLoadedSwfCanvasStatusTransition(
+    changed.assetStatusIdentity,
+    {...changedAsset},
+  );
+  assert.equal(repeated.resetToLoading, false);
+  assert.equal(loadingResetCount, 1, 'one exact asset change resets loading once');
 });

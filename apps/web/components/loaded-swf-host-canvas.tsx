@@ -11,6 +11,32 @@ export interface LoadedSwfHostAsset {
     'ignore-loaded-child-swf-standalone-stage-background';
 }
 
+export function loadedSwfCanvasAssetStatusIdentity(
+  asset: LoadedSwfHostAsset,
+): string {
+  return JSON.stringify([
+    asset.registryKey,
+    asset.assetSource,
+    asset.assetSha256,
+    asset.sourceProvenLanguage,
+    asset.backgroundDisposition,
+  ]);
+}
+
+export function resolveLoadedSwfCanvasStatusTransition(
+  currentAssetStatusIdentity: string,
+  asset: LoadedSwfHostAsset,
+): Readonly<{
+  assetStatusIdentity: string;
+  resetToLoading: boolean;
+}> {
+  const assetStatusIdentity = loadedSwfCanvasAssetStatusIdentity(asset);
+  return {
+    assetStatusIdentity,
+    resetToLoading: currentAssetStatusIdentity !== assetStatusIdentity,
+  };
+}
+
 interface LoadedSwfCanvasAsset {
   readonly metadata?: Readonly<{renderScale?: number}>;
   readonly ready: () => Promise<void>;
@@ -199,15 +225,27 @@ export function LoadedSwfHostCanvas({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [status, setStatus] =
     useState<'loading' | 'ready' | 'error'>('loading');
+  const assetStatusIdentityRef = useRef(
+    loadedSwfCanvasAssetStatusIdentity(asset),
+  );
   // The adapter declares the backing store it was generated for. Absent means
   // the authored stage at 1x.
   const [renderScale, setRenderScale] = useState(1);
 
   useEffect(() => {
+    const transition = resolveLoadedSwfCanvasStatusTransition(
+      assetStatusIdentityRef.current,
+      asset,
+    );
+    if (!transition.resetToLoading) return;
+    assetStatusIdentityRef.current = transition.assetStatusIdentity;
+    setStatus('loading');
+  }, [asset]);
+
+  useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     let cancelled = false;
-    setStatus('loading');
     loadAsset(asset)
       .then(async (loadedAsset) => {
         await loadedAsset.ready();

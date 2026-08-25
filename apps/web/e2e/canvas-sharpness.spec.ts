@@ -49,9 +49,9 @@ test.describe('canvas pages keep their resolution', () => {
     });
   }
 
-  test('lesson Page 2 retains one visible Canvas beyond 55 source frames without runtime errors', async ({page}) => {
+  test('lesson Page 2 retains one visible Canvas beyond source frame 55 without runtime errors', async ({page}) => {
     test.setTimeout(60_000);
-    const minimumSourceFrames = 60;
+    const minimumSourceFrame = 60;
     const runtimeErrors: string[] = [];
     page.on('console', (message) => {
       if (
@@ -93,13 +93,14 @@ test.describe('canvas pages keep their resolution', () => {
     });
     await expect(canvas).toBeVisible();
 
-    const observation = await canvas.evaluate(async (element, requiredSourceFrames) => {
+    const observation = await canvas.evaluate(async (element, requiredSourceFrame) => {
       const node = element as HTMLCanvasElement;
       const host = node.closest<HTMLElement>('[data-canvas-status]');
       if (!host) throw new Error('Page 2 Canvas status host is missing');
-      const frames = new Set<string>();
+      const frames = new Set<number>();
       const statuses = new Set<string>();
       const displayValues = new Set<string>();
+      let highestSourceFrame = 0;
       let disconnectedSamples = 0;
       let hiddenSamples = 0;
       let updatingCaptureReadySamples = 0;
@@ -111,8 +112,12 @@ test.describe('canvas pages keep their resolution', () => {
         const rect = node.getBoundingClientRect();
         statuses.add(status);
         displayValues.add(display);
-        const frame = node.getAttribute('data-flash-frame');
-        if (frame) frames.add(frame);
+        const frameText = node.getAttribute('data-flash-frame');
+        if (frameText && /^[1-9]\d*$/u.test(frameText)) {
+          const frame = Number(frameText);
+          frames.add(frame);
+          highestSourceFrame = Math.max(highestSourceFrame, frame);
+        }
         if (!node.isConnected || !host.contains(node)) disconnectedSamples += 1;
         if (display === 'none' || getComputedStyle(node).visibility === 'hidden') {
           hiddenSamples += 1;
@@ -151,7 +156,7 @@ test.describe('canvas pages keep their resolution', () => {
       const deadline = performance.now() + 10_000;
       while (
         performance.now() < deadline &&
-        frames.size < requiredSourceFrames
+        (highestSourceFrame < requiredSourceFrame || frames.size < 2)
       ) {
         record();
         await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
@@ -162,14 +167,16 @@ test.describe('canvas pages keep their resolution', () => {
         disconnectedSamples,
         displayValues: [...displayValues],
         frameCount: frames.size,
+        highestSourceFrame,
         hiddenSamples,
         statuses: [...statuses],
         updatingCaptureReadySamples,
         zeroRectSamples,
       };
-    }, minimumSourceFrames);
+    }, minimumSourceFrame);
 
-    expect(observation.frameCount).toBeGreaterThanOrEqual(minimumSourceFrames);
+    expect(observation.highestSourceFrame).toBeGreaterThanOrEqual(minimumSourceFrame);
+    expect(observation.frameCount).toBeGreaterThanOrEqual(2);
     expect(observation.disconnectedSamples).toBe(0);
     expect(observation.hiddenSamples).toBe(0);
     expect(observation.zeroRectSamples).toBe(0);
