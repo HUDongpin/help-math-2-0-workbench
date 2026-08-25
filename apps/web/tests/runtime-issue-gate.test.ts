@@ -88,3 +88,11 @@ test('the shared fixture contains no message allowlist and CI fails on flaky tes
   assert.match(fixture, /page\.on\('pageerror'/u);
   assert.match(config, /failOnFlakyTests: Boolean\(process\.env\.CI\)/u);
 });
+
+test('ordinary Site startup proves the real default-locale rewrite before browser tests begin', async () => {
+  const config = await readFile(path.join(webRoot, 'playwright.config.ts'), 'utf8');
+  assert.match(config, /const host = process\.env\.PLAYWRIGHT_HOST \?\? '127\.0\.0\.1'/u);
+  assert.match(config, /workers: process\.env\.CI \? 2 : undefined/u);
+  assert.match(config, /url: `\$\{baseURL\}\/`,/u);
+  assert.doesNotMatch(config, /url: `\$\{baseURL\}\/robots\.txt`,/u);
+});

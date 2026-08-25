@@ -31,6 +31,18 @@ test('site runtime log gate reports every maximum-depth line', () => {
   );
 });
 
+test('site runtime log gate rejects loopback proxy transport failures', () => {
+  assert.throws(
+    () => inspectSiteRuntimeLog(
+      '[WebServer] Failed to proxy http://localhost:3211/en Error: socket hang up\n'
+      + "[WebServer]   code: 'ECONNRESET'\n"
+      + '70 passed\n',
+      '/tmp/site.log',
+    ),
+    /SITE_RUNTIME_LOG_GATE_FAIL.*"transportFailureCount":3.*"transportFailureLines":\[\{"line":1,"signals":\["failed-proxy","socket-hang-up"\]\},\{"line":2,"signals":\["econnreset"\]\}\]/u,
+  );
+});
+
 test('ordinary error words do not masquerade as a maximum-depth warning', () => {
   const result = inspectSiteRuntimeLog(
     'test title: handles an expected error response\n70 passed\n',

@@ -192,8 +192,8 @@ export function validateHostedWorkbenchContract({
   }
 
   invariant(
-    contract.fullyHostedProfile.expectedTestCount === 126 &&
-      contract.fullyHostedProfile.expectedPassCount === 126 &&
+    contract.fullyHostedProfile.expectedTestCount === 127 &&
+      contract.fullyHostedProfile.expectedPassCount === 127 &&
       contract.fullyHostedProfile.expectedSkipCount === 0,
     'fully Hosted capability floor drifted',
   );

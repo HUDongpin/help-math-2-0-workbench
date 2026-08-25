@@ -73,7 +73,11 @@ export default defineConfig({
       REVIEWER_INSTRUMENTATION_ENABLED:
         process.env.REVIEWER_INSTRUMENTATION_ENABLED ?? 'false',
     },
-    url: `${baseURL}/robots.txt`,
+    // Do not admit the browser matrix from a static endpoint. The public root
+    // exercises the default-locale proxy rewrite, so polling it here warms the
+    // real application route and requires a successful response before two
+    // parallel workers can begin first-load compilation.
+    url: `${baseURL}/`,
     reuseExistingServer: process.env.PLAYWRIGHT_REUSE_EXISTING_SERVER === '1',
     timeout: 120_000,
   },
