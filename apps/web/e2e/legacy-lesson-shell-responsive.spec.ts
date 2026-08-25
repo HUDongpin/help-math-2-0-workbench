@@ -135,9 +135,11 @@ async function openLesson(
   );
   await expect(page.locator(ROOT)).toHaveAttribute('data-current-js-pages', '39');
   await expect(page.locator(ROOT)).toHaveAttribute('data-public-release', 'false');
-  await expect(page.locator(ROOT)).not.toHaveAttribute('data-stage-render-mode', 'measuring');
   await page.evaluate(() => document.fonts.ready);
-  await page.waitForLoadState('networkidle');
+  await expect(page.locator(ROOT)).toHaveAttribute(
+    'data-stage-render-mode',
+    /^(?:native-pixel-size|proportional-scale)$/,
+  );
 
   const origin = new URL(baseURL).origin;
   expect(new URL(page.url()).origin).toBe(origin);
