@@ -1023,7 +1023,8 @@ export function AnimationRuntime({
     toggleNarrationTrack,
   ]);
   useEffect(() => {
-    onPlaybackStateChange?.({
+    if (!onPlaybackStateChange) return;
+    const playbackState: AnimationRuntimePlaybackState = {
       audioAvailable,
       frame,
       frameCount: reportedFrameCount,
@@ -1036,7 +1037,14 @@ export function AnimationRuntime({
       transportMode: transportEnabledForDomain
         ? 'visual-frame-inspector'
         : 'none',
+    };
+    let active = true;
+    queueMicrotask(() => {
+      if (active) onPlaybackStateChange(playbackState);
     });
+    return () => {
+      active = false;
+    };
   }, [
     activeMovie?.fps,
     audioAvailable,

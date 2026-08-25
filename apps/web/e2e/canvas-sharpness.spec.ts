@@ -49,10 +49,17 @@ test.describe('canvas pages keep their resolution', () => {
     });
   }
 
-  test('lesson Page 2 retains one visible Canvas while its 12 fps frames advance', async ({page}) => {
+  test('lesson Page 2 retains one visible Canvas beyond 55 source frames without runtime errors', async ({page}) => {
+    test.setTimeout(60_000);
+    const minimumSourceFrames = 60;
     const runtimeErrors: string[] = [];
     page.on('console', (message) => {
-      if (message.type() === 'error') runtimeErrors.push(message.text());
+      if (
+        message.type() === 'error' ||
+        message.text().includes('Maximum update depth exceeded')
+      ) {
+        runtimeErrors.push(message.text());
+      }
     });
     page.on('pageerror', (error) => runtimeErrors.push(error.message));
     await page.route('**/api/learning-events', async (route) => {
@@ -86,7 +93,7 @@ test.describe('canvas pages keep their resolution', () => {
     });
     await expect(canvas).toBeVisible();
 
-    const observation = await canvas.evaluate(async (element) => {
+    const observation = await canvas.evaluate(async (element, requiredSourceFrames) => {
       const node = element as HTMLCanvasElement;
       const host = node.closest<HTMLElement>('[data-canvas-status]');
       if (!host) throw new Error('Page 2 Canvas status host is missing');
@@ -141,8 +148,11 @@ test.describe('canvas pages keep their resolution', () => {
         attributes: true,
       });
 
-      const deadline = performance.now() + 2_200;
-      while (performance.now() < deadline) {
+      const deadline = performance.now() + 10_000;
+      while (
+        performance.now() < deadline &&
+        frames.size < requiredSourceFrames
+      ) {
         record();
         await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
       }
@@ -157,9 +167,9 @@ test.describe('canvas pages keep their resolution', () => {
         updatingCaptureReadySamples,
         zeroRectSamples,
       };
-    });
+    }, minimumSourceFrames);
 
-    expect(observation.frameCount).toBeGreaterThanOrEqual(8);
+    expect(observation.frameCount).toBeGreaterThanOrEqual(minimumSourceFrames);
     expect(observation.disconnectedSamples).toBe(0);
     expect(observation.hiddenSamples).toBe(0);
     expect(observation.zeroRectSamples).toBe(0);
