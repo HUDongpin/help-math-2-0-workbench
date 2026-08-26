@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "animationId": "course-g03-l01-vb-004",
+  "generatedBy": "scripts/build-safe-animate-createjs-adapter.mjs",
+  "scope": "production-safety-engineering-candidate-only",
+  "productionRegistered": false,
+  "strictAcceptanceEffect": "none; this adapter is not registered in the product, does not change migration status, and cannot satisfy authoritative runtime, full-frame, audio, interaction, human-review, or owner-acceptance gates",
+  "source": {
+    "fla": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/VB/L1VB04.fla",
+    "flaSha256": "49f1694f1a7ec200d4d3455c1bc29699b83146043b7c0f25165228b32a9e3a1a",
+    "swf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/VB/L1VB04.swf",
+    "swfSha256": "8c9860663714843b4d858a50528ad82d6783d8446c38d6f1cc77ec03a07ec72e"
+  },
+  "authoringExport": {
+    "tool": "Adobe Animate 2021 MAC 21,0,7,42652",
+    "authority": "working-copy HTML5 Canvas export used as authoring/rendering evidence only; the shipped SWF and original runtime remain authoritative for behavior",
+    "javascriptSha256": "8429eaa7803a897498d1066f89c5902a66f17e1ce2286330b5bdefd9bd73e0c4",
+    "compositionId": "AA313E3026E644278726588E93C3F41F"
+  },
+  "deterministicRuntime": {
+    "tickerRegistrationRemoved": true,
+    "ambientPlaybackLoop": false,
+    "rootFrameCount": 10,
+    "rootFrame": 6,
+    "localFrameDomain": "sprite-231",
+    "defaultFrameDomain": "sprite-231",
+    "scenarios": [
+      {
+        "id": "linear-to-quiz-stop",
+        "frameDomain": "sprite-231",
+        "frameStart": 1,
+        "frameEndInclusive": 222,
+        "naturalPlaybackEndFrame": 56,
+        "claim": "source-structured automatic path ends at frame 56; explicit frames 57 through 222 are source-structural renderer inspection only and do not claim post-stop reachability"
+      },
+      {
+        "id": "authoring-frame-inspection",
+        "frameDomain": "sprite-231",
+        "frameStart": 1,
+        "frameEndInclusive": 222,
+        "claim": "engineering-only structural frame inspection; frames after 56 are not claimed runtime-reachable"
+      },
+      {
+        "id": "root-standalone",
+        "frameDomain": "root",
+        "frameStart": 1,
+        "frameEndInclusive": 10,
+        "naturalPlaybackEndFrame": 1,
+        "claim": "source root frames addressed from root structure and the hash-bound Adobe standalone sequential-step baseline; accepted implementation comparison remains separate"
+      }
+    ],
+    "supportedLanguages": [
+      "en",
+      "es"
+    ],
+    "visualLocalizationStatus": "source-shared-untranslated-visual",
+    "audioLocalizationStatus": "unresolved",
+    "visualLanguageBranchEvidence": {
+      "source": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+      "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538",
+      "exhaustiveScriptCount": 37,
+      "status": "none-observed-in-exhaustive-37-script-export"
+    },
+    "audioStatus": "blocked-until-authoritative-listening-and-cue-mapping",
+    "interactionStatus": "blocked-until-host-bindings-branches-scoring-and-replay-are-proven",
+    "spanishStatus": "single-source-English-visual-rendered-untranslated; Spanish-audio-and-bilingual-parity-unresolved"
+  },
+  "glyphCorrection": {
+    "authority": "JPEXS vector export of shipped SWF DefineSprite 231; used to replace Animate's substituted Bauhaus chart glyph bitmaps and the fully revealed standalone-root instruction glyphs",
+    "evidenceSha256": "85bbb79f7db8c31fad9e29dd205e51c992740ce44e688f936ddc1682cad4d7e5",
+    "font": "Bauhaus Md BT",
+    "localFrames": {
+      "start": 1,
+      "endInclusive": 56
+    },
+    "limitation": "The chart correction covers local frames 1 through 56. The shipped-SWF instruction vectors replace the converted bitmap for standalone root frames 7 through 10: hash-bound Adobe frames 7 and 8 prove exact right-edge reveal clips, while frames 9 and 10 prove the complete reveal. Later glossary, feedback, and question text still require authoritative per-state validation."
+  },
+  "upstreamDependencies": {
+    "easeljs": {
+      "version": "1.0.2",
+      "sha256": "9b895d5dd6bad4309956ebc2100019787940b0391e30432dac7ebc75fd6cc4c1",
+      "license": "MIT"
+    },
+    "tweenjs": {
+      "version": "1.0.2",
+      "sha256": "a7fd9431277d14034c3b19696a73dc91a59997673cdbba25adbdcf853550bc15",
+      "license": "MIT",
+      "deterministicPatch": "remove TweenJS automatic registration with the global CreateJS Ticker; MovieClip timelines are advanced only through explicit gotoAndStop calls"
+    }
+  },
+  "generatedFiles": {
+    "easeljs-1.0.2.min.js": {
+      "sha256": "13f193b48754ccb3ee83a4902663ddbb08a2ce3613d0e8550827371ec5d1f4f1",
+      "bytes": 127624
+    },
+    "tweenjs-1.0.2-deterministic.min.js": {
+      "sha256": "2a5c115b16fc19a3b3b8b18d567ad67d7c4007c98405b915725d9b14a4b81658",
+      "bytes": 26925
+    },
+    "authoring-export.js": {
+      "sha256": "a4632842fd9c67491288c5e9b6b045820524be6dda56a6e8b979ff7c62bd98d9",
+      "bytes": 268603
+    },
+    "authoritative-chart-vector.js": {
+      "sha256": "5ec37506685af7cbcb324fd05e87e727ee3ab0368105cd60b93532734f6b56e3",
+      "bytes": 36531
+    },
+    "runtime.js": {
+      "sha256": "05731192d354d6d3df708388e32e2130e153fd1619b3113983d80d7e5872b6cd",
+      "bytes": 12909
+    },
+    "index.html": {
+      "sha256": "ea0a1da2d191dd82856fe834a6d59500aed93cf25685c6560370271b678636de",
+      "bytes": 2164
+    },
+    "README.md": {
+      "sha256": "a19f4e5269d807cd026e8f42e043be2744be289d9c98088c771b0cc0eb4127b9",
+      "bytes": 1538
+    },
+    "THIRD_PARTY_LICENSE.txt": {
+      "sha256": "40c0376e79640aea6df7d3e7b22c4bae42ee7f3334d0a7db84ba58bdf619820d",
+      "bytes": 1188
+    },
+    "atlas-1.png": {
+      "sha256": "efa23aa889f70a03d7b281aa189eed5edc226298e30683dd22c1d8daa1e77bcc",
+      "bytes": 283798
+    },
+    "atlas-2.png": {
+      "sha256": "0dc8d125bed3ee54fb21723af78b53a5f060275a723dabc417878e0ed693512b",
+      "bytes": 240174
+    }
+  }
+}

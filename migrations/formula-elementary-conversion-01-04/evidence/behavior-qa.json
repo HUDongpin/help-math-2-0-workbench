@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "animationId": "formula-elementary-conversion-01-04",
+  "generatedAt": "2026-07-22T13:36:55.099Z",
+  "status": "pass",
+  "scenarios": [
+    "default"
+  ],
+  "checks": [
+    {
+      "id": "replay-mouse",
+      "result": "pass",
+      "evidence": [
+        {
+          "path": "evidence/formula-engineering-behavior-qa.json",
+          "sha256": "e5c0dca5a639b01c89729d63a5addf83c97933f39329ef78d2920d5a85a1882f"
+        }
+      ]
+    },
+    {
+      "id": "replay-enter",
+      "result": "pass",
+      "evidence": [
+        {
+          "path": "evidence/formula-engineering-behavior-qa.json",
+          "sha256": "e5c0dca5a639b01c89729d63a5addf83c97933f39329ef78d2920d5a85a1882f"
+        }
+      ]
+    },
+    {
+      "id": "replay-space",
+      "result": "pass",
+      "evidence": [
+        {
+          "path": "evidence/formula-engineering-behavior-qa.json",
+          "sha256": "e5c0dca5a639b01c89729d63a5addf83c97933f39329ef78d2920d5a85a1882f"
+        }
+      ]
+    },
+    {
+      "id": "replay-reset-frame-state-audio",
+      "result": "pass",
+      "evidence": [
+        {
+          "path": "evidence/formula-engineering-behavior-qa.json",
+          "sha256": "e5c0dca5a639b01c89729d63a5addf83c97933f39329ef78d2920d5a85a1882f"
+        },
+        {
+          "path": "evidence/product-audio-controls-qa.json",
+          "sha256": "e2813640fa85b0026f3548aea23731fd40be3051e7068d9f665b3ba579612c55"
+        }
+      ]
+    },
+    {
+      "id": "all-reachable-branches",
+      "result": "pass",
+      "evidence": [
+        {
+          "path": "evidence/formula-engineering-behavior-qa.json",
+          "sha256": "e5c0dca5a639b01c89729d63a5addf83c97933f39329ef78d2920d5a85a1882f"
+        },
+        {
+          "path": "baseline/source-composited-spanish-default.json",
+          "sha256": "86581cd7c24aaf607163e6c1bd76bab42a516fcef8b7ed6790f0bf273ff4e894"
+        },
+        {
+          "path": "evidence/full-frame-comparison-default-es.json",
+          "sha256": "56620bdb8142e09f9d703833c4ed06011383d6d7a9dc9a8707545f783ae092ec"
+        }
+      ]
+    },
+    {
+      "id": "interaction-input-scoring",
+      "result": "not-required",
+      "reason": "The audited linear formula movie has no learner input, score, or grading branch.",
+      "evidence": [
+        {
+          "path": "evidence/formula-engineering-behavior-qa.json",
+          "sha256": "e5c0dca5a639b01c89729d63a5addf83c97933f39329ef78d2920d5a85a1882f"
+        }
+      ]
+    },
+    {
+      "id": "completion-terminal-state",
+      "result": "pass",
+      "evidence": [
+        {
+          "path": "evidence/formula-engineering-behavior-qa.json",
+          "sha256": "e5c0dca5a639b01c89729d63a5addf83c97933f39329ef78d2920d5a85a1882f"
+        },
+        {
+          "path": "baseline/source-composited-spanish-default.json",
+          "sha256": "86581cd7c24aaf607163e6c1bd76bab42a516fcef8b7ed6790f0bf273ff4e894"
+        },
+        {
+          "path": "evidence/full-frame-comparison-default-es.json",
+          "sha256": "56620bdb8142e09f9d703833c4ed06011383d6d7a9dc9a8707545f783ae092ec"
+        }
+      ]
+    },
+    {
+      "id": "random-seeded-outcomes",
+      "result": "not-required",
+      "reason": "The audited linear formula movie has no random operation.",
+      "evidence": [
+        {
+          "path": "evidence/formula-engineering-behavior-qa.json",
+          "sha256": "e5c0dca5a639b01c89729d63a5addf83c97933f39329ef78d2920d5a85a1882f"
+        }
+      ]
+    }
+  ],
+  "authorityBoundary": {
+    "originalHostSpanishTraversal": false,
+    "sourceCompositedSpanishVisualParity": true,
+    "authoritativeAudioListening": false,
+    "audioSynchronization": false,
+    "humanVisualReview": false,
+    "ownerAcceptance": false,
+    "strictMigrationCompletion": false
+  }
+}

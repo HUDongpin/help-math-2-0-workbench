@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "full-frame-contact-sheet",
+  "animationId": "keyterm-elementary-computeghgh",
+  "generatedAt": "2026-07-21T07:32:43.008Z",
+  "generator": {
+    "name": "build-engineering-contact-sheet",
+    "script": "scripts/build-engineering-contact-sheet.mjs",
+    "scriptSha256": "ccf7b9f330ece122c25447069597583d2bfa9ce8e2ed928d916c14f88509b302"
+  },
+  "sourceEvidence": {
+    "comparison": {
+      "file": "migrations/keyterm-elementary-computeghgh/evidence/full-frame-comparison-default-es.json",
+      "sha256": "e143f8fad201152d4d272586b9f0b9f04c98042b0d45f153f261161caa03582b"
+    },
+    "baselineReport": {
+      "file": "migrations/keyterm-elementary-computeghgh/baseline/adobe-flash-player-32-standalone-default.json",
+      "sha256": "3da59ca060ade75c8fa4ea6089870af7f888fc73a07ba84bc6807bdbc605158e"
+    },
+    "adobeBaselineReport": {
+      "file": "migrations/keyterm-elementary-computeghgh/baseline/adobe-flash-player-32-standalone-default.json",
+      "sha256": "3da59ca060ade75c8fa4ea6089870af7f888fc73a07ba84bc6807bdbc605158e"
+    },
+    "implementationCaptureManifest": {
+      "file": "artifacts/full-frame/pilot-implementations/keyterm-elementary-computeghgh/canonical/default/es/capture-manifest.json",
+      "sha256": "bf36fb03b8ab2f8f8482623b524628528700cea0a556766995233cdd87613270"
+    }
+  },
+  "contract": {
+    "baselineAuthority": "original-swf-adobe-flash-player-runtime",
+    "baselineScenario": "standalone-default",
+    "comparisonScenario": "default",
+    "implementationScenario": "default",
+    "scenarioEquivalence": {
+      "baseline": "standalone-default",
+      "implementation": "default"
+    },
+    "baselineLanguage": "en",
+    "languageEquivalence": {
+      "baseline": "en",
+      "implementation": "es"
+    },
+    "language": "es",
+    "seed": "0",
+    "frameNumbering": "one-indexed",
+    "frameCount": 35,
+    "stage": {
+      "width": 225,
+      "height": 225
+    },
+    "columnsWithinEachFrame": [
+      "baseline",
+      "implementation",
+      "diff"
+    ],
+    "framesPerPage": 10,
+    "pageColumns": 2,
+    "pageCount": 4
+  },
+  "verification": {
+    "comparisonSummaryRecomputed": true,
+    "completeSequentialFrameCoverage": true,
+    "everyFrameRepresentedExactlyOnce": true,
+    "baselineReportHashesMatchActualPngs": true,
+    "baselinePngsAreOpaqueAfterAlphaNormalization": true,
+    "implementationCaptureHashesMatchActualPngs": true,
+    "implementationReportedFramesMatchRequests": true,
+    "diffHashesMatchActualPngs": true,
+    "directoryDigestsMatchComparison": true,
+    "nativeStageDimensionsMatch": true,
+    "captureStatusComplete": true,
+    "consoleErrors": 0,
+    "failedRequests": 0,
+    "httpErrors": 0,
+    "unexpectedRequests": 0
+  },
+  "pages": [
+    {
+      "page": 1,
+      "file": "migrations/keyterm-elementary-computeghgh/evidence/contact-sheets/default-es/page-01.png",
+      "sha256": "f1764cea205670bb1d161ec7de39194dff0ec747a18c25cf00965c4157384ed5",
+      "width": 1402,
+      "height": 1341,
+      "frames": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "page": 2,
+      "file": "migrations/keyterm-elementary-computeghgh/evidence/contact-sheets/default-es/page-02.png",
+      "sha256": "c85f50c32d01b549d1fbc97b8b301de59f90108182a582d6c606d8581b5f4408",
+      "width": 1402,
+      "height": 1341,
+      "frames": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ]
+    },
+    {
+      "page": 3,
+      "file": "migrations/keyterm-elementary-computeghgh/evidence/contact-sheets/default-es/page-03.png",
+      "sha256": "28eb7b985a09ebe37c80a9abb3e935d5b5059d0fb9cae39ed5dcc3cd575c0660",
+      "width": 1402,
+      "height": 1341,
+      "frames": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ]
+    },
+    {
+      "page": 4,
+      "file": "migrations/keyterm-elementary-computeghgh/evidence/contact-sheets/default-es/page-04.png",
+      "sha256": "dccfabc478283e7918bf582e67740d3f57fc01f258d8bc289d7a58a1d8235713",
+      "width": 1402,
+      "height": 1341,
+      "frames": [
+        31,
+        32,
+        33,
+        34,
+        35
+      ]
+    }
+  ],
+  "limitations": [
+    "The contact sheet is an engineering review aid, not a human visual-review signature or owner acceptance.",
+    "Silent PNG evidence does not establish audio presence, language correctness, cue timing, or synchronization.",
+    "Only the scenario and language named in this manifest are represented.",
+    "The explicit scenario mapping standalone-default=default only identifies the standalone default child timeline with the modern default scenario; it does not establish any other host or interaction branch.",
+    "The explicit language mapping en=es is valid only because the audited child SWF has no language-dependent visual input or text; it does not prove parent-host titles, definitions, or audio."
+  ]
+}

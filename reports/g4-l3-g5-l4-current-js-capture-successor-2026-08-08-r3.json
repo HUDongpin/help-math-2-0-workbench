@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l3-g5-l4-current-javascript-capture-successor",
+  "issuedOn": "2026-08-08",
+  "revision": "r3",
+  "status": "r6-current-javascript-captures-verified-session-protected-private-preview-r2-rendering-corrected-strict-ledger-unevaluated-unpublished",
+  "correction": {
+    "predecessorMarkdownField": "captureVerification.frameCount",
+    "correctStructuredField": "captureVerification.result.frameCount",
+    "predecessorRenderedValue": "undefined",
+    "correctedRenderedValue": 547,
+    "structuredR2EvidenceChanged": false,
+    "r2PredecessorsRewritten": false,
+    "correctionScope": "rendered-r6-frame-count-only"
+  },
+  "r2Predecessor": {
+    "json": {
+      "path": "reports/g4-l3-g5-l4-current-js-capture-successor-2026-08-08-r2.json",
+      "bytes": 6475,
+      "sha256": "09549ff17032f55e3fcef288c3da0f6c692f475d16fcc03feb6f8528eb35b217"
+    },
+    "markdown": {
+      "path": "reports/g4-l3-g5-l4-current-js-capture-successor-2026-08-08-r2.md",
+      "bytes": 948,
+      "sha256": "36f375b641a1f7602a2e669543bf6ee0bec54a1f0aad2694744b75c492d436f4"
+    },
+    "strictLedgerVerdict": "UNEVALUATED_STALE_CHECKED_IN_LEDGER_DO_NOT_INFER_STRICT_ZERO",
+    "retainedByteForByte": true
+  },
+  "r6CurrentVerification": {
+    "verifier": {
+      "path": "scripts/verify-g4-l3-g5-l4-private-preview-capture-execution-receipt-2026-08-08-r6.mjs",
+      "bytes": 14028,
+      "sha256": "aac5ecb47a42e3d7e73f88da72cbbf570e54e20e604cc37a66686faf4f688b5a"
+    },
+    "receipt": {
+      "path": "reports/g4-l3-g5-l4-private-preview-capture-execution-receipt-2026-08-08-r6.json",
+      "bytes": 10614,
+      "sha256": "e28c607301f1052a945537a3cb97946dbdbb685438f14e539a8fd6533307806e"
+    },
+    "verdict": "PASS",
+    "captureCount": 2,
+    "frameCount": 547,
+    "totalPngBytes": 144069460,
+    "strictComplete": false,
+    "published": false,
+    "currentJavascriptEvidenceOnly": true
+  },
+  "r3Implementation": {
+    "bindings": [
+      {
+        "path": "scripts/build-g4-l3-g5-l4-current-js-capture-successor-2026-08-08-r3.mjs",
+        "bytes": 10371,
+        "sha256": "d34dfdcb63709a1df1a9d59c525a7c514115f9592c0ae420aaa0e91f8380c511"
+      },
+      {
+        "path": "scripts/build-g4-l3-g5-l4-current-js-capture-successor-2026-08-08-r3.test.mjs",
+        "bytes": 2823,
+        "sha256": "bd8190878d5c722468ef91c00229433523b8ceb89e4f298b385acd8ffbc43e63"
+      }
+    ],
+    "outputDisposition": "new-read-only-no-clobber-successor-only"
+  },
+  "acceptanceEffects": {
+    "originalRuntimeEvidence": false,
+    "fullFrameComparison": false,
+    "audioAcceptance": false,
+    "interactionAcceptance": false,
+    "replayAcceptance": false,
+    "humanVisualReview": false,
+    "ownerAcceptance": false,
+    "strictCompletion": false,
+    "lessonPublication": false,
+    "publicLibraryVisibility": false
+  }
+}

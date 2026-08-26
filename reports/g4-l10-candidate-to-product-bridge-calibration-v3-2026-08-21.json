@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "reportId": "g4-l10-candidate-to-product-bridge-calibration-v3",
+  "observedAt": "2026-08-21T01:07:10+08:00",
+  "baselineGitHead": "71485baa601fe600e8f63c88fb0139492a4ad31e",
+  "outcome": "CONDITIONAL_GO_NEXT_LOW_LANE_BATCH",
+  "scopeBoundary": "One additional low-lane G4 L10 active lesson page moved from an existing preserved candidate into the private page-only product bridge. This does not authorize public registration, Flash fidelity, audio acceptance, human or Owner acceptance, strict completion, release, or publication.",
+  "freezeChain": {
+    "v1": {
+      "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v1.json",
+      "sha256": "c966f850ef4c6706b56904834c39922ddff2c8e7c4c9e51df80bc326e2f7e950",
+      "status": "preserved-three-page-predecessor"
+    },
+    "v2": {
+      "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v2.json",
+      "sha256": "bf557eca119de797158e34d9e4a458bd0868eb9146b1710232ee7702e699485a",
+      "status": "preserved-but-invalidated-for-ts006-section-page-ordinal-only",
+      "invalidatedValue": 6
+    },
+    "v3": {
+      "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v3.json",
+      "sha256": "9fed5ccb229a3f8135ec00c6a7976b0bf1367f9d9f5420e3ce7caa577bbbaf0f",
+      "status": "current-source-order-correction-successor",
+      "correctedValue": 5,
+      "basis": "The canonical active TS sequence omits TS04, so TS006 is active TS position 5 while remaining global lesson page 41."
+    }
+  },
+  "batch": {
+    "attemptedPages": 1,
+    "successfulPrivateRegistrations": 1,
+    "newWorkspaceCount": 0,
+    "animationId": "course-g04-l10-ts-006",
+    "complexityLane": "low",
+    "globalPageOrdinal": 41,
+    "sectionCode": "TS",
+    "sectionPageOrdinal": 5,
+    "frameDomain": "sprite-13",
+    "frameCount": 245,
+    "rootBeginFrame": 6
+  },
+  "yield": {
+    "thisBatch": {
+      "numerator": 1,
+      "denominator": 1,
+      "percent": 100
+    },
+    "cumulativeDeliberateAttempts": {
+      "numerator": 4,
+      "denominator": 4,
+      "percent": 100
+    },
+    "auditedCandidatePoolConverted": {
+      "numerator": 4,
+      "denominator": 24,
+      "percent": 16.666666666666668
+    },
+    "lessonPagePrivateCoverage": {
+      "numerator": 4,
+      "denominator": 46,
+      "percent": 8.695652173913043
+    },
+    "remainingAuditedCandidates": 20,
+    "unavailableDescriptorPositions": 42,
+    "publicCourseReleaseRegistrations": 0,
+    "grade4EngineeringCurrentJsPages": {
+      "numerator": 45,
+      "denominator": 645
+    }
+  },
+  "ts006SourceReachability": {
+    "sourceSwfSha256": "b0ad832f7d755e2f94dddc53e3267414c5d8430ed0e8c28d498cc5ec3c05160e",
+    "sourceFlaSha256": "4991dd4d87468d7c9162a88c94a15b8c7d251bc240e4c855b7b470976e887eb8",
+    "candidateManifestSha256": "698ba38db06bf0978234280c2cf63f358f2ab918f4de56d4b60e75188b663bc6",
+    "canvasRendererSha256": "ba4ab8464a6351576ee17bcd3ea0a542a0589652b9c6038b1da61328c02b2695",
+    "rootPlacement": {
+      "rootFrame": 6,
+      "instanceName": "animation",
+      "targetTimeline": "sprite-13"
+    },
+    "unresolvedTimelineCount": 0,
+    "reachableHandlerCount": 0,
+    "randomBranchCount": 0,
+    "externalSideEffectCount": 0
+  },
+  "ts006AudioDisposition": {
+    "materializer": "scripts/materialize-g4-l10-ts006-private-audio.mjs",
+    "receipt": {
+      "path": "migrations/course-g04-l10-ts-006/audit/private-product-audio-assets.json",
+      "sha256": "4e38e9c6ceddd0ff7e8eb941b6fedcbc3373804291f5fc8b126dcc0971f3da61"
+    },
+    "manifest": {
+      "path": "public/flash-assets/courses/course-g04-l10-ts-006/audio/manifest.json",
+      "sha256": "f1a9c871eda007f8341d3c1741f746249d431380011434e6c10b3d58ecd509d8"
+    },
+    "embeddedEnglishEngineeringCue": {
+      "path": "public/flash-assets/courses/course-g04-l10-ts-006/audio/embedded-stream-0001.mp3",
+      "sha256": "d27c65e6bd7b9087b168e2a54ff60568e9481c84bd9996b87ef50392d8cc77e6",
+      "bytes": 101530,
+      "durationMs": 20402,
+      "sampleRate": 22050,
+      "channels": 1,
+      "frameRange": "sprite-13 frames 1 through 245; end frame 246",
+      "activation": "timeline-cue",
+      "spokenLanguage": "undetermined"
+    },
+    "spanishHostTrack": {
+      "path": "public/flash-assets/courses/course-g04-l10-ts-006/audio/spanish-host-narration.mp3",
+      "sha256": "c0ea9f1cede741945c763707ed89c5be76f651f761209880157bf0c45ded8688",
+      "bytes": 106848,
+      "durationMs": 7632,
+      "sampleRate": 48000,
+      "channels": 1,
+      "activation": "user",
+      "timelineBehavior": "pause-while-playing",
+      "spokenLanguageAccepted": false
+    },
+    "fullEofDecodeCount": 2,
+    "audioAccepted": false
+  },
+  "productBridge": {
+    "privateRegistryPath": "packages/demos/private-current-js-registry.json",
+    "privateRegistryCalibrationId": "g4-l10-candidate-to-product-v3",
+    "privateRegistryEntries": [
+      "course-g04-l10-ir-001",
+      "course-g04-l10-vb-003",
+      "course-g04-l10-ts-006",
+      "course-g04-l10-fq-001"
+    ],
+    "sourceOrderedSelectedOrdinals": [1, 7, 41, 44],
+    "descriptorPath": "apps/web/lib/g4-l10-product-bridge-descriptor.ts",
+    "descriptorActivePageCount": 46,
+    "descriptorCourseShellCount": 0,
+    "routePath": "apps/web/app/[locale]/migration-status/g4-l10-product-bridge/page.tsx",
+    "routeAvailability": "development-only; production calls notFound before rendering",
+    "publicCourseReleaseRegistrations": 0,
+    "acceptanceGatesIndependent": true
+  },
+  "browserQa": {
+    "tool": "Playwright CLI with headed Chrome",
+    "desktopEnglish": {
+      "viewport": "1920x1080",
+      "pagePosition": "41/46",
+      "sectionPosition": "Practice Test 5",
+      "canvasRequest": "HTTP 200",
+      "audioRequest": "embedded-stream-0001.mp3 HTTP 206",
+      "autoplayFallback": "The modern Narration control remained visible after the browser refused autoplay; a learner gesture loaded and played the exact cue.",
+      "replayLifecycle": "Replay retained global page 41 and section position 5 and restarted the EN timeline cue through the replay-bound runtime.",
+      "screenshot": {
+        "path": "output/playwright/g4-l10-product-bridge/desktop-en-ts006-v3.png",
+        "sha256": "7e74025085a315063de34882568436b7ff3d4ae1c40735970f0c8b07cf28d92b"
+      }
+    },
+    "mobileSpanish": {
+      "viewport": "390x844",
+      "pagePosition": "41/46",
+      "sectionPosition": "Plan de los cuatro pasos 5",
+      "audioRequest": "spanish-host-narration.mp3 HTTP 206",
+      "playbackState": "Narracion changed to playing and exposed the stop action after the learner gesture.",
+      "replayLifecycle": "Replay stopped and reset the user-activated host track to idle while retaining page 41 and section position 5, as defined by runtime-epoch cleanup.",
+      "visualLanguageBoundary": "Spanish source visuals remain unavailable and fail closed; the presence of an ES host track does not claim Spanish visual or audio parity.",
+      "documentScrollWidth": 375,
+      "windowInnerWidth": 390,
+      "horizontalPageOverflow": false,
+      "screenshot": {
+        "path": "output/playwright/g4-l10-product-bridge/mobile-es-ts006-viewport-v3.png",
+        "sha256": "ffe4297230cb7a75aaebd945655d2f8b8fcdec6eeb27c5984b91aff14bbc171f"
+      }
+    },
+    "productAssetRequestFailures": 0,
+    "nonProductConsoleFindings": [
+      "Clerk __experimental_CheckoutProvider child-key warning",
+      "Clerk development-key warning",
+      "Clerk telemetry request blocked by the application Content Security Policy"
+    ]
+  },
+  "verification": {
+    "audioMaterializationCheck": "PASS: four outputs, 208378 audio bytes, two full-EOF decodes",
+    "audioMaterializerTests": {
+      "passed": 4,
+      "failed": 0
+    },
+    "focusedDemosTests": {
+      "passed": 9,
+      "failed": 0
+    },
+    "focusedWebTests": {
+      "passed": 7,
+      "failed": 0
+    },
+    "demosPackageTests": {
+      "passed": 637,
+      "failed": 0
+    },
+    "webPackageTests": {
+      "passed": 370,
+      "failed": 0
+    },
+    "demosTypecheck": "PASS",
+    "webTypecheck": "PASS",
+    "privateRegistryGenerationCheck": "PASS",
+    "lessonLanguageAudioObligationMatrix": "PASS: 94 EN/ES obligations across the legacy 47-member report; this does not change the Owner-approved 46-page lesson scope"
+  },
+  "openGlobalCurrentnessGates": [
+    {
+      "gate": "npm run verify:workbench",
+      "status": "FAIL_CLOSED",
+      "reason": "catalog/completion-ledger.json is stale",
+      "scope": "pre-existing global workbench currentness; not closed by this G4 L10 batch"
+    },
+    {
+      "gate": "npm run verify:sources",
+      "status": "FAIL_CLOSED",
+      "reason": "99 unexpected source files, beginning in Grade 5 Lesson 4 FQ English-audio paths",
+      "scope": "pre-existing global source-freeze drift outside TS006"
+    },
+    {
+      "gate": "npm test at repository root",
+      "status": "FAIL_CLOSED",
+      "reason": "broader historical/generated-currentness and unrelated profile-mode failures remain in the dirty worktree",
+      "scope": "package-local demos and web suites pass; the broader repository gate was not refreshed or weakened"
+    }
+  ],
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "behaviorParityAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "releaseEligible": false,
+    "published": false
+  },
+  "nextFactoryDecision": {
+    "status": "conditional-go-next-low-lane-batch",
+    "authorizedMeaning": "The source-reachability and audio-disposition gate produced one additional successful low-lane private registration without creating a workspace or changing public release authority.",
+    "notAuthorizedMeaning": "Do not auto-register the remaining 20 audited candidates, promote G4 L10 publicly, infer spoken language, or raise any fidelity or acceptance gate.",
+    "laneRules": {
+      "low": "Require explicit source reachability and audio disposition before each private registration.",
+      "interactive-understood": "Bind every reachable source handler to an exact typed host contract before registration.",
+      "behavior-heavy": "Close random branches, audio routing, timeline reachability, and Replay engineering behavior before registration."
+    }
+  }
+}

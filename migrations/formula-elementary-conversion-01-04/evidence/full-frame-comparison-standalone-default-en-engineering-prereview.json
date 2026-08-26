@@ -1,0 +1,182 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "engineering-visual-prereview",
+  "animationId": "formula-elementary-conversion-01-04",
+  "reviewedAt": "2026-07-21T06:11:32Z",
+  "comparison": {
+    "file": "migrations/formula-elementary-conversion-01-04/evidence/full-frame-comparison-standalone-default-en.json",
+    "sha256": "0099f8a87bb0fcfff66957badba3018691f2faedd3ff94c72599d26172ef06a2",
+    "baselineReport": {
+      "file": "migrations/formula-elementary-conversion-01-04/baseline/adobe-flash-player-32-standalone-default.json",
+      "sha256": "b3ef8b7efd2cc64e87de6006881bc112a006581ab7d3ac2effcd0d87e624ff54"
+    },
+    "implementationCaptureManifest": {
+      "file": "artifacts/full-frame/pilot-implementations/formula-elementary-conversion-01-04/default/en/capture-manifest.json",
+      "sha256": "7640e021f2692cce5887763eecdba8b8ace4159e9b248b22881905e4940b999d"
+    },
+    "baselineAuthority": "original-swf-adobe-flash-player-runtime",
+    "baselineScenario": "standalone-default",
+    "implementationScenario": "default",
+    "language": "en",
+    "seed": "0",
+    "frameCount": 67,
+    "stage": {
+      "width": 780,
+      "height": 379
+    }
+  },
+  "contactSheets": {
+    "manifest": "migrations/formula-elementary-conversion-01-04/evidence/contact-sheets/standalone-default-en/manifest.json",
+    "manifestSha256": "6fe0f205e65de58ecd62c4933182c2ed18f997628beb961332e46a57e33a21cb",
+    "pageCount": 7,
+    "pagesInspected": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "framesRepresentedExactlyOnce": 67,
+    "columnsWithinEachFrame": [
+      "Adobe baseline",
+      "modern implementation",
+      "pixel diff"
+    ],
+    "integrityVerification": {
+      "comparisonSummaryRecomputed": true,
+      "completeSequentialFrameCoverage": true,
+      "baselineReportHashesMatchActualPngs": true,
+      "baselinePngsAreOpaqueAfterAlphaNormalization": true,
+      "implementationCaptureHashesMatchActualPngs": true,
+      "implementationReportedFramesMatchRequests": true,
+      "diffHashesMatchActualPngs": true,
+      "directoryDigestsMatchComparison": true,
+      "nativeStageDimensionsMatch": true,
+      "captureStatusComplete": true,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "httpErrors": 0,
+      "unexpectedRequests": 0
+    }
+  },
+  "review": {
+    "kind": "codex-assisted-engineering-prereview",
+    "allContactSheetPagesInspected": true,
+    "humanVisualReview": false,
+    "ownerAcceptance": false,
+    "audioReviewedByListening": false,
+    "hostLocalizationTraversalReviewed": false
+  },
+  "numericResult": {
+    "staticThreshold": 0.05,
+    "transitionThreshold": 0.08,
+    "framesAtOrBelowStaticThreshold": 67,
+    "framesAtOrBelowTransitionThreshold": 67,
+    "numericOutlierFrames": [],
+    "allAssignedThresholdsPass": true,
+    "normalizedRmse": {
+      "min": 0.03022495130240797,
+      "max": 0.03953098594449571,
+      "mean": 0.03557528461499095,
+      "median": 0.03540658723463451,
+      "p95": 0.039038491682775914
+    }
+  },
+  "inspectedFrames": [
+    {
+      "frame": 1,
+      "selectionReason": "first-static-frame",
+      "normalizedRmse": 0.03125340327187246,
+      "mismatchedPixelRatio": 0.012763006562478857,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "The graduated cylinder, authored 1000-to-100 scale, lower formula panel, and initial layer order align at the native 780x379 stage.",
+        "Visible residuals are concentrated around Flash-versus-browser vector, glyph, and antialiasing edges."
+      ]
+    },
+    {
+      "frame": 6,
+      "selectionReason": "maximum-normalized-rmse-and-early-pour-motion",
+      "normalizedRmse": 0.03953098594449571,
+      "mismatchedPixelRatio": 0.027444015966443407,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "At the largest numeric difference, the pouring vessel, stream, cylinder scale, formula panel, and their layer order remain on the same authored beat.",
+        "The diff follows renderer-specific edge rasterization and translucent overlap rather than a missing teaching object or wrong value."
+      ]
+    },
+    {
+      "frame": 41,
+      "selectionReason": "pour-exit-and-formula-transition-boundary",
+      "normalizedRmse": 0.03386090263537236,
+      "mismatchedPixelRatio": 0.018936472498477776,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "The vessel exit, filled cylinder, scale labels, and lower formula panel remain synchronized with the Adobe frame.",
+        "No one-frame timing displacement, number substitution, or stale tween object is visible."
+      ]
+    },
+    {
+      "frame": 60,
+      "selectionReason": "minimum-normalized-rmse-and-terminal-teaching-state",
+      "normalizedRmse": 0.03022495130240797,
+      "mismatchedPixelRatio": 0.014535552398349232,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "The terminal statement, filled cylinder, 1000-milliliter scale, and lower formula are present with matching hierarchy and placement.",
+        "No clipping, wrong formula, or extra scene object was observed."
+      ]
+    },
+    {
+      "frame": 67,
+      "selectionReason": "terminal-replay-frame",
+      "normalizedRmse": 0.03466204221164451,
+      "mismatchedPixelRatio": 0.017617211284757458,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "The Replay control appears on the same terminal beat while the final teaching composition remains stable.",
+        "The visible residuals do not indicate a missing control, changed label, or incorrect conversion value."
+      ]
+    }
+  ],
+  "audioGate": {
+    "result": "pending-blocking-strict-acceptance",
+    "auditFile": "migrations/formula-elementary-conversion-01-04/audit/audio-runtime-evidence.json",
+    "auditFileSha256": "59a8722f2858e34512db4ca7b0317c08a2856e57ed92a4b1640ab170c07d2e3a",
+    "englishTrack": {
+      "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/EAD/Conversion_1_4.mp3",
+      "sha256": "4cb95f75f46e9bb14acc59043d6ee5367d7ad2e460a78ba53371bca39456e009",
+      "durationMs": 3206,
+      "association": "exact-basename-association",
+      "authoritativeListeningComplete": false,
+      "userTriggerAndSynchronizationComplete": false
+    },
+    "spanishTrack": {
+      "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SAD/Conversion_1_4.mp3",
+      "sha256": "756ee31becb867396837a7c16a66d72a6e011da232e338e2362996767f309462",
+      "durationMs": 4092,
+      "association": "exact-basename-association",
+      "authoritativeListeningComplete": false,
+      "userTriggerAndSynchronizationComplete": false
+    }
+  },
+  "conclusion": {
+    "numericThresholdResult": "pass",
+    "engineeringVisualPrereviewResult": "pass-for-reviewed-standalone-visual-scenario",
+    "strictAcceptanceResult": "not-accepted",
+    "reason": "All 67 corrected Adobe frames and implementation frames are present, hash-verified, exact-frame matched, numerically below threshold, and visually aligned in the reviewed English standalone scenario. Strict acceptance remains unavailable because original-host language/audio behavior, authoritative listening, Replay interaction QA, human visual review, and owner acceptance are unfinished.",
+    "requiredFollowUp": [
+      "Complete original-host English and Spanish language traversal and authoritative listening for both exact audio tracks.",
+      "Verify the user-triggered play/stop behavior, one-track-at-a-time semantics, and completion behavior in the original host and modern player.",
+      "Complete responsive, keyboard, reduced-motion, Replay, strict-validator, human visual-review, and owner-acceptance gates."
+    ]
+  },
+  "limitations": [
+    "The visual evidence covers the English standalone child-SWF scenario only.",
+    "Silent PNG comparison does not prove spoken content, language selection, user-trigger behavior, or audio completion.",
+    "This engineering prereview is not a human visual-review signature and is not owner acceptance.",
+    "No migration status, checklist item, completion flag, or accepted exception is changed by this prereview."
+  ]
+}

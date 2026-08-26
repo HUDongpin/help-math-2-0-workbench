@@ -1,0 +1,884 @@
+{
+  "acceptanceEffects": {
+    "audioAccepted": false,
+    "authoringAccepted": false,
+    "authoritativeOriginalRuntimeAccepted": false,
+    "currentJavaScriptCandidate": false,
+    "fidelityAccepted": false,
+    "fullFrameComparisonAccepted": false,
+    "humanVisualAccepted": false,
+    "implementationAuthorized": false,
+    "independentEngineeringAccepted": false,
+    "ownerAccepted": false,
+    "published": false,
+    "rmseAccepted": false,
+    "runtimeReachabilityEstablished": false,
+    "strictComplete": false
+  },
+  "animationId": "course-g05-l05-vb-013",
+  "artifactFingerprintSha256": "6ee732da2bf5e28bdac26f6cfa8cffefa00388ba6286743e5c651c5d66a3e1d6",
+  "artifactType": "g5-l5-static-coverage-trace-obligation-plan",
+  "authorityStatement": [
+    "This plan binds current machine-only M1 static artifacts and routes unresolved coverage/trace obligations to future authority, entry-state, and trace resolution.",
+    "It is not a trace specification, capture package, renderer decision, runtime observation, review, acceptance, strict-completion, or publication record.",
+    "Only a named human may operate and attest an authoritative original-runtime session; machine checks may validate later evidence but may not invent or sign it."
+  ],
+  "bindings": {
+    "coverageV2": {
+      "bytes": 2039,
+      "path": "migrations/course-g05-l05-vb-013/evidence/full-frame-coverage.json",
+      "sha256": "da0f69d9db79d568243b37412e481ce51cd57a5f521ad37dfacefed7b3432a52"
+    },
+    "frameDomainDisposition": {
+      "bytes": 57354,
+      "path": "migrations/course-g05-l05-vb-013/audit/frame-domain-disposition.json",
+      "sha256": "14ff19701f229d65defaa4084710c19c5030ad2ac20f035cda55d87337cacecf"
+    },
+    "lessonReleaseCatalog": {
+      "bytes": 87864,
+      "path": "catalog/lesson-releases.json",
+      "sha256": "f3caa2ae0e9bfd6c02dd846aa2d45de5c2f746cc57ba01a09e506d4d3c42d632"
+    },
+    "m1StaticReconciliationReceipt": {
+      "bytes": 7987,
+      "path": "migrations/course-g05-l05-vb-013/audit/machine/g5-l5-m1-static-reconciliation-receipt.json",
+      "sha256": "f3839e5aa4297955c6baf0f25df4ae7c626655e9b1edc272536a7e6f2a4c156c"
+    },
+    "migrationManifest": {
+      "bytes": 6363,
+      "path": "migrations/course-g05-l05-vb-013/migration.json",
+      "sha256": "84566ed7447c7ac2b11972955b3540989c39747ffe59bac06495c61355f5bddd"
+    },
+    "scenarioInventory": {
+      "bytes": 416374,
+      "path": "migrations/course-g05-l05-vb-013/audit/scenario-inventory.json",
+      "sha256": "81ad4717791f8b9e17db1a788dfdb9a185a555023e5ba174045d796f941e3da6"
+    },
+    "staticDispositionEvidence": {
+      "bytes": 23430,
+      "path": "migrations/course-g05-l05-vb-013/audit/static-frame-domain-disposition-evidence.json",
+      "sha256": "2f103e929f975ca47cf3b243711e7835aa5b46c514dd826f68607e3b0255c7d7"
+    },
+    "strictReadiness": {
+      "bytes": 15776,
+      "path": "migrations/course-g05-l05-vb-013/audit/strict-readiness.json",
+      "sha256": "d449cf29dde005380efa7fd9e40ad658ec4579edc18aa67243d93db88a88e7f4"
+    }
+  },
+  "currentCanonicalCoverage": {
+    "authoritativeBaselineCount": 0,
+    "boundary": "The current two root requirements remain canonical pending obligations only; this plan neither expands nor edits coverage-v2.",
+    "missingFrameCount": 20,
+    "pendingRequirementCount": 2,
+    "requirementCount": 2,
+    "requirements": [
+      {
+        "baselineAuthority": "unresolved",
+        "baselineAuthorityRequirement": "original-runtime-frame-accurate",
+        "capturedFrameCount": 0,
+        "entryState": {
+          "kind": "initial-load",
+          "language": "en"
+        },
+        "entryStateSha256": "bf209e3302a76c14fff3e7e12f6fdc0f9bc01d4934aadd03334b5c3cf61b7cf1",
+        "frameDomainId": "root",
+        "language": "en",
+        "missingFrameCount": 10,
+        "requiredRange": {
+          "firstFrame": 1,
+          "lastFrame": 10
+        },
+        "requirementId": "req-default-root-en",
+        "scenario": "default",
+        "seed": "0",
+        "status": "pending",
+        "traceId": "default-root-en"
+      },
+      {
+        "baselineAuthority": "unresolved",
+        "baselineAuthorityRequirement": "original-runtime-frame-accurate",
+        "capturedFrameCount": 0,
+        "entryState": {
+          "kind": "initial-load",
+          "language": "es"
+        },
+        "entryStateSha256": "4e4bcf0390c6fd9bb1539b0c26a8555d9e4034ef5c591548bdb1f9a506f70067",
+        "frameDomainId": "root",
+        "language": "es",
+        "missingFrameCount": 10,
+        "requiredRange": {
+          "firstFrame": 1,
+          "lastFrame": 10
+        },
+        "requirementId": "req-default-root-es",
+        "scenario": "default",
+        "seed": "0",
+        "status": "pending",
+        "traceId": "default-root-es"
+      }
+    ],
+    "scope": "root-only-provisional-bilingual",
+    "traceSpecCount": 0
+  },
+  "execution": {
+    "browsersLaunched": 0,
+    "guiApplicationsLaunched": 0,
+    "legacyEndpointsExecuted": 0,
+    "namedHumanAttestationsRecorded": 0,
+    "runtimeSessionsExecuted": 0
+  },
+  "futureResolutionSequence": [
+    "obtain separate immutable runtime authorization and named operator/session attestation",
+    "execute natural host entry in the authorized original runtime and establish reachability",
+    "resolve every child disposition and exact entry-state identity without guessing",
+    "resolve source-evidenced button, drag, branch, random, terminal, Replay, language, audio, and host-state schedules",
+    "only then create separately reviewed trace specifications and capture packages",
+    "capture authoritative original-runtime evidence before implementation comparison or acceptance"
+  ],
+  "generatedBy": {
+    "bytes": 87887,
+    "deterministic": true,
+    "path": "scripts/build-g5-l5-coverage-trace-obligation-matrix.mjs",
+    "sha256": "e0d6e21b0dcc7e791d0ba3606ffa68179704d008eb58eb2d1726c6d22f1c8e89"
+  },
+  "managedOutputContract": {
+    "hardLink": false,
+    "linkCount": 1,
+    "mode": "0644",
+    "ordinaryFile": true,
+    "symbolicLink": false
+  },
+  "obligationCounts": {
+    "buttonTargetObligations": 3,
+    "childDomainCandidates": 14,
+    "conditionalBranchObligations": 8,
+    "correctWrongObligations": 3,
+    "courseRouteObligations": 1,
+    "dependencyFixtureObligations": 18,
+    "dragObligations": 0,
+    "glossaryAndHyperlinkObligations": 0,
+    "handlerBehaviorGroups": 3,
+    "inputObligations": 0,
+    "labeledStateObligations": 0,
+    "randomObligations": 0,
+    "replayCandidates": 1,
+    "sectionMenuObligations": 0,
+    "sideEffectObligations": 0,
+    "terminalCandidates": 19,
+    "timelineStateCoverage": 19
+  },
+  "obligationRoutes": {
+    "additional": [
+      {
+        "category": "timelineStateCoverage",
+        "obligationCount": 19,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "pending-authority-entry-state-trace-resolution"
+      },
+      {
+        "category": "handlerBehaviorGroups",
+        "obligationCount": 3,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "pending-authority-entry-state-trace-resolution"
+      },
+      {
+        "category": "inputObligations",
+        "obligationCount": 0,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "no-static-candidate-in-current-inventory"
+      },
+      {
+        "category": "correctWrongObligations",
+        "obligationCount": 3,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "pending-authority-entry-state-trace-resolution"
+      },
+      {
+        "category": "labeledStateObligations",
+        "obligationCount": 0,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "no-static-candidate-in-current-inventory"
+      },
+      {
+        "category": "glossaryAndHyperlinkObligations",
+        "obligationCount": 0,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "no-static-candidate-in-current-inventory"
+      },
+      {
+        "category": "sectionMenuObligations",
+        "obligationCount": 0,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "no-static-candidate-in-current-inventory"
+      },
+      {
+        "category": "courseRouteObligations",
+        "obligationCount": 1,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "pending-authority-entry-state-trace-resolution"
+      },
+      {
+        "category": "sideEffectObligations",
+        "obligationCount": 0,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "no-static-candidate-in-current-inventory"
+      },
+      {
+        "category": "dependencyFixtureObligations",
+        "obligationCount": 18,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "pending-authority-entry-state-trace-resolution"
+      },
+      {
+        "category": "replayCandidates",
+        "obligationCount": 1,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "pending-authority-entry-state-trace-resolution"
+      },
+      {
+        "category": "terminalCandidates",
+        "obligationCount": 19,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "pending-authority-entry-state-trace-resolution"
+      }
+    ],
+    "buttons": [
+      {
+        "buttonObjectId": "38",
+        "encodedEventConditionCount": 1,
+        "evidence": {
+          "artifactId": "swfmill-xml",
+          "objectId": "38"
+        },
+        "hitRecordCount": 1,
+        "obligationId": "button-target-38-1",
+        "placementCount": 2,
+        "routePolicyId": "button-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "7bba6a0893a2c83ed736e98db4a7c98835bf9e7f40fa90c09c9a0f93a4a4f4e7",
+        "status": "pending-authoritative-reachability-entry-state-trace"
+      },
+      {
+        "buttonObjectId": "39",
+        "encodedEventConditionCount": 1,
+        "evidence": {
+          "artifactId": "swfmill-xml",
+          "objectId": "39"
+        },
+        "hitRecordCount": 1,
+        "obligationId": "button-target-39-2",
+        "placementCount": 1,
+        "routePolicyId": "button-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "c5cb4d058a9fd3305fa13e9cb80f33d90bde83f9e85424b50c8914643c60d949",
+        "status": "pending-authoritative-reachability-entry-state-trace"
+      },
+      {
+        "buttonObjectId": "61",
+        "encodedEventConditionCount": 1,
+        "evidence": {
+          "artifactId": "swfmill-xml",
+          "objectId": "61"
+        },
+        "hitRecordCount": 4,
+        "obligationId": "button-target-61-3",
+        "placementCount": 1,
+        "routePolicyId": "button-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "a79184bb589abf396ed09cea20a1f6d0dedcbdb368463d37d4d3dc6ef18a6dc1",
+        "status": "pending-authoritative-reachability-entry-state-trace"
+      }
+    ],
+    "childDomains": [
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 10,
+        "obligationId": "child-domain-sprite-33",
+        "riskLevel": "review",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "81ad4717791f8b9e17db1a788dfdb9a185a555023e5ba174045d796f941e3da6",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "d6ddb8ff16699c565abbc652d760540267bf100e8d24185a1b7bb60e9d3c74e9"
+        },
+        "sourceObjectId": "33",
+        "sourceTimelineId": "sprite-33",
+        "staticFingerprintSha256": "b0bb62fa1e7df8597cc703e2aa3ddc3650f898b383a56794bc1419523a65e676",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 3,
+        "obligationId": "child-domain-sprite-36",
+        "riskLevel": "review",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "81ad4717791f8b9e17db1a788dfdb9a185a555023e5ba174045d796f941e3da6",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "d6ddb8ff16699c565abbc652d760540267bf100e8d24185a1b7bb60e9d3c74e9"
+        },
+        "sourceObjectId": "36",
+        "sourceTimelineId": "sprite-36",
+        "staticFingerprintSha256": "0ecadef3e84ee2f110c34e9a783544508e98e466e7371503eb41ec15c2222ea4",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 1,
+        "obligationId": "child-domain-sprite-62",
+        "riskLevel": "review",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "81ad4717791f8b9e17db1a788dfdb9a185a555023e5ba174045d796f941e3da6",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "d6ddb8ff16699c565abbc652d760540267bf100e8d24185a1b7bb60e9d3c74e9"
+        },
+        "sourceObjectId": "62",
+        "sourceTimelineId": "sprite-62",
+        "staticFingerprintSha256": "6fe467878c953872e0331619d5b699057f5d14c9192604bca8712f455f5d0f5e",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 31,
+        "obligationId": "child-domain-sprite-66",
+        "riskLevel": "review",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "81ad4717791f8b9e17db1a788dfdb9a185a555023e5ba174045d796f941e3da6",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "d6ddb8ff16699c565abbc652d760540267bf100e8d24185a1b7bb60e9d3c74e9"
+        },
+        "sourceObjectId": "66",
+        "sourceTimelineId": "sprite-66",
+        "staticFingerprintSha256": "5932296943c0f6ea8c5f8f64e8c50ce93b0845e801d0ebc7d22bd25ef52b1bc0",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 28,
+        "obligationId": "child-domain-sprite-94",
+        "riskLevel": "review",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "81ad4717791f8b9e17db1a788dfdb9a185a555023e5ba174045d796f941e3da6",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "d6ddb8ff16699c565abbc652d760540267bf100e8d24185a1b7bb60e9d3c74e9"
+        },
+        "sourceObjectId": "94",
+        "sourceTimelineId": "sprite-94",
+        "staticFingerprintSha256": "5a9ee19989505cc64f5fb61c7f7dd4bd84dd89f6eccc1f42afe33644f19a9077",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 28,
+        "obligationId": "child-domain-sprite-105",
+        "riskLevel": "review",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "81ad4717791f8b9e17db1a788dfdb9a185a555023e5ba174045d796f941e3da6",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "d6ddb8ff16699c565abbc652d760540267bf100e8d24185a1b7bb60e9d3c74e9"
+        },
+        "sourceObjectId": "105",
+        "sourceTimelineId": "sprite-105",
+        "staticFingerprintSha256": "de8dc078300cfb9e68b00f8b8b25e3313da558b7d7812b00f2f02a2f0683fc9f",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 31,
+        "obligationId": "child-domain-sprite-117",
+        "riskLevel": "review",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "81ad4717791f8b9e17db1a788dfdb9a185a555023e5ba174045d796f941e3da6",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "d6ddb8ff16699c565abbc652d760540267bf100e8d24185a1b7bb60e9d3c74e9"
+        },
+        "sourceObjectId": "117",
+        "sourceTimelineId": "sprite-117",
+        "staticFingerprintSha256": "344afcd4139e8acdc2d225128e83d1a5dbeb03df1e3b00d563db5f4da8511f58",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 31,
+        "obligationId": "child-domain-sprite-143",
+        "riskLevel": "review",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "81ad4717791f8b9e17db1a788dfdb9a185a555023e5ba174045d796f941e3da6",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "d6ddb8ff16699c565abbc652d760540267bf100e8d24185a1b7bb60e9d3c74e9"
+        },
+        "sourceObjectId": "143",
+        "sourceTimelineId": "sprite-143",
+        "staticFingerprintSha256": "12bf54d1d0e8a6abdbdd6227195e5470c2d20db531c3b30e92bdb6a899a780e2",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 28,
+        "obligationId": "child-domain-sprite-160",
+        "riskLevel": "review",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "81ad4717791f8b9e17db1a788dfdb9a185a555023e5ba174045d796f941e3da6",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "d6ddb8ff16699c565abbc652d760540267bf100e8d24185a1b7bb60e9d3c74e9"
+        },
+        "sourceObjectId": "160",
+        "sourceTimelineId": "sprite-160",
+        "staticFingerprintSha256": "03f6d6877a7a5af24990f20aa5b15ff356c1e23a11376a5bdbf87b056019ca2c",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 33,
+        "obligationId": "child-domain-sprite-181",
+        "riskLevel": "review",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "81ad4717791f8b9e17db1a788dfdb9a185a555023e5ba174045d796f941e3da6",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "d6ddb8ff16699c565abbc652d760540267bf100e8d24185a1b7bb60e9d3c74e9"
+        },
+        "sourceObjectId": "181",
+        "sourceTimelineId": "sprite-181",
+        "staticFingerprintSha256": "345100749cfb2e0ef6640954e22fe01d0d4623860ec0850085999ca41d7533f9",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 28,
+        "obligationId": "child-domain-sprite-193",
+        "riskLevel": "review",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "81ad4717791f8b9e17db1a788dfdb9a185a555023e5ba174045d796f941e3da6",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "d6ddb8ff16699c565abbc652d760540267bf100e8d24185a1b7bb60e9d3c74e9"
+        },
+        "sourceObjectId": "193",
+        "sourceTimelineId": "sprite-193",
+        "staticFingerprintSha256": "04f5817460b149f60e1a5ee9b33340bf323d7b78fdfc8d107d7cc74ac3d444d0",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 22,
+        "obligationId": "child-domain-sprite-202",
+        "riskLevel": "review",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "rootPlacementStatus": "structurally-reachable-but-named-root-path-unresolved",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "81ad4717791f8b9e17db1a788dfdb9a185a555023e5ba174045d796f941e3da6",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "d6ddb8ff16699c565abbc652d760540267bf100e8d24185a1b7bb60e9d3c74e9"
+        },
+        "sourceObjectId": "202",
+        "sourceTimelineId": "sprite-202",
+        "staticFingerprintSha256": "ec81c1a93be89fd378b1148cedd25174fdae49377415de90a1d92ae194285ec4",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 26,
+        "obligationId": "child-domain-sprite-224",
+        "riskLevel": "review",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "81ad4717791f8b9e17db1a788dfdb9a185a555023e5ba174045d796f941e3da6",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "d6ddb8ff16699c565abbc652d760540267bf100e8d24185a1b7bb60e9d3c74e9"
+        },
+        "sourceObjectId": "224",
+        "sourceTimelineId": "sprite-224",
+        "staticFingerprintSha256": "b316db84c3fd55943f80ac9aae34d0a21917902602967dd873913362a81a493e",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 201,
+        "obligationId": "child-domain-sprite-225",
+        "riskLevel": "high",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root",
+          "local-frame-count-at-least-100",
+          "direct-named-root-placement"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "81ad4717791f8b9e17db1a788dfdb9a185a555023e5ba174045d796f941e3da6",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "d6ddb8ff16699c565abbc652d760540267bf100e8d24185a1b7bb60e9d3c74e9"
+        },
+        "sourceObjectId": "225",
+        "sourceTimelineId": "sprite-225",
+        "staticFingerprintSha256": "064b77fd8bc1739366a73bb686b77c86609592d54739321ece1a6e695761aaf0",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      }
+    ],
+    "conditionalBranches": [
+      {
+        "condition": "_global.quizTryCount == 1",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 4,
+            "script": "DefineButton2_38/BUTTONCONDACTION on(release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-001",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "4c9e9b8ab72f2e99a946b984d2512af05e1c0b1f2d727a00e4ecf0080060a4f1",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "_global.quizTryCount >= 2",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 39,
+            "script": "DefineSprite_105/frame_28/DoAction.as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 56,
+            "script": "DefineSprite_117/frame_31/DoAction.as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 224,
+            "script": "DefineSprite_66/frame_31/DoAction.as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 241,
+            "script": "DefineSprite_94/frame_28/DoAction.as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-002",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "a64adee3419c83a1665991324fff56166120d3f661d6715943abe8b4dbc4a8cb",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "elapsedH < 10",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 183,
+            "script": "DefineSprite_36/frame_3/DoAction.as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-003",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "32afa2d41a8c7d28763dcec420b48be2d77bfc9e5c06ec3124bcda92101382e8",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "elapsedHours < 10",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 159,
+            "script": "DefineSprite_36/frame_3/DoAction.as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-004",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "7e5357a7e47b36265b0df90a7efb5a401e0ea60d9c27b7f01ca93a1dd8800422",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "elapsedM < 10",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 167,
+            "script": "DefineSprite_36/frame_3/DoAction.as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-005",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "052d6c4c5b13a26eea56e2e6de2c4e2289ebef1385b7af3cfddebed98e358055",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "elapsedS < 10",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 175,
+            "script": "DefineSprite_36/frame_3/DoAction.as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-006",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "73a3330aa273714c31b8ce2308952756b921e91f0a9c3c71a4977b0074886182",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "seconds > 5",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 193,
+            "script": "DefineSprite_36/frame_3/DoAction.as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-007",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "4b6cc5bb5fd6a65750561ebf738c134e4c282b1686223a73ab346656bc48fae6",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "startTimer == true",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 149,
+            "script": "DefineSprite_36/frame_3/DoAction.as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-008",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "eedc8da11a4478523c7e2b75267ecce05052c1dbb73fb294e7cce4aae3945649",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      }
+    ],
+    "drags": [],
+    "random": []
+  },
+  "protectedMutations": {
+    "acceptanceAdvanced": false,
+    "browserLaunched": false,
+    "canonicalCoverageWritten": false,
+    "canonicalKeyframesWritten": false,
+    "completionLedgerChanged": false,
+    "guiLaunched": false,
+    "implementationStarted": false,
+    "originalRuntimeLaunched": false,
+    "publicationChanged": false,
+    "rendererSelected": false,
+    "reviewRecorded": false,
+    "ruffleLaunched": false,
+    "traceSpecCreated": false
+  },
+  "releaseId": "lesson-g05-l05-add-subtract-negative-numbers",
+  "releaseMembership": {
+    "assetId": "swf-cc2b3a405682e3fc684ebdcebc72be044eeb1817839dd6f0f9fe5a4fd1eb9811",
+    "batchId": "g05-l05-host-language",
+    "ordinal": 16,
+    "releaseFingerprintSha256": "c03cf04129a19758f1bbdadbc67c78b26dde783fca1587447bf6ff83f2af7f84",
+    "releaseRole": "active-xml-referenced-page",
+    "shardId": "g05-l05-host-language",
+    "sourcePath": "HELP_COURSES/ELMGR5/L5/VB/L5VB13.swf",
+    "sourceSha256": "cc2b3a405682e3fc684ebdcebc72be044eeb1817839dd6f0f9fe5a4fd1eb9811"
+  },
+  "routePolicies": {
+    "branch-authority-entry-state-trace-v1": {
+      "entryStateResolution": "resolve all prerequisite values, containing domain, language, host state, and entry-state hash without guessing defaults",
+      "futureAuthority": "source-evidenced fixtures plus authorized original-runtime execution of every reachable outcome",
+      "namedHumanRequired": "yes for authoritative original-runtime execution and attestation",
+      "staticAuthority": "exported conditional expression candidate only; reachability and feasibility are unresolved",
+      "traceResolution": "record one ordered natural trace per reachable outcome; document an evidence-backed exception for an infeasible outcome"
+    },
+    "button-authority-entry-state-trace-v1": {
+      "entryStateResolution": "resolve the containing frame domain, exact placement, language, host state, and stage-space target before interaction",
+      "futureAuthority": "authorized original-runtime natural interaction with source-evidenced placement and event identity",
+      "namedHumanRequired": "yes for authoritative original-runtime interaction and attestation",
+      "staticAuthority": "button definition, encoded event, hit-record, and placement candidate only",
+      "traceResolution": "record ordered pointer/keyboard events and up, over, down, hit, result, terminal, and reset states for every reachable placement"
+    },
+    "child-domain-authority-entry-state-trace-v1": {
+      "entryStateResolution": "prove the complete parent placement chain, parent frame, local entry frame, language, host state, and entry-state hash before assigning an independent or composite domain",
+      "futureAuthority": "authorized original-runtime natural host entry, or exact authoring/source evidence reviewed under the project evidence order",
+      "namedHumanRequired": "yes for original-runtime operation, observation, and session attestation",
+      "staticAuthority": "structural candidate only; the disposition is not runtime reachability evidence",
+      "traceResolution": "create a trace obligation only after reachability, disposition, and exact entry state are evidenced; preserve every local frame when independent-required"
+    },
+    "drag-authority-entry-state-trace-v1": {
+      "entryStateResolution": "resolve containing domain, placement, start position, bounds, host variables, language, and entry-state hash",
+      "futureAuthority": "authorized original-runtime natural drag observation with exact coordinates and source identity",
+      "namedHumanRequired": "yes for authoritative original-runtime drag operation and attestation",
+      "staticAuthority": "exported drag handler and static bound expression candidate only",
+      "traceResolution": "record press/start, ordered coordinate samples, minimum/intermediate/maximum positions, release, releaseOutside where encoded, result, and Replay/reset"
+    },
+    "interaction-authority-entry-state-trace-v1": {
+      "entryStateResolution": "resolve containing domain, exact prerequisite state, language, host state, and entry-state hash",
+      "futureAuthority": "source evidence plus authorized original-runtime natural reachability",
+      "namedHumanRequired": "yes whenever original-runtime operation, listening, visual judgment, or attestation is required",
+      "staticAuthority": "static scenario obligation only",
+      "traceResolution": "record the complete ordered natural trace, terminal state, and Replay/reset semantics"
+    },
+    "random-authority-entry-state-trace-v1": {
+      "entryStateResolution": "resolve containing domain, prerequisite array/range values, language, host state, and entry-state hash",
+      "futureAuthority": "source-proven random domain and authorized original-runtime observation; deterministic seeds only when evidenced",
+      "namedHumanRequired": "yes for authoritative original-runtime observation and attestation",
+      "staticAuthority": "exported random expression and outcome-shape candidate only",
+      "traceResolution": "record the injected or observed outcome, seed/fixture authority, ordered events, resulting states, terminal behavior, and reset for every required outcome"
+    }
+  },
+  "schemaVersion": 1,
+  "state": "static-obligations-routed-runtime-authority-pending",
+  "structuralDefinitionInventory": {
+    "evidenceBoundCompositeChildCount": 3,
+    "excludedNotProven": {
+      "count": 1,
+      "futureResolution": "retain in the definition census and prove root reachability before creating any entry-state or trace route; do not classify as dead code from absence alone",
+      "runnableRouteCreated": false,
+      "status": "static-definition-retained-root-reachability-not-proven"
+    },
+    "excludedNotProvenTimelineCount": 1,
+    "highRiskIndependentCandidateCount": 1,
+    "longerThanRootCount": 11,
+    "nestedDefinitionCount": 18,
+    "structurallyReachableChildCount": 17,
+    "structurallyReachableUnresolvedChildCount": 14
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 2,
+  "receiptType": "g4-l3-source-static-source-audit-rebind-transaction-proof-receipt",
+  "receiptId": "g4-l3-source-static-source-audit-rebind-transaction-proof-2026-07-27-v2",
+  "transactionId": "75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7",
+  "generatedBy": {
+    "path": "scripts/validate-g4-l3-source-static-source-audit-rebind-v2.mjs",
+    "bytes": 24355,
+    "sha256": "710c62c5cead26d524925661eac9bd7d5d4ba67a6107b739fa61d56e04f113b0"
+  },
+  "supersedesValidationBehavior": {
+    "v1Receipt": {
+      "path": "reports/g4-l3-source-static-source-audit-rebind-receipt.json",
+      "bytes": 69649,
+      "sha256": "395b5b239e481a44dec202f2a01540948000372a950d631d3f44e3017b5dc3e7"
+    },
+    "behavior": "Canonical post-transaction validation uses immutable transaction-time artifacts and does not require live protected files to retain transaction-time bytes.",
+    "v1ReceiptBytesModified": false,
+    "v1WriterBytesModified": false,
+    "v1PlanBytesModified": false,
+    "v1CommitBytesModified": false
+  },
+  "immutableTransactionTimeProof": {
+    "path": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/transaction-time-protected-state-proof-v2.json",
+    "bytes": 18730,
+    "sha256": "106423f78db3285e9b179653ee8642e4666b69f3d9d2cba74d46b2541b930fc7"
+  },
+  "protectedBefore": [
+    {
+      "path": "catalog/completion-ledger.json",
+      "bytes": 64286,
+      "sha256": "8e5f26e1cece647a38182a9d544f509b5c4737df087fc16c34ef9c2a0b774ad0"
+    },
+    {
+      "path": "catalog/lesson-release-ledger.json",
+      "bytes": 49048,
+      "sha256": "e6dc65da3981a7e497c1a9ecacb60b8ba4acbb18ef0fb3963d2ef28b5b8b02e0"
+    },
+    {
+      "path": "catalog/lesson-releases.json",
+      "bytes": 54579,
+      "sha256": "ab0ad5dac373f7bf192b603c4c2b0bc4dae9f73fe770eba3be7507d458bfc375"
+    },
+    {
+      "path": "reports/current-javascript-output-human-approval.json",
+      "bytes": 3375444,
+      "sha256": "7f291bd72cf2a9c35cdb7d7fcbd3b52c1e3b88ec1e31e66e776b909e9c01cc5c"
+    }
+  ],
+  "protectedAfterAtCommit": [
+    {
+      "path": "catalog/completion-ledger.json",
+      "bytes": 64286,
+      "sha256": "8e5f26e1cece647a38182a9d544f509b5c4737df087fc16c34ef9c2a0b774ad0"
+    },
+    {
+      "path": "catalog/lesson-release-ledger.json",
+      "bytes": 49048,
+      "sha256": "e6dc65da3981a7e497c1a9ecacb60b8ba4acbb18ef0fb3963d2ef28b5b8b02e0"
+    },
+    {
+      "path": "catalog/lesson-releases.json",
+      "bytes": 54579,
+      "sha256": "ab0ad5dac373f7bf192b603c4c2b0bc4dae9f73fe770eba3be7507d458bfc375"
+    },
+    {
+      "path": "reports/current-javascript-output-human-approval.json",
+      "bytes": 3375444,
+      "sha256": "7f291bd72cf2a9c35cdb7d7fcbd3b52c1e3b88ec1e31e66e776b909e9c01cc5c"
+    }
+  ],
+  "canonicalValidationInputs": [
+    {
+      "path": "reports/g4-l3-source-static-source-audit-rebind-receipt.json",
+      "bytes": 69649,
+      "sha256": "395b5b239e481a44dec202f2a01540948000372a950d631d3f44e3017b5dc3e7"
+    },
+    {
+      "path": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/plan.json",
+      "bytes": 7481,
+      "sha256": "6e6b3880e9303fee845419427ebb092bae6da59b8bd34a89383540708d4bddc9"
+    },
+    {
+      "path": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/commit.json",
+      "bytes": 985,
+      "sha256": "48b862d3621de47e943dc00deecdde786d8c2e2f754885212d1c78740f20bad5"
+    },
+    {
+      "path": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/transaction-time-protected-state-proof-v2.json",
+      "bytes": 18730,
+      "sha256": "106423f78db3285e9b179653ee8642e4666b69f3d9d2cba74d46b2541b930fc7"
+    }
+  ],
+  "canonicalValidationExplicitExclusions": {
+    "liveProtectedFiles": [
+      "catalog/completion-ledger.json",
+      "catalog/lesson-release-ledger.json",
+      "catalog/lesson-releases.json",
+      "reports/current-javascript-output-human-approval.json"
+    ],
+    "reason": "Later authorized changes are independent downstream transactions and do not rewrite this committed historical fact."
+  },
+  "archivedPreimageCount": 13,
+  "authorityBoundary": {
+    "acceptanceNeutral": true,
+    "currentJavaScriptCandidateOnly": true,
+    "originalRuntimeAuthorityCreated": false,
+    "audioAcceptanceCreated": false,
+    "humanReviewCreated": false,
+    "ownerAcceptanceCreated": false,
+    "strictCompletionCreated": false,
+    "completionLedgerWriteAuthorized": false,
+    "lessonReleaseWriteAuthorized": false,
+    "approvalOrPinWriteAuthorized": false,
+    "publicReleaseAuthorized": false,
+    "sourceAssetWriteAuthorized": false,
+    "strictAcceptanceEffect": "none"
+  },
+  "receiptFingerprintSha256": "c9b0db9a45fd85d05745b53c243b54e98218968c559c5db182a09043f8afd5d1"
+}

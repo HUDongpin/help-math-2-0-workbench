@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "engineering-visual-prereview",
+  "animationId": "keyterm-elementary-acute-angle",
+  "reviewedAt": "2026-07-21T05:50:04Z",
+  "comparison": {
+    "file": "migrations/keyterm-elementary-acute-angle/evidence/full-frame-comparison-standalone-default-en.json",
+    "sha256": "9fb444e1a69b496cf668c07ac08999d736d560319e2bcd68f714a5ee57494600",
+    "baselineReport": {
+      "file": "migrations/keyterm-elementary-acute-angle/baseline/adobe-flash-player-32-standalone-default.json",
+      "sha256": "c71f8760a5ae0541ba90d4ffde3bad463f35eb93c104ee0f5a5fc36a83c9686d"
+    },
+    "implementationCaptureManifest": {
+      "file": "artifacts/full-frame/pilot-implementations/keyterm-elementary-acute-angle/default/en/capture-manifest.json",
+      "sha256": "65e94f939d8bb3662e3845202c2e4ef23b2b910f5feb59111f73f95fe2fc1548"
+    },
+    "baselineAuthority": "original-swf-adobe-flash-player-runtime",
+    "baselineScenario": "standalone-default",
+    "implementationScenario": "default",
+    "language": "en",
+    "seed": "0",
+    "frameCount": 60,
+    "stage": {
+      "width": 225,
+      "height": 225
+    }
+  },
+  "contactSheets": {
+    "manifest": "migrations/keyterm-elementary-acute-angle/evidence/contact-sheets/standalone-default-en/manifest.json",
+    "manifestSha256": "ecd7a283196959bcf53c52a7890ee3c60fa4022f6507fca46177e9bee76f2aa4",
+    "pageCount": 6,
+    "pagesInspected": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "framesRepresentedExactlyOnce": 60,
+    "columnsWithinEachFrame": [
+      "Adobe baseline",
+      "modern implementation",
+      "pixel diff"
+    ],
+    "integrityVerification": {
+      "comparisonSummaryRecomputed": true,
+      "completeSequentialFrameCoverage": true,
+      "baselineReportHashesMatchActualPngs": true,
+      "baselinePngsAreOpaqueAfterAlphaNormalization": true,
+      "implementationCaptureHashesMatchActualPngs": true,
+      "implementationReportedFramesMatchRequests": true,
+      "diffHashesMatchActualPngs": true,
+      "directoryDigestsMatchComparison": true,
+      "nativeStageDimensionsMatch": true,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "httpErrors": 0,
+      "unexpectedRequests": 0
+    }
+  },
+  "review": {
+    "kind": "codex-assisted-engineering-prereview",
+    "allContactSheetPagesInspected": true,
+    "humanVisualReview": false,
+    "ownerAcceptance": false,
+    "audioReviewedByListening": false,
+    "hostLocalizationTraversalReviewed": false
+  },
+  "numericResult": {
+    "staticThreshold": 0.05,
+    "transitionThreshold": 0.08,
+    "framesAtOrBelowStaticThreshold": 60,
+    "framesAtOrBelowTransitionThreshold": 60,
+    "numericOutlierFrames": [],
+    "allAssignedThresholdsPass": true,
+    "normalizedRmse": {
+      "min": 0.03416223524939118,
+      "max": 0.03951356887494662,
+      "mean": 0.03593270243893434,
+      "median": 0.035728216871828124,
+      "p95": 0.03859662621592435
+    }
+  },
+  "inspectedFrames": [
+    {
+      "frame": 1,
+      "selectionReason": "first-static-frame",
+      "normalizedRmse": 0.03859662621592435,
+      "mismatchedPixelRatio": 0.019753086419753086,
+      "visualResult": "engineering-pass",
+      "observations": [
+        "The bilingual title, dotted vertical reference, A/B/C labels, horizontal ray, moving ray origin, arrowheads, and layer order align at the native 225x225 stage.",
+        "Visible residuals are concentrated on glyph/vector antialiasing and do not indicate a wrong label, coordinate, or teaching object."
+      ]
+    },
+    {
+      "frame": 26,
+      "selectionReason": "vertical-ray-boundary",
+      "normalizedRmse": 0.0341642285219508,
+      "mismatchedPixelRatio": 0.019950617283950617,
+      "visualResult": "engineering-pass",
+      "observations": [
+        "The moving ray reaches the vertical reference on the same one-indexed frame in baseline and implementation.",
+        "The red angle sector, arrowhead, label C, dotted guide, and fixed horizontal ray remain aligned."
+      ]
+    },
+    {
+      "frame": 33,
+      "selectionReason": "post-vertical-return-boundary",
+      "normalizedRmse": 0.03527744623605915,
+      "mismatchedPixelRatio": 0.020701234567901235,
+      "visualResult": "engineering-pass",
+      "observations": [
+        "The ray has passed the vertical return boundary by the same amount in both renderers; no one-frame offset is visible.",
+        "Geometry, labels, and layering remain consistent with the Adobe frame."
+      ]
+    },
+    {
+      "frame": 43,
+      "selectionReason": "maximum-normalized-rmse-and-pixel-mismatch",
+      "normalizedRmse": 0.03951356887494662,
+      "mismatchedPixelRatio": 0.02380246913580247,
+      "visualResult": "engineering-pass",
+      "observations": [
+        "This is the largest numeric difference in the 60-frame run, but the moving ray, angle sector, fixed ray, reference line, labels, and title remain spatially and semantically aligned.",
+        "The diff shape follows renderer-specific edge and font rasterization rather than a missing object, wrong angle, or timing mismatch."
+      ]
+    },
+    {
+      "frame": 60,
+      "selectionReason": "terminal-static-frame",
+      "normalizedRmse": 0.03859662621592435,
+      "mismatchedPixelRatio": 0.019753086419753086,
+      "visualResult": "engineering-pass",
+      "observations": [
+        "The terminal composition returns to the same static visual state as frame 1 in both the Adobe and modern captures.",
+        "No clipping, extra object, or stale tween state is visible."
+      ]
+    }
+  ],
+  "audioGate": {
+    "result": "pending-blocking-strict-acceptance",
+    "auditFile": "migrations/keyterm-elementary-acute-angle/audit/audio-runtime-evidence.json",
+    "auditFileSha256": "b98c59b77327632193da7e8a6f1649f17f9fffbe4cacc22476e86c32cafcccba",
+    "englishTrack": {
+      "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/EAD/acute_angle.mp3",
+      "sha256": "8b150d56158690d70c8f9891a72c13fdb62719b973bf970dcdeadaed612dc97f",
+      "durationMs": 7871,
+      "association": "exact-basename-association",
+      "authoritativeListeningComplete": false,
+      "cueSynchronizationComplete": false
+    },
+    "spanishTrack": {
+      "expectedFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/SAD/acute_angle.mp3",
+      "status": "missing-source",
+      "synthesisOrSubstitutionAllowed": false
+    }
+  },
+  "conclusion": {
+    "numericThresholdResult": "pass",
+    "engineeringVisualPrereviewResult": "pass-for-reviewed-standalone-visual-scenario",
+    "strictAcceptanceResult": "not-accepted",
+    "reason": "All 60 corrected, alpha-normalized Adobe frames and implementation frames are present, hash-verified, exact-frame matched, numerically below threshold, and visually aligned in the reviewed English standalone scenario. Strict acceptance remains unavailable because the Spanish SAD source is missing, English listening/cue synchronization and host localization traversal are unfinished, and neither human visual review nor owner acceptance has been signed.",
+    "requiredFollowUp": [
+      "Confirm the missing Spanish SAD source with the owner; do not synthesize or silently substitute it.",
+      "Complete authoritative English listening and cue/start synchronization evidence in the original host and modern player.",
+      "Complete host-language traversal, product QA, human visual review, and owner acceptance."
+    ]
+  },
+  "limitations": [
+    "The visual evidence covers the English standalone child-SWF scenario only, even though the child artwork itself includes a bilingual title.",
+    "Silent PNG comparison does not prove spoken content, language selection, cue timing, pause/resume, or synchronization.",
+    "This engineering prereview is not a human visual-review signature and is not owner acceptance.",
+    "No migration status, checklist item, completion flag, or accepted exception is changed by this prereview."
+  ]
+}

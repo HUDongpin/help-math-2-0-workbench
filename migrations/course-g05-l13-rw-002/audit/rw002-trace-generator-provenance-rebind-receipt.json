@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "rw002-trace-generator-provenance-rebind-receipt",
+  "receiptId": "course-g05-l13-rw-002-trace-generator-rebind-2026-07-27",
+  "animationId": "course-g05-l13-rw-002",
+  "status": "verified-acceptance-neutral-generator-provenance-only-rebind",
+  "reason": "The course trace generator changed while the RW002 nested trace source inputs and derived schedule remained unchanged. Each prior EN/ES trace is reconstructed byte-for-byte by changing only the generator SHA-256 provenance pointer.",
+  "transition": {
+    "historicalGenerator": {
+      "path": "scripts/build-course-trace-specs.mjs",
+      "bytes": 126835,
+      "sha256": "96deed49c23c753f073b74d9290940e74d5af0e94a22212970c2377209376599"
+    },
+    "currentGenerator": {
+      "path": "scripts/build-course-trace-specs.mjs",
+      "bytes": 154192,
+      "sha256": "e9eb23d2f76966672c215d8fff6202d7328bcff9046b0584e9f041873ab7ca1f"
+    },
+    "allowlistedChangedJsonPointers": [
+      "/sourceBindings/scheduleDerivation/generator/sha256"
+    ],
+    "generatorPathUnchanged": true,
+    "generatorSha256Changed": true
+  },
+  "nestedTraces": [
+    {
+      "language": "en",
+      "requirementId": "req:sprite-334:default:en",
+      "traceId": "trace:sprite-334:default:en:seed-0",
+      "changedJsonPointers": [
+        "/sourceBindings/scheduleDerivation/generator/sha256"
+      ],
+      "historical": {
+        "path": "migrations/course-g05-l13-rw-002/audit/trace-specs/req-sprite-334-default-en.json",
+        "bytes": 28992,
+        "sha256": "a77ffc7b52a12c1023122d37d250e607adaa7b34e3ab170a380d84c85705589e",
+        "completePreimageReconstructed": true
+      },
+      "current": {
+        "path": "migrations/course-g05-l13-rw-002/audit/trace-specs/req-sprite-334-default-en.json",
+        "bytes": 28992,
+        "sha256": "9b992c1344f103faa1ef117d6eedc7717d107277d1840b352d08cda201b31f4b"
+      },
+      "currentIndexBindingVerified": true,
+      "historicalHashReconstructed": true,
+      "sourceInputProjectionSha256": "225505a5fe9613bf062fed7e41187c964def7119882408194efece416d4a95d1",
+      "sourceInputsUnchangedAcrossTransition": true,
+      "executionEvidenceCreated": false,
+      "strictAcceptanceEffect": "none"
+    },
+    {
+      "language": "es",
+      "requirementId": "req:sprite-334:default:es",
+      "traceId": "trace:sprite-334:default:es:seed-0",
+      "changedJsonPointers": [
+        "/sourceBindings/scheduleDerivation/generator/sha256"
+      ],
+      "historical": {
+        "path": "migrations/course-g05-l13-rw-002/audit/trace-specs/req-sprite-334-default-es.json",
+        "bytes": 28992,
+        "sha256": "c6f8f2e24f2fef404b79dbbac0903713de67836e2aa090497c702bcf10f4061e",
+        "completePreimageReconstructed": true
+      },
+      "current": {
+        "path": "migrations/course-g05-l13-rw-002/audit/trace-specs/req-sprite-334-default-es.json",
+        "bytes": 28992,
+        "sha256": "93489d567f0e6d0f02a54ad850143b364d6b690d85131c1b85452727eaabe4bf"
+      },
+      "currentIndexBindingVerified": true,
+      "historicalHashReconstructed": true,
+      "sourceInputProjectionSha256": "225505a5fe9613bf062fed7e41187c964def7119882408194efece416d4a95d1",
+      "sourceInputsUnchangedAcrossTransition": true,
+      "executionEvidenceCreated": false,
+      "strictAcceptanceEffect": "none"
+    }
+  ],
+  "unchangedSourceInputs": {
+    "sourceSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/RW/L13RW02.swf",
+      "bytes": 4796905,
+      "sha256": "bf9ab1d12832fbe54c5bef08d0dd51307169eefbae1f75188efd9db94ed9e4e6"
+    },
+    "geometryParser": {
+      "path": "scripts/parse-swfmill-course-button-trace.py",
+      "bytes": 11481,
+      "sha256": "ce074ca3075cf63657fcdc1a03ad2451a6767a788a1720e0461f2f43e5ab494d"
+    },
+    "swfmillXml": {
+      "path": "migrations/course-g05-l13-rw-002/audit/machine/swfmill.xml.gz",
+      "bytes": 5549950,
+      "sha256": "ed3f5e973676f18d22473a5079b084f14e581c27ab31728dea30fff73480592f"
+    },
+    "ffdecScripts": {
+      "path": "migrations/course-g05-l13-rw-002/audit/machine/ffdec-scripts.txt.gz",
+      "bytes": 228,
+      "sha256": "d88251b1b31171a25cb97ba318f0ae77859531dc5e24dba143752576f211df55"
+    },
+    "scenarioInventory": {
+      "path": "migrations/course-g05-l13-rw-002/audit/scenario-inventory.json",
+      "bytes": 182086,
+      "sha256": "088dfbcd1281aa844b7e66ed364ed996c3429961a7a63cb7f4dd1c77eb25e597"
+    },
+    "sourceInputProjectionSha256": "225505a5fe9613bf062fed7e41187c964def7119882408194efece416d4a95d1",
+    "enEsSourceInputProjectionEqual": true,
+    "historicalVsCurrentSourceInputProjectionEqual": true
+  },
+  "currentTraceIndex": {
+    "path": "migrations/course-shell-pilot-trace-spec-index.json",
+    "bytes": 100867,
+    "sha256": "1ef2af9f0955aa4cdf4186a702587df1b6031b65d9e9a1f99a926578bea12a1e",
+    "pilotJsonPointer": "/pilots/9",
+    "indexedTraces": [
+      {
+        "language": "en",
+        "requirementId": "req:sprite-334:default:en",
+        "file": "migrations/course-g05-l13-rw-002/audit/trace-specs/req-sprite-334-default-en.json",
+        "sha256": "9b992c1344f103faa1ef117d6eedc7717d107277d1840b352d08cda201b31f4b"
+      },
+      {
+        "language": "es",
+        "requirementId": "req:sprite-334:default:es",
+        "file": "migrations/course-g05-l13-rw-002/audit/trace-specs/req-sprite-334-default-es.json",
+        "sha256": "93489d567f0e6d0f02a54ad850143b364d6b690d85131c1b85452727eaabe4bf"
+      }
+    ],
+    "current": true,
+    "strictAcceptanceEffect": "none"
+  },
+  "verification": {
+    "exactChangedJsonPointerCountPerTrace": 1,
+    "everyChangedJsonPointerAllowlisted": true,
+    "everyHistoricalTraceHashReconstructed": true,
+    "everyCurrentTraceHashVerified": true,
+    "currentTraceIndexVerified": true,
+    "sourceInputsPhysicallyHashVerified": true,
+    "sourceInputsUnchanged": true,
+    "legacyPreimageCopiedIntoProject": false
+  },
+  "authorityBoundary": {
+    "acceptanceNeutral": true,
+    "planningProvenanceOnly": true,
+    "originalRuntimeAuthorityCreated": false,
+    "audioAcceptanceCreated": false,
+    "humanReviewCreated": false,
+    "ownerAcceptanceCreated": false,
+    "strictCompletionCreated": false,
+    "completionLedgerWriteAuthorized": false,
+    "lessonReleaseWriteAuthorized": false,
+    "publicReleaseAuthorized": false,
+    "sourceAssetWriteAuthorized": false,
+    "strictAcceptanceEffect": "none"
+  },
+  "generatedBy": {
+    "path": "scripts/build-rw002-trace-generator-provenance-rebind-receipt.mjs",
+    "bytes": 24907,
+    "sha256": "99274ab67712b9a5514a1f822bda3c80b89c994e87e3f40e8c5b58a736c4271d"
+  },
+  "receiptFingerprintSha256": "37f1c8ca34cc00edba4a597b01f8b36270f868d8a68e9d6a68c196f74e210c52"
+}

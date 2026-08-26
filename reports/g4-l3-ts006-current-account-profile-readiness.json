@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l3-ts006-current-account-disposable-profile-readiness",
+  "generatedOn": "2026-07-29",
+  "generator": {
+    "path": "scripts/build-g4-l3-ts006-current-account-profile-readiness.mjs",
+    "bytes": 26789,
+    "sha256": "cd902a1040dba18a7000742c920849f1320525ce61535f310a4ffb06ddeb32ea"
+  },
+  "sourceBindings": {
+    "accountExceptionIntake": {
+      "path": "work/g4-l3-ts006-original-runtime-authorization-intake/current-admin-account-exception-intake.json",
+      "bytes": 2135,
+      "sha256": "330d7520c19bd7934d8a15897dec427b5e9c49e76cf89477a61ab95d07634b6c"
+    },
+    "profileSelection": {
+      "path": "work/g4-l3-ts006-original-runtime-authorization-intake/current-session-profile-selection.json",
+      "bytes": 4200,
+      "sha256": "ef03ea54293135fb79e0d8896e64ea7ed4de489045fb7edf72cd2553eb70a747"
+    },
+    "sessionKitReadiness": {
+      "path": "reports/g4-l3-ts006-original-runtime-session-kit-readiness.json",
+      "bytes": 5087,
+      "sha256": "e7df81a75ca266e2288ee5250604129af5eba0dc82e7d4733051402026b003ba"
+    },
+    "sandboxExecutable": {
+      "path": "/usr/bin/sandbox-exec",
+      "bytes": 102560,
+      "sha256": "8290e4be7387a0df83cd1559e86afd880464f269450573d012795761fe298f16",
+      "mode": "0755"
+    }
+  },
+  "scope": {
+    "animationId": "course-g04-l03-ts-006",
+    "languages": [
+      "en",
+      "es"
+    ],
+    "accountIsolationMode": "same-account-separate-disposable-process-profiles",
+    "additionalMacosAccountsRequired": 0,
+    "additionalMacosAccountsCreated": 0
+  },
+  "currentExecutionContext": {
+    "accountIdentifierSha256": "026ad9b14a7453b7488daa0c6acbc258b1506f52c441c7c465474c1a564394ff",
+    "uid": 501,
+    "accountClass": "current-macos-administrator",
+    "administratorGroupPresent": true,
+    "homePathPublished": false,
+    "iCloudStateInspected": false,
+    "iCloudStateReason": "privacy boundary; host and process no-egress controls remain mandatory",
+    "hostIdentitySha256": "537d0cbbd6f9ba5afef33f77a51b80dc86ec413c39acd1a97b351189155a7880",
+    "osVersion": "26.5.2",
+    "osBuild": "25F84",
+    "architecture": "arm64",
+    "unwantedLanguageAccounts": [
+      {
+        "accountIdentifierSha256": "854e3775f27184ca717e63aabe3bc7f808a8d415eb2e6f4b60dabac8a2c5a936",
+        "absent": true
+      },
+      {
+        "accountIdentifierSha256": "e3a4fcab14de6ef298855af3e06393eb58d28441d1df2765616be599671f518f",
+        "absent": true
+      }
+    ]
+  },
+  "disposableProfileContract": {
+    "oneFreshProfilePerLanguage": true,
+    "environmentVariables": [
+      "HOME",
+      "CFFIXED_USER_HOME",
+      "TMPDIR",
+      "XDG_CACHE_HOME",
+      "XDG_CONFIG_HOME",
+      "XDG_DATA_HOME"
+    ],
+    "realUserHomeReadDefault": "deny",
+    "realUserHomeWrite": "deny",
+    "userFontDirectoryRead": "allow-after-separate-hash-binding",
+    "network": "deny-all-at-process-boundary-plus-live-host-network-disable",
+    "childProcessExecution": "deny-except-exact-projector-executable",
+    "launchServicesHostOpenMachLookup": "deny-com.apple.lsd.open",
+    "launchServicesOtherMachLookups": "deny-com.apple.lsd-regex",
+    "launchServicesSelfRegistrationMachLookup": "allow-exact-com.apple.lsd.modifydb",
+    "launchServicesDatabaseMapMachLookup": "allow-exact-com.apple.lsd.mapdb",
+    "profileRootPattern": "artifacts/full-frame/g4-l3/<session-id>/runtime-profile",
+    "normalizedSandboxPolicySha256": "4d9477641961a658b311067935c92ec300b03960efd459ce71fabb583377bc61",
+    "normalizedSandboxPolicy": "(version 1)\n(allow default)\n(deny network*)\n(deny appleevent-send)\n(deny process-exec)\n(allow process-exec (literal \"/__ALLOWLISTED_EXECUTABLE__\"))\n(deny file-read* (subpath \"/__CURRENT_ACCOUNT_HOME__\"))\n(allow file-read* (subpath \"/__CURRENT_ACCOUNT_HOME__/Library/Fonts\"))\n(deny mach-lookup\n  (require-any\n    (global-name \"com.apple.lsd.open\")\n    (global-name \"com.apple.lsd.modifydb\")\n    (global-name-regex #\"^com\\.apple\\.lsd\\.\")))\n(allow mach-lookup (global-name \"com.apple.lsd.modifydb\"))\n(allow mach-lookup (global-name \"com.apple.lsd.mapdb\"))\n(deny file-write*\n  (require-all\n    (require-not (subpath \"/__LANGUAGE_SESSION_ROOT__\"))\n    (require-not (subpath \"/private/var/folders\"))\n    (require-not (subpath \"/private/tmp\"))\n    (require-not (literal \"/dev/null\"))))\n(allow file-read* file-write* (subpath \"/__LANGUAGE_SESSION_ROOT__\"))\n"
+  },
+  "preparedProfileCandidates": [
+    {
+      "language": "en",
+      "sessionId": "ts006-en-234c90ac-e683-4b53-b16e-811739956f11",
+      "manifest": {
+        "path": "artifacts/full-frame/g4-l3/ts006-en-234c90ac-e683-4b53-b16e-811739956f11/profile-manifest.json",
+        "bytes": 4921,
+        "sha256": "d791235a883e58f237f94b6782cc6e38c9a96948098806dd21d2176cfb69baf3"
+      },
+      "sandbox": {
+        "path": "artifacts/full-frame/g4-l3/ts006-en-234c90ac-e683-4b53-b16e-811739956f11/runtime-profile/sandbox.sb",
+        "bytes": 1039,
+        "sha256": "e110c17b1e57870c8db875ac8ead023ec0cf0a55fef5e5dbb75629923c5497cc"
+      },
+      "projectorLaunched": false,
+      "runtimeSessionExecuted": false
+    },
+    {
+      "language": "es",
+      "sessionId": "ts006-es-e25bf978-611a-47e4-a708-2067d96e89a6",
+      "manifest": {
+        "path": "artifacts/full-frame/g4-l3/ts006-es-e25bf978-611a-47e4-a708-2067d96e89a6/profile-manifest.json",
+        "bytes": 4921,
+        "sha256": "6a6422e1321a0116d9760628067df4d9c408f17e53c6cb483e58e9204b9405ee"
+      },
+      "sandbox": {
+        "path": "artifacts/full-frame/g4-l3/ts006-es-e25bf978-611a-47e4-a708-2067d96e89a6/runtime-profile/sandbox.sb",
+        "bytes": 1039,
+        "sha256": "a8e54aa286781b4190a571aa1a93c34c935fef1de820283e236cf5b6faf0bf89"
+      },
+      "projectorLaunched": false,
+      "runtimeSessionExecuted": false
+    }
+  ],
+  "technicalProbes": {
+    "exactAllowlistedExecutableRuns": true,
+    "nonAllowlistedExecutableDenied": true,
+    "loopbackNetworkConnectDenied": true,
+    "privateHomeReadDenied": true,
+    "allowlistedUserFontsReadAllowed": true,
+    "privateHomeWriteDenied": true,
+    "sessionRootWriteAllowed": true,
+    "externalNetworkContactAttempted": false,
+    "flashProjectorLaunched": false
+  },
+  "executionGate": {
+    "userAccountExceptionIntentRecorded": true,
+    "technicalSandboxCapabilitiesVerified": true,
+    "externalOwnerExceptionSignatureBound": false,
+    "namedOperatorsBound": 0,
+    "externalTrustRootBound": false,
+    "liveHostNetworkDisableVerified": false,
+    "emptyDisposableProfileCandidatesPrepared": 2,
+    "liveDisposableProfilesPrepared": 0,
+    "livePreflightsPassed": 0,
+    "runtimeSessionsExecuted": 0,
+    "originalRuntimeExecutionReady": false,
+    "state": "technical-capability-proved-awaiting-external-signatures-roles-and-live-session-preflight"
+  },
+  "acceptance": {
+    "acceptanceNeutral": true,
+    "authoritativeOriginalRuntimeTrace": false,
+    "baselineAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictMigrationComplete": false,
+    "publicRelease": false
+  },
+  "reportFingerprintSha256": "fb6bb31e5c703a82c6d7f2076e4bbca939c0d27964b86141b34ca0451324b0ac"
+}

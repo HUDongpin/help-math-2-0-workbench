@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "receiptType": "g4-l3-ts006-current-javascript-asset-inventory-cross-writer-reconciliation-intent",
+  "transactionSemantics": "content-addressed-no-replace-prepared-intent; application requires the workspace report refresh-history binding",
+  "generator": {
+    "path": "scripts/materialize-g4-l3-ts006-current-js-workspace-binding.mjs",
+    "bytes": 71113,
+    "sha256": "d24f9846f7504c3053607a527ae4eedf862d8452b19321938ea3ee082351682f"
+  },
+  "reconciliation": {
+    "schemaVersion": 1,
+    "evidenceType": "g4-l3-ts006-current-javascript-asset-inventory-cross-writer-reconciliation",
+    "applicationStatus": "prepared-intent-not-standalone-application-proof",
+    "status": "cross-writer-lineage-verified-observer-remains-stale",
+    "workspaceReportPreimage": {
+      "path": "reports/g4-l3-ts006-current-javascript-workspace-binding.json",
+      "bytes": 27453,
+      "sha256": "99b3fb09b1bfbb691b8f088bd30cb1a69eb703885ef685ff289c76a4c9a4dbec"
+    },
+    "observerReceipt": {
+      "path": "migrations/course-g04-l03-ts-006/audit/machine/g4-l3-inventory-materialization.json",
+      "bytes": 5807,
+      "sha256": "03f51053974d2a7418d3bf7d28251c4a21fb4f91bffe152e27b6e9186919b49f"
+    },
+    "observerAssetInventory": {
+      "path": "migrations/course-g04-l03-ts-006/asset-inventory.csv",
+      "bytes": 1470,
+      "sha256": "5cdbfbb9ea7c38bae41d46ad9bfefe19e38e03e995b7f36bcac8c51d5d0f1dfa",
+      "changedByMaterializer": false
+    },
+    "specializedWriterCurrentAssetInventory": {
+      "path": "migrations/course-g04-l03-ts-006/asset-inventory.csv",
+      "bytes": 1470,
+      "sha256": "b88e72cb342b978930f10965d9b8fc45425b491f6b4feacb5b8dd12d93ef333f"
+    },
+    "specializedWriterNextAssetInventory": {
+      "path": "migrations/course-g04-l03-ts-006/asset-inventory.csv",
+      "bytes": 1470,
+      "sha256": "c65960d0ef5abeac6a7853dcdcc4c1c94e08a5adf6a89ee3b4aa96e9d3488a76"
+    },
+    "currentJavascriptCandidate": {
+      "path": "reports/g4-l3-ts006-current-javascript-candidate.json",
+      "bytes": 47151,
+      "sha256": "80fbe8cf9b283a0a411477cc6602a1968e4e1af924ce02c93923794751634398"
+    },
+    "currentJavascriptCandidateFingerprintSha256": "9c764a4c2555221b051305a49c8f0137b7474329afbd884eb2df55c443e545be",
+    "candidateAssetManifest": {
+      "path": "public/flash-assets/courses/course-g04-l03-ts-006/manifest.json",
+      "bytes": 46990,
+      "sha256": "3e53077860ab9e6f9aeea22989770d2605e8ccd8b56e124342cf536a4c8200de"
+    },
+    "exactCellTransition": {
+      "row": 3,
+      "field": "sha256",
+      "priorSha256": "6d27769d685dcb37b1177d97300311eb3f981929d1f9bbebc1f7cb430fba7063",
+      "nextSha256": "3e53077860ab9e6f9aeea22989770d2605e8ccd8b56e124342cf536a4c8200de",
+      "allOtherBytesUnchanged": true
+    },
+    "lineageWitness": {
+      "historyIndex": 18,
+      "priorReportSha256": "3988f9de3d6fbd40aebae6f4ec166f7d399aea3da77fae31ee7428bb701f4ccf",
+      "immutablePreimage": {
+        "root": "work/g4-l3-v2-ts006-current-js-binding-refresh-preimages/3847e5108a13150b6ea6ab0e8899ed9c061299238b194e8d90a1af5b413af7ff",
+        "preimageSetSha256": "3847e5108a13150b6ea6ab0e8899ed9c061299238b194e8d90a1af5b413af7ff",
+        "bindings": {
+          "migrations/course-g04-l03-ts-006/asset-inventory.csv": {
+            "path": "migrations/course-g04-l03-ts-006/asset-inventory.csv",
+            "bytes": 1470,
+            "sha256": "5cdbfbb9ea7c38bae41d46ad9bfefe19e38e03e995b7f36bcac8c51d5d0f1dfa"
+          },
+          "reports/g4-l3-ts006-current-javascript-workspace-binding.json": {
+            "path": "reports/g4-l3-ts006-current-javascript-workspace-binding.json",
+            "bytes": 24174,
+            "sha256": "3988f9de3d6fbd40aebae6f4ec166f7d399aea3da77fae31ee7428bb701f4ccf"
+          },
+          "reports/g4-l3-ts006-current-javascript-workspace-binding.md": {
+            "path": "reports/g4-l3-ts006-current-javascript-workspace-binding.md",
+            "bytes": 1172,
+            "sha256": "6fb2bf170c060d354c82d1e9b297ff361cc6a3f547e8d0d822ddc45eb4b09e83"
+          }
+        },
+        "ignoredWorkArtifact": true
+      },
+      "assetInventory": {
+        "path": "migrations/course-g04-l03-ts-006/asset-inventory.csv",
+        "bytes": 1470,
+        "sha256": "5cdbfbb9ea7c38bae41d46ad9bfefe19e38e03e995b7f36bcac8c51d5d0f1dfa"
+      }
+    },
+    "conflictPreserved": true,
+    "observerReceiptRewrittenByThisWriter": false,
+    "sourceAssetsChanged": false,
+    "protectedPinsChanged": false,
+    "acceptanceChanged": false,
+    "completionOrReleaseLedgerChanged": false,
+    "strictAcceptanceEffect": "none"
+  },
+  "writeContract": {
+    "contentAddressed": true,
+    "noReplace": true,
+    "compareAndSwapRequired": true,
+    "orphanPreparedReceiptIsNotApplicationProof": true,
+    "sourceAssetsWritable": false,
+    "protectedPinsWritable": false,
+    "acceptanceWritable": false,
+    "completionOrReleaseLedgerWritable": false
+  },
+  "strictAcceptanceEffect": "none",
+  "receiptFingerprintSha256": "fdccc943b42f2456c5aff21d0593d627ac13be538dc2d09cd3ee1b112d731b01"
+}

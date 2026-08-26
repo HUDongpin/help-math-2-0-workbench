@@ -38,7 +38,10 @@
     "chromium": "Google Chrome for Testing 149.0.7827.55"
   },
   "authoringEvidence": {
-    "adobeAnimateDetected": false,
-    "impact": "Binary FLA library/timeline/font inspection requires an authorized Adobe Animate workstation; automated SWF evidence cannot replace this gate."
+    "adobeAnimateDetected": true,
+    "application": "Adobe Animate 2021",
+    "productVersion": "21.0.7",
+    "applicationPath": "/Applications/Adobe Animate 2021",
+    "impact": "The authorized workstation can inspect legacy binary FLA library, timeline, script, and font evidence. Each migration still requires its own hash-bound read-only audit; application availability alone does not satisfy an authoring or runtime fidelity gate."
   }
 }

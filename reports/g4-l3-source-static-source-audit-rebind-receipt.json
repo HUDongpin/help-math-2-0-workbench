@@ -1,0 +1,1561 @@
+{
+  "schemaVersion": 1,
+  "receiptType": "g4-l3-source-static-source-audit-rebind-receipt",
+  "receiptId": "g4-l3-source-static-source-audit-rebind-2026-07-27-v1",
+  "transactionId": "75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7",
+  "status": "verified-acceptance-neutral-batch-source-audit-rebind-with-bounded-historical-delta",
+  "reason": "Thirteen artifact-only workspace source audits were rematerialized against one current derived-provenance chain. Their physical source identities and the exact source-audit semantic projection consumed by the hash-bound archived source-static candidate generator remain unchanged.",
+  "historicalBoundary": {
+    "oldSourceAuditCompleteBytesAvailable": false,
+    "oldSourceAuditFullByteDiffPerformed": false,
+    "limitation": "The thirteen old source-audit byte preimages are not retained. Equal byte lengths and equal candidate-consumed semantic projections do not prove that only provenance fields changed. This receipt authorizes only the bounded descriptor rebind recorded below."
+  },
+  "commonDriftAssessment": {
+    "classification": "common-derived-provenance-rematerialization-with-no-candidate-consumed-semantic-drift-observed",
+    "transitionCount": 13,
+    "allAuditByteLengthsUnchanged": true,
+    "allAuditSha256ValuesChanged": true,
+    "exactOldFieldDeltaProven": false,
+    "commonCurrentProvenance": {
+      "materializer": {
+        "path": "scripts/materialize-g4-l3-workspace-source-audits.mjs",
+        "bytes": 36651,
+        "sha256": "9da52c9d17bfec652a9cf58f90419978dcfc76588fd428e1f371b00661d23630"
+      },
+      "upstreamMachineAudit": {
+        "path": "reports/g4-l3-machine-source-audits.json",
+        "bytes": 5152829,
+        "sha256": "c7f987904de8e2a5bca907931feedab0e3bd61ffdcf26b56ef5d7295e49ab9f6"
+      },
+      "upstreamAuditSetSha256": "ef3e3f2d6757778662d280d10a4b04f46da84f0bd402c9d6c41017f58da69709",
+      "lessonReleaseManifest": {
+        "path": "catalog/lesson-releases.json",
+        "bytes": 54579,
+        "sha256": "ab0ad5dac373f7bf192b603c4c2b0bc4dae9f73fe770eba3be7507d458bfc375"
+      }
+    }
+  },
+  "candidateGenerator": {
+    "path": "scripts/build-g4-l3-source-static-candidate.mjs",
+    "bytes": 76309,
+    "sha256": "f7f8c8b357bd0580eb1dbe6bb99e9fbe52aff15a1736d0179188637960f04821"
+  },
+  "items": [
+    {
+      "animationId": "course-g04-l03-fq-003",
+      "specPath": "migrations/course-g04-l03-fq-003/audit/source-static-current-js-candidate-spec.json",
+      "transition": {
+        "from": {
+          "path": "migrations/course-g04-l03-fq-003/audit/machine/g4-l3-source-audit.json",
+          "bytes": 67354,
+          "sha256": "bed7cc26a215ea0da42e8890dc0001159cfab1da0d34ac019de14aa6463b1d54"
+        },
+        "to": {
+          "path": "migrations/course-g04-l03-fq-003/audit/machine/g4-l3-source-audit.json",
+          "bytes": 67354,
+          "sha256": "d0619b3dd00210acad91748e3b4ae023aa4d33077bede0f1625b751ed6a22755"
+        },
+        "bytesUnchanged": true,
+        "sha256Changed": true
+      },
+      "historicalEvidence": {
+        "candidateReport": {
+          "path": "reports/g4-l3-fq003-current-javascript-candidate.json",
+          "bytes": 30617,
+          "sha256": "c84d309f52ccbc52555ee2835954f2cac40c3131c075892dca4ac1dab9014956"
+        },
+        "candidateReportFingerprintSha256": "3ab012bca4eeeb1097d7ce69ecf7025634b293833a29f3ae55c24505af42f6fc",
+        "archivedCandidatePath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/historical-candidates/reports/g4-l3-fq003-current-javascript-candidate.json",
+        "specPreimage": {
+          "path": "migrations/course-g04-l03-fq-003/audit/source-static-current-js-candidate-spec.json",
+          "bytes": 4561,
+          "sha256": "15f4ce17b79cfec57b74c5cf3a8e82ccd11a82a2acdf0dbd99986946277dc88b"
+        },
+        "archivedSpecPath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/spec-preimages/migrations/course-g04-l03-fq-003/audit/source-static-current-js-candidate-spec.json"
+      },
+      "currentEvidence": {
+        "sourceAudit": {
+          "path": "migrations/course-g04-l03-fq-003/audit/machine/g4-l3-source-audit.json",
+          "bytes": 67354,
+          "sha256": "d0619b3dd00210acad91748e3b4ae023aa4d33077bede0f1625b751ed6a22755"
+        },
+        "sourceAuditArtifactFingerprintSha256": "345106a69cd340cfe1daf53eba6f137b8e856e0406271002c1ecc77d2bb7a6cb",
+        "physicalSources": {
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/FQ/L3FQ03.swf",
+            "bytes": 43689,
+            "sha256": "f40e24b47e05de7dce02ac98344c8748b5941a67d908f85fc1fe152fe684b7dc"
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/FQ/L3FQ03.fla",
+            "bytes": 2228224,
+            "sha256": "a873da8016d59b001db1fc5be359063342861809a33af194fec9fec81082a2f4"
+          }
+        }
+      },
+      "semanticProjection": {
+        "encoding": "two-space-indented JSON plus LF",
+        "scope": "The fields consumed by validateEvidence in the exact hash-bound source-static candidate generator: animation identity, source SWF hash, stage width/height, FPS, root frame count, random/external-API declarations, and negative original-runtime/visual-baseline limits.",
+        "historical": {
+          "animationId": "course-g04-l03-fq-003",
+          "sourceSwfSha256": "f40e24b47e05de7dce02ac98344c8748b5941a67d908f85fc1fe152fe684b7dc",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 0,
+              "files": []
+            },
+            "externalApiCandidateCount": 1,
+            "externalControlEventFiles": [
+              {
+                "path": "DefineButton2_12/BUTTONCONDACTION on(release).as",
+                "sha256": "f96cd6ef551caebcc7af4898e4e1985ba6366a3129a4498197777c5c3fefac05",
+                "occurrences": 1
+              }
+            ]
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "current": {
+          "animationId": "course-g04-l03-fq-003",
+          "sourceSwfSha256": "f40e24b47e05de7dce02ac98344c8748b5941a67d908f85fc1fe152fe684b7dc",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 0,
+              "files": []
+            },
+            "externalApiCandidateCount": 1,
+            "externalControlEventFiles": [
+              {
+                "path": "DefineButton2_12/BUTTONCONDACTION on(release).as",
+                "sha256": "f96cd6ef551caebcc7af4898e4e1985ba6366a3129a4498197777c5c3fefac05",
+                "occurrences": 1
+              }
+            ]
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "historicalSha256": "9900196e450c899f4461b95a189812b96223041f3fe15f24cc9a1e9a970edce4",
+        "currentSha256": "9900196e450c899f4461b95a189812b96223041f3fe15f24cc9a1e9a970edce4",
+        "equal": true
+      }
+    },
+    {
+      "animationId": "course-g04-l03-in-004",
+      "specPath": "migrations/course-g04-l03-in-004/audit/source-static-current-js-candidate-spec.json",
+      "transition": {
+        "from": {
+          "path": "migrations/course-g04-l03-in-004/audit/machine/g4-l3-source-audit.json",
+          "bytes": 35245,
+          "sha256": "cb828ee8fba695a6dee45d6cc51e7a11d45359615f35e7ff27bc4ec7f9fae900"
+        },
+        "to": {
+          "path": "migrations/course-g04-l03-in-004/audit/machine/g4-l3-source-audit.json",
+          "bytes": 35245,
+          "sha256": "4694e532c758d59e87878402c8e857fe9bd637f27253d5a16cd0d69e6bcf5db0"
+        },
+        "bytesUnchanged": true,
+        "sha256Changed": true
+      },
+      "historicalEvidence": {
+        "candidateReport": {
+          "path": "reports/g4-l3-in004-current-javascript-candidate.json",
+          "bytes": 58954,
+          "sha256": "5a6dd59b922e14baed24e0ab70f7dea8b62f8f180553d11b4253c67427cadc63"
+        },
+        "candidateReportFingerprintSha256": "2789e86ba53182f33968a3b07287e1d234e3dd0441f33737b4c48846593cfbb8",
+        "archivedCandidatePath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/historical-candidates/reports/g4-l3-in004-current-javascript-candidate.json",
+        "specPreimage": {
+          "path": "migrations/course-g04-l03-in-004/audit/source-static-current-js-candidate-spec.json",
+          "bytes": 9506,
+          "sha256": "c855d5cc55bb95db6c4ce8c7b23b3fb37932089cf1581996e55e4386600eb1e0"
+        },
+        "archivedSpecPath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/spec-preimages/migrations/course-g04-l03-in-004/audit/source-static-current-js-candidate-spec.json"
+      },
+      "currentEvidence": {
+        "sourceAudit": {
+          "path": "migrations/course-g04-l03-in-004/audit/machine/g4-l3-source-audit.json",
+          "bytes": 35245,
+          "sha256": "4694e532c758d59e87878402c8e857fe9bd637f27253d5a16cd0d69e6bcf5db0"
+        },
+        "sourceAuditArtifactFingerprintSha256": "5121a673c7a0bed4aed32b261551321e1931011d0e42a05c00a7f75610b36036",
+        "physicalSources": {
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN04.swf",
+            "bytes": 166617,
+            "sha256": "2ac5cd71bbc57bd9761668a7c383f821fa52b91f1e68a7b4f14151410857dfad"
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN04.fla",
+            "bytes": 2105856,
+            "sha256": "879624e9cfac8a2b26539d6ea32ef2d3e7d0d8ca3bf3ebd1c44c2f96b7db14d2"
+          }
+        }
+      },
+      "semanticProjection": {
+        "encoding": "two-space-indented JSON plus LF",
+        "scope": "The fields consumed by validateEvidence in the exact hash-bound source-static candidate generator: animation identity, source SWF hash, stage width/height, FPS, root frame count, random/external-API declarations, and negative original-runtime/visual-baseline limits.",
+        "historical": {
+          "animationId": "course-g04-l03-in-004",
+          "sourceSwfSha256": "2ac5cd71bbc57bd9761668a7c383f821fa52b91f1e68a7b4f14151410857dfad",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 1,
+              "files": [
+                {
+                  "path": "DefineSprite_53/frame_2/DoAction.as",
+                  "sha256": "816e183d51a10c83131a99d9a1d3b0198bda532af6ca34cbdf918ddab13499cd",
+                  "occurrences": 1
+                }
+              ]
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "current": {
+          "animationId": "course-g04-l03-in-004",
+          "sourceSwfSha256": "2ac5cd71bbc57bd9761668a7c383f821fa52b91f1e68a7b4f14151410857dfad",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 1,
+              "files": [
+                {
+                  "path": "DefineSprite_53/frame_2/DoAction.as",
+                  "sha256": "816e183d51a10c83131a99d9a1d3b0198bda532af6ca34cbdf918ddab13499cd",
+                  "occurrences": 1
+                }
+              ]
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "historicalSha256": "c85a63cb09a81c623d29f69544707f45cbf4e7805411c48fd036532f93ee510f",
+        "currentSha256": "c85a63cb09a81c623d29f69544707f45cbf4e7805411c48fd036532f93ee510f",
+        "equal": true
+      }
+    },
+    {
+      "animationId": "course-g04-l03-in-005",
+      "specPath": "migrations/course-g04-l03-in-005/audit/source-static-current-js-candidate-spec.json",
+      "transition": {
+        "from": {
+          "path": "migrations/course-g04-l03-in-005/audit/machine/g4-l3-source-audit.json",
+          "bytes": 27555,
+          "sha256": "b96894d6cf6b2ec28a0a63e2981136cfbdcdc045617d3ce6c3a89953af86dbab"
+        },
+        "to": {
+          "path": "migrations/course-g04-l03-in-005/audit/machine/g4-l3-source-audit.json",
+          "bytes": 27555,
+          "sha256": "9dc6d290559564f1208499656d29c816d05acfbc2b3caed784edd214757a37af"
+        },
+        "bytesUnchanged": true,
+        "sha256Changed": true
+      },
+      "historicalEvidence": {
+        "candidateReport": {
+          "path": "reports/g4-l3-in005-current-javascript-candidate.json",
+          "bytes": 59563,
+          "sha256": "72f6f83e1d6caddd3c2179e4a25cb87ef4724b701dcbd85a7017337013861a95"
+        },
+        "candidateReportFingerprintSha256": "5043b4cff54e5e85795284a54bf68e6277b98be38eab214a42642f15c65b0f52",
+        "archivedCandidatePath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/historical-candidates/reports/g4-l3-in005-current-javascript-candidate.json",
+        "specPreimage": {
+          "path": "migrations/course-g04-l03-in-005/audit/source-static-current-js-candidate-spec.json",
+          "bytes": 7382,
+          "sha256": "114e1de4bc8d6bb611a29a80f734be2eda5bd2c16ef2e2f197e42c1b509fb00f"
+        },
+        "archivedSpecPath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/spec-preimages/migrations/course-g04-l03-in-005/audit/source-static-current-js-candidate-spec.json"
+      },
+      "currentEvidence": {
+        "sourceAudit": {
+          "path": "migrations/course-g04-l03-in-005/audit/machine/g4-l3-source-audit.json",
+          "bytes": 27555,
+          "sha256": "9dc6d290559564f1208499656d29c816d05acfbc2b3caed784edd214757a37af"
+        },
+        "sourceAuditArtifactFingerprintSha256": "c3999654a4d617182a29d8b445b0aaea979e40f0f98e3b0df1475b2cc8f400be",
+        "physicalSources": {
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN05.swf",
+            "bytes": 74705,
+            "sha256": "dcbc74e5f8391afb0a307421729c8b5d5f548f3185c429fb40e7aae3cb647048"
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN05.fla",
+            "bytes": 4320768,
+            "sha256": "91654d016163c79a3d49e1f7135280f90b276e9492877fa0b9a6d567acb6334e"
+          }
+        }
+      },
+      "semanticProjection": {
+        "encoding": "two-space-indented JSON plus LF",
+        "scope": "The fields consumed by validateEvidence in the exact hash-bound source-static candidate generator: animation identity, source SWF hash, stage width/height, FPS, root frame count, random/external-API declarations, and negative original-runtime/visual-baseline limits.",
+        "historical": {
+          "animationId": "course-g04-l03-in-005",
+          "sourceSwfSha256": "dcbc74e5f8391afb0a307421729c8b5d5f548f3185c429fb40e7aae3cb647048",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 0,
+              "files": []
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "current": {
+          "animationId": "course-g04-l03-in-005",
+          "sourceSwfSha256": "dcbc74e5f8391afb0a307421729c8b5d5f548f3185c429fb40e7aae3cb647048",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 0,
+              "files": []
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "historicalSha256": "b16ba5f8dee487314af865735bb5e830603c4acfe993992342b6d0d0ef7644b3",
+        "currentSha256": "b16ba5f8dee487314af865735bb5e830603c4acfe993992342b6d0d0ef7644b3",
+        "equal": true
+      }
+    },
+    {
+      "animationId": "course-g04-l03-in-012",
+      "specPath": "migrations/course-g04-l03-in-012/audit/source-static-current-js-candidate-spec.json",
+      "transition": {
+        "from": {
+          "path": "migrations/course-g04-l03-in-012/audit/machine/g4-l3-source-audit.json",
+          "bytes": 33903,
+          "sha256": "5220ade21fd5d71ef166e94996c54c7e74a237f13d1efd76fadb5c92ac44feb6"
+        },
+        "to": {
+          "path": "migrations/course-g04-l03-in-012/audit/machine/g4-l3-source-audit.json",
+          "bytes": 33903,
+          "sha256": "4c59108274b1d674c312c43a32e4fe5b400fac329ca31611659fa52dfc1b13e6"
+        },
+        "bytesUnchanged": true,
+        "sha256Changed": true
+      },
+      "historicalEvidence": {
+        "candidateReport": {
+          "path": "reports/g4-l3-in012-current-javascript-candidate.json",
+          "bytes": 67698,
+          "sha256": "0634db4f72bf48da5fae106f41603e44af2cd504a474c00f7385e08aea84bd93"
+        },
+        "candidateReportFingerprintSha256": "90e78506a537898f2e7c267075bccd2cca5a4faf105a8962e14d7f5722ee764f",
+        "archivedCandidatePath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/historical-candidates/reports/g4-l3-in012-current-javascript-candidate.json",
+        "specPreimage": {
+          "path": "migrations/course-g04-l03-in-012/audit/source-static-current-js-candidate-spec.json",
+          "bytes": 8519,
+          "sha256": "af115111201dea1d31f873c0951a2908e7a4e0c091ea9e95e4430c2262458ca5"
+        },
+        "archivedSpecPath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/spec-preimages/migrations/course-g04-l03-in-012/audit/source-static-current-js-candidate-spec.json"
+      },
+      "currentEvidence": {
+        "sourceAudit": {
+          "path": "migrations/course-g04-l03-in-012/audit/machine/g4-l3-source-audit.json",
+          "bytes": 33903,
+          "sha256": "4c59108274b1d674c312c43a32e4fe5b400fac329ca31611659fa52dfc1b13e6"
+        },
+        "sourceAuditArtifactFingerprintSha256": "dc82d2707cec7c55ea3aea930786ac70368c9db17d9b92b996a919981a6cd5f4",
+        "physicalSources": {
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN12.swf",
+            "bytes": 249556,
+            "sha256": "fa131c4cfad5619beb1343d0bfbc941bd9ffa59f190ae1b002f81d5f9d8cde55"
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN12.fla",
+            "bytes": 3275776,
+            "sha256": "9b53a7990ab3f2954c81b83cf4a0d516828d4b72c6bb2269c402c3826ffcdce4"
+          }
+        }
+      },
+      "semanticProjection": {
+        "encoding": "two-space-indented JSON plus LF",
+        "scope": "The fields consumed by validateEvidence in the exact hash-bound source-static candidate generator: animation identity, source SWF hash, stage width/height, FPS, root frame count, random/external-API declarations, and negative original-runtime/visual-baseline limits.",
+        "historical": {
+          "animationId": "course-g04-l03-in-012",
+          "sourceSwfSha256": "fa131c4cfad5619beb1343d0bfbc941bd9ffa59f190ae1b002f81d5f9d8cde55",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 0,
+              "files": []
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "current": {
+          "animationId": "course-g04-l03-in-012",
+          "sourceSwfSha256": "fa131c4cfad5619beb1343d0bfbc941bd9ffa59f190ae1b002f81d5f9d8cde55",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 0,
+              "files": []
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "historicalSha256": "592c7257a07c98071fe778476bcc0f56700e9ca75adc6c68d5c45f7db028ebdb",
+        "currentSha256": "592c7257a07c98071fe778476bcc0f56700e9ca75adc6c68d5c45f7db028ebdb",
+        "equal": true
+      }
+    },
+    {
+      "animationId": "course-g04-l03-ti-002",
+      "specPath": "migrations/course-g04-l03-ti-002/audit/source-static-current-js-candidate-spec.json",
+      "transition": {
+        "from": {
+          "path": "migrations/course-g04-l03-ti-002/audit/machine/g4-l3-source-audit.json",
+          "bytes": 49529,
+          "sha256": "7cd7fadde37a23ee2011317849bc6b8de50ca604cfcf3eb4e427fba9f5484149"
+        },
+        "to": {
+          "path": "migrations/course-g04-l03-ti-002/audit/machine/g4-l3-source-audit.json",
+          "bytes": 49529,
+          "sha256": "9995b17de5a1b43db42a99fd3050ac8148887c391286877ae40ebbb3b84ae373"
+        },
+        "bytesUnchanged": true,
+        "sha256Changed": true
+      },
+      "historicalEvidence": {
+        "candidateReport": {
+          "path": "reports/g4-l3-ti002-current-javascript-candidate.json",
+          "bytes": 75903,
+          "sha256": "ffa9200251c24baf7298c773daa6f88ddb34a779285e21702b955a00506b0740"
+        },
+        "candidateReportFingerprintSha256": "a561730a788bee3b45aee3ae02c24f9194a3878dfc75255435e2ee006a08f546",
+        "archivedCandidatePath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/historical-candidates/reports/g4-l3-ti002-current-javascript-candidate.json",
+        "specPreimage": {
+          "path": "migrations/course-g04-l03-ti-002/audit/source-static-current-js-candidate-spec.json",
+          "bytes": 5706,
+          "sha256": "9367050bc30f71bbc1da836638a9fb5641a7907a06907a88481ae980ec13e784"
+        },
+        "archivedSpecPath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/spec-preimages/migrations/course-g04-l03-ti-002/audit/source-static-current-js-candidate-spec.json"
+      },
+      "currentEvidence": {
+        "sourceAudit": {
+          "path": "migrations/course-g04-l03-ti-002/audit/machine/g4-l3-source-audit.json",
+          "bytes": 49529,
+          "sha256": "9995b17de5a1b43db42a99fd3050ac8148887c391286877ae40ebbb3b84ae373"
+        },
+        "sourceAuditArtifactFingerprintSha256": "521188a513da1ef0e5f398ea0c545d0dd47ba57c86d31899a612ef6fd2740903",
+        "physicalSources": {
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TI/L3TI02.swf",
+            "bytes": 193445,
+            "sha256": "e640f8dcbfb6dd6945d97be67890e0015902702239e2bad4bd4283685fb0f807"
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TI/L3TI02.fla",
+            "bytes": 2385408,
+            "sha256": "3068bbd11d14c4226b961edc7cc31117ba71515546195782771749727c2bc7d3"
+          }
+        }
+      },
+      "semanticProjection": {
+        "encoding": "two-space-indented JSON plus LF",
+        "scope": "The fields consumed by validateEvidence in the exact hash-bound source-static candidate generator: animation identity, source SWF hash, stage width/height, FPS, root frame count, random/external-API declarations, and negative original-runtime/visual-baseline limits.",
+        "historical": {
+          "animationId": "course-g04-l03-ti-002",
+          "sourceSwfSha256": "e640f8dcbfb6dd6945d97be67890e0015902702239e2bad4bd4283685fb0f807",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 1,
+              "files": [
+                {
+                  "path": "DefineSprite_269/frame_2/DoAction.as",
+                  "sha256": "816e183d51a10c83131a99d9a1d3b0198bda532af6ca34cbdf918ddab13499cd",
+                  "occurrences": 1
+                }
+              ]
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "current": {
+          "animationId": "course-g04-l03-ti-002",
+          "sourceSwfSha256": "e640f8dcbfb6dd6945d97be67890e0015902702239e2bad4bd4283685fb0f807",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 1,
+              "files": [
+                {
+                  "path": "DefineSprite_269/frame_2/DoAction.as",
+                  "sha256": "816e183d51a10c83131a99d9a1d3b0198bda532af6ca34cbdf918ddab13499cd",
+                  "occurrences": 1
+                }
+              ]
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "historicalSha256": "e9c4ee13e618f6a134d42a48e01fffc2533363af77236fa8a28e7eb1d1ff3fc5",
+        "currentSha256": "e9c4ee13e618f6a134d42a48e01fffc2533363af77236fa8a28e7eb1d1ff3fc5",
+        "equal": true
+      }
+    },
+    {
+      "animationId": "course-g04-l03-ti-003",
+      "specPath": "migrations/course-g04-l03-ti-003/audit/source-static-current-js-candidate-spec.json",
+      "transition": {
+        "from": {
+          "path": "migrations/course-g04-l03-ti-003/audit/machine/g4-l3-source-audit.json",
+          "bytes": 36841,
+          "sha256": "c9d6aec13bed3d2e7f23c2fe3bdfaa5a2e83b3202b77f6ad5db836adfb79fc83"
+        },
+        "to": {
+          "path": "migrations/course-g04-l03-ti-003/audit/machine/g4-l3-source-audit.json",
+          "bytes": 36841,
+          "sha256": "a81598f44df3f38f74ef96fc32b52d828a4d6c94086d27b95498f4b774f8362b"
+        },
+        "bytesUnchanged": true,
+        "sha256Changed": true
+      },
+      "historicalEvidence": {
+        "candidateReport": {
+          "path": "reports/g4-l3-ti003-current-javascript-candidate.json",
+          "bytes": 49137,
+          "sha256": "3c83a3c47452b4727db7affe9799cb0228a432382bcfbd35780d1141e7bc3f29"
+        },
+        "candidateReportFingerprintSha256": "65c9b824c068f0fd94c7c4c07e1ab2c77cb076d4637ae6de004aeb3af693b1c0",
+        "archivedCandidatePath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/historical-candidates/reports/g4-l3-ti003-current-javascript-candidate.json",
+        "specPreimage": {
+          "path": "migrations/course-g04-l03-ti-003/audit/source-static-current-js-candidate-spec.json",
+          "bytes": 5187,
+          "sha256": "a768a8cda83fd16f1c881cdfca6856c41117fe0dd0075fcf207727fd2bcb36cf"
+        },
+        "archivedSpecPath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/spec-preimages/migrations/course-g04-l03-ti-003/audit/source-static-current-js-candidate-spec.json"
+      },
+      "currentEvidence": {
+        "sourceAudit": {
+          "path": "migrations/course-g04-l03-ti-003/audit/machine/g4-l3-source-audit.json",
+          "bytes": 36841,
+          "sha256": "a81598f44df3f38f74ef96fc32b52d828a4d6c94086d27b95498f4b774f8362b"
+        },
+        "sourceAuditArtifactFingerprintSha256": "78e2cd7cd91162d78e89adfb9fade27f83216a0af03cdb0aa56004d125f4d898",
+        "physicalSources": {
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TI/L3TI03.swf",
+            "bytes": 100853,
+            "sha256": "7abcc6151596b89d7b3142985bf8de2aae1d31ddb6eb47b14d2b9950c095a262"
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TI/L3TI03.fla",
+            "bytes": 719872,
+            "sha256": "4670c0aa1e8bf7ccf7ffe83bcffd880daf95250c88dc8f528210b033113692d2"
+          }
+        }
+      },
+      "semanticProjection": {
+        "encoding": "two-space-indented JSON plus LF",
+        "scope": "The fields consumed by validateEvidence in the exact hash-bound source-static candidate generator: animation identity, source SWF hash, stage width/height, FPS, root frame count, random/external-API declarations, and negative original-runtime/visual-baseline limits.",
+        "historical": {
+          "animationId": "course-g04-l03-ti-003",
+          "sourceSwfSha256": "7abcc6151596b89d7b3142985bf8de2aae1d31ddb6eb47b14d2b9950c095a262",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 1,
+              "files": [
+                {
+                  "path": "DefineSprite_84/frame_2/DoAction.as",
+                  "sha256": "816e183d51a10c83131a99d9a1d3b0198bda532af6ca34cbdf918ddab13499cd",
+                  "occurrences": 1
+                }
+              ]
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "current": {
+          "animationId": "course-g04-l03-ti-003",
+          "sourceSwfSha256": "7abcc6151596b89d7b3142985bf8de2aae1d31ddb6eb47b14d2b9950c095a262",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 1,
+              "files": [
+                {
+                  "path": "DefineSprite_84/frame_2/DoAction.as",
+                  "sha256": "816e183d51a10c83131a99d9a1d3b0198bda532af6ca34cbdf918ddab13499cd",
+                  "occurrences": 1
+                }
+              ]
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "historicalSha256": "d0cf83f9bd1e3c661b9c8f8aa224e4d1b2194f40c0af9565045e8b704365ce59",
+        "currentSha256": "d0cf83f9bd1e3c661b9c8f8aa224e4d1b2194f40c0af9565045e8b704365ce59",
+        "equal": true
+      }
+    },
+    {
+      "animationId": "course-g04-l03-ti-004",
+      "specPath": "migrations/course-g04-l03-ti-004/audit/source-static-current-js-candidate-spec.json",
+      "transition": {
+        "from": {
+          "path": "migrations/course-g04-l03-ti-004/audit/machine/g4-l3-source-audit.json",
+          "bytes": 48962,
+          "sha256": "867f9045016ce8439c658b6c2b8fa161f856c91195283e9ae370ec435576dbf0"
+        },
+        "to": {
+          "path": "migrations/course-g04-l03-ti-004/audit/machine/g4-l3-source-audit.json",
+          "bytes": 48962,
+          "sha256": "d279d9e6273acbf0c16a82b8e0b98a47f69dd014f331e23d8c296bf80cdb989a"
+        },
+        "bytesUnchanged": true,
+        "sha256Changed": true
+      },
+      "historicalEvidence": {
+        "candidateReport": {
+          "path": "reports/g4-l3-ti004-current-javascript-candidate.json",
+          "bytes": 47409,
+          "sha256": "d6f3ae72e3350a11192d0c03e4b6d784bfd6df6fda2eef38d4e8d1a2fb6626e5"
+        },
+        "candidateReportFingerprintSha256": "bd0cc4588020c9252fa29180c7832d1643bcee4efb43a3d8900d31fe4951f74e",
+        "archivedCandidatePath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/historical-candidates/reports/g4-l3-ti004-current-javascript-candidate.json",
+        "specPreimage": {
+          "path": "migrations/course-g04-l03-ti-004/audit/source-static-current-js-candidate-spec.json",
+          "bytes": 5406,
+          "sha256": "7a2ba7e8dea881d1cfececfe0f2a810b340ae3c5c48e981f56ae27f9a5e5c2e9"
+        },
+        "archivedSpecPath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/spec-preimages/migrations/course-g04-l03-ti-004/audit/source-static-current-js-candidate-spec.json"
+      },
+      "currentEvidence": {
+        "sourceAudit": {
+          "path": "migrations/course-g04-l03-ti-004/audit/machine/g4-l3-source-audit.json",
+          "bytes": 48962,
+          "sha256": "d279d9e6273acbf0c16a82b8e0b98a47f69dd014f331e23d8c296bf80cdb989a"
+        },
+        "sourceAuditArtifactFingerprintSha256": "8a448c3d98ef621ced98498b7f2e5c75019b4f95c0057a63ed2a4ece850422d5",
+        "physicalSources": {
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TI/L3TI04.swf",
+            "bytes": 98680,
+            "sha256": "04145dae5f7b295bed7ed882689be12ca7c4d31ef392a496d1c741ba1915a43c"
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TI/L3TI04.fla",
+            "bytes": 1657344,
+            "sha256": "68837d6c25eb947fcb76a7ecf1113f28db9a45136dd1d4ce9a966d890a245fc3"
+          }
+        }
+      },
+      "semanticProjection": {
+        "encoding": "two-space-indented JSON plus LF",
+        "scope": "The fields consumed by validateEvidence in the exact hash-bound source-static candidate generator: animation identity, source SWF hash, stage width/height, FPS, root frame count, random/external-API declarations, and negative original-runtime/visual-baseline limits.",
+        "historical": {
+          "animationId": "course-g04-l03-ti-004",
+          "sourceSwfSha256": "04145dae5f7b295bed7ed882689be12ca7c4d31ef392a496d1c741ba1915a43c",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 1,
+              "files": [
+                {
+                  "path": "DefineSprite_225/frame_2/DoAction.as",
+                  "sha256": "816e183d51a10c83131a99d9a1d3b0198bda532af6ca34cbdf918ddab13499cd",
+                  "occurrences": 1
+                }
+              ]
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "current": {
+          "animationId": "course-g04-l03-ti-004",
+          "sourceSwfSha256": "04145dae5f7b295bed7ed882689be12ca7c4d31ef392a496d1c741ba1915a43c",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 1,
+              "files": [
+                {
+                  "path": "DefineSprite_225/frame_2/DoAction.as",
+                  "sha256": "816e183d51a10c83131a99d9a1d3b0198bda532af6ca34cbdf918ddab13499cd",
+                  "occurrences": 1
+                }
+              ]
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "historicalSha256": "00d75ff87fab35e077a07363e3606115325a2b8206a0302ef553b28b35eefac5",
+        "currentSha256": "00d75ff87fab35e077a07363e3606115325a2b8206a0302ef553b28b35eefac5",
+        "equal": true
+      }
+    },
+    {
+      "animationId": "course-g04-l03-ti-006",
+      "specPath": "migrations/course-g04-l03-ti-006/audit/source-static-current-js-candidate-spec.json",
+      "transition": {
+        "from": {
+          "path": "migrations/course-g04-l03-ti-006/audit/machine/g4-l3-source-audit.json",
+          "bytes": 42397,
+          "sha256": "3a2cc7fffc4377a9b3e82b7b5648cfef906891121c7b9a8f489d9c2d3ec940ca"
+        },
+        "to": {
+          "path": "migrations/course-g04-l03-ti-006/audit/machine/g4-l3-source-audit.json",
+          "bytes": 42397,
+          "sha256": "1d3de7a4123eb554027d5b5775bbaf9a25aadae6985db0d1b499ca124f32d346"
+        },
+        "bytesUnchanged": true,
+        "sha256Changed": true
+      },
+      "historicalEvidence": {
+        "candidateReport": {
+          "path": "reports/g4-l3-ti006-current-javascript-candidate.json",
+          "bytes": 54421,
+          "sha256": "fba372e68cc271f1d01656a95a26d602b8116fa6ed6e3b43525cea07d46cbe8d"
+        },
+        "candidateReportFingerprintSha256": "a0cf0755120c8d9693f74b824ff5fe5a83e898ec0e80e7879b1576ce98dd51c6",
+        "archivedCandidatePath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/historical-candidates/reports/g4-l3-ti006-current-javascript-candidate.json",
+        "specPreimage": {
+          "path": "migrations/course-g04-l03-ti-006/audit/source-static-current-js-candidate-spec.json",
+          "bytes": 5180,
+          "sha256": "87724996757b30f2d5dfe22e40d347d01ef00181b31dd94cf0a961414f231efa"
+        },
+        "archivedSpecPath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/spec-preimages/migrations/course-g04-l03-ti-006/audit/source-static-current-js-candidate-spec.json"
+      },
+      "currentEvidence": {
+        "sourceAudit": {
+          "path": "migrations/course-g04-l03-ti-006/audit/machine/g4-l3-source-audit.json",
+          "bytes": 42397,
+          "sha256": "1d3de7a4123eb554027d5b5775bbaf9a25aadae6985db0d1b499ca124f32d346"
+        },
+        "sourceAuditArtifactFingerprintSha256": "b2d1824798db092414f8a537f5f06cca0c221393f00b7b233644a25400d523ee",
+        "physicalSources": {
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TI/L3TI06.swf",
+            "bytes": 122640,
+            "sha256": "8b1b570cb14dc3fd8f5a73920d0661b8a14c971eb477d5bfb6d8579f5ce842e8"
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TI/L3TI06.fla",
+            "bytes": 1236992,
+            "sha256": "4143f5a7ac3816078ee076adf5157ceba538c6599360ed2e387b1a687e3df5ae"
+          }
+        }
+      },
+      "semanticProjection": {
+        "encoding": "two-space-indented JSON plus LF",
+        "scope": "The fields consumed by validateEvidence in the exact hash-bound source-static candidate generator: animation identity, source SWF hash, stage width/height, FPS, root frame count, random/external-API declarations, and negative original-runtime/visual-baseline limits.",
+        "historical": {
+          "animationId": "course-g04-l03-ti-006",
+          "sourceSwfSha256": "8b1b570cb14dc3fd8f5a73920d0661b8a14c971eb477d5bfb6d8579f5ce842e8",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 1,
+              "files": [
+                {
+                  "path": "DefineSprite_224/frame_2/DoAction.as",
+                  "sha256": "816e183d51a10c83131a99d9a1d3b0198bda532af6ca34cbdf918ddab13499cd",
+                  "occurrences": 1
+                }
+              ]
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "current": {
+          "animationId": "course-g04-l03-ti-006",
+          "sourceSwfSha256": "8b1b570cb14dc3fd8f5a73920d0661b8a14c971eb477d5bfb6d8579f5ce842e8",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 1,
+              "files": [
+                {
+                  "path": "DefineSprite_224/frame_2/DoAction.as",
+                  "sha256": "816e183d51a10c83131a99d9a1d3b0198bda532af6ca34cbdf918ddab13499cd",
+                  "occurrences": 1
+                }
+              ]
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "historicalSha256": "3fe96abb5a4ef4f45304f2e6edb1b14001ff68ab7336e84302e26e2fb83ff352",
+        "currentSha256": "3fe96abb5a4ef4f45304f2e6edb1b14001ff68ab7336e84302e26e2fb83ff352",
+        "equal": true
+      }
+    },
+    {
+      "animationId": "course-g04-l03-ts-007",
+      "specPath": "migrations/course-g04-l03-ts-007/audit/source-static-current-js-candidate-spec.json",
+      "transition": {
+        "from": {
+          "path": "migrations/course-g04-l03-ts-007/audit/machine/g4-l3-source-audit.json",
+          "bytes": 53999,
+          "sha256": "b4476a53617b639f0eae018cbfc37430e9b2b67f995003f0a1818e301e42f8d3"
+        },
+        "to": {
+          "path": "migrations/course-g04-l03-ts-007/audit/machine/g4-l3-source-audit.json",
+          "bytes": 53999,
+          "sha256": "1864141c4ec5ed092dea76f2718b1a10f8088cb981583d6b063c9eb2c1ab160c"
+        },
+        "bytesUnchanged": true,
+        "sha256Changed": true
+      },
+      "historicalEvidence": {
+        "candidateReport": {
+          "path": "reports/g4-l3-ts007-current-javascript-candidate.json",
+          "bytes": 161104,
+          "sha256": "12c6b627c368c7ab18cbb3d191da72c3c32163b8ad007b0e9903ea3a74ac61e1"
+        },
+        "candidateReportFingerprintSha256": "fb82fbd440c05ad49b910acbcdce942eec7a150e3ed18cac2ae62c7874d5837f",
+        "archivedCandidatePath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/historical-candidates/reports/g4-l3-ts007-current-javascript-candidate.json",
+        "specPreimage": {
+          "path": "migrations/course-g04-l03-ts-007/audit/source-static-current-js-candidate-spec.json",
+          "bytes": 4202,
+          "sha256": "47b88d90abbef5402ee25ed3a4911821bf69657535523a0891e5b05ddbcb00c6"
+        },
+        "archivedSpecPath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/spec-preimages/migrations/course-g04-l03-ts-007/audit/source-static-current-js-candidate-spec.json"
+      },
+      "currentEvidence": {
+        "sourceAudit": {
+          "path": "migrations/course-g04-l03-ts-007/audit/machine/g4-l3-source-audit.json",
+          "bytes": 53999,
+          "sha256": "1864141c4ec5ed092dea76f2718b1a10f8088cb981583d6b063c9eb2c1ab160c"
+        },
+        "sourceAuditArtifactFingerprintSha256": "657c7c17fd46071de58b20e3f8d54ca3991ac9254652fdc6ab5d4c88c42ccb69",
+        "physicalSources": {
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS07.swf",
+            "bytes": 534054,
+            "sha256": "f29b6880fea6e2316d1916bec26dc58050a8dad78a4b082efc19c85720128daf"
+          },
+          "fla": null
+        }
+      },
+      "semanticProjection": {
+        "encoding": "two-space-indented JSON plus LF",
+        "scope": "The fields consumed by validateEvidence in the exact hash-bound source-static candidate generator: animation identity, source SWF hash, stage width/height, FPS, root frame count, random/external-API declarations, and negative original-runtime/visual-baseline limits.",
+        "historical": {
+          "animationId": "course-g04-l03-ts-007",
+          "sourceSwfSha256": "f29b6880fea6e2316d1916bec26dc58050a8dad78a4b082efc19c85720128daf",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 0,
+              "files": []
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "current": {
+          "animationId": "course-g04-l03-ts-007",
+          "sourceSwfSha256": "f29b6880fea6e2316d1916bec26dc58050a8dad78a4b082efc19c85720128daf",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 0,
+              "files": []
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "historicalSha256": "3476b2e055f9ec9bf153be3c50d6c3e451ee10ef6676a61db6eadb2bb983685e",
+        "currentSha256": "3476b2e055f9ec9bf153be3c50d6c3e451ee10ef6676a61db6eadb2bb983685e",
+        "equal": true
+      }
+    },
+    {
+      "animationId": "course-g04-l03-ts-008",
+      "specPath": "migrations/course-g04-l03-ts-008/audit/source-static-current-js-candidate-spec.json",
+      "transition": {
+        "from": {
+          "path": "migrations/course-g04-l03-ts-008/audit/machine/g4-l3-source-audit.json",
+          "bytes": 49046,
+          "sha256": "837e537e2b9f7dd11362250f37e6b44242280b4aa15d93785ffc1151da7be5b9"
+        },
+        "to": {
+          "path": "migrations/course-g04-l03-ts-008/audit/machine/g4-l3-source-audit.json",
+          "bytes": 49046,
+          "sha256": "98522b152d7ec9cc41ce8ae613c12d99b446bc8926157f69649b2a33ed9113a4"
+        },
+        "bytesUnchanged": true,
+        "sha256Changed": true
+      },
+      "historicalEvidence": {
+        "candidateReport": {
+          "path": "reports/g4-l3-ts008-current-javascript-candidate.json",
+          "bytes": 179403,
+          "sha256": "8068e10e0b839898233e62131cd34dbb5029b2ff9c3b9e65cb3bb26c56e97a17"
+        },
+        "candidateReportFingerprintSha256": "f1fff0f06afebefa489a6c595aff166bec13ea9fda2759266023ae410defb4ae",
+        "archivedCandidatePath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/historical-candidates/reports/g4-l3-ts008-current-javascript-candidate.json",
+        "specPreimage": {
+          "path": "migrations/course-g04-l03-ts-008/audit/source-static-current-js-candidate-spec.json",
+          "bytes": 4126,
+          "sha256": "a52702053715300dfa8ce767fb726d7363cc25df65b8d8da5810df9be370180e"
+        },
+        "archivedSpecPath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/spec-preimages/migrations/course-g04-l03-ts-008/audit/source-static-current-js-candidate-spec.json"
+      },
+      "currentEvidence": {
+        "sourceAudit": {
+          "path": "migrations/course-g04-l03-ts-008/audit/machine/g4-l3-source-audit.json",
+          "bytes": 49046,
+          "sha256": "98522b152d7ec9cc41ce8ae613c12d99b446bc8926157f69649b2a33ed9113a4"
+        },
+        "sourceAuditArtifactFingerprintSha256": "1bb31a21f4167bfde573f85cd9d51c93501067b210ba4693db19f9c871547839",
+        "physicalSources": {
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS08.swf",
+            "bytes": 693079,
+            "sha256": "9c7288f67f764e02f4320655b64dbb57d3d690a75951b549ee5113f385e6b885"
+          },
+          "fla": null
+        }
+      },
+      "semanticProjection": {
+        "encoding": "two-space-indented JSON plus LF",
+        "scope": "The fields consumed by validateEvidence in the exact hash-bound source-static candidate generator: animation identity, source SWF hash, stage width/height, FPS, root frame count, random/external-API declarations, and negative original-runtime/visual-baseline limits.",
+        "historical": {
+          "animationId": "course-g04-l03-ts-008",
+          "sourceSwfSha256": "9c7288f67f764e02f4320655b64dbb57d3d690a75951b549ee5113f385e6b885",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 0,
+              "files": []
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "current": {
+          "animationId": "course-g04-l03-ts-008",
+          "sourceSwfSha256": "9c7288f67f764e02f4320655b64dbb57d3d690a75951b549ee5113f385e6b885",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 0,
+              "files": []
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "historicalSha256": "a76fa48d58cbc526a1ee8f7aeb0273bdc910a6b0690d44a261661c8440899230",
+        "currentSha256": "a76fa48d58cbc526a1ee8f7aeb0273bdc910a6b0690d44a261661c8440899230",
+        "equal": true
+      }
+    },
+    {
+      "animationId": "course-g04-l03-vb-003",
+      "specPath": "migrations/course-g04-l03-vb-003/audit/source-static-current-js-candidate-spec.json",
+      "transition": {
+        "from": {
+          "path": "migrations/course-g04-l03-vb-003/audit/machine/g4-l3-source-audit.json",
+          "bytes": 24445,
+          "sha256": "6246767f8ffe86497c1865d6ff08ec23bf644d8bdee771792b4824bfda388a62"
+        },
+        "to": {
+          "path": "migrations/course-g04-l03-vb-003/audit/machine/g4-l3-source-audit.json",
+          "bytes": 24445,
+          "sha256": "ea2e52c9519e3a8ced60572aba892b418980c81d5198dd87b1b5bc84859c060b"
+        },
+        "bytesUnchanged": true,
+        "sha256Changed": true
+      },
+      "historicalEvidence": {
+        "candidateReport": {
+          "path": "reports/g4-l3-vb003-current-javascript-candidate.json",
+          "bytes": 49772,
+          "sha256": "cd37ec771c2ceaf22e29989b5fea874c51dcca73b382fa0d7fb12d82f0b5ac53"
+        },
+        "candidateReportFingerprintSha256": "46f52eacee932079f10644cc544b41963627352440d212fc33dc6f280dddc0f5",
+        "archivedCandidatePath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/historical-candidates/reports/g4-l3-vb003-current-javascript-candidate.json",
+        "specPreimage": {
+          "path": "migrations/course-g04-l03-vb-003/audit/source-static-current-js-candidate-spec.json",
+          "bytes": 5437,
+          "sha256": "86d421aa5f5318a0baed86b9bf0029666dd1a311e366fc1446b12b24da2de11c"
+        },
+        "archivedSpecPath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/spec-preimages/migrations/course-g04-l03-vb-003/audit/source-static-current-js-candidate-spec.json"
+      },
+      "currentEvidence": {
+        "sourceAudit": {
+          "path": "migrations/course-g04-l03-vb-003/audit/machine/g4-l3-source-audit.json",
+          "bytes": 24445,
+          "sha256": "ea2e52c9519e3a8ced60572aba892b418980c81d5198dd87b1b5bc84859c060b"
+        },
+        "sourceAuditArtifactFingerprintSha256": "d8f2cc6768cd0249e58b3a9987e8c5ffb4afccdf1a9faa03d700e88764d2cabf",
+        "physicalSources": {
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB03.swf",
+            "bytes": 83472,
+            "sha256": "ab47ed70dd5bba5515011e6f156c5a985fa107ef7e426448fe65507e9927204a"
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB03.fla",
+            "bytes": 615936,
+            "sha256": "263b18fb695f4b5b8f11db8774bfcc7312a485fb51d4f133cb7e08f3f34dd3ce"
+          }
+        }
+      },
+      "semanticProjection": {
+        "encoding": "two-space-indented JSON plus LF",
+        "scope": "The fields consumed by validateEvidence in the exact hash-bound source-static candidate generator: animation identity, source SWF hash, stage width/height, FPS, root frame count, random/external-API declarations, and negative original-runtime/visual-baseline limits.",
+        "historical": {
+          "animationId": "course-g04-l03-vb-003",
+          "sourceSwfSha256": "ab47ed70dd5bba5515011e6f156c5a985fa107ef7e426448fe65507e9927204a",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 0,
+              "files": []
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "current": {
+          "animationId": "course-g04-l03-vb-003",
+          "sourceSwfSha256": "ab47ed70dd5bba5515011e6f156c5a985fa107ef7e426448fe65507e9927204a",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 0,
+              "files": []
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "historicalSha256": "38336edb3172c186b50530b5cd11a81e1b8dcfc46c344b2d435683f5a09a932c",
+        "currentSha256": "38336edb3172c186b50530b5cd11a81e1b8dcfc46c344b2d435683f5a09a932c",
+        "equal": true
+      }
+    },
+    {
+      "animationId": "course-g04-l03-vb-007",
+      "specPath": "migrations/course-g04-l03-vb-007/audit/source-static-current-js-candidate-spec.json",
+      "transition": {
+        "from": {
+          "path": "migrations/course-g04-l03-vb-007/audit/machine/g4-l3-source-audit.json",
+          "bytes": 25442,
+          "sha256": "28de921cc532c8e62530c531de1b01c91dad654c7dfe94e37ef509bb5249aab7"
+        },
+        "to": {
+          "path": "migrations/course-g04-l03-vb-007/audit/machine/g4-l3-source-audit.json",
+          "bytes": 25442,
+          "sha256": "84fd0c7631f19af72b180f9732319cd352bbd696b797090d8d961bbc1ccd6136"
+        },
+        "bytesUnchanged": true,
+        "sha256Changed": true
+      },
+      "historicalEvidence": {
+        "candidateReport": {
+          "path": "reports/g4-l3-vb007-current-javascript-candidate.json",
+          "bytes": 37107,
+          "sha256": "626cc5017f7181a694656761475bdac144eac315e90e55a57f120f7c24a39cd0"
+        },
+        "candidateReportFingerprintSha256": "ba48e7e2f8059fd756461d6936463a92daad2afe015d0084bf6e1f3c9fe4e140",
+        "archivedCandidatePath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/historical-candidates/reports/g4-l3-vb007-current-javascript-candidate.json",
+        "specPreimage": {
+          "path": "migrations/course-g04-l03-vb-007/audit/source-static-current-js-candidate-spec.json",
+          "bytes": 8290,
+          "sha256": "2baf0b842674a5b4e725a789fc0f308e15c6b60cf1f2f74c6ac9dc0ff063c158"
+        },
+        "archivedSpecPath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/spec-preimages/migrations/course-g04-l03-vb-007/audit/source-static-current-js-candidate-spec.json"
+      },
+      "currentEvidence": {
+        "sourceAudit": {
+          "path": "migrations/course-g04-l03-vb-007/audit/machine/g4-l3-source-audit.json",
+          "bytes": 25442,
+          "sha256": "84fd0c7631f19af72b180f9732319cd352bbd696b797090d8d961bbc1ccd6136"
+        },
+        "sourceAuditArtifactFingerprintSha256": "1840d18e7190b4dc2e87535ad5cf5915ff3caa906bf415754948dd6f8327c383",
+        "physicalSources": {
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB07.swf",
+            "bytes": 219242,
+            "sha256": "e3e6c45a56f343b3a8baf8a65dd34b615327029f808eec0c5f9cfee2dd2c1450"
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB07.fla",
+            "bytes": 3141120,
+            "sha256": "b4eb0a360733817b164356149bae97b11b21d9554a2a0a365a01a9ec69c4147c"
+          }
+        }
+      },
+      "semanticProjection": {
+        "encoding": "two-space-indented JSON plus LF",
+        "scope": "The fields consumed by validateEvidence in the exact hash-bound source-static candidate generator: animation identity, source SWF hash, stage width/height, FPS, root frame count, random/external-API declarations, and negative original-runtime/visual-baseline limits.",
+        "historical": {
+          "animationId": "course-g04-l03-vb-007",
+          "sourceSwfSha256": "e3e6c45a56f343b3a8baf8a65dd34b615327029f808eec0c5f9cfee2dd2c1450",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 0,
+              "files": []
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "current": {
+          "animationId": "course-g04-l03-vb-007",
+          "sourceSwfSha256": "e3e6c45a56f343b3a8baf8a65dd34b615327029f808eec0c5f9cfee2dd2c1450",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 0,
+              "files": []
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "historicalSha256": "9a72342b05e3f21d1412aed6e45fbae2dfe979b8831e238528aedda6a9d61fed",
+        "currentSha256": "9a72342b05e3f21d1412aed6e45fbae2dfe979b8831e238528aedda6a9d61fed",
+        "equal": true
+      }
+    },
+    {
+      "animationId": "course-g04-l03-vb-008",
+      "specPath": "migrations/course-g04-l03-vb-008/audit/source-static-current-js-candidate-spec.json",
+      "transition": {
+        "from": {
+          "path": "migrations/course-g04-l03-vb-008/audit/machine/g4-l3-source-audit.json",
+          "bytes": 23917,
+          "sha256": "01c7b05963a9695b4c7e27bbb1a78a9009497c5b21c3e6e56039ab29ea2dd548"
+        },
+        "to": {
+          "path": "migrations/course-g04-l03-vb-008/audit/machine/g4-l3-source-audit.json",
+          "bytes": 23917,
+          "sha256": "2cb8b3af5d4049e6f0f3c0135e5fef577aee9491812a41291e34c7e2dcb0639a"
+        },
+        "bytesUnchanged": true,
+        "sha256Changed": true
+      },
+      "historicalEvidence": {
+        "candidateReport": {
+          "path": "reports/g4-l3-vb008-current-javascript-candidate.json",
+          "bytes": 35244,
+          "sha256": "ef20c31a451a8858cb799dae440dd3954be5c3282779dd74f5ddd5d8ae96db94"
+        },
+        "candidateReportFingerprintSha256": "948ffc52420dc21b7f64d83c864cd3d14f6751dca41495c69e4f27eeb5b46dfd",
+        "archivedCandidatePath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/historical-candidates/reports/g4-l3-vb008-current-javascript-candidate.json",
+        "specPreimage": {
+          "path": "migrations/course-g04-l03-vb-008/audit/source-static-current-js-candidate-spec.json",
+          "bytes": 8170,
+          "sha256": "493142511b19b8bb3005dc06f2c0a88aafeb3ae4cffe34dea6ca49439ee99f3e"
+        },
+        "archivedSpecPath": "work/g4-l3-source-static-source-audit-rebind/transactions/75f8766a9fb4648979f7c0fbae3badf05d31c43f5ca83b40f3f2c2c85344fcf7/spec-preimages/migrations/course-g04-l03-vb-008/audit/source-static-current-js-candidate-spec.json"
+      },
+      "currentEvidence": {
+        "sourceAudit": {
+          "path": "migrations/course-g04-l03-vb-008/audit/machine/g4-l3-source-audit.json",
+          "bytes": 23917,
+          "sha256": "2cb8b3af5d4049e6f0f3c0135e5fef577aee9491812a41291e34c7e2dcb0639a"
+        },
+        "sourceAuditArtifactFingerprintSha256": "d7723a87f7426434818ba79cfc8a9d1ec4460fb1c198f05e6fa26aa73855e792",
+        "physicalSources": {
+          "swf": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB08.swf",
+            "bytes": 751915,
+            "sha256": "3c61fd04bbaf6b316438691fd59222623bbb1d11a36c731ae7ed9fb862245bcf"
+          },
+          "fla": {
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB08.fla",
+            "bytes": 4256256,
+            "sha256": "25b7f4acc1128d4b8a06df89d52b9f372b4af00b77d2053fbccfaa24dba53922"
+          }
+        }
+      },
+      "semanticProjection": {
+        "encoding": "two-space-indented JSON plus LF",
+        "scope": "The fields consumed by validateEvidence in the exact hash-bound source-static candidate generator: animation identity, source SWF hash, stage width/height, FPS, root frame count, random/external-API declarations, and negative original-runtime/visual-baseline limits.",
+        "historical": {
+          "animationId": "course-g04-l03-vb-008",
+          "sourceSwfSha256": "3c61fd04bbaf6b316438691fd59222623bbb1d11a36c731ae7ed9fb862245bcf",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 0,
+              "files": []
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "current": {
+          "animationId": "course-g04-l03-vb-008",
+          "sourceSwfSha256": "3c61fd04bbaf6b316438691fd59222623bbb1d11a36c731ae7ed9fb862245bcf",
+          "runtime": {
+            "stage": {
+              "width": 800,
+              "height": 600
+            },
+            "fps": 12,
+            "rootFrameCount": 10
+          },
+          "scripts": {
+            "random": {
+              "occurrences": 0,
+              "files": []
+            },
+            "externalApiCandidateCount": 0,
+            "externalControlEventFiles": null
+          },
+          "evidenceLimits": {
+            "authoritativeRuntimeLaunched": false,
+            "visualBaselineEstablished": false
+          }
+        },
+        "historicalSha256": "a285b7b4983cc05008dbde09b05edabddc166ef4c1c518da9b6a236bad4e4a05",
+        "currentSha256": "a285b7b4983cc05008dbde09b05edabddc166ef4c1c518da9b6a236bad4e4a05",
+        "equal": true
+      }
+    }
+  ],
+  "protectedBefore": [
+    {
+      "path": "catalog/completion-ledger.json",
+      "bytes": 64286,
+      "sha256": "8e5f26e1cece647a38182a9d544f509b5c4737df087fc16c34ef9c2a0b774ad0"
+    },
+    {
+      "path": "catalog/lesson-release-ledger.json",
+      "bytes": 49048,
+      "sha256": "e6dc65da3981a7e497c1a9ecacb60b8ba4acbb18ef0fb3963d2ef28b5b8b02e0"
+    },
+    {
+      "path": "catalog/lesson-releases.json",
+      "bytes": 54579,
+      "sha256": "ab0ad5dac373f7bf192b603c4c2b0bc4dae9f73fe770eba3be7507d458bfc375"
+    },
+    {
+      "path": "reports/current-javascript-output-human-approval.json",
+      "bytes": 3375444,
+      "sha256": "7f291bd72cf2a9c35cdb7d7fcbd3b52c1e3b88ec1e31e66e776b909e9c01cc5c"
+    }
+  ],
+  "specMutationBoundary": {
+    "allowed": "Replace only evidence.sourceAudit with the current descriptor plus this receipt binding, and append this receipt path once to integrationBindings.",
+    "receiptDoesNotBindPostSpecWholeFileSha256": true,
+    "reason": "The post-spec contains the receipt SHA-256; omitting the post-spec whole-file SHA from the receipt prevents a self-referential hash cycle."
+  },
+  "authorityBoundary": {
+    "acceptanceNeutral": true,
+    "currentJavaScriptCandidateOnly": true,
+    "originalRuntimeAuthorityCreated": false,
+    "audioAcceptanceCreated": false,
+    "humanReviewCreated": false,
+    "ownerAcceptanceCreated": false,
+    "strictCompletionCreated": false,
+    "completionLedgerWriteAuthorized": false,
+    "lessonReleaseWriteAuthorized": false,
+    "approvalOrPinWriteAuthorized": false,
+    "publicReleaseAuthorized": false,
+    "sourceAssetWriteAuthorized": false,
+    "strictAcceptanceEffect": "none"
+  },
+  "generatedBy": {
+    "path": "scripts/rebind-g4-l3-source-static-source-audits.mjs",
+    "bytes": 57636,
+    "sha256": "40538eec255f618f54c8bad4aeb5b3c99a8262cdfe7bddd94c7e7578d8cf865c"
+  },
+  "receiptFingerprintSha256": "a1f61a3b52f5ca05d07c10d9b13101b093715441cd49d89b6f9b5736de702ead"
+}

@@ -1,0 +1,963 @@
+{
+  "acceptance": {
+    "acceptanceNeutral": true,
+    "approvalOrReviewChanges": 0,
+    "completionLedgerChanges": 0,
+    "gates": {
+      "accessibilityAcceptance": false,
+      "audioAcceptance": false,
+      "authoritativeOriginalRuntimeBaseline": false,
+      "behaviorParity": false,
+      "bilingualAcceptance": false,
+      "humanVisualReview": false,
+      "ownerAcceptance": false,
+      "routeImplementation": false,
+      "runtimeReachability": false,
+      "strictMigrationCompletion": false,
+      "visualParity": false
+    },
+    "legacyEndpointExecutions": 0,
+    "migrationStatusChanges": 0,
+    "migrationWorkspaceChanges": 0,
+    "productionRouteChanges": 0,
+    "sourceAssetChanges": 0,
+    "statement": "Every gate remains false. This contract records exact static dependency candidates and contained Ruffle observations only; it is not fidelity, parity, acceptance, or migration completion."
+  },
+  "candidates": [
+    {
+      "api": "getURL",
+      "candidateId": "static-001",
+      "disposition": "disabled-legacy-side-effect",
+      "dispositionReason": "The legacy host/window/network effect is disabled by default and must not execute; a separate reviewed modern product requirement would be needed to rebuild it.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "javascript-parent-close",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 4,
+        "exactCallText": "getURL(\"javascript:void(parent.close());\");",
+        "lineNumber": 2,
+        "scriptPath": "DefineButton2_151/BUTTONCONDACTION on(release).as",
+        "scriptSha256": "8865745d8c2ae3625e56aa78139806409711bc2c44ae4bd2b087f2031a962a1c",
+        "sourceEventId": "source-event-0019"
+      },
+      "telemetryCandidate": false,
+      "upstreamMachineCandidateBound": true
+    },
+    {
+      "api": "fscommand",
+      "candidateId": "static-002",
+      "disposition": "disabled-legacy-side-effect",
+      "dispositionReason": "The legacy host/window/network effect is disabled by default and must not execute; a separate reviewed modern product requirement would be needed to rebuild it.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "close-player-host-command",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 4,
+        "exactCallText": "fscommand(\"quit\");",
+        "lineNumber": 3,
+        "scriptPath": "DefineButton2_151/BUTTONCONDACTION on(release).as",
+        "scriptSha256": "8865745d8c2ae3625e56aa78139806409711bc2c44ae4bd2b087f2031a962a1c",
+        "sourceEventId": "source-event-0019"
+      },
+      "telemetryCandidate": false,
+      "upstreamMachineCandidateBound": true
+    },
+    {
+      "api": "getURL",
+      "candidateId": "static-003",
+      "disposition": "disabled-legacy-side-effect",
+      "dispositionReason": "The legacy host/window/network effect is disabled by default and must not execute; a separate reviewed modern product requirement would be needed to rebuild it.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "javascript-student-help-window",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 4,
+        "exactCallText": "getURL(\"javascript:void(window.open(\\'\" + STHelpURL + \"\\'));\",\"\");",
+        "lineNumber": 18,
+        "scriptPath": "DefineButton2_247/BUTTONCONDACTION on(release).as",
+        "scriptSha256": "83476fc4e1b2f737f217b73db41fd5b4af11f1fd2efe6b7b5b59bdc6075e537b",
+        "sourceEventId": "source-event-0029"
+      },
+      "telemetryCandidate": false,
+      "upstreamMachineCandidateBound": true
+    },
+    {
+      "api": "getURL",
+      "candidateId": "static-004",
+      "disposition": "disabled-legacy-side-effect",
+      "dispositionReason": "The legacy host/window/network effect is disabled by default and must not execute; a separate reviewed modern product requirement would be needed to rebuild it.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "lesson-report-and-bookmark-request",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 4,
+        "exactCallText": "getURL(strURL,\"\");",
+        "lineNumber": 7,
+        "scriptPath": "DefineButton2_556/BUTTONCONDACTION on(release).as",
+        "scriptSha256": "87ca54926a97fa05f26af17be815cd554f3490083a3b9c190bac1646820cc599",
+        "sourceEventId": "source-event-0057"
+      },
+      "telemetryCandidate": true,
+      "upstreamMachineCandidateBound": true
+    },
+    {
+      "api": "loadVariablesNum",
+      "candidateId": "static-005",
+      "disposition": "disabled-legacy-side-effect",
+      "dispositionReason": "The legacy host/window/network effect is disabled by default and must not execute; a separate reviewed modern product requirement would be needed to rebuild it.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "failure-report-request",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 4,
+        "exactCallText": "loadVariablesNum(strURL,0,\"POST\");",
+        "lineNumber": 16,
+        "scriptPath": "DefineSprite_155/frame_15/DoAction.as",
+        "scriptSha256": "3bf2025d5901799cb932e90157390db5a909c87b0e2a67b999c6a645206ace97",
+        "sourceEventId": "source-event-0185"
+      },
+      "telemetryCandidate": true,
+      "upstreamMachineCandidateBound": true
+    },
+    {
+      "api": "loadVariablesNum",
+      "candidateId": "static-006",
+      "disposition": "disabled-legacy-side-effect",
+      "dispositionReason": "The legacy host/window/network effect is disabled by default and must not execute; a separate reviewed modern product requirement would be needed to rebuild it.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "download-time-and-bookmark-report-request",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 13,
+        "exactCallText": "loadVariablesNum(strURL,0,\"POST\");",
+        "lineNumber": 74,
+        "scriptPath": "DefineSprite_155/frame_15/DoAction.as",
+        "scriptSha256": "3bf2025d5901799cb932e90157390db5a909c87b0e2a67b999c6a645206ace97",
+        "sourceEventId": "source-event-0185"
+      },
+      "telemetryCandidate": true,
+      "upstreamMachineCandidateBound": true
+    },
+    {
+      "api": "loadVariablesNum",
+      "candidateId": "static-007",
+      "disposition": "disabled-legacy-side-effect",
+      "dispositionReason": "The legacy host/window/network effect is disabled by default and must not execute; a separate reviewed modern product requirement would be needed to rebuild it.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "final-quiz-report-request",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 1,
+        "exactCallText": "loadVariablesNum(finalQuizURL,0,\"POST\");",
+        "lineNumber": 2,
+        "scriptPath": "DefineSprite_164/frame_5/DoAction.as",
+        "scriptSha256": "97968c0ceccc8e94edcd6e51b6f8bdefde0c1a0a192788f4cc7c61435523b8a3",
+        "sourceEventId": "source-event-0187"
+      },
+      "telemetryCandidate": true,
+      "upstreamMachineCandidateBound": true
+    },
+    {
+      "api": "loadMovie",
+      "candidateId": "static-008",
+      "disposition": "local-nextjs-navigation-data-candidate",
+      "dispositionReason": "The source names course-child or keyterm-diagram content; it is a candidate for reviewed local Next.js navigation/data resolution, not a route implementation.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "lesson-child-swf-load",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 24,
+        "exactCallText": "_loc2_.animation_mc.loadMovie(_loc1_.playSwfFileName,1);",
+        "lineNumber": 1007,
+        "scriptPath": "frame_35/DoAction.as",
+        "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+        "sourceEventId": "source-event-0389"
+      },
+      "telemetryCandidate": false,
+      "upstreamMachineCandidateBound": true
+    },
+    {
+      "api": "Sound.loadSound",
+      "candidateId": "static-009",
+      "disposition": "human-runtime-evidence-required",
+      "dispositionReason": "The source constructs a Spanish MP3 expression, but file association, activation timing, synchronization, and listening acceptance are not established.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "spanish-page-audio-load",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 21,
+        "exactCallText": "_global.gSound.loadSound(SndFName,1);",
+        "lineNumber": 2182,
+        "scriptPath": "frame_35/DoAction.as",
+        "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+        "sourceEventId": "source-event-0389"
+      },
+      "telemetryCandidate": false,
+      "upstreamMachineCandidateBound": true
+    },
+    {
+      "api": "XML.load",
+      "candidateId": "static-010",
+      "disposition": "local-nextjs-navigation-data-candidate",
+      "dispositionReason": "The source names lesson-local keyterm data; any modern read must resolve to reviewed local data without executing the legacy loader.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "keyterm-xml-load-primary",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 4,
+        "exactCallText": "F_X.load(_loc2_.KeyTermVar);",
+        "lineNumber": 2243,
+        "scriptPath": "frame_35/DoAction.as",
+        "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+        "sourceEventId": "source-event-0389"
+      },
+      "telemetryCandidate": false,
+      "upstreamMachineCandidateBound": false
+    },
+    {
+      "api": "XML.load",
+      "candidateId": "static-011",
+      "disposition": "local-nextjs-navigation-data-candidate",
+      "dispositionReason": "The source names lesson-local keyterm data; any modern read must resolve to reviewed local data without executing the legacy loader.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "keyterm-xml-load-secondary",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 4,
+        "exactCallText": "F_X.load(_loc2_.KeyTermVar);",
+        "lineNumber": 2352,
+        "scriptPath": "frame_35/DoAction.as",
+        "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+        "sourceEventId": "source-event-0389"
+      },
+      "telemetryCandidate": false,
+      "upstreamMachineCandidateBound": false
+    },
+    {
+      "api": "loadMovie",
+      "candidateId": "static-012",
+      "disposition": "local-nextjs-navigation-data-candidate",
+      "dispositionReason": "The source names course-child or keyterm-diagram content; it is a candidate for reviewed local Next.js navigation/data resolution, not a route implementation.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "keyterm-diagram-swf-load",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 45,
+        "exactCallText": "_loc1_.glossary.keyterms.keyterm_diagram.loadMovie(exampleSwfFileName,7);",
+        "lineNumber": 2679,
+        "scriptPath": "frame_35/DoAction.as",
+        "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+        "sourceEventId": "source-event-0389"
+      },
+      "telemetryCandidate": false,
+      "upstreamMachineCandidateBound": true
+    },
+    {
+      "api": "loadMovie",
+      "candidateId": "static-013",
+      "disposition": "local-nextjs-navigation-data-candidate",
+      "dispositionReason": "The source names course-child or keyterm-diagram content; it is a candidate for reviewed local Next.js navigation/data resolution, not a route implementation.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "keyterm-diagram-swf-load",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 45,
+        "exactCallText": "_loc1_.glossary.keyterms.keyterm_diagram.loadMovie(exampleSwfFileName,7);",
+        "lineNumber": 2997,
+        "scriptPath": "frame_35/DoAction.as",
+        "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+        "sourceEventId": "source-event-0389"
+      },
+      "telemetryCandidate": false,
+      "upstreamMachineCandidateBound": true
+    },
+    {
+      "api": "loadMovie",
+      "candidateId": "static-014",
+      "disposition": "local-nextjs-navigation-data-candidate",
+      "dispositionReason": "The source names course-child or keyterm-diagram content; it is a candidate for reviewed local Next.js navigation/data resolution, not a route implementation.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "keyterm-diagram-swf-load",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 31,
+        "exactCallText": "_loc1_.m_c.keyterm_diagram.loadMovie(exampleSwfFileName,6);",
+        "lineNumber": 3311,
+        "scriptPath": "frame_35/DoAction.as",
+        "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+        "sourceEventId": "source-event-0389"
+      },
+      "telemetryCandidate": false,
+      "upstreamMachineCandidateBound": true
+    },
+    {
+      "api": "fscommand",
+      "candidateId": "static-015",
+      "disposition": "disabled-legacy-side-effect",
+      "dispositionReason": "The legacy host/window/network effect is disabled by default and must not execute; a separate reviewed modern product requirement would be needed to rebuild it.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "legacy-flash-player-host-setting",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 1,
+        "exactCallText": "fscommand(\"fullscreen\",\"true\");",
+        "lineNumber": 3326,
+        "scriptPath": "frame_35/DoAction.as",
+        "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+        "sourceEventId": "source-event-0389"
+      },
+      "telemetryCandidate": false,
+      "upstreamMachineCandidateBound": true
+    },
+    {
+      "api": "fscommand",
+      "candidateId": "static-016",
+      "disposition": "disabled-legacy-side-effect",
+      "dispositionReason": "The legacy host/window/network effect is disabled by default and must not execute; a separate reviewed modern product requirement would be needed to rebuild it.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "legacy-flash-player-host-setting",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 1,
+        "exactCallText": "fscommand(\"allowscale\",\"true\");",
+        "lineNumber": 3327,
+        "scriptPath": "frame_35/DoAction.as",
+        "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+        "sourceEventId": "source-event-0389"
+      },
+      "telemetryCandidate": false,
+      "upstreamMachineCandidateBound": true
+    },
+    {
+      "api": "fscommand",
+      "candidateId": "static-017",
+      "disposition": "disabled-legacy-side-effect",
+      "dispositionReason": "The legacy host/window/network effect is disabled by default and must not execute; a separate reviewed modern product requirement would be needed to rebuild it.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "legacy-flash-player-host-setting",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 1,
+        "exactCallText": "fscommand(\"showmenu\",\"false\");",
+        "lineNumber": 3328,
+        "scriptPath": "frame_35/DoAction.as",
+        "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+        "sourceEventId": "source-event-0389"
+      },
+      "telemetryCandidate": false,
+      "upstreamMachineCandidateBound": true
+    },
+    {
+      "api": "fscommand",
+      "candidateId": "static-018",
+      "disposition": "disabled-legacy-side-effect",
+      "dispositionReason": "The legacy host/window/network effect is disabled by default and must not execute; a separate reviewed modern product requirement would be needed to rebuild it.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "legacy-flash-player-host-setting",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 1,
+        "exactCallText": "fscommand(\"trapallkeys\",\"true\");",
+        "lineNumber": 3329,
+        "scriptPath": "frame_35/DoAction.as",
+        "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+        "sourceEventId": "source-event-0389"
+      },
+      "telemetryCandidate": false,
+      "upstreamMachineCandidateBound": true
+    },
+    {
+      "api": "SharedObject.getLocal",
+      "candidateId": "static-019",
+      "disposition": "human-runtime-evidence-required",
+      "dispositionReason": "The source reads and writes a Flash SharedObject bookmark, but required product semantics and authoritative runtime state transitions are not established.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "local-bookmark-persistence",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 12,
+        "exactCallText": "myCookie = SharedObject.getLocal(\"cookiename\");",
+        "lineNumber": 3454,
+        "scriptPath": "frame_35/DoAction.as",
+        "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+        "sourceEventId": "source-event-0389"
+      },
+      "telemetryCandidate": false,
+      "upstreamMachineCandidateBound": true
+    },
+    {
+      "api": "loadMovie",
+      "candidateId": "static-020",
+      "disposition": "unresolved-source-expression",
+      "dispositionReason": "The generic component receives url from an unresolved caller expression; static source does not establish the concrete resource or runtime reachability.",
+      "evidenceKind": "static-exact-source-call",
+      "executedDuringStaticAudit": false,
+      "originalRuntimeObserved": false,
+      "role": "generic-scroll-pane-content-load",
+      "runtimeReachabilityEstablished": false,
+      "source": {
+        "columnNumber": 20,
+        "exactCallText": "_loc1_.loadTemp.loadMovie(url);",
+        "lineNumber": 169,
+        "scriptPath": "FScrollPaneSymbol.as",
+        "scriptSha256": "e57a51c62b1e9e7c13dbd4d78ca535b6f741c40b5a63fb9f71471383bd288d29",
+        "sourceEventId": "source-event-0407"
+      },
+      "telemetryCandidate": false,
+      "upstreamMachineCandidateBound": true
+    },
+    {
+      "api": "HTTP.GET",
+      "authoritativeRuntimeEvidence": false,
+      "candidateId": "observed-001",
+      "disposition": "local-nextjs-navigation-data-candidate",
+      "dispositionReason": "The forensic Ruffle run attempted a contained local read. This corroborates a local navigation/data candidate but is not original-runtime or route-behavior proof.",
+      "evidenceKind": "selected-ruffle-diagnostic-observation",
+      "observation": {
+        "blockedBeforeServer": true,
+        "exactSourceFrameBinding": null,
+        "fixedDelayAfterLoadMs": 5000,
+        "method": "GET",
+        "ruffleDisposition": "blocked-local-unallowlisted-read",
+        "url": "http://127.0.0.1:3104/api/reference/shell-course-g04-l03/IR/L3RW01.swf"
+      },
+      "originalRuntimeObserved": false,
+      "role": "observed-initial-lesson-child-swf-read",
+      "telemetryCandidate": false
+    },
+    {
+      "api": "HTTP.GET",
+      "authoritativeRuntimeEvidence": false,
+      "candidateId": "observed-002",
+      "disposition": "local-nextjs-navigation-data-candidate",
+      "dispositionReason": "The forensic Ruffle run attempted a contained local read. This corroborates a local navigation/data candidate but is not original-runtime or route-behavior proof.",
+      "evidenceKind": "selected-ruffle-diagnostic-observation",
+      "observation": {
+        "blockedBeforeServer": true,
+        "exactSourceFrameBinding": null,
+        "fixedDelayAfterLoadMs": 5000,
+        "method": "GET",
+        "ruffleDisposition": "blocked-local-unallowlisted-read",
+        "url": "http://127.0.0.1:3104/HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTEG4.xml"
+      },
+      "originalRuntimeObserved": false,
+      "role": "observed-english-keyterm-xml-read",
+      "telemetryCandidate": false
+    },
+    {
+      "api": "HTTP.POST",
+      "authoritativeRuntimeEvidence": false,
+      "candidateId": "observed-003",
+      "disposition": "disabled-legacy-side-effect",
+      "dispositionReason": "The forensic Ruffle run exposed a legacy telemetry attempt. It was blocked before the server and remains disabled; the URL is evidence only.",
+      "evidenceKind": "selected-ruffle-diagnostic-observation",
+      "observation": {
+        "blockedBeforeServer": true,
+        "exactSourceFrameBinding": null,
+        "fixedDelayAfterLoadMs": 5000,
+        "method": "POST",
+        "ruffleDisposition": "blocked-local-non-read-request",
+        "url": "http://127.0.0.1:3104/reference/shell-course-g04-l03-index-local?&Student_ID=&Class_ID=&Lesson_ID=&Section=Introduction&FileName=http://127.0.0.1:3104/api/reference/shell-course-g04-l03/IR/L3RW01.swf&Failure=yes&Close=no&Download_Time=&Book_Mark=0SPLDATA0SPLDATA1SPLDATA2SPLDATAhttp://127.0.0.1:3104/api/reference/shell-course-g04-l03/IR/L3RW01.swf"
+      },
+      "originalRuntimeObserved": false,
+      "role": "observed-legacy-report-and-bookmark-request",
+      "telemetryCandidate": true
+    }
+  ],
+  "generator": {
+    "path": "scripts/build-g4-l3-shell-legacy-host-dependency-contract.mjs",
+    "sha256": "1aa6e629bee829ef10c73fee85ed5b6cd11c1ce9f962e0111665be50af9b88c2",
+    "version": 1
+  },
+  "method": {
+    "behaviorParityEstablished": false,
+    "deterministic": true,
+    "fullFfdecScriptReexported": true,
+    "fullScriptManifestMatched": true,
+    "legacyEndpointsExecutedByGenerator": false,
+    "limitation": "Static ActionScript and a selected contained Ruffle diagnostic identify dependency candidates only. They do not prove original-runtime reachability, timing, branch semantics, language behavior, audio synchronization, or visual/behavioral parity.",
+    "normalizedScriptBundleMatched": true,
+    "physicalShellHashRepeated": true,
+    "routesImplemented": false,
+    "runtimeReachabilityEstablished": false,
+    "selectedRuffleFilesPhysicallyRehashed": true,
+    "sourceAssetsModified": false,
+    "staticSourceLineCallsExact": true
+  },
+  "observedRequests": [
+    {
+      "authoritativeRuntimeEvidence": false,
+      "blockedBeforeServer": true,
+      "candidateId": "observed-001",
+      "disposition": "local-nextjs-navigation-data-candidate",
+      "method": "GET",
+      "ruffleDisposition": "blocked-local-unallowlisted-read",
+      "url": "http://127.0.0.1:3104/api/reference/shell-course-g04-l03/IR/L3RW01.swf"
+    },
+    {
+      "authoritativeRuntimeEvidence": false,
+      "blockedBeforeServer": true,
+      "candidateId": "observed-002",
+      "disposition": "local-nextjs-navigation-data-candidate",
+      "method": "GET",
+      "ruffleDisposition": "blocked-local-unallowlisted-read",
+      "url": "http://127.0.0.1:3104/HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTEG4.xml"
+    },
+    {
+      "authoritativeRuntimeEvidence": false,
+      "blockedBeforeServer": true,
+      "candidateId": "observed-003",
+      "disposition": "disabled-legacy-side-effect",
+      "method": "POST",
+      "ruffleDisposition": "blocked-local-non-read-request",
+      "url": "http://127.0.0.1:3104/reference/shell-course-g04-l03-index-local?&Student_ID=&Class_ID=&Lesson_ID=&Section=Introduction&FileName=http://127.0.0.1:3104/api/reference/shell-course-g04-l03/IR/L3RW01.swf&Failure=yes&Close=no&Download_Time=&Book_Mark=0SPLDATA0SPLDATA1SPLDATA2SPLDATAhttp://127.0.0.1:3104/api/reference/shell-course-g04-l03/IR/L3RW01.swf"
+    }
+  ],
+  "productNavigationBoundary": {
+    "activeProductPageCount": 39,
+    "keytermSourceConflict": {
+      "courseXmlReferencesMissingLessonSpecificFiles": true,
+      "productDispositionAccepted": false,
+      "runtimeResolutionVerified": false,
+      "shellReferencesPresentGradeWideFiles": true
+    },
+    "lesson": {
+      "domain": "negative-numbers-number-line",
+      "grade": 4,
+      "lesson": 3,
+      "titleEnglishRaw": "Negative Numbers"
+    },
+    "originalRuntimeBehaviorEstablished": false,
+    "productRule": "Keep the 39 active XML pages as the current product contract. The 44-entry static shell sequence remains conflicting forensic evidence until authoritative runtime and owner evidence resolves it.",
+    "selectedProductSequenceAuthority": "active-Page elements in physical G4 L3 index.xml",
+    "shellStaticConflictResolved": false,
+    "shellStaticExtrasNotInActiveProductSequence": [
+      "VB/L3VB01.swf",
+      "IN/L3IN01.swf",
+      "TI/L3TI01.swf",
+      "GS/L3GS01.swf",
+      "TS/L3TS01.swf"
+    ],
+    "shellStaticPageCount": 44
+  },
+  "reportType": "g4-l3-shell-legacy-host-dependency-disposition-contract",
+  "requiredNextEvidence": [
+    "Capture an authorized original-runtime/Adobe Animate shell trace for initial child loading, navigation, language switching, keyterm reads, bookmark state, audio activation, and terminal behavior.",
+    "Resolve the generic FScrollPane loadMovie(url) caller expression before assigning any concrete resource or modern implementation.",
+    "Reconcile the 39 active XML pages with the shell's 44-entry static sequence; retain the five extras as unresolved forensic evidence until reviewed.",
+    "Resolve the missing lesson-specific versus present grade-wide keyterm XML conflict with runtime and owner evidence.",
+    "Bind each source-derived Spanish MP3 candidate to a physical file, hash, language, duration, start frame, synchronization trace, and listening acceptance.",
+    "Define reviewed modern bookmark semantics before replacing SharedObject; do not read or write legacy local storage by default.",
+    "Keep legacy close/window/fscommand/report/loadVariables effects disabled unless a separate reviewed product/API requirement authorizes a modern replacement.",
+    "Complete behavior, bilingual, audio, accessibility, visual, human-review, owner, and strict migration gates before any completion claim."
+  ],
+  "schemaVersion": 1,
+  "shell": {
+    "animationId": "shell-course-g04-l03-index-local",
+    "assetId": "swf-817e599de43a7924f0a93791e950c8781755692371945a5b7ea4cdd2ad26c58e",
+    "audioCueMappingEstablished": false,
+    "audioListeningAcceptanceEstablished": false,
+    "catalogAssociatedExternalAudioFileCount": 0,
+    "machineAuditFingerprintSha256": "8e0f896a81ae3859b1e1901b88664bfeb58c06e8a4a50cfd033ca54c8c1dabce",
+    "runtime": {
+      "actionScriptVersion": "AS1/2",
+      "fps": 12,
+      "rootFrameCount": 50,
+      "stage": {
+        "height": 600,
+        "width": 800
+      }
+    },
+    "source": {
+      "bytes": 657421,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/index_local.swf",
+      "physicalHashVerifiedNow": true,
+      "preservedByteForByte": true,
+      "sha256": "817e599de43a7924f0a93791e950c8781755692371945a5b7ea4cdd2ad26c58e"
+    },
+    "staticEventIndexCounts": {
+      "candidateFamilyCount": 10,
+      "clipEventTokens": 17,
+      "externalApiOccurrences": 18,
+      "handlerEventTokens": 204,
+      "handlerFiles": 198,
+      "indexedSourceEventFiles": 408,
+      "inputSignalOccurrences": 37,
+      "keyboardEventTokens": 2,
+      "keyboardSignalOccurrences": 19,
+      "languageScriptSignalOccurrences": 0,
+      "pointerEventTokens": 180,
+      "randomCallOccurrences": 3,
+      "replayOrResetOccurrences": 6,
+      "scoringSignalOccurrences": 0,
+      "timelineNavigationOccurrences": 435
+    },
+    "staticScriptEvidence": {
+      "contentManifestSha256": "2ab8d70a2a13be661046ee5ef5a29e35f50483d065d6af3628968486833cab0e",
+      "exportedScriptFileCount": 528,
+      "extraction": "Fresh FFDec script export; LF normalized; paths sorted; every file/byte/hash compared with the upstream machine audit.",
+      "normalizedBundleSha256": "1d9daa6afa242d770e6726e144653b704f44e8c802dd3b370a0ba42470f8d8f2",
+      "normalizedBytes": 194191,
+      "upstreamScriptEvidenceFingerprintSha256": "64751162e91e6cbe498a75efe9cda4b6d6671a1af16102659e7b54355c6227e4"
+    }
+  },
+  "sourceBindings": {
+    "lessonProductContract": {
+      "bytes": 285364,
+      "path": "reports/g4-l3-lesson-product-navigation-contract.json",
+      "sha256": "b065634e63aa3068ac3490e6798469b7109ac94d96b8bd826ca2df9e4f9766ad"
+    },
+    "machineSourceAudit": {
+      "bytes": 5152829,
+      "path": "reports/g4-l3-machine-source-audits.json",
+      "sha256": "c7f987904de8e2a5bca907931feedab0e3bd61ffdcf26b56ef5d7295e49ab9f6"
+    },
+    "ruffleReferenceMatrix": {
+      "bytes": 337042,
+      "path": "reports/g4-l3-ruffle-reference-matrix.json",
+      "sha256": "02e7ab1faff85b33c6a5e4a4b6c19290f55ae16b38d3011af7cd02e0a3394ca3"
+    },
+    "selectedRuffleDiagnosticJson": {
+      "bytes": 18802,
+      "path": "output/playwright/g4-l3-ruffle-reference-diagnostics/shell-course-g04-l03-index-local/en-5000ms/diagnostic.json",
+      "sha256": "8833e2de038a58a4abeb1fabe37a7ed9a295100c1f3a792271f0f8cb36fb63b5"
+    },
+    "selectedRuffleDiagnosticPng": {
+      "bytes": 58552,
+      "exactSourceFrameBinding": null,
+      "height": 600,
+      "path": "output/playwright/g4-l3-ruffle-reference-diagnostics/shell-course-g04-l03-index-local/en-5000ms/diagnostic-stage.png",
+      "sha256": "16853da52dab21dfd56f7ece53230838e9658ae4b43260bf9044ecde28e71a26",
+      "uniqueRgbaColorCount": 4654,
+      "width": 800
+    },
+    "shellSwf": {
+      "bytes": 657421,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/index_local.swf",
+      "sha256": "817e599de43a7924f0a93791e950c8781755692371945a5b7ea4cdd2ad26c58e"
+    },
+    "staticSourceEventIndex": {
+      "bytes": 4377090,
+      "path": "reports/g4-l3-static-source-event-index.json",
+      "sha256": "88068fbea3907570295af5f891be72198e3ec5fef20d0e70590545ed2adbeb32"
+    },
+    "tool": {
+      "ffdec": {
+        "command": "ffdec",
+        "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+        "launcherSha256": "1a242c6333aa8dba0f18f635f9ea2585a988f4131aa5164b70eb00ad9e662bab",
+        "version": "JPEXS Free Flash Decompiler v.26.2.1"
+      }
+    }
+  },
+  "sourceSupportingExpressions": [
+    {
+      "evidence": [
+        {
+          "exactSourceText": "for(var _loc3_ in myCookie.data)",
+          "group": "bookmark-state",
+          "lineNumber": 842,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        },
+        {
+          "exactSourceText": "_loc1_.arrayFLCookie.push(myCookie.data[_loc3_]);",
+          "group": "bookmark-state",
+          "lineNumber": 844,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        },
+        {
+          "exactSourceText": "myCookie.clear();",
+          "group": "bookmark-state",
+          "lineNumber": 864,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        },
+        {
+          "exactSourceText": "_loc1_.BmId = _loc1_.splitStart + \"SPLDATA\" + _loc1_.splitEnd + \"SPLDATA\" + _loc1_.sectionNumber + \"SPLDATA\" + _loc1_.slideNumber + \"SPLDATA\" + _loc1_.playSwfFileName;",
+          "group": "bookmark-state",
+          "lineNumber": 875,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        },
+        {
+          "exactSourceText": "myCookie.data[i] = _loc1_.arrayFLCookie[i];",
+          "group": "bookmark-state",
+          "lineNumber": 880,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        },
+        {
+          "exactSourceText": "myCookie.flush();",
+          "group": "bookmark-state",
+          "lineNumber": 881,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        }
+      ],
+      "group": "bookmark-state"
+    },
+    {
+      "evidence": [
+        {
+          "exactSourceText": "_loc1_.FileName = _loc1_.playSwfFileName;",
+          "group": "child-load",
+          "lineNumber": 1005,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        }
+      ],
+      "group": "child-load"
+    },
+    {
+      "evidence": [
+        {
+          "exactSourceText": "LessonDetails = \"[CourseDetails]~CourseName,Algebra~LessonName,ABC to XYZ~TotalSection,8[Details_Split][Section1Details]~IR~L3RW01.swf[Details_Split][Section2Details]~RW~L3RW02.swf~L3RW03.swf~L3RW04.swf[Details_Split][Section3Details]~VB~L3VB01.swf~L3VB02.swf~L3VB03.swf~L3VB04.swf~L3VB05.swf~L3VB06.swf~L3VB07.swf~L3VB08.swf~L3VB09.swf[Details_Split][Section4Details]~IN~L3IN01.swf~L3IN02.swf~L3IN03.swf~L3IN04.swf~L3IN05.swf~L3IN06.swf~L3IN07.swf~L3IN08.swf~L3IN09.swf~L3IN10.swf~L3IN11.swf~L3IN12.swf[Details_Split][Section5Details]~TI~L3TI01.swf~L3TI02.swf~L3TI03.swf~L3TI04.swf~L3TI05.swf~L3TI06.swf[Details_Split][Section6Details]~GS~L3GS01.swf~L3GS02.swf[Details_Split][Section7Details]~TS~L3TS01.swf~L3TS02.swf~L3TS03.swf~L3TS04.swf~L3TS05.swf~L3TS06.swf~L3TS07.swf~L3TS08.swf[Details_Split][Section8Details]~FQ~L3FQ01.swf~L3FQ02.swf~L3FQ03.swf\";",
+          "group": "embedded-shell-sequence",
+          "lineNumber": 3321,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        }
+      ],
+      "group": "embedded-shell-sequence"
+    },
+    {
+      "evidence": [
+        {
+          "exactSourceText": "exampleSwfFileName = _loc3_.xmlPath + \"DIG/\" + splKeyTerm[6].toLowerCase();",
+          "group": "keyterm-data",
+          "lineNumber": 2677,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        },
+        {
+          "exactSourceText": "_loc2_.KeyTermVar = _loc2_.xmlPath + \"XML/ELKTEG4.xml\";",
+          "group": "keyterm-data",
+          "lineNumber": 2688,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        },
+        {
+          "exactSourceText": "exampleSwfFileName = _loc2_.xmlPath + \"DIG/\" + splKeyTerm[6].toLowerCase();",
+          "group": "keyterm-data",
+          "lineNumber": 2995,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        },
+        {
+          "exactSourceText": "_loc2_.KeyTermVar = _loc2_.xmlPath + \"XML/ELKTSG4.xml\";",
+          "group": "keyterm-data",
+          "lineNumber": 3045,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        },
+        {
+          "exactSourceText": "_loc2_.KeyTermVar = _loc2_.xmlPath + \"XML/ELKTEG4.xml\";",
+          "group": "keyterm-data",
+          "lineNumber": 3063,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        },
+        {
+          "exactSourceText": "exampleSwfFileName = _loc3_.xmlPath + \"DIG/\" + splKeyTerm[6].toLowerCase();",
+          "group": "keyterm-data",
+          "lineNumber": 3309,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        }
+      ],
+      "group": "keyterm-data"
+    },
+    {
+      "evidence": [
+        {
+          "exactSourceText": "tempURL = _root._url;",
+          "group": "lesson-root",
+          "lineNumber": 3468,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        },
+        {
+          "exactSourceText": "splTempURL = tempURL.split(\"index\");",
+          "group": "lesson-root",
+          "lineNumber": 3469,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        },
+        {
+          "exactSourceText": "_global.tempURL = splTempURL[0].substring(0,splTempURL[0].length - 1);",
+          "group": "lesson-root",
+          "lineNumber": 3470,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        },
+        {
+          "exactSourceText": "_global.xmlPath = \"../../../HELP_KEYTERMS/KT/ELEMENTARY/\";",
+          "group": "lesson-root",
+          "lineNumber": 3471,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        }
+      ],
+      "group": "lesson-root"
+    },
+    {
+      "evidence": [
+        {
+          "exactSourceText": "SFTemFName = _global.playSwfFileName.split(\"/\");",
+          "group": "spanish-audio",
+          "lineNumber": 2178,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        },
+        {
+          "exactSourceText": "SndFName = _global.tempURL + \"/SA/\" + SSTemFName[0] + \".mp3\";",
+          "group": "spanish-audio",
+          "lineNumber": 2181,
+          "scriptPath": "frame_35/DoAction.as",
+          "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0"
+        }
+      ],
+      "group": "spanish-audio"
+    },
+    {
+      "evidence": [
+        {
+          "exactSourceText": "URL = _root.Report_URL + \"?\" + \"&Student_ID=\" + _root.Student_ID + \"&Class_ID=\" + _root.Class_ID + \"&Lesson_ID=\" + _root.Lesson_ID + \"&Section=\" + _global.Section + \"&FileName=\" + _global.FileName + \"&Failure=\" + _global.Failure + \"&Close=\" + _global.closeApp + \"&Download_Time=\";",
+          "group": "telemetry",
+          "lineNumber": 12,
+          "scriptPath": "DefineSprite_155/frame_15/DoAction.as",
+          "scriptSha256": "3bf2025d5901799cb932e90157390db5a909c87b0e2a67b999c6a645206ace97"
+        },
+        {
+          "exactSourceText": "_global.BmId = _global.splitStart + \"SPLDATA\" + _global.splitEnd + \"SPLDATA\" + _global.sectionNumber + \"SPLDATA\" + _global.slideNumber + \"SPLDATA\" + _global.playSwfFileName;",
+          "group": "telemetry",
+          "lineNumber": 13,
+          "scriptPath": "DefineSprite_155/frame_15/DoAction.as",
+          "scriptSha256": "3bf2025d5901799cb932e90157390db5a909c87b0e2a67b999c6a645206ace97"
+        },
+        {
+          "exactSourceText": "URL = URL + \"&Book_Mark=\" + _global.BmId;",
+          "group": "telemetry",
+          "lineNumber": 14,
+          "scriptPath": "DefineSprite_155/frame_15/DoAction.as",
+          "scriptSha256": "3bf2025d5901799cb932e90157390db5a909c87b0e2a67b999c6a645206ace97"
+        },
+        {
+          "exactSourceText": "URL = _loc2_.Report_URL + \"?\" + \"&Student_ID=\" + _loc2_.Student_ID + \"&Class_ID=\" + _loc2_.Class_ID + \"&Lesson_ID=\" + _loc2_.Lesson_ID + \"&Section=\" + _loc1_.Section + \"&FileName=\" + _loc1_.FileName + \"&Failure=\" + _loc1_.Failure + \"&Close=\" + _loc1_.closeApp + \"&Download_Time=\" + dtfTIMETAKEN1.text;",
+          "group": "telemetry",
+          "lineNumber": 70,
+          "scriptPath": "DefineSprite_155/frame_15/DoAction.as",
+          "scriptSha256": "3bf2025d5901799cb932e90157390db5a909c87b0e2a67b999c6a645206ace97"
+        },
+        {
+          "exactSourceText": "_loc1_.BmId = _loc1_.splitStart + \"SPLDATA\" + _loc1_.splitEnd + \"SPLDATA\" + _loc1_.sectionNumber + \"SPLDATA\" + _loc1_.slideNumber + \"SPLDATA\" + _loc1_.playSwfFileName;",
+          "group": "telemetry",
+          "lineNumber": 71,
+          "scriptPath": "DefineSprite_155/frame_15/DoAction.as",
+          "scriptSha256": "3bf2025d5901799cb932e90157390db5a909c87b0e2a67b999c6a645206ace97"
+        },
+        {
+          "exactSourceText": "URL = URL + \"&Bookmark_URL=\" + _loc1_.BmId;",
+          "group": "telemetry",
+          "lineNumber": 72,
+          "scriptPath": "DefineSprite_155/frame_15/DoAction.as",
+          "scriptSha256": "3bf2025d5901799cb932e90157390db5a909c87b0e2a67b999c6a645206ace97"
+        },
+        {
+          "exactSourceText": "URL = _root.Report_URL + \"?\" + \"&Student_ID=\" + _root.Student_ID + \"&Class_ID=\" + _root.Class_ID + \"&Lesson_ID=\" + _root.Lesson_ID + \"&Section=\" + _global.Section + \"&FileName=\" + _global.FileName + \"&Failure=\" + _global.Failure + \"&Close=\" + _global.closeApp + \"&Download_Time=\" + dtfTIMETAKEN1.text;",
+          "group": "telemetry",
+          "lineNumber": 3,
+          "scriptPath": "DefineButton2_556/BUTTONCONDACTION on(release).as",
+          "scriptSha256": "87ca54926a97fa05f26af17be815cd554f3490083a3b9c190bac1646820cc599"
+        },
+        {
+          "exactSourceText": "_global.BmId = _global.splitStart + \"SPLDATA\" + _global.splitEnd + \"SPLDATA\" + _global.sectionNumber + \"SPLDATA\" + _global.slideNumber + \"SPLDATA\" + _global.playSwfFileName;",
+          "group": "telemetry",
+          "lineNumber": 4,
+          "scriptPath": "DefineButton2_556/BUTTONCONDACTION on(release).as",
+          "scriptSha256": "87ca54926a97fa05f26af17be815cd554f3490083a3b9c190bac1646820cc599"
+        },
+        {
+          "exactSourceText": "URL = URL + \"&Bookmark_URL=\" + _global.BmId;",
+          "group": "telemetry",
+          "lineNumber": 5,
+          "scriptPath": "DefineButton2_556/BUTTONCONDACTION on(release).as",
+          "scriptSha256": "87ca54926a97fa05f26af17be815cd554f3490083a3b9c190bac1646820cc599"
+        },
+        {
+          "exactSourceText": "finalQuizURL = _root.animation_mc.animation.Mc_Finish.strQuiz_Report_URL;",
+          "group": "telemetry",
+          "lineNumber": 1,
+          "scriptPath": "DefineSprite_164/frame_5/DoAction.as",
+          "scriptSha256": "97968c0ceccc8e94edcd6e51b6f8bdefde0c1a0a192788f4cc7c61435523b8a3"
+        }
+      ],
+      "group": "telemetry"
+    }
+  ],
+  "summary": {
+    "candidateCountsByDisposition": {
+      "disabled-legacy-side-effect": 12,
+      "human-runtime-evidence-required": 2,
+      "local-nextjs-navigation-data-candidate": 8,
+      "unresolved-source-expression": 1
+    },
+    "candidatesWithoutDisposition": 0,
+    "exactXmlCallsAddedBeyondUpstreamExternalApiFamilies": 2,
+    "observedRequestCount": 3,
+    "staticExactCallCount": 20,
+    "staticExactCallsByApi": {
+      "fscommand": 5,
+      "getURL": 3,
+      "loadMovie": 5,
+      "loadVariablesNum": 3,
+      "SharedObject.getLocal": 1,
+      "Sound.loadSound": 1,
+      "XML.load": 2
+    },
+    "telemetryTaggedCandidateCount": 5,
+    "totalCandidateCount": 23,
+    "unresolvedSourceExpressionCount": 1,
+    "upstreamMachineExternalApiOccurrenceCount": 18
+  }
+}

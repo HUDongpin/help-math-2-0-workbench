@@ -1,0 +1,145 @@
+{
+  "animationId": "course-g03-l06-ti-001",
+  "authority": {
+    "audioClaimed": false,
+    "authoritativeBaselineClaimed": false,
+    "branchTraversalClaimed": false,
+    "humanReviewClaimed": false,
+    "languageClaimed": false,
+    "naturalPlaybackClaimed": false,
+    "originalCourseShellExecuted": false,
+    "originalHostBehaviorClaimed": false,
+    "ownerAcceptanceClaimed": false,
+    "sourceChildUntouched": true
+  },
+  "controllerContract": {
+    "actualFrameChecksBeforeReveal": 3,
+    "audioPolicy": "The loaded root/local movie is held at volume zero, 2 source-named local audio placements are explicitly stopped, and stopAllSounds is repeated.",
+    "canonicalSelection": {
+      "evidence": {
+        "frame": 5,
+        "kind": "control-state",
+        "reasons": [
+          "exported-action-script",
+          "structural-action:DoAction"
+        ]
+      },
+      "frame": 5,
+      "strategy": "first-source-audited-nonterminal-action-state",
+      "structuralKey": true,
+      "visualNonEmptyClaimed": false
+    },
+    "canonicalTargetFrame": 5,
+    "failurePresentation": "The child remains hidden behind a full-stage opaque FRAME CONTROL FAILED CLOSED screen.",
+    "localFrameDomain": {
+      "endInclusive": 142,
+      "indexing": "one-indexed",
+      "start": 1
+    },
+    "localTimeline": "sprite-21",
+    "postPinInputPolicy": "A transparent full-stage top-depth shield blocks pointer input while root/local frame and audio checks continue.",
+    "sourceFps": 12,
+    "sourcePlacementName": "animation",
+    "sourcePlacementObjectId": 21,
+    "sourceRootFrame": 6,
+    "sourceRootLabel": "begin",
+    "sourceStage": {
+      "height": 600,
+      "width": 800
+    },
+    "successPresentation": "The untouched child is revealed with no controller pixels after three actual-frame checks pass."
+  },
+  "decision": "static-and-compiled-factory-passed-runtime-frame-control-not-yet-proven",
+  "factory": {
+    "canonicalFixture": {
+      "decompiledMarkersVerified": true,
+      "deterministicDoubleBuild": true,
+      "fixtureDigest": "32b093c5da8c12a195c594a6f834e5853f7455b36eddcb8a136f78ae93853f1f",
+      "hostSha256": "039101c351a20fdbda5c612b9cbe601529e6cdb1d3e0cef736a4be95a0f1b96e",
+      "manifest": "work/adobe-course-host-fixtures-frame-controller-all/generated/course-g03-l06-ti-001/frame-0005/32b093c5da8c12a195c594a6/fixture-manifest.json",
+      "manifestSha256": "16b81b5578c8991e28089ba79be94546221c50a8b280e21289508d1edee9ccab",
+      "targetFrame": 5
+    },
+    "generator": {
+      "path": "scripts/build-adobe-course-frame-controller-fixtures.mjs",
+      "sha256": "bb3e83d5e1f7961d13add098cbeb5169f0e1613bce4af05b8a1413519f0f59f6"
+    },
+    "specification": {
+      "path": "migrations/course-g03-l06-ti-001/audit/adobe-course-frame-controller-spec.json",
+      "sha256": "2984793c4890db6236a0e37aee461e31a4fac7a4417fe1ca5f1990d13f3b8da1"
+    },
+    "supportModule": {
+      "path": "scripts/build-adobe-course-host-fixtures.mjs",
+      "sha256": "92fffd1cca82962a7ce1034e60a957b0ff356ade4a2b8746a22f7f8b49a92891"
+    },
+    "verificationCommands": [
+      "node scripts/build-adobe-course-frame-controller-fixtures.mjs --verify work/adobe-course-host-fixtures-frame-controller-all/generated/course-g03-l06-ti-001/frame-0005/32b093c5da8c12a195c594a6/fixture-manifest.json",
+      "node scripts/build-adobe-course-frame-controller-fixtures.mjs --check",
+      "node scripts/build-adobe-course-frame-controller-fixtures.mjs --id course-g03-l06-ti-001 --frame 5"
+    ]
+  },
+  "legacyTiCompatibility": {
+    "files": [
+      {
+        "path": "migrations/course-g03-l06-ti-001/audit/adobe-frame-controller-spec.json",
+        "sha256": "99e6e51239191389f9963c3a2179c70e6d60d5b0f656678d03ef15f84899ebda"
+      },
+      {
+        "path": "migrations/course-g03-l06-ti-001/audit/adobe-frame-controller-engineering-report.json",
+        "sha256": "55a3bed831c86c8256d0589b8cd6f8e1768960f92cbea101ec663c0ffc66f411"
+      }
+    ],
+    "preservedUnmodifiedByThisFactory": true,
+    "separateOutputNamespace": "work/adobe-course-host-fixtures-frame-controller-all"
+  },
+  "limitations": [
+    "Direct gotoAndStop is a visual engineering seek and does not reproduce elapsed-time traversal or nested timeline phase through preceding local frames.",
+    "Unknown host bindings are deliberately not synthesized; frame scripts may therefore be incomplete even if a visual candidate appears.",
+    "The fixture suppresses all audio and cannot support listening, identity, cue, synchronization, stop, or Replay acceptance.",
+    "Interaction, branch, drag, scoring, random, Replay, language, original-shell, and external-dependency behavior remain separate blockers exactly as listed.",
+    "A successful Adobe probe would establish only a controlled source-addressed visual candidate; RMSE comparison, product QA, human review, owner acceptance, and strict validation remain pending."
+  ],
+  "migrationStatusChanged": false,
+  "reportKind": "adobe-avm1-course-local-frame-controller-engineering-candidate",
+  "reviewFieldsChanged": false,
+  "runtimeProofStillRequired": [
+    "Run the exact fixture through the sandbox in the authorized Adobe Flash Player only after a separate no-click GUI safety smoke is reviewed.",
+    "Observe that the cover disappears only after one explicit load click and three actual-frame ticks report root 6, local 5, and local frameCount 142.",
+    "Record a lossless native 800x600 stage capture plus a separate fixture digest, requested frame, and observed actual-frame trace record."
+  ],
+  "schemaVersion": 1,
+  "staticallyProven": [
+    "The root animation placement, its exact frame/label/objectId, the corresponding local sprite frameCount, source hash, native stage, and FPS are derived from the reviewed scenario inventory without basename or timeline guessing.",
+    "Every source/evidence/spec/generator/support input is hash-pinned; the untouched child is copied byte-for-byte into a content-addressed fixture.",
+    "The host is compiled twice from identical inputs to the same SWF hash, then decompiled and checked for fail-closed, target-frame, three-tick actual-frame, audio-suppression, and blocked-primitive markers.",
+    "Sandbox syntax, fixture-local write, outside-write denial, and loopback-network denial probes pass before any GUI launch is eligible.",
+    "The factory supports every one-indexed local frame 1..142; the tracked canonical probe is frame 5."
+  ],
+  "strictAcceptanceEffect": "none; retain every baseline, language, audio, behavior, product, human, owner, validator, regression, and build blocker",
+  "unresolvedObligations": {
+    "audio": [
+      "all audio is intentionally muted and stopped; listening, identity, start cue, synchronization, and Replay remain outside this fixture"
+    ],
+    "hostBindings": [
+      "_level0.InternalPreloader"
+    ],
+    "interactionCoverage": [
+      {
+        "count": 57,
+        "key": "conditionalBranchObligations"
+      },
+      {
+        "count": 1,
+        "key": "dragObligations"
+      }
+    ],
+    "language": [
+      "English/Spanish host flags and visual branches are not established by direct local-frame seek"
+    ],
+    "randomObligationCount": 1,
+    "randomObligationIds": [
+      "random-001"
+    ],
+    "sideEffectApis": []
+  }
+}

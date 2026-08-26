@@ -1,0 +1,2969 @@
+{
+  "schemaVersion": 1,
+  "generatedMarker": "deterministic-from-current-pilot-strict-report-and-workspaces",
+  "generator": "scripts/build-pilot-machine-gap-readiness.mjs",
+  "source": {
+    "strictReport": {
+      "path": "reports/pilot-strict-acceptance.json",
+      "sha256": "dbd0ddcab28be5faf278c3d6bae7be59e5afa403e6c7dbfb77aaecf946875d39"
+    },
+    "protectedVb004ReviewPacket": {
+      "path": "reports/vb004-semantic-review-packet.json",
+      "sha256": "90cf63d2ee4eaf77c785df17752406b258aa79209f8c4fd18bb8d9719fff32a7",
+      "pendingExplicitNamedHumanDecision": true,
+      "reviewScopeSha256": "0cc51bd67122aa5d4491863384f26da1a1225ee62850d771ed50ad4d1518d222"
+    }
+  },
+  "authorityBoundary": {
+    "changesMigrationStatus": false,
+    "changesStrictStatus": false,
+    "changesAcceptanceRecords": false,
+    "changesCurrentJavascriptApproval": false,
+    "changesProtectedVb004Pins": false,
+    "claimsOriginalRuntimeAuthority": false,
+    "claimsAudioListening": false,
+    "claimsHumanOrOwnerAcceptance": false,
+    "rule": "Machine preparation, current-JavaScript QA, or a green generator check never substitutes for original-runtime, listening, human, owner, or strict acceptance evidence."
+  },
+  "summary": {
+    "pilotCount": 16,
+    "workspacesInspected": 16,
+    "manifestBindingsCurrent": true,
+    "gateCells": 240,
+    "passedGateCells": 46,
+    "failedGateCells": 194,
+    "machineClosableFailingGateCellsNow": 0,
+    "machineClosablePilotCountNow": 0,
+    "productionBuildPassPilots": 16,
+    "implementationRoutePassPilots": 12,
+    "deterministicFrameContractPassPilots": 10,
+    "canonicalProductQaPilots": 6,
+    "canonicalBehaviorQaPilots": 6,
+    "nonCanonicalQaRecords": 25,
+    "classificationCounts": {
+      "audio-listening-authority-required": 14,
+      "behavior-specification-evidence-required": 10,
+      "downstream-prerequisite-blocked": 96,
+      "human-visual-authority-required": 16,
+      "original-runtime-authority-required": 16,
+      "owner-authority-required": 16,
+      "passed": 46,
+      "protected-review-pin-blocked": 16,
+      "review-record-required": 10
+    }
+  },
+  "decision": {
+    "disposition": "no-safe-machine-only-strict-gate-closure-currently-proven",
+    "nextMachineBoundary": "Keep implementations, deterministic capture tooling, and QA receipts current, but do not promote any strict gate until its modeled authority prerequisites and protected review inputs are current.",
+    "currentHighestValuePreparation": "Use this hash-bound inventory as the handoff queue: first satisfy the named-human original-runtime and VB004 protected-review prerequisites, then rerun machine capture, RMSE, QA, validator, tests, and build in dependency order."
+  },
+  "pilots": [
+    {
+      "animationId": "course-g03-l01-ts-008",
+      "workspace": "migrations/course-g03-l01-ts-008",
+      "migrationStatus": "preserved",
+      "manifestSha256": "d3c271bd10a34415d2b8e7f6e38df33c4222966927d0a840ee0b0cb6549cd249",
+      "strictAccepted": false,
+      "passedGateCount": 1,
+      "failedGateCount": 14,
+      "workspaceInspection": {
+        "workspaceExists": true,
+        "manifestIdentityMatches": true,
+        "manifestSha256MatchesStrictReport": true,
+        "evidenceDirectoryExists": true,
+        "canonicalBehaviorQaExists": false,
+        "canonicalProductQaExists": false,
+        "nonCanonicalQaRecords": [
+          "migrations/course-g03-l01-ts-008/evidence/nextjs-native-candidate-qa.json"
+        ]
+      },
+      "gateReadiness": [
+        {
+          "gateId": "authoritative-baseline",
+          "status": "fail",
+          "closureClass": "original-runtime-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-original-runtime-session"
+          ],
+          "reason": "Current JavaScript output and static SWF/FLA audits cannot create authoritative original-runtime frame evidence."
+        },
+        {
+          "gateId": "implementation-route",
+          "status": "fail",
+          "closureClass": "behavior-specification-evidence-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "source-evidenced-or-original-runtime-behavior"
+          ],
+          "reason": "The route exists, but one or more pure renderer states are deliberately blocked; synthesizing them would violate the fidelity boundary."
+        },
+        {
+          "gateId": "deterministic-frame-contract",
+          "status": "fail",
+          "closureClass": "behavior-specification-evidence-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "source-evidenced-or-original-runtime-behavior",
+            "fully-renderable-pure-state-contract"
+          ],
+          "reason": "Deterministic capture cannot safely cover unresolved or deliberately blocked frame domains."
+        },
+        {
+          "gateId": "full-frame-scenario-coverage",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "deterministic-frame-contract"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, deterministic-frame-contract passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "rmse-thresholds",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "english-spanish-evidence",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "audio-hash-listening-sync",
+          "status": "fail",
+          "closureClass": "audio-listening-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-listening-and-natural-host-traversal"
+          ],
+          "reason": "Hashes and cue inventories are machine-checkable, but listening, language, natural traversal, synchronization, and Replay acceptance are not."
+        },
+        {
+          "gateId": "replay-interaction-random",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "product-qa",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage",
+            "rmse-thresholds"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage, rmse-thresholds passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "engineering-review",
+          "status": "fail",
+          "closureClass": "review-record-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "dated-named-engineering-review"
+          ],
+          "reason": "The gate requires an accepted named engineering review record; this report is not an acceptance record."
+        },
+        {
+          "gateId": "human-review",
+          "status": "fail",
+          "closureClass": "human-visual-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-hash-bound-visual-review"
+          ],
+          "reason": "Automation cannot perform or sign the required visual review."
+        },
+        {
+          "gateId": "owner-acceptance",
+          "status": "fail",
+          "closureClass": "owner-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "owner-hash-bound-acceptance"
+          ],
+          "reason": "Automation cannot infer or sign owner acceptance."
+        },
+        {
+          "gateId": "strict-validator",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "implementation-route",
+            "deterministic-frame-contract",
+            "full-frame-scenario-coverage",
+            "rmse-thresholds",
+            "english-spanish-evidence",
+            "audio-hash-listening-sync",
+            "replay-interaction-random",
+            "product-qa",
+            "engineering-review",
+            "human-review",
+            "owner-acceptance",
+            "regression-tests"
+          ],
+          "reason": "Strict validation is a downstream closure check and cannot replace its failed evidence gates."
+        },
+        {
+          "gateId": "regression-tests",
+          "status": "fail",
+          "closureClass": "protected-review-pin-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "fresh-explicit-vb004-semantic-decision"
+          ],
+          "reason": "The shared full-suite receipt is non-zero while the protected VB004 semantic/scenario binding awaits an explicit named-human decision; automation must not refresh that pin."
+        },
+        {
+          "gateId": "production-build",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        }
+      ],
+      "machineClosableFailingGateIds": []
+    },
+    {
+      "animationId": "course-g03-l01-vb-004",
+      "workspace": "migrations/course-g03-l01-vb-004",
+      "migrationStatus": "preserved",
+      "manifestSha256": "b14c9d9335cd303f5aceae514acbbb2dc7517cddf253bf1c9489f1ebc8311ad2",
+      "strictAccepted": false,
+      "passedGateCount": 2,
+      "failedGateCount": 13,
+      "workspaceInspection": {
+        "workspaceExists": true,
+        "manifestIdentityMatches": true,
+        "manifestSha256MatchesStrictReport": true,
+        "evidenceDirectoryExists": true,
+        "canonicalBehaviorQaExists": false,
+        "canonicalProductQaExists": false,
+        "nonCanonicalQaRecords": [
+          "migrations/course-g03-l01-vb-004/evidence/nextjs-native-candidate-qa.json"
+        ]
+      },
+      "gateReadiness": [
+        {
+          "gateId": "authoritative-baseline",
+          "status": "fail",
+          "closureClass": "original-runtime-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-original-runtime-session"
+          ],
+          "reason": "Current JavaScript output and static SWF/FLA audits cannot create authoritative original-runtime frame evidence."
+        },
+        {
+          "gateId": "implementation-route",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "deterministic-frame-contract",
+          "status": "fail",
+          "closureClass": "behavior-specification-evidence-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "source-evidenced-or-original-runtime-behavior",
+            "fully-renderable-pure-state-contract"
+          ],
+          "reason": "Deterministic capture cannot safely cover unresolved or deliberately blocked frame domains."
+        },
+        {
+          "gateId": "full-frame-scenario-coverage",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "deterministic-frame-contract"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, deterministic-frame-contract passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "rmse-thresholds",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "english-spanish-evidence",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "audio-hash-listening-sync",
+          "status": "fail",
+          "closureClass": "audio-listening-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-listening-and-natural-host-traversal"
+          ],
+          "reason": "Hashes and cue inventories are machine-checkable, but listening, language, natural traversal, synchronization, and Replay acceptance are not."
+        },
+        {
+          "gateId": "replay-interaction-random",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "product-qa",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage",
+            "rmse-thresholds"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage, rmse-thresholds passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "engineering-review",
+          "status": "fail",
+          "closureClass": "review-record-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "dated-named-engineering-review"
+          ],
+          "reason": "The gate requires an accepted named engineering review record; this report is not an acceptance record."
+        },
+        {
+          "gateId": "human-review",
+          "status": "fail",
+          "closureClass": "human-visual-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-hash-bound-visual-review"
+          ],
+          "reason": "Automation cannot perform or sign the required visual review."
+        },
+        {
+          "gateId": "owner-acceptance",
+          "status": "fail",
+          "closureClass": "owner-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "owner-hash-bound-acceptance"
+          ],
+          "reason": "Automation cannot infer or sign owner acceptance."
+        },
+        {
+          "gateId": "strict-validator",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "deterministic-frame-contract",
+            "full-frame-scenario-coverage",
+            "rmse-thresholds",
+            "english-spanish-evidence",
+            "audio-hash-listening-sync",
+            "replay-interaction-random",
+            "product-qa",
+            "engineering-review",
+            "human-review",
+            "owner-acceptance",
+            "regression-tests"
+          ],
+          "reason": "Strict validation is a downstream closure check and cannot replace its failed evidence gates."
+        },
+        {
+          "gateId": "regression-tests",
+          "status": "fail",
+          "closureClass": "protected-review-pin-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "fresh-explicit-vb004-semantic-decision"
+          ],
+          "reason": "The shared full-suite receipt is non-zero while the protected VB004 semantic/scenario binding awaits an explicit named-human decision; automation must not refresh that pin."
+        },
+        {
+          "gateId": "production-build",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        }
+      ],
+      "machineClosableFailingGateIds": []
+    },
+    {
+      "animationId": "course-g03-l06-fq-002-review",
+      "workspace": "migrations/course-g03-l06-fq-002-review",
+      "migrationStatus": "preserved",
+      "manifestSha256": "5576094b2c47b2326de5634f094cbb5cfde4b3803c2b2d5d408cc794ed8fe98e",
+      "strictAccepted": false,
+      "passedGateCount": 1,
+      "failedGateCount": 14,
+      "workspaceInspection": {
+        "workspaceExists": true,
+        "manifestIdentityMatches": true,
+        "manifestSha256MatchesStrictReport": true,
+        "evidenceDirectoryExists": true,
+        "canonicalBehaviorQaExists": false,
+        "canonicalProductQaExists": false,
+        "nonCanonicalQaRecords": [
+          "migrations/course-g03-l06-fq-002-review/evidence/nextjs-structural-candidate-qa.json"
+        ]
+      },
+      "gateReadiness": [
+        {
+          "gateId": "authoritative-baseline",
+          "status": "fail",
+          "closureClass": "original-runtime-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-original-runtime-session"
+          ],
+          "reason": "Current JavaScript output and static SWF/FLA audits cannot create authoritative original-runtime frame evidence."
+        },
+        {
+          "gateId": "implementation-route",
+          "status": "fail",
+          "closureClass": "behavior-specification-evidence-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "source-evidenced-or-original-runtime-behavior"
+          ],
+          "reason": "The route exists, but one or more pure renderer states are deliberately blocked; synthesizing them would violate the fidelity boundary."
+        },
+        {
+          "gateId": "deterministic-frame-contract",
+          "status": "fail",
+          "closureClass": "behavior-specification-evidence-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "source-evidenced-or-original-runtime-behavior",
+            "fully-renderable-pure-state-contract"
+          ],
+          "reason": "Deterministic capture cannot safely cover unresolved or deliberately blocked frame domains."
+        },
+        {
+          "gateId": "full-frame-scenario-coverage",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "deterministic-frame-contract"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, deterministic-frame-contract passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "rmse-thresholds",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "english-spanish-evidence",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "audio-hash-listening-sync",
+          "status": "fail",
+          "closureClass": "audio-listening-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-listening-and-natural-host-traversal"
+          ],
+          "reason": "Hashes and cue inventories are machine-checkable, but listening, language, natural traversal, synchronization, and Replay acceptance are not."
+        },
+        {
+          "gateId": "replay-interaction-random",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "product-qa",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage",
+            "rmse-thresholds"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage, rmse-thresholds passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "engineering-review",
+          "status": "fail",
+          "closureClass": "review-record-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "dated-named-engineering-review"
+          ],
+          "reason": "The gate requires an accepted named engineering review record; this report is not an acceptance record."
+        },
+        {
+          "gateId": "human-review",
+          "status": "fail",
+          "closureClass": "human-visual-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-hash-bound-visual-review"
+          ],
+          "reason": "Automation cannot perform or sign the required visual review."
+        },
+        {
+          "gateId": "owner-acceptance",
+          "status": "fail",
+          "closureClass": "owner-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "owner-hash-bound-acceptance"
+          ],
+          "reason": "Automation cannot infer or sign owner acceptance."
+        },
+        {
+          "gateId": "strict-validator",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "implementation-route",
+            "deterministic-frame-contract",
+            "full-frame-scenario-coverage",
+            "rmse-thresholds",
+            "english-spanish-evidence",
+            "audio-hash-listening-sync",
+            "replay-interaction-random",
+            "product-qa",
+            "engineering-review",
+            "human-review",
+            "owner-acceptance",
+            "regression-tests"
+          ],
+          "reason": "Strict validation is a downstream closure check and cannot replace its failed evidence gates."
+        },
+        {
+          "gateId": "regression-tests",
+          "status": "fail",
+          "closureClass": "protected-review-pin-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "fresh-explicit-vb004-semantic-decision"
+          ],
+          "reason": "The shared full-suite receipt is non-zero while the protected VB004 semantic/scenario binding awaits an explicit named-human decision; automation must not refresh that pin."
+        },
+        {
+          "gateId": "production-build",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        }
+      ],
+      "machineClosableFailingGateIds": []
+    },
+    {
+      "animationId": "course-g03-l06-ti-001",
+      "workspace": "migrations/course-g03-l06-ti-001",
+      "migrationStatus": "preserved",
+      "manifestSha256": "ec847ac41dbfd2e262f53066f9769b06235fa6a0ad91e4beadf83a50e59bab46",
+      "strictAccepted": false,
+      "passedGateCount": 3,
+      "failedGateCount": 12,
+      "workspaceInspection": {
+        "workspaceExists": true,
+        "manifestIdentityMatches": true,
+        "manifestSha256MatchesStrictReport": true,
+        "evidenceDirectoryExists": true,
+        "canonicalBehaviorQaExists": false,
+        "canonicalProductQaExists": false,
+        "nonCanonicalQaRecords": [
+          "migrations/course-g03-l06-ti-001/evidence/nextjs-native-candidate-qa.json"
+        ]
+      },
+      "gateReadiness": [
+        {
+          "gateId": "authoritative-baseline",
+          "status": "fail",
+          "closureClass": "original-runtime-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-original-runtime-session"
+          ],
+          "reason": "Current JavaScript output and static SWF/FLA audits cannot create authoritative original-runtime frame evidence."
+        },
+        {
+          "gateId": "implementation-route",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "deterministic-frame-contract",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "full-frame-scenario-coverage",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "rmse-thresholds",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "english-spanish-evidence",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "audio-hash-listening-sync",
+          "status": "fail",
+          "closureClass": "audio-listening-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-listening-and-natural-host-traversal"
+          ],
+          "reason": "Hashes and cue inventories are machine-checkable, but listening, language, natural traversal, synchronization, and Replay acceptance are not."
+        },
+        {
+          "gateId": "replay-interaction-random",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "product-qa",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage",
+            "rmse-thresholds"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage, rmse-thresholds passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "engineering-review",
+          "status": "fail",
+          "closureClass": "review-record-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "dated-named-engineering-review"
+          ],
+          "reason": "The gate requires an accepted named engineering review record; this report is not an acceptance record."
+        },
+        {
+          "gateId": "human-review",
+          "status": "fail",
+          "closureClass": "human-visual-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-hash-bound-visual-review"
+          ],
+          "reason": "Automation cannot perform or sign the required visual review."
+        },
+        {
+          "gateId": "owner-acceptance",
+          "status": "fail",
+          "closureClass": "owner-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "owner-hash-bound-acceptance"
+          ],
+          "reason": "Automation cannot infer or sign owner acceptance."
+        },
+        {
+          "gateId": "strict-validator",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage",
+            "rmse-thresholds",
+            "english-spanish-evidence",
+            "audio-hash-listening-sync",
+            "replay-interaction-random",
+            "product-qa",
+            "engineering-review",
+            "human-review",
+            "owner-acceptance",
+            "regression-tests"
+          ],
+          "reason": "Strict validation is a downstream closure check and cannot replace its failed evidence gates."
+        },
+        {
+          "gateId": "regression-tests",
+          "status": "fail",
+          "closureClass": "protected-review-pin-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "fresh-explicit-vb004-semantic-decision"
+          ],
+          "reason": "The shared full-suite receipt is non-zero while the protected VB004 semantic/scenario binding awaits an explicit named-human decision; automation must not refresh that pin."
+        },
+        {
+          "gateId": "production-build",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        }
+      ],
+      "machineClosableFailingGateIds": []
+    },
+    {
+      "animationId": "course-g03-l08-re-001",
+      "workspace": "migrations/course-g03-l08-re-001",
+      "migrationStatus": "preserved",
+      "manifestSha256": "3b78cf26bbadbadd8769090a560af13cc5caa3651684d35d9a45e8f3388ddbc5",
+      "strictAccepted": false,
+      "passedGateCount": 2,
+      "failedGateCount": 13,
+      "workspaceInspection": {
+        "workspaceExists": true,
+        "manifestIdentityMatches": true,
+        "manifestSha256MatchesStrictReport": true,
+        "evidenceDirectoryExists": true,
+        "canonicalBehaviorQaExists": false,
+        "canonicalProductQaExists": false,
+        "nonCanonicalQaRecords": [
+          "migrations/course-g03-l08-re-001/evidence/native-canvas-candidate-qa.json"
+        ]
+      },
+      "gateReadiness": [
+        {
+          "gateId": "authoritative-baseline",
+          "status": "fail",
+          "closureClass": "original-runtime-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-original-runtime-session"
+          ],
+          "reason": "Current JavaScript output and static SWF/FLA audits cannot create authoritative original-runtime frame evidence."
+        },
+        {
+          "gateId": "implementation-route",
+          "status": "fail",
+          "closureClass": "behavior-specification-evidence-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "source-evidenced-or-original-runtime-behavior"
+          ],
+          "reason": "The route exists, but one or more pure renderer states are deliberately blocked; synthesizing them would violate the fidelity boundary."
+        },
+        {
+          "gateId": "deterministic-frame-contract",
+          "status": "fail",
+          "closureClass": "behavior-specification-evidence-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "source-evidenced-or-original-runtime-behavior",
+            "fully-renderable-pure-state-contract"
+          ],
+          "reason": "Deterministic capture cannot safely cover unresolved or deliberately blocked frame domains."
+        },
+        {
+          "gateId": "full-frame-scenario-coverage",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "deterministic-frame-contract"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, deterministic-frame-contract passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "rmse-thresholds",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "english-spanish-evidence",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "audio-hash-listening-sync",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "replay-interaction-random",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "product-qa",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage",
+            "rmse-thresholds"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage, rmse-thresholds passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "engineering-review",
+          "status": "fail",
+          "closureClass": "review-record-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "dated-named-engineering-review"
+          ],
+          "reason": "The gate requires an accepted named engineering review record; this report is not an acceptance record."
+        },
+        {
+          "gateId": "human-review",
+          "status": "fail",
+          "closureClass": "human-visual-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-hash-bound-visual-review"
+          ],
+          "reason": "Automation cannot perform or sign the required visual review."
+        },
+        {
+          "gateId": "owner-acceptance",
+          "status": "fail",
+          "closureClass": "owner-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "owner-hash-bound-acceptance"
+          ],
+          "reason": "Automation cannot infer or sign owner acceptance."
+        },
+        {
+          "gateId": "strict-validator",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "implementation-route",
+            "deterministic-frame-contract",
+            "full-frame-scenario-coverage",
+            "rmse-thresholds",
+            "english-spanish-evidence",
+            "replay-interaction-random",
+            "product-qa",
+            "engineering-review",
+            "human-review",
+            "owner-acceptance",
+            "regression-tests"
+          ],
+          "reason": "Strict validation is a downstream closure check and cannot replace its failed evidence gates."
+        },
+        {
+          "gateId": "regression-tests",
+          "status": "fail",
+          "closureClass": "protected-review-pin-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "fresh-explicit-vb004-semantic-decision"
+          ],
+          "reason": "The shared full-suite receipt is non-zero while the protected VB004 semantic/scenario binding awaits an explicit named-human decision; automation must not refresh that pin."
+        },
+        {
+          "gateId": "production-build",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        }
+      ],
+      "machineClosableFailingGateIds": []
+    },
+    {
+      "animationId": "course-g04-l01-ir-001",
+      "workspace": "migrations/course-g04-l01-ir-001",
+      "migrationStatus": "preserved",
+      "manifestSha256": "4616774b30d6382efaeda1518e81d8fc0065425fe766f3d8fd975cfb6b48ffab",
+      "strictAccepted": false,
+      "passedGateCount": 3,
+      "failedGateCount": 12,
+      "workspaceInspection": {
+        "workspaceExists": true,
+        "manifestIdentityMatches": true,
+        "manifestSha256MatchesStrictReport": true,
+        "evidenceDirectoryExists": true,
+        "canonicalBehaviorQaExists": false,
+        "canonicalProductQaExists": false,
+        "nonCanonicalQaRecords": [
+          "migrations/course-g04-l01-ir-001/evidence/nextjs-native-candidate-qa.json"
+        ]
+      },
+      "gateReadiness": [
+        {
+          "gateId": "authoritative-baseline",
+          "status": "fail",
+          "closureClass": "original-runtime-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-original-runtime-session"
+          ],
+          "reason": "Current JavaScript output and static SWF/FLA audits cannot create authoritative original-runtime frame evidence."
+        },
+        {
+          "gateId": "implementation-route",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "deterministic-frame-contract",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "full-frame-scenario-coverage",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "rmse-thresholds",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "english-spanish-evidence",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "audio-hash-listening-sync",
+          "status": "fail",
+          "closureClass": "audio-listening-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-listening-and-natural-host-traversal"
+          ],
+          "reason": "Hashes and cue inventories are machine-checkable, but listening, language, natural traversal, synchronization, and Replay acceptance are not."
+        },
+        {
+          "gateId": "replay-interaction-random",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "product-qa",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage",
+            "rmse-thresholds"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage, rmse-thresholds passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "engineering-review",
+          "status": "fail",
+          "closureClass": "review-record-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "dated-named-engineering-review"
+          ],
+          "reason": "The gate requires an accepted named engineering review record; this report is not an acceptance record."
+        },
+        {
+          "gateId": "human-review",
+          "status": "fail",
+          "closureClass": "human-visual-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-hash-bound-visual-review"
+          ],
+          "reason": "Automation cannot perform or sign the required visual review."
+        },
+        {
+          "gateId": "owner-acceptance",
+          "status": "fail",
+          "closureClass": "owner-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "owner-hash-bound-acceptance"
+          ],
+          "reason": "Automation cannot infer or sign owner acceptance."
+        },
+        {
+          "gateId": "strict-validator",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage",
+            "rmse-thresholds",
+            "english-spanish-evidence",
+            "audio-hash-listening-sync",
+            "replay-interaction-random",
+            "product-qa",
+            "engineering-review",
+            "human-review",
+            "owner-acceptance",
+            "regression-tests"
+          ],
+          "reason": "Strict validation is a downstream closure check and cannot replace its failed evidence gates."
+        },
+        {
+          "gateId": "regression-tests",
+          "status": "fail",
+          "closureClass": "protected-review-pin-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "fresh-explicit-vb004-semantic-decision"
+          ],
+          "reason": "The shared full-suite receipt is non-zero while the protected VB004 semantic/scenario binding awaits an explicit named-human decision; automation must not refresh that pin."
+        },
+        {
+          "gateId": "production-build",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        }
+      ],
+      "machineClosableFailingGateIds": []
+    },
+    {
+      "animationId": "course-g04-l03-in-009",
+      "workspace": "migrations/course-g04-l03-in-009",
+      "migrationStatus": "preserved",
+      "manifestSha256": "1ce0052bf4f7d68cb7ba2effc65c52592f6ba1717864da9c31ccadacf32bb5c9",
+      "strictAccepted": false,
+      "passedGateCount": 3,
+      "failedGateCount": 12,
+      "workspaceInspection": {
+        "workspaceExists": true,
+        "manifestIdentityMatches": true,
+        "manifestSha256MatchesStrictReport": true,
+        "evidenceDirectoryExists": true,
+        "canonicalBehaviorQaExists": false,
+        "canonicalProductQaExists": false,
+        "nonCanonicalQaRecords": [
+          "migrations/course-g04-l03-in-009/evidence/native-canvas-candidate-qa.json"
+        ]
+      },
+      "gateReadiness": [
+        {
+          "gateId": "authoritative-baseline",
+          "status": "fail",
+          "closureClass": "original-runtime-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-original-runtime-session"
+          ],
+          "reason": "Current JavaScript output and static SWF/FLA audits cannot create authoritative original-runtime frame evidence."
+        },
+        {
+          "gateId": "implementation-route",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "deterministic-frame-contract",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "full-frame-scenario-coverage",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "rmse-thresholds",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "english-spanish-evidence",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "audio-hash-listening-sync",
+          "status": "fail",
+          "closureClass": "audio-listening-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-listening-and-natural-host-traversal"
+          ],
+          "reason": "Hashes and cue inventories are machine-checkable, but listening, language, natural traversal, synchronization, and Replay acceptance are not."
+        },
+        {
+          "gateId": "replay-interaction-random",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "product-qa",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage",
+            "rmse-thresholds"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage, rmse-thresholds passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "engineering-review",
+          "status": "fail",
+          "closureClass": "review-record-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "dated-named-engineering-review"
+          ],
+          "reason": "The gate requires an accepted named engineering review record; this report is not an acceptance record."
+        },
+        {
+          "gateId": "human-review",
+          "status": "fail",
+          "closureClass": "human-visual-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-hash-bound-visual-review"
+          ],
+          "reason": "Automation cannot perform or sign the required visual review."
+        },
+        {
+          "gateId": "owner-acceptance",
+          "status": "fail",
+          "closureClass": "owner-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "owner-hash-bound-acceptance"
+          ],
+          "reason": "Automation cannot infer or sign owner acceptance."
+        },
+        {
+          "gateId": "strict-validator",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage",
+            "rmse-thresholds",
+            "english-spanish-evidence",
+            "audio-hash-listening-sync",
+            "replay-interaction-random",
+            "product-qa",
+            "engineering-review",
+            "human-review",
+            "owner-acceptance",
+            "regression-tests"
+          ],
+          "reason": "Strict validation is a downstream closure check and cannot replace its failed evidence gates."
+        },
+        {
+          "gateId": "regression-tests",
+          "status": "fail",
+          "closureClass": "protected-review-pin-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "fresh-explicit-vb004-semantic-decision"
+          ],
+          "reason": "The shared full-suite receipt is non-zero while the protected VB004 semantic/scenario binding awaits an explicit named-human decision; automation must not refresh that pin."
+        },
+        {
+          "gateId": "production-build",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        }
+      ],
+      "machineClosableFailingGateIds": []
+    },
+    {
+      "animationId": "course-g04-l09-gs-002",
+      "workspace": "migrations/course-g04-l09-gs-002",
+      "migrationStatus": "preserved",
+      "manifestSha256": "fa67f35533c1e0b9ec73bfcc04786263f2875ed46db3aac064b19ccff13a8f37",
+      "strictAccepted": false,
+      "passedGateCount": 1,
+      "failedGateCount": 14,
+      "workspaceInspection": {
+        "workspaceExists": true,
+        "manifestIdentityMatches": true,
+        "manifestSha256MatchesStrictReport": true,
+        "evidenceDirectoryExists": true,
+        "canonicalBehaviorQaExists": false,
+        "canonicalProductQaExists": false,
+        "nonCanonicalQaRecords": [
+          "migrations/course-g04-l09-gs-002/evidence/nextjs-native-candidate-qa.json"
+        ]
+      },
+      "gateReadiness": [
+        {
+          "gateId": "authoritative-baseline",
+          "status": "fail",
+          "closureClass": "original-runtime-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-original-runtime-session"
+          ],
+          "reason": "Current JavaScript output and static SWF/FLA audits cannot create authoritative original-runtime frame evidence."
+        },
+        {
+          "gateId": "implementation-route",
+          "status": "fail",
+          "closureClass": "behavior-specification-evidence-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "source-evidenced-or-original-runtime-behavior"
+          ],
+          "reason": "The route exists, but one or more pure renderer states are deliberately blocked; synthesizing them would violate the fidelity boundary."
+        },
+        {
+          "gateId": "deterministic-frame-contract",
+          "status": "fail",
+          "closureClass": "behavior-specification-evidence-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "source-evidenced-or-original-runtime-behavior",
+            "fully-renderable-pure-state-contract"
+          ],
+          "reason": "Deterministic capture cannot safely cover unresolved or deliberately blocked frame domains."
+        },
+        {
+          "gateId": "full-frame-scenario-coverage",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "deterministic-frame-contract"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, deterministic-frame-contract passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "rmse-thresholds",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "english-spanish-evidence",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "audio-hash-listening-sync",
+          "status": "fail",
+          "closureClass": "audio-listening-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-listening-and-natural-host-traversal"
+          ],
+          "reason": "Hashes and cue inventories are machine-checkable, but listening, language, natural traversal, synchronization, and Replay acceptance are not."
+        },
+        {
+          "gateId": "replay-interaction-random",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "product-qa",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage",
+            "rmse-thresholds"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage, rmse-thresholds passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "engineering-review",
+          "status": "fail",
+          "closureClass": "review-record-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "dated-named-engineering-review"
+          ],
+          "reason": "The gate requires an accepted named engineering review record; this report is not an acceptance record."
+        },
+        {
+          "gateId": "human-review",
+          "status": "fail",
+          "closureClass": "human-visual-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-hash-bound-visual-review"
+          ],
+          "reason": "Automation cannot perform or sign the required visual review."
+        },
+        {
+          "gateId": "owner-acceptance",
+          "status": "fail",
+          "closureClass": "owner-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "owner-hash-bound-acceptance"
+          ],
+          "reason": "Automation cannot infer or sign owner acceptance."
+        },
+        {
+          "gateId": "strict-validator",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "implementation-route",
+            "deterministic-frame-contract",
+            "full-frame-scenario-coverage",
+            "rmse-thresholds",
+            "english-spanish-evidence",
+            "audio-hash-listening-sync",
+            "replay-interaction-random",
+            "product-qa",
+            "engineering-review",
+            "human-review",
+            "owner-acceptance",
+            "regression-tests"
+          ],
+          "reason": "Strict validation is a downstream closure check and cannot replace its failed evidence gates."
+        },
+        {
+          "gateId": "regression-tests",
+          "status": "fail",
+          "closureClass": "protected-review-pin-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "fresh-explicit-vb004-semantic-decision"
+          ],
+          "reason": "The shared full-suite receipt is non-zero while the protected VB004 semantic/scenario binding awaits an explicit named-human decision; automation must not refresh that pin."
+        },
+        {
+          "gateId": "production-build",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        }
+      ],
+      "machineClosableFailingGateIds": []
+    },
+    {
+      "animationId": "course-g05-l13-rw-002",
+      "workspace": "migrations/course-g05-l13-rw-002",
+      "migrationStatus": "preserved",
+      "manifestSha256": "5d984a5a4202504e22b481228784854c94e6db2e595bc176545e2b795c33e5c2",
+      "strictAccepted": false,
+      "passedGateCount": 3,
+      "failedGateCount": 12,
+      "workspaceInspection": {
+        "workspaceExists": true,
+        "manifestIdentityMatches": true,
+        "manifestSha256MatchesStrictReport": true,
+        "evidenceDirectoryExists": true,
+        "canonicalBehaviorQaExists": false,
+        "canonicalProductQaExists": false,
+        "nonCanonicalQaRecords": [
+          "migrations/course-g05-l13-rw-002/evidence/nextjs-structural-candidate-qa.json",
+          "migrations/course-g05-l13-rw-002/evidence/source-routed-spanish-audio-product-qa.json"
+        ]
+      },
+      "gateReadiness": [
+        {
+          "gateId": "authoritative-baseline",
+          "status": "fail",
+          "closureClass": "original-runtime-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-original-runtime-session"
+          ],
+          "reason": "Current JavaScript output and static SWF/FLA audits cannot create authoritative original-runtime frame evidence."
+        },
+        {
+          "gateId": "implementation-route",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "deterministic-frame-contract",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "full-frame-scenario-coverage",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "rmse-thresholds",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "english-spanish-evidence",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "audio-hash-listening-sync",
+          "status": "fail",
+          "closureClass": "audio-listening-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-listening-and-natural-host-traversal"
+          ],
+          "reason": "Hashes and cue inventories are machine-checkable, but listening, language, natural traversal, synchronization, and Replay acceptance are not."
+        },
+        {
+          "gateId": "replay-interaction-random",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "product-qa",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage",
+            "rmse-thresholds"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage, rmse-thresholds passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "engineering-review",
+          "status": "fail",
+          "closureClass": "review-record-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "dated-named-engineering-review"
+          ],
+          "reason": "The gate requires an accepted named engineering review record; this report is not an acceptance record."
+        },
+        {
+          "gateId": "human-review",
+          "status": "fail",
+          "closureClass": "human-visual-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-hash-bound-visual-review"
+          ],
+          "reason": "Automation cannot perform or sign the required visual review."
+        },
+        {
+          "gateId": "owner-acceptance",
+          "status": "fail",
+          "closureClass": "owner-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "owner-hash-bound-acceptance"
+          ],
+          "reason": "Automation cannot infer or sign owner acceptance."
+        },
+        {
+          "gateId": "strict-validator",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage",
+            "rmse-thresholds",
+            "english-spanish-evidence",
+            "audio-hash-listening-sync",
+            "replay-interaction-random",
+            "product-qa",
+            "engineering-review",
+            "human-review",
+            "owner-acceptance",
+            "regression-tests"
+          ],
+          "reason": "Strict validation is a downstream closure check and cannot replace its failed evidence gates."
+        },
+        {
+          "gateId": "regression-tests",
+          "status": "fail",
+          "closureClass": "protected-review-pin-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "fresh-explicit-vb004-semantic-decision"
+          ],
+          "reason": "The shared full-suite receipt is non-zero while the protected VB004 semantic/scenario binding awaits an explicit named-human decision; automation must not refresh that pin."
+        },
+        {
+          "gateId": "production-build",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        }
+      ],
+      "machineClosableFailingGateIds": []
+    },
+    {
+      "animationId": "formula-elementary-conversion-01-01",
+      "workspace": "migrations/formula-elementary-conversion-01-01",
+      "migrationStatus": "preserved",
+      "manifestSha256": "5a16f7ebae49b069108d07712726dda39809a9eed7922737c942fb4ddec48a99",
+      "strictAccepted": false,
+      "passedGateCount": 4,
+      "failedGateCount": 11,
+      "workspaceInspection": {
+        "workspaceExists": true,
+        "manifestIdentityMatches": true,
+        "manifestSha256MatchesStrictReport": true,
+        "evidenceDirectoryExists": true,
+        "canonicalBehaviorQaExists": true,
+        "canonicalProductQaExists": true,
+        "nonCanonicalQaRecords": [
+          "migrations/formula-elementary-conversion-01-01/evidence/formula-engineering-behavior-qa.json",
+          "migrations/formula-elementary-conversion-01-01/evidence/formula-engineering-product-qa.json",
+          "migrations/formula-elementary-conversion-01-01/evidence/product-audio-controls-qa.json"
+        ]
+      },
+      "gateReadiness": [
+        {
+          "gateId": "authoritative-baseline",
+          "status": "fail",
+          "closureClass": "original-runtime-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-original-runtime-session"
+          ],
+          "reason": "Current JavaScript output and static SWF/FLA audits cannot create authoritative original-runtime frame evidence."
+        },
+        {
+          "gateId": "implementation-route",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "deterministic-frame-contract",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "full-frame-scenario-coverage",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "rmse-thresholds",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "english-spanish-evidence",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "audio-hash-listening-sync",
+          "status": "fail",
+          "closureClass": "audio-listening-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-listening-and-natural-host-traversal"
+          ],
+          "reason": "Hashes and cue inventories are machine-checkable, but listening, language, natural traversal, synchronization, and Replay acceptance are not."
+        },
+        {
+          "gateId": "replay-interaction-random",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "product-qa",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage",
+            "rmse-thresholds"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage, rmse-thresholds passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "engineering-review",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "human-review",
+          "status": "fail",
+          "closureClass": "human-visual-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-hash-bound-visual-review"
+          ],
+          "reason": "Automation cannot perform or sign the required visual review."
+        },
+        {
+          "gateId": "owner-acceptance",
+          "status": "fail",
+          "closureClass": "owner-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "owner-hash-bound-acceptance"
+          ],
+          "reason": "Automation cannot infer or sign owner acceptance."
+        },
+        {
+          "gateId": "strict-validator",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage",
+            "rmse-thresholds",
+            "english-spanish-evidence",
+            "audio-hash-listening-sync",
+            "replay-interaction-random",
+            "product-qa",
+            "human-review",
+            "owner-acceptance",
+            "regression-tests"
+          ],
+          "reason": "Strict validation is a downstream closure check and cannot replace its failed evidence gates."
+        },
+        {
+          "gateId": "regression-tests",
+          "status": "fail",
+          "closureClass": "protected-review-pin-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "fresh-explicit-vb004-semantic-decision"
+          ],
+          "reason": "The shared full-suite receipt is non-zero while the protected VB004 semantic/scenario binding awaits an explicit named-human decision; automation must not refresh that pin."
+        },
+        {
+          "gateId": "production-build",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        }
+      ],
+      "machineClosableFailingGateIds": []
+    },
+    {
+      "animationId": "formula-elementary-conversion-01-02",
+      "workspace": "migrations/formula-elementary-conversion-01-02",
+      "migrationStatus": "preserved",
+      "manifestSha256": "b4d7c3aab06b848bbb2335d147ec501ce06f70c43eda5f2a1d67fc790963230e",
+      "strictAccepted": false,
+      "passedGateCount": 4,
+      "failedGateCount": 11,
+      "workspaceInspection": {
+        "workspaceExists": true,
+        "manifestIdentityMatches": true,
+        "manifestSha256MatchesStrictReport": true,
+        "evidenceDirectoryExists": true,
+        "canonicalBehaviorQaExists": true,
+        "canonicalProductQaExists": true,
+        "nonCanonicalQaRecords": [
+          "migrations/formula-elementary-conversion-01-02/evidence/formula-engineering-behavior-qa.json",
+          "migrations/formula-elementary-conversion-01-02/evidence/formula-engineering-product-qa.json",
+          "migrations/formula-elementary-conversion-01-02/evidence/product-audio-controls-qa.json"
+        ]
+      },
+      "gateReadiness": [
+        {
+          "gateId": "authoritative-baseline",
+          "status": "fail",
+          "closureClass": "original-runtime-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-original-runtime-session"
+          ],
+          "reason": "Current JavaScript output and static SWF/FLA audits cannot create authoritative original-runtime frame evidence."
+        },
+        {
+          "gateId": "implementation-route",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "deterministic-frame-contract",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "full-frame-scenario-coverage",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "rmse-thresholds",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "english-spanish-evidence",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "audio-hash-listening-sync",
+          "status": "fail",
+          "closureClass": "audio-listening-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-listening-and-natural-host-traversal"
+          ],
+          "reason": "Hashes and cue inventories are machine-checkable, but listening, language, natural traversal, synchronization, and Replay acceptance are not."
+        },
+        {
+          "gateId": "replay-interaction-random",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "product-qa",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage",
+            "rmse-thresholds"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage, rmse-thresholds passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "engineering-review",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "human-review",
+          "status": "fail",
+          "closureClass": "human-visual-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-hash-bound-visual-review"
+          ],
+          "reason": "Automation cannot perform or sign the required visual review."
+        },
+        {
+          "gateId": "owner-acceptance",
+          "status": "fail",
+          "closureClass": "owner-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "owner-hash-bound-acceptance"
+          ],
+          "reason": "Automation cannot infer or sign owner acceptance."
+        },
+        {
+          "gateId": "strict-validator",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage",
+            "rmse-thresholds",
+            "english-spanish-evidence",
+            "audio-hash-listening-sync",
+            "replay-interaction-random",
+            "product-qa",
+            "human-review",
+            "owner-acceptance",
+            "regression-tests"
+          ],
+          "reason": "Strict validation is a downstream closure check and cannot replace its failed evidence gates."
+        },
+        {
+          "gateId": "regression-tests",
+          "status": "fail",
+          "closureClass": "protected-review-pin-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "fresh-explicit-vb004-semantic-decision"
+          ],
+          "reason": "The shared full-suite receipt is non-zero while the protected VB004 semantic/scenario binding awaits an explicit named-human decision; automation must not refresh that pin."
+        },
+        {
+          "gateId": "production-build",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        }
+      ],
+      "machineClosableFailingGateIds": []
+    },
+    {
+      "animationId": "formula-elementary-conversion-01-03",
+      "workspace": "migrations/formula-elementary-conversion-01-03",
+      "migrationStatus": "preserved",
+      "manifestSha256": "71f8b65658c9a6b71c26a0a6e93261b21fca4c458e125027ff0a96f3628fb64e",
+      "strictAccepted": false,
+      "passedGateCount": 4,
+      "failedGateCount": 11,
+      "workspaceInspection": {
+        "workspaceExists": true,
+        "manifestIdentityMatches": true,
+        "manifestSha256MatchesStrictReport": true,
+        "evidenceDirectoryExists": true,
+        "canonicalBehaviorQaExists": true,
+        "canonicalProductQaExists": true,
+        "nonCanonicalQaRecords": [
+          "migrations/formula-elementary-conversion-01-03/evidence/formula-engineering-behavior-qa.json",
+          "migrations/formula-elementary-conversion-01-03/evidence/formula-engineering-product-qa.json",
+          "migrations/formula-elementary-conversion-01-03/evidence/product-audio-controls-qa.json"
+        ]
+      },
+      "gateReadiness": [
+        {
+          "gateId": "authoritative-baseline",
+          "status": "fail",
+          "closureClass": "original-runtime-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-original-runtime-session"
+          ],
+          "reason": "Current JavaScript output and static SWF/FLA audits cannot create authoritative original-runtime frame evidence."
+        },
+        {
+          "gateId": "implementation-route",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "deterministic-frame-contract",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "full-frame-scenario-coverage",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "rmse-thresholds",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "english-spanish-evidence",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "audio-hash-listening-sync",
+          "status": "fail",
+          "closureClass": "audio-listening-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-listening-and-natural-host-traversal"
+          ],
+          "reason": "Hashes and cue inventories are machine-checkable, but listening, language, natural traversal, synchronization, and Replay acceptance are not."
+        },
+        {
+          "gateId": "replay-interaction-random",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "product-qa",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage",
+            "rmse-thresholds"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage, rmse-thresholds passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "engineering-review",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "human-review",
+          "status": "fail",
+          "closureClass": "human-visual-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-hash-bound-visual-review"
+          ],
+          "reason": "Automation cannot perform or sign the required visual review."
+        },
+        {
+          "gateId": "owner-acceptance",
+          "status": "fail",
+          "closureClass": "owner-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "owner-hash-bound-acceptance"
+          ],
+          "reason": "Automation cannot infer or sign owner acceptance."
+        },
+        {
+          "gateId": "strict-validator",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage",
+            "rmse-thresholds",
+            "english-spanish-evidence",
+            "audio-hash-listening-sync",
+            "replay-interaction-random",
+            "product-qa",
+            "human-review",
+            "owner-acceptance",
+            "regression-tests"
+          ],
+          "reason": "Strict validation is a downstream closure check and cannot replace its failed evidence gates."
+        },
+        {
+          "gateId": "regression-tests",
+          "status": "fail",
+          "closureClass": "protected-review-pin-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "fresh-explicit-vb004-semantic-decision"
+          ],
+          "reason": "The shared full-suite receipt is non-zero while the protected VB004 semantic/scenario binding awaits an explicit named-human decision; automation must not refresh that pin."
+        },
+        {
+          "gateId": "production-build",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        }
+      ],
+      "machineClosableFailingGateIds": []
+    },
+    {
+      "animationId": "formula-elementary-conversion-01-04",
+      "workspace": "migrations/formula-elementary-conversion-01-04",
+      "migrationStatus": "preserved",
+      "manifestSha256": "2764ef8d68a5e07ecfcd5cac282d1ec8f227220d202c02ca04d5eb194103f5ff",
+      "strictAccepted": false,
+      "passedGateCount": 4,
+      "failedGateCount": 11,
+      "workspaceInspection": {
+        "workspaceExists": true,
+        "manifestIdentityMatches": true,
+        "manifestSha256MatchesStrictReport": true,
+        "evidenceDirectoryExists": true,
+        "canonicalBehaviorQaExists": true,
+        "canonicalProductQaExists": true,
+        "nonCanonicalQaRecords": [
+          "migrations/formula-elementary-conversion-01-04/evidence/formula-engineering-behavior-qa.json",
+          "migrations/formula-elementary-conversion-01-04/evidence/formula-engineering-product-qa.json",
+          "migrations/formula-elementary-conversion-01-04/evidence/product-audio-controls-qa.json"
+        ]
+      },
+      "gateReadiness": [
+        {
+          "gateId": "authoritative-baseline",
+          "status": "fail",
+          "closureClass": "original-runtime-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-original-runtime-session"
+          ],
+          "reason": "Current JavaScript output and static SWF/FLA audits cannot create authoritative original-runtime frame evidence."
+        },
+        {
+          "gateId": "implementation-route",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "deterministic-frame-contract",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "full-frame-scenario-coverage",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "rmse-thresholds",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "english-spanish-evidence",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "audio-hash-listening-sync",
+          "status": "fail",
+          "closureClass": "audio-listening-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-listening-and-natural-host-traversal"
+          ],
+          "reason": "Hashes and cue inventories are machine-checkable, but listening, language, natural traversal, synchronization, and Replay acceptance are not."
+        },
+        {
+          "gateId": "replay-interaction-random",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "product-qa",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage",
+            "rmse-thresholds"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage, rmse-thresholds passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "engineering-review",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "human-review",
+          "status": "fail",
+          "closureClass": "human-visual-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-hash-bound-visual-review"
+          ],
+          "reason": "Automation cannot perform or sign the required visual review."
+        },
+        {
+          "gateId": "owner-acceptance",
+          "status": "fail",
+          "closureClass": "owner-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "owner-hash-bound-acceptance"
+          ],
+          "reason": "Automation cannot infer or sign owner acceptance."
+        },
+        {
+          "gateId": "strict-validator",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage",
+            "rmse-thresholds",
+            "english-spanish-evidence",
+            "audio-hash-listening-sync",
+            "replay-interaction-random",
+            "product-qa",
+            "human-review",
+            "owner-acceptance",
+            "regression-tests"
+          ],
+          "reason": "Strict validation is a downstream closure check and cannot replace its failed evidence gates."
+        },
+        {
+          "gateId": "regression-tests",
+          "status": "fail",
+          "closureClass": "protected-review-pin-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "fresh-explicit-vb004-semantic-decision"
+          ],
+          "reason": "The shared full-suite receipt is non-zero while the protected VB004 semantic/scenario binding awaits an explicit named-human decision; automation must not refresh that pin."
+        },
+        {
+          "gateId": "production-build",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        }
+      ],
+      "machineClosableFailingGateIds": []
+    },
+    {
+      "animationId": "keyterm-elementary-acute-angle",
+      "workspace": "migrations/keyterm-elementary-acute-angle",
+      "migrationStatus": "blocked",
+      "manifestSha256": "2b37b804ea4b0277437f384c03b9a97311830d00fabb51606c75b2d7f91b50b9",
+      "strictAccepted": false,
+      "passedGateCount": 4,
+      "failedGateCount": 11,
+      "workspaceInspection": {
+        "workspaceExists": true,
+        "manifestIdentityMatches": true,
+        "manifestSha256MatchesStrictReport": true,
+        "evidenceDirectoryExists": true,
+        "canonicalBehaviorQaExists": true,
+        "canonicalProductQaExists": true,
+        "nonCanonicalQaRecords": [
+          "migrations/keyterm-elementary-acute-angle/evidence/keyterm-engineering-qa.json"
+        ]
+      },
+      "gateReadiness": [
+        {
+          "gateId": "authoritative-baseline",
+          "status": "fail",
+          "closureClass": "original-runtime-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-original-runtime-session"
+          ],
+          "reason": "Current JavaScript output and static SWF/FLA audits cannot create authoritative original-runtime frame evidence."
+        },
+        {
+          "gateId": "implementation-route",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "deterministic-frame-contract",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "full-frame-scenario-coverage",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "rmse-thresholds",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "english-spanish-evidence",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "audio-hash-listening-sync",
+          "status": "fail",
+          "closureClass": "audio-listening-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-listening-and-natural-host-traversal"
+          ],
+          "reason": "Hashes and cue inventories are machine-checkable, but listening, language, natural traversal, synchronization, and Replay acceptance are not."
+        },
+        {
+          "gateId": "replay-interaction-random",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "product-qa",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage",
+            "rmse-thresholds"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage, rmse-thresholds passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "engineering-review",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "human-review",
+          "status": "fail",
+          "closureClass": "human-visual-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-hash-bound-visual-review"
+          ],
+          "reason": "Automation cannot perform or sign the required visual review."
+        },
+        {
+          "gateId": "owner-acceptance",
+          "status": "fail",
+          "closureClass": "owner-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "owner-hash-bound-acceptance"
+          ],
+          "reason": "Automation cannot infer or sign owner acceptance."
+        },
+        {
+          "gateId": "strict-validator",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage",
+            "rmse-thresholds",
+            "english-spanish-evidence",
+            "audio-hash-listening-sync",
+            "replay-interaction-random",
+            "product-qa",
+            "human-review",
+            "owner-acceptance",
+            "regression-tests"
+          ],
+          "reason": "Strict validation is a downstream closure check and cannot replace its failed evidence gates."
+        },
+        {
+          "gateId": "regression-tests",
+          "status": "fail",
+          "closureClass": "protected-review-pin-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "fresh-explicit-vb004-semantic-decision"
+          ],
+          "reason": "The shared full-suite receipt is non-zero while the protected VB004 semantic/scenario binding awaits an explicit named-human decision; automation must not refresh that pin."
+        },
+        {
+          "gateId": "production-build",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        }
+      ],
+      "machineClosableFailingGateIds": []
+    },
+    {
+      "animationId": "keyterm-elementary-computeghgh",
+      "workspace": "migrations/keyterm-elementary-computeghgh",
+      "migrationStatus": "validating",
+      "manifestSha256": "e02d15dbf0668cedf19c5f4b616ef65885c1185a310f8a524876794c2d9125fb",
+      "strictAccepted": false,
+      "passedGateCount": 5,
+      "failedGateCount": 10,
+      "workspaceInspection": {
+        "workspaceExists": true,
+        "manifestIdentityMatches": true,
+        "manifestSha256MatchesStrictReport": true,
+        "evidenceDirectoryExists": true,
+        "canonicalBehaviorQaExists": true,
+        "canonicalProductQaExists": true,
+        "nonCanonicalQaRecords": [
+          "migrations/keyterm-elementary-computeghgh/evidence/keyterm-engineering-qa.json"
+        ]
+      },
+      "gateReadiness": [
+        {
+          "gateId": "authoritative-baseline",
+          "status": "fail",
+          "closureClass": "original-runtime-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-original-runtime-session"
+          ],
+          "reason": "Current JavaScript output and static SWF/FLA audits cannot create authoritative original-runtime frame evidence."
+        },
+        {
+          "gateId": "implementation-route",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "deterministic-frame-contract",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "full-frame-scenario-coverage",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "rmse-thresholds",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "english-spanish-evidence",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "audio-hash-listening-sync",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "replay-interaction-random",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "product-qa",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage",
+            "rmse-thresholds"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage, rmse-thresholds passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "engineering-review",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "human-review",
+          "status": "fail",
+          "closureClass": "human-visual-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-hash-bound-visual-review"
+          ],
+          "reason": "Automation cannot perform or sign the required visual review."
+        },
+        {
+          "gateId": "owner-acceptance",
+          "status": "fail",
+          "closureClass": "owner-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "owner-hash-bound-acceptance"
+          ],
+          "reason": "Automation cannot infer or sign owner acceptance."
+        },
+        {
+          "gateId": "strict-validator",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage",
+            "rmse-thresholds",
+            "english-spanish-evidence",
+            "replay-interaction-random",
+            "product-qa",
+            "human-review",
+            "owner-acceptance",
+            "regression-tests"
+          ],
+          "reason": "Strict validation is a downstream closure check and cannot replace its failed evidence gates."
+        },
+        {
+          "gateId": "regression-tests",
+          "status": "fail",
+          "closureClass": "protected-review-pin-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "fresh-explicit-vb004-semantic-decision"
+          ],
+          "reason": "The shared full-suite receipt is non-zero while the protected VB004 semantic/scenario binding awaits an explicit named-human decision; automation must not refresh that pin."
+        },
+        {
+          "gateId": "production-build",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        }
+      ],
+      "machineClosableFailingGateIds": []
+    },
+    {
+      "animationId": "shell-course-g04-l01-index-local",
+      "workspace": "migrations/shell-course-g04-l01-index-local",
+      "migrationStatus": "preserved",
+      "manifestSha256": "bfb4edd6d2c607ea52d5e113e82b2d836348355761584eeb54cf2625a5fc3aa4",
+      "strictAccepted": false,
+      "passedGateCount": 2,
+      "failedGateCount": 13,
+      "workspaceInspection": {
+        "workspaceExists": true,
+        "manifestIdentityMatches": true,
+        "manifestSha256MatchesStrictReport": true,
+        "evidenceDirectoryExists": true,
+        "canonicalBehaviorQaExists": false,
+        "canonicalProductQaExists": false,
+        "nonCanonicalQaRecords": [
+          "migrations/shell-course-g04-l01-index-local/evidence/native-navigation-candidate-qa.json"
+        ]
+      },
+      "gateReadiness": [
+        {
+          "gateId": "authoritative-baseline",
+          "status": "fail",
+          "closureClass": "original-runtime-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-original-runtime-session"
+          ],
+          "reason": "Current JavaScript output and static SWF/FLA audits cannot create authoritative original-runtime frame evidence."
+        },
+        {
+          "gateId": "implementation-route",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        },
+        {
+          "gateId": "deterministic-frame-contract",
+          "status": "fail",
+          "closureClass": "behavior-specification-evidence-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "source-evidenced-or-original-runtime-behavior",
+            "fully-renderable-pure-state-contract"
+          ],
+          "reason": "Deterministic capture cannot safely cover unresolved or deliberately blocked frame domains."
+        },
+        {
+          "gateId": "full-frame-scenario-coverage",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "deterministic-frame-contract"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, deterministic-frame-contract passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "rmse-thresholds",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "english-spanish-evidence",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "audio-hash-listening-sync",
+          "status": "fail",
+          "closureClass": "audio-listening-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-listening-and-natural-host-traversal"
+          ],
+          "reason": "Hashes and cue inventories are machine-checkable, but listening, language, natural traversal, synchronization, and Replay acceptance are not."
+        },
+        {
+          "gateId": "replay-interaction-random",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "full-frame-scenario-coverage"
+          ],
+          "reason": "This gate cannot close before authoritative-baseline, full-frame-scenario-coverage passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "product-qa",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "full-frame-scenario-coverage",
+            "rmse-thresholds"
+          ],
+          "reason": "This gate cannot close before full-frame-scenario-coverage, rmse-thresholds passes; preparatory current-JavaScript QA is not strict acceptance."
+        },
+        {
+          "gateId": "engineering-review",
+          "status": "fail",
+          "closureClass": "review-record-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "dated-named-engineering-review"
+          ],
+          "reason": "The gate requires an accepted named engineering review record; this report is not an acceptance record."
+        },
+        {
+          "gateId": "human-review",
+          "status": "fail",
+          "closureClass": "human-visual-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "named-human-hash-bound-visual-review"
+          ],
+          "reason": "Automation cannot perform or sign the required visual review."
+        },
+        {
+          "gateId": "owner-acceptance",
+          "status": "fail",
+          "closureClass": "owner-authority-required",
+          "machineClosableNow": false,
+          "dependencies": [
+            "owner-hash-bound-acceptance"
+          ],
+          "reason": "Automation cannot infer or sign owner acceptance."
+        },
+        {
+          "gateId": "strict-validator",
+          "status": "fail",
+          "closureClass": "downstream-prerequisite-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "authoritative-baseline",
+            "deterministic-frame-contract",
+            "full-frame-scenario-coverage",
+            "rmse-thresholds",
+            "english-spanish-evidence",
+            "audio-hash-listening-sync",
+            "replay-interaction-random",
+            "product-qa",
+            "engineering-review",
+            "human-review",
+            "owner-acceptance",
+            "regression-tests"
+          ],
+          "reason": "Strict validation is a downstream closure check and cannot replace its failed evidence gates."
+        },
+        {
+          "gateId": "regression-tests",
+          "status": "fail",
+          "closureClass": "protected-review-pin-blocked",
+          "machineClosableNow": false,
+          "dependencies": [
+            "fresh-explicit-vb004-semantic-decision"
+          ],
+          "reason": "The shared full-suite receipt is non-zero while the protected VB004 semantic/scenario binding awaits an explicit named-human decision; automation must not refresh that pin."
+        },
+        {
+          "gateId": "production-build",
+          "status": "pass",
+          "closureClass": "passed",
+          "machineClosableNow": false,
+          "dependencies": [],
+          "reason": "The strict report already proves this gate."
+        }
+      ],
+      "machineClosableFailingGateIds": []
+    }
+  ]
+}

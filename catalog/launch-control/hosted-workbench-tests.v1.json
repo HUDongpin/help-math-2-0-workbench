@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "releaseId": "HELP_MATH_2_PUBLIC_LAUNCH_V1",
+  "purpose": "Define the repository-contained GitHub Hosted workbench suite without relabeling private/local evidence tests as Hosted-clean.",
+  "pathSetEncoding": "sorted-utf8-nul-terminated",
+  "fullLocalCommand": "node --import ./scripts/register-worktree-shared-dependencies.mjs --test --test-concurrency=4 lib/*.test.mjs scripts/*.test.mjs",
+  "fullLocalDiscovery": {
+    "directories": [
+      "lib",
+      "scripts"
+    ],
+    "suffix": ".test.mjs",
+    "fileCount": 565,
+    "encodedByteLength": 33665,
+    "sortedPathSetSha256": "b24497d5d62f603a3450aab3d7d6f4061ac9d5ea60ee5bed1d2c1ef296e59991"
+  },
+  "fullyHostedProfile": {
+    "nodeArguments": [
+      "--import",
+      "./scripts/register-worktree-shared-dependencies.mjs",
+      "--import",
+      "tsx",
+      "--test",
+      "--test-concurrency=4",
+      "--test-reporter=tap"
+    ],
+    "fileCount": 18,
+    "encodedByteLength": 768,
+    "sortedPathSetSha256": "5cc879039cddc4d5a34cdb070ce88eb91662e1496724edb0fbd306731fb6c495",
+    "expectedTestCount": 157,
+    "expectedPassCount": 157,
+    "expectedSkipCount": 0,
+    "testFiles": [
+      "lib/conversion11Timeline.test.mjs",
+      "lib/conversion13Timeline.test.mjs",
+      "lib/conversionTimeline.test.mjs",
+      "scripts/build-lesson-release-ledger.test.mjs",
+      "scripts/build-page-only-migration-control-ledger.test.mjs",
+      "scripts/build-public-launch-manifest.test.mjs",
+      "scripts/completion-ledger.test.mjs",
+      "scripts/evidence-projections.test.mjs",
+      "scripts/freeze-help-math-sources.test.mjs",
+      "scripts/prepare-linked-worktree-generated-inputs.test.mjs",
+      "scripts/prepare-linked-worktree-sources.test.mjs",
+      "scripts/register-worktree-shared-dependencies.test.mjs",
+      "scripts/run-worktree-typecheck.test.mjs",
+      "scripts/verify-deploy-closure.test.mjs",
+      "scripts/verify-launch-control.test.mjs",
+      "scripts/verify-npm-install-script-policy.test.mjs",
+      "scripts/verify-site-runtime-log.test.mjs",
+      "scripts/workbench-tools.test.mjs"
+    ]
+  },
+  "mixedHostedProfiles": [
+    {
+      "testFile": "scripts/build-help-math-catalog.test.mjs",
+      "selectedTestNames": [
+        "builds deterministic placement, duplicate, reference, audio, and FLA inventories",
+        "classifies legacy compound and compressed ZIP FLA containers",
+        "loads only a hash-bound, real, single-link current-source profile",
+        "parses uncompressed and zlib-compressed SWF movie metadata",
+        "the checked-in full-archive catalog records the evidence-grounded known totals"
+      ],
+      "fullLocalOnlyTestNames": [
+        "binds the canonical G5 L2 source promotion to its exact two-page gap",
+        "binds the canonical G5 L3 source promotion to the reviewed 43-file copy set",
+        "binds the canonical G5 L6 source promotion to its exact thirteen-page gap",
+        "binds the current G5 L4 FQ source profile to the approved historical source-only transaction"
+      ],
+      "expectedTestCount": 5,
+      "expectedPassCount": 5,
+      "expectedSkipCount": 0,
+      "boundary": "The four full-local-only cases remain in npm test and are not counted as Hosted PASS."
+    }
+  ],
+  "notYetHostedClassifiedRemainder": {
+    "fileCount": 546,
+    "encodedByteLength": 32856,
+    "sortedPathSetSha256": "d7c729a3e782a93979805163cd6fc60001a257d89bac22e8ef4cf12c27b93661",
+    "classificationStatus": "NOT_INDIVIDUALLY_PROVEN_CLEAN_CHECKOUT_SAFE",
+    "reasonCodes": [
+      "individual-clean-checkout-classification-pending",
+      "set-may-contain-both-pure-fixture-and-private-evidence-tests"
+    ],
+    "executionContract": "Preserved under npm test and local evidence gates; exclusion from this Hosted profile is not PASS, skip acceptance, strict acceptance, or release acceptance."
+  }
+}

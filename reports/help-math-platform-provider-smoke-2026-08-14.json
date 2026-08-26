@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-08-13T19:09:35Z",
+  "configurationSource": {
+    "path": "All API Keys.docx",
+    "sha256": "4a0425c19a55ce233ea33ef946564998409b5ab65e0f679b3efc6e2a47def946",
+    "valuesRecorded": false,
+    "storageBoundary": "Values were imported into ignored, mode-0600 apps/web/.env.local only."
+  },
+  "qwen": {
+    "provider": "Alibaba Cloud Model Studio",
+    "protocol": "OpenAI-compatible Responses API",
+    "requestedModel": "qwen3.8-max",
+    "reportedModel": "qwen3.8-max",
+    "httpStatus": 200,
+    "responseStatus": "completed",
+    "outputTextPresent": true,
+    "passed": true,
+    "credentialRecorded": false,
+    "responseContentRecorded": false
+  },
+  "lrs": {
+    "providerHostRecorded": false,
+    "xapiRequestVersion": "1.0.3",
+    "productionAbout": {
+      "httpStatus": 200,
+      "advertisedVersions": [
+        "2.0.0",
+        "1.0.3",
+        "1.0.2",
+        "1.0.1",
+        "1.0.0",
+        "0.95",
+        "0.9"
+      ],
+      "passed": true
+    },
+    "bugAccountAbout": {
+      "httpStatus": 200,
+      "advertisedVersions": [
+        "2.0.0",
+        "1.0.3",
+        "1.0.2",
+        "1.0.1",
+        "1.0.0",
+        "0.95",
+        "0.9"
+      ],
+      "passed": true
+    },
+    "productionCanary": {
+      "statementId": "ae0321a7-d5d9-4c80-b9e1-c1bb74cce9b9",
+      "timestamp": "2026-08-13T19:08:58.048958Z",
+      "putHttpStatus": 204,
+      "getHttpStatus": 200,
+      "readbackMatched": true,
+      "passed": true,
+      "actor": "opaque HMAC-derived test actor; value not recorded",
+      "scope": "integration-test"
+    },
+    "credentialRecorded": false
+  },
+  "boundaries": [
+    "The Qwen result proves provider authentication, exact-model routing, and one minimal response only; it does not yet prove the Nova UI, classroom voice, frame context, safety policy, rate limits, or production deployment.",
+    "The LRS result proves one anonymous xAPI 1.0.3 canary write and exact-ID readback only; it does not yet prove browser outbox retries, lesson event coverage, student identity governance, institutional reliability, or production deployment.",
+    "No key, password, endpoint, provider response text, Nova message, voice, photo, student name, email, IP address, IEP, disability, or English-learner label is recorded in this receipt."
+  ]
+}

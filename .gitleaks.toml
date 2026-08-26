@@ -1,0 +1,66 @@
+title = "HELP MATH 2.0 narrow false-positive policy"
+
+[extend]
+useDefault = true
+
+# Keep the default generic-api-key rule enabled. Each exception below requires
+# BOTH an exact repository path and an exact non-secret line shape. No path is
+# excluded wholesale, and a token-shaped value under any other field remains a
+# finding.
+[[rules]]
+id = "generic-api-key"
+
+  [[rules.allowlists]]
+  description = "Generated G5 L5 reuse identity is a SHA-256, not a credential"
+  condition = "AND"
+  regexTarget = "line"
+  paths = [
+    '''^migrations/(?:shell-course-g05-l05-index-local|course-g05-l05-(?:fq|gs|in|ir|rw|ti|ts|vb)-[a-z0-9-]+)/audit/machine/g5-l5-renderer-neutral-work-package\.json$''',
+  ]
+  regexes = [
+    '''(?m)^[ \t]*"exactMatchKey"[ \t]*:[ \t]*"[0-9a-f]{64}"[ \t]*,?[ \t]*$''',
+  ]
+
+  [[rules.allowlists]]
+  description = "Animation catalog Key Term ID followed by typed SWF SHA-256 asset ID"
+  condition = "AND"
+  regexTarget = "secret"
+  paths = [
+    '''^catalog/animations\.csv$''',
+  ]
+  regexes = [
+    '''^swf-[0-9a-f]{64}$''',
+  ]
+
+  [[rules.allowlists]]
+  description = "SQL archive catalog relative path followed by its path SHA-256"
+  condition = "AND"
+  regexTarget = "secret"
+  paths = [
+    '''^catalog/newhelpprogram-20210203-files\.csv$''',
+  ]
+  regexes = [
+    '''^[0-9a-f]{64}$''',
+  ]
+
+  [[rules.allowlists]]
+  description = "Fixed provenance artifact IDs are labels bound separately to SHA-256"
+  condition = "AND"
+  regexTarget = "line"
+  paths = [
+    '''^(?:scripts/build-g4-missing-mp3-resolution-plan-v2\.mjs|catalog/source-promotions/g4-missing-mp3-resolution-plan-v2\.json)$''',
+  ]
+  regexes = [
+    '''(?m)^[ \t]*"?artifactToken"?[ \t]*:[ \t]*"(?:historical-technical-crosswalk-2026-07-25|grade4-quarantine-(?:readme|intake-receipt|file-manifest)-2026-08-02|combined-freeze-closure-2026-08-04)"[ \t]*,?[ \t]*$''',
+  ]
+
+  [[rules.allowlists]]
+  description = "Fixed internal record IDs are compared as names, never assigned as credentials"
+  condition = "AND"
+  regexTarget = "line"
+  paths = [
+    '''^scripts/build-g4-l10-complete-migration-template-contract-v6\.mjs$''',
+  ]
+  regexes = [
+    '''(?m)^[ \t]*record\.key[ \t]*===[ \t]*"(?:predecessorV5Json|predecessorV5Markdown|conditionalOperatorGateV1)"\)\.contents\.toString\("utf8"\);[ \t]*$''',
+  ]

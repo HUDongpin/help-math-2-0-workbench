@@ -1,0 +1,234 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "g5-l4-current-js-fq23-companion-local-browser-qa-receipt",
+  "receiptId": "g5-l4-current-js-fq23-companion-qa-2026-07-30",
+  "releaseId": "lesson-g05-l04-number-lines",
+  "recordedAt": "2026-07-30T06:40:53Z",
+  "authority": "Current-JavaScript local browser regression evidence for the private controlled CEO preview only. This receipt has no original-runtime, Flash/Animate comparison, independent-human, Owner-fidelity, strict-completion, deployment, public-release, or publication authority.",
+  "scope": {
+    "route": "http://127.0.0.1:3231/en/courses/5/4",
+    "networkBoundary": "loopback-only-local-preview",
+    "previewClass": "private-controlled-ceo-preview",
+    "javascriptCandidateKind": "source-bound-current-javascript-question-flow-not-strict",
+    "members": [
+      "course-g05-l04-fq-002",
+      "course-g05-l04-fq-003"
+    ],
+    "g4L3Port3216Touched": false,
+    "externalDeploymentPerformed": false
+  },
+  "authorizationBinding": {
+    "path": "catalog/owner-authorizations/g5-l4-current-js-implementation-authorization-2026-07-29.json",
+    "bytes": 3508,
+    "sha256": "56b49ba928de107246192e2a71fdb803e80299d61eb3c93f7ed4b5fb32fc358c",
+    "acceptedScope": [
+      "g5-l4-acceptance-neutral-current-js-product-qa",
+      "g5-l4-private-controlled-ceo-preview-preparation"
+    ],
+    "strictAcceptanceEffect": "none"
+  },
+  "browserDriver": {
+    "workflow": "playwright-cli-first",
+    "cliVersion": "0.1.17",
+    "session": "g5l4qa2",
+    "viewportCssPixels": {
+      "width": 1280,
+      "height": 720
+    },
+    "console": {
+      "totalMessages": 6,
+      "errors": 0,
+      "warnings": 0
+    },
+    "networkInventory": {
+      "recordedRequestCount": 75,
+      "http200Count": 75,
+      "failedRequestCount": 0,
+      "nonLoopbackRequestCount": 0
+    }
+  },
+  "scopeResult": {
+    "currentJavascriptFq23CompanionQaPassed": true,
+    "portalHostContractPassed": true,
+    "visibleAndVerticallyScrollablePassed": true,
+    "answerSubmissionPassed": true,
+    "scoringPassed": true,
+    "textReviewPassed": true,
+    "wholeStateReplayResetPassed": true
+  },
+  "observations": {
+    "course-g05-l04-fq-002": {
+      "seed": 0,
+      "companionHostCount": 1,
+      "companionVisible": true,
+      "documentVerticallyScrollable": true,
+      "presentedQuestionCount": 10,
+      "questionOrder": [5, 1, 6, 4, 11, 13, 14, 15, 9, 12],
+      "uniqueQuestionCount": 10,
+      "correctCount": 10,
+      "scoreText": "Score: 10 / 10",
+      "gradeText": "Source grade: Advanced",
+      "reviewFirst": "Review 1 of 10: Q5. Your answer: C. Correct answer: C. Correct.",
+      "reviewNext": "Review 2 of 10: Q1. Your answer: C. Correct answer: C. Correct.",
+      "reviewPreviousReturnedToFirst": true,
+      "replayQuestionPosition": 1,
+      "replayPresentedQuestionCount": 10,
+      "replaySelectedRadioCount": 0,
+      "replayFirstQuestion": 5,
+      "exactAvm1RandomOrderEstablished": false
+    },
+    "course-g05-l04-fq-003": {
+      "seed": 0,
+      "companionHostCount": 1,
+      "companionVisible": true,
+      "documentVerticallyScrollable": true,
+      "presentedQuestionCount": 18,
+      "questionOrder": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
+      "uniqueQuestionCount": 18,
+      "correctCount": 18,
+      "scoreText": "Score: 18 / 18",
+      "gradeText": "Source grade: Advanced",
+      "reviewFirst": "Review 1 of 18: Q1. Your answer: C. Correct answer: C. Correct.",
+      "reviewNext": "Review 2 of 18: Q2. Your answer: B. Correct answer: B. Correct.",
+      "reviewPreviousReturnedToFirst": true,
+      "replayQuestionPosition": 1,
+      "replayPresentedQuestionCount": 18,
+      "replaySelectedRadioCount": 0,
+      "replayFirstQuestion": 1
+    }
+  },
+  "focusedTests": [
+    {
+      "command": "npm --workspace packages/demos exec -- tsx --test tests/course-g05-l04-fq23-question-atlas.test.ts",
+      "passed": 10,
+      "failed": 0
+    },
+    {
+      "command": "npm --workspace apps/web exec -- tsx --test tests/descriptor-driven-whole-lesson-player.test.ts",
+      "passed": 2,
+      "failed": 0
+    }
+  ],
+  "sourceBindings": [
+    {
+      "path": "apps/web/components/descriptor-driven-whole-lesson-player.tsx",
+      "bytes": 29171,
+      "sha256": "2384c1fb160f08a4ef107016722693d028b10fb2c66536274ede5bfacc7842e9"
+    },
+    {
+      "path": "apps/web/components/legacy-responsive-lesson-shell.tsx",
+      "bytes": 73778,
+      "sha256": "8801222068e0792218f8dd35af37b909c9682ab8275dc3c1cb51d4b3e43090b0"
+    },
+    {
+      "path": "apps/web/components/animation-runtime.tsx",
+      "bytes": 29129,
+      "sha256": "c4f990764eef78d656cb16513540b6b7aa647a8d2e528667f011f47f8503eccb"
+    },
+    {
+      "path": "apps/web/app/globals.css",
+      "bytes": 149489,
+      "sha256": "d225c7c39ef4ab3b0e23783c222e9b737a2c75c8edf3f6eff57906a9d3ff39be"
+    },
+    {
+      "path": "packages/demos/src/g5-l4-fq23-question-atlas-candidate.tsx",
+      "bytes": 36247,
+      "sha256": "fda613ec4a19dc65f18b0e711a6c68af53579b3f4a4ba0120c0fe40e942379ee"
+    },
+    {
+      "path": "packages/demos/src/timelines/course-g05-l04-fq23-question-sequence.ts",
+      "bytes": 15022,
+      "sha256": "098b4bf2d921a1524f17db9a3d1e6301ff9e82c5185fb979c5d3ef7b3aa0a5e0"
+    },
+    {
+      "path": "packages/demos/src/timelines/course-g05-l04-fq-002.ts",
+      "bytes": 2466,
+      "sha256": "9b038fd222c0920766fcfc1656aaa4e6fba0d346d804c8e3c31306bd54ec8580"
+    },
+    {
+      "path": "packages/demos/src/timelines/course-g05-l04-fq-003.ts",
+      "bytes": 2467,
+      "sha256": "47f7788b6ad7651d308b93a770edf38c9160b897941d5989200d0140cec110f9"
+    },
+    {
+      "path": "apps/web/tests/descriptor-driven-whole-lesson-player.test.ts",
+      "bytes": 6885,
+      "sha256": "25bff1a7757dd51c5a29250d8b9681da891ca2e42d117cccb4a5fc5388e52b41"
+    },
+    {
+      "path": "packages/demos/tests/course-g05-l04-fq23-question-atlas.test.ts",
+      "bytes": 20164,
+      "sha256": "95e73bd925b8c009d09d46647a2ebf85077ac794477905e6b8284bd4339065c6"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "reports/g5-l4-current-js-fq23-companion-qa-2026-07-30.md",
+      "bytes": 3769,
+      "sha256": "b499a6b3130211bea5a0be101d112480471bbb79bca5fe3b2053c4ed9453d02c",
+      "role": "human-readable-scope-and-observation-record"
+    },
+    {
+      "path": "output/playwright/g5-l4-current-js-product-qa/en-desktop-fq002-question-flow.png",
+      "bytes": 223445,
+      "sha256": "af3b99cf1d3186d3ddba9d46dae2faead6326edc44bcc7749d6710497031a511",
+      "role": "fq002-visible-companion",
+      "pixelWidth": 1280,
+      "pixelHeight": 1280
+    },
+    {
+      "path": "output/playwright/g5-l4-current-js-product-qa/en-desktop-fq002-results-post-portal.png",
+      "bytes": 212416,
+      "sha256": "c288bc5ab8b52ccce87484f2edb80044d38676bdd8814bccefc2ee1a143aeb3d",
+      "role": "fq002-score",
+      "pixelWidth": 1280,
+      "pixelHeight": 1126
+    },
+    {
+      "path": "output/playwright/g5-l4-current-js-product-qa/en-desktop-fq002-replay-reset-post-portal.png",
+      "bytes": 225760,
+      "sha256": "ca284c8a24a07e36cf3ef810845f927aa7baf7639ed9df13d0a92fb831b9c72f",
+      "role": "fq002-replay-reset",
+      "pixelWidth": 1280,
+      "pixelHeight": 1280
+    },
+    {
+      "path": "output/playwright/g5-l4-current-js-product-qa/en-desktop-fq003-results-post-portal.png",
+      "bytes": 212382,
+      "sha256": "eb55e182acfabcdc8a960f700b4d873e0c5619b233458dd2f0fab6cc77d9dcb4",
+      "role": "fq003-score",
+      "pixelWidth": 1280,
+      "pixelHeight": 1126
+    },
+    {
+      "path": "output/playwright/g5-l4-current-js-product-qa/en-desktop-fq003-replay-reset-post-portal.png",
+      "bytes": 226106,
+      "sha256": "f47898085700083cb82f1b51a11e93520119fae6d4244cd88ecf16af7319b668",
+      "role": "fq003-replay-reset",
+      "pixelWidth": 1280,
+      "pixelHeight": 1280
+    }
+  ],
+  "acceptanceEffects": {
+    "productQaComplete": false,
+    "originalRuntimeEvidenceEstablished": false,
+    "naturalNavigationCausalityEstablished": false,
+    "sourceReviewVisualParityEstablished": false,
+    "spanishQuestionParityEstablished": false,
+    "audioAcceptanceEstablished": false,
+    "fullFrameRmseAccepted": false,
+    "independentHumanVisualReviewAccepted": false,
+    "ownerFidelityAcceptanceEstablished": false,
+    "strictMigrationComplete": false,
+    "externalDeploymentAuthorized": false,
+    "publicReleaseAuthorized": false,
+    "published": false
+  },
+  "limitations": [
+    "FQ002 seed-bound deterministic order does not establish original AVM1 random-order parity.",
+    "The source review-screen visuals, timer, reporting, audio, and Spanish question behavior were not implemented or validated by this receipt.",
+    "The screenshots and CLI observations bind the current-JavaScript local preview only; they are not an original-runtime or comparison baseline.",
+    "No independent human reviewer or Owner fidelity acceptance was recorded.",
+    "No deployment or publication action was performed or authorized by this receipt."
+  ]
+}

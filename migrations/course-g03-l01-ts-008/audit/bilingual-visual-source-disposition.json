@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "source-shared-bilingual-visual-disposition",
+  "animationId": "course-g03-l01-ts-008",
+  "status": "verified-source-shared-untranslated-visual",
+  "migrationStatusChanged": false,
+  "authorityStatement": [
+    "The preserved Grade 3 Lesson 1 course XML routes both the English and Spanish shell labels for Question 2 to the same L1TS08.swf binary.",
+    "The complete hash-bound FFDec ActionScript export contains no English, Spanish, language, or lang branch; the scenario inventory records no dynamic EditText and no language-sensitive host or FlashVars binding.",
+    "Rendering the same fixed source drawing in en and es preserves source pixels only. It is not a Spanish translation, audio acceptance, original-host parity, natural interaction trace, or migration-completion claim."
+  ],
+  "generatedFrom": {
+    "generator": {
+      "path": "scripts/build-ts008-bilingual-visual-disposition.mjs",
+      "sha256": "0b5ff2ea63996125d0b115ebde16b9a5fb9b2e671f75ddbabc02170d258f60a5"
+    },
+    "sourceSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/TS/L1TS08.swf",
+      "sha256": "9749ae5f4d533379aa58531e541ffd5da1624bc8fcea38660d54d0f5d3ddc29b"
+    },
+    "ffdecScripts": {
+      "path": "migrations/course-g03-l01-ts-008/audit/machine/ffdec-scripts.txt.gz",
+      "sha256": "8732f240411fc572cf0e58c3bc5e620eb7f1c3ba459f797b9cc4ba7322a31ebd",
+      "uncompressedSha256": "e50e5e933915d9ee8c14a2b81728d7f17cdc4d897dbed94f1d200f8792c53bd3"
+    },
+    "scenarioInventory": {
+      "path": "migrations/course-g03-l01-ts-008/audit/scenario-inventory.json",
+      "sha256": "6f9bf586ed355a094a54c3331ff8bac542fb12bd894d37a1f7e48c4c33a92236"
+    },
+    "courseXml": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index.xml",
+      "sha256": "f803cd0f01016385e8fd6d2ad11ee2b5379c82f252015999c62727c7fd581443"
+    }
+  },
+  "sourceFindings": {
+    "rootTimeline": {
+      "timelineId": "root",
+      "frameCount": 10
+    },
+    "mainTimeline": {
+      "timelineId": "sprite-348",
+      "frameCount": 747
+    },
+    "ffdecExportedScriptBlockCount": 86,
+    "languageSensitiveActionScriptMatches": [],
+    "dynamicEditTextCount": 0,
+    "languageSensitiveHostBindings": [],
+    "languageSensitiveFlashVarsCandidates": [],
+    "coursePlacement": {
+      "swfPath": "TS/L1TS08.swf",
+      "pageTitle": "Question 2",
+      "englishShellTitle": "Question 2",
+      "spanishShellTitle": "Pregunta 2",
+      "shellButtonName": "L1TS08"
+    }
+  },
+  "implementationDisposition": {
+    "languages": [
+      "en",
+      "es"
+    ],
+    "visualClassification": "source-shared-untranslated-visual",
+    "visualLocalization": "single-source-drawing-timeline-with-embedded-english-title-and-no-language-branch; es preserves source pixels without claiming translation",
+    "renderSameSourceVisualForBothLanguages": true,
+    "sourceSharedRequirements": [
+      {
+        "requirementId": "req:root:root-standalone:es",
+        "frameDomainId": "root",
+        "scenario": "root-standalone",
+        "language": "es",
+        "firstFrame": 1,
+        "lastFrame": 10,
+        "frameCount": 10
+      },
+      {
+        "requirementId": "req:sprite-348:source-drawing-default:es",
+        "frameDomainId": "sprite-348",
+        "scenario": "source-drawing-default",
+        "language": "es",
+        "firstFrame": 1,
+        "lastFrame": 747,
+        "frameCount": 747
+      }
+    ],
+    "newlyRenderableFrameCount": 757,
+    "interactionScenariosRemainBlockedForBothLanguages": [
+      "answer-correct-unavailable",
+      "answer-first-wrong-unavailable",
+      "answer-second-wrong-unavailable",
+      "glossary-popup-unavailable",
+      "completion-scoring-replay-unavailable"
+    ],
+    "audioRendered": false,
+    "audioStatus": "pending-authoritative-listening-language-mapping-cue-synchronization-and-replay",
+    "hostIntegrationStatus": "blocked-not-reconstructed"
+  },
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntimeBaseline": false,
+    "bilingualVisualParity": false,
+    "spanishTranslationAccepted": false,
+    "audioAcceptance": false,
+    "naturalOriginalRuntimeTraversal": false,
+    "interactionBehaviorParity": false,
+    "scoringParity": false,
+    "replayParity": false,
+    "fullFrameCoverage": false,
+    "rmseAcceptance": false,
+    "humanVisualReview": false,
+    "engineeringAcceptance": false,
+    "ownerAcceptance": false,
+    "strictMigrationCompletion": false
+  },
+  "strictAcceptanceEffect": "none; this evidence permits only root-standalone and source-drawing-default to render identical source pixels for en/es. All interaction scenarios, Spanish translation, audio, original-host behavior, authoritative baseline, RMSE, reviews, and completion remain unresolved."
+}

@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "engineering-visual-prereview",
+  "animationId": "formula-elementary-conversion-01-03",
+  "reviewedAt": "2026-07-21T06:43:11Z",
+  "comparison": {
+    "file": "migrations/formula-elementary-conversion-01-03/evidence/full-frame-comparison-standalone-default-en.json",
+    "sha256": "6da15160aa33b2cd42ac361890226082cd4d797331e52d21bc210dd3dff4b354",
+    "baselineAuthority": "original-swf-adobe-flash-player-runtime",
+    "baselineManifestSha256": "8802aa386b819bb7db30914cce26177c6d7d0d9edcf25450e9c96baafaef985f",
+    "sourceVectorManifestSha256": "7982ac61926d7b61fc95bbdcc1d99e0e90df332d1f1df5a4ad4ff259cec8e685",
+    "implementationCapture": {
+      "directory": "output/playwright/conversion-1-3-fidelity-final-vector/en-default",
+      "manifestSha256": "bdc4f80ea2aaffe5e92ddd6143bcc197f9aefbb524f63b998368cd8123264d58",
+      "status": "complete",
+      "capturedFrames": 170,
+      "reportedFrameMismatches": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "httpErrors": 0,
+      "unexpectedRequests": 0
+    },
+    "scenario": "standalone-default",
+    "language": "en",
+    "frameCount": 170,
+    "stage": { "width": 780, "height": 379 }
+  },
+  "review": {
+    "kind": "codex-assisted-engineering-prereview",
+    "humanVisualReview": false,
+    "ownerAcceptance": false,
+    "audioReviewed": false,
+    "hostLocalizationReviewed": false
+  },
+  "numericResult": {
+    "staticThreshold": 0.05,
+    "transitionThreshold": 0.08,
+    "normalizedRmse": {
+      "min": 0.01921602892029753,
+      "max": 0.022677782990904123,
+      "mean": 0.020053442630627524,
+      "median": 0.020004768274569977,
+      "p95": 0.021304894556179406
+    },
+    "framesAtOrBelowStaticThreshold": 170,
+    "framesAtOrBelowTransitionThreshold": 170,
+    "numericOutlierFrames": [],
+    "allAssignedThresholdsPass": true
+  },
+  "inspectedFrames": [
+    {
+      "frame": 1,
+      "selectionReason": "first-frame",
+      "normalizedRmse": 0.02034248337552016,
+      "mismatchedPixelRatio": 0.009796360192138556,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "The four source-gradient quart bottles, authored shadows, gallon jug, scale labels, embedded glyphs, and English formula panel align with Adobe standalone playback.",
+        "The prior flat-blue approximation is no longer used."
+      ]
+    },
+    {
+      "frame": 9,
+      "selectionReason": "first-authored-motion-frame",
+      "normalizedRmse": 0.020095292218550734,
+      "mismatchedPixelRatio": 0.009586631486367634,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "The corrected runtime-to-root mapping and SWF-to-SVG skew ordering place and rotate the first bottle on the authoritative frame."
+      ]
+    },
+    {
+      "frame": 14,
+      "selectionReason": "moving-bottle-keyframe",
+      "normalizedRmse": 0.020217061330457798,
+      "mismatchedPixelRatio": 0.009698261281374737,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "The moving bottle's fill gradient, cap, label, rotation, and overlap match the source-derived frame; residuals are antialiased SVG edges."
+      ]
+    },
+    {
+      "frame": 45,
+      "selectionReason": "second-pour-boundary",
+      "normalizedRmse": 0.020164543847950214,
+      "mismatchedPixelRatio": 0.009637372302279954,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "Bottle state, pour boundary, gallon fill, scale, and layer order align without a one-frame displacement."
+      ]
+    },
+    {
+      "frame": 105,
+      "selectionReason": "fourth-pour-boundary",
+      "normalizedRmse": 0.01982475500630321,
+      "mismatchedPixelRatio": 0.00945132264393478,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "The fourth bottle enters its source-authored pour pose with the expected empty bottles and gallon level."
+      ]
+    },
+    {
+      "frame": 149,
+      "selectionReason": "final-formula-start",
+      "normalizedRmse": 0.01973009648926779,
+      "mismatchedPixelRatio": 0.00947161897029971,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "The final equation begins on the authoritative corrected frame and uses embedded source glyphs and panel geometry."
+      ]
+    },
+    {
+      "frame": 170,
+      "selectionReason": "terminal-and-maximum-rmse-frame",
+      "normalizedRmse": 0.022677782990904123,
+      "mismatchedPixelRatio": 0.012319870103511264,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "The final gallon equation, bottle states, scale, and source Replay up-state align in geometry, alpha, embedded glyphs, and layer order.",
+        "A transparent React hit target preserves click, Enter, Space, focus, and accessible-name behavior without changing source visuals."
+      ]
+    }
+  ],
+  "conclusion": {
+    "numericThresholdResult": "pass",
+    "visualFidelityResult": "engineering-prereview-pass-with-residuals",
+    "strictAcceptanceResult": "not-accepted-pending-human-owner-and-other-gates",
+    "reason": "All 170 authoritative English standalone frames pass their assigned thresholds after the complete source-derived vector sequence replaced approximate bottle and terminal artwork; engineering inspection found no material formula, number, label, timing, or layer mismatch in selected boundaries and the terminal frame.",
+    "requiredFollowUp": [
+      "Obtain signed human review of the all-frame contact sheet and accepted renderer residuals.",
+      "Validate parent-host Spanish behavior and both authoritative audio tracks, including hashes, durations, cue timing, and synchronization.",
+      "Complete responsive, reduced-motion, keyboard, strict-validator, and owner acceptance gates before changing migration status."
+    ]
+  },
+  "limitations": [
+    "This evidence covers only English standalone Adobe Flash Player playback.",
+    "It does not prove Spanish behavior driven by parent-movie variables.",
+    "Silent PNG comparison does not prove either language's audio activation or synchronization.",
+    "The authoritative baseline uses recorded alpha-composite normalization for transparent macOS window corners; invalidated captures were not used.",
+    "This engineering prereview is not a human visual-review signature and is not owner acceptance."
+  ]
+}

@@ -20,9 +20,11 @@
 
 ## Baseline
 
-- [ ] An independent original/Ruffle/Animate baseline is identified and versioned.
+- [ ] Every requirement is satisfied by the required `original-runtime-natural-trace`, `original-runtime-direct-seek`, or `original-runtime-frame-step` authority; any Ruffle capture is labeled forensic-only.
+- [ ] Every requirement binds its frame domain, trace, entry-state hash, scenario, language, seed, authority, and exact frame range.
 - [ ] Frame 1, all transition boundaries, text/count changes, interactions, final frame, and Replay are listed in `keyframes.csv`.
 - [ ] Native-size baseline images exist for every required keyframe.
+- [ ] Complete original-runtime baseline manifests exist for every strict full-frame requirement.
 - [ ] Every baseline, implementation, diff, capture-manifest, metrics, asset, and audio checksum verifies.
 - [ ] Emulator differences and evidence conflicts are documented.
 
@@ -44,15 +46,19 @@
 - [ ] Metadata and every required timeline beat have automated tests.
 - [ ] Language variants, boundary frames, completion, and Replay have automated tests.
 - [ ] Every reachable scenario and every language has complete frame 1-through-terminal coverage.
+- [ ] Keyframe spot checks and complete full-frame coverage are reported separately.
 - [ ] All tests pass.
 - [ ] Production build passes.
 - [ ] Implementation images exist for every required keyframe.
 - [ ] Diff images and normalized RMSE values exist for every required keyframe.
-- [ ] Static keyframes meet RMSE `<= 0.05` or have an accepted written exception.
-- [ ] Transition keyframes meet RMSE `<= 0.08` or have an accepted written exception.
-- [ ] Every diff image received human visual review.
+- [ ] Complete baseline and implementation capture manifests plus per-frame metrics bind every full-frame PNG and SHA-256 pair.
+- [ ] Every designated static keyframe and static full-frame metric meets RMSE `<= 0.05` or has an accepted written exception.
+- [ ] Every transition keyframe and transition full-frame metric meets RMSE `<= 0.08` or has an accepted written exception.
+- [ ] Every diff image and contact-sheet page received human visual review, recorded in an immutable hash-bound human review record.
 - [ ] The full-frame capture manifest reports zero console errors, failed requests, HTTP errors, and unexpected network calls.
 - [ ] Capture PNG files decode and match the native stage dimensions at device scale 1.
+- [ ] Machine audio audit and `audio-inventory.csv` agree with source hashes, languages, durations, cue semantics, and host dependencies.
+- [ ] Required audio has named-human authorized-original-runtime listening/traversal/synchronization/Replay acceptance; no-audio cases have source-bound accepted-not-required negative evidence.
 
 ## Product Quality
 
@@ -67,8 +73,8 @@
 
 - [ ] `MIGRATION_BRIEF.md`, `migration.json`, CSV inventories, and evidence paths are complete.
 - [ ] Known exceptions and owner decisions are explicit.
-- [ ] Engineering and human visual reviews include reviewer identity and review date.
-- [ ] Owner acceptance includes reviewer/date, or `not-required` includes an explicit reason.
+- [ ] Engineering review includes reviewer identity and review date.
+- [ ] Accepted human visual review points to an immutable `{ path, bytes, sha256 }` record whose reviewer/date/scope are mirrored in `migration.json`.
+- [ ] Accepted owner review points to an immutable `{ path, bytes, sha256 }` record that binds the exact human, audio, behavior, product, and exception evidence and mirrors the reviewer, date, and reason.
 - [ ] Strict migration validator passes.
 - [ ] Final report lists source hashes, route, package, tests, build, keyframes, RMSE, and exceptions.
-- [ ] Owner review is accepted or explicitly marked not required.

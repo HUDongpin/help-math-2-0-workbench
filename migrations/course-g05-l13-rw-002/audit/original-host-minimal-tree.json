@@ -1,0 +1,246 @@
+{
+  "animationId": "course-g05-l13-rw-002",
+  "archiveRoot": "source-assets/flash/HELP MATH_ORIGINAL FILES",
+  "artifactType": "help-math-original-host-minimal-lesson-tree-manifest",
+  "expectedRelativeLayoutFromArchiveRoot": [
+    "HELP_COURSES/ELMGR5/L13/index_local.swf",
+    "HELP_COURSES/ELMGR5/L13/IR/L13RW01.swf",
+    "HELP_COURSES/ELMGR5/L13/RW/L13RW02.swf",
+    "HELP_COURSES/ELMGR5/L13/SA/L13RW02.mp3",
+    "HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTEG4.xml"
+  ],
+  "explicitlyExcludedFromScopedRuntimeTree": [
+    {
+      "bytes": 15115,
+      "disposition": "not-required-for-this-scoped-host-entry",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/index.xml",
+      "rationale": "The compiled host contains LessonDetails and parses that embedded string; the scoped path does not execute an index.xml load.",
+      "role": "corroborating-authoring-metadata-not-read-by-this-host-entry-path",
+      "sha256": "71e34cf68f01f43ddd447ce7c858e4ff6fc04b5b8734c0fff272561593d1c524"
+    },
+    {
+      "disposition": "authoring-evidence-not-runtime-input",
+      "pathPattern": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/**/*.fla"
+    },
+    {
+      "disposition": "not-traversed-by-scoped-entry",
+      "pathPattern": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/{RW,VB,IN,TI,GS,TS,FQ,RE}/** except RW/L13RW02.swf"
+    },
+    {
+      "bytes": 374466,
+      "disposition": "conditional-glossary-spanish-switch-only",
+      "evidence": [
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineSprite_696/frame_1/DoAction.as",
+          "excerptId": "conditional-spanish-glossary-button",
+          "excerptSha256": "59b487707c49bfdc90c9f0896589fb9124db3ca45c6a79f85f5b30585261586f",
+          "lineEnd": 129,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 126,
+          "text": "_root.glossary.keyterms.BtnSpan.onRelease = function()\n{\n   _root.doSwitchSpanGloss();\n};\n"
+        },
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+          "excerptId": "conditional-spanish-glossary-path",
+          "excerptSha256": "cdfac76d1a000bcced91d8b4cfff345ed8856f74d1f752cafc5cb28cfa5415ed",
+          "lineEnd": 3224,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 3218,
+          "text": "function doSwitchSpanGloss()\n{\n   var _loc1_ = _root;\n   var _loc2_ = _global;\n   _loc2_.KeyTermVar = _loc2_.xmlPath + \"XML/ELKTSG4.xml\";\n   _loc2_.LngFlag = \"Spanish\";\n   _loc1_.glossary.keyterms.C_L(\"Source\");\n"
+        },
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineButton2_221/BUTTONCONDACTION on(release).as",
+          "excerptId": "spanish-audio-play-button",
+          "excerptSha256": "0c57432147b74831cde8fae46320b50acfeef71d34d4dbeb4f64d0fc8561c6e6",
+          "lineEnd": 3,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 1,
+          "text": "on(release){\n   _root.doPlaySpanishAudio();\n}\n"
+        }
+      ],
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTSG4.xml",
+      "rationale": "The Spanish narration control only calls doPlaySpanishAudio. ELKTSG4.xml is selected solely by the separate glossary BtnSpan → doSwitchSpanGloss path.",
+      "role": "conditional-glossary-spanish-switch-only",
+      "sha256": "7f12ce833f1429073a11a3ea0dd9d9964eb773804c18c025bde12552b3be5a00"
+    },
+    {
+      "disposition": "conditional-term-selection-dependency-not-traversed-and-not-allowlisted",
+      "operatorConstraint": "Do not open or select glossary/keyterm controls during this scoped capture.",
+      "pathPattern": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/DIG/**"
+    }
+  ],
+  "generatedBy": {
+    "path": "scripts/build-rw002-original-host-entry-contract.mjs",
+    "sha256": "e866761348872d620251a8db82b2e645d2c7985d9db49ed88d94c84d9795df87"
+  },
+  "minimalityConditions": [
+    "Use a fresh ephemeral Flash profile with no incoming bookmark or FlashVars; the bookmark branch otherwise stops before default navigation.",
+    "Do not reuse the user's SharedObject state; isolate cookiename reads/writes to the ephemeral runtime profile.",
+    "Leave Report_URL and QuizReport_URL unset and deny all reporting/network calls.",
+    "Do not open or interact with glossary controls; the automatic English XML request still occurs and must be logged.",
+    "End the scoped trace at RW02 local frame 1873; do not press Next into RW03/RW04.",
+    "The Spanish trace specification does not itself schedule the host Spanish-audio button; presence of the MP3 in this tree is not proof that narration was executed or heard."
+  ],
+  "originalLessonTreeComparison": {
+    "lessonBytes": 204630573,
+    "lessonFileCount": 351,
+    "lessonRoot": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13",
+    "requiredLessonFileCount": 4,
+    "requiredUnionAsPercentOfLessonBytes": 3.068322,
+    "requiredUnionBytesIncludingExternalEnglishKeytermsXml": 6278724
+  },
+  "pathDerivationEvidence": [
+    {
+      "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_49/DoAction.as",
+      "excerptId": "default-startup-child-selection",
+      "excerptSha256": "31b7d6836b7db862ee723232f5be510b39f69267c2afb3fa81131b37a89100cf",
+      "lineEnd": 32,
+      "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+      "lineStart": 22,
+      "text": "if(_global.bookMark != false && _root.dtfBMID.text != \"\" && _root.dtfBMID.text != undefined && _root.dtfBMID.text != \"undefined\")\n{\n   _root.stop();\n   _root.bookmark_mc.gotoAndStop(2);\n}\nelse if(_global.sectionNumber == 0 || _global.sectionNumber == undefined)\n{\n   _global.sectionNumber = 1;\n   _global.slideNumber = 2;\n   _global.playSwfFileName = _global.tempURL + \"/IR/\" + _global.arrSection1_Details[_global.slideNumber];\n}\n"
+    },
+    {
+      "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_50/DoAction.as",
+      "excerptId": "default-startup-child-load",
+      "excerptSha256": "4fe09a314ca8cb7522296e2fe191469cdce381689359d7dc0ca7e76a3a6813f9",
+      "lineEnd": 18,
+      "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+      "lineStart": 1,
+      "text": "stop();\n_root.glossary.McKeyTermAngle1._visible = false;\n_root.glossary.McKeyTermAngle2._visible = false;\n_root.doCreateSlide();\n_root.title._visible = true;\n_root.top._y = _root.top_initial._y;\n_root.sideNavcontent._visible = true;\n_root.sideNav._visible = true;\n_root.sideexample._visible = true;\n_root.sideNav.dis.gotoAndStop(1);\n_root.map.enabled = true;\n_root.glossary._visible = false;\n_root.m_c.gotoAndStop(\"hide\");\n_root.calculator._visible = false;\n_root.l_s.gotoAndStop(\"map\");\n_global.quizSection = false;\n_root.doPutBackAndFinished();\n_root.loadSWFMovie();\n"
+    },
+    {
+      "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+      "excerptId": "embedded-lesson-map",
+      "excerptSha256": "342c3b67c3f662874416e901c7dbd52fae4d4f4f6f84bc6f4a8854bfc4626743",
+      "lineEnd": 3501,
+      "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+      "lineStart": 3498,
+      "text": "LessonDetails = \"[CourseDetails]~CourseName,Counting on Numbers~LessonName,Counting on Numbers~TotalSection,8[Details_Split][Section1Details]~IR~L13RW01.swf[Details_Split][Section2Details]~RW~L13RW02.swf~L13RW03.swf~L13RW04.swf[Details_Split][Section3Details]~VB~L13VB01.swf~L13VB02.swf~L13VB03.swf~L13VB04.swf~L13VB05.swf~L13VB06.swf~L13VB07.swf~L13VB08.swf~L13VB09.swf~L13VB10.swf~L13VB11.swf~L13VB12.swf~L13VB13.swf~L13VB14.swf~L13VB15.swf~L13VB16.swf~L13VB17.swf~L13VB18.swf~L13VB19.swf~L13VB20.swf[Details_Split][Section4Details]~IN~L13IN01.swf~L13IN02.swf~L13IN03.swf~L13IN04.swf~L13IN05.swf~L13IN06.swf~L13IN07.swf~L13IN08.swf~L13IN09.swf~L13IN10.swf~L13IN11.swf~L13IN12.swf~L13IN13.swf~L13IN14a.swf~L13IN14b.swf~L13IN15a.swf~L13IN15b.swf~L13IN16.swf~L13IN17a.swf~L13IN17b.swf~L13IN18.swf~L13IN19.swf~L13IN20.swf~L13IN21a.swf~L13IN21b.swf~L13IN22.swf~L13IN23.swf~L13IN24.swf~L13IN25.swf~L13IN26.swf[Details_Split][Section5Details]~TI~L13TI01.swf~L13TI02.swf~L13TI03.swf~L13TI04.swf~L13TI05.swf~L13TI06.swf~L13TI07.swf~L13TI08.swf~L13TI09.swf~L13TI10.swf~L13TI11.swf[Details_Split][Section6Details]~GS~L13GS01.swf~L13GS02.swf[Details_Split][Section7Details]~TS~L13TS01.swf~L13TS02.swf~L13TS03.swf~L13TS04.swf~L13TS05.swf~L13TS06.swf~L13TS07.swf~L13TS08.swf[Details_Split][Section8Details]~FQ~L13FQ01.swf~L13FQ02.swf~L13FQ03.swf\";\nSlideSpaceDetails = \"[Section1Details]~IR[Details_Split][Section2Details]~RW[Details_Split][Section3Details]~VB~3~6~10~12~13[Details_Split][Section4Details]~IN~4~5~7~8~9~10~13~15~16~17~18~19[Details_Split][Section5Details]~TI[Details_Split][Section6Details]~GS[Details_Split][Section7Details]~TS[Details_Split][Section8Details]~FQ\";\nRandomAudioDetails = \"[Section1Details]~IR~L13RW01.swf[Details_Split][Section2Details]~RW[Details_Split][Section3Details]~VB~L13VB01.swf[Details_Split][Section4Details]~IN~L13IN01.swf[Details_Split][Section5Details]~TI~L13TI01.swf[Details_Split][Section6Details]~GS~L13GS01.swf[Details_Split][Section7Details]~TS\";\nBGTextDetails = \"[Section1Details]~IR~L13RW01.swf[Details_Split][Section2Details]~RW[Details_Split][Section3Details]~VB~L13VB01.swf[Details_Split][Section4Details]~IN~L13IN01.swf[Details_Split][Section5Details]~TI~L13TI01.swf[Details_Split][Section6Details]~GS~L13GS01.swf[Details_Split][Section7Details]~TS~L13TS01.swf\";\n"
+    },
+    {
+      "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineButton2_344/BUTTONCONDACTION on(release).as",
+      "excerptId": "target-navigation-next-button",
+      "excerptSha256": "75209df5cab35512763c75487c2e7f76ba39b35ab758204b775b2ea22c7cefb5",
+      "lineEnd": 7,
+      "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+      "lineStart": 1,
+      "text": "on(release){\n   _global.gSound.stop();\n   _root.SA._visible = true;\n   _root.EA._visible = false;\n   _global.spanSound = false;\n   _root.doPlayNextMovie();\n}\n"
+    },
+    {
+      "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+      "excerptId": "target-navigation-ir-to-rw02",
+      "excerptSha256": "b85db0cceade8206a6189a1e4e772ee09ddb45f74f449fc795507c0e49251ae5",
+      "lineEnd": 812,
+      "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+      "lineStart": 783,
+      "text": "function doPlayNextMovie()\n{\n   var _loc1_ = _global;\n   var _loc2_ = _root;\n   _loc1_.Play = true;\n   _loc1_.Pause = false;\n   _loc1_.CompClick = \"\";\n   _loc1_.quizSection = false;\n   _loc1_.needMoreBackURL = \"\";\n   _loc1_.slideNumber = _loc1_.slideNumber + 1;\n   _loc2_.animation_mc.unloadMovie();\n   _loc2_.glossary.keyterms.mouse_down._x = _loc2_.glossary.keyterms.x_pos;\n   _loc2_.glossary.keyterms.mouse_down._y = _loc2_.glossary.keyterms.y_pos;\n   _loc2_.glossary._visible = false;\n   _loc2_.calculator._visible = false;\n   _loc2_.m_c._visible = false;\n   _loc2_.popup.gotoAndStop(1);\n   _loc2_.next.gotoAndStop(\"inactive\");\n   _loc2_.replay.gotoAndStop(\"inactive\");\n   if(_loc1_.sectionNumber == 1)\n   {\n      if(_loc1_.slideNumber > _loc1_.arrSection1_Details.length - 1)\n      {\n         _loc1_.sectionNumber = 2;\n         _loc1_.slideNumber = 2;\n         _loc1_.playSwfFileName = _loc1_.tempURL + \"/RW/\" + _loc1_.arrSection2_Details[_loc1_.slideNumber];\n         _loc2_.doCreateSlide();\n         _loc2_.doPutBackAndFinished();\n         _loc2_.loadSWFMovie();\n      }\n"
+    },
+    {
+      "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+      "excerptId": "lesson-root-url-derivation",
+      "excerptSha256": "72de9547761ba2f24f1e8858ca3ad209f202896399377cc47e36fb0383c121b2",
+      "lineEnd": 3648,
+      "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+      "lineStart": 3645,
+      "text": "tempURL = _root._url;\nsplTempURL = tempURL.split(\"index\");\n_global.tempURL = splTempURL[0].substring(0,splTempURL[0].length - 1);\n_global.xmlPath = \"../../../HELP_KEYTERMS/KT/ELEMENTARY/\";\n"
+    },
+    {
+      "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+      "excerptId": "spanish-audio-stop-load-and-completion-resume",
+      "excerptSha256": "64df27d2d35059de783ca86b16f7667536ad12a2f114d25266f328a3dea98927",
+      "lineEnd": 2374,
+      "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+      "lineStart": 2344,
+      "text": "function doPlaySpanishAudio()\n{\n   if(_global.sectionNumber == 2 || _global.sectionNumber == 3 || _global.sectionNumber == 4 || _global.sectionNumber == 5 || _global.sectionNumber == 6 || _global.sectionNumber == 7 && _global.slideNumber != 2)\n   {\n      _root.SA._visible = false;\n      _root.SA_PLAY._alpha = 100;\n      _root.SA_PAUSE._alpha = 100;\n      _root.SA_PLAY._visible = false;\n      _root.SA_PAUSE._visible = true;\n      _root.EA._visible = true;\n      _global.spanSound = true;\n      SFTemFName = _global.playSwfFileName.split(\"/\");\n      SSTemFName = SFTemFName[SFTemFName.length - 1].split(\".\");\n      _root.animation_mc.animation.stop();\n      SndFName = _global.tempURL + \"/SA/\" + SSTemFName[0] + \".mp3\";\n      _global.gSound.loadSound(SndFName,1);\n      _global.gSound.onSoundComplete = function()\n      {\n         var _loc1_ = _root;\n         var _loc2_ = _global;\n         _loc2_.gSound.stop();\n         if(_loc1_.animation_mc.animation._currentframe != _loc1_.animation_mc.animation._totalframes && _loc2_.quizSection == false)\n         {\n            _loc1_.animation_mc.animation.play();\n         }\n         _loc1_.SA._visible = true;\n         _loc1_.SA_PLAY._visible = false;\n         _loc1_.SA_PAUSE._visible = false;\n         _loc1_.EA._visible = false;\n         _loc2_.spanSound = false;\n      };\n"
+    },
+    {
+      "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineSprite_696/frame_1/DoAction.as",
+      "excerptId": "keyterms-instance-auto-init",
+      "excerptSha256": "82818b6b3baf538b2b8d2ebc576600b1bd1335cf308bfb473687b5936a6f3abb",
+      "lineEnd": 17,
+      "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+      "lineStart": 9,
+      "text": "function C_L(M_Name)\n{\n   _root.doCreateGlossaryWord(M_Name);\n}\nfunction C_S(M_Name, Word)\n{\n   _root.doCreateGlossAlph(M_Name,Word);\n}\n_root.doInitKeyTerms();\n"
+    },
+    {
+      "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+      "excerptId": "keyterms-english-path-and-load-dispatch",
+      "excerptSha256": "c20a2583dbffe4fe82c41fccec16000b8dde80397870979dadc7529a36a0308e",
+      "lineEnd": 2872,
+      "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+      "lineStart": 2858,
+      "text": "function doInitKeyTerms()\n{\n   var _loc1_ = _root;\n   var _loc2_ = _global;\n   _loc1_.glossary.keyterms.BtnBack._visible = false;\n   _loc2_.scrollUp;\n   _loc2_.scrollDown;\n   _loc2_.KeyTermVar = _loc2_.xmlPath + \"XML/ELKTEG4.xml\";\n   _loc1_.glossary.keyterms.DesEng.html = true;\n   _loc1_.glossary.keyterms.DesSpan.html = true;\n   _loc1_.glossary.keyterms.Display = \"\";\n   _loc1_.glossary.keyterms.title = \"\";\n   _loc1_.glossary.keyterms.spanish_title = \"\";\n   _loc1_.glossary.keyterms.C_L(\"Source\");\n   _loc1_.glossary.keyterms.stop();\n"
+    },
+    {
+      "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+      "excerptId": "keyterms-xml-load",
+      "excerptSha256": "35e098d15c93e7302a4027af9d169e30e48b7b2af7887fd1a672b6455ba97495",
+      "lineEnd": 2422,
+      "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+      "lineStart": 2403,
+      "text": "function doCreateGlossaryWord(M_Name)\n{\n   var _loc1_ = _root;\n   var _loc2_ = _global;\n   i = 0;\n   while(i < _loc2_.arrKeyTermBank.length)\n   {\n      splKeyTerm = _loc2_.arrKeyTermBank[i].split(\"SPLDATA\");\n      _loc1_.glossary.keyterms.Sample[splKeyTerm[0]].removeMovieClip();\n      i++;\n   }\n   _loc2_.arrTempKeyTerm = new Array();\n   M_Name += \"_\";\n   _loc1_.glossary.keyterms.BtnBack._visible = false;\n   _loc1_.glossary.keyterms.TempTotCount = -1;\n   F_X = new XML();\n   _loc1_.QU = _loc2_.KeyTermVar;\n   F_X.load(_loc2_.KeyTermVar);\n   F_X.ignoreWhite = true;\n   F_X.onLoad = function()\n"
+    }
+  ],
+  "requiredFileCount": 5,
+  "requiredFiles": [
+    {
+      "bytes": 676556,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/index_local.swf",
+      "proof": "operator launches this original host",
+      "requirement": "always-required",
+      "role": "unmodified-original-lesson-host",
+      "sha256": "956d8e90ca07d59aeb9b3e97bc20f7e2e14221125913d8f774b8c98a61d4292d"
+    },
+    {
+      "bytes": 54864,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/IR/L13RW01.swf",
+      "proof": "frame 49 selects IR slide index 2 and frame 50 calls loadSWFMovie",
+      "requirement": "always-required-for-clean-default-entry",
+      "role": "source-script-proven-default-startup-child",
+      "sha256": "bf91ca582fab1b414950af18fa10c2e5676804102e26c1b2ceadef338405473e"
+    },
+    {
+      "bytes": 4796905,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/RW/L13RW02.swf",
+      "proof": "embedded Real World lesson map names L13RW02.swf",
+      "requirement": "always-required",
+      "role": "target-animation-child",
+      "sha256": "bf9ab1d12832fbe54c5bef08d0dd51307169eefbae1f75188efd9db94ed9e4e6"
+    },
+    {
+      "bytes": 371616,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/SA/L13RW02.mp3",
+      "proof": "doPlaySpanishAudio derives SA/<current basename>.mp3",
+      "requirement": "required-for-spanish-audio-traversal",
+      "role": "source-script-derived-spanish-user-activated-track",
+      "sha256": "2e809c69df60cec11427a71d38b37b830a0a9ec805e3c8ff4f68734cb53bfcd2"
+    },
+    {
+      "bytes": 378783,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTEG4.xml",
+      "proof": "root frame 50 placement enters sprite 696 doInitKeyTerms → C_L → doCreateGlossaryWord → XML.load",
+      "requirement": "automatic-ancillary-read",
+      "role": "automatic-english-keyterm-xml-read-at-host-root-frame-50",
+      "sha256": "bec389ce286b9a113297dfd87e052f28cf1da2640d93a277f91f669dfb3ef749"
+    }
+  ],
+  "requiredTotalBytes": 6278724,
+  "schemaVersion": 1,
+  "selectionPolicy": {
+    "failClosed": true,
+    "rationale": "Only byte-preserved source files proven necessary by the scoped original-host path are allowlisted; the remaining lesson tree is neither copied nor inferred as necessary.",
+    "scopedOperation": "launch-unmodified-index_local-host-enter-default-startup-then-navigate-to-RW-L13RW02-and-optionally-exercise-Spanish-audio",
+    "sourceTreeCopiedByThisGenerator": false
+  },
+  "structuralPlacementProof": {
+    "path": "migrations/course-g05-l13-rw-002/audit/original-host-placement-proof.json",
+    "sha256": "3349fc83ba03916b5d12e08530aed3d1edb3a10c740e24f5fbf276330af4d890"
+  },
+  "validation": {
+    "allRequiredFilesExist": true,
+    "allRequiredHashesMatch": true,
+    "automaticKeytermRequestRuntimeResultPending": true,
+    "layoutDerivedFromSourceScripts": true,
+    "wholeLessonTreeRequired": false
+  }
+}

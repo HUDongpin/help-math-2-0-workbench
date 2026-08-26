@@ -1,13 +1,866 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "animationId": "shell-course-g04-l01-index-local",
-  "frameCount": 0,
-  "languages": [
-    "en",
-    "es"
-  ],
-  "scenarios": [
-    "default"
-  ],
-  "combinations": []
+  "requirements": [
+    {
+      "requirementId": "req:root:default:en",
+      "scenario": "default",
+      "frameDomainId": "root",
+      "traceId": "trace:root:default:en:seed-0",
+      "language": "en",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "default",
+        "language": "en",
+        "seed": "0"
+      },
+      "entryStateSha256": "4040d01285cccec9ab9de736f732ce96f269bd41f869e7b8c6a6b25d89b71efa",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-default-en/capture-manifest.json",
+          "sha256": "3e5fc59fdbda3c6254b425a398d40f6d7ddea58b83bd44387154a0314bc57a17"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-default-en/capture-manifest.json",
+      "captureManifestSha256": "3e5fc59fdbda3c6254b425a398d40f6d7ddea58b83bd44387154a0314bc57a17",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:default:es",
+      "scenario": "default",
+      "frameDomainId": "root",
+      "traceId": "trace:root:default:es:seed-0",
+      "language": "es",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "default",
+        "language": "es",
+        "seed": "0"
+      },
+      "entryStateSha256": "db44c6cbe20a92bab99ee963454b2da751174496e81e1b288083abd7358da72f",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-default-es/capture-manifest.json",
+          "sha256": "d1a906d6ff8ea63249eed1be260c1c06acb741ace4e5e51a76a53f3ec93ef1f3"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-default-es/capture-manifest.json",
+      "captureManifestSha256": "d1a906d6ff8ea63249eed1be260c1c06acb741ace4e5e51a76a53f3ec93ef1f3",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:section-ir:en",
+      "scenario": "section-ir",
+      "frameDomainId": "root",
+      "traceId": "trace:root:section-ir:en:seed-0",
+      "language": "en",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "section-ir",
+        "language": "en",
+        "seed": "0"
+      },
+      "entryStateSha256": "5cee776966c8ef79a64c2fb607376240cc9b8e06cbc680326edc32ac7e044127",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-ir-en/capture-manifest.json",
+          "sha256": "ddf7a4dfa238e082f0987e02c0e51ca19eca820e60e0afbf36605fb4c630b275"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-ir-en/capture-manifest.json",
+      "captureManifestSha256": "ddf7a4dfa238e082f0987e02c0e51ca19eca820e60e0afbf36605fb4c630b275",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:section-ir:es",
+      "scenario": "section-ir",
+      "frameDomainId": "root",
+      "traceId": "trace:root:section-ir:es:seed-0",
+      "language": "es",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "section-ir",
+        "language": "es",
+        "seed": "0"
+      },
+      "entryStateSha256": "6c5c0cf3adc0622c4e8da1c6bdb0c9b3bc3f7785b4e7ec4154a62c247eb671f6",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-ir-es/capture-manifest.json",
+          "sha256": "3fe25a5fb6886de29348598f6fa5301cf08188e58f0ae4de9c7942cd8b2d97e0"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-ir-es/capture-manifest.json",
+      "captureManifestSha256": "3fe25a5fb6886de29348598f6fa5301cf08188e58f0ae4de9c7942cd8b2d97e0",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:section-rw:en",
+      "scenario": "section-rw",
+      "frameDomainId": "root",
+      "traceId": "trace:root:section-rw:en:seed-0",
+      "language": "en",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "section-rw",
+        "language": "en",
+        "seed": "0"
+      },
+      "entryStateSha256": "5fbb8dced0b95986f2744fac1f60a67e56b0ef14e37451b4ee4810bba64dbff4",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-rw-en/capture-manifest.json",
+          "sha256": "445a3253f97c5ee3210de7ef3a05189b526166b000b9488ed5a96fd966251d36"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-rw-en/capture-manifest.json",
+      "captureManifestSha256": "445a3253f97c5ee3210de7ef3a05189b526166b000b9488ed5a96fd966251d36",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:section-rw:es",
+      "scenario": "section-rw",
+      "frameDomainId": "root",
+      "traceId": "trace:root:section-rw:es:seed-0",
+      "language": "es",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "section-rw",
+        "language": "es",
+        "seed": "0"
+      },
+      "entryStateSha256": "1b3e9dc0ccb793067f78558f6b4cd2ab6a7a75af2e377d08c5bc4d97e0f86702",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-rw-es/capture-manifest.json",
+          "sha256": "71f43a61247ff2349bcde6151cccf844a618c3fe19d238f74f29551ae1d3511e"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-rw-es/capture-manifest.json",
+      "captureManifestSha256": "71f43a61247ff2349bcde6151cccf844a618c3fe19d238f74f29551ae1d3511e",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:section-vb:en",
+      "scenario": "section-vb",
+      "frameDomainId": "root",
+      "traceId": "trace:root:section-vb:en:seed-0",
+      "language": "en",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "section-vb",
+        "language": "en",
+        "seed": "0"
+      },
+      "entryStateSha256": "ec22625b372e9ed726340c17607cc2dd427d4cb630d069716dcbb1f5f2e43145",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-vb-en/capture-manifest.json",
+          "sha256": "3fbfcb176446251f2da3ad1f46acb89a9e053c8df6f7049b89e172a0c5257504"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-vb-en/capture-manifest.json",
+      "captureManifestSha256": "3fbfcb176446251f2da3ad1f46acb89a9e053c8df6f7049b89e172a0c5257504",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:section-vb:es",
+      "scenario": "section-vb",
+      "frameDomainId": "root",
+      "traceId": "trace:root:section-vb:es:seed-0",
+      "language": "es",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "section-vb",
+        "language": "es",
+        "seed": "0"
+      },
+      "entryStateSha256": "b56227058a4d80a92218cf6fed595bda7d1d9027774892863762769555270c51",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-vb-es/capture-manifest.json",
+          "sha256": "2a36ad2eba7229e7c3b7ba70b55a3d98837b1d9b427d8e8a7d2ad291b042d71e"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-vb-es/capture-manifest.json",
+      "captureManifestSha256": "2a36ad2eba7229e7c3b7ba70b55a3d98837b1d9b427d8e8a7d2ad291b042d71e",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:section-in:en",
+      "scenario": "section-in",
+      "frameDomainId": "root",
+      "traceId": "trace:root:section-in:en:seed-0",
+      "language": "en",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "section-in",
+        "language": "en",
+        "seed": "0"
+      },
+      "entryStateSha256": "7fdfb8b43e18be63577af22de644e0ec238f4218bca2052c13d37279aabc98a1",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-in-en/capture-manifest.json",
+          "sha256": "45039d67dcfd6ee58502512c32838deb15c44a32d62e55a534002f223e66417a"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-in-en/capture-manifest.json",
+      "captureManifestSha256": "45039d67dcfd6ee58502512c32838deb15c44a32d62e55a534002f223e66417a",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:section-in:es",
+      "scenario": "section-in",
+      "frameDomainId": "root",
+      "traceId": "trace:root:section-in:es:seed-0",
+      "language": "es",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "section-in",
+        "language": "es",
+        "seed": "0"
+      },
+      "entryStateSha256": "f2af1fc75b54f66a7902a5b485d3d1e54dffe9f99c00f892608eddf5282d4b82",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-in-es/capture-manifest.json",
+          "sha256": "e82f9bde2f076a103ab97de1b851106e10e2c3c154e9ccf92f761f175c8abd42"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-in-es/capture-manifest.json",
+      "captureManifestSha256": "e82f9bde2f076a103ab97de1b851106e10e2c3c154e9ccf92f761f175c8abd42",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:section-ti:en",
+      "scenario": "section-ti",
+      "frameDomainId": "root",
+      "traceId": "trace:root:section-ti:en:seed-0",
+      "language": "en",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "section-ti",
+        "language": "en",
+        "seed": "0"
+      },
+      "entryStateSha256": "f968a21d43c42aa4630bd158dd2bc15638cfc14e7e71f8bf70ae880b40737cf6",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-ti-en/capture-manifest.json",
+          "sha256": "a3fef59ce04000f40b45b5bd3b439846a82e4e192a9860f69009aa7f2db170b5"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-ti-en/capture-manifest.json",
+      "captureManifestSha256": "a3fef59ce04000f40b45b5bd3b439846a82e4e192a9860f69009aa7f2db170b5",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:section-ti:es",
+      "scenario": "section-ti",
+      "frameDomainId": "root",
+      "traceId": "trace:root:section-ti:es:seed-0",
+      "language": "es",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "section-ti",
+        "language": "es",
+        "seed": "0"
+      },
+      "entryStateSha256": "49cb8729ab74c5a98e8a2017332686cc808555ebc05218d8544d604940e74bc6",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-ti-es/capture-manifest.json",
+          "sha256": "c8a8cea38ef6fa1e84d9aabc3c9de046ed45110fa8d34f9cd22d5bac53896479"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-ti-es/capture-manifest.json",
+      "captureManifestSha256": "c8a8cea38ef6fa1e84d9aabc3c9de046ed45110fa8d34f9cd22d5bac53896479",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:section-gs:en",
+      "scenario": "section-gs",
+      "frameDomainId": "root",
+      "traceId": "trace:root:section-gs:en:seed-0",
+      "language": "en",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "section-gs",
+        "language": "en",
+        "seed": "0"
+      },
+      "entryStateSha256": "4fb141ec4313cb673df468368f11067fbc71e126840a11bdc60be51d6960786f",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-gs-en/capture-manifest.json",
+          "sha256": "b07349f2194f009b38cec416dba3ae4b0ef3f6b22488c180156026057154ed89"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-gs-en/capture-manifest.json",
+      "captureManifestSha256": "b07349f2194f009b38cec416dba3ae4b0ef3f6b22488c180156026057154ed89",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:section-gs:es",
+      "scenario": "section-gs",
+      "frameDomainId": "root",
+      "traceId": "trace:root:section-gs:es:seed-0",
+      "language": "es",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "section-gs",
+        "language": "es",
+        "seed": "0"
+      },
+      "entryStateSha256": "b04be4bd049b801ab74b19a0f499caacc422306419c6fe915f73491c4732bc85",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-gs-es/capture-manifest.json",
+          "sha256": "12b4ac15664967485af8945fff6eae5434f956b234a30b668b1be8022c25dd40"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-gs-es/capture-manifest.json",
+      "captureManifestSha256": "12b4ac15664967485af8945fff6eae5434f956b234a30b668b1be8022c25dd40",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:section-ts:en",
+      "scenario": "section-ts",
+      "frameDomainId": "root",
+      "traceId": "trace:root:section-ts:en:seed-0",
+      "language": "en",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "section-ts",
+        "language": "en",
+        "seed": "0"
+      },
+      "entryStateSha256": "75d44b76463f9d748f4c0aa92335bd2aa77239965ef4e5e54d058ddb7982a8e4",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-ts-en/capture-manifest.json",
+          "sha256": "a14a88e0cca771dbf5b8b0bb566a375eaa6b0a784564394cf057f329e613aa14"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-ts-en/capture-manifest.json",
+      "captureManifestSha256": "a14a88e0cca771dbf5b8b0bb566a375eaa6b0a784564394cf057f329e613aa14",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:section-ts:es",
+      "scenario": "section-ts",
+      "frameDomainId": "root",
+      "traceId": "trace:root:section-ts:es:seed-0",
+      "language": "es",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "section-ts",
+        "language": "es",
+        "seed": "0"
+      },
+      "entryStateSha256": "d7f5a2d65ee7917ab786a8f601fb6b09cfa0555379b5eae635dd1676420ebc88",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-ts-es/capture-manifest.json",
+          "sha256": "403eb47145262fcf89b375cd8695043d300f44892adff49d1239b169c8f27c29"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-ts-es/capture-manifest.json",
+      "captureManifestSha256": "403eb47145262fcf89b375cd8695043d300f44892adff49d1239b169c8f27c29",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:section-fq:en",
+      "scenario": "section-fq",
+      "frameDomainId": "root",
+      "traceId": "trace:root:section-fq:en:seed-0",
+      "language": "en",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "section-fq",
+        "language": "en",
+        "seed": "0"
+      },
+      "entryStateSha256": "7847ef287abac6b55723350f663a3fecf995d269381c3ddd165ab55a3d07e441",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-fq-en/capture-manifest.json",
+          "sha256": "23a4122bf35fe19fac0e04f49b8a336a42b63682c6b9f5a755a45398d1603f9e"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-fq-en/capture-manifest.json",
+      "captureManifestSha256": "23a4122bf35fe19fac0e04f49b8a336a42b63682c6b9f5a755a45398d1603f9e",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:section-fq:es",
+      "scenario": "section-fq",
+      "frameDomainId": "root",
+      "traceId": "trace:root:section-fq:es:seed-0",
+      "language": "es",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "section-fq",
+        "language": "es",
+        "seed": "0"
+      },
+      "entryStateSha256": "c6d8894114df9e3654e4374ce4cf480d92fd40cd43915c313019a9206b6fef37",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-fq-es/capture-manifest.json",
+          "sha256": "a7a9bd475b843ce541ae8714f560a45a5b4f3346460886c954fc1eb249095e64"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-section-fq-es/capture-manifest.json",
+      "captureManifestSha256": "a7a9bd475b843ce541ae8714f560a45a5b4f3346460886c954fc1eb249095e64",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:quit-confirmation:en",
+      "scenario": "quit-confirmation",
+      "frameDomainId": "root",
+      "traceId": "trace:root:quit-confirmation:en:seed-0",
+      "language": "en",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "quit-confirmation",
+        "language": "en",
+        "seed": "0"
+      },
+      "entryStateSha256": "285c18fb655016a53b40a1f2a5c222c61ac80745e3bdd30ad63e01e4fa1be7ad",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-quit-confirmation-en/capture-manifest.json",
+          "sha256": "5accc8ab23cc099fa1462bb96941b483f760b84ad9b647a8fba08ad76fc239be"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-quit-confirmation-en/capture-manifest.json",
+      "captureManifestSha256": "5accc8ab23cc099fa1462bb96941b483f760b84ad9b647a8fba08ad76fc239be",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:quit-confirmation:es",
+      "scenario": "quit-confirmation",
+      "frameDomainId": "root",
+      "traceId": "trace:root:quit-confirmation:es:seed-0",
+      "language": "es",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 50
+      },
+      "entryState": {
+        "kind": "original-shell-natural-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "quit-confirmation",
+        "language": "es",
+        "seed": "0"
+      },
+      "entryStateSha256": "12ec70e2d6aceb1f8dd65d5c2fb9f2421997342351e77bab728215ef10c8483d",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "1829be3b504e0eb5d829fc840601c770de9a36eddfcb7f86a279ed066fbc0b3c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-quit-confirmation-es/capture-manifest.json",
+          "sha256": "ec758ac9399e671c0845aa95ec690c8e08122fafd07263d358f202e3e47f1853"
+        }
+      ],
+      "capturedFrameCount": 50,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/shell-course-g04-l01-index-local/req-root-quit-confirmation-es/capture-manifest.json",
+      "captureManifestSha256": "ec758ac9399e671c0845aa95ec690c8e08122fafd07263d358f202e3e47f1853",
+      "metricsFile": "",
+      "metricsSha256": ""
+    }
+  ]
 }

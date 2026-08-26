@@ -1,0 +1,3 @@
+# course-g04-l09-ti-004
+
+P5.1 admits only G4 L9 source occurrence 29 through a bounded advanced-manual implementation. TI004 keeps its own 42-action core, S1-S4 source random cycle, six source-instance drag outcomes, four-unique-correct terminal condition, 12 source glossary handlers, exact audio identity, calibration, registry module, and Replay reset. It does not clone TI007/doGetRndQuest behavior. This is private Current-JS engineering integration only; it is not exact-equivalence admission, original-runtime parity, fidelity or audio acceptance, human or Owner acceptance, strict completion, formal release, publication, production verification, F08-family scale-out, or 43-page scale-out.

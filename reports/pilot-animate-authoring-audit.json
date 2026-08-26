@@ -1,0 +1,827 @@
+{
+  "schemaVersion": 1,
+  "evidenceKind": "pilot-adobe-animate-authoring-coverage-index",
+  "generatedFromEvidenceAt": "Wed, 22 Jul 2026 07:09:08 GMT",
+  "scope": "Adobe Animate authoring structure only; no original-runtime, audio-listening, human-review, owner, or strict acceptance authority",
+  "authorityBoundary": {
+    "authoringStructureEvidence": true,
+    "runtimeBehaviorEvidence": false,
+    "fullFrameFidelityEvidence": false,
+    "audioListeningEvidence": false,
+    "humanVisualReview": false,
+    "ownerAcceptance": false,
+    "strictAcceptanceEffect": false
+  },
+  "animateProbe": {
+    "status": "passed",
+    "scope": "disposable-blank-document",
+    "animateVersion": "MAC 21,0,7,42652",
+    "executable": "/Applications/Adobe Animate 2021/Adobe Animate 2021.app/Contents/MacOS/Adobe Animate 2021",
+    "executableSha256": "fc7903fe74b3ad16842274eeffef12e18bcb51cee8722d7fd69166948991fbcb",
+    "capturedAt": "Wed, 22 Jul 2026 07:09:08 GMT",
+    "receipt": {
+      "file": "work/animate/jsfl-cli-probes/run-pbVdi8/probe-result.json",
+      "sha256": "941c75066249dbdd1c646d10b9131f79ce31c2648e2f17df0dc3b307b7d835aa"
+    },
+    "auditScript": {
+      "file": "scripts/animate-audit-current-document.jsfl",
+      "sha256": "043188cb940adc1895a8682ca2c5e146faf07e96a03bade11c62073055dda0ae"
+    },
+    "limitations": [
+      "This proves cold-start JSFL execution and the authoring-audit script on a generated blank document only.",
+      "It does not prove that a legacy HELP Math FLA can open unattended; legacy ActionScript conversion dialogs can require a human acknowledgement.",
+      "It does not establish runtime, localization, interaction, audio, or visual fidelity for any migration."
+    ]
+  },
+  "summary": {
+    "pilots": 16,
+    "flaBacked": 8,
+    "swfOnly": 8,
+    "verifiedAuthoringAudits": 8,
+    "legacyPartialAuthoringAudits": 0,
+    "missingAuthoringAudits": 0,
+    "pendingAuthoringAudits": 0,
+    "metadataConsistentLegacyOrCurrentAudits": 8,
+    "readOnlyWorkingCopiesReady": 8,
+    "authoringCoverageComplete": true,
+    "strictAcceptanceEffect": false
+  },
+  "pendingAnimationIds": [],
+  "pilots": [
+    {
+      "animationId": "formula-elementary-conversion-01-01",
+      "sourceKind": "fla-and-swf",
+      "status": "verified-current-recursive-authoring-audit",
+      "migration": {
+        "file": "migrations/formula-elementary-conversion-01-01/migration.json",
+        "sha256": "5a16f7ebae49b069108d07712726dda39809a9eed7922737c942fb4ddec48a99"
+      },
+      "swf": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SWF/Conversion_1_1.swf",
+        "sha256": "72d1e337b81939bace7eddf0b4994b469b73f3e4c8b103d82c06bda858dcd8a3"
+      },
+      "fla": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SWF/Conversion_1_1.fla",
+        "sha256": "9b369aa2a927e0417a7aef0c94956f609643b6c6737ba824a308d32ba8d928d4"
+      },
+      "workingCopy": {
+        "file": "work/animate/read-only-fla-copies/formula-elementary-conversion-01-01/Conversion_1_1.fla",
+        "sha256": "9b369aa2a927e0417a7aef0c94956f609643b6c6737ba824a308d32ba8d928d4",
+        "bytes": 323072,
+        "readOnly": true,
+        "byteIdenticalToSource": true
+      },
+      "authoringAudit": {
+        "file": "migrations/formula-elementary-conversion-01-01/audit/adobe-animate-2021-authoring-audit.json",
+        "sha256": "a76b9696ccdd578b96e379a24c939fef7e72eeb658d3d0d0741a9b28fbbe004b",
+        "animateVersion": "MAC 21,0,7,42652",
+        "capturedAt": "Wed, 22 Jul 2026 02:19:03 GMT",
+        "nativeMovie": {
+          "width": 780,
+          "height": 379,
+          "fps": 12,
+          "frameCount": 94,
+          "backgroundColor": "#E4E4E4",
+          "rootLayerCount": 17,
+          "libraryItemCount": 9
+        },
+        "nativeMetadataMatchesManifest": true,
+        "authoringFrame": {
+          "file": "migrations/formula-elementary-conversion-01-01/audit/adobe-animate-2021-authoring-frame-0094.png",
+          "sha256": "840aa9f4da684794c3433db1e34c15ec159d5b26a7db0d381e93c4510e00ad65",
+          "flashFrame": 94,
+          "width": 780,
+          "height": 379
+        },
+        "rawAudit": null,
+        "structure": {
+          "rootLayerCount": 17,
+          "rootKeyframeCount": 53,
+          "rootActionScriptKeyframeCount": 2,
+          "rootSoundKeyframeCount": 0,
+          "maskLayerCount": 2,
+          "libraryItemCount": 9,
+          "libraryTypes": {
+            "graphic": 4,
+            "movie clip": 3,
+            "button": 1,
+            "compiled clip": 1
+          },
+          "replayLibraryItems": [
+            {
+              "name": "Replay",
+              "itemType": "button"
+            }
+          ]
+        },
+        "comprehensiveCurrentContract": true,
+        "contractChecks": {
+          "canonicalSchemaV2": true,
+          "readOnlyWorkingCopyBound": true,
+          "currentAuditScriptBound": true,
+          "recursiveLibraryTimelineAudit": true,
+          "recursiveElementsPresent": true
+        },
+        "limitations": [
+          "Animate 2021 converts this unsupported ActionScript 1 document to ActionScript 3 in memory and may remove attached ActionScript 1 code.",
+          "The original shipped SWF bytecode and Adobe Flash Player runtime capture remain authoritative for runtime behavior.",
+          "This authoring-stage capture does not prove host variables, interaction branches, localization selection, audio synchronization, or Replay behavior."
+        ]
+      },
+      "nextAction": null,
+      "strictAcceptanceEffect": false
+    },
+    {
+      "animationId": "formula-elementary-conversion-01-02",
+      "sourceKind": "fla-and-swf",
+      "status": "verified-current-recursive-authoring-audit",
+      "migration": {
+        "file": "migrations/formula-elementary-conversion-01-02/migration.json",
+        "sha256": "b4d7c3aab06b848bbb2335d147ec501ce06f70c43eda5f2a1d67fc790963230e"
+      },
+      "swf": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SWF/Conversion_1_2.swf",
+        "sha256": "91d63f9f045d2097cd0f46c59ceacd4faefd95851f9039003589d8052c39e758"
+      },
+      "fla": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SWF/Conversion_1_2.fla",
+        "sha256": "7c59923ebd200f4fb951e1c9a7683861c21af7688d537fa5fca370acf6d9291d"
+      },
+      "workingCopy": {
+        "file": "work/animate/read-only-fla-copies/formula-elementary-conversion-01-02/Conversion_1_2.fla",
+        "sha256": "7c59923ebd200f4fb951e1c9a7683861c21af7688d537fa5fca370acf6d9291d",
+        "bytes": 688640,
+        "readOnly": true,
+        "byteIdenticalToSource": true
+      },
+      "authoringAudit": {
+        "file": "migrations/formula-elementary-conversion-01-02/audit/adobe-animate-2021-authoring-audit.json",
+        "sha256": "74213d85b7a294ced7163175037b2fb7bf9c24fa4e9e4efe2949aa1643a1bc3e",
+        "animateVersion": "MAC 21,0,7,42652",
+        "capturedAt": "Wed, 22 Jul 2026 02:21:08 GMT",
+        "nativeMovie": {
+          "width": 780,
+          "height": 379,
+          "fps": 12,
+          "frameCount": 109,
+          "backgroundColor": "#E4E4E4",
+          "rootLayerCount": 19,
+          "libraryItemCount": 10
+        },
+        "nativeMetadataMatchesManifest": true,
+        "authoringFrame": {
+          "file": "migrations/formula-elementary-conversion-01-02/audit/adobe-animate-2021-authoring-frame-0109.png",
+          "sha256": "9f3ec287e52a9b79d62b282fa4d6c596a98ce144ec918c6c6ab1158c722f375e",
+          "flashFrame": 109,
+          "width": 780,
+          "height": 379
+        },
+        "rawAudit": null,
+        "structure": {
+          "rootLayerCount": 19,
+          "rootKeyframeCount": 97,
+          "rootActionScriptKeyframeCount": 2,
+          "rootSoundKeyframeCount": 0,
+          "maskLayerCount": 2,
+          "libraryItemCount": 10,
+          "libraryTypes": {
+            "graphic": 5,
+            "movie clip": 3,
+            "button": 1,
+            "compiled clip": 1
+          },
+          "replayLibraryItems": [
+            {
+              "name": "Replay",
+              "itemType": "button"
+            }
+          ]
+        },
+        "comprehensiveCurrentContract": true,
+        "contractChecks": {
+          "canonicalSchemaV2": true,
+          "readOnlyWorkingCopyBound": true,
+          "currentAuditScriptBound": true,
+          "recursiveLibraryTimelineAudit": true,
+          "recursiveElementsPresent": true
+        },
+        "limitations": [
+          "Animate 2021 converts this unsupported ActionScript 1 document to ActionScript 3 in memory and may remove attached ActionScript 1 code.",
+          "The original shipped SWF bytecode and Adobe Flash Player runtime capture remain authoritative for runtime behavior.",
+          "This authoring-stage capture does not prove host variables, interaction branches, localization selection, audio synchronization, or Replay behavior."
+        ]
+      },
+      "nextAction": null,
+      "strictAcceptanceEffect": false
+    },
+    {
+      "animationId": "formula-elementary-conversion-01-03",
+      "sourceKind": "fla-and-swf",
+      "status": "verified-current-recursive-authoring-audit",
+      "migration": {
+        "file": "migrations/formula-elementary-conversion-01-03/migration.json",
+        "sha256": "71f8b65658c9a6b71c26a0a6e93261b21fca4c458e125027ff0a96f3628fb64e"
+      },
+      "swf": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SWF/Conversion_1_3.swf",
+        "sha256": "0a315ea564bcb79b809cabf1a5f406b3a16363f8ad654678ca2683534f09c818"
+      },
+      "fla": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SWF/Conversion_1_3.fla",
+        "sha256": "db7e027066f69dffe2337c36b6810182eb50ca8d5e5e020b6c5f43975517233b"
+      },
+      "workingCopy": {
+        "file": "work/animate/read-only-fla-copies/formula-elementary-conversion-01-03/Conversion_1_3.fla",
+        "sha256": "db7e027066f69dffe2337c36b6810182eb50ca8d5e5e020b6c5f43975517233b",
+        "bytes": 584704,
+        "readOnly": true,
+        "byteIdenticalToSource": true
+      },
+      "authoringAudit": {
+        "file": "migrations/formula-elementary-conversion-01-03/audit/adobe-animate-2021-authoring-audit.json",
+        "sha256": "5a47d6c5eef71f39c282d85097a3ce59f5c1d6fa84a7318063200328b447cb76",
+        "animateVersion": "MAC 21,0,7,42652",
+        "capturedAt": "Wed, 22 Jul 2026 02:22:34 GMT",
+        "nativeMovie": {
+          "width": 780,
+          "height": 379,
+          "fps": 12,
+          "frameCount": 170,
+          "backgroundColor": "#E4E4E4",
+          "rootLayerCount": 17,
+          "libraryItemCount": 11
+        },
+        "nativeMetadataMatchesManifest": true,
+        "authoringFrame": {
+          "file": "migrations/formula-elementary-conversion-01-03/audit/adobe-animate-2021-authoring-frame-0170.png",
+          "sha256": "0c8962ce7e790b6a6b5dab5d7f01298abc49e898626062e284227ce208b7f9d9",
+          "flashFrame": 170,
+          "width": 780,
+          "height": 379
+        },
+        "rawAudit": null,
+        "structure": {
+          "rootLayerCount": 17,
+          "rootKeyframeCount": 65,
+          "rootActionScriptKeyframeCount": 2,
+          "rootSoundKeyframeCount": 0,
+          "maskLayerCount": 2,
+          "libraryItemCount": 11,
+          "libraryTypes": {
+            "graphic": 6,
+            "movie clip": 3,
+            "button": 1,
+            "compiled clip": 1
+          },
+          "replayLibraryItems": [
+            {
+              "name": "Replay",
+              "itemType": "button"
+            }
+          ]
+        },
+        "comprehensiveCurrentContract": true,
+        "contractChecks": {
+          "canonicalSchemaV2": true,
+          "readOnlyWorkingCopyBound": true,
+          "currentAuditScriptBound": true,
+          "recursiveLibraryTimelineAudit": true,
+          "recursiveElementsPresent": true
+        },
+        "limitations": [
+          "Animate 2021 converts this unsupported ActionScript 1 document to ActionScript 3 in memory and may remove attached ActionScript 1 code.",
+          "The original shipped SWF bytecode and Adobe Flash Player runtime capture remain authoritative for runtime behavior.",
+          "This authoring-stage capture does not prove host variables, interaction branches, localization selection, audio synchronization, or Replay behavior."
+        ]
+      },
+      "nextAction": null,
+      "strictAcceptanceEffect": false
+    },
+    {
+      "animationId": "formula-elementary-conversion-01-04",
+      "sourceKind": "fla-and-swf",
+      "status": "verified-current-recursive-authoring-audit",
+      "migration": {
+        "file": "migrations/formula-elementary-conversion-01-04/migration.json",
+        "sha256": "2764ef8d68a5e07ecfcd5cac282d1ec8f227220d202c02ca04d5eb194103f5ff"
+      },
+      "swf": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SWF/Conversion_1_4.swf",
+        "sha256": "cbb7f3f529c8c5ca679da864c7c49ab472cac4d0feb2392eed5aa04d21a4e1a9"
+      },
+      "fla": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SWF/Conversion_1_4.fla",
+        "sha256": "d661c776e239fb59c44278c6e4d5fd75812599eb2dc9fa758b1ba37a59251b1c"
+      },
+      "workingCopy": {
+        "file": "work/animate/read-only-fla-copies/formula-elementary-conversion-01-04/Conversion_1_4.fla",
+        "sha256": "d661c776e239fb59c44278c6e4d5fd75812599eb2dc9fa758b1ba37a59251b1c",
+        "bytes": 552448,
+        "readOnly": true,
+        "byteIdenticalToSource": true
+      },
+      "authoringAudit": {
+        "file": "migrations/formula-elementary-conversion-01-04/audit/adobe-animate-2021-authoring-audit.json",
+        "sha256": "d96bd13e12085dcfabed09cf15cd1a437edf2a52ed54f71338c2867458ac1f12",
+        "animateVersion": "MAC 21,0,7,42652",
+        "capturedAt": "Wed, 22 Jul 2026 02:23:08 GMT",
+        "nativeMovie": {
+          "width": 780,
+          "height": 379,
+          "fps": 12,
+          "frameCount": 67,
+          "backgroundColor": "#E4E4E4",
+          "rootLayerCount": 6,
+          "libraryItemCount": 22
+        },
+        "nativeMetadataMatchesManifest": true,
+        "authoringFrame": {
+          "file": "migrations/formula-elementary-conversion-01-04/audit/adobe-animate-2021-authoring-frame-0067.png",
+          "sha256": "f63c8810673684053155b1eaf97565261e7b42f42e006b7046663b96909f0994",
+          "flashFrame": 67,
+          "width": 780,
+          "height": 379
+        },
+        "rawAudit": null,
+        "structure": {
+          "rootLayerCount": 6,
+          "rootKeyframeCount": 9,
+          "rootActionScriptKeyframeCount": 2,
+          "rootSoundKeyframeCount": 0,
+          "maskLayerCount": 0,
+          "libraryItemCount": 22,
+          "libraryTypes": {
+            "graphic": 10,
+            "movie clip": 10,
+            "button": 1,
+            "compiled clip": 1
+          },
+          "replayLibraryItems": [
+            {
+              "name": "Replay",
+              "itemType": "button"
+            }
+          ]
+        },
+        "comprehensiveCurrentContract": true,
+        "contractChecks": {
+          "canonicalSchemaV2": true,
+          "readOnlyWorkingCopyBound": true,
+          "currentAuditScriptBound": true,
+          "recursiveLibraryTimelineAudit": true,
+          "recursiveElementsPresent": true
+        },
+        "limitations": [
+          "Animate 2021 converts this unsupported ActionScript 1 document to ActionScript 3 in memory and may remove attached ActionScript 1 code.",
+          "The original shipped SWF bytecode and Adobe Flash Player runtime capture remain authoritative for runtime behavior.",
+          "This authoring-stage capture does not prove host variables, interaction branches, localization selection, audio synchronization, or Replay behavior."
+        ]
+      },
+      "nextAction": null,
+      "strictAcceptanceEffect": false
+    },
+    {
+      "animationId": "keyterm-elementary-acute-angle",
+      "sourceKind": "fla-and-swf",
+      "status": "verified-current-recursive-authoring-audit",
+      "migration": {
+        "file": "migrations/keyterm-elementary-acute-angle/migration.json",
+        "sha256": "2b37b804ea4b0277437f384c03b9a97311830d00fabb51606c75b2d7f91b50b9"
+      },
+      "swf": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/DIG/acute_angle.swf",
+        "sha256": "dbc56af636e5551c582977f9230be2ae530874a05c901f0cf44dd5e2d5f2a347"
+      },
+      "fla": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/DIG/acute_angle.fla",
+        "sha256": "f129e5a338c2d9c70d004e8473f6cb3ea7f4883f67d28ebe72607057f9ef6837"
+      },
+      "workingCopy": {
+        "file": "work/animate/read-only-fla-copies/keyterm-elementary-acute-angle/acute_angle.fla",
+        "sha256": "f129e5a338c2d9c70d004e8473f6cb3ea7f4883f67d28ebe72607057f9ef6837",
+        "bytes": 44032,
+        "readOnly": true,
+        "byteIdenticalToSource": true
+      },
+      "authoringAudit": {
+        "file": "migrations/keyterm-elementary-acute-angle/audit/adobe-animate-2021-authoring-audit.json",
+        "sha256": "ec1766d9d0f82f02e4056985a22a20bd463a4766c664353c972440824eeb6a5a",
+        "animateVersion": "MAC 21,0,7,42652",
+        "capturedAt": "Wed, 22 Jul 2026 02:23:41 GMT",
+        "nativeMovie": {
+          "width": 225,
+          "height": 225,
+          "fps": 12,
+          "frameCount": 60,
+          "backgroundColor": "#FFFFFF",
+          "rootLayerCount": 7,
+          "libraryItemCount": 4
+        },
+        "nativeMetadataMatchesManifest": true,
+        "authoringFrame": {
+          "file": "migrations/keyterm-elementary-acute-angle/audit/adobe-animate-2021-authoring-frame-0060.png",
+          "sha256": "92445e383135d029be78164c4a894c149f3189533160e133037b0d37b1df518b",
+          "flashFrame": 60,
+          "width": 225,
+          "height": 225
+        },
+        "rawAudit": null,
+        "structure": {
+          "rootLayerCount": 7,
+          "rootKeyframeCount": 33,
+          "rootActionScriptKeyframeCount": 0,
+          "rootSoundKeyframeCount": 0,
+          "maskLayerCount": 0,
+          "libraryItemCount": 4,
+          "libraryTypes": {
+            "graphic": 4
+          },
+          "replayLibraryItems": []
+        },
+        "comprehensiveCurrentContract": true,
+        "contractChecks": {
+          "canonicalSchemaV2": true,
+          "readOnlyWorkingCopyBound": true,
+          "currentAuditScriptBound": true,
+          "recursiveLibraryTimelineAudit": true,
+          "recursiveElementsPresent": true
+        },
+        "limitations": [
+          "Animate 2021 converts this unsupported ActionScript 1 document to ActionScript 3 in memory and may remove attached ActionScript 1 code.",
+          "The original shipped SWF bytecode and Adobe Flash Player runtime capture remain authoritative for runtime behavior.",
+          "This authoring-stage capture does not prove host variables, interaction branches, localization selection, audio synchronization, or Replay behavior."
+        ]
+      },
+      "nextAction": null,
+      "strictAcceptanceEffect": false
+    },
+    {
+      "animationId": "keyterm-elementary-computeghgh",
+      "sourceKind": "fla-and-swf",
+      "status": "verified-current-recursive-authoring-audit",
+      "migration": {
+        "file": "migrations/keyterm-elementary-computeghgh/migration.json",
+        "sha256": "e02d15dbf0668cedf19c5f4b616ef65885c1185a310f8a524876794c2d9125fb"
+      },
+      "swf": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/DIG/computeghgh.swf",
+        "sha256": "fc5c79792530092fa98d450ac00622f5f107c598bf2f313b69fe3b524a6d62e8"
+      },
+      "fla": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/DIG/computeghgh.fla",
+        "sha256": "6307c1d0ceced1527981c40bce6bd7b4015a7f0f5c650546cac2a5c095add722"
+      },
+      "workingCopy": {
+        "file": "work/animate/read-only-fla-copies/keyterm-elementary-computeghgh/computeghgh.fla",
+        "sha256": "6307c1d0ceced1527981c40bce6bd7b4015a7f0f5c650546cac2a5c095add722",
+        "bytes": 203264,
+        "readOnly": true,
+        "byteIdenticalToSource": true
+      },
+      "authoringAudit": {
+        "file": "migrations/keyterm-elementary-computeghgh/audit/adobe-animate-2021-authoring-audit.json",
+        "sha256": "c575901e80f046d431ea5b72a285076e122cc7fb5412a9e2a5d3f3260307be52",
+        "animateVersion": "MAC 21,0,7,42652",
+        "capturedAt": "Wed, 22 Jul 2026 02:40:21 GMT",
+        "nativeMovie": {
+          "width": 225,
+          "height": 225,
+          "fps": 12,
+          "frameCount": 35,
+          "backgroundColor": "#FFFFFF",
+          "rootLayerCount": 5,
+          "libraryItemCount": 8
+        },
+        "nativeMetadataMatchesManifest": true,
+        "authoringFrame": {
+          "file": "migrations/keyterm-elementary-computeghgh/audit/adobe-animate-2021-authoring-frame-0035.png",
+          "sha256": "734e1951e2316fed5c50b82c9f7946656ab3c77df0b07e4758104247ba878374",
+          "flashFrame": 35,
+          "width": 225,
+          "height": 225
+        },
+        "rawAudit": null,
+        "structure": {
+          "rootLayerCount": 5,
+          "rootKeyframeCount": 6,
+          "rootActionScriptKeyframeCount": 1,
+          "rootSoundKeyframeCount": 0,
+          "maskLayerCount": 0,
+          "libraryItemCount": 8,
+          "libraryTypes": {
+            "graphic": 7,
+            "button": 1
+          },
+          "replayLibraryItems": [
+            {
+              "name": "Replay",
+              "itemType": "button"
+            }
+          ]
+        },
+        "comprehensiveCurrentContract": true,
+        "contractChecks": {
+          "canonicalSchemaV2": true,
+          "readOnlyWorkingCopyBound": true,
+          "currentAuditScriptBound": true,
+          "recursiveLibraryTimelineAudit": true,
+          "recursiveElementsPresent": true
+        },
+        "limitations": [
+          "Animate 2021 converts this unsupported ActionScript 1 document to ActionScript 3 in memory and may remove attached ActionScript 1 code.",
+          "The original shipped SWF bytecode and Adobe Flash Player runtime capture remain authoritative for runtime behavior.",
+          "This authoring-stage capture does not prove host variables, interaction branches, localization selection, audio synchronization, or Replay behavior."
+        ]
+      },
+      "nextAction": null,
+      "strictAcceptanceEffect": false
+    },
+    {
+      "animationId": "course-g03-l01-vb-004",
+      "sourceKind": "fla-and-swf",
+      "status": "verified-current-recursive-authoring-audit",
+      "migration": {
+        "file": "migrations/course-g03-l01-vb-004/migration.json",
+        "sha256": "b14c9d9335cd303f5aceae514acbbb2dc7517cddf253bf1c9489f1ebc8311ad2"
+      },
+      "swf": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/VB/L1VB04.swf",
+        "sha256": "8c9860663714843b4d858a50528ad82d6783d8446c38d6f1cc77ec03a07ec72e"
+      },
+      "fla": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/VB/L1VB04.fla",
+        "sha256": "49f1694f1a7ec200d4d3455c1bc29699b83146043b7c0f25165228b32a9e3a1a"
+      },
+      "workingCopy": {
+        "file": "work/animate/read-only-fla-copies/course-g03-l01-vb-004/L1VB04.fla",
+        "sha256": "49f1694f1a7ec200d4d3455c1bc29699b83146043b7c0f25165228b32a9e3a1a",
+        "bytes": 5239296,
+        "readOnly": true,
+        "byteIdenticalToSource": true
+      },
+      "authoringAudit": {
+        "file": "migrations/course-g03-l01-vb-004/audit/adobe-animate-2021-authoring-audit.json",
+        "sha256": "38cbdd18a6d3f1fa2b75843fd6eb640ae59d6c36b670a100f7fb8bc018135e83",
+        "animateVersion": "MAC 21,0,7,42652",
+        "capturedAt": "Wed, 22 Jul 2026 02:41:09 GMT",
+        "nativeMovie": {
+          "width": 800,
+          "height": 600,
+          "fps": 12,
+          "frameCount": 10,
+          "backgroundColor": "#B8D8F7",
+          "rootLayerCount": 5,
+          "libraryItemCount": 83
+        },
+        "nativeMetadataMatchesManifest": true,
+        "authoringFrame": {
+          "file": "migrations/course-g03-l01-vb-004/audit/adobe-animate-2021-authoring-frame-0010.png",
+          "sha256": "cfaaaab224f7ae55ab5adacd85a5d266ba920b1734065b6fcfe1fde09d0a782b",
+          "flashFrame": 10,
+          "width": 800,
+          "height": 600
+        },
+        "rawAudit": null,
+        "structure": {
+          "rootLayerCount": 5,
+          "rootKeyframeCount": 10,
+          "rootActionScriptKeyframeCount": 2,
+          "rootSoundKeyframeCount": 0,
+          "maskLayerCount": 0,
+          "libraryItemCount": 83,
+          "libraryTypes": {
+            "folder": 2,
+            "graphic": 29,
+            "button": 4,
+            "movie clip": 18,
+            "sound": 16,
+            "bitmap": 14
+          },
+          "replayLibraryItems": []
+        },
+        "comprehensiveCurrentContract": true,
+        "contractChecks": {
+          "canonicalSchemaV2": true,
+          "readOnlyWorkingCopyBound": true,
+          "currentAuditScriptBound": true,
+          "recursiveLibraryTimelineAudit": true,
+          "recursiveElementsPresent": true
+        },
+        "limitations": [
+          "Animate 2021 converts this unsupported ActionScript 1 document to ActionScript 3 in memory and may remove attached ActionScript 1 code.",
+          "The original shipped SWF bytecode and Adobe Flash Player runtime capture remain authoritative for runtime behavior.",
+          "This authoring-stage capture does not prove host variables, interaction branches, localization selection, audio synchronization, or Replay behavior."
+        ]
+      },
+      "nextAction": null,
+      "strictAcceptanceEffect": false
+    },
+    {
+      "animationId": "course-g04-l01-ir-001",
+      "sourceKind": "fla-and-swf",
+      "status": "verified-current-recursive-authoring-audit",
+      "migration": {
+        "file": "migrations/course-g04-l01-ir-001/migration.json",
+        "sha256": "4616774b30d6382efaeda1518e81d8fc0065425fe766f3d8fd975cfb6b48ffab"
+      },
+      "swf": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/IR/L1RW01.swf",
+        "sha256": "b21b16d1e5756820b5703136708f625dcc3a324d629b2337b1dc42af64559e46"
+      },
+      "fla": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/IR/L1RW01.fla",
+        "sha256": "c4ba5fd0b37b1a1ad622f4fdf89295a6b76c820588a8000b239b0f4d68984fb9"
+      },
+      "workingCopy": {
+        "file": "work/animate/read-only-fla-copies/course-g04-l01-ir-001/L1RW01.fla",
+        "sha256": "c4ba5fd0b37b1a1ad622f4fdf89295a6b76c820588a8000b239b0f4d68984fb9",
+        "bytes": 1372672,
+        "readOnly": true,
+        "byteIdenticalToSource": true
+      },
+      "authoringAudit": {
+        "file": "migrations/course-g04-l01-ir-001/audit/adobe-animate-2021-authoring-audit.json",
+        "sha256": "27de76cabebadbf1dd58dc9562c15b4786c93ffb5cc7be350aadaa07dc5241d7",
+        "animateVersion": "MAC 21,0,7,42652",
+        "capturedAt": "Wed, 22 Jul 2026 02:42:15 GMT",
+        "nativeMovie": {
+          "width": 800,
+          "height": 600,
+          "fps": 12,
+          "frameCount": 10,
+          "backgroundColor": "#B8D8F7",
+          "rootLayerCount": 4,
+          "libraryItemCount": 52
+        },
+        "nativeMetadataMatchesManifest": true,
+        "authoringFrame": {
+          "file": "migrations/course-g04-l01-ir-001/audit/adobe-animate-2021-authoring-frame-0010.png",
+          "sha256": "28f45b590038bc563dc8a1fb62c891faf0a068052d2917c3ead495db035138a8",
+          "flashFrame": 10,
+          "width": 800,
+          "height": 600
+        },
+        "rawAudit": null,
+        "structure": {
+          "rootLayerCount": 4,
+          "rootKeyframeCount": 8,
+          "rootActionScriptKeyframeCount": 2,
+          "rootSoundKeyframeCount": 0,
+          "maskLayerCount": 0,
+          "libraryItemCount": 52,
+          "libraryTypes": {
+            "folder": 19,
+            "graphic": 20,
+            "movie clip": 9,
+            "component": 2,
+            "sound": 2
+          },
+          "replayLibraryItems": []
+        },
+        "comprehensiveCurrentContract": true,
+        "contractChecks": {
+          "canonicalSchemaV2": true,
+          "readOnlyWorkingCopyBound": true,
+          "currentAuditScriptBound": true,
+          "recursiveLibraryTimelineAudit": true,
+          "recursiveElementsPresent": true
+        },
+        "limitations": [
+          "Animate 2021 converts this unsupported ActionScript 1 document to ActionScript 3 in memory and may remove attached ActionScript 1 code.",
+          "The original shipped SWF bytecode and Adobe Flash Player runtime capture remain authoritative for runtime behavior.",
+          "This authoring-stage capture does not prove host variables, interaction branches, localization selection, audio synchronization, or Replay behavior."
+        ]
+      },
+      "nextAction": null,
+      "strictAcceptanceEffect": false
+    },
+    {
+      "animationId": "course-g03-l06-ti-001",
+      "sourceKind": "swf-only",
+      "status": "not-applicable-swf-only",
+      "migration": {
+        "file": "migrations/course-g03-l06-ti-001/migration.json",
+        "sha256": "ec847ac41dbfd2e262f53066f9769b06235fa6a0ad91e4beadf83a50e59bab46"
+      },
+      "swf": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L6/TI/L6TI01.swf",
+        "sha256": "722b56b73cfc3bcff71c83cf71b00bfc89b4fdd3b147ecb43646f644f45dc739"
+      },
+      "fla": null,
+      "authoringAudit": null,
+      "strictAcceptanceEffect": false
+    },
+    {
+      "animationId": "course-g04-l03-in-009",
+      "sourceKind": "swf-only",
+      "status": "not-applicable-swf-only",
+      "migration": {
+        "file": "migrations/course-g04-l03-in-009/migration.json",
+        "sha256": "1ce0052bf4f7d68cb7ba2effc65c52592f6ba1717864da9c31ccadacf32bb5c9"
+      },
+      "swf": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN09.swf",
+        "sha256": "766b6ab686bbaf8ab1dacc30a7ffb96f33735102a1dff7df6b7a97976e3ab25c"
+      },
+      "fla": null,
+      "authoringAudit": null,
+      "strictAcceptanceEffect": false
+    },
+    {
+      "animationId": "course-g04-l09-gs-002",
+      "sourceKind": "swf-only",
+      "status": "not-applicable-swf-only",
+      "migration": {
+        "file": "migrations/course-g04-l09-gs-002/migration.json",
+        "sha256": "fa67f35533c1e0b9ec73bfcc04786263f2875ed46db3aac064b19ccff13a8f37"
+      },
+      "swf": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L9/GS/L9GS02.swf",
+        "sha256": "41cdb7e5cc5735eef2af3e4831908c47781840f0addcc3ac1a2142cbb0d48f15"
+      },
+      "fla": null,
+      "authoringAudit": null,
+      "strictAcceptanceEffect": false
+    },
+    {
+      "animationId": "course-g05-l13-rw-002",
+      "sourceKind": "swf-only",
+      "status": "not-applicable-swf-only",
+      "migration": {
+        "file": "migrations/course-g05-l13-rw-002/migration.json",
+        "sha256": "5d984a5a4202504e22b481228784854c94e6db2e595bc176545e2b795c33e5c2"
+      },
+      "swf": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/RW/L13RW02.swf",
+        "sha256": "bf9ab1d12832fbe54c5bef08d0dd51307169eefbae1f75188efd9db94ed9e4e6"
+      },
+      "fla": null,
+      "authoringAudit": null,
+      "strictAcceptanceEffect": false
+    },
+    {
+      "animationId": "course-g03-l01-ts-008",
+      "sourceKind": "swf-only",
+      "status": "not-applicable-swf-only",
+      "migration": {
+        "file": "migrations/course-g03-l01-ts-008/migration.json",
+        "sha256": "d3c271bd10a34415d2b8e7f6e38df33c4222966927d0a840ee0b0cb6549cd249"
+      },
+      "swf": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/TS/L1TS08.swf",
+        "sha256": "9749ae5f4d533379aa58531e541ffd5da1624bc8fcea38660d54d0f5d3ddc29b"
+      },
+      "fla": null,
+      "authoringAudit": null,
+      "strictAcceptanceEffect": false
+    },
+    {
+      "animationId": "course-g03-l06-fq-002-review",
+      "sourceKind": "swf-only",
+      "status": "not-applicable-swf-only",
+      "migration": {
+        "file": "migrations/course-g03-l06-fq-002-review/migration.json",
+        "sha256": "5576094b2c47b2326de5634f094cbb5cfde4b3803c2b2d5d408cc794ed8fe98e"
+      },
+      "swf": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L6/FQ/Review/L6FQ02.swf",
+        "sha256": "fadffa9df169b4c3417066431f8bfbc16a923778ec17a213b21a7ba2d0a51563"
+      },
+      "fla": null,
+      "authoringAudit": null,
+      "strictAcceptanceEffect": false
+    },
+    {
+      "animationId": "course-g03-l08-re-001",
+      "sourceKind": "swf-only",
+      "status": "not-applicable-swf-only",
+      "migration": {
+        "file": "migrations/course-g03-l08-re-001/migration.json",
+        "sha256": "3b78cf26bbadbadd8769090a560af13cc5caa3651684d35d9a45e8f3388ddbc5"
+      },
+      "swf": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L8/RE/L8RE01.swf",
+        "sha256": "e4a6403f6b45a3b4aecb48e0659aa20113acb0644e37b027a19fb51f34417f9b"
+      },
+      "fla": null,
+      "authoringAudit": null,
+      "strictAcceptanceEffect": false
+    },
+    {
+      "animationId": "shell-course-g04-l01-index-local",
+      "sourceKind": "swf-only",
+      "status": "not-applicable-swf-only",
+      "migration": {
+        "file": "migrations/shell-course-g04-l01-index-local/migration.json",
+        "sha256": "bfb4edd6d2c607ea52d5e113e82b2d836348355761584eeb54cf2625a5fc3aa4"
+      },
+      "swf": {
+        "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+        "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e"
+      },
+      "fla": null,
+      "authoringAudit": null,
+      "strictAcceptanceEffect": false
+    }
+  ]
+}

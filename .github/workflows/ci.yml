@@ -22,33 +22,48 @@ jobs:
   workbench:
     name: Workbench
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 90
     steps:
       - name: Check out source without Git LFS objects
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           fetch-depth: 1
           lfs: false
           persist-credentials: false
 
       - name: Use repository Node.js version
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version-file: .nvmrc
           cache: npm
           cache-dependency-path: package-lock.json
 
+      - name: Use the repository npm version
+        run: npm install --global npm@11.16.0
+
+      - name: Verify denied dependency lifecycle-script policy
+        run: node scripts/verify-npm-install-script-policy.mjs
+
       - name: Install locked dependencies
-        run: npm ci
+        run: npm ci --no-dangerously-allow-all-scripts
 
-      - name: Verify migration workbench
-        run: npm run verify:workbench
+      - name: Verify repository-contained Hosted workbench structure
+        # Full strict-ledger and preserved-source currentness remains a
+        # separate local-evidence gate. The Hosted verifier reports those
+        # checks as NOT_RUN_REQUIRES_LOCAL_EVIDENCE, never as PASS.
+        run: npm run verify:workbench:hosted
 
-      - name: Run workbench tests
-        run: npm test
+      - name: Run repository-contained Hosted workbench tests
+        # The full `npm test` suite intentionally retains private/local
+        # evidence tests. This hash-bound profile fails on discovery drift and
+        # never promotes excluded tests to PASS or skip acceptance.
+        run: npm run test:workbench:hosted
 
-      - name: Test demo integration package
-        run: npm run test:demos
+      - name: Test repository-contained demo integration profile
+        # The full demos suite remains unchanged and requires repo-excluded
+        # canonical source and private Adobe evidence. This exact partition
+        # reports those files as NOT_RUN_REQUIRES_LOCAL_EVIDENCE, never PASS.
+        run: npm run test:demos:hosted
 
       - name: Type-check demo integration package
         run: npm run typecheck:demos
@@ -56,27 +71,38 @@ jobs:
   site:
     name: Site workspace
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
+    env:
+      CURRENT_JS_SHOWCASE_G4_L3_ENABLED: "true"
+      CURRENT_JS_SHOWCASE_G5_L4_ENABLED: "true"
+      MODERN_WIDE_SHELL_ENABLED: "true"
     defaults:
       run:
         working-directory: apps/web
     steps:
       - name: Check out source without Git LFS objects
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           fetch-depth: 1
           lfs: false
           persist-credentials: false
 
       - name: Use repository Node.js version
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version-file: .nvmrc
           cache: npm
           cache-dependency-path: package-lock.json
 
+      - name: Use the repository npm version
+        run: npm install --global npm@11.16.0
+
+      - name: Verify denied dependency lifecycle-script policy
+        working-directory: .
+        run: node scripts/verify-npm-install-script-policy.mjs
+
       - name: Install locked dependencies
-        run: npm ci
+        run: npm ci --no-dangerously-allow-all-scripts
 
       - name: Lint site
         run: npm run lint
@@ -94,4 +120,136 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run browser and accessibility tests
-        run: npm run test:e2e
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run test:e2e 2>&1 | tee "$RUNNER_TEMP/site-ordinary.log"
+          node ../../scripts/verify-site-runtime-log.mjs \
+            "$RUNNER_TEMP/site-ordinary.log"
+
+      - name: Run G5 L4 audio gate-off browser test
+        run: npm run test:e2e:g5-l4-audio-gate-off --workspace @helpmath/web
+
+      - name: Run modern-wide lesson and Nova acceptance tests
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run test:e2e:modern-wide --workspace @helpmath/web 2>&1 \
+            | tee "$RUNNER_TEMP/site-modern-wide.log"
+          node ../../scripts/verify-site-runtime-log.mjs \
+            "$RUNNER_TEMP/site-modern-wide.log"
+
+  release-currentness:
+    name: Release currentness
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out exact release tree
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          # Launch-control verification binds origin/main, the page-only
+          # spine, and the explicitly rejected mixed commit. A shallow clone
+          # cannot prove those ancestry and changed-path contracts.
+          fetch-depth: 0
+          lfs: false
+          persist-credentials: false
+
+      - name: Use repository Node.js version
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Use the repository npm version
+        run: npm install --global npm@11.16.0
+
+      - name: Verify denied dependency lifecycle-script policy
+        run: node scripts/verify-npm-install-script-policy.mjs
+
+      - name: Install locked dependencies
+        run: npm ci --no-dangerously-allow-all-scripts
+
+      - name: Verify page-only registration baseline
+        run: npm run verify:current-js:426:page-only
+
+      - name: Verify repository-contained page-only ledger currentness
+        # Completion and lesson-release ledgers are regenerated against
+        # repo-excluded canonical-source aliases by the full local gate.
+        # Re-running them in a clean Hosted checkout would manufacture a
+        # different diagnostic ledger, so Hosted CI must not label them PASS.
+        run: npm run ledger:page-only:check
+
+      - name: Reassert the local-evidence ledger boundary
+        run: npm run verify:workbench:hosted
+
+      - name: Verify public launch manifest currentness
+        run: npm run verify:public-launch
+
+      - name: Verify public deployment closure
+        run: npm run verify:deploy-closure
+
+      - name: Verify release-controller contracts and truthful readiness state
+        run: npm run verify:launch-control
+
+  production-build-e2e:
+    name: Production-build E2E
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      CURRENT_JS_CANDIDATE_PROFILE_ENABLED: "true"
+      CURRENT_JS_SHOWCASE_G3_L2_ENABLED: "true"
+      CURRENT_JS_SHOWCASE_G4_L3_ENABLED: "true"
+      CURRENT_JS_SHOWCASE_G4_L5_ENABLED: "true"
+      CURRENT_JS_SHOWCASE_G4_L10_ENABLED: "true"
+      CURRENT_JS_SHOWCASE_G4_L11_ENABLED: "true"
+      CURRENT_JS_SHOWCASE_G5_L3_ENABLED: "true"
+      CURRENT_JS_SHOWCASE_G5_L4_ENABLED: "true"
+      CURRENT_JS_SHOWCASE_G5_L5_ENABLED: "true"
+      CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED: "true"
+      NOVA_TUTOR_ENABLED: "true"
+      LRS_ENABLED: "true"
+      CLERK_LOCAL_AUTH_ENABLED: "false"
+      CONTACT_FORM_ENABLED: "true"
+      MIGRATION_STATUS_ENABLED: "1"
+      REVIEWER_INSTRUMENTATION_ENABLED: "false"
+      WEB_ANALYTICS_ENABLED: "false"
+      VERCEL_ENV: ""
+    steps:
+      - name: Check out exact release tree
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 1
+          lfs: false
+          persist-credentials: false
+
+      - name: Use repository Node.js version
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Use the repository npm version
+        run: npm install --global npm@11.16.0
+
+      - name: Verify denied dependency lifecycle-script policy
+        run: node scripts/verify-npm-install-script-policy.mjs
+
+      - name: Install locked dependencies
+        run: npm ci --no-dangerously-allow-all-scripts
+
+      - name: Verify public launch manifest currentness
+        run: npm run verify:public-launch
+
+      - name: Verify deployment closure
+        run: npm run verify:deploy-closure
+
+      - name: Build the production application
+        run: npm run build
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run production-server browser smoke
+        run: npm run test:e2e:production --workspace @helpmath/web

@@ -1,0 +1,1595 @@
+{
+  "acceptanceEffects": {
+    "audioAccepted": false,
+    "authoringAccepted": false,
+    "authoritativeOriginalRuntimeAccepted": false,
+    "currentJavaScriptCandidate": false,
+    "fidelityAccepted": false,
+    "fullFrameComparisonAccepted": false,
+    "humanVisualAccepted": false,
+    "implementationAuthorized": false,
+    "independentEngineeringAccepted": false,
+    "ownerAccepted": false,
+    "published": false,
+    "rmseAccepted": false,
+    "runtimeReachabilityEstablished": false,
+    "strictComplete": false
+  },
+  "animationId": "course-g05-l05-vb-003",
+  "artifactFingerprintSha256": "e1e9ef694c73f1fae22c9fa8b633296d7ca1dda36fa91e6f521f43bda5ad59df",
+  "artifactType": "g5-l5-static-coverage-trace-obligation-plan",
+  "authorityStatement": [
+    "This plan binds current machine-only M1 static artifacts and routes unresolved coverage/trace obligations to future authority, entry-state, and trace resolution.",
+    "It is not a trace specification, capture package, renderer decision, runtime observation, review, acceptance, strict-completion, or publication record.",
+    "Only a named human may operate and attest an authoritative original-runtime session; machine checks may validate later evidence but may not invent or sign it."
+  ],
+  "bindings": {
+    "coverageV2": {
+      "bytes": 2039,
+      "path": "migrations/course-g05-l05-vb-003/evidence/full-frame-coverage.json",
+      "sha256": "e1c4b83f8b8a1e31e4f969e1c60922b6b0176365a906006823969cee3341b761"
+    },
+    "frameDomainDisposition": {
+      "bytes": 72330,
+      "path": "migrations/course-g05-l05-vb-003/audit/frame-domain-disposition.json",
+      "sha256": "f4da1c5e71cafa5e54f7f6244278415d2cf6a124d5b878eed29a0e3dc0be3a51"
+    },
+    "lessonReleaseCatalog": {
+      "bytes": 87864,
+      "path": "catalog/lesson-releases.json",
+      "sha256": "f3caa2ae0e9bfd6c02dd846aa2d45de5c2f746cc57ba01a09e506d4d3c42d632"
+    },
+    "m1StaticReconciliationReceipt": {
+      "bytes": 7985,
+      "path": "migrations/course-g05-l05-vb-003/audit/machine/g5-l5-m1-static-reconciliation-receipt.json",
+      "sha256": "604f6286ec1199bca4d53478ba8c7be8de4ead37de17828c3ee7ad7586248b99"
+    },
+    "migrationManifest": {
+      "bytes": 6340,
+      "path": "migrations/course-g05-l05-vb-003/migration.json",
+      "sha256": "ac4440223e4095961529ebd30b582f523a1e96217e1d7fa1c3f43f517143f1a9"
+    },
+    "scenarioInventory": {
+      "bytes": 816793,
+      "path": "migrations/course-g05-l05-vb-003/audit/scenario-inventory.json",
+      "sha256": "b3158fbd4d713ac162e1c9bf21143f78fcd0772e6e42bebaf040fd48e2d95644"
+    },
+    "staticDispositionEvidence": {
+      "bytes": 40736,
+      "path": "migrations/course-g05-l05-vb-003/audit/static-frame-domain-disposition-evidence.json",
+      "sha256": "28c8eff3a8070c99bab270a0f81f425877d60da5c157e85681d7ca347c184fd2"
+    },
+    "strictReadiness": {
+      "bytes": 15779,
+      "path": "migrations/course-g05-l05-vb-003/audit/strict-readiness.json",
+      "sha256": "6c8abe3d1b4dea7c071725598830ce8e9a6fb9e091d4592500b4d17dfd71d9d7"
+    }
+  },
+  "currentCanonicalCoverage": {
+    "authoritativeBaselineCount": 0,
+    "boundary": "The current two root requirements remain canonical pending obligations only; this plan neither expands nor edits coverage-v2.",
+    "missingFrameCount": 20,
+    "pendingRequirementCount": 2,
+    "requirementCount": 2,
+    "requirements": [
+      {
+        "baselineAuthority": "unresolved",
+        "baselineAuthorityRequirement": "original-runtime-frame-accurate",
+        "capturedFrameCount": 0,
+        "entryState": {
+          "kind": "initial-load",
+          "language": "en"
+        },
+        "entryStateSha256": "bf209e3302a76c14fff3e7e12f6fdc0f9bc01d4934aadd03334b5c3cf61b7cf1",
+        "frameDomainId": "root",
+        "language": "en",
+        "missingFrameCount": 10,
+        "requiredRange": {
+          "firstFrame": 1,
+          "lastFrame": 10
+        },
+        "requirementId": "req-default-root-en",
+        "scenario": "default",
+        "seed": "0",
+        "status": "pending",
+        "traceId": "default-root-en"
+      },
+      {
+        "baselineAuthority": "unresolved",
+        "baselineAuthorityRequirement": "original-runtime-frame-accurate",
+        "capturedFrameCount": 0,
+        "entryState": {
+          "kind": "initial-load",
+          "language": "es"
+        },
+        "entryStateSha256": "4e4bcf0390c6fd9bb1539b0c26a8555d9e4034ef5c591548bdb1f9a506f70067",
+        "frameDomainId": "root",
+        "language": "es",
+        "missingFrameCount": 10,
+        "requiredRange": {
+          "firstFrame": 1,
+          "lastFrame": 10
+        },
+        "requirementId": "req-default-root-es",
+        "scenario": "default",
+        "seed": "0",
+        "status": "pending",
+        "traceId": "default-root-es"
+      }
+    ],
+    "scope": "root-only-provisional-bilingual",
+    "traceSpecCount": 0
+  },
+  "execution": {
+    "browsersLaunched": 0,
+    "guiApplicationsLaunched": 0,
+    "legacyEndpointsExecuted": 0,
+    "namedHumanAttestationsRecorded": 0,
+    "runtimeSessionsExecuted": 0
+  },
+  "futureResolutionSequence": [
+    "obtain separate immutable runtime authorization and named operator/session attestation",
+    "execute natural host entry in the authorized original runtime and establish reachability",
+    "resolve every child disposition and exact entry-state identity without guessing",
+    "resolve source-evidenced button, drag, branch, random, terminal, Replay, language, audio, and host-state schedules",
+    "only then create separately reviewed trace specifications and capture packages",
+    "capture authoritative original-runtime evidence before implementation comparison or acceptance"
+  ],
+  "generatedBy": {
+    "bytes": 87887,
+    "deterministic": true,
+    "path": "scripts/build-g5-l5-coverage-trace-obligation-matrix.mjs",
+    "sha256": "e0d6e21b0dcc7e791d0ba3606ffa68179704d008eb58eb2d1726c6d22f1c8e89"
+  },
+  "managedOutputContract": {
+    "hardLink": false,
+    "linkCount": 1,
+    "mode": "0644",
+    "ordinaryFile": true,
+    "symbolicLink": false
+  },
+  "obligationCounts": {
+    "buttonTargetObligations": 6,
+    "childDomainCandidates": 7,
+    "conditionalBranchObligations": 29,
+    "correctWrongObligations": 4,
+    "courseRouteObligations": 1,
+    "dependencyFixtureObligations": 50,
+    "dragObligations": 8,
+    "glossaryAndHyperlinkObligations": 2,
+    "handlerBehaviorGroups": 12,
+    "inputObligations": 1,
+    "labeledStateObligations": 0,
+    "randomObligations": 1,
+    "replayCandidates": 0,
+    "sectionMenuObligations": 0,
+    "sideEffectObligations": 0,
+    "terminalCandidates": 20,
+    "timelineStateCoverage": 19
+  },
+  "obligationRoutes": {
+    "additional": [
+      {
+        "category": "timelineStateCoverage",
+        "obligationCount": 19,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "pending-authority-entry-state-trace-resolution"
+      },
+      {
+        "category": "handlerBehaviorGroups",
+        "obligationCount": 12,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "pending-authority-entry-state-trace-resolution"
+      },
+      {
+        "category": "inputObligations",
+        "obligationCount": 1,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "pending-authority-entry-state-trace-resolution"
+      },
+      {
+        "category": "correctWrongObligations",
+        "obligationCount": 4,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "pending-authority-entry-state-trace-resolution"
+      },
+      {
+        "category": "labeledStateObligations",
+        "obligationCount": 0,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "no-static-candidate-in-current-inventory"
+      },
+      {
+        "category": "glossaryAndHyperlinkObligations",
+        "obligationCount": 2,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "pending-authority-entry-state-trace-resolution"
+      },
+      {
+        "category": "sectionMenuObligations",
+        "obligationCount": 0,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "no-static-candidate-in-current-inventory"
+      },
+      {
+        "category": "courseRouteObligations",
+        "obligationCount": 1,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "pending-authority-entry-state-trace-resolution"
+      },
+      {
+        "category": "sideEffectObligations",
+        "obligationCount": 0,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "no-static-candidate-in-current-inventory"
+      },
+      {
+        "category": "dependencyFixtureObligations",
+        "obligationCount": 50,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "pending-authority-entry-state-trace-resolution"
+      },
+      {
+        "category": "replayCandidates",
+        "obligationCount": 0,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "no-static-candidate-in-current-inventory"
+      },
+      {
+        "category": "terminalCandidates",
+        "obligationCount": 20,
+        "routePolicyId": "interaction-authority-entry-state-trace-v1",
+        "status": "pending-authority-entry-state-trace-resolution"
+      }
+    ],
+    "buttons": [
+      {
+        "buttonObjectId": "9",
+        "encodedEventConditionCount": 1,
+        "evidence": {
+          "artifactId": "swfmill-xml",
+          "objectId": "9"
+        },
+        "hitRecordCount": 1,
+        "obligationId": "button-target-9-1",
+        "placementCount": 1,
+        "routePolicyId": "button-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "08b5271e532f37e2a3bf04f1c43c0f989f2446084b601dcad7002d42ffe4c129",
+        "status": "pending-authoritative-reachability-entry-state-trace"
+      },
+      {
+        "buttonObjectId": "10",
+        "encodedEventConditionCount": 1,
+        "evidence": {
+          "artifactId": "swfmill-xml",
+          "objectId": "10"
+        },
+        "hitRecordCount": 1,
+        "obligationId": "button-target-10-2",
+        "placementCount": 1,
+        "routePolicyId": "button-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "306c5d39dd44e3e686b964827b39438cf123c33b7c3c62275d177a2e4e7a50c2",
+        "status": "pending-authoritative-reachability-entry-state-trace"
+      },
+      {
+        "buttonObjectId": "40",
+        "encodedEventConditionCount": 1,
+        "evidence": {
+          "artifactId": "swfmill-xml",
+          "objectId": "40"
+        },
+        "hitRecordCount": 2,
+        "obligationId": "button-target-40-3",
+        "placementCount": 2,
+        "routePolicyId": "button-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "5cfa0b35c02c5ab74d0e4a80105a09cbaa8915060e6a98c27785de8af0368f96",
+        "status": "pending-authoritative-reachability-entry-state-trace"
+      },
+      {
+        "buttonObjectId": "43",
+        "encodedEventConditionCount": 1,
+        "evidence": {
+          "artifactId": "swfmill-xml",
+          "objectId": "43"
+        },
+        "hitRecordCount": 2,
+        "obligationId": "button-target-43-4",
+        "placementCount": 1,
+        "routePolicyId": "button-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "54dcb8b3e81f140d9424787b965090abb7964e565d2f89c51c0e029e9026e022",
+        "status": "pending-authoritative-reachability-entry-state-trace"
+      },
+      {
+        "buttonObjectId": "47",
+        "encodedEventConditionCount": 1,
+        "evidence": {
+          "artifactId": "swfmill-xml",
+          "objectId": "47"
+        },
+        "hitRecordCount": 2,
+        "obligationId": "button-target-47-5",
+        "placementCount": 1,
+        "routePolicyId": "button-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "35043f8547c03a3ceffaae5cd7bc6740c7520e599a30351a922882ad6971849f",
+        "status": "pending-authoritative-reachability-entry-state-trace"
+      },
+      {
+        "buttonObjectId": "66",
+        "encodedEventConditionCount": 1,
+        "evidence": {
+          "artifactId": "swfmill-xml",
+          "objectId": "66"
+        },
+        "hitRecordCount": 4,
+        "obligationId": "button-target-66-6",
+        "placementCount": 1,
+        "routePolicyId": "button-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "49b5926e20fbaeb5c0d5e68241e515339a14c1af36f49eea69d1d8bf5554498c",
+        "status": "pending-authoritative-reachability-entry-state-trace"
+      }
+    ],
+    "childDomains": [
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 2,
+        "obligationId": "child-domain-sprite-46",
+        "riskLevel": "review",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "b3158fbd4d713ac162e1c9bf21143f78fcd0772e6e42bebaf040fd48e2d95644",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "1415bf3510bd800533ad674660703739bd7095b8810b93a59a2b3eb5975125ef"
+        },
+        "sourceObjectId": "46",
+        "sourceTimelineId": "sprite-46",
+        "staticFingerprintSha256": "15ae67e1b445f416ae897a088bb0675e40d66e4c2acf5d0a109fab01eb0002a1",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 55,
+        "obligationId": "child-domain-sprite-49",
+        "riskLevel": "high",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root",
+          "at-least-10-static-control-states"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "b3158fbd4d713ac162e1c9bf21143f78fcd0772e6e42bebaf040fd48e2d95644",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "1415bf3510bd800533ad674660703739bd7095b8810b93a59a2b3eb5975125ef"
+        },
+        "sourceObjectId": "49",
+        "sourceTimelineId": "sprite-49",
+        "staticFingerprintSha256": "dae07ea01180d544053d5b79e8a3f48c57e957dcfa09ed99e68e39527e2fbaa4",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 20,
+        "obligationId": "child-domain-sprite-51",
+        "riskLevel": "review",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "b3158fbd4d713ac162e1c9bf21143f78fcd0772e6e42bebaf040fd48e2d95644",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "1415bf3510bd800533ad674660703739bd7095b8810b93a59a2b3eb5975125ef"
+        },
+        "sourceObjectId": "51",
+        "sourceTimelineId": "sprite-51",
+        "staticFingerprintSha256": "1a59001af8061121812d64934bfe41e7d5f95ce66a86882bef301d7a7abffe65",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 10,
+        "obligationId": "child-domain-sprite-55",
+        "riskLevel": "review",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "b3158fbd4d713ac162e1c9bf21143f78fcd0772e6e42bebaf040fd48e2d95644",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "1415bf3510bd800533ad674660703739bd7095b8810b93a59a2b3eb5975125ef"
+        },
+        "sourceObjectId": "55",
+        "sourceTimelineId": "sprite-55",
+        "staticFingerprintSha256": "e0e4c0049df08f11e3e763fc0ae1c674bf704701f1e6d8d4539edd53fce1bd87",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 1,
+        "obligationId": "child-domain-sprite-73",
+        "riskLevel": "review",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "b3158fbd4d713ac162e1c9bf21143f78fcd0772e6e42bebaf040fd48e2d95644",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "1415bf3510bd800533ad674660703739bd7095b8810b93a59a2b3eb5975125ef"
+        },
+        "sourceObjectId": "73",
+        "sourceTimelineId": "sprite-73",
+        "staticFingerprintSha256": "7978e7b8320bf40c463cc203b99816d35d6716f888964c9094c9f9e3d773907d",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 25,
+        "obligationId": "child-domain-sprite-77",
+        "riskLevel": "review",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "b3158fbd4d713ac162e1c9bf21143f78fcd0772e6e42bebaf040fd48e2d95644",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "1415bf3510bd800533ad674660703739bd7095b8810b93a59a2b3eb5975125ef"
+        },
+        "sourceObjectId": "77",
+        "sourceTimelineId": "sprite-77",
+        "staticFingerprintSha256": "b55dda0f2d27a5e94749b23f761b20db0156985e26b537f118660a5dfe8dec42",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      },
+      {
+        "currentDisposition": "unresolved",
+        "frameCount": 260,
+        "obligationId": "child-domain-sprite-89",
+        "riskLevel": "high",
+        "riskSignals": [
+          "undeclared-structurally-root-reachable-timeline",
+          "multiframe-local-playhead",
+          "local-frame-count-exceeds-root",
+          "local-frame-count-at-least-100",
+          "at-least-10-static-control-states",
+          "direct-named-root-placement"
+        ],
+        "rootPlacementStatus": "proven-named-placement-chain",
+        "routePolicyId": "child-domain-authority-entry-state-trace-v1",
+        "sourceEvidence": {
+          "scenarioInventoryPath": "audit/scenario-inventory.json",
+          "scenarioInventorySha256": "b3158fbd4d713ac162e1c9bf21143f78fcd0772e6e42bebaf040fd48e2d95644",
+          "swfmillPath": "audit/machine/swfmill.xml.gz",
+          "swfmillSha256": "1415bf3510bd800533ad674660703739bd7095b8810b93a59a2b3eb5975125ef"
+        },
+        "sourceObjectId": "89",
+        "sourceTimelineId": "sprite-89",
+        "staticFingerprintSha256": "e57669807a3b99be17cccc4322cbc2efdfc84535e2676487df32ae508f6f4f16",
+        "status": "pending-authoritative-reachability-disposition-entry-state-trace",
+        "structuralReachability": "reachable-from-root-placement-graph"
+      }
+    ],
+    "conditionalBranches": [
+      {
+        "condition": "Entry_1.text != \"2\" || Entry_2.text != \"2\" || Entry_3.text != \"3\" || Entry_4.text != \"3\"",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 19,
+            "script": "DefineButton2_40/BUTTONCONDACTION on(release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 80,
+            "script": "DefineButton2_43/BUTTONCONDACTION on(release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-001",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "e1bf7e4df0526caa1f87d65f999fd578dd5ba24b7b736a5ff092f69b285cb99c",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "_global.b >= 2",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 248,
+            "script": "DefineSprite_49/frame_1/DoAction.as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-002",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "9d627be9059db43733f1712d1c9f645ff40c73943c69aca11dc8c515489841d8",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "_global.tryCount > 1",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 41,
+            "script": "DefineButton2_40/BUTTONCONDACTION on(release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 102,
+            "script": "DefineButton2_43/BUTTONCONDACTION on(release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-003",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "be92d259ef9a4ef8e8e6d5451f9b16da6f1074a62d1799df99322183dba340a9",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "_parent.Mc_Wrong_Feedback._visible == false",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 380,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_45_27/CLIPACTIONRECORD on(releaseOutside,release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 509,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_52_30/CLIPACTIONRECORD on(releaseOutside,release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 638,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_53_33/CLIPACTIONRECORD on(releaseOutside,release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-004",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "c48621bdd6e31653f216927c1dc3707647c45ea37a4d77e18463c1c66ded52c2",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "_parent.tryCount >= 2",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 158,
+            "script": "DefineButton2_66/BUTTONCONDACTION on(release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-005",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "dcaa71760f4a75b8981ce44f64bdab03661ee38ae4762686d14a94b52cdaeeae",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "_parent[funpass]._y >= ooy - 3",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 472,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_45_27/CLIPACTIONRECORD onClipEvent(enterFrame).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 601,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_52_30/CLIPACTIONRECORD onClipEvent(enterFrame).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 730,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_53_33/CLIPACTIONRECORD onClipEvent(enterFrame).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-006",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "f8326fd2b843d14a420304e88f3886b365eff539d73d6d020c826bc7ae6deb6e",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "b",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 470,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_45_27/CLIPACTIONRECORD onClipEvent(enterFrame).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 599,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_52_30/CLIPACTIONRECORD onClipEvent(enterFrame).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 728,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_53_33/CLIPACTIONRECORD onClipEvent(enterFrame).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-007",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "677c1eb6f15317bb2537e5f677b09587742f8f19fe311ed60f121cb3be441c51",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "correctAns >= 3 && wrongAns <= 0",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 143,
+            "script": "DefineButton2_47/BUTTONCONDACTION on(release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-008",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "9b9c164f19ad495e13e25b1fccba48d46a024eb6e3707da2c402f404fad97b91",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "eval(\"Entry_\" + i).text != _global.arrayAnswer[i - 1]",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 24,
+            "script": "DefineButton2_40/BUTTONCONDACTION on(release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 85,
+            "script": "DefineButton2_43/BUTTONCONDACTION on(release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-009",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "0b565ba8675bbeda7dcc7f1e08336104b853db01606159d028e9e8288d7de1ed",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "eval(\"Src_\" + i)._currentframe == 2",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 785,
+            "script": "DefineSprite_89/frame_180/DoAction.as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-010",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "3cf9aba7ed2ddfbbcc052024a6f372318910edaa3933edc13820d54102c5e84d",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "eval(\"Src_\" + i)._currentframe == 2 && eval(\"Tar_\" + i)._currentframe == 2",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 137,
+            "script": "DefineButton2_47/BUTTONCONDACTION on(release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-011",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "61b2e8ddcec77e0e3ad89a01f7ae6b11e08260f697b9a797a79f5ff36c97b9f5",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "eval(\"Tar_\" + i)._currentframe == 2",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 781,
+            "script": "DefineSprite_89/frame_180/DoAction.as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-012",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "41e7dda0de0ef054ca396bceee213436dacf2734f9afde7c0ed838fe4bb8f8a8",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "eval(_droptarget) == _parent.Src_1 && _parent.Tar_1._currentframe == 1",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 410,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_45_27/CLIPACTIONRECORD on(releaseOutside,release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 539,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_52_30/CLIPACTIONRECORD on(releaseOutside,release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 668,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_53_33/CLIPACTIONRECORD on(releaseOutside,release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-013",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "e973695beb0dd33605b4b70b8e2444393e732e1a5c523ead964e259161470b08",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "eval(_droptarget) == _parent.Src_2 && _parent.Tar_2._currentframe == 1",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 422,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_45_27/CLIPACTIONRECORD on(releaseOutside,release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 551,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_52_30/CLIPACTIONRECORD on(releaseOutside,release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 680,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_53_33/CLIPACTIONRECORD on(releaseOutside,release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-014",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "f2cdff61157c94d0e9daa1c58f148f4f44cb34dd5f4e9c157a8b5b6f3177664c",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "eval(_droptarget) == _parent.Src_3 && _parent.Tar_3._currentframe == 1",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 434,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_45_27/CLIPACTIONRECORD on(releaseOutside,release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 563,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_52_30/CLIPACTIONRECORD on(releaseOutside,release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 692,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_53_33/CLIPACTIONRECORD on(releaseOutside,release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-015",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "6366ff7d1622f2300f3b6a6cbae8c2a1505eb844a0caeac37c5ad04ed596f978",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "eval(_droptarget) == _parent.Src_4 && _parent.Tar_4._currentframe == 1",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 446,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_45_27/CLIPACTIONRECORD on(releaseOutside,release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 575,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_52_30/CLIPACTIONRECORD on(releaseOutside,release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 704,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_53_33/CLIPACTIONRECORD on(releaseOutside,release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-016",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "32723539846e432e4223582ec917a7e2d9e77631eca5657852ab2a3860d7c766",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "eval(_droptarget) == _parent.Tar_1 && _parent.Tar_1._currentframe == 1",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 382,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_45_27/CLIPACTIONRECORD on(releaseOutside,release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 511,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_52_30/CLIPACTIONRECORD on(releaseOutside,release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 640,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_53_33/CLIPACTIONRECORD on(releaseOutside,release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-017",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "b532d715b625e5b50a1ddb66c348918138f3a0262332132b00c2456a828fd096",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "eval(_droptarget) == _parent.Tar_2 && _parent.Tar_2._currentframe == 1",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 389,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_45_27/CLIPACTIONRECORD on(releaseOutside,release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 518,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_52_30/CLIPACTIONRECORD on(releaseOutside,release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 647,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_53_33/CLIPACTIONRECORD on(releaseOutside,release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-018",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "b1008af2ae7838b512837249de0828331e71bf827009f1332caa7a76cf4a943e",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "eval(_droptarget) == _parent.Tar_3 && _parent.Tar_3._currentframe == 1",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 396,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_45_27/CLIPACTIONRECORD on(releaseOutside,release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 525,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_52_30/CLIPACTIONRECORD on(releaseOutside,release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 654,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_53_33/CLIPACTIONRECORD on(releaseOutside,release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-019",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "a4f6dc22905b585ff8e2487fb83537298c3fdefe00a14336f629628ca0ce891e",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "eval(_droptarget) == _parent.Tar_4 && _parent.Tar_4._currentframe == 1",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 403,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_45_27/CLIPACTIONRECORD on(releaseOutside,release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 532,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_52_30/CLIPACTIONRECORD on(releaseOutside,release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 661,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_53_33/CLIPACTIONRECORD on(releaseOutside,release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-020",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "1a35deb34b0c4734d4571d0984f26b902734639a8bc22f3ba83e9034cd278056",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "eval(_droptarget) == this._parent.Mc_Tar_1",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 206,
+            "script": "DefineSprite_46/frame_2/PlaceObject2_45_1/CLIPACTIONRECORD on(releaseOutside,release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-021",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "d9063076beb730330347e58d2257adb8fe992f4cea10b5b8f86105dd405ebd62",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "eval(_droptarget) == this._parent.Mc_Tar_2",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 215,
+            "script": "DefineSprite_46/frame_2/PlaceObject2_45_1/CLIPACTIONRECORD on(releaseOutside,release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-022",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "a6203561ddbacc500e88b62b8912b2531c2339ec745352c078f6d2005f1c5870",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "eval(_droptarget) == this._parent.Mc_Tar_3",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 224,
+            "script": "DefineSprite_46/frame_2/PlaceObject2_45_1/CLIPACTIONRECORD on(releaseOutside,release).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-023",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "559833df55cd2fb0bf343a10193e030b099deaaf8cfc73ef5af9fd8abea8a067",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "i < 5",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 135,
+            "script": "DefineButton2_47/BUTTONCONDACTION on(release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 779,
+            "script": "DefineSprite_89/frame_180/DoAction.as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-024",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "a7a0797728e02eaac0915edcc2a75b00bb0b9e66bb52a46758580cc82611c797",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "i < 8",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 354,
+            "script": "DefineSprite_89/frame_170/DoAction.as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-025",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "17af4fd4d356b46b41c5daa086fefd2be96ac1b1e53b7f01147fb17a3a3ad269",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "i < arr.length",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 798,
+            "script": "DefineSprite_89/frame_182/DoAction.as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 807,
+            "script": "DefineSprite_89/frame_185/DoAction.as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 816,
+            "script": "DefineSprite_89/frame_188/DoAction.as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 825,
+            "script": "DefineSprite_89/frame_191/DoAction.as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 834,
+            "script": "DefineSprite_89/frame_194/DoAction.as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 843,
+            "script": "DefineSprite_89/frame_196/DoAction.as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-026",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "2bb10b0efa5ced870fe1fa818115d94e8f25b232db1f9a7a636b00ba32fbd3fe",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "i <= 5",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 13,
+            "script": "DefineButton2_40/BUTTONCONDACTION on(release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 22,
+            "script": "DefineButton2_40/BUTTONCONDACTION on(release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 44,
+            "script": "DefineButton2_40/BUTTONCONDACTION on(release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 56,
+            "script": "DefineButton2_40/BUTTONCONDACTION on(release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 74,
+            "script": "DefineButton2_43/BUTTONCONDACTION on(release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 83,
+            "script": "DefineButton2_43/BUTTONCONDACTION on(release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 105,
+            "script": "DefineButton2_43/BUTTONCONDACTION on(release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 117,
+            "script": "DefineButton2_43/BUTTONCONDACTION on(release).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 347,
+            "script": "DefineSprite_89/frame_170/DoAction.as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-027",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "bcd3be82b6ed4e4d3f5386e6a60b2180efcadba9aefa9278e2036f402bbf2c4e",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "i <= 7",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 320,
+            "script": "DefineSprite_89/frame_170/DoAction.as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 329,
+            "script": "DefineSprite_89/frame_170/DoAction.as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 338,
+            "script": "DefineSprite_89/frame_170/DoAction.as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-028",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "b807af6680ffc9bff77ffa4d5d9a9e6fb2507e653c5494fbbab18838c6336bcb",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      },
+      {
+        "condition": "started == true",
+        "evidence": [
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 468,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_45_27/CLIPACTIONRECORD onClipEvent(enterFrame).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 597,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_52_30/CLIPACTIONRECORD onClipEvent(enterFrame).as"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "line": 726,
+            "script": "DefineSprite_89/frame_170/PlaceObject2_53_33/CLIPACTIONRECORD onClipEvent(enterFrame).as"
+          }
+        ],
+        "feasibility": "runtime reachability must be proven; infeasible outcomes require a written exception, not silent omission",
+        "obligationId": "condition-029",
+        "requiredOutcomes": [
+          "true",
+          "false"
+        ],
+        "routePolicyId": "branch-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "fabf8cc3de8e7ea09b687de8b9669385063495670d642768bbec1637523fc787",
+        "status": "pending-authoritative-reachability-entry-state-outcome-traces"
+      }
+    ],
+    "drags": [
+      {
+        "boundEvidenceCount": 1,
+        "events": [
+          "press"
+        ],
+        "evidence": {
+          "artifactId": "ffdec-scripts",
+          "lineEnd": 201,
+          "lineStart": 198,
+          "script": "DefineSprite_46/frame_2/PlaceObject2_45_1/CLIPACTIONRECORD on(press).as"
+        },
+        "obligationId": "drag-script-0009-1",
+        "requiredStates": [
+          "before",
+          "press-or-start",
+          "minimum-bound",
+          "intermediate",
+          "maximum-bound",
+          "release",
+          "releaseOutside-if-encoded"
+        ],
+        "routePolicyId": "drag-authority-entry-state-trace-v1",
+        "script": "DefineSprite_46/frame_2/PlaceObject2_45_1/CLIPACTIONRECORD on(press).as",
+        "scriptId": "script-0009",
+        "staticFingerprintSha256": "d2448a7be8527d403b01fff1afee219f4290d898d34a8b936eafa23a489c9d24",
+        "status": "pending-authoritative-entry-state-coordinate-trace"
+      },
+      {
+        "boundEvidenceCount": 0,
+        "events": [
+          "releaseOutside",
+          "release"
+        ],
+        "evidence": {
+          "artifactId": "ffdec-scripts",
+          "lineEnd": 238,
+          "lineStart": 203,
+          "script": "DefineSprite_46/frame_2/PlaceObject2_45_1/CLIPACTIONRECORD on(releaseOutside,release).as"
+        },
+        "obligationId": "drag-script-0010-2",
+        "requiredStates": [
+          "before",
+          "press-or-start",
+          "minimum-bound",
+          "intermediate",
+          "maximum-bound",
+          "release",
+          "releaseOutside-if-encoded"
+        ],
+        "routePolicyId": "drag-authority-entry-state-trace-v1",
+        "script": "DefineSprite_46/frame_2/PlaceObject2_45_1/CLIPACTIONRECORD on(releaseOutside,release).as",
+        "scriptId": "script-0010",
+        "staticFingerprintSha256": "1083fcea6f706ee5dcecce45df08dcc3027b42a9855da728affaee2e4fc8116d",
+        "status": "pending-authoritative-entry-state-coordinate-trace"
+      },
+      {
+        "boundEvidenceCount": 1,
+        "events": [
+          "press"
+        ],
+        "evidence": {
+          "artifactId": "ffdec-scripts",
+          "lineEnd": 375,
+          "lineStart": 372,
+          "script": "DefineSprite_89/frame_170/PlaceObject2_45_27/CLIPACTIONRECORD on(press).as"
+        },
+        "obligationId": "drag-script-0029-3",
+        "requiredStates": [
+          "before",
+          "press-or-start",
+          "minimum-bound",
+          "intermediate",
+          "maximum-bound",
+          "release",
+          "releaseOutside-if-encoded"
+        ],
+        "routePolicyId": "drag-authority-entry-state-trace-v1",
+        "script": "DefineSprite_89/frame_170/PlaceObject2_45_27/CLIPACTIONRECORD on(press).as",
+        "scriptId": "script-0029",
+        "staticFingerprintSha256": "63674426e1cdbe467ce1e8a9b76a1ee5f30e17bdfcb2ae52413de43d3a4e4e7d",
+        "status": "pending-authoritative-entry-state-coordinate-trace"
+      },
+      {
+        "boundEvidenceCount": 0,
+        "events": [
+          "releaseOutside",
+          "release"
+        ],
+        "evidence": {
+          "artifactId": "ffdec-scripts",
+          "lineEnd": 464,
+          "lineStart": 377,
+          "script": "DefineSprite_89/frame_170/PlaceObject2_45_27/CLIPACTIONRECORD on(releaseOutside,release).as"
+        },
+        "obligationId": "drag-script-0030-4",
+        "requiredStates": [
+          "before",
+          "press-or-start",
+          "minimum-bound",
+          "intermediate",
+          "maximum-bound",
+          "release",
+          "releaseOutside-if-encoded"
+        ],
+        "routePolicyId": "drag-authority-entry-state-trace-v1",
+        "script": "DefineSprite_89/frame_170/PlaceObject2_45_27/CLIPACTIONRECORD on(releaseOutside,release).as",
+        "scriptId": "script-0030",
+        "staticFingerprintSha256": "37c399dfd2de467af012258c34f31210623a41ab2454b29621d31ab4c11e52c6",
+        "status": "pending-authoritative-entry-state-coordinate-trace"
+      },
+      {
+        "boundEvidenceCount": 1,
+        "events": [
+          "press"
+        ],
+        "evidence": {
+          "artifactId": "ffdec-scripts",
+          "lineEnd": 504,
+          "lineStart": 501,
+          "script": "DefineSprite_89/frame_170/PlaceObject2_52_30/CLIPACTIONRECORD on(press).as"
+        },
+        "obligationId": "drag-script-0033-5",
+        "requiredStates": [
+          "before",
+          "press-or-start",
+          "minimum-bound",
+          "intermediate",
+          "maximum-bound",
+          "release",
+          "releaseOutside-if-encoded"
+        ],
+        "routePolicyId": "drag-authority-entry-state-trace-v1",
+        "script": "DefineSprite_89/frame_170/PlaceObject2_52_30/CLIPACTIONRECORD on(press).as",
+        "scriptId": "script-0033",
+        "staticFingerprintSha256": "e81a16e6145ce5384e8b513ba95179afd7f6c3933fd8bb3446fcfc95cda5c9d7",
+        "status": "pending-authoritative-entry-state-coordinate-trace"
+      },
+      {
+        "boundEvidenceCount": 0,
+        "events": [
+          "releaseOutside",
+          "release"
+        ],
+        "evidence": {
+          "artifactId": "ffdec-scripts",
+          "lineEnd": 593,
+          "lineStart": 506,
+          "script": "DefineSprite_89/frame_170/PlaceObject2_52_30/CLIPACTIONRECORD on(releaseOutside,release).as"
+        },
+        "obligationId": "drag-script-0034-6",
+        "requiredStates": [
+          "before",
+          "press-or-start",
+          "minimum-bound",
+          "intermediate",
+          "maximum-bound",
+          "release",
+          "releaseOutside-if-encoded"
+        ],
+        "routePolicyId": "drag-authority-entry-state-trace-v1",
+        "script": "DefineSprite_89/frame_170/PlaceObject2_52_30/CLIPACTIONRECORD on(releaseOutside,release).as",
+        "scriptId": "script-0034",
+        "staticFingerprintSha256": "987f8f10266e49c9c97d535e07ed182ab6fff8511a151b678a7d8fe8e002f1f6",
+        "status": "pending-authoritative-entry-state-coordinate-trace"
+      },
+      {
+        "boundEvidenceCount": 1,
+        "events": [
+          "press"
+        ],
+        "evidence": {
+          "artifactId": "ffdec-scripts",
+          "lineEnd": 633,
+          "lineStart": 630,
+          "script": "DefineSprite_89/frame_170/PlaceObject2_53_33/CLIPACTIONRECORD on(press).as"
+        },
+        "obligationId": "drag-script-0037-7",
+        "requiredStates": [
+          "before",
+          "press-or-start",
+          "minimum-bound",
+          "intermediate",
+          "maximum-bound",
+          "release",
+          "releaseOutside-if-encoded"
+        ],
+        "routePolicyId": "drag-authority-entry-state-trace-v1",
+        "script": "DefineSprite_89/frame_170/PlaceObject2_53_33/CLIPACTIONRECORD on(press).as",
+        "scriptId": "script-0037",
+        "staticFingerprintSha256": "b339d79a328527facd35e66bbc2e54632057932916cf263b364add4daf4edcc4",
+        "status": "pending-authoritative-entry-state-coordinate-trace"
+      },
+      {
+        "boundEvidenceCount": 0,
+        "events": [
+          "releaseOutside",
+          "release"
+        ],
+        "evidence": {
+          "artifactId": "ffdec-scripts",
+          "lineEnd": 722,
+          "lineStart": 635,
+          "script": "DefineSprite_89/frame_170/PlaceObject2_53_33/CLIPACTIONRECORD on(releaseOutside,release).as"
+        },
+        "obligationId": "drag-script-0038-8",
+        "requiredStates": [
+          "before",
+          "press-or-start",
+          "minimum-bound",
+          "intermediate",
+          "maximum-bound",
+          "release",
+          "releaseOutside-if-encoded"
+        ],
+        "routePolicyId": "drag-authority-entry-state-trace-v1",
+        "script": "DefineSprite_89/frame_170/PlaceObject2_53_33/CLIPACTIONRECORD on(releaseOutside,release).as",
+        "scriptId": "script-0038",
+        "staticFingerprintSha256": "5163f9fd1e9a5796641f3b371291f551c017e75e275c53deda3cc5860aa9824a",
+        "status": "pending-authoritative-entry-state-coordinate-trace"
+      }
+    ],
+    "random": [
+      {
+        "deterministicHarness": "record and inject the random result without enabling network, storage, or host side effects",
+        "evidence": {
+          "artifactId": "ffdec-scripts",
+          "line": 264,
+          "script": "DefineSprite_49/frame_2/DoAction.as"
+        },
+        "expression": "random(_global.rndAudio.length)",
+        "obligationId": "random-001",
+        "requiredOutcomes": "each integer index in [0, _global.rndAudio.length) under a controlled fixture",
+        "routePolicyId": "random-authority-entry-state-trace-v1",
+        "staticFingerprintSha256": "4b40e4db32d80433cd1573937ad07909e4a221ccc4466b57a694c501bc199152",
+        "status": "pending-source-authority-entry-state-outcome-traces"
+      }
+    ]
+  },
+  "protectedMutations": {
+    "acceptanceAdvanced": false,
+    "browserLaunched": false,
+    "canonicalCoverageWritten": false,
+    "canonicalKeyframesWritten": false,
+    "completionLedgerChanged": false,
+    "guiLaunched": false,
+    "implementationStarted": false,
+    "originalRuntimeLaunched": false,
+    "publicationChanged": false,
+    "rendererSelected": false,
+    "reviewRecorded": false,
+    "ruffleLaunched": false,
+    "traceSpecCreated": false
+  },
+  "releaseId": "lesson-g05-l05-add-subtract-negative-numbers",
+  "releaseMembership": {
+    "assetId": "swf-9f3b7475cadeb8f5780d98a047b7bfe2b5aa6d3f90c3cf7206b206bd0bee3eaa",
+    "batchId": "g05-l05-host-language",
+    "ordinal": 6,
+    "releaseFingerprintSha256": "c03cf04129a19758f1bbdadbc67c78b26dde783fca1587447bf6ff83f2af7f84",
+    "releaseRole": "active-xml-referenced-page",
+    "shardId": "g05-l05-host-language",
+    "sourcePath": "HELP_COURSES/ELMGR5/L5/VB/L5VB03.swf",
+    "sourceSha256": "9f3b7475cadeb8f5780d98a047b7bfe2b5aa6d3f90c3cf7206b206bd0bee3eaa"
+  },
+  "routePolicies": {
+    "branch-authority-entry-state-trace-v1": {
+      "entryStateResolution": "resolve all prerequisite values, containing domain, language, host state, and entry-state hash without guessing defaults",
+      "futureAuthority": "source-evidenced fixtures plus authorized original-runtime execution of every reachable outcome",
+      "namedHumanRequired": "yes for authoritative original-runtime execution and attestation",
+      "staticAuthority": "exported conditional expression candidate only; reachability and feasibility are unresolved",
+      "traceResolution": "record one ordered natural trace per reachable outcome; document an evidence-backed exception for an infeasible outcome"
+    },
+    "button-authority-entry-state-trace-v1": {
+      "entryStateResolution": "resolve the containing frame domain, exact placement, language, host state, and stage-space target before interaction",
+      "futureAuthority": "authorized original-runtime natural interaction with source-evidenced placement and event identity",
+      "namedHumanRequired": "yes for authoritative original-runtime interaction and attestation",
+      "staticAuthority": "button definition, encoded event, hit-record, and placement candidate only",
+      "traceResolution": "record ordered pointer/keyboard events and up, over, down, hit, result, terminal, and reset states for every reachable placement"
+    },
+    "child-domain-authority-entry-state-trace-v1": {
+      "entryStateResolution": "prove the complete parent placement chain, parent frame, local entry frame, language, host state, and entry-state hash before assigning an independent or composite domain",
+      "futureAuthority": "authorized original-runtime natural host entry, or exact authoring/source evidence reviewed under the project evidence order",
+      "namedHumanRequired": "yes for original-runtime operation, observation, and session attestation",
+      "staticAuthority": "structural candidate only; the disposition is not runtime reachability evidence",
+      "traceResolution": "create a trace obligation only after reachability, disposition, and exact entry state are evidenced; preserve every local frame when independent-required"
+    },
+    "drag-authority-entry-state-trace-v1": {
+      "entryStateResolution": "resolve containing domain, placement, start position, bounds, host variables, language, and entry-state hash",
+      "futureAuthority": "authorized original-runtime natural drag observation with exact coordinates and source identity",
+      "namedHumanRequired": "yes for authoritative original-runtime drag operation and attestation",
+      "staticAuthority": "exported drag handler and static bound expression candidate only",
+      "traceResolution": "record press/start, ordered coordinate samples, minimum/intermediate/maximum positions, release, releaseOutside where encoded, result, and Replay/reset"
+    },
+    "interaction-authority-entry-state-trace-v1": {
+      "entryStateResolution": "resolve containing domain, exact prerequisite state, language, host state, and entry-state hash",
+      "futureAuthority": "source evidence plus authorized original-runtime natural reachability",
+      "namedHumanRequired": "yes whenever original-runtime operation, listening, visual judgment, or attestation is required",
+      "staticAuthority": "static scenario obligation only",
+      "traceResolution": "record the complete ordered natural trace, terminal state, and Replay/reset semantics"
+    },
+    "random-authority-entry-state-trace-v1": {
+      "entryStateResolution": "resolve containing domain, prerequisite array/range values, language, host state, and entry-state hash",
+      "futureAuthority": "source-proven random domain and authorized original-runtime observation; deterministic seeds only when evidenced",
+      "namedHumanRequired": "yes for authoritative original-runtime observation and attestation",
+      "staticAuthority": "exported random expression and outcome-shape candidate only",
+      "traceResolution": "record the injected or observed outcome, seed/fixture authority, ordered events, resulting states, terminal behavior, and reset for every required outcome"
+    }
+  },
+  "schemaVersion": 1,
+  "state": "static-obligations-routed-runtime-authority-pending",
+  "structuralDefinitionInventory": {
+    "evidenceBoundCompositeChildCount": 10,
+    "excludedNotProven": {
+      "count": 1,
+      "futureResolution": "retain in the definition census and prove root reachability before creating any entry-state or trace route; do not classify as dead code from absence alone",
+      "runnableRouteCreated": false,
+      "status": "static-definition-retained-root-reachability-not-proven"
+    },
+    "excludedNotProvenTimelineCount": 1,
+    "highRiskIndependentCandidateCount": 2,
+    "longerThanRootCount": 4,
+    "nestedDefinitionCount": 18,
+    "structurallyReachableChildCount": 17,
+    "structurallyReachableUnresolvedChildCount": 7
+  }
+}

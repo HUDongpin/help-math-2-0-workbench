@@ -1,0 +1,793 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "g4-l10-ts007-sprite64-interactive-disposition-readiness-v1",
+  "status": "source-static-interactive-gap-frozen-disposition-unresolved",
+  "decision": "KEEP_UNRESOLVED_DO_NOT_CLASSIFY_DO_NOT_APPLY",
+  "releaseId": "lesson-g04-l10-perimeter-area",
+  "animationId": "course-g04-l10-ts-007",
+  "sourceIdentity": {
+    "assetId": "swf-64070bdec0badb3cb009a741fe1b5e9c96bd98e68b92c4dfe125db3b43617eff",
+    "sourceSwfPath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/TS/L10TS07.swf",
+    "sourceSwfSha256": "64070bdec0badb3cb009a741fe1b5e9c96bd98e68b92c4dfe125db3b43617eff"
+  },
+  "purpose": [
+    "Freeze the exact source-static interactive behavior that prevents sprite-64 from being classified as a single-frame scriptless composite.",
+    "Define an acceptance-neutral original-runtime observation matrix without launching any runtime or changing the migration workspace."
+  ],
+  "evidenceInputs": {
+    "manifest": {
+      "path": "migrations/course-g04-l10-ts-007/migration.json",
+      "bytes": 28936,
+      "sha256": "62a981ef41d274f5ec9b3ad69852d3e7b860db4270cb895085387ca395cc8337",
+      "mode": "0644"
+    },
+    "coverage": {
+      "path": "migrations/course-g04-l10-ts-007/evidence/full-frame-coverage.json",
+      "bytes": 97875,
+      "sha256": "7a0b368f1d1f222a40a6a3185cfc0842036f7967063940e0511758aac100d789",
+      "mode": "0644"
+    },
+    "disposition": {
+      "path": "migrations/course-g04-l10-ts-007/audit/frame-domain-disposition.json",
+      "bytes": 100597,
+      "sha256": "b5495a553e3663dad5083bca04b82d06756912a8496617f8dc231014866c36da",
+      "mode": "0644"
+    },
+    "staticEvidence": {
+      "path": "migrations/course-g04-l10-ts-007/audit/static-frame-domain-disposition-evidence.json",
+      "bytes": 165860,
+      "sha256": "3e965e69081ce4affedfcfa86ff02b14559d5fbee73039539b8e475a57a2aaea",
+      "mode": "0644"
+    },
+    "independentEvidence": {
+      "path": "migrations/course-g04-l10-ts-007/audit/source-proven-independent-frame-domain-evidence.json",
+      "bytes": 54647,
+      "sha256": "110ad73562c8e01b205c4449504612dcf6cb0d86b6cea051d1da81bb25f60f02",
+      "mode": "0644"
+    },
+    "inventory": {
+      "path": "migrations/course-g04-l10-ts-007/audit/scenario-inventory.json",
+      "bytes": 1030575,
+      "sha256": "a7601f0e9a1508f446ccb630d182d3004316b52ef3cd38dc2734115c292430f6",
+      "mode": "0644"
+    },
+    "swfmill": {
+      "path": "migrations/course-g04-l10-ts-007/audit/machine/swfmill.xml.gz",
+      "bytes": 987643,
+      "sha256": "a2cdc609431c5a6571383828e2a180b9034137ebe9275f19e9da107330873183",
+      "mode": "0644"
+    },
+    "ffdecScripts": {
+      "path": "migrations/course-g04-l10-ts-007/audit/machine/ffdec-scripts.txt.gz",
+      "bytes": 1475,
+      "sha256": "37ae1f45789624e1bbc68937074eaf7c59818877692701a71ab4f82b6bafc447",
+      "mode": "0644"
+    },
+    "sourceSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/TS/L10TS07.swf",
+      "bytes": 585839,
+      "sha256": "64070bdec0badb3cb009a741fe1b5e9c96bd98e68b92c4dfe125db3b43617eff",
+      "mode": "0500"
+    },
+    "templateContract": {
+      "path": "reports/g4-l10-complete-migration-template-contract-v6-2026-08-06.json",
+      "bytes": 237667,
+      "sha256": "4bc3884451303da1342763ec65095bb13b3d67f2ba28bfbfda739c58485f9e51",
+      "mode": "0644"
+    },
+    "failedHelperReview": {
+      "path": "reports/g4-l10-native-helper-v2-14-independent-review-batch-487d5f85-failed-v1.json",
+      "bytes": 8768,
+      "sha256": "7b07824a378d232e89f46eb744fd572042a455f3203c7e41c2b0b16fda477b1d",
+      "mode": "0444"
+    }
+  },
+  "currentDisposition": {
+    "status": "structurally-enumerated-dispositions-unresolved",
+    "summary": {
+      "inventoryTimelineCount": 27,
+      "enumeratedTimelineCount": 26,
+      "reachableChildTimelineCount": 25,
+      "excludedNotProvenTimelineCount": 1,
+      "dispositionCounts": {
+        "declared-frame-domain": 15,
+        "composite-child-with-parent": 10,
+        "independent-required": 0,
+        "nonvisual": 0,
+        "unresolved": 1
+      },
+      "highRiskIndependentCandidateCount": 0,
+      "highRiskIndependentCandidates": []
+    },
+    "definitions": {
+      "declared-frame-domain": "The bound manifest explicitly declares this source timeline as a frame domain with a matching frame count.",
+      "composite-child-with-parent": "A reproducible hash-bound source audit proves that the child's local state is exhaustively represented inside a declared parent domain while all non-frame-domain obligations remain pending.",
+      "independent-required": "Reserved for a future authoritative-runtime or authoring-evidence conclusion that this undeclared local playhead requires its own frame domain.",
+      "nonvisual": "Reserved for a future asset/script/authoring audit proving that the timeline has no visual or interaction-state contribution.",
+      "unresolved": "Current evidence does not support one of the other dispositions without guessing."
+    },
+    "sprite64": {
+      "timelineId": "sprite-64",
+      "sourceTimelineId": "sprite-64",
+      "sourceObjectId": "64",
+      "frameCount": 1,
+      "structuralReachability": "reachable-from-root-placement-graph",
+      "rootPlacement": {
+        "status": "proven-named-placement-chain",
+        "namedPlacementPath": [
+          {
+            "parentTimelineId": "root",
+            "childTimelineId": "sprite-415",
+            "sourceObjectId": "415",
+            "frame": 6,
+            "depth": "1",
+            "instanceName": "animation",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          },
+          {
+            "parentTimelineId": "sprite-415",
+            "childTimelineId": "sprite-64",
+            "sourceObjectId": "64",
+            "frame": 23,
+            "depth": "57",
+            "instanceName": "scale",
+            "tag": "PlaceObject2",
+            "replace": "0",
+            "hasClipActions": false
+          }
+        ]
+      },
+      "knownNamedParentPlacements": [
+        {
+          "parentTimelineId": "sprite-415",
+          "childTimelineId": "sprite-64",
+          "sourceObjectId": "64",
+          "frame": 23,
+          "depth": "57",
+          "instanceName": "scale",
+          "tag": "PlaceObject2",
+          "replace": "0",
+          "hasClipActions": false
+        }
+      ],
+      "declaredFrameDomains": [],
+      "disposition": "unresolved",
+      "dispositionBasis": "Static root reachability does not prove that a MovieClip is composite-only, independently required, or nonvisual; no authoritative disposition is recorded in the bound manifest.",
+      "riskAssessment": {
+        "level": "review",
+        "independentFrameDomainCandidate": false,
+        "signals": [
+          "undeclared-structurally-root-reachable-timeline"
+        ],
+        "interpretation": "Static structure does not prove whether this one-frame MovieClip is visual, nonvisual, interactive, or fully represented by a parent domain."
+      },
+      "staticSignals": {
+        "controlStateCount": 1,
+        "frameLabelCount": 0,
+        "namedChildPlacementCount": 1
+      },
+      "sourceEvidence": {
+        "scenarioInventoryPath": "audit/scenario-inventory.json",
+        "scenarioInventorySha256": "a7601f0e9a1508f446ccb630d182d3004316b52ef3cd38dc2734115c292430f6",
+        "swfmillArtifactId": "swfmill-xml",
+        "swfmillPath": "audit/machine/swfmill.xml.gz",
+        "swfmillSha256": "a2cdc609431c5a6571383828e2a180b9034137ebe9275f19e9da107330873183"
+      }
+    },
+    "staticClaimTimelineIds": [
+      "sprite-60",
+      "sprite-62",
+      "sprite-63",
+      "sprite-77",
+      "sprite-79",
+      "sprite-203",
+      "sprite-226",
+      "sprite-355",
+      "sprite-379",
+      "sprite-419"
+    ],
+    "sourceProvenIndependentClaimCount": 14,
+    "sprite64ClaimedByStaticCompositeEvidence": false,
+    "sprite64ClaimedBySourceProvenIndependentEvidence": false
+  },
+  "independentStaticRecomputation": {
+    "algorithm": "deriveSingleFrameScriptlessEligibility from the bound swfmill, FFDec, scenario-inventory, and migration-manifest bytes",
+    "eligibleSingleFrameTimelineIds": [
+      "sprite-60",
+      "sprite-62",
+      "sprite-63",
+      "sprite-77",
+      "sprite-79",
+      "sprite-203",
+      "sprite-226",
+      "sprite-419"
+    ],
+    "sprite64": {
+      "eligibleAsSingleFrameScriptlessComposite": false,
+      "disqualifiers": [
+        "swfmill-do-action-present",
+        "ffdec-frame-script-present"
+      ],
+      "declaredFrameCount": 1,
+      "observedShowFrameCount": 1,
+      "directTimelineTagCounts": {
+        "DoAction": 1,
+        "PlaceObject2": 1,
+        "ShowFrame": 1,
+        "End": 1
+      },
+      "directDoActionCount": 1,
+      "directFfdecFrameScriptCount": 1,
+      "ffdecPlacedClipActionPresentOutsideDirectFrameScriptClassifier": true,
+      "incomingPlacement": {
+        "parentTimelineId": "sprite-415",
+        "sourceObjectId": "64",
+        "frame": 23,
+        "depth": "57",
+        "instanceName": "scale",
+        "tag": "PlaceObject2",
+        "replace": "0",
+        "hasClipActionsInSwfmillExport": false,
+        "matrix": {
+          "a": 1,
+          "b": 0,
+          "c": 0,
+          "d": -1,
+          "tx": 2539,
+          "ty": -529
+        }
+      },
+      "outgoingPlacement": {
+        "parentTimelineId": "sprite-64",
+        "sourceObjectId": "63",
+        "frame": 1,
+        "depth": "1",
+        "instanceName": "scale_mc",
+        "tag": "PlaceObject2",
+        "replace": "0",
+        "hasClipActionsInSwfmillExport": false,
+        "matrix": {
+          "a": 0,
+          "b": 1,
+          "c": -1,
+          "d": 0,
+          "tx": -1,
+          "ty": -1
+        }
+      },
+      "unresolvedOutgoingObjectCount": 0,
+      "swfmillExportedPlacementClipActionCount": 0
+    }
+  },
+  "interactiveScriptCluster": {
+    "scenarioInventoryRecords": [
+      {
+        "id": "script-0083",
+        "script": "DefineSprite_63/frame_1/PlaceObject2_60_1/CLIPACTIONRECORD on(press).as",
+        "bodySha256": "9607d5ee075d80c14d6d8382af8d73abcc2e40313f98aee646d918322ace8db6",
+        "lineStart": 501,
+        "lineEnd": 504,
+        "scope": {
+          "kind": "sprite",
+          "objectId": "63",
+          "frame": 1
+        },
+        "hitTargetCandidate": {
+          "objectId": "60",
+          "depth": "1"
+        },
+        "event": [
+          "press"
+        ],
+        "categories": [
+          "drag"
+        ],
+        "signals": {
+          "calls": [
+            {
+              "target": "_parent.startDrag",
+              "arguments": "",
+              "evidence": {
+                "artifactId": "ffdec-scripts",
+                "script": "DefineSprite_63/frame_1/PlaceObject2_60_1/CLIPACTIONRECORD on(press).as",
+                "line": 503
+              }
+            }
+          ],
+          "assignments": [],
+          "transitions": [],
+          "scopeReferences": [
+            "_parent.startDrag"
+          ],
+          "conditionals": [],
+          "randomCalls": [],
+          "sideEffects": []
+        }
+      },
+      {
+        "id": "script-0084",
+        "script": "DefineSprite_63/frame_1/PlaceObject2_60_1/CLIPACTIONRECORD on(releaseOutside,release).as",
+        "bodySha256": "828c5a3b328e8dfdd1621579990cf204c1d5ad953c64fad4a9751cf37cba3ab5",
+        "lineStart": 506,
+        "lineEnd": 509,
+        "scope": {
+          "kind": "sprite",
+          "objectId": "63",
+          "frame": 1
+        },
+        "hitTargetCandidate": {
+          "objectId": "60",
+          "depth": "1"
+        },
+        "event": [
+          "releaseOutside",
+          "release"
+        ],
+        "categories": [
+          "drag"
+        ],
+        "signals": {
+          "calls": [
+            {
+              "target": "_parent.stopDrag",
+              "arguments": "",
+              "evidence": {
+                "artifactId": "ffdec-scripts",
+                "script": "DefineSprite_63/frame_1/PlaceObject2_60_1/CLIPACTIONRECORD on(releaseOutside,release).as",
+                "line": 508
+              }
+            }
+          ],
+          "assignments": [],
+          "transitions": [],
+          "scopeReferences": [
+            "_parent.stopDrag"
+          ],
+          "conditionals": [],
+          "randomCalls": [],
+          "sideEffects": []
+        }
+      },
+      {
+        "id": "script-0085",
+        "script": "DefineSprite_63/frame_1/PlaceObject2_62_12/CLIPACTIONRECORD on(press).as",
+        "bodySha256": "af57c5a006160bee204a895f22e269207dc6e33ab28d8a7b84647d97ef023660",
+        "lineStart": 511,
+        "lineEnd": 514,
+        "scope": {
+          "kind": "sprite",
+          "objectId": "63",
+          "frame": 1
+        },
+        "hitTargetCandidate": {
+          "objectId": "62",
+          "depth": "12"
+        },
+        "event": [
+          "press"
+        ],
+        "categories": [],
+        "signals": {
+          "calls": [],
+          "assignments": [
+            {
+              "target": "_global.mcMovement",
+              "operator": "=",
+              "expression": "true",
+              "evidence": {
+                "artifactId": "ffdec-scripts",
+                "script": "DefineSprite_63/frame_1/PlaceObject2_62_12/CLIPACTIONRECORD on(press).as",
+                "line": 513
+              }
+            }
+          ],
+          "transitions": [],
+          "scopeReferences": [
+            "_global.mcMovement"
+          ],
+          "conditionals": [],
+          "randomCalls": [],
+          "sideEffects": []
+        }
+      },
+      {
+        "id": "script-0086",
+        "script": "DefineSprite_63/frame_1/PlaceObject2_62_12/CLIPACTIONRECORD on(releaseOutside,release).as",
+        "bodySha256": "f6080c6d013fd0e8380a2c23da0f9379b09a75b1958428f58cbb8847d776a41e",
+        "lineStart": 516,
+        "lineEnd": 519,
+        "scope": {
+          "kind": "sprite",
+          "objectId": "63",
+          "frame": 1
+        },
+        "hitTargetCandidate": {
+          "objectId": "62",
+          "depth": "12"
+        },
+        "event": [
+          "releaseOutside",
+          "release"
+        ],
+        "categories": [],
+        "signals": {
+          "calls": [],
+          "assignments": [
+            {
+              "target": "_global.mcMovement",
+              "operator": "=",
+              "expression": "false",
+              "evidence": {
+                "artifactId": "ffdec-scripts",
+                "script": "DefineSprite_63/frame_1/PlaceObject2_62_12/CLIPACTIONRECORD on(releaseOutside,release).as",
+                "line": 518
+              }
+            }
+          ],
+          "transitions": [],
+          "scopeReferences": [
+            "_global.mcMovement"
+          ],
+          "conditionals": [],
+          "randomCalls": [],
+          "sideEffects": []
+        }
+      },
+      {
+        "id": "script-0087",
+        "script": "DefineSprite_64/frame_1/DoAction.as",
+        "bodySha256": "c25439ba4c079127c9866f139daa22f9a45aa30546e399796f170ddd05991ff0",
+        "lineStart": 521,
+        "lineEnd": 552,
+        "scope": {
+          "kind": "sprite",
+          "objectId": "64",
+          "frame": 1
+        },
+        "hitTargetCandidate": null,
+        "event": [],
+        "categories": [],
+        "signals": {
+          "calls": [
+            {
+              "target": "Math.atan2",
+              "arguments": "dy,dx",
+              "evidence": {
+                "artifactId": "ffdec-scripts",
+                "script": "DefineSprite_64/frame_1/DoAction.as",
+                "line": 532
+              }
+            }
+          ],
+          "assignments": [
+            {
+              "target": "_global.degreesRotation",
+              "operator": "=",
+              "expression": "degrees - 85",
+              "evidence": {
+                "artifactId": "ffdec-scripts",
+                "script": "DefineSprite_64/frame_1/DoAction.as",
+                "line": 550
+              }
+            }
+          ],
+          "transitions": [],
+          "scopeReferences": [
+            "_global.degreesRotation",
+            "_global.mcMovement"
+          ],
+          "conditionals": [
+            {
+              "condition": "_global.mcMovement",
+              "evidence": {
+                "artifactId": "ffdec-scripts",
+                "script": "DefineSprite_64/frame_1/DoAction.as",
+                "line": 524
+              }
+            },
+            {
+              "condition": "degrees_Mirrored > 180 && degrees_Mirrored < 360",
+              "evidence": {
+                "artifactId": "ffdec-scripts",
+                "script": "DefineSprite_64/frame_1/DoAction.as",
+                "line": 534
+              }
+            },
+            {
+              "condition": "degrees_Mirrored > 0 && degrees_Mirrored < 180",
+              "evidence": {
+                "artifactId": "ffdec-scripts",
+                "script": "DefineSprite_64/frame_1/DoAction.as",
+                "line": 538
+              }
+            },
+            {
+              "condition": "degrees_Mirrored == 360 || degrees_Mirrored == 0",
+              "evidence": {
+                "artifactId": "ffdec-scripts",
+                "script": "DefineSprite_64/frame_1/DoAction.as",
+                "line": 542
+              }
+            },
+            {
+              "condition": "degrees_Mirrored == 180",
+              "evidence": {
+                "artifactId": "ffdec-scripts",
+                "script": "DefineSprite_64/frame_1/DoAction.as",
+                "line": 546
+              }
+            }
+          ],
+          "randomCalls": [],
+          "sideEffects": []
+        }
+      },
+      {
+        "id": "script-0088",
+        "script": "DefineSprite_64/frame_1/PlaceObject2_63_1/CLIPACTIONRECORD onClipEvent(enterFrame).as",
+        "bodySha256": "6b24d80a18f65976f7216643b9a9ece029e9887111660327d105f0f36f9f4c83",
+        "lineStart": 554,
+        "lineEnd": 560,
+        "scope": {
+          "kind": "sprite",
+          "objectId": "64",
+          "frame": 1
+        },
+        "hitTargetCandidate": {
+          "objectId": "63",
+          "depth": "1"
+        },
+        "event": [],
+        "categories": [],
+        "signals": {
+          "calls": [
+            {
+              "target": "onClipEvent",
+              "arguments": "enterFrame",
+              "evidence": {
+                "artifactId": "ffdec-scripts",
+                "script": "DefineSprite_64/frame_1/PlaceObject2_63_1/CLIPACTIONRECORD onClipEvent(enterFrame).as",
+                "line": 555
+              }
+            },
+            {
+              "target": "Math.floor",
+              "arguments": "_global.degreesRotation",
+              "evidence": {
+                "artifactId": "ffdec-scripts",
+                "script": "DefineSprite_64/frame_1/PlaceObject2_63_1/CLIPACTIONRECORD onClipEvent(enterFrame).as",
+                "line": 558
+              }
+            }
+          ],
+          "assignments": [],
+          "transitions": [],
+          "scopeReferences": [
+            "_global.degreesRotation",
+            "_global.mcMovement"
+          ],
+          "conditionals": [
+            {
+              "condition": "_global.mcMovement",
+              "evidence": {
+                "artifactId": "ffdec-scripts",
+                "script": "DefineSprite_64/frame_1/PlaceObject2_63_1/CLIPACTIONRECORD onClipEvent(enterFrame).as",
+                "line": 556
+              }
+            }
+          ],
+          "randomCalls": [],
+          "sideEffects": []
+        }
+      }
+    ],
+    "exactFfdecBlocks": {
+      "sprite64FrameAction": {
+        "script": "DefineSprite_64/frame_1/DoAction.as",
+        "bodySha256": "c25439ba4c079127c9866f139daa22f9a45aa30546e399796f170ddd05991ff0",
+        "headingLine": 521,
+        "lineStart": 522,
+        "lineEnd": 553
+      },
+      "sprite63PlacedEnterFrameAction": {
+        "script": "DefineSprite_64/frame_1/PlaceObject2_63_1/CLIPACTIONRECORD onClipEvent(enterFrame).as",
+        "bodySha256": "6b24d80a18f65976f7216643b9a9ece029e9887111660327d105f0f36f9f4c83",
+        "headingLine": 554,
+        "lineStart": 555,
+        "lineEnd": 561
+      }
+    },
+    "sourceStaticSemantics": [
+      "sprite-63 object 60 press calls _parent.startDrag(); release or releaseOutside calls _parent.stopDrag().",
+      "sprite-63 object 62 press writes _global.mcMovement=true; release or releaseOutside writes _global.mcMovement=false.",
+      "sprite-64 frame 1 installs this.onEnterFrame. While _global.mcMovement is truthy it reads local mouse coordinates and scale_mc coordinates, computes atan2-derived mirrored degrees through four explicit branches, and writes _global.degreesRotation=degrees-85.",
+      "sprite-64's placed sprite-63 clip action runs on enterFrame. While _global.mcMovement is truthy it assigns this._rotation=Math.floor(_global.degreesRotation)."
+    ],
+    "unresolvedSourceBindings": [
+      {
+        "name": "_global.mcMovement",
+        "sourceWritesObserved": [
+          true,
+          false
+        ],
+        "authoritativeEntryValueKnown": false,
+        "rule": "capture must observe or explicitly seed the value; no default may be guessed"
+      },
+      {
+        "name": "_global.degreesRotation",
+        "sourceWriteFormula": "degrees - 85",
+        "authoritativeEntryValueKnown": false,
+        "rule": "capture must observe or explicitly seed the value; no default may be guessed"
+      }
+    ]
+  },
+  "sourceStaticBehaviorSpecificationCandidate": {
+    "acceptanceStatus": "candidate-only-not-adopted",
+    "states": [
+      {
+        "id": "movement-inactive",
+        "condition": "_global.mcMovement is false or otherwise not truthy",
+        "sourceProvenEffect": "the two sprite-64 enterFrame handlers do not execute their guarded writes",
+        "runtimeVisualPersistence": "unresolved-until-authoritative-observation"
+      },
+      {
+        "id": "movement-active",
+        "entryEvent": "press on sprite-63 object 62 at depth 12",
+        "sourceProvenEffect": "each eligible enterFrame callback recomputes degreesRotation and floors it into sprite-63 rotation",
+        "exitEvents": [
+          "release",
+          "releaseOutside"
+        ]
+      },
+      {
+        "id": "drag-active",
+        "entryEvent": "press on sprite-63 object 60 at depth 1",
+        "sourceProvenEffect": "calls _parent.startDrag()",
+        "exitEvents": [
+          "release",
+          "releaseOutside"
+        ],
+        "relationshipToRotationControl": "unresolved-until-natural-runtime-observation"
+      }
+    ],
+    "angleBranches": [
+      "degrees_Mirrored > 180 && degrees_Mirrored < 360",
+      "degrees_Mirrored > 0 && degrees_Mirrored < 180",
+      "degrees_Mirrored == 360 || degrees_Mirrored == 0",
+      "degrees_Mirrored == 180"
+    ]
+  },
+  "requiredFutureOriginalRuntimeObservationMatrix": {
+    "status": "required-not-executed",
+    "prerequisite": "a separately qualified security review, implementation authorization, reviewed helper, approved disposable offline environment, named Peter Hu operation, and a checked launch receipt",
+    "languages": [
+      "en",
+      "es"
+    ],
+    "naturalEntry": [
+      "root frame 6 named instance animation -> sprite-415",
+      "sprite-415 frame 23 depth 57 named instance scale -> sprite-64"
+    ],
+    "scenarios": [
+      "entry before any interaction, including observed _global.mcMovement and _global.degreesRotation",
+      "movement-inactive across multiple enterFrame ticks",
+      "press movement control, then sample multiple mouse positions covering all four angle branches and axis boundaries",
+      "release and releaseOutside as separate paths, followed by multiple enterFrame ticks",
+      "drag press/move/release and drag press/move/releaseOutside",
+      "Replay/reset and natural re-entry",
+      "terminal progression and navigation away/back"
+    ],
+    "observables": [
+      "event ordering across sprite-64 frame action and placed sprite-63 enterFrame clip action",
+      "sprite-64 visibility and bounds; scale_mc anchor and transform",
+      "sprite-64 local _xmouse/_ymouse, dx, dy, alpha, degrees_Mirrored, degrees, and _global.degreesRotation",
+      "sprite-63 rotation before and after each callback",
+      "_global.mcMovement before and after press, release, releaseOutside, Replay, and re-entry",
+      "language-dependent visual, text, host, or audio differences if any"
+    ],
+    "exactMouseCoordinatesPredeclared": false,
+    "reason": "source-static evidence does not establish authoritative hit bounds or natural runtime coordinate samples; the operator kit must bind them before launch without guessing"
+  },
+  "dispositionConclusion": {
+    "currentDisposition": "unresolved",
+    "compositeChildWithParentSupported": false,
+    "independentRequiredSupported": false,
+    "nonvisualSupported": false,
+    "reason": "sprite-64 is structurally reachable and interactive, but current source-static evidence neither proves exhaustive representation inside a parent domain nor proves that an independent frame domain is required; authoritative runtime or authoring evidence remains absent",
+    "allowedFutureTransition": "only a separately reviewed, hash-bound successor based on authoritative original-runtime or higher-priority authoring evidence"
+  },
+  "downstreamStalenessAndSafetyBoundary": {
+    "coverageCurrentAgainstDisposition": false,
+    "coverageBindsDisposition": {
+      "path": "audit/frame-domain-disposition.json",
+      "bytes": 91900,
+      "sha256": "ebc6e4aafdf48f7beb6752f437e21a5fdd1986e4b5209362c0c94628e830b3c2",
+      "status": "structurally-enumerated-dispositions-unresolved",
+      "dispositionCounts": {
+        "declared-frame-domain": 15,
+        "composite-child-with-parent": 8,
+        "independent-required": 0,
+        "nonvisual": 0,
+        "unresolved": 3
+      }
+    },
+    "currentDisposition": {
+      "bytes": 100597,
+      "sha256": "b5495a553e3663dad5083bca04b82d06756912a8496617f8dc231014866c36da",
+      "dispositionCounts": {
+        "declared-frame-domain": 15,
+        "composite-child-with-parent": 10,
+        "independent-required": 0,
+        "nonvisual": 0,
+        "unresolved": 1
+      }
+    },
+    "staleCoverageEffect": "full-frame coverage remains a predecessor projection and cannot be cited as current for the two later nested-parent composite classifications",
+    "downstreamTransactionDecision": "DO_NOT_APPLY",
+    "downstreamTransactionProhibitedModes": [
+      "--apply",
+      "--dry-run",
+      "--check"
+    ],
+    "independentlyReproducedP0Findings": [
+      "custody leaf can be replaced after identity verification and before pathname unlinkat deletion",
+      "formal, archive, lock, and stage writes are pathname-based rather than descriptor-relative from pinned parents",
+      "temporary clone and native-build cleanup retain recursive pathname deletion authority before mode dispatch"
+    ],
+    "rule": "Do not execute the 114-output downstream candidate in any mode; this report does not refresh coverage, traces, keyframes, plans, caches, or receipts"
+  },
+  "helperAndRuntimeBoundary": {
+    "latestBoundReviewBatchStatus": "FAILED_INVALIDATED_NONREUSABLE_NO_IMPLEMENTATION_AUTHORITY",
+    "reviewBatchReusable": false,
+    "productionHelperImplementationAuthorized": false,
+    "helperExecutionAuthorized": false,
+    "originalRuntimeLaunchAuthorized": false
+  },
+  "implementationBoundary": {
+    "reportPublicationOnly": true,
+    "canonicalWorkspaceWriteSupported": false,
+    "applySupported": false,
+    "recoverSupported": false,
+    "rollbackSupported": false,
+    "helperExecutionSupported": false,
+    "originalRuntimeLaunchSupported": false
+  },
+  "supportedCliModes": [
+    "--dry-run",
+    "--write-no-clobber",
+    "--check"
+  ],
+  "writeNoClobberMeaning": "publish only reports/g4-l10-ts007-sprite64-interactive-disposition-readiness-v1.json as a new mode-0444 report; never modify a migration workspace or source asset",
+  "authorityEffects": {
+    "canonicalWorkspaceMutation": false,
+    "frameDomainDispositionChange": false,
+    "coverageRegeneration": false,
+    "specificationAcceptance": false,
+    "productionHelperImplementation": false,
+    "productionHelperTest": false,
+    "protectedInstallation": false,
+    "helperExecution": false,
+    "originalRuntimeLaunch": false,
+    "authoritativeOriginalRuntimeEvidence": false,
+    "baselineAdoption": false,
+    "rendererAdoption": false,
+    "behaviorAcceptance": false,
+    "visualRmseAcceptance": false,
+    "audioAcceptance": false,
+    "humanVisualAcceptance": false,
+    "engineeringAcceptance": false,
+    "ownerAcceptance": false,
+    "strictCompletion": false,
+    "lessonBatchAdmission": false,
+    "wholeLessonIntegration": false,
+    "remainingGrade4BatchStart": false,
+    "wholeCourseIntegration": false,
+    "sourcePromotion": false,
+    "release": false,
+    "publication": false
+  },
+  "nextPermittedAction": "Use this frozen source-static gap as an input to a future separately authorized review/capture-kit successor after the native-helper security path is independently requalified; do not launch a runtime or implement a renderer from this report alone.",
+  "readinessFingerprintSha256": "8e5d8caea047bf57b6701c05f1987f7c7eacb77111149c18e2b327b2ab8cccd5"
+}

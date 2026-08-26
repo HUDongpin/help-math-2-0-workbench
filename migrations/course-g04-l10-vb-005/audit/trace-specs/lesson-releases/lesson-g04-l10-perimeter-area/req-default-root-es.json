@@ -1,0 +1,456 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "course-pilot-original-runtime-trace-specification",
+  "animationId": "course-g04-l10-vb-005",
+  "requirementId": "req-default-root-es",
+  "traceSpecStatus": "source-frame-accurate-root-ready-for-authoritative-capture",
+  "authorityStatement": [
+    "This file specifies evidence needed to execute one original-runtime trace; it is not an execution log, baseline capture, RMSE result, or acceptance record.",
+    "Static ActionScript/timeline inventories expose candidates and obligations but do not prove event order, runtime reachability, source targets, checkpoints, or terminal semantics.",
+    "Empty orderedSteps and executedSteps are intentional when no complete source-evidenced schedule exists; product behavior and the JavaScript rewrite are never used to fill legacy-source gaps.",
+    "This linear root requirement may be captured by exact original-runtime direct seeks or Rewind plus one Step Forward per subsequent frame; this proves only frame-accurate root visuals and never natural playback.",
+    "The exact atomic lesson-release membership, current scenario-inventory bytes, and current frame-domain disposition are hash-bound planning inputs only; unresolved dispositions and natural traces remain fail-closed."
+  ],
+  "identity": {
+    "frameDomainId": "root",
+    "traceId": "default-root-es",
+    "entryStateSha256": "4e4bcf0390c6fd9bb1539b0c26a8555d9e4034ef5c591548bdb1f9a506f70067",
+    "scenario": "default",
+    "scenarioKind": "linear",
+    "language": "es",
+    "seed": "0",
+    "requiredRange": {
+      "firstFrame": 1,
+      "lastFrame": 10
+    },
+    "baselineAuthorityRequirement": "original-runtime-frame-accurate"
+  },
+  "traceModel": {
+    "kind": "frame-accurate-root-exhaustive",
+    "domainScope": "root",
+    "interactionMode": "no-natural-action-schedule-required-for-frame-accurate-root-baseline",
+    "captureMode": "every-one-indexed-frame-in-declared-root-range",
+    "positioningProofModes": [
+      "direct-seek-root-exhaustive",
+      "sequential-step-root-exhaustive"
+    ],
+    "naturalPlaybackClaimed": false
+  },
+  "sourceBindings": {
+    "sourceSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/VB/L10VB05.swf",
+      "sha256": "ad41ce348f5412f090598ef73154cec82aa54877c4f95af65495129f1309321f"
+    },
+    "migrationManifest": {
+      "path": "migration.json",
+      "hashMode": "canonical-json-v1",
+      "projection": "help-math-technical-manifest-v1",
+      "sha256": "d81666a041db5613c1d130fc970c2c21c1f674eebe64b27fa3ce43577c64c6da",
+      "excludedPaths": [
+        "status",
+        "created",
+        "confidence",
+        "classification",
+        "audit",
+        "toolVersions",
+        "baseline",
+        "evidence",
+        "fidelity",
+        "accessibility",
+        "acceptance",
+        "catalogEvidence",
+        "implementation.candidateQa",
+        "implementation.candidateMaturity",
+        "implementation.candidateProductQa",
+        "implementation.candidateVisualEvidence",
+        "implementation.productQaEvidence",
+        "implementation.productQaScope",
+        "audio.catalogGroupCandidates",
+        "audio.catalogExactAssociations",
+        "audio.acceptance",
+        "audio.authoritativeListeningComplete",
+        "audio.originalHostSynchronizationComplete",
+        "audio.strictAcceptance",
+        "audio.structuralAuditComplete"
+      ]
+    },
+    "fullFrameCoverage": {
+      "path": "evidence/full-frame-coverage.json",
+      "hashMode": "canonical-json-v1",
+      "projection": "help-math-trace-coverage-identity-v1",
+      "sha256": "b2df19bac156efa25a17e87497c1e705b841c2229e781897d52ee9a5d5e25655",
+      "excludedPaths": [
+        "status",
+        "blockingReason",
+        "blockingEvidence",
+        "baselineAuthority",
+        "capturedFrameCount",
+        "missingFrames",
+        "baselineCaptureManifest",
+        "baselineCaptureManifestSha256",
+        "captureManifest",
+        "captureManifestSha256",
+        "metricsFile",
+        "metricsSha256"
+      ],
+      "includedPaths": [
+        "requirementId",
+        "requirementSchemaVersion",
+        "coverageRole",
+        "coverageGroupId",
+        "scenario",
+        "frameDomainId",
+        "traceId",
+        "language",
+        "seed",
+        "requiredRange",
+        "requiredFrameSet",
+        "selectionSha256",
+        "naturalPath",
+        "entryState",
+        "entryStateSha256",
+        "baselineAuthorityRequirement",
+        "strictAcceptanceEffect"
+      ]
+    },
+    "scenarioInventory": {
+      "path": "audit/scenario-inventory.json",
+      "hashMode": "canonical-json-v1",
+      "projection": "help-math-scenario-inventory-technical-v1",
+      "sha256": "530281191066c5c34c551e1355399ed28705624c9a036952c26c1bbd27ec8091",
+      "excludedPaths": [
+        "migrationStatusAtGeneration",
+        "migrationStatusChanged",
+        "evidenceIndex[artifactId=migration-manifest]"
+      ]
+    },
+    "coverageInventoryBinding": {
+      "status": "verified-current-file-at-spec-generation-not-part-of-execution-binding",
+      "fileSha256AtSpecGeneration": "9503bd554df17a04aac9bb6a845152484e1eccd819747de9b832254d921f127b",
+      "technicalProjectionSha256": "530281191066c5c34c551e1355399ed28705624c9a036952c26c1bbd27ec8091"
+    },
+    "lessonReleaseCatalog": {
+      "path": "catalog/lesson-releases.json",
+      "bytes": 115651,
+      "sha256": "d518f812a19b6038e55bca337b7a4f4f96425dd5599f9d07c9f69c8a0a1ae1cf",
+      "schemaVersion": 1,
+      "releaseId": "lesson-g04-l10-perimeter-area",
+      "releaseFingerprintSha256": "f4f2062204e026cb96a8d734e973d2a0b6d6dccb8e381068eb8209186eb43e60",
+      "orderedMemberIdentitySha256": "8a2d3a083ab41d33afa5554442abb46c46d88779d030fb7fef6b257a79e46534"
+    },
+    "scenarioInventoryExactFile": {
+      "path": "audit/scenario-inventory.json",
+      "sha256": "9503bd554df17a04aac9bb6a845152484e1eccd819747de9b832254d921f127b",
+      "role": "exact-current-static-scenario-inventory-file-at-spec-generation"
+    },
+    "frameDomainDisposition": {
+      "path": "audit/frame-domain-disposition.json",
+      "sha256": "af32856d8133f24ed6ab20b526cab9ddc7356640cf08f0997ab2204b22b7c42d",
+      "fileSha256AtSpecGeneration": "af32856d8133f24ed6ab20b526cab9ddc7356640cf08f0997ab2204b22b7c42d",
+      "schemaVersion": 1,
+      "status": "structurally-enumerated",
+      "dispositionCounts": {
+        "declared-frame-domain": 2,
+        "composite-child-with-parent": 1,
+        "independent-required": 0,
+        "nonvisual": 0,
+        "unresolved": 0
+      },
+      "unresolvedTimelineCount": 0,
+      "independentRequiredTimelineCount": 0,
+      "highRiskIndependentCandidateCount": 0,
+      "scenarioInventoryFileSha256": "9503bd554df17a04aac9bb6a845152484e1eccd819747de9b832254d921f127b",
+      "technicalManifestProjectionSha256": "d81666a041db5613c1d130fc970c2c21c1f674eebe64b27fa3ce43577c64c6da"
+    }
+  },
+  "frameDomain": {
+    "id": "root",
+    "kind": "root",
+    "sourceTimelineId": "root",
+    "parentFrameDomainId": null,
+    "parentEntryFrame": null,
+    "localEntryFrame": 1,
+    "frameCount": 10,
+    "structuralReachability": "root",
+    "inventoryEvidence": {
+      "artifactId": "swfmill-xml",
+      "timelineId": "root"
+    },
+    "nativeStage": {
+      "width": 800,
+      "height": 600
+    },
+    "fps": 12
+  },
+  "entryState": {
+    "kind": "initial-load",
+    "language": "es"
+  },
+  "schedule": {
+    "status": "not-required-frame-accurate-root",
+    "sourceEvidence": [
+      {
+        "artifactId": "swfmill-xml",
+        "timelineId": "root"
+      }
+    ],
+    "noActionsRequired": false,
+    "orderedStepSchema": {
+      "description": "Schema required for each future source-evidenced step. Empty unresolved orderedSteps are intentional and must not be filled from product behavior or inference.",
+      "required": [
+        "order",
+        "action",
+        "sourceTarget",
+        "preStateCheckpoint",
+        "postStateCheckpoint",
+        "evidence"
+      ],
+      "properties": {
+        "order": "one-indexed integer contiguous with the preceding step",
+        "action": "exact source event and input; never a guessed click, key, coordinate, value, or delay",
+        "sourceTarget": "source timeline/instance/object/script target plus authoritative locator",
+        "preStateCheckpoint": "complete source-observable state required before dispatch",
+        "postStateCheckpoint": "complete source-observable state required after dispatch",
+        "evidence": "one or more scenario-inventory artifact references that prove this exact step and ordering",
+        "terminalEffect": "optional source-evidenced relationship to completion, Replay, navigation, score, or stop state"
+      }
+    },
+    "orderedSteps": [],
+    "executedSteps": [],
+    "stateCheckpoints": [],
+    "terminalSemantics": {
+      "status": "separate-natural-playback-behavior-gate-not-required-for-frame-accurate-root-baseline",
+      "expectedState": null,
+      "evidence": []
+    },
+    "exhaustiveFrameCapturePlan": {
+      "indexing": "one-indexed",
+      "firstFrame": 1,
+      "lastFrame": 10,
+      "frameCount": 10,
+      "executionPrerequisite": "Use an authorized original-runtime direct seek for every frame, or Rewind to frame 1 then Step Forward exactly once per subsequent root frame; preserve a sequenced, hash-chained observation/capture result for each exact frame."
+    }
+  },
+  "unresolvedMappings": [],
+  "separateBehaviorUnknowns": [
+    {
+      "id": "natural-playback-terminal-and-replay-semantics",
+      "status": "not-resolved-by-frame-accurate-root-baseline",
+      "note": "Direct seeking or Rewind plus sequential frame stepping can establish frame-accurate root visuals without inventing an action schedule; neither proves natural playback, terminal stop/completion, or Replay."
+    }
+  ],
+  "inventoryContext": {
+    "inventoryStatus": "static-exhaustive-runtime-unverified",
+    "timelineControlStates": [
+      {
+        "frame": 1,
+        "reasons": [
+          "exported-action-script",
+          "initial-one-indexed-frame",
+          "script-stop-state",
+          "structural-action:DoAction"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "root"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "root"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "frame_1/DoAction.as",
+            "lineStart": 54,
+            "lineEnd": 56
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "frame_1/DoAction.as",
+            "lineStart": 54,
+            "lineEnd": 56
+          }
+        ]
+      },
+      {
+        "frame": 6,
+        "reasons": [
+          "exported-action-script",
+          "frame-label:begin",
+          "script-stop-state",
+          "structural-action:DoAction"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "root"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "root"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "frame_6/DoAction.as",
+            "lineStart": 58,
+            "lineEnd": 59
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "frame_6/DoAction.as",
+            "lineStart": 58,
+            "lineEnd": 59
+          }
+        ]
+      },
+      {
+        "frame": 10,
+        "reasons": [
+          "terminal-structural-frame"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "root"
+          }
+        ]
+      }
+    ],
+    "obligationCounts": {
+      "handlerBehaviorGroups": 5,
+      "buttonTargetObligations": 5,
+      "inputObligations": 0,
+      "dragObligations": 0,
+      "correctWrongObligations": 0,
+      "conditionalBranchObligations": 0,
+      "randomObligations": 0,
+      "labeledStateObligations": 0,
+      "glossaryAndHyperlinkObligations": 5,
+      "sectionMenuObligations": 0,
+      "courseRouteObligations": 1,
+      "sideEffectObligations": 0,
+      "dependencyFixtureObligations": 5
+    },
+    "unknownIds": [
+      "hit-geometry",
+      "host-defaults",
+      "readiness-missing-01",
+      "readiness-missing-02",
+      "readiness-missing-03",
+      "readiness-missing-04",
+      "readiness-missing-05",
+      "replay-target",
+      "runtime-reachability"
+    ],
+    "note": "These are static candidates/obligations only and are not mapped into orderedSteps by this generator."
+  },
+  "executionEvidence": {
+    "status": "not-executed-by-this-generator",
+    "expectedExecutionReportPath": "baseline/trace-executions/req-default-root-es.json",
+    "hashDagDirection": "source -> stable technical manifest/coverage/inventory projections -> trace spec -> execution report; mutable coverage results, QA, status, signatures, and baseline adoption must never hash-bind back to the spec/report",
+    "executionProofSchema": {
+      "description": "Contract for a future authorized-original-runtime execution report. A report that only repeats identifiers or hashes is insufficient.",
+      "required": [
+        "schemaVersion",
+        "status",
+        "proofMode",
+        "animationId",
+        "requirementId",
+        "identity",
+        "traceSpecBinding",
+        "authorizedRuntime",
+        "rawEventLog",
+        "sourceTargetResolutionLog",
+        "stateSnapshotArchive",
+        "originalRuntimeCaptureManifest",
+        "frameResults",
+        "orderedStepResults",
+        "stateCheckpointResults",
+        "terminalResult",
+        "unexpectedEvents",
+        "sequenceChainSha256"
+      ],
+      "invariants": [
+        "traceSpecBinding.file and traceSpecBinding.sha256 must identify the exact indexed trace spec used for execution.",
+        "orderedStepResults length, one-indexed order, scheduledStepSha256, dispatchedAction, and resolvedSourceTarget must exactly match schedule.orderedSteps.",
+        "Each step must preserve an actual monotonic eventSequence index, raw-log locator, pre/post observed state, frame-domain/root/local playheads, and evidence hashes; identifier echoing is not execution proof.",
+        "Each result record is chain-bound to the preceding result hash. sequenceChainSha256 must end at the last canonical result record, or at the signed zero-action observation when noActionsRequired is source-evidenced.",
+        "stateCheckpointResults must cover every declared checkpoint and compare expectedState with observedState. Missing, extra, reordered, or mismatched events/checkpoints make status failed.",
+        "terminalResult must compare the source-evidenced terminal semantics with observed completion/stop/navigation/score/audio/Replay state and must include capture/log hashes.",
+        "unexpectedEvents must be empty for a passing report; legacy network, host-command, JavaScript bridge, or persistent side effects remain disabled and recorded.",
+        "For frame-accurate root proof, frameResults must contain every required root frame exactly once in strict order and bind the positioning operation, runtime-observed frame, display-list state hash, native-size bitmap, capture-log locator, and previous result hash.",
+        "direct-seek-root-exhaustive requires one original-runtime direct-seek operation per frame. sequential-step-root-exhaustive requires a Rewind observation at frame 1 followed by exactly one Step Forward operation for each frame 2..N. Neither positioning mode proves natural playback."
+      ],
+      "orderedStepResultRequired": [
+        "order",
+        "scheduledStepSha256",
+        "eventSequence",
+        "rawEventLogLocator",
+        "dispatchedAction",
+        "resolvedSourceTarget",
+        "preState",
+        "postState",
+        "frameEvidence",
+        "previousResultSha256",
+        "resultSha256",
+        "result"
+      ],
+      "stateObservationRequired": [
+        "observedState",
+        "observedStateSha256",
+        "rootFrame",
+        "frameDomainId",
+        "localFrame",
+        "screenshotSha256",
+        "eventLogOffset"
+      ],
+      "frameAccurateRootResultRequired": [
+        "frame",
+        "positioningOperation",
+        "operationCountSincePrevious",
+        "requestSequence",
+        "captureLogLocator",
+        "observedRootFrame",
+        "observedDisplayListStateSha256",
+        "screenshotFile",
+        "screenshotSha256",
+        "width",
+        "height",
+        "previousResultSha256",
+        "resultSha256",
+        "result"
+      ],
+      "rawEvidenceRequired": [
+        "authorizedRuntime version/build and launch protocol",
+        "append-only raw event log path/SHA-256",
+        "source-target resolution log path/SHA-256",
+        "state-snapshot archive path/SHA-256",
+        "original-runtime frame capture manifest path/SHA-256"
+      ]
+    },
+    "executionReport": null,
+    "originalRuntimeCaptureManifest": null,
+    "executedSteps": [],
+    "stateCheckpointResults": [],
+    "terminalResult": null
+  },
+  "strictAcceptanceEffect": "none; this specification neither resolves baseline authority nor satisfies branch, visual, RMSE, audio, human-review, or owner-acceptance gates",
+  "lessonReleaseMembership": {
+    "releaseId": "lesson-g04-l10-perimeter-area",
+    "publicationMode": "atomic",
+    "expectedAtomicMemberCount": 47,
+    "releaseFingerprintSha256": "f4f2062204e026cb96a8d734e973d2a0b6d6dccb8e381068eb8209186eb43e60",
+    "member": {
+      "ordinal": 9,
+      "animationId": "course-g04-l10-vb-005",
+      "assetId": "swf-ad41ce348f5412f090598ef73154cec82aa54877c4f95af65495129f1309321f",
+      "releaseRole": "active-xml-referenced-page",
+      "shardId": "g04-l10-host-language",
+      "sourcePath": "HELP_COURSES/ELMGR4/L10/VB/L10VB05.swf",
+      "sourceSha256": "ad41ce348f5412f090598ef73154cec82aa54877c4f95af65495129f1309321f"
+    },
+    "memberIdentitySha256": "83025ee7552c70d828a31ed82b543816ad74d839a9c2242883af505d21195624",
+    "publicationAuthorized": false
+  }
+}

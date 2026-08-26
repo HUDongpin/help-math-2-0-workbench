@@ -1,0 +1,479 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://help-math.local/schemas/missing-original-audio-exception.schema.json",
+  "title": "Missing original audio source absence exception",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "evidenceType",
+    "animationId",
+    "status",
+    "scope",
+    "bindings",
+    "missingCues",
+    "claims",
+    "review"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "evidenceType": {
+      "const": "missing-original-audio-absence-exception"
+    },
+    "animationId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "pending",
+        "accepted-absence",
+        "rejected"
+      ]
+    },
+    "scope": {
+      "const": "exact-preserved-original-audio-source-absence-only"
+    },
+    "bindings": {
+      "type": "object",
+      "required": [
+        "migrationManifest",
+        "sourceSwf",
+        "machineAudioAudit",
+        "hostRoutingEvidence",
+        "missingCueEvidence"
+      ],
+      "properties": {
+        "migrationManifest": {
+          "type": "object",
+          "required": [
+            "path",
+            "hashMode",
+            "projection",
+            "excludedPaths",
+            "sha256"
+          ],
+          "properties": {
+            "path": {
+              "const": "migration.json"
+            },
+            "hashMode": {
+              "const": "canonical-json-v1"
+            },
+            "projection": {
+              "const": "help-math-technical-manifest-v1"
+            },
+            "excludedPaths": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            }
+          },
+          "additionalProperties": false
+        },
+        "sourceSwf": {
+          "$ref": "#/$defs/fileBinding"
+        },
+        "machineAudioAudit": {
+          "$ref": "#/$defs/fileBinding"
+        },
+        "hostRoutingEvidence": {
+          "type": "object",
+          "required": [
+            "hashMode",
+            "projection",
+            "sha256",
+            "sourceHost",
+            "combinedAudioRelevantScriptsSha256",
+            "conventions"
+          ],
+          "properties": {
+            "hashMode": {
+              "const": "canonical-json-v1"
+            },
+            "projection": {
+              "const": "missing-original-audio-host-routing-v1"
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "sourceHost": {
+              "$ref": "#/$defs/fileBinding"
+            },
+            "combinedAudioRelevantScriptsSha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "conventions": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "evidenceScript",
+                  "finding"
+                ],
+                "properties": {
+                  "id": {
+                    "enum": [
+                      "formula",
+                      "keyterm",
+                      "finalQuiz",
+                      "courseSpanishPage"
+                    ]
+                  },
+                  "evidenceScript": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "finding": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "missingCueEvidence": {
+          "type": "object",
+          "required": [
+            "hashMode",
+            "projection",
+            "sha256"
+          ],
+          "properties": {
+            "hashMode": {
+              "const": "canonical-json-v1"
+            },
+            "projection": {
+              "const": "missing-original-audio-cues-v1"
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "missingCues": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "required": [
+          "cueId",
+          "machineExpectedPathId",
+          "sourceFile",
+          "language",
+          "cueKind",
+          "questionNumber",
+          "option",
+          "status",
+          "routingConventionId",
+          "machineEvidence",
+          "replacement"
+        ],
+        "properties": {
+          "cueId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "machineExpectedPathId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sourceFile": {
+            "$ref": "#/$defs/safeRelativePath"
+          },
+          "language": {
+            "enum": [
+              "en",
+              "es"
+            ]
+          },
+          "cueKind": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "questionNumber": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          },
+          "option": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "status": {
+            "const": "missing-source"
+          },
+          "routingConventionId": {
+            "enum": [
+              "formula",
+              "keyterm",
+              "finalQuiz",
+              "courseSpanishPage"
+            ]
+          },
+          "machineEvidence": {
+            "type": "string",
+            "minLength": 1
+          },
+          "replacement": {
+            "type": "object",
+            "required": [
+              "disposition",
+              "acceptedAsOriginal"
+            ],
+            "properties": {
+              "disposition": {
+                "const": "none"
+              },
+              "acceptedAsOriginal": {
+                "const": false
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "claims": {
+      "type": "object",
+      "required": [
+        "acceptsOnlyOriginalSourceAbsence",
+        "originalAudioListeningAccepted",
+        "languageOrContentAccepted",
+        "hostTraversalAccepted",
+        "timingOrSynchronizationAccepted",
+        "replacementAudioAcceptedAsOriginal",
+        "behavioralParityAccepted",
+        "migrationCompletionAccepted"
+      ],
+      "properties": {
+        "acceptsOnlyOriginalSourceAbsence": {
+          "type": "boolean"
+        },
+        "originalAudioListeningAccepted": {
+          "const": false
+        },
+        "languageOrContentAccepted": {
+          "const": false
+        },
+        "hostTraversalAccepted": {
+          "const": false
+        },
+        "timingOrSynchronizationAccepted": {
+          "const": false
+        },
+        "replacementAudioAcceptedAsOriginal": {
+          "const": false
+        },
+        "behavioralParityAccepted": {
+          "const": false
+        },
+        "migrationCompletionAccepted": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "review": {
+      "type": "object",
+      "required": [
+        "decision",
+        "reviewer",
+        "attestation",
+        "signedAt",
+        "notes"
+      ],
+      "properties": {
+        "decision": {
+          "enum": [
+            "pending",
+            "accepted-absence",
+            "rejected"
+          ]
+        },
+        "reviewer": {
+          "type": "object",
+          "required": [
+            "kind",
+            "authority",
+            "fullName",
+            "role",
+            "organizationOrOwnerId",
+            "contact"
+          ],
+          "properties": {
+            "kind": {
+              "const": "human"
+            },
+            "authority": {
+              "enum": [
+                "owner",
+                "owner-delegate"
+              ]
+            },
+            "fullName": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            },
+            "organizationOrOwnerId": {
+              "type": "string"
+            },
+            "contact": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "attestation": {
+          "const": "I am a named human owner or owner delegate. I accept only that the exact listed intended original audio sources are absent from the preserved archive. This does not accept synthesized or replacement audio as original and does not attest listening, language or content, host traversal, timing, synchronization, behavioral parity, or migration completion."
+        },
+        "signedAt": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "safeRelativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+    },
+    "fileBinding": {
+      "type": "object",
+      "required": [
+        "file",
+        "sha256"
+      ],
+      "properties": {
+        "file": {
+          "$ref": "#/$defs/safeRelativePath"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "accepted-absence"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "claims": {
+            "properties": {
+              "acceptsOnlyOriginalSourceAbsence": {
+                "const": true
+              }
+            }
+          },
+          "review": {
+            "properties": {
+              "decision": {
+                "const": "accepted-absence"
+              },
+              "reviewer": {
+                "properties": {
+                  "fullName": {
+                    "minLength": 1
+                  },
+                  "role": {
+                    "minLength": 1
+                  },
+                  "organizationOrOwnerId": {
+                    "minLength": 1
+                  },
+                  "contact": {
+                    "minLength": 1
+                  }
+                }
+              },
+              "signedAt": {
+                "minLength": 1,
+                "format": "date-time",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,9})?(?:Z|[+-]\\d{2}:\\d{2})$"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "pending"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "claims": {
+            "properties": {
+              "acceptsOnlyOriginalSourceAbsence": {
+                "const": false
+              }
+            }
+          },
+          "review": {
+            "properties": {
+              "decision": {
+                "const": "pending"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}

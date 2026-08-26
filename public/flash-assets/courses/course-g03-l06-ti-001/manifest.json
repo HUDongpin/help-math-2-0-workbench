@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "animationId": "course-g03-l06-ti-001",
+  "classification": "engineering-candidate-not-strict-acceptance",
+  "authority": "Safe deterministic drawing adapter generated from a hash-pinned FFDec export; this is not authoritative runtime, audio, localization, visual, human, or owner acceptance.",
+  "generator": "scripts/build-safe-ffdec-canvas-adapter.mjs",
+  "inputs": {
+    "spec": {
+      "path": "migrations/course-g03-l06-ti-001/audit/canvas-adapter-spec.json",
+      "sha256": "78bf1867066c4da6633fd57ce893cc1ba1a662e5f49e9ec584f883f02f618212"
+    },
+    "sourceSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L6/TI/L6TI01.swf",
+      "sha256": "722b56b73cfc3bcff71c83cf71b00bfc89b4fdd3b147ecb43646f644f45dc739"
+    },
+    "scenarioInventory": {
+      "path": "migrations/course-g03-l06-ti-001/audit/scenario-inventory.json",
+      "sha256": "cecccec1d923184aa85028be7acefa8391c355b887d42ee0a8a7ab062c982739"
+    },
+    "audioAudit": {
+      "path": "migrations/course-g03-l06-ti-001/audit/audio-runtime-evidence.json",
+      "sha256": "beb5db3876bce9f3520e45664aacbb68bc3a95c613548714fdf72ae94a8d35a1"
+    },
+    "ffdecHelper": {
+      "path": "work/course-assets/course-g03-l06-ti-001-main-canvas/DefineSprite_21/canvas.js",
+      "sha256": "78256220d01fba044341283703c3923a1ff8ff29499c51f65ab4e6ac825ccb93"
+    },
+    "ffdecFramesHtml": {
+      "path": "work/course-assets/course-g03-l06-ti-001-main-canvas/DefineSprite_21/frames.html",
+      "sha256": "75bfcebc92421203ecbbd576c3da404ee8d0488db3f21c74ef3807c92247e680"
+    }
+  },
+  "output": {
+    "script": "public/flash-assets/courses/course-g03-l06-ti-001/canvas-renderer.js",
+    "sha256": "9788ae542b2573e73eb08bf9a5496c73a939f6408d1012355e578d04a766c7d4",
+    "bytes": 2306669,
+    "globalRegistry": "HELP_MATH_CANVAS_ASSETS"
+  },
+  "safety": {
+    "noLegacyActionScriptExecuted": true,
+    "noDynamicEvaluation": true,
+    "noNetworkPrimitives": true,
+    "noTimersOrAutoplay": true,
+    "noPersistentStorage": true,
+    "noAmbientDomListeners": true,
+    "embeddedImages": [
+      "imageObj13",
+      "imageObj15",
+      "imageObj17",
+      "imageObj19"
+    ],
+    "drawingObjectAllowlist": [
+      "shape14",
+      "shape16",
+      "shape18",
+      "shape20",
+      "shape6",
+      "sprite7",
+      "sprite8",
+      "text10",
+      "text11",
+      "text12"
+    ]
+  },
+  "timeline": {
+    "schemaVersion": 1,
+    "animationId": "course-g03-l06-ti-001",
+    "classification": "engineering-candidate-not-strict-acceptance",
+    "sourceSwfSha256": "722b56b73cfc3bcff71c83cf71b00bfc89b4fdd3b147ecb43646f644f45dc739",
+    "generatorInput": {
+      "ffdec": "JPEXS Free Flash Decompiler v.26.2.1",
+      "helperSha256": "78256220d01fba044341283703c3923a1ff8ff29499c51f65ab4e6ac825ccb93",
+      "framesHtmlSha256": "75bfcebc92421203ecbbd576c3da404ee8d0488db3f21c74ef3807c92247e680",
+      "targetSpriteObjectId": 21
+    },
+    "stage": {
+      "width": 800,
+      "height": 600,
+      "backgroundColor": "#b8d8f7"
+    },
+    "fps": 12,
+    "sourceRootTimeline": {
+      "frameCount": 10,
+      "preloaderStopFrame": 1,
+      "beginFrame": 6,
+      "beginLabel": "begin",
+      "placementName": "animation",
+      "placementTwips": {
+        "x": 8248,
+        "y": 5666
+      },
+      "placementPixels": {
+        "x": 412.4,
+        "y": 283.3
+      }
+    },
+    "deterministicContentTimeline": {
+      "timelineId": "sprite-21",
+      "frameCount": 142,
+      "durationMs": 11833.333333333334,
+      "terminalStopFrame": 142,
+      "publicFrameIndexing": "one-indexed"
+    },
+    "stageRenderOffset": {
+      "x": -124.5,
+      "y": 84.6
+    },
+    "scenarios": [
+      "sound-from-seed",
+      "sound-0",
+      "sound-1"
+    ],
+    "supportedLanguages": [
+      "en",
+      "es"
+    ],
+    "seedMapping": "unsigned-integer-modulo-2-selects-an-explicit-branch; not a claim about the Adobe AVM1 PRNG sequence",
+    "visualLocalization": "single-source-drawing-timeline-with-embedded-english-title-and-no-language-branch; es preserves source pixels without claiming translation",
+    "audioRendering": "not-included"
+  },
+  "unresolved": [
+    "The source root timeline stops at frame 1 until the original InternalPreloader contract advances it to labeled frame 6; the deterministic renderer therefore exposes sprite-21 local frames rather than pretending root frames 1..10 map one-to-one.",
+    "The FFDec drawing export omits AVM1 random(2), gotoAndPlay(2), stop(), and both embedded streaming-audio timelines; branch state is explicit but audio is not rendered.",
+    "The one shipped drawing timeline has no language branch and embeds an English title; en and es requests preserve those source pixels unchanged, without claiming a Spanish translation.",
+    "Both embedded audio streams remain language-undetermined and are not rendered.",
+    "No safe-host Adobe GUI capture, full-frame RMSE comparison, product QA, human review, or owner review is represented by this asset."
+  ],
+  "strictAcceptanceEffect": "none"
+}

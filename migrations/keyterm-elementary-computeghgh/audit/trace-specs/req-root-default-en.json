@@ -1,0 +1,854 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "legacy-pilot-original-runtime-trace-specification",
+  "animationId": "keyterm-elementary-computeghgh",
+  "requirementId": "req:root:default:en",
+  "traceSpecStatus": "source-schedule-ready-for-authoritative-execution",
+  "authorityStatement": [
+    "This file specifies evidence needed to execute one original-runtime trace; it is not an execution log, baseline capture, RMSE result, or acceptance record.",
+    "Static ActionScript/timeline inventories expose candidates and obligations but do not prove event order, runtime reachability, source targets, checkpoints, or terminal semantics.",
+    "Empty orderedSteps and executedSteps are intentional when no complete source-evidenced schedule exists; product behavior and the JavaScript rewrite are never used to fill legacy-source gaps."
+  ],
+  "identity": {
+    "frameDomainId": "root",
+    "traceId": "trace:root:default:en:seed-0",
+    "entryStateSha256": "c4e59050847229fb64f73610691e51bf1ca2bba42f3ef5d7bb5da6ddc57553c0",
+    "scenario": "default",
+    "scenarioKind": "interactive",
+    "language": "en",
+    "seed": "0",
+    "requiredRange": {
+      "firstFrame": 1,
+      "lastFrame": 35
+    },
+    "baselineAuthorityRequirement": "original-runtime-natural-trace"
+  },
+  "traceModel": {
+    "kind": "stateful-natural-trace",
+    "domainScope": "root",
+    "interactionMode": "interactive",
+    "positioningProofModes": [],
+    "naturalPlaybackClaimed": true,
+    "captureMode": "every-one-indexed-frame-after-source-evidenced-root-actions"
+  },
+  "sourceBindings": {
+    "sourceSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/DIG/computeghgh.swf",
+      "sha256": "fc5c79792530092fa98d450ac00622f5f107c598bf2f313b69fe3b524a6d62e8"
+    },
+    "migrationManifest": {
+      "path": "migration.json",
+      "hashMode": "canonical-json-v1",
+      "projection": "help-math-technical-manifest-v1",
+      "sha256": "5a09af79e3529ad29218053770283b5860ae5ee419cc5c36f5987a0d21ab46ac",
+      "excludedPaths": [
+        "status",
+        "created",
+        "confidence",
+        "classification",
+        "audit",
+        "toolVersions",
+        "baseline",
+        "evidence",
+        "fidelity",
+        "accessibility",
+        "acceptance",
+        "catalogEvidence",
+        "implementation.candidateQa",
+        "implementation.candidateMaturity",
+        "implementation.candidateProductQa",
+        "implementation.candidateVisualEvidence",
+        "implementation.productQaEvidence",
+        "implementation.productQaScope",
+        "audio.catalogGroupCandidates",
+        "audio.catalogExactAssociations",
+        "audio.acceptance",
+        "audio.authoritativeListeningComplete",
+        "audio.originalHostSynchronizationComplete",
+        "audio.strictAcceptance",
+        "audio.structuralAuditComplete"
+      ]
+    },
+    "fullFrameCoverage": {
+      "path": "evidence/full-frame-coverage.json",
+      "hashMode": "canonical-json-v1",
+      "projection": "help-math-trace-coverage-identity-v1",
+      "sha256": "89d661513542da9149999c63f4e0bb276b84c9de1b55108baa40e7fe406e9c40",
+      "excludedPaths": [
+        "status",
+        "blockingReason",
+        "blockingEvidence",
+        "baselineAuthority",
+        "capturedFrameCount",
+        "missingFrames",
+        "baselineCaptureManifest",
+        "baselineCaptureManifestSha256",
+        "captureManifest",
+        "captureManifestSha256",
+        "metricsFile",
+        "metricsSha256"
+      ],
+      "includedPaths": [
+        "requirementId",
+        "requirementSchemaVersion",
+        "coverageRole",
+        "coverageGroupId",
+        "scenario",
+        "frameDomainId",
+        "traceId",
+        "language",
+        "seed",
+        "requiredRange",
+        "requiredFrameSet",
+        "selectionSha256",
+        "naturalPath",
+        "entryState",
+        "entryStateSha256",
+        "baselineAuthorityRequirement",
+        "strictAcceptanceEffect"
+      ]
+    },
+    "scenarioInventory": {
+      "path": "audit/scenario-inventory.json",
+      "hashMode": "canonical-json-v1",
+      "projection": "help-math-scenario-inventory-technical-v1",
+      "sha256": "c033169d066b7908ac277bcfd94745462ee8864bead34398fb6dadbfffc192c6",
+      "excludedPaths": [
+        "migrationStatusAtGeneration",
+        "migrationStatusChanged",
+        "evidenceIndex[artifactId=migration-manifest]"
+      ]
+    },
+    "coverageInventoryBinding": {
+      "status": "verified-current-file-at-spec-generation-not-part-of-execution-binding",
+      "fileSha256AtSpecGeneration": "961f4a0caee32b2e01dc9ee78fdb838d70ab54f5e50beb7c2db539cdd00f21b0",
+      "technicalProjectionSha256": "c033169d066b7908ac277bcfd94745462ee8864bead34398fb6dadbfffc192c6"
+    },
+    "scheduleDerivation": {
+      "status": "hash-bound-static-source-derivation-not-runtime-execution",
+      "generator": {
+        "path": "scripts/build-legacy-trace-specs.mjs",
+        "sha256": "9d306b7d9f43631a64201f872a9264c35f150f71c971c03783a1d47eab78906f"
+      },
+      "geometryParser": {
+        "path": "scripts/parse-swfmill-root-replay-trace.py",
+        "sha256": "7c080d28222a98e9ec3ae7e101337263323242239fc7801910e4d38fa388b4d8"
+      },
+      "sourceArtifacts": {
+        "sourceSwf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/DIG/computeghgh.swf",
+          "sha256": "fc5c79792530092fa98d450ac00622f5f107c598bf2f313b69fe3b524a6d62e8"
+        },
+        "swfmillXml": {
+          "path": "audit/machine/swfmill.xml.gz",
+          "sha256": "701edb158e02d0584b6ccffbbe454096509248c8e07f6e1e7ce261a44a77bf9a"
+        },
+        "ffdecScripts": {
+          "path": "audit/machine/ffdec-scripts.txt.gz",
+          "sha256": "4b3425c779f20c8f9463a55bd4ac4f8cd0f003985464cfbd243f7a870c903e45"
+        },
+        "adobeAnimateAuthoringCorroboration": {
+          "path": "audit/adobe-animate-2021-authoring-audit.json",
+          "sha256": "c575901e80f046d431ea5b72a285076e122cc7fb5412a9e2a5d3f3260307be52",
+          "role": "read-only FLA placement/lifetime corroboration only; shipped SWF bytecode remains authoritative for the removed AS1 behavior"
+        },
+        "scenarioInventoryTechnicalProjection": {
+          "projection": "help-math-scenario-inventory-technical-v1",
+          "sha256": "c033169d066b7908ac277bcfd94745462ee8864bead34398fb6dadbfffc192c6"
+        }
+      },
+      "derivedGeometrySha256": "c4c43d1779bb38ca591d2ad774120f6d01a927b8ffc9e36748537f668073da35",
+      "replayWrapContract": {
+        "firstCycleCaptureRange": {
+          "firstFrame": 1,
+          "lastFrame": 35
+        },
+        "actionAfterCapturedFrame": 35,
+        "postActionRootFrame": 1,
+        "executionEvidenceCreated": false
+      },
+      "executionEvidenceCreated": false,
+      "strictAcceptanceEffect": "none; source schedule readiness is only a prerequisite for future authorized original-runtime natural execution"
+    }
+  },
+  "frameDomain": {
+    "id": "root",
+    "kind": "root",
+    "sourceTimelineId": "root",
+    "sourceInstanceId": "root",
+    "parentFrameDomainId": null,
+    "parentEntryFrame": null,
+    "localEntryFrame": 1,
+    "frameCount": 35,
+    "structuralReachability": "root",
+    "inventoryEvidence": {
+      "artifactId": "swfmill-xml",
+      "timelineId": "root"
+    },
+    "nativeStage": {
+      "width": 225,
+      "height": 225
+    },
+    "fps": 12
+  },
+  "entryState": {
+    "kind": "original-root-natural-entry",
+    "rootTimelineId": "root",
+    "rootEntryFrame": 1,
+    "scenario": "default",
+    "language": "en",
+    "seed": "0"
+  },
+  "schedule": {
+    "status": "source-evidenced-executable",
+    "sourceEvidence": [
+      {
+        "artifactId": "swfmill-xml",
+        "timelineId": "root"
+      },
+      {
+        "artifactId": "swfmill-xml",
+        "objectId": "14",
+        "selectedHitShapeObjectId": "6",
+        "placementDepth": "28"
+      },
+      {
+        "artifactId": "ffdec-scripts",
+        "script": "DefineButton2_14/BUTTONCONDACTION on(release).as",
+        "lineStart": 1,
+        "lineEnd": 4
+      },
+      {
+        "artifactId": "ffdec-scripts",
+        "script": "frame_35/DoAction.as",
+        "lineStart": 6,
+        "lineEnd": 7
+      }
+    ],
+    "noActionsRequired": false,
+    "playbackSegments": [
+      {
+        "id": "frames-1-34-natural-first-cycle",
+        "requiredRange": {
+          "firstFrame": 1,
+          "lastFrame": 34
+        },
+        "expectedState": {
+          "rootFrameRange": {
+            "firstFrame": 1,
+            "lastFrame": 34
+          },
+          "rootPlayState": "playing",
+          "activeControl": {
+            "buttonObjectId": 14,
+            "selectedHitShapeObjectId": 6,
+            "depth": 28,
+            "sourceEvent": "pointerReleaseInside"
+          },
+          "requiredLanguage": "en"
+        },
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "root"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "objectId": "14",
+            "selectedHitShapeObjectId": "6",
+            "placementDepth": "28"
+          }
+        ]
+      },
+      {
+        "id": "frame-35-source-stop-awaiting-replay-release",
+        "requiredRange": {
+          "firstFrame": 35,
+          "lastFrame": 35
+        },
+        "expectedState": {
+          "rootFrame": 35,
+          "localFrame": 35,
+          "rootPlayState": "stopped",
+          "localPlayState": "stopped",
+          "activeControl": {
+            "buttonObjectId": 14,
+            "selectedHitShapeObjectId": 6,
+            "depth": 28,
+            "sourceEvent": "pointerReleaseInside"
+          }
+        },
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "root"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "objectId": "14",
+            "selectedHitShapeObjectId": "6",
+            "placementDepth": "28"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "frame_35/DoAction.as",
+            "lineStart": 6,
+            "lineEnd": 7
+          }
+        ]
+      }
+    ],
+    "orderedStepSchema": {
+      "description": "Schema required for each future source-evidenced step. Empty unresolved orderedSteps are intentional and must not be filled from product behavior or inference.",
+      "required": [
+        "order",
+        "action",
+        "sourceTarget",
+        "preStateCheckpoint",
+        "postStateCheckpoint",
+        "evidence"
+      ],
+      "properties": {
+        "order": "one-indexed integer contiguous with the preceding step",
+        "action": "exact source event and input; never a guessed click, key, coordinate, value, or delay",
+        "sourceTarget": "source timeline/instance/object/script target plus authoritative locator",
+        "preStateCheckpoint": "complete source-observable state required before dispatch",
+        "postStateCheckpoint": "complete source-observable state required after dispatch",
+        "evidence": "one or more scenario-inventory artifact references that prove this exact step and ordering",
+        "terminalEffect": "optional source-evidenced relationship to completion, Replay, navigation, score, or stop state"
+      }
+    },
+    "orderedSteps": [
+      {
+        "order": 1,
+        "action": {
+          "event": "release",
+          "sourceCondition": "pointerReleaseInside",
+          "dispatchSequence": [
+            "pointer-down-inside",
+            "pointer-up-inside"
+          ],
+          "dispatchPhase": "pointer-up",
+          "coordinateSpace": "native-stage-pixels",
+          "pointer": {
+            "x": 184.85,
+            "y": 200
+          },
+          "exactPointerDecimals": {
+            "x": "184.85",
+            "y": "200"
+          },
+          "hitTest": "inside-source-derived-opaque-hit-shape",
+          "sourceCommand": "GotoFrame(0); Play",
+          "executionTiming": "after-capture-and-observation-of-source-stopped-root-frame-35"
+        },
+        "sourceTarget": {
+          "timelineId": "root",
+          "localFrame": 35,
+          "buttonObjectId": 14,
+          "selectedHitShapeObjectId": 6,
+          "depth": 28,
+          "activeFrameRange": {
+            "firstFrame": 1,
+            "lastFrame": 35
+          },
+          "sourceFillInteriorProof": {
+            "boundary": {
+              "canonicalSegmentsSha256": "e3c74404392222ff5201e9d203b5d0bd05df67e48540f5324cf8b32fbd2784bc",
+              "closed": true,
+              "lineSegmentIndexes": [
+                0,
+                5
+              ],
+              "quadraticSegmentIndexes": [
+                1,
+                2,
+                3,
+                4,
+                6,
+                7,
+                8,
+                9
+              ],
+              "segmentCount": 10
+            },
+            "centralRectangleTwips": {
+              "bottom": 72,
+              "left": -1467,
+              "right": -491,
+              "top": -213
+            },
+            "fill": {
+              "alpha": 255,
+              "side": "fillStyle0",
+              "styleEpoch": 0,
+              "styleIndex": 1,
+              "type": "Solid"
+            },
+            "interiorPointTwipsExactDecimals": {
+              "x": "-982",
+              "y": "-71"
+            },
+            "leftCap": {
+              "maxControlOrEndpointX": -1467,
+              "outsideOrOnRectangleBoundary": true,
+              "segmentIndexes": [
+                1,
+                2,
+                3,
+                4
+              ],
+              "yMonotone": "increasing"
+            },
+            "method": "exact-closed-quadratic-capsule-central-rectangle",
+            "proofConclusion": "point-strictly-inside-opaque-source-fill",
+            "rightCap": {
+              "minControlOrEndpointX": -491,
+              "outsideOrOnRectangleBoundary": true,
+              "segmentIndexes": [
+                6,
+                7,
+                8,
+                9
+              ],
+              "yMonotone": "decreasing"
+            },
+            "strictlyInsideCentralRectangle": true
+          },
+          "stageHitBounds": {
+            "coordinateSpace": "native-stage",
+            "derivationOrder": [
+              "selected-button-hit-record",
+              "root-button-placement"
+            ],
+            "exactDecimals": {
+              "bottom": "208.25",
+              "height": "16.5",
+              "left": "152.1",
+              "right": "217.6",
+              "top": "191.75",
+              "width": "65.5"
+            },
+            "interiorPointBasis": "source-bounds center proven strictly inside the locked closed opaque fill's exact central rectangle; runtime hit resolution still requires original-runtime execution",
+            "interiorPointExactDecimals": {
+              "x": "184.85",
+              "y": "200"
+            },
+            "interiorPointNumeric": {
+              "x": 184.85,
+              "y": 200
+            },
+            "numeric": {
+              "bottom": 208.25,
+              "height": 16.5,
+              "left": 152.1,
+              "right": 217.6,
+              "top": 191.75,
+              "width": 65.5
+            },
+            "units": "pixels"
+          }
+        },
+        "preStateCheckpoint": {
+          "checkpointId": "frame-35-before-source-replay-release",
+          "expectedState": {
+            "rootFrame": 35,
+            "localFrame": 35,
+            "rootPlayState": "stopped",
+            "localPlayState": "stopped",
+            "activeControl": {
+              "buttonObjectId": 14,
+              "selectedHitShapeObjectId": 6,
+              "depth": 28,
+              "sourceEvent": "pointerReleaseInside"
+            }
+          }
+        },
+        "postStateCheckpoint": {
+          "checkpointId": "frame-1-after-source-replay-release",
+          "expectedState": {
+            "rootFrame": 1,
+            "localFrame": 1,
+            "rootPlayState": "playing",
+            "localPlayState": "playing",
+            "activeControl": {
+              "buttonObjectId": 14,
+              "selectedHitShapeObjectId": 6,
+              "depth": 28,
+              "sourceEvent": "pointerReleaseInside"
+            },
+            "replayTransition": {
+              "fromRootFrame": 35,
+              "toRootFrame": 1,
+              "sourceCommand": "GotoFrame(0); Play"
+            }
+          }
+        },
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "objectId": "14",
+            "selectedHitShapeObjectId": "6",
+            "placementDepth": "28"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineButton2_14/BUTTONCONDACTION on(release).as",
+            "lineStart": 1,
+            "lineEnd": 4
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "frame_35/DoAction.as",
+            "lineStart": 6,
+            "lineEnd": 7
+          }
+        ],
+        "terminalEffect": "The frame-35 source stop is followed by button 14 pointerReleaseInside; GotoFrame(0) and Play restart the same root timeline at one-indexed frame 1 in the next playback cycle."
+      }
+    ],
+    "executedSteps": [],
+    "stateCheckpoints": [
+      {
+        "id": "frame-1-natural-entry-first-cycle",
+        "expectedState": {
+          "rootFrame": 1,
+          "localFrame": 1,
+          "rootPlayState": "playing",
+          "localPlayState": "playing",
+          "requiredLanguage": "en",
+          "activeControl": {
+            "buttonObjectId": 14,
+            "selectedHitShapeObjectId": 6,
+            "depth": 28,
+            "sourceEvent": "pointerReleaseInside"
+          },
+          "playbackCycle": 1
+        },
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "root"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "objectId": "14",
+            "selectedHitShapeObjectId": "6",
+            "placementDepth": "28"
+          }
+        ]
+      },
+      {
+        "id": "frame-35-before-source-replay-release",
+        "expectedState": {
+          "rootFrame": 35,
+          "localFrame": 35,
+          "rootPlayState": "stopped",
+          "localPlayState": "stopped",
+          "activeControl": {
+            "buttonObjectId": 14,
+            "selectedHitShapeObjectId": 6,
+            "depth": 28,
+            "sourceEvent": "pointerReleaseInside"
+          }
+        },
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "root"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "objectId": "14",
+            "selectedHitShapeObjectId": "6",
+            "placementDepth": "28"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "frame_35/DoAction.as",
+            "lineStart": 6,
+            "lineEnd": 7
+          }
+        ]
+      },
+      {
+        "id": "frame-1-after-source-replay-release",
+        "expectedState": {
+          "rootFrame": 1,
+          "localFrame": 1,
+          "rootPlayState": "playing",
+          "localPlayState": "playing",
+          "activeControl": {
+            "buttonObjectId": 14,
+            "selectedHitShapeObjectId": 6,
+            "depth": 28,
+            "sourceEvent": "pointerReleaseInside"
+          },
+          "replayTransition": {
+            "fromRootFrame": 35,
+            "toRootFrame": 1,
+            "sourceCommand": "GotoFrame(0); Play"
+          },
+          "requiredLanguage": "en",
+          "playbackCycle": 2
+        },
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "root"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "objectId": "14",
+            "selectedHitShapeObjectId": "6",
+            "placementDepth": "28"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "DefineButton2_14/BUTTONCONDACTION on(release).as",
+            "lineStart": 1,
+            "lineEnd": 4
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "frame_35/DoAction.as",
+            "lineStart": 6,
+            "lineEnd": 7
+          }
+        ]
+      }
+    ],
+    "terminalSemantics": {
+      "status": "source-evidenced",
+      "expectedState": {
+        "rootFrame": 1,
+        "localFrame": 1,
+        "rootPlayState": "playing",
+        "localPlayState": "playing",
+        "activeControl": {
+          "buttonObjectId": 14,
+          "selectedHitShapeObjectId": 6,
+          "depth": 28,
+          "sourceEvent": "pointerReleaseInside"
+        },
+        "replayTransition": {
+          "fromRootFrame": 35,
+          "toRootFrame": 1,
+          "sourceCommand": "GotoFrame(0); Play"
+        },
+        "requiredLanguage": "en",
+        "playbackCycle": 2
+      },
+      "evidence": [
+        {
+          "artifactId": "swfmill-xml",
+          "timelineId": "root"
+        },
+        {
+          "artifactId": "swfmill-xml",
+          "objectId": "14",
+          "selectedHitShapeObjectId": "6",
+          "placementDepth": "28"
+        },
+        {
+          "artifactId": "ffdec-scripts",
+          "script": "DefineButton2_14/BUTTONCONDACTION on(release).as",
+          "lineStart": 1,
+          "lineEnd": 4
+        },
+        {
+          "artifactId": "ffdec-scripts",
+          "script": "frame_35/DoAction.as",
+          "lineStart": 6,
+          "lineEnd": 7
+        }
+      ],
+      "traceEnd": "post-replay-root-frame-1-playing",
+      "firstCycleTerminalStop": {
+        "rootFrame": 35,
+        "localFrame": 35,
+        "rootPlayState": "stopped",
+        "localPlayState": "stopped",
+        "activeControl": {
+          "buttonObjectId": 14,
+          "selectedHitShapeObjectId": 6,
+          "depth": 28,
+          "sourceEvent": "pointerReleaseInside"
+        }
+      },
+      "outsideThisSpecification": [
+        "The original runtime must still execute and hash-chain the natural first cycle, frame-35 stop, release-inside dispatch, source-target resolution, and post-Replay frame-1 state.",
+        "The standalone source does not consume a language flag; EN/ES requirements retain separate product-context identities but share this byte-identical source schedule.",
+        "Audio presence, language-track selection, listening acceptance, visual RMSE, human review, owner review, and migration completion are not established by this schedule."
+      ]
+    },
+    "exhaustiveFrameCapturePlan": {
+      "indexing": "one-indexed",
+      "firstFrame": 1,
+      "lastFrame": 35,
+      "frameCount": 35,
+      "executionPrerequisite": "Execute this source-evidenced schedule in the required original runtime before pairing every frame with implementation evidence."
+    }
+  },
+  "unresolvedMappings": [],
+  "separateBehaviorUnknowns": [],
+  "inventoryContext": {
+    "inventoryStatus": "static-exhaustive-runtime-unverified",
+    "timelineControlStates": [
+      {
+        "frame": 1,
+        "reasons": [
+          "initial-one-indexed-frame"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "root"
+          }
+        ]
+      },
+      {
+        "frame": 35,
+        "reasons": [
+          "exported-action-script",
+          "script-stop-state",
+          "structural-action:DoAction",
+          "terminal-structural-frame"
+        ],
+        "evidence": [
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "root"
+          },
+          {
+            "artifactId": "swfmill-xml",
+            "timelineId": "root"
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "frame_35/DoAction.as",
+            "lineStart": 6,
+            "lineEnd": 7
+          },
+          {
+            "artifactId": "ffdec-scripts",
+            "script": "frame_35/DoAction.as",
+            "lineStart": 6,
+            "lineEnd": 7
+          }
+        ]
+      }
+    ],
+    "obligationCounts": {
+      "handlerBehaviorGroups": 1,
+      "buttonTargetObligations": 1,
+      "inputObligations": 0,
+      "dragObligations": 0,
+      "correctWrongObligations": 0,
+      "conditionalBranchObligations": 0,
+      "randomObligations": 0,
+      "labeledStateObligations": 0,
+      "glossaryAndHyperlinkObligations": 0,
+      "sectionMenuObligations": 0,
+      "courseRouteObligations": 0,
+      "sideEffectObligations": 0,
+      "dependencyFixtureObligations": 0
+    },
+    "unknownIds": [
+      "authoritative-original-runtime-traversal",
+      "interactive-source-schedule-default"
+    ],
+    "note": "These are static candidates/obligations only and are not mapped into orderedSteps by this generator."
+  },
+  "executionEvidence": {
+    "status": "not-executed-by-this-generator",
+    "expectedExecutionReportPath": "baseline/trace-executions/req-root-default-en.json",
+    "hashDagDirection": "source -> stable technical manifest/coverage/inventory projections -> trace spec -> execution report; mutable coverage results, QA, status, signatures, and baseline adoption must never hash-bind back to the spec/report",
+    "executionProofSchema": {
+      "description": "Contract for a future authorized-original-runtime execution report. A report that only repeats identifiers or hashes is insufficient.",
+      "required": [
+        "schemaVersion",
+        "status",
+        "proofMode",
+        "animationId",
+        "requirementId",
+        "identity",
+        "traceSpecBinding",
+        "authorizedRuntime",
+        "rawEventLog",
+        "sourceTargetResolutionLog",
+        "stateSnapshotArchive",
+        "originalRuntimeCaptureManifest",
+        "frameResults",
+        "orderedStepResults",
+        "stateCheckpointResults",
+        "terminalResult",
+        "unexpectedEvents",
+        "sequenceChainSha256"
+      ],
+      "invariants": [
+        "traceSpecBinding.file and traceSpecBinding.sha256 must identify the exact indexed trace spec used for execution.",
+        "orderedStepResults length, one-indexed order, scheduledStepSha256, dispatchedAction, and resolvedSourceTarget must exactly match schedule.orderedSteps.",
+        "Each step must preserve an actual monotonic eventSequence index, raw-log locator, pre/post observed state, frame-domain/root/local playheads, and evidence hashes; identifier echoing is not execution proof.",
+        "Each result record is chain-bound to the preceding result hash. sequenceChainSha256 must end at the last canonical result record, or at the signed zero-action observation when noActionsRequired is source-evidenced.",
+        "stateCheckpointResults must cover every declared checkpoint and compare expectedState with observedState. Missing, extra, reordered, or mismatched events/checkpoints make status failed.",
+        "terminalResult must compare the source-evidenced terminal semantics with observed completion/stop/navigation/score/audio/Replay state and must include capture/log hashes.",
+        "unexpectedEvents must be empty for a passing report; legacy network, host-command, JavaScript bridge, or persistent side effects remain disabled and recorded.",
+        "For frame-accurate root proof, frameResults must contain every required root frame exactly once in strict order and bind the positioning operation, runtime-observed frame, display-list state hash, native-size bitmap, capture-log locator, and previous result hash.",
+        "direct-seek-root-exhaustive requires one original-runtime direct-seek operation per frame. sequential-step-root-exhaustive requires a Rewind observation at frame 1 followed by exactly one Step Forward operation for each frame 2..N. Neither positioning mode proves natural playback."
+      ],
+      "orderedStepResultRequired": [
+        "order",
+        "scheduledStepSha256",
+        "eventSequence",
+        "rawEventLogLocator",
+        "dispatchedAction",
+        "resolvedSourceTarget",
+        "preState",
+        "postState",
+        "frameEvidence",
+        "previousResultSha256",
+        "resultSha256",
+        "result"
+      ],
+      "stateObservationRequired": [
+        "observedState",
+        "observedStateSha256",
+        "rootFrame",
+        "frameDomainId",
+        "localFrame",
+        "screenshotSha256",
+        "eventLogOffset"
+      ],
+      "frameAccurateRootResultRequired": [
+        "frame",
+        "positioningOperation",
+        "operationCountSincePrevious",
+        "requestSequence",
+        "captureLogLocator",
+        "observedRootFrame",
+        "observedDisplayListStateSha256",
+        "screenshotFile",
+        "screenshotSha256",
+        "width",
+        "height",
+        "previousResultSha256",
+        "resultSha256",
+        "result"
+      ],
+      "rawEvidenceRequired": [
+        "authorizedRuntime version/build and launch protocol",
+        "append-only raw event log path/SHA-256",
+        "source-target resolution log path/SHA-256",
+        "state-snapshot archive path/SHA-256",
+        "original-runtime frame capture manifest path/SHA-256"
+      ]
+    },
+    "executionReport": null,
+    "originalRuntimeCaptureManifest": null,
+    "executedSteps": [],
+    "stateCheckpointResults": [],
+    "terminalResult": null
+  },
+  "strictAcceptanceEffect": "none; this specification neither resolves baseline authority nor satisfies branch, visual, RMSE, audio, human-review, or owner-acceptance gates"
+}

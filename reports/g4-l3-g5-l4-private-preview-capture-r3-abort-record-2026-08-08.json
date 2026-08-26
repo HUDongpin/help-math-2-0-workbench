@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "receiptType": "g4-l3-g5-l4-private-preview-capture-attempt-abort-record",
+  "issuedOn": "2026-08-08",
+  "recordedAt": "2026-08-07T16:46:15.568Z",
+  "revision": "r3",
+  "status": "aborted-incomplete-no-success-receipt",
+  "retainedAttemptInputs": {
+    "runner": {
+      "path": "scripts/run-g4-l3-g5-l4-private-preview-captures-2026-08-08-r3.mjs",
+      "bytes": 23050,
+      "sha256": "09664824287a09ddc9e0f9f223ad015686e3ecf78d25c02fd9c119d97cf75b38"
+    },
+    "g4CaptureOrchestration": {
+      "path": "output/playwright/g4-l3-current-js-v3/course-g04-l03-ts-006-en-current-r7/capture-orchestration.json",
+      "bytes": 8172,
+      "sha256": "fc452f0ebe3de22b01cd00f7fa8f7cefd69a7e85f674b0446736b4abb1c083f4"
+    },
+    "g4CaptureManifest": {
+      "path": "output/playwright/g4-l3-current-js-v3/course-g04-l03-ts-006-en-current-r7/req-sprite-23-lesson-shell-natural-entry-en/capture-manifest.json",
+      "bytes": 269921,
+      "sha256": "3edcd27a2acf515074d1fc92c172232752bf7bc3aa012f05531ae34c40e748f7"
+    },
+    "g5FailedCaptureManifest": {
+      "path": "output/playwright/g5-l4-current-js-v1/course-g05-l04-rw-002-en-current-r3/req-sprite-341-lesson-shell-natural-entry-en/capture-manifest.json",
+      "bytes": 30189,
+      "sha256": "113b9e986c21b5602912a96a847cb4d8684d1a94e48ba5089a60288b1160f8c0"
+    }
+  },
+  "observedResult": {
+    "g4": {
+      "status": "individual-current-javascript-capture-complete-but-not-a-cohort-success",
+      "frames": 128
+    },
+    "g5": {
+      "status": "failed-before-first-frame",
+      "frames": 0,
+      "diagnostic": "generic-production-animation-route-did-not-produce-a-capture-stage",
+      "consoleErrorCount": 1,
+      "failedRequestCount": 12,
+      "httpErrorCount": 1,
+      "unexpectedRequestCount": 0
+    },
+    "successReceiptWritten": false
+  },
+  "remediationBoundary": {
+    "requiredSuccessor": "a-new-r4-capture-must-use-the-session-protected-g5-l4-executive-preview-route-and-new-output-roots",
+    "r3OutputsReusedAsCohortEvidence": false,
+    "historicalArtifactsRewritten": false
+  },
+  "acceptanceEffects": {
+    "currentJavascriptCohortCapture": false,
+    "authoritativeOriginalRuntime": false,
+    "fullFrameBaselineComparison": false,
+    "audioAcceptance": false,
+    "interactionAcceptance": false,
+    "replayAcceptance": false,
+    "humanVisualReview": false,
+    "ownerAcceptance": false,
+    "strictCompletion": false,
+    "publication": false
+  }
+}

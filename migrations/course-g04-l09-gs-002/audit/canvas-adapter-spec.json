@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "animationId": "course-g04-l09-gs-002",
+  "classification": "engineering-structural-frame-candidate-not-strict-acceptance",
+  "source": {
+    "swf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L9/GS/L9GS02.swf",
+    "swfSha256": "41cdb7e5cc5735eef2af3e4831908c47781840f0addcc3ac1a2142cbb0d48f15"
+  },
+  "evidence": {
+    "scenarioInventory": "migrations/course-g04-l09-gs-002/audit/scenario-inventory.json",
+    "scenarioInventorySha256": "01a4ec58265ef20d6bdb6e132625dbc10a1c6d3a5466de8f6b5c5c6729c83047",
+    "scenarioInventoryRevalidation": {
+      "status": "revalidated-after-english-structural-root-renderer-addition",
+      "checkedAt": "2026-07-22T15:20:37Z",
+      "checkedFacts": [
+        "The preserved SWF SHA-256 and sprite-787 identity remain unchanged.",
+        "The regenerated scenario inventory still records the ten-frame root placement at frame 6 and the 653-frame sprite-787 timeline.",
+        "The source frame-642 action initializes game globals and hides Mc_Popup plus Robos_1 through Robos_8; therefore only frames 1 through 641 are admitted by the JavaScript candidate.",
+        "The new English root renderer exposes only hash-bound FFDec structural drawings 1 through 10, keeps normal root playback stopped at frame 1, and does not alter the sprite-787 Canvas adapter contract.",
+        "The adapter generator must revalidate the current scenario inventory, audio audit, FFDec helper, and FFDec frame export before writing outputs."
+      ],
+      "strictAcceptanceEffect": "none"
+    },
+    "audioAudit": "migrations/course-g04-l09-gs-002/audit/audio-runtime-evidence.json",
+    "audioAuditSha256": "2b08d241f3f7cc5a7699171e9e56af929287d61fcacdfd7ae2eabf2005f19384"
+  },
+  "ffdecExport": {
+    "tool": "JPEXS Free Flash Decompiler v.26.2.1",
+    "helper": "work/course-assets/course-g04-l09-gs-002-main-canvas/DefineSprite_787/canvas.js",
+    "helperSha256": "78256220d01fba044341283703c3923a1ff8ff29499c51f65ab4e6ac825ccb93",
+    "framesHtml": "work/course-assets/course-g04-l09-gs-002-main-canvas/DefineSprite_787/frames.html",
+    "framesHtmlSha256": "55cea62b56c084b8775f7905195fbf5e00b1579490cedc773dfd886e4a8e2ec0",
+    "targetSpriteObjectId": 787,
+    "targetSpriteFunction": "sprite787",
+    "exportCanvas": {
+      "width": 2237,
+      "height": 1258
+    },
+    "exportInternalTranslation": {
+      "x": 764.8,
+      "y": 751.6
+    },
+    "expectedPlacedFunctionCount": 763,
+    "expectedPlacedFunctionsSha256": "b31a6a1e6909588ec40c559cb98e870893278c71c75e430f558f7981a33b6ce8",
+    "embeddedImageVariableCount": 10,
+    "embeddedImageVariablesSha256": "1df0bd06d7a2a063b17c8d7d940a7a56f8163fb5faff66c67a2bc0891b3966f4"
+  },
+  "timeline": {
+    "fps": 12,
+    "stage": {
+      "width": 800,
+      "height": 600,
+      "backgroundColor": "#b8d8f7"
+    },
+    "root": {
+      "frameCount": 10,
+      "preloaderStopFrame": 1,
+      "beginFrame": 6,
+      "beginLabel": "begin",
+      "placementName": "animation",
+      "placementTwips": {
+        "x": 8388,
+        "y": 5266
+      },
+      "placementPixels": {
+        "x": 419.4,
+        "y": 263.3
+      }
+    },
+    "local": {
+      "timelineId": "sprite-787",
+      "frameCount": 653,
+      "playbackMode": "state-explorer",
+      "exportFrameIndexing": "zero-indexed",
+      "publicFrameIndexing": "one-indexed"
+    },
+    "stageRenderOffset": {
+      "x": -345.4,
+      "y": -488.3
+    }
+  },
+  "runtimeContract": {
+    "kind": "structural-local-frame",
+    "defaultScenario": "source-drawing-lead-in",
+    "scenarios": [
+      "source-drawing-lead-in"
+    ],
+    "supportedLanguages": [
+      "en"
+    ],
+    "seedMapping": "recorded-but-not-applied-because-the-AVM1-game-random-state-is-unresolved",
+    "unresolved": [
+      "Frames 1 through 641 are source drawings for the lead-in, while stopped states 642 through 653 require AVM1 game/question state; the adapter executes no ActionScript and claims no reachable state composition.",
+      "Fourteen button targets, random selection, correct/wrong feedback, scoring, ten questions, final state, course routing, glossary actions, and Replay/reset remain unresolved.",
+      "The matching-basename Spanish MP3 is inventoried but has not been authoritatively listened to, mapped, synchronized, or rendered; English/Spanish host flags remain unresolved.",
+      "No authoritative natural-runtime all-state baseline, full-frame RMSE comparison, human visual review, engineering acceptance, or owner acceptance is represented by this asset."
+    ]
+  },
+  "output": {
+    "script": "public/flash-assets/courses/course-g04-l09-gs-002/canvas-renderer.js",
+    "manifest": "public/flash-assets/courses/course-g04-l09-gs-002/manifest.json",
+    "globalRegistry": "HELP_MATH_CANVAS_ASSETS"
+  }
+}

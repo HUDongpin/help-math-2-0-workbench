@@ -138,6 +138,34 @@ Example:
   npm run scaffold:migration -- Conversion_1_5 --fla source-assets/flash/Conversion_1_5.fla --swf source-assets/flash/Conversion_1_5.swf`;
 }
 
+function canonicalJson(value) {
+  if (Array.isArray(value)) return `[${value.map(canonicalJson).join(",")}]`;
+  if (value && typeof value === "object") {
+    return `{${Object.keys(value).sort().map((key) => `${JSON.stringify(key)}:${canonicalJson(value[key])}`).join(",")}}`;
+  }
+  return JSON.stringify(value);
+}
+
+export function initializeCapturePlanning(manifest, coverage, swfHeader) {
+  const rootFrameCount = swfHeader?.frameCount;
+  const rootDomain = manifest.implementation?.frameDomains?.find(({id}) => id === "root");
+  if (rootDomain) rootDomain.frameCount = Number.isInteger(rootFrameCount) && rootFrameCount > 0 ? rootFrameCount : null;
+  for (const requirement of coverage.requirements || []) {
+    requirement.requiredRange = Number.isInteger(rootFrameCount) && rootFrameCount > 0
+      ? {firstFrame: 1, lastFrame: rootFrameCount}
+      : null;
+    requirement.entryState = {kind: "initial-load", language: requirement.language};
+    requirement.entryStateSha256 = createHash("sha256")
+      .update(canonicalJson(requirement.entryState))
+      .digest("hex");
+    requirement.capturedFrameCount = 0;
+    requirement.missingFrames = Number.isInteger(rootFrameCount) && rootFrameCount > 0
+      ? Array.from({length: rootFrameCount}, (_, index) => index + 1)
+      : [];
+  }
+  return {manifest, coverage};
+}
+
 export function parseArguments(argv) {
   const options = { output: path.join(projectRoot, "migrations") };
   const positional = [];
@@ -236,7 +264,11 @@ export async function scaffoldMigration(options) {
       pairedFlaStatus: flaPath ? "present" : swfPath ? "missing" : "not-applicable",
     });
     if (swfHeader) Object.assign(manifest.runtime, swfHeader);
+    const coveragePath = path.join(destination, "evidence", "full-frame-coverage.json");
+    const coverage = JSON.parse(await readFile(coveragePath, "utf8"));
+    initializeCapturePlanning(manifest, coverage, swfHeader);
     await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+    await writeFile(coveragePath, `${JSON.stringify(coverage, null, 2)}\n`);
   } catch (error) {
     await rm(destination, { recursive: true, force: true });
     throw error;

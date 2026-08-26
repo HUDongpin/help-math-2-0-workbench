@@ -1,0 +1,144 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://help-math.local/schemas/course-scenario-inventory.schema.json",
+  "title": "HELP Math course/shell static scenario inventory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "animationId",
+    "inventoryStatus",
+    "migrationStatusChanged",
+    "authorityStatement",
+    "source",
+    "courseXml",
+    "evidenceIndex",
+    "authoritativeRuntimeEvidence",
+    "staticExtraction",
+    "timelineInventory",
+    "interactions",
+    "dependencies",
+    "coverage",
+    "conflicts",
+    "unknowns",
+    "strictAcceptanceEffect"
+  ],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "animationId": {"type": "string", "pattern": "^(course|shell-course)-"},
+    "inventoryStatus": {"const": "static-exhaustive-runtime-unverified"},
+    "migrationStatusChanged": {"const": false},
+    "authorityStatement": {"type": "array", "minItems": 3, "items": {"type": "string"}},
+    "source": {
+      "type": "object",
+      "required": ["swf", "swfSha256", "stage", "fps", "rootFrameCount", "actionScriptVersion"],
+      "properties": {
+        "swf": {"type": "string"},
+        "swfSha256": {"$ref": "#/definitions/sha256"},
+        "fla": {"type": ["string", "null"]},
+        "flaSha256": {"type": ["string", "null"]},
+        "pairedFlaStatus": {"type": "string"},
+        "stage": {
+          "type": "object",
+          "required": ["width", "height"],
+          "properties": {"width": {"type": "integer", "minimum": 1}, "height": {"type": "integer", "minimum": 1}}
+        },
+        "fps": {"type": "number", "exclusiveMinimum": 0},
+        "rootFrameCount": {"type": "integer", "minimum": 1},
+        "actionScriptVersion": {"type": "string"}
+      }
+    },
+    "courseXml": {"type": "object"},
+    "authoritativeRuntimeEvidence": {"type": "array"},
+    "evidenceIndex": {
+      "type": "array",
+      "minItems": 7,
+      "items": {
+        "type": "object",
+        "required": ["artifactId", "path", "sha256"],
+        "properties": {
+          "artifactId": {"type": "string", "minLength": 1},
+          "path": {"type": "string", "minLength": 1},
+          "sha256": {"$ref": "#/definitions/sha256"},
+          "uncompressedSha256": {"$ref": "#/definitions/sha256"}
+        }
+      }
+    },
+    "staticExtraction": {"type": "object"},
+    "timelineInventory": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["timelineId", "frameCount", "frameDomain", "structuralReachability", "controlStates", "evidence"],
+        "properties": {
+          "timelineId": {"type": "string"},
+          "frameCount": {"type": "integer", "minimum": 1},
+          "frameDomain": {
+            "type": "object",
+            "required": ["indexing", "start", "endInclusive", "captureRequirement"],
+            "properties": {
+              "indexing": {"const": "one-indexed"},
+              "start": {"const": 1},
+              "endInclusive": {"type": "integer", "minimum": 1},
+              "captureRequirement": {"const": "every-frame-for-every-reachable-runtime-scenario"}
+            }
+          },
+          "structuralReachability": {"enum": ["root", "reachable-from-root-placement-graph", "not-proven-by-root-placement-graph"]},
+          "controlStates": {"type": "array"},
+          "evidence": {"$ref": "#/definitions/evidenceRef"}
+        }
+      }
+    },
+    "interactions": {
+      "type": "object",
+      "required": ["handlers", "nonEventScripts", "buttonDefinitions", "editTexts", "dragHandlers", "correctHandlers", "wrongHandlers", "replayAndTerminal"]
+    },
+    "dependencies": {
+      "type": "object",
+      "required": ["bindings", "flashVarsCandidates", "safeSideEffectPolicy", "fixtureRule"]
+    },
+    "coverage": {
+      "type": "object",
+      "required": [
+        "acceptanceObligationsFromReadiness",
+        "timelineStateCoverage",
+        "handlerBehaviorGroups",
+        "buttonTargetObligations",
+        "inputObligations",
+        "dragObligations",
+        "correctWrongObligations",
+        "conditionalBranchObligations",
+        "randomObligations",
+        "labeledStateObligations",
+        "glossaryAndHyperlinkObligations",
+        "sectionMenuObligations",
+        "courseRouteObligations",
+        "replayAndTerminalObligations",
+        "sideEffectObligations",
+        "dependencyFixtureObligations",
+        "authoritativeRuntimeCoverage",
+        "minimumSetRule"
+      ]
+    },
+    "conflicts": {"type": "array"},
+    "unknowns": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "statement", "resolution", "evidence"],
+        "properties": {"evidence": {"$ref": "#/definitions/evidenceRef"}}
+      }
+    },
+    "strictAcceptanceEffect": {"type": "string", "pattern": "^none;"}
+  },
+  "definitions": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "evidenceRef": {
+      "type": "object",
+      "required": ["artifactId"],
+      "properties": {"artifactId": {"type": "string", "minLength": 1}}
+    }
+  }
+}

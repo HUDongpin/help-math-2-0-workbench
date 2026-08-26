@@ -1,0 +1,185 @@
+{
+  "animationId": "course-g04-l09-gs-002",
+  "authority": {
+    "audioClaimed": false,
+    "authoritativeBaselineClaimed": false,
+    "branchTraversalClaimed": false,
+    "humanReviewClaimed": false,
+    "languageClaimed": false,
+    "naturalPlaybackClaimed": false,
+    "originalCourseShellExecuted": false,
+    "originalHostBehaviorClaimed": false,
+    "ownerAcceptanceClaimed": false,
+    "sourceChildUntouched": true
+  },
+  "controllerContract": {
+    "actualFrameChecksBeforeReveal": 3,
+    "audioPolicy": "The loaded root/local movie is held at volume zero, 0 source-named local audio placements are explicitly stopped, and stopAllSounds is repeated.",
+    "canonicalSelection": {
+      "evidence": {
+        "frame": 642,
+        "kind": "frame-label",
+        "label": "GS_Begin"
+      },
+      "frame": 642,
+      "strategy": "first-source-audited-local-frame-label-after-frame-1",
+      "structuralKey": true,
+      "visualNonEmptyClaimed": false
+    },
+    "canonicalTargetFrame": 642,
+    "failurePresentation": "The child remains hidden behind a full-stage opaque FRAME CONTROL FAILED CLOSED screen.",
+    "localFrameDomain": {
+      "endInclusive": 653,
+      "indexing": "one-indexed",
+      "start": 1
+    },
+    "localTimeline": "sprite-787",
+    "postPinInputPolicy": "A transparent full-stage top-depth shield blocks pointer input while root/local frame and audio checks continue.",
+    "sourceFps": 12,
+    "sourcePlacementName": "animation",
+    "sourcePlacementObjectId": 787,
+    "sourceRootFrame": 6,
+    "sourceRootLabel": "begin",
+    "sourceStage": {
+      "height": 600,
+      "width": 800
+    },
+    "successPresentation": "The untouched child is revealed with no controller pixels after three actual-frame checks pass."
+  },
+  "decision": "static-and-compiled-factory-passed-runtime-frame-control-not-yet-proven",
+  "factory": {
+    "canonicalFixture": {
+      "decompiledMarkersVerified": true,
+      "deterministicDoubleBuild": true,
+      "fixtureDigest": "3a6e3885641768d0993b968f1f76946b093644b85e79b69d8097e463ad2a5171",
+      "hostSha256": "c49f15a4cc328a1f371685e995b1c115ca091a38378c3a09e11a5494f4ff84d9",
+      "manifest": "work/adobe-course-host-fixtures-frame-controller-all/generated/course-g04-l09-gs-002/frame-0642/3a6e3885641768d0993b968f/fixture-manifest.json",
+      "manifestSha256": "c4410863766857c08ea413398ac4544bc92a72e4d0bec3a6bfc2d706bc60a764",
+      "targetFrame": 642
+    },
+    "generator": {
+      "path": "scripts/build-adobe-course-frame-controller-fixtures.mjs",
+      "sha256": "bb3e83d5e1f7961d13add098cbeb5169f0e1613bce4af05b8a1413519f0f59f6"
+    },
+    "specification": {
+      "path": "migrations/course-g04-l09-gs-002/audit/adobe-course-frame-controller-spec.json",
+      "sha256": "d6c9fadaa01741e27eff7f98581f15a0633f5014441177049877c0aa2cb9aa20"
+    },
+    "supportModule": {
+      "path": "scripts/build-adobe-course-host-fixtures.mjs",
+      "sha256": "92fffd1cca82962a7ce1034e60a957b0ff356ade4a2b8746a22f7f8b49a92891"
+    },
+    "verificationCommands": [
+      "node scripts/build-adobe-course-frame-controller-fixtures.mjs --verify work/adobe-course-host-fixtures-frame-controller-all/generated/course-g04-l09-gs-002/frame-0642/3a6e3885641768d0993b968f/fixture-manifest.json",
+      "node scripts/build-adobe-course-frame-controller-fixtures.mjs --check",
+      "node scripts/build-adobe-course-frame-controller-fixtures.mjs --id course-g04-l09-gs-002 --frame 642"
+    ]
+  },
+  "limitations": [
+    "Direct gotoAndStop is a visual engineering seek and does not reproduce elapsed-time traversal or nested timeline phase through preceding local frames.",
+    "Unknown host bindings are deliberately not synthesized; frame scripts may therefore be incomplete even if a visual candidate appears.",
+    "The fixture suppresses all audio and cannot support listening, identity, cue, synchronization, stop, or Replay acceptance.",
+    "Interaction, branch, drag, scoring, random, Replay, language, original-shell, and external-dependency behavior remain separate blockers exactly as listed.",
+    "A successful Adobe probe would establish only a controlled source-addressed visual candidate; RMSE comparison, product QA, human review, owner acceptance, and strict validation remain pending."
+  ],
+  "migrationStatusChanged": false,
+  "reportKind": "adobe-avm1-course-local-frame-controller-engineering-candidate",
+  "reviewFieldsChanged": false,
+  "runtimeProofStillRequired": [
+    "Run the exact fixture through the sandbox in the authorized Adobe Flash Player only after a separate no-click GUI safety smoke is reviewed.",
+    "Observe that the cover disappears only after one explicit load click and three actual-frame ticks report root 6, local 642, and local frameCount 653.",
+    "Record a lossless native 800x600 stage capture plus a separate fixture digest, requested frame, and observed actual-frame trace record."
+  ],
+  "schemaVersion": 1,
+  "staticallyProven": [
+    "The root animation placement, its exact frame/label/objectId, the corresponding local sprite frameCount, source hash, native stage, and FPS are derived from the reviewed scenario inventory without basename or timeline guessing.",
+    "Every source/evidence/spec/generator/support input is hash-pinned; the untouched child is copied byte-for-byte into a content-addressed fixture.",
+    "The host is compiled twice from identical inputs to the same SWF hash, then decompiled and checked for fail-closed, target-frame, three-tick actual-frame, audio-suppression, and blocked-primitive markers.",
+    "Sandbox syntax, fixture-local write, outside-write denial, and loopback-network denial probes pass before any GUI launch is eligible.",
+    "The factory supports every one-indexed local frame 1..653; the tracked canonical probe is frame 642."
+  ],
+  "strictAcceptanceEffect": "none; retain every baseline, language, audio, behavior, product, human, owner, validator, regression, and build blocker",
+  "unresolvedObligations": {
+    "audio": [
+      "all audio is intentionally muted and stopped; listening, identity, start cue, synchronization, and Replay remain outside this fixture"
+    ],
+    "hostBindings": [
+      "_global",
+      "_global.KeyAttribute",
+      "_global.WrongFeed",
+      "_global.correctSelect",
+      "_global.counting",
+      "_global.gSound",
+      "_global.qLabelName",
+      "_global.quizCorrectLabelArray",
+      "_global.quizLabelArray",
+      "_global.quizSection",
+      "_global.startGame",
+      "_global.totQuizCount",
+      "_global.volLevel",
+      "_level0.InternalPreloader",
+      "_parent",
+      "_parent.BtnRepeat",
+      "_parent.BtnStart",
+      "_parent.Mc_Quest_Main",
+      "_parent.Mc_Right_Feed1",
+      "_parent.Mc_Right_Feed2",
+      "_parent.Mc_Right_Feed3",
+      "_parent.Mc_Right_Feed4",
+      "_parent.Mc_Right_Feed5",
+      "_parent.Mc_Right_Feed6",
+      "_parent.Mc_Right_Feed7",
+      "_parent._parent",
+      "_parent.disableQuizButton",
+      "_parent.doGetRandomQuiz",
+      "_parent.enableButton",
+      "_parent.enableQuizButton",
+      "_parent.gotoAndPlay",
+      "_parent.gotoAndStop",
+      "_parent.play",
+      "_parent.showWrongFeed",
+      "_root.DoHyperLinks",
+      "_root.animation_mc",
+      "_root.disableQuizButton",
+      "_root.enableQuizButton"
+    ],
+    "interactionCoverage": [
+      {
+        "count": 14,
+        "key": "buttonTargetObligations"
+      },
+      {
+        "count": 8,
+        "key": "conditionalBranchObligations"
+      },
+      {
+        "count": 13,
+        "key": "correctWrongObligations"
+      },
+      {
+        "count": 1,
+        "key": "courseRouteObligations"
+      },
+      {
+        "count": 3,
+        "key": "glossaryAndHyperlinkObligations"
+      },
+      {
+        "count": 11,
+        "key": "handlerBehaviorGroups"
+      },
+      {
+        "count": 11,
+        "key": "labeledStateObligations"
+      }
+    ],
+    "language": [
+      "English/Spanish host flags and visual branches are not established by direct local-frame seek"
+    ],
+    "randomObligationCount": 1,
+    "randomObligationIds": [
+      "random-001"
+    ],
+    "sideEffectApis": []
+  }
+}

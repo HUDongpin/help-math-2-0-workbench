@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "course-g04-l10-in-016-private-product-browser-qa-v24",
+  "calibrationId": "g4-l10-candidate-to-product-v24",
+  "status": "passed-private-product-engineering-browser-qa",
+  "animationId": "course-g04-l10-in-016",
+  "observedAt": {
+    "start": "2026-08-21T09:12:09+08:00",
+    "end": "2026-08-21T09:38:41+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "scope": {
+    "routeEn": "/en/migration-status/g4-l10-product-bridge?mode=focus",
+    "routeEs": "/es/migration-status/g4-l10-product-bridge?mode=focus",
+    "routeVisibility": "private-development-only",
+    "globalPageOrdinal": 30,
+    "activePageCount": 46,
+    "sectionCode": "IN",
+    "sectionPageOrdinal": 15,
+    "complexityLane": "interactive-understood",
+    "privateRegistrationCount": 14,
+    "publicRegistrationCount": 0,
+    "unregisteredCandidateCount": 10,
+    "honestLowLaneCountAmongRemainder": 0,
+    "newCandidateSelectionCountInV24": 0,
+    "newWorkspaceCount": 0
+  },
+  "environment": {
+    "tool": "playwright-cli",
+    "browser": "Chromium",
+    "baseUrl": "http://localhost:3213",
+    "serverMode": "Next.js development server",
+    "browserSession": "g4l10in016v23b",
+    "developmentServerClosedAfterQa": true,
+    "browserSessionClosedAfterQa": true
+  },
+  "implementationBindings": {
+    "currentFreeze": {
+      "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v24.json",
+      "bytes": 7786,
+      "sha256": "bcc4f8dfce695d86d153d357d1f1d9c127c93b9442eca770b9bde80bf719d281"
+    },
+    "implementationBeforeFreeze": {
+      "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v22.json",
+      "bytes": 17790,
+      "sha256": "1d40bda0221e8614df03af2995a9d449640acb3f699bec1e8ba0de095ab5769e"
+    },
+    "maintainedModule": {
+      "path": "packages/demos/src/modules/course-g04-l10-in-016.tsx",
+      "bytes": 21186,
+      "sha256": "22214382eb6d172e2b1dcdc64fbe71f0e8db25ba1bc2e056906d1c817110a011"
+    },
+    "timelineContract": {
+      "path": "packages/demos/src/timelines/course-g04-l10-in-016.ts",
+      "bytes": 2902,
+      "sha256": "af749bb88881678207b4686c1e79e891f15472b56d422f3ff619572f48f5b71f"
+    },
+    "lessonHostContract": {
+      "path": "packages/demos/src/lesson-host-contract.ts",
+      "bytes": 16388,
+      "sha256": "23c878622f0a7b0997d76e8d9605d20163dc612a229882f7aec43320aa506ae1"
+    },
+    "animationRuntime": {
+      "path": "apps/web/components/animation-runtime.tsx",
+      "bytes": 51017,
+      "sha256": "0ff262370bd62a6e25657a41845ab847967b3193894462b04235c84f5bf0af19"
+    },
+    "privateRegistry": {
+      "path": "packages/demos/private-current-js-registry.json",
+      "bytes": 2864,
+      "sha256": "07064e77ad838cda0f03f6958fa6c8850ea5951d16d5da53febb04e41248ab8b"
+    },
+    "generatedRegistry": {
+      "path": "packages/demos/src/registry.generated.ts",
+      "bytes": 29219,
+      "sha256": "2cad86e4534070441292732a962e4ef82519fee5dcaf66b6d5becf88138d21c4"
+    },
+    "pageOnlyDescriptor": {
+      "path": "apps/web/lib/g4-l10-product-bridge-descriptor.ts",
+      "bytes": 25782,
+      "sha256": "9651a86545208d58a7c2eee26eef31e392db786ae56e7ef32e80ddd764b643b5"
+    },
+    "audioReceipt": {
+      "path": "migrations/course-g04-l10-in-016/audit/private-product-audio-assets.json",
+      "bytes": 14053,
+      "sha256": "a274866545f4d39590db63bd2281097399fb5e1454c50d05cb19da3df0aa69b0"
+    }
+  },
+  "browserDiscoveredCorrections": [
+    {
+      "issue": "Opening a glossary dialog changed the host callback identity and triggered the renderer reset effect, clearing wrong-feedback state before the source close handler ran.",
+      "correction": "The latest host callback is retained in a ref while the reset effect is driven only by Replay; wrong feedback now survives glossary open and close until the source-derived Try again handler is invoked.",
+      "regressionTest": "IN016 resets typed practice state only on Replay, not host callback identity changes"
+    },
+    {
+      "issue": "The correct handler exposed productRenderFrame=81 while the shared Canvas renderer still preferred the inherited host state for frame 57.",
+      "correction": "The maintained adapter clears the inherited state when projecting its local terminal frame, causing the Canvas renderer to recompute and stamp frame 81 itself.",
+      "regressionTest": "IN016 terminal adapter passes frame 81 without a stale host state"
+    }
+  ],
+  "behaviorHeavyGates": {
+    "randomBranches": {
+      "status": "closed-private-product-engineering",
+      "sourceHostWrongCardinality": 3,
+      "sourceHostRightCardinality": 4,
+      "unitTestExhaustsAllReachableBranches": true,
+      "browserObservedWrongBranch": {
+        "branchIndex": 3,
+        "sourceInstance": "Mc_Wrong_Feed3",
+        "sourceTimelineId": "sprite-101"
+      },
+      "browserObservedRightBranch": {
+        "branchIndex": 2,
+        "sourceInstance": "Mc_Right_Feed2",
+        "sourceTimelineId": "sprite-127"
+      },
+      "sourcePresentHostUnreachableCharacterIds": [50, 208],
+      "adobeRandomStateParityAccepted": false
+    },
+    "audioRouting": {
+      "status": "closed-private-product-engineering-listening-pending",
+      "productReachableEmbeddedStreamCount": 9,
+      "spanishHostTrackCount": 1,
+      "fullEofDecodePassedForEveryMaterializedAsset": true,
+      "englishRoute": "embedded-en",
+      "spanishRoute": "host-es-or-muted",
+      "observedExactRequests": [
+        {"asset": "main-timeline.mp3", "status": 206, "sha256": "af1e23de4f23ab35bc815e860463f2dbc42ed7ac1f7b9db5794fb0078ed327ca"},
+        {"asset": "right-2.mp3", "status": 206, "sha256": "70f9eeb16521b9fe8c12f243af3c99482c185a39dab38b226eb3801ed204290b"},
+        {"asset": "wrong-3.mp3", "status": 206, "sha256": "c374d3f9cf0f5fd1adfbd46c74abd7d3bd2d0b1d41bf15b3758a87386a6ca7d1"},
+        {"asset": "feedback-close.mp3", "status": 206, "sha256": "ad4a86a727b8d4b5379655258cdffc62f85f89cb460a96565fad27d975a2aa38"},
+        {"asset": "spanish-host-narration.mp3", "status": 206, "sha256": "fbb761b5332c0190ba6ab51f228c9b191fcb7a56bc4b6852ba214562c71956c0"}
+      ],
+      "spanishHostTimelinePauseObserved": true,
+      "spokenLanguageAccepted": false,
+      "audioListeningAccepted": false
+    },
+    "timelineReachability": {
+      "status": "closed-private-product-engineering",
+      "quizStopFrame": 57,
+      "wrongFeedbackCanvasFrame": 57,
+      "correctTerminalProductFrame": 81,
+      "correctTerminalCanvasDataFlashFrame": 81,
+      "correctTerminalCanvasStatus": "ready",
+      "sprite46Disposition": "modern typed host owns exact sanitized wrong-feedback prose and glossary requests",
+      "sprite186Disposition": "product-unreachable because it occurs only in Right5 outside the shipped random(4) range",
+      "strictFrameDomainDispositionMutated": false,
+      "authoritativeOriginalRuntimeAccepted": false
+    },
+    "replayEngineering": {
+      "status": "closed-private-product-engineering",
+      "audioStopVector": ["host-narration", "interactive-audio", "timeline-audio"],
+      "practiceResetVector": ["outcome", "branch", "phase", "timers", "terminal-render-frame", "memory-only-host-state"],
+      "observedAfter120Milliseconds": {
+        "practicePhase": "idle",
+        "feedbackBranch": "none",
+        "productRenderFrame": 3,
+        "canvasDataFlashFrame": 3,
+        "answerHandlersEnabled": false,
+        "canvasStatus": "ready"
+      },
+      "answersReenabledAtFrame": 57,
+      "nextRightBranchAdvancedFrom1To2": true,
+      "nextWrongBranchAdvancedTo3": true,
+      "authoritativeOriginalRuntimeReplayAccepted": false
+    }
+  },
+  "desktopEnglish": {
+    "viewport": {"width": 1280, "height": 900},
+    "routeStatus": 200,
+    "sourceCanvasStatus": 200,
+    "pageLoaded": true,
+    "heading": "Same Area or Same Perimeter?",
+    "registeredBoundaryVisible": "14/46",
+    "answerHandlers": [
+      {"sourceCharacterId": 23, "sourceInstance": "AnsBtn1", "outcome": "correct"},
+      {"sourceCharacterId": 22, "sourceInstance": "AnsBtn2", "outcome": "incorrect"}
+    ],
+    "glossaryHandlersObserved": ["statement", "area"],
+    "wrongFeedbackSurvivedGlossaryOpenAndClose": true,
+    "tryAgainRestoredIdleAndAnswers": true,
+    "correctTerminalCanvasFrame81Observed": true,
+    "horizontalOverflowObserved": false,
+    "screenshots": [
+      {"path": "output/playwright/g4-l10-in016-v23/desktop-en-page-30-idle.png", "bytes": 141189, "sha256": "8fed993e077c12569f1d9c2a0e7e16dccd640b0ec1f8ab656e23ba0dbbc65a07", "pixelWidth": 1280, "pixelHeight": 997, "visualPurpose": "idle layout and handler visibility"},
+      {"path": "output/playwright/g4-l10-in016-v23/desktop-en-wrong-branch-1.png", "bytes": 143287, "sha256": "2445ff2dc86ef94fbdd00f7bed38bef872960b945a77f15daac4ada671e2ffed", "pixelWidth": 1280, "pixelHeight": 1011, "visualPurpose": "wrong-feedback layout only; functional post-correction persistence was observed separately"},
+      {"path": "output/playwright/g4-l10-in016-v23/desktop-en-correct-terminal-frame-81.png", "bytes": 150126, "sha256": "537c7444257d9ce8bf4b54f8c96c81fac714341fcab827b4313d05c999b10cd5", "pixelWidth": 1280, "pixelHeight": 1177, "visualPurpose": "correct terminal Canvas frame 81"}
+    ]
+  },
+  "mobileSpanish": {
+    "viewport": {"width": 390, "height": 844},
+    "routeStatus": 200,
+    "pageLoaded": true,
+    "heading": "¿Mismo área o mismo perímetro?",
+    "fixedEnglishSourceVisualBoundaryDisclosed": true,
+    "visibleGlossaryLabels": ["Enunciado", "Forma"],
+    "statementDefinitionObserved": "Es un concepto resumido de lo que decimos acerca de algo. Por ejemplo: un enunciado acerca del triángulo es “que tiene tres lados”.",
+    "audioRoute": "host-es-or-muted",
+    "spanishNarrationButtonChangedToStopWhilePlaying": true,
+    "runtimeAudioLanguage": "es",
+    "hostAudioTimelinePausedWhilePlaying": true,
+    "innerWidth": 390,
+    "documentClientWidth": 390,
+    "documentScrollWidth": 390,
+    "bodyScrollWidth": 390,
+    "horizontalOverflowObserved": false,
+    "screenshots": [
+      {"path": "output/playwright/g4-l10-in016-v23/mobile-es-page-30-idle.png", "bytes": 141900, "sha256": "77db246eca3b0aa25013b109203e17a7bbcc8f9f5603451054576edd67ffac3e", "pixelWidth": 390, "pixelHeight": 1909},
+      {"path": "output/playwright/g4-l10-in016-v23/mobile-es-statement-dialog.png", "bytes": 151126, "sha256": "51d8b8d72d60b3bc87ff3c51eba7624661a91fc641c6d6d1f1330c163e6f4604", "pixelWidth": 390, "pixelHeight": 1909}
+    ]
+  },
+  "network": {
+    "canvasRendererStatus": 200,
+    "englishMainTimelineStatus": 206,
+    "englishWrongFeedbackStatus": 206,
+    "englishRightFeedbackStatus": 206,
+    "englishFeedbackCloseStatus": 206,
+    "spanishHostTrackStatus": 206,
+    "legacyClickRecordRequestsObserved": 0,
+    "legacyHandlerWriteRequestsObserved": 0,
+    "in016ProductRequestFailuresObserved": 0
+  },
+  "console": {
+    "in016RendererOrAudioErrorsObserved": 0,
+    "cleanConsoleClaimed": false,
+    "knownDevelopmentEnvironmentNoise": [
+      "Clerk experimental CheckoutProvider child-key warning",
+      "Clerk development-key warning"
+    ]
+  },
+  "testEvidence": {
+    "in016AndMaterializer": {"tests": 9, "passed": 9, "failed": 0},
+    "candidateCensusAndRegistration": {"tests": 6, "passed": 6, "failed": 0},
+    "descriptor": {"tests": 17, "passed": 17, "failed": 0},
+    "grade4Coverage": {"tests": 4, "passed": 4, "failed": 0},
+    "demoTypecheck": "passed",
+    "registryCheck": "passed"
+  },
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "behaviorParityAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "spokenLanguageAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "releaseEligible": false,
+    "published": false
+  },
+  "limitations": [
+    "This receipt is local Chromium engineering QA for a private maintained adapter inside the modern My Lesson host; it is not Adobe original-runtime evidence.",
+    "The random branch mapping is source-cardinality-bound and unit-exhausted, but Adobe random-state sequence parity is not accepted.",
+    "Every staged audio byte passed hash and full EOF decode, while spoken-language and listening acceptance remain pending.",
+    "The screenshots were visually inspected for product layout and state, but they are not human visual-fidelity or Owner acceptance.",
+    "V24 freezes no additional candidate and does not change the ten-candidate remainder gate."
+  ]
+}

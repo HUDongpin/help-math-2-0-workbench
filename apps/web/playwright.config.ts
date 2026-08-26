@@ -1,16 +1,33 @@
 import {defineConfig, devices} from '@playwright/test';
 
-const port = 3211;
-const baseURL = `http://127.0.0.1:${port}`;
+const port = Number(process.env.PLAYWRIGHT_PORT ?? 3211);
+if (!Number.isInteger(port) || port < 1 || port > 65_535) {
+  throw new Error('PLAYWRIGHT_PORT must be an integer from 1 through 65535.');
+}
+const host = process.env.PLAYWRIGHT_HOST ?? '127.0.0.1';
+const baseURL = `http://${host}:${port}`;
 
 export default defineConfig({
   testDir: './e2e',
+  // External Clerk mutation is reachable only through the dedicated,
+  // redacted, fresh-server launcher. Ordinary browser regression must never
+  // discover it even if authorization variables were left in a shell.
+  testIgnore: [
+    'clerk-synthetic-lifecycle.spec.ts',
+    // Production fail-closed assertions run only against `next start` through
+    // playwright.production.config.ts. Candidate-mode development flags in
+    // this suite deliberately make those assertions inapplicable.
+    'production-smoke.spec.ts',
+  ],
   fullyParallel: true,
+  failOnFlakyTests: Boolean(process.env.CI),
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 2 : undefined,
   reporter: [['line']],
-  outputDir: '/tmp/helpmath-site-playwright-results',
+  outputDir:
+    process.env.PLAYWRIGHT_OUTPUT_DIR ??
+    '/tmp/helpmath-site-playwright-results',
   expect: {
     timeout: 10_000,
   },
@@ -25,9 +42,43 @@ export default defineConfig({
     trace: 'retain-on-failure',
   },
   webServer: {
-    command: `npm run start -- --hostname 127.0.0.1 --port ${port}`,
-    url: `${baseURL}/robots.txt`,
-    reuseExistingServer: !process.env.CI,
+    command: `npm run dev -- --hostname ${host} --port ${port}`,
+    env: {
+      // Ordinary browser regression must never connect to the development
+      // Clerk instance. The destructive provider lifecycle has a separate,
+      // explicitly authorized launcher and Playwright configuration.
+      CLERK_LOCAL_AUTH_ENABLED: 'false',
+      // The browser suite exercises unfinished candidates only in a local
+      // development server. Production does not expose a review route.
+      MODERN_WIDE_SHELL_ENABLED:
+        process.env.MODERN_WIDE_SHELL_ENABLED ?? 'false',
+      CURRENT_JS_SHOWCASE_G4_L3_ENABLED:
+        process.env.CURRENT_JS_SHOWCASE_G4_L3_ENABLED ?? 'false',
+      CURRENT_JS_SHOWCASE_G4_L5_ENABLED:
+        process.env.CURRENT_JS_SHOWCASE_G4_L5_ENABLED ?? 'false',
+      CURRENT_JS_SHOWCASE_G4_L10_ENABLED:
+        process.env.CURRENT_JS_SHOWCASE_G4_L10_ENABLED ?? 'false',
+      CURRENT_JS_SHOWCASE_G4_L11_ENABLED:
+        process.env.CURRENT_JS_SHOWCASE_G4_L11_ENABLED ?? 'false',
+      CURRENT_JS_SHOWCASE_G3_L2_ENABLED:
+        process.env.CURRENT_JS_SHOWCASE_G3_L2_ENABLED ?? 'false',
+      CURRENT_JS_SHOWCASE_G5_L3_ENABLED:
+        process.env.CURRENT_JS_SHOWCASE_G5_L3_ENABLED ?? 'false',
+      CURRENT_JS_SHOWCASE_G5_L4_ENABLED:
+        process.env.CURRENT_JS_SHOWCASE_G5_L4_ENABLED ?? 'false',
+      CURRENT_JS_SHOWCASE_G5_L5_ENABLED:
+        process.env.CURRENT_JS_SHOWCASE_G5_L5_ENABLED ?? 'false',
+      CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED:
+        process.env.CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED ?? 'false',
+      REVIEWER_INSTRUMENTATION_ENABLED:
+        process.env.REVIEWER_INSTRUMENTATION_ENABLED ?? 'false',
+    },
+    // Do not admit the browser matrix from a static endpoint. The public root
+    // exercises the default-locale proxy rewrite, so polling it here warms the
+    // real application route and requires a successful response before two
+    // parallel workers can begin first-load compilation.
+    url: `${baseURL}/`,
+    reuseExistingServer: process.env.PLAYWRIGHT_REUSE_EXISTING_SERVER === '1',
     timeout: 120_000,
   },
 });

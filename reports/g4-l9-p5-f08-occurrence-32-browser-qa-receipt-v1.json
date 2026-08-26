@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "g4-l9-p5-f08-occurrence-32-private-modern-my-lesson-browser-qa-receipt",
+  "taskId": "HELP-MATH-G4-L9-P5-F08-OCCURRENCE-32-STRESS-GATE-20260823",
+  "recordedAt": "2026-08-24",
+  "baseCommit": "fb7dc21e4ecb9d625cd96eb7822a1bce89c9e076",
+  "route": "/migration-status/g4-l9-product-bridge",
+  "routeAuthority": {
+    "surface": "private-local-modern-my-lesson",
+    "actualDevelopmentStatus": 200,
+    "actualProductionModeStatus": 404,
+    "developmentLocalesChecked": ["en", "es"],
+    "productionModeLocalesChecked": ["en", "es"],
+    "deployedProductionVerified": false,
+    "publicReleaseExpanded": false
+  },
+  "commands": {
+    "p5Stress": "HELP_MATH_CURRENT_JS_CANDIDATE_QA=current-js-candidate-profile-v1 CURRENT_JS_CANDIDATE_PROFILE_ENABLED=true PLAYWRIGHT_PORT=3215 npm run test:e2e --workspace @helpmath/web -- e2e/g4-l9-p5-f08-occurrence-32-stress.spec.ts",
+    "p4Regression": "HELP_MATH_CURRENT_JS_CANDIDATE_QA=current-js-candidate-profile-v1 CURRENT_JS_CANDIDATE_PROFILE_ENABLED=true PLAYWRIGHT_PORT=3216 npm run test:e2e --workspace @helpmath/web -- e2e/g4-l9-product-bridge.spec.ts"
+  },
+  "results": {
+    "p5Stress": {
+      "status": "PASS",
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "duration": "13.0s",
+      "pageCases": 2
+    },
+    "p4NoScreenshotRegression": {
+      "status": "PASS",
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "duration": "39.0s",
+      "pageCases": 28,
+      "p4ScreenshotsRewritten": false
+    }
+  },
+  "matrices": [
+    {
+      "locale": "en",
+      "browser": "chromium",
+      "viewport": {"width": 1440, "height": 1000},
+      "sourceOccurrence": 32,
+      "placementId": "g04-l09-placement-032",
+      "animationId": "course-g04-l09-ti-007"
+    },
+    {
+      "locale": "es",
+      "browser": "chromium",
+      "viewport": {"width": 390, "height": 844},
+      "sourceOccurrence": 32,
+      "placementId": "g04-l09-placement-032",
+      "animationId": "course-g04-l09-ti-007"
+    }
+  ],
+  "assertions": {
+    "privateRegisteredPages": 15,
+    "privateUnavailablePages": 28,
+    "formalRegistryExpanded": false,
+    "frameDomain": "sprite-149",
+    "scenario": "p5-f08-occurrence-32-stress",
+    "doGetRndQuestAdapterDeclared": true,
+    "hostSymbolCount": 21,
+    "dragBindingsDeclared": {"correct": ["Scr1", "Scr2", "Scr3", "Scr6"], "incorrect": ["Scr4", "Scr5"]},
+    "browserDragCasesPerLocale": 6,
+    "browserCorrectFeedbackCasesPerLocale": 4,
+    "browserWrongFeedbackCasesPerLocale": 2,
+    "hostDecisionAllowedAfterEveryDrop": true,
+    "firstQuestionPracticeBranchIndex": 1,
+    "firstQuestionInvalidRequest": false,
+    "questionCountPerLocale": 3,
+    "finalScorePerLocale": "2/3",
+    "repeatResetPerLocale": true,
+    "replayResetPerLocale": true,
+    "modernMyLessonReplayWithActivePracticeFeedbackAndAudioPerLocale": true,
+    "rendererReplayWithActivePracticeFeedbackAndAudioPerLocale": true,
+    "replayClearsPracticeFeedbackInMemoryHost": true,
+    "replayClearsActiveAudioCueInMemoryHost": true,
+    "reanswerAfterReplayHostDecisionAllowed": true,
+    "glossaryHandlerIntentsPerLocale": 19,
+    "resolvedGlossaryEntries": 16,
+    "onlyExplicitAlias": "Mathematical aentence -> Sentence",
+    "courseIntentPerLocale": true,
+    "audioRequestStopPerLocale": true,
+    "blockedReportAndGetUrlPerLocale": true,
+    "modernNextPreviousSourceOrderPerLocale": true,
+    "moduleNetworkCalls": 0,
+    "consoleErrors": 0,
+    "pageErrors": 0,
+    "failedBrowserRequests": 0,
+    "externalRequests": 0,
+    "legacyOrUnknownNetworkRequests": 0
+  },
+  "screenshotManifest": {
+    "count": 2,
+    "totalBytes": 227802,
+    "projection": "For each C-locale byte-sorted record: path NUL decimal-bytes NUL lowercase-sha256 NUL",
+    "projectionNulBytes": 298,
+    "projectionSha256": "74e83ad73bae260176e25b8c7c16a03bf96f719369768db203491383c8bb06a7",
+    "artifacts": [
+      {
+        "path": "reports/browser-qa/g4-l9-p5/desktop-en-1440x1000/032-course-g04-l09-ti-007.png",
+        "bytes": 148062,
+        "sha256": "8228dba3da51bb5e32aad33056b080fb58799fc52eb080e74abc17c68152912f",
+        "width": 1440,
+        "height": 1000
+      },
+      {
+        "path": "reports/browser-qa/g4-l9-p5/mobile-es-390x844/032-course-g04-l09-ti-007.png",
+        "bytes": 79740,
+        "sha256": "bcbe0df76f1489d957ef0786532cb1f5ca675f20d43c195920fd3700ced9af5d",
+        "width": 390,
+        "height": 844
+      }
+    ]
+  },
+  "visualInspection": {
+    "workerInspectedBothPngs": true,
+    "p4Occurrence30ComparatorInspected": true,
+    "conclusion": "P5 retains the accepted P4 modern-host scaling and reduced-motion presentation; the six-source stress control density introduces no P5-only blank, overflow-outside-stage, or noninteractive regression.",
+    "screenshotsAreHumanReview": false,
+    "screenshotsAreFidelityAcceptance": false
+  },
+  "acceptanceBoundary": {
+    "boundedPrivateEngineeringBrowserQa": true,
+    "exactEquivalenceAdmission": false,
+    "originalRuntimeValidated": false,
+    "technicalOrVisualFidelityAccepted": false,
+    "audioListeningAccepted": false,
+    "humanOrOwnerAccepted": false,
+    "strictComplete": false,
+    "formalRelease": false,
+    "published": false,
+    "productionVerified": false,
+    "f08FamilyScaleOut": false,
+    "fortyThreePageScaleOut": false
+  }
+}

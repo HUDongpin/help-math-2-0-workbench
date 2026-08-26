@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "animationId": "formula-elementary-conversion-01-03",
+  "auditedOn": "2026-07-21",
+  "migrationStatusObserved": "preserved",
+  "strictReadiness": "blocked",
+  "completionClaimAllowed": false,
+  "sourceIntegrity": {
+    "swfSha256": "0a315ea564bcb79b809cabf1a5f406b3a16363f8ad654678ca2683534f09c818",
+    "flaSha256": "db7e027066f69dffe2337c36b6810182eb50ca8d5e5e020b6c5f43975517233b",
+    "pairedFlaPresent": true,
+    "flaContainer": "Composite Document File V2",
+    "byteIdenticalPlacement": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SWF/Copy of Conversion_1_3.swf",
+      "sha256": "0a315ea564bcb79b809cabf1a5f406b3a16363f8ad654678ca2683534f09c818"
+    },
+    "sourceModified": false
+  },
+  "runtimeAudit": {
+    "stage": {"width": 780, "height": 379},
+    "fps": 12,
+    "frameCount": 170,
+    "durationMs": 14166.666666666666,
+    "backgroundColor": "#e4e4e4",
+    "swfVersion": 6,
+    "actionScriptVersion": "AS1/2",
+    "defineFont2Count": 4,
+    "fontNames": ["Verdana", "Arial", "Whitney-Semibold", "Bauhaus Md BT"],
+    "defineMorphShapeCount": 14,
+    "embeddedSoundTags": 0,
+    "embeddedVideoTags": 0,
+    "externalCallCandidatesInChildSwf": [],
+    "instructionalBehavior": {
+      "kind": "linear-with-host-language-context-and-replay",
+      "randomnessFound": false,
+      "scoringFound": false,
+      "learnerInputFound": false,
+      "frame1LanguageScript": "Mc_SD visibility is controlled by _root.dtfSpanishFormulas.text.toUpperCase() == ON",
+      "terminalScript": "stop() on frame 170",
+      "replayScript": "on(release) { gotoAndPlay(1); }"
+    },
+    "embeddedTextEvidence": {
+      "en": ["1 gallon = 4 quarts", "gallon", "quart", "1 Qt", "2 Qt", "3 Qt", "4 Qt", "Replay"],
+      "es": ["1 galón =  4 cuartos"]
+    },
+    "evidence": [
+      "audit/machine/report.json",
+      "audit/machine/ffdec-tags.txt.gz",
+      "audit/machine/ffdec-scripts.txt.gz",
+      "audit/machine/swfmill-summary.json"
+    ]
+  },
+  "hostShellDependency": {
+    "requiredForAuthenticLanguageAndAudioBehavior": true,
+    "source": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+    "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd",
+    "findings": [
+      "doDisplayFormulaDef loads _global.formulasPath + SWF/<name>.swf into Mc_FormulaDEF.",
+      "The child and shell both read _root.dtfSpanishFormulas.text to control Spanish visibility.",
+      "English and Spanish MP3 files are loaded from EAD/ and SAD/ only after the corresponding shell audio control is activated; they are not child-SWF frame-synchronized cues."
+    ]
+  },
+  "structuralFrameEvidence": {
+    "status": "structural-baseline-only",
+    "report": "baseline/ffdec-root-frames.json",
+    "reportSha256": "4cda8eb8b30355012ecbc8d4371ea58d50b45721d7984a37b9000b43591a1063",
+    "archive": "artifacts/full-frame/pilot-baselines/formula-elementary-conversion-01-03/ffdec-root-frames",
+    "frameFiles": 170,
+    "totalPngBytes": 4898540,
+    "changedDestinationFrameRuns": ["8-135", "149-160", "163-170"],
+    "unchangedDestinationFrameRuns": ["2-7", "136-148", "161-162"],
+    "candidateStructuralBeats": [
+      "Four successive quart-pour cycles occupy the long frame 8-135 change window; exact cycle semantics still require runtime/FLA review.",
+      "The final formula is structurally present by frame 148 and changes through frame 160.",
+      "Replay changes from frame 163 through terminal frame 170."
+    ],
+    "limitations": [
+      "FFDec renders the static root display structure and does not execute ActionScript visibility or Replay.",
+      "The structural frames expose both language panels and therefore are not authoritative English or Spanish runtime baseline frames.",
+      "No RMSE against a strict implementation may be accepted from this evidence alone."
+    ]
+  },
+  "audioEvidence": [
+    {
+      "language": "en",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/EAD/Conversion_1_3.mp3",
+      "sha256": "8cb6c9995b7f27f805f4f581857ac80034502eead869f86c007f871d71618281",
+      "durationSecondsFfprobe": 2.736563,
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "bitRate": 128000
+    },
+    {
+      "language": "es",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SAD/Conversion_1_3.mp3",
+      "sha256": "8658e12deb64b1eb58f4503e48766432de336032f05e6d5ce5cb00f1d6f87887",
+      "durationSecondsFfprobe": 3.674813,
+      "sampleRateHz": 44100,
+      "channels": 1,
+      "bitRate": 128000
+    }
+  ],
+  "implementationCoverage": {
+    "strictCanonicalModulePresent": false,
+    "prototypeEvidence": [],
+    "assessment": "No Conversion_1_3 Next.js/React renderer or pure timeline implementation was found."
+  },
+  "representativeStandaloneRuffleLanguageProbe": {
+    "testedAnimationId": "formula-elementary-conversion-01-02",
+    "parametersTried": ["dtfSpanishFormulas=OFF", "dtfSpanishFormulas=ON"],
+    "result": "Terminal PNGs were byte-identical, so standalone parameter injection did not create the required host-root dynamic text field.",
+    "pngSha256": "5d0adb151f919cdef5d95035e336e38633548143faef41285f0774012727fa6e",
+    "evidence": [
+      "output/playwright/pilot-runtime/formula-01-02-final-en.png",
+      "output/playwright/pilot-runtime/formula-01-02-final-es.png"
+    ],
+    "implication": "All four formula SWFs require original-shell or Adobe Animate/Test Movie captures for authoritative Spanish behavior."
+  },
+  "hardBlockers": [
+    "The binary FLA timeline, library, fonts and scripts have not been inspected in an authorized Adobe Animate workstation.",
+    "No authoritative native-stage English and Spanish host-context baseline exists for every frame and Replay state.",
+    "No strict canonical Next.js implementation exists for this animation.",
+    "No implementation full-frame capture or RMSE comparison exists.",
+    "The current strict audio CSV requires a timeline start_frame, but source audio is user-triggered by the host shell; the contract must represent an interaction trigger instead of inventing a frame.",
+    "Audio hashes and stream metadata are verified, but human language/content, button behavior and playback QA are not signed.",
+    "Human visual review and owner acceptance are absent."
+  ],
+  "nextExecutableGates": [
+    "Inspect the paired FLA in licensed Adobe Animate and record authoring timeline/library/font evidence.",
+    "Run the formula through the preserved indexELM host (or an equivalent verified Animate harness) in English and Spanish, capture all 170 frames at 780x379, and capture Replay plus both audio-control states.",
+    "Extend the strict audio evidence contract with a user-interaction trigger and shell control identity; keep start_frame blank unless authoritative runtime evidence proves one.",
+    "Implement the canonical renderer and deterministic scenarios, then compare every implementation frame against the matching authoritative language baseline.",
+    "Complete audio, accessibility, mobile, human and owner review without converting blank approvals into machine claims."
+  ],
+  "verification": {
+    "draftValidator": "pass",
+    "strictValidator": "fail-as-required",
+    "strictValidatorErrorCount": 41,
+    "sourceArchiveVerification": {"fileCount": 7919, "totalBytes": 2779928841, "result": "pass"},
+    "repositoryTests": {"passed": 48, "failed": 0}
+  },
+  "humanReview": null,
+  "ownerAcceptance": null,
+  "acceptedExceptions": []
+}

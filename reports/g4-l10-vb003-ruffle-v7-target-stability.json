@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l10-vb003-ruffle-v7-target-stability-analysis",
+  "evidenceAsOf": "2026-08-02",
+  "status": "target-content-exactly-stable-over-two-seconds-host-chrome-dynamic-ruffle-forensic-only",
+  "input": {
+    "diagnostic": {
+      "path": "output/playwright/g4-l10-vb003-original-host-ruffle-successor-v7/diagnostic.json",
+      "bytes": 1071007,
+      "sha256": "eb2e458f3654a4420f35727bafd8c6eae314b619bdcb19737b1c8749b9145f06",
+      "mode": "0444"
+    },
+    "first": {
+      "path": "output/playwright/g4-l10-vb003-original-host-ruffle-successor-v7/07-vb-l10vb03-source-window-elapsed.png",
+      "bytes": 69508,
+      "sha256": "948104570634523b50f496acbcd3aa09b9110952fb8884a220f2c74eaef829fe",
+      "mode": "0444",
+      "atMs": 482982
+    },
+    "second": {
+      "path": "output/playwright/g4-l10-vb003-original-host-ruffle-successor-v7/07-vb-l10vb03-two-seconds-later.png",
+      "bytes": 69477,
+      "sha256": "0f9a1ac249710375c424e25bd117b5ff3b259deac552f811aafde47d4f5cf939",
+      "mode": "0444",
+      "atMs": 485064
+    },
+    "intervalMs": 2082,
+    "targetPath": "/runtime/HELP_COURSES/ELMGR4/L10/VB/L10VB03.swf",
+    "sevenStepDeliveryObserved": true,
+    "sourceDeclaredElapsedWindowCompleted": true
+  },
+  "metricDefinition": {
+    "exactPixelDifference": "A pixel differs when any decoded RGBA byte differs. Counts use all pixels in the declared rectangle.",
+    "normalizedRgbRmse": "sqrt(mean squared RGB byte error across all pixels and three RGB channels)) / 255",
+    "segmentation": "The full 800x600 Ruffle player is partitioned at y=500: target content y=0..499 and host chrome y=500..599. The target lesson body is y=109..499."
+  },
+  "regions": {
+    "fullPlayer": {
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 600
+      },
+      "pixelCount": 480000,
+      "exactRgbaDifferentPixels": 2520,
+      "exactRgbDifferentPixels": 2520,
+      "exactRgbDifferentPixelRatio": 0.00525,
+      "normalizedRgbRmse": 0.006785937286054983,
+      "exactPixelStable": false
+    },
+    "targetContentAboveHostChrome": {
+      "region": {
+        "x": 0,
+        "y": 0,
+        "width": 800,
+        "height": 500
+      },
+      "pixelCount": 400000,
+      "exactRgbaDifferentPixels": 0,
+      "exactRgbDifferentPixels": 0,
+      "exactRgbDifferentPixelRatio": 0,
+      "normalizedRgbRmse": 0,
+      "exactPixelStable": true
+    },
+    "targetLessonBody": {
+      "region": {
+        "x": 0,
+        "y": 109,
+        "width": 800,
+        "height": 391
+      },
+      "pixelCount": 312800,
+      "exactRgbaDifferentPixels": 0,
+      "exactRgbDifferentPixels": 0,
+      "exactRgbDifferentPixelRatio": 0,
+      "normalizedRgbRmse": 0,
+      "exactPixelStable": true
+    },
+    "hostChrome": {
+      "region": {
+        "x": 0,
+        "y": 500,
+        "width": 800,
+        "height": 100
+      },
+      "pixelCount": 80000,
+      "exactRgbaDifferentPixels": 2520,
+      "exactRgbDifferentPixels": 2520,
+      "exactRgbDifferentPixelRatio": 0.0315,
+      "normalizedRgbRmse": 0.016622083777361598,
+      "exactPixelStable": false
+    }
+  },
+  "interpretation": {
+    "fullPlayerByteOrPixelStable": false,
+    "targetContentExactPixelStable": true,
+    "targetLessonBodyExactPixelStable": true,
+    "allObservedPixelChangeConfinedToHostChrome": true,
+    "supportsTargetStaticStateCandidate": true,
+    "provesRuffleRuntimeTerminal": false,
+    "provesBeginHandshake": false,
+    "provesChildFrameDomainEntry": false,
+    "provesAdobeOriginalRuntime": false,
+    "comparesOriginalRuntimeToJavaScript": false,
+    "formalRmseAcceptanceEffect": "none",
+    "reason": "Two pixel-stable Ruffle target-content frames support only a static-state candidate. No playhead-bearing trace observes begin, child-domain entry, or terminal arrival, and no authoritative original-runtime or JavaScript counterpart is compared."
+  },
+  "authority": {
+    "ruffleForensicReferenceOnly": true,
+    "diagnosticSelfComparisonOnly": true,
+    "authoritativeOriginalRuntime": false,
+    "originalRuntimeNaturalTrace": false,
+    "originalRuntimeBaseline": false,
+    "fullFrameBaseline": false,
+    "formalRmseComparison": false,
+    "visualFidelity": false,
+    "audioListeningOrSynchronization": false,
+    "humanReview": false,
+    "ownerReview": false,
+    "strictCompletion": false,
+    "wholeLessonIntegration": false,
+    "releaseOrPublication": false,
+    "strictAcceptanceEffect": "none"
+  }
+}

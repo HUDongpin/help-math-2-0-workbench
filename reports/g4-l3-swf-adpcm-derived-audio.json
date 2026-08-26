@@ -1,0 +1,1133 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l3-swf-adpcm-derived-audio-technical-binding",
+  "generator": {
+    "path": "scripts/build-g4-l3-swf-adpcm-derived-audio.mjs",
+    "version": 1,
+    "sha256": "c991dc9d869a6afb4aae15d5a133bb396e9c8847d9225a1cd0ea7c3c518c6b3c",
+    "decoder": {
+      "path": "scripts/lib/swf-adpcm.mjs",
+      "sha256": "bb1f449bb14b726d65b9421e409baf2932b0cebe67d43511ccdf5137e88a01ab"
+    }
+  },
+  "acceptance": {
+    "acceptanceNeutral": true,
+    "languageEstablished": false,
+    "cueMappingEstablished": false,
+    "runtimeSynchronizationEstablished": false,
+    "audibleContentEstablished": false,
+    "audibleQualityEstablished": false,
+    "listeningAcceptanceEstablished": false,
+    "authoritativeRuntimeEstablished": false,
+    "independentDecoderPcmEqualityEstablished": false,
+    "behavioralParityEstablished": false,
+    "visualParityEstablished": false,
+    "humanReviewEstablished": false,
+    "ownerAcceptanceEstablished": false,
+    "strictCompletionEstablished": false,
+    "sourceAssetsChanged": 0,
+    "sourceCasObjectsChanged": 0,
+    "migrationsChanged": 0,
+    "productRenderersChanged": 0,
+    "approvalOrStatusChanges": 0,
+    "completionLedgerChanges": 0,
+    "statement": "This report establishes only deterministic byte-level decoding of one raw SWF ADPCM CAS payload into a separately stored PCM WAV and technical ffprobe/ffmpeg readability. It does not establish spoken language, cue mapping, timeline synchronization, audible content or quality, listening acceptance, authoritative/original-runtime behavior, equality with an independent FFDec/original decoder PCM export, behavioral or visual parity, human review, owner acceptance, or strict migration completion."
+  },
+  "specification": {
+    "title": "SWF File Format Specification Version 19",
+    "publisher": "Adobe Systems Incorporated",
+    "version": 19,
+    "url": "https://open-flash.github.io/mirrors/swf-spec-19.pdf",
+    "evidencePages": [
+      {
+        "pages": "13",
+        "use": "SWF byte order, bit order, and signed integer representation"
+      },
+      {
+        "pages": "177-178",
+        "use": "audio format 1 and exact 5.5 kHz rate of 5512 Hz"
+      },
+      {
+        "pages": "186-188",
+        "use": "ADPCM code sizes, index tables, and mono/stereo packet fields"
+      }
+    ],
+    "implementationConstraint": "The decoder constants and packet algorithm are implemented from the Adobe SWF v19 ADPCM contract; no third-party decoder output is used as an implementation input. ffprobe and ffmpeg inspect only the already-derived RIFF/WAVE result."
+  },
+  "sourceBindings": {
+    "embeddedAudioArchiveReport": {
+      "path": "reports/g4-l3-embedded-audio-archive.json",
+      "bytes": 14844830,
+      "sha256": "7a1fe8406c7b005ccde20bb34aec09ac6c2dc52a17bb913b65550915f2bb40c4",
+      "archiveSetSha256": "5e5f16014945570eee0f4e0b5b9f38a0ccbcb1f1af84ba51fd5c6ed994f8c922"
+    },
+    "priorRawCasMediaProbeReport": {
+      "path": "reports/g4-l3-audio-cas-media-probe.json",
+      "bytes": 1159441,
+      "sha256": "ffe105817bc7aadd0a7edbccf0bd8bc847b165154412fa2611de601ce4f8d938",
+      "objectProbeFingerprintSha256": "2f8d75e257da0b1a9bc2f2f5a3874179764dea4619a0487fbff4b25a9645f345",
+      "retainedStatus": "ffprobe-parse-failed",
+      "interpretation": "The prior generic probe retained this containerless .bin as unparsed. This additive report does not rewrite that result; it parses the SWF ADPCM bitstream and probes only the separately derived RIFF/WAVE artifact."
+    },
+    "sourceCasObject": {
+      "path": "artifacts/g4-l3-embedded-audio/sha256/e5/e5c99e029d9df7717bc7755b5f4660841ad3f453d10bb8dbc8010d69b5a653b6.bin",
+      "bytes": 3770,
+      "sha256": "e5c99e029d9df7717bc7755b5f4660841ad3f453d10bb8dbc8010d69b5a653b6",
+      "mode": "0444",
+      "sourceFormatCode": 1,
+      "sourceAudioUnitReferenceCount": 4,
+      "logicalPayloadIdentityCount": 1,
+      "physicalHashVerifiedBeforeAndAfterDeriveAndProbe": true
+    },
+    "references": [
+      {
+        "unitReferenceId": "course-g04-l03-in-004/sound-stream-4/source-order-4",
+        "sequence": 15,
+        "batchId": "batch-001",
+        "animationId": "course-g04-l03-in-004",
+        "sourceSwf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN04.swf",
+          "bytes": 166617,
+          "sha256": "2ac5cd71bbc57bd9761668a7c383f821fa52b91f1e68a7b4f14151410857dfad",
+          "physicalHashVerified": true
+        },
+        "streamIndex": 4,
+        "sourceOrder": 4,
+        "ownerDomainId": "sprite-84",
+        "logicalPayloadIdentitySha256": "e803a18be02146af868d14de4b02fa41cd6587e990d06ed9060e373eaa049a55",
+        "stream": {
+          "head": {
+            "formatCode": 1,
+            "format": "adpcm",
+            "rateCode": 0,
+            "sampleRateHz": 5512,
+            "sampleSizeBits": 16,
+            "channels": 1,
+            "nominalSamplesPerBlock": 459
+          },
+          "blockCount": 13,
+          "blocks": [
+            {
+              "blockIndex": 1,
+              "localFrame": 1,
+              "byteOffsetInStreamArchive": 0,
+              "byteLength": 290,
+              "sha256": "91138d92ed669e10208f684f3788e52211d3b98cd6f867893b413bbd17d789e5"
+            },
+            {
+              "blockIndex": 2,
+              "localFrame": 2,
+              "byteOffsetInStreamArchive": 290,
+              "byteLength": 290,
+              "sha256": "4700af2f86ba09f7a071e09af4a89d156925174b24d55b8a4853e7009e593ab3"
+            },
+            {
+              "blockIndex": 3,
+              "localFrame": 3,
+              "byteOffsetInStreamArchive": 580,
+              "byteLength": 290,
+              "sha256": "153e5496858a6fa838d132111d3612cea05085fee6e88ce94049ac20c2efff70"
+            },
+            {
+              "blockIndex": 4,
+              "localFrame": 4,
+              "byteOffsetInStreamArchive": 870,
+              "byteLength": 290,
+              "sha256": "2498d2c867f5044c21267ee9d79649d496d07bf9a27f56e4b34d0c20ad12ccf6"
+            },
+            {
+              "blockIndex": 5,
+              "localFrame": 5,
+              "byteOffsetInStreamArchive": 1160,
+              "byteLength": 290,
+              "sha256": "4fc4476f7b40eb035589040b197346f29f6e1ab66a481dea784fcbf5a44a9d19"
+            },
+            {
+              "blockIndex": 6,
+              "localFrame": 6,
+              "byteOffsetInStreamArchive": 1450,
+              "byteLength": 290,
+              "sha256": "4da09c1ff4ed4fafaed6d718d7f3cdbe25072a802e01044f56863b0cd0bf62a6"
+            },
+            {
+              "blockIndex": 7,
+              "localFrame": 7,
+              "byteOffsetInStreamArchive": 1740,
+              "byteLength": 290,
+              "sha256": "a4b1a85343058d2d4532b6bb86aee75eb12d08d47a639d60b0159dd008e5ccdf"
+            },
+            {
+              "blockIndex": 8,
+              "localFrame": 8,
+              "byteOffsetInStreamArchive": 2030,
+              "byteLength": 290,
+              "sha256": "4b2c857a896173cd2bacaa0bda83f5d694b2acafa298d95487565980d7900c53"
+            },
+            {
+              "blockIndex": 9,
+              "localFrame": 9,
+              "byteOffsetInStreamArchive": 2320,
+              "byteLength": 290,
+              "sha256": "25826caf622342d09760f90b5ccb7fe8a95b857c112f450189eeb2294bf69b55"
+            },
+            {
+              "blockIndex": 10,
+              "localFrame": 10,
+              "byteOffsetInStreamArchive": 2610,
+              "byteLength": 290,
+              "sha256": "14e6334548c781caa4984604bf6e0fc7d250e972e6a04de25f2f11821d1c8f22"
+            },
+            {
+              "blockIndex": 11,
+              "localFrame": 11,
+              "byteOffsetInStreamArchive": 2900,
+              "byteLength": 290,
+              "sha256": "417c4918ec2d9ffc49f5b72473308333157ae58071d491eeefeb825223c916a2"
+            },
+            {
+              "blockIndex": 12,
+              "localFrame": 12,
+              "byteOffsetInStreamArchive": 3190,
+              "byteLength": 290,
+              "sha256": "4be693cff01d496672f7695f3f531bdc883accdeb2e03c3dfb6dc54bb0281a75"
+            },
+            {
+              "blockIndex": 13,
+              "localFrame": 13,
+              "byteOffsetInStreamArchive": 3480,
+              "byteLength": 290,
+              "sha256": "8208b2f60b21a60cee42f93d16ea2ab64f450b6f8a055aae4d430376cc3baf49"
+            }
+          ],
+          "payload": {
+            "path": "artifacts/g4-l3-embedded-audio/sha256/e5/e5c99e029d9df7717bc7755b5f4660841ad3f453d10bb8dbc8010d69b5a653b6.bin",
+            "sha256": "e5c99e029d9df7717bc7755b5f4660841ad3f453d10bb8dbc8010d69b5a653b6",
+            "byteLength": 3770
+          }
+        },
+        "referenceFingerprintSha256": "b86051ec7f44ed25b346d83f13e53e322ea1323dd5ca8066a2166d29a20f0339"
+      },
+      {
+        "unitReferenceId": "course-g04-l03-ti-002/sound-stream-3/source-order-3",
+        "sequence": 24,
+        "batchId": "batch-001",
+        "animationId": "course-g04-l03-ti-002",
+        "sourceSwf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TI/L3TI02.swf",
+          "bytes": 193445,
+          "sha256": "e640f8dcbfb6dd6945d97be67890e0015902702239e2bad4bd4283685fb0f807",
+          "physicalHashVerified": true
+        },
+        "streamIndex": 3,
+        "sourceOrder": 3,
+        "ownerDomainId": "sprite-217",
+        "logicalPayloadIdentitySha256": "e803a18be02146af868d14de4b02fa41cd6587e990d06ed9060e373eaa049a55",
+        "stream": {
+          "head": {
+            "formatCode": 1,
+            "format": "adpcm",
+            "rateCode": 0,
+            "sampleRateHz": 5512,
+            "sampleSizeBits": 16,
+            "channels": 1,
+            "nominalSamplesPerBlock": 459
+          },
+          "blockCount": 13,
+          "blocks": [
+            {
+              "blockIndex": 1,
+              "localFrame": 1,
+              "byteOffsetInStreamArchive": 0,
+              "byteLength": 290,
+              "sha256": "91138d92ed669e10208f684f3788e52211d3b98cd6f867893b413bbd17d789e5"
+            },
+            {
+              "blockIndex": 2,
+              "localFrame": 2,
+              "byteOffsetInStreamArchive": 290,
+              "byteLength": 290,
+              "sha256": "4700af2f86ba09f7a071e09af4a89d156925174b24d55b8a4853e7009e593ab3"
+            },
+            {
+              "blockIndex": 3,
+              "localFrame": 3,
+              "byteOffsetInStreamArchive": 580,
+              "byteLength": 290,
+              "sha256": "153e5496858a6fa838d132111d3612cea05085fee6e88ce94049ac20c2efff70"
+            },
+            {
+              "blockIndex": 4,
+              "localFrame": 4,
+              "byteOffsetInStreamArchive": 870,
+              "byteLength": 290,
+              "sha256": "2498d2c867f5044c21267ee9d79649d496d07bf9a27f56e4b34d0c20ad12ccf6"
+            },
+            {
+              "blockIndex": 5,
+              "localFrame": 5,
+              "byteOffsetInStreamArchive": 1160,
+              "byteLength": 290,
+              "sha256": "4fc4476f7b40eb035589040b197346f29f6e1ab66a481dea784fcbf5a44a9d19"
+            },
+            {
+              "blockIndex": 6,
+              "localFrame": 6,
+              "byteOffsetInStreamArchive": 1450,
+              "byteLength": 290,
+              "sha256": "4da09c1ff4ed4fafaed6d718d7f3cdbe25072a802e01044f56863b0cd0bf62a6"
+            },
+            {
+              "blockIndex": 7,
+              "localFrame": 7,
+              "byteOffsetInStreamArchive": 1740,
+              "byteLength": 290,
+              "sha256": "a4b1a85343058d2d4532b6bb86aee75eb12d08d47a639d60b0159dd008e5ccdf"
+            },
+            {
+              "blockIndex": 8,
+              "localFrame": 8,
+              "byteOffsetInStreamArchive": 2030,
+              "byteLength": 290,
+              "sha256": "4b2c857a896173cd2bacaa0bda83f5d694b2acafa298d95487565980d7900c53"
+            },
+            {
+              "blockIndex": 9,
+              "localFrame": 9,
+              "byteOffsetInStreamArchive": 2320,
+              "byteLength": 290,
+              "sha256": "25826caf622342d09760f90b5ccb7fe8a95b857c112f450189eeb2294bf69b55"
+            },
+            {
+              "blockIndex": 10,
+              "localFrame": 10,
+              "byteOffsetInStreamArchive": 2610,
+              "byteLength": 290,
+              "sha256": "14e6334548c781caa4984604bf6e0fc7d250e972e6a04de25f2f11821d1c8f22"
+            },
+            {
+              "blockIndex": 11,
+              "localFrame": 11,
+              "byteOffsetInStreamArchive": 2900,
+              "byteLength": 290,
+              "sha256": "417c4918ec2d9ffc49f5b72473308333157ae58071d491eeefeb825223c916a2"
+            },
+            {
+              "blockIndex": 12,
+              "localFrame": 12,
+              "byteOffsetInStreamArchive": 3190,
+              "byteLength": 290,
+              "sha256": "4be693cff01d496672f7695f3f531bdc883accdeb2e03c3dfb6dc54bb0281a75"
+            },
+            {
+              "blockIndex": 13,
+              "localFrame": 13,
+              "byteOffsetInStreamArchive": 3480,
+              "byteLength": 290,
+              "sha256": "8208b2f60b21a60cee42f93d16ea2ab64f450b6f8a055aae4d430376cc3baf49"
+            }
+          ],
+          "payload": {
+            "path": "artifacts/g4-l3-embedded-audio/sha256/e5/e5c99e029d9df7717bc7755b5f4660841ad3f453d10bb8dbc8010d69b5a653b6.bin",
+            "sha256": "e5c99e029d9df7717bc7755b5f4660841ad3f453d10bb8dbc8010d69b5a653b6",
+            "byteLength": 3770
+          }
+        },
+        "referenceFingerprintSha256": "28cf6dfe590568a9b81589c8b4a159eec3a3c64b6ad3b8bdb88c16d5e79b174b"
+      },
+      {
+        "unitReferenceId": "course-g04-l03-ts-008/sound-stream-10/source-order-10",
+        "sequence": 36,
+        "batchId": "batch-002",
+        "animationId": "course-g04-l03-ts-008",
+        "sourceSwf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS08.swf",
+          "bytes": 693079,
+          "sha256": "9c7288f67f764e02f4320655b64dbb57d3d690a75951b549ee5113f385e6b885",
+          "physicalHashVerified": true
+        },
+        "streamIndex": 10,
+        "sourceOrder": 10,
+        "ownerDomainId": "sprite-312",
+        "logicalPayloadIdentitySha256": "e803a18be02146af868d14de4b02fa41cd6587e990d06ed9060e373eaa049a55",
+        "stream": {
+          "head": {
+            "formatCode": 1,
+            "format": "adpcm",
+            "rateCode": 0,
+            "sampleRateHz": 5512,
+            "sampleSizeBits": 16,
+            "channels": 1,
+            "nominalSamplesPerBlock": 459
+          },
+          "blockCount": 13,
+          "blocks": [
+            {
+              "blockIndex": 1,
+              "localFrame": 1,
+              "byteOffsetInStreamArchive": 0,
+              "byteLength": 290,
+              "sha256": "91138d92ed669e10208f684f3788e52211d3b98cd6f867893b413bbd17d789e5"
+            },
+            {
+              "blockIndex": 2,
+              "localFrame": 2,
+              "byteOffsetInStreamArchive": 290,
+              "byteLength": 290,
+              "sha256": "4700af2f86ba09f7a071e09af4a89d156925174b24d55b8a4853e7009e593ab3"
+            },
+            {
+              "blockIndex": 3,
+              "localFrame": 3,
+              "byteOffsetInStreamArchive": 580,
+              "byteLength": 290,
+              "sha256": "153e5496858a6fa838d132111d3612cea05085fee6e88ce94049ac20c2efff70"
+            },
+            {
+              "blockIndex": 4,
+              "localFrame": 4,
+              "byteOffsetInStreamArchive": 870,
+              "byteLength": 290,
+              "sha256": "2498d2c867f5044c21267ee9d79649d496d07bf9a27f56e4b34d0c20ad12ccf6"
+            },
+            {
+              "blockIndex": 5,
+              "localFrame": 5,
+              "byteOffsetInStreamArchive": 1160,
+              "byteLength": 290,
+              "sha256": "4fc4476f7b40eb035589040b197346f29f6e1ab66a481dea784fcbf5a44a9d19"
+            },
+            {
+              "blockIndex": 6,
+              "localFrame": 6,
+              "byteOffsetInStreamArchive": 1450,
+              "byteLength": 290,
+              "sha256": "4da09c1ff4ed4fafaed6d718d7f3cdbe25072a802e01044f56863b0cd0bf62a6"
+            },
+            {
+              "blockIndex": 7,
+              "localFrame": 7,
+              "byteOffsetInStreamArchive": 1740,
+              "byteLength": 290,
+              "sha256": "a4b1a85343058d2d4532b6bb86aee75eb12d08d47a639d60b0159dd008e5ccdf"
+            },
+            {
+              "blockIndex": 8,
+              "localFrame": 8,
+              "byteOffsetInStreamArchive": 2030,
+              "byteLength": 290,
+              "sha256": "4b2c857a896173cd2bacaa0bda83f5d694b2acafa298d95487565980d7900c53"
+            },
+            {
+              "blockIndex": 9,
+              "localFrame": 9,
+              "byteOffsetInStreamArchive": 2320,
+              "byteLength": 290,
+              "sha256": "25826caf622342d09760f90b5ccb7fe8a95b857c112f450189eeb2294bf69b55"
+            },
+            {
+              "blockIndex": 10,
+              "localFrame": 10,
+              "byteOffsetInStreamArchive": 2610,
+              "byteLength": 290,
+              "sha256": "14e6334548c781caa4984604bf6e0fc7d250e972e6a04de25f2f11821d1c8f22"
+            },
+            {
+              "blockIndex": 11,
+              "localFrame": 11,
+              "byteOffsetInStreamArchive": 2900,
+              "byteLength": 290,
+              "sha256": "417c4918ec2d9ffc49f5b72473308333157ae58071d491eeefeb825223c916a2"
+            },
+            {
+              "blockIndex": 12,
+              "localFrame": 12,
+              "byteOffsetInStreamArchive": 3190,
+              "byteLength": 290,
+              "sha256": "4be693cff01d496672f7695f3f531bdc883accdeb2e03c3dfb6dc54bb0281a75"
+            },
+            {
+              "blockIndex": 13,
+              "localFrame": 13,
+              "byteOffsetInStreamArchive": 3480,
+              "byteLength": 290,
+              "sha256": "8208b2f60b21a60cee42f93d16ea2ab64f450b6f8a055aae4d430376cc3baf49"
+            }
+          ],
+          "payload": {
+            "path": "artifacts/g4-l3-embedded-audio/sha256/e5/e5c99e029d9df7717bc7755b5f4660841ad3f453d10bb8dbc8010d69b5a653b6.bin",
+            "sha256": "e5c99e029d9df7717bc7755b5f4660841ad3f453d10bb8dbc8010d69b5a653b6",
+            "byteLength": 3770
+          }
+        },
+        "referenceFingerprintSha256": "e966c97df864dc00043435912c6f65ab4190f712f4b159978af6ba57f737a066"
+      },
+      {
+        "unitReferenceId": "course-g04-l03-vb-008/sound-stream-10/source-order-10",
+        "sequence": 11,
+        "batchId": "batch-001",
+        "animationId": "course-g04-l03-vb-008",
+        "sourceSwf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB08.swf",
+          "bytes": 751915,
+          "sha256": "3c61fd04bbaf6b316438691fd59222623bbb1d11a36c731ae7ed9fb862245bcf",
+          "physicalHashVerified": true
+        },
+        "streamIndex": 10,
+        "sourceOrder": 10,
+        "ownerDomainId": "sprite-191",
+        "logicalPayloadIdentitySha256": "e803a18be02146af868d14de4b02fa41cd6587e990d06ed9060e373eaa049a55",
+        "stream": {
+          "head": {
+            "formatCode": 1,
+            "format": "adpcm",
+            "rateCode": 0,
+            "sampleRateHz": 5512,
+            "sampleSizeBits": 16,
+            "channels": 1,
+            "nominalSamplesPerBlock": 459
+          },
+          "blockCount": 13,
+          "blocks": [
+            {
+              "blockIndex": 1,
+              "localFrame": 1,
+              "byteOffsetInStreamArchive": 0,
+              "byteLength": 290,
+              "sha256": "91138d92ed669e10208f684f3788e52211d3b98cd6f867893b413bbd17d789e5"
+            },
+            {
+              "blockIndex": 2,
+              "localFrame": 2,
+              "byteOffsetInStreamArchive": 290,
+              "byteLength": 290,
+              "sha256": "4700af2f86ba09f7a071e09af4a89d156925174b24d55b8a4853e7009e593ab3"
+            },
+            {
+              "blockIndex": 3,
+              "localFrame": 3,
+              "byteOffsetInStreamArchive": 580,
+              "byteLength": 290,
+              "sha256": "153e5496858a6fa838d132111d3612cea05085fee6e88ce94049ac20c2efff70"
+            },
+            {
+              "blockIndex": 4,
+              "localFrame": 4,
+              "byteOffsetInStreamArchive": 870,
+              "byteLength": 290,
+              "sha256": "2498d2c867f5044c21267ee9d79649d496d07bf9a27f56e4b34d0c20ad12ccf6"
+            },
+            {
+              "blockIndex": 5,
+              "localFrame": 5,
+              "byteOffsetInStreamArchive": 1160,
+              "byteLength": 290,
+              "sha256": "4fc4476f7b40eb035589040b197346f29f6e1ab66a481dea784fcbf5a44a9d19"
+            },
+            {
+              "blockIndex": 6,
+              "localFrame": 6,
+              "byteOffsetInStreamArchive": 1450,
+              "byteLength": 290,
+              "sha256": "4da09c1ff4ed4fafaed6d718d7f3cdbe25072a802e01044f56863b0cd0bf62a6"
+            },
+            {
+              "blockIndex": 7,
+              "localFrame": 7,
+              "byteOffsetInStreamArchive": 1740,
+              "byteLength": 290,
+              "sha256": "a4b1a85343058d2d4532b6bb86aee75eb12d08d47a639d60b0159dd008e5ccdf"
+            },
+            {
+              "blockIndex": 8,
+              "localFrame": 8,
+              "byteOffsetInStreamArchive": 2030,
+              "byteLength": 290,
+              "sha256": "4b2c857a896173cd2bacaa0bda83f5d694b2acafa298d95487565980d7900c53"
+            },
+            {
+              "blockIndex": 9,
+              "localFrame": 9,
+              "byteOffsetInStreamArchive": 2320,
+              "byteLength": 290,
+              "sha256": "25826caf622342d09760f90b5ccb7fe8a95b857c112f450189eeb2294bf69b55"
+            },
+            {
+              "blockIndex": 10,
+              "localFrame": 10,
+              "byteOffsetInStreamArchive": 2610,
+              "byteLength": 290,
+              "sha256": "14e6334548c781caa4984604bf6e0fc7d250e972e6a04de25f2f11821d1c8f22"
+            },
+            {
+              "blockIndex": 11,
+              "localFrame": 11,
+              "byteOffsetInStreamArchive": 2900,
+              "byteLength": 290,
+              "sha256": "417c4918ec2d9ffc49f5b72473308333157ae58071d491eeefeb825223c916a2"
+            },
+            {
+              "blockIndex": 12,
+              "localFrame": 12,
+              "byteOffsetInStreamArchive": 3190,
+              "byteLength": 290,
+              "sha256": "4be693cff01d496672f7695f3f531bdc883accdeb2e03c3dfb6dc54bb0281a75"
+            },
+            {
+              "blockIndex": 13,
+              "localFrame": 13,
+              "byteOffsetInStreamArchive": 3480,
+              "byteLength": 290,
+              "sha256": "8208b2f60b21a60cee42f93d16ea2ab64f450b6f8a055aae4d430376cc3baf49"
+            }
+          ],
+          "payload": {
+            "path": "artifacts/g4-l3-embedded-audio/sha256/e5/e5c99e029d9df7717bc7755b5f4660841ad3f453d10bb8dbc8010d69b5a653b6.bin",
+            "sha256": "e5c99e029d9df7717bc7755b5f4660841ad3f453d10bb8dbc8010d69b5a653b6",
+            "byteLength": 3770
+          }
+        },
+        "referenceFingerprintSha256": "ce35f9211c135ce3af2fce06ab4c6933269602455f874b361ddf03e0b2fede97"
+      }
+    ],
+    "referenceSetSha256": "3595a9e2ec90024f363f9e06a7949abbf2e0d9e731acd945ee43148f457782e5",
+    "tools": {
+      "ffprobe": {
+        "command": "ffprobe",
+        "resolvedCommandPath": "/opt/homebrew/bin/ffprobe",
+        "executableRealPath": "/opt/homebrew/Cellar/ffmpeg/8.1.2_1/bin/ffprobe",
+        "executableBytes": 236912,
+        "executableSha256": "cfeefcc9207eb3fa424679228fe3848db2921b15537d26c1ccc4a7a61de95d00",
+        "versionFirstLine": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers",
+        "versionTextSha256": "02fc12664a1197a1371c24546b454aa6de28fecd0a7d52308f99184b371a5011",
+        "versionText": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers\nbuilt with Apple clang version 21.0.0 (clang-2100.0.123.102)\nconfiguration: --prefix=/opt/homebrew/Cellar/ffmpeg/8.1.2_1 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvmaf --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\nlibavutil      60. 26.102 / 60. 26.102\nlibavcodec     62. 28.102 / 62. 28.102\nlibavformat    62. 12.102 / 62. 12.102\nlibavdevice    62.  3.102 / 62.  3.102\nlibavfilter    11. 14.102 / 11. 14.102\nlibswscale      9.  5.102 /  9.  5.102\nlibswresample   6.  3.102 /  6.  3.102\n"
+      },
+      "ffmpeg": {
+        "command": "ffmpeg",
+        "resolvedCommandPath": "/opt/homebrew/bin/ffmpeg",
+        "executableRealPath": "/opt/homebrew/Cellar/ffmpeg/8.1.2_1/bin/ffmpeg",
+        "executableBytes": 426224,
+        "executableSha256": "dad4b30b36a1a999bfa4b6ffbde138bd17ee496c69e12eef638227dff2c6415c",
+        "versionFirstLine": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers",
+        "versionTextSha256": "8830e8e1fff6bf09c9a577b8ad96375df7fdb9e38b188c945f8572147e6a6550",
+        "versionText": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers\nbuilt with Apple clang version 21.0.0 (clang-2100.0.123.102)\nconfiguration: --prefix=/opt/homebrew/Cellar/ffmpeg/8.1.2_1 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvmaf --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\nlibavutil      60. 26.102 / 60. 26.102\nlibavcodec     62. 28.102 / 62. 28.102\nlibavformat    62. 12.102 / 62. 12.102\nlibavdevice    62.  3.102 / 62.  3.102\nlibavfilter    11. 14.102 / 11. 14.102\nlibswscale      9.  5.102 /  9.  5.102\nlibswresample   6.  3.102 /  6.  3.102\n\nExiting with exit code 0\n"
+      }
+    }
+  },
+  "decodeContract": {
+    "swfFormatCode": 1,
+    "swfFormat": "adpcm",
+    "inputKind": "source-order concatenation of independently framed SoundStreamBlock ADPCMSOUNDDATA records",
+    "blockResetRule": "Each of the 13 archived SoundStreamBlock payloads is decoded as an independent ADPCMSOUNDDATA record, including its own AdpcmCodeSize and initial sample/index.",
+    "bitOrder": "most-significant bit first",
+    "adpcmCodeSizeFieldValue": 3,
+    "adpcmCodeSizeBits": 5,
+    "channels": 1,
+    "sampleRateHz": 5512,
+    "outputSampleSizeBits": 16,
+    "blockCount": 13,
+    "sourceBytesPerBlock": 290,
+    "samplesPerChannelPerBlock": 459,
+    "maximumCodesPerFullPacketPerChannel": 4095,
+    "stepSizeTableEntryCount": 89,
+    "stepSizeTableSha256": "1e9bfc8f235603bff7f8172e449d36b9b23589be8417aec8960e5495120b97b3",
+    "indexTable": [
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      1,
+      2,
+      4,
+      6,
+      8,
+      10,
+      13,
+      16
+    ],
+    "indexTableSha256": "b171a4122f87e62d131024b5ed338a0b499c3fb20b03ae254056eb72015a5e32",
+    "predictorClamp": [
+      -32768,
+      32767
+    ],
+    "stepIndexClamp": [
+      0,
+      88
+    ],
+    "terminalPaddingRequiredZero": true
+  },
+  "derivedArtifact": {
+    "path": "artifacts/g4-l3-embedded-audio-derived/sha256/f3/f3e05365073feff502feda8779b3d3a5e3ba4ca6ee213e7a162e1ad5b3961eb8.wav",
+    "bytes": 11978,
+    "sha256": "f3e05365073feff502feda8779b3d3a5e3ba4ca6ee213e7a162e1ad5b3961eb8",
+    "mode": "0444",
+    "kind": "derived-pcm-wave-technical-evidence",
+    "sourceOverwritten": false,
+    "container": "RIFF/WAVE",
+    "codec": "PCM signed 16-bit little-endian",
+    "sampleRateHz": 5512,
+    "channels": 1,
+    "bitsPerSample": 16,
+    "sampleCountPerChannel": 5967,
+    "interleavedSampleCount": 5967,
+    "dataByteLength": 11934,
+    "rawPcmSha256": "2fdcd846d6b0f1b99b8d77111a4b5cb58cb1119f76c9b50147d3bf1804548a33",
+    "duration": {
+      "exactSampleCountNumerator": 5967,
+      "sampleRateDenominator": 5512,
+      "seconds": 1.0825471698113207,
+      "interpretation": "mathematical PCM duration only; not a runtime synchronization result"
+    },
+    "sampleStatistics": {
+      "minimum": -12757,
+      "maximum": 12148,
+      "zeroSampleCount": 1457
+    }
+  },
+  "technicalValidation": {
+    "derivedHashVerifiedBeforeAndAfterProbe": true,
+    "ffprobe": {
+      "arguments": [
+        "-v",
+        "error",
+        "-select_streams",
+        "a:0",
+        "-show_frames",
+        "-show_entries",
+        "stream=index,codec_name,codec_long_name,codec_type,sample_fmt,sample_rate,channels,channel_layout,bits_per_sample,bits_per_raw_sample,time_base,start_pts,start_time,duration_ts,duration,bit_rate,nb_frames:format=format_name,format_long_name,start_time,duration,size,bit_rate,probe_score:frame=nb_samples",
+        "-of",
+        "json",
+        "artifacts/g4-l3-embedded-audio-derived/sha256/f3/f3e05365073feff502feda8779b3d3a5e3ba4ca6ee213e7a162e1ad5b3961eb8.wav"
+      ],
+      "exitCode": 0,
+      "stdout": {
+        "byteLength": 1392,
+        "sha256": "2837f384f45246842fcdd00544a2278a37f88a342acd8534f3df3c5bd460d03f",
+        "text": "{\n    \"frames\": [\n        {\n            \"nb_samples\": 512\n        },\n        {\n            \"nb_samples\": 512\n        },\n        {\n            \"nb_samples\": 512\n        },\n        {\n            \"nb_samples\": 512\n        },\n        {\n            \"nb_samples\": 512\n        },\n        {\n            \"nb_samples\": 512\n        },\n        {\n            \"nb_samples\": 512\n        },\n        {\n            \"nb_samples\": 512\n        },\n        {\n            \"nb_samples\": 512\n        },\n        {\n            \"nb_samples\": 512\n        },\n        {\n            \"nb_samples\": 512\n        },\n        {\n            \"nb_samples\": 335\n        }\n    ],\n    \"programs\": [\n\n    ],\n    \"stream_groups\": [\n\n    ],\n    \"streams\": [\n        {\n            \"index\": 0,\n            \"codec_name\": \"pcm_s16le\",\n            \"codec_long_name\": \"PCM signed 16-bit little-endian\",\n            \"codec_type\": \"audio\",\n            \"sample_fmt\": \"s16\",\n            \"sample_rate\": \"5512\",\n            \"channels\": 1,\n            \"bits_per_sample\": 16,\n            \"time_base\": \"1/5512\",\n            \"duration_ts\": 5967,\n            \"duration\": \"1.082547\",\n            \"bit_rate\": \"88192\"\n        }\n    ],\n    \"format\": {\n        \"format_name\": \"wav\",\n        \"format_long_name\": \"WAV / WAVE (Waveform Audio)\",\n        \"duration\": \"1.082547\",\n        \"size\": \"11978\",\n        \"bit_rate\": \"88517\",\n        \"probe_score\": 99\n    }\n}\n"
+      },
+      "stderr": {
+        "byteLength": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "text": ""
+      },
+      "media": {
+        "audioStreamCount": 1,
+        "selectedStreamIndex": 0,
+        "codecName": "pcm_s16le",
+        "codecLongName": "PCM signed 16-bit little-endian",
+        "sampleFormat": "s16",
+        "bitsPerSample": 16,
+        "bitsPerRawSample": null,
+        "sampleRateHz": 5512,
+        "channels": 1,
+        "channelLayout": null,
+        "timeBase": "1/5512",
+        "durationTs": 5967,
+        "durationSeconds": 1.082547,
+        "containerFormatName": "wav",
+        "containerFormatLongName": "WAV / WAVE (Waveform Audio)",
+        "containerBytes": 11978,
+        "probeScore": 99,
+        "decodedAudioFrameCount": 12,
+        "decodedSampleCount": 5967,
+        "decodedSampleCountBasis": "sum-of-ffprobe-frame-nb_samples"
+      }
+    },
+    "ffmpegDecodeToNull": {
+      "arguments": [
+        "-v",
+        "error",
+        "-xerror",
+        "-nostdin",
+        "-i",
+        "artifacts/g4-l3-embedded-audio-derived/sha256/f3/f3e05365073feff502feda8779b3d3a5e3ba4ca6ee213e7a162e1ad5b3961eb8.wav",
+        "-map",
+        "0:a:0",
+        "-f",
+        "null",
+        "-"
+      ],
+      "exitCode": 0,
+      "stdout": {
+        "byteLength": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "text": ""
+      },
+      "stderr": {
+        "byteLength": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "text": ""
+      },
+      "passed": true
+    },
+    "ffprobeTool": {
+      "command": "ffprobe",
+      "resolvedCommandPath": "/opt/homebrew/bin/ffprobe",
+      "executableRealPath": "/opt/homebrew/Cellar/ffmpeg/8.1.2_1/bin/ffprobe",
+      "executableBytes": 236912,
+      "executableSha256": "cfeefcc9207eb3fa424679228fe3848db2921b15537d26c1ccc4a7a61de95d00",
+      "versionFirstLine": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers",
+      "versionTextSha256": "02fc12664a1197a1371c24546b454aa6de28fecd0a7d52308f99184b371a5011",
+      "versionText": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers\nbuilt with Apple clang version 21.0.0 (clang-2100.0.123.102)\nconfiguration: --prefix=/opt/homebrew/Cellar/ffmpeg/8.1.2_1 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvmaf --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\nlibavutil      60. 26.102 / 60. 26.102\nlibavcodec     62. 28.102 / 62. 28.102\nlibavformat    62. 12.102 / 62. 12.102\nlibavdevice    62.  3.102 / 62.  3.102\nlibavfilter    11. 14.102 / 11. 14.102\nlibswscale      9.  5.102 /  9.  5.102\nlibswresample   6.  3.102 /  6.  3.102\n"
+    },
+    "ffmpegTool": {
+      "command": "ffmpeg",
+      "resolvedCommandPath": "/opt/homebrew/bin/ffmpeg",
+      "executableRealPath": "/opt/homebrew/Cellar/ffmpeg/8.1.2_1/bin/ffmpeg",
+      "executableBytes": 426224,
+      "executableSha256": "dad4b30b36a1a999bfa4b6ffbde138bd17ee496c69e12eef638227dff2c6415c",
+      "versionFirstLine": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers",
+      "versionTextSha256": "8830e8e1fff6bf09c9a577b8ad96375df7fdb9e38b188c945f8572147e6a6550",
+      "versionText": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers\nbuilt with Apple clang version 21.0.0 (clang-2100.0.123.102)\nconfiguration: --prefix=/opt/homebrew/Cellar/ffmpeg/8.1.2_1 --enable-shared --enable-pthreads --enable-version3 --cc=clang --host-cflags= --host-ldflags= --enable-ffplay --enable-gpl --enable-libsvtav1 --enable-libopus --enable-libx264 --enable-libmp3lame --enable-libdav1d --enable-libvmaf --enable-libvpx --enable-libx265 --enable-openssl --enable-videotoolbox --enable-audiotoolbox --enable-neon\nlibavutil      60. 26.102 / 60. 26.102\nlibavcodec     62. 28.102 / 62. 28.102\nlibavformat    62. 12.102 / 62. 12.102\nlibavdevice    62.  3.102 / 62.  3.102\nlibavfilter    11. 14.102 / 11. 14.102\nlibswscale      9.  5.102 /  9.  5.102\nlibswresample   6.  3.102 /  6.  3.102\n\nExiting with exit code 0\n"
+    },
+    "sourceCasHashVerifiedBeforeAndAfter": true,
+    "derivedArtifactExactFileSetVerified": true,
+    "noPlaybackOrListeningPerformed": true,
+    "independentFfdecOrOriginalDecoderPcmEqualityEstablished": false
+  },
+  "blocks": [
+    {
+      "blockIndex": 1,
+      "source": {
+        "blockIndex": 1,
+        "localFrame": 1,
+        "byteOffsetInStreamArchive": 0,
+        "byteLength": 290,
+        "sha256": "91138d92ed669e10208f684f3788e52211d3b98cd6f867893b413bbd17d789e5"
+      },
+      "decode": {
+        "codeSizeBits": 5,
+        "channels": 1,
+        "sampleCountPerChannel": 459,
+        "packetCount": 1,
+        "sourceByteLength": 290,
+        "consumedDataBits": 2314,
+        "paddingBitCount": 6,
+        "paddingValue": 0,
+        "initialSample": 0,
+        "initialIndex": 0,
+        "finalSample": 0,
+        "finalIndex": 0
+      },
+      "blockFingerprintSha256": "02f220e3781ee53cb81d81faa0de4c3b2720de968f7fc0cecb2bc7d14f7645f5"
+    },
+    {
+      "blockIndex": 2,
+      "source": {
+        "blockIndex": 2,
+        "localFrame": 2,
+        "byteOffsetInStreamArchive": 290,
+        "byteLength": 290,
+        "sha256": "4700af2f86ba09f7a071e09af4a89d156925174b24d55b8a4853e7009e593ab3"
+      },
+      "decode": {
+        "codeSizeBits": 5,
+        "channels": 1,
+        "sampleCountPerChannel": 459,
+        "packetCount": 1,
+        "sourceByteLength": 290,
+        "consumedDataBits": 2314,
+        "paddingBitCount": 6,
+        "paddingValue": 0,
+        "initialSample": 0,
+        "initialIndex": 0,
+        "finalSample": 0,
+        "finalIndex": 0
+      },
+      "blockFingerprintSha256": "1a3f1d5d879685fa4d1f480230f317b5d8cf2abfc20f0b3f7c0178ca061ea5d3"
+    },
+    {
+      "blockIndex": 3,
+      "source": {
+        "blockIndex": 3,
+        "localFrame": 3,
+        "byteOffsetInStreamArchive": 580,
+        "byteLength": 290,
+        "sha256": "153e5496858a6fa838d132111d3612cea05085fee6e88ce94049ac20c2efff70"
+      },
+      "decode": {
+        "codeSizeBits": 5,
+        "channels": 1,
+        "sampleCountPerChannel": 459,
+        "packetCount": 1,
+        "sourceByteLength": 290,
+        "consumedDataBits": 2314,
+        "paddingBitCount": 6,
+        "paddingValue": 0,
+        "initialSample": 0,
+        "initialIndex": 0,
+        "finalSample": -10,
+        "finalIndex": 36
+      },
+      "blockFingerprintSha256": "23eefe29fb6c0248085da13f174b5c71ef2f8106e35980ff8cee4e6e606726f0"
+    },
+    {
+      "blockIndex": 4,
+      "source": {
+        "blockIndex": 4,
+        "localFrame": 4,
+        "byteOffsetInStreamArchive": 870,
+        "byteLength": 290,
+        "sha256": "2498d2c867f5044c21267ee9d79649d496d07bf9a27f56e4b34d0c20ad12ccf6"
+      },
+      "decode": {
+        "codeSizeBits": 5,
+        "channels": 1,
+        "sampleCountPerChannel": 459,
+        "packetCount": 1,
+        "sourceByteLength": 290,
+        "consumedDataBits": 2314,
+        "paddingBitCount": 6,
+        "paddingValue": 0,
+        "initialSample": 0,
+        "initialIndex": 0,
+        "finalSample": 227,
+        "finalIndex": 46
+      },
+      "blockFingerprintSha256": "c882c54d746cdd4e4f583e82a1f5b384cbc3e50f3db8f811efd0723c1684c844"
+    },
+    {
+      "blockIndex": 5,
+      "source": {
+        "blockIndex": 5,
+        "localFrame": 5,
+        "byteOffsetInStreamArchive": 1160,
+        "byteLength": 290,
+        "sha256": "4fc4476f7b40eb035589040b197346f29f6e1ab66a481dea784fcbf5a44a9d19"
+      },
+      "decode": {
+        "codeSizeBits": 5,
+        "channels": 1,
+        "sampleCountPerChannel": 459,
+        "packetCount": 1,
+        "sourceByteLength": 290,
+        "consumedDataBits": 2314,
+        "paddingBitCount": 6,
+        "paddingValue": 0,
+        "initialSample": 0,
+        "initialIndex": 0,
+        "finalSample": 505,
+        "finalIndex": 55
+      },
+      "blockFingerprintSha256": "7e1881b6e74f8a750a4a9805f143c2a5af7c6c2e1720d91e7fff34f1c87745fd"
+    },
+    {
+      "blockIndex": 6,
+      "source": {
+        "blockIndex": 6,
+        "localFrame": 6,
+        "byteOffsetInStreamArchive": 1450,
+        "byteLength": 290,
+        "sha256": "4da09c1ff4ed4fafaed6d718d7f3cdbe25072a802e01044f56863b0cd0bf62a6"
+      },
+      "decode": {
+        "codeSizeBits": 5,
+        "channels": 1,
+        "sampleCountPerChannel": 459,
+        "packetCount": 1,
+        "sourceByteLength": 290,
+        "consumedDataBits": 2314,
+        "paddingBitCount": 6,
+        "paddingValue": 0,
+        "initialSample": 0,
+        "initialIndex": 38,
+        "finalSample": 1590,
+        "finalIndex": 60
+      },
+      "blockFingerprintSha256": "89ce42a3e869b8c3e8826cfcbd3c3bfdd09f96300a39caecf535fca1acad8240"
+    },
+    {
+      "blockIndex": 7,
+      "source": {
+        "blockIndex": 7,
+        "localFrame": 7,
+        "byteOffsetInStreamArchive": 1740,
+        "byteLength": 290,
+        "sha256": "a4b1a85343058d2d4532b6bb86aee75eb12d08d47a639d60b0159dd008e5ccdf"
+      },
+      "decode": {
+        "codeSizeBits": 5,
+        "channels": 1,
+        "sampleCountPerChannel": 459,
+        "packetCount": 1,
+        "sourceByteLength": 290,
+        "consumedDataBits": 2314,
+        "paddingBitCount": 6,
+        "paddingValue": 0,
+        "initialSample": -256,
+        "initialIndex": 59,
+        "finalSample": 184,
+        "finalIndex": 80
+      },
+      "blockFingerprintSha256": "3d571e06cb11856d9eb33bb8fae454626b550f4e45cb48b616da8a63fad11796"
+    },
+    {
+      "blockIndex": 8,
+      "source": {
+        "blockIndex": 8,
+        "localFrame": 8,
+        "byteOffsetInStreamArchive": 2030,
+        "byteLength": 290,
+        "sha256": "4b2c857a896173cd2bacaa0bda83f5d694b2acafa298d95487565980d7900c53"
+      },
+      "decode": {
+        "codeSizeBits": 5,
+        "channels": 1,
+        "sampleCountPerChannel": 459,
+        "packetCount": 1,
+        "sourceByteLength": 290,
+        "consumedDataBits": 2314,
+        "paddingBitCount": 6,
+        "paddingValue": 0,
+        "initialSample": -2304,
+        "initialIndex": 56,
+        "finalSample": 253,
+        "finalIndex": 77
+      },
+      "blockFingerprintSha256": "d84dd0bbfda603ca1e700cd46255b2ade713a98361b6350499dc3ac51d38840a"
+    },
+    {
+      "blockIndex": 9,
+      "source": {
+        "blockIndex": 9,
+        "localFrame": 9,
+        "byteOffsetInStreamArchive": 2320,
+        "byteLength": 290,
+        "sha256": "25826caf622342d09760f90b5ccb7fe8a95b857c112f450189eeb2294bf69b55"
+      },
+      "decode": {
+        "codeSizeBits": 5,
+        "channels": 1,
+        "sampleCountPerChannel": 459,
+        "packetCount": 1,
+        "sourceByteLength": 290,
+        "consumedDataBits": 2314,
+        "paddingBitCount": 6,
+        "paddingValue": 0,
+        "initialSample": -6144,
+        "initialIndex": 63,
+        "finalSample": -4421,
+        "finalIndex": 75
+      },
+      "blockFingerprintSha256": "672504ec83a71af165eea4e2e48eccb241e47d2de0a15e8bb9c0d5abc596bcf6"
+    },
+    {
+      "blockIndex": 10,
+      "source": {
+        "blockIndex": 10,
+        "localFrame": 10,
+        "byteOffsetInStreamArchive": 2610,
+        "byteLength": 290,
+        "sha256": "14e6334548c781caa4984604bf6e0fc7d250e972e6a04de25f2f11821d1c8f22"
+      },
+      "decode": {
+        "codeSizeBits": 5,
+        "channels": 1,
+        "sampleCountPerChannel": 459,
+        "packetCount": 1,
+        "sourceByteLength": 290,
+        "consumedDataBits": 2314,
+        "paddingBitCount": 6,
+        "paddingValue": 0,
+        "initialSample": -1024,
+        "initialIndex": 61,
+        "finalSample": -2680,
+        "finalIndex": 72
+      },
+      "blockFingerprintSha256": "a939cf7a0325abbd9244513357e643f5d12ed8386fb40433d8297ea8be455428"
+    },
+    {
+      "blockIndex": 11,
+      "source": {
+        "blockIndex": 11,
+        "localFrame": 11,
+        "byteOffsetInStreamArchive": 2900,
+        "byteLength": 290,
+        "sha256": "417c4918ec2d9ffc49f5b72473308333157ae58071d491eeefeb825223c916a2"
+      },
+      "decode": {
+        "codeSizeBits": 5,
+        "channels": 1,
+        "sampleCountPerChannel": 459,
+        "packetCount": 1,
+        "sourceByteLength": 290,
+        "consumedDataBits": 2314,
+        "paddingBitCount": 6,
+        "paddingValue": 0,
+        "initialSample": 1536,
+        "initialIndex": 62,
+        "finalSample": 139,
+        "finalIndex": 60
+      },
+      "blockFingerprintSha256": "25d584670b04dd1aa44bef804796053a82b7d5d1629e348e7af35fe9c8eba0fb"
+    },
+    {
+      "blockIndex": 12,
+      "source": {
+        "blockIndex": 12,
+        "localFrame": 12,
+        "byteOffsetInStreamArchive": 3190,
+        "byteLength": 290,
+        "sha256": "4be693cff01d496672f7695f3f531bdc883accdeb2e03c3dfb6dc54bb0281a75"
+      },
+      "decode": {
+        "codeSizeBits": 5,
+        "channels": 1,
+        "sampleCountPerChannel": 459,
+        "packetCount": 1,
+        "sourceByteLength": 290,
+        "consumedDataBits": 2314,
+        "paddingBitCount": 6,
+        "paddingValue": 0,
+        "initialSample": 512,
+        "initialIndex": 38,
+        "finalSample": 241,
+        "finalIndex": 41
+      },
+      "blockFingerprintSha256": "5b93a7f3f37870620b4b680d861a26c848e47e4b9745b3b3193d42191c141acf"
+    },
+    {
+      "blockIndex": 13,
+      "source": {
+        "blockIndex": 13,
+        "localFrame": 13,
+        "byteOffsetInStreamArchive": 3480,
+        "byteLength": 290,
+        "sha256": "8208b2f60b21a60cee42f93d16ea2ab64f450b6f8a055aae4d430376cc3baf49"
+      },
+      "decode": {
+        "codeSizeBits": 5,
+        "channels": 1,
+        "sampleCountPerChannel": 459,
+        "packetCount": 1,
+        "sourceByteLength": 290,
+        "consumedDataBits": 2314,
+        "paddingBitCount": 6,
+        "paddingValue": 0,
+        "initialSample": 0,
+        "initialIndex": 0,
+        "finalSample": 0,
+        "finalIndex": 0
+      },
+      "blockFingerprintSha256": "40e9c82d4155f60fde95f4f78630824cc8571c5d2d389c2d8c8e5d69c7d43277"
+    }
+  ],
+  "summary": {
+    "sourceCasObjectCount": 1,
+    "sourceCasBytes": 3770,
+    "sourceAudioUnitReferenceCount": 4,
+    "independentlyDecodedBlockCount": 13,
+    "decodedSampleCountPerChannel": 5967,
+    "derivedArtifactCount": 1,
+    "derivedArtifactBytes": 11978,
+    "ffprobeParsedDerivedArtifactCount": 1,
+    "ffmpegDecodeToNullPassedDerivedArtifactCount": 1,
+    "blockSetSha256": "1b56c0be899eb5b085c5fd40c48d5e118921493c884ba897faa63f4dc99276a1",
+    "disposition": "acceptance-neutral-technical-decode-written-and-verified",
+    "acceptanceEffect": "none"
+  },
+  "reportFingerprintSha256": "a695a4f6a381cdbb51b5f55d8e650ce29bbb3eeda68629219fb286c4fae6d5a8"
+}

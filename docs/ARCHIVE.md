@@ -1,6 +1,6 @@
 # Legacy Archive Boundary
 
-The full owner-provided HELP Math collection is irreplaceable source evidence. The 2.6 GiB `HELP MATH_ORIGINAL FILES` tree must never be committed to, copied into, or deployed from the website repository. The archive and website use two independent private GitHub repositories:
+The full owner-provided HELP Math collection is irreplaceable source evidence. The approximately 3.0 GiB `HELP MATH_ORIGINAL FILES` tree must never be committed to, copied into, or deployed from the website repository. The archive and website use two independent private GitHub repositories:
 
 - `HUDongpin/helpmath-web`: Next.js site, approved JavaScript demos, migration metadata, tests, reviewed derived web assets, and only the small hash-pinned migration inputs that the existing private workbench explicitly requires.
 - `HUDongpin/helpmath-legacy-archive`: exact owner-provided FLA, SWF, MP3, XML, ActionScript, image, and related source files, plus integrity manifests.
@@ -9,10 +9,14 @@ Do not initialize the archive repository inside `HELP MATH_ORIGINAL FILES`, and 
 
 On the current workstation the frozen canonical tree is
 `source-assets/flash/HELP MATH_ORIGINAL FILES/`; the top-level name is a
-compatibility symbolic link to that directory. All 7,919 regular files are
+compatibility symbolic link to that directory. All 9,147 regular files are
 read-only. `catalog/source-manifest.sha256` is the local freeze manifest, whose
 SHA-256 is
-`a9625fb4a99e026fea09e4a1929edc2fa9d47ccf6cdbca7de4ba9ca75adf211e`.
+`f0a33c8a3d15afd7340e9ea5523385428bae7546bd8d4227a3a8977ab8914318`.
+The current tree totals 3,214,585,414 bytes. The reviewed 2026-08-02 Grade 4
+active-source promotion and its retained pre-promotion recovery roots are
+documented in `reports/g4-active-source-promotion-review-2026-08-02.md` and the
+immutable applied receipt under `catalog/source-promotions/`.
 Run `npm run verify:sources` before and after every archive transfer.
 
 ## Generate a portable archive-repository intake manifest

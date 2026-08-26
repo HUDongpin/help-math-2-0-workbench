@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "engineering-visual-prereview",
+  "animationId": "keyterm-elementary-computeghgh",
+  "reviewedAt": "2026-07-21T18:43:29Z",
+  "comparison": {
+    "file": "migrations/keyterm-elementary-computeghgh/evidence/full-frame-comparison-standalone-default-en.json",
+    "sha256": "e91c6673bf951b2862cc78ec53bcdebb990d81357fdc95674c625c6fe91b0b98",
+    "baselineReport": {
+      "file": "migrations/keyterm-elementary-computeghgh/baseline/adobe-flash-player-32-standalone-default.json",
+      "sha256": "3da59ca060ade75c8fa4ea6089870af7f888fc73a07ba84bc6807bdbc605158e"
+    },
+    "implementationCaptureManifest": {
+      "file": "artifacts/full-frame/pilot-implementations/keyterm-elementary-computeghgh/default/en/capture-manifest.json",
+      "sha256": "328d2491d17f098c8bdf6b5c048e89ee109d03dc8ac5b14ee8b955ebd4230ab9"
+    },
+    "baselineAuthority": "original-swf-adobe-flash-player-runtime",
+    "baselineScenario": "standalone-default",
+    "implementationScenario": "default",
+    "language": "en",
+    "seed": "0",
+    "frameCount": 35,
+    "stage": {
+      "width": 225,
+      "height": 225
+    }
+  },
+  "contactSheets": {
+    "manifest": "migrations/keyterm-elementary-computeghgh/evidence/contact-sheets/standalone-default-en/manifest.json",
+    "manifestSha256": "9cee526a19420cdc8f181e9372da6dd5899155e62064da1e909bb6a97f33373e",
+    "pageCount": 4,
+    "pagesInspected": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "framesRepresentedExactlyOnce": 35,
+    "columnsWithinEachFrame": [
+      "Adobe baseline",
+      "modern implementation",
+      "pixel diff"
+    ],
+    "integrityVerification": {
+      "comparisonSummaryRecomputed": true,
+      "completeSequentialFrameCoverage": true,
+      "baselineReportHashesMatchActualPngs": true,
+      "baselinePngsAreOpaqueAfterAlphaNormalization": true,
+      "implementationCaptureHashesMatchActualPngs": true,
+      "implementationReportedFramesMatchRequests": true,
+      "diffHashesMatchActualPngs": true,
+      "directoryDigestsMatchComparison": true,
+      "nativeStageDimensionsMatch": true,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "httpErrors": 0,
+      "unexpectedRequests": 0
+    }
+  },
+  "review": {
+    "kind": "codex-assisted-engineering-prereview",
+    "allContactSheetPagesInspected": true,
+    "humanVisualReview": true,
+    "humanVisualReviewEvidence": {
+      "reviewer": "Project user (explicit human approval in Codex thread)",
+      "reviewedAt": "2026-07-22",
+      "scope": "all-keyframe-and-full-frame-diffs",
+      "ownerAuthorityInferred": false
+    },
+    "ownerAcceptance": false,
+    "audioReviewedByListening": false,
+    "hostLocalizationTraversalReviewed": false
+  },
+  "numericResult": {
+    "staticThreshold": 0.05,
+    "transitionThreshold": 0.08,
+    "framesAtOrBelowStaticThreshold": 35,
+    "framesAtOrBelowTransitionThreshold": 35,
+    "numericOutlierFrames": [],
+    "allAssignedThresholdsPass": true,
+    "normalizedRmse": {
+      "min": 0.026404569163275857,
+      "max": 0.026404569163275857,
+      "mean": 0.026404569163275847,
+      "median": 0.026404569163275857,
+      "p95": 0.026404569163275857
+    },
+    "sourceUniqueVisualHashes": 1,
+    "implementationUniqueVisualHashes": 1
+  },
+  "inspectedFrames": [
+    {
+      "frame": 1,
+      "selectionReason": "first-static-frame-and-replay-up-state",
+      "normalizedRmse": 0.026404569163275857,
+      "mismatchedPixelRatio": 0.02093827160493827,
+      "visualResult": "engineering-pass",
+      "observations": [
+        "The Common Sense / Computar title, character, worksheet details, Replay label, orange up-state button, coordinates, and layer order align at the native 225x225 stage.",
+        "Residuals are concentrated on text, bitmap/vector edge antialiasing, and small button-edge rasterization."
+      ]
+    },
+    {
+      "frame": 35,
+      "selectionReason": "terminal-frame-and-last-of-identical-root-visuals",
+      "normalizedRmse": 0.026404569163275857,
+      "mismatchedPixelRatio": 0.02093827160493827,
+      "visualResult": "engineering-pass",
+      "observations": [
+        "All 35 Adobe root frames share one visual hash and all 35 implementation frames share one visual hash, so frames 1 and 35 bound a visually static root timeline.",
+        "The terminal Replay up state and teaching artwork remain aligned with no clipping, extra object, or stale state."
+      ]
+    }
+  ],
+  "replayGate": {
+    "result": "pass-engineering-evidence-owner-review-pending",
+    "interactionReport": {
+      "file": "migrations/keyterm-elementary-computeghgh/baseline/adobe-flash-player-32-replay-interaction.json",
+      "sha256": "2ad43f48ce111bbeb0024a95354f40b0664531ad55ee31669266ca292d5e9533"
+    },
+    "up": {
+      "adobeCapture": "artifacts/full-frame/pilot-baselines/keyterm-elementary-computeghgh/adobe-flash-player-32-interactions-replay-up.png",
+      "adobeCaptureSha256": "056133570fb8232d5a195c49b7d46a19bf89a8a111c62fb6e42678fc9378ce83",
+      "implementationCapture": "artifacts/full-frame/pilot-implementations/keyterm-elementary-computeghgh/default/en/frame-035.png",
+      "implementationCaptureSha256": "890106fdf1532e63f000fb38f2145f96dbe3104177039e572e39b9e7e627d36b",
+      "normalizedRmse": 0.026404569163275857,
+      "visualResult": "engineering-pass-lossless"
+    },
+    "hover": {
+      "adobeCapture": "artifacts/full-frame/pilot-baselines/keyterm-elementary-computeghgh/adobe-flash-player-32-interactions-replay-over.png",
+      "adobeCaptureSha256": "d88f12d0583a019e4b054f09416b5e93d46ec7a2e3d534d09208090c6c748532",
+      "implementationCapture": "artifacts/full-frame/pilot-implementations/keyterm-elementary-computeghgh/replay-hover/en/frame-035.png",
+      "implementationCaptureSha256": "06b71ba57c27d494d04bce2f20ca88dd286ab118b2ecf3d6a0344778ed8d79ae",
+      "implementationCaptureManifest": "artifacts/full-frame/pilot-implementations/keyterm-elementary-computeghgh/replay-hover/en/capture-manifest.json",
+      "implementationCaptureManifestSha256": "9d55b6824a634113efa67706e783b4df0526adc4ea9f8244e862de671c5bf169",
+      "comparison": "migrations/keyterm-elementary-computeghgh/evidence/replay-hover-frame-35-comparison.json",
+      "comparisonSha256": "9563dbbc8570c303d4935b4de44b03db624c104f67c81a9c3d48665921788e54",
+      "diff": "artifacts/full-frame/comparisons/keyterm-elementary-computeghgh/replay-hover/en/frame-0035.png",
+      "diffSha256": "cb6ecca6765a490fc066df7a1d3606e75cd919cc1dd6bb0f6673536ec6a72fcd",
+      "normalizedRmse": 0.02593025942801952,
+      "mismatchedPixelRatio": 0.020503703703703705,
+      "visualResult": "engineering-pass-lossless",
+      "observation": "The cyan hover artwork, Replay label, character, title, coordinates, and layering align; visible differences are limited to renderer edge and glyph rasterization."
+    },
+    "pressed": {
+      "adobeCapture": "migrations/keyterm-elementary-computeghgh/baseline/adobe-flash-player-32-replay-pressed-computer-use.jpeg",
+      "adobeCaptureSha256": "d9f4ff90de057d40fc0e5b0e8bceedd46f5d541105dd51312f804ec3a4c1698e",
+      "adobeEncoding": "computer-use-jpeg",
+      "adobeNativeStageOnly": false,
+      "adobeIncludesPlayerChromePixels": 28,
+      "adobeIncludesPointerOverButton": true,
+      "usableForRmse": false,
+      "implementationCapture": "artifacts/full-frame/pilot-implementations/keyterm-elementary-computeghgh/replay-pressed/en/frame-035.png",
+      "implementationCaptureSha256": "b5b329c0fb4d463d522ae02c0196197460048655bffbf2103150a37f79b8cf31",
+      "implementationCaptureManifest": "artifacts/full-frame/pilot-implementations/keyterm-elementary-computeghgh/replay-pressed/en/capture-manifest.json",
+      "implementationCaptureManifestSha256": "1867fb40396c821f3345a2d564d54a838c2d67d9b916cd28f7416632f999c42d",
+      "visualResult": "engineering-pass-source-structural",
+      "sourceStructuralBaseline": "artifacts/full-frame/pilot-baselines/keyterm-elementary-computeghgh/swf-structural-button-states/down.png",
+      "sourceStructuralBaselineSha256": "2ba02c2188f5e0d082d398fe48c614e5695a392070b6fa44f9d5feb01a10069a",
+      "sourceStructuralManifest": "migrations/keyterm-elementary-computeghgh/baseline/swf-structural-button-states.json",
+      "sourceStructuralManifestSha256": "6d1bc537bbf4b337cd12ab3e26b25874c544f196e4d85ac5496f808728d564e4",
+      "sourceStructuralComparison": "artifacts/full-frame/comparisons/keyterm-elementary-computeghgh/swf-structural-button-states/source-structural-down-v-modern-pressed.png",
+      "sourceStructuralComparisonSha256": "046d7391944009eefdda650c11323a714825450742a227d58eaf141cc5e26c43",
+      "normalizedRmse": 0.022170000867706856,
+      "assignedThreshold": 0.05,
+      "metricResult": "pass",
+      "evidenceBoundary": "The lossless Adobe up and over states calibrate the source-structural DefineButton2 compositor. The Adobe pressed JPEG remains qualitative confirmation only and is excluded from RMSE; owner review is still pending."
+    },
+    "behavior": {
+      "actionScriptHandler": "DefineButton2_14/BUTTONCONDACTION on(release).as",
+      "action": "gotoAndPlay(1)",
+      "adobeRuntimeRestartObserved": true,
+      "observation": "Adobe Player switched to running immediately after Replay and returned to its terminal stop after one 35-frame duration. Because all root frames are visually identical, this run-state observation proves restart behavior but not a changing visual sequence."
+    }
+  },
+  "audioGate": {
+    "result": "accepted-not-required",
+    "auditFile": "migrations/keyterm-elementary-computeghgh/audit/audio-runtime-evidence.json",
+    "auditFileSha256": "bb2d4380608d12acf5e015bd3ba4293a9c61d35b0a7c4f45e2f42fb62cc870d6",
+    "exactExternalTrackCount": 0,
+    "embeddedTrackCount": 0,
+    "authoritativeListeningComplete": false,
+    "hostStateTraversalComplete": false,
+    "strictAudioAcceptance": "accepted-not-required",
+    "observation": "The source-hash-bound shipped SWF has no audio data, sound tags, audio ActionScript, exact external basename association, or reachable XML/catalog host placement. There is no cue to listen to or synchronize; the paired FLA is not used to invent shipped audio."
+  },
+  "conclusion": {
+    "numericThresholdResult": "pass",
+    "engineeringVisualPrereviewResult": "pass-for-reviewed-default-and-replay-visuals",
+    "strictAcceptanceResult": "not-accepted",
+    "reason": "All 35 default/up frames, the lossless Replay hover state, and the source-structural Replay down comparison are hash-verified, below threshold, and visually aligned. The project user's current JavaScript output approval is recorded without treating it as strict human or owner authority. Strict completion remains unavailable because strict human review, owner review, original-host localization authority, the FLA authoring audit, and the coverage-v2 deterministic-capture identity contract remain unresolved.",
+    "requiredFollowUp": [
+      "Complete the authorized Adobe Animate FLA authoring audit without modifying the source FLA.",
+      "Resolve the original-host instructional identity and English/Spanish localization authority.",
+      "Upgrade the archived full-frame capture manifests to the coverage-v2 identity contract and obtain owner acceptance."
+    ]
+  },
+  "limitations": [
+    "The full-frame visual evidence covers the English standalone child-SWF default/up scenario; Replay hover is a separate one-frame lossless comparison.",
+    "The pressed-state JPEG is retained as authoritative behavioral evidence but is explicitly excluded from RMSE; pressed-state metrics use the calibrated source-structural down baseline.",
+    "Silent PNG comparison does not establish audio; the separate source-bound audio audit establishes accepted-not-required because no reachable shipped-runtime cue exists.",
+    "The project user's current JavaScript output approval is recorded separately and is neither strict human review nor owner acceptance.",
+    "No migration status, checklist item, completion flag, or accepted exception is changed by this prereview."
+  ]
+}

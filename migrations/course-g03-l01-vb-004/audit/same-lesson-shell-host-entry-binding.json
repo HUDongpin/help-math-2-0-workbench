@@ -1,0 +1,384 @@
+{
+  "animationId": "course-g03-l01-vb-004",
+  "artifactType": "help-math-same-lesson-shell-host-entry-binding",
+  "authority": {
+    "audioExecutedOrListened": false,
+    "authorizedOriginalRuntimeReachedTarget": false,
+    "eventFreeFullShellTerminalProof": false,
+    "feedbackFunctionsProven": false,
+    "fidelityClaimed": false,
+    "fullShellTerminalSemanticsProven": false,
+    "globalSpanishProtocolProven": false,
+    "migrationStatusChanged": false,
+    "naturalEntryTimingProven": false,
+    "staticSameLessonHandoffCandidateProven": true,
+    "strictCompletionEffect": "none",
+    "terminalOrReplayProven": false
+  },
+  "bindingStatus": "static-candidate-runtime-unverified",
+  "fullShellBoundaryQualification": {
+    "authorizedRuntimeEventOrderingRequired": true,
+    "evidence": [
+      {
+        "artifact": "frame_50/PlaceObject2_589_78/CLIPACTIONRECORD onClipEvent(enterFrame).as",
+        "frame": 50,
+        "lineEnd": 3,
+        "lineStart": 1,
+        "normalizedSha256": "c9b24d3bf25d6a41fd70cdcfd7fc0d0c9a7edd4b6ae0a94fb89f542441940da2",
+        "role": "root-frame-50-full-shell-prev-next-monitor",
+        "timelineId": "root"
+      },
+      {
+        "artifact": "frame_35/DoAction.as",
+        "frame": 35,
+        "lineEnd": 1707,
+        "lineStart": 1635,
+        "normalizedSha256": "e8947f523ba7efed833d3ba70fc3e0550c3b4a0522251bfda9af41ea2145719a",
+        "role": "root-frame-35-full-shell-prev-next-terminal-boundary-function",
+        "timelineId": "root"
+      }
+    ],
+    "firstCycleBoundaryPlayingClassification": "admissible-only-as-a-minimal-child-entry-adapter-candidate-if-separately-source-proven; not-proven-for-the-complete-same-lesson-shell",
+    "fullShellEventFreeTerminalProofAllowed": false,
+    "sourceMonitorMayStopNestedAnimationAtOrBeyondTotalFrames": true,
+    "statement": "The root-frame-50 enterFrame monitor calls doCheckPrevAndNext; that function can stop _root.animation_mc.animation when its current frame reaches or exceeds its total frames. Therefore a first-cycle-boundary-playing state is only a minimal child-entry adapter candidate. Complete same-lesson shell stop/wrap ordering must be determined by authorized execution.",
+    "status": "source-monitor-proven-runtime-ordering-unresolved"
+  },
+  "generatedBy": {
+    "script": "scripts/build-same-lesson-shell-host-entry-bindings.mjs",
+    "scriptSha256": "c5398b7f7a5b07a4221aaca82807e0b92ceff620651f59d777bdaf140cec7b89",
+    "sourceCatalog": {
+      "checksumSetSha256": "0d6f20e50576c73aac38aa5a88610c654bbe29430044c2db43d8d6236cf8fe0f",
+      "path": "catalog/source-files.json",
+      "sha256": "3c69ff32fd641910f63b24709b3c0225418ba1eee823155a99b307456eb1ee6c"
+    },
+    "toolchain": {
+      "ffdec": {
+        "jarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+        "version": "JPEXS Free Flash Decompiler v.26.2.1"
+      },
+      "swfmill": {
+        "executableSha256": "b1299adad7f32d8e489574539e79b0f42c4960148170bc1ca48736e07ccbd311",
+        "version": "swfmill 0.3.6"
+      }
+    }
+  },
+  "limitations": [
+    "This artifact proves only a hash-bound static candidate for the generic same-lesson shell handoff; it is not an authorized original-runtime execution log.",
+    "The active course XML placement corroborates lesson membership, but this artifact does not claim that index_local.swf reads that XML or naturally navigates to the target child.",
+    "Static ActionScript and placement evidence does not establish load completion timing, natural entry timing, or that gotoAndPlay(\"begin\") executed for this target.",
+    "The global Spanish entry protocol, language state, Spanish audio, audio timing, and pause/resume behavior remain unresolved.",
+    "Host feedback functions, interaction branches, scoring, terminal behavior, and complete Replay state reset remain unresolved.",
+    "The full shell's root-frame-50 doCheckPrevAndNext monitor may stop the nested animation at its total-frame boundary. first-cycle-boundary-playing is only a minimal child-entry adapter candidate; it is not event-free or full-shell terminal proof, and authorized execution must establish event ordering.",
+    "This artifact performs no visual comparison, human review, owner acceptance, fidelity approval, strict validation, or migration status change."
+  ],
+  "protocol": {
+    "childEntryRequest": {
+      "excerpts": [
+        {
+          "artifact": "frame_1/DoAction.as",
+          "exact": true,
+          "frame": 1,
+          "lineEnd": 2,
+          "lineStart": 1,
+          "missingTokens": [],
+          "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+          "normalizedBytes": 61,
+          "normalizedSha256": "8edb4298364fccc1a492b99afd35910c38775e841df758cc2f8f09063e448862",
+          "rawBytes": 63,
+          "rawSha256": "af7188282949f2613421ba9c8be629f489bbe2ee1e370a072024794b2d2cfc19",
+          "requiredTokens": [
+            "_level0.InternalPreloader.gotoAndPlay(\"jump_check\")",
+            "stop()"
+          ],
+          "role": "child-root-preloader-request-and-stop",
+          "text": "_level0.InternalPreloader.gotoAndPlay(\"jump_check\");\nstop();\n",
+          "timelineId": "root"
+        }
+      ],
+      "fullExportFileCount": 37,
+      "fullExportIndexHashMode": "stable-key-sorted-pretty-json-array-v1",
+      "fullExportIndexSha256": "b333a6ed6825d4072209e868a47b10e3edd43660e9b3f5217909b5255c1bfed9",
+      "missingArtifacts": []
+    },
+    "id": "help-math-g3-shell-preloader-v1",
+    "qualificationIssues": [],
+    "sameLessonHostActionScript": {
+      "excerpts": [
+        {
+          "artifact": "DefineSprite_179/frame_2/DoAction.as",
+          "exact": true,
+          "frame": 2,
+          "lineEnd": 12,
+          "lineStart": 1,
+          "missingTokens": [],
+          "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+          "normalizedBytes": 352,
+          "normalizedSha256": "6bf7e12013255f6b14ee4e415135fa8ea08cb6b05e3b837174ead2cbfbfbeffc",
+          "rawBytes": 364,
+          "rawSha256": "dffd2e1e2ff957be7f673398946cad234b3031b5f787572e6a3bb87aa0447612",
+          "requiredTokens": [
+            "_root.animation_mc.getBytesLoaded()",
+            "_root.animation_mc.getBytesTotal()",
+            "this.gotoAndStop(1)",
+            "_root.animation_mc.gotoAndPlay(\"begin\")"
+          ],
+          "role": "g3-preloader-jump-check-completion-handoff",
+          "text": "if(loadBar._width == getPercent * 100 && Math.round(getPercent * 100) >= 100 && _root.animation_mc.getBytesLoaded() >= _root.animation_mc.getBytesTotal())\n{\n   _global.showWarnText = 0;\n   _root.WarnText = \"\";\n   this.gotoAndStop(1);\n   _root.animation_mc.gotoAndPlay(\"begin\");\n}\nelse\n{\n   _root.WarnText = \"Loading page. Please wait...\";\n   play();\n}\n",
+          "timelineId": "sprite-179"
+        },
+        {
+          "artifact": "DefineSprite_179/frame_3/DoAction.as",
+          "exact": true,
+          "frame": 3,
+          "lineEnd": 19,
+          "lineStart": 1,
+          "missingTokens": [],
+          "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+          "normalizedBytes": 662,
+          "normalizedSha256": "5ddff1cbdcbbd78927c49c707b0509cb040fad56bcda963156934cc3f972e2fc",
+          "rawBytes": 681,
+          "rawSha256": "7b9b8be2edb7b1da48700f03cd001a0ff80a99f226ce64edcbfe4c6bf163dd4d",
+          "requiredTokens": [
+            "getPercent = bytes_loaded / bytes_total",
+            "_root.animation_mc.gotoAndPlay(\"begin\")",
+            "this.gotoAndPlay(2)"
+          ],
+          "role": "g3-preloader-done-completion-handoff",
+          "text": "bytes_loaded = 0;\nbytes_total = 0;\nbytes_loaded = Math.round(_root.animation_mc.getBytesLoaded());\nbytes_total = Math.round(_root.animation_mc.getBytesTotal());\ngetPercent = bytes_loaded / bytes_total;\nloadBar._width = getPercent * 100;\nloadText = \"Loading \" + Math.round(getPercent * 100) + \"%\";\nif(loadBar._width == getPercent * 100 && Math.round(getPercent * 100) >= 100 && _root.animation_mc.getBytesLoaded() >= _root.animation_mc.getBytesTotal())\n{\n   _global.showWarnText = 0;\n   _root.WarnText = \"\";\n   this.gotoAndStop(1);\n   _root.animation_mc.gotoAndPlay(\"begin\");\n}\nelse\n{\n   _root.WarnText = \"Loading page. Please wait...\";\n   this.gotoAndPlay(2);\n}\n",
+          "timelineId": "sprite-179"
+        },
+        {
+          "artifact": "frame_50/PlaceObject2_589_78/CLIPACTIONRECORD onClipEvent(enterFrame).as",
+          "exact": true,
+          "frame": 50,
+          "lineEnd": 3,
+          "lineStart": 1,
+          "missingTokens": [],
+          "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+          "normalizedBytes": 58,
+          "normalizedSha256": "c9b24d3bf25d6a41fd70cdcfd7fc0d0c9a7edd4b6ae0a94fb89f542441940da2",
+          "placedObjectId": 589,
+          "placementDepth": 78,
+          "rawBytes": 61,
+          "rawSha256": "0f74c16ab4c673bd21f5d82f4c7bd77f2c003198d8870bda7764b3cd7699c035",
+          "requiredTokens": [
+            "onClipEvent(enterFrame)",
+            "_root.doCheckPrevAndNext()"
+          ],
+          "role": "root-frame-50-full-shell-prev-next-monitor",
+          "text": "onClipEvent(enterFrame){\n   _root.doCheckPrevAndNext();\n}\n",
+          "timelineId": "root"
+        },
+        {
+          "artifact": "frame_35/DoAction.as",
+          "exact": true,
+          "frame": 35,
+          "lineEnd": 1707,
+          "lineStart": 1635,
+          "missingTokens": [],
+          "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+          "normalizedBytes": 2594,
+          "normalizedSha256": "e8947f523ba7efed833d3ba70fc3e0550c3b4a0522251bfda9af41ea2145719a",
+          "rawBytes": 119626,
+          "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8",
+          "requiredTokens": [
+            "function doCheckPrevAndNext()",
+            "_root.InternalPreloader._currentframe == 1",
+            "_root.animation_mc.animation._currentframe >= _root.animation_mc.animation._totalframes",
+            "_root.nextani.gotoAndPlay(\"nextani\")",
+            "_root.doCheckSpanishAudio()",
+            "_root.animation_mc.animation.stop()"
+          ],
+          "role": "root-frame-35-full-shell-prev-next-terminal-boundary-function",
+          "text": "function doCheckPrevAndNext()\n{\n   splitRootURL = _global.playSwfFileName.split(\"/\");\n   splitFileName = splitRootURL[splitRootURL.length - 1].split(\"FQ\");\n   strTempLID = splitFileName[0];\n   i = 0;\n   while(i < splitRootURL.length)\n   {\n      if(splitRootURL.indexOf(\"FQ02\") != -1)\n      {\n         strTempURL = splitRootURL(i);\n      }\n      i++;\n   }\n   if(_global.playSwfFileName.indexOf(\"FQ02\") != -1)\n   {\n      _root[strTempLID + \"FQ01\"]._visible = false;\n      _root[strTempLID + \"FQ02\"]._visible = false;\n      _root[strTempLID + \"FQ03\"]._visible = false;\n   }\n   if(_global.playSwfFileName.indexOf(\"FQ02\") == -1 && _global.playSwfFileName.indexOf(\"FQ03\") == -1)\n   {\n      ss = new Sound();\n      ss.setVolume(_global.volLevel);\n      if(_root.InternalPreloader._currentframe == 1 && _root.animation_mc.animation._currentframe > 1 && _root.animation_mc.animation._currentframe >= _root.animation_mc.animation._totalframes)\n      {\n         if(_root.nextani._currentframe == 1)\n         {\n            _root.nextani.gotoAndPlay(\"nextani\");\n         }\n      }\n      else\n      {\n         _root.nextani.gotoAndStop(1);\n      }\n      _root.doCheckSpanishAudio();\n      _root.BtnRewind.enabled = true;\n      _root.BtnForward.enabled = true;\n      if(_root.animation_mc.animation._currentframe <= 1)\n      {\n         _root.BtnRewind.enabled = false;\n         _root.BtnForward.enabled = true;\n         _global.rewind = 0;\n         _root.pause_mc._visible = false;\n         _root.play_mc._visible = true;\n      }\n      if(_root.animation_mc.animation._currentframe >= _root.animation_mc.animation._totalframes)\n      {\n         _root.BtnRewind.enabled = true;\n         _root.BtnForward.enabled = false;\n         _global.forward = 0;\n         _root.pause_mc._visible = false;\n         _root.play_mc._visible = true;\n      }\n      if(_root.animation_mc.animation._currentframe > 1 && _root.animation_mc.animation._currentframe >= _root.animation_mc.animation._totalframes)\n      {\n         _root.animation_mc.animation.stop();\n         if(_global.randomAudio == true)\n         {\n            _global.gSound.setVolume(0);\n         }\n         _root.animation_mc.animation.s_aud1.gotoAndStop(1);\n         _root.pause_mc._visible = false;\n         _root.play_mc._visible = false;\n         if(_global.Play == true && _global.CompClick == \"\")\n         {\n            _root.m_c._visible = false;\n            _root.glossary._visible = false;\n            _root.calculator._visible = false;\n            _root.m1_l1.gotoAndStop(\"m1_l1_content\");\n            _root.m1_l1._visible = false;\n         }\n      }\n",
+          "timelineId": "root"
+        }
+      ],
+      "fullExportFileCount": 547,
+      "fullExportIndexHashMode": "stable-key-sorted-pretty-json-array-v1",
+      "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+      "missingArtifacts": []
+    },
+    "sameLessonHostStructure": {
+      "animationMcPlacement": {
+        "depth": 47,
+        "frame": 38,
+        "instanceName": "animation_mc",
+        "line": 69510,
+        "objectId": 172,
+        "sourceLine": "<PlaceObject2 replace=\"0\" depth=\"47\" objectID=\"172\" morph=\"37\" name=\"animation_mc\">",
+        "timelineId": "root"
+      },
+      "internalPreloaderPlacement": {
+        "depth": 49,
+        "frame": 38,
+        "instanceName": "InternalPreloader",
+        "line": 71756,
+        "objectId": 179,
+        "sourceLine": "<PlaceObject2 replace=\"0\" depth=\"49\" objectID=\"179\" morph=\"37\" name=\"InternalPreloader\" allflags1=\"2\" allflags2=\"0\">",
+        "timelineId": "root"
+      },
+      "issues": [],
+      "preloaderDefinition": {
+        "frameCount": 3,
+        "line": 71097,
+        "objectId": 179,
+        "sourceLine": "<DefineSprite objectID=\"179\" frames=\"3\">",
+        "timelineId": "sprite-179"
+      },
+      "preloaderLabels": [
+        {
+          "frame": 1,
+          "label": "inactive",
+          "line": 71106,
+          "sourceLine": "<FrameLabel label=\"inactive\">",
+          "timelineId": "sprite-179"
+        },
+        {
+          "frame": 2,
+          "label": "jump_check",
+          "line": 71327,
+          "sourceLine": "<FrameLabel label=\"jump_check\">",
+          "timelineId": "sprite-179"
+        },
+        {
+          "frame": 3,
+          "label": "done",
+          "line": 71749,
+          "sourceLine": "<FrameLabel label=\"done\">",
+          "timelineId": "sprite-179"
+        }
+      ],
+      "rootFrameCount": 50,
+      "status": "source-structure-proven-runtime-unverified",
+      "transientXml": {
+        "bytes": 7914133,
+        "command": [
+          "swfmill",
+          "-n",
+          "swf2xml",
+          "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+          "<temporary-xml>"
+        ],
+        "retained": false,
+        "sha256": "734354b176834140dc6f27b1a99ce4f7e5b65361e99fcad6f18fbb7a33ee3d59"
+      }
+    },
+    "sourceDerivedCandidateSequence": [
+      "The target child root frame 1 requests _level0.InternalPreloader.gotoAndPlay(\"jump_check\") and stops.",
+      "The same-lesson index_local.swf places animation_mc and InternalPreloader together on its root timeline.",
+      "The shell InternalPreloader source checks the loaded child and calls animation_mc.gotoAndPlay(\"begin\").",
+      "The target child has exactly one root label begin aligned with exactly one root placement named animation."
+    ],
+    "targetBindingStatus": "source-structure-proven-runtime-unverified",
+    "targetObservations": {
+      "animationPlacements": [
+        {
+          "depth": "4",
+          "frame": 6,
+          "hasClipActions": false,
+          "name": "animation",
+          "objectId": "231",
+          "replace": "0",
+          "tag": "PlaceObject2"
+        }
+      ],
+      "beginLabels": [
+        {
+          "frame": 6,
+          "label": "begin"
+        }
+      ],
+      "childRelativeToLesson": "VB/L1VB04.swf",
+      "courseXmlPath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index.xml",
+      "lessonRoot": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1",
+      "sourceHostPath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf"
+    },
+    "targetRootEntry": {
+      "depth": 4,
+      "frame": 6,
+      "hasClipActions": false,
+      "instanceName": "animation",
+      "label": "begin",
+      "objectId": 231,
+      "placementTag": "PlaceObject2",
+      "rootTimelineId": "root",
+      "timelineId": "sprite-231"
+    }
+  },
+  "scenarioInventory": {
+    "excludedPaths": [
+      "migrationStatusAtGeneration",
+      "migrationStatusChanged",
+      "evidenceIndex[artifactId=migration-manifest]"
+    ],
+    "fullFileSha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c",
+    "hashMode": "canonical-json-v1",
+    "machineEvidence": [
+      {
+        "artifactId": "swfmill-xml",
+        "path": "migrations/course-g03-l01-vb-004/audit/machine/swfmill.xml.gz",
+        "sha256": "1ded3d50d0d77bf74875b2eb922a37d50a4f5dc12322d1ade6cc43e6c54f7fd6",
+        "uncompressedSha256": "6ca43b6b1b3bbe6bc3b50ede3e7568ccc648904ed4a247e1d6f91b9b78bdd7cf"
+      },
+      {
+        "artifactId": "ffdec-scripts",
+        "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+        "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538",
+        "uncompressedSha256": "9cc062e1b3aa1a44aa421607db08b2c744e5a9f7296cf5093c01a0ae7daf7263"
+      }
+    ],
+    "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+    "projection": "help-math-scenario-inventory-technical-v1",
+    "sha256": "47e12e2d71d630517bbcda30ed2f9e4b9afa3fd29b03e30fdf9eaa8ccd889b91",
+    "technicalSha256": "47e12e2d71d630517bbcda30ed2f9e4b9afa3fd29b03e30fdf9eaa8ccd889b91"
+  },
+  "schemaVersion": 1,
+  "scope": "deterministic-read-only-static-same-lesson-shell-handoff-candidate",
+  "sourceFreeze": {
+    "fileCount": 7919,
+    "manifest": "catalog/source-manifest.sha256",
+    "manifestSha256": "a9625fb4a99e026fea09e4a1929edc2fa9d47ccf6cdbca7de4ba9ca75adf211e",
+    "path": "catalog/source-freeze.json",
+    "sha256": "4601eb4a6b0b2818efaac2adb361b15ec5cefc412bdc19bcaf14dd1e93464e52",
+    "totalBytes": 2779928841
+  },
+  "sources": {
+    "courseXml": {
+      "archiveRelativePath": "HELP_COURSES/ELMGR3/L1/index.xml",
+      "bytes": 14542,
+      "exactActivePlacementLine": {
+        "line": 48,
+        "normalization": "CRLF-or-CR-to-LF; selected line plus one LF",
+        "sha256": "eae04620c89568d5aea525dd4c58d20930dab213467d548701db3c391e41f6fd",
+        "status": "source-line-proven",
+        "text": "    <Page Title=\"Place-value chart, place value models\" RandomAudio=\"\" BGText=\"\">VB/L1VB04.swf</Page>\n"
+      },
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index.xml",
+      "role": "same-lesson-course-xml",
+      "sha256": "f803cd0f01016385e8fd6d2ad11ee2b5379c82f252015999c62727c7fd581443"
+    },
+    "sameLessonHost": {
+      "archiveRelativePath": "HELP_COURSES/ELMGR3/L1/index_local.swf",
+      "bytes": 663428,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+      "role": "same-lesson-index-local-swf",
+      "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+    },
+    "targetChild": {
+      "archiveRelativePath": "HELP_COURSES/ELMGR3/L1/VB/L1VB04.swf",
+      "bytes": 861554,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/VB/L1VB04.swf",
+      "role": "target-child-swf",
+      "sha256": "8c9860663714843b4d858a50528ad82d6783d8446c38d6f1cc77ec03a07ec72e"
+    }
+  },
+  "spanishQualification": {
+    "globalSpanishEntryProtocolProven": false,
+    "observedCall": "_root.doCheckSpanishAudio()",
+    "sourceCallObservedInSelectedHostExcerpt": true,
+    "statement": "A local doCheckSpanishAudio call, when present, does not prove a global Spanish shell-entry protocol, Spanish language state, Spanish narration traversal, or audio synchronization.",
+    "status": "separate-blocker-unresolved"
+  }
+}

@@ -1,9 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import {
   GALLON_FLASH_MOVIE,
+  GALLON_FORMULAS,
   getGallonFrameState,
   restartGallonTimeline,
 } from "../lib/conversionTimeline.js";
@@ -12,45 +13,14 @@ import {
   FlashGallonCounter,
   FlashGallonFinalFormula,
 } from "./FlashBauhausGallon.jsx";
-import { FlashBauhausReplayText } from "./FlashBauhausFormula.jsx";
 
 const ASSET_ROOT = "/flash-assets/conversion-1-2";
 const FULL_BOTTLE_SOURCE = [1, 0, 0, 1, 56.8, 144.65];
-const EMPTY_BOTTLE_SOURCE = [
-  -0.363312, 0.93045, -0.93045, -0.363312, 96.4, 203.6,
-];
 const GALLON_LEVELS = [0, 0.25, 0.5, 0.75, 1];
 const GALLON_LEVEL_ASSETS = ["0", "32", "64", "96", "128"];
 
-function multiplyMatrices(left, right) {
-  const [a1, b1, c1, d1, e1, f1] = left;
-  const [a2, b2, c2, d2, e2, f2] = right;
-  return [
-    a1 * a2 + c1 * b2,
-    b1 * a2 + d1 * b2,
-    a1 * c2 + c1 * d2,
-    b1 * c2 + d1 * d2,
-    a1 * e2 + c1 * f2 + e1,
-    b1 * e2 + d1 * f2 + f1,
-  ];
-}
-
-function invertMatrix(matrix) {
-  const [a, b, c, d, e, f] = matrix;
-  const determinant = a * d - b * c;
-  return [
-    d / determinant,
-    -b / determinant,
-    -c / determinant,
-    a / determinant,
-    (c * f - d * e) / determinant,
-    (b * e - a * f) / determinant,
-  ];
-}
-
-function stageImageTransform(target, source) {
-  const matrix = multiplyMatrices(target.slice(0, 6), invertMatrix(source));
-  return `matrix(${matrix.join(" ")})`;
+function matrixTransform(matrix) {
+  return `matrix(${matrix.slice(0, 6).join(" ")})`;
 }
 
 function GallonLayer({ progress }) {
@@ -83,48 +53,89 @@ function GallonLayer({ progress }) {
   );
 }
 
-function BottleShadow({ index }) {
+function BottleShadows() {
   return (
-    <ellipse
-      cx={103 + index * 72}
-      cy="253"
-      rx="31"
-      ry="8"
-      fill="url(#quart-shadow)"
+    <image
+      href={`${ASSET_ROOT}/quart-shadows.svg`}
+      x="92"
+      y="241.7"
+      width="280.8"
+      height="19.2"
     />
   );
 }
 
-function FullBottle({ index, matrix }) {
-  const transform = matrix
-    ? stageImageTransform(matrix, FULL_BOTTLE_SOURCE)
-    : `translate(${index * 72} 0)`;
+function BottleLabel({ matrix }) {
   return (
     <image
-      href={`${ASSET_ROOT}/quart-full-stage.png`}
-      width="780"
-      height="379"
-      transform={transform}
+      href={`${ASSET_ROOT}/quart-label.svg`}
+      x="0.7"
+      y="5.7"
+      width="42.2"
+      height="15.95"
+      transform={matrixTransform(matrix)}
     />
   );
 }
 
-function EmptyBottle({ index, matrix, opacity }) {
-  const transform = matrix
-    ? stageImageTransform(matrix, EMPTY_BOTTLE_SOURCE)
-    : `translate(${index * 72} 0)`;
+function FullBottle({ index, matrix, labelMatrix }) {
+  const bodyMatrix = matrix ?? [
+    ...FULL_BOTTLE_SOURCE.slice(0, 4),
+    FULL_BOTTLE_SOURCE[4] + index * 72,
+    FULL_BOTTLE_SOURCE[5],
+  ];
   return (
-    <image
-      href={`${ASSET_ROOT}/quart-empty-stage.png`}
-      width="780"
-      height="379"
-      transform={transform}
-      opacity={opacity}
-    />
+    <g>
+      <image
+        href={`${ASSET_ROOT}/quart-full-body.svg`}
+        x="22.3"
+        y="0"
+        width="47.45"
+        height="109.15"
+        transform={matrixTransform(bodyMatrix)}
+      />
+      <BottleLabel matrix={labelMatrix} />
+    </g>
+  );
+}
+
+function EmptyBottle({ matrix, labelMatrix, opacity }) {
+  return (
+    <g opacity={opacity}>
+      <image
+        href={`${ASSET_ROOT}/quart-empty-body.svg`}
+        x="-52.9"
+        y="-33.85"
+        width="105.8"
+        height="67.75"
+        transform={matrixTransform(matrix)}
+      />
+      <BottleLabel matrix={labelMatrix} />
+    </g>
   );
 }
 
 function PouringBottle({ progress, opacity }) {
+  if (progress === 0) {
+    return (
+      <g opacity={opacity}>
+        <svg
+          x="420"
+          y="15"
+          width="125"
+          height="100"
+          viewBox="420 15 125 100"
+        >
+          <image
+            href={`${ASSET_ROOT}/pouring-start.svg`}
+            width="780"
+            height="379"
+          />
+        </svg>
+      </g>
+    );
+  }
+
   const streamOpacity = Math.sin(Math.PI * progress) * opacity;
   return (
     <g opacity={opacity}>
@@ -159,16 +170,31 @@ function PouringBottle({ progress, opacity }) {
 function BottleLayer({ bottle }) {
   if (bottle.phase === "full") {
     return (
-      <g>
-        <BottleShadow index={bottle.index} />
-        <FullBottle index={bottle.index} />
-      </g>
+      <FullBottle
+        index={bottle.index}
+        labelMatrix={bottle.labelMatrix}
+      />
     );
   }
   if (bottle.phase === "moving") {
-    return <FullBottle index={bottle.index} matrix={bottle.matrix} />;
+    return (
+      <FullBottle
+        index={bottle.index}
+        matrix={bottle.matrix}
+        labelMatrix={bottle.labelMatrix}
+      />
+    );
   }
   if (bottle.phase === "pouring") {
+    if (bottle.pourExit) {
+      return (
+        <EmptyBottle
+          matrix={bottle.matrix}
+          labelMatrix={bottle.labelMatrix}
+          opacity={bottle.opacity}
+        />
+      );
+    }
     return (
       <PouringBottle
         progress={bottle.pourProgress}
@@ -178,8 +204,8 @@ function BottleLayer({ bottle }) {
   }
   return (
     <EmptyBottle
-      index={bottle.index}
       matrix={bottle.matrix}
+      labelMatrix={bottle.labelMatrix}
       opacity={bottle.opacity}
     />
   );
@@ -203,49 +229,12 @@ function ReplayButton({ opacity, onReplay }) {
       onClick={onReplay}
       onKeyDown={onKeyDown}
     >
-      <rect
-        x="678.4"
-        y="9.2"
-        width="90.5"
-        height="20.5"
-        rx="10.25"
-        fill="#ffffff"
-        stroke="#999999"
-        strokeWidth="1.5"
-      />
-      <rect
-        x="731.3"
-        y="9.2"
-        width="37.6"
-        height="20.5"
-        rx="10.25"
-        fill="url(#replay-orange-gallon)"
-        stroke="#cd6701"
-        strokeWidth="1.5"
-      />
-      <path
-        d="M733 12.1 C741 9.4 758 9.6 766.2 12.2"
-        fill="none"
-        stroke="#ffffff"
-        strokeOpacity="0.72"
-        strokeWidth="1.3"
-      />
-      <FlashBauhausReplayText />
-      <circle
-        cx="750.3"
-        cy="19.4"
-        r="7.1"
-        fill="none"
-        stroke="#ffffff"
-        strokeWidth="1.1"
-      />
-      <path
-        d="M747.1 15.4 A5.1 5.1 0 1 1 746.1 22.2 M746.1 22.2 L746.2 18.7 M746.1 22.2 L749.5 21.7"
-        fill="none"
-        stroke="#ffffff"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.15"
+      <image
+        href={`${ASSET_ROOT}/replay-up.svg`}
+        x="676.546"
+        y="8.660"
+        width="92.494"
+        height="21.450"
       />
     </g>
   );
@@ -254,6 +243,8 @@ function ReplayButton({ opacity, onReplay }) {
 export function GallonConversionAnimation({
   spanishFormulaFlag = "off",
   captureFrame,
+  captureStageAttributes,
+  captureVisualAttributes,
 }) {
   const normalizedCaptureFrame = Number.isInteger(captureFrame)
     ? Math.min(GALLON_FLASH_MOVIE.frameCount, Math.max(1, captureFrame))
@@ -273,6 +264,7 @@ export function GallonConversionAnimation({
     normalizedCaptureFrame === null ? elapsedMs : capturedElapsedMs,
     languageOptions,
   );
+  const spanishFormulaVisible = spanishFormulaFlag.toUpperCase() === "ON";
 
   useEffect(() => {
     if (normalizedCaptureFrame !== null) return undefined;
@@ -304,10 +296,12 @@ export function GallonConversionAnimation({
   return (
     <div className="faithful-conversion gallon-conversion">
       <div
+        {...captureStageAttributes}
         className="faithful-stage-wrap"
         data-flash-frame={frameState.frame}
       >
         <svg
+          {...captureVisualAttributes}
           className="faithful-stage"
           viewBox="0 0 780 379"
           role="group"
@@ -321,42 +315,31 @@ export function GallonConversionAnimation({
             increases from 32 to 128.
           </desc>
 
-          <defs>
-            <radialGradient id="quart-shadow">
-              <stop offset="0" stopColor="#8a8a8a" stopOpacity="0.46" />
-              <stop offset="0.55" stopColor="#a8a8a8" stopOpacity="0.22" />
-              <stop offset="1" stopColor="#e4e4e4" stopOpacity="0" />
-            </radialGradient>
-            <linearGradient id="replay-orange-gallon" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0" stopColor="#ff9900" />
-              <stop offset="0.66" stopColor="#ff6600" />
-              <stop offset="1" stopColor="#ff9900" />
-            </linearGradient>
-          </defs>
-
           <rect width="780" height="379" fill="#e4e4e4" />
 
-          <g>
-            <rect
+          <g role="img" aria-label={GALLON_FORMULAS.en}>
+            <image
+              href={`${ASSET_ROOT}/formula-en.svg`}
               x="15.15"
               y="322.85"
               width="365.7"
               height="52.8"
-              fill="#9fd2df"
-              stroke="#1e4e59"
-              strokeWidth="0.55"
             />
-            <text
-              x="29.15"
-              y="352.85"
-              fill="#000000"
-              fontFamily="Verdana, Arial, sans-serif"
-              fontSize="16"
-            >
-              {frameState.formulaText}
-            </text>
           </g>
 
+          {spanishFormulaVisible ? (
+            <g role="img" aria-label={GALLON_FORMULAS.es} data-source-instance="Mc_SD" data-source-depth="4">
+              <image
+                href={`${ASSET_ROOT}/formula-es.svg`}
+                x="414.3"
+                y="322.85"
+                width="365.7"
+                height="52.8"
+              />
+            </g>
+          ) : null}
+
+          {frameState.quartShadowsVisible ? <BottleShadows /> : null}
           <GallonLayer progress={frameState.gallonProgress} />
 
           {frameState.bottles.map((bottle) => (

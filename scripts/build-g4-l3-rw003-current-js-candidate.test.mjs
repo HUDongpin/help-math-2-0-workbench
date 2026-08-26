@@ -1,0 +1,117 @@
+import assert from "node:assert/strict";
+import {readFile} from "node:fs/promises";
+import path from "node:path";
+import test from "node:test";
+import {fileURLToPath} from "node:url";
+
+import {
+  generateG4L3Rw003CurrentJsCandidate,
+  parseArguments,
+} from "./build-g4-l3-rw003-current-js-candidate.mjs";
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const REPORT = path.join(
+  ROOT,
+  "reports/g4-l3-rw003-current-javascript-candidate.json",
+);
+const MANIFEST = path.join(
+  ROOT,
+  "public/flash-assets/courses/course-g04-l03-rw-003/manifest.json",
+);
+const RUNTIME = path.join(
+  ROOT,
+  "public/flash-assets/courses/course-g04-l03-rw-003/canvas-renderer.js",
+);
+
+test("RW003 candidate CLI is explicit and rejects unknown arguments", () => {
+  assert.deepEqual(parseArguments(["--check"], {root: ROOT}), {
+    check: true,
+    ffdec: "ffdec",
+    python: "python3",
+    swfmill: "swfmill",
+    root: ROOT,
+  });
+  assert.equal(
+    parseArguments(["--ffdec", "/opt/tools/ffdec"], {root: ROOT}).ffdec,
+    "/opt/tools/ffdec",
+  );
+  assert.throws(() => parseArguments(["--python"], {root: ROOT}), /requires a value/);
+  assert.throws(() => parseArguments(["--unknown"], {root: ROOT}), /Unknown argument/);
+});
+
+test("RW003 checked-in outputs reproduce from fresh hash-bound source extraction", async () => {
+  const result = await generateG4L3Rw003CurrentJsCandidate({check: true});
+  assert.equal(result.animationId, "course-g04-l03-rw-003");
+  assert.equal(result.outputScript.bytes, 1_426_349);
+  assert.equal(
+    result.outputScript.sha256,
+    "658570c73aa29a6eb44e8ff3591ac6dc345d0d559840941b00872e5e9e2e0c51",
+  );
+  assert.equal(result.frameDomain.timelineId, "sprite-49");
+  assert.equal(result.frameDomain.frameCount, 278);
+  assert.equal(result.status.prototypeRegistryOnly, true);
+  assert.equal(result.status.publicLibraryAdmitted, false);
+  assert.equal(result.strictAcceptanceEffect, "none");
+  assert.ok(Object.values(result.acceptance).every((value) => value === false));
+});
+
+test("RW003 manifest and report keep behavior and acceptance fail-closed", async () => {
+  const [report, manifest, runtime] = await Promise.all([
+    readFile(REPORT, "utf8").then(JSON.parse),
+    readFile(MANIFEST, "utf8").then(JSON.parse),
+    readFile(RUNTIME, "utf8"),
+  ]);
+  assert.equal(report.reportType, "current-javascript-engineering-candidate");
+  assert.equal(report.disposition.currentJavaScriptCandidate, true);
+  assert.equal(report.disposition.migrationScaffoldCreated, false);
+  assert.equal(report.disposition.strictLedgerChanged, false);
+  assert.equal(report.disposition.publicLibraryAdmitted, false);
+  assert.ok(Object.values(report.acceptance).every((value) => value === false));
+  assert.equal(report.strictAcceptanceEffect, "none");
+  assert.equal(report.timeline.root.renderable, false);
+  assert.equal(report.timeline.local.timelineId, "sprite-49");
+  assert.equal(report.timeline.companion.timelineId, "sprite-53");
+  assert.equal(report.timeline.companion.renderable, false);
+  assert.equal(report.evidence.interaction.renderedAsControls, false);
+  assert.equal(report.evidence.interaction.legacyActionScriptExecuted, false);
+  assert.equal(report.evidence.interaction.sourceButtons.length, 2);
+  assert.equal(report.evidence.embeddedAudio.rendered, false);
+  assert.equal(report.evidence.embeddedAudio.accepted, false);
+  assert.equal(report.evidence.embeddedAudio.hostPlaybackImplemented, true);
+  assert.equal(report.evidence.embeddedAudio.candidateCueFrame, 8);
+  assert.equal(report.evidence.embeddedAudio.browserQaPassed, true);
+  assert.equal(report.evidence.associatedSpanishAudio.rendered, false);
+  assert.equal(
+    report.evidence.associatedSpanishAudio.hostUserControlImplemented,
+    true,
+  );
+  assert.equal(report.evidence.associatedSpanishAudio.browserQaPassed, true);
+  assert.equal(report.evidence.associatedSpanishAudio.listeningAccepted, false);
+  assert.equal(
+    report.evidence.currentJavascriptAudioCandidate.exactSourceBytesPreserved,
+    true,
+  );
+  assert.equal(
+    report.evidence.currentJavascriptAudioCandidate.strictAcceptanceEffect,
+    "none",
+  );
+
+  assert.equal(
+    manifest.status,
+    "source-static-current-javascript-engineering-candidate-only",
+  );
+  assert.equal(manifest.safety.noLegacyActionScriptExecuted, true);
+  assert.equal(manifest.safety.noNetworkPrimitives, true);
+  assert.equal(manifest.safety.noTimersOrAutoplay, true);
+  assert.equal(manifest.safety.interactiveControlsEnabled, false);
+  assert.equal(manifest.safety.audioRendered, false);
+  assert.ok(Object.values(manifest.acceptance).every((value) => value === false));
+  assert.equal(manifest.strictAcceptanceEffect, "none");
+
+  assert.doesNotMatch(runtime, /\beval\s*\(/);
+  assert.doesNotMatch(runtime, /\b(?:setInterval|setTimeout|requestAnimationFrame)\s*\(/);
+  assert.doesNotMatch(runtime, /\b(?:fetch|XMLHttpRequest|WebSocket|EventSource)\b/);
+  assert.doesNotMatch(runtime, /DoHyperLinks|KeyAttribute/);
+  assert.match(runtime, /unsupported source-proven language/);
+  assert.match(runtime, /HELP_MATH_CANVAS_ASSETS/);
+});

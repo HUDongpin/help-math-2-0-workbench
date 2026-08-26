@@ -1,0 +1,3748 @@
+{
+  "schemaVersion": 1,
+  "reportType": "pilot-original-runtime-audio-operator-readiness",
+  "generatedMarker": "deterministic-no-wall-clock",
+  "status": "acceptance-neutral",
+  "acceptanceEffect": "none",
+  "statements": {
+    "audioPlayedOrListenedByGenerator": false,
+    "originalRuntimeLaunchedByGenerator": false,
+    "humanIdentityOrDecisionRecorded": false,
+    "ownerDecisionRecorded": false,
+    "migrationStatusOrStrictLedgerChanged": false,
+    "machineOnlyStrictAudioClosureCount": 0
+  },
+  "bindings": {
+    "generator": {
+      "path": "scripts/build-pilot-audio-operator-readiness.mjs",
+      "bytes": 27852,
+      "sha256": "55efb5833744d38900d85507df256618c0db58ed1c3e491f383741079b3fb307"
+    },
+    "strictReport": {
+      "path": "reports/pilot-strict-acceptance.json",
+      "bytes": 878503,
+      "sha256": "dbd0ddcab28be5faf278c3d6bae7be59e5afa403e6c7dbfb77aaecf946875d39"
+    },
+    "unsignedKitReadiness": {
+      "path": "work/audio-runtime-session-kits-20260724-current-v4/readiness-report.json",
+      "bytes": 12697,
+      "sha256": "5bf646c8c48533a9c44c53e93390f3370a2cc2a631973f0afa68014284866d73"
+    },
+    "g4L3StaticAudioAudit": {
+      "path": "reports/g4-l3-machine-source-audits.json",
+      "bytes": 5152829,
+      "sha256": "7b750151c7bc81cd20e76b513f93502125c5b12f50baf02001d75c71ceab8b37"
+    },
+    "pilotAcceptanceRunbook": {
+      "path": "docs/PILOT_ACCEPTANCE_RUNBOOK.md",
+      "bytes": 34007,
+      "sha256": "d8bd6575b42baf35c555948a619834919e83077de6f3495394a3588d775779ab"
+    },
+    "originalRuntimeSessionSchema": {
+      "path": "schemas/original-runtime-audio-listening-session.schema.json",
+      "bytes": 2116,
+      "sha256": "3cf98699e4fbca194098a979de59f3f8b8c4f2cb1b5adf4d3fb6dc5de790a8de"
+    }
+  },
+  "exactKitCheckCommand": "node scripts/scaffold-audio-runtime-session-kit.mjs --check --readiness-report --output work/audio-runtime-session-kits-20260724-current-v4 --include-acute-english --id formula-elementary-conversion-01-01 --id formula-elementary-conversion-01-02 --id formula-elementary-conversion-01-03 --id formula-elementary-conversion-01-04 --id keyterm-elementary-acute-angle --id course-g03-l01-vb-004 --id course-g04-l01-ir-001 --id course-g03-l06-ti-001 --id course-g04-l03-in-009 --id course-g04-l09-gs-002 --id course-g05-l13-rw-002 --id course-g03-l01-ts-008 --id shell-course-g04-l01-index-local",
+  "runtime": {
+    "runtimeId": "adobe-flash-player-projector",
+    "name": "Adobe Flash Player Projector",
+    "version": "32.0.0.414",
+    "requestedAppPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+    "appPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+    "executablePath": "/Applications/Adobe Animate 2021/Players/Flash Player.app/Contents/MacOS/Flash Player",
+    "executableSha256": "8f4e10c8c28698f3429a1489f9592f6ae5697fb6eb7d15c4cfe83e925b1ebc30"
+  },
+  "requiredHumanAttestation": "I personally performed the authoritative original-runtime audio listening and host traversal recorded here.",
+  "requiredHumanScope": "all-declared-audio-cues-and-reachable-host-states",
+  "summary": {
+    "pilotCount": 16,
+    "strictAudioPassCount": 2,
+    "fullyScopedUnsignedKitPilotCount": 12,
+    "fullyScopedUnsignedKitCueCount": 70,
+    "partialNonUnblockingPilotCount": 1,
+    "partialNonUnblockingCueCount": 1,
+    "blockedBeforeListeningPilotCount": 1,
+    "sourceBoundNoAudioPilotCount": 2,
+    "machineOnlyStrictAudioClosureCount": 0,
+    "parsedPilotCueCount": 71,
+    "parsedPilotExternalCueCount": 14,
+    "parsedPilotEmbeddedCueCount": 57
+  },
+  "g4L3AudioScope": {
+    "uniqueFileCount": 143,
+    "languages": {
+      "en": 60,
+      "es": 83,
+      "und": 0
+    },
+    "allPhysicalHashesReverified": true,
+    "overlapWithPilotExternalCueCount": 1,
+    "overlapWithPilotExternalCuePaths": [
+      "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN09.mp3"
+    ],
+    "authorityLimit": "file-identity-only; no cue mapping, timing, reachability, listening, synchronization, replay, or acceptance"
+  },
+  "pilots": [
+    {
+      "animationId": "formula-elementary-conversion-01-01",
+      "manifestSha256": "5a16f7ebae49b069108d07712726dda39809a9eed7922737c942fb4ddec48a99",
+      "strictAudioGate": "fail",
+      "machineReadiness": "prepared-unsigned-template",
+      "cueCount": 2,
+      "acceptance": {
+        "path": "migrations/formula-elementary-conversion-01-01/evidence/audio-listening-acceptance.json",
+        "bytes": 2631,
+        "sha256": "1fee7004112ff0b1e172b79cba326b5641757946fbfb92c8247168b2aa4fb458",
+        "status": "pending"
+      },
+      "currentMigrationEvidence": {
+        "sessionFileCount": 0,
+        "runtimeArtifactFileCount": 0
+      },
+      "pendingAcceptanceTemplateCurrent": true,
+      "operator": {
+        "disposition": "unsigned-template-ready-for-named-human-original-runtime-listening",
+        "operatorReady": true,
+        "readinessBoundary": "unsigned-template-and-hash-bindings-only; natural host reachability and listening remain human observations",
+        "strictUnblockingPotential": "audio-gate-can-pass-only-after-valid-human-session-evidence-and-acceptance",
+        "machineOnlyStrictClosurePossible": false
+      },
+      "technicalBlockers": [],
+      "machineNotes": [],
+      "machineAuditRequirementsStillPending": [
+        "Adobe/original-host listening must verify spoken language/content, user-trigger behavior, start timing, pause/resume, and completion for every exact external track."
+      ],
+      "kit": {
+        "path": "work/audio-runtime-session-kits-20260724-current-v4/formula-elementary-conversion-01-01",
+        "manifestSha256": "bdd73aed1b3f310326d7a95552464e6b7c1e7b3818df709e2f5305b5e8707535",
+        "runtime": {
+          "runtimeId": "adobe-flash-player-projector",
+          "name": "Adobe Flash Player Projector",
+          "version": "32.0.0.414",
+          "requestedAppPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "appPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "executablePath": "/Applications/Adobe Animate 2021/Players/Flash Player.app/Contents/MacOS/Flash Player",
+          "executableSha256": "8f4e10c8c28698f3429a1489f9592f6ae5697fb6eb7d15c4cfe83e925b1ebc30"
+        }
+      },
+      "authoritativeHost": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+        "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd"
+      },
+      "cues": [
+        {
+          "cue": {
+            "cueId": "formula-narration-en",
+            "language": "en",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/EAD/Conversion_1_1.mp3",
+            "sha256": "ac64efe44e1960d1abde5fb9aeb0c2d38509ae5c2bafd86351b53d1a4177a66a",
+            "durationMs": 2893,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "host-user-activated",
+            "format": "mp3",
+            "channels": 1,
+            "sampleRateHz": 44100,
+            "sourceCharacterId": null
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/formula-elementary-conversion-01-01/evidence/audio-listening-sessions/formula-narration-en-en.template.json",
+            "sha256": "c14d88d32279572e72bfe6691f594cff6618016a039577435ad77eb18f790448"
+          },
+          "finalSessionDestination": "migrations/formula-elementary-conversion-01-01/evidence/audio-listening-sessions/formula-narration-en-en.json",
+          "runtimeEvidenceDirectory": "migrations/formula-elementary-conversion-01-01/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "formula-narration-es",
+            "language": "es",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SAD/Conversion_1_1.mp3",
+            "sha256": "e1667a7b14a9ac38d885020a3f5fae0e947abbac74faf7231ceaff2198368d9c",
+            "durationMs": 4743,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "host-user-activated",
+            "format": "mp3",
+            "channels": 1,
+            "sampleRateHz": 44100,
+            "sourceCharacterId": null
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/formula-elementary-conversion-01-01/evidence/audio-listening-sessions/formula-narration-es-es.template.json",
+            "sha256": "b6e1529029660050393587d3e2649a50fe801fb93c8a8e8a066bc5bafdbf3e6a"
+          },
+          "finalSessionDestination": "migrations/formula-elementary-conversion-01-01/evidence/audio-listening-sessions/formula-narration-es-es.json",
+          "runtimeEvidenceDirectory": "migrations/formula-elementary-conversion-01-01/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        }
+      ]
+    },
+    {
+      "animationId": "formula-elementary-conversion-01-02",
+      "manifestSha256": "b4d7c3aab06b848bbb2335d147ec501ce06f70c43eda5f2a1d67fc790963230e",
+      "strictAudioGate": "fail",
+      "machineReadiness": "prepared-unsigned-template",
+      "cueCount": 2,
+      "acceptance": {
+        "path": "migrations/formula-elementary-conversion-01-02/evidence/audio-listening-acceptance.json",
+        "bytes": 2631,
+        "sha256": "a20dabf7672d576e070ad6b96ccae3bc4bd6e5d3b6b152d9cce25e9b5683c808",
+        "status": "pending"
+      },
+      "currentMigrationEvidence": {
+        "sessionFileCount": 0,
+        "runtimeArtifactFileCount": 0
+      },
+      "pendingAcceptanceTemplateCurrent": true,
+      "operator": {
+        "disposition": "unsigned-template-ready-for-named-human-original-runtime-listening",
+        "operatorReady": true,
+        "readinessBoundary": "unsigned-template-and-hash-bindings-only; natural host reachability and listening remain human observations",
+        "strictUnblockingPotential": "audio-gate-can-pass-only-after-valid-human-session-evidence-and-acceptance",
+        "machineOnlyStrictClosurePossible": false
+      },
+      "technicalBlockers": [],
+      "machineNotes": [],
+      "machineAuditRequirementsStillPending": [
+        "Adobe/original-host listening must verify spoken language/content, user-trigger behavior, start timing, pause/resume, and completion for every exact external track."
+      ],
+      "kit": {
+        "path": "work/audio-runtime-session-kits-20260724-current-v4/formula-elementary-conversion-01-02",
+        "manifestSha256": "4ca3bb2531f77c9f4458ada1246394b1c5093e7c203e1eaa94e745869f154a75",
+        "runtime": {
+          "runtimeId": "adobe-flash-player-projector",
+          "name": "Adobe Flash Player Projector",
+          "version": "32.0.0.414",
+          "requestedAppPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "appPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "executablePath": "/Applications/Adobe Animate 2021/Players/Flash Player.app/Contents/MacOS/Flash Player",
+          "executableSha256": "8f4e10c8c28698f3429a1489f9592f6ae5697fb6eb7d15c4cfe83e925b1ebc30"
+        }
+      },
+      "authoritativeHost": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+        "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd"
+      },
+      "cues": [
+        {
+          "cue": {
+            "cueId": "formula-narration-en",
+            "language": "en",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/EAD/Conversion_1_2.mp3",
+            "sha256": "4f972d06f68779806b7938363acd476e26a70af0b1e4584efd9d3c5a1180891a",
+            "durationMs": 3623,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "host-user-activated",
+            "format": "mp3",
+            "channels": 1,
+            "sampleRateHz": 44100,
+            "sourceCharacterId": null
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/formula-elementary-conversion-01-02/evidence/audio-listening-sessions/formula-narration-en-en.template.json",
+            "sha256": "d90d13c75353482d567c1012bd882775b85e01b5a4f649a51448b18a5fd2bada"
+          },
+          "finalSessionDestination": "migrations/formula-elementary-conversion-01-02/evidence/audio-listening-sessions/formula-narration-en-en.json",
+          "runtimeEvidenceDirectory": "migrations/formula-elementary-conversion-01-02/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "formula-narration-es",
+            "language": "es",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SAD/Conversion_1_2.mp3",
+            "sha256": "23941719e38912fa61faf34cf0f4fc175d258009ddb581b079d586517f33931c",
+            "durationMs": 5577,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "host-user-activated",
+            "format": "mp3",
+            "channels": 1,
+            "sampleRateHz": 44100,
+            "sourceCharacterId": null
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/formula-elementary-conversion-01-02/evidence/audio-listening-sessions/formula-narration-es-es.template.json",
+            "sha256": "a3b510b6bf27418501b78074e50eb6f1ddeeccf37119986f1a0bc6f7de5b894b"
+          },
+          "finalSessionDestination": "migrations/formula-elementary-conversion-01-02/evidence/audio-listening-sessions/formula-narration-es-es.json",
+          "runtimeEvidenceDirectory": "migrations/formula-elementary-conversion-01-02/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        }
+      ]
+    },
+    {
+      "animationId": "formula-elementary-conversion-01-03",
+      "manifestSha256": "71f8b65658c9a6b71c26a0a6e93261b21fca4c458e125027ff0a96f3628fb64e",
+      "strictAudioGate": "fail",
+      "machineReadiness": "prepared-unsigned-template",
+      "cueCount": 2,
+      "acceptance": {
+        "path": "migrations/formula-elementary-conversion-01-03/evidence/audio-listening-acceptance.json",
+        "bytes": 2631,
+        "sha256": "cb3a171816e83211eebff6f9a11ca0179f269584453a00ebaa6a8e86db4ab7ff",
+        "status": "pending"
+      },
+      "currentMigrationEvidence": {
+        "sessionFileCount": 0,
+        "runtimeArtifactFileCount": 0
+      },
+      "pendingAcceptanceTemplateCurrent": true,
+      "operator": {
+        "disposition": "unsigned-template-ready-for-named-human-original-runtime-listening",
+        "operatorReady": true,
+        "readinessBoundary": "unsigned-template-and-hash-bindings-only; natural host reachability and listening remain human observations",
+        "strictUnblockingPotential": "audio-gate-can-pass-only-after-valid-human-session-evidence-and-acceptance",
+        "machineOnlyStrictClosurePossible": false
+      },
+      "technicalBlockers": [],
+      "machineNotes": [],
+      "machineAuditRequirementsStillPending": [
+        "Adobe/original-host listening must verify spoken language/content, user-trigger behavior, start timing, pause/resume, and completion for every exact external track."
+      ],
+      "kit": {
+        "path": "work/audio-runtime-session-kits-20260724-current-v4/formula-elementary-conversion-01-03",
+        "manifestSha256": "861f9f3f0ee6fe4506664abbeef21d83c8f4fd8f866ad3ac7b73ce8107fbf31c",
+        "runtime": {
+          "runtimeId": "adobe-flash-player-projector",
+          "name": "Adobe Flash Player Projector",
+          "version": "32.0.0.414",
+          "requestedAppPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "appPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "executablePath": "/Applications/Adobe Animate 2021/Players/Flash Player.app/Contents/MacOS/Flash Player",
+          "executableSha256": "8f4e10c8c28698f3429a1489f9592f6ae5697fb6eb7d15c4cfe83e925b1ebc30"
+        }
+      },
+      "authoritativeHost": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+        "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd"
+      },
+      "cues": [
+        {
+          "cue": {
+            "cueId": "formula-narration-en",
+            "language": "en",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/EAD/Conversion_1_3.mp3",
+            "sha256": "8cb6c9995b7f27f805f4f581857ac80034502eead869f86c007f871d71618281",
+            "durationMs": 2737,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "host-user-activated",
+            "format": "mp3",
+            "channels": 1,
+            "sampleRateHz": 44100,
+            "sourceCharacterId": null
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/formula-elementary-conversion-01-03/evidence/audio-listening-sessions/formula-narration-en-en.template.json",
+            "sha256": "1ba9ab0ef8817a91ed2301ba1dc5857422db52c9b578bc6967d7491236dd72e2"
+          },
+          "finalSessionDestination": "migrations/formula-elementary-conversion-01-03/evidence/audio-listening-sessions/formula-narration-en-en.json",
+          "runtimeEvidenceDirectory": "migrations/formula-elementary-conversion-01-03/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "formula-narration-es",
+            "language": "es",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SAD/Conversion_1_3.mp3",
+            "sha256": "8658e12deb64b1eb58f4503e48766432de336032f05e6d5ce5cb00f1d6f87887",
+            "durationMs": 3675,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "host-user-activated",
+            "format": "mp3",
+            "channels": 1,
+            "sampleRateHz": 44100,
+            "sourceCharacterId": null
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/formula-elementary-conversion-01-03/evidence/audio-listening-sessions/formula-narration-es-es.template.json",
+            "sha256": "10286519c288e4b25930246ac5005afc8c125e727ba8c2adf4d88bf2b98dd7d3"
+          },
+          "finalSessionDestination": "migrations/formula-elementary-conversion-01-03/evidence/audio-listening-sessions/formula-narration-es-es.json",
+          "runtimeEvidenceDirectory": "migrations/formula-elementary-conversion-01-03/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        }
+      ]
+    },
+    {
+      "animationId": "formula-elementary-conversion-01-04",
+      "manifestSha256": "2764ef8d68a5e07ecfcd5cac282d1ec8f227220d202c02ca04d5eb194103f5ff",
+      "strictAudioGate": "fail",
+      "machineReadiness": "prepared-unsigned-template",
+      "cueCount": 2,
+      "acceptance": {
+        "path": "migrations/formula-elementary-conversion-01-04/evidence/audio-listening-acceptance.json",
+        "bytes": 2631,
+        "sha256": "7fcb535dfa858d4d9bf54451b64b3caa0b143ad3816ef87ce73d6fec1647fb2c",
+        "status": "pending"
+      },
+      "currentMigrationEvidence": {
+        "sessionFileCount": 0,
+        "runtimeArtifactFileCount": 0
+      },
+      "pendingAcceptanceTemplateCurrent": true,
+      "operator": {
+        "disposition": "unsigned-template-ready-for-named-human-original-runtime-listening",
+        "operatorReady": true,
+        "readinessBoundary": "unsigned-template-and-hash-bindings-only; natural host reachability and listening remain human observations",
+        "strictUnblockingPotential": "audio-gate-can-pass-only-after-valid-human-session-evidence-and-acceptance",
+        "machineOnlyStrictClosurePossible": false
+      },
+      "technicalBlockers": [],
+      "machineNotes": [],
+      "machineAuditRequirementsStillPending": [
+        "Adobe/original-host listening must verify spoken language/content, user-trigger behavior, start timing, pause/resume, and completion for every exact external track."
+      ],
+      "kit": {
+        "path": "work/audio-runtime-session-kits-20260724-current-v4/formula-elementary-conversion-01-04",
+        "manifestSha256": "8e8a2ce96cc2b9504313bf06bb8a49b05d2afd22a246900164a02812357b25fa",
+        "runtime": {
+          "runtimeId": "adobe-flash-player-projector",
+          "name": "Adobe Flash Player Projector",
+          "version": "32.0.0.414",
+          "requestedAppPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "appPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "executablePath": "/Applications/Adobe Animate 2021/Players/Flash Player.app/Contents/MacOS/Flash Player",
+          "executableSha256": "8f4e10c8c28698f3429a1489f9592f6ae5697fb6eb7d15c4cfe83e925b1ebc30"
+        }
+      },
+      "authoritativeHost": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+        "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd"
+      },
+      "cues": [
+        {
+          "cue": {
+            "cueId": "formula-narration-en",
+            "language": "en",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/EAD/Conversion_1_4.mp3",
+            "sha256": "4cb95f75f46e9bb14acc59043d6ee5367d7ad2e460a78ba53371bca39456e009",
+            "durationMs": 3206,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "host-user-activated",
+            "format": "mp3",
+            "channels": 1,
+            "sampleRateHz": 44100,
+            "sourceCharacterId": null
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/formula-elementary-conversion-01-04/evidence/audio-listening-sessions/formula-narration-en-en.template.json",
+            "sha256": "74a63affe6473cb1644707cf24a28e167a07001e1fbd436131653ca9fc099377"
+          },
+          "finalSessionDestination": "migrations/formula-elementary-conversion-01-04/evidence/audio-listening-sessions/formula-narration-en-en.json",
+          "runtimeEvidenceDirectory": "migrations/formula-elementary-conversion-01-04/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "formula-narration-es",
+            "language": "es",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SAD/Conversion_1_4.mp3",
+            "sha256": "756ee31becb867396837a7c16a66d72a6e011da232e338e2362996767f309462",
+            "durationMs": 4092,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "host-user-activated",
+            "format": "mp3",
+            "channels": 1,
+            "sampleRateHz": 44100,
+            "sourceCharacterId": null
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/formula-elementary-conversion-01-04/evidence/audio-listening-sessions/formula-narration-es-es.template.json",
+            "sha256": "b2ca0fb60edebfd35c30d98142669ca991550fbab84d986f5d7738147028dcca"
+          },
+          "finalSessionDestination": "migrations/formula-elementary-conversion-01-04/evidence/audio-listening-sessions/formula-narration-es-es.json",
+          "runtimeEvidenceDirectory": "migrations/formula-elementary-conversion-01-04/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        }
+      ]
+    },
+    {
+      "animationId": "keyterm-elementary-acute-angle",
+      "manifestSha256": "2b37b804ea4b0277437f384c03b9a97311830d00fabb51606c75b2d7f91b50b9",
+      "strictAudioGate": "fail",
+      "machineReadiness": "prepared-partial-non-unblocking",
+      "cueCount": 1,
+      "acceptance": {
+        "path": "migrations/keyterm-elementary-acute-angle/evidence/audio-listening-acceptance.json",
+        "bytes": 1972,
+        "sha256": "60d26576b22305fcb1c1584323105680489ba2e299b7210b7ec35950dc971245",
+        "status": "pending"
+      },
+      "currentMigrationEvidence": {
+        "sessionFileCount": 0,
+        "runtimeArtifactFileCount": 0
+      },
+      "pendingAcceptanceTemplateCurrent": true,
+      "operator": {
+        "disposition": "partial-human-session-possible-but-non-unblocking",
+        "operatorReady": true,
+        "readinessBoundary": "unsigned-template-and-hash-bindings-only; natural host reachability and listening remain human observations",
+        "strictUnblockingPotential": "none-until-missing-or-inconsistent-audio-scope-is-resolved",
+        "machineOnlyStrictClosurePossible": false
+      },
+      "technicalBlockers": [
+        "es: missing source source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/SAD/acute_angle.mp3",
+        "Machine audio audit records 1 expected but missing track(s).",
+        "migration.audio.cues does not exactly match the machine-audited audio inventory identity.",
+        "migration.audio.languages does not exactly match inventoried cue languages.",
+        "Machine audio audit still has candidate, missing, or manifest-follow-up mappings; strict audio acceptance is not ready."
+      ],
+      "machineNotes": [],
+      "machineAuditRequirementsStillPending": [
+        "Adobe/original-host listening must verify spoken language/content, user-trigger behavior, start timing, pause/resume, and completion for every exact external track.",
+        "The host constructs the SAD counterpart of the exact EAD key-term track, but no matching Spanish MP3 is present for this pilot; the missing track must be confirmed and cannot be synthesized silently."
+      ],
+      "kit": {
+        "path": "work/audio-runtime-session-kits-20260724-current-v4/keyterm-elementary-acute-angle",
+        "manifestSha256": "c5dbda756d6fa54bc83f9a7a5b63e020e41abef7a06910439ed95f9460039374",
+        "runtime": {
+          "runtimeId": "adobe-flash-player-projector",
+          "name": "Adobe Flash Player Projector",
+          "version": "32.0.0.414",
+          "requestedAppPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "appPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "executablePath": "/Applications/Adobe Animate 2021/Players/Flash Player.app/Contents/MacOS/Flash Player",
+          "executableSha256": "8f4e10c8c28698f3429a1489f9592f6ae5697fb6eb7d15c4cfe83e925b1ebc30"
+        }
+      },
+      "authoritativeHost": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+        "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd"
+      },
+      "cues": [
+        {
+          "cue": {
+            "cueId": "catalog-audio-01",
+            "language": "en",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/EAD/acute_angle.mp3",
+            "sha256": "8b150d56158690d70c8f9891a72c13fdb62719b973bf970dcdeadaed612dc97f",
+            "durationMs": 7871,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "host-user-activated",
+            "format": "mp3",
+            "channels": 1,
+            "sampleRateHz": 44100,
+            "sourceCharacterId": null
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/keyterm-elementary-acute-angle/evidence/audio-listening-sessions/catalog-audio-01-en.template.json",
+            "sha256": "a2ef5092165829d9f5183a455b873bb2b0ab91531c9262e132f9b88ed6ed06fb"
+          },
+          "finalSessionDestination": "migrations/keyterm-elementary-acute-angle/evidence/audio-listening-sessions/catalog-audio-01-en.json",
+          "runtimeEvidenceDirectory": "migrations/keyterm-elementary-acute-angle/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        }
+      ]
+    },
+    {
+      "animationId": "keyterm-elementary-computeghgh",
+      "manifestSha256": "e02d15dbf0668cedf19c5f4b616ef65885c1185a310f8a524876794c2d9125fb",
+      "strictAudioGate": "pass",
+      "machineReadiness": "not-applicable-source-bound",
+      "cueCount": 0,
+      "acceptance": null,
+      "currentMigrationEvidence": {
+        "sessionFileCount": 0,
+        "runtimeArtifactFileCount": 0
+      },
+      "pendingAcceptanceTemplateCurrent": true,
+      "operator": {
+        "disposition": "no-listening-required-source-bound-no-audio",
+        "operatorReady": false,
+        "strictUnblockingPotential": "already-passes-audio-gate",
+        "machineOnlyStrictClosurePossible": false
+      },
+      "technicalBlockers": [],
+      "machineNotes": [
+        "The source-hash-bound shipped SWF contains no audio tag/data or audio ActionScript operation, the preserved archive has no matching MP3, and neither key-term XML nor the catalog exposes a host placement that could create an external cue."
+      ],
+      "machineAuditRequirementsStillPending": [],
+      "kit": null,
+      "authoritativeHost": null,
+      "cues": []
+    },
+    {
+      "animationId": "course-g03-l01-vb-004",
+      "manifestSha256": "b14c9d9335cd303f5aceae514acbbb2dc7517cddf253bf1c9489f1ebc8311ad2",
+      "strictAudioGate": "fail",
+      "machineReadiness": "prepared-unsigned-template",
+      "cueCount": 12,
+      "acceptance": {
+        "path": "migrations/course-g03-l01-vb-004/evidence/audio-listening-acceptance.json",
+        "bytes": 8959,
+        "sha256": "1deaf7e4442d140cf87116c44c5dcdae9373d5c8cb6e071b4c39befb44f7d4c5",
+        "status": "pending"
+      },
+      "currentMigrationEvidence": {
+        "sessionFileCount": 0,
+        "runtimeArtifactFileCount": 0
+      },
+      "pendingAcceptanceTemplateCurrent": true,
+      "operator": {
+        "disposition": "unsigned-template-ready-for-named-human-original-runtime-listening",
+        "operatorReady": true,
+        "readinessBoundary": "unsigned-template-and-hash-bindings-only; natural host reachability and listening remain human observations",
+        "strictUnblockingPotential": "audio-gate-can-pass-only-after-valid-human-session-evidence-and-acceptance",
+        "machineOnlyStrictClosurePossible": false
+      },
+      "technicalBlockers": [],
+      "machineNotes": [],
+      "machineAuditRequirementsStillPending": [
+        "Adobe/original-host listening must verify spoken language/content, user-trigger behavior, start timing, pause/resume, and completion for every exact external track.",
+        "Adobe/original-runtime listening is required to classify embedded speech versus effects, confirm language, and verify synchronization/loop/stop behavior.",
+        "Nested SoundStream local frames are known, but an authoritative traversal must map each sprite instance and interaction branch to its root/runtime cue time."
+      ],
+      "kit": {
+        "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-vb-004",
+        "manifestSha256": "45b9c4e05eab0e7c6d947ae4c06e1f45f03fa849d94b1aab32c81b174c6d80e2",
+        "runtime": {
+          "runtimeId": "adobe-flash-player-projector",
+          "name": "Adobe Flash Player Projector",
+          "version": "32.0.0.414",
+          "requestedAppPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "appPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "executablePath": "/Applications/Adobe Animate 2021/Players/Flash Player.app/Contents/MacOS/Flash Player",
+          "executableSha256": "8f4e10c8c28698f3429a1489f9592f6ae5697fb6eb7d15c4cfe83e925b1ebc30"
+        }
+      },
+      "authoritativeHost": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+        "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd"
+      },
+      "cues": [
+        {
+          "cue": {
+            "cueId": "catalog-audio-01",
+            "language": "es",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/SA/L1VB04.mp3",
+            "sha256": "b594513fbc63da6f76cef1cfe55ed7e76dc5bb257a7007d4dda1d5295f6cf4f4",
+            "durationMs": 5640,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "host-user-activated",
+            "format": "mp3",
+            "channels": 1,
+            "sampleRateHz": 48000,
+            "sourceCharacterId": null
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-vb-004/evidence/audio-listening-sessions/catalog-audio-01-es.template.json",
+            "sha256": "83733e993ec7787bfe7b59191c2a94f8c82741cca4f61923ec5b022b952d7644"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-vb-004/evidence/audio-listening-sessions/catalog-audio-01-es.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-vb-004/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0001",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/VB/L1VB04.swf",
+            "sha256": "8c9860663714843b4d858a50528ad82d6783d8446c38d6f1cc77ec03a07ec72e",
+            "durationMs": 392,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 63
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0001-und.template.json",
+            "sha256": "3976bd5df5970447754a2d550171ee919141664095eff914fcd47ebe3a86b90b"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0001-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-vb-004/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0002",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/VB/L1VB04.swf",
+            "sha256": "8c9860663714843b4d858a50528ad82d6783d8446c38d6f1cc77ec03a07ec72e",
+            "durationMs": 2220,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 74
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0002-und.template.json",
+            "sha256": "c0155ee811df2b025d348eb7bfa511f4f63e174a0434fcfcab615692c5ecd40c"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0002-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-vb-004/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0003",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/VB/L1VB04.swf",
+            "sha256": "8c9860663714843b4d858a50528ad82d6783d8446c38d6f1cc77ec03a07ec72e",
+            "durationMs": 2220,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 85
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0003-und.template.json",
+            "sha256": "ff6b178c3125cb3beac94b9784d04270baaecaced144c00dd6dfd8d3194618fa"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0003-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-vb-004/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0004",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/VB/L1VB04.swf",
+            "sha256": "8c9860663714843b4d858a50528ad82d6783d8446c38d6f1cc77ec03a07ec72e",
+            "durationMs": 2325,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 97
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0004-und.template.json",
+            "sha256": "691d443e99dd27d6c26025ac5e855795ea6d18e3b7a02c50fa8bfe063472b8a6"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0004-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-vb-004/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0005",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/VB/L1VB04.swf",
+            "sha256": "8c9860663714843b4d858a50528ad82d6783d8446c38d6f1cc77ec03a07ec72e",
+            "durationMs": 2403,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 109
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0005-und.template.json",
+            "sha256": "cd2add63cd5b7e90bc82985c48e4700cd7333ce07f0b5c651a46d158e43915fe"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0005-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-vb-004/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0006",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/VB/L1VB04.swf",
+            "sha256": "8c9860663714843b4d858a50528ad82d6783d8446c38d6f1cc77ec03a07ec72e",
+            "durationMs": 2142,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 121
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0006-und.template.json",
+            "sha256": "dac82d9d5bdb7c522efb695e64f23e5e2972aff209d1aecb9ad10f0ea70526cc"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0006-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-vb-004/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0007",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/VB/L1VB04.swf",
+            "sha256": "8c9860663714843b4d858a50528ad82d6783d8446c38d6f1cc77ec03a07ec72e",
+            "durationMs": 2220,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 149
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0007-und.template.json",
+            "sha256": "3d9b43c873bec0e7afabecf47590904157fea088abed28f2beba55cfbd0b175a"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0007-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-vb-004/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0008",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/VB/L1VB04.swf",
+            "sha256": "8c9860663714843b4d858a50528ad82d6783d8446c38d6f1cc77ec03a07ec72e",
+            "durationMs": 2142,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 188
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0008-und.template.json",
+            "sha256": "34cc687d313e0cd57102077230206795e29966c0f4b439e6c79a812ac61d5700"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0008-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-vb-004/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0009",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/VB/L1VB04.swf",
+            "sha256": "8c9860663714843b4d858a50528ad82d6783d8446c38d6f1cc77ec03a07ec72e",
+            "durationMs": 1985,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 213
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0009-und.template.json",
+            "sha256": "3968c1318b63bec87694b41c898d75c6f2dc4f3eb4365c4deaa5cc7c72582a0b"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0009-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-vb-004/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0010",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/VB/L1VB04.swf",
+            "sha256": "8c9860663714843b4d858a50528ad82d6783d8446c38d6f1cc77ec03a07ec72e",
+            "durationMs": 2220,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 229
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0010-und.template.json",
+            "sha256": "c25a047ac69ebfe7239031d165f927e149863e15aeea7ac1a6fe7d4c2d262d2d"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0010-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-vb-004/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0011",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/VB/L1VB04.swf",
+            "sha256": "8c9860663714843b4d858a50528ad82d6783d8446c38d6f1cc77ec03a07ec72e",
+            "durationMs": 17972,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 231
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0011-und.template.json",
+            "sha256": "5df7a8da34297a745604c42075d8b48e78e0067297ecbba6ba027013a8874549"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-vb-004/evidence/audio-listening-sessions/embedded-stream-0011-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-vb-004/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        }
+      ]
+    },
+    {
+      "animationId": "course-g04-l01-ir-001",
+      "manifestSha256": "4616774b30d6382efaeda1518e81d8fc0065425fe766f3d8fd975cfb6b48ffab",
+      "strictAudioGate": "fail",
+      "machineReadiness": "prepared-unsigned-template",
+      "cueCount": 2,
+      "acceptance": {
+        "path": "migrations/course-g04-l01-ir-001/evidence/audio-listening-acceptance.json",
+        "bytes": 2584,
+        "sha256": "555257a7601d7195a4ed120b4d502e6ce076a325364b3a5dc05f813f19fcd875",
+        "status": "pending"
+      },
+      "currentMigrationEvidence": {
+        "sessionFileCount": 0,
+        "runtimeArtifactFileCount": 0
+      },
+      "pendingAcceptanceTemplateCurrent": true,
+      "operator": {
+        "disposition": "unsigned-template-ready-for-named-human-original-runtime-listening",
+        "operatorReady": true,
+        "readinessBoundary": "unsigned-template-and-hash-bindings-only; natural host reachability and listening remain human observations",
+        "strictUnblockingPotential": "audio-gate-can-pass-only-after-valid-human-session-evidence-and-acceptance",
+        "machineOnlyStrictClosurePossible": false
+      },
+      "technicalBlockers": [],
+      "machineNotes": [],
+      "machineAuditRequirementsStillPending": [
+        "Adobe/original-runtime listening is required to classify embedded speech versus effects, confirm language, and verify synchronization/loop/stop behavior.",
+        "Nested SoundStream local frames are known, but an authoritative traversal must map each sprite instance and interaction branch to its root/runtime cue time."
+      ],
+      "kit": {
+        "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l01-ir-001",
+        "manifestSha256": "6331d64dec7e0314d8798d0efdc1bac9ea60af9e394a8cd73ebcca52740a9f8f",
+        "runtime": {
+          "runtimeId": "adobe-flash-player-projector",
+          "name": "Adobe Flash Player Projector",
+          "version": "32.0.0.414",
+          "requestedAppPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "appPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "executablePath": "/Applications/Adobe Animate 2021/Players/Flash Player.app/Contents/MacOS/Flash Player",
+          "executableSha256": "8f4e10c8c28698f3429a1489f9592f6ae5697fb6eb7d15c4cfe83e925b1ebc30"
+        }
+      },
+      "authoritativeHost": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+        "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd"
+      },
+      "cues": [
+        {
+          "cue": {
+            "cueId": "embedded-stream-0001",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/IR/L1RW01.swf",
+            "sha256": "b21b16d1e5756820b5703136708f625dcc3a324d629b2337b1dc42af64559e46",
+            "durationMs": 11233,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 2,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 7
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l01-ir-001/evidence/audio-listening-sessions/embedded-stream-0001-und.template.json",
+            "sha256": "5a0dcdb7c9d9152256940defffa618a7c36d4f746aca5a6464befa6f30a410a1"
+          },
+          "finalSessionDestination": "migrations/course-g04-l01-ir-001/evidence/audio-listening-sessions/embedded-stream-0001-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g04-l01-ir-001/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0002",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/IR/L1RW01.swf",
+            "sha256": "b21b16d1e5756820b5703136708f625dcc3a324d629b2337b1dc42af64559e46",
+            "durationMs": 11233,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 2,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 8
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l01-ir-001/evidence/audio-listening-sessions/embedded-stream-0002-und.template.json",
+            "sha256": "db739d68e1b23af0e1fb8c10ade1694f9c2afcbf92c901ee95264d74c27637f8"
+          },
+          "finalSessionDestination": "migrations/course-g04-l01-ir-001/evidence/audio-listening-sessions/embedded-stream-0002-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g04-l01-ir-001/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        }
+      ]
+    },
+    {
+      "animationId": "course-g03-l06-ti-001",
+      "manifestSha256": "ec847ac41dbfd2e262f53066f9769b06235fa6a0ad91e4beadf83a50e59bab46",
+      "strictAudioGate": "fail",
+      "machineReadiness": "prepared-unsigned-template",
+      "cueCount": 2,
+      "acceptance": {
+        "path": "migrations/course-g03-l06-ti-001/evidence/audio-listening-acceptance.json",
+        "bytes": 2584,
+        "sha256": "4cad3beb168f39006a677e4f91cd816e57dc0059ac1a573d39e3d75766321bb0",
+        "status": "pending"
+      },
+      "currentMigrationEvidence": {
+        "sessionFileCount": 0,
+        "runtimeArtifactFileCount": 0
+      },
+      "pendingAcceptanceTemplateCurrent": true,
+      "operator": {
+        "disposition": "unsigned-template-ready-for-named-human-original-runtime-listening",
+        "operatorReady": true,
+        "readinessBoundary": "unsigned-template-and-hash-bindings-only; natural host reachability and listening remain human observations",
+        "strictUnblockingPotential": "audio-gate-can-pass-only-after-valid-human-session-evidence-and-acceptance",
+        "machineOnlyStrictClosurePossible": false
+      },
+      "technicalBlockers": [],
+      "machineNotes": [],
+      "machineAuditRequirementsStillPending": [
+        "Adobe/original-runtime listening is required to classify embedded speech versus effects, confirm language, and verify synchronization/loop/stop behavior.",
+        "Nested SoundStream local frames are known, but an authoritative traversal must map each sprite instance and interaction branch to its root/runtime cue time."
+      ],
+      "kit": {
+        "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l06-ti-001",
+        "manifestSha256": "a9fd902cb5e4d0495184d1456e4bd01d7cf0267b22ab62dcc4eda73bea13c63c",
+        "runtime": {
+          "runtimeId": "adobe-flash-player-projector",
+          "name": "Adobe Flash Player Projector",
+          "version": "32.0.0.414",
+          "requestedAppPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "appPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "executablePath": "/Applications/Adobe Animate 2021/Players/Flash Player.app/Contents/MacOS/Flash Player",
+          "executableSha256": "8f4e10c8c28698f3429a1489f9592f6ae5697fb6eb7d15c4cfe83e925b1ebc30"
+        }
+      },
+      "authoritativeHost": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+        "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd"
+      },
+      "cues": [
+        {
+          "cue": {
+            "cueId": "embedded-stream-0001",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L6/TI/L6TI01.swf",
+            "sha256": "722b56b73cfc3bcff71c83cf71b00bfc89b4fdd3b147ecb43646f644f45dc739",
+            "durationMs": 11233,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 2,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 7
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l06-ti-001/evidence/audio-listening-sessions/embedded-stream-0001-und.template.json",
+            "sha256": "e71c43f700f8fe87cc608f9a6e9f679a8e9f80185e6d3b0bdd4c9d25b8e6416a"
+          },
+          "finalSessionDestination": "migrations/course-g03-l06-ti-001/evidence/audio-listening-sessions/embedded-stream-0001-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l06-ti-001/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0002",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L6/TI/L6TI01.swf",
+            "sha256": "722b56b73cfc3bcff71c83cf71b00bfc89b4fdd3b147ecb43646f644f45dc739",
+            "durationMs": 11233,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 2,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 8
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l06-ti-001/evidence/audio-listening-sessions/embedded-stream-0002-und.template.json",
+            "sha256": "4697fc65a24fb760c04ab73411c5067d10ed703f1bf070f236472738377bcd4a"
+          },
+          "finalSessionDestination": "migrations/course-g03-l06-ti-001/evidence/audio-listening-sessions/embedded-stream-0002-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l06-ti-001/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        }
+      ]
+    },
+    {
+      "animationId": "course-g04-l03-in-009",
+      "manifestSha256": "1ce0052bf4f7d68cb7ba2effc65c52592f6ba1717864da9c31ccadacf32bb5c9",
+      "strictAudioGate": "fail",
+      "machineReadiness": "prepared-unsigned-template",
+      "cueCount": 2,
+      "acceptance": {
+        "path": "migrations/course-g04-l03-in-009/evidence/audio-listening-acceptance.json",
+        "bytes": 2581,
+        "sha256": "333d123d6b8683d32a3ca3f6885df2dd22a0ae12a2f2cae6b3f62302ba7f0ad1",
+        "status": "pending"
+      },
+      "currentMigrationEvidence": {
+        "sessionFileCount": 0,
+        "runtimeArtifactFileCount": 0
+      },
+      "pendingAcceptanceTemplateCurrent": true,
+      "operator": {
+        "disposition": "unsigned-template-ready-for-named-human-original-runtime-listening",
+        "operatorReady": true,
+        "readinessBoundary": "unsigned-template-and-hash-bindings-only; natural host reachability and listening remain human observations",
+        "strictUnblockingPotential": "audio-gate-can-pass-only-after-valid-human-session-evidence-and-acceptance",
+        "machineOnlyStrictClosurePossible": false
+      },
+      "technicalBlockers": [],
+      "machineNotes": [],
+      "machineAuditRequirementsStillPending": [
+        "Adobe/original-host listening must verify spoken language/content, user-trigger behavior, start timing, pause/resume, and completion for every exact external track.",
+        "Adobe/original-runtime listening is required to classify embedded speech versus effects, confirm language, and verify synchronization/loop/stop behavior.",
+        "Nested SoundStream local frames are known, but an authoritative traversal must map each sprite instance and interaction branch to its root/runtime cue time."
+      ],
+      "kit": {
+        "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l03-in-009",
+        "manifestSha256": "e7fe03a68a8bc1fd60fe321d9e34520cc83b1fc79189e09c8ffa84c2a6d2f950",
+        "runtime": {
+          "runtimeId": "adobe-flash-player-projector",
+          "name": "Adobe Flash Player Projector",
+          "version": "32.0.0.414",
+          "requestedAppPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "appPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "executablePath": "/Applications/Adobe Animate 2021/Players/Flash Player.app/Contents/MacOS/Flash Player",
+          "executableSha256": "8f4e10c8c28698f3429a1489f9592f6ae5697fb6eb7d15c4cfe83e925b1ebc30"
+        }
+      },
+      "authoritativeHost": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+        "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd"
+      },
+      "cues": [
+        {
+          "cue": {
+            "cueId": "catalog-audio-01",
+            "language": "es",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN09.mp3",
+            "sha256": "1d2370d59a6400dbd666a3f049fd4222a54d664e62055a1fb5f93596b9a2ea4b",
+            "durationMs": 40344,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "host-user-activated",
+            "format": "mp3",
+            "channels": 1,
+            "sampleRateHz": 48000,
+            "sourceCharacterId": null
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l03-in-009/evidence/audio-listening-sessions/catalog-audio-01-es.template.json",
+            "sha256": "4fd84b13366213517bc609843a71321602d16a08ec22b421a103456912c004b6"
+          },
+          "finalSessionDestination": "migrations/course-g04-l03-in-009/evidence/audio-listening-sessions/catalog-audio-01-es.json",
+          "runtimeEvidenceDirectory": "migrations/course-g04-l03-in-009/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0001",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN09.swf",
+            "sha256": "766b6ab686bbaf8ab1dacc30a7ffb96f33735102a1dff7df6b7a97976e3ab25c",
+            "durationMs": 48901,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 200
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l03-in-009/evidence/audio-listening-sessions/embedded-stream-0001-und.template.json",
+            "sha256": "dd91fd52a25861ab2165ec7eb067100f2fe547d3f28bb23fe504c0630680a443"
+          },
+          "finalSessionDestination": "migrations/course-g04-l03-in-009/evidence/audio-listening-sessions/embedded-stream-0001-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g04-l03-in-009/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        }
+      ]
+    },
+    {
+      "animationId": "course-g04-l09-gs-002",
+      "manifestSha256": "fa67f35533c1e0b9ec73bfcc04786263f2875ed46db3aac064b19ccff13a8f37",
+      "strictAudioGate": "fail",
+      "machineReadiness": "prepared-unsigned-template",
+      "cueCount": 13,
+      "acceptance": {
+        "path": "migrations/course-g04-l09-gs-002/evidence/audio-listening-acceptance.json",
+        "bytes": 9598,
+        "sha256": "7acad7cbdec26a46faffbe50b65941384e916bbc79c4625d8bb81cd5120422e7",
+        "status": "pending"
+      },
+      "currentMigrationEvidence": {
+        "sessionFileCount": 0,
+        "runtimeArtifactFileCount": 0
+      },
+      "pendingAcceptanceTemplateCurrent": true,
+      "operator": {
+        "disposition": "unsigned-template-ready-for-named-human-original-runtime-listening",
+        "operatorReady": true,
+        "readinessBoundary": "unsigned-template-and-hash-bindings-only; natural host reachability and listening remain human observations",
+        "strictUnblockingPotential": "audio-gate-can-pass-only-after-valid-human-session-evidence-and-acceptance",
+        "machineOnlyStrictClosurePossible": false
+      },
+      "technicalBlockers": [],
+      "machineNotes": [],
+      "machineAuditRequirementsStillPending": [
+        "Adobe/original-host listening must verify spoken language/content, user-trigger behavior, start timing, pause/resume, and completion for every exact external track.",
+        "Adobe/original-runtime listening is required to classify embedded speech versus effects, confirm language, and verify synchronization/loop/stop behavior.",
+        "Nested SoundStream local frames are known, but an authoritative traversal must map each sprite instance and interaction branch to its root/runtime cue time."
+      ],
+      "kit": {
+        "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l09-gs-002",
+        "manifestSha256": "32decd8c75e1e22baf7fded0c1243dcc2bbf7129fe2a5e57423447b3e14b1594",
+        "runtime": {
+          "runtimeId": "adobe-flash-player-projector",
+          "name": "Adobe Flash Player Projector",
+          "version": "32.0.0.414",
+          "requestedAppPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "appPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "executablePath": "/Applications/Adobe Animate 2021/Players/Flash Player.app/Contents/MacOS/Flash Player",
+          "executableSha256": "8f4e10c8c28698f3429a1489f9592f6ae5697fb6eb7d15c4cfe83e925b1ebc30"
+        }
+      },
+      "authoritativeHost": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+        "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd"
+      },
+      "cues": [
+        {
+          "cue": {
+            "cueId": "catalog-audio-01",
+            "language": "es",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L9/SA/L9GS02.mp3",
+            "sha256": "fc1d611959deedae1d0ac4005b09c416fbd1711536c3190d190795798a4ad9d3",
+            "durationMs": 44544,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "host-user-activated",
+            "format": "mp3",
+            "channels": 1,
+            "sampleRateHz": 48000,
+            "sourceCharacterId": null
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l09-gs-002/evidence/audio-listening-sessions/catalog-audio-01-es.template.json",
+            "sha256": "ebc8a208546889b3ff96f2f019f18d2e2bc195570d50a601328c966052fac7ce"
+          },
+          "finalSessionDestination": "migrations/course-g04-l09-gs-002/evidence/audio-listening-sessions/catalog-audio-01-es.json",
+          "runtimeEvidenceDirectory": "migrations/course-g04-l09-gs-002/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0001",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L9/GS/L9GS02.swf",
+            "sha256": "41cdb7e5cc5735eef2af3e4831908c47781840f0addcc3ac1a2142cbb0d48f15",
+            "durationMs": 392,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 11
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0001-und.template.json",
+            "sha256": "dea530350f2a554f965a69342029900bf0b0de6f9af0113c284d407475c16984"
+          },
+          "finalSessionDestination": "migrations/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0001-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g04-l09-gs-002/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0002",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L9/GS/L9GS02.swf",
+            "sha256": "41cdb7e5cc5735eef2af3e4831908c47781840f0addcc3ac1a2142cbb0d48f15",
+            "durationMs": 7314,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 223
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0002-und.template.json",
+            "sha256": "6c20ee23cd06f70214353d39857c7892c1928792526aec4560e22dcc49d33f4e"
+          },
+          "finalSessionDestination": "migrations/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0002-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g04-l09-gs-002/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0003",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L9/GS/L9GS02.swf",
+            "sha256": "41cdb7e5cc5735eef2af3e4831908c47781840f0addcc3ac1a2142cbb0d48f15",
+            "durationMs": 7314,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 291
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0003-und.template.json",
+            "sha256": "d135ade45fb0af22dbebd963602f503de183e06b5c0b30ce35f9e66da800fcdf"
+          },
+          "finalSessionDestination": "migrations/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0003-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g04-l09-gs-002/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0004",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L9/GS/L9GS02.swf",
+            "sha256": "41cdb7e5cc5735eef2af3e4831908c47781840f0addcc3ac1a2142cbb0d48f15",
+            "durationMs": 7314,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 371
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0004-und.template.json",
+            "sha256": "7e6ee98b061fbb2e23093438f763ddf3d398a5b45e6c43d292baaf7638486922"
+          },
+          "finalSessionDestination": "migrations/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0004-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g04-l09-gs-002/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0005",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L9/GS/L9GS02.swf",
+            "sha256": "41cdb7e5cc5735eef2af3e4831908c47781840f0addcc3ac1a2142cbb0d48f15",
+            "durationMs": 6740,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 402
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0005-und.template.json",
+            "sha256": "3099faa24b6e1a4fa11b9f8d4c8de03987c3d5d9e04f144760dcb253c54fa684"
+          },
+          "finalSessionDestination": "migrations/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0005-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g04-l09-gs-002/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0006",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L9/GS/L9GS02.swf",
+            "sha256": "41cdb7e5cc5735eef2af3e4831908c47781840f0addcc3ac1a2142cbb0d48f15",
+            "durationMs": 6975,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 462
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0006-und.template.json",
+            "sha256": "f0642be2fd7043d381cb09f24882a05162e519f2a4fd6fe24b39ce4cb9db551a"
+          },
+          "finalSessionDestination": "migrations/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0006-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g04-l09-gs-002/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0007",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L9/GS/L9GS02.swf",
+            "sha256": "41cdb7e5cc5735eef2af3e4831908c47781840f0addcc3ac1a2142cbb0d48f15",
+            "durationMs": 6818,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 516
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0007-und.template.json",
+            "sha256": "52fb88274e3fd822ddd892d18976028d508061eed33b2721def543cfcfecd630"
+          },
+          "finalSessionDestination": "migrations/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0007-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g04-l09-gs-002/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0008",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L9/GS/L9GS02.swf",
+            "sha256": "41cdb7e5cc5735eef2af3e4831908c47781840f0addcc3ac1a2142cbb0d48f15",
+            "durationMs": 7053,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 546
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0008-und.template.json",
+            "sha256": "4df6e745c6e50ebe98b9242dd5404a7362e33bf4343128eaa00ed7bb1f1c06e7"
+          },
+          "finalSessionDestination": "migrations/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0008-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g04-l09-gs-002/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0009",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L9/GS/L9GS02.swf",
+            "sha256": "41cdb7e5cc5735eef2af3e4831908c47781840f0addcc3ac1a2142cbb0d48f15",
+            "durationMs": 7811,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 644
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0009-und.template.json",
+            "sha256": "72902d44130b10bd4240f0acf425103eeaa0466f8df0bab06819105b742c9eb5"
+          },
+          "finalSessionDestination": "migrations/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0009-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g04-l09-gs-002/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0010",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L9/GS/L9GS02.swf",
+            "sha256": "41cdb7e5cc5735eef2af3e4831908c47781840f0addcc3ac1a2142cbb0d48f15",
+            "durationMs": 3396,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 651
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0010-und.template.json",
+            "sha256": "90ccfedfabc9792b5b3f1841f80d64d8713866d003db91d6138328b969615059"
+          },
+          "finalSessionDestination": "migrations/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0010-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g04-l09-gs-002/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0011",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L9/GS/L9GS02.swf",
+            "sha256": "41cdb7e5cc5735eef2af3e4831908c47781840f0addcc3ac1a2142cbb0d48f15",
+            "durationMs": 9221,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 786
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0011-und.template.json",
+            "sha256": "21b6e7afcca0ebe96e5413b06ed3170336474e704da189fb65130b02b7153d0d"
+          },
+          "finalSessionDestination": "migrations/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0011-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g04-l09-gs-002/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0012",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L9/GS/L9GS02.swf",
+            "sha256": "41cdb7e5cc5735eef2af3e4831908c47781840f0addcc3ac1a2142cbb0d48f15",
+            "durationMs": 50573,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 787
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0012-und.template.json",
+            "sha256": "2aadcf0bb28721ed5c3143033db10a1cf2fb92ce2eec2506cc74fdcaa105dcca"
+          },
+          "finalSessionDestination": "migrations/course-g04-l09-gs-002/evidence/audio-listening-sessions/embedded-stream-0012-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g04-l09-gs-002/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        }
+      ]
+    },
+    {
+      "animationId": "course-g05-l13-rw-002",
+      "manifestSha256": "5d984a5a4202504e22b481228784854c94e6db2e595bc176545e2b795c33e5c2",
+      "strictAudioGate": "fail",
+      "machineReadiness": "prepared-unsigned-template",
+      "cueCount": 2,
+      "acceptance": {
+        "path": "migrations/course-g05-l13-rw-002/evidence/audio-listening-acceptance.json",
+        "bytes": 2588,
+        "sha256": "54b790a9f7b52d17bd600a54e521e2040cec92154312b03e99827902853b4766",
+        "status": "pending"
+      },
+      "currentMigrationEvidence": {
+        "sessionFileCount": 0,
+        "runtimeArtifactFileCount": 0
+      },
+      "pendingAcceptanceTemplateCurrent": true,
+      "operator": {
+        "disposition": "unsigned-template-ready-for-named-human-original-runtime-listening",
+        "operatorReady": true,
+        "readinessBoundary": "unsigned-template-and-hash-bindings-only; natural host reachability and listening remain human observations",
+        "strictUnblockingPotential": "audio-gate-can-pass-only-after-valid-human-session-evidence-and-acceptance",
+        "machineOnlyStrictClosurePossible": false
+      },
+      "technicalBlockers": [],
+      "machineNotes": [],
+      "machineAuditRequirementsStillPending": [
+        "Adobe/original-host listening must verify spoken language/content, user-trigger behavior, start timing, pause/resume, and completion for every exact external track.",
+        "Adobe/original-runtime listening is required to classify embedded speech versus effects, confirm language, and verify synchronization/loop/stop behavior.",
+        "Nested SoundStream local frames are known, but an authoritative traversal must map each sprite instance and interaction branch to its root/runtime cue time."
+      ],
+      "kit": {
+        "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g05-l13-rw-002",
+        "manifestSha256": "166280ac3087b3d396c878f236eb814a14901130947a3a0bdb625de9cbc8f4dc",
+        "runtime": {
+          "runtimeId": "adobe-flash-player-projector",
+          "name": "Adobe Flash Player Projector",
+          "version": "32.0.0.414",
+          "requestedAppPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "appPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "executablePath": "/Applications/Adobe Animate 2021/Players/Flash Player.app/Contents/MacOS/Flash Player",
+          "executableSha256": "8f4e10c8c28698f3429a1489f9592f6ae5697fb6eb7d15c4cfe83e925b1ebc30"
+        }
+      },
+      "authoritativeHost": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+        "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd"
+      },
+      "cues": [
+        {
+          "cue": {
+            "cueId": "catalog-audio-01",
+            "language": "es",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/SA/L13RW02.mp3",
+            "sha256": "2e809c69df60cec11427a71d38b37b830a0a9ec805e3c8ff4f68734cb53bfcd2",
+            "durationMs": 26544,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "host-user-activated",
+            "format": "mp3",
+            "channels": 1,
+            "sampleRateHz": 48000,
+            "sourceCharacterId": null
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g05-l13-rw-002/evidence/audio-listening-sessions/catalog-audio-01-es.template.json",
+            "sha256": "edc579514ed954f1d58ea2e641bc16b6fb985722cc322aa550caeeb820144b24"
+          },
+          "finalSessionDestination": "migrations/course-g05-l13-rw-002/evidence/audio-listening-sessions/catalog-audio-01-es.json",
+          "runtimeEvidenceDirectory": "migrations/course-g05-l13-rw-002/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0001",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/RW/L13RW02.swf",
+            "sha256": "bf9ab1d12832fbe54c5bef08d0dd51307169eefbae1f75188efd9db94ed9e4e6",
+            "durationMs": 155611,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 334
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g05-l13-rw-002/evidence/audio-listening-sessions/embedded-stream-0001-und.template.json",
+            "sha256": "b1ee57e459ef93d0b0472a1862689d0671d78e56cd207cf95db130980393e708"
+          },
+          "finalSessionDestination": "migrations/course-g05-l13-rw-002/evidence/audio-listening-sessions/embedded-stream-0001-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g05-l13-rw-002/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        }
+      ]
+    },
+    {
+      "animationId": "course-g03-l01-ts-008",
+      "manifestSha256": "d3c271bd10a34415d2b8e7f6e38df33c4222966927d0a840ee0b0cb6549cd249",
+      "strictAudioGate": "fail",
+      "machineReadiness": "prepared-unsigned-template",
+      "cueCount": 13,
+      "acceptance": {
+        "path": "migrations/course-g03-l01-ts-008/evidence/audio-listening-acceptance.json",
+        "bytes": 9597,
+        "sha256": "9590022fb2442a19a284de82eb3a4a3ff7782fc773c2e194a2e37b7aa6eb6c4c",
+        "status": "pending"
+      },
+      "currentMigrationEvidence": {
+        "sessionFileCount": 0,
+        "runtimeArtifactFileCount": 0
+      },
+      "pendingAcceptanceTemplateCurrent": true,
+      "operator": {
+        "disposition": "unsigned-template-ready-for-named-human-original-runtime-listening",
+        "operatorReady": true,
+        "readinessBoundary": "unsigned-template-and-hash-bindings-only; natural host reachability and listening remain human observations",
+        "strictUnblockingPotential": "audio-gate-can-pass-only-after-valid-human-session-evidence-and-acceptance",
+        "machineOnlyStrictClosurePossible": false
+      },
+      "technicalBlockers": [],
+      "machineNotes": [],
+      "machineAuditRequirementsStillPending": [
+        "Adobe/original-host listening must verify spoken language/content, user-trigger behavior, start timing, pause/resume, and completion for every exact external track.",
+        "Adobe/original-runtime listening is required to classify embedded speech versus effects, confirm language, and verify synchronization/loop/stop behavior.",
+        "Nested SoundStream local frames are known, but an authoritative traversal must map each sprite instance and interaction branch to its root/runtime cue time."
+      ],
+      "kit": {
+        "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-ts-008",
+        "manifestSha256": "1fc4251ae750b976c2e78a1ac1a475c24c20fd6101da722eacf8c583a61f859f",
+        "runtime": {
+          "runtimeId": "adobe-flash-player-projector",
+          "name": "Adobe Flash Player Projector",
+          "version": "32.0.0.414",
+          "requestedAppPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "appPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "executablePath": "/Applications/Adobe Animate 2021/Players/Flash Player.app/Contents/MacOS/Flash Player",
+          "executableSha256": "8f4e10c8c28698f3429a1489f9592f6ae5697fb6eb7d15c4cfe83e925b1ebc30"
+        }
+      },
+      "authoritativeHost": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+        "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd"
+      },
+      "cues": [
+        {
+          "cue": {
+            "cueId": "catalog-audio-01",
+            "language": "es",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/SA/L1TS08.mp3",
+            "sha256": "e81753a65c066c3b0112abf7dda689712a15aa022c8cc5ee7b4e38724c9fb734",
+            "durationMs": 9408,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "host-user-activated",
+            "format": "mp3",
+            "channels": 1,
+            "sampleRateHz": 48000,
+            "sourceCharacterId": null
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-ts-008/evidence/audio-listening-sessions/catalog-audio-01-es.template.json",
+            "sha256": "a166cbbee0860d4901d8c1c20a42661477fed2d3867790c4910f02302c3f1d9b"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-ts-008/evidence/audio-listening-sessions/catalog-audio-01-es.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-ts-008/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0001",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/TS/L1TS08.swf",
+            "sha256": "9749ae5f4d533379aa58531e541ffd5da1624bc8fcea38660d54d0f5d3ddc29b",
+            "durationMs": 5721,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 101
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0001-und.template.json",
+            "sha256": "9dfa49c5b63f3f388682c0de97e4f96c5d72341efb6f49744beff792684cfa59"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0001-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-ts-008/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0002",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/TS/L1TS08.swf",
+            "sha256": "9749ae5f4d533379aa58531e541ffd5da1624bc8fcea38660d54d0f5d3ddc29b",
+            "durationMs": 392,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 131
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0002-und.template.json",
+            "sha256": "92769ddc8e42321608739212515d67d9e76e65ed7d62e4b7caa310814aaad223"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0002-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-ts-008/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0003",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/TS/L1TS08.swf",
+            "sha256": "9749ae5f4d533379aa58531e541ffd5da1624bc8fcea38660d54d0f5d3ddc29b",
+            "durationMs": 2220,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 195
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0003-und.template.json",
+            "sha256": "277337c2923f7f1b98fbf6c799700338e10e1c45296ece6681985b0ab006d588"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0003-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-ts-008/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0004",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/TS/L1TS08.swf",
+            "sha256": "9749ae5f4d533379aa58531e541ffd5da1624bc8fcea38660d54d0f5d3ddc29b",
+            "durationMs": 2220,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 206
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0004-und.template.json",
+            "sha256": "9a3f576e45317c6231b03a9d91b2f1d8651d93479f7c8f01ef4db67384725f94"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0004-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-ts-008/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0005",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/TS/L1TS08.swf",
+            "sha256": "9749ae5f4d533379aa58531e541ffd5da1624bc8fcea38660d54d0f5d3ddc29b",
+            "durationMs": 2325,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 218
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0005-und.template.json",
+            "sha256": "0f4e0c5e386f8c6012c71c17393d0ed70ac2c64282e3df299c2cb06075602bc6"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0005-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-ts-008/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0006",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/TS/L1TS08.swf",
+            "sha256": "9749ae5f4d533379aa58531e541ffd5da1624bc8fcea38660d54d0f5d3ddc29b",
+            "durationMs": 2403,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 230
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0006-und.template.json",
+            "sha256": "fb544376d3e7edc467d42870cfba2c9af09e06885aef073bbdf5671fae262735"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0006-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-ts-008/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0007",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/TS/L1TS08.swf",
+            "sha256": "9749ae5f4d533379aa58531e541ffd5da1624bc8fcea38660d54d0f5d3ddc29b",
+            "durationMs": 2142,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 242
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0007-und.template.json",
+            "sha256": "c2dd0f0f5457b33978e52961c0ceb1d5c268fa31c06c8ba266afe7dce53fb359"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0007-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-ts-008/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0008",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/TS/L1TS08.swf",
+            "sha256": "9749ae5f4d533379aa58531e541ffd5da1624bc8fcea38660d54d0f5d3ddc29b",
+            "durationMs": 2220,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 270
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0008-und.template.json",
+            "sha256": "eab1e37f45b053d3f113da6dfa4c6031412df2c2591769eb0994777d5c806d17"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0008-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-ts-008/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0009",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/TS/L1TS08.swf",
+            "sha256": "9749ae5f4d533379aa58531e541ffd5da1624bc8fcea38660d54d0f5d3ddc29b",
+            "durationMs": 1985,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 294
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0009-und.template.json",
+            "sha256": "cd219dbf2f5050504a74709fd13c6caf197e9a6568e89bab6e191d904a6945b6"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0009-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-ts-008/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0010",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/TS/L1TS08.swf",
+            "sha256": "9749ae5f4d533379aa58531e541ffd5da1624bc8fcea38660d54d0f5d3ddc29b",
+            "durationMs": 2220,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 310
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0010-und.template.json",
+            "sha256": "778a594a5bed491b4237e83de092485b4630721747bf48e2d374b073c7bf09ba"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0010-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-ts-008/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0011",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/TS/L1TS08.swf",
+            "sha256": "9749ae5f4d533379aa58531e541ffd5da1624bc8fcea38660d54d0f5d3ddc29b",
+            "durationMs": 1082,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-adpcm-stream",
+            "channels": 1,
+            "sampleRateHz": 5512.5,
+            "sourceCharacterId": 322
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0011-und.template.json",
+            "sha256": "d7a8866e8cc8a3a4a4930c536a7c0e16fbe6464088310fba676e7e5e9333c101"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0011-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-ts-008/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0012",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/TS/L1TS08.swf",
+            "sha256": "9749ae5f4d533379aa58531e541ffd5da1624bc8fcea38660d54d0f5d3ddc29b",
+            "durationMs": 60473,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 348
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0012-und.template.json",
+            "sha256": "7fb6e6b41dee8377731def61e1474e256a335bdd41664ecdcf43c59fede66b3d"
+          },
+          "finalSessionDestination": "migrations/course-g03-l01-ts-008/evidence/audio-listening-sessions/embedded-stream-0012-und.json",
+          "runtimeEvidenceDirectory": "migrations/course-g03-l01-ts-008/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        }
+      ]
+    },
+    {
+      "animationId": "course-g03-l06-fq-002-review",
+      "manifestSha256": "5576094b2c47b2326de5634f094cbb5cfde4b3803c2b2d5d408cc794ed8fe98e",
+      "strictAudioGate": "fail",
+      "machineReadiness": "blocked-before-template",
+      "cueCount": 0,
+      "acceptance": null,
+      "currentMigrationEvidence": {
+        "sessionFileCount": 0,
+        "runtimeArtifactFileCount": 0
+      },
+      "pendingAcceptanceTemplateCurrent": false,
+      "operator": {
+        "disposition": "blocked-before-authoritative-listening",
+        "operatorReady": false,
+        "readinessBoundary": "no authoritative listening should begin until the listed machine/evidence blockers are resolved",
+        "strictUnblockingPotential": "none-until-listed-machine-or-evidence-blockers-are-resolved",
+        "machineOnlyStrictClosurePossible": false
+      },
+      "technicalBlockers": [
+        "audio inventory has no resolved cue rows",
+        "182 expected source audio path(s) are missing",
+        "129 lesson-group candidate association(s) remain unresolved",
+        "1 manifest follow-up item(s) remain unresolved",
+        "Audio is required but audio-inventory.csv has no rows.",
+        "Machine audio audit records 182 expected but missing track(s).",
+        "Machine audio audit still has candidate, missing, or manifest-follow-up mappings; strict audio acceptance is not ready.",
+        "Authoritative audio listening acceptance cannot be read (file does not exist).",
+        "audio listening acceptance is absent or not the exact current unsigned pending template"
+      ],
+      "machineNotes": [],
+      "machineAuditRequirementsStillPending": [],
+      "kit": null,
+      "authoritativeHost": null,
+      "cues": []
+    },
+    {
+      "animationId": "course-g03-l08-re-001",
+      "manifestSha256": "3b78cf26bbadbadd8769090a560af13cc5caa3651684d35d9a45e8f3388ddbc5",
+      "strictAudioGate": "pass",
+      "machineReadiness": "not-applicable-source-bound",
+      "cueCount": 0,
+      "acceptance": null,
+      "currentMigrationEvidence": {
+        "sessionFileCount": 0,
+        "runtimeArtifactFileCount": 0
+      },
+      "pendingAcceptanceTemplateCurrent": true,
+      "operator": {
+        "disposition": "no-listening-required-source-bound-no-audio",
+        "operatorReady": false,
+        "strictUnblockingPotential": "already-passes-audio-gate",
+        "machineOnlyStrictClosurePossible": false
+      },
+      "technicalBlockers": [],
+      "machineNotes": [
+        "No DefineSound, SoundStream, StartSound, exact external association, or ActionScript audio operation was found. Authoritative listening across host-bound states remains pending before strict not-applicable acceptance."
+      ],
+      "machineAuditRequirementsStillPending": [],
+      "kit": null,
+      "authoritativeHost": null,
+      "cues": []
+    },
+    {
+      "animationId": "shell-course-g04-l01-index-local",
+      "manifestSha256": "bfb4edd6d2c607ea52d5e113e82b2d836348355761584eeb54cf2625a5fc3aa4",
+      "strictAudioGate": "fail",
+      "machineReadiness": "prepared-unsigned-template",
+      "cueCount": 16,
+      "acceptance": {
+        "path": "migrations/shell-course-g04-l01-index-local/evidence/audio-listening-acceptance.json",
+        "bytes": 11568,
+        "sha256": "17c615c3963fec87faf933b7e63e354fdfd51e9e50ef6cd2b43f2c729399f7ed",
+        "status": "pending"
+      },
+      "currentMigrationEvidence": {
+        "sessionFileCount": 0,
+        "runtimeArtifactFileCount": 0
+      },
+      "pendingAcceptanceTemplateCurrent": true,
+      "operator": {
+        "disposition": "unsigned-template-ready-for-named-human-original-runtime-listening",
+        "operatorReady": true,
+        "readinessBoundary": "unsigned-template-and-hash-bindings-only; natural host reachability and listening remain human observations",
+        "strictUnblockingPotential": "audio-gate-can-pass-only-after-valid-human-session-evidence-and-acceptance",
+        "machineOnlyStrictClosurePossible": false
+      },
+      "technicalBlockers": [],
+      "machineNotes": [],
+      "machineAuditRequirementsStillPending": [
+        "Adobe/original-runtime listening is required to classify embedded speech versus effects, confirm language, and verify synchronization/loop/stop behavior.",
+        "Nested SoundStream local frames are known, but an authoritative traversal must map each sprite instance and interaction branch to its root/runtime cue time.",
+        "ActionScript audio calls are conditional/event-driven; host state and interaction traversal must prove resolved URL/linkage, invocation order, offsets, loops, and stop behavior."
+      ],
+      "kit": {
+        "path": "work/audio-runtime-session-kits-20260724-current-v4/shell-course-g04-l01-index-local",
+        "manifestSha256": "24a4d8eff99fbee1f15192bba3550415768fd8d4175bde8bedc5b04b33f9e96a",
+        "runtime": {
+          "runtimeId": "adobe-flash-player-projector",
+          "name": "Adobe Flash Player Projector",
+          "version": "32.0.0.414",
+          "requestedAppPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "appPath": "/Applications/Adobe Animate 2021/Players/Flash Player.app",
+          "executablePath": "/Applications/Adobe Animate 2021/Players/Flash Player.app/Contents/MacOS/Flash Player",
+          "executableSha256": "8f4e10c8c28698f3429a1489f9592f6ae5697fb6eb7d15c4cfe83e925b1ebc30"
+        }
+      },
+      "authoritativeHost": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+        "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd"
+      },
+      "cues": [
+        {
+          "cue": {
+            "cueId": "embedded-define-sound-0001",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+            "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+            "durationMs": 4598,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3",
+            "channels": 2,
+            "sampleRateHz": 44100,
+            "sourceCharacterId": 1
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-define-sound-0001-und.template.json",
+            "sha256": "2d72cf4ad5eeeeecab1a68e110c3509df522628635069e943b5fe280f687ccc4"
+          },
+          "finalSessionDestination": "migrations/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-define-sound-0001-und.json",
+          "runtimeEvidenceDirectory": "migrations/shell-course-g04-l01-index-local/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-define-sound-0002",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+            "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+            "durationMs": 20193,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3",
+            "channels": 1,
+            "sampleRateHz": 44100,
+            "sourceCharacterId": 2
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-define-sound-0002-und.template.json",
+            "sha256": "5540dd3cbf88e3f1f8246f3bbd4a8f5e709dcc25fd9ccf328f07b12e33cb5396"
+          },
+          "finalSessionDestination": "migrations/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-define-sound-0002-und.json",
+          "runtimeEvidenceDirectory": "migrations/shell-course-g04-l01-index-local/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-define-sound-0149",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+            "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+            "durationMs": 13,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 149
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-define-sound-0149-und.template.json",
+            "sha256": "6825a61a739aa19e31610c8a3423f2a693d687f950c8becc8bb9679300374f7f"
+          },
+          "finalSessionDestination": "migrations/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-define-sound-0149-und.json",
+          "runtimeEvidenceDirectory": "migrations/shell-course-g04-l01-index-local/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-define-sound-0150",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+            "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+            "durationMs": 57,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 150
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-define-sound-0150-und.template.json",
+            "sha256": "12de670aedd66edb147d12a8f478de1d488ad3722a7f13d0a3ca7d1a9692f2b2"
+          },
+          "finalSessionDestination": "migrations/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-define-sound-0150-und.json",
+          "runtimeEvidenceDirectory": "migrations/shell-course-g04-l01-index-local/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0100",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+            "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+            "durationMs": 392,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 224
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0100-und.template.json",
+            "sha256": "368204e20ef3db3155b58ff9235e67b81eeaebcf69abccb6e20e19c197b6301f"
+          },
+          "finalSessionDestination": "migrations/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0100-und.json",
+          "runtimeEvidenceDirectory": "migrations/shell-course-g04-l01-index-local/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0137",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+            "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+            "durationMs": 575,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 794
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0137-und.template.json",
+            "sha256": "29238e42a3e3c1dca28f4ce15072b8ec18c23a8d8a036c1f390d5adee03e637c"
+          },
+          "finalSessionDestination": "migrations/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0137-und.json",
+          "runtimeEvidenceDirectory": "migrations/shell-course-g04-l01-index-local/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0141",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+            "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+            "durationMs": 810,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 812
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0141-und.template.json",
+            "sha256": "8730b046875c272adbf049d44890adf50b622d98845b2e951c0c19c91e0106af"
+          },
+          "finalSessionDestination": "migrations/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0141-und.json",
+          "runtimeEvidenceDirectory": "migrations/shell-course-g04-l01-index-local/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0144",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+            "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+            "durationMs": 575,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 826
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0144-und.template.json",
+            "sha256": "f5b3ca516a0a3c1c800064e8d88a56b1abba2c28c69764908a07f5cb7f85fdfb"
+          },
+          "finalSessionDestination": "migrations/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0144-und.json",
+          "runtimeEvidenceDirectory": "migrations/shell-course-g04-l01-index-local/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0147",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+            "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+            "durationMs": 575,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 838
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0147-und.template.json",
+            "sha256": "82c45d2f477c4dbf81b64dc41d0ac6915148a8ad8ce9124c7fa95df21b35e732"
+          },
+          "finalSessionDestination": "migrations/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0147-und.json",
+          "runtimeEvidenceDirectory": "migrations/shell-course-g04-l01-index-local/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0150",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+            "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+            "durationMs": 575,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 848
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0150-und.template.json",
+            "sha256": "2cc3b1b1d9631b078c702d91ed287a50150c78139229e98051af8aac23a02020"
+          },
+          "finalSessionDestination": "migrations/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0150-und.json",
+          "runtimeEvidenceDirectory": "migrations/shell-course-g04-l01-index-local/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0153",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+            "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+            "durationMs": 575,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 860
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0153-und.template.json",
+            "sha256": "9fbcf26a84ae9560cef15ed70a76cf6aca2b54da0a51f154789ef337071e8c92"
+          },
+          "finalSessionDestination": "migrations/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0153-und.json",
+          "runtimeEvidenceDirectory": "migrations/shell-course-g04-l01-index-local/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0155",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+            "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+            "durationMs": 575,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 869
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0155-und.template.json",
+            "sha256": "fb90c000177fe5cce55f3fa326d4598427dd9eda8c4051ddc3ee33c88c6ae41f"
+          },
+          "finalSessionDestination": "migrations/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0155-und.json",
+          "runtimeEvidenceDirectory": "migrations/shell-course-g04-l01-index-local/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0157",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+            "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+            "durationMs": 888,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 876
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0157-und.template.json",
+            "sha256": "3959739255d6e2043a9eaff1d28e7d1d2d9040be6252d49e1a2af9d3716ff772"
+          },
+          "finalSessionDestination": "migrations/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0157-und.json",
+          "runtimeEvidenceDirectory": "migrations/shell-course-g04-l01-index-local/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0177",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+            "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+            "durationMs": 888,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 1012
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0177-und.template.json",
+            "sha256": "9668ec5956a7bfd7687ced05140b7fb4c1dabf1931b79ed92b566b9a9393fe6a"
+          },
+          "finalSessionDestination": "migrations/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0177-und.json",
+          "runtimeEvidenceDirectory": "migrations/shell-course-g04-l01-index-local/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0197",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+            "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+            "durationMs": 575,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 1,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 1149
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0197-und.template.json",
+            "sha256": "c8520d5431accd0b5ee7ae6e0b23ff66872796f9709af03e2a326d1028e0751e"
+          },
+          "finalSessionDestination": "migrations/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0197-und.json",
+          "runtimeEvidenceDirectory": "migrations/shell-course-g04-l01-index-local/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        },
+        {
+          "cue": {
+            "cueId": "embedded-stream-0206",
+            "language": "und",
+            "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L1/index_local.swf",
+            "sha256": "ade6cd4b47d8948ae975b6cbceac2c24c91341e94b61e4ce683b4307f373779e",
+            "durationMs": 392,
+            "startFrame": null,
+            "startFrameDomainId": null,
+            "startSemantics": "interaction-state",
+            "format": "swf-mp3-stream",
+            "channels": 2,
+            "sampleRateHz": 22050,
+            "sourceCharacterId": 1198
+          },
+          "unsignedTemplate": {
+            "path": "work/audio-runtime-session-kits-20260724-current-v4/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0206-und.template.json",
+            "sha256": "cdc283460da745f08d94fde42c78aba9cfe202215d952b9c4e472ac7a392f0f0"
+          },
+          "finalSessionDestination": "migrations/shell-course-g04-l01-index-local/evidence/audio-listening-sessions/embedded-stream-0206-und.json",
+          "runtimeEvidenceDirectory": "migrations/shell-course-g04-l01-index-local/evidence/audio-runtime-sessions/",
+          "requiredOrderedOperationEvents": [
+            "activate",
+            "start",
+            "stop-or-complete",
+            "replay",
+            "start"
+          ],
+          "requiredHumanObservations": [
+            "spokenContentAndLanguage",
+            "naturalHostTraversal",
+            "startStopAndSynchronization",
+            "replayReset"
+          ],
+          "permittedRuntimeArtifactKinds": [
+            "lossless-runtime-capture",
+            "append-only-original-runtime-log",
+            "audio-waveform-capture"
+          ],
+          "naturalHostNavigationScheduleStatus": "not-specified-by-the-unsigned-kit; the named human must reach and identify this cue through the original host"
+        }
+      ]
+    }
+  ]
+}

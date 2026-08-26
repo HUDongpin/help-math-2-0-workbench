@@ -1,0 +1,168 @@
+name: Security
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  secrets:
+    name: Secret scan
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      # Pull-request runs bind the source branch tip, never GitHub's synthetic
+      # merge commit. Push/manual runs bind the event SHA.
+      SECRET_SCAN_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Check out complete reachable history
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ env.SECRET_SCAN_SHA }}
+          fetch-depth: 0
+          lfs: false
+          persist-credentials: false
+
+      - name: Use repository Node.js version for policy canaries
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install checksum-bound Gitleaks
+        # The former JavaScript action was only a non-authoritative event-range
+        # scan and downloaded its CLI without a release checksum. Install the
+        # exact official Linux archive directly; the strict tree and exact-
+        # ancestor scans below remain the release gates.
+        env:
+          GITLEAKS_VERSION: "8.24.3"
+          GITLEAKS_LINUX_X64_TARBALL_SHA256: "9991e0b2903da4c8f6122b5c3186448b927a5da4deef1fe45271c3793f4ee29c"
+        run: |
+          set -euo pipefail
+          umask 077
+          install_root="$(mktemp -d "${RUNNER_TEMP}/gitleaks-${GITLEAKS_VERSION}.XXXXXX")"
+          archive="${install_root}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          curl --fail --location --proto '=https' --tlsv1.2 \
+            --retry 2 --retry-all-errors \
+            --output "${archive}" \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          printf '%s  %s\n' "${GITLEAKS_LINUX_X64_TARBALL_SHA256}" "${archive}" \
+            | sha256sum --check --strict
+          tar -xzf "${archive}" -C "${install_root}" gitleaks
+          chmod 0755 "${install_root}/gitleaks"
+          test "$("${install_root}/gitleaks" version)" = "${GITLEAKS_VERSION}"
+          printf '%s\n' "${install_root}" >> "${GITHUB_PATH}"
+
+      - name: Prove the narrow false-positive policy rejects near-miss secrets
+        # Runtime canaries prove all five approved non-secret shapes are
+        # detected by default, suppressed only at their exact path/shape, and
+        # that seven neighboring credential shapes still fail.
+        run: |
+          test "$(gitleaks version)" = "8.24.3"
+          node scripts/verify-gitleaks-policy.mjs
+
+      - name: Scan the exact tracked tree
+        # A hash-bound git archive excludes untracked caches and the .git object
+        # database, so this proves the exact release tree rather than an
+        # incidental runner directory.
+        run: |
+          test "$(gitleaks version)" = "8.24.3"
+          test "$(git rev-parse HEAD)" = "${SECRET_SCAN_SHA}"
+          snapshot_root="$(mktemp -d "${RUNNER_TEMP}/help-math-gitleaks-head.XXXXXX")"
+          trap 'rm -rf -- "${snapshot_root}"' EXIT
+          git archive "${SECRET_SCAN_SHA}" | tar -x -C "${snapshot_root}"
+          test ! -e "${snapshot_root}/.gitleaksignore"
+          (
+            cd "${snapshot_root}"
+            gitleaks dir . \
+              --config "${GITHUB_WORKSPACE}/.gitleaks.toml" \
+              --ignore-gitleaks-allow \
+              --redact=100 \
+              --exit-code 2
+          )
+
+      - name: Scan the exact release commit and every ancestor
+        # `--all` is deliberately not a release gate: its meaning changes with
+        # the fetched refset and currently includes rejected Nova/stage and
+        # account-lab branches. Those refs belong to a separate repository-wide
+        # inventory. This command binds one exact releasable commit closure.
+        run: |
+          test "$(gitleaks version)" = "8.24.3"
+          test "$(git rev-parse HEAD)" = "${SECRET_SCAN_SHA}"
+          test ! -e .gitleaksignore
+          gitleaks git . \
+            --config .gitleaks.toml \
+            --ignore-gitleaks-allow \
+            --redact=100 \
+            --exit-code 2 \
+            --log-opts="${SECRET_SCAN_SHA}"
+
+  supply-chain:
+    name: Security and supply chain
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Check out exact tree
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 1
+          lfs: false
+          persist-credentials: false
+
+      - name: Use repository Node.js version
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Use the repository npm version
+        run: npm install --global npm@11.16.0
+
+      - name: Verify denied dependency lifecycle-script policy
+        # This job intentionally installs with --ignore-scripts below. Run the
+        # dependency-free verifier first so the exact denied identities,
+        # lockfile sources, workspace boundary, and strict npm config remain a
+        # Hosted supply-chain gate rather than an incidental local convention.
+        run: node scripts/verify-npm-install-script-policy.mjs
+
+      - name: Prove the lifecycle-script policy fails closed
+        run: node --test scripts/verify-npm-install-script-policy.test.mjs
+
+      - name: Install the locked graph without lifecycle scripts
+        run: npm ci --ignore-scripts
+
+      - name: Reject high or critical production vulnerabilities
+        run: npm audit --omit=dev --audit-level=high
+
+      - name: Verify path-level deployment closure
+        run: npm run verify:deploy-closure
+
+      - name: Generate production-only SPDX JSON SBOM
+        run: npm sbom --omit=dev --sbom-format=spdx > "${RUNNER_TEMP}/help-math-2-${GITHUB_SHA}.spdx.json"
+
+      - name: Validate the SBOM envelope
+        run: >-
+          node -e "const fs=require('node:fs');
+          const p=process.env.RUNNER_TEMP+'/help-math-2-'+process.env.GITHUB_SHA+'.spdx.json';
+          const d=JSON.parse(fs.readFileSync(p,'utf8'));
+          if(d.spdxVersion!=='SPDX-2.3'||!Array.isArray(d.packages)||d.packages.length===0)
+          process.exit(1)"
+
+      - name: Upload the production dependency SBOM
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: help-math-2-${{ github.sha }}-spdx
+          path: ${{ runner.temp }}/help-math-2-${{ github.sha }}.spdx.json
+          if-no-files-found: error
+          retention-days: 30

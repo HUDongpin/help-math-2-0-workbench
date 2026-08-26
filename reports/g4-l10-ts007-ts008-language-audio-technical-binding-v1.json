@@ -1,0 +1,1101 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "g4-l10-ts007-ts008-language-audio-technical-binding-successor",
+  "releaseId": "lesson-g04-l10-perimeter-area",
+  "animationIds": [
+    "course-g04-l10-ts-007",
+    "course-g04-l10-ts-008"
+  ],
+  "status": "SOURCE_STATIC_EN_ES_AUDIO_CANDIDATES_BOUND_MANIFEST_FOLLOWUP_UNAPPLIED_RUNTIME_LISTENING_PENDING",
+  "decision": "PRESERVE_EXACT_CANDIDATES_DO_NOT_PATCH_MANIFEST_DO_NOT_PLAY_DO_NOT_ACCEPT",
+  "scope": "exact-source-static-en-es-audio-candidate-obligation-and-unapplied-manifest-follow-up-binding-only",
+  "authorityStatement": [
+    "This artifact binds source-static audio candidates and EN/ES obligations for TS007 and TS008; it does not classify audible content.",
+    "SA/SP routing establishes a Spanish route candidate, not spoken language, voice identity, playback, timing, or acceptance.",
+    "Embedded local SoundStream frames are not root/runtime cue times.",
+    "No workspace or manifest was modified and no proposed patch is adopted by this artifact."
+  ],
+  "generator": {
+    "path": "scripts/build-g4-l10-ts007-ts008-language-audio-technical-binding-v1.mjs",
+    "bytes": 30931,
+    "sha256": "053711d1537ea11d441acc961fef55b0b0240586510cdd8a3881084cbb509567",
+    "mode": "0644"
+  },
+  "sharedSourceBindings": {
+    "languageAudioMatrix": {
+      "path": "reports/lesson-g04-l10-perimeter-area-language-audio-cue-obligation-matrix.json",
+      "bytes": 1247159,
+      "sha256": "d71e3f0bf05c6db20d02d8327d7ec53e99d9735d7045547af0a9231c69928e23",
+      "mode": "0644"
+    },
+    "vb003TechnicalBinding": {
+      "path": "migrations/course-g04-l10-vb-003/audit/language-audio-technical-binding.json",
+      "bytes": 17024,
+      "sha256": "ac87d1db72a799b8ec58a451051dc7d1e9cfe3d104c1722058b36769dc44081e",
+      "mode": "0644"
+    },
+    "templateContractV8": {
+      "path": "reports/g4-l10-complete-migration-template-contract-v8-2026-08-07.json",
+      "bytes": 251342,
+      "sha256": "c9066a90a7add7795a0e9702c94a7b1a060334e8962c65a180ae2cf4b23ed2f4",
+      "mode": "0444"
+    },
+    "failedSecurityBatch": {
+      "path": "reports/g4-l10-native-helper-v2-14-independent-review-batch-4d05187e-failed-v1.json",
+      "bytes": 9999,
+      "sha256": "de1bfbf4323a44360932851772bf35db09f8bc3e4310f65eac28b976aa002ea2",
+      "mode": "0444"
+    }
+  },
+  "hostLanguageRouting": {
+    "authority": {
+      "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+      "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd",
+      "extractor": "JPEXS Free Flash Decompiler v.26.2.1",
+      "extractedScriptCount": 633,
+      "audioRelevantScriptCount": 2,
+      "combinedAudioRelevantScriptsSha256": "bdf58f23b647b1b78968873adfdda55f52baa63ce8dc42dea7dd2e6c0ba9b8d3",
+      "conventions": {
+        "formula": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "EAD is loaded when the formulas audio-language argument equals English; SAD is loaded by the Spanish/non-English branch."
+        },
+        "keyterm": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "The key-term host builds matching EAD and SAD MP3 paths and selects them from the English/Spanish language state."
+        },
+        "finalQuiz": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "Final-quiz language code EN maps to EA and SP maps to SA for question and answer MP3 paths."
+        },
+        "courseSpanishPage": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "The course host's Spanish-audio path is built from the loaded page basename under the sibling SA directory."
+        }
+      }
+    },
+    "routeCandidates": {
+      "en": {
+        "hostLanguageCode": "EN",
+        "finalQuizDirectory": "EA",
+        "ordinaryPageExternalDirectory": null,
+        "evidenceScope": "legacy-host-routing-only"
+      },
+      "es": {
+        "hostLanguageCode": "SP",
+        "finalQuizDirectory": "SA",
+        "ordinaryPageExternalDirectory": "SA",
+        "ordinaryPageAssociation": "matching-loaded-page-basename-only",
+        "evidenceScope": "legacy-host-routing-only"
+      }
+    },
+    "spokenLanguageEstablished": false,
+    "audibleContentEstablished": false,
+    "runtimeRouteTraversalEstablished": false,
+    "boundary": "Directory and language-code routing are structural candidates. They do not establish what a file says, which voice is heard, whether the route executes, or when playback occurs."
+  },
+  "members": [
+    {
+      "animationId": "course-g04-l10-ts-007",
+      "ordinal": 42,
+      "xmlPage": {
+        "lineNumber": 133,
+        "text": "<Page Title=\"Question 1\" RandomAudio=\"\" BGText=\"\">TS/L10TS07.swf</Page>",
+        "randomAudio": "empty"
+      },
+      "sourceBindings": {
+        "sourceSwf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/TS/L10TS07.swf",
+          "bytes": 585839,
+          "sha256": "64070bdec0badb3cb009a741fe1b5e9c96bd98e68b92c4dfe125db3b43617eff",
+          "mode": "0500"
+        },
+        "spanishMp3": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/SA/L10TS07.mp3",
+          "bytes": 128016,
+          "sha256": "3ea4640a0ef8a7b4fdb2bc80fa0afb929b82ded77ed780ca95eede8020568372",
+          "mode": "0500"
+        },
+        "manifest": {
+          "path": "migrations/course-g04-l10-ts-007/migration.json",
+          "bytes": 28936,
+          "sha256": "62a981ef41d274f5ec9b3ad69852d3e7b860db4270cb895085387ca395cc8337",
+          "mode": "0644"
+        },
+        "audioInventory": {
+          "path": "migrations/course-g04-l10-ts-007/audio-inventory.csv",
+          "bytes": 7292,
+          "sha256": "220de57bdf0836e2627796f85f9c6b731085c2467b4c1c55daec56315d4c98e2",
+          "mode": "0600"
+        },
+        "audioRuntime": {
+          "path": "migrations/course-g04-l10-ts-007/audit/audio-runtime-evidence.json",
+          "bytes": 22627,
+          "sha256": "f14df917b35dc501432aaeb553a994831257408a104a1ae220eaf04c8ebd3546",
+          "mode": "0600"
+        }
+      },
+      "currentManifestObservation": {
+        "localizationLanguages": [
+          "en",
+          "es"
+        ],
+        "audioRequired": true,
+        "audioLanguages": [
+          "und"
+        ],
+        "audioCueCount": 0,
+        "exactAssociation": {
+          "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/SA/L10TS07.mp3",
+          "sha256": "3ea4640a0ef8a7b4fdb2bc80fa0afb929b82ded77ed780ca95eede8020568372",
+          "language": "und",
+          "bytes": 128016,
+          "association": "matching-basename"
+        },
+        "discrepancy": "audio.languages and the exact association label omit the structurally classified es route while the canonical inventory preserves es plus und"
+      },
+      "candidateCounts": {
+        "exactExternal": 1,
+        "embeddedUnknownLanguage": 12,
+        "total": 13,
+        "targetActionScriptAudioOperations": 0
+      },
+      "exactExternalCandidate": {
+        "candidateId": "external-eb6a786933b80473b13a00c62d607ebb0063394bbcd1561e458fd6c0d0d93b5c",
+        "source": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/SA/L10TS07.mp3",
+          "sha256": "3ea4640a0ef8a7b4fdb2bc80fa0afb929b82ded77ed780ca95eede8020568372",
+          "bytes": 128016
+        },
+        "routingLanguageCandidate": "es",
+        "routingEvidenceScope": "legacy-host-routing-only",
+        "spokenLanguage": null,
+        "spokenLanguageEstablished": false,
+        "probe": {
+          "codecName": "mp3",
+          "durationMs": 9144,
+          "channels": 1,
+          "sampleRateHz": 48000
+        },
+        "startSemantics": "host-user-activated",
+        "rootRuntimeCueTime": null,
+        "runtimeReachabilityEstablished": false,
+        "listeningRequired": true
+      },
+      "embeddedCandidates": [
+        {
+          "candidateId": "course-g04-l10-ts-007:embedded-stream-0001",
+          "context": {
+            "kind": "sprite",
+            "characterId": 121
+          },
+          "contextDeclaredFrames": 70,
+          "headFrame": 1,
+          "firstBlockFrame": 2,
+          "lastBlockFrame": 70,
+          "blockCount": 69,
+          "durationMs": 5721,
+          "format": "mp3",
+          "channels": 1,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-007:embedded-stream-0002",
+          "context": {
+            "kind": "sprite",
+            "characterId": 157
+          },
+          "contextDeclaredFrames": 5,
+          "headFrame": 1,
+          "firstBlockFrame": 1,
+          "lastBlockFrame": 5,
+          "blockCount": 5,
+          "durationMs": 392,
+          "format": "mp3",
+          "channels": 1,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-007:embedded-stream-0003",
+          "context": {
+            "kind": "sprite",
+            "characterId": 221
+          },
+          "contextDeclaredFrames": 28,
+          "headFrame": 1,
+          "firstBlockFrame": 2,
+          "lastBlockFrame": 28,
+          "blockCount": 27,
+          "durationMs": 2220,
+          "format": "mp3",
+          "channels": 1,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-007:embedded-stream-0004",
+          "context": {
+            "kind": "sprite",
+            "characterId": 235
+          },
+          "contextDeclaredFrames": 31,
+          "headFrame": 1,
+          "firstBlockFrame": 3,
+          "lastBlockFrame": 31,
+          "blockCount": 29,
+          "durationMs": 2403,
+          "format": "mp3",
+          "channels": 1,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-007:embedded-stream-0005",
+          "context": {
+            "kind": "sprite",
+            "characterId": 246
+          },
+          "contextDeclaredFrames": 29,
+          "headFrame": 1,
+          "firstBlockFrame": 2,
+          "lastBlockFrame": 29,
+          "blockCount": 28,
+          "durationMs": 2325,
+          "format": "mp3",
+          "channels": 1,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-007:embedded-stream-0006",
+          "context": {
+            "kind": "sprite",
+            "characterId": 258
+          },
+          "contextDeclaredFrames": 28,
+          "headFrame": 1,
+          "firstBlockFrame": 2,
+          "lastBlockFrame": 28,
+          "blockCount": 27,
+          "durationMs": 2220,
+          "format": "mp3",
+          "channels": 1,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-007:embedded-stream-0007",
+          "context": {
+            "kind": "sprite",
+            "characterId": 292
+          },
+          "contextDeclaredFrames": 27,
+          "headFrame": 1,
+          "firstBlockFrame": 1,
+          "lastBlockFrame": 27,
+          "blockCount": 27,
+          "durationMs": 2220,
+          "format": "mp3",
+          "channels": 2,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-007:embedded-stream-0008",
+          "context": {
+            "kind": "sprite",
+            "characterId": 304
+          },
+          "contextDeclaredFrames": 25,
+          "headFrame": 1,
+          "firstBlockFrame": 1,
+          "lastBlockFrame": 13,
+          "blockCount": 13,
+          "durationMs": 1082,
+          "format": "adpcm",
+          "channels": 1,
+          "sampleRateHz": 5512.5,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-007:embedded-stream-0009",
+          "context": {
+            "kind": "sprite",
+            "characterId": 317
+          },
+          "contextDeclaredFrames": 28,
+          "headFrame": 1,
+          "firstBlockFrame": 1,
+          "lastBlockFrame": 28,
+          "blockCount": 28,
+          "durationMs": 2325,
+          "format": "mp3",
+          "channels": 1,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-007:embedded-stream-0010",
+          "context": {
+            "kind": "sprite",
+            "characterId": 349
+          },
+          "contextDeclaredFrames": 25,
+          "headFrame": 1,
+          "firstBlockFrame": 2,
+          "lastBlockFrame": 25,
+          "blockCount": 24,
+          "durationMs": 1985,
+          "format": "mp3",
+          "channels": 2,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-007:embedded-stream-0011",
+          "context": {
+            "kind": "sprite",
+            "characterId": 388
+          },
+          "contextDeclaredFrames": 27,
+          "headFrame": 1,
+          "firstBlockFrame": 2,
+          "lastBlockFrame": 27,
+          "blockCount": 26,
+          "durationMs": 2142,
+          "format": "mp3",
+          "channels": 1,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-007:embedded-stream-0012",
+          "context": {
+            "kind": "sprite",
+            "characterId": 415
+          },
+          "contextDeclaredFrames": 851,
+          "headFrame": 1,
+          "firstBlockFrame": 14,
+          "lastBlockFrame": 842,
+          "blockCount": 829,
+          "durationMs": 68963,
+          "format": "mp3",
+          "channels": 1,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        }
+      ],
+      "languageObligations": [
+        {
+          "obligationId": "course-g04-l10-ts-007:en",
+          "language": "en",
+          "hostRouteCandidate": {
+            "languageCode": "EN",
+            "finalQuizDirectory": "EA",
+            "ordinaryPageExternalDirectory": null
+          },
+          "exactExternalCandidateIds": [],
+          "embeddedUnknownLanguageCandidateIds": [
+            "course-g04-l10-ts-007:embedded-stream-0001",
+            "course-g04-l10-ts-007:embedded-stream-0002",
+            "course-g04-l10-ts-007:embedded-stream-0003",
+            "course-g04-l10-ts-007:embedded-stream-0004",
+            "course-g04-l10-ts-007:embedded-stream-0005",
+            "course-g04-l10-ts-007:embedded-stream-0006",
+            "course-g04-l10-ts-007:embedded-stream-0007",
+            "course-g04-l10-ts-007:embedded-stream-0008",
+            "course-g04-l10-ts-007:embedded-stream-0009",
+            "course-g04-l10-ts-007:embedded-stream-0010",
+            "course-g04-l10-ts-007:embedded-stream-0011",
+            "course-g04-l10-ts-007:embedded-stream-0012"
+          ],
+          "actionScriptOperationIds": [],
+          "unresolved": [
+            "exact-runtime-cue-ownership-and-reachability",
+            "spoken-content-language-and-voice",
+            "natural-host-state-and-interaction-trace",
+            "start-stop-pause-complete-synchronization",
+            "replay-reset-behavior",
+            "named-human-authorized-original-runtime-listening"
+          ],
+          "authoritativeOriginalRuntimeTraversalComplete": false,
+          "namedHumanListeningComplete": false,
+          "accepted": false,
+          "status": "unresolved-listening-required"
+        },
+        {
+          "obligationId": "course-g04-l10-ts-007:es",
+          "language": "es",
+          "hostRouteCandidate": {
+            "languageCode": "SP",
+            "finalQuizDirectory": "SA",
+            "ordinaryPageExternalDirectory": "SA"
+          },
+          "exactExternalCandidateIds": [
+            "external-eb6a786933b80473b13a00c62d607ebb0063394bbcd1561e458fd6c0d0d93b5c"
+          ],
+          "embeddedUnknownLanguageCandidateIds": [
+            "course-g04-l10-ts-007:embedded-stream-0001",
+            "course-g04-l10-ts-007:embedded-stream-0002",
+            "course-g04-l10-ts-007:embedded-stream-0003",
+            "course-g04-l10-ts-007:embedded-stream-0004",
+            "course-g04-l10-ts-007:embedded-stream-0005",
+            "course-g04-l10-ts-007:embedded-stream-0006",
+            "course-g04-l10-ts-007:embedded-stream-0007",
+            "course-g04-l10-ts-007:embedded-stream-0008",
+            "course-g04-l10-ts-007:embedded-stream-0009",
+            "course-g04-l10-ts-007:embedded-stream-0010",
+            "course-g04-l10-ts-007:embedded-stream-0011",
+            "course-g04-l10-ts-007:embedded-stream-0012"
+          ],
+          "actionScriptOperationIds": [],
+          "unresolved": [
+            "exact-runtime-cue-ownership-and-reachability",
+            "spoken-content-language-and-voice",
+            "natural-host-state-and-interaction-trace",
+            "start-stop-pause-complete-synchronization",
+            "replay-reset-behavior",
+            "named-human-authorized-original-runtime-listening"
+          ],
+          "authoritativeOriginalRuntimeTraversalComplete": false,
+          "namedHumanListeningComplete": false,
+          "accepted": false,
+          "status": "unresolved-listening-required"
+        }
+      ],
+      "manifestFollowUpProposal": {
+        "status": "EXACT_PATCH_CANDIDATE_ONLY_NOT_APPLIED_NOT_ADOPTED",
+        "operations": [
+          {
+            "jsonPointer": "/audio/languages",
+            "exactPreimage": [
+              "und"
+            ],
+            "proposedSuccessorValue": [
+              "und",
+              "es"
+            ],
+            "rationale": "Preserve und for the twelve embedded streams and add es for the exact external route candidate."
+          },
+          {
+            "jsonPointer": "/audio/catalogExactAssociations/0/language",
+            "exactPreimage": "und",
+            "proposedSuccessorValue": "es",
+            "rationale": "Represent the verified SA/SP routing classification without claiming spoken-language content."
+          }
+        ],
+        "rawManifestSha256RequiredAtApplyTime": "62a981ef41d274f5ec9b3ad69852d3e7b860db4270cb895085387ca395cc8337",
+        "applyAuthorizedByThisArtifact": false,
+        "applied": false,
+        "adoptionReviewPresent": false,
+        "downstreamRegenerationPlanPresent": false,
+        "rule": "Do not patch the manifest until a separately reviewed successor transaction binds every raw-manifest-hash dependent audit and regenerates them no-clobber."
+      },
+      "authorityEffects": {
+        "workspaceModified": false,
+        "manifestFollowUpAdopted": false,
+        "audioPlayed": false,
+        "originalRuntimeExecuted": false,
+        "originalRuntimeBaselineEstablished": false,
+        "runtimeReachabilityEstablished": false,
+        "spokenLanguageEstablished": false,
+        "synchronizationEstablished": false,
+        "rendererImplemented": false,
+        "behaviorAccepted": false,
+        "rmseAccepted": false,
+        "audioAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAcceptanceAccepted": false,
+        "strictCompletionAccepted": false,
+        "wholeCourseIntegrationAccepted": false,
+        "promotionAccepted": false,
+        "publicationAccepted": false
+      }
+    },
+    {
+      "animationId": "course-g04-l10-ts-008",
+      "ordinal": 43,
+      "xmlPage": {
+        "lineNumber": 134,
+        "text": "<Page Title=\"Question 2\" RandomAudio=\"\" BGText=\"\">TS/L10TS08.swf</Page>",
+        "randomAudio": "empty"
+      },
+      "sourceBindings": {
+        "sourceSwf": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/TS/L10TS08.swf",
+          "bytes": 556547,
+          "sha256": "59299d4acf780a24e5f221fb1f4fe5e9a8330303367b9632c7b1ff2d6bf7b3a5",
+          "mode": "0500"
+        },
+        "spanishMp3": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/SA/L10TS08.mp3",
+          "bytes": 217392,
+          "sha256": "be113dae1147cc56a0945c3f780f148e4beba56863b651aa8e6a98ac25884716",
+          "mode": "0500"
+        },
+        "manifest": {
+          "path": "migrations/course-g04-l10-ts-008/migration.json",
+          "bytes": 28936,
+          "sha256": "d7630d31090e204f84d6e93f334d876caf5f7d32428014d7396bb1490afaab6d",
+          "mode": "0644"
+        },
+        "audioInventory": {
+          "path": "migrations/course-g04-l10-ts-008/audio-inventory.csv",
+          "bytes": 7293,
+          "sha256": "4fc2bacd60223935438ee4efc7afdcbba6476ecaba626562aebecac336a3e876",
+          "mode": "0600"
+        },
+        "audioRuntime": {
+          "path": "migrations/course-g04-l10-ts-008/audit/audio-runtime-evidence.json",
+          "bytes": 22630,
+          "sha256": "f8b684f2dfa072b3296613b3343240bf386983a8743cd08206c9a7328b365b88",
+          "mode": "0600"
+        }
+      },
+      "currentManifestObservation": {
+        "localizationLanguages": [
+          "en",
+          "es"
+        ],
+        "audioRequired": true,
+        "audioLanguages": [
+          "und"
+        ],
+        "audioCueCount": 0,
+        "exactAssociation": {
+          "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/SA/L10TS08.mp3",
+          "sha256": "be113dae1147cc56a0945c3f780f148e4beba56863b651aa8e6a98ac25884716",
+          "language": "und",
+          "bytes": 217392,
+          "association": "matching-basename"
+        },
+        "discrepancy": "audio.languages and the exact association label omit the structurally classified es route while the canonical inventory preserves es plus und"
+      },
+      "candidateCounts": {
+        "exactExternal": 1,
+        "embeddedUnknownLanguage": 12,
+        "total": 13,
+        "targetActionScriptAudioOperations": 0
+      },
+      "exactExternalCandidate": {
+        "candidateId": "external-240d339f1be0f56e1d747013241c77d251606bc75c0322a328b2ed3d87d93b75",
+        "source": {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/SA/L10TS08.mp3",
+          "sha256": "be113dae1147cc56a0945c3f780f148e4beba56863b651aa8e6a98ac25884716",
+          "bytes": 217392
+        },
+        "routingLanguageCandidate": "es",
+        "routingEvidenceScope": "legacy-host-routing-only",
+        "spokenLanguage": null,
+        "spokenLanguageEstablished": false,
+        "probe": {
+          "codecName": "mp3",
+          "durationMs": 15528,
+          "channels": 1,
+          "sampleRateHz": 48000
+        },
+        "startSemantics": "host-user-activated",
+        "rootRuntimeCueTime": null,
+        "runtimeReachabilityEstablished": false,
+        "listeningRequired": true
+      },
+      "embeddedCandidates": [
+        {
+          "candidateId": "course-g04-l10-ts-008:embedded-stream-0001",
+          "context": {
+            "kind": "sprite",
+            "characterId": 110
+          },
+          "contextDeclaredFrames": 70,
+          "headFrame": 1,
+          "firstBlockFrame": 2,
+          "lastBlockFrame": 70,
+          "blockCount": 69,
+          "durationMs": 5721,
+          "format": "mp3",
+          "channels": 1,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-008:embedded-stream-0002",
+          "context": {
+            "kind": "sprite",
+            "characterId": 148
+          },
+          "contextDeclaredFrames": 5,
+          "headFrame": 1,
+          "firstBlockFrame": 1,
+          "lastBlockFrame": 5,
+          "blockCount": 5,
+          "durationMs": 392,
+          "format": "mp3",
+          "channels": 1,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-008:embedded-stream-0003",
+          "context": {
+            "kind": "sprite",
+            "characterId": 220
+          },
+          "contextDeclaredFrames": 28,
+          "headFrame": 1,
+          "firstBlockFrame": 2,
+          "lastBlockFrame": 28,
+          "blockCount": 27,
+          "durationMs": 2220,
+          "format": "mp3",
+          "channels": 1,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-008:embedded-stream-0004",
+          "context": {
+            "kind": "sprite",
+            "characterId": 234
+          },
+          "contextDeclaredFrames": 31,
+          "headFrame": 1,
+          "firstBlockFrame": 3,
+          "lastBlockFrame": 31,
+          "blockCount": 29,
+          "durationMs": 2403,
+          "format": "mp3",
+          "channels": 1,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-008:embedded-stream-0005",
+          "context": {
+            "kind": "sprite",
+            "characterId": 245
+          },
+          "contextDeclaredFrames": 29,
+          "headFrame": 1,
+          "firstBlockFrame": 2,
+          "lastBlockFrame": 29,
+          "blockCount": 28,
+          "durationMs": 2325,
+          "format": "mp3",
+          "channels": 1,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-008:embedded-stream-0006",
+          "context": {
+            "kind": "sprite",
+            "characterId": 257
+          },
+          "contextDeclaredFrames": 28,
+          "headFrame": 1,
+          "firstBlockFrame": 2,
+          "lastBlockFrame": 28,
+          "blockCount": 27,
+          "durationMs": 2220,
+          "format": "mp3",
+          "channels": 1,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-008:embedded-stream-0007",
+          "context": {
+            "kind": "sprite",
+            "characterId": 291
+          },
+          "contextDeclaredFrames": 27,
+          "headFrame": 1,
+          "firstBlockFrame": 1,
+          "lastBlockFrame": 27,
+          "blockCount": 27,
+          "durationMs": 2220,
+          "format": "mp3",
+          "channels": 2,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-008:embedded-stream-0008",
+          "context": {
+            "kind": "sprite",
+            "characterId": 303
+          },
+          "contextDeclaredFrames": 25,
+          "headFrame": 1,
+          "firstBlockFrame": 1,
+          "lastBlockFrame": 13,
+          "blockCount": 13,
+          "durationMs": 1082,
+          "format": "adpcm",
+          "channels": 1,
+          "sampleRateHz": 5512.5,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-008:embedded-stream-0009",
+          "context": {
+            "kind": "sprite",
+            "characterId": 316
+          },
+          "contextDeclaredFrames": 28,
+          "headFrame": 1,
+          "firstBlockFrame": 1,
+          "lastBlockFrame": 28,
+          "blockCount": 28,
+          "durationMs": 2325,
+          "format": "mp3",
+          "channels": 1,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-008:embedded-stream-0010",
+          "context": {
+            "kind": "sprite",
+            "characterId": 348
+          },
+          "contextDeclaredFrames": 25,
+          "headFrame": 1,
+          "firstBlockFrame": 2,
+          "lastBlockFrame": 25,
+          "blockCount": 24,
+          "durationMs": 1985,
+          "format": "mp3",
+          "channels": 2,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-008:embedded-stream-0011",
+          "context": {
+            "kind": "sprite",
+            "characterId": 387
+          },
+          "contextDeclaredFrames": 27,
+          "headFrame": 1,
+          "firstBlockFrame": 2,
+          "lastBlockFrame": 27,
+          "blockCount": 26,
+          "durationMs": 2142,
+          "format": "mp3",
+          "channels": 1,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        },
+        {
+          "candidateId": "course-g04-l10-ts-008:embedded-stream-0012",
+          "context": {
+            "kind": "sprite",
+            "characterId": 413
+          },
+          "contextDeclaredFrames": 785,
+          "headFrame": 1,
+          "firstBlockFrame": 14,
+          "lastBlockFrame": 776,
+          "blockCount": 763,
+          "durationMs": 63451,
+          "format": "mp3",
+          "channels": 1,
+          "sampleRateHz": 22050,
+          "languageCandidate": "und",
+          "spokenLanguage": null,
+          "rootRuntimeCueTime": null,
+          "runtimeReachabilityEstablished": false,
+          "listeningRequired": true
+        }
+      ],
+      "languageObligations": [
+        {
+          "obligationId": "course-g04-l10-ts-008:en",
+          "language": "en",
+          "hostRouteCandidate": {
+            "languageCode": "EN",
+            "finalQuizDirectory": "EA",
+            "ordinaryPageExternalDirectory": null
+          },
+          "exactExternalCandidateIds": [],
+          "embeddedUnknownLanguageCandidateIds": [
+            "course-g04-l10-ts-008:embedded-stream-0001",
+            "course-g04-l10-ts-008:embedded-stream-0002",
+            "course-g04-l10-ts-008:embedded-stream-0003",
+            "course-g04-l10-ts-008:embedded-stream-0004",
+            "course-g04-l10-ts-008:embedded-stream-0005",
+            "course-g04-l10-ts-008:embedded-stream-0006",
+            "course-g04-l10-ts-008:embedded-stream-0007",
+            "course-g04-l10-ts-008:embedded-stream-0008",
+            "course-g04-l10-ts-008:embedded-stream-0009",
+            "course-g04-l10-ts-008:embedded-stream-0010",
+            "course-g04-l10-ts-008:embedded-stream-0011",
+            "course-g04-l10-ts-008:embedded-stream-0012"
+          ],
+          "actionScriptOperationIds": [],
+          "unresolved": [
+            "exact-runtime-cue-ownership-and-reachability",
+            "spoken-content-language-and-voice",
+            "natural-host-state-and-interaction-trace",
+            "start-stop-pause-complete-synchronization",
+            "replay-reset-behavior",
+            "named-human-authorized-original-runtime-listening"
+          ],
+          "authoritativeOriginalRuntimeTraversalComplete": false,
+          "namedHumanListeningComplete": false,
+          "accepted": false,
+          "status": "unresolved-listening-required"
+        },
+        {
+          "obligationId": "course-g04-l10-ts-008:es",
+          "language": "es",
+          "hostRouteCandidate": {
+            "languageCode": "SP",
+            "finalQuizDirectory": "SA",
+            "ordinaryPageExternalDirectory": "SA"
+          },
+          "exactExternalCandidateIds": [
+            "external-240d339f1be0f56e1d747013241c77d251606bc75c0322a328b2ed3d87d93b75"
+          ],
+          "embeddedUnknownLanguageCandidateIds": [
+            "course-g04-l10-ts-008:embedded-stream-0001",
+            "course-g04-l10-ts-008:embedded-stream-0002",
+            "course-g04-l10-ts-008:embedded-stream-0003",
+            "course-g04-l10-ts-008:embedded-stream-0004",
+            "course-g04-l10-ts-008:embedded-stream-0005",
+            "course-g04-l10-ts-008:embedded-stream-0006",
+            "course-g04-l10-ts-008:embedded-stream-0007",
+            "course-g04-l10-ts-008:embedded-stream-0008",
+            "course-g04-l10-ts-008:embedded-stream-0009",
+            "course-g04-l10-ts-008:embedded-stream-0010",
+            "course-g04-l10-ts-008:embedded-stream-0011",
+            "course-g04-l10-ts-008:embedded-stream-0012"
+          ],
+          "actionScriptOperationIds": [],
+          "unresolved": [
+            "exact-runtime-cue-ownership-and-reachability",
+            "spoken-content-language-and-voice",
+            "natural-host-state-and-interaction-trace",
+            "start-stop-pause-complete-synchronization",
+            "replay-reset-behavior",
+            "named-human-authorized-original-runtime-listening"
+          ],
+          "authoritativeOriginalRuntimeTraversalComplete": false,
+          "namedHumanListeningComplete": false,
+          "accepted": false,
+          "status": "unresolved-listening-required"
+        }
+      ],
+      "manifestFollowUpProposal": {
+        "status": "EXACT_PATCH_CANDIDATE_ONLY_NOT_APPLIED_NOT_ADOPTED",
+        "operations": [
+          {
+            "jsonPointer": "/audio/languages",
+            "exactPreimage": [
+              "und"
+            ],
+            "proposedSuccessorValue": [
+              "und",
+              "es"
+            ],
+            "rationale": "Preserve und for the twelve embedded streams and add es for the exact external route candidate."
+          },
+          {
+            "jsonPointer": "/audio/catalogExactAssociations/0/language",
+            "exactPreimage": "und",
+            "proposedSuccessorValue": "es",
+            "rationale": "Represent the verified SA/SP routing classification without claiming spoken-language content."
+          }
+        ],
+        "rawManifestSha256RequiredAtApplyTime": "d7630d31090e204f84d6e93f334d876caf5f7d32428014d7396bb1490afaab6d",
+        "applyAuthorizedByThisArtifact": false,
+        "applied": false,
+        "adoptionReviewPresent": false,
+        "downstreamRegenerationPlanPresent": false,
+        "rule": "Do not patch the manifest until a separately reviewed successor transaction binds every raw-manifest-hash dependent audit and regenerates them no-clobber."
+      },
+      "authorityEffects": {
+        "workspaceModified": false,
+        "manifestFollowUpAdopted": false,
+        "audioPlayed": false,
+        "originalRuntimeExecuted": false,
+        "originalRuntimeBaselineEstablished": false,
+        "runtimeReachabilityEstablished": false,
+        "spokenLanguageEstablished": false,
+        "synchronizationEstablished": false,
+        "rendererImplemented": false,
+        "behaviorAccepted": false,
+        "rmseAccepted": false,
+        "audioAccepted": false,
+        "humanReviewAccepted": false,
+        "ownerAcceptanceAccepted": false,
+        "strictCompletionAccepted": false,
+        "wholeCourseIntegrationAccepted": false,
+        "promotionAccepted": false,
+        "publicationAccepted": false
+      }
+    }
+  ],
+  "aggregate": {
+    "memberCount": 2,
+    "languageObligationCount": 4,
+    "exactExternalCandidateCount": 2,
+    "embeddedUnknownLanguageCandidateCount": 24,
+    "totalCandidateCount": 26,
+    "targetActionScriptAudioOperationCount": 0,
+    "externalDurationMsTotal": 24672,
+    "embeddedStructuralDurationMsTotal": 182484,
+    "adoptedCueCount": 0,
+    "runtimeReachabilityEstablishedCount": 0,
+    "spokenLanguageEstablishedCount": 0,
+    "acceptedCueCount": 0
+  },
+  "grade4Boundary": {
+    "l10MissingCourseMp3Count": 0,
+    "theseExactExternalMp3sAreAmongMissing16": false,
+    "wholeGrade4MissingCourseMp3Count": 16,
+    "missingCourseMp3ByLesson": {
+      "2": 14,
+      "6": 1,
+      "8": 1
+    },
+    "wholeGrade4DependencyClosureEstablished": false,
+    "rule": "The two L10 files are present, but the sixteen Grade 4 MP3 blockers remain unresolved and may not be inferred by name, case, or placement."
+  },
+  "securityAndRuntimeBoundary": {
+    "latestReviewStatus": "FAILED_TWO_TASK_SYSTEM_INCOMPLETE_ONE_P1_NONREUSABLE_NO_IMPLEMENTATION_AUTHORITY",
+    "reviewBatchReusable": false,
+    "productionHelperImplementationEligible": false,
+    "originalRuntimeLaunchAuthorizedByThisArtifact": false,
+    "namedOriginalRuntimeOperatorConditionActivated": false,
+    "audioListeningPerformed": false
+  },
+  "review": {
+    "independentReviewTaskAuthorizedByThisArtifact": false,
+    "reviewTaskIds": [],
+    "reviewVerdictPresent": false,
+    "manifestSuccessorAdopted": false
+  },
+  "authorityEffects": {
+    "workspaceModified": false,
+    "manifestFollowUpAdopted": false,
+    "audioPlayed": false,
+    "originalRuntimeExecuted": false,
+    "originalRuntimeBaselineEstablished": false,
+    "runtimeReachabilityEstablished": false,
+    "spokenLanguageEstablished": false,
+    "synchronizationEstablished": false,
+    "rendererImplemented": false,
+    "behaviorAccepted": false,
+    "rmseAccepted": false,
+    "audioAccepted": false,
+    "humanReviewAccepted": false,
+    "ownerAcceptanceAccepted": false,
+    "strictCompletionAccepted": false,
+    "wholeCourseIntegrationAccepted": false,
+    "promotionAccepted": false,
+    "publicationAccepted": false
+  },
+  "nextPermittedAction": "Independently review this static binding and separately authorize any exact-preimage manifest successor transaction; original-runtime listening remains gated by a future qualifying security closure and per-launch receipt.",
+  "reportFingerprintSha256": "d41cdebb5c88ce57b862bb173c91897244fffe0d615b190d605eb8e9d639f76b"
+}

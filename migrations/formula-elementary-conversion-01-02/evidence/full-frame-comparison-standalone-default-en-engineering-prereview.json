@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "engineering-visual-prereview",
+  "animationId": "formula-elementary-conversion-01-02",
+  "reviewedAt": "2026-07-21T06:04:03Z",
+  "comparison": {
+    "file": "migrations/formula-elementary-conversion-01-02/evidence/full-frame-comparison-standalone-default-en.json",
+    "sha256": "d567f735fd846e84928a180cecaa4ed427bfed2496e9ddc1dabf98c10dfef233",
+    "baselineAuthority": "original-swf-adobe-flash-player-runtime",
+    "baselineManifest": {
+      "file": "migrations/formula-elementary-conversion-01-02/baseline/adobe-flash-player-32-standalone-default.json",
+      "sha256": "b4ce551d97c9a2cac84f2803bdfe1449f2ceffffd2430f929c0d1b95b5645563",
+      "alphaComposite": "macOS transparent rounded window corners composited against the SWF background #e4e4e4"
+    },
+    "implementationCapture": {
+      "directory": "output/playwright/conversion-1-2-fidelity-final-isolated/en-default",
+      "manifestSha256": "45be74d526f01d3918daab72c3949bab6b3b7dc1ab2a6c73fb5e4a364beef12f",
+      "status": "complete",
+      "reportedFrameMismatches": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "httpErrors": 0,
+      "unexpectedRequests": 0
+    },
+    "scenario": "standalone-default",
+    "language": "en",
+    "frameCount": 109,
+    "stage": {
+      "width": 780,
+      "height": 379
+    }
+  },
+  "review": {
+    "kind": "codex-assisted-engineering-prereview",
+    "humanVisualReview": false,
+    "ownerAcceptance": false,
+    "audioReviewed": false,
+    "hostLocalizationReviewed": false
+  },
+  "numericResult": {
+    "staticThreshold": 0.05,
+    "transitionThreshold": 0.08,
+    "normalizedRmse": {
+      "min": 0.024213313361713645,
+      "max": 0.030659726204404127,
+      "mean": 0.02652369817714099,
+      "median": 0.02615766561018929,
+      "p95": 0.0292553803070267
+    },
+    "framesAtOrBelowStaticThreshold": 109,
+    "framesAtOrBelowTransitionThreshold": 109,
+    "numericOutlierFrames": [],
+    "allAssignedThresholdsPass": true
+  },
+  "inspectedFrames": [
+    {
+      "frame": 1,
+      "selectionReason": "first-frame",
+      "normalizedRmse": 0.024213313361713645,
+      "mismatchedPixelRatio": 0.008805222921317909,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "The four quart bottles, embedded label glyphs, lower liquid regions, and authored shadows now closely match the Adobe runtime composition.",
+        "Residuals are concentrated at Flash-versus-browser antialiased vector and gallon-raster edges."
+      ]
+    },
+    {
+      "frame": 6,
+      "selectionReason": "first-authored-motion-frame",
+      "normalizedRmse": 0.024653447209238916,
+      "mismatchedPixelRatio": 0.009613693254854205,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "The first bottle begins on the authoritative path with the SWF matrix orientation, rotation, and overlap.",
+        "Remaining edge differences are consistent with browser and Flash rasterization."
+      ]
+    },
+    {
+      "frame": 18,
+      "selectionReason": "maximum-normalized-rmse",
+      "normalizedRmse": 0.030659726204404127,
+      "mismatchedPixelRatio": 0.012806981936269534,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "Bottle placement, counter beat, gallon fill state, and layer order are aligned at the highest-RMSE frame.",
+        "The remaining difference is primarily the approximated intermediate pouring morph and renderer antialiasing; no formula, number, label, or layer error was observed."
+      ]
+    },
+    {
+      "frame": 56,
+      "selectionReason": "fourth-pour-start",
+      "normalizedRmse": 0.0292553803070267,
+      "mismatchedPixelRatio": 0.010787497462959204,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "The fourth bottle pour-start pose uses the exported SWF root frame and aligns with the Adobe runtime crop.",
+        "Residual differences remain around the gallon bitmap and Flash/browser alpha edges."
+      ]
+    },
+    {
+      "frame": 67,
+      "selectionReason": "fourth-pour-exit-transition",
+      "normalizedRmse": 0.029048320594967383,
+      "mismatchedPixelRatio": 0.010587916920370746,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "The authored exit rotation, translation, label transform, and alpha now match the SWF timeline matrix.",
+        "No one-frame timing displacement is visible against the corrected Adobe baseline."
+      ]
+    },
+    {
+      "frame": 109,
+      "selectionReason": "terminal-frame",
+      "normalizedRmse": 0.02878063454821156,
+      "mismatchedPixelRatio": 0.014775725593667546,
+      "visualResult": "engineering-pass-with-residuals",
+      "observations": [
+        "The terminal counter, final formula, bottle state, and Replay composition are structurally aligned.",
+        "Replay now uses the SWF-exported embedded Bauhaus glyph and button vectors; remaining differences are dominated by vector and glyph antialiasing."
+      ]
+    }
+  ],
+  "conclusion": {
+    "numericThresholdResult": "pass",
+    "visualFidelityResult": "engineering-prereview-pass-with-residuals",
+    "strictAcceptanceResult": "not-accepted-pending-human-owner-and-other-gates",
+    "reason": "All 109 authoritative English standalone frames pass their assigned RMSE thresholds, exact-frame capture is clean, and engineering inspection found no material formula, number, label, timing, or layer mismatch in the selected first, motion, maximum-error, pour, exit, and terminal frames. This remains an engineering prereview rather than final human or owner acceptance.",
+    "requiredFollowUp": [
+      "Obtain a signed human review of the all-frame contact sheet, keyframes, and every accepted residual.",
+      "Validate parent-host Spanish behavior and both authoritative audio tracks, including hashes, duration, cue timing, and synchronization.",
+      "Complete accessibility, responsive-product, Replay interaction, strict-validator, and owner acceptance gates before changing migration status."
+    ]
+  },
+  "limitations": [
+    "This evidence covers only English standalone Adobe Flash Player playback.",
+    "It does not prove Spanish behavior driven by parent-movie variables.",
+    "Silent PNG comparison does not prove either English or Spanish audio presence, hashes, duration, cue timing, or synchronization.",
+    "The authoritative baseline uses the recorded alpha-composite normalization for transparent macOS window corners; invalidated off-by-one and window-mask-alpha captures were not used.",
+    "This engineering prereview is not a human visual-review signature and is not owner acceptance."
+  ]
+}

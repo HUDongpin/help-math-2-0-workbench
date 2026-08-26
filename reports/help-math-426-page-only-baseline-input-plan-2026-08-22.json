@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "taskId": "HELP-MATH-426-PAGE-ONLY-BASELINE-20260822",
+  "createdAt": "2026-08-22T00:00:00+08:00",
+  "authority": {
+    "requested": [
+      "read-only audit",
+      "bounded baseline repair",
+      "local verification"
+    ],
+    "notRequested": [
+      "new migration page",
+      "private source archive modification",
+      "commit",
+      "push",
+      "deploy"
+    ]
+  },
+  "integrationCheckout": {
+    "path": "/Volumes/WestWorld/HELP MATH 2.0-g4-l5-l10-l11-integration",
+    "branch": "codex/g4-l5-l10-l11-page-only-integration",
+    "head": "93fb79aa16e68d32edb43b864a1c8972d59b219f",
+    "initialStatus": "clean"
+  },
+  "preservedDirtyCheckout": {
+    "path": "/Volumes/WestWorld/HELP MATH 2.0",
+    "branch": "codex/help-math-learning-platform-nova-fq",
+    "head": "93fb79aa16e68d32edb43b864a1c8972d59b219f",
+    "modified": 111,
+    "deleted": 663,
+    "untracked": 73,
+    "statusSha256": "7f844e2820d1dd0e79365e3989c5567c7e2aa3cae2cd55566716fe3b5d7f5fb6"
+  },
+  "ownerScope": {
+    "denominator": 1751,
+    "registeredPageOccurrences": 426,
+    "uniqueRenderers": 425,
+    "schemaVersion": 2,
+    "courseShellCount": 0,
+    "lessons": [
+      { "lessonId": "course-g03-l02-rw-001", "pages": 70 },
+      { "lessonId": "course-g04-l03-gl-001", "pages": 39 },
+      { "lessonId": "course-g04-l05-gl-004", "pages": 53 },
+      { "lessonId": "course-g04-l10-in-008", "pages": 46 },
+      { "lessonId": "course-g04-l11-ir-006", "pages": 43 },
+      { "lessonId": "course-g05-l03-rw-003", "pages": 65 },
+      { "lessonId": "course-g05-l04-rw-004", "pages": 54 },
+      { "lessonId": "course-g05-l05-fq-003", "pages": 56 }
+    ]
+  },
+  "guardrails": {
+    "maximumRegisteredPageOccurrences": 426,
+    "maximumUniqueRenderers": 425,
+    "forbidPage427": true,
+    "preserveUserDirtyCheckout": true,
+    "preservePrivateArchives": true,
+    "candidateAssetsRemainNonProduction": true,
+    "formalCurrentJsRequiresExactRegistrationAndSourceBinding": true,
+    "noVerifierWeakening": true,
+    "noCommitPushOrDeploy": true
+  },
+  "mergePolicy": {
+    "sharedFiles": "manual three-way review against the common HEAD",
+    "generatedFiles": "regenerate from reviewed maintained inputs",
+    "candidateAssets": "hash-bound no-overwrite import into non-production directories",
+    "sourceAssets": "read-only checkout-local binding to the verified canonical source snapshot",
+    "unrelatedDirtyWork": "excluded from integration"
+  },
+  "requiredVerification": [
+    "npm run verify:sources",
+    "npm run verify:workbench",
+    "npm run verify:g4:l5-l10-l11:page-only",
+    "npm test --workspace @helpmath/web",
+    "npm test --workspace @helpmath/demos",
+    "npm run typecheck",
+    "npm run build",
+    "browser smoke for all eight My Lessons"
+  ]
+}
