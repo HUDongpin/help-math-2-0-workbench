@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "policyId": "help-math-npm-install-script-policy-v1",
+  "npmVersion": "11.16.0",
+  "strictConfig": {
+    "path": ".npmrc",
+    "exactContentsSha256": "b1f8b04500d8d474670c3fcfa8e2b6292d50eb084cc13966b419583e8bd6ed83"
+  },
+  "workflowInstallBoundaries": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "installCommand": "npm ci --no-dangerously-allow-all-scripts",
+      "installCommandCount": 4,
+      "verifierCommand": "node scripts/verify-npm-install-script-policy.mjs",
+      "verifierCommandCount": 4,
+      "verifierRequiredBeforeEveryInstall": true
+    },
+    {
+      "path": ".github/workflows/launch-go.yml",
+      "installCommand": "npm ci --ignore-scripts",
+      "installCommandCount": 1,
+      "verifierCommand": null,
+      "verifierCommandCount": 0,
+      "verifierRequiredBeforeEveryInstall": false
+    },
+    {
+      "path": ".github/workflows/security.yml",
+      "installCommand": "npm ci --ignore-scripts",
+      "installCommandCount": 1,
+      "verifierCommand": "node scripts/verify-npm-install-script-policy.mjs",
+      "verifierCommandCount": 1,
+      "verifierRequiredBeforeEveryInstall": true
+    }
+  ],
+  "workspacePackageJsonPaths": [
+    "apps/web/package.json",
+    "package.json",
+    "packages/demos/package.json"
+  ],
+  "trustedPackages": [
+    {
+      "identity": "@parcel/watcher@2.6.0",
+      "packageName": "@parcel/watcher",
+      "version": "2.6.0",
+      "lockPath": "node_modules/@parcel/watcher",
+      "resolved": "https://registry.npmjs.org/@parcel/watcher/-/watcher-2.6.0.tgz",
+      "integrity": "sha512-7FNeNl8NCE7aINx7WXiKQrPYZWC/hvrTsmk6zmxbI7LTXE7hVek/n8AfVgpe2y82zl3w0HvCHN0bVKMBoJcC0w==",
+      "optional": false,
+      "os": null,
+      "disposition": "deny",
+      "tarballSha256": "ab42807be3df24a12d01e31568a7e61def1a4bee636a7c60a397319eff677e95",
+      "packageJsonSha256": "b1fad194cd1597d84446a821f32969dd61f12f6a148e5a9c94958271978dc0e0",
+      "reviewedLifecycleEntrypoints": [
+        {
+          "event": "install",
+          "command": "node scripts/build-from-source.js",
+          "path": "scripts/build-from-source.js",
+          "sha256": "e97ada845f9423f9d1a02284bef36ff1e8f648141897c94d7b10edeb38f96b47"
+        }
+      ],
+      "reviewNote": "The script can invoke node-gyp when build-from-source is enabled; the release install denies it."
+    },
+    {
+      "identity": "@swc/core@1.15.46",
+      "packageName": "@swc/core",
+      "version": "1.15.46",
+      "lockPath": "node_modules/next-intl/node_modules/@swc/core",
+      "resolved": "https://registry.npmjs.org/@swc/core/-/core-1.15.46.tgz",
+      "integrity": "sha512-Ri3em2mBpq3h2zSPliCYl63otDGqek8PPEfv2nWgRQEbZ/VBCNyypVTVQ6cEbTCXBhy+WE2T3fQb08moIyuYaw==",
+      "optional": false,
+      "os": null,
+      "disposition": "deny",
+      "tarballSha256": "d81ffb258eafe55919fbdd9503269ad97a3a871c929f987717a3ae399cb4896b",
+      "packageJsonSha256": "d6b100cb632d1b9d13f465c763de1452fe658a821bdf9ed25d1e5ffafecb5bee",
+      "reviewedLifecycleEntrypoints": [
+        {
+          "event": "postinstall",
+          "command": "node postinstall.js",
+          "path": "postinstall.js",
+          "sha256": "5da0f556c5702eaf4c4b66283f03aeccbd8db3d4b730866741ca23c799614a87"
+        }
+      ],
+      "reviewNote": "The script can invoke npm to install a WASM fallback; the release install denies it."
+    },
+    {
+      "identity": "esbuild@0.28.1",
+      "packageName": "esbuild",
+      "version": "0.28.1",
+      "lockPath": "node_modules/esbuild",
+      "resolved": "https://registry.npmjs.org/esbuild/-/esbuild-0.28.1.tgz",
+      "integrity": "sha512-HrJrvZv5ayxBzPfwphOoNzkzOIIlifzk0KJrGK2c8R4+LKpMtpYLQeUdjnwjWv/LZlkH2laZk+4w78pi99D4Vw==",
+      "optional": false,
+      "os": null,
+      "disposition": "deny",
+      "tarballSha256": "eb8ef756f8299d16d5c8b35678606d715ba29923f500db7b37c181310eed40a5",
+      "packageJsonSha256": "d55d1d19fcc5b6079e4a71dd4111340c79c682bc36835ac7058a0c364c7db58a",
+      "reviewedLifecycleEntrypoints": [
+        {
+          "event": "postinstall",
+          "command": "node install.js",
+          "path": "install.js",
+          "sha256": "612294e278914443bdcf81cb17f54afec34dbdd2ebd999a6ee187912320cc315"
+        }
+      ],
+      "reviewNote": "The prebuilt optional binary is lockfile-pinned; the validator or fallback script is not needed by the verified install."
+    },
+    {
+      "identity": "fsevents@2.3.2",
+      "packageName": "fsevents",
+      "version": "2.3.2",
+      "lockPath": "node_modules/fsevents",
+      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz",
+      "integrity": "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "disposition": "deny",
+      "tarballSha256": "e17ade950c193fe09adfc7915fe29ac26166c8782d00e7c3879e7e9de02c5428",
+      "packageJsonSha256": "80914b12dba592ca926d9e6aae0bf6fdc35d871f756a9b34804b98944fac4506",
+      "reviewedLifecycleEntrypoints": [],
+      "reviewNote": "The lock marks an install-script surface, but the packed optional native package has no preinstall, install, or postinstall entrypoint."
+    },
+    {
+      "identity": "fsevents@2.3.3",
+      "packageName": "fsevents",
+      "version": "2.3.3",
+      "lockPath": "node_modules/tsx/node_modules/fsevents",
+      "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz",
+      "integrity": "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "disposition": "deny",
+      "tarballSha256": "c77e7a5d5ff31dd7acea7c44d4a0455e0528cdacbd24a8cb6c82b66d239b587e",
+      "packageJsonSha256": "500839fcc76f6c5efcb454e6614b23c26775e75e1140619fff9ca64c291aec2b",
+      "reviewedLifecycleEntrypoints": [],
+      "reviewNote": "The lock marks an install-script surface, but the packed optional native package has no preinstall, install, or postinstall entrypoint."
+    },
+    {
+      "identity": "unrs-resolver@1.12.2",
+      "packageName": "unrs-resolver",
+      "version": "1.12.2",
+      "lockPath": "node_modules/unrs-resolver",
+      "resolved": "https://registry.npmjs.org/unrs-resolver/-/unrs-resolver-1.12.2.tgz",
+      "integrity": "sha512-dmlRxBJJayXjqTwC+JtF1HhJmgf3ftQ3YejFcZrf4+KKtJv0qDsK1pjqaaVjG7wJ5NJ6UVP1OqRMQ71Z4C3rxQ==",
+      "optional": false,
+      "os": null,
+      "disposition": "deny",
+      "tarballSha256": "22203fe39b7626e2679fa74d6c2e9985e52b5cbf79ed27f8dc0439b3255c9778",
+      "packageJsonSha256": "3ef3f74675fe31a88dc490e4136178a5fd8f96142df0c565d66be9a894543adf",
+      "reviewedLifecycleEntrypoints": [
+        {
+          "event": "postinstall",
+          "command": "node postinstall.js",
+          "path": "postinstall.js",
+          "sha256": "446a0aeed55eeb28eadd9ac31f0b71654265aba8ca5a99dbc22dab0b26a02469"
+        }
+      ],
+      "reviewNote": "The helper can prepare or fetch a native binding; the release install denies it."
+    }
+  ]
+}

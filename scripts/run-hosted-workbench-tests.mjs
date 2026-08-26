@@ -27,6 +27,7 @@ export const MANDATORY_HOSTED_TEST_FILES = Object.freeze([
   'scripts/run-worktree-typecheck.test.mjs',
   'scripts/verify-deploy-closure.test.mjs',
   'scripts/verify-launch-control.test.mjs',
+  'scripts/verify-npm-install-script-policy.test.mjs',
   'scripts/verify-site-runtime-log.test.mjs',
   'scripts/workbench-tools.test.mjs',
 ]);
@@ -193,8 +194,8 @@ export function validateHostedWorkbenchContract({
   }
 
   invariant(
-    contract.fullyHostedProfile.expectedTestCount === 149 &&
-      contract.fullyHostedProfile.expectedPassCount === 149 &&
+    contract.fullyHostedProfile.expectedTestCount === 157 &&
+      contract.fullyHostedProfile.expectedPassCount === 157 &&
       contract.fullyHostedProfile.expectedSkipCount === 0,
     'fully Hosted capability floor drifted',
   );

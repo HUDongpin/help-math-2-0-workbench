@@ -41,8 +41,11 @@ jobs:
       - name: Use the repository npm version
         run: npm install --global npm@11.16.0
 
+      - name: Verify denied dependency lifecycle-script policy
+        run: node scripts/verify-npm-install-script-policy.mjs
+
       - name: Install locked dependencies
-        run: npm ci
+        run: npm ci --no-dangerously-allow-all-scripts
 
       - name: Verify repository-contained Hosted workbench structure
         # Full strict-ledger and preserved-source currentness remains a
@@ -94,8 +97,12 @@ jobs:
       - name: Use the repository npm version
         run: npm install --global npm@11.16.0
 
+      - name: Verify denied dependency lifecycle-script policy
+        working-directory: .
+        run: node scripts/verify-npm-install-script-policy.mjs
+
       - name: Install locked dependencies
-        run: npm ci
+        run: npm ci --no-dangerously-allow-all-scripts
 
       - name: Lint site
         run: npm run lint
@@ -157,8 +164,11 @@ jobs:
       - name: Use the repository npm version
         run: npm install --global npm@11.16.0
 
+      - name: Verify denied dependency lifecycle-script policy
+        run: node scripts/verify-npm-install-script-policy.mjs
+
       - name: Install locked dependencies
-        run: npm ci
+        run: npm ci --no-dangerously-allow-all-scripts
 
       - name: Verify page-only registration baseline
         run: npm run verify:current-js:426:page-only
@@ -223,8 +233,11 @@ jobs:
       - name: Use the repository npm version
         run: npm install --global npm@11.16.0
 
+      - name: Verify denied dependency lifecycle-script policy
+        run: node scripts/verify-npm-install-script-policy.mjs
+
       - name: Install locked dependencies
-        run: npm ci
+        run: npm ci --no-dangerously-allow-all-scripts
 
       - name: Verify public launch manifest currentness
         run: npm run verify:public-launch
