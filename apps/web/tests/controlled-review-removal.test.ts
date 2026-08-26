@@ -60,6 +60,13 @@ test('controlled-review routes and passphrase session plumbing are removed', asy
   for (const source of [proxySource, configSource, courseSource, demoSource]) {
     assert.doesNotMatch(source, /EXECUTIVE_PREVIEW|executive-preview|controlledPreview/u);
   }
+  for (const privateMatcher of [
+    "'/source-assets/:path*'",
+    "'/candidate-assets/:path*'",
+    "'/((?:\\\\.env(?:\\\\..*)?|pkcs11\\\\.txt))'",
+  ]) {
+    assert.ok(proxySource.includes(privateMatcher), privateMatcher);
+  }
   assert.match(courseSource, /const auditPreview = developmentAuditPreview;/u);
   assert.match(demoSource, /process\.env\.NODE_ENV === 'production'\) notFound\(\);/u);
   assert.doesNotMatch(
@@ -72,7 +79,7 @@ test('controlled-review routes and passphrase session plumbing are removed', asy
   );
 });
 
-test('production routing no longer sends visitors to a review login', async () => {
+test('production routing fails closed outside exact manifest authority', async () => {
   await withProductionEnvironment(async () => {
     const preview = await proxyForRequest(
       new NextRequest('https://www.helpmath.ai/executive-preview'),
@@ -83,6 +90,15 @@ test('production routing no longer sends visitors to a review login', async () =
       new NextRequest('https://www.helpmath.ai/demos/conversion-1-2'),
     );
     assert.equal(demo.status, 404);
+
+    const legacyAllLessonsQuery = await proxyForRequest(
+      new NextRequest('https://www.helpmath.ai/?screen=lessons'),
+    );
+    assert.equal(legacyAllLessonsQuery.status, 404);
+    assert.equal(
+      legacyAllLessonsQuery.headers.get('x-robots-tag'),
+      'noindex, nofollow',
+    );
 
     const originalG4L3Showcase =
       process.env.CURRENT_JS_SHOWCASE_G4_L3_ENABLED;
@@ -113,12 +129,19 @@ test('production routing no longer sends visitors to a review login', async () =
     }
 
     for (const pathName of [
+      '/',
       '/about',
       '/approach',
       '/curriculum',
       '/research',
       '/resources',
       '/support',
+      '/accessibility',
+      '/lessons',
+      '/privacy',
+      '/terms',
+      '/robots.txt',
+      '/sitemap.xml',
       '/library',
       '/demos',
       '/login',
@@ -133,13 +156,6 @@ test('production routing no longer sends visitors to a review login', async () =
       );
       assert.equal(response.status, 404, pathName);
       assert.equal(response.headers.get('x-robots-tag'), 'noindex, nofollow');
-    }
-
-    for (const pathName of ['/privacy', '/terms']) {
-      const response = await proxyForRequest(
-        new NextRequest(`https://www.helpmath.ai${pathName}`),
-      );
-      assert.equal(response.status, 200, pathName);
     }
 
     const originalG5L4Showcase =
@@ -161,11 +177,14 @@ test('production routing no longer sends visitors to a review login', async () =
       assert.equal(inexactG5L4.status, 404);
 
       process.env.CURRENT_JS_SHOWCASE_G5_L4_ENABLED = 'true';
-      const publicG5L4 = await proxyForRequest(
+      const stillClosedG5L4 = await proxyForRequest(
         new NextRequest('https://www.helpmath.ai/courses/5/4'),
       );
-      assert.equal(publicG5L4.status, 200);
-      assert.equal(publicG5L4.headers.get('x-middleware-next'), null);
+      assert.equal(stillClosedG5L4.status, 404);
+      assert.equal(
+        stillClosedG5L4.headers.get('x-robots-tag'),
+        'noindex, nofollow',
+      );
     } finally {
       if (originalG5L4Showcase === undefined) {
         Reflect.deleteProperty(
@@ -187,13 +206,35 @@ test('production routing no longer sends visitors to a review login', async () =
       const migrationStatus = await proxyForRequest(
         new NextRequest('https://www.helpmath.ai/migration-status?view=designer'),
       );
-      assert.equal(migrationStatus.status, 200);
+      assert.equal(migrationStatus.status, 404);
+      assert.equal(
+        migrationStatus.headers.get('x-robots-tag'),
+        'noindex, nofollow',
+      );
     } finally {
       if (originalMigrationStatus === undefined) {
         Reflect.deleteProperty(process.env, 'MIGRATION_STATUS_ENABLED');
       } else {
         process.env.MIGRATION_STATUS_ENABLED = originalMigrationStatus;
       }
+    }
+
+    for (const privatePath of [
+      '/source-assets/private-source.swf',
+      '/candidate-assets/private-candidate.js',
+      '/pkcs11.txt',
+      '/.env',
+      '/.env.production',
+    ]) {
+      const response = await proxyForRequest(
+        new NextRequest(`https://www.helpmath.ai${privatePath}`),
+      );
+      assert.equal(response.status, 404, privatePath);
+      assert.equal(
+        response.headers.get('x-robots-tag'),
+        'noindex, nofollow',
+        privatePath,
+      );
     }
   });
 });
@@ -205,4 +246,64 @@ test('locale-free flash assets are not rewritten through the default locale', as
   assert.equal(asset.status, 200);
   assert.equal(asset.headers.get('x-middleware-rewrite'), null);
   assert.equal(asset.headers.get('x-middleware-next'), '1');
+});
+
+test('manifest machine routes stay locale-free in the development audit server', async () => {
+  for (const pathname of ['/robots.txt', '/sitemap.xml']) {
+    const response = await proxyForRequest(new NextRequest(
+      `http://localhost:3200${pathname}`,
+    ));
+    assert.equal(response.status, 200, pathname);
+    assert.equal(response.headers.get('x-middleware-rewrite'), null, pathname);
+    assert.equal(response.headers.get('x-middleware-next'), '1', pathname);
+  }
+});
+
+test('the manifest-defined All Lessons route reuses the one catalog workspace', async () => {
+  for (const [url, expected] of [
+    ['http://localhost:3200/lessons', 'http://localhost:3200/en?screen=lessons'],
+    ['http://localhost:3200/es/lessons', 'http://localhost:3200/es?screen=lessons'],
+  ] as const) {
+    const response = await proxyForRequest(new NextRequest(url));
+    assert.equal(response.status, 200, url);
+    assert.equal(response.headers.get('x-middleware-rewrite'), expected, url);
+  }
+});
+
+test('loopback locale rewrites preserve the exact inbound origin', async () => {
+  const originalNodeEnv = process.env.NODE_ENV;
+  try {
+    Reflect.set(process.env, 'NODE_ENV', 'development');
+    for (const [input, expected] of [
+      ['http://127.0.0.1:3211/', 'http://127.0.0.1:3211/en'],
+      [
+        'http://127.0.0.1:3211/lessons',
+        'http://127.0.0.1:3211/en?screen=lessons',
+      ],
+      [
+        'http://127.0.0.1:3211/courses/5/4',
+        'http://127.0.0.1:3211/en/courses/5/4',
+      ],
+    ] as const) {
+      const response = await proxyForRequest(new NextRequest(input, {
+        headers: {host: '127.0.0.1:3211'},
+      }));
+      assert.equal(response.headers.get('x-middleware-rewrite'), expected);
+    }
+
+    const untrustedHost = await proxyForRequest(new NextRequest(
+      'http://127.0.0.1:3211/',
+      {headers: {host: 'example.com'}},
+    ));
+    assert.equal(
+      untrustedHost.headers.get('x-middleware-rewrite'),
+      'http://localhost:3211/en',
+    );
+  } finally {
+    if (originalNodeEnv === undefined) {
+      Reflect.deleteProperty(process.env, 'NODE_ENV');
+    } else {
+      Reflect.set(process.env, 'NODE_ENV', originalNodeEnv);
+    }
+  }
 });

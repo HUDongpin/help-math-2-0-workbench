@@ -82,21 +82,34 @@ function collectRuntimeIssues(page: Page, origin: string) {
   return issues;
 }
 
-async function doubleRafBox(locator: Locator): Promise<Box> {
-  return locator.evaluate((element) => new Promise<Box>((resolve) => {
+type BoxCoordinateSpace = 'document' | 'viewport';
+
+async function doubleRafBox(
+  locator: Locator,
+  coordinateSpace: BoxCoordinateSpace = 'viewport',
+): Promise<Box> {
+  return locator.evaluate((element, space) => new Promise<Box>((resolve) => {
     requestAnimationFrame(() => requestAnimationFrame(() => {
       const rect = element.getBoundingClientRect();
-      resolve({height: rect.height, width: rect.width, x: rect.x, y: rect.y});
+      resolve({
+        height: rect.height,
+        width: rect.width,
+        x: rect.x + (space === 'document' ? window.scrollX : 0),
+        y: rect.y + (space === 'document' ? window.scrollY : 0),
+      });
     }));
-  }));
+  }), coordinateSpace);
 }
 
-async function stableBox(locator: Locator): Promise<Box> {
+async function stableBox(
+  locator: Locator,
+  coordinateSpace: BoxCoordinateSpace = 'viewport',
+): Promise<Box> {
   let previous: Box | null = null;
   let stableSamples = 0;
 
   for (let attempt = 0; attempt < 12; attempt += 1) {
-    const current = await doubleRafBox(locator);
+    const current = await doubleRafBox(locator, coordinateSpace);
     if (previous && Object.keys(current).every((key) =>
       Math.abs(current[key as keyof Box] - previous![key as keyof Box]) <= .5)) {
       stableSamples += 1;
@@ -349,12 +362,12 @@ async function expectProportionalStage(page: Page) {
 
 async function exerciseOverlayTools(page: Page) {
   const stage = page.locator(STAGE);
-  const before = await stableBox(stage);
+  const before = await stableBox(stage, 'document');
   const mapTrigger = await liveControl(page, 'map');
 
   await mapTrigger.click();
   await expect(page.locator(ROOT)).toHaveAttribute('data-map-open', 'true');
-  expectBoxUnchanged(before, await stableBox(stage));
+  expectBoxUnchanged(before, await stableBox(stage, 'document'));
   await expectNoHorizontalOverflow(page);
   await page.locator(
     '.lesson-shell2__side-panel--map button[data-course-map-close-control="true"]',
@@ -363,14 +376,14 @@ async function exerciseOverlayTools(page: Page) {
 
   await (await liveControl(page, 'calculator')).click();
   await expect(page.locator(ROOT)).toHaveAttribute('data-active-tool', 'calculator');
-  expectBoxUnchanged(before, await stableBox(stage));
+  expectBoxUnchanged(before, await stableBox(stage, 'document'));
   await expectNoHorizontalOverflow(page);
   await page.locator('.lesson-shell2__side-panel--tool').getByRole(
     'button',
     {name: 'Close tool'},
   ).click();
   await expect(page.locator(ROOT)).toHaveAttribute('data-tool-open', 'false');
-  expectBoxUnchanged(before, await stableBox(stage));
+  expectBoxUnchanged(before, await stableBox(stage, 'document'));
 }
 
 async function exerciseMapRail(page: Page) {
@@ -383,7 +396,7 @@ async function exerciseMapRail(page: Page) {
   ).click();
   await expect(root).toHaveAttribute('data-map-open', 'false');
 
-  const before = await stableBox(stage);
+  const before = await stableBox(stage, 'document');
   const surface = await liveControlSurface(page);
   const mapTrigger = surfaceControl(page, surface, 'map');
 
@@ -395,25 +408,25 @@ async function exerciseMapRail(page: Page) {
   );
   await mapTrigger.click();
   await expect(root).toHaveAttribute('data-map-open', 'true');
-  expectBoxUnchanged(before, await stableBox(stage));
+  expectBoxUnchanged(before, await stableBox(stage, 'document'));
   await expectNoHorizontalOverflow(page);
 }
 
 async function exerciseToolRail(page: Page) {
   const root = page.locator(ROOT);
   const stage = page.locator(STAGE);
-  const before = await stableBox(stage);
+  const before = await stableBox(stage, 'document');
 
   await (await liveControl(page, 'calculator')).click();
   await expect(root).toHaveAttribute('data-active-tool', 'calculator');
-  expectBoxUnchanged(before, await stableBox(stage));
+  expectBoxUnchanged(before, await stableBox(stage, 'document'));
   await expectNoHorizontalOverflow(page);
   await page.locator('.lesson-shell2__side-panel--tool').getByRole(
     'button',
     {name: 'Close tool'},
   ).click();
   await expect(root).toHaveAttribute('data-tool-open', 'false');
-  expectBoxUnchanged(before, await stableBox(stage));
+  expectBoxUnchanged(before, await stableBox(stage, 'document'));
 }
 
 async function expectVisibleResponsiveFocus(page: Page, key: string) {
@@ -626,7 +639,7 @@ test('support overlays lock page scroll and Escape restores the visible trigger'
   const issues = collectRuntimeIssues(page, new URL(baseURL!).origin);
   await openLesson(page, baseURL!);
   const root = page.locator(ROOT);
-  const stageBefore = await stableBox(page.locator(STAGE));
+  const stageBefore = await stableBox(page.locator(STAGE), 'document');
 
   await page.evaluate(() => {
     const spacer = document.createElement('div');
@@ -651,7 +664,10 @@ test('support overlays lock page scroll and Escape restores the visible trigger'
   await page.mouse.wheel(0, 640);
   await page.waitForTimeout(100);
   expect(await page.evaluate(() => window.scrollY)).toBe(lockedScrollY);
-  expectBoxUnchanged(stageBefore, await stableBox(page.locator(STAGE)));
+  expectBoxUnchanged(
+    stageBefore,
+    await stableBox(page.locator(STAGE), 'document'),
+  );
 
   await page.keyboard.press('Escape');
   await expect(root).toHaveAttribute('data-support-modal-open', 'false');
@@ -893,7 +909,8 @@ test.describe('coarse-pointer companion layout', () => {
     const issues = collectRuntimeIssues(page, new URL(baseURL!).origin);
     await openLesson(page, baseURL!);
     const root = page.locator(ROOT);
-    const stageBefore = await expectNativeStage(page);
+    await expectNativeStage(page);
+    const stageBefore = await stableBox(page.locator(STAGE), 'document');
 
     await expect(root).toHaveAttribute('data-coarse-pointer', 'true');
     // A coarse pointer keeps the labelled toolbar live at a wide viewport even
@@ -940,7 +957,10 @@ test.describe('coarse-pointer companion layout', () => {
       'data-page-interaction-companion-host',
       'true',
     );
-    expectBoxUnchanged(stageBefore, await stableBox(page.locator(STAGE)));
+    expectBoxUnchanged(
+      stageBefore,
+      await stableBox(page.locator(STAGE), 'document'),
+    );
     await expectNoHorizontalOverflow(page);
     await expectNoRuntimeIssues(page, issues);
   });

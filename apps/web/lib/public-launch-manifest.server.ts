@@ -3,6 +3,13 @@ import {createHash} from 'node:crypto';
 import manifestDocument from '../../../catalog/public-launch-manifest.v1.json' with {type: 'json'};
 
 export type PublicLessonTier = 'unavailable' | 'preview' | 'released';
+export type PublicLaunchDeploymentTarget =
+  | 'non-production'
+  | 'preview'
+  | 'production';
+export type PublicLaunchRuntimeEnvironment = Readonly<
+  Record<string, string | undefined>
+>;
 export type PublicFeature =
   | 'auth'
   | 'contactForm'
@@ -17,6 +24,22 @@ export interface PublicLaunchSmokeRoute {
   readonly locale: 'en' | 'es' | null;
   readonly kind: 'public-page' | 'lesson' | 'robots' | 'sitemap';
   readonly expectedStatus: 200;
+}
+
+export interface PublicRouteCatalogRow {
+  readonly routeId:
+    | 'home'
+    | 'all-lessons'
+    | 'privacy'
+    | 'terms'
+    | 'support'
+    | 'accessibility'
+    | 'robots'
+    | 'sitemap';
+  readonly kind: 'localized-page' | 'machine-route';
+  readonly paths: Readonly<{en: string; es: string | null}>;
+  readonly authorizationTier: PublicLessonTier;
+  readonly productionIndexable: boolean;
 }
 
 interface PublicLaunchLesson {
@@ -106,8 +129,12 @@ interface PublicLaunchManifestV1 {
   readonly releaseId: 'HELP_MATH_2_PUBLIC_LAUNCH_V1';
   readonly generatedMarker: string;
   readonly publicFeatures: Readonly<Record<PublicFeature, false>>;
+  readonly publicRoutes: readonly PublicRouteCatalogRow[];
   readonly lessons: readonly PublicLaunchLesson[];
-  readonly smokeRoutes: readonly PublicLaunchSmokeRoute[];
+  readonly smokeRoutes: Readonly<{
+    preview: readonly PublicLaunchSmokeRoute[];
+    production: readonly PublicLaunchSmokeRoute[];
+  }>;
   readonly summary: Readonly<PublicLaunchSummary>;
 }
 
@@ -316,13 +343,21 @@ function assertExactStringSet(
   `${label} drifted`);
 }
 
+function routeTierAuthorizesTarget(tier: unknown): boolean {
+  return tier === 'preview' || tier === 'released';
+}
+
 function deriveRuntimeSmokeRoutes(
   publicRoutes: readonly Record<string, unknown>[],
   lessons: readonly Record<string, unknown>[],
+  target: 'preview' | 'production',
+  launchReadiness: unknown,
 ): readonly Record<string, unknown>[] {
+  if (target === 'production' && launchReadiness !== 'GO') return [];
   const result: Record<string, unknown>[] = [];
   for (const route of publicRoutes) {
-    if (route.authorized !== true || !isObject(route.paths)) continue;
+    if (!routeTierAuthorizesTarget(route.authorizationTier)
+      || !isObject(route.paths)) continue;
     const routeId = route.routeId as string;
     const kind = route.kind as string;
     result.push({
@@ -350,7 +385,7 @@ function deriveRuntimeSmokeRoutes(
     if (!isObject(lesson.publication)
       || !isObject(lesson.routes)
       || lesson.publication.routeAuthorized !== true
-      || lesson.publication.tier === 'unavailable') continue;
+      || !routeTierAuthorizesTarget(lesson.publication.tier)) continue;
     for (const locale of ['en', 'es'] as const) {
       result.push({
         smokeId: `${lesson.lessonKey}-${locale}`,
@@ -381,10 +416,10 @@ function validateRuntimeManifest(value: unknown): PublicLaunchManifestV1 {
   exactKeys(value.generator,
     ['path', 'version', 'sha256', 'determinism'], 'generator');
   invariant(value.generator.path === 'scripts/build-public-launch-manifest.mjs'
-    && value.generator.version === '1.0.0'
+    && value.generator.version === '1.2.0'
     && isSha256(value.generator.sha256)
     && value.generator.determinism ===
-      'no-clock-no-current-head-source-ordered-v1',
+      'no-clock-no-current-head-source-ordered-publication-tier-v3',
   'generator binding is invalid');
   invariant(isObject(value.sourceBindings), 'sourceBindings must be an object');
   exactKeys(value.sourceBindings, [
@@ -512,15 +547,22 @@ function validateRuntimeManifest(value: unknown): PublicLaunchManifestV1 {
     const expected = PUBLIC_ROUTES[index];
     invariant(isObject(rawRoute), `publicRoutes[${index}] must be an object`);
     exactKeys(rawRoute, [
-      'routeId', 'kind', 'paths', 'authorized', 'indexable', 'requiredForLaunch',
+      'routeId',
+      'kind',
+      'paths',
+      'authorizationTier',
+      'productionIndexable',
+      'requiredForLaunch',
     ], `publicRoutes[${index}]`);
     invariant(rawRoute.routeId === expected.routeId
       && rawRoute.kind === expected.kind
       && isObject(rawRoute.paths)
       && rawRoute.paths.en === expected.paths.en
       && rawRoute.paths.es === expected.paths.es
-      && typeof rawRoute.authorized === 'boolean'
-      && typeof rawRoute.indexable === 'boolean'
+      && ['unavailable', 'preview', 'released'].includes(
+        rawRoute.authorizationTier as string,
+      )
+      && typeof rawRoute.productionIndexable === 'boolean'
       && rawRoute.requiredForLaunch === true,
     `publicRoutes[${index}] is invalid`);
     const routeId = rawRoute.routeId as string;
@@ -533,8 +575,12 @@ function validateRuntimeManifest(value: unknown): PublicLaunchManifestV1 {
         `duplicate public route path ${routePath}`);
       publicRoutePaths.add(routePath as string);
     }
-    invariant(rawRoute.authorized === true || rawRoute.indexable === false,
-      `publicRoutes[${index}] unauthorized route cannot be indexable`);
+    invariant(rawRoute.authorizationTier !== 'unavailable'
+      || rawRoute.productionIndexable === false,
+    `publicRoutes[${index}] unavailable route cannot be production-indexable`);
+    invariant(rawRoute.kind === 'localized-page'
+      || rawRoute.productionIndexable === false,
+    `publicRoutes[${index}] machine route cannot be production-indexable`);
   }
   assertExactStringSet(publicRouteIds, [
     'home', 'all-lessons', 'privacy', 'terms', 'support', 'accessibility',
@@ -543,6 +589,7 @@ function validateRuntimeManifest(value: unknown): PublicLaunchManifestV1 {
   invariant(Array.isArray(value.lessons) && value.lessons.length === 29,
     'catalog must contain 29 Lessons');
   const lessonKeys = new Set<string>();
+  const lessonReleaseIds = new Set<string>();
   const routePaths = new Set<string>();
   let occurrences = 0;
   let registered = 0;
@@ -630,6 +677,11 @@ function validateRuntimeManifest(value: unknown): PublicLaunchManifestV1 {
       && (currentJs.descriptorId === null) === (currentJs.releaseId === null)
       && (!complete || currentJs.descriptorId !== null),
     `${expectedKey} descriptor/release binding is invalid`);
+    if (typeof currentJs.releaseId === 'string') {
+      invariant(!lessonReleaseIds.has(currentJs.releaseId),
+        `duplicate Current-JS release ID ${currentJs.releaseId}`);
+      lessonReleaseIds.add(currentJs.releaseId);
+    }
     invariant(isObject(rawLesson.routes)
       && rawLesson.routes.en === `/courses/${grade}/${lessonNumber}`
       && rawLesson.routes.es === `/es/courses/${grade}/${lessonNumber}`,
@@ -760,8 +812,9 @@ function validateRuntimeManifest(value: unknown): PublicLaunchManifestV1 {
   }
   if (!assetClosureCurrent) blockers.push('deploy-asset-manifest-not-current');
   for (const route of value.publicRoutes) {
-    if ((route as Record<string, unknown>).authorized !== true) {
-      blockers.push(`${String((route as Record<string, unknown>).routeId)}-route-not-authorized`);
+    const record = route as Record<string, unknown>;
+    if (!routeTierAuthorizesTarget(record.authorizationTier)) {
+      blockers.push(`${String(record.routeId)}-production-route-not-authorized`);
     }
   }
   if (!publicFeaturesFailClosed) blockers.push('public-features-not-fail-closed');
@@ -783,32 +836,48 @@ function validateRuntimeManifest(value: unknown): PublicLaunchManifestV1 {
       && externalInputsComplete
       && legalPagesFinal
       && value.publicRoutes.every((route) =>
-        (route as Record<string, unknown>).authorized === true)
+        routeTierAuthorizesTarget(
+          (route as Record<string, unknown>).authorizationTier,
+        ))
         ? 'GO'
         : 'NO_GO',
     blockers,
   };
   invariant(stableJson(value.summary) === stableJson(expectedSummary),
     'summary must be mechanically derived from manifest state');
-  invariant(Array.isArray(value.smokeRoutes), 'smokeRoutes must be an array');
-  const expectedSmokeRoutes = deriveRuntimeSmokeRoutes(
-    value.publicRoutes,
-    value.lessons,
-  );
-  invariant(JSON.stringify(value.smokeRoutes) ===
-    JSON.stringify(expectedSmokeRoutes),
-  'smokeRoutes are not mechanically derived');
-  for (const [index, smoke] of value.smokeRoutes.entries()) {
-    invariant(isObject(smoke)
-      && typeof smoke.smokeId === 'string'
-      && typeof smoke.path === 'string'
-      && smoke.expectedStatus === 200,
-    `smokeRoutes[${index}] is invalid`);
+  invariant(isObject(value.smokeRoutes), 'smokeRoutes must be an object');
+  exactKeys(value.smokeRoutes, ['preview', 'production'], 'smokeRoutes');
+  for (const target of ['preview', 'production'] as const) {
+    const routes = value.smokeRoutes[target];
+    invariant(Array.isArray(routes), `smokeRoutes.${target} must be an array`);
+    const expectedSmokeRoutes = deriveRuntimeSmokeRoutes(
+      value.publicRoutes,
+      value.lessons,
+      target,
+      expectedSummary.launchReadiness,
+    );
+    invariant(JSON.stringify(routes) === JSON.stringify(expectedSmokeRoutes),
+    `smokeRoutes.${target} are not mechanically derived`);
+    for (const [index, smoke] of routes.entries()) {
+      invariant(isObject(smoke)
+        && typeof smoke.smokeId === 'string'
+        && typeof smoke.path === 'string'
+        && smoke.expectedStatus === 200,
+      `smokeRoutes.${target}[${index}] is invalid`);
+    }
   }
   return deepFreeze(value) as unknown as PublicLaunchManifestV1;
 }
 
 const manifest = validateRuntimeManifest(manifestDocument);
+function productionLaunchIsAuthorized(): boolean {
+  return manifest.summary.launchReadiness === 'GO';
+}
+const manifestLessonsByReleaseId = new Map(
+  manifest.lessons.flatMap((lesson) => lesson.currentJs.releaseId === null
+    ? []
+    : [[lesson.currentJs.releaseId, lesson] as const]),
+);
 const publicCatalog = deepFreeze(manifest.lessons.map((lesson) => ({
   lessonKey: lesson.lessonKey,
   catalogOrdinal: lesson.catalogOrdinal,
@@ -830,6 +899,16 @@ const publicCatalog = deepFreeze(manifest.lessons.map((lesson) => ({
     indexable: lesson.publication.indexable,
   },
 } satisfies PublicLessonCatalogRow)));
+const publicRouteCatalog = deepFreeze(manifest.publicRoutes.map((route) => ({
+  routeId: route.routeId,
+  kind: route.kind,
+  paths: {en: route.paths.en, es: route.paths.es},
+  authorizationTier: route.authorizationTier,
+  productionIndexable: route.productionIndexable,
+} satisfies PublicRouteCatalogRow)));
+const publicRoutesByEnglishPath = new Map(
+  publicRouteCatalog.map((route) => [route.paths.en, route] as const),
+);
 
 // The full manifest deliberately has no exported value accessor: source paths,
 // engineering hashes, and evidence receipts remain inside this server module.
@@ -841,6 +920,49 @@ export function publicLessonCatalog(): readonly PublicLessonCatalogRow[] {
   return publicCatalog;
 }
 
+export function publicRouteCatalogRows(): readonly PublicRouteCatalogRow[] {
+  return publicRouteCatalog;
+}
+
+export function publicRouteForEnglishPath(
+  pathname: string,
+): PublicRouteCatalogRow | null {
+  return publicRoutesByEnglishPath.get(pathname) ?? null;
+}
+
+export function isKnownPublicRoutePath(pathname: string): boolean {
+  return publicRoutesByEnglishPath.has(pathname);
+}
+
+export function isPublicRoutePreviewAuthorized(pathname: string): boolean {
+  return routeTierAuthorizesTarget(
+    publicRoutesByEnglishPath.get(pathname)?.authorizationTier,
+  );
+}
+
+export function isPublicRouteProductionAuthorized(pathname: string): boolean {
+  return productionLaunchIsAuthorized()
+    && routeTierAuthorizesTarget(
+      publicRoutesByEnglishPath.get(pathname)?.authorizationTier,
+    );
+}
+
+export function isPublicRouteProductionIndexable(pathname: string): boolean {
+  const route = publicRoutesByEnglishPath.get(pathname);
+  return route?.productionIndexable === true
+    && isPublicRouteProductionAuthorized(pathname);
+}
+
+export function isPublicRoutePathAuthorized(
+  pathname: string,
+  env: PublicLaunchRuntimeEnvironment = process.env,
+): boolean {
+  const target = publicLaunchDeploymentTarget(env);
+  if (target === 'preview') return isPublicRoutePreviewAuthorized(pathname);
+  return target === 'production'
+    && isPublicRouteProductionAuthorized(pathname);
+}
+
 export function publicLessonFor(
   grade: number,
   lesson: number,
@@ -850,10 +972,15 @@ export function publicLessonFor(
   ) ?? null;
 }
 
-export function publicLearningLessons(): readonly PublicLessonCatalogRow[] {
+export function publicLearningLessons(
+  env: PublicLaunchRuntimeEnvironment = process.env,
+): readonly PublicLessonCatalogRow[] {
   return Object.freeze(publicCatalog.filter((lesson) =>
-    lesson.publication.tier !== 'unavailable'
-      && lesson.publication.routeAuthorized
+    isPublicLessonDeploymentRouteAuthorized(
+      lesson.grade,
+      lesson.lesson,
+      env,
+    )
   ));
 }
 
@@ -866,8 +993,160 @@ export function isPublicLessonRouteAuthorized(
     && candidate.publication.tier !== 'unavailable';
 }
 
-export function publicSmokeRoutes(): readonly PublicLaunchSmokeRoute[] {
-  return manifest.smokeRoutes;
+export function isPublicLessonProductionRouteAuthorized(
+  grade: number,
+  lesson: number,
+): boolean {
+  const candidate = manifest.lessons.find((entry) =>
+    entry.grade === grade && entry.lesson === lesson
+  );
+  return productionLaunchIsAuthorized()
+    && candidate?.publication.routeAuthorized === true
+    && publicLessonTierAuthorizesDeployment(
+      candidate.publication.tier,
+      'production',
+    )
+    && isSha256(candidate.publication.runtimeAssetClosureSha256);
+}
+
+export function isPublicLessonPreviewRouteAuthorized(
+  grade: number,
+  lesson: number,
+): boolean {
+  const candidate = manifest.lessons.find((entry) =>
+    entry.grade === grade && entry.lesson === lesson
+  );
+  return candidate?.publication.routeAuthorized === true
+    && publicLessonTierAuthorizesDeployment(candidate.publication.tier, 'preview')
+    && isSha256(candidate.publication.runtimeAssetClosureSha256)
+    && isSha256(candidate.publication.previewProductQaReceiptSha256)
+    && isSha256(candidate.publication.ownerPreviewDecisionSha256);
+}
+
+/**
+ * Resolves only the deployment class. A `VERCEL_ENV=preview` value does not
+ * prove that Vercel access protection is configured or that a Preview has
+ * passed review; those remain external, hash-bound gates. Publication tier is
+ * deliberately independent of this deployment context.
+ */
+export function publicLaunchDeploymentTarget(
+  env: PublicLaunchRuntimeEnvironment = process.env,
+): PublicLaunchDeploymentTarget {
+  if (env.NODE_ENV !== 'production') return 'non-production';
+  return env.VERCEL_ENV === 'preview' ? 'preview' : 'production';
+}
+
+export function publicLessonTierAuthorizesDeployment(
+  tier: PublicLessonTier,
+  target: PublicLaunchDeploymentTarget,
+): boolean {
+  if (target === 'non-production') return false;
+  return tier === 'preview' || tier === 'released';
+}
+
+export function isPublicLessonDeploymentRouteAuthorized(
+  grade: number,
+  lesson: number,
+  env: PublicLaunchRuntimeEnvironment = process.env,
+): boolean {
+  const target = publicLaunchDeploymentTarget(env);
+  if (target === 'preview') {
+    return isPublicLessonPreviewRouteAuthorized(grade, lesson);
+  }
+  return target === 'production'
+    && isPublicLessonProductionRouteAuthorized(grade, lesson);
+}
+
+export function isPublicLessonReleaseRouteAuthorized(
+  releaseId: string,
+): boolean {
+  const lesson = manifestLessonsByReleaseId.get(releaseId);
+  return lesson?.publication.routeAuthorized === true
+    && lesson.publication.tier !== 'unavailable';
+}
+
+export function isPublicLessonReleaseProductionRouteAuthorized(
+  releaseId: string,
+): boolean {
+  const lesson = manifestLessonsByReleaseId.get(releaseId);
+  return manifest.summary.launchReadiness === 'GO'
+    && lesson?.publication.routeAuthorized === true
+    && publicLessonTierAuthorizesDeployment(
+      lesson.publication.tier,
+      'production',
+    );
+}
+
+export function isPublicLessonReleaseProductionRuntimeAssetAuthorized(
+  releaseId: string,
+): boolean {
+  const lesson = manifestLessonsByReleaseId.get(releaseId);
+  return isPublicLessonReleaseProductionRouteAuthorized(releaseId)
+    && isSha256(lesson?.publication.runtimeAssetClosureSha256);
+}
+
+export function isPublicLessonReleasePreviewRuntimeAssetAuthorized(
+  releaseId: string,
+): boolean {
+  const lesson = manifestLessonsByReleaseId.get(releaseId);
+  return lesson?.publication.routeAuthorized === true
+    && publicLessonTierAuthorizesDeployment(lesson.publication.tier, 'preview')
+    && isSha256(lesson.publication.runtimeAssetClosureSha256)
+    && isSha256(lesson.publication.previewProductQaReceiptSha256)
+    && isSha256(lesson.publication.ownerPreviewDecisionSha256);
+}
+
+export function isPublicLessonReleaseDeploymentRuntimeAssetAuthorized(
+  releaseId: string,
+  env: PublicLaunchRuntimeEnvironment = process.env,
+): boolean {
+  const target = publicLaunchDeploymentTarget(env);
+  if (target === 'preview') {
+    return isPublicLessonReleasePreviewRuntimeAssetAuthorized(releaseId);
+  }
+  return target === 'production'
+    && isPublicLessonReleaseProductionRuntimeAssetAuthorized(releaseId);
+}
+
+export function isPublicLessonReleaseProductionAudioAuthorized(
+  releaseId: string,
+): boolean {
+  const lesson = manifestLessonsByReleaseId.get(releaseId);
+  return isPublicLessonReleaseProductionRouteAuthorized(releaseId)
+    && isSha256(lesson?.publication.runtimeAssetClosureSha256)
+    && isSha256(lesson?.publication.audioAcceptanceReceiptSha256);
+}
+
+export function isPublicLessonReleasePreviewAudioAuthorized(
+  releaseId: string,
+): boolean {
+  const lesson = manifestLessonsByReleaseId.get(releaseId);
+  return lesson?.publication.routeAuthorized === true
+    && publicLessonTierAuthorizesDeployment(lesson.publication.tier, 'preview')
+    && isSha256(lesson.publication.runtimeAssetClosureSha256)
+    && isSha256(lesson.publication.previewProductQaReceiptSha256)
+    && isSha256(lesson.publication.ownerPreviewDecisionSha256)
+    && isSha256(lesson.publication.audioAcceptanceReceiptSha256);
+}
+
+export function isPublicLessonReleaseDeploymentAudioAuthorized(
+  releaseId: string,
+  env: PublicLaunchRuntimeEnvironment = process.env,
+): boolean {
+  const target = publicLaunchDeploymentTarget(env);
+  if (target === 'preview') {
+    return isPublicLessonReleasePreviewAudioAuthorized(releaseId);
+  }
+  return target === 'production'
+    && isPublicLessonReleaseProductionAudioAuthorized(releaseId);
+}
+
+export function publicSmokeRoutes(
+  env: PublicLaunchRuntimeEnvironment = process.env,
+): readonly PublicLaunchSmokeRoute[] {
+  const target = publicLaunchDeploymentTarget(env);
+  if (target === 'preview') return manifest.smokeRoutes.preview;
+  return target === 'production' ? manifest.smokeRoutes.production : [];
 }
 
 export function publicFeatureEnabled(feature: PublicFeature): boolean {

@@ -2,18 +2,26 @@ import {notFound} from 'next/navigation';
 
 import {LessonMap} from '@/components/lesson-navigation';
 import {Container} from '@/components/ui';
-import {WholeLessonCoursePlayer} from '@/components/whole-lesson-course-player';
+import {
+  LessonPublicationNotice,
+  WholeLessonCoursePlayer,
+} from '@/components/whole-lesson-course-player';
 import {Link} from '@/i18n/navigation';
 import {completeAnimations, getCatalog, isLessonReleasePublished, publishedAnimations} from '@/lib/catalog';
 import {readAuthSession} from '@/lib/clerk-auth-session.server';
 import {
-  currentJsShowcasePublication,
   G5_L4_SHOWCASE_RELEASE_ID,
 } from '@/lib/current-js-showcase-publication';
 import {isG5L4ShowcaseAudioAuthorized} from '@/lib/g5-l4-preview-asset-policy';
 import {findLessonNavigationForRoute} from '@/lib/lesson-navigation';
 import {findPageOnlyCurrentJsNavigationForRoute} from '@/lib/page-only-current-js-navigation.server';
 import {protectedAtomicReleaseIdForScope} from '@/lib/lesson-release-publication';
+import {
+  isPublicLessonReleaseDeploymentRuntimeAssetAuthorized,
+  isPublicLessonReleaseDeploymentAudioAuthorized,
+  publicLessonFor,
+  publicFeatureEnabled,
+} from '@/lib/public-launch-manifest.server';
 import {
   isMigrationStatusAvailable,
   isMigrationStatusDesignerViewRequested,
@@ -34,6 +42,12 @@ import {
 // the independent server publication or controlled-preview gate.
 
 export const dynamic = 'force-dynamic';
+
+async function readPublicAuthSession(authorized: boolean) {
+  if (!authorized) return {status: 'disabled' as const};
+  const authSession = await readAuthSession();
+  return authSession;
+}
 
 export default async function CoursePage({
   params,
@@ -99,12 +113,20 @@ export default async function CoursePage({
       catalog,
       courseRegistration.descriptor.releaseId,
     );
-    const showcasePublication = currentJsShowcasePublication(
-      courseRegistration.descriptor.releaseId,
-    );
-    if (!auditPreview && !releasePublished && !showcasePublication.enabled) {
+    const publicManifestAuthorized =
+      isPublicLessonReleaseDeploymentRuntimeAssetAuthorized(
+        courseRegistration.descriptor.releaseId,
+      );
+    if (
+      !auditPreview
+      && !publicManifestAuthorized
+    ) {
       notFound();
     }
+    const publicationTier = auditPreview
+      ? 'local-audit' as const
+      : publicLessonFor(Number(grade), lessonNumber)?.publication.tier
+        ?? 'unavailable';
 
     const releaseView = resolveWholeLessonReleaseView(
       courseRegistration.descriptor,
@@ -123,19 +145,29 @@ export default async function CoursePage({
       declared: courseRegistration.descriptor.visualSkin.presentations,
       enabled: isModernWideShellEnabled(),
     });
-    const authSession = await readAuthSession();
+    const authSession = await readPublicAuthSession(
+      auditPreview || publicFeatureEnabled('auth'),
+    );
     return <WholeLessonCoursePlayer
       audioEnabled={
-        courseRegistration.descriptor.releaseId === G5_L4_SHOWCASE_RELEASE_ID
-        && isG5L4ShowcaseAudioAuthorized()
+        auditPreview
+          ? courseRegistration.descriptor.releaseId ===
+              G5_L4_SHOWCASE_RELEASE_ID
+            && isG5L4ShowcaseAudioAuthorized()
+          : isPublicLessonReleaseDeploymentAudioAuthorized(
+              courseRegistration.descriptor.releaseId,
+            )
       }
       authStatus={authSession.status}
       candidateMode={designerView && (auditPreview || !releasePublished)}
       hostPresentation={hostPresentation}
-      learningEventsEnabled={process.env.LRS_ENABLED === 'true'}
+      learningEventsEnabled={process.env.LRS_ENABLED === 'true'
+        && (auditPreview || publicFeatureEnabled('lrs'))}
+      novaTutorEnabled={auditPreview || publicFeatureEnabled('novaTutor')}
       reviewerMode={isReviewerInstrumentationEnabled()}
       locale={locale}
       novaTutorMode={novaTutorMode}
+      publicationTier={publicationTier}
       registration={courseRegistration}
       releasePublished={releasePublished}
       strictCompleteMemberCount={releaseView.strictCompleteMemberCount}
@@ -146,12 +178,29 @@ export default async function CoursePage({
     const auditPreview = developmentAuditPreview;
     const completeAnimationIds = new Set(complete.map((animation) => animation.animationId));
     const releasePublished = isLessonReleasePublished(catalog, releaseDescriptor.releaseId);
-    if (!auditPreview && !releasePublished) notFound();
+    const publicManifestAuthorized =
+      isPublicLessonReleaseDeploymentRuntimeAssetAuthorized(
+        releaseDescriptor.releaseId,
+      );
+    if (
+      !auditPreview
+      && !publicManifestAuthorized
+    ) {
+      notFound();
+    }
+    const publicationTier = auditPreview
+      ? 'local-audit' as const
+      : publicLessonFor(Number(grade), lessonNumber)?.publication.tier
+        ?? 'unavailable';
     const statusById = Object.fromEntries(catalog.animations
       .filter((animation) => releaseDescriptor.memberAnimationIds.includes(animation.animationId))
       .map((animation) => [animation.animationId, animation.migration.status]));
 
     return <main id="main-content">
+      <LessonPublicationNotice
+        locale={locale}
+        publicationTier={publicationTier}
+      />
       <header className="archive-page-header archive-page-header--course">
         <Container>
           <p className="eyebrow">{spanish
@@ -167,11 +216,11 @@ export default async function CoursePage({
             : null}
           <p>{auditPreview
             ? (spanish
-                ? `Entorno local de auditoría: orden XML exacto de ${releaseDescriptor.activePageCount} páginas activas y el shell del curso.`
-                : `Local audit environment: exact XML order for ${releaseDescriptor.activePageCount} active pages and the course shell.`)
+                ? `Entorno local de auditoría: orden XML exacto de ${releaseDescriptor.activePageCount} páginas activas dentro del host moderno My Lesson.`
+                : `Local audit environment: exact XML order for ${releaseDescriptor.activePageCount} active pages inside the modern My Lesson host.`)
             : (spanish
-                ? `La lección completa se publica de forma atómica solo después de que sus ${releaseDescriptor.activePageCount} páginas y el shell superen la admisión estricta.`
-                : `The complete lesson is published atomically only after all ${releaseDescriptor.activePageCount} pages and the shell pass strict admission.`)}</p>
+                ? `La lección completa se publica de forma atómica solo después de que sus ${releaseDescriptor.activePageCount} páginas activas y el host moderno superen sus puertas independientes.`
+                : `The complete lesson is published atomically only after all ${releaseDescriptor.activePageCount} active pages and the modern host pass their independent gates.`)}</p>
         </Container>
       </header>
       <section className="catalog-section">
@@ -188,6 +237,8 @@ export default async function CoursePage({
       </section>
     </main>;
   }
+
+  if (!developmentAuditPreview) notFound();
 
   const animations = published
     .filter((item) => String(item.classification.grade) === grade && String(item.classification.lesson) === String(lessonNumber))

@@ -11,6 +11,7 @@ import {
   currentJsCandidateAssetRecords,
   currentJsCandidateProfileEnabled,
   currentJsProductionAssetRecords,
+  isCurrentJsAudioAssetRecord,
   isCurrentJsProductionReleaseApproved,
   selectedCurrentJsAssetRecordForSegments,
 } from '../lib/current-js-asset-profile';
@@ -283,4 +284,30 @@ test('profile selection cannot turn candidate files into production with flags a
     G4_L10_PAGE_ONLY_RELEASE_ID,
     G4_L11_PAGE_ONLY_RELEASE_ID,
   ]) assert.equal(isCurrentJsProductionReleaseApproved(releaseId), false);
+});
+
+test('every source-associated MP3 uses the separate audio authorization gate', () => {
+  const g3Audio = selectedCurrentJsAssetRecordForSegments([
+    'courses',
+    'course-g03-l02-gs-002',
+    'audio',
+    'source-associated-undetermined.mp3',
+  ]);
+  const g4Audio = selectedCurrentJsAssetRecordForSegments([
+    'courses',
+    'course-g04-l03-gs-002',
+    'audio',
+    'embedded-stream-0001.mp3',
+  ]);
+  const renderer = selectedCurrentJsAssetRecordForSegments([
+    'courses',
+    'course-g03-l02-gs-002',
+    'canvas-renderer.js',
+  ]);
+  assert(g3Audio);
+  assert(g4Audio);
+  assert(renderer);
+  assert.equal(isCurrentJsAudioAssetRecord(g3Audio), true);
+  assert.equal(isCurrentJsAudioAssetRecord(g4Audio), true);
+  assert.equal(isCurrentJsAudioAssetRecord(renderer), false);
 });

@@ -10,6 +10,7 @@ import {deliverXapiStatement, type LrsDeliveryResult} from '@/lib/lrs-client.ser
 import {loadLrsConfig} from '@/lib/lrs-config.server';
 import {consumeRequestBudget} from '@/lib/request-budget.server';
 import {isSameOriginLearningEventRequest} from '@/lib/learning-event-route-support.server';
+import {publicFeatureEnabled} from '@/lib/public-launch-manifest.server';
 import {buildXapiStatement} from '@/lib/xapi-statement';
 
 export const dynamic = 'force-dynamic';
@@ -89,7 +90,10 @@ async function mapWithConcurrency<T, R>(
 }
 
 export async function POST(request: Request) {
-  if (process.env.LRS_ENABLED !== 'true') return notFoundResponse();
+  if (
+    process.env.LRS_ENABLED !== 'true'
+    || (process.env.NODE_ENV === 'production' && !publicFeatureEnabled('lrs'))
+  ) return notFoundResponse();
 
   if (!isSameOriginLearningEventRequest(request)) {
     return jsonResponse({ok: false, error: {code: 'ORIGIN_FORBIDDEN'}}, 403);

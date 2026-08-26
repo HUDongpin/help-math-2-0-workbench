@@ -127,3 +127,17 @@ test('all eight complete lessons have an exact page-only release binding', () =>
     )), `G${descriptor.course.grade} L${descriptor.course.lesson}`);
   }
 });
+
+test('production availability requires exact descriptor and manifest asset authority', async () => {
+  const source = await readFile(new URL(
+    '../lib/learning-lesson-availability.server.ts',
+    import.meta.url,
+  ), 'utf8');
+  assert.match(source,
+    /isPublicLessonReleaseDeploymentRuntimeAssetAuthorized\(\s*descriptor\.releaseId,\s*env,\s*\)/u);
+  assert.match(source,
+    /!developmentAudit && !publicManifestAuthorized/u);
+  assert.doesNotMatch(source, /isLessonReleasePublished|releasePublished/u);
+  assert.match(source, /publicationTier: developmentAudit[\s\S]*'local-audit'/u);
+  assert.doesNotMatch(source, /currentJsShowcasePublication\(/u);
+});

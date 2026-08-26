@@ -6,7 +6,7 @@ import {
   isMigrationStatusDesignerViewRequested,
 } from '../lib/migration-status-access';
 
-test('migration status remains local by default and requires an exact production opt-in', () => {
+test('migration status remains local even when a legacy production opt-in is present', () => {
   assert.equal(isMigrationStatusAvailable({NODE_ENV: 'development'}), true);
   assert.equal(isMigrationStatusAvailable({NODE_ENV: 'test'}), true);
   assert.equal(isMigrationStatusAvailable({NODE_ENV: 'production'}), false);
@@ -17,7 +17,7 @@ test('migration status remains local by default and requires an exact production
   assert.equal(isMigrationStatusAvailable({
     NODE_ENV: 'production',
     MIGRATION_STATUS_ENABLED: '1',
-  }), true);
+  }), false);
 });
 
 test('migration status designer view requires the exact first query value', () => {

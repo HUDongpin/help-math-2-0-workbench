@@ -389,7 +389,7 @@ test('candidate assets allow only local audit or the exact G5 showcase gate', ()
   }), true);
 });
 
-test('production proxy serves only opted-in G5 L4 assets with exact runtime digest', async () => {
+test('legacy G5 L4 flags cannot open production runtime assets', async () => {
   const digest = expected['course-g05-l04-vb-002'];
   const runtime = 'https://www.helpmath.ai/flash-assets/courses/'
     + `course-g05-l04-vb-002/canvas-renderer.js?sha256=${digest}`;
@@ -421,11 +421,19 @@ test('production proxy serves only opted-in G5 L4 assets with exact runtime dige
     assert.equal((await proxyForRequest(new NextRequest(sourceFla))).status, 404);
     assert.equal((await proxyForRequest(new NextRequest(privateAudit))).status, 404);
     assert.equal((await proxyForRequest(new NextRequest(nestedRuntime))).status, 404);
+    assert.equal((await proxyForRequest(new NextRequest(runtime))).status, 404);
+    assert.equal((await proxyForRequest(new NextRequest(shellFrame))).status, 404);
+  });
+
+  await withEnvironment({
+    NODE_ENV: 'development',
+    CURRENT_JS_SHOWCASE_G5_L4_ENABLED: 'true'
+  }, async () => {
     assert.equal((await proxyForRequest(new NextRequest(runtime))).status, 200);
     assert.equal((await proxyForRequest(new NextRequest(shellFrame))).status, 200);
     assert.equal((await proxyForRequest(new NextRequest(
       shellFrame.replace('g05-l04', 'g05-l05')
-    ))).status, 404);
+    ))).status, 200);
     assert.equal((await proxyForRequest(new NextRequest(
       runtime.replace(digest, '0'.repeat(64))
     ))).status, 404);
@@ -435,7 +443,7 @@ test('production proxy serves only opted-in G5 L4 assets with exact runtime dige
   });
 });
 
-test('production proxy serves only exact allowlisted G5 L4 audio URLs', async () => {
+test('production audio requires manifest acceptance while local audit keeps exact dual flags', async () => {
   const [assetPath, digest] = Object.entries(G5_L4_AUDIO_ASSET_SHA256)[0]!;
   const base = `https://www.helpmath.ai/flash-assets/courses/${assetPath}`;
   const exact = `${base}?sha256=${digest}`;
@@ -446,6 +454,9 @@ test('production proxy serves only exact allowlisted G5 L4 audio URLs', async ()
     CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED: undefined,
   }, async () => {
     assert.equal((await proxyForRequest(new NextRequest(exact))).status, 404);
+    assert.equal((await proxyForRequest(new NextRequest(
+      base.replace(/\.mp3$/u, '-future.mp3') + `?sha256=${digest}`,
+    ))).status, 404);
   });
 
   await withEnvironment({
@@ -469,6 +480,14 @@ test('production proxy serves only exact allowlisted G5 L4 audio URLs', async ()
     CURRENT_JS_SHOWCASE_G5_L4_ENABLED: 'true',
     CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED: 'true',
   }, async () => {
+    assert.equal((await proxyForRequest(new NextRequest(exact))).status, 404);
+  });
+
+  await withEnvironment({
+    NODE_ENV: 'development',
+    CURRENT_JS_SHOWCASE_G5_L4_ENABLED: 'true',
+    CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED: 'true',
+  }, async () => {
     assert.equal((await proxyForRequest(new NextRequest(exact))).status, 200);
     for (const url of [
       base,
@@ -476,7 +495,6 @@ test('production proxy serves only exact allowlisted G5 L4 audio URLs', async ()
       `${base}?sha256=${digest.toUpperCase()}`,
       `${base}?sha256=${digest}&sha256=${digest}`,
       `${base}?sha256=${digest}&download=1`,
-      base.replace(/\.mp3$/u, '-future.mp3') + `?sha256=${digest}`,
     ]) {
       assert.equal((await proxyForRequest(new NextRequest(url))).status, 404, url);
     }
@@ -511,6 +529,10 @@ test('flash asset route applies the G5 gate and exact-byte checks before serving
     source,
     /policy\.kind === 'audio'[\s\S]*isG5L4ShowcaseAudioAuthorized\(\)[\s\S]*isG5L4PreviewAssetAuthorized/u,
   );
+  assert.match(source,
+    /isPublicLessonReleaseDeploymentAudioAuthorized\(/u);
+  assert.match(source,
+    /isPublicLessonReleaseDeploymentRuntimeAssetAuthorized\(/u);
   assert.match(source, /hasExactG5L4RuntimeDigest\(/u);
   assert.match(source, /hasExactG5L4AudioDigest\(/u);
   assert.match(source, /targetEntry\.isSymbolicLink\(\)/u);

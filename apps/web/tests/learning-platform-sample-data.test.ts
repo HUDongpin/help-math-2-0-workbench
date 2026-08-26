@@ -10,7 +10,6 @@ import {
   LEARNING_HELPER_SAMPLE,
   LEARNING_PLATFORM_SAMPLE_BOUNDARY,
   LEARNING_SECTIONS,
-  LESSON_CATALOG_SAMPLE,
   NOVA_CONTROL_SAMPLE,
   TEACHER_ATTENTION_SAMPLE,
   TEACHER_ROSTER_SAMPLE,
@@ -21,12 +20,11 @@ import {
 } from '../lib/learning-platform-sample-data';
 
 const SAMPLE_FIXTURE_SHA256 =
-  '85041a39169bd5401ab0c5f58982cac5aed12f19acf3b316ea2d23a9d3845323';
+  '4027247412aa018ee5361a4d36cc50664d3f12f50e3b281789df2d13b813bd68';
 
 function sampleFixtureSha256() {
   const fixture = {
     LEARNING_SECTIONS,
-    LESSON_CATALOG_SAMPLE,
     WORDS_G4_L3,
     WORDS_G5_L4,
     WORDS_CONTEXT_SAMPLE,
@@ -43,7 +41,7 @@ function sampleFixtureSha256() {
   return createHash('sha256').update(JSON.stringify(fixture)).digest('hex');
 }
 
-test('the design transcription retains its 8-step, 29-lesson, and 39-page sample data', () => {
+test('the design transcription retains its 8-step and 39-page lesson sample data', () => {
   assert.equal(LEARNING_SECTIONS.length, 8);
   assert.equal(
     LEARNING_SECTIONS.reduce((total, section) => total + section.pages, 0),
@@ -51,19 +49,6 @@ test('the design transcription retains its 8-step, 29-lesson, and 39-page sample
   );
   assert.equal(new Set(LEARNING_SECTIONS.map((section) => section.code)).size, 8);
 
-  assert.equal(LESSON_CATALOG_SAMPLE.length, 29);
-  assert.equal(
-    new Set(LESSON_CATALOG_SAMPLE.map(({grade, lesson}) => `${grade}-${lesson}`)).size,
-    29,
-  );
-  assert.deepEqual(
-    LESSON_CATALOG_SAMPLE.find(({grade, lesson}) => grade === 4 && lesson === 3),
-    {grade: 4, lesson: 3, title: 'Negative Numbers', pages: 39},
-  );
-  assert.deepEqual(
-    LESSON_CATALOG_SAMPLE.find(({grade, lesson}) => grade === 5 && lesson === 4),
-    {grade: 5, lesson: 4, title: 'Number Lines', pages: 54},
-  );
   assert.equal(G4_L3_PAGE_TITLES.length, 39);
 });
 
@@ -118,7 +103,7 @@ test('all preserved prototype fixtures remain byte-for-byte stable', () => {
 });
 
 test('workspace keeps ordinary learning clean while retaining fixtures behind designer tools', async () => {
-  const [workspaceSource, workspaceCss] = await Promise.all([
+  const [workspaceSource, workspaceCss, homeSource] = await Promise.all([
     readFile(
       new URL('../components/learning-platform-workspace.tsx', import.meta.url),
       'utf8',
@@ -127,6 +112,7 @@ test('workspace keeps ordinary learning clean while retaining fixtures behind de
       new URL('../components/learning-platform-workspace.module.css', import.meta.url),
       'utf8',
     ),
+    readFile(new URL('../app/[locale]/page.tsx', import.meta.url), 'utf8'),
   ]);
 
   for (const removedText of [
@@ -136,6 +122,13 @@ test('workspace keeps ordinary learning clean while retaining fixtures behind de
   ]) {
     assert.equal(workspaceSource.includes(removedText), false);
   }
+  assert.doesNotMatch(workspaceSource, /LEARNER_POWER_SAMPLE/u);
+  assert.doesNotMatch(workspaceSource, /LEARNER_SUMMARY_SAMPLE/u);
+  assert.doesNotMatch(workspaceSource, /Hi Maria|Hola María|21 \/ 39/u);
+  assert.match(workspaceSource, /data-browser-progress-summary/u);
+  assert.match(workspaceSource, /data-publication-tier=\{publicationTier\}/u);
+  assert.match(workspaceSource, /publicationTier === 'preview'[\s\S]*'Preview'/u);
+  assert.match(workspaceSource, /publicationTier === 'released'/u);
   assert.match(workspaceSource, /screen === 'notes'[\s\S]*>EVIDENCE<\/span>/);
   assert.match(workspaceSource, /designerToolsVisible \? <>[\s\S]*Design notes[\s\S]*Migration status/);
   assert.match(workspaceSource, /designerToolsVisible && screen === 'notes'/);
@@ -146,6 +139,16 @@ test('workspace keeps ordinary learning clean while retaining fixtures behind de
   assert.match(workspaceSource, /Workspace language/);
   assert.match(workspaceSource, /data-brand-word="help">HELP/);
   assert.match(workspaceSource, /data-brand-word="math">Math/);
+  assert.doesNotMatch(workspaceSource, /LESSON_CATALOG_SAMPLE/);
+  assert.match(homeSource, /lessonCatalog=\{publicLessonCatalog\(\)\}/u);
+  assert.match(homeSource,
+    /teacherAvailable = !production \|\| publicFeatureEnabled\('teacher'\)/u);
+  assert.match(homeSource,
+    /publicAuthAvailable = !production \|\| publicFeatureEnabled\('auth'\)/u);
+  assert.match(homeSource,
+    /novaTutorAvailable = !production \|\| publicFeatureEnabled\('novaTutor'\)/u);
+  assert.match(workspaceSource,
+    /\{novaTutorAvailable \? <article[\s\S]*className=\{`\$\{styles\.card\} \$\{styles\.novaCard\}`\}[\s\S]*<\/article> : null\}/u);
   assert.match(workspaceCss, /--brand-help: #14213d;/);
   assert.match(workspaceCss, /--brand-math: #1768d4;/);
   assert.match(workspaceCss, /--brand-help: #f5f3fc;/);

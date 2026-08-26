@@ -9,8 +9,12 @@ import {G4_PAGE_ONLY_RELEASE_METADATA} from
   './g4-page-only-release-metadata.generated';
 import {
   currentJsAssetRecordsForSegments,
+  isCurrentJsAudioAssetRecord,
   selectedCurrentJsAssetRecordForSegments,
 } from './current-js-asset-profile';
+import {
+  isPublicLessonReleaseDeploymentAudioAuthorized,
+} from './public-launch-manifest.server';
 
 /**
  * Exact public runtime-directory closure for the page-only lessons whose
@@ -269,7 +273,13 @@ export function isPageOnlyCurrentJsShowcaseAssetAuthorized(
   env: CurrentJsShowcaseEnvironment = process.env,
 ) {
   const record = selectedCurrentJsAssetRecordForSegments(asset, env);
+  const publicationAuthorized = record?.profile === 'production'
+    && env.NODE_ENV === 'production'
+    && isCurrentJsAudioAssetRecord(record)
+    ? isPublicLessonReleaseDeploymentAudioAuthorized(record.releaseId, env)
+    : record !== undefined
+      && currentJsShowcasePublication(record.releaseId, env).enabled;
   return record !== undefined
     && pageOnlyReleaseIds.has(record.releaseId as PageOnlyShowcaseReleaseId)
-    && currentJsShowcasePublication(record.releaseId, env).enabled;
+    && publicationAuthorized;
 }

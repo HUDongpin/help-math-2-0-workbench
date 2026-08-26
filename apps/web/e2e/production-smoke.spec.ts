@@ -1,21 +1,17 @@
 import AxeBuilder from '@axe-core/playwright';
 import {expect, test, type Page, type Request} from '@playwright/test';
 
+import {
+  isPublicLessonProductionRouteAuthorized,
+  isPublicRouteProductionAuthorized,
+  publicLessonCatalog,
+  publicRouteCatalogRows,
+} from '../lib/public-launch-manifest.server';
+
 type RuntimeIssue = Readonly<{
   kind: 'console' | 'external-request' | 'http' | 'page' | 'request';
   detail: string;
 }>;
-
-const registeredCurrentJsCandidateLessons = Object.freeze([
-  '/courses/3/2?mode=focus',
-  '/courses/4/3?mode=focus',
-  '/courses/4/5?mode=focus',
-  '/courses/4/10?mode=focus',
-  '/courses/4/11?mode=focus',
-  '/courses/5/3?mode=focus',
-  '/courses/5/4?mode=focus',
-  '/courses/5/5?mode=focus',
-]);
 
 function monitorRuntime(page: Page): RuntimeIssue[] {
   const issues: RuntimeIssue[] = [];
@@ -80,26 +76,61 @@ async function expectCleanDocument(
   expect(issues, `${path}: ${JSON.stringify(issues, null, 2)}`).toEqual([]);
 }
 
-test('Next production server renders clean EN and ES public documents', async ({page}) => {
-  for (const [path, language] of [
-    ['/', 'en'],
-    ['/es', 'es'],
-    ['/privacy', 'en'],
-    ['/es/privacy', 'es'],
-    ['/terms', 'en'],
-    ['/es/terms', 'es'],
-  ] as const) {
-    await expectCleanDocument(page, path, language);
+test('public documents follow the exact manifest route authorization', async ({page, request}) => {
+  for (const route of publicRouteCatalogRows()) {
+    for (const [language, path] of [
+      ['en', route.paths.en],
+      ['es', route.paths.es],
+    ] as const) {
+      if (path === null) continue;
+      const productionAuthorized = isPublicRouteProductionAuthorized(
+        route.paths.en,
+      );
+      const response = await request.get(path);
+      expect(response.status(), `${route.routeId}:${language}`).toBe(
+        productionAuthorized ? 200 : 404,
+      );
+      if (!productionAuthorized) {
+        expect(response.headers()['x-robots-tag'], path).toContain('noindex');
+      } else if (route.kind === 'localized-page') {
+        await expectCleanDocument(page, path, language);
+      }
+    }
+  }
+
+  const legacyAllLessonsQuery = await request.get('/?screen=lessons');
+  const legacyAllLessonsAuthorized =
+    isPublicRouteProductionAuthorized('/')
+    && isPublicRouteProductionAuthorized('/lessons');
+  expect(legacyAllLessonsQuery.status()).toBe(
+    legacyAllLessonsAuthorized ? 200 : 404,
+  );
+  if (!legacyAllLessonsAuthorized) {
+    expect(legacyAllLessonsQuery.headers()['x-robots-tag']).toContain(
+      'noindex',
+    );
   }
 });
 
-test('Current-JS registration never grants public production admission by itself', async ({
+test('all 29 Lesson routes follow exact Preview-or-Released public authority', async ({
   request,
 }) => {
-  for (const href of registeredCurrentJsCandidateLessons) {
-    const response = await request.get(href);
-    expect(response.status(), href).toBe(404);
-    expect(response.headers()['x-robots-tag'], href).toContain('noindex');
+  const catalog = publicLessonCatalog();
+  expect(catalog).toHaveLength(29);
+  expect(catalog.reduce((total, lesson) =>
+    total + lesson.pageOccurrenceCount, 0)).toBe(1_751);
+  for (const lesson of catalog) {
+    const productionAuthorized = isPublicLessonProductionRouteAuthorized(
+      lesson.grade,
+      lesson.lesson,
+    );
+    for (const href of [lesson.routes.en, lesson.routes.es]) {
+      const response = await request.get(`${href}?mode=focus`);
+      expect(response.status(), href).toBe(productionAuthorized ? 200 : 404);
+      if (!productionAuthorized) {
+        expect(response.headers()['x-robots-tag'], href).toContain('noindex');
+      }
+    }
   }
 });
 
@@ -125,20 +156,46 @@ test('disabled public capabilities fail closed before provider work', async ({re
 
 test('private-looking deployment paths are absent', async ({request}) => {
   for (const path of [
+    '/migration-status?view=designer',
+    '/migration-status/g4-l9-product-bridge',
+    '/library',
+    '/en/library',
+    '/demos',
+    '/en/demos',
+    '/demos/conversion-1-2',
+    '/es/demos/conversion-1-2',
+    '/animations/not-public',
+    '/en/animations/not-public',
+    '/reference/not-public',
+    '/en/reference/not-public',
+    '/generated/g4-grade-wide-keyterms-en.json',
+    '/generated/g4-grade-wide-keyterms-es.json',
+    '/generated/g5-l4-elementary-keyterms-reference-en.json',
+    '/generated/g5-l4-elementary-keyterms-reference-es.json',
+    '/generated/not-declared.json',
+    '/api/reference/not-public',
+    '/api/ruffle/ruffle.js',
     '/source-assets/private-source.swf',
     '/candidate-assets/private-candidate.js',
     '/flash-assets/private-source.swf',
     '/pkcs11.txt',
     '/.env.production',
   ]) {
-    expect((await request.get(path)).status(), path).toBe(404);
+    const response = await request.get(path);
+    expect(response.status(), path).toBe(404);
+    expect(response.headers()['x-robots-tag'], path).toContain('noindex');
   }
 });
 
-test('current public surfaces have zero serious or critical axe violations', async ({page}) => {
-  for (const path of ['/', '/es', '/privacy', '/terms']) {
-    const response = await page.goto(path, {waitUntil: 'networkidle'});
-    expect(response?.status(), path).toBe(200);
+test('every authorized public document has zero serious or critical axe violations', async ({page}) => {
+  const documentPaths = publicRouteCatalogRows().flatMap((route) =>
+    isPublicRouteProductionAuthorized(route.paths.en)
+      && route.kind === 'localized-page'
+      ? [route.paths.en, ...(route.paths.es === null ? [] : [route.paths.es])]
+      : []
+  );
+  for (const path of documentPaths) {
+    await expectCleanDocument(page, path, path.startsWith('/es') ? 'es' : 'en');
     const results = await new AxeBuilder({page})
       .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
       .analyze();
@@ -152,24 +209,41 @@ test('current public surfaces have zero serious or critical axe violations', asy
   }
 });
 
-test('robots and sitemap keep all unapproved Current-JS candidates undiscoverable', async ({request}) => {
+test('robots and sitemap reflect exact production Lesson authorization', async ({request}) => {
+  const routeContracts = new Map(publicRouteCatalogRows().map((route) =>
+    [route.routeId, route] as const));
   const robots = await request.get('/robots.txt');
-  expect(robots.status()).toBe(200);
+  const robotsPath = routeContracts.get('robots')?.paths.en ?? '/robots.txt';
+  const robotsAuthorized = isPublicRouteProductionAuthorized(robotsPath);
+  expect(robots.status()).toBe(robotsAuthorized ? 200 : 404);
+  if (!robotsAuthorized) {
+    expect(robots.headers()['x-robots-tag']).toContain('noindex');
+  }
   const robotsText = await robots.text();
-  expect(robotsText).toContain('Disallow: /api/');
+  if (robotsAuthorized) expect(robotsText).toContain('Disallow: /api/');
 
   const sitemap = await request.get('/sitemap.xml');
-  expect(sitemap.status()).toBe(200);
+  const sitemapPath = routeContracts.get('sitemap')?.paths.en ?? '/sitemap.xml';
+  const sitemapAuthorized = isPublicRouteProductionAuthorized(sitemapPath);
+  expect(sitemap.status()).toBe(sitemapAuthorized ? 200 : 404);
+  if (!sitemapAuthorized) {
+    expect(sitemap.headers()['x-robots-tag']).toContain('noindex');
+  }
   const sitemapText = await sitemap.text();
-  for (const href of registeredCurrentJsCandidateLessons) {
-    const route = href.split('?')[0]!;
-    expect(sitemapText, route).not.toContain(
-      `<loc>https://www.helpmath.ai${route}</loc>`,
+  for (const lesson of publicLessonCatalog()) {
+    const authorized = isPublicLessonProductionRouteAuthorized(
+      lesson.grade,
+      lesson.lesson,
     );
-    expect(sitemapText, `/es${route}`).not.toContain(
-      `<loc>https://www.helpmath.ai/es${route}</loc>`,
-    );
-    expect(robotsText, route).toContain(`Disallow: ${route}`);
-    expect(robotsText, `/es${route}`).toContain(`Disallow: /es${route}`);
+    for (const route of [lesson.routes.en, lesson.routes.es]) {
+      if (sitemapAuthorized) {
+        const location = `<loc>https://www.helpmath.ai${route}</loc>`;
+        if (authorized) expect(sitemapText, route).toContain(location);
+        else expect(sitemapText, route).not.toContain(location);
+      }
+      if (robotsAuthorized && !authorized) {
+        expect(robotsText, route).toContain(`Disallow: ${route}`);
+      }
+    }
   }
 });

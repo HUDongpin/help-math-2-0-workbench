@@ -142,6 +142,7 @@ export function G4L3WholeLessonPlayer({
   hostPresentation = 'legacy-composite',
   learningEventsEnabled = false,
   locale,
+  novaTutorEnabled = true,
   novaTutorMode = 'focus',
   releasePublished,
   reviewerMode = false,
@@ -152,6 +153,7 @@ export function G4L3WholeLessonPlayer({
   hostPresentation?: WholeLessonHostPresentation;
   learningEventsEnabled?: boolean;
   locale: G4L3Locale;
+  novaTutorEnabled?: boolean;
   novaTutorMode?: NovaTutorMode;
   releasePublished: boolean;
   reviewerMode?: boolean;
@@ -1197,7 +1199,7 @@ export function G4L3WholeLessonPlayer({
         <button onClick={restartLesson} type="button">{spanish ? 'Reiniciar toda la lección' : 'Restart entire lesson'}</button>
       </>}
       totalPages={G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.course.activePageCount}
-      tutorContext={tutorContext}
+      tutorContext={novaTutorEnabled ? tutorContext : undefined}
       visualSkin={visualSkin}
       volume={volume}
     />

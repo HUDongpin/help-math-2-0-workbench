@@ -16,6 +16,18 @@ export const LOCAL_REFERENCE_DIAGNOSTIC_CONTENT_SECURITY_POLICY = [
   "worker-src 'self' blob:",
 ].join('; ');
 
+export function localReferenceDiagnosticNotFoundResponse() {
+  return new Response('Not Found', {
+    status: 404,
+    headers: {
+      'Cache-Control': 'private, no-store, max-age=0',
+      'Content-Security-Policy': "default-src 'none'; sandbox",
+      'Content-Type': 'text/plain; charset=utf-8',
+      'X-Robots-Tag': 'noindex, nofollow, noarchive, noimageindex',
+    },
+  });
+}
+
 type HeaderReader = Pick<Headers, 'get'>;
 
 export interface LocalReferenceDiagnosticAccessInput {

@@ -7,6 +7,7 @@ import {resetRequestBudgetsForTests} from '../lib/request-budget.server';
 
 const originalFetch = globalThis.fetch;
 const envKeys = [
+  'NODE_ENV',
   'LRS_ENABLED',
   'LRS_ENDPOINT',
   'LRS_USERNAME',
@@ -147,6 +148,20 @@ test('disabled learning events are indistinguishable from an absent public API',
   assert.equal(response.headers.get('cache-control'), 'private, no-store, max-age=0');
   assert.equal(response.headers.get('x-robots-tag'), 'noindex, nofollow');
   assert.equal(await response.text(), 'Not Found');
+  assert.equal(deliveryCalls, 0);
+});
+
+test('legacy LRS configuration cannot open the production feature', async () => {
+  configureLrs();
+  Reflect.set(process.env, 'NODE_ENV', 'production');
+  let deliveryCalls = 0;
+  globalThis.fetch = async () => {
+    deliveryCalls += 1;
+    return new Response(null, {status: 204});
+  };
+  const response = await POST(learningEventRequest());
+  assert.equal(response.status, 404);
+  assert.equal(response.headers.get('x-robots-tag'), 'noindex, nofollow');
   assert.equal(deliveryCalls, 0);
 });
 

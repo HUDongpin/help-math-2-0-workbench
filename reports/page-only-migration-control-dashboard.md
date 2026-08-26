@@ -172,5 +172,5 @@ Authorization still required:
 - Input plan: `/Volumes/WestWorld/HELP MATH 2.0-g4-l5-l10-l11-integration/reports/help-math-426-page-only-baseline-input-plan-2026-08-22.json` / `6d181ad88f0c0cd0e6094a4fff2ac4056a883f442e402b3aa9c69ac8c94a4764`.
 - Frozen P0 receipt: `/Volumes/WestWorld/HELP MATH 2.0-g4-l5-l10-l11-integration/artifacts/handoffs/help-math-p0-426-page-only-baseline-final-receipt-2026-08-23.json` / `5c4c96d98f76977c8bb05438af6b2b7c22ceb8b96193b1d291166fac950bb028`.
 - Currentness successor: `HELP-MATH-C0-SOURCE-CUSTODY-CONVERGENCE-SUCCESSOR-20260824`; predecessor generator 1.1.0; formal baseline unchanged.
-- Generator: `scripts/build-page-only-migration-control-ledger.mjs` / `a2dde55405c9d79a6f361673591b39c736b04c0822ee6fdea427d30cd5e8f1f5`.
+- Generator: `scripts/build-page-only-migration-control-ledger.mjs` / `ab7c65aada8bcc8cc049db29c93e6b2fef57811f738c8846a1d0b3aea2f49030`.
 - Canonical JSON: `catalog/page-only-migration-control-ledger.json`.

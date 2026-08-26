@@ -176,8 +176,22 @@ describe('POST /api/contact', () => {
     assert.equal(await response.text(), 'Not Found');
   });
 
-  it('rejects a failed Turnstile verification before email delivery', async () => {
+  it('does not let complete legacy configuration open the production feature', async () => {
     setEnv('NODE_ENV', 'production');
+    enableContactForm();
+    let providerCalls = 0;
+    globalThis.fetch = async () => {
+      providerCalls += 1;
+      throw new Error('provider must not be called');
+    };
+    const response = await POST(request(validRequest()));
+    assert.equal(response.status, 404);
+    assert.equal(response.headers.get('x-robots-tag'), 'noindex, nofollow');
+    assert.equal(providerCalls, 0);
+  });
+
+  it('rejects a failed Turnstile verification before email delivery', async () => {
+    setEnv('NODE_ENV', 'test');
     enableContactForm();
     globalThis.fetch = async () => Response.json({success: false});
 
@@ -190,7 +204,7 @@ describe('POST /api/contact', () => {
   });
 
   it('rejects a successful token issued for a different Turnstile action', async () => {
-    setEnv('NODE_ENV', 'production');
+    setEnv('NODE_ENV', 'test');
     enableContactForm();
     globalThis.fetch = async () => Response.json({success: true, action: 'login'});
 
@@ -201,7 +215,7 @@ describe('POST /api/contact', () => {
   });
 
   it('preserves the enabled Turnstile and Resend delivery flow only for exact true', async () => {
-    setEnv('NODE_ENV', 'production');
+    setEnv('NODE_ENV', 'test');
     enableContactForm();
     let verificationBody = '';
     let deliveryBody = '';

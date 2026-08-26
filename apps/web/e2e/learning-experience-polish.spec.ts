@@ -88,10 +88,10 @@ async function expectVisibleMinimumFontSizes(
 test('Learning Home keeps lesson and teacher information readable across EN/ES viewports', async ({page}) => {
   test.setTimeout(120_000);
   const cases = [
-    {path: '/', viewport: {width: 1440, height: 900}, lessons: 'All lessons', teacher: 'Teacher'},
-    {path: '/', viewport: {width: 390, height: 844}, lessons: 'All lessons', teacher: 'Teacher'},
-    {path: '/es', viewport: {width: 1024, height: 768}, lessons: 'Todas las lecciones', teacher: 'Docente'},
-    {path: '/es', viewport: {width: 320, height: 568}, lessons: 'Todas las lecciones', teacher: 'Docente'},
+    {path: '/', viewport: {width: 1440, height: 900}, lessons: 'All lessons 29', lessonsPath: '/lessons', teacher: 'Teacher'},
+    {path: '/', viewport: {width: 390, height: 844}, lessons: 'All lessons', lessonsPath: '/lessons', teacher: 'Teacher'},
+    {path: '/es', viewport: {width: 1024, height: 768}, lessons: 'Todas las lecciones 29', lessonsPath: '/es/lessons', teacher: 'Docente'},
+    {path: '/es', viewport: {width: 320, height: 568}, lessons: 'Todas las lecciones', lessonsPath: '/es/lessons', teacher: 'Docente'},
   ] as const;
 
   for (const scenario of cases) {
@@ -115,9 +115,16 @@ test('Learning Home keeps lesson and teacher information readable across EN/ES v
       13,
     );
 
-    // The count remains visible/audible on wide layouts and becomes
-    // presentation-only on compact layouts; the navigation label is stable.
-    await page.getByRole('button', {name: scenario.lessons}).click();
+    // All Lessons is a manifest-gated route. Wait for its navigation to finish
+    // before measuring the destination rather than treating it as client-only
+    // workspace state.
+    await workspaceRail.getByRole('link', {
+      exact: true,
+      name: scenario.lessons,
+    }).click();
+    await expect.poll(() => new URL(page.url()).pathname).toBe(
+      scenario.lessonsPath,
+    );
     await expect(page.locator('[data-workspace-screen="lessons"]')).toBeVisible();
     const lessonCopy = page.locator('[data-lesson-card-copy]').first();
     await expectMinimumFontSize(lessonCopy.locator('small'), 13);

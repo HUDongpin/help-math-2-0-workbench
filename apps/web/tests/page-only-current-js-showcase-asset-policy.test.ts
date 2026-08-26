@@ -194,7 +194,7 @@ test('page-only showcase asset classification is exact and fails closed', () => 
   }), true);
 });
 
-test('production proxy admits each page-only course and its exact asset closure only when opted in', async () => {
+test('legacy page-only flags cannot open production courses or assets', async () => {
   for (const scope of scopes) {
     const firstDirectory =
       PAGE_ONLY_CURRENT_JS_SHOWCASE_ASSET_DIRECTORIES_BY_RELEASE[
@@ -223,18 +223,13 @@ test('production proxy admits each page-only course and its exact asset closure 
       CURRENT_JS_CANDIDATE_PROFILE_ENABLED: 'true',
       [scope.environmentKey]: 'true',
     }, async () => {
-      const productionApproved = !scope.directoryPrefix.startsWith(
-        'course-g04-',
-      );
       assert.equal(
         (await proxyForRequest(new NextRequest(courseUrl))).status,
-        productionApproved ? 200 : 404,
+        404,
       );
       const asset = await proxyForRequest(new NextRequest(assetUrl));
-      assert.equal(asset.status, productionApproved ? 200 : 404);
-      if (productionApproved) {
-        assert.equal(asset.headers.get('x-middleware-next'), '1');
-      }
+      assert.equal(asset.status, 404);
+      assert.equal(asset.headers.get('x-robots-tag'), 'noindex, nofollow');
     });
   }
 
@@ -290,5 +285,10 @@ test('flash asset route repeats the page-only authorization check', async () => 
   assert.match(
     source,
     /!isPageOnlyCurrentJsShowcaseAssetAuthorized\(canonicalAsset\)/u,
+  );
+  assert.match(source, /isCurrentJsAudioAssetRecord/u);
+  assert.match(
+    source,
+    /isPublicLessonReleaseDeploymentAudioAuthorized/u,
   );
 });

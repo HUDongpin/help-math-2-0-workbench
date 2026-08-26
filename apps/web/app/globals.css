@@ -2455,6 +2455,25 @@ body:has(.whole-lesson-page) .site-footer {
   padding: .45rem clamp(1rem, 3vw, 2.5rem);
 }
 
+.lesson-publication-notice {
+  align-items: flex-start;
+  background: #f5f1ff;
+  border: 1px solid #7656b5;
+  color: #21143d;
+  display: flex;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0.75rem 1rem;
+}
+
+.lesson-publication-notice strong {
+  flex: 0 0 auto;
+}
+
+.lesson-publication-notice[data-publication-tier="preview"] strong {
+  text-transform: uppercase;
+}
+
 .whole-lesson-disclosure .controlled-ceo-preview-boundary {
   background: transparent;
   border: 0;

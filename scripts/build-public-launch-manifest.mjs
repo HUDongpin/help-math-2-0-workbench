@@ -22,7 +22,7 @@ const projectRoot = path.resolve(path.dirname(scriptPath), "..");
 
 export const RELEASE_ID = "HELP_MATH_2_PUBLIC_LAUNCH_V1";
 export const MANIFEST_SCHEMA_VERSION = 1;
-export const GENERATOR_VERSION = "1.0.0";
+export const GENERATOR_VERSION = "1.2.0";
 export const DEFAULT_MANIFEST_PATH = path.join(
   projectRoot,
   "catalog",
@@ -183,6 +183,14 @@ function initialPublication() {
   };
 }
 
+export function publicRouteTierAuthorizesDeployment(tier, target) {
+  invariant(["unavailable", "preview", "released"].includes(tier),
+    `unknown public route authorization tier ${String(tier)}`);
+  invariant(["preview", "production"].includes(target),
+    `unknown public route deployment target ${String(target)}`);
+  return tier === "preview" || tier === "released";
+}
+
 function buildLessonRecord(lesson, rows, catalogOrdinal) {
   invariant(rows.length === lesson.occurrences,
     `${lessonKey(lesson.grade, lesson.lesson)} row count drifted`);
@@ -254,10 +262,23 @@ function buildLessonRecord(lesson, rows, catalogOrdinal) {
   };
 }
 
-export function derivePublicLaunchSmokeRoutes(publicRoutes, lessons) {
+export function derivePublicLaunchSmokeRoutes(
+  publicRoutes,
+  lessons,
+  target,
+  launchReadiness = "NO_GO",
+) {
+  invariant(["preview", "production"].includes(target),
+    `unknown smoke deployment target ${String(target)}`);
+  invariant(["GO", "NO_GO"].includes(launchReadiness),
+    `unknown launch readiness ${String(launchReadiness)}`);
+  if (target === "production" && launchReadiness !== "GO") return [];
   const result = [];
   for (const route of publicRoutes) {
-    if (!route.authorized) continue;
+    if (!publicRouteTierAuthorizesDeployment(
+      route.authorizationTier,
+      target,
+    )) continue;
     result.push({
       smokeId: `${route.routeId}-en`,
       path: route.paths.en,
@@ -281,7 +302,10 @@ export function derivePublicLaunchSmokeRoutes(publicRoutes, lessons) {
   }
   for (const lesson of lessons) {
     if (!lesson.publication.routeAuthorized
-      || lesson.publication.tier === "unavailable") continue;
+      || !publicRouteTierAuthorizesDeployment(
+        lesson.publication.tier,
+        target,
+      )) continue;
     result.push({
       smokeId: `${lesson.lessonKey}-en`,
       path: lesson.routes.en,
@@ -322,7 +346,8 @@ export function derivePublicLaunchSummary({lessons, publicFeatures, legalAndSupp
     && legalAndSupport.terms.state === "approved"
     && legalAndSupport.support.state === "approved"
     && legalAndSupport.accessibility.state === "approved";
-  const requiredRoutesAuthorized = publicRoutes.every((route) => route.authorized);
+  const requiredRoutesAuthorized = publicRoutes.every((route) =>
+    publicRouteTierAuthorizesDeployment(route.authorizationTier, "production"));
   const assetClosureCurrent = assetClosure.deployAssetManifestCurrent === true
     && isSha256(assetClosure.deployAssetManifestSha256);
   const blockers = [];
@@ -345,7 +370,10 @@ export function derivePublicLaunchSummary({lessons, publicFeatures, legalAndSupp
   if (legalAndSupport.accessibility.state !== "approved") blockers.push("accessibility-review-not-approved");
   if (!assetClosureCurrent) blockers.push("deploy-asset-manifest-not-current");
   for (const route of publicRoutes) {
-    if (!route.authorized) blockers.push(`${route.routeId}-route-not-authorized`);
+    if (!publicRouteTierAuthorizesDeployment(
+      route.authorizationTier,
+      "production",
+    )) blockers.push(`${route.routeId}-production-route-not-authorized`);
   }
   if (!publicFeaturesFailClosed) blockers.push("public-features-not-fail-closed");
   const launchReadiness = blockers.length === 0
@@ -586,7 +614,7 @@ export function validatePublicLaunchManifestContract(manifest, {
     && manifest.generator.version === GENERATOR_VERSION
     && isSha256(manifest.generator.sha256)
     && manifest.generator.determinism ===
-      "no-clock-no-current-head-source-ordered-v1",
+      "no-clock-no-current-head-source-ordered-publication-tier-v3",
   "generator binding is invalid");
   invariant(SHA256_MARKER_PATTERN.test(manifest.generatedMarker),
     "generatedMarker shape is invalid");
@@ -714,19 +742,30 @@ export function validatePublicLaunchManifestContract(manifest, {
   manifest.publicRoutes.forEach((route, index) => {
     const expected = PUBLIC_ROUTES[index];
     exactKeys(route, [
-      "routeId", "kind", "paths", "authorized", "indexable", "requiredForLaunch",
+      "routeId",
+      "kind",
+      "paths",
+      "authorizationTier",
+      "productionIndexable",
+      "requiredForLaunch",
     ], `publicRoutes[${index}]`);
     exactKeys(route.paths, ["en", "es"], `publicRoutes[${index}].paths`);
     invariant(route.routeId === expected.routeId
       && route.kind === expected.kind
       && route.paths.en === expected.paths.en
       && route.paths.es === expected.paths.es
-      && typeof route.authorized === "boolean"
-      && typeof route.indexable === "boolean"
+      && ["unavailable", "preview", "released"].includes(
+        route.authorizationTier,
+      )
+      && typeof route.productionIndexable === "boolean"
       && route.requiredForLaunch === true,
     `publicRoutes[${index}] drifted`);
-    invariant(route.authorized || route.indexable === false,
-      `publicRoutes[${index}] unauthorized route cannot be indexable`);
+    invariant(route.authorizationTier !== "unavailable"
+      || route.productionIndexable === false,
+    `publicRoutes[${index}] unavailable route cannot be production-indexable`);
+    invariant(route.kind === "localized-page"
+      || route.productionIndexable === false,
+    `publicRoutes[${index}] machine route cannot be production-indexable`);
     routePaths.push(route.paths.en);
     if (route.paths.es !== null) routePaths.push(route.paths.es);
   });
@@ -743,11 +782,22 @@ export function validatePublicLaunchManifestContract(manifest, {
   invariant(new Set(lessonRoutes).size === lessonRoutes.length,
     "Lesson routes must be unique");
 
-  invariant(Array.isArray(manifest.smokeRoutes), "smokeRoutes must be an array");
-  const expectedSmokeRoutes = derivePublicLaunchSmokeRoutes(manifest.publicRoutes,
-    manifest.lessons);
-  invariant(JSON.stringify(manifest.smokeRoutes) === JSON.stringify(expectedSmokeRoutes),
-    "smokeRoutes must be mechanically derived from authorized surfaces");
+  const smokeLaunchReadiness = derivePublicLaunchSummary(manifest)
+    .launchReadiness;
+  exactKeys(manifest.smokeRoutes, ["preview", "production"], "smokeRoutes");
+  for (const target of ["preview", "production"]) {
+    invariant(Array.isArray(manifest.smokeRoutes[target]),
+      `smokeRoutes.${target} must be an array`);
+    const expectedSmokeRoutes = derivePublicLaunchSmokeRoutes(
+      manifest.publicRoutes,
+      manifest.lessons,
+      target,
+      smokeLaunchReadiness,
+    );
+    invariant(JSON.stringify(manifest.smokeRoutes[target]) ===
+      JSON.stringify(expectedSmokeRoutes),
+    `smokeRoutes.${target} must be mechanically derived from target-authorized surfaces`);
+  }
 
   exactKeys(manifest.summary, [
     "lessonCount",
@@ -856,8 +906,8 @@ export async function buildPublicLaunchManifest({
     paths: {...route.paths},
     // C1 core introduces authority; no route becomes launch-authorized until
     // its real consumer and review gates are integrated on an exact successor.
-    authorized: false,
-    indexable: false,
+    authorizationTier: "unavailable",
+    productionIndexable: false,
     requiredForLaunch: true,
   }));
   const publicFeatures = {
@@ -916,7 +966,7 @@ export async function buildPublicLaunchManifest({
       path: "scripts/build-public-launch-manifest.mjs",
       version: GENERATOR_VERSION,
       sha256: await sha256File(scriptPath),
-      determinism: "no-clock-no-current-head-source-ordered-v1",
+      determinism: "no-clock-no-current-head-source-ordered-publication-tier-v3",
     },
     generatedMarker: ZERO_MARKER,
     sourceBindings: {
@@ -951,11 +1001,25 @@ export async function buildPublicLaunchManifest({
     legalAndSupport,
     assetClosure,
     publicRoutes,
-    smokeRoutes: derivePublicLaunchSmokeRoutes(publicRoutes, lessons),
+    smokeRoutes: {preview: [], production: []},
     summary: null,
     lessons,
   };
   manifest.summary = derivePublicLaunchSummary(manifest);
+  manifest.smokeRoutes = {
+    preview: derivePublicLaunchSmokeRoutes(
+      publicRoutes,
+      lessons,
+      "preview",
+      manifest.summary.launchReadiness,
+    ),
+    production: derivePublicLaunchSmokeRoutes(
+      publicRoutes,
+      lessons,
+      "production",
+      manifest.summary.launchReadiness,
+    ),
+  };
   manifest.generatedMarker = computePublicLaunchGeneratedMarker(manifest);
   validatePublicLaunchManifestContract(manifest);
   return manifest;

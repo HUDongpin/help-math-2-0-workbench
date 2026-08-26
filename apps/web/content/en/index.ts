@@ -8,7 +8,7 @@ export const enContent = {
     skipToContent: "Skip to main content",
     statusLabel: "Learning platform preview",
     statusMessage:
-      "Eight current-JavaScript lessons are available with 426 source-ordered page placements: G3 L2 (70); G4 L3 (39), L5 (53), L10 (46), and L11 (43); and G5 L3 (65), L4 (54), and L5 (56). This is runnable learning access, not strict Flash fidelity, audio acceptance, Owner acceptance, or publication of the wider curriculum.",
+      "Public lesson access is controlled by the exact public launch manifest. A Current-JavaScript implementation is not public authorization, strict Flash fidelity, audio acceptance, Owner acceptance, or publication of the wider curriculum.",
     externalLinkLabel: "Opens in a new tab",
     requiredFieldLabel: "Required",
     navigation: {
@@ -48,7 +48,7 @@ export const enContent = {
       languageNote:
         "The platform interface is available in English and Spanish. Source media and interactions vary by page and do not form a complete or validated Spanish experience.",
       legalNote:
-        "Eight page-complete lessons—G3 L2; G4 L3, L5, L10, and L11; and G5 L3 through L5—are runnable in current JavaScript. Strict Flash fidelity, audio acceptance, Owner acceptance, and wider-curriculum publication remain separate gates.",
+        "Only lessons authorized by the exact public launch manifest may be opened. Current JavaScript, strict Flash fidelity, audio acceptance, Owner acceptance, and wider-curriculum publication remain separate gates.",
     },
   },
   pages: {
@@ -66,7 +66,7 @@ export const enContent = {
         primaryAction: { label: "Explore the demos", href: "/demos" },
         secondaryAction: { label: "Get project support", href: "/support" },
         supportingNote:
-          "The website now offers eight runnable current-JavaScript lessons with 426 source-ordered page placements: G3 L2 (70); G4 L3 (39), L5 (53), L10 (46), and L11 (43); and G5 L3 (65), L4 (54), and L5 (56). Strict Flash fidelity, audio acceptance, Owner acceptance, and publication of the wider curriculum remain separate gates.",
+          "The 29-Lesson source-backed catalog can show availability status without opening a lesson. A lesson becomes runnable only when its exact release is authorized by the public launch manifest; strict fidelity, audio, human, Owner, and publication gates remain separate.",
       },
       status: {
         label: "Project status",
@@ -180,9 +180,9 @@ export const enContent = {
         {
           id: "today",
           eyebrow: "Where we are today",
-          title: "A learning platform with eight runnable current-JavaScript lessons",
+          title: "A learning platform with a fail-closed public catalog",
           paragraphs: [
-            "This release provides eight runnable current-JavaScript lessons with 426 source-ordered page placements in the modern My Lesson experience: G3 L2; G4 L3, L5, L10, and L11; and G5 L3 through L5.",
+            "Engineering completion and public availability are different. The modern My Lesson experience opens only the exact lessons authorized by the public launch manifest; every other catalog row remains visibly unavailable.",
             "It does not restore the former account system or provide classes, assignments, purchases, teacher dashboards, or formal grades. Strict Flash fidelity, audio acceptance, Owner acceptance, and wider-curriculum publication remain separate gates.",
           ],
         },
@@ -324,7 +324,7 @@ export const enContent = {
       teacherRole: {
         title: "Technology supports instruction; educators shape its use.",
         body:
-          "The platform now provides eight runnable current-JavaScript lessons totaling 426 source-ordered page placements, not a complete released curriculum or an automated teaching system. Strict Flash fidelity, audio acceptance, Owner acceptance, and wider-curriculum publication remain separate gates. Educators remain essential for choosing appropriate tasks, listening to student reasoning, and connecting activities to classroom goals.",
+          "The platform is not a complete released curriculum or an automated teaching system. Only manifest-authorized lessons may open, while strict Flash fidelity, audio acceptance, Owner acceptance, and wider-curriculum publication remain separate gates. Educators remain essential for choosing appropriate tasks, listening to student reasoning, and connecting activities to classroom goals.",
         action: { label: "Ask an instructional question", href: "/contact?topic=instruction" },
       },
     },
@@ -416,9 +416,9 @@ export const enContent = {
       availability: {
         id: "availability",
         eyebrow: "What is available now",
-        title: "Eight runnable lessons, without enrollment",
+        title: "Manifest-authorized lessons, without enrollment",
         paragraphs: [
-          "The learning platform currently offers eight current-JavaScript lessons in the modern My Lesson experience: Grade 3 Lesson 2, Addition and Subtraction (70 page placements); Grade 4 Lesson 3, Negative Numbers (39); Grade 4 Lesson 5, Multiplication (53); Grade 4 Lesson 10, Perimeter & Area (46); Grade 4 Lesson 11, Coordinate Grid (43); Grade 5 Lesson 3, Exponents & Prime Factorizations (65); Grade 5 Lesson 4, Number Lines (54); and Grade 5 Lesson 5, Add & Subtract Negative Numbers (56). They include local browser progress and learning supports, but no placement testing, teacher dashboard, class assignment, enrollment, or formal grade record.",
+          "The modern My Lesson experience opens only lessons whose exact routes, runtime assets, and release evidence are authorized by the public launch manifest. An available lesson may use local browser progress and learning supports, but there is no placement testing, teacher dashboard, class assignment, enrollment, or formal grade record.",
           "The interface is available in English and Spanish, but source media and interactions vary by page and do not form a complete or validated Spanish experience.",
           "These lessons are runnable product access, not strict migration, Flash-fidelity, audio-acceptance, or Owner-acceptance claims. Wider curriculum publication still depends on source audit, rights review, instructional review, accessibility work, original-behavior validation, human review, and Owner acceptance.",
         ],
@@ -612,7 +612,7 @@ export const enContent = {
         eyebrow: "HELP Math support",
         title: "Start with what is available today",
         summary:
-          "The learning platform offers eight current-JavaScript lessons with 426 source-ordered page placements—G3 L2 (70); G4 L3 (39), L5 (53), L10 (46), and L11 (43); and G5 L3 (65), L4 (54), and L5 (56)—together with local progress and learning supports. Former student and educator accounts are not connected, and this site cannot recover old passwords or historical learning records.",
+          "The learning platform opens only lessons authorized by the public launch manifest, with local progress and learning supports where applicable. Former student and educator accounts are not connected, and this site cannot recover old passwords or historical learning records.",
         primaryAction: { label: "Contact support", href: "/contact?topic=support" },
         secondaryAction: { label: "Check login status", href: "/login" },
       },
@@ -624,8 +624,8 @@ export const enContent = {
             id: "website",
             title: "Learning platform",
             description:
-              "Available with English and Spanish interface options, eight runnable current-JavaScript lessons totaling 426 source-ordered page placements, local progress, Nova Tutor, program information, and support. Source media and interactions vary by page.",
-            detail: "Available",
+              "English and Spanish interface options and the 29-Lesson catalog are available as public information. Lesson routes, local progress, Nova Tutor, and other optional capabilities appear only when the public launch manifest authorizes them. Source media and interactions vary by page.",
+            detail: "Manifest controlled",
           },
           {
             id: "g3-l2",
@@ -689,7 +689,7 @@ export const enContent = {
           id: "full-course",
           question: "Is the full HELP Math course available?",
           answer:
-            "Not yet. The current release includes eight runnable current-JavaScript lessons—G3 L2 (70 page placements); G4 L3 (39), L5 (53), L10 (46), and L11 (43); and G5 L3 (65), L4 (54), and L5 (56)—not the full HELP Math curriculum. This does not establish strict Flash fidelity, audio acceptance, or Owner acceptance; additional lessons require their own source, rights, instructional, accessibility, fidelity, and acceptance reviews.",
+            "Not yet. The public launch manifest may authorize a bounded lesson cohort, not the full HELP Math curriculum. Availability does not establish strict Flash fidelity, audio acceptance, or Owner acceptance; every additional lesson requires its own source, rights, instructional, accessibility, fidelity, and acceptance reviews.",
         },
         {
           id: "student-help",
@@ -715,6 +715,83 @@ export const enContent = {
         body:
           "Contact intake is paused. This link opens the current availability status; HELP Math does not currently collect or send a support request through this site.",
         action: { label: "Check contact availability", href: "/contact?topic=support" },
+      },
+    },
+    accessibility: {
+      metadata: {
+        title: "Draft Accessibility Statement",
+        description:
+          "Read the draft accessibility status, current technical supports, known limits, and review boundary for HELP Math.",
+      },
+      hero: {
+        eyebrow: "Draft accessibility statement",
+        title: "Accessibility is a release gate, not a label",
+        summary:
+          "HELP Math is rebuilding historical learning animations inside a modern browser experience. This draft records current design practices and known review limits; it is not a claim of conformance, certification, or human acceptance.",
+      },
+      effectiveDateLabel: "Last updated",
+      effectiveDate: "August 26, 2026",
+      reviewNotice:
+        "DRAFT — Owner and accessibility review required before publication. Automated tests, keyboard checks, and engineering review do not by themselves establish WCAG conformance or usability for every learner.",
+      sections: [
+        {
+          id: "scope",
+          title: "1. Scope and current status",
+          paragraphs: [
+            "This draft applies to helpmath.ai and to only those public pages and lessons authorized by the public launch manifest. The current manifest remains fail-closed, so this page is available for local review and is not an approved public accessibility statement.",
+            "Original FLA and SWF files remain private source evidence. The modern Lesson Page, controls, navigation, and JavaScript animation surface are reviewed separately from source custody, visual fidelity, audio acceptance, and publication authority.",
+          ],
+        },
+        {
+          id: "current-supports",
+          title: "2. Current technical supports",
+          paragraphs: [
+            "The modern experience is designed to support keyboard navigation, visible focus, semantic headings and controls, English and Spanish interface routes, responsive layouts, reduced-motion preferences, and text that remains part of the browser page rather than an obsolete plug-in.",
+          ],
+          bullets: [
+            "A skip link and one main-content destination",
+            "Keyboard-operable learner controls with text labels",
+            "Responsive layouts and zoom-oriented checks",
+            "Reduced-motion handling where motion is not essential to the learning sequence",
+            "Automated serious and critical accessibility checks as one engineering signal",
+          ],
+        },
+        {
+          id: "limits",
+          title: "3. Known limits and separate acceptance gates",
+          paragraphs: [
+            "Historical animations vary in narration, timing, text, interaction, and visual complexity. Each lesson page requires its own evidence and review. A passing automated check, a rendered page, or a JavaScript registration does not prove accessible instruction, audio equivalence, original-runtime fidelity, or human acceptance.",
+            "Spanish interface copy is provided, while some lesson titles and source-authored instructional material may still use an explicitly recorded English fallback. Features such as Nova Tutor, accounts, teacher tools, contact intake, and learning-event delivery remain unavailable unless the public launch manifest separately authorizes them.",
+          ],
+        },
+        {
+          id: "compatibility",
+          title: "4. Compatibility and testing boundary",
+          paragraphs: [
+            "The project tests current browser layouts, keyboard paths, runtime errors, responsive presentations, and selected assistive-technology-oriented semantics. Those checks are dated engineering evidence, not a guarantee that every browser, device, screen reader, magnifier, input method, or learning need has been covered.",
+          ],
+        },
+        {
+          id: "feedback",
+          title: "5. Accessibility feedback",
+          paragraphs: [
+            "The public adult support channel is not yet approved or bound to the verified staffed mailbox, so this draft does not collect accessibility feedback. Do not submit student names, school records, disability information, credentials, or other sensitive information through an unavailable or unapproved channel.",
+            "Before launch, the final statement must provide the reviewed adult support route, response expectations, responsible operating entity, and any material known limitations.",
+          ],
+        },
+        {
+          id: "review",
+          title: "6. Review and updates",
+          paragraphs: [
+            "This statement will change as exact lessons, legal pages, support operations, browser evidence, and human review are completed. A final version requires documented Owner approval and must describe the exact production deployment rather than this local candidate.",
+          ],
+        },
+      ],
+      contact: {
+        title: "Accessibility feedback channel unavailable",
+        body:
+          "The current support page is a local review surface and does not yet bind an approved public mailbox. The launch remains blocked until that adult-operated channel and this statement are independently reviewed.",
+        action: { label: "Check support status", href: "/support" },
       },
     },
     login: {
@@ -852,16 +929,16 @@ export const enContent = {
       },
       hero: {
         eyebrow: "Learning experience",
-        title: "Eight lessons are ready to explore",
+        title: "Explore only released lessons",
         summary:
-          "Eight lessons are runnable in current JavaScript: G3 L2 (70 page placements); G4 L3 (39), L5 (53), L10 (46), and L11 (43); and G5 L3 (65), L4 (54), and L5 (56). Running them does not establish strict Flash fidelity, audio acceptance, Owner acceptance, or publication of the wider curriculum.",
-        primaryAction: { label: "Start the lesson", href: "/courses/4/3?mode=focus" },
+          "The lesson catalog opens only exact releases authorized by the public launch manifest. Runnable access does not establish strict Flash fidelity, audio acceptance, Owner acceptance, or publication of the wider curriculum.",
+        primaryAction: { label: "View lesson availability", href: "/lessons" },
         secondaryAction: { label: "How restoration works", href: "/about#preservation" },
       },
       previewNotice: {
         title: "Runnable lessons; strict evidence gates remain open",
         body:
-          "All 426 source-ordered placements across G3 L2 (70); G4 L3 (39), L5 (53), L10 (46), and L11 (43); and G5 L3 (65), L4 (54), and L5 (56) are navigable in the modern My Lesson experience. This does not establish original-runtime, visual, or audio fidelity, completed human review, Owner acceptance, rights clearance, strict migration completion, or publication of the wider curriculum.",
+          "Only manifest-authorized releases are navigable in the modern My Lesson experience. This does not establish original-runtime, visual, or audio fidelity, completed human review, Owner acceptance, rights clearance, strict migration completion, or publication of the wider curriculum.",
       },
       listLabel: "Current availability",
       items: [
@@ -1073,7 +1150,7 @@ export const enContent = {
           id: "scope",
           title: "1. Scope",
           paragraphs: [
-            "This notice applies to helpmath.ai, including its informational pages, the eight runnable current-JavaScript lessons—G3 L2; G4 L3, L5, L10, and L11; and G5 L3 through L5—Nova Tutor, learning-event reporting, and the current contact-status page.",
+            "This notice applies to helpmath.ai, including its public informational pages and any exact lessons or optional capabilities authorized by the public launch manifest.",
             "The current learning experience has no student or teacher accounts and does not ask for a learner's name, email address, school, class, payment, or teacher profile. It does not authenticate a learner or connect lesson activity to a school record.",
           ],
         },
@@ -1175,7 +1252,7 @@ export const enContent = {
         eyebrow: "Draft terms of use",
         title: "Use the learning experiences thoughtfully",
         summary:
-          "This draft describes proposed terms for the website and its eight runnable current-JavaScript lessons: G3 L2; G4 L3, L5, L10, and L11; and G5 L3 through L5. Until owner and legal approval is documented and a final version is published, it does not form a contract, bind a visitor, or grant a license.",
+          "This draft describes proposed terms for the website and any lessons authorized by the public launch manifest. Until owner and legal approval is documented and a final version is published, it does not form a contract, bind a visitor, or grant a license.",
       },
       effectiveDateLabel: "Last updated",
       effectiveDate: "August 16, 2026",
@@ -1194,7 +1271,7 @@ export const enContent = {
           id: "service",
           title: "2. What this site provides",
           paragraphs: [
-            "The site provides eight runnable current-JavaScript lessons in the modern My Lesson experience, totaling 426 source-ordered page placements: G3 L2 (70); G4 L3 (39), L5 (53), L10 (46), and L11 (43); and G5 L3 (65), L4 (54), and L5 (56).",
+            "The site provides only the exact lessons and routes authorized by the public launch manifest in the modern My Lesson experience.",
             "Lesson availability is not proof of strict migration completion, original Flash runtime or visual fidelity, audio fidelity, human or Owner acceptance, rights clearance, or publication of the restored historical curriculum. Those remain separate evidence and release gates.",
             "The site does not currently provide enrollment, named student or educator accounts, schools, classes, assignments, teacher dashboards, official grades, payments, or guaranteed access to the historical program.",
           ],

@@ -26,6 +26,10 @@ const coursePlayerUrl = new URL(
   '../components/whole-lesson-course-player.tsx',
   import.meta.url,
 );
+const g4PlayerUrl = new URL(
+  '../components/g4-l3-whole-lesson-player.tsx',
+  import.meta.url,
+);
 const courseRegistryUrl = new URL(
   '../lib/whole-lesson-course-registry.ts',
   import.meta.url,
@@ -85,7 +89,8 @@ test('descriptor-driven player never mounts or prefetches unavailable renderers'
   assert.match(component, /sections=\{shellSections\}/);
   assert.match(component, /const tutorContext = tutorPageContext\(\{/);
   assert.match(component, /novaTutorMode=\{novaTutorMode\}/);
-  assert.match(component, /tutorContext=\{tutorContext\}/);
+  assert.match(component,
+    /tutorContext=\{novaTutorEnabled \? tutorContext : undefined\}/);
   assert.match(
     component,
     /pageTitleSpanish: currentPage\.labels\.es\.usesEnglishFallback[\s\S]*?\? null[\s\S]*?: currentPage\.labels\.es\.text/,
@@ -403,9 +408,11 @@ test('every Course Map selection owns a focus epoch, including same-page reselec
 });
 
 test('registered whole-lesson routes preserve cross-binding and publication gates before mounting either player', async () => {
-  const [route, coursePlayer, registry] = await Promise.all([
+  const [route, coursePlayer, descriptorPlayer, g4Player, registry] = await Promise.all([
     readFile(routeUrl, 'utf8'),
     readFile(coursePlayerUrl, 'utf8'),
+    readFile(componentUrl, 'utf8'),
+    readFile(g4PlayerUrl, 'utf8'),
     readFile(courseRegistryUrl, 'utf8'),
   ]);
   const registeredBranch = route.slice(
@@ -416,7 +423,7 @@ test('registered whole-lesson routes preserve cross-binding and publication gate
     '!wholeLessonDescriptorMatchesNavigation(',
   );
   const publicationGate = registeredBranch.indexOf(
-    'if (!auditPreview && !releasePublished && !showcasePublication.enabled)',
+    '!auditPreview\n      && !publicManifestAuthorized',
   );
   const playerMount = registeredBranch.indexOf(
     'return <WholeLessonCoursePlayer',
@@ -431,17 +438,22 @@ test('registered whole-lesson routes preserve cross-binding and publication gate
   );
   assert.match(
     registeredBranch,
-    /currentJsShowcasePublication\(\s*courseRegistration\.descriptor\.releaseId,\s*\)/,
+    /isPublicLessonReleaseDeploymentRuntimeAssetAuthorized\(\s*courseRegistration\.descriptor\.releaseId,\s*\)/,
   );
   assert.match(
     registeredBranch,
-    /audioEnabled=\{\s*courseRegistration\.descriptor\.releaseId === G5_L4_SHOWCASE_RELEASE_ID\s*&& isG5L4ShowcaseAudioAuthorized\(\)\s*\}/,
+    /audioEnabled=\{[\s\S]*?auditPreview[\s\S]*?G5_L4_SHOWCASE_RELEASE_ID[\s\S]*?isG5L4ShowcaseAudioAuthorized\(\)[\s\S]*?: isPublicLessonReleaseDeploymentAudioAuthorized\(/,
     'the server must resolve the independent audio gate before mounting the client player',
   );
   assert.match(
     registeredBranch,
-    /if \(!auditPreview && !releasePublished && !showcasePublication\.enabled\) \{\s*notFound\(\);\s*\}/,
+    /if \(\s*!auditPreview\s*&& !publicManifestAuthorized\s*\) \{\s*notFound\(\);\s*\}/,
   );
+  assert.doesNotMatch(
+    registeredBranch,
+    /!publicManifestAuthorized[\s\S]*!releasePublished[\s\S]*notFound/u,
+  );
+  assert.match(registeredBranch, /publicationTier=\{publicationTier\}/u);
   assert.doesNotMatch(registeredBranch, /controlledPreview|isControlledPreviewEnabled/);
   assert.match(
     registeredBranch,
@@ -454,6 +466,9 @@ test('registered whole-lesson routes preserve cross-binding and publication gate
   assert.doesNotMatch(route, /G4_L3_LESSON|G5_L4_ATOMIC_RELEASE_ID/);
   assert.doesNotMatch(route, /isG4L3Lesson|isG5L4ExecutivePreviewEnabled/);
   assert.match(coursePlayer, /registration\.player\.kind === 'preserved-custom'/);
+  assert.match(coursePlayer, /data-publication-tier=\{publicationTier\}/u);
+  assert.match(coursePlayer, /publicationTier === 'preview'[\s\S]*label: 'Preview'/u);
+  assert.match(coursePlayer, /publicationTier === 'released'/u);
   assert.match(coursePlayer, /<G4L3WholeLessonPlayer/);
   assert.match(coursePlayer, /<DescriptorDrivenWholeLessonPlayer/);
   assert.match(coursePlayer, /audioEnabled=\{audioEnabled\}/);
@@ -462,6 +477,17 @@ test('registered whole-lesson routes preserve cross-binding and publication gate
     2,
     'both whole-lesson adapters must receive the fixed Focus Nova mode',
   );
+  assert.equal(
+    coursePlayer.match(/novaTutorEnabled=\{novaTutorEnabled\}/g)?.length,
+    2,
+    'both whole-lesson adapters must receive the server-resolved Nova gate',
+  );
+  assert.match(route,
+    /novaTutorEnabled=\{auditPreview \|\| publicFeatureEnabled\('novaTutor'\)\}/u);
+  for (const player of [descriptorPlayer, g4Player]) {
+    assert.match(player,
+      /tutorContext=\{novaTutorEnabled \? tutorContext : undefined\}/u);
+  }
   assert.match(registry, /G4_L3_PAGE_ONLY_COURSE_DESCRIPTOR/);
   assert.match(registry, /G5_L4_PAGE_ONLY_COURSE_DESCRIPTOR/);
 });

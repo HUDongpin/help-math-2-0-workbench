@@ -8,6 +8,7 @@ import {getWorkspaceRoot} from '@/lib/catalog';
 import {
   CURRENT_JS_CANDIDATE_ASSET_VERSION,
   hasExactCurrentJsAssetBytes,
+  isCurrentJsAudioAssetRecord,
   selectedCurrentJsAssetRecordForSegments,
 } from '@/lib/current-js-asset-profile';
 import {
@@ -32,6 +33,10 @@ import {
   isPageOnlyCurrentJsShowcaseAssetAuthorized,
   isPageOnlyCurrentJsShowcaseAssetSegments,
 } from '@/lib/page-only-current-js-showcase-asset-policy';
+import {
+  isPublicLessonReleaseDeploymentAudioAuthorized,
+  isPublicLessonReleaseDeploymentRuntimeAssetAuthorized,
+} from '@/lib/public-launch-manifest.server';
 
 const types: Record<string, string> = {
   '.html': 'text/html; charset=utf-8',
@@ -94,6 +99,19 @@ export async function GET(
   const requestedG5Policy = classifyG5L4PreviewAsset(asset);
   const exactCurrentJsRecord =
     selectedCurrentJsAssetRecordForSegments(asset);
+  const exactCurrentJsAudio = exactCurrentJsRecord !== undefined
+    && isCurrentJsAudioAssetRecord(exactCurrentJsRecord);
+  if (process.env.NODE_ENV === 'production') {
+    if (!exactCurrentJsRecord) notFound();
+    const manifestAuthorized = exactCurrentJsAudio
+      ? isPublicLessonReleaseDeploymentAudioAuthorized(
+          exactCurrentJsRecord.releaseId,
+        )
+      : isPublicLessonReleaseDeploymentRuntimeAssetAuthorized(
+          exactCurrentJsRecord.releaseId,
+        );
+    if (!manifestAuthorized) notFound();
+  }
   const storageRoot = exactCurrentJsRecord?.storageRoot;
   const root = path.resolve(
     getWorkspaceRoot(),

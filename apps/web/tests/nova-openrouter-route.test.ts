@@ -27,6 +27,7 @@ import {
 
 const originalFetch = globalThis.fetch;
 const envKeys = [
+  'NODE_ENV',
   'NOVA_TUTOR_ENABLED',
   'NOVA_TUTOR_RATE_LIMIT_PER_MINUTE',
   'NOVA_ALLOW_FRAME_CONTEXT',
@@ -158,6 +159,25 @@ describe('Nova Tutor OpenRouter GPT-5.6 Luna integration', () => {
     assert.equal(providerCalls, 0);
     process.env.NOVA_TUTOR_ENABLED = 'true';
     assert.equal(isNovaTutorEnabled(), true);
+  });
+
+  it('does not let legacy Nova configuration open the production feature', async () => {
+    configureRouteEnvironment();
+    Reflect.set(process.env, 'NODE_ENV', 'production');
+    let providerCalls = 0;
+    globalThis.fetch = async () => {
+      providerCalls += 1;
+      return providerResponse();
+    };
+    assert.equal(isNovaTutorEnabled(), false);
+    assert.equal(isNovaFrameContextEnabled({
+      NODE_ENV: 'production',
+      NOVA_ALLOW_FRAME_CONTEXT: 'true',
+    }), false);
+    const response = await POST(routeRequest(inputForPage(4)));
+    assert.equal(response.status, 404);
+    assert.equal(response.headers.get('x-robots-tag'), 'noindex, nofollow');
+    assert.equal(providerCalls, 0);
   });
 
   it('requires Origin and compares it with Vercel forwarded host and protocol', async () => {

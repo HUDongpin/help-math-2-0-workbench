@@ -5,6 +5,7 @@ import {
   buildContactEmail,
   verifyTurnstile,
 } from '@/lib/contact-route-support.server';
+import {publicFeatureEnabled} from '@/lib/public-launch-manifest.server';
 
 type ErrorCode =
   | 'BAD_REQUEST'
@@ -36,7 +37,10 @@ const CONTACT_CONFIGURATION_KEYS = [
 ] as const;
 
 function contactFormIsEnabled() {
-  return process.env.CONTACT_FORM_ENABLED === 'true' &&
+  return process.env.CONTACT_FORM_ENABLED === 'true'
+    && (process.env.NODE_ENV !== 'production'
+      || publicFeatureEnabled('contactForm'))
+    &&
     CONTACT_CONFIGURATION_KEYS.every((key) => Boolean(process.env[key]?.trim()));
 }
 

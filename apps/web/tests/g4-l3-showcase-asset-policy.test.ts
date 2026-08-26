@@ -79,7 +79,7 @@ test('showcase asset classification is narrow and fails closed', () => {
   }), true);
 });
 
-test('production proxy serves only opted-in G4 L3 showcase assets', async () => {
+test('legacy G4 L3 flags cannot open production assets', async () => {
   const target = 'https://www.helpmath.ai/flash-assets/courses/'
     + 'course-g04-l03-ts-006/canvas-renderer.js';
   await withEnvironment({
@@ -92,9 +92,10 @@ test('production proxy serves only opted-in G4 L3 showcase assets', async () => 
     NODE_ENV: 'production',
     CURRENT_JS_SHOWCASE_G4_L3_ENABLED: 'true',
   }, async () => {
-    const allowed = await proxyForRequest(new NextRequest(target));
-    assert.equal(allowed.status, 200);
-    assert.equal(allowed.headers.get('x-middleware-next'), '1');
+    const stillClosed = await proxyForRequest(new NextRequest(target));
+    assert.equal(stillClosed.status, 404);
+    assert.equal(stillClosed.headers.get('x-robots-tag'),
+      'noindex, nofollow');
     const otherLesson = await proxyForRequest(new NextRequest(
       'https://www.helpmath.ai/flash-assets/courses/'
       + 'course-g05-l04-ir-001/canvas-renderer.js',
@@ -110,7 +111,7 @@ test('proxy enforces the host-composite digest before public static handling', a
   const digest =
     '102f0ddeec5ede8843149c3c5621fb5a6632a5edc191b768823fbce691740355';
   await withEnvironment({
-    NODE_ENV: 'production',
+    NODE_ENV: 'development',
     CURRENT_JS_SHOWCASE_G4_L3_ENABLED: 'true',
   }, async () => {
     assert.equal((await proxyForRequest(new NextRequest(base))).status, 404);
@@ -130,4 +131,6 @@ test('flash asset route includes defense-in-depth showcase authorization', async
   );
   assert.match(source, /isG4L3ShowcaseAssetSegments\(canonicalAsset\)/u);
   assert.match(source, /!isG4L3ShowcaseAssetAuthorized\(\)/u);
+  assert.match(source,
+    /isPublicLessonReleaseDeploymentRuntimeAssetAuthorized\(/u);
 });

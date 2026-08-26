@@ -8,6 +8,7 @@ import {
   HELP_MATH_LOCAL_REFERENCE_DIAGNOSTIC_FLAG,
   isExactLoopbackHostHeader,
   isLocalReferenceDiagnosticRequestAllowed,
+  localReferenceDiagnosticNotFoundResponse,
   LOCAL_REFERENCE_DIAGNOSTIC_CONTENT_SECURITY_POLICY,
 } from '../lib/local-reference-diagnostic-access';
 import proxy from '../proxy';
@@ -109,6 +110,22 @@ test('development access remains unchanged without the production flag or loopba
   }), true);
 });
 
+test('forensic API denial is a private no-store 404 with crawler and content defenses', async () => {
+  const response = localReferenceDiagnosticNotFoundResponse();
+  assert.equal(response.status, 404);
+  assert.equal(await response.text(), 'Not Found');
+  assert.equal(response.headers.get('cache-control'), 'private, no-store, max-age=0');
+  assert.equal(response.headers.get('content-type'), 'text/plain; charset=utf-8');
+  assert.equal(
+    response.headers.get('content-security-policy'),
+    "default-src 'none'; sandbox",
+  );
+  assert.equal(
+    response.headers.get('x-robots-tag'),
+    'noindex, nofollow, noarchive, noimageindex',
+  );
+});
+
 test('proxy keeps production reference pages 404 by default and admits only flagged plain-HTTP loopback requests', async () => {
   await withEnvironment({NODE_ENV: 'production'}, async () => {
     const denied = await proxy(new NextRequest(
@@ -173,14 +190,19 @@ test('proxy keeps production reference pages 404 by default and admits only flag
 });
 
 test('page, SWF API, and Ruffle API sources use the shared gate and preserve evidence/security headers and path checks', async () => {
-  const [pageSource, swfSource, ruffleSource] = await Promise.all([
+  const [pageSource, swfSource, ruffleSource, productionConfigSource] = await Promise.all([
     readFile(new URL('../app/[locale]/reference/[animationId]/page.tsx', import.meta.url), 'utf8'),
     readFile(new URL('../app/api/reference/[animationId]/route.ts', import.meta.url), 'utf8'),
     readFile(new URL('../app/api/ruffle/[...asset]/route.ts', import.meta.url), 'utf8'),
+    readFile(new URL('../playwright.production.config.ts', import.meta.url), 'utf8'),
   ]);
   for (const source of [pageSource, swfSource, ruffleSource]) {
     assert.match(source, /isLocalReferenceDiagnosticRequestAllowed/);
     assert.doesNotMatch(source, /process\.env\.NODE_ENV === 'production'/);
+  }
+  for (const source of [swfSource, ruffleSource]) {
+    assert.match(source, /localReferenceDiagnosticNotFoundResponse/);
+    assert.doesNotMatch(source, /notFound\(/);
   }
   assert.match(pageSource, /robots:\s*\{index:\s*false,\s*follow:\s*false\}/);
   assert.match(swfSource, /'Cache-Control': 'no-store'/);
@@ -192,4 +214,9 @@ test('page, SWF API, and Ruffle API sources use the shared gate and preserve evi
   assert.match(ruffleSource, /'X-Robots-Tag': 'noindex, nofollow, noarchive, noimageindex'/);
   assert.match(ruffleSource, /asset\.length !== 1/);
   assert.match(ruffleSource, /\^\[a-zA-Z0-9\._-\]\+\$/);
+  assert.match(
+    productionConfigSource,
+    /HELP_MATH_LOCAL_REFERENCE_DIAGNOSTIC: '1'/,
+  );
+  assert.match(productionConfigSource, /VERCEL_ENV: 'production'/);
 });

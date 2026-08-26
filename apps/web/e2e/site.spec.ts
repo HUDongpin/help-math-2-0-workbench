@@ -5,6 +5,13 @@ import {
   G4_L3_WHOLE_LESSON_STORAGE_KEY,
 } from '../lib/g4-l3-whole-lesson';
 import {G4_L3_LESSON} from '../lib/g4-l3-lesson-navigation';
+import {
+  isPublicLessonProductionRouteAuthorized,
+  isPublicRouteProductionAuthorized,
+  isPublicRouteProductionIndexable,
+  publicLessonCatalog,
+  publicRouteCatalogRows,
+} from '../lib/public-launch-manifest.server';
 
 type RuntimeIssue = {kind: 'console' | 'page'; message: string};
 
@@ -127,20 +134,21 @@ test('English home exposes the learning platform and the Grade 4 Lesson 3 entry'
   const navigation = page.getByRole('navigation', {name: 'Learning workspace'});
 
   await expect(workspace).toBeVisible();
-  await expect(page.getByRole('heading', {level: 1, name: 'Hi Maria! Ready to keep going?'})).toBeVisible();
+  await expect(page.getByRole('heading', {level: 1, name: 'Ready to learn?'})).toBeVisible();
   await expect(page.getByText('Sample learner state', {exact: true})).toHaveCount(0);
-  await expect(page.getByText(/4 days in a row/)).toBeVisible();
-  await expect(page.getByText(/5 stickers/)).toBeVisible();
-  await expect(page.getByText('21 / 39', {exact: true})).toBeVisible();
+  await expect(page.getByText(/days in a row|stickers/i)).toHaveCount(0);
+  await expect(page.getByText('0 / 39', {exact: true})).toBeVisible();
+  await expect(page.locator('[data-browser-progress-summary]')).toContainText('Pages visited0');
+  await expect(page.locator('[data-browser-progress-summary]')).toContainText('Pages reviewed0');
   await expect(page.getByRole('heading', {level: 2, name: 'Negative Numbers'})).toBeVisible();
   await expect(page.getByText('CURRENT-JS SHOWCASE', {exact: true})).toHaveCount(0);
   await expect(page.getByText('LEARNING + SAMPLE STATE', {exact: true})).toHaveCount(0);
   await expect(page.getByText('SAMPLE TEACHER DATA', {exact: true})).toHaveCount(0);
   await expect(page.getByText(/Changes learner\/teacher previews and their links/)).toHaveCount(0);
-  await expect(navigation.getByRole('link', {name: 'My lesson', exact: true})).toHaveAttribute('href', '/courses/4/3?mode=focus');
+  await expect(navigation.getByRole('link', {name: 'My lesson · Local audit', exact: true})).toHaveAttribute('href', '/courses/4/3?mode=focus');
   await expect(navigation.getByRole('button', {name: 'Practice', exact: true})).toBeVisible();
   await expect(navigation.getByRole('button', {name: /My words/})).toBeVisible();
-  await expect(navigation.getByRole('button', {name: 'All lessons 73', exact: true})).toBeVisible();
+  await expect(navigation.getByRole('link', {name: 'All lessons 29', exact: true})).toHaveAttribute('href', '/lessons');
   await expect(navigation.getByRole('button', {name: 'Design notes', exact: true})).toHaveCount(0);
   await expect(navigation.getByRole('link', {name: 'Migration status', exact: true})).toHaveCount(0);
   await expect(page.getByRole('group', {name: 'Learning workspace role'})).toBeVisible();
@@ -169,7 +177,7 @@ test('English home exposes the learning platform and the Grade 4 Lesson 3 entry'
 test('All Lessons exposes the eight page-complete lessons and opens Grade 5 Lesson 4', async ({page}) => {
   await expectDocument(page, '/', 'en');
   await page.getByRole('navigation', {name: 'Learning workspace'})
-    .getByRole('button', {name: 'All lessons 73', exact: true})
+    .getByRole('link', {name: 'All lessons 29', exact: true})
     .click();
 
   for (const {href, pages} of [
@@ -272,10 +280,10 @@ for (const {height, locale, path, width} of [
     const navigation = page.getByRole('navigation', {
       name: locale === 'es' ? 'Espacio de aprendizaje' : 'Learning workspace',
     });
-    await navigation.getByRole('button', {
+    await navigation.getByRole('link', {
       name: locale === 'es'
-        ? /^Todas las lecciones(?: 73)?$/u
-        : /^All lessons(?: 73)?$/u,
+        ? /^Todas las lecciones(?: 29)?$/u
+        : /^All lessons(?: 29)?$/u,
     }).click();
     const href = locale === 'es'
       ? '/es/courses/5/4?mode=focus'
@@ -385,12 +393,12 @@ test('Spanish home localizes content and never duplicates the /es route prefix',
   await expectDocument(page, '/es', 'es');
 
   const navigation = page.getByRole('navigation', {name: 'Espacio de aprendizaje'});
-  await expect(page.getByRole('heading', {level: 1, name: '¡Hola María! ¿Lista para seguir?'})).toBeVisible();
+  await expect(page.getByRole('heading', {level: 1, name: '¿Lista o listo para aprender?'})).toBeVisible();
   await expect(navigation).toBeVisible();
   await expect(page.getByRole('heading', {level: 2, name: 'Negative Numbers'})).toBeVisible();
   await expect(page.getByText('⚠️ inglés · la fuente no tiene español', {exact: true})).toBeVisible();
   await expect(page.getByText('Estado de estudiante de muestra', {exact: true})).toHaveCount(0);
-  await expect(navigation.getByRole('link', {name: 'Mi lección', exact: true})).toHaveAttribute('href', '/es/courses/4/3?mode=focus');
+  await expect(navigation.getByRole('link', {name: 'Mi lección · Auditoría local', exact: true})).toHaveAttribute('href', '/es/courses/4/3?mode=focus');
   await expect(navigation.getByRole('link', {name: 'EN', exact: true})).toHaveAttribute('href', '/');
   await expect(navigation.getByRole('link', {name: 'ES', exact: true})).toHaveAttribute('href', '/es');
 
@@ -400,7 +408,8 @@ test('Spanish home localizes content and never duplicates the /es route prefix',
   await expect(page.getByRole('button', {name: 'Coordinate Grid. Sin español en la fuente', exact: true})).toHaveCount(0);
   await expect(page.getByRole('button', {name: 'Docente', exact: true})).toBeVisible();
 
-  await navigation.getByRole('button', {name: 'Todas las lecciones 73', exact: true}).click();
+  await navigation.getByRole('link', {name: 'Todas las lecciones 29', exact: true}).click();
+  await expect(navigation.getByRole('link', {name: 'EN', exact: true})).toHaveAttribute('href', '/lessons');
   const g5Lesson = page.locator('a[href="/es/courses/5/4?mode=focus"]');
   await expect(g5Lesson).toHaveAttribute('href', '/es/courses/5/4?mode=focus');
   await expect(g5Lesson.getByText('⚠️ inglés · sin título español en la fuente', {exact: true})).toBeVisible();
@@ -412,7 +421,7 @@ test('Spanish home localizes content and never duplicates the /es route prefix',
   expect(localHrefs.some((href) => href?.includes('/es/es'))).toBe(false);
   for (const href of localHrefs) {
     expect(
-      href === '/' || href?.startsWith('/?') || href?.startsWith('/es'),
+      href === '/' || href === '/lessons' || href?.startsWith('/?') || href?.startsWith('/es'),
     ).toBe(true);
   }
   expectNoRuntimeIssues(issues);
@@ -467,7 +476,7 @@ test('mobile navigation opens at a phone viewport and reaches Grade 4 Lesson 3',
     expect(box?.height).toBeGreaterThanOrEqual(44);
   }
 
-  const lesson = navigation.getByRole('link', {name: 'My lesson', exact: true});
+  const lesson = navigation.getByRole('link', {name: 'My lesson · Local audit', exact: true});
   await expect(lesson).toBeVisible();
   await expect(lesson).toHaveAttribute('href', '/courses/4/3?mode=focus');
   await lesson.click();
@@ -518,13 +527,14 @@ test('workspace tools work without turning preview controls into real records', 
   await negativeNumbers.click();
   await expect(negativeNumbers).toHaveAttribute('aria-pressed', 'true');
 
-  await navigation.getByRole('button', {name: 'All lessons 73', exact: true}).click();
-  await expect(page.getByRole('heading', {level: 1, name: '73 math lessons · grades 3 to 8'})).toBeVisible();
-  await expect(page.getByRole('button', {name: 'Grade 8', exact: true})).toBeVisible();
+  await navigation.getByRole('link', {name: 'All lessons 29', exact: true}).click();
+  await expect(page.getByRole('heading', {level: 1, name: '29 math lessons · grades 3, 4, 5'})).toBeVisible();
+  await expect(page.getByRole('button', {name: 'Grade 5', exact: true})).toBeVisible();
+  await expect(page.getByRole('button', {name: 'Grade 8', exact: true})).toHaveCount(0);
   await expect(page.getByRole('link', {name: /G4 · L3 Negative Numbers/})).toHaveAttribute('href', '/courses/4/3?mode=focus');
-  const g5Lesson = page.getByRole('link', {name: /G5 · L4 Number Lines 54 pages · 8 steps Open/});
+  const g5Lesson = page.getByRole('link', {name: /G5 · L4 Number Lines 54 pages · 8 steps Local audit/});
   await expect(g5Lesson).toHaveAttribute('href', '/courses/5/4?mode=focus');
-  await expect(page.getByText('Coming soon', {exact: true}).first()).toBeVisible();
+  await expect(page.getByText('Unavailable', {exact: true}).first()).toBeVisible();
   await expect(page.locator('a[href*="/courses/5/4"]')).toHaveCount(1);
 
   await page.getByRole('button', {name: 'Teacher', exact: true}).click();
@@ -542,7 +552,7 @@ test('workspace tools work without turning preview controls into real records', 
   expectNoRuntimeIssues(issues);
 });
 
-test('real browser progress is distinct from the preserved 21 of 39 sample score', async ({page}) => {
+test('anonymous workspace reports only real browser progress', async ({page}) => {
   const current = G4_L3_LESSON.pages[5]!;
   const visited = G4_L3_LESSON.pages.slice(0, 6).map(({animationId}) => animationId);
   const completed = G4_L3_LESSON.pages.slice(0, 4).map(({animationId}) => animationId);
@@ -561,7 +571,7 @@ test('real browser progress is distinct from the preserved 21 of 39 sample score
   });
 
   await expectDocument(page, '/', 'en');
-  await expect(page.getByText('21 / 39', {exact: true})).toBeVisible();
+  await expect(page.getByText('6 / 39', {exact: true})).toBeVisible();
   await expect(page.getByText('This browser: page 6, 4 reviewed', {exact: false})).toBeVisible();
   await expect(page.getByRole('link', {name: 'Continue my lesson', exact: true})).toHaveAttribute('href', '/courses/4/3?mode=focus');
 });
@@ -658,11 +668,15 @@ test('every learner screen and designer-only teacher screen stays axe-clean', as
   const navigation = page.getByRole('navigation', {name: 'Learning workspace'});
 
   for (const screen of [
-    {label: 'Practice', control: navigation.getByRole('button', {name: 'Practice', exact: true})},
-    {label: 'My words', control: navigation.getByRole('button', {name: /My words/})},
-    {label: 'All lessons', control: navigation.getByRole('button', {name: /All lessons/})},
+    {label: 'Practice', control: navigation.getByRole('button', {name: 'Practice', exact: true}), path: null},
+    {label: 'My words', control: navigation.getByRole('button', {name: /My words/}), path: null},
+    {label: 'All lessons', control: navigation.getByRole('link', {name: /All lessons/}), path: '/lessons'},
   ]) {
     await screen.control.click();
+    if (screen.path) {
+      await expect.poll(() => new URL(page.url()).pathname).toBe(screen.path);
+      await expect(page).toHaveTitle(/\S/u);
+    }
     await expectNoBlockingAxeViolations(page, screen.label);
   }
 
@@ -687,7 +701,6 @@ test('retired marketing and status surfaces return non-indexable 404 responses',
     '/curriculum',
     '/research',
     '/resources',
-    '/support',
     '/demos',
     '/login',
     '/contact',
@@ -697,6 +710,22 @@ test('retired marketing and status surfaces return non-indexable 404 responses',
     const response = await request.get(path);
     expect(response.status(), path).toBe(404);
     expect(response.headers()['x-robots-tag'], path).toBe('noindex, nofollow');
+  }
+});
+
+test('manifest draft support surfaces remain available only for local audit', async ({request}) => {
+  const supportRoutes = publicRouteCatalogRows()
+    .filter((route) => ['support', 'accessibility'].includes(route.routeId))
+    .flatMap((route) => [route.paths.en, route.paths.es])
+    .filter((path): path is string => path !== null);
+  expect(supportRoutes).toEqual([
+    '/support',
+    '/es/support',
+    '/accessibility',
+    '/es/accessibility',
+  ]);
+  for (const path of supportRoutes) {
+    expect((await request.get(path)).status(), path).toBe(200);
   }
 });
 
@@ -773,61 +802,71 @@ test('ordinary platform surfaces expose only the environment-required CSP', asyn
   }
 });
 
-test('robots and sitemap publish all eight runnable lessons in both locale variants', async ({request}) => {
+test('robots and sitemap expose the exact production manifest boundary for local audit', async ({request}) => {
+  const routeContracts = new Map(publicRouteCatalogRows().map((route) =>
+    [route.routeId, route] as const));
   const robots = await request.get('/robots.txt');
   expect(robots.status()).toBe(200);
   expect(robots.headers()['content-type']).toContain('text/plain');
   const robotsText = await robots.text();
   expect(robotsText).toContain('User-Agent: *');
   expect(robotsText).toContain('Disallow: /api/');
-  expect(robotsText).toContain('Sitemap: https://www.helpmath.ai/sitemap.xml');
-  for (const route of [
-    '/courses/3/2',
-    '/courses/4/3',
-    '/courses/4/5',
-    '/courses/4/10',
-    '/courses/4/11',
-    '/courses/5/3',
-    '/courses/5/4',
-    '/courses/5/5',
-  ]) {
-    expect(robotsText).not.toContain(`Disallow: ${route}`);
-    expect(robotsText).not.toContain(`Disallow: /es${route}`);
+  const sitemapPath = routeContracts.get('sitemap')?.paths.en
+    ?? '/sitemap.xml';
+  if (isPublicRouteProductionAuthorized(sitemapPath)) {
+    expect(robotsText).toContain(
+      'Sitemap: https://www.helpmath.ai/sitemap.xml',
+    );
+  } else {
+    expect(robotsText).not.toContain('Sitemap:');
+  }
+  const disallow = new Set(robotsText.split(/\r?\n/u).flatMap((line) =>
+    line.startsWith('Disallow: ') ? [line.slice('Disallow: '.length)] : []
+  ));
+  for (const route of publicRouteCatalogRows()) {
+    const authorized = isPublicRouteProductionAuthorized(route.paths.en);
+    const indexable = route.kind === 'machine-route'
+      || isPublicRouteProductionIndexable(route.paths.en);
+    for (const path of [route.paths.en, route.paths.es]) {
+      if (path === null || path === '/robots.txt') continue;
+      if (authorized && indexable) expect(disallow.has(path), path).toBe(false);
+      else expect(disallow.has(path), path).toBe(true);
+    }
+  }
+  for (const lesson of publicLessonCatalog()) {
+    const authorized = isPublicLessonProductionRouteAuthorized(
+      lesson.grade,
+      lesson.lesson,
+    );
+    for (const route of [lesson.routes.en, lesson.routes.es]) {
+      expect(disallow.has(route), route).toBe(!authorized);
+    }
   }
 
   const sitemap = await request.get('/sitemap.xml');
   expect(sitemap.status()).toBe(200);
   expect(sitemap.headers()['content-type']).toContain('application/xml');
   const sitemapText = await sitemap.text();
-  expect(sitemapText).toContain('<loc>https://www.helpmath.ai/</loc>');
-  expect(sitemapText).toContain('<loc>https://www.helpmath.ai/es</loc>');
-  for (const route of [
-    '/courses/3/2',
-    '/courses/4/3',
-    '/courses/4/5',
-    '/courses/4/10',
-    '/courses/4/11',
-    '/courses/5/3',
-    '/courses/5/4',
-    '/courses/5/5',
-  ]) {
-    expect(sitemapText).toContain(`<loc>https://www.helpmath.ai${route}</loc>`);
-    expect(sitemapText).toContain(`<loc>https://www.helpmath.ai/es${route}</loc>`);
+  for (const route of publicRouteCatalogRows()) {
+    if (route.kind !== 'localized-page') continue;
+    const indexable = isPublicRouteProductionIndexable(route.paths.en);
+    for (const path of [route.paths.en, route.paths.es]) {
+      if (path === null) continue;
+      const location = `<loc>https://www.helpmath.ai${path}</loc>`;
+      if (indexable) expect(sitemapText, path).toContain(location);
+      else expect(sitemapText, path).not.toContain(location);
+    }
   }
-  for (const retiredPath of [
-    '/about',
-    '/approach',
-    '/curriculum',
-    '/research',
-    '/resources',
-    '/support',
-    '/library',
-    '/demos',
-    '/login',
-    '/contact',
-    '/migration-status',
-  ]) {
-    expect(sitemapText, retiredPath).not.toContain(`<loc>https://www.helpmath.ai${retiredPath}</loc>`);
+  for (const lesson of publicLessonCatalog()) {
+    const indexable = isPublicLessonProductionRouteAuthorized(
+      lesson.grade,
+      lesson.lesson,
+    ) && lesson.publication.indexable;
+    for (const route of [lesson.routes.en, lesson.routes.es]) {
+      const location = `<loc>https://www.helpmath.ai${route}</loc>`;
+      if (indexable) expect(sitemapText, route).toContain(location);
+      else expect(sitemapText, route).not.toContain(location);
+    }
   }
 });
 

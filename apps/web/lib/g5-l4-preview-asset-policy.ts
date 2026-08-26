@@ -5,6 +5,8 @@ import {
   type CurrentJsShowcaseEnvironment,
 } from './current-js-showcase-publication';
 import {getExactG5L4AudioAssetSha256} from './g5-l4-audio-assets.generated';
+import {isPublicLessonReleaseDeploymentAudioAuthorized} from
+  './public-launch-manifest.server';
 
 const SHA256 = /^[a-f0-9]{64}$/;
 const G5_L4_SHOWCASE_SHELL_ANIMATION_ID =
@@ -172,12 +174,20 @@ export function isG5L4ShowcaseAssetAuthorized(
 
 /**
  * The generated G5 L4 audio closure has its own publication boundary. The
- * animation showcase opt-in alone must never make these 185 exact assets
- * public; both server-only flags have to be the literal string `true`.
+ * animation local-audit opt-in alone must never make these 185 exact assets
+ * public. Production reads the independent audio acceptance receipt from the
+ * public launch manifest; non-production audit still requires both exact
+ * legacy flags.
  */
 export function isG5L4ShowcaseAudioAuthorized(
   env: CurrentJsShowcaseEnvironment = process.env,
 ) {
+  if (env.NODE_ENV === 'production') {
+    return isPublicLessonReleaseDeploymentAudioAuthorized(
+      G5_L4_SHOWCASE_RELEASE_ID,
+      env,
+    );
+  }
   return isG5L4ShowcaseAssetAuthorized(env)
     && env.CURRENT_JS_SHOWCASE_G5_L4_AUDIO_ENABLED === 'true';
 }

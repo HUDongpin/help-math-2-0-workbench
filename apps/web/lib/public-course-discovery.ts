@@ -1,13 +1,8 @@
-export const PUBLIC_CURRENT_JS_LESSON_ROUTES = Object.freeze([
-  '/courses/3/2',
-  '/courses/4/3',
-  '/courses/4/5',
-  '/courses/4/10',
-  '/courses/4/11',
-  '/courses/5/3',
-  '/courses/5/4',
-  '/courses/5/5',
-] as const);
+import {publicLessonCatalog} from './public-launch-manifest.server';
+
+export const PUBLIC_LESSON_ROUTE_UNIVERSE = Object.freeze(
+  publicLessonCatalog().map((lesson) => lesson.routes.en),
+);
 
 export interface PublicCourseDiscoveryInput {
   readonly availableLessonRoutes: readonly string[];
@@ -26,10 +21,10 @@ export function resolvePublicCourseDiscovery({
   availableLessonRoutes,
 }: PublicCourseDiscoveryInput): PublicCourseDiscovery {
   const available = new Set(availableLessonRoutes);
-  const lessonRoutes = PUBLIC_CURRENT_JS_LESSON_ROUTES.filter((route) =>
+  const lessonRoutes = PUBLIC_LESSON_ROUTE_UNIVERSE.filter((route) =>
     available.has(route)
   );
-  const unavailableRoutes = PUBLIC_CURRENT_JS_LESSON_ROUTES.filter((route) =>
+  const unavailableRoutes = PUBLIC_LESSON_ROUTE_UNIVERSE.filter((route) =>
     !available.has(route)
   );
 

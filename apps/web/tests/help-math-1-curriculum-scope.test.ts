@@ -24,7 +24,7 @@ test('historical HELP Math 1.0 curriculum scope stays distinct from availability
   );
 });
 
-test('the learner navigation derives its lesson count from the historical scope', () => {
+test('the learner navigation keeps the historical scope separate from the public launch catalog', () => {
   const workspace = readFileSync(
     new URL('../components/learning-platform-workspace.tsx', import.meta.url),
     'utf8',
@@ -32,7 +32,11 @@ test('the learner navigation derives its lesson count from the historical scope'
 
   assert.match(
     workspace,
-    /tail: String\(HELP_MATH_1_CURRICULUM_SCOPE\.structuredMathLessonCount\)/,
+    /<i>\{lessonCatalog\.length\}<\/i>/,
   );
-  assert.doesNotMatch(workspace, /en: 'All lessons', es: 'Todas las lecciones', tail: '29'/);
+  assert.match(workspace, /new Set\([\s\S]*lessonCatalog\.map/u);
+  assert.match(workspace, /allLessonsAvailable[\s\S]*href=\{allLessonsHref\}/u);
+  assert.doesNotMatch(workspace, /HELP_MATH_1_CURRICULUM_SCOPE/u);
+  assert.doesNotMatch(workspace, /HELP_MATH_1_GRADE_FILTERS/u);
+  assert.doesNotMatch(workspace, /grades 3 to 8|grados 3 a 8/u);
 });

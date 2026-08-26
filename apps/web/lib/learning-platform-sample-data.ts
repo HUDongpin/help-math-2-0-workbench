@@ -41,13 +41,6 @@ export interface LearningSectionSample {
   readonly tint: LearningPlatformTint;
 }
 
-export interface LessonCatalogSampleItem {
-  readonly grade: number;
-  readonly lesson: number;
-  readonly title: string;
-  readonly pages: number;
-}
-
 export interface LearningWordSample {
   readonly en: string;
   readonly es: string | null;
@@ -162,63 +155,6 @@ export const LEARNING_SECTIONS = [
     tint: "gold",
   },
 ] as const satisfies readonly LearningSectionSample[];
-
-export const LESSON_CATALOG_SAMPLE = [
-  { grade: 3, lesson: 1, title: "Place Value", pages: 74 },
-  { grade: 3, lesson: 2, title: "Addition and Subtraction", pages: 70 },
-  { grade: 3, lesson: 3, title: "Multiplication", pages: 63 },
-  { grade: 3, lesson: 4, title: "Division", pages: 67 },
-  { grade: 3, lesson: 5, title: "Fractions", pages: 62 },
-  { grade: 3, lesson: 6, title: "Decimals & Money", pages: 56 },
-  { grade: 3, lesson: 8, title: "Measurement", pages: 61 },
-  { grade: 3, lesson: 9, title: "Measurement", pages: 93 },
-  { grade: 4, lesson: 1, title: "Place Value", pages: 80 },
-  { grade: 4, lesson: 2, title: "Fractions & Decimals", pages: 67 },
-  { grade: 4, lesson: 3, title: "Negative Numbers", pages: 39 },
-  { grade: 4, lesson: 4, title: "Addition & Subtraction", pages: 54 },
-  { grade: 4, lesson: 5, title: "Multiplication", pages: 53 },
-  { grade: 4, lesson: 6, title: "Division", pages: 49 },
-  { grade: 4, lesson: 7, title: "Factoring", pages: 48 },
-  { grade: 4, lesson: 8, title: "Mathematical Expressions", pages: 46 },
-  { grade: 4, lesson: 9, title: "Equations", pages: 43 },
-  { grade: 4, lesson: 10, title: "Perimeter & Area", pages: 46 },
-  { grade: 4, lesson: 11, title: "Coordinate Grid", pages: 43 },
-  { grade: 4, lesson: 12, title: "Geometry", pages: 77 },
-  {
-    grade: 5,
-    lesson: 1,
-    title: "Working with Decimals and Percents",
-    pages: 82,
-  },
-  { grade: 5, lesson: 2, title: "Percents", pages: 64 },
-  {
-    grade: 5,
-    lesson: 3,
-    title: "Exponents & Prime Factorizations",
-    pages: 65,
-  },
-  { grade: 5, lesson: 4, title: "Number Lines", pages: 54 },
-  {
-    grade: 5,
-    lesson: 5,
-    title: "Add & Subtract Negative Numbers",
-    pages: 56,
-  },
-  { grade: 5, lesson: 6, title: "Division Skills", pages: 40 },
-  {
-    grade: 5,
-    lesson: 7,
-    title: "Add, Subtract, Multiply & Divide Decimals",
-    pages: 55,
-  },
-  {
-    grade: 5,
-    lesson: 8,
-    title: "Add & Subtract Fractions",
-    pages: 71,
-  },
-  { grade: 5, lesson: 13, title: "Geometry", pages: 73 },
-] as const satisfies readonly LessonCatalogSampleItem[];
 
 export const WORDS_G4_L3 = [
   { en: "Number Line", es: "Recta numérica", emoji: "📈" },

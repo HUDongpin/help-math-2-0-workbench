@@ -6,6 +6,7 @@ export const pageKeys = [
   "research",
   "resources",
   "support",
+  "accessibility",
   "login",
   "contact",
   "demos",
@@ -377,6 +378,7 @@ export interface SiteContent {
     research: ResearchContent;
     resources: ResourcesContent;
     support: SupportContent;
+    accessibility: LegalContent;
     login: LoginContent;
     contact: ContactContent;
     demos: DemosContent;

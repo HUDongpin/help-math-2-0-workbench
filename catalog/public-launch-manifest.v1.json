@@ -8,12 +8,12 @@
     "privateEvidencePublic": false,
     "rufflePublic": false
   },
-  "generatedMarker": "sha256:1d2766493dd077040cf3b6fe388ad55c371acd204e8cd618a59655e6b39da11c",
+  "generatedMarker": "sha256:bb538ac98ea23b956c453ebe799b27b259542284684fd2d24358042be8591ec9",
   "generator": {
-    "determinism": "no-clock-no-current-head-source-ordered-v1",
+    "determinism": "no-clock-no-current-head-source-ordered-publication-tier-v3",
     "path": "scripts/build-public-launch-manifest.mjs",
-    "sha256": "e09b045333af0756e352db8d3be8f7bec6ef524c16bbb586b8d16fb9f3f7cf87",
-    "version": "1.0.0"
+    "sha256": "4a7a8bd52b14da0e87283e7eb36754f9b7e43eda102d7849ac9256c06bc5e7ba",
+    "version": "1.2.0"
   },
   "launchContract": {
     "audience": "us-k12-families-educators-and-anonymous-learners-under-adult-supervision",
@@ -1376,97 +1376,100 @@
   },
   "publicRoutes": [
     {
-      "authorized": false,
-      "indexable": false,
+      "authorizationTier": "unavailable",
       "kind": "localized-page",
       "paths": {
         "en": "/",
         "es": "/es"
       },
+      "productionIndexable": false,
       "requiredForLaunch": true,
       "routeId": "home"
     },
     {
-      "authorized": false,
-      "indexable": false,
+      "authorizationTier": "unavailable",
       "kind": "localized-page",
       "paths": {
         "en": "/lessons",
         "es": "/es/lessons"
       },
+      "productionIndexable": false,
       "requiredForLaunch": true,
       "routeId": "all-lessons"
     },
     {
-      "authorized": false,
-      "indexable": false,
+      "authorizationTier": "unavailable",
       "kind": "localized-page",
       "paths": {
         "en": "/privacy",
         "es": "/es/privacy"
       },
+      "productionIndexable": false,
       "requiredForLaunch": true,
       "routeId": "privacy"
     },
     {
-      "authorized": false,
-      "indexable": false,
+      "authorizationTier": "unavailable",
       "kind": "localized-page",
       "paths": {
         "en": "/terms",
         "es": "/es/terms"
       },
+      "productionIndexable": false,
       "requiredForLaunch": true,
       "routeId": "terms"
     },
     {
-      "authorized": false,
-      "indexable": false,
+      "authorizationTier": "unavailable",
       "kind": "localized-page",
       "paths": {
         "en": "/support",
         "es": "/es/support"
       },
+      "productionIndexable": false,
       "requiredForLaunch": true,
       "routeId": "support"
     },
     {
-      "authorized": false,
-      "indexable": false,
+      "authorizationTier": "unavailable",
       "kind": "localized-page",
       "paths": {
         "en": "/accessibility",
         "es": "/es/accessibility"
       },
+      "productionIndexable": false,
       "requiredForLaunch": true,
       "routeId": "accessibility"
     },
     {
-      "authorized": false,
-      "indexable": false,
+      "authorizationTier": "unavailable",
       "kind": "machine-route",
       "paths": {
         "en": "/robots.txt",
         "es": null
       },
+      "productionIndexable": false,
       "requiredForLaunch": true,
       "routeId": "robots"
     },
     {
-      "authorized": false,
-      "indexable": false,
+      "authorizationTier": "unavailable",
       "kind": "machine-route",
       "paths": {
         "en": "/sitemap.xml",
         "es": null
       },
+      "productionIndexable": false,
       "requiredForLaunch": true,
       "routeId": "sitemap"
     }
   ],
   "releaseId": "HELP_MATH_2_PUBLIC_LAUNCH_V1",
   "schemaVersion": 1,
-  "smokeRoutes": [],
+  "smokeRoutes": {
+    "preview": [],
+    "production": []
+  },
   "sourceBindings": {
     "deployAssetManifest": {
       "current": false,
@@ -1480,9 +1483,9 @@
     },
     "pageOnlyControlLedger": {
       "generatorPath": "scripts/build-page-only-migration-control-ledger.mjs",
-      "generatorSha256": "a2dde55405c9d79a6f361673591b39c736b04c0822ee6fdea427d30cd5e8f1f5",
+      "generatorSha256": "ab7c65aada8bcc8cc049db29c93e6b2fef57811f738c8846a1d0b3aea2f49030",
       "path": "catalog/page-only-migration-control-ledger.json",
-      "sha256": "98f33e3ac365903f70e17c08ab712e5c8dd2a83e0faf1b15670b288aa59cc591"
+      "sha256": "e6a6e200e998373fe5a87b8d341869dcf1e634dbcfb6b610b49b15a535807eac"
     }
   },
   "summary": {
@@ -1494,14 +1497,14 @@
       "support-runtime-binding-not-approved",
       "accessibility-review-not-approved",
       "deploy-asset-manifest-not-current",
-      "home-route-not-authorized",
-      "all-lessons-route-not-authorized",
-      "privacy-route-not-authorized",
-      "terms-route-not-authorized",
-      "support-route-not-authorized",
-      "accessibility-route-not-authorized",
-      "robots-route-not-authorized",
-      "sitemap-route-not-authorized"
+      "home-production-route-not-authorized",
+      "all-lessons-production-route-not-authorized",
+      "privacy-production-route-not-authorized",
+      "terms-production-route-not-authorized",
+      "support-production-route-not-authorized",
+      "accessibility-production-route-not-authorized",
+      "robots-production-route-not-authorized",
+      "sitemap-production-route-not-authorized"
     ],
     "currentJsCompleteLessons": 8,
     "externalInputsComplete": true,

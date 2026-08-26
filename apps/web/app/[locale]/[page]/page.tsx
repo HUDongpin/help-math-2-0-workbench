@@ -23,6 +23,7 @@ const supported = [
   'research',
   'resources',
   'support',
+  'accessibility',
   'login',
   'contact',
   'demos',
@@ -53,6 +54,7 @@ export default async function ContentPage({params}: {params: Promise<{locale: 'e
     case 'research': rendered = <ResearchPage content={content.research} />; break;
     case 'resources': rendered = <ResourcesPage content={content.resources} />; break;
     case 'support': rendered = <SupportPage content={content.support} />; break;
+    case 'accessibility': rendered = <LegalPage content={content.accessibility} />; break;
     case 'login': rendered = <LoginPage content={content.login} />; break;
     case 'contact': rendered = <ContactPage content={content.contact} locale={locale} />; break;
     case 'demos': rendered = <DemosPage content={content.demos} />; break;

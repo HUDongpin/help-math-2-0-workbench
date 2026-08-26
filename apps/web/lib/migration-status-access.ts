@@ -1,8 +1,10 @@
 export function isMigrationStatusAvailable(
   env: Readonly<Record<string, string | undefined>> = process.env,
 ) {
-  return env.NODE_ENV !== 'production'
-    || env.MIGRATION_STATUS_ENABLED === '1';
+  // Migration status contains source-ledger and workbench diagnostics. It is a
+  // local engineering surface, never a public-launch feature. In particular,
+  // a legacy deployment variable must not be able to reopen it in Production.
+  return env.NODE_ENV !== 'production';
 }
 
 export function isMigrationStatusDesignerViewRequested(

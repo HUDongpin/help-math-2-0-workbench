@@ -107,6 +107,7 @@ export function DescriptorDrivenWholeLessonPlayer({
   descriptor,
   hostPresentation = 'legacy-composite',
   locale,
+  novaTutorEnabled = true,
   novaTutorMode = 'focus',
   releasePublished,
   reviewerMode = false,
@@ -118,6 +119,7 @@ export function DescriptorDrivenWholeLessonPlayer({
   descriptor: DescriptorDrivenLessonPlayerDescriptor;
   hostPresentation?: WholeLessonHostPresentation;
   locale: WholeLessonPlayerLocale;
+  novaTutorEnabled?: boolean;
   novaTutorMode?: NovaTutorMode;
   releasePublished: boolean;
   reviewerMode?: boolean;
@@ -997,7 +999,7 @@ export function DescriptorDrivenWholeLessonPlayer({
           : 'Restart tour'}</button>
       </>}
       totalPages={descriptor.course.activePageCount}
-      tutorContext={tutorContext}
+      tutorContext={novaTutorEnabled ? tutorContext : undefined}
       visualSkin={skin}
       volume={volume}
     />

@@ -10,6 +10,11 @@ import {
   isMigrationStatusAvailable,
   isMigrationStatusDesignerViewRequested,
 } from '@/lib/migration-status-access';
+import {
+  publicFeatureEnabled,
+  isPublicRoutePathAuthorized,
+  publicLessonCatalog,
+} from '@/lib/public-launch-manifest.server';
 
 type WorkspaceQuery = Record<string, string | string[] | undefined>;
 
@@ -17,14 +22,27 @@ function first(value: string | string[] | undefined) {
   return Array.isArray(value) ? value[0] : value;
 }
 
-function workspaceState(query: WorkspaceQuery, designerToolsVisible: boolean) {
-  const role = first(query.role) === 'teacher'
+function workspaceState(
+  query: WorkspaceQuery,
+  allLessonsAvailable: boolean,
+  designerToolsVisible: boolean,
+  teacherAvailable: boolean,
+) {
+  const role = teacherAvailable && first(query.role) === 'teacher'
     ? 'teacher' as const
     : 'student' as const;
   const requested = first(query.screen);
-  const allowed = role === 'teacher'
-    ? designerToolsVisible ? ['class', 'prep', 'notes'] as const : ['class', 'prep'] as const
-    : designerToolsVisible ? ['today', 'practice', 'words', 'lessons', 'notes'] as const : ['today', 'practice', 'words', 'lessons'] as const;
+  const teacherScreens = designerToolsVisible
+    ? ['class', 'prep', 'notes'] as const
+    : ['class', 'prep'] as const;
+  const studentScreens = [
+    'today',
+    'practice',
+    'words',
+    ...(allLessonsAvailable ? ['lessons'] as const : []),
+    ...(designerToolsVisible ? ['notes'] as const : []),
+  ] as const;
+  const allowed = role === 'teacher' ? teacherScreens : studentScreens;
   const screen = allowed.find((candidate) => candidate === requested)
     ?? (role === 'teacher' ? 'class' : 'today');
   return {role, screen};
@@ -68,23 +86,40 @@ export default async function Home({
 }) {
   const [{locale}, query] = await Promise.all([params, searchParams]);
   if (!isLocale(locale)) notFound();
-  const authSession = await readAuthSession();
   const migrationStatusAvailable = isMigrationStatusAvailable();
   const designerToolsVisible = migrationStatusAvailable
     && isMigrationStatusDesignerViewRequested(query.view);
-  const state = workspaceState(query, designerToolsVisible);
+  const production = process.env.NODE_ENV === 'production';
+  const publicAuthAvailable = !production || publicFeatureEnabled('auth');
+  const novaTutorAvailable = !production || publicFeatureEnabled('novaTutor');
+  const teacherAvailable = !production || publicFeatureEnabled('teacher');
+  const allLessonsAvailable = !production
+    || isPublicRoutePathAuthorized('/lessons');
+  const state = workspaceState(
+    query,
+    allLessonsAvailable,
+    designerToolsVisible,
+    teacherAvailable,
+  );
   const availableLessons = availableLearningLessons();
+  const authSession = publicAuthAvailable
+    ? await readAuthSession()
+    : {status: 'disabled' as const};
   return <LearningPlatformWorkspace
     activeLesson={availableLessons.find((lesson) =>
       lesson.grade === 4 && lesson.lesson === 3
     ) ?? availableLessons[0] ?? null}
     authStatus={authSession.status}
+    allLessonsAvailable={allLessonsAvailable}
     availableLessons={availableLessons}
     designerToolsVisible={designerToolsVisible}
     initialRole={state.role}
     initialScreen={state.screen}
     key={`${locale}:${state.role}:${state.screen}:${designerToolsVisible ? 'designer' : 'learner'}`}
+    lessonCatalog={publicLessonCatalog()}
     locale={locale}
     migrationStatusAvailable={migrationStatusAvailable}
+    novaTutorAvailable={novaTutorAvailable}
+    teacherAvailable={teacherAvailable}
   />;
 }

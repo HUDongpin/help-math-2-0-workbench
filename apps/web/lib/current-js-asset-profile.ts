@@ -122,6 +122,18 @@ export function isCurrentJsProductionReleaseApproved(releaseId: string) {
   return CURRENT_JS_PRODUCTION_APPROVED_RELEASE_IDS.has(releaseId);
 }
 
+/**
+ * Audio remains a separate acceptance gate from the runnable renderer. Both
+ * the private server-audio store and source-associated MP3 files in the public
+ * byte profile are audio, regardless of which Lesson first introduced them.
+ */
+export function isCurrentJsAudioAssetRecord(
+  record: CurrentJsAssetProfileRecord,
+) {
+  return record.storageRoot === 'server-audio'
+    || /\.mp3$/iu.test(record.assetPath);
+}
+
 export function currentJsProductionAssetRecordForSegments(
   asset: readonly string[],
 ) {

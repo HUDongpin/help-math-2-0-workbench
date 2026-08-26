@@ -205,7 +205,7 @@ const SUPPLEMENTAL_INPUTS = Object.freeze([
   }),
   Object.freeze({
     path: "apps/web/lib/learning-lesson-availability.server.ts",
-    expectedSha256: "c9cfdd8668915d69d8d092d2de1360109d55a319b3badeed947ea129e2e51f96",
+    expectedSha256: "3a8028e6ca35d6601edbe260423d6152e01ef9d9468753ce433d80ddbde92a02",
     role: "modern My Lessons availability derivation",
   }),
   Object.freeze({

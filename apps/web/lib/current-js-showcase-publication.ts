@@ -7,14 +7,19 @@ import {
   currentJsCandidateProfileEnabled,
   isCurrentJsProductionReleaseApproved,
 } from './current-js-asset-profile';
+import {
+  isPublicLessonReleaseDeploymentRuntimeAssetAuthorized,
+  isPublicLessonReleasePreviewRuntimeAssetAuthorized,
+  isPublicLessonReleaseProductionRuntimeAssetAuthorized,
+  publicLaunchDeploymentTarget,
+} from './public-launch-manifest.server';
 
 /**
- * Explicit public-product authorization for a runnable current-JavaScript
- * lesson that has not passed the separate strict Flash-migration release gate.
+ * Compatibility facade for a runnable current-JavaScript Lesson.
  *
- * This gate is intentionally narrow and cannot mutate or reinterpret the
- * completion/lesson-release ledgers. An enabled lesson must continue to show
- * its candidate evidence boundary in the player.
+ * Production authority comes only from the public launch manifest. Legacy
+ * showcase environment variables remain available solely for non-production
+ * local audit and cannot expand Preview, Released, or Production state.
  */
 
 export const G4_L3_SHOWCASE_RELEASE_ID =
@@ -49,7 +54,8 @@ export type CurrentJsShowcaseEnvironment =
 
 export type CurrentJsShowcasePublication = Readonly<{
   enabled: boolean;
-  profile: 'candidate' | 'production' | 'unavailable';
+  profile: 'candidate' | 'preview' | 'production' | 'unavailable';
+  previewApproved: boolean;
   productionApproved: boolean;
   releaseId: string;
   scope: 'current-javascript-showcase';
@@ -66,14 +72,29 @@ export function currentJsShowcasePublication(
   const optedIn = environmentKey !== undefined &&
     env[environmentKey] === 'true';
   const productionApproved =
+    isPublicLessonReleaseProductionRuntimeAssetAuthorized(releaseId);
+  const previewApproved =
+    isPublicLessonReleasePreviewRuntimeAssetAuthorized(releaseId);
+  const deploymentApproved =
+    isPublicLessonReleaseDeploymentRuntimeAssetAuthorized(releaseId, env);
+  const deploymentTarget = publicLaunchDeploymentTarget(env);
+  const hasProductionAssetProfileEvidence =
     isCurrentJsProductionReleaseApproved(releaseId);
   const candidateEnabled = currentJsCandidateProfileEnabled(env);
-  const enabled = optedIn && (productionApproved || candidateEnabled);
+  const localAuditEnabled = env.NODE_ENV !== 'production'
+    && optedIn
+    && (hasProductionAssetProfileEvidence || candidateEnabled);
+  const enabled = deploymentApproved || localAuditEnabled;
   return Object.freeze({
     enabled,
     profile: enabled
-      ? candidateEnabled ? 'candidate' as const : 'production' as const
+      ? deploymentTarget === 'preview'
+        ? 'preview' as const
+        : deploymentTarget === 'production'
+          ? 'production' as const
+          : 'candidate' as const
       : 'unavailable' as const,
+    previewApproved,
     productionApproved,
     releaseId,
     scope: 'current-javascript-showcase' as const,

@@ -1,10 +1,15 @@
-import {getCatalog, isLessonReleasePublished} from './catalog';
 import {
-  currentJsShowcasePublication,
   type CurrentJsShowcaseEnvironment,
 } from './current-js-showcase-publication';
+import {getCatalog} from './catalog';
 import {findLessonNavigationForRoute} from './lesson-navigation';
 import {findPageOnlyCurrentJsNavigationForRoute} from './page-only-current-js-navigation.server';
+import {
+  isPublicLessonReleaseDeploymentRuntimeAssetAuthorized,
+  publicLessonFor,
+  type PublicLessonTier,
+} from
+  './public-launch-manifest.server';
 import {wholeLessonCourseRegistrations} from './whole-lesson-course-registry';
 import {wholeLessonDescriptorMatchesNavigation} from './whole-lesson-player-descriptor';
 
@@ -13,6 +18,7 @@ export interface AvailableLearningLesson {
   readonly grade: number;
   readonly href: string;
   readonly lesson: number;
+  readonly publicationTier: PublicLessonTier | 'local-audit';
   readonly releaseId: string;
   readonly titleEnglish: string;
   readonly titleSpanish: string | null;
@@ -47,26 +53,31 @@ export function availableLearningLessons(
         ),
       );
       const descriptorBound = Boolean(navigation);
-      const releasePublished = isLessonReleasePublished(
-        catalog,
-        descriptor.releaseId,
-      );
-      const showcaseEnabled = currentJsShowcasePublication(
-        descriptor.releaseId,
-        env,
-      ).enabled;
+      const publicManifestAuthorized =
+        isPublicLessonReleaseDeploymentRuntimeAssetAuthorized(
+          descriptor.releaseId,
+          env,
+        );
       if (
         !descriptorBound ||
-        (!developmentAudit && !releasePublished && !showcaseEnabled)
+        (!developmentAudit && !publicManifestAuthorized)
       ) {
         return [];
       }
+
+      const manifestLesson = publicLessonFor(
+        descriptor.course.grade,
+        descriptor.course.lesson,
+      );
 
       return [Object.freeze({
         activePageCount: descriptor.course.activePageCount,
         grade: descriptor.course.grade,
         href: `${descriptor.course.href}?mode=focus`,
         lesson: descriptor.course.lesson,
+        publicationTier: developmentAudit
+          ? 'local-audit' as const
+          : manifestLesson?.publication.tier ?? 'unavailable',
         releaseId: descriptor.releaseId,
         titleEnglish: descriptor.course.labels.en.text,
         titleSpanish: descriptor.course.labels.es.usesEnglishFallback

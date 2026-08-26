@@ -16,6 +16,7 @@ import {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 import {Link} from '@/i18n/navigation';
 import type {PublicAuthStatus} from '@/lib/auth-session';
 import type {AvailableLearningLesson} from '@/lib/learning-lesson-availability.server';
+import type {PublicLessonCatalogRow} from '@/lib/public-launch-manifest.server';
 import {
   G4_L3_WHOLE_LESSON_STORAGE_KEY,
   g4L3CompletionPercent,
@@ -28,17 +29,9 @@ import {
   type G4L3Locale,
 } from '@/lib/g4-l3-lesson-navigation';
 import {
-  HELP_MATH_1_CURRICULUM_SCOPE,
-  HELP_MATH_1_GRADE_FILTERS,
-  type HelpMath1GradeFilter,
-} from '@/lib/help-math-1-curriculum-scope';
-import {
-  LEARNER_POWER_SAMPLE,
-  LEARNER_SUMMARY_SAMPLE,
   LEARNING_HELPER_SAMPLE,
   LEARNING_PLATFORM_SAMPLE_BOUNDARY,
   LEARNING_SECTIONS,
-  LESSON_CATALOG_SAMPLE,
   NOVA_CONTROL_SAMPLE,
   TEACHER_ATTENTION_SAMPLE,
   TEACHER_ROSTER_SAMPLE,
@@ -67,11 +60,11 @@ type ProgressSnapshot = Readonly<{
 }>;
 
 const EMPTY_PROGRESS: ProgressSnapshot = {
-  currentPage: 1,
+  currentPage: 0,
   currentSectionCode: 'IR',
   percent: 0,
   reviewed: 0,
-  visited: 1,
+  visited: 0,
 };
 
 function snapshotFor(progress: G4L3WholeLessonProgress): ProgressSnapshot {
@@ -87,14 +80,14 @@ function snapshotFor(progress: G4L3WholeLessonProgress): ProgressSnapshot {
   };
 }
 
-function readProgress(locale: G4L3Locale): G4L3WholeLessonProgress {
+function readProgress(locale: G4L3Locale): G4L3WholeLessonProgress | null {
   try {
-    return parseG4L3WholeLessonProgress(
-      window.localStorage.getItem(G4_L3_WHOLE_LESSON_STORAGE_KEY),
-      locale,
+    const stored = window.localStorage.getItem(
+      G4_L3_WHOLE_LESSON_STORAGE_KEY,
     );
+    return stored ? parseG4L3WholeLessonProgress(stored, locale) : null;
   } catch {
-    return parseG4L3WholeLessonProgress(null, locale);
+    return null;
   }
 }
 
@@ -195,6 +188,7 @@ function StudentToday({
   flippedWords,
   g4L3Available,
   locale,
+  novaTutorAvailable,
   onFlipWord,
   onOpenWords,
   progress,
@@ -203,6 +197,7 @@ function StudentToday({
   flippedWords: ReadonlySet<string>;
   g4L3Available: boolean;
   locale: G4L3Locale;
+  novaTutorAvailable: boolean;
   onFlipWord: (key: string) => void;
   onOpenWords: () => void;
   progress: ProgressSnapshot;
@@ -211,44 +206,41 @@ function StudentToday({
   const currentSection = G4_L3_LESSON.sections.find(
     (section) => section.code === progress.currentSectionCode,
   ) ?? G4_L3_LESSON.sections[0]!;
-  const hasBrowserProgress = Boolean(
-    browserProgress && (progress.currentPage > 1 || progress.reviewed > 0 || progress.visited > 1),
-  );
-  const samplePercent = Math.round(LEARNER_SUMMARY_SAMPLE.currentPage / LEARNER_SUMMARY_SAMPLE.totalPages * 1000) / 10;
+  const hasBrowserProgress = browserProgress !== null;
   const copy = spanish ? {
     browser: `En este navegador: página ${progress.currentPage}, ${progress.reviewed} repasadas`,
     continue: hasBrowserProgress ? 'Continuar mi lección' : 'Comenzar mi lección',
-    greeting: '¡Hola María! ¿Lista para seguir?',
+    greeting: '¿Lista o listo para aprender?',
     helper: 'Tu ayudante de matemáticas',
     helperBody: 'Pregúntame en inglés o en español. La lección puede compartir la página actual con Nova.',
     lessonUnavailable: 'Lección no disponible en este entorno',
     next: 'Tu siguiente paso',
-    powers: 'Tus poderes matemáticos',
-    powersNote: 'Cada respuesta hace crecer un poder matemático.',
+    progressSummary: 'Progreso guardado en este navegador',
+    progressNote: 'Solo muestra la actividad que realmente guardaste en este navegador. No hay perfil, racha, puntos ni estimaciones inventadas.',
     lessonProgress: 'Avance en esta lección',
     seeAll: 'Ver todas',
-    stickers: 'Estampas de esta lección',
-    stickersNote: 'Una estampa por cada uno de los ocho pasos. Sin puntos ni monedas.',
     talk: 'Hablar con Nova',
-    today: 'Martes · Grado 4',
+    today: 'Tu espacio de aprendizaje · Grado 4',
+    visited: 'Páginas visitadas',
+    reviewed: 'Páginas repasadas',
     words: 'Palabras de hoy',
     wordsHint: 'Toca una tarjeta para darle la vuelta.',
   } : {
     browser: `This browser: page ${progress.currentPage}, ${progress.reviewed} reviewed`,
     continue: hasBrowserProgress ? 'Continue my lesson' : 'Start my lesson',
-    greeting: 'Hi Maria! Ready to keep going?',
+    greeting: 'Ready to learn?',
     helper: 'Your math helper',
     helperBody: 'Ask in English or Spanish. The lesson can share the current page with Nova.',
     lessonUnavailable: 'Lesson unavailable in this environment',
     next: 'Your next step',
-    powers: 'Your math powers',
-    powersNote: 'Every answer grows a math power.',
+    progressSummary: 'Progress saved in this browser',
+    progressNote: 'This shows only activity you actually saved in this browser. There is no profile, streak, points, or invented estimate.',
     lessonProgress: 'Progress in this lesson',
     seeAll: 'See all',
-    stickers: 'Stickers in this lesson',
-    stickersNote: 'One sticker for each of the eight steps. No points or coins.',
     talk: 'Talk to Nova',
-    today: 'Tuesday · Grade 4',
+    today: 'Your learning workspace · Grade 4',
+    visited: 'Pages visited',
+    reviewed: 'Pages reviewed',
     words: "Today's words",
     wordsHint: 'Tap a card to flip it.',
   };
@@ -263,14 +255,9 @@ function StudentToday({
             <h1 id="today-title">{copy.greeting}</h1>
           </div>
         </div>
-        <div className={styles.chipRow}>
-          <span className={`${styles.chip} ${styles.chipSun}`}>
-            <Emoji>🔥</Emoji>{LEARNER_SUMMARY_SAMPLE.streakDays} {spanish ? 'días seguidos' : 'days in a row'}
-          </span>
-          <span className={`${styles.chip} ${styles.chipMint}`}>
-            <Emoji>⭐</Emoji>{LEARNER_SUMMARY_SAMPLE.stickers} {spanish ? 'estampas' : 'stickers'}
-          </span>
-        </div>
+        <span className={`${styles.chip} ${styles.chipMint}`}>
+          <Emoji>💾</Emoji>{spanish ? 'Solo este navegador' : 'This browser only'}
+        </span>
       </div>
 
       <article className={`${styles.card} ${styles.nextCard}`}>
@@ -285,9 +272,13 @@ function StudentToday({
             {spanish && !G4_L3_LESSON.titleSpanish
               ? <span className={styles.sourceGapLabel}>⚠️ inglés · la fuente no tiene español</span>
               : null}
-            <p>{spanish
-              ? 'Te quedaste en el paso 4 de 8. Sigue justo ahí.'
-              : 'You stopped at step 4 of 8. Pick up right there.'}</p>
+            <p>{hasBrowserProgress
+              ? (spanish
+                  ? `Continúa desde la página ${progress.currentPage}.`
+                  : `Continue from page ${progress.currentPage}.`)
+              : (spanish
+                  ? 'Comienza la lección cuando estés lista o listo.'
+                  : 'Start the Lesson when you are ready.')}</p>
             <span className={styles.browserResume}>{copy.browser} · {getG4L3SectionLabel(currentSection, locale).text}</span>
           </div>
           {g4L3Available
@@ -301,71 +292,35 @@ function StudentToday({
         <div className={styles.progressBlock}>
           <div className={styles.progressMeta}>
             <span>{copy.lessonProgress}</span>
-            <strong>{LEARNER_SUMMARY_SAMPLE.currentPage} / {LEARNER_SUMMARY_SAMPLE.totalPages}</strong>
+            <strong>{progress.currentPage} / {G4_L3_LESSON.activePageCount}</strong>
           </div>
           <div
-            aria-label={`${samplePercent}% ${spanish ? 'avance en esta lección' : 'progress in this lesson'}`}
+            aria-label={`${progress.percent}% ${spanish ? 'avance en esta lección' : 'progress in this lesson'}`}
             aria-valuemax={100}
             aria-valuemin={0}
-            aria-valuenow={samplePercent}
+            aria-valuenow={progress.percent}
             className={styles.progressTrack}
             role="progressbar"
-          ><i style={{width: `${samplePercent}%`}} /></div>
+          ><i style={{width: `${progress.percent}%`}} /></div>
         </div>
       </article>
 
       <div className={styles.dashboardGrid}>
         <div className={styles.dashboardMain}>
-          <article className={styles.card}>
+          <article className={styles.card} data-browser-progress-summary>
             <div className={styles.panelHeader}>
-              <div><Emoji>💪</Emoji><h2>{copy.powers}</h2></div>
+              <div><Emoji>💾</Emoji><h2>{copy.progressSummary}</h2></div>
             </div>
-            <div className={styles.powerList}>
-              {LEARNER_POWER_SAMPLE.map((power) => {
-                const pips = Math.max(1, Math.min(5, Math.round(power.probability * 5)));
-                const label = power.probability >= 0.8
-                  ? (spanish ? '¡Fuerte!' : 'Strong!')
-                  : power.probability >= 0.5
-                    ? (spanish ? 'Ya casi' : 'Getting there')
-                    : (spanish ? 'Empezando' : 'Just starting');
-                const badge = power.probability >= 0.8 ? '💪' : power.probability >= 0.5 ? '🌤️' : '🌱';
-                return <div className={`${styles.powerRow} ${tintClass(power.tint)}`} key={power.en}>
-                  <div className={styles.powerHeading}>
-                    <span className={styles.termPair}>
-                      <strong lang={spanish ? 'es' : 'en'}>{spanish ? power.es : power.en}</strong>
-                      <small data-language={spanish ? 'en' : 'es'} lang={spanish ? 'en' : 'es'}>{spanish ? power.en : power.es}</small>
-                    </span>
-                    <span className={styles.powerBand}><Emoji>{badge}</Emoji>{label}</span>
-                  </div>
-                  <div aria-label={`${pips} / 5`} className={styles.powerPips} role="img">
-                    {Array.from({length: 5}, (_, index) => <i data-on={index < pips ? 'true' : 'false'} key={index} />)}
-                  </div>
-                </div>;
-              })}
-            </div>
-            <p className={styles.panelNote}>{copy.powersNote}</p>
-          </article>
-
-          <article className={styles.card}>
-            <div className={styles.panelHeader}>
-              <div><Emoji>🏅</Emoji><h2>{copy.stickers}</h2></div>
-              <span className={styles.chip}>{LEARNER_SUMMARY_SAMPLE.stickers} / {LEARNER_SUMMARY_SAMPLE.totalSteps}</span>
-            </div>
-            <div className={styles.stickerShelf}>
-              {LEARNING_SECTIONS.map((section, index) => <span
-                aria-label={`${pick(section.kid, spanish)} — ${index < LEARNER_SUMMARY_SAMPLE.stickers ? (spanish ? 'ganada' : 'earned') : (spanish ? 'todavía no' : 'not yet')}`}
-                className={`${styles.sticker} ${tintClass(section.tint)}`}
-                data-earned={index < LEARNER_SUMMARY_SAMPLE.stickers ? 'true' : 'false'}
-                key={section.code}
-                role="img"
-              ><Emoji>{section.emoji}</Emoji></span>)}
-            </div>
-            <p className={styles.panelNote}>{copy.stickersNote}</p>
+            <dl>
+              <div><dt>{copy.visited}</dt><dd>{progress.visited}</dd></div>
+              <div><dt>{copy.reviewed}</dt><dd>{progress.reviewed}</dd></div>
+            </dl>
+            <p className={styles.panelNote}>{copy.progressNote}</p>
           </article>
         </div>
 
         <aside className={styles.dashboardSide}>
-          <article className={`${styles.card} ${styles.novaCard}`} id="learning-help">
+          {novaTutorAvailable ? <article className={`${styles.card} ${styles.novaCard}`} id="learning-help">
             <div className={styles.novaHeading}>
               <span className={styles.novaAvatar}><Emoji>🤖</Emoji></span>
               <div><h2>Nova</h2><p>{copy.helper}</p></div>
@@ -378,7 +333,7 @@ function StudentToday({
               : <span aria-disabled="true" className={`${styles.novaAction} ${styles.actionDisabled}`}>
                   {copy.lessonUnavailable}<LockKeyhole aria-hidden="true" size={18} />
                 </span>}
-          </article>
+          </article> : null}
 
           <article className={styles.card} id="today-words">
             <div className={styles.panelHeader}>
@@ -507,43 +462,59 @@ function WordsScreen({
 
 function LessonsScreen({
   availableLessons,
+  lessonCatalog,
   locale,
 }: {
   availableLessons: readonly AvailableLearningLesson[];
+  lessonCatalog: readonly PublicLessonCatalogRow[];
   locale: G4L3Locale;
 }) {
   const spanish = locale === 'es';
-  const [filter, setFilter] = useState<HelpMath1GradeFilter>('all');
-  const lessons = LESSON_CATALOG_SAMPLE.filter((lesson) => filter === 'all' || String(lesson.grade) === filter);
+  const [filter, setFilter] = useState('all');
+  const gradeFilters = useMemo(
+    () => Array.from(new Set(
+      lessonCatalog.map((lesson) => String(lesson.grade)),
+    )).sort((left, right) => Number(left) - Number(right)),
+    [lessonCatalog],
+  );
+  const gradeLabel = gradeFilters.join(', ');
+  const publicCatalogScope = spanish
+    ? `El catálogo público de lanzamiento de HELP Math 2.0 contiene ${lessonCatalog.length} lecciones de los grados ${gradeLabel}.`
+    : `The HELP Math 2.0 public launch catalog contains ${lessonCatalog.length} lessons in Grades ${gradeLabel}.`;
+  const lessons = lessonCatalog.filter((lesson) =>
+    filter === 'all' || String(lesson.grade) === filter
+  );
   const lessonEmoji = LEARNING_PLATFORM_SAMPLE_BOUNDARY.prototypeUi.lessonEmojiByTitle as Readonly<Record<string, string>>;
   const availableByKey = new Map(availableLessons.map((lesson) => [
     `${lesson.grade}-${lesson.lesson}`,
     lesson,
   ]));
   let availabilityMessage = spanish
-    ? 'El currículo principal de HELP Math 1.0 abarca los grados 3–8. Las lecciones se abrirán aquí cuando sus versiones modernas estén disponibles.'
-    : 'HELP Math 1.0’s main curriculum spans Grades 3–8. Lessons will open here as their modern versions become available.';
+    ? `${publicCatalogScope} Las lecciones se abrirán aquí cuando sus versiones modernas estén disponibles.`
+    : `${publicCatalogScope} Lessons will open here when their modern versions become available.`;
   if (availableLessons.length > 1) {
     availabilityMessage = spanish
-      ? `El currículo principal de HELP Math 1.0 abarca los grados 3–8. Ya hay ${availableLessons.length} lecciones modernas disponibles; las demás se abrirán cuando estén listas.`
-      : `HELP Math 1.0’s main curriculum spans Grades 3–8. ${availableLessons.length} modern lessons are available now; the others will open when they are ready.`;
+      ? `${publicCatalogScope} Ya hay ${availableLessons.length} lecciones modernas disponibles; las demás se abrirán cuando estén listas.`
+      : `${publicCatalogScope} ${availableLessons.length} modern lessons are available now; the others will open when they are ready.`;
   } else if (availableLessons.length === 1) {
     availabilityMessage = spanish
-      ? 'El currículo principal de HELP Math 1.0 abarca los grados 3–8. Abre una lección disponible; las demás aparecerán cuando sus versiones modernas estén listas.'
-      : 'HELP Math 1.0’s main curriculum spans Grades 3–8. Open an available lesson; the others will appear as their modern versions are ready.';
+      ? `${publicCatalogScope} Abre la lección disponible; las demás aparecerán cuando sus versiones modernas estén listas.`
+      : `${publicCatalogScope} Open the available lesson; the others will appear when their modern versions are ready.`;
   }
 
   return <section aria-labelledby="lessons-title" className={styles.screen} data-workspace-screen="lessons">
     <div className={styles.screenHeading}>
       <p className={styles.eyebrow}>{spanish ? 'Currículo de HELP Math' : 'HELP Math curriculum'}</p>
       <h1 id="lessons-title">
-        {HELP_MATH_1_CURRICULUM_SCOPE.structuredMathLessonCount}{' '}
-        {spanish ? 'lecciones de matemáticas · grados 3 a 8' : 'math lessons · grades 3 to 8'}
+        {lessonCatalog.length}{' '}
+        {spanish
+          ? `lecciones de matemáticas · grados ${gradeLabel}`
+          : `math lessons · grades ${gradeLabel}`}
       </h1>
       <p>{availabilityMessage}</p>
     </div>
     <div aria-label={spanish ? 'Filtrar por grado' : 'Filter by grade'} className={styles.filterGroup} role="group">
-      {(['all', ...HELP_MATH_1_GRADE_FILTERS] as const).map((value) => <button aria-pressed={filter === value} key={value} onClick={() => setFilter(value)} type="button">{value === 'all' ? (spanish ? 'Todos' : 'All') : `${spanish ? 'Grado' : 'Grade'} ${value}`}</button>)}
+      {['all', ...gradeFilters].map((value) => <button aria-pressed={filter === value} key={value} onClick={() => setFilter(value)} type="button">{value === 'all' ? (spanish ? 'Todos' : 'All') : `${spanish ? 'Grado' : 'Grade'} ${value}`}</button>)}
     </div>
     {lessons.length
       ? <div className={styles.lessonGrid}>
@@ -552,23 +523,41 @@ function LessonsScreen({
         const availableLesson = availableByKey.get(key);
         const lessonHref = availableLesson?.href ?? null;
         const learnerRunnable = availableLesson !== undefined;
+        const publicationTier = availableLesson?.publicationTier
+          ?? 'unavailable';
+        const tierLabel = publicationTier === 'preview'
+          ? 'Preview'
+          : publicationTier === 'released'
+            ? (spanish ? 'Publicada' : 'Released')
+            : publicationTier === 'local-audit'
+              ? (spanish ? 'Auditoría local' : 'Local audit')
+              : (spanish ? 'No disponible' : 'Unavailable');
+        const localizedTitle = spanish
+          ? lesson.title.es ?? lesson.title.en
+          : lesson.title.en;
         const content = <>
-          <span className={`${styles.lessonIcon} ${learnerRunnable ? styles.lessonIconOpen : ''}`}><Emoji>{lessonEmoji[lesson.title] ?? '🔢'}</Emoji></span>
+          <span className={`${styles.lessonIcon} ${learnerRunnable ? styles.lessonIconOpen : ''}`}><Emoji>{lessonEmoji[lesson.title.en] ?? '🔢'}</Emoji></span>
           <span className={styles.lessonTileCopy} data-lesson-card-copy>
             <small>G{lesson.grade} · L{lesson.lesson}</small>
-            <strong lang="en">{lesson.title}</strong>
-            {spanish && availableLesson && !availableLesson.titleSpanish
+            <strong lang={spanish && lesson.title.es ? 'es' : 'en'}>{localizedTitle}</strong>
+            {spanish && lesson.title.esUsesEnglishFallback
               ? <em className={styles.sourceGapLabel}>⚠️ inglés · sin título español en la fuente</em>
               : null}
-            <span>{availableLesson?.activePageCount ?? lesson.pages} {spanish ? 'páginas · 8 pasos' : 'pages · 8 steps'}</span>
+            <span>{lesson.pageOccurrenceCount} {spanish ? 'páginas · 8 pasos' : 'pages · 8 steps'}</span>
           </span>
-          <span className={`${styles.lessonStatus} ${learnerRunnable ? styles.lessonStatusOpen : ''}`} data-lesson-card-status>
-            {learnerRunnable ? <><Check aria-hidden="true" size={15} />{spanish ? 'Abrir' : 'Open'}</> : <><LockKeyhole aria-hidden="true" size={15} />{spanish ? 'Muy pronto' : 'Coming soon'}</>}
+          <span
+            className={`${styles.lessonStatus} ${learnerRunnable ? styles.lessonStatusOpen : ''}`}
+            data-lesson-card-status
+            data-publication-tier={publicationTier}
+          >
+            {learnerRunnable
+              ? <><Check aria-hidden="true" size={15} />{tierLabel}</>
+              : <><LockKeyhole aria-hidden="true" size={15} />{tierLabel}</>}
           </span>
         </>;
         return lessonHref
           ? <Link className={styles.lessonTile} href={lessonHref} key={key}>{content}</Link>
-          : <article aria-label={`${lesson.title}: ${spanish ? 'no disponible' : 'not available'}`} className={`${styles.lessonTile} ${styles.lessonTileLocked}`} key={key}>{content}</article>;
+          : <article aria-label={`${localizedTitle}: ${spanish ? 'no disponible' : 'not available'}`} className={`${styles.lessonTile} ${styles.lessonTileLocked}`} key={key}>{content}</article>;
         })}
       </div>
       : <div className={styles.lessonEmptyState} role="status">
@@ -704,34 +693,42 @@ function DesignNotesScreen({
     <article className={styles.notesPanel}><h2>The teacher view deliberately becomes calmer</h2><p>Student surfaces use picture-plus-word support. Teacher sample surfaces use exact numbers, quiet cards, explicit tables, and local preview controls. Switching the preview role is not authentication or authorization.</p></article>
     <article className={styles.notesPanel}><h2>Learner support controls stay visible as samples</h2><p>These prototype preferences are preserved from the design. They are not saved learner settings and do not claim verified audio or district consent.</p><div className={styles.boundaryGrid}>{LEARNING_HELPER_SAMPLE.map((helper) => <div key={helper.title[0]}><strong><Emoji>{helper.emoji}</Emoji> {pick(helper.title, spanish)} · {helper.enabled ? 'ON' : 'OFF'}</strong><p>{pick(helper.detail, spanish)}</p></div>)}</div></article>
     <article className={styles.notesPanel}><h2>Evidence and sample boundaries that remain visible</h2><div className={styles.boundaryGrid}>
-      <div><strong>Sample learner state</strong><p>Maria, the four-day streak, five stickers, 21/39, powers, and Nova replies are invented UI data.</p></div>
+      <div><strong>Learner state</strong><p>The anonymous workspace shows only real progress saved in this browser. It does not invent a learner identity, streak, sticker count, mastery estimate, class record, or account.</p></div>
       <div><strong>Sample teacher state</strong><p>The roster, EL markers, mastery values, attention notes, IEP export, lesson assignment, and controls are invented and produce no real record.</p></div>
-      <div><strong>Current-JS learner access</strong><p>Eight page-complete lessons—G3 L2; G4 L3, L5, L10, and L11; and G5 L3 through L5—can open only after their exact registration, descriptor/navigation, and release or showcase gates pass. Current JavaScript access does not prove Flash fidelity, audio acceptance, original runtime, owner acceptance, strict completion, or wider-curriculum publication.</p></div>
-      <div><strong>Future and internal evidence</strong><p>All 29 source-catalog lessons remain visible. Only the eight exact runnable lessons become links; every other lesson stays visibly unavailable until its own page sequence and product gates pass.</p></div>
+      <div><strong>Current-JS engineering evidence</strong><p>Eight lessons currently have page-complete Current-JS engineering registrations. They become learner links only when the exact public launch manifest also authorizes their release. Current JavaScript does not prove Flash fidelity, audio acceptance, original runtime, owner acceptance, strict completion, or publication.</p></div>
+      <div><strong>Public catalog authority</strong><p>All 29 source-catalog lessons remain visible. Only exact manifest-authorized released lessons become links; every other lesson stays visibly unavailable.</p></div>
     </div></article>
     <article className={styles.notesPanel}><h2>Palette and type</h2><div className={styles.palette}>{LEARNING_SECTIONS.map((section) => <span className={tintClass(section.tint)} key={section.code}><i /><b>{section.en}</b></span>)}</div><p>Rounded display type, a readable system body stack, soft lavender ground, white cards, layered shadows, and separate high-contrast text tokens.</p></article>
-    <p className={styles.finalBoundary}>Design prototype and local learning-platform implementation. Sample names, powers, stickers, teacher data, and Nova replies remain sample data. No fidelity, audio, original-runtime, owner, strict-completion, deployment, release, or publication acceptance is claimed or implied.</p>
+    <p className={styles.finalBoundary}>Design prototype and local learning-platform implementation. Teacher data and Nova replies remain sample data behind local designer controls. Anonymous learner progress is browser-local only. No fidelity, audio, original-runtime, owner, strict-completion, deployment, release, or publication acceptance is claimed or implied.</p>
   </section>;
 }
 
 export function LearningPlatformWorkspace({
   activeLesson,
+  allLessonsAvailable,
   authStatus,
   availableLessons,
   designerToolsVisible,
   initialRole,
   initialScreen,
+  lessonCatalog,
   locale,
   migrationStatusAvailable,
+  novaTutorAvailable,
+  teacherAvailable,
 }: {
   activeLesson: AvailableLearningLesson | null;
+  allLessonsAvailable: boolean;
   authStatus: PublicAuthStatus;
   availableLessons: readonly AvailableLearningLesson[];
   designerToolsVisible: boolean;
   initialRole: Role;
   initialScreen: Screen;
+  lessonCatalog: readonly PublicLessonCatalogRow[];
   locale: G4L3Locale;
   migrationStatusAvailable: boolean;
+  novaTutorAvailable: boolean;
+  teacherAvailable: boolean;
 }) {
   const spanish = locale === 'es';
   const g4L3Available = availableLessons.some(
@@ -807,19 +804,17 @@ export function LearningPlatformWorkspace({
     localeParameters.set('screen', screen);
   }
   if (designerToolsVisible) localeParameters.set('view', 'designer');
-  const localeHref = localeParameters.size ? `/?${localeParameters}` : '/';
+  const allLessonsHref = designerToolsVisible
+    ? '/lessons?view=designer'
+    : '/lessons';
+  const localeHref = screen === 'lessons'
+    ? allLessonsHref
+    : localeParameters.size ? `/?${localeParameters}` : '/';
 
   const studentNav = [
-    {screen: 'today' as const, emoji: '🏡', en: 'Today', es: 'Hoy', tail: spanish ? '2 pendientes' : '2 to do'},
+    {screen: 'today' as const, emoji: '🏡', en: 'Today', es: 'Hoy'},
     {screen: 'practice' as const, emoji: '✏️', en: 'Practice', es: 'Practicar'},
     {screen: 'words' as const, emoji: '🔤', en: 'My words', es: 'Mis palabras', tail: '8'},
-    {
-      screen: 'lessons' as const,
-      emoji: '🗺️',
-      en: 'All lessons',
-      es: 'Todas las lecciones',
-      tail: String(HELP_MATH_1_CURRICULUM_SCOPE.structuredMathLessonCount),
-    },
   ];
   const teacherNav = [
     {screen: 'class' as const, emoji: '📊', en: 'Class board', es: 'Panel de clase'},
@@ -851,11 +846,14 @@ export function LearningPlatformWorkspace({
         <div className={styles.navScroller}>
           {role === 'student' ? <>
             <span className={styles.railGroup}>{spanish ? 'Aprender' : 'Learn'}</span>
-            <button aria-current={screen === 'today' ? 'page' : undefined} className={styles.navItem} onClick={() => openScreen('today')} type="button"><span className={styles.navIcon}><Emoji>🏡</Emoji></span><span>{spanish ? 'Hoy' : 'Today'}</span><i>{spanish ? '2 pendientes' : '2 to do'}</i></button>
+            <button aria-current={screen === 'today' ? 'page' : undefined} className={styles.navItem} onClick={() => openScreen('today')} type="button"><span className={styles.navIcon}><Emoji>🏡</Emoji></span><span>{spanish ? 'Hoy' : 'Today'}</span></button>
             {activeLesson
-              ? <Link className={styles.navItem} href={activeLesson.href}><span className={styles.navIcon}><Emoji>📺</Emoji></span><span>{spanish ? 'Mi lección' : 'My lesson'}</span></Link>
+              ? <Link className={styles.navItem} href={activeLesson.href}><span className={styles.navIcon}><Emoji>📺</Emoji></span><span>{spanish ? 'Mi lección' : 'My lesson'} · {activeLesson.publicationTier === 'preview' ? 'Preview' : activeLesson.publicationTier === 'released' ? (spanish ? 'Publicada' : 'Released') : (spanish ? 'Auditoría local' : 'Local audit')}</span></Link>
               : <span aria-disabled="true" className={`${styles.navItem} ${styles.navItemDisabled}`}><span className={styles.navIcon}><Emoji>📺</Emoji></span><span>{spanish ? 'Mi lección · no disponible' : 'My lesson · unavailable'}</span></span>}
             {studentNav.slice(1).map((item) => <button aria-current={screen === item.screen ? 'page' : undefined} className={styles.navItem} key={item.screen} onClick={() => openScreen(item.screen)} type="button"><span className={styles.navIcon}><Emoji>{item.emoji}</Emoji></span><span>{spanish ? item.es : item.en}</span>{item.tail ? <i>{item.tail}</i> : null}</button>)}
+            {allLessonsAvailable
+              ? <Link aria-current={screen === 'lessons' ? 'page' : undefined} className={styles.navItem} href={allLessonsHref}><span className={styles.navIcon}><Emoji>🗺️</Emoji></span><span>{spanish ? 'Todas las lecciones' : 'All lessons'}</span><i>{lessonCatalog.length}</i></Link>
+              : <span aria-disabled="true" className={`${styles.navItem} ${styles.navItemDisabled}`}><span className={styles.navIcon}><Emoji>🗺️</Emoji></span><span>{spanish ? 'Todas las lecciones · no disponible' : 'All lessons · unavailable'}</span></span>}
           </> : <>
             <span className={styles.railGroup}>{spanish ? 'Enseñar' : 'Teach'}</span>
             {teacherNav.map((item) => <button aria-current={screen === item.screen ? 'page' : undefined} className={styles.navItem} key={item.screen} onClick={() => openScreen(item.screen)} type="button"><span className={styles.navIcon}><Emoji>{item.emoji}</Emoji></span><span>{spanish ? item.es : item.en}</span></button>)}
@@ -880,10 +878,12 @@ export function LearningPlatformWorkspace({
       <div className={styles.mainShell}>
         <header className={styles.topbar}>
           <span className={styles.crumb}>{crumbs[screen]}</span>
-          <div aria-label={spanish ? 'Rol del espacio de aprendizaje' : 'Learning workspace role'} className={styles.roleSwitch} role="group">
-            <button aria-pressed={role === 'student'} onClick={() => changeRole('student')} type="button">{spanish ? 'Estudiante' : 'Student'}</button>
-            <button aria-pressed={role === 'teacher'} onClick={() => changeRole('teacher')} type="button">{spanish ? 'Docente' : 'Teacher'}</button>
-          </div>
+          {teacherAvailable
+            ? <div aria-label={spanish ? 'Rol del espacio de aprendizaje' : 'Learning workspace role'} className={styles.roleSwitch} role="group">
+                <button aria-pressed={role === 'student'} onClick={() => changeRole('student')} type="button">{spanish ? 'Estudiante' : 'Student'}</button>
+                <button aria-pressed={role === 'teacher'} onClick={() => changeRole('teacher')} type="button">{spanish ? 'Docente' : 'Teacher'}</button>
+              </div>
+            : null}
           {designerToolsVisible && screen === 'notes' ? <span className={styles.topbarStatus}>EVIDENCE</span> : null}
           {authStatus === 'signed-out' ? <nav
             aria-label={spanish ? 'Cuenta local' : 'Local account'}
@@ -905,10 +905,10 @@ export function LearningPlatformWorkspace({
           <button aria-label={theme === 'light' ? (spanish ? 'Cambiar a tema oscuro' : 'Switch to dark theme') : (spanish ? 'Cambiar a tema claro' : 'Switch to light theme')} className={styles.themeButton} onClick={changeTheme} type="button">{theme === 'light' ? <Moon aria-hidden="true" /> : <Sun aria-hidden="true" />}</button>
         </header>
         <main className={styles.workspace} id="main-content" ref={workspaceRef} tabIndex={-1}>
-          {screen === 'today' ? <StudentToday browserProgress={browserProgress} flippedWords={flippedWords} g4L3Available={g4L3Available} locale={locale} onFlipWord={flipWord} onOpenWords={() => openScreen('words')} progress={progress} /> : null}
+          {screen === 'today' ? <StudentToday browserProgress={browserProgress} flippedWords={flippedWords} g4L3Available={g4L3Available} locale={locale} novaTutorAvailable={novaTutorAvailable} onFlipWord={flipWord} onOpenWords={() => openScreen('words')} progress={progress} /> : null}
           {screen === 'practice' ? <PracticeScreen locale={locale} /> : null}
           {screen === 'words' ? <WordsScreen designerToolsVisible={designerToolsVisible} flippedWords={flippedWords} locale={locale} onFlipWord={flipWord} /> : null}
-          {screen === 'lessons' ? <LessonsScreen availableLessons={availableLessons} locale={locale} /> : null}
+          {allLessonsAvailable && screen === 'lessons' ? <LessonsScreen availableLessons={availableLessons} lessonCatalog={lessonCatalog} locale={locale} /> : null}
           {screen === 'class' ? <TeacherClassScreen locale={locale} onPlan={() => openScreen('prep')} /> : null}
           {screen === 'prep' ? <TeacherPrepScreen locale={locale} /> : null}
           {designerToolsVisible && screen === 'notes' ? <DesignNotesScreen locale={locale} migrationStatusAvailable={migrationStatusAvailable} /> : null}

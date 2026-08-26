@@ -74,6 +74,7 @@ test('controller, security, and Hosted test controls remain mandatory deployment
     'nested/.gitleaksignore',
     'packages/demos/hosted-tests.v1.json',
     'packages/demos/scripts/run-hosted-tests.mjs',
+    'apps/web/public/generated/private-candidate.json',
   ]) {
     assert.equal(ignoredByRules(filePath, rules), true, filePath);
   }
@@ -152,4 +153,19 @@ test('closure fails if a mandatory controller-runtime exclusion is removed', () 
   });
   assert.equal(result.status, 'FAIL');
   assert.deepEqual(result.missingRequiredRules, ['/.launch-control-runtime/']);
+});
+
+test('closure fails if the generated public-candidate exclusion is removed', () => {
+  const ignoreContents = REQUIRED_FAIL_CLOSED_RULES.filter(
+    (rule) => rule !== 'apps/web/public/generated/',
+  ).join('\n');
+  const result = verifyDeployClosure({
+    trackedPaths: ['apps/web/app/page.tsx'],
+    stagedEntries: [indexEntry('apps/web/app/page.tsx')],
+    ignoreContents,
+  });
+  assert.equal(result.status, 'FAIL');
+  assert.deepEqual(result.missingRequiredRules, [
+    'apps/web/public/generated/',
+  ]);
 });

@@ -28,6 +28,7 @@ export const REQUIRED_FAIL_CLOSED_RULES = Object.freeze([
   'private-archive/',
   'candidate-evidence/',
   'apps/web/candidate-assets/',
+  'apps/web/public/generated/',
   '!catalog/public-launch-manifest.v1.json',
   '**/*.fla',
   '**/*.swf',

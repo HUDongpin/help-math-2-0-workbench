@@ -12,6 +12,7 @@ import {
   derivePublicLaunchSmokeRoutes,
   derivePublicLaunchSummary,
   parseArguments,
+  publicRouteTierAuthorizesDeployment,
   validatePublicLaunchManifestContract,
 } from "./build-public-launch-manifest.mjs";
 
@@ -19,6 +20,16 @@ const SHA_A = "a".repeat(64);
 const SHA_B = "b".repeat(64);
 const SHA_C = "c".repeat(64);
 const SHA_D = "d".repeat(64);
+const RELEASE_RECEIPT_FIELDS = Object.freeze([
+  "originalRuntimeReceiptSha256",
+  "technicalComparisonReceiptSha256",
+  "audioAcceptanceReceiptSha256",
+  "humanVisualAcceptanceReceiptSha256",
+  "ownerReleaseDecisionSha256",
+  "strictCompletionReceiptSha256",
+  "productionTrustReceiptSha256",
+  "productionVerificationReceiptSha256",
+]);
 
 let baseline;
 let baselineText;
@@ -28,11 +39,21 @@ function clone(value) {
 }
 
 function refresh(manifest) {
-  manifest.smokeRoutes = derivePublicLaunchSmokeRoutes(
-    manifest.publicRoutes,
-    manifest.lessons,
-  );
   manifest.summary = derivePublicLaunchSummary(manifest);
+  manifest.smokeRoutes = {
+    preview: derivePublicLaunchSmokeRoutes(
+      manifest.publicRoutes,
+      manifest.lessons,
+      "preview",
+      manifest.summary.launchReadiness,
+    ),
+    production: derivePublicLaunchSmokeRoutes(
+      manifest.publicRoutes,
+      manifest.lessons,
+      "production",
+      manifest.summary.launchReadiness,
+    ),
+  };
   manifest.generatedMarker = computePublicLaunchGeneratedMarker(manifest);
   return manifest;
 }
@@ -50,6 +71,15 @@ function previewLesson(manifest, lessonKey = "g04-l03") {
     previewProductQaReceiptSha256: SHA_B,
     ownerPreviewDecisionSha256: SHA_C,
   });
+  return lesson;
+}
+
+function releaseLesson(manifest, lessonKey) {
+  const lesson = previewLesson(manifest, lessonKey);
+  lesson.publication.tier = "released";
+  for (const field of RELEASE_RECEIPT_FIELDS) {
+    lesson.publication[field] = SHA_D;
+  }
   return lesson;
 }
 
@@ -90,7 +120,72 @@ test("keeps 426/425/8 as engineering truth without granting publication", () => 
   });
   assert.equal(baseline.summary.publiclyRoutableLessons, 0);
   assert.equal(baseline.summary.strictCompleteLessons, 0);
-  assert.equal(baseline.smokeRoutes.some(({kind}) => kind === "lesson"), false);
+  assert.deepEqual(baseline.smokeRoutes, {preview: [], production: []});
+});
+
+test("keeps publication tier independent from deployment target", () => {
+  assert.equal(publicRouteTierAuthorizesDeployment("preview", "preview"), true);
+  assert.equal(publicRouteTierAuthorizesDeployment("preview", "production"), true);
+  assert.equal(publicRouteTierAuthorizesDeployment("released", "preview"), true);
+  assert.equal(publicRouteTierAuthorizesDeployment("released", "production"), true);
+  assert.equal(publicRouteTierAuthorizesDeployment("unavailable", "preview"), false);
+  assert.equal(publicRouteTierAuthorizesDeployment("unavailable", "production"), false);
+
+  const candidate = clone(baseline);
+  candidate.publicRoutes[0].authorizationTier = "preview";
+  refresh(candidate);
+  assert.deepEqual(candidate.smokeRoutes.preview.map(({path}) => path), [
+    "/",
+    "/es",
+  ]);
+  assert.deepEqual(candidate.smokeRoutes.production, []);
+  assert.ok(!candidate.summary.blockers.includes(
+    "home-production-route-not-authorized",
+  ));
+  assert.equal(candidate.summary.launchReadiness, "NO_GO");
+  assert.equal(validatePublicLaunchManifestContract(candidate), true);
+});
+
+test("keeps partial Released rows out of Production smoke until the whole manifest is GO", () => {
+  const candidate = clone(baseline);
+  releaseLesson(candidate, "g04-l03");
+  candidate.publicRoutes[0].authorizationTier = "released";
+  candidate.publicRoutes[0].productionIndexable = true;
+  refresh(candidate);
+  assert.equal(candidate.summary.launchReadiness, "NO_GO");
+  assert.deepEqual(candidate.smokeRoutes.preview.map(({path}) => path), [
+    "/",
+    "/es",
+    "/courses/4/3",
+    "/es/courses/4/3",
+  ]);
+  assert.deepEqual(candidate.smokeRoutes.production, []);
+  assert.deepEqual(derivePublicLaunchSmokeRoutes(
+    candidate.publicRoutes,
+    candidate.lessons,
+    "production",
+    "NO_GO",
+  ), []);
+  assert.throws(() => derivePublicLaunchSmokeRoutes(
+    candidate.publicRoutes,
+    candidate.lessons,
+    "staged",
+    "NO_GO",
+  ), /unknown smoke deployment target/u);
+});
+
+test("rejects target ambiguity and production indexing while unavailable", () => {
+  for (const [field, value, expected] of [
+    ["authorizationTier", "authorized", /publicRoutes\[0\] drifted/u],
+    ["productionIndexable", true,
+      /unavailable route cannot be production-indexable/u],
+  ]) {
+    const candidate = clone(baseline);
+    candidate.publicRoutes[0][field] = value;
+    assert.throws(() => validatePublicLaunchManifestContract(candidate, {
+      validateGeneratedMarker: false,
+    }), expected);
+  }
 });
 
 test("keeps all public features as exact boolean false", () => {
@@ -192,30 +287,16 @@ test("does not relabel partially evidenced Preview as Released", () => {
 });
 
 test("requires the complete strict receipt set for Released", () => {
-  const receiptFields = [
-    "originalRuntimeReceiptSha256",
-    "technicalComparisonReceiptSha256",
-    "audioAcceptanceReceiptSha256",
-    "humanVisualAcceptanceReceiptSha256",
-    "ownerReleaseDecisionSha256",
-    "strictCompletionReceiptSha256",
-    "productionTrustReceiptSha256",
-    "productionVerificationReceiptSha256",
-  ];
-  for (const missing of receiptFields) {
+  for (const missing of RELEASE_RECEIPT_FIELDS) {
     const candidate = clone(baseline);
-    const lesson = previewLesson(candidate);
-    lesson.publication.tier = "released";
-    for (const field of receiptFields) lesson.publication[field] = SHA_D;
+    const lesson = releaseLesson(candidate, "g04-l03");
     lesson.publication[missing] = null;
     assert.throws(() => validatePublicLaunchManifestContract(candidate, {
       validateGeneratedMarker: false,
     }), /Released requires every strict release receipt/u, missing);
   }
   const valid = clone(baseline);
-  const lesson = previewLesson(valid);
-  lesson.publication.tier = "released";
-  for (const field of receiptFields) lesson.publication[field] = SHA_D;
+  releaseLesson(valid, "g04-l03");
   refresh(valid);
   assert.equal(validatePublicLaunchManifestContract(valid), true);
   assert.equal(valid.summary.publicationCounts.released, 1);
@@ -340,11 +421,11 @@ test("treats Draft legal content as structurally valid but launch NO_GO", () => 
 
 test("never derives GO when any required external input is absent", () => {
   const authorized = clone(baseline);
-  previewLesson(authorized, "g04-l03");
-  previewLesson(authorized, "g05-l04");
+  releaseLesson(authorized, "g04-l03");
+  releaseLesson(authorized, "g05-l04");
   for (const route of authorized.publicRoutes) {
-    route.authorized = true;
-    route.indexable = true;
+    route.authorizationTier = "released";
+    route.productionIndexable = route.kind === "localized-page";
   }
   for (const page of ["privacy", "terms", "accessibility"]) {
     authorized.legalAndSupport[page] = {
@@ -380,6 +461,39 @@ test("never derives GO when any required external input is absent", () => {
     assert.equal(summary.launchReadiness, "NO_GO", field);
     assert.deepEqual(summary.blockers, [blocker], field);
   }
+});
+
+test("counts two public Preview Lessons toward the learning MVP without relabeling them Released", () => {
+  const previewOnly = clone(baseline);
+  previewLesson(previewOnly, "g04-l03");
+  previewLesson(previewOnly, "g05-l04");
+  for (const route of previewOnly.publicRoutes) {
+    route.authorizationTier = "released";
+    route.productionIndexable = route.kind === "localized-page";
+  }
+  for (const page of ["privacy", "terms", "accessibility"]) {
+    previewOnly.legalAndSupport[page] = {
+      state: "approved",
+      approvalReceiptSha256: SHA_A,
+      contentSha256: SHA_B,
+    };
+  }
+  previewOnly.legalAndSupport.support = {
+    state: "approved",
+    mailboxVerificationReceiptSha256: SHA_A,
+    runtimeValueBindingSha256: SHA_B,
+    approvalReceiptSha256: SHA_C,
+  };
+  previewOnly.assetClosure.deployAssetManifestCurrent = true;
+  previewOnly.assetClosure.deployAssetManifestSha256 = SHA_D;
+  previewOnly.sourceBindings.deployAssetManifest.current = true;
+  previewOnly.sourceBindings.deployAssetManifest.sha256 = SHA_D;
+  const summary = derivePublicLaunchSummary(previewOnly);
+  assert.equal(summary.minimumPreviewLessonsSatisfied, true);
+  assert.equal(summary.publicationCounts.preview, 2);
+  assert.equal(summary.publicationCounts.released, 0);
+  assert.equal(summary.launchReadiness, "GO");
+  assert.deepEqual(summary.blockers, []);
 });
 
 test("parses only the documented fail-closed CLI switches", () => {

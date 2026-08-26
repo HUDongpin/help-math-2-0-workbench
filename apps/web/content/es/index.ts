@@ -8,7 +8,7 @@ export const esContent = {
     skipToContent: "Ir al contenido principal",
     statusLabel: "Vista previa de la plataforma educativa",
     statusMessage:
-      "Hay ocho lecciones disponibles en JavaScript actual con 426 ubicaciones de página en orden de origen: G3 L2 (70); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56). Es acceso funcional al aprendizaje, no fidelidad estricta a Flash, aceptación del audio, aceptación del titular ni publicación del currículo más amplio.",
+      "El acceso público a las lecciones está controlado por el manifiesto público de lanzamiento exacto. Una implementación en JavaScript actual no es autorización pública, fidelidad estricta a Flash, aceptación del audio, aceptación del titular ni publicación del currículo más amplio.",
     externalLinkLabel: "Se abre en una pestaña nueva",
     requiredFieldLabel: "Obligatorio",
     navigation: {
@@ -48,7 +48,7 @@ export const esContent = {
       languageNote:
         "La interfaz de la plataforma está disponible en inglés y español. Los medios y las interacciones de origen varían según la página y no forman una experiencia completa ni validada en español.",
       legalNote:
-        "Ocho lecciones completas por páginas—G3 L2; G4 L3, L5, L10 y L11; y G5 L3 a L5—son funcionales en JavaScript actual. La fidelidad estricta a Flash, la aceptación del audio, la aceptación del titular y la publicación del currículo más amplio siguen siendo procesos separados.",
+        "Solo se pueden abrir las lecciones autorizadas por el manifiesto público de lanzamiento exacto. JavaScript actual, fidelidad estricta a Flash, aceptación del audio, aceptación del titular y publicación del currículo más amplio siguen siendo procesos separados.",
     },
   },
   pages: {
@@ -66,7 +66,7 @@ export const esContent = {
         primaryAction: { label: "Explorar las demostraciones", href: "/es/demos" },
         secondaryAction: { label: "Obtener ayuda con el proyecto", href: "/es/support" },
         supportingNote:
-          "El sitio web ofrece ocho lecciones funcionales en JavaScript actual con 426 ubicaciones de página en orden de origen: G3 L2 (70); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56). La fidelidad estricta a Flash, la aceptación del audio, la aceptación del titular y la publicación del currículo más amplio siguen siendo procesos separados.",
+          "El catálogo de 29 lecciones respaldado por fuentes puede mostrar el estado de disponibilidad sin abrir una lección. Una lección solo funciona cuando el manifiesto público de lanzamiento autoriza su versión exacta; las puertas de fidelidad, audio, revisión humana, titular y publicación siguen separadas.",
       },
       status: {
         label: "Estado del proyecto",
@@ -180,9 +180,9 @@ export const esContent = {
         {
           id: "today",
           eyebrow: "Nuestra situación actual",
-          title: "Una plataforma educativa con ocho lecciones funcionales en JavaScript actual",
+          title: "Una plataforma educativa con un catálogo público cerrado por defecto",
           paragraphs: [
-          "Esta versión ofrece ocho lecciones en JavaScript actual dentro de la experiencia moderna Mi lección: G3 L2, Suma y resta (70 ubicaciones de página); G4 L3, Números negativos (39); G4 L5, Multiplicación (53); G4 L10, Perímetro y área (46); G4 L11, Cuadrícula de coordenadas (43); G5 L3, Exponentes y factorizaciones primas (65); G5 L4, Rectas numéricas (54); y G5 L5, Sumar y restar números negativos (56).",
+          "La finalización de ingeniería y la disponibilidad pública son distintas. La experiencia moderna Mi lección solo abre las lecciones exactas autorizadas por el manifiesto público de lanzamiento; las demás filas del catálogo siguen visiblemente no disponibles.",
             "No restaura el antiguo sistema de cuentas ni ofrece clases, tareas, compras, paneles docentes o calificaciones formales. La fidelidad estricta a Flash, la aceptación del audio, la aceptación del titular y la publicación del currículo más amplio siguen siendo puertas separadas.",
           ],
         },
@@ -324,7 +324,7 @@ export const esContent = {
       teacherRole: {
         title: "La tecnología apoya la enseñanza; los educadores orientan su uso.",
         body:
-          "La plataforma ya ofrece ocho lecciones funcionales en JavaScript actual con un total de 426 ubicaciones de página en orden de origen, no un currículo publicado completo ni un sistema docente automatizado. La fidelidad estricta a Flash, la aceptación del audio, la aceptación del titular y la publicación del currículo más amplio siguen siendo procesos separados. Los educadores son esenciales para elegir tareas apropiadas, escuchar el razonamiento del alumnado y conectar las actividades con las metas del aula.",
+          "La plataforma no es un currículo publicado completo ni un sistema docente automatizado. Solo se abren las lecciones autorizadas por el manifiesto, mientras que la fidelidad estricta a Flash, la aceptación del audio, la aceptación del titular y la publicación del currículo más amplio siguen siendo procesos separados. Los educadores son esenciales para elegir tareas apropiadas, escuchar el razonamiento del alumnado y conectar las actividades con las metas del aula.",
         action: { label: "Hacer una consulta didáctica", href: "/es/contact?topic=instruction" },
       },
     },
@@ -416,9 +416,9 @@ export const esContent = {
       availability: {
         id: "availability",
         eyebrow: "Lo que está disponible ahora",
-        title: "Ocho lecciones funcionales, sin matrículas",
+        title: "Lecciones autorizadas por el manifiesto, sin matrículas",
         paragraphs: [
-          "La plataforma ofrece actualmente ocho lecciones en JavaScript actual dentro de la experiencia moderna Mi lección: G3 L2 (70 ubicaciones de página); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56). Incluyen progreso local del navegador y apoyos de aprendizaje, pero no pruebas de ubicación, paneles docentes, tareas, matrículas ni calificaciones formales.",
+          "La experiencia moderna Mi lección solo abre lecciones cuyas rutas, recursos de ejecución y evidencia de publicación exactos están autorizados por el manifiesto público de lanzamiento. Una lección disponible puede usar progreso local del navegador y apoyos de aprendizaje, pero no hay pruebas de ubicación, paneles docentes, tareas, matrículas ni calificaciones formales.",
           "La interfaz está disponible en inglés y español, pero los medios y las interacciones de origen varían según la página y no forman una experiencia completa ni validada en español.",
           "Estas lecciones son acceso funcional al producto, no afirmaciones de migración estricta, fidelidad a Flash, aceptación del audio ni aceptación del titular. La publicación de más currículo aún depende de auditorías de fuentes y derechos, revisión didáctica, accesibilidad, validación del comportamiento original, revisión humana y aceptación del titular.",
         ],
@@ -612,7 +612,7 @@ export const esContent = {
         eyebrow: "Asistencia de HELP Math",
         title: "Comienza por lo que está disponible hoy",
         summary:
-          "La plataforma ofrece ocho lecciones en JavaScript actual con 426 ubicaciones de página en orden de origen—G3 L2 (70); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56)—junto con progreso local y apoyos de aprendizaje. Las cuentas anteriores no están conectadas y este sitio no puede recuperar contraseñas ni registros históricos.",
+          "La plataforma solo abre lecciones autorizadas por el manifiesto público de lanzamiento, con progreso local y apoyos de aprendizaje cuando correspondan. Las cuentas anteriores no están conectadas y este sitio no puede recuperar contraseñas ni registros históricos.",
         primaryAction: { label: "Contactar con asistencia", href: "/es/contact?topic=support" },
         secondaryAction: { label: "Comprobar el estado de acceso", href: "/es/login" },
       },
@@ -624,8 +624,8 @@ export const esContent = {
             id: "website",
             title: "Plataforma de aprendizaje",
             description:
-              "Disponible con opciones de interfaz en inglés y español, ocho lecciones funcionales en JavaScript actual con un total de 426 ubicaciones de página en orden de origen, progreso local, Nova Tutor, información del programa y asistencia. Los medios y las interacciones de origen varían según la página.",
-            detail: "Disponible",
+              "Las opciones de interfaz en inglés y español y el catálogo de 29 lecciones están disponibles como información pública. Las rutas de lecciones, el progreso local, Nova Tutor y otras capacidades opcionales solo aparecen cuando las autoriza el manifiesto público de lanzamiento. Los medios y las interacciones de origen varían según la página.",
+            detail: "Controlado por el manifiesto",
           },
           {
             id: "g3-l2",
@@ -689,7 +689,7 @@ export const esContent = {
           id: "full-course",
           question: "¿Está disponible el curso completo de HELP Math?",
           answer:
-            "Todavía no. La versión actual incluye ocho lecciones funcionales en JavaScript actual—G3 L2 (70 ubicaciones de página); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56)—, no todo el currículo de HELP Math. Esto no demuestra fidelidad estricta a Flash, aceptación del audio ni aceptación del titular; cada lección adicional requiere sus propias revisiones de fuentes, derechos, instrucción, accesibilidad, fidelidad y aceptación.",
+            "Todavía no. El manifiesto público de lanzamiento puede autorizar un conjunto limitado de lecciones, no todo el currículo de HELP Math. La disponibilidad no demuestra fidelidad estricta a Flash, aceptación del audio ni aceptación del titular; cada lección adicional requiere sus propias revisiones de fuentes, derechos, instrucción, accesibilidad, fidelidad y aceptación.",
         },
         {
           id: "student-help",
@@ -715,6 +715,83 @@ export const esContent = {
         body:
           "La recepción de contactos está pausada. Este enlace abre el estado actual de disponibilidad; HELP Math no recopila ni envía actualmente solicitudes de asistencia mediante este sitio.",
         action: { label: "Consultar disponibilidad de contacto", href: "/es/contact?topic=support" },
+      },
+    },
+    accessibility: {
+      metadata: {
+        title: "Borrador de la declaración de accesibilidad",
+        description:
+          "Consulta el estado de accesibilidad, los apoyos técnicos actuales, los límites conocidos y la frontera de revisión de HELP Math.",
+      },
+      hero: {
+        eyebrow: "Borrador de accesibilidad",
+        title: "La accesibilidad es una puerta de publicación, no una etiqueta",
+        summary:
+          "HELP Math está reconstruyendo animaciones educativas históricas dentro de una experiencia moderna de navegador. Este borrador registra prácticas actuales y límites de revisión; no afirma conformidad, certificación ni aceptación humana.",
+      },
+      effectiveDateLabel: "Última actualización",
+      effectiveDate: "26 de agosto de 2026",
+      reviewNotice:
+        "BORRADOR — Requiere aprobación del titular y revisión de accesibilidad antes de publicarse. Las pruebas automatizadas, comprobaciones de teclado y revisiones de ingeniería no demuestran por sí solas conformidad con WCAG ni usabilidad para todo el alumnado.",
+      sections: [
+        {
+          id: "scope",
+          title: "1. Alcance y estado actual",
+          paragraphs: [
+            "Este borrador se aplica a helpmath.ai y solo a las páginas y lecciones públicas autorizadas por el manifiesto público de lanzamiento. El manifiesto actual permanece cerrado, por lo que esta página sirve para revisión local y no es una declaración pública aprobada.",
+            "Los archivos FLA y SWF originales siguen siendo evidencia de origen privada. La página moderna de lección, sus controles, navegación y superficie de animación JavaScript se revisan por separado de la custodia de fuentes, fidelidad visual, aceptación del audio y autorización de publicación.",
+          ],
+        },
+        {
+          id: "current-supports",
+          title: "2. Apoyos técnicos actuales",
+          paragraphs: [
+            "La experiencia moderna está diseñada para navegación por teclado, foco visible, encabezados y controles semánticos, rutas de interfaz en inglés y español, diseños adaptables, preferencias de movimiento reducido y texto integrado en la página del navegador en lugar de un complemento obsoleto.",
+          ],
+          bullets: [
+            "Enlace para saltar al contenido y un destino principal",
+            "Controles de aprendizaje operables con teclado y etiquetas de texto",
+            "Diseños adaptables y comprobaciones orientadas al zoom",
+            "Tratamiento del movimiento reducido cuando el movimiento no es esencial para la secuencia didáctica",
+            "Comprobaciones automatizadas de problemas graves y críticos como una señal de ingeniería",
+          ],
+        },
+        {
+          id: "limits",
+          title: "3. Límites conocidos y puertas de aceptación independientes",
+          paragraphs: [
+            "Las animaciones históricas varían en narración, ritmo, texto, interacción y complejidad visual. Cada página requiere evidencia y revisión propias. Una prueba automatizada aprobada, una página renderizada o un registro JavaScript no demuestra instrucción accesible, equivalencia del audio, fidelidad a la ejecución original ni aceptación humana.",
+            "Se ofrece interfaz en español, aunque algunos títulos y materiales didácticos de origen pueden conservar una alternativa en inglés expresamente registrada. Nova Tutor, cuentas, herramientas docentes, recepción de contactos y entrega de eventos permanecen deshabilitados salvo autorización separada del manifiesto.",
+          ],
+        },
+        {
+          id: "compatibility",
+          title: "4. Compatibilidad y límite de pruebas",
+          paragraphs: [
+            "El proyecto comprueba diseños en navegadores actuales, recorridos de teclado, errores de ejecución, presentaciones adaptables y semántica seleccionada orientada a tecnologías de apoyo. Son evidencias de ingeniería fechadas, no una garantía de cobertura de todos los navegadores, dispositivos, lectores de pantalla, ampliadores, métodos de entrada o necesidades de aprendizaje.",
+          ],
+        },
+        {
+          id: "feedback",
+          title: "5. Comentarios sobre accesibilidad",
+          paragraphs: [
+            "El canal público de asistencia para adultos aún no está aprobado ni vinculado al buzón atendido y verificado, por lo que este borrador no recopila comentarios. No envíes nombres de estudiantes, expedientes, información sobre discapacidad, credenciales ni otros datos sensibles por un canal no disponible o no aprobado.",
+            "Antes del lanzamiento, la declaración final debe indicar la ruta adulta revisada, las expectativas de respuesta, la entidad operadora responsable y toda limitación material conocida.",
+          ],
+        },
+        {
+          id: "review",
+          title: "6. Revisión y actualizaciones",
+          paragraphs: [
+            "Esta declaración cambiará a medida que se completen lecciones exactas, páginas legales, operaciones de asistencia, evidencia de navegador y revisión humana. La versión final requiere aprobación documentada del titular y debe describir el despliegue exacto de producción, no este candidato local.",
+          ],
+        },
+      ],
+      contact: {
+        title: "Canal de comentarios de accesibilidad no disponible",
+        body:
+          "La página de asistencia actual es una superficie de revisión local y aún no vincula un buzón público aprobado. El lanzamiento sigue bloqueado hasta revisar de forma independiente ese canal operado por adultos y esta declaración.",
+        action: { label: "Consultar estado de asistencia", href: "/es/support" },
       },
     },
     login: {
@@ -852,16 +929,16 @@ export const esContent = {
       },
       hero: {
         eyebrow: "Experiencia de aprendizaje",
-        title: "Hay ocho lecciones listas para explorar",
+        title: "Explora solo las lecciones publicadas",
         summary:
-          "Hay ocho lecciones funcionales en JavaScript actual: G3 L2 (70 ubicaciones de página); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56). Ejecutarlas no demuestra fidelidad estricta a Flash, aceptación del audio, aceptación del titular ni publicación del currículo más amplio.",
-        primaryAction: { label: "Comenzar la lección", href: "/es/courses/4/3?mode=focus" },
+          "El catálogo de lecciones solo abre versiones exactas autorizadas por el manifiesto público de lanzamiento. El acceso funcional no demuestra fidelidad estricta a Flash, aceptación del audio, aceptación del titular ni publicación del currículo más amplio.",
+        primaryAction: { label: "Ver disponibilidad de lecciones", href: "/es/lessons" },
         secondaryAction: { label: "Cómo funciona la restauración", href: "/es/about#preservation" },
       },
       previewNotice: {
         title: "Lecciones funcionales; las puertas estrictas siguen abiertas",
         body:
-          "Las 426 ubicaciones en orden de origen de G3 L2 (70); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56) son navegables dentro de la experiencia moderna Mi lección. Esto no establece fidelidad original de ejecución, imagen o audio, revisión humana completa, aceptación del titular, derechos, finalización estricta ni publicación del currículo más amplio.",
+          "Solo las versiones autorizadas por el manifiesto son navegables dentro de la experiencia moderna Mi lección. Esto no establece fidelidad original de ejecución, imagen o audio, revisión humana completa, aceptación del titular, derechos, finalización estricta ni publicación del currículo más amplio.",
       },
       listLabel: "Disponibilidad actual",
       items: [
@@ -1073,7 +1150,7 @@ export const esContent = {
           id: "scope",
           title: "1. Alcance",
           paragraphs: [
-            "Este aviso se aplica a helpmath.ai, incluidas sus páginas informativas, las ocho lecciones funcionales en JavaScript actual—G3 L2; G4 L3, L5, L10 y L11; y G5 L3 a L5—, Nova Tutor, el registro de eventos de aprendizaje y la página actual de estado del contacto.",
+            "Este aviso se aplica a helpmath.ai, incluidas sus páginas informativas públicas y cualquier lección o capacidad opcional exacta autorizada por el manifiesto público de lanzamiento.",
             "La experiencia educativa actual no tiene cuentas de estudiantes o docentes ni pide el nombre, correo, escuela, clase, pago o perfil docente del estudiante. No autentica al estudiante ni conecta la actividad de la lección con un expediente escolar.",
           ],
         },
@@ -1175,7 +1252,7 @@ export const esContent = {
         eyebrow: "Borrador de los términos de uso",
         title: "Utiliza responsablemente las experiencias educativas",
         summary:
-          "Este borrador describe los términos propuestos para el sitio y sus ocho lecciones funcionales en JavaScript actual: G3 L2; G4 L3, L5, L10 y L11; y G5 L3 a L5. Hasta que queden documentadas la aprobación del titular y la revisión legal y se publique una versión final, no constituye contrato, no obliga a quien lo visita ni concede licencia.",
+          "Este borrador describe los términos propuestos para el sitio y cualquier lección autorizada por el manifiesto público de lanzamiento. Hasta que queden documentadas la aprobación del titular y la revisión legal y se publique una versión final, no constituye contrato, no obliga a quien lo visita ni concede licencia.",
       },
       effectiveDateLabel: "Última actualización",
       effectiveDate: "16 de agosto de 2026",
@@ -1194,7 +1271,7 @@ export const esContent = {
           id: "service",
           title: "2. Qué ofrece este sitio",
           paragraphs: [
-            "El sitio ofrece ocho lecciones funcionales en JavaScript actual dentro de la experiencia moderna Mi lección, con 426 ubicaciones de página en orden de origen: G3 L2 (70); G4 L3 (39), L5 (53), L10 (46) y L11 (43); y G5 L3 (65), L4 (54) y L5 (56).",
+            "El sitio ofrece solamente las lecciones y rutas exactas autorizadas por el manifiesto público de lanzamiento dentro de la experiencia moderna Mi lección.",
             "Que las lecciones estén disponibles no demuestra finalización estricta de la migración, fidelidad al Flash original en ejecución o imagen, fidelidad del audio, aceptación humana o del titular, autorización de derechos ni publicación del currículo histórico restaurado. Son puertas de evidencia y publicación independientes.",
             "Actualmente no ofrece matrículas, cuentas nominales de estudiantes o docentes, escuelas, clases, tareas, paneles docentes, calificaciones oficiales, pagos ni acceso garantizado al programa histórico.",
           ],
