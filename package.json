@@ -22,7 +22,7 @@
     "test:demos": "npm run test --workspace @helpmath/demos",
     "typecheck:demos": "npm run typecheck --workspace @helpmath/demos",
     "test:e2e": "npm run test:e2e --workspace @helpmath/web",
-    "test": "node --test --test-concurrency=4 lib/*.test.mjs scripts/*.test.mjs",
+    "test": "node --test --test-concurrency=4 lib/*.test.mjs scripts/*.test.mjs scripts/lib/*.test.mjs",
     "doctor": "node scripts/workbench-doctor.mjs",
     "verify:workbench": "node scripts/verify-workbench.mjs",
     "verify:sources": "node scripts/freeze-help-math-sources.mjs --verify",

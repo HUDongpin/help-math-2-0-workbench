@@ -1,11 +1,11 @@
 import {CircleAlert, ShieldCheck} from 'lucide-react';
 
-import type {ContactContent, Locale} from '@/content/types';
+import type {ContactContent} from '@/content/types';
 
 import {PageHero} from './page-hero';
 import {Callout, Container, Section} from './ui';
 
-export function ContactPage({content}: {content: ContactContent; locale: Locale}) {
+export function ContactPage({content}: {content: ContactContent}) {
   return (
     <>
       <PageHero content={content.hero} tone="yellow" />

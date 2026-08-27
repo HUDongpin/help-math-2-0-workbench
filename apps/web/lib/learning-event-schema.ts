@@ -148,7 +148,6 @@ export const learningEventBatchSchema = z.object({
 });
 
 export type HelpMathLearningEvent = z.infer<typeof learningEventSchema>;
-export type HelpMathLearningEventBatch = z.infer<typeof learningEventBatchSchema>;
 
 const PROHIBITED_FIELD_FRAGMENTS = [
   'actor',

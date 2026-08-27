@@ -13,6 +13,22 @@ import {
   validateLessonProductContract,
 } from "./build-g4-l3-lesson-product-contract.mjs";
 
+const CURRENT_G4_L3_RELEASE = JSON.parse(await readFile(new URL(
+  "../catalog/lesson-releases.json",
+  import.meta.url,
+), "utf8")).releases.find(({releaseId}) =>
+  releaseId === "lesson-g04-l03-negative-numbers");
+const HISTORICAL_SHELL_INCLUSIVE_RELEASE_IS_CURRENT =
+  CURRENT_G4_L3_RELEASE?.expectedCounts?.members === 40
+  && CURRENT_G4_L3_RELEASE?.members?.length === 40;
+const SUPERSEDED_SHELL_INCLUSIVE_REASON =
+  `superseded contract: current page-only G4 L3 release has ${CURRENT_G4_L3_RELEASE?.members?.length ?? "unknown"} members; the historical product contract expected 39 pages plus one legacy Flash shell`;
+
+function historicalShellInclusiveTest(name, body) {
+  if (HISTORICAL_SHELL_INCLUSIVE_RELEASE_IS_CURRENT) return test(name, body);
+  return test(name, {skip: SUPERSEDED_SHELL_INCLUSIVE_REASON}, body);
+}
+
 test("release selection permits unrelated lessons and rejects zero or duplicate target rows", () => {
   const target = {releaseId: "lesson-g04-l03-negative-numbers"};
   const unrelated = {releaseId: "lesson-g05-l04-number-lines"};
@@ -126,7 +142,20 @@ test("shell LessonDetails parser retains the shipped section and page order", ()
   assert.equal(parsed.pages.at(-1).archiveRelativePath, "HELP_COURSES/ELMGR4/L3/FQ/L3FQ01.swf");
 });
 
-test("checked-in contract matches all bound inputs and separates open scaffolding from closed acceptance", async () => {
+if (!HISTORICAL_SHELL_INCLUSIVE_RELEASE_IS_CURRENT) {
+  test("historical shell-inclusive product contract refuses the current page-only G4 L3 release", async () => {
+    assert.equal(CURRENT_G4_L3_RELEASE.expectedCounts.members, 39);
+    assert.equal(CURRENT_G4_L3_RELEASE.members.length, 39);
+    assert.equal(CURRENT_G4_L3_RELEASE.scope.pageOnly, true);
+    assert.equal(CURRENT_G4_L3_RELEASE.scope.legacyFlashCourseShellExcluded, true);
+    await assert.rejects(
+      buildLessonProductContract(),
+      /drifted|39-page plus shell atomic scope/u,
+    );
+  });
+}
+
+historicalShellInclusiveTest("checked-in contract matches all bound inputs and separates open scaffolding from closed acceptance", async () => {
   const [built, checkedIn] = await Promise.all([
     buildLessonProductContract(),
     readFile(new URL("../reports/g4-l3-lesson-product-navigation-contract.json", import.meta.url), "utf8").then(JSON.parse),

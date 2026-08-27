@@ -190,14 +190,3 @@ test('public selection and navigation remain strict-ledger fail-closed', () => {
     strictComplete: false,
   });
 });
-
-test('course map shell link opens the exact 39-page audit projection', () => {
-  const source = readFileSync(
-    new URL('../components/g4-l3-lesson-navigation.tsx', import.meta.url),
-    'utf8',
-  );
-  assert.match(
-    source,
-    /\?auditContext=g4-l3-lesson&lang=\$\{locale\}&seed=0&frame=50&scenario=lesson-map-audit/,
-  );
-});

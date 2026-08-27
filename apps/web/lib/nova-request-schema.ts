@@ -219,6 +219,3 @@ export type NovaTutorTransportRequest = z.infer<
 
 export type NovaTutorInputMethod =
   (typeof novaInputMethods)[number];
-
-/** @deprecated Prefer NovaTutorTransportRequest at the browser boundary. */
-export type NovaTutorRequest = NovaTutorTransportRequest;

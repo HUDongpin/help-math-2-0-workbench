@@ -54,7 +54,7 @@ export default async function ContentPage({params}: {params: Promise<{locale: 'e
     case 'resources': rendered = <ResourcesPage content={content.resources} />; break;
     case 'support': rendered = <SupportPage content={content.support} />; break;
     case 'login': rendered = <LoginPage content={content.login} />; break;
-    case 'contact': rendered = <ContactPage content={content.contact} locale={locale} />; break;
+    case 'contact': rendered = <ContactPage content={content.contact} />; break;
     case 'demos': rendered = <DemosPage content={content.demos} />; break;
     case 'privacy': rendered = <LegalPage content={content.privacy} />; break;
     case 'terms': rendered = <LegalPage content={content.terms} />; break;

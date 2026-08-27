@@ -140,6 +140,21 @@ function firstPageTransport(
 }
 
 describe('production-like Nova course eligibility', () => {
+  it('fails closed without production opt-ins and exposes descriptor-bound development audits', () => {
+    assert.deepEqual(
+      availableLearningLessons({NODE_ENV: 'production'}),
+      [],
+    );
+    assert.deepEqual(
+      availableLearningLessons({NODE_ENV: 'development'}).map((lesson) => ({
+        grade: lesson.grade,
+        lesson: lesson.lesson,
+        releaseId: lesson.releaseId,
+      })),
+      productionEligibleCourses,
+    );
+  });
+
   it('derives exactly the eight production-profile lessons as learner-visible and text-capable', () => {
     const environment = productionLikeEnvironment();
     assert.deepEqual(

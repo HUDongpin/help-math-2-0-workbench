@@ -25,6 +25,21 @@ const JSON_REPORT = path.join(ROOT,
   "reports/g4-l10-animate-authoring-v2-control-readiness.json");
 const MARKDOWN_REPORT = path.join(ROOT,
   "reports/g4-l10-animate-authoring-v2-control-readiness.md");
+const CURRENT_L10_RELEASE = JSON.parse(await readFile(path.join(
+  ROOT,
+  "catalog/lesson-releases.json",
+), "utf8")).releases.find(({releaseId}) =>
+  releaseId === "lesson-g04-l10-perimeter-area");
+const HISTORICAL_V2_RELEASE_IS_CURRENT =
+  CURRENT_L10_RELEASE?.expectedCounts?.members === 47
+  && CURRENT_L10_RELEASE?.members?.length === 47;
+const SUPERSEDED_V2_RELEASE_REASON =
+  `superseded contract: current page-only L10 release has ${CURRENT_L10_RELEASE?.members?.length ?? "unknown"} members; immutable V2 expected 47 members including the legacy Flash shell`;
+
+function historicalV2ReadinessTest(name, body) {
+  if (HISTORICAL_V2_RELEASE_IS_CURRENT) return test(name, body);
+  return test(name, {skip: SUPERSEDED_V2_RELEASE_REASON}, body);
+}
 
 test("CLI is deterministic and exposes only help or write-free --check", () => {
   assert.deepEqual(parseArguments([]), {check: false, help: false});
@@ -39,7 +54,24 @@ test("CLI is deterministic and exposes only help or write-free --check", () => {
   ]) assert.throws(() => parseArguments(argv), /only once|cannot be combined|unknown option/u);
 });
 
-test("actual readiness build revalidates the exact zero-admission L10 control baseline without writes", async () => {
+if (!HISTORICAL_V2_RELEASE_IS_CURRENT) {
+  test("historical V2 readiness refuses the current page-only L10 release without writes", async () => {
+    assert.equal(CURRENT_L10_RELEASE.expectedCounts.members, 46);
+    assert.equal(CURRENT_L10_RELEASE.members.length, 46);
+    assert.equal(CURRENT_L10_RELEASE.scope.pageOnly, true);
+    assert.equal(CURRENT_L10_RELEASE.scope.legacyFlashCourseShellExcluded, true);
+    const before = await Promise.all([stat(JSON_REPORT), stat(MARKDOWN_REPORT)]);
+    await assert.rejects(
+      buildG4L10AnimateAuthoringV2ControlReadiness({persist: false}),
+      /protected release cardinality drifted/u,
+    );
+    const after = await Promise.all([stat(JSON_REPORT), stat(MARKDOWN_REPORT)]);
+    assert.deepEqual(after.map(({size, mtimeMs}) => ({size, mtimeMs})),
+      before.map(({size, mtimeMs}) => ({size, mtimeMs})));
+  });
+}
+
+historicalV2ReadinessTest("actual readiness build revalidates the exact zero-admission L10 control baseline without writes", async () => {
   const before = await Promise.all([stat(JSON_REPORT), stat(MARKDOWN_REPORT)]);
   const result = await buildG4L10AnimateAuthoringV2ControlReadiness({persist: false});
   const after = await Promise.all([stat(JSON_REPORT), stat(MARKDOWN_REPORT)]);

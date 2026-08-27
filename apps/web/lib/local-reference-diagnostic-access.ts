@@ -84,12 +84,3 @@ export function isLocalReferenceDiagnosticRequestAllowed({
   }
   return true;
 }
-
-export const LOCAL_REFERENCE_DIAGNOSTIC_BOUNDARY = Object.freeze({
-  flag: `${HELP_MATH_LOCAL_REFERENCE_DIAGNOSTIC_FLAG}=1`,
-  productionDefault: 'disabled-404',
-  allowedHosts: ['127.0.0.1', 'localhost', '[::1]'],
-  protocol: 'plain-http-only',
-  deployment: 'local-process-only-not-vercel',
-  authority: 'forensic-reference-only-acceptance-neutral',
-});

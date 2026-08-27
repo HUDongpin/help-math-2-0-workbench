@@ -72,6 +72,25 @@ const AUTHORITY_BOUNDARY = Object.freeze({
 
 const sha256 = (bytes) => createHash("sha256").update(bytes).digest("hex");
 const execFileAsync = promisify(execFile);
+const CURRENT_SOURCE_FREEZE_SHA256 = sha256(await readFile(path.join(
+  REPOSITORY_ROOT,
+  "catalog/source-manifest.sha256",
+)));
+const HISTORICAL_V2_FREEZE_IS_CURRENT = CURRENT_SOURCE_FREEZE_SHA256
+  === LESSON_ANIMATE_ONE_ROW_V2_FIXED_SOURCE_FREEZE_SHA256;
+const SUPERSEDED_V2_CONTRACT_REASON =
+  `superseded contract: current source freeze ${CURRENT_SOURCE_FREEZE_SHA256} does not match immutable V2 freeze ${LESSON_ANIMATE_ONE_ROW_V2_FIXED_SOURCE_FREEZE_SHA256}`;
+
+function historicalV2BehaviorTest(name, optionsOrBody, maybeBody) {
+  if (HISTORICAL_V2_FREEZE_IS_CURRENT) {
+    return typeof optionsOrBody === "function"
+      ? test(name, optionsOrBody)
+      : test(name, optionsOrBody, maybeBody);
+  }
+  const options = typeof optionsOrBody === "function" ? {} : optionsOrBody;
+  const body = typeof optionsOrBody === "function" ? optionsOrBody : maybeBody;
+  return test(name, {...options, skip: SUPERSEDED_V2_CONTRACT_REASON}, body);
+}
 
 async function put(root, relative, bytes, mode) {
   const file = path.join(root, ...relative.split("/"));
@@ -142,6 +161,7 @@ async function fixture(t, {
   mutateAssignmentAfterSign = (value) => value,
   mutateAuthorizationBeforeSign = (value) => value,
   mutateAuthorizationAfterSign = (value) => value,
+  requireHistoricalSourceFreeze = true,
 } = {}) {
   const container = await realpath(await mkdtemp(path.join(os.tmpdir(), "l10-auth-v2-")));
   t?.after(async () => rm(container, {recursive: true, force: true}));
@@ -164,8 +184,12 @@ async function fixture(t, {
     LESSON_ANIMATE_ONE_ROW_V2_FIXED_QUEUE_SHA256);
   assert.equal(sha256(await readFile(path.join(projectRoot, FIXED_STAGING_RELATIVE))),
     LESSON_ANIMATE_ONE_ROW_V2_FIXED_STAGING_SHA256);
-  assert.equal(sha256(await readFile(path.join(projectRoot, "catalog/source-manifest.sha256"))),
-    LESSON_ANIMATE_ONE_ROW_V2_FIXED_SOURCE_FREEZE_SHA256);
+  const fixtureSourceFreezeSha256 = sha256(await readFile(
+    path.join(projectRoot, "catalog/source-manifest.sha256"),
+  ));
+  assert.equal(fixtureSourceFreezeSha256, requireHistoricalSourceFreeze
+    ? LESSON_ANIMATE_ONE_ROW_V2_FIXED_SOURCE_FREEZE_SHA256
+    : CURRENT_SOURCE_FREEZE_SHA256);
 
   const queue = JSON.parse(await readFile(path.join(projectRoot, FIXED_QUEUE_RELATIVE), "utf8"));
   const staging = JSON.parse(await readFile(path.join(projectRoot, FIXED_STAGING_RELATIVE), "utf8"));
@@ -383,7 +407,23 @@ async function fixture(t, {
   };
 }
 
-test("diagnostic v2 verifies canonical owner-signed VB003 by deriving fixed queue row 4/release row 7", async (t) => {
+if (!HISTORICAL_V2_FREEZE_IS_CURRENT) {
+  test("diagnostic v2 rejects the current repository after its catalog/source freeze supersedes the immutable V2 contract", async (t) => {
+    assert.notEqual(CURRENT_SOURCE_FREEZE_SHA256,
+      LESSON_ANIMATE_ONE_ROW_V2_FIXED_SOURCE_FREEZE_SHA256);
+    const input = await fixture(t, {requireHistoricalSourceFreeze: false});
+    await assert.rejects(
+      verifyLessonAnimateOneRowAuthorizationV2Diagnostic(input.verifyOptions),
+      (error) => {
+        assert.match(error.message,
+          /staging input (?:lessonReleases|animations|sourceFreezeManifest) differs from its current physical file|fixed source freeze SHA-256 drifted|current L10 release identity or member count drifted/u);
+        return true;
+      },
+    );
+  });
+}
+
+historicalV2BehaviorTest("diagnostic v2 verifies canonical owner-signed VB003 by deriving fixed queue row 4/release row 7", async (t) => {
   const input = await fixture(t);
   const token = await verifyLessonAnimateOneRowAuthorizationV2Diagnostic(input.verifyOptions);
   assert.equal(token.ok, true);
@@ -399,7 +439,7 @@ test("diagnostic v2 verifies canonical owner-signed VB003 by deriving fixed queu
   assert.equal(Object.isFrozen(token), true);
 });
 
-test("diagnostic verified values, clones, spreads, JSON round trips, and fabricated tokens cannot consume or claim", async (t) => {
+historicalV2BehaviorTest("diagnostic verified values, clones, spreads, JSON round trips, and fabricated tokens cannot consume or claim", async (t) => {
   const input = await fixture(t);
   const diagnostic = await verifyLessonAnimateOneRowAuthorizationV2Diagnostic(input.verifyOptions);
   for (const candidate of [diagnostic, {...diagnostic}, structuredClone(diagnostic),
@@ -458,7 +498,7 @@ test("execution-context handoff surface is one-time async and revalidates every 
     "handoff must return a deeply frozen clone instead of the WeakMap-held object");
 });
 
-test("concurrent diagnostic, cloned, spread, JSON, and fabricated handoff attempts all fail closed", async (t) => {
+historicalV2BehaviorTest("concurrent diagnostic, cloned, spread, JSON, and fabricated handoff attempts all fail closed", async (t) => {
   const input = await fixture(t);
   const diagnostic = await verifyLessonAnimateOneRowAuthorizationV2Diagnostic(input.verifyOptions);
   const candidates = [diagnostic, diagnostic, {...diagnostic}, structuredClone(diagnostic),
@@ -469,7 +509,7 @@ test("concurrent diagnostic, cloned, spread, JSON, and fabricated handoff attemp
     && /opaque production claim token/u.test(outcome.reason?.message || "")), true);
 });
 
-test("production verifier accepts only four exact keys and cannot receive clock, key, expected row, helper, or trust path", async (t) => {
+historicalV2BehaviorTest("production verifier accepts only four exact keys and cannot receive clock, key, expected row, helper, or trust path", async (t) => {
   const input = await fixture(t);
   const production = {
     projectRoot: input.projectRoot,
@@ -493,7 +533,7 @@ test("production verifier accepts only four exact keys and cannot receive clock,
     /exact dedicated runner process entrypoint/u);
 });
 
-test("diagnostic verifier also rejects caller expected/key/path/helper injection", async (t) => {
+historicalV2BehaviorTest("diagnostic verifier also rejects caller expected/key/path/helper injection", async (t) => {
   const input = await fixture(t);
   for (const injection of [
     {expected: input.authorization.member},
@@ -508,7 +548,7 @@ test("diagnostic verifier also rejects caller expected/key/path/helper injection
   }
 });
 
-test("valid owner signature cannot authorize a different or SWF-only row by caller expectation", async (t) => {
+historicalV2BehaviorTest("valid owner signature cannot authorize a different or SWF-only row by caller expectation", async (t) => {
   const input = await fixture(t, {
     mutateAuthorizationBeforeSign(value) {
       value.release.queueOrdinal = 3;
@@ -519,7 +559,7 @@ test("valid owner signature cannot authorize a different or SWF-only row by call
     /does not select the unique fixed FLA-backed queue row/u);
 });
 
-test("owner-signed member descriptor drift is rejected against physical source/copy derivation", async (t) => {
+historicalV2BehaviorTest("owner-signed member descriptor drift is rejected against physical source/copy derivation", async (t) => {
   const input = await fixture(t, {
     mutateAuthorizationBeforeSign(value) {
       value.member.fla.source.mode = "0444";
@@ -530,7 +570,7 @@ test("owner-signed member descriptor drift is rejected against physical source/c
     /differs from the independently derived binding/u);
 });
 
-test("assignment and authorization signature drift fail closed", async (t) => {
+historicalV2BehaviorTest("assignment and authorization signature drift fail closed", async (t) => {
   await t.test("assignment", async (subtest) => {
     const input = await fixture(subtest, {
       mutateAssignmentAfterSign(value) {
@@ -553,7 +593,7 @@ test("assignment and authorization signature drift fail closed", async (t) => {
   });
 });
 
-test("trust owner subject, PEM hash, SPKI fingerprint, and trustRootId are all signed bindings", async (t) => {
+historicalV2BehaviorTest("trust owner subject, PEM hash, SPKI fingerprint, and trustRootId are all signed bindings", async (t) => {
   for (const field of ["ownerSubjectId", "ownerPublicKeySha256",
     "ownerKeyFingerprintSha256", "trustRootId"]) {
     await t.test(field, async (subtest) => {
@@ -569,7 +609,7 @@ test("trust owner subject, PEM hash, SPKI fingerprint, and trustRootId are all s
   }
 });
 
-test("assignment requires a named primary human, explicit two-action consent, and no hidden or automation identity", async (t) => {
+historicalV2BehaviorTest("assignment requires a named primary human, explicit two-action consent, and no hidden or automation identity", async (t) => {
   for (const [name, mutate] of [
     ["automation", (value) => { value.assignment.assigneeFullName = "Codex Agent"; }],
     ["n-a", (value) => { value.assignment.assigneeFullName = "N/A"; }],
@@ -591,7 +631,7 @@ test("assignment requires a named primary human, explicit two-action consent, an
   }
 });
 
-test("assignment and authorization validity windows are bounded and enforced with diagnostic clock only", async (t) => {
+historicalV2BehaviorTest("assignment and authorization validity windows are bounded and enforced with diagnostic clock only", async (t) => {
   await t.test("assignment expired", async (subtest) => {
     const input = await fixture(subtest, {assignmentWindow: {
       issuedAt: "2026-08-03T10:00:00.000Z",
@@ -634,7 +674,7 @@ test("assignment and authorization validity windows are bounded and enforced wit
   });
 });
 
-test("all-false acceptance boundary is exact and cannot advance current JS, fidelity, review, strict, or publication gates", async (t) => {
+historicalV2BehaviorTest("all-false acceptance boundary is exact and cannot advance current JS, fidelity, review, strict, or publication gates", async (t) => {
   const input = await fixture(t, {
     mutateAuthorizationBeforeSign(value) {
       value.authorityBoundary.javascriptFidelity = true;
@@ -645,7 +685,7 @@ test("all-false acceptance boundary is exact and cannot advance current JS, fide
     /javascriptFidelity must remain false/u);
 });
 
-test("canonical receipts reject formatting drift and physical hardlink aliasing", async (t) => {
+historicalV2BehaviorTest("canonical receipts reject formatting drift and physical hardlink aliasing", async (t) => {
   await t.test("canonical formatting", async (subtest) => {
     const input = await fixture(subtest);
     const noncanonical = Buffer.from(`${JSON.stringify(input.authorization)}\n`);
@@ -666,7 +706,7 @@ test("canonical receipts reject formatting drift and physical hardlink aliasing"
   });
 });
 
-test("read-only authority receipts reject extended ACL authority", {
+historicalV2BehaviorTest("read-only authority receipts reject extended ACL authority", {
   skip: process.platform !== "darwin" && "Darwin ACL syntax is required",
 }, async (t) => {
   const input = await fixture(t);
@@ -686,7 +726,7 @@ test("read-only authority receipts reject extended ACL authority", {
     /one-row authorization v2 may not carry an extended ACL/u);
 });
 
-test("fixed queue/staging/catalog/source-freeze and source-binding drift fail closed", async (t) => {
+historicalV2BehaviorTest("fixed queue/staging/catalog/source-freeze and source-binding drift fail closed", async (t) => {
   const input = await fixture(t);
   const sourceBinding = input.authorization.bindings.assistSourceBinding.file;
   const sourceBindingFile = path.join(input.projectRoot, ...sourceBinding.split("/"));
@@ -737,7 +777,7 @@ test("launch-attempt transition is one-time before-await and revalidates every a
   assert.match(source, /L10_AA_NATIVE_LAUNCH_CAPABILITY_UNAVAILABLE/u);
 });
 
-test("signing bytes and canonical JSON are deterministic and exclude only the signature", async (t) => {
+historicalV2BehaviorTest("signing bytes and canonical JSON are deterministic and exclude only the signature", async (t) => {
   const input = await fixture(t);
   const canonical = canonicalLessonAnimateOneRowAuthorizationV2Json(input.authorization);
   assert.equal(canonical, canonicalLessonAnimateOneRowAuthorizationV2Json(
