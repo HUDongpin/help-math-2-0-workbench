@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "status": "prepared-not-activated",
+  "repository": "HUDongpin/help-math-2-0-workbench",
+  "defaultBranch": "main",
+  "activationVariable": "HELP_MATH_CICD_IDENTITY_ACTIVATED",
+  "activationVariableScope": "repository-actions-variable",
+  "vercel": {
+    "projectId": "prj_q3v5Ue0zCL1T9rzTFD21KpNc5tzu",
+    "projectName": "helpmath-web",
+    "environment": "production"
+  },
+  "github": {
+    "environment": "helpmath-production",
+    "oidcAudience": "https://vercel.com/helpmath-production",
+    "candidateStatusContext": "Vercel - helpmath-web: production-smoke",
+    "postflightStatusContext": "Vercel - helpmath-web: production-postflight",
+    "vercelApp": {
+      "installationId": null,
+      "senderLogin": "vercel[bot]",
+      "senderType": "Bot"
+    }
+  },
+  "trustedSource": {
+    "issuer": "https://token.actions.githubusercontent.com",
+    "subject": "repo:HUDongpin/help-math-2-0-workbench:environment:helpmath-production",
+    "eventName": "repository_dispatch",
+    "ref": "refs/heads/main",
+    "jobWorkflowRef": "HUDongpin/help-math-2-0-workbench/.github/workflows/vercel-production-smoke.yml@refs/heads/main",
+    "header": "x-vercel-trusted-oidc-idp-token"
+  },
+  "routes": {
+    "roots": [
+      {
+        "path": "/",
+        "status": 200,
+        "marker": "HELP Math"
+      },
+      {
+        "path": "/es",
+        "status": 200,
+        "marker": "HELP Math"
+      }
+    ],
+    "courses": [
+      {
+        "path": "/courses/3/2",
+        "pageCount": 70
+      },
+      {
+        "path": "/courses/4/3",
+        "pageCount": 39
+      },
+      {
+        "path": "/courses/4/5",
+        "pageCount": 53
+      },
+      {
+        "path": "/courses/4/10",
+        "pageCount": 46
+      },
+      {
+        "path": "/courses/4/11",
+        "pageCount": 43
+      },
+      {
+        "path": "/courses/5/3",
+        "pageCount": 65
+      },
+      {
+        "path": "/courses/5/4",
+        "pageCount": 54
+      },
+      {
+        "path": "/courses/5/5",
+        "pageCount": 56
+      }
+    ],
+    "forbidden": [
+      "/courses/3/1",
+      "/courses/4/1",
+      "/courses/5/1",
+      "/migration-status",
+      "/reference",
+      "/ruffle",
+      "/flash/example.swf"
+    ],
+    "apexProbe": "/courses/4/5?probe=ci-service-identity"
+  },
+  "releaseBoundary": {
+    "currentJsLessons": 8,
+    "currentJsPagePlacements": 426,
+    "strictCompletionClaim": false,
+    "formalPublishedReleaseClaim": false,
+    "novaEnabled": false,
+    "lrsEnabled": false,
+    "contactEnabled": false
+  }
+}

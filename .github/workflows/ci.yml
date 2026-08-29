@@ -41,6 +41,12 @@ jobs:
       - name: Install locked dependencies
         run: npm ci
 
+      - name: Test the secretless CI/CD service identity package
+        run: node --test scripts/helpmath-vercel-ci.test.mjs scripts/verify-helpmath-cicd-service-identity.test.mjs
+
+      - name: Verify the CI/CD service identity policy
+        run: node scripts/verify-helpmath-cicd-service-identity.mjs
+
       - name: Verify migration workbench
         run: npm run verify:workbench
 

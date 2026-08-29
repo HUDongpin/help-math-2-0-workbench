@@ -1,0 +1,93 @@
+name: HELP Math Vercel production smoke
+
+on:
+  repository_dispatch:
+    types:
+      - vercel.deployment.ready
+
+run-name: HELP Math protected production-candidate smoke
+
+permissions:
+  actions: read
+  contents: read
+  id-token: write
+  statuses: write
+
+concurrency:
+  group: helpmath-vercel-production-smoke
+  cancel-in-progress: false
+
+jobs:
+  production-smoke:
+    name: Vercel production smoke
+    if: ${{ vars.HELP_MATH_CICD_IDENTITY_ACTIVATED == 'true' }}
+    environment: helpmath-production
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out the protected production branch
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: main
+          fetch-depth: 1
+          lfs: false
+          persist-credentials: false
+          submodules: false
+
+      - name: Use the repository Node.js version
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Validate the Vercel dispatch against checked-out main
+        id: payload
+        env:
+          HELP_MATH_VERCEL_EVENT_ACTION: ${{ github.event.action }}
+          HELP_MATH_VERCEL_INSTALLATION_ID: ${{ github.event.installation.id }}
+          HELP_MATH_VERCEL_PAYLOAD_JSON: ${{ toJSON(github.event.client_payload) }}
+          HELP_MATH_VERCEL_SENDER_LOGIN: ${{ github.event.sender.login }}
+          HELP_MATH_VERCEL_SENDER_TYPE: ${{ github.event.sender.type }}
+        run: >-
+          node scripts/helpmath-vercel-ci.mjs validate-payload
+          --mode candidate
+          --policy .github/helpmath-vercel-production-policy.json
+
+      - name: Bind the deployment check to the Vercel event SHA
+        uses: vercel/repository-dispatch/actions/status@61881006269f0b5ac2cb186b198c54be6afe90e1
+        with:
+          name: "Vercel - helpmath-web: production-smoke"
+          github_token: ${{ github.token }}
+
+      - name: Request a short-lived GitHub OIDC token
+        id: oidc
+        env:
+          HELP_MATH_VERCEL_INSTALLATION_ID: ${{ steps.payload.outputs.installation_id }}
+          HELP_MATH_VERCEL_SENDER_LOGIN: ${{ steps.payload.outputs.sender_login }}
+        run: >-
+          node scripts/helpmath-vercel-ci.mjs request-oidc
+          --policy .github/helpmath-vercel-production-policy.json
+
+      - name: Smoke-test the exact protected production candidate
+        env:
+          HELP_MATH_DEPLOYMENT_ID: ${{ steps.payload.outputs.deployment_id }}
+          HELP_MATH_DEPLOYMENT_URL: ${{ steps.payload.outputs.deployment_url }}
+          HELP_MATH_GIT_SHA: ${{ steps.payload.outputs.git_sha }}
+          HELP_MATH_VERCEL_INSTALLATION_ID: ${{ steps.payload.outputs.installation_id }}
+          HELP_MATH_TRUSTED_OIDC_TOKEN: ${{ steps.oidc.outputs.token }}
+        run: >-
+          node scripts/helpmath-vercel-ci.mjs smoke
+          --mode candidate
+          --receipt artifacts/ci-service-identity/vercel-production-candidate-smoke.json
+          --policy .github/helpmath-vercel-production-policy.json
+
+      - name: Retain the privacy-safe candidate receipt
+        if: ${{ always() && steps.payload.outcome == 'success' }}
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        with:
+          name: helpmath-vercel-production-candidate-${{ steps.payload.outputs.deployment_id }}
+          path: artifacts/ci-service-identity/vercel-production-candidate-smoke.json
+          if-no-files-found: warn
+          include-hidden-files: false
+          retention-days: 90
