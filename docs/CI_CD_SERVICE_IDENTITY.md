@@ -54,8 +54,11 @@ The identities are deliberately separate:
   workflow, promotes after the status passes.
 - **Postflight:** the provider-generated `vercel.deployment.promoted` event
   binds the deployment ID, project, environment, ref, SHA, immutable repository
-  IDs, and the distinct postflight `workflow_ref`. The postflight checks the
-  public domain and posts a separate status. It receives no OIDC token.
+  IDs, and the distinct postflight `workflow_ref`. Every checked public response
+  must also expose build-fixed, non-secret project ID, unique deployment URL,
+  and Git SHA provenance equal to that event. The schema-v2 receipt keeps
+  `eventDeploymentIdentity` separate from `observedDomainDeploymentIdentity`
+  and cannot pass on route content alone. The postflight receives no OIDC token.
 - **Merge admission:** the ordinary CI workflow exposes a separate
   `CI/CD service identity` job. It runs the secretless identity tests and
   verifier plus the exact deployment-asset closure from a clean Git checkout.
@@ -271,7 +274,10 @@ must not be represented as the Git-service-identity result.
 9. Let Vercel perform automatic aliasing only after the required check for the
    second deployment passes; no workflow token performs the promotion.
 10. Require the `vercel.deployment.promoted` postflight to pass the same 25
-   public routes and the exact apex `308` path/query-preserving redirect.
+    public routes, exact project/deployment-URL/SHA provenance on every route,
+    and the exact apex `308` path/query-preserving redirect. Missing, stale, or
+    mixed provenance is a failure even when every page marker is otherwise
+    correct.
 11. Retain the GitHub environment review, Vercel installation/configuration
     IDs, deployment ID, main SHA, workflow run IDs, candidate/postflight
     artifacts, prior deployment ID, and rollback decision in the restricted

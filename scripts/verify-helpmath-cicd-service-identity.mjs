@@ -105,6 +105,13 @@ export function validateServiceIdentityDocuments(documents) {
     "response body exceeded the bounded size",
     "containsOidcToken: false",
     "formalPublishedReleaseClaim",
+    "x-helpmath-vercel-project-id",
+    "x-helpmath-vercel-deployment-url",
+    "x-helpmath-git-commit-sha",
+    "eventDeploymentIdentity",
+    "observedDomainDeploymentIdentity",
+    "eventToObservedDomainExactMatch",
+    "typeof actual === \"string\" && actual === expected",
   ], "CI core");
   includesAll(runner, [
     "ACTIONS_ID_TOKEN_REQUEST_URL",

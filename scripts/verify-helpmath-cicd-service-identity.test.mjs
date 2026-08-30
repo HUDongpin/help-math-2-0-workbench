@@ -50,6 +50,18 @@ test("static verifier requires a source-independent release check", async () => 
   );
 });
 
+test("static verifier requires an exact event-to-public-deployment evidence join", async () => {
+  const base = await checkedInDocuments();
+  const withoutObservedIdentity = base.core.replace(
+    "observedDomainDeploymentIdentity",
+    "removedObservedDomainDeploymentIdentity",
+  );
+  assert.throws(
+    () => validateServiceIdentityDocuments({...base, core: withoutObservedIdentity}),
+    /omitted observedDomainDeploymentIdentity/u,
+  );
+});
+
 test("static verifier rejects a Vercel token fallback", async () => {
   const base = await checkedInDocuments();
   assert.throws(
