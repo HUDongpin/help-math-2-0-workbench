@@ -56,6 +56,13 @@ The identities are deliberately separate:
   binds the deployment ID, project, environment, ref, SHA, immutable repository
   IDs, and the distinct postflight `workflow_ref`. The postflight checks the
   public domain and posts a separate status. It receives no OIDC token.
+- **Merge admission:** the ordinary CI workflow exposes a separate
+  `CI/CD service identity` job. It runs the secretless identity tests and
+  verifier plus the exact deployment-asset closure from a clean Git checkout.
+  It does not request OIDC, write statuses, or depend on ignored private source
+  archives. The source-complete `Workbench` job remains a distinct diagnostic
+  gate and is never reinterpreted as site-deployment or lesson-publication
+  evidence.
 
 The workflows use no `${{ secrets.* }}` values, no `VERCEL_TOKEN`, no
 Protection Bypass secret, no Owner credential helper, and no Vercel mutation
@@ -133,9 +140,14 @@ Complete these steps without placing a secret in chat, Git, workflow inputs,
 command arguments, or ordinary logs:
 
 1. Protect `main`. Require pull requests, at least one independent approval,
-   dismissal of stale approvals, resolved conversations, and the existing
-   `Workbench` and `Site workspace` checks. Block force pushes and direct
-   pushes.
+   dismissal of stale approvals, resolved conversations, and the
+   `CI/CD service identity` and `Site workspace` checks. Block force pushes
+   and direct pushes. Keep `Workbench` visible, but do not require it for this
+   Git-hosted site-release path: its strict source/evidence validation requires
+   ignored private source archives and work records that a clean GitHub runner
+   must not receive. Do not weaken that job or treat its absence/failure as a
+   strict-completion pass; run it only in a separately authorized,
+   source-complete environment.
 2. Create the environment `helpmath-production`.
 3. Restrict it to protected `main`, require the Owner or authorized release
    team as reviewer, prevent self-review, and disable administrator bypass
@@ -229,7 +241,9 @@ must not be represented as the Git-service-identity result.
 
 1. Review and merge this prepared package together with the accepted application tree
    into protected `main` while the old Vercel Git connection remains inactive
-   or automatic aliasing remains off.
+   or automatic aliasing remains off. Require the exact `CI/CD service identity`
+   and `Site workspace` checks; retain the separate source-complete Workbench
+   result without using it as site-deployment or publication evidence.
 2. Complete the GitHub environment and Vercel Trusted Sources setup, authorize
    the repository-restricted Vercel for GitHub installation, and verify that
    Production domain auto-assignment remains off. Do not create a deployment

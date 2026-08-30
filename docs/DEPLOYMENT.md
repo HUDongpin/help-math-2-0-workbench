@@ -47,11 +47,11 @@ instructions below remain rollback and dated-provenance context only.
 ## 1. GitHub release controls
 
 1. Keep `HUDongpin/help-math-2-0-workbench` **Private**. Keep original HELP Math sources, private archives, API-key documents, local `.env` files, migration evidence, and review captures outside the deployment upload.
-2. In repository settings, protect `main`: require a pull request, at least one approval, dismissal of stale approvals, resolved review conversations, and passing `Workbench` and `Site workspace` checks from `.github/workflows/ci.yml`.
+2. In repository settings, protect `main`: require a pull request, at least one approval, dismissal of stale approvals, resolved review conversations, and passing `CI/CD service identity` and `Site workspace` checks from `.github/workflows/ci.yml`. Keep the source-complete `Workbench` job separate: a clean GitHub checkout intentionally lacks the ignored private source archive and private work records it validates, so its failure or absence is neither a site-deployment failure nor a strict-completion pass.
 3. Restrict direct pushes and force pushes to `main`. Require signed commits if that matches the owner's existing GitHub policy.
 4. Keep Actions permissions read-only by default. The CI workflow needs no deployment token and explicitly avoids Git LFS downloads.
 
-The two CI jobs install from the root lockfile with Node 24. `Workbench` runs `npm run verify:workbench` and `npm test`; `Site workspace` runs lint, type-check, tests, and build for `@helpmath/web`.
+All CI jobs install from the root lockfile with Node 24. `CI/CD service identity` runs the secretless identity tests and verifier plus the exact deployment-asset closure from a clean Git checkout. `Site workspace` runs lint, type-check, tests, and build for `@helpmath/web`. `Workbench` retains `npm run verify:workbench` and `npm test` for a separately authorized source-complete environment; it is not a public-site release or lesson-publication claim.
 
 ## 2. Existing Vercel project configuration
 

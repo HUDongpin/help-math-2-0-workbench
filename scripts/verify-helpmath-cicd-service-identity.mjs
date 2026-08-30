@@ -76,6 +76,7 @@ export function validateServiceIdentityDocuments(documents) {
 
   for (const [label, text] of [
     ["candidate workflow", candidateWorkflow],
+    ["CI workflow", ciWorkflow],
     ["postflight workflow", postflightWorkflow],
     ["runner", runner],
   ]) {
@@ -123,10 +124,25 @@ export function validateServiceIdentityDocuments(documents) {
   invariant(!runner.includes("keychain"), "CI runner must not inspect a keychain");
 
   includesAll(ignore, [".github/", "docs/", "scripts/*"], ".vercelignore");
-  includesAll(ciWorkflow, [
+  const serviceIdentityJobStart = ciWorkflow.indexOf("  cicd-service-identity:\n");
+  const workbenchJobStart = ciWorkflow.indexOf("\n  workbench:\n", serviceIdentityJobStart);
+  invariant(serviceIdentityJobStart >= 0 && workbenchJobStart > serviceIdentityJobStart, "CI workflow must isolate the service-identity job from Workbench");
+  const serviceIdentityJob = ciWorkflow.slice(serviceIdentityJobStart, workbenchJobStart);
+  includesAll(serviceIdentityJob, [
+    "name: CI/CD service identity",
+    "actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
+    "actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38",
+    "persist-credentials: false",
+    "npm ci",
     "node --test scripts/helpmath-vercel-ci.test.mjs scripts/verify-helpmath-cicd-service-identity.test.mjs",
     "node scripts/verify-helpmath-cicd-service-identity.mjs",
-  ], "CI workflow");
+    "npm run verify:asset-profiles:deployment --workspace @helpmath/web",
+  ], "CI/CD service-identity job");
+  invariant(!serviceIdentityJob.includes("npm run verify:workbench"), "service-identity release check must not depend on the private source-complete Workbench gate");
+  invariant(!serviceIdentityJob.includes("npm run verify:sources"), "service-identity release check must not require ignored private source archives");
+  invariant(!serviceIdentityJob.includes("\n        run: npm test\n"), "service-identity release check must not substitute the source-complete Workbench suite");
+  invariant(!ciWorkflow.includes("id-token: write"), "ordinary CI must not request a GitHub OIDC token");
+  invariant(!ciWorkflow.includes("statuses: write"), "ordinary CI must not write commit statuses");
   includesAll(identityDoc, [
     "prepared-not-activated",
     "Vercel for GitHub",
@@ -147,6 +163,7 @@ export function validateServiceIdentityDocuments(documents) {
   return Object.freeze({
     candidateWorkflow: true,
     dispatchOriginBound: true,
+    releaseCheckSeparateFromWorkbench: true,
     postflightWorkflow: true,
     storedProviderSecrets: 0,
     vercelControlPlaneTokens: 0,

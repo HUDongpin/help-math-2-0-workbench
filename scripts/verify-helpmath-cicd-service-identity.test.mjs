@@ -35,6 +35,19 @@ test("checked-in service identity package is secretless and activation-gated", a
   assert.equal(result.summary.trustedOidcHeader, true);
   assert.equal(result.summary.dispatchOriginBound, true);
   assert.equal(result.summary.immutableGithubIdentity, true);
+  assert.equal(result.summary.releaseCheckSeparateFromWorkbench, true);
+});
+
+test("static verifier requires a source-independent release check", async () => {
+  const base = await checkedInDocuments();
+  const withoutReleaseJob = base.ciWorkflow.replace(
+    /  cicd-service-identity:\n[\s\S]*?(?=\n  workbench:\n)/u,
+    "",
+  );
+  assert.throws(
+    () => validateServiceIdentityDocuments({...base, ciWorkflow: withoutReleaseJob}),
+    /must isolate the service-identity job/u,
+  );
 });
 
 test("static verifier rejects a Vercel token fallback", async () => {
