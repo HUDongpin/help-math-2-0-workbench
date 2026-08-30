@@ -1,15 +1,18 @@
 import {notFound} from 'next/navigation';
+import {headers} from 'next/headers';
 
 import {ReferencePlayer} from '@/components/reference-player';
 import {Container} from '@/components/ui';
 import {Link} from '@/i18n/navigation';
 import {findAnimation, resolveCatalogSource} from '@/lib/catalog';
+import {isLocalReferenceDiagnosticRequestAllowed} from '@/lib/local-reference-diagnostic-access';
 
 export const dynamic = 'force-dynamic';
 export const metadata = {title: 'Local SWF reference', robots: {index: false, follow: false}};
 
 export default async function ReferencePage({params}: {params: Promise<{locale: 'en' | 'es'; animationId: string}>}) {
-  if (process.env.NODE_ENV === 'production') notFound();
+  const requestHeaders = await headers();
+  if (!isLocalReferenceDiagnosticRequestAllowed({headers: requestHeaders})) notFound();
   const {locale, animationId} = await params;
   const animation = findAnimation(animationId);
   if (!animation || !resolveCatalogSource(animation)) notFound();

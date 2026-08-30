@@ -53,8 +53,79 @@ async function strictEntries() {
   return ledgerEntries(ledger).map((item) => ({
     key: item?.animationId,
     module: item?.registryModule,
-    maturity: 'strict-complete'
+    maturity: 'strict-complete',
+    scope: 'strict-ledger'
   }));
+}
+
+async function privateCurrentJsEntries() {
+  const document = await readJson(
+    path.join(packageRoot, 'private-current-js-registry.json'),
+  );
+  const calibrations = document.schemaVersion === 1 &&
+      document.registryScope === 'private-engineering'
+    ? [document]
+    : document.schemaVersion === 2 &&
+        document.registryScope === 'private-engineering' &&
+        Array.isArray(document.calibrations)
+      ? document.calibrations
+      : null;
+  if (!calibrations || calibrations.length === 0) {
+    throw new Error(
+      'private-current-js-registry.json must bind one or more private-engineering calibrations',
+    );
+  }
+  const calibrationIds = new Set();
+  const output = [];
+  for (const calibration of calibrations) {
+    if (
+      typeof calibration?.calibrationId !== 'string' ||
+      !calibration.calibrationId ||
+      typeof calibration.freezeManifest !== 'string' ||
+      !calibration.freezeManifest.startsWith(
+        'catalog/product-bridge-calibrations/',
+      ) ||
+      !Array.isArray(calibration.entries) ||
+      calibrationIds.has(calibration.calibrationId)
+    ) {
+      throw new Error(
+        'private Current-JS calibration identity, freeze, or entries are invalid',
+      );
+    }
+    calibrationIds.add(calibration.calibrationId);
+    const freeze = await readJson(
+      path.join(repositoryRoot, calibration.freezeManifest),
+    );
+    if (
+      freeze.schemaVersion !== 1 ||
+      freeze.calibrationId !== calibration.calibrationId ||
+      !Array.isArray(freeze.selectedPages)
+    ) {
+      throw new Error('private Current-JS registry freeze manifest is invalid');
+    }
+    const selected = new Map(
+      freeze.selectedPages.map((page) => [
+        page?.animationId,
+        page?.complexityLane,
+      ]),
+    );
+    for (const entry of calibration.entries) {
+      if (
+        entry?.maturity !== 'private-current-js' ||
+        selected.get(entry?.key) !== entry?.complexityLane
+      ) {
+        throw new Error(
+          `Private registry entry is not frozen by ${calibration.calibrationId}: ${entry?.key}`,
+        );
+      }
+      output.push({
+        ...entry,
+        scope: 'private-engineering',
+        calibrationId: calibration.calibrationId,
+      });
+    }
+  }
+  return output;
 }
 
 export async function buildRegistrySource() {
@@ -62,15 +133,32 @@ export async function buildRegistrySource() {
   if (prototypes.schemaVersion !== 1 || !Array.isArray(prototypes.entries)) {
     throw new Error('prototype-registry.json must use schemaVersion 1 with an entries array');
   }
-  const entries = [...prototypes.entries, ...(await strictEntries())].sort((a, b) =>
+  const prototypeEntries = prototypes.entries.map((entry) => ({
+    ...entry,
+    scope: 'prototype',
+  }));
+  const entries = [
+    ...prototypeEntries,
+    ...(await privateCurrentJsEntries()),
+    ...(await strictEntries()),
+  ].sort((a, b) =>
     String(a.key).localeCompare(String(b.key))
   );
   const seen = new Set();
   for (const entry of entries) {
     if (!validKey(entry.key)) throw new Error(`Invalid animation registry key: ${entry.key}`);
     if (!validModule(entry.module)) throw new Error(`Invalid module for ${entry.key}: ${entry.module}`);
-    if (!['legacy-prototype', 'strict-complete'].includes(entry.maturity)) {
+    if (!['legacy-prototype', 'private-current-js', 'strict-complete'].includes(entry.maturity)) {
       throw new Error(`Invalid maturity for ${entry.key}: ${entry.maturity}`);
+    }
+    if (!['prototype', 'private-engineering', 'strict-ledger'].includes(entry.scope)) {
+      throw new Error(`Invalid registry scope for ${entry.key}: ${entry.scope}`);
+    }
+    if (
+      entry.scope === 'private-engineering' &&
+      (typeof entry.calibrationId !== 'string' || !entry.calibrationId)
+    ) {
+      throw new Error(`Private registry calibration is missing for ${entry.key}`);
     }
     if (seen.has(entry.key)) throw new Error(`Duplicate animation registry key: ${entry.key}`);
     seen.add(entry.key);
@@ -78,17 +166,32 @@ export async function buildRegistrySource() {
       throw new Error(`Registry module does not exist for ${entry.key}: ${entry.module}`);
     }
   }
-  const loaders = entries.map((entry) =>
-    `  '${entry.key}': () => import('${entry.module}').then(({default: animationModule}) => animationModule)`
+  const loaders = entries.map((entry) => entry.scope === 'private-engineering'
+    ? `  '${entry.key}': () => import('${entry.module}').then(({default: animationModule}) => Object.freeze({...animationModule, maturity: 'private-current-js' as const}))`
+    : `  '${entry.key}': () => import('${entry.module}').then(({default: animationModule}) => animationModule)`
+  );
+  const registrations = entries.map((entry) =>
+    `  '${entry.key}': Object.freeze({maturity: '${entry.maturity}', scope: '${entry.scope}'${entry.calibrationId ? `, calibrationId: '${entry.calibrationId}'` : ''}})`
   );
   return [
     '/* This file is generated by scripts/generate-registry.mjs. Do not edit. */',
     "import type {AnimationModule} from './contract';",
     '',
     'export type AnimationModuleLoader = () => Promise<AnimationModule>;',
+    "export type AnimationRegistryScope = 'prototype' | 'private-engineering' | 'strict-ledger';",
+    'export type AnimationModuleRegistrationScope = AnimationRegistryScope;',
+    'export interface AnimationModuleRegistration {',
+    "  readonly maturity: AnimationModule['maturity'];",
+    '  readonly scope: AnimationRegistryScope;',
+    '  readonly calibrationId?: string;',
+    '}',
     '',
     'export const animationModuleLoaders: Readonly<Record<string, AnimationModuleLoader>> = Object.freeze({',
     loaders.join(',\n'),
+    '});',
+    '',
+    'export const animationModuleRegistrations: Readonly<Record<string, AnimationModuleRegistration>> = Object.freeze({',
+    registrations.join(',\n'),
     '});',
     ''
   ].join('\n');

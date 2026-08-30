@@ -5,6 +5,7 @@ import {RotateCcw} from 'lucide-react';
 import {loadAnimationModule, type AnimationModule} from '@helpmath/demos/animation-registry';
 
 import type {DemoDetailContent, DemoId, Locale} from '@/content/types';
+import {HostAudioControls} from './animation-runtime';
 
 export function DemoPlayer({
   content,
@@ -101,6 +102,7 @@ export function DemoPlayer({
       />
       {!requestedFrame && reduceMotion === false ? (
         <div className="demo-player__controls">
+          <HostAudioControls lang={locale} module={animation} />
           <button
             onClick={() => {
               setLiveFrame(1);
