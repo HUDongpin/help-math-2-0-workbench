@@ -35,6 +35,9 @@ export function validateServiceIdentityDocuments(documents) {
     "HELP_MATH_VERCEL_INSTALLATION_ID: ${{ github.event.installation.id }}",
     "HELP_MATH_VERCEL_SENDER_LOGIN: ${{ github.event.sender.login }}",
     "HELP_MATH_VERCEL_SENDER_TYPE: ${{ github.event.sender.type }}",
+    "HELP_MATH_GITHUB_REPOSITORY_ID: ${{ github.repository_id }}",
+    "HELP_MATH_GITHUB_REPOSITORY_OWNER_ID: ${{ github.repository_owner_id }}",
+    "HELP_MATH_GITHUB_WORKFLOW_REF: ${{ github.workflow_ref }}",
     "actions: read",
     "contents: read",
     "id-token: write",
@@ -47,6 +50,7 @@ export function validateServiceIdentityDocuments(documents) {
     "github_token: ${{ github.token }}",
     "HELP_MATH_VERCEL_INSTALLATION_ID: ${{ steps.payload.outputs.installation_id }}",
     "HELP_MATH_VERCEL_SENDER_LOGIN: ${{ steps.payload.outputs.sender_login }}",
+    "HELP_MATH_VERCEL_SENDER_TYPE: ${{ github.event.sender.type }}",
     "persist-credentials: false",
     "--mode candidate",
   ], "candidate workflow");
@@ -56,6 +60,9 @@ export function validateServiceIdentityDocuments(documents) {
     "HELP_MATH_VERCEL_INSTALLATION_ID: ${{ github.event.installation.id }}",
     "HELP_MATH_VERCEL_SENDER_LOGIN: ${{ github.event.sender.login }}",
     "HELP_MATH_VERCEL_SENDER_TYPE: ${{ github.event.sender.type }}",
+    "HELP_MATH_GITHUB_REPOSITORY_ID: ${{ github.repository_id }}",
+    "HELP_MATH_GITHUB_REPOSITORY_OWNER_ID: ${{ github.repository_owner_id }}",
+    "HELP_MATH_GITHUB_WORKFLOW_REF: ${{ github.workflow_ref }}",
     "actions: read",
     "contents: read",
     "statuses: write",
@@ -85,7 +92,11 @@ export function validateServiceIdentityDocuments(documents) {
 
   includesAll(core, [
     "x-vercel-trusted-oidc-idp-token",
-    "repo:HUDongpin/help-math-2-0-workbench:environment:helpmath-production",
+    "active policy requires the exact immutable GitHub repository_id claim",
+    "validateGithubOidcClaims",
+    "repository_id",
+    "workflow_ref",
+    "GitHub OIDC ${name} claim drifted",
     "dispatch installation id drifted",
     "service identity policy is not active",
     "redirect: \"manual\"",
@@ -98,8 +109,12 @@ export function validateServiceIdentityDocuments(documents) {
     "ACTIONS_ID_TOKEN_REQUEST_URL",
     "ACTIONS_ID_TOKEN_REQUEST_TOKEN",
     "HELP_MATH_VERCEL_INSTALLATION_ID",
+    "HELP_MATH_GITHUB_REPOSITORY_ID",
+    "HELP_MATH_GITHUB_REPOSITORY_OWNER_ID",
+    "HELP_MATH_GITHUB_WORKFLOW_REF",
     "OIDC request installation id drifted",
     "OIDC request sender login drifted",
+    "OIDC request sender type drifted",
     "::add-mask::",
     "GITHUB_OUTPUT",
     "flag: \"wx\"",
@@ -118,6 +133,8 @@ export function validateServiceIdentityDocuments(documents) {
     "Trusted Sources",
     "HELP_MATH_CICD_IDENTITY_ACTIVATED",
     "repository Actions variable",
+    "repository_id",
+    "workflow_ref",
     "BLOCKED_POLICY_NOT_RELOADED",
     "0/6",
   ], "service-identity documentation");
@@ -134,6 +151,7 @@ export function validateServiceIdentityDocuments(documents) {
     storedProviderSecrets: 0,
     vercelControlPlaneTokens: 0,
     trustedOidcHeader: true,
+    immutableGithubIdentity: true,
   });
 }
 
@@ -165,6 +183,8 @@ if (isMain) {
     status: result.policy.status,
     repository: result.policy.repository,
     vercelAppInstallationId: result.policy.github.vercelApp.installationId,
+    githubRepositoryId: result.policy.trustedSource.claims.repository_id,
+    githubRepositoryOwnerId: result.policy.trustedSource.claims.repository_owner_id,
     vercelProjectId: result.policy.vercel.projectId,
     ...result.summary,
   }, null, 2)}\n`);

@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "status": "prepared-not-activated",
   "repository": "HUDongpin/help-math-2-0-workbench",
   "defaultBranch": "main",
@@ -15,6 +15,8 @@
     "oidcAudience": "https://vercel.com/helpmath-production",
     "candidateStatusContext": "Vercel - helpmath-web: production-smoke",
     "postflightStatusContext": "Vercel - helpmath-web: production-postflight",
+    "candidateWorkflowRef": "HUDongpin/help-math-2-0-workbench/.github/workflows/vercel-production-smoke.yml@refs/heads/main",
+    "postflightWorkflowRef": "HUDongpin/help-math-2-0-workbench/.github/workflows/vercel-production-postflight.yml@refs/heads/main",
     "vercelApp": {
       "installationId": null,
       "senderLogin": "vercel[bot]",
@@ -23,11 +25,18 @@
   },
   "trustedSource": {
     "issuer": "https://token.actions.githubusercontent.com",
-    "subject": "repo:HUDongpin/help-math-2-0-workbench:environment:helpmath-production",
-    "eventName": "repository_dispatch",
-    "ref": "refs/heads/main",
-    "jobWorkflowRef": "HUDongpin/help-math-2-0-workbench/.github/workflows/vercel-production-smoke.yml@refs/heads/main",
-    "header": "x-vercel-trusted-oidc-idp-token"
+    "header": "x-vercel-trusted-oidc-idp-token",
+    "claims": {
+      "aud": "https://vercel.com/helpmath-production",
+      "repository": "HUDongpin/help-math-2-0-workbench",
+      "repository_id": null,
+      "repository_owner": "HUDongpin",
+      "repository_owner_id": null,
+      "ref": "refs/heads/main",
+      "environment": "helpmath-production",
+      "event_name": "repository_dispatch",
+      "workflow_ref": "HUDongpin/help-math-2-0-workbench/.github/workflows/vercel-production-smoke.yml@refs/heads/main"
+    }
   },
   "routes": {
     "roots": [

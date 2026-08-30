@@ -5,6 +5,7 @@ import {
   requestGithubOidcToken,
   runSmoke,
   validateDispatch,
+  validateGithubOidcClaims,
   validatePolicy,
 } from "./lib/helpmath-vercel-ci.mjs";
 
@@ -22,11 +23,40 @@ const activePolicy = validatePolicy({
       installationId: "12345678",
     },
   },
+  trustedSource: {
+    ...structuredClone(policy.trustedSource),
+    claims: {
+      ...structuredClone(policy.trustedSource.claims),
+      repository_id: "987654321",
+      repository_owner_id: "1234567",
+    },
+  },
 });
 
 const gitSha = "b2263fad156054239a74acdbf4b94048c9a45f69";
 const deploymentId = "dpl_2YL2yrWS3618VGQB36nusPt7yLhB";
 const deploymentUrl = "https://helpmath-example-team.vercel.app";
+
+function workflowContext(overrides = {}, mode = "candidate") {
+  return {
+    eventName: "repository_dispatch",
+    ref: "refs/heads/main",
+    repository: activePolicy.repository,
+    repositoryId: activePolicy.trustedSource.claims.repository_id,
+    repositoryOwner: activePolicy.trustedSource.claims.repository_owner,
+    repositoryOwnerId: activePolicy.trustedSource.claims.repository_owner_id,
+    workflowRef: mode === "candidate"
+      ? activePolicy.github.candidateWorkflowRef
+      : activePolicy.github.postflightWorkflowRef,
+    ...overrides,
+  };
+}
+
+function jwt(payload) {
+  const header = Buffer.from(JSON.stringify({alg: "RS256", typ: "JWT"})).toString("base64url");
+  const body = Buffer.from(JSON.stringify(payload)).toString("base64url");
+  return `${header}.${body}.test-signature`;
+}
 
 function payload({mode = "candidate", overrides = {}} = {}) {
   const value = {
@@ -43,8 +73,11 @@ function payload({mode = "candidate", overrides = {}} = {}) {
 test("policy fixes one secretless Vercel Git and GitHub OIDC boundary", () => {
   assert.equal(policy.status, "prepared-not-activated");
   assert.equal(policy.github.vercelApp.installationId, null);
+  assert.equal(policy.trustedSource.claims.repository_id, null);
+  assert.equal(policy.trustedSource.claims.repository_owner_id, null);
   assert.equal(policy.activationVariableScope, "repository-actions-variable");
   assert.equal(policy.github.environment, "helpmath-production");
+  assert.equal(policy.trustedSource.claims.workflow_ref, "HUDongpin/help-math-2-0-workbench/.github/workflows/vercel-production-smoke.yml@refs/heads/main");
   assert.equal(policy.trustedSource.header, "x-vercel-trusted-oidc-idp-token");
   assert.equal(policy.routes.courses.reduce((sum, row) => sum + row.pageCount, 0), 426);
   assert.deepEqual(
@@ -53,13 +86,30 @@ test("policy fixes one secretless Vercel Git and GitHub OIDC boundary", () => {
   );
 });
 
+test("policy cannot activate without all three observed provider identity IDs", () => {
+  const activationBase = {
+    ...structuredClone(policy),
+    status: "active",
+    github: {
+      ...structuredClone(policy.github),
+      vercelApp: {
+        ...structuredClone(policy.github.vercelApp),
+        installationId: "12345678",
+      },
+    },
+  };
+  assert.throws(() => validatePolicy(activationBase), /repository_id claim/iu);
+  activationBase.trustedSource.claims.repository_id = "987654321";
+  assert.throws(() => validatePolicy(activationBase), /repository_owner_id claim/iu);
+});
+
 test("candidate dispatch binds the exact project, production main SHA, and deployment", () => {
   const result = validateDispatch({
     action: "vercel.deployment.ready",
     payload: payload(),
     checkoutSha: gitSha,
     eventOrigin: {installationId: "12345678", senderLogin: "vercel[bot]", senderType: "Bot"},
-    repository: activePolicy.repository,
+    workflowContext: workflowContext(),
     mode: "candidate",
     policy: activePolicy,
   });
@@ -81,7 +131,7 @@ test("postflight dispatch requires the promoted event and state", () => {
     payload: payload({mode: "postflight"}),
     checkoutSha: gitSha,
     eventOrigin: {installationId: "12345678", senderLogin: "vercel[bot]", senderType: "Bot"},
-    repository: activePolicy.repository,
+    workflowContext: workflowContext({}, "postflight"),
     mode: "postflight",
     policy: activePolicy,
   });
@@ -105,7 +155,7 @@ test("dispatch validation rejects project, branch, SHA, environment, URL, and st
       payload: value,
       checkoutSha: gitSha,
       eventOrigin: {installationId: "12345678", senderLogin: "vercel[bot]", senderType: "Bot"},
-      repository: activePolicy.repository,
+      workflowContext: workflowContext(),
       mode: "candidate",
       policy: activePolicy,
     }), item.pattern);
@@ -117,7 +167,7 @@ test("dispatch validation rejects inactive policy and event-origin drift before 
     action: "vercel.deployment.ready",
     payload: payload(),
     checkoutSha: gitSha,
-    repository: activePolicy.repository,
+    workflowContext: workflowContext(),
     mode: "candidate",
   };
   assert.throws(() => validateDispatch({
@@ -132,6 +182,29 @@ test("dispatch validation rejects inactive policy and event-origin drift before 
   ]) {
     assert.throws(() => validateDispatch({...common, eventOrigin, policy: activePolicy}), /dispatch (installation id|sender)/iu);
   }
+});
+
+test("dispatch validation rejects immutable repository identity and workflow_ref drift", () => {
+  const common = {
+    action: "vercel.deployment.ready",
+    payload: payload(),
+    checkoutSha: gitSha,
+    eventOrigin: {installationId: "12345678", senderLogin: "vercel[bot]", senderType: "Bot"},
+    mode: "candidate",
+    policy: activePolicy,
+  };
+  assert.throws(
+    () => validateDispatch({...common, workflowContext: workflowContext({repositoryId: "111111111"})}),
+    /repository id drifted/iu,
+  );
+  assert.throws(
+    () => validateDispatch({...common, workflowContext: workflowContext({repositoryOwnerId: "2222222"})}),
+    /repository owner id drifted/iu,
+  );
+  assert.throws(
+    () => validateDispatch({...common, workflowContext: workflowContext({workflowRef: "attacker/repo/.github/workflows/pwn.yml@refs/heads/main"})}),
+    /workflow_ref drifted/iu,
+  );
 });
 
 function responseFor(rawUrl, {candidate}) {
@@ -261,28 +334,54 @@ test("public postflight checks routes plus exact apex path and query preservatio
 
 test("OIDC exchange requests the fixed audience and returns only a JWT", async () => {
   let observed;
+  const tokenValue = jwt({
+    iss: activePolicy.trustedSource.issuer,
+    ...activePolicy.trustedSource.claims,
+  });
   const token = await requestGithubOidcToken({
     requestUrl: "https://token.actions.githubusercontent.com/request?job=1",
     requestToken: "ephemeral-request-token-value",
-    audience: activePolicy.github.oidcAudience,
+    issuer: activePolicy.trustedSource.issuer,
+    claims: activePolicy.trustedSource.claims,
     fetchImpl: async (url, options) => {
       observed = {url: url.href, authorization: options.headers.authorization};
-      return new Response(JSON.stringify({value: "header.payload.signature"}), {
+      return new Response(JSON.stringify({value: tokenValue}), {
         status: 200,
         headers: {"content-type": "application/json"},
       });
     },
   });
-  assert.equal(token, "header.payload.signature");
+  assert.equal(token, tokenValue);
   assert.equal(new URL(observed.url).searchParams.get("audience"), activePolicy.github.oidcAudience);
   assert.equal(observed.authorization, "bearer ephemeral-request-token-value");
   await assert.rejects(
     requestGithubOidcToken({
       requestUrl: "https://attacker.invalid/request",
       requestToken: "ephemeral-request-token-value",
-      audience: activePolicy.github.oidcAudience,
-      fetchImpl: async () => new Response(JSON.stringify({value: "header.payload.signature"}), {status: 200}),
+      issuer: activePolicy.trustedSource.issuer,
+      claims: activePolicy.trustedSource.claims,
+      fetchImpl: async () => new Response(JSON.stringify({value: tokenValue}), {status: 200}),
     }),
     /origin drifted/iu,
+  );
+});
+
+test("OIDC claim validation rejects immutable repository and workflow identity drift", () => {
+  const expected = {issuer: activePolicy.trustedSource.issuer, claims: activePolicy.trustedSource.claims};
+  assert.throws(
+    () => validateGithubOidcClaims(jwt({
+      iss: activePolicy.trustedSource.issuer,
+      ...activePolicy.trustedSource.claims,
+      repository_id: "111111111",
+    }), expected),
+    /repository_id claim drifted/iu,
+  );
+  assert.throws(
+    () => validateGithubOidcClaims(jwt({
+      iss: activePolicy.trustedSource.issuer,
+      ...activePolicy.trustedSource.claims,
+      workflow_ref: "attacker/repo/.github/workflows/pwn.yml@refs/heads/main",
+    }), expected),
+    /workflow_ref claim drifted/iu,
   );
 });

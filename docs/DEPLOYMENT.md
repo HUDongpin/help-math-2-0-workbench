@@ -21,7 +21,9 @@ GitHub as the project-scoped deployment identity, a short-lived GitHub OIDC
 token admitted through Vercel Trusted Sources for protected-candidate access,
 and Vercel Deployment Checks for automatic promotion after an exact commit
 status passes. It stores no Vercel token, Owner credential, or Protection
-Bypass secret in GitHub.
+Bypass secret in GitHub. The Trusted Sources rule and checked-in policy both
+bind the immutable GitHub `repository_id` and `repository_owner_id` plus the
+exact `workflow_ref`; they do not assume the older name-only OIDC `sub` format.
 
 The successor is inert unless all of the following are true:
 

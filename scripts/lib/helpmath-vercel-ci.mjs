@@ -66,7 +66,7 @@ export function validatePolicy(policy) {
     "trustedSource",
     "vercel",
   ], "policy");
-  invariant(policy.schemaVersion === 1, "policy schemaVersion must be 1");
+  invariant(policy.schemaVersion === 2, "policy schemaVersion must be 2");
   invariant(
     policy.status === "prepared-not-activated" || policy.status === "active",
     "policy status must be prepared-not-activated or active",
@@ -86,9 +86,11 @@ export function validatePolicy(policy) {
 
   exactKeys(policy.github, [
     "candidateStatusContext",
+    "candidateWorkflowRef",
     "environment",
     "oidcAudience",
     "postflightStatusContext",
+    "postflightWorkflowRef",
     "vercelApp",
   ], "policy.github");
   invariant(policy.github.environment === "helpmath-production", "GitHub environment drifted");
@@ -96,30 +98,62 @@ export function validatePolicy(policy) {
   invariant(STATUS_CONTEXT.test(policy.github.candidateStatusContext), "candidate status context is invalid");
   invariant(STATUS_CONTEXT.test(policy.github.postflightStatusContext), "postflight status context is invalid");
   invariant(policy.github.candidateStatusContext !== policy.github.postflightStatusContext, "status contexts must be distinct");
+  invariant(
+    policy.github.candidateWorkflowRef
+      === "HUDongpin/help-math-2-0-workbench/.github/workflows/vercel-production-smoke.yml@refs/heads/main",
+    "candidate workflow ref drifted",
+  );
+  invariant(
+    policy.github.postflightWorkflowRef
+      === "HUDongpin/help-math-2-0-workbench/.github/workflows/vercel-production-postflight.yml@refs/heads/main",
+    "postflight workflow ref drifted",
+  );
+  invariant(policy.github.candidateWorkflowRef !== policy.github.postflightWorkflowRef, "workflow refs must be distinct");
   exactKeys(policy.github.vercelApp, ["installationId", "senderLogin", "senderType"], "policy.github.vercelApp");
   invariant(policy.github.vercelApp.senderLogin === "vercel[bot]", "Vercel App sender login drifted");
   invariant(policy.github.vercelApp.senderType === "Bot", "Vercel App sender type drifted");
+  const providerId = (value) => typeof value === "string" && /^[1-9][0-9]{0,19}$/u.test(value);
   if (policy.status === "prepared-not-activated") {
     invariant(policy.github.vercelApp.installationId === null, "prepared policy must not invent an installation id");
   } else {
     invariant(
-      typeof policy.github.vercelApp.installationId === "string"
-        && /^[1-9][0-9]{0,19}$/u.test(policy.github.vercelApp.installationId),
+      providerId(policy.github.vercelApp.installationId),
       "active policy requires the exact Vercel GitHub App installation id",
     );
   }
 
-  exactKeys(policy.trustedSource, ["eventName", "header", "issuer", "jobWorkflowRef", "ref", "subject"], "policy.trustedSource");
+  exactKeys(policy.trustedSource, ["claims", "header", "issuer"], "policy.trustedSource");
   invariant(policy.trustedSource.issuer === "https://token.actions.githubusercontent.com", "OIDC issuer drifted");
-  invariant(policy.trustedSource.subject === "repo:HUDongpin/help-math-2-0-workbench:environment:helpmath-production", "OIDC subject drifted");
-  invariant(policy.trustedSource.eventName === "repository_dispatch", "trusted event must be repository_dispatch");
-  invariant(policy.trustedSource.ref === "refs/heads/main", "trusted ref must be refs/heads/main");
-  invariant(
-    policy.trustedSource.jobWorkflowRef
-      === "HUDongpin/help-math-2-0-workbench/.github/workflows/vercel-production-smoke.yml@refs/heads/main",
-    "trusted workflow ref drifted",
-  );
   invariant(policy.trustedSource.header === "x-vercel-trusted-oidc-idp-token", "trusted OIDC header drifted");
+  exactKeys(policy.trustedSource.claims, [
+    "aud",
+    "environment",
+    "event_name",
+    "ref",
+    "repository",
+    "repository_id",
+    "repository_owner",
+    "repository_owner_id",
+    "workflow_ref",
+  ], "policy.trustedSource.claims");
+  const claims = policy.trustedSource.claims;
+  invariant(claims.aud === policy.github.oidcAudience, "trusted OIDC audience drifted");
+  invariant(claims.repository === policy.repository, "trusted repository claim drifted");
+  invariant(claims.repository_owner === "HUDongpin", "trusted repository owner claim drifted");
+  invariant(claims.ref === "refs/heads/main", "trusted ref claim must be refs/heads/main");
+  invariant(claims.environment === policy.github.environment, "trusted environment claim drifted");
+  invariant(claims.event_name === "repository_dispatch", "trusted event claim must be repository_dispatch");
+  invariant(
+    claims.workflow_ref === policy.github.candidateWorkflowRef,
+    "trusted workflow_ref claim drifted",
+  );
+  if (policy.status === "prepared-not-activated") {
+    invariant(claims.repository_id === null, "prepared policy must not invent a GitHub repository id");
+    invariant(claims.repository_owner_id === null, "prepared policy must not invent a GitHub repository owner id");
+  } else {
+    invariant(providerId(claims.repository_id), "active policy requires the exact immutable GitHub repository_id claim");
+    invariant(providerId(claims.repository_owner_id), "active policy requires the exact immutable GitHub repository_owner_id claim");
+  }
 
   exactKeys(policy.routes, ["apexProbe", "courses", "forbidden", "roots"], "policy.routes");
   invariant(Array.isArray(policy.routes.roots) && policy.routes.roots.length === 2, "root route set must contain 2 rows");
@@ -182,7 +216,34 @@ export async function readPolicy(path) {
   return validatePolicy(JSON.parse(text));
 }
 
-export function validateDispatch({action, payload, checkoutSha, eventOrigin, repository, mode, policy}) {
+export function validateWorkflowContext(context, policy, mode) {
+  validatePolicy(policy);
+  invariant(policy.status === "active", "service identity policy is not active");
+  invariant(mode === "candidate" || mode === "postflight", "workflow context mode is invalid");
+  exactKeys(context, [
+    "eventName",
+    "ref",
+    "repository",
+    "repositoryId",
+    "repositoryOwner",
+    "repositoryOwnerId",
+    "workflowRef",
+  ], "GitHub workflow context");
+  const claims = policy.trustedSource.claims;
+  invariant(context.repository === claims.repository, "GitHub workflow repository drifted");
+  invariant(context.repositoryId === claims.repository_id, "GitHub workflow repository id drifted");
+  invariant(context.repositoryOwner === claims.repository_owner, "GitHub workflow repository owner drifted");
+  invariant(context.repositoryOwnerId === claims.repository_owner_id, "GitHub workflow repository owner id drifted");
+  invariant(context.ref === claims.ref, "GitHub workflow ref drifted");
+  invariant(context.eventName === claims.event_name, "GitHub workflow event name drifted");
+  const expectedWorkflowRef = mode === "candidate"
+    ? policy.github.candidateWorkflowRef
+    : policy.github.postflightWorkflowRef;
+  invariant(context.workflowRef === expectedWorkflowRef, `GitHub ${mode} workflow_ref drifted`);
+  return context;
+}
+
+export function validateDispatch({action, payload, checkoutSha, eventOrigin, workflowContext, mode, policy}) {
   validatePolicy(policy);
   invariant(policy.status === "active", "service identity policy is not active");
   invariant(mode === "candidate" || mode === "postflight", "dispatch mode is invalid");
@@ -190,7 +251,7 @@ export function validateDispatch({action, payload, checkoutSha, eventOrigin, rep
     ? "vercel.deployment.ready"
     : "vercel.deployment.promoted";
   invariant(action === expectedAction, `unexpected repository_dispatch action: ${action}`);
-  invariant(repository === policy.repository, "GitHub repository drifted");
+  validateWorkflowContext(workflowContext, policy, mode);
   invariant(SHA256.test(checkoutSha), "checkout SHA must be a full lowercase Git SHA");
   exactKeys(eventOrigin, ["installationId", "senderLogin", "senderType"], "dispatch origin");
   invariant(eventOrigin.installationId === policy.github.vercelApp.installationId, "dispatch installation id drifted");
@@ -222,7 +283,7 @@ export function validateDispatch({action, payload, checkoutSha, eventOrigin, rep
     deploymentUrl,
     githubAppInstallationId: eventOrigin.installationId,
     githubAppSenderLogin: eventOrigin.senderLogin,
-    gitRef: policy.trustedSource.ref,
+    gitRef: policy.trustedSource.claims.ref,
     gitSha: payload.git.sha,
     projectId: payload.project.id,
     projectName: payload.project.name,
@@ -392,10 +453,48 @@ export async function runSmoke({policy, mode, deployment, oidcToken, fetchImpl =
   };
 }
 
-export async function requestGithubOidcToken({requestUrl, requestToken, audience, fetchImpl = fetch}) {
+function decodeJwtPayload(token) {
+  invariant(typeof token === "string", "GitHub OIDC response did not contain a JWT");
+  const parts = token.split(".");
+  invariant(parts.length === 3 && parts.every((part) => part.length > 0), "GitHub OIDC response did not contain a JWT");
+  let payload;
+  try {
+    payload = JSON.parse(Buffer.from(parts[1], "base64url").toString("utf8"));
+  } catch {
+    throw new Error("GitHub OIDC JWT payload is invalid");
+  }
+  invariant(plainObject(payload), "GitHub OIDC JWT payload must be a plain object");
+  return payload;
+}
+
+export function validateGithubOidcClaims(token, {issuer, claims}) {
+  invariant(issuer === "https://token.actions.githubusercontent.com", "OIDC issuer drifted");
+  exactKeys(claims, [
+    "aud",
+    "environment",
+    "event_name",
+    "ref",
+    "repository",
+    "repository_id",
+    "repository_owner",
+    "repository_owner_id",
+    "workflow_ref",
+  ], "expected GitHub OIDC claims");
+  const payload = decodeJwtPayload(token);
+  invariant(payload.iss === issuer, "GitHub OIDC iss claim drifted");
+  for (const [name, expected] of Object.entries(claims)) {
+    invariant(typeof expected === "string" && expected.length > 0, `expected GitHub OIDC ${name} claim is unavailable`);
+    const actual = payload[name];
+    const matches = Array.isArray(actual) ? actual.includes(expected) : actual === expected;
+    invariant(matches, `GitHub OIDC ${name} claim drifted`);
+  }
+  return payload;
+}
+
+export async function requestGithubOidcToken({requestUrl, requestToken, issuer, claims, fetchImpl = fetch}) {
   invariant(typeof requestUrl === "string", "GitHub OIDC request URL is unavailable");
   invariant(typeof requestToken === "string" && requestToken.length >= 20, "GitHub OIDC request token is unavailable");
-  invariant(audience === "https://vercel.com/helpmath-production", "OIDC audience drifted");
+  invariant(claims?.aud === "https://vercel.com/helpmath-production", "OIDC audience drifted");
   const url = new URL(requestUrl);
   invariant(
     url.origin === "https://token.actions.githubusercontent.com"
@@ -403,7 +502,7 @@ export async function requestGithubOidcToken({requestUrl, requestToken, audience
       && url.password === "",
     "GitHub OIDC request origin drifted",
   );
-  url.searchParams.set("audience", audience);
+  url.searchParams.set("audience", claims.aud);
   const response = await fetchImpl(url, {
     headers: {authorization: `bearer ${requestToken}`},
     redirect: "error",
@@ -412,6 +511,6 @@ export async function requestGithubOidcToken({requestUrl, requestToken, audience
   invariant(response.status === 200, `GitHub OIDC endpoint returned ${response.status}`);
   const body = await response.json();
   exactKeys(body, ["value"], "GitHub OIDC response");
-  invariant(typeof body.value === "string" && body.value.split(".").length === 3, "GitHub OIDC response did not contain a JWT");
+  validateGithubOidcClaims(body.value, {issuer, claims});
   return body.value;
 }

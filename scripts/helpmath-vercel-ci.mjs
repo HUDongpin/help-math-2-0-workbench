@@ -9,6 +9,7 @@ import {
   requestGithubOidcToken,
   runSmoke,
   validateDispatch,
+  validateWorkflowContext,
 } from "./lib/helpmath-vercel-ci.mjs";
 
 const scriptPath = fileURLToPath(import.meta.url);
@@ -69,6 +70,18 @@ function checkoutSha() {
   return value;
 }
 
+function workflowContext() {
+  return {
+    eventName: requiredEnv("HELP_MATH_GITHUB_EVENT_NAME"),
+    ref: requiredEnv("HELP_MATH_GITHUB_REF"),
+    repository: requiredEnv("GITHUB_REPOSITORY"),
+    repositoryId: requiredEnv("HELP_MATH_GITHUB_REPOSITORY_ID"),
+    repositoryOwner: requiredEnv("HELP_MATH_GITHUB_REPOSITORY_OWNER"),
+    repositoryOwnerId: requiredEnv("HELP_MATH_GITHUB_REPOSITORY_OWNER_ID"),
+    workflowRef: requiredEnv("HELP_MATH_GITHUB_WORKFLOW_REF"),
+  };
+}
+
 async function validatePayload(values) {
   const mode = option(values, "--mode");
   const policy = await readPolicy(option(values, "--policy", {fallback: defaultPolicyPath}));
@@ -82,7 +95,7 @@ async function validatePayload(values) {
       senderLogin: requiredEnv("HELP_MATH_VERCEL_SENDER_LOGIN"),
       senderType: requiredEnv("HELP_MATH_VERCEL_SENDER_TYPE"),
     },
-    repository: requiredEnv("GITHUB_REPOSITORY"),
+    workflowContext: workflowContext(),
     mode,
     policy,
   });
@@ -107,10 +120,15 @@ async function requestOidc(values) {
   if (requiredEnv("HELP_MATH_VERCEL_SENDER_LOGIN") !== policy.github.vercelApp.senderLogin) {
     fail("OIDC request sender login drifted");
   }
+  if (requiredEnv("HELP_MATH_VERCEL_SENDER_TYPE") !== policy.github.vercelApp.senderType) {
+    fail("OIDC request sender type drifted");
+  }
+  validateWorkflowContext(workflowContext(), policy, "candidate");
   const token = await requestGithubOidcToken({
     requestUrl: requiredEnv("ACTIONS_ID_TOKEN_REQUEST_URL"),
     requestToken: requiredEnv("ACTIONS_ID_TOKEN_REQUEST_TOKEN"),
-    audience: policy.github.oidcAudience,
+    issuer: policy.trustedSource.issuer,
+    claims: policy.trustedSource.claims,
   });
   process.stdout.write(`::add-mask::${token}\n`);
   await githubOutput({token});

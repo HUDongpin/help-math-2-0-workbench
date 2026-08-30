@@ -47,6 +47,12 @@ jobs:
           HELP_MATH_VERCEL_PAYLOAD_JSON: ${{ toJSON(github.event.client_payload) }}
           HELP_MATH_VERCEL_SENDER_LOGIN: ${{ github.event.sender.login }}
           HELP_MATH_VERCEL_SENDER_TYPE: ${{ github.event.sender.type }}
+          HELP_MATH_GITHUB_EVENT_NAME: ${{ github.event_name }}
+          HELP_MATH_GITHUB_REF: ${{ github.ref }}
+          HELP_MATH_GITHUB_REPOSITORY_ID: ${{ github.repository_id }}
+          HELP_MATH_GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
+          HELP_MATH_GITHUB_REPOSITORY_OWNER_ID: ${{ github.repository_owner_id }}
+          HELP_MATH_GITHUB_WORKFLOW_REF: ${{ github.workflow_ref }}
         run: >-
           node scripts/helpmath-vercel-ci.mjs validate-payload
           --mode postflight

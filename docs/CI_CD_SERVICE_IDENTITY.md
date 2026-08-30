@@ -31,14 +31,20 @@ The identities are deliberately separate:
   It builds the protected `main` commit. No Owner CLI session or Vercel token
   is stored in GitHub. Before any OIDC token is requested, both workflows
   require the event's sender to be `vercel[bot]` and its GitHub App
-  installation ID to equal the reviewed ID in repository policy. This prevents
-  a forged `repository_dispatch` from redirecting the token to an unrelated
-  `vercel.app` origin.
+  installation ID to equal the reviewed ID in repository policy. They also
+  bind the immutable GitHub `repository_id` and `repository_owner_id`, the
+  repository name, ref, event, and `workflow_ref` from the live workflow
+  context. This prevents a forged `repository_dispatch` or a recycled
+  repository name from redirecting the token to an unrelated `vercel.app`
+  origin.
 - **Candidate access:** GitHub Actions requests one short-lived OIDC token with
   audience `https://vercel.com/helpmath-production`. Vercel Trusted Sources
-  accepts it only for the configured repository, environment, ref, event, and
-  workflow. The token crosses deployment protection; it cannot create,
-  promote, roll back, reconfigure, or delete a deployment.
+  accepts it only when every configured claim matches: audience, repository,
+  immutable repository and owner IDs, environment, ref, event, and the ordinary
+  workflow's `workflow_ref`. The runner parses and checks the same claims before
+  forwarding the token; Vercel independently verifies its signature. The token
+  crosses deployment protection; it cannot create, promote, roll back,
+  reconfigure, or delete a deployment.
 - **Promotion decision:** the GitHub environment `helpmath-production` supplies
   an auditable required-review boundary. The workflow posts only the exact
   `Vercel - helpmath-web: production-smoke` status to the deployed main SHA.
@@ -47,8 +53,9 @@ The identities are deliberately separate:
   job-scoped ephemeral `github.token`. Vercel Deployment Checks, not the
   workflow, promotes after the status passes.
 - **Postflight:** the provider-generated `vercel.deployment.promoted` event
-  binds the deployment ID, project, environment, ref, and SHA. The postflight
-  checks the public domain and posts a separate status.
+  binds the deployment ID, project, environment, ref, SHA, immutable repository
+  IDs, and the distinct postflight `workflow_ref`. The postflight checks the
+  public domain and posts a separate status. It receives no OIDC token.
 
 The workflows use no `${{ secrets.* }}` values, no `VERCEL_TOKEN`, no
 Protection Bypass secret, no Owner credential helper, and no Vercel mutation
@@ -71,7 +78,12 @@ The machine-readable policy is
   `HELP_MATH_CICD_IDENTITY_ACTIVATED`;
 - Vercel GitHub App sender `vercel[bot]` and an installation ID that is
   deliberately `null` while this package is prepared but not activated;
-- Trusted Sources issuer, subject, audience, workflow, ref, event, and header;
+- Trusted Sources issuer, audience, repository name, immutable GitHub
+  `repository_id` and `repository_owner_id`, environment, `workflow_ref`, ref,
+  event, and header; the two immutable IDs are deliberately `null` while the
+  package is prepared;
+- distinct candidate and postflight workflow refs, so the public postflight is
+  not incorrectly validated as the OIDC-bearing candidate workflow;
 - the exact eight-lesson, 426-page bilingual route matrix;
 - fail-closed unpublished routes and apex redirect probe; and
 - all-false strict-completion, formal-publication, Nova, LRS, and Contact
@@ -81,10 +93,21 @@ Changing those values requires a reviewed pull request. Provider settings do
 not override a mismatch in the checked-in policy.
 
 Activation requires a narrow follow-up pull request that records the exact
-repository-restricted Vercel GitHub App installation ID and changes policy
+repository-restricted Vercel GitHub App installation ID, the live GitHub
+`repository_id`, and the live `repository_owner_id`, then changes policy
 `status` from `prepared-not-activated` to `active`. The runtime rejects every
-dispatch, OIDC request, and smoke run while the status is still prepared. Never
-guess, preallocate, or copy an installation ID from another repository.
+dispatch, OIDC request, and smoke run while the status is still prepared or any
+one of these three IDs is absent. Never guess, preallocate, or copy an ID from
+another repository.
+
+Do not bind Trusted Sources only to the historical name-based GitHub OIDC
+`sub`. GitHub introduced immutable `sub` formats containing owner/repository
+IDs for repositories created after 2026-07-15, renamed after that date, or
+opted into immutable subjects. This policy instead uses the stable
+`repository_id` and `repository_owner_id` claims directly and uses
+`workflow_ref` for this ordinary workflow; `job_workflow_ref` is not a
+substitute unless the job actually invokes a reusable workflow. See GitHub's
+[OIDC claim reference](https://docs.github.com/en/actions/reference/security/oidc#oidc-token-claims).
 
 ## Required management policy change
 
@@ -119,8 +142,11 @@ command arguments, or ordinary logs:
    where the current GitHub plan supports those controls.
 4. Store **no secrets** in the environment. The package does not accept a
    Vercel token or protection-bypass secret.
-5. After the Vercel GitHub App is authorized only for this repository, record
-   its exact installation ID in a reviewed activation pull request and change
+5. After the Vercel GitHub App is authorized only for this repository, obtain
+   the non-secret immutable `github.repository_id` and
+   `github.repository_owner_id` from the repository context. Record those two
+   IDs plus the exact App installation ID in a reviewed activation pull
+   request, configure Vercel with the same claim values, and only then change
    the machine-readable policy status to `active`.
 6. Leave the repository Actions variable
    `HELP_MATH_CICD_IDENTITY_ACTIVATED` absent until every Vercel control below
@@ -151,16 +177,30 @@ Use the existing `helpmath-web` project. Do not create a replacement project.
    settings from `docs/DEPLOYMENT.md` unchanged.
 4. Keep Vercel `repository_dispatch` delivery enabled for
    `vercel.deployment.ready` and `vercel.deployment.promoted`.
-5. Add a Trusted Sources external OIDC rule with these exact bindings:
+5. Add a **GitHub Actions** Trusted Sources external OIDC rule, switch to
+   **Edit raw claims**, and configure these exact bindings. Replace the two
+   bracketed values only with the live immutable IDs recorded in the activation
+   pull request:
 
    ```text
-   issuer      = https://token.actions.githubusercontent.com
-   audience    = https://vercel.com/helpmath-production
-   subject     = repo:HUDongpin/help-math-2-0-workbench:environment:helpmath-production
-   event_name  = repository_dispatch
-   ref         = refs/heads/main
-   workflow    = HUDongpin/help-math-2-0-workbench/.github/workflows/vercel-production-smoke.yml@refs/heads/main
+   issuer             = https://token.actions.githubusercontent.com
+   aud                = https://vercel.com/helpmath-production
+   repository         = HUDongpin/help-math-2-0-workbench
+   repository_id      = <exact github.repository_id>
+   repository_owner   = HUDongpin
+   repository_owner_id = <exact github.repository_owner_id>
+   environment        = helpmath-production
+   event_name         = repository_dispatch
+   ref                = refs/heads/main
+   workflow_ref       = HUDongpin/help-math-2-0-workbench/.github/workflows/vercel-production-smoke.yml@refs/heads/main
    ```
+
+   Do not configure a guessed name-only `sub`, and do not use
+   `job_workflow_ref`. Every listed raw claim must be present and must match
+   exactly. Apply the rule only to the `production` environment on
+   `helpmath-web`. Vercel documents the required audience, identity claims,
+   exact matching behavior, custom audience, and raw `workflow_ref` option in
+   [Trusted Sources](https://vercel.com/docs/deployment-protection/methods-to-bypass-deployment-protection/trusted-sources).
 
 6. Do not add a long-lived Protection Bypass for Automation secret. The smoke
    workflow must pass only through the Trusted Sources OIDC rule.
@@ -194,8 +234,10 @@ must not be represented as the Git-service-identity result.
    the repository-restricted Vercel for GitHub installation, and verify that
    Production domain auto-assignment remains off. Do not create a deployment
    yet.
-3. Merge the narrow activation pull request containing the observed
-   installation ID and `status: active`, then rerun the focused identity tests.
+3. Merge the narrow activation pull request containing the observed App
+   installation ID, GitHub repository ID, owner ID, and `status: active`, then
+   rerun the focused identity tests. The Vercel raw-claim rule must contain the
+   exact same values.
 4. Set the repository Actions variable
    `HELP_MATH_CICD_IDENTITY_ACTIVATED=true`. Keep the GitHub environment free
    of that variable and of all secrets.
@@ -224,8 +266,9 @@ must not be represented as the Git-service-identity result.
 ## Failure and rollback behavior
 
 - No activation variable: the workflows skip and no promotion status exists.
-- Prepared policy, absent/wrong installation ID, or non-Vercel sender: the
-  workflow fails before requesting or forwarding an OIDC token.
+- Prepared policy, absent/wrong installation ID, immutable repository/owner ID,
+  `workflow_ref`, or non-Vercel sender: the workflow fails before requesting or
+  forwarding an OIDC token.
 - Wrong project, environment, branch, SHA, state, ID, or URL: no status is
   posted, so promotion remains blocked.
 - Environment review withheld: the candidate remains unpromoted.
