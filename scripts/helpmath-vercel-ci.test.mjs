@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import {readFile} from "node:fs/promises";
 import test from "node:test";
 import {
+  DEPLOYMENT_PROVENANCE_HEADERS,
   requestGithubOidcToken,
   runSmoke,
   validateDispatch,
@@ -49,9 +50,9 @@ function provenanceHeaders(overrides = {}) {
     ...overrides,
   };
   return {
-    "x-helpmath-vercel-project-id": provenance.projectId,
-    "x-helpmath-vercel-deployment-url": provenance.deploymentUrl,
-    "x-helpmath-git-commit-sha": provenance.gitSha,
+    [DEPLOYMENT_PROVENANCE_HEADERS.projectId]: provenance.projectId,
+    [DEPLOYMENT_PROVENANCE_HEADERS.deploymentUrl]: provenance.deploymentUrl,
+    [DEPLOYMENT_PROVENANCE_HEADERS.gitSha]: provenance.gitSha,
   };
 }
 
@@ -106,9 +107,9 @@ test("policy fixes one secretless Vercel Git and GitHub OIDC boundary", () => {
 
 test("application responses expose only fail-closed build provenance fields", () => {
   assert.match(nextConfigSource, /source: '\/:path\*'/u);
-  assert.match(nextConfigSource, /X-HELP-Math-Vercel-Project-ID/u);
-  assert.match(nextConfigSource, /X-HELP-Math-Vercel-Deployment-URL/u);
-  assert.match(nextConfigSource, /X-HELP-Math-Git-Commit-SHA/u);
+  for (const headerName of Object.values(DEPLOYMENT_PROVENANCE_HEADERS)) {
+    assert.match(nextConfigSource, new RegExp(headerName, "iu"));
+  }
   assert.match(nextConfigSource, /process\.env\.VERCEL_PROJECT_ID/u);
   assert.match(nextConfigSource, /process\.env\.VERCEL_URL/u);
   assert.match(nextConfigSource, /process\.env\.VERCEL_GIT_COMMIT_SHA/u);

@@ -5,7 +5,7 @@ const DEPLOYMENT_ID = /^dpl_[A-Za-z0-9]+$/u;
 const STATUS_CONTEXT = /^[A-Za-z0-9][A-Za-z0-9 .:_/-]{0,99}$/u;
 const MAX_RESPONSE_BYTES = 5 * 1024 * 1024;
 const REQUEST_TIMEOUT_MS = 20_000;
-const DEPLOYMENT_PROVENANCE_HEADERS = Object.freeze({
+export const DEPLOYMENT_PROVENANCE_HEADERS = Object.freeze({
   gitSha: "x-helpmath-git-commit-sha",
   projectId: "x-helpmath-vercel-project-id",
   deploymentUrl: "x-helpmath-vercel-deployment-url",

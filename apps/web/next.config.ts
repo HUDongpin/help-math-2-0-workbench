@@ -191,15 +191,15 @@ const securityHeaders = [
 
 const deploymentProvenanceHeaders = [
   {
-    key: 'X-HELP-Math-Vercel-Project-ID',
+    key: 'X-Helpmath-Vercel-Project-ID',
     value: helpMathVercelProjectId,
   },
   {
-    key: 'X-HELP-Math-Vercel-Deployment-URL',
+    key: 'X-Helpmath-Vercel-Deployment-URL',
     value: helpMathVercelDeploymentUrl,
   },
   {
-    key: 'X-HELP-Math-Git-Commit-SHA',
+    key: 'X-Helpmath-Git-Commit-SHA',
     value: helpMathVercelGitCommitSha,
   },
 ];
