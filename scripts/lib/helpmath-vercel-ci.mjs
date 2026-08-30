@@ -5,6 +5,11 @@ const DEPLOYMENT_ID = /^dpl_[A-Za-z0-9]+$/u;
 const STATUS_CONTEXT = /^[A-Za-z0-9][A-Za-z0-9 .:_/-]{0,99}$/u;
 const MAX_RESPONSE_BYTES = 5 * 1024 * 1024;
 const REQUEST_TIMEOUT_MS = 20_000;
+const DEPLOYMENT_PROVENANCE_HEADERS = Object.freeze({
+  gitSha: "x-helpmath-git-commit-sha",
+  projectId: "x-helpmath-vercel-project-id",
+  deploymentUrl: "x-helpmath-vercel-deployment-url",
+});
 
 function invariant(condition, message) {
   if (!condition) throw new Error(message);
@@ -355,6 +360,27 @@ function requestHeaders({mode, oidcToken, policy}) {
   return headers;
 }
 
+function validateResponseDeploymentProvenance({response, path, policy, deploymentUrl, gitSha}) {
+  const observed = {
+    projectId: response.headers.get(DEPLOYMENT_PROVENANCE_HEADERS.projectId),
+    deploymentUrl: response.headers.get(DEPLOYMENT_PROVENANCE_HEADERS.deploymentUrl),
+    gitSha: response.headers.get(DEPLOYMENT_PROVENANCE_HEADERS.gitSha),
+  };
+  invariant(
+    observed.projectId === policy.vercel.projectId,
+    `route ${path} deployment provenance project id drifted`,
+  );
+  invariant(
+    observed.deploymentUrl === deploymentUrl,
+    `route ${path} deployment provenance URL drifted`,
+  );
+  invariant(
+    observed.gitSha === gitSha,
+    `route ${path} deployment provenance Git SHA drifted`,
+  );
+  return observed;
+}
+
 export async function runSmoke({policy, mode, deployment, oidcToken, fetchImpl = fetch, now = () => new Date()}) {
   validatePolicy(policy);
   invariant(policy.status === "active", "service identity policy is not active");
@@ -366,11 +392,13 @@ export async function runSmoke({policy, mode, deployment, oidcToken, fetchImpl =
     deployment.githubAppInstallationId === policy.github.vercelApp.installationId,
     "deployment installation id drifted",
   );
+  const eventDeploymentUrl = validatedDeploymentUrl(deployment.deploymentUrl);
   const baseOrigin = mode === "candidate"
-    ? validatedDeploymentUrl(deployment.deploymentUrl)
+    ? eventDeploymentUrl
     : "https://www.helpmath.ai";
   const headers = requestHeaders({mode, oidcToken, policy});
   const results = [];
+  let observedDeploymentIdentity = null;
 
   for (const check of expectedChecks(policy)) {
     const path = validateRoutePath(check.path, "smoke route");
@@ -382,13 +410,34 @@ export async function runSmoke({policy, mode, deployment, oidcToken, fetchImpl =
     });
     invariant(new URL(response.url).origin === baseOrigin, `route ${path} escaped the expected origin`);
     invariant(response.status === check.status, `route ${path} returned ${response.status}; expected ${check.status}`);
+    const routeDeploymentIdentity = validateResponseDeploymentProvenance({
+      response,
+      path,
+      policy,
+      deploymentUrl: eventDeploymentUrl,
+      gitSha: deployment.gitSha,
+    });
+    if (observedDeploymentIdentity === null) {
+      observedDeploymentIdentity = routeDeploymentIdentity;
+    } else {
+      invariant(
+        JSON.stringify(routeDeploymentIdentity) === JSON.stringify(observedDeploymentIdentity),
+        `route ${path} deployment provenance changed during the route sweep`,
+      );
+    }
     const body = await boundedBody(response);
     if (check.marker) invariant(body.includes(check.marker), `route ${path} omitted its required marker`);
     if (mode === "candidate") {
       const robots = response.headers.get("x-robots-tag") ?? "";
       invariant(robots.toLowerCase().includes("noindex"), `protected candidate route ${path} omitted x-robots-tag: noindex`);
     }
-    results.push({path, status: response.status, requiredMarker: check.marker, pass: true});
+    results.push({
+      path,
+      status: response.status,
+      requiredMarker: check.marker,
+      deploymentProvenanceMatch: true,
+      pass: true,
+    });
   }
 
   let apexRedirect = null;
@@ -412,8 +461,9 @@ export async function runSmoke({policy, mode, deployment, oidcToken, fetchImpl =
 
   const generatedAt = now();
   invariant(generatedAt instanceof Date && Number.isFinite(generatedAt.getTime()), "receipt time is invalid");
+  invariant(observedDeploymentIdentity !== null, "deployment provenance was not observed");
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     evidenceKind: mode === "candidate"
       ? "HELP_MATH_VERCEL_GIT_PRODUCTION_CANDIDATE_SMOKE"
       : "HELP_MATH_VERCEL_GIT_PRODUCTION_POSTFLIGHT",
@@ -429,11 +479,30 @@ export async function runSmoke({policy, mode, deployment, oidcToken, fetchImpl =
       installationId: deployment.githubAppInstallationId,
       storedCredential: false,
     },
+    eventDeploymentIdentity: {
+      projectId: policy.vercel.projectId,
+      deploymentId: deployment.deploymentId,
+      deploymentUrl: eventDeploymentUrl,
+      gitSha: deployment.gitSha,
+    },
+    observedDomainDeploymentIdentity: {
+      origin: baseOrigin,
+      projectId: observedDeploymentIdentity.projectId,
+      deploymentUrl: observedDeploymentIdentity.deploymentUrl,
+      gitSha: observedDeploymentIdentity.gitSha,
+      routeResponseCount: results.length,
+      consistentAcrossRouteSweep: true,
+    },
+    deploymentBinding: {
+      comparedFields: ["projectId", "deploymentUrl", "gitSha"],
+      eventToObservedDomainExactMatch: true,
+      responseCount: results.length,
+    },
     vercel: {
       projectId: policy.vercel.projectId,
       projectName: policy.vercel.projectName,
       deploymentId: deployment.deploymentId,
-      deploymentUrl: deployment.deploymentUrl,
+      deploymentUrl: eventDeploymentUrl,
       environment: policy.vercel.environment,
       accessIdentity: mode === "candidate" ? "github-actions-oidc-trusted-source" : "public-domain",
     },
@@ -485,8 +554,7 @@ export function validateGithubOidcClaims(token, {issuer, claims}) {
   for (const [name, expected] of Object.entries(claims)) {
     invariant(typeof expected === "string" && expected.length > 0, `expected GitHub OIDC ${name} claim is unavailable`);
     const actual = payload[name];
-    const matches = Array.isArray(actual) ? actual.includes(expected) : actual === expected;
-    invariant(matches, `GitHub OIDC ${name} claim drifted`);
+    invariant(typeof actual === "string" && actual === expected, `GitHub OIDC ${name} claim drifted`);
   }
   return payload;
 }

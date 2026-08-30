@@ -13,6 +13,10 @@ const policy = validatePolicy(JSON.parse(await readFile(
   new URL("../.github/helpmath-vercel-production-policy.json", import.meta.url),
   "utf8",
 )));
+const nextConfigSource = await readFile(
+  new URL("../apps/web/next.config.ts", import.meta.url),
+  "utf8",
+);
 const activePolicy = validatePolicy({
   ...structuredClone(policy),
   status: "active",
@@ -36,6 +40,20 @@ const activePolicy = validatePolicy({
 const gitSha = "b2263fad156054239a74acdbf4b94048c9a45f69";
 const deploymentId = "dpl_2YL2yrWS3618VGQB36nusPt7yLhB";
 const deploymentUrl = "https://helpmath-example-team.vercel.app";
+
+function provenanceHeaders(overrides = {}) {
+  const provenance = {
+    projectId: activePolicy.vercel.projectId,
+    deploymentUrl,
+    gitSha,
+    ...overrides,
+  };
+  return {
+    "x-helpmath-vercel-project-id": provenance.projectId,
+    "x-helpmath-vercel-deployment-url": provenance.deploymentUrl,
+    "x-helpmath-git-commit-sha": provenance.gitSha,
+  };
+}
 
 function workflowContext(overrides = {}, mode = "candidate") {
   return {
@@ -84,6 +102,17 @@ test("policy fixes one secretless Vercel Git and GitHub OIDC boundary", () => {
     Object.values(policy.releaseBoundary).filter((value) => typeof value === "boolean"),
     [false, false, false, false, false],
   );
+});
+
+test("application responses expose only fail-closed build provenance fields", () => {
+  assert.match(nextConfigSource, /source: '\/:path\*'/u);
+  assert.match(nextConfigSource, /X-HELP-Math-Vercel-Project-ID/u);
+  assert.match(nextConfigSource, /X-HELP-Math-Vercel-Deployment-URL/u);
+  assert.match(nextConfigSource, /X-HELP-Math-Git-Commit-SHA/u);
+  assert.match(nextConfigSource, /process\.env\.VERCEL_PROJECT_ID/u);
+  assert.match(nextConfigSource, /process\.env\.VERCEL_URL/u);
+  assert.match(nextConfigSource, /process\.env\.VERCEL_GIT_COMMIT_SHA/u);
+  assert.match(nextConfigSource, /'unavailable'/u);
 });
 
 test("policy cannot activate without all three observed provider identity IDs", () => {
@@ -207,7 +236,7 @@ test("dispatch validation rejects immutable repository identity and workflow_ref
   );
 });
 
-function responseFor(rawUrl, {candidate}) {
+function responseFor(rawUrl, {candidate, provenance = {}}) {
   const url = new URL(rawUrl);
   if (url.origin === "https://helpmath.ai") {
     const location = `https://www.helpmath.ai${url.pathname}${url.search}`;
@@ -221,7 +250,10 @@ function responseFor(rawUrl, {candidate}) {
     const course = activePolicy.routes.courses.find((row) => url.pathname.endsWith(row.path));
     body = course ? `<main data-current-js-pages=\"${course.pageCount}\">HELP Math</main>` : "<main>HELP Math</main>";
   }
-  const headers = {"content-length": String(Buffer.byteLength(body))};
+  const headers = {
+    "content-length": String(Buffer.byteLength(body)),
+    ...(provenance === null ? {} : provenanceHeaders(provenance)),
+  };
   if (candidate) headers["x-robots-tag"] = "noindex, nofollow";
   const response = new Response(body, {status: forbidden ? 404 : 200, headers});
   Object.defineProperty(response, "url", {value: url.href});
@@ -245,6 +277,25 @@ test("candidate smoke checks all 25 protected routes and emits no token or respo
   assert.equal(receipt.checks.routeCount, 25);
   assert.equal(receipt.checks.passed, 25);
   assert.equal(receipt.checks.apexRedirect, null);
+  assert.equal(receipt.schemaVersion, 2);
+  assert.deepEqual(receipt.eventDeploymentIdentity, {
+    projectId: activePolicy.vercel.projectId,
+    deploymentId,
+    deploymentUrl,
+    gitSha,
+  });
+  assert.deepEqual(receipt.observedDomainDeploymentIdentity, {
+    origin: deploymentUrl,
+    projectId: activePolicy.vercel.projectId,
+    deploymentUrl,
+    gitSha,
+    routeResponseCount: 25,
+    consistentAcrossRouteSweep: true,
+  });
+  assert.equal(
+    receipt.checks.results.every((result) => result.deploymentProvenanceMatch === true),
+    true,
+  );
   assert.equal(receipt.vercel.accessIdentity, "github-actions-oidc-trusted-source");
   assert.deepEqual(receipt.githubServiceIdentity, {
     appSender: "vercel[bot]",
@@ -302,6 +353,7 @@ test("candidate smoke rejects an oversized response before retaining its body", 
           headers: {
             "content-length": String((5 * 1024 * 1024) + 1),
             "x-robots-tag": "noindex",
+            ...provenanceHeaders(),
           },
         });
         Object.defineProperty(response, "url", {value: url.href});
@@ -330,6 +382,85 @@ test("public postflight checks routes plus exact apex path and query preservatio
     pass: true,
   });
   assert.equal(receipt.vercel.accessIdentity, "public-domain");
+  assert.deepEqual(receipt.observedDomainDeploymentIdentity, {
+    origin: "https://www.helpmath.ai",
+    projectId: activePolicy.vercel.projectId,
+    deploymentUrl,
+    gitSha,
+    routeResponseCount: 25,
+    consistentAcrossRouteSweep: true,
+  });
+  assert.deepEqual(receipt.deploymentBinding, {
+    comparedFields: ["projectId", "deploymentUrl", "gitSha"],
+    eventToObservedDomainExactMatch: true,
+    responseCount: 25,
+  });
+});
+
+test("public postflight rejects missing or mismatched deployment provenance", async () => {
+  const cases = [
+    {
+      label: "missing",
+      provenance: null,
+      pattern: /provenance project id drifted/iu,
+    },
+    {
+      label: "wrong project",
+      provenance: {projectId: "prj_wrong"},
+      pattern: /provenance project id drifted/iu,
+    },
+    {
+      label: "same SHA but wrong deployment",
+      provenance: {deploymentUrl: "https://different-deployment.vercel.app"},
+      pattern: /provenance URL drifted/iu,
+    },
+    {
+      label: "right deployment but wrong SHA",
+      provenance: {gitSha: "a".repeat(40)},
+      pattern: /provenance Git SHA drifted/iu,
+    },
+  ];
+  for (const item of cases) {
+    await assert.rejects(
+      runSmoke({
+        policy: activePolicy,
+        mode: "postflight",
+        deployment: {deploymentId, deploymentUrl, gitSha, githubAppInstallationId: "12345678"},
+        fetchImpl: async (url) => responseFor(url, {
+          candidate: false,
+          provenance: item.provenance,
+        }),
+      }),
+      item.pattern,
+      item.label,
+    );
+  }
+});
+
+test("public postflight rejects an alias change during the route sweep", async () => {
+  let publicRouteResponses = 0;
+  await assert.rejects(
+    runSmoke({
+      policy: activePolicy,
+      mode: "postflight",
+      deployment: {deploymentId, deploymentUrl, gitSha, githubAppInstallationId: "12345678"},
+      fetchImpl: async (url) => {
+        const parsed = new URL(url);
+        if (parsed.origin === "https://helpmath.ai") {
+          return responseFor(url, {candidate: false});
+        }
+        publicRouteResponses += 1;
+        return responseFor(url, {
+          candidate: false,
+          provenance: publicRouteResponses === 1
+            ? {}
+            : {deploymentUrl: "https://replacement-deployment.vercel.app"},
+        });
+      },
+    }),
+    /provenance URL drifted/iu,
+  );
+  assert.equal(publicRouteResponses, 2);
 });
 
 test("OIDC exchange requests the fixed audience and returns only a JWT", async () => {
@@ -384,4 +515,19 @@ test("OIDC claim validation rejects immutable repository and workflow identity d
     }), expected),
     /workflow_ref claim drifted/iu,
   );
+});
+
+test("OIDC claim validation rejects array supersets instead of weakening exact claims", () => {
+  const expected = {issuer: activePolicy.trustedSource.issuer, claims: activePolicy.trustedSource.claims};
+  for (const name of ["aud", "repository"]) {
+    const payloadClaims = {
+      iss: activePolicy.trustedSource.issuer,
+      ...activePolicy.trustedSource.claims,
+      [name]: [activePolicy.trustedSource.claims[name], "attacker-controlled-value"],
+    };
+    assert.throws(
+      () => validateGithubOidcClaims(jwt(payloadClaims), expected),
+      new RegExp(`GitHub OIDC ${name} claim drifted`, "u"),
+    );
+  }
 });

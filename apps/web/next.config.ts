@@ -37,6 +37,37 @@ const currentJsCandidateQaBuild =
   && process.env.CURRENT_JS_CANDIDATE_PROFILE_ENABLED === 'true'
   && process.env.NODE_ENV === 'development'
   && process.env.VERCEL_ENV === undefined;
+const helpMathVercelProjectId =
+  process.env.VERCEL_PROJECT_ID === 'prj_q3v5Ue0zCL1T9rzTFD21KpNc5tzu'
+    ? process.env.VERCEL_PROJECT_ID
+    : 'unavailable';
+const helpMathVercelGitCommitSha =
+  /^[0-9a-f]{40}$/.test(process.env.VERCEL_GIT_COMMIT_SHA ?? '')
+    ? process.env.VERCEL_GIT_COMMIT_SHA!
+    : 'unavailable';
+const helpMathVercelDeploymentUrl = (() => {
+  const raw = process.env.VERCEL_URL;
+  if (!raw) return 'unavailable';
+  try {
+    const value = new URL(`https://${raw}`);
+    if (
+      value.protocol !== 'https:'
+      || value.username !== ''
+      || value.password !== ''
+      || value.port !== ''
+      || value.pathname !== '/'
+      || value.search !== ''
+      || value.hash !== ''
+      || !value.hostname.endsWith('.vercel.app')
+      || value.hostname !== raw
+    ) {
+      return 'unavailable';
+    }
+    return value.origin;
+  } catch {
+    return 'unavailable';
+  }
+})();
 const novaFullStackFakeTransportRequested = [
   process.env.NOVA_TEST_FAKE_TRANSPORT_AUTHORIZATION,
   process.env.NOVA_TEST_FAKE_TRANSPORT_MODE,
@@ -158,6 +189,21 @@ const securityHeaders = [
   {key: 'X-Frame-Options', value: 'DENY'}
 ];
 
+const deploymentProvenanceHeaders = [
+  {
+    key: 'X-HELP-Math-Vercel-Project-ID',
+    value: helpMathVercelProjectId,
+  },
+  {
+    key: 'X-HELP-Math-Vercel-Deployment-URL',
+    value: helpMathVercelDeploymentUrl,
+  },
+  {
+    key: 'X-HELP-Math-Git-Commit-SHA',
+    value: helpMathVercelGitCommitSha,
+  },
+];
+
 const embeddedCourseAdapterHeaders = [
   {
     key: 'Content-Security-Policy',
@@ -242,6 +288,10 @@ const nextConfig: NextConfig = {
   transpilePackages: ['@helpmath/demos'],
   async headers() {
     return [
+      {
+        source: '/:path*',
+        headers: deploymentProvenanceHeaders,
+      },
       {
         source: '/((?!flash-assets/courses/).*)',
         headers: securityHeaders
