@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "directory": "HELP MATH_ORIGINAL FILES",
+    "fileCount": 7919,
+    "totalBytes": 2779928841,
+    "checksumSetSha256": "0d6f20e50576c73aac38aa5a88610c654bbe29430044c2db43d8d6236cf8fe0f",
+    "extensions": {
+      "": 4,
+      "as": 21,
+      "fla": 1398,
+      "jpg": 6,
+      "mp3": 4565,
+      "swf": 1894,
+      "xml": 31
+    }
+  },
+  "swf": {
+    "placements": 1894,
+    "uniqueAssets": 1873,
+    "duplicateGroups": 21,
+    "duplicatePlacements": 21,
+    "byCollection": {
+      "course": 1385,
+      "keyterm": 459,
+      "formula": 50,
+      "unknown": 0
+    },
+    "headerParseErrors": 0,
+    "signatures": [
+      "CWS",
+      "FWS"
+    ],
+    "fpsValues": [
+      12
+    ],
+    "totalFrames": 32149,
+    "courseShells": 33
+  },
+  "pairing": {
+    "pairedSwfFla": 1181,
+    "swfOnly": 713,
+    "flaOnly": 217
+  },
+  "fla": {
+    "files": 1398,
+    "compoundBinary": 1398,
+    "unrecognized": 0
+  },
+  "xml": {
+    "files": 31,
+    "courseFiles": 29,
+    "keytermFiles": 2,
+    "filesWithBareAmpersands": 8
+  },
+  "audio": {
+    "files": 4565,
+    "exactAssociations": 959,
+    "groupCount": 29
+  },
+  "references": {
+    "course": {
+      "occurrences": 1751,
+      "unique": 1750,
+      "resolved": 1159,
+      "missing": 591,
+      "unreferencedExisting": 226
+    },
+    "keyterm": {
+      "occurrences": 1515,
+      "unique": 760,
+      "resolved": 443,
+      "missing": 317,
+      "unreferencedExisting": 16
+    }
+  },
+  "migration": {
+    "status": "intake-catalog-only",
+    "complete": 0,
+    "discoveredPlacements": 1894,
+    "discoveredCanonicalAssets": 1873
+  },
+  "discrepancies": [
+    {
+      "id": "keyterm-missing-reference-count",
+      "approvedPlanValue": 316,
+      "evidenceCorrectValue": 317,
+      "explanation": "The earlier count skipped Cubed_root.swf because both keyterm XML files spell the attribute as `ExFileName =\"Cubed_root.swf\"` (whitespace before `=`). Tolerant parsing includes it; no matching SWF or FLA exists.",
+      "sourcePaths": [
+        "HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTEG4.xml",
+        "HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTSG4.xml"
+      ]
+    }
+  ]
+}

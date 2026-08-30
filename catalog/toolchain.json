@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "recordedOn": "2026-07-21",
+  "platform": "macOS arm64",
+  "runtime": {
+    "node": "24.18.0",
+    "npm": "11.16.0",
+    "python": "3.12.7",
+    "java": "Eclipse Temurin OpenJDK JRE 21.0.11+10"
+  },
+  "application": {
+    "productNextJs": "16.2.10",
+    "productReact": "19.2.7",
+    "legacyWorkbenchNextJs": "16.2.10",
+    "legacyWorkbenchReact": "19.2.7",
+    "typescript": "6.0.3"
+  },
+  "flashForensics": {
+    "ffdec": {
+      "version": "26.2.1",
+      "release": "https://github.com/jindrapetrik/jpexs-decompiler/releases/tag/version26.2.1",
+      "releaseAsset": "ffdec_26.2.1_macosx.zip",
+      "releaseAssetSha256": "a160249e037115b935db253e993a6c00694f5d89bc4808c379e9a08a4034795c"
+    },
+    "swfmill": {
+      "version": "0.3.6",
+      "note": "The installed Homebrew formula is deprecated upstream and scheduled as disabled from 2026-01-12; retain versioned XML evidence and do not make it the only audit authority."
+    },
+    "ruffle": {
+      "npmVersion": "0.4.1",
+      "role": "forensic-reference-only"
+    }
+  },
+  "mediaAndValidation": {
+    "ffmpeg": "8.1.2",
+    "imageMagick": "7.1.2-27 Q16-HDRI",
+    "playwright": "1.61.1",
+    "chromium": "Google Chrome for Testing 149.0.7827.55"
+  },
+  "authoringEvidence": {
+    "adobeAnimateDetected": false,
+    "impact": "Binary FLA library/timeline/font inspection requires an authorized Adobe Animate workstation; automated SWF evidence cannot replace this gate."
+  }
+}
