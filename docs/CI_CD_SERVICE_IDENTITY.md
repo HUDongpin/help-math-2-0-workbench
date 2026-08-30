@@ -64,8 +64,12 @@ The identities are deliberately separate:
   verifier plus the exact deployment-asset closure from a clean Git checkout.
   It does not request OIDC, write statuses, or depend on ignored private source
   archives. The source-complete `Workbench` job remains a distinct diagnostic
-  gate and is never reinterpreted as site-deployment or lesson-publication
-  evidence.
+  job and is not required for this site-release path. `Site workspace` uses
+  `npm run test:deployment`, whose recursive runner keeps ordinary security,
+  route, unit, and exact deployment-asset tests while excluding only the seven
+  source-bound tests that require candidate assets, legacy shell assets, private
+  migration/source files, or private reports. Neither job is reinterpreted as
+  Flash fidelity or lesson-publication evidence.
 
 The workflows use no `${{ secrets.* }}` values, no `VERCEL_TOKEN`, no
 Protection Bypass secret, no Owner credential helper, and no Vercel mutation

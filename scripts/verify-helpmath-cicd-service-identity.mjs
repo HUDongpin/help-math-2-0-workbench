@@ -19,6 +19,7 @@ export function validateServiceIdentityDocuments(documents) {
     ciWorkflow,
     core,
     deploymentDoc,
+    deploymentSafeTestRunner,
     identityDoc,
     ignore,
     postflightWorkflow,
@@ -73,6 +74,24 @@ export function validateServiceIdentityDocuments(documents) {
     "--mode postflight",
     "vercel-production-postflight.json",
   ], "postflight workflow");
+
+  includesAll(deploymentSafeTestRunner, [
+    "EXCLUDED_TEST_PATHS",
+    "tests/current-js-asset-profiles.test.ts",
+    "tests/g4-l3-lesson-navigation.test.ts",
+    "tests/g4-l3-showcase-asset-policy.test.ts",
+    "tests/g4-l3-whole-lesson.test.ts",
+    "tests/g5-l4-executive-preview-content.test.ts",
+    "tests/g5-l4-whole-lesson-player-descriptor.test.ts",
+    "tests/page-only-whole-lesson-availability.test.ts",
+    "REQUIRED_DEPLOYMENT_TEST_PATHS",
+    "tests/private-preview-deployment-assets.test.ts",
+    "tests/current-js-showcase-publication.test.ts",
+    "tests/page-only-current-js-showcase-asset-policy.test.ts",
+    "new Set(EXCLUDED_TEST_PATHS)",
+    "spawn(",
+    "--import', 'tsx', '--test",
+  ], "deployment-safe test runner");
 
   for (const [label, text] of [
     ["candidate workflow", candidateWorkflow],
@@ -150,6 +169,14 @@ export function validateServiceIdentityDocuments(documents) {
   invariant(!serviceIdentityJob.includes("\n        run: npm test\n"), "service-identity release check must not substitute the source-complete Workbench suite");
   invariant(!ciWorkflow.includes("id-token: write"), "ordinary CI must not request a GitHub OIDC token");
   invariant(!ciWorkflow.includes("statuses: write"), "ordinary CI must not write commit statuses");
+  const siteJobStart = ciWorkflow.indexOf("\n  site:\n");
+  invariant(siteJobStart >= 0, "CI workflow must define the Site workspace job");
+  const siteJob = ciWorkflow.slice(siteJobStart);
+  includesAll(siteJob, [
+    "name: Site workspace",
+    "run: npm run test:deployment",
+  ], "Site workspace job");
+  invariant(!siteJob.includes("\n        run: npm test\n"), "Site workspace must not run the source-bound full test suite");
   includesAll(identityDoc, [
     "prepared-not-activated",
     "Vercel for GitHub",
@@ -185,6 +212,7 @@ export async function verifyHelpmathCicdServiceIdentity(projectRoot) {
     ciWorkflow: ".github/workflows/ci.yml",
     core: "scripts/lib/helpmath-vercel-ci.mjs",
     deploymentDoc: "docs/DEPLOYMENT.md",
+    deploymentSafeTestRunner: "apps/web/scripts/run-deployment-safe-tests.mjs",
     identityDoc: "docs/CI_CD_SERVICE_IDENTITY.md",
     ignore: ".vercelignore",
     postflightWorkflow: ".github/workflows/vercel-production-postflight.yml",

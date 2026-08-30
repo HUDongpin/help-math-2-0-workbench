@@ -16,6 +16,7 @@ async function checkedInDocuments() {
     ciWorkflow: ".github/workflows/ci.yml",
     core: "scripts/lib/helpmath-vercel-ci.mjs",
     deploymentDoc: "docs/DEPLOYMENT.md",
+    deploymentSafeTestRunner: "apps/web/scripts/run-deployment-safe-tests.mjs",
     identityDoc: "docs/CI_CD_SERVICE_IDENTITY.md",
     ignore: ".vercelignore",
     postflightWorkflow: ".github/workflows/vercel-production-postflight.yml",
@@ -59,6 +60,20 @@ test("static verifier requires an exact event-to-public-deployment evidence join
   assert.throws(
     () => validateServiceIdentityDocuments({...base, core: withoutObservedIdentity}),
     /omitted observedDomainDeploymentIdentity/u,
+  );
+});
+
+test("static verifier requires the deployment-safe Site workspace test runner", async () => {
+  const base = await checkedInDocuments();
+  assert.throws(
+    () => validateServiceIdentityDocuments({
+      ...base,
+      deploymentSafeTestRunner: base.deploymentSafeTestRunner.replaceAll(
+        "REQUIRED_DEPLOYMENT_TEST_PATHS",
+        "removedRequiredDeploymentTestPaths",
+      ),
+    }),
+    /omitted REQUIRED_DEPLOYMENT_TEST_PATHS/u,
   );
 });
 

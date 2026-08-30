@@ -51,7 +51,7 @@ instructions below remain rollback and dated-provenance context only.
 3. Restrict direct pushes and force pushes to `main`. Require signed commits if that matches the owner's existing GitHub policy.
 4. Keep Actions permissions read-only by default. The CI workflow needs no deployment token and explicitly avoids Git LFS downloads.
 
-All CI jobs install from the root lockfile with Node 24. `CI/CD service identity` runs the secretless identity tests and verifier plus the exact deployment-asset closure from a clean Git checkout. `Site workspace` runs lint, type-check, tests, and build for `@helpmath/web`. `Workbench` retains `npm run verify:workbench` and `npm test` for a separately authorized source-complete environment; it is not a public-site release or lesson-publication claim.
+All CI jobs install from the root lockfile with Node 24. `CI/CD service identity` runs the secretless identity tests and verifier plus the exact deployment-asset closure from a clean Git checkout. `Site workspace` runs lint, type-check, the deployment-safe `npm run test:deployment` runner, and build for `@helpmath/web`; that runner excludes only the seven source-bound tests that require private candidate, migration, source, shell, or report inputs. `Workbench` retains `npm run verify:workbench` and `npm test` for a separately authorized source-complete environment, but is not a required check for this Git-hosted site-release path and is not a public-site release or lesson-publication claim.
 
 ## 2. Existing Vercel project configuration
 

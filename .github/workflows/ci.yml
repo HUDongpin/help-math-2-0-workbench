@@ -120,7 +120,7 @@ jobs:
         run: npm run typecheck
 
       - name: Test site
-        run: npm test
+        run: npm run test:deployment
 
       - name: Test Nova server invariants
         run: npm run test:nova:server --workspace @helpmath/web
