@@ -12,14 +12,46 @@ protected `main` is the exact accepted release source. Until then, releases use
 the staged CLI flow below: upload a production-target candidate with
 `--skip-domain`, test it, then promote that exact deployment.
 
+## 0. CI/CD service-identity successor
+
+The repository now contains a **prepared, not activated** CI/CD
+service-identity successor in
+[`CI_CD_SERVICE_IDENTITY.md`](CI_CD_SERVICE_IDENTITY.md). It uses Vercel for
+GitHub as the project-scoped deployment identity, a short-lived GitHub OIDC
+token admitted through Vercel Trusted Sources for protected-candidate access,
+and Vercel Deployment Checks for automatic promotion after an exact commit
+status passes. It stores no Vercel token, Owner credential, or Protection
+Bypass secret in GitHub. The Trusted Sources rule and checked-in policy both
+bind the immutable GitHub `repository_id` and `repository_owner_id` plus the
+exact `workflow_ref`; they do not assume the older name-only OIDC `sub` format.
+
+The successor is inert unless all of the following are true:
+
+1. a fresh Codex run actually loads a management policy permitting this exact
+   non-Owner identity;
+2. protected `main` contains the accepted application and the two checked-in
+   Vercel dispatch workflows;
+3. the GitHub environment `helpmath-production`, Vercel for GitHub project
+   connection, Trusted Sources rule, and required Deployment Check have been
+   configured by an authorized administrator; and
+4. the repository Actions variable `HELP_MATH_CICD_IDENTITY_ACTIVATED` is
+   exact string `true`.
+
+Until a restricted activation receipt proves those facts, this section does
+not authorize a Git connection, provider write, deployment, domain assignment,
+or promotion. Do not run the Owner-credential CLI path and the service-identity
+path concurrently. After reviewed activation, the service-identity path
+supersedes the local Owner launcher for ordinary releases; the historical CLI
+instructions below remain rollback and dated-provenance context only.
+
 ## 1. GitHub release controls
 
 1. Keep `HUDongpin/help-math-2-0-workbench` **Private**. Keep original HELP Math sources, private archives, API-key documents, local `.env` files, migration evidence, and review captures outside the deployment upload.
-2. In repository settings, protect `main`: require a pull request, at least one approval, dismissal of stale approvals, resolved review conversations, and passing `Workbench` and `Site workspace` checks from `.github/workflows/ci.yml`.
+2. In repository settings, protect `main`: require a pull request, at least one approval, dismissal of stale approvals, resolved review conversations, and passing `CI/CD service identity` and `Site workspace` checks from `.github/workflows/ci.yml`. Keep the source-complete `Workbench` job separate: a clean GitHub checkout intentionally lacks the ignored private source archive and private work records it validates, so its failure or absence is neither a site-deployment failure nor a strict-completion pass.
 3. Restrict direct pushes and force pushes to `main`. Require signed commits if that matches the owner's existing GitHub policy.
 4. Keep Actions permissions read-only by default. The CI workflow needs no deployment token and explicitly avoids Git LFS downloads.
 
-The two CI jobs install from the root lockfile with Node 24. `Workbench` runs `npm run verify:workbench` and `npm test`; `Site workspace` runs lint, type-check, tests, and build for `@helpmath/web`.
+All CI jobs install from the root lockfile with Node 24. `CI/CD service identity` runs the secretless identity tests and verifier plus the exact deployment-asset closure from a clean Git checkout. `Site workspace` runs lint, type-check, tests, and build for `@helpmath/web`. `Workbench` retains `npm run verify:workbench` and `npm test` for a separately authorized source-complete environment; it is not a public-site release or lesson-publication claim.
 
 ## 2. Existing Vercel project configuration
 
