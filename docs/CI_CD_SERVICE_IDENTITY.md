@@ -65,11 +65,19 @@ The identities are deliberately separate:
   It does not request OIDC, write statuses, or depend on ignored private source
   archives. The source-complete `Workbench` job remains a distinct diagnostic
   job and is not required for this site-release path. `Site workspace` uses
-  `npm run test:deployment`, whose recursive runner keeps ordinary security,
-  route, unit, and exact deployment-asset tests while excluding only the seven
-  source-bound tests that require candidate assets, legacy shell assets, private
-  migration/source files, or private reports. Neither job is reinterpreted as
-  Flash fidelity or lesson-publication evidence.
+  `npm run test:deployment`, whose recursive runner excludes only the top-level
+  `tests/g4-l3-lesson-navigation.test.ts` module because its import requires a
+  non-deployment report. It keeps the other six affected modules in the test
+  set and uses Node 24's exact anchored `--test-skip-pattern` for the seven
+  source-bound test names that require candidate assets, legacy shell assets,
+  private migration/source files, or private reports. Neither job is
+  reinterpreted as Flash fidelity or lesson-publication evidence. After the
+  build, Site invokes only `npm run test:e2e:deployment`: the runner binds five
+  named browser specs, two workers, disabled candidate profile, all eight
+  course feature flags, deterministic local Nova, and an exact `--grep-invert`
+  list for diagnostic/demo and candidate-evidence/design-only names. The G5 L4
+  audio, aggregate modern-wide, and Nova full-stack specialized commands are
+  not rerun by this clean deployment job.
 
 The workflows use no `${{ secrets.* }}` values, no `VERCEL_TOKEN`, no
 Protection Bypass secret, no Owner credential helper, and no Vercel mutation

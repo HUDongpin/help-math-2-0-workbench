@@ -1,3 +1,6 @@
+import {tmpdir} from 'node:os';
+import path from 'node:path';
+
 import {defineConfig, devices} from '@playwright/test';
 
 const port = Number(process.env.PLAYWRIGHT_PORT ?? 3211);
@@ -33,7 +36,15 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 2 : undefined,
   reporter: [['line']],
-  outputDir: '/tmp/helpmath-site-playwright-results',
+  // The deployment candidate contains a large binary asset closure. Retain
+  // commit/PR metadata, but do not buffer the full CI git diff in Playwright.
+  captureGitInfo: {
+    commit: true,
+    diff: false,
+  },
+  outputDir:
+    process.env.PLAYWRIGHT_OUTPUT_DIR
+      ?? path.join(tmpdir(), 'helpmath-site-playwright-results'),
   expect: {
     timeout: 10_000,
   },

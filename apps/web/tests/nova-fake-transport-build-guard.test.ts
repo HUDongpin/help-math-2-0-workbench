@@ -69,6 +69,17 @@ describe('Nova fake transport production build guard', () => {
     );
   });
 
+  it('keeps Playwright commit metadata without buffering the candidate git diff', () => {
+    const configSource = readFileSync(
+      new URL('../playwright.config.ts', import.meta.url),
+      'utf8',
+    );
+    assert.match(
+      configSource,
+      /captureGitInfo:\s*\{\s*commit:\s*true,\s*diff:\s*false,\s*\}/u,
+    );
+  });
+
   for (const variable of fakeTransportVariables) {
     it(`rejects production when ${variable} is defined as an empty string`, () => {
       const result = importProductionConfig({[variable]: ''});
