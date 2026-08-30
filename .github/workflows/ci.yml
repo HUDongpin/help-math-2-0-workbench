@@ -19,20 +19,51 @@ env:
   NEXT_PUBLIC_SITE_URL: https://www.helpmath.ai
 
 jobs:
+  cicd-service-identity:
+    name: CI/CD service identity
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out the release source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 1
+          lfs: false
+          persist-credentials: false
+
+      - name: Use the repository Node.js version
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Test the secretless CI/CD service identity package
+        run: node --test scripts/helpmath-vercel-ci.test.mjs scripts/verify-helpmath-cicd-service-identity.test.mjs
+
+      - name: Verify the CI/CD service identity policy
+        run: node scripts/verify-helpmath-cicd-service-identity.mjs
+
+      - name: Verify the exact deployment asset closure
+        run: npm run verify:asset-profiles:deployment --workspace @helpmath/web
+
   workbench:
     name: Workbench
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - name: Check out source without Git LFS objects
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           fetch-depth: 1
           lfs: false
           persist-credentials: false
 
       - name: Use repository Node.js version
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -56,20 +87,24 @@ jobs:
   site:
     name: Site workspace
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
+    env:
+      CURRENT_JS_SHOWCASE_G4_L3_ENABLED: "true"
+      CURRENT_JS_SHOWCASE_G5_L4_ENABLED: "true"
+      MODERN_WIDE_SHELL_ENABLED: "true"
     defaults:
       run:
         working-directory: apps/web
     steps:
       - name: Check out source without Git LFS objects
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           fetch-depth: 1
           lfs: false
           persist-credentials: false
 
       - name: Use repository Node.js version
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -87,6 +122,9 @@ jobs:
       - name: Test site
         run: npm test
 
+      - name: Test Nova server invariants
+        run: npm run test:nova:server --workspace @helpmath/web
+
       - name: Build site
         run: npm run build
 
@@ -95,3 +133,12 @@ jobs:
 
       - name: Run browser and accessibility tests
         run: npm run test:e2e
+
+      - name: Run G5 L4 audio gate-off browser test
+        run: npm run test:e2e:g5-l4-audio-gate-off --workspace @helpmath/web
+
+      - name: Run modern-wide lesson and Nova acceptance tests
+        run: npm run test:e2e:modern-wide --workspace @helpmath/web
+
+      - name: Run Nova full-stack fake-upstream tests
+        run: npm run test:e2e:nova-full-stack --workspace @helpmath/web

@@ -1,20 +1,3 @@
-export const pageKeys = [
-  "home",
-  "about",
-  "approach",
-  "curriculum",
-  "research",
-  "resources",
-  "support",
-  "login",
-  "contact",
-  "demos",
-  "privacy",
-  "terms",
-] as const;
-
-export type PageKey = (typeof pageKeys)[number];
-
 export type Locale = "en" | "es";
 
 export const demoIds = ["conversion-1-2", "conversion-1-4"] as const;
@@ -91,37 +74,6 @@ export interface SharedContent {
   requiredFieldLabel: string;
   navigation: SiteNavigation;
   footer: SiteFooter;
-}
-
-export interface HomeContent {
-  metadata: PageMetadata;
-  hero: HeroContent & {
-    supportingNote: string;
-  };
-  status: CalloutContent & {
-    label: string;
-  };
-  audiences: {
-    eyebrow: string;
-    title: string;
-    intro: string;
-    cards: FeatureCard[];
-  };
-  approach: {
-    eyebrow: string;
-    title: string;
-    intro: string;
-    cards: FeatureCard[];
-    action: LinkContent;
-  };
-  demos: {
-    eyebrow: string;
-    title: string;
-    intro: string;
-    items: Array<FeatureCard & { action: LinkContent }>;
-    note: string;
-  };
-  closing: CalloutContent;
 }
 
 export interface AboutContent {
@@ -257,7 +209,7 @@ export interface LoginContent {
 }
 
 export interface DemoListItem {
-  id: DemoId;
+  id: string;
   title: string;
   summary: string;
   conceptLabel: string;
@@ -370,7 +322,6 @@ export interface SiteContent {
   locale: Locale;
   shared: SharedContent;
   pages: {
-    home: HomeContent;
     about: AboutContent;
     approach: ApproachContent;
     curriculum: CurriculumContent;

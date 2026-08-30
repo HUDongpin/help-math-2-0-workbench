@@ -1,0 +1,139 @@
+.page {
+  align-items: center;
+  background:
+    radial-gradient(circle at 12% 10%, rgb(255 207 92 / 25%), transparent 28rem),
+    radial-gradient(circle at 90% 18%, rgb(94 214 185 / 20%), transparent 24rem),
+    #f4f7fb;
+  display: flex;
+  justify-content: center;
+  min-height: calc(100dvh - 2rem);
+  padding: clamp(24px, 5vw, 72px) 16px;
+}
+
+.signUpPage {
+  align-items: flex-start;
+  padding-top: clamp(12px, 2.5vw, 32px);
+}
+
+.flow {
+  align-items: center;
+  display: grid;
+  gap: 20px;
+  justify-items: center;
+  max-width: 560px;
+  width: 100%;
+}
+
+.intro {
+  color: #14213d;
+  max-width: 48ch;
+  text-align: center;
+}
+
+.intro a {
+  color: #1768d4;
+  display: inline-flex;
+  font-weight: 800;
+  margin-bottom: 18px;
+  min-height: 44px;
+  place-items: center;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.intro h1 {
+  font-size: clamp(30px, 6vw, 48px);
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  margin: 0;
+}
+
+.intro p {
+  color: #52657d;
+  font-size: 17px;
+  line-height: 1.6;
+  margin: 14px 0 0;
+}
+
+.accountCard {
+  background: #fff;
+  border: 2px solid #d7e1ee;
+  border-radius: 28px;
+  box-shadow: 0 18px 44px rgb(29 62 105 / 12%);
+  color: #14213d;
+  max-width: 560px;
+  padding: clamp(28px, 5vw, 48px);
+  text-align: center;
+  width: 100%;
+}
+
+.accountCard svg {
+  color: #1768d4;
+  height: 52px;
+  width: 52px;
+}
+
+.accountCard h1 {
+  font-size: clamp(30px, 5vw, 44px);
+  line-height: 1.08;
+  margin: 14px 0 12px;
+}
+
+.accountCard p {
+  color: #52657d;
+  font-size: 17px;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+.accountActions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.accountActions a,
+.signOutButton {
+  align-items: center;
+  border: 2px solid #1768d4;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-weight: 850;
+  justify-content: center;
+  min-height: 46px;
+  padding: 10px 20px;
+  text-decoration: none;
+}
+
+.accountActions a {
+  background: #1768d4;
+  color: #fff;
+}
+
+.signOutButton {
+  background: #fff;
+  color: #1768d4;
+}
+
+.accountActions a:focus-visible,
+.intro a:focus-visible,
+.signOutButton:focus-visible {
+  box-shadow: 0 0 0 2px #fff, 0 0 0 5px #14213d;
+  outline: 0;
+}
+
+@media (max-width: 480px) {
+  .page {
+    align-items: start;
+    padding-inline: 10px;
+  }
+
+  .accountActions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

@@ -29,10 +29,3 @@ export function normalizeLocale(value: string | null | undefined): Locale {
 export function getSiteContent(locale?: string | null): SiteContent {
   return siteContent[normalizeLocale(locale)];
 }
-
-export function getPageContent<Key extends keyof SiteContent["pages"]>(
-  locale: string | null | undefined,
-  page: Key,
-): SiteContent["pages"][Key] {
-  return getSiteContent(locale).pages[page];
-}

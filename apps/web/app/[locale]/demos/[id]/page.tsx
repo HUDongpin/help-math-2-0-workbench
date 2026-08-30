@@ -20,6 +20,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const {locale, id} = await params;
   if (!isLocale(locale) || !isDemoId(id)) notFound();
+  if (process.env.NODE_ENV === 'production') notFound();
   const content = getSiteContent(locale).pages.demoDetails[id];
   return createPageMetadata(locale, content.metadata, `/demos/${id}`);
 }
@@ -33,6 +34,7 @@ export default async function DemoPage({
 }) {
   const [{locale, id}, query] = await Promise.all([params, searchParams]);
   if (!isLocale(locale) || !isDemoId(id)) notFound();
+  if (process.env.NODE_ENV === 'production') notFound();
 
   const rawFrame = Array.isArray(query.frame) ? query.frame[0] : query.frame;
   const parsedFrame = rawFrame && /^\d+$/.test(rawFrame) ? Number(rawFrame) : undefined;
