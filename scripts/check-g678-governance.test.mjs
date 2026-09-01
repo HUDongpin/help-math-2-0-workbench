@@ -8,7 +8,11 @@ test("governance stays explicitly blocked until named primary and backup roles e
   assert.equal(result.status, "blocked");
   assert.equal(result.roleCount, 12);
   assert.equal(result.m0Exit, false);
-  assert.ok(result.blockers.includes("budget-or-procurement-cap-missing"));
+  assert.equal(result.blockers.includes("budget-or-procurement-cap-missing"), false);
+  assert.ok(result.blockers.includes("procurement-controls-not-yet-live-verified"));
+  assert.ok(result.blockers.includes("remaining-named-primary-and-backup-assignments-missing"));
+  assert.equal(result.blockers.includes("math-ccss-reviewer:primary-missing"), false);
+  assert.ok(result.blockers.includes("math-ccss-reviewer:backup-missing"));
 });
 
 test("the evaluator rejects a missing required role", () => {

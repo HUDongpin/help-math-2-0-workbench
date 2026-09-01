@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://helpmath.ai/schemas/g678-budget-procurement-intake-v1.schema.json",
+  "title": "HELP Math G6-G8 budget and procurement intake v1",
+  "type": "object",
+  "required": ["schemaVersion", "artifactType", "intakeId", "providedByIdentityId", "providedByRoles", "providedAt", "budget", "procurementOwner", "limitations", "acceptanceEffects"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schemaVersion": {"const": 1},
+    "artifactType": {"const": "g678-budget-procurement-intake-v1"},
+    "intakeId": {"type": "string"},
+    "providedByIdentityId": {"const": "dr-peter-hu"},
+    "providedByRoles": {"type": "array", "items": {"type": "string"}},
+    "providedAt": {"type": "string", "format": "date"},
+    "budget": {"type": "object", "required": ["currency", "period", "cap", "spendAuthorized", "status"], "properties": {"currency": {"const": "USD"}, "period": {"const": "week"}, "cap": {"const": 1000}, "spendAuthorized": {"const": false}, "status": {"type": "string"}}, "additionalProperties": false},
+    "procurementOwner": {"type": "object", "required": ["identityId", "displayName", "status"], "properties": {"identityId": {"const": "dr-peter-hu"}, "displayName": {"const": "Dr. Peter Hu"}, "status": {"type": "string"}}, "additionalProperties": false},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "acceptanceEffects": {"type": "object", "additionalProperties": {"const": false}}
+  },
+  "additionalProperties": false
+}

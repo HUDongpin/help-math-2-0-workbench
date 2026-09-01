@@ -197,6 +197,24 @@ acceptance-neutral receipt template. It must receive a named independent
 authority reviewer and approval statement before any of the 44 mapping records
 can unlock a grade route.
 
+The current successor authority receipt is
+`catalog/ccss/ccss-math-2010-v1.authority-receipt-approved-20260901T104409Z.json`.
+It records Dr. Peter Hu's exact approval statement and approves only the frozen
+CCSS Mathematics snapshot as the standards corpus for mapping review. The
+derived successor readiness report correctly removes the snapshot-authority
+blocker while retaining `44-lesson-mappings-not-approved`; no grade route is
+opened by the corpus approval alone.
+
+Current governance inputs record Dr. Peter Hu as product owner, Owner approver,
+CCSS authority reviewer, procurement owner, and approver of a USD 1,000 weekly
+planning cap. Professor Eric is named only as the primary math/CCSS reviewer;
+his qualification, independence, and at-least-eight-hour weekly commitment are
+not yet verified. A bounded read-only search of the mounted American Dream
+project backup found historical G3-G5 governance receipts but no current G678
+named backup identity/capacity receipt. A storage backup is not a named-human
+backup assignment: each required backup stays null until an exact G678 path,
+person, role, and committed weekly hours are reviewed.
+
 The web route has a second defense-in-depth check: even an individually marked
 `approved` mapping cannot create a grade URL until the hash-bound readiness
 report says `authority-approved` and `gradeRouteGenerationAllowed=true`. A

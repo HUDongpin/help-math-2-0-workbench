@@ -93,6 +93,11 @@ export function evaluateGovernance(value) {
     typeof value?.budget?.procurementOwner !== "string" || !value.budget.procurementOwner.trim()) {
     assignmentBlockers.push("budget-or-procurement-cap-missing");
   }
+  for (const blocker of Array.isArray(value?.blockers) ? value.blockers : []) {
+    if (typeof blocker === "string" && blocker.trim() && !assignmentBlockers.includes(blocker.trim())) {
+      assignmentBlockers.push(blocker.trim());
+    }
+  }
   if (value?.m0Exit !== false) errors.push("m0Exit must remain false until assignments and controls are verified");
   const acceptanceEffects = value?.acceptanceEffects;
   if (!acceptanceEffects || Object.values(acceptanceEffects).some((entry) => entry !== false)) {

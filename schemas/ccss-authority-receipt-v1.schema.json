@@ -16,13 +16,19 @@
     "mappingVersion": {"const": "ccss-math-2010-v1"},
     "snapshotId": {"const": "ccss-math-2010-v1"},
     "snapshotManifestPath": {"const": "catalog/ccss/ccss-math-2010-v1.snapshot.json"},
+    "snapshotManifestSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
     "snapshotSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
     "snapshotContentSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
     "status": {"enum": ["pending-authority-review", "approved", "rejected"]},
     "reviewerId": {"type": ["string", "null"]},
+    "reviewerDisplayName": {"type": "string"},
+    "reviewerDeclaredRole": {"type": "string"},
     "reviewerRole": {"const": "ccss-authority"},
     "reviewedAt": {"type": ["string", "null"], "format": "date-time"},
     "approvalStatement": {"type": ["string", "null"]},
+    "attestationType": {"type": "string"},
+    "identityIntakePath": {"type": "string"},
+    "identityIntakeSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
     "requiredBeforeMappingUnlock": {"type": "array", "items": {"type": "string"}},
     "acceptanceEffects": {
       "type": "object",
@@ -44,5 +50,18 @@
     },
     "notes": {"type": "array", "items": {"type": "string"}}
   },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "approved"}}, "required": ["status"]},
+      "then": {
+        "required": ["snapshotManifestSha256", "reviewerDisplayName", "reviewerDeclaredRole", "attestationType", "identityIntakePath", "identityIntakeSha256"],
+        "properties": {
+          "reviewerId": {"type": "string", "minLength": 1},
+          "reviewedAt": {"type": "string", "format": "date-time"},
+          "approvalStatement": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  ],
   "additionalProperties": false
 }

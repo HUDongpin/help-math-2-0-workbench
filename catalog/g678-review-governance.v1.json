@@ -18,7 +18,7 @@
     {"role": "integration-engineer", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "registry-descriptor-route-host"},
     {"role": "qa-strict-authority", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "independent-validator-and-ledger"},
     {"role": "authorized-original-runtime-operator", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 20, "backup": 8}, "independence": "cannot-self-sign-implementation"},
-    {"role": "math-ccss-reviewer", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "grade-mapping-and-mathematical-semantics"},
+    {"role": "math-ccss-reviewer", "primary": "professor-eric", "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "grade-mapping-and-mathematical-semantics"},
     {"role": "spanish-reviewer", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "language-and-behavior-review"},
     {"role": "audio-reviewer", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "named-human-listening-and-sync"},
     {"role": "independent-visual-reviewer", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "must-not-be-implementation-author"},
@@ -27,18 +27,19 @@
   ],
   "budget": {
     "currency": "USD",
-    "weeklyCap": null,
-    "procurementOwner": null,
-    "status": "pending-owner-budget-decision"
+    "weeklyCap": 1000,
+    "procurementOwner": "dr-peter-hu",
+    "status": "owner-approved-planning-cap-pending-procurement-controls"
   },
   "m0Exit": false,
   "blockers": [
     "remaining-named-primary-and-backup-assignments-missing",
     "product-owner-identity-self-attested-not-independently-verified",
     "owner-approver-identity-self-attested-not-independently-verified",
-    "ccss-authority-receipt-pending-immutable-approval",
+    "professor-eric-capacity-and-qualification-not-verified",
     "effective-backups-not-verified",
-    "budget-and-procurement-cap-missing",
+    "distinct-backup-record-not-located-on-other-drive",
+    "procurement-controls-not-yet-live-verified",
     "original-runtime-containment-not-live-verified"
   ],
   "acceptanceEffects": {

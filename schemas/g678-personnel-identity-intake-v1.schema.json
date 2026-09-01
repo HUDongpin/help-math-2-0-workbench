@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://helpmath.ai/schemas/g678-personnel-identity-intake-v1.schema.json",
+  "title": "HELP Math G6-G8 personnel identity intake v1",
+  "type": "object",
+  "required": ["schemaVersion", "artifactType", "intakeId", "identityId", "displayName", "providedByIdentityId", "providedByRole", "providedAt", "assignment", "acceptanceEffects"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schemaVersion": {"const": 1},
+    "artifactType": {"const": "g678-personnel-identity-intake-v1"},
+    "intakeId": {"type": "string", "minLength": 1},
+    "identityId": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "displayName": {"type": "string", "minLength": 1},
+    "providedByIdentityId": {"const": "dr-peter-hu"},
+    "providedByRole": {"type": "string", "minLength": 1},
+    "providedAt": {"type": "string", "format": "date"},
+    "assignment": {
+      "type": "object",
+      "required": ["role", "slot", "minimumRequiredHoursPerWeek", "committedHoursPerWeek", "status"],
+      "properties": {
+        "role": {"type": "string"},
+        "slot": {"enum": ["primary", "backup"]},
+        "minimumRequiredHoursPerWeek": {"type": "number", "minimum": 0},
+        "committedHoursPerWeek": {"type": ["number", "null"], "minimum": 0},
+        "status": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "notAssignedRoles": {"type": "array", "items": {"type": "string"}},
+    "requiredFollowUp": {"type": "array", "items": {"type": "string"}},
+    "acceptanceEffects": {"type": "object", "additionalProperties": {"const": false}}
+  },
+  "additionalProperties": false
+}

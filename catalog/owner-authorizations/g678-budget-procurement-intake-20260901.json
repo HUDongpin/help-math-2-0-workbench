@@ -1,0 +1,35 @@
+{
+  "$schema": "../../schemas/g678-budget-procurement-intake-v1.schema.json",
+  "schemaVersion": 1,
+  "artifactType": "g678-budget-procurement-intake-v1",
+  "intakeId": "g678-budget-procurement-intake-20260901",
+  "providedByIdentityId": "dr-peter-hu",
+  "providedByRoles": ["CTO", "product-owner", "owner-approver"],
+  "providedAt": "2026-09-01",
+  "budget": {
+    "currency": "USD",
+    "period": "week",
+    "cap": 1000,
+    "spendAuthorized": false,
+    "status": "owner-approved-planning-cap-pending-procurement-controls"
+  },
+  "procurementOwner": {
+    "identityId": "dr-peter-hu",
+    "displayName": "Dr. Peter Hu",
+    "status": "owner-assigned-pending-effective-procurement-controls"
+  },
+  "limitations": [
+    "The USD 1,000 amount is recorded as the weekly planning cap because the governance contract uses weeklyCap.",
+    "This receipt does not authorize a purchase, payment, vendor engagement, reimbursement, or provider account action.",
+    "Any procurement transaction requires an exact target, approved scope, invoice or rate basis, and applicable authorization."
+  ],
+  "acceptanceEffects": {
+    "procurementExecuted": false,
+    "currentJavaScriptRegistered": false,
+    "humanReviewAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "released": false,
+    "published": false
+  }
+}

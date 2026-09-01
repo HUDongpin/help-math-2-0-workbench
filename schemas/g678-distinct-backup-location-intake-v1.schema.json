@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://helpmath.ai/schemas/g678-distinct-backup-location-intake-v1.schema.json",
+  "title": "HELP Math G6-G8 distinct backup location intake v1",
+  "type": "object",
+  "required": ["schemaVersion", "artifactType", "intakeId", "providedByIdentityId", "providedAt", "locationClaim", "searchScope", "searchResult", "backupIdentityId", "roleAssignments", "status", "requiredFollowUp", "acceptanceEffects"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schemaVersion": {"const": 1},
+    "artifactType": {"const": "g678-distinct-backup-location-intake-v1"},
+    "intakeId": {"type": "string"},
+    "providedByIdentityId": {"const": "dr-peter-hu"},
+    "providedAt": {"type": "string", "format": "date"},
+    "locationClaim": {"type": "string"},
+    "searchScope": {"type": "array", "items": {"type": "string"}},
+    "searchResult": {"const": "no-current-g678-named-backup-identity-or-capacity-receipt-located"},
+    "observedHistoricalBoundary": {"type": "string"},
+    "backupIdentityId": {"type": "null"},
+    "backupDisplayName": {"type": "null"},
+    "roleAssignments": {"type": "array", "maxItems": 0},
+    "committedHoursPerWeek": {"type": "null"},
+    "status": {"const": "blocked-pending-exact-backup-record-location-and-review"},
+    "requiredFollowUp": {"type": "array", "items": {"type": "string"}},
+    "acceptanceEffects": {"type": "object", "additionalProperties": {"const": false}}
+  },
+  "additionalProperties": false
+}
