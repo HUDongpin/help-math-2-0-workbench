@@ -161,12 +161,13 @@ input, and no source promotion, extraction, or publication is implied.
 
 The review queue is materialized by
 `node scripts/build-g678-review-packet.mjs --write --source-root <root>
---output <new-run-file>`. The committed v4 packet records all 46 same-path
+--output <new-run-file>`. The committed v5 packet records all 46 same-path
 conflicts, all 59 GEO alternate placements (33 differing SHA-256 values), all
-92 dependency holds, the 5,562 grouped FQ/EA candidates, license dispositions,
-and all 16 calibration placements. It intentionally keeps every source-choice,
-dependency, audio, license, and behavior decision pending; v1--v3 packets in
-the working tree are superseded diagnostics from earlier path-basis checks.
+92 dependency holds plus the NMS cross-lesson alias, the 5,562 grouped FQ/EA
+candidates, license dispositions, and all 16 calibration placements. It
+intentionally keeps every source-choice, dependency, audio, license, and
+behavior decision pending; v1--v4 packets in the working tree are superseded
+diagnostics from earlier packet revisions.
 
 The command may produce a structural candidate, but it must never mark a
 page `registered`, `strict-complete`, or `published` by itself. A reusable

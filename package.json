@@ -44,7 +44,7 @@
     "map:g678:grade:report:check": "node scripts/map-shared-grade.mjs --check --output reports/g678-grade-mapping-readiness.json",
     "governance:g678:check": "node scripts/check-g678-governance.mjs --check",
     "review:g678:packet": "node scripts/build-g678-review-packet.mjs --write",
-    "review:g678:packet:check": "node scripts/build-g678-review-packet.mjs --check --source-root \"$HELP_MATH_G678_SOURCE_ROOT\" --output reports/g678-review-packet-v4-20260901.json",
+    "review:g678:packet:check": "node scripts/build-g678-review-packet.mjs --check --source-root \"$HELP_MATH_G678_SOURCE_ROOT\" --output reports/g678-review-packet-v5-20260901.json",
     "factory:g678:calibrate": "node scripts/build-shared-page-factory.mjs --profile catalog/g678-shared-source-profile.v1.json --mode calibrate --output work/g678-shared-page-factory/calibration-v1 --require-read-only",
     "factory:g678:calibrate:dry-run": "npm run factory:g678:calibrate -- --dry-run",
     "factory:g678:extend": "node scripts/build-shared-page-factory.mjs --profile catalog/g678-shared-source-profile.v1.json --mode extend --require-read-only",
