@@ -311,6 +311,7 @@ export function sharedCatalogProjectionIsValid(value: unknown): boolean {
       : null;
     const sourceXmlSha256 = stringValue(sourceXml.sha256)?.toLowerCase();
     if (!moduleCode || !lessonNumber || !key || seenLessons.has(key) ||
+        lesson.moduleCode !== moduleCode || lesson.lessonNumber !== lessonNumber ||
         lesson.stableLessonKey !== stableLessonKey ||
         lessonNumber > expectedLessonCount || lesson.activePageCount !== expectedPages ||
         lesson.pagePlacementCount !== expectedPages || !Array.isArray(lesson.pages) ||
