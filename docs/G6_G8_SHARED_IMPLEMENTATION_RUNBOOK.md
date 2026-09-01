@@ -151,21 +151,50 @@ Likewise, use a new run directory for each calibration build rather than
 reusing the sample `calibration-v1` path.
 
 Archive receipts for the two multi-gigabyte recovery ZIPs are deliberately
-reported as `blocked-unverified` unless an explicitly bounded, read-only hash
-operation is authorized. The default local calibration does not read those ZIP
-bytes; this is a source-custody hold, not a successful rehash. Do not change
-the gate to `hash-verified` from an old receipt or a size/CRC-only observation.
+kept separate from the factory profile. The current read-only, complete EOF
+rehash is recorded in
+`reports/g678-raw-zip-custody-verification-20260901.json` and has status
+`CUSTODY_VERIFIED_NO_PROMOTION`; both outer ZIP hashes and both member-manifest
+hashes match their declarations. This is custody evidence only. The factory
+still requires a new profile/run binding before treating that receipt as an
+input, and no source promotion, extraction, or publication is implied.
+
+The review queue is materialized by
+`node scripts/build-g678-review-packet.mjs --write --source-root <root>
+--output <new-run-file>`. The committed v4 packet records all 46 same-path
+conflicts, all 59 GEO alternate placements (33 differing SHA-256 values), all
+92 dependency holds, the 5,562 grouped FQ/EA candidates, license dispositions,
+and all 16 calibration placements. It intentionally keeps every source-choice,
+dependency, audio, license, and behavior decision pending; v1--v3 packets in
+the working tree are superseded diagnostics from earlier path-basis checks.
 
 The command may produce a structural candidate, but it must never mark a
 page `registered`, `strict-complete`, or `published` by itself. A reusable
 behavior fix belongs in the IR, generator, or maintained adapter and must be
 regenerated; generated output is never hand-edited.
 
+For G678 specifically, `extend`, `--batch`, and `--all` are fail-closed until
+the profile contains a hash-bound `representativeProductPathGate` (or
+`scaleOutGate`) with a `GO` status, 16/16 registered calibration pages,
+modern-My-Lesson, Replay/interaction/audio, desktop/mobile QA, and a receipt
+SHA-256. The guard is enforced by
+`ensureScaleOutAuthorization`; the current profile has no such receipt and
+therefore returns `SCALE_OUT_NOT_AUTHORIZED` even for a dry-run.
+
 The current checked-in mapping report is intentionally `blocked`: the 44
 records are pending independent Common Core review and no official CCSS
 snapshot has been hash-bound. `--require-approved` is available for a CI gate
 that must fail rather than return a structured blocked report. Do not replace
 the pending mapping with a guessed grade to make a route appear.
+
+The official standards witness is
+`catalog/ccss/ccss-math-2010-v1.snapshot.json`, bound to the Common Core State
+Standards Initiative Mathematics PDF at `corestandards.org` (1,242,082 bytes,
+SHA-256 `2d28ded26c7394f55525550e32bb96786da2e9a3276ccca8873e80ebcdebab11`).
+`catalog/ccss/ccss-math-2010-v1.authority-receipt.json` is an unsigned,
+acceptance-neutral receipt template. It must receive a named independent
+authority reviewer and approval statement before any of the 44 mapping records
+can unlock a grade route.
 
 The web route has a second defense-in-depth check: even an individually marked
 `approved` mapping cannot create a grade URL until the hash-bound readiness
