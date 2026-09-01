@@ -758,7 +758,25 @@ function readSnapshot(): SharedMiddleSchoolCatalogSnapshot {
 
   const profileRoot = record(profileValue);
   const mappingRoot = record(mappingValue);
-  const catalogProjectionValid = profilePath === 'catalog/g678-shared-catalog.v1.json'
+  const sourceProfilePath = 'catalog/g678-shared-source-profile.v1.json';
+  const sourceProfile = record(readJson(root, sourceProfilePath));
+  const sourceProfileManifestSha256 = stringValue(sourceProfile.sourceManifestSha256 ??
+    record(sourceProfile.witnesses)['classification-manifest.jsonl'])?.toLowerCase();
+  const sourceProfileMappingSha256 = stringValue(sourceProfile.mappingManifestSha256)?.toLowerCase();
+  const generatedFrom = record(profileRoot.generatedFrom);
+  const sourceProfileBindingValid = sourceProfile.schemaVersion === 1 &&
+    sourceProfile.artifactType === 'help-math-g678-shared-source-profile' &&
+    sourceProfile.profileId === 'g678-shared-source-profile-v1' &&
+    sourceProfile.version === 'G6-G8-shared-v1' &&
+    SHA256.test(sourceProfileManifestSha256 ?? '') &&
+    SHA256.test(sourceProfileMappingSha256 ?? '') &&
+    record(sourceProfile.expected).canonicalLessonXmlCount === 44 &&
+    record(sourceProfile.expected).activePagePlacementCount === 2282 &&
+    record(sourceProfile.expected).uniqueActiveSwfSha256Count === 2240 &&
+    generatedFrom.sourceManifestSha256 === sourceProfileManifestSha256 &&
+    fileSha256(root, 'catalog/g678-grade-mapping.v1.json') === sourceProfileMappingSha256;
+  const catalogProjectionValid = profilePath === 'catalog/g678-shared-catalog.v1.json' &&
+    sourceProfileBindingValid
     ? sharedCatalogProjectionIsValid(profileValue)
     : false;
   const gradeMappingAuthorityApproved = hasApprovedGradeMapping(root, mappingPath);
