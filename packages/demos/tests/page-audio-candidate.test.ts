@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import test from 'node:test';
 
 import {isPageAudioCandidate, type PageAudioCandidate} from '../src/contract';
@@ -33,4 +34,17 @@ test('page audio candidate guard rejects malformed identity or timing fields', (
   assert.equal(isPageAudioCandidate({...base, hostTrigger: ''}), false);
   assert.equal(isPageAudioCandidate({...base, required: 'yes'}), false);
   assert.equal(isPageAudioCandidate({...base, required: null, durationMs: null, frameDomain: null}), true);
+});
+
+test('a source-catalog candidate with pending fields satisfies the shared contract', () => {
+  const catalog = JSON.parse(readFileSync(
+    new URL('../../../catalog/g678-shared-catalog.v1.json', import.meta.url),
+    'utf8',
+  )) as {lessons: Array<{pages: Array<{audioCueCandidates?: unknown[]}>}>};
+  const candidate = catalog.lessons
+    .flatMap((lesson) => lesson.pages)
+    .flatMap((page) => page.audioCueCandidates ?? [])
+    .find((entry) => entry && typeof entry === 'object') ?? null;
+  assert.ok(candidate, 'the source catalog should expose at least one candidate');
+  assert.equal(isPageAudioCandidate(candidate), true);
 });
