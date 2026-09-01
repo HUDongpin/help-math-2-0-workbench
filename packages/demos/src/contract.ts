@@ -147,14 +147,15 @@ export interface PageAudioCandidate {
   readonly source: string;
   readonly sha256: string;
   readonly language: AnimationLanguage | 'shared' | 'undetermined';
-  readonly durationMs?: number;
-  readonly frameDomain?: string;
+  readonly durationMs?: number | null;
+  readonly frameDomain?: string | null;
   readonly startSemantics: string;
   readonly hostTrigger: string;
   readonly stopOrCompleteSemantics: string;
   readonly replayBehavior: string;
   readonly binding: PageAudioCandidateBinding;
-  readonly required: boolean;
+  /** null means source intake has not yet established whether the cue is required. */
+  readonly required: boolean | null;
   readonly acceptance: PageAudioCandidateAcceptance;
 }
 
@@ -175,10 +176,10 @@ export function isPageAudioCandidate(value: unknown): value is PageAudioCandidat
     typeof candidate.sha256 === 'string' && PAGE_AUDIO_SHA256.test(candidate.sha256) &&
     language && text(candidate.startSemantics) && text(candidate.hostTrigger) &&
     text(candidate.stopOrCompleteSemantics) && text(candidate.replayBehavior) &&
-    binding && typeof candidate.required === 'boolean' && acceptance &&
-    (candidate.durationMs === undefined ||
+    binding && (candidate.required === null || typeof candidate.required === 'boolean') && acceptance &&
+    (candidate.durationMs === undefined || candidate.durationMs === null ||
       (typeof candidate.durationMs === 'number' && Number.isFinite(candidate.durationMs) && candidate.durationMs >= 0)) &&
-    (candidate.frameDomain === undefined || text(candidate.frameDomain));
+    (candidate.frameDomain === undefined || candidate.frameDomain === null || text(candidate.frameDomain));
 }
 
 /**
