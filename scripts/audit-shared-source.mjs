@@ -17,7 +17,6 @@ import {pathToFileURL} from "node:url";
 import {
   ExternalSourceRootMissingError,
   buildSharedCatalog,
-  readJsonl,
   stableJson,
   validateGradeMapping,
   validateSharedCatalog,
@@ -137,15 +136,6 @@ async function readJsonFile(filePath, label) {
   }
 }
 
-async function optionalJsonl(filePath, label) {
-  if (!filePath) return [];
-  try {
-    return await readJsonl(projectPath(filePath));
-  } catch (error) {
-    throw new Error(`${label} unavailable: ${error.message}`);
-  }
-}
-
 const SOURCE_WITNESS_NAMES = Object.freeze([
   "README.md",
   "classification-summary.json",
@@ -213,7 +203,7 @@ export async function verifySourceWitnesses({options, profile, sourceRoot}) {
     if (expected && actual !== expected) {
       throw new Error(`G678_WITNESS_HASH_DRIFT: ${name}: expected ${expected}, found ${actual}`);
     }
-    verified[name] = {path: witnessPath, sha256: actual};
+    verified[name] = {path: witnessPath, sha256: actual, bytes};
   }
   if (required) {
     for (const name of ["classification-manifest.jsonl", "missing-dependencies.jsonl"]) {
@@ -229,7 +219,16 @@ async function readVerifiedJsonl(verified, name) {
   const item = verified[name];
   if (!item) return [];
   try {
-    return await readJsonl(item.path);
+    const rows = [];
+    for (const [index, line] of item.bytes.toString("utf8").split(/\r?\n/u).entries()) {
+      if (!line.trim()) continue;
+      try {
+        rows.push(JSON.parse(line));
+      } catch (error) {
+        throw new Error(`invalid JSONL at ${item.path}:${index + 1}: ${error.message}`);
+      }
+    }
+    return rows;
   } catch (error) {
     throw new Error(`G678_WITNESS_INVALID: ${name}: ${error.message}`);
   }
@@ -322,12 +321,14 @@ export async function runAudit(options) {
   // In strict source mode the sibling witnesses are discovered and verified
   // automatically, so the package shortcut cannot accidentally report zero
   // variants/dependencies merely because two optional flags were omitted.
-  const classificationRows = options.classificationManifest
-    ? await optionalJsonl(options.classificationManifest, "classification manifest")
-    : await readVerifiedJsonl(verifiedWitnesses, "classification-manifest.jsonl");
-  const dependencyRows = options.dependencyManifest
-    ? await optionalJsonl(options.dependencyManifest, "dependency manifest")
-    : await readVerifiedJsonl(verifiedWitnesses, "missing-dependencies.jsonl");
+  const classificationRows = await readVerifiedJsonl(
+    verifiedWitnesses,
+    "classification-manifest.jsonl",
+  );
+  const dependencyRows = await readVerifiedJsonl(
+    verifiedWitnesses,
+    "missing-dependencies.jsonl",
+  );
   const catalog = await buildSharedCatalog({
     sourceRoot,
     profile,
