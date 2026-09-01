@@ -143,6 +143,13 @@ The factory command has three intentionally separate modes:
 - `extend` processes an explicitly frozen page batch;
 - `check` re-hashes and replays the run without overwriting it.
 
+The `factory:g678:extend` npm alias is a guarded command template, not an
+unscoped batch operation. Always append one explicit selector (`--module-code
+... --lesson ...`, `--batch ...`, or `--all`) together with a fresh `--run-id`
+and exclusive `--output`; an unscoped extend invocation must fail closed.
+Likewise, use a new run directory for each calibration build rather than
+reusing the sample `calibration-v1` path.
+
 Archive receipts for the two multi-gigabyte recovery ZIPs are deliberately
 reported as `blocked-unverified` unless an explicitly bounded, read-only hash
 operation is authorized. The default local calibration does not read those ZIP
