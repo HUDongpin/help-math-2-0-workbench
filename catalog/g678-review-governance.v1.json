@@ -22,7 +22,7 @@
     {"role": "spanish-reviewer", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "language-and-behavior-review"},
     {"role": "audio-reviewer", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "named-human-listening-and-sync"},
     {"role": "independent-visual-reviewer", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "must-not-be-implementation-author"},
-    {"role": "owner-approver", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 4, "backup": 2}, "independence": "separate-from-professional-reviewers"},
+    {"role": "owner-approver", "primary": "dr-peter-hu", "backup": null, "minimumHoursPerWeek": {"primary": 4, "backup": 2}, "independence": "separate-from-professional-reviewers"},
     {"role": "release-custodian", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 4, "backup": 2}, "independence": "atomic-release-and-publication-boundary"}
   ],
   "budget": {
@@ -35,6 +35,8 @@
   "blockers": [
     "remaining-named-primary-and-backup-assignments-missing",
     "product-owner-identity-self-attested-not-independently-verified",
+    "owner-approver-identity-self-attested-not-independently-verified",
+    "ccss-authority-receipt-pending-immutable-approval",
     "effective-backups-not-verified",
     "budget-and-procurement-cap-missing",
     "original-runtime-containment-not-live-verified"

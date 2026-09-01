@@ -168,6 +168,7 @@ export async function buildGradeMappingReadiness({
       snapshotSha256,
       status: "hash-observed-pending-authority-review",
       authorityReceiptPath: null,
+      authorityReceiptSha256: null,
       authorityReviewer: null,
     };
   }
@@ -181,17 +182,18 @@ export async function buildGradeMappingReadiness({
     } catch (error) {
       invariant(false, `CCSS authority receipt is not valid JSON: ${error.message}`);
     }
+    const receiptStatus = receipt?.status;
     invariant(receipt?.schemaVersion === 1 &&
       receipt?.artifactType === "ccss-authority-receipt-v1" &&
-      receipt?.status === "approved" &&
+      ["approved", "pending-authority-review"].includes(receiptStatus) &&
       receipt?.mappingVersion === ccssId &&
       receipt?.snapshotSha256 === snapshotSha256 &&
       typeof receipt?.reviewerId === "string" && receipt.reviewerId.trim() &&
-      typeof receipt?.reviewedAt === "string" && receipt.reviewedAt,
+      (receiptStatus !== "approved" || (typeof receipt?.reviewedAt === "string" && receipt.reviewedAt)),
     "CCSS authority receipt is not hash-bound to the selected snapshot");
     ccss = {
       ...ccss,
-      status: "authority-approved",
+      status: receiptStatus === "approved" ? "authority-approved" : "hash-observed-pending-authority-review",
       authorityReceiptPath: portableProjectPath(receiptPath),
       authorityReceiptSha256: receiptBytes.length > 0 ? sha256(receiptBytes) : null,
       authorityReviewer: receipt.reviewerId.trim(),

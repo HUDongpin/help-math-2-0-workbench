@@ -17,6 +17,7 @@
     "selfAttested": {"const": true},
     "verificationStatus": {"enum": ["self-attested-pending-independent-identity-verification", "verified"]},
     "governanceAssignment": {"type": "object", "required": ["role", "primary", "backup", "minimumHoursPerWeek"], "properties": {"role": {"const": "product-owner"}, "primary": {"const": true}, "backup": {"const": false}, "minimumHoursPerWeek": {"const": 4}}, "additionalProperties": false},
+    "declaredAdditionalRoles": {"type": "array", "items": {"enum": ["owner-approver", "ccss-authority-reviewer"]}, "uniqueItems": true},
     "notAutomaticallyAssigned": {"type": "array", "items": {"type": "string"}},
     "requiredFollowUp": {"type": "array", "items": {"type": "string"}},
     "acceptanceEffects": {"type": "object", "additionalProperties": {"const": false}}

@@ -5,7 +5,7 @@
   "type": "object",
   "required": [
     "schemaVersion", "artifactType", "receiptId", "mappingVersion", "snapshotId",
-    "snapshotManifestPath", "snapshotContentSha256", "status", "reviewerId",
+    "snapshotManifestPath", "snapshotSha256", "snapshotContentSha256", "status", "reviewerId",
     "reviewerRole", "reviewedAt", "approvalStatement", "acceptanceEffects"
   ],
   "properties": {
@@ -16,6 +16,7 @@
     "mappingVersion": {"const": "ccss-math-2010-v1"},
     "snapshotId": {"const": "ccss-math-2010-v1"},
     "snapshotManifestPath": {"const": "catalog/ccss/ccss-math-2010-v1.snapshot.json"},
+    "snapshotSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
     "snapshotContentSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
     "status": {"enum": ["pending-authority-review", "approved", "rejected"]},
     "reviewerId": {"type": ["string", "null"]},

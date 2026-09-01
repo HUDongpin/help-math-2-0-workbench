@@ -16,20 +16,22 @@
     "backup": false,
     "minimumHoursPerWeek": 4
   },
+  "declaredAdditionalRoles": [
+    "owner-approver",
+    "ccss-authority-reviewer"
+  ],
   "notAutomaticallyAssigned": [
-    "ccss-authority-reviewer",
     "math-ccss-reviewer",
     "independent-visual-reviewer",
     "spanish-reviewer",
     "audio-reviewer",
     "authorized-original-runtime-operator",
     "qa-strict-authority",
-    "owner-approver",
     "release-custodian",
     "governance-backup"
   ],
   "requiredFollowUp": [
-    "Owner must confirm whether CTO identity is also authorized as owner-approver.",
+    "Owner-approver and CCSS-authority assignments remain self-attested until an independent authority verifies effective scope.",
     "Owner must provide a distinct product-owner backup if the project policy requires backup coverage.",
     "Independent authority must verify the identity and effective decision authority before any approval receipt is accepted."
   ],
