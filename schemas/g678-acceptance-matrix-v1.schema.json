@@ -6,6 +6,7 @@
   "type": "object",
   "required": ["schemaVersion", "artifactType", "matrixId", "generatedAt", "source", "sourceAudit", "funnel", "lessons", "acceptanceEffects"],
   "properties": {
+    "$schema": {"type": "string"},
     "schemaVersion": {"const": 1},
     "artifactType": {"const": "help-math-g678-acceptance-matrix"},
     "matrixId": {"type": "string", "pattern": "^g678-acceptance-matrix-v[0-9]+$"},
