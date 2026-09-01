@@ -174,6 +174,106 @@ test("source-backed build is deterministic and carries variant/dependency/audio 
   }
 });
 
+test("strict catalog validation binds every classification row and all source-audit counts", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "g678-strict-catalog-"));
+  try {
+    const lessonRoot = path.join(root, "NMS002", "L1");
+    for (const directory of ["IR", "FQ", "SA"]) {
+      await mkdir(path.join(lessonRoot, directory), {recursive: true});
+    }
+    await writeFile(path.join(lessonRoot, "index.xml"), FIXTURE_XML);
+    const swfBytes = [
+      ["IR/L1IR01.swf", "CWS first"],
+      ["IR/L1IR02.swf", "FWS second"],
+      ["FQ/L1FQ01.swf", "ZWS quiz"],
+    ];
+    for (const [relative, value] of swfBytes) {
+      await writeFile(path.join(lessonRoot, relative), Buffer.from(value));
+    }
+    await writeFile(path.join(lessonRoot, "SA", "L1IR01.mp3"), Buffer.from("audio"));
+    const profile = {
+      profileId: "g678-shared-source-profile-v1",
+      version: "G6-G8-shared-v1",
+      modules: [{...MODULES[0], lessonNumbers: [1], activePageCounts: [3]}],
+      expected: {
+        canonicalLessonXmlCount: 1,
+        activePagePlacementCount: 3,
+        uniqueActiveSwfSha256Count: 3,
+        commentedPageCount: 1,
+        bomXmlCount: 1,
+        bareAmpersandCount: 1,
+        canonicalSwfCount: 3,
+        canonicalMp3Count: 1,
+        canonicalFlaCount: 0,
+        samePathDifferentHashCount: 0,
+        geoAlternateLessonCount: 0,
+        geoAlternateActivePageCount: 0,
+      },
+    };
+    const initial = await buildSharedCatalog({sourceRoot: root, profile});
+    const rows = initial.lessons[0].pages.map((page) => ({
+      gradeBucket: "G6-G8-shared",
+      outputPath: page.viewPath,
+      sha256: page.sourceSha256,
+      bytes: page.sourceBytes,
+      variants: [],
+    }));
+    const catalog = await buildSharedCatalog({
+      sourceRoot: root,
+      profile,
+      classificationRows: rows,
+    });
+    assert.deepEqual(validateSharedCatalog(catalog, profile, {strictCounts: true}), []);
+
+    const countDrift = structuredClone(catalog);
+    countDrift.audit.canonicalFileCounts.mp3 = 0;
+    assert.ok(validateSharedCatalog(countDrift, profile, {strictCounts: true})
+      .some((error) => error.includes("canonicalMp3Count")));
+
+    const missingRowCatalog = await buildSharedCatalog({
+      sourceRoot: root,
+      profile,
+      classificationRows: rows.slice(0, 1),
+    });
+    assert.equal(missingRowCatalog.lessons[0].pages[1].sourceStatus, "classification-row-missing");
+    assert.ok(validateSharedCatalog(missingRowCatalog, profile, {strictCounts: true})
+      .some((error) => error.includes("classification manifest row is missing")));
+  } finally {
+    await rm(root, {recursive: true, force: true});
+  }
+});
+
+test("audio candidate indexing distinguishes FQ/EA, FQ/SA, and lesson-SA paths", async () => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "g678-audio-bindings-"));
+  try {
+    const lessonRoot = path.join(root, "NMS002", "L1");
+    for (const directory of ["FQ", "FQ/EA", "FQ/SA", "SA", "IR"]) {
+      await mkdir(path.join(lessonRoot, directory), {recursive: true});
+    }
+    const xml = `<Lesson><LessonName>Audio fixture</LessonName><Section SName="IR"><Page>IR/L1IR01.swf</Page></Section><Section SName="FQ"><Page>FQ/L1FQ01.swf</Page></Section></Lesson>`;
+    await writeFile(path.join(lessonRoot, "index.xml"), xml);
+    await writeFile(path.join(lessonRoot, "IR", "L1IR01.swf"), Buffer.from("FWS ir"));
+    await writeFile(path.join(lessonRoot, "FQ", "L1FQ01.swf"), Buffer.from("FWS fq"));
+    for (const directory of ["FQ/EA", "FQ/SA", "SA"]) {
+      await writeFile(path.join(lessonRoot, directory, "L1FQ01.mp3"), Buffer.from(directory));
+    }
+    const profile = {
+      profileId: "g678-shared-source-profile-v1",
+      version: "G6-G8-shared-v1",
+      modules: [{...MODULES[0], lessonNumbers: [1], activePageCounts: [2]}],
+    };
+    const catalog = await buildSharedCatalog({sourceRoot: root, profile});
+    const candidates = catalog.lessons[0].pages[1].audioCueCandidates;
+    assert.deepEqual(
+      candidates.map((candidate) => candidate.bindingKind).sort(),
+      ["FQ/EA-candidate", "FQ/SA-candidate", "lesson-SA-candidate"],
+    );
+    assert.equal(catalog.audit.audioCandidatePages, 1);
+  } finally {
+    await rm(root, {recursive: true, force: true});
+  }
+});
+
 test("grade mapping application creates one primary course key and preserves tags", () => {
   const catalog = {
     lessons: [{moduleCode: "NMS002", lessonNumber: 1, stableLessonKey: "shared-nms002-l01"}],

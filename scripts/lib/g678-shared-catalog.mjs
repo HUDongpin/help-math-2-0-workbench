@@ -590,6 +590,51 @@ async function walkFiles(root) {
   return files;
 }
 
+/**
+ * Measure the preserved GEO alternate source without admitting it to the
+ * canonical lesson/page denominator.  The alternate tree is deliberately
+ * audited from its own XML occurrence stream so a missing or expanded
+ * variant cannot pass a strict source check merely because the canonical
+ * tree still has the expected 595 pages.
+ */
+async function auditGeoAlternate(sourceRoot) {
+  const alternateRoot = pathInside(
+    sourceRoot,
+    path.join("GEO001", "_alternate"),
+  );
+  let info;
+  try {
+    info = await lstat(alternateRoot);
+  } catch (error) {
+    if (error?.code === "ENOENT") return {lessonCount: 0, activePageCount: 0};
+    throw error;
+  }
+  if (!info.isDirectory() || info.isSymbolicLink()) {
+    throw new Error(`alternate source root is not a non-symlink directory: ${alternateRoot}`);
+  }
+  const files = await walkFiles(alternateRoot);
+  const xmlFiles = files.filter((filePath) =>
+    path.basename(filePath).toLowerCase() === "index.xml" &&
+    /(?:^|[/\\])L\d+[/\\]index\.xml$/iu.test(filePath),
+  );
+  let activePageCount = 0;
+  for (const xmlPath of xmlFiles) {
+    const lessonMatch = xmlPath.match(/(?:^|[/\\])L(\d+)[/\\]index\.xml$/iu);
+    if (!lessonMatch) continue;
+    const bytes = await readFile(xmlPath);
+    const projection = parseSharedLessonXml({
+      bytes,
+      // The alternate path contains extra archive/user directories.  Supply
+      // the canonical identity explicitly while retaining the alternate
+      // bytes and occurrence order for this audit-only measurement.
+      xmlPath: `G6-G8-shared/GEO001/L${lessonMatch[1]}/index.xml`,
+      moduleCode: "GEO001",
+    });
+    activePageCount += projection.activePageCount;
+  }
+  return {lessonCount: xmlFiles.length, activePageCount};
+}
+
 async function ensureDirectory(root) {
   try {
     const info = await lstat(root);
@@ -610,13 +655,38 @@ function enrichPageWithClassification(page, row, bytes, flaExists) {
   page.sourceSha256 = sha256(bytes);
   page.assetId = `swf-${page.sourceSha256}`;
   page.swfMagic = inferSwfMagic(bytes);
-  const manifestHashDrift = row?.sha256 && SHA256_PATTERN.test(String(row.sha256)) && row.sha256 !== page.sourceSha256;
-  page.sourceStatus = manifestHashDrift
-    ? "classification-hash-drift"
-    : page.swfMagic
-      ? "resolved-canonical"
-      : "resolved-unknown-swf-magic";
-  if (manifestHashDrift) page.warnings = [...(page.warnings ?? []), "classification-hash-drift"];
+  // A valid SWF byte sequence is not enough to establish source custody.  The
+  // strict source audit must also bind every active placement to a row in the
+  // hash-locked classification manifest, including both its SHA-256 and byte
+  // count.  Keep the normal resolved status unchanged for the current source
+  // view, while assigning an explicit non-resolved status to an absent or
+  // drifted row so `validateSharedCatalog(..., {strictCounts: true})` cannot
+  // silently accept an unbound page.
+  const rowPresent = Boolean(row && typeof row === "object");
+  const manifestSha256 = typeof row?.sha256 === "string"
+    ? row.sha256.toLowerCase()
+    : null;
+  const manifestBytes = Number(row?.bytes);
+  const manifestHashDrift = !rowPresent ||
+    !manifestSha256 ||
+    !SHA256_PATTERN.test(manifestSha256) ||
+    manifestSha256 !== page.sourceSha256;
+  const manifestBytesDrift = !rowPresent ||
+    !Number.isSafeInteger(manifestBytes) ||
+    manifestBytes !== bytes.length;
+  page.sourceStatus = !rowPresent
+    ? "classification-row-missing"
+    : manifestHashDrift || manifestBytesDrift
+      ? "classification-hash-drift"
+      : page.swfMagic
+        ? "resolved-canonical"
+        : "resolved-unknown-swf-magic";
+  if (!rowPresent) {
+    page.warnings = [...(page.warnings ?? []), "classification-row-missing"];
+  } else {
+    if (manifestHashDrift) page.warnings = [...(page.warnings ?? []), "classification-hash-drift"];
+    if (manifestBytesDrift) page.warnings = [...(page.warnings ?? []), "classification-bytes-drift"];
+  }
   page.authoringEvidence = flaExists ? "paired-fla" : "swf-only";
   page.flaPath = flaExists ? page.sourcePath.replace(/\.swf$/iu, ".fla") : null;
   page.variantDecision = rowVariantDisposition(row);
@@ -705,6 +775,11 @@ export async function buildSharedCatalog({
     bareAmpersandCount: 0,
     canonicalFileCounts: {swf: 0, mp3: 0, fla: 0, xml: 0},
     unknownCanonicalSwfMagic: [],
+    // The GEO alternate source is measured but never appended to `lessons`.
+    // These fields make the denominator boundary auditable and let strict
+    // validation detect an accidentally removed or expanded alternate tree.
+    geoAlternateLessonCount: 0,
+    geoAlternateActivePageCount: 0,
   };
   const moduleDefinitions = Array.isArray(profile?.modules) && profile.modules.length > 0
     ? profile.modules
@@ -823,6 +898,9 @@ export async function buildSharedCatalog({
       lessons.push(lesson);
     }
   }
+  const geoAlternate = await auditGeoAlternate(sourceRoot);
+  audit.geoAlternateLessonCount = geoAlternate.lessonCount;
+  audit.geoAlternateActivePageCount = geoAlternate.activePageCount;
   lessons.sort((left, right) => {
     const moduleOrder = MODULES.findIndex((module) => module.moduleCode === left.moduleCode)
       - MODULES.findIndex((module) => module.moduleCode === right.moduleCode);
@@ -1015,6 +1093,9 @@ export function validateSharedCatalog(catalog, profile = null, {strictCounts = f
       if (page.sourceSha256 !== null && !SHA256_PATTERN.test(page.sourceSha256)) errors.push(`${page.placementId}: invalid source SHA-256`);
       if (page.assetId !== null && page.assetId !== `swf-${page.sourceSha256}`) errors.push(`${page.placementId}: assetId/source SHA mismatch`);
       if (strictCounts && page.sourceSha256 === null) errors.push(`${page.placementId}: active source SHA-256 is missing`);
+      if (strictCounts && page.sourceStatus === "classification-row-missing") {
+        errors.push(`${page.placementId}: classification manifest row is missing`);
+      }
       if (strictCounts && page.sourceStatus !== "resolved-canonical") errors.push(`${page.placementId}: active source is not a resolved canonical SWF`);
       if (page.variants?.length > 0 && page.variantDecision !== "hold-source-choice-review") {
         errors.push(`${page.placementId}: source variant is not held for explicit choice review`);
@@ -1024,8 +1105,41 @@ export function validateSharedCatalog(catalog, profile = null, {strictCounts = f
   if (catalog.activePagePlacementCount !== lessons.reduce((sum, lesson) => sum + (lesson.activePageCount ?? 0), 0)) errors.push("catalog active page count is not derived from lessons");
   if (strictCounts) {
     const expected = profile?.expected ?? EXPECTED_COUNTS;
-    if (lessons.length !== expected.canonicalLessonXmlCount) errors.push(`expected ${expected.canonicalLessonXmlCount} lessons, found ${lessons.length}`);
-    if (catalog.activePagePlacementCount !== expected.activePagePlacementCount) errors.push(`expected ${expected.activePagePlacementCount} pages, found ${catalog.activePagePlacementCount}`);
+    const actualAudit = catalog.audit ?? {};
+    const actualFileCounts = actualAudit.canonicalFileCounts ?? {};
+    const expectedAudit = {
+      canonicalLessonXmlCount: lessons.length,
+      activePagePlacementCount: catalog.activePagePlacementCount,
+      uniqueActiveSwfSha256Count: catalog.uniqueActiveSwfSha256Count,
+      commentedPageCount: actualAudit.commentedPageCount,
+      bomXmlCount: actualAudit.bomXmlCount,
+      bareAmpersandCount: actualAudit.bareAmpersandCount,
+      canonicalSwfCount: actualFileCounts.swf,
+      canonicalMp3Count: actualFileCounts.mp3,
+      canonicalFlaCount: actualFileCounts.fla,
+      // `variantPlacements` is the source projection's count of active
+      // same-path/different-hash decisions. Keep the profile's historical
+      // name as the comparison key for compatibility with the source report.
+      samePathDifferentHashCount: actualAudit.variantPlacements,
+      geoAlternateLessonCount: actualAudit.geoAlternateLessonCount,
+      geoAlternateActivePageCount: actualAudit.geoAlternateActivePageCount,
+    };
+    for (const [key, expectedValue] of Object.entries(expected)) {
+      if (!Object.hasOwn(expectedAudit, key)) continue;
+      const actualValue = expectedAudit[key];
+      if (actualValue !== expectedValue) {
+        errors.push(`source audit ${key} expected ${expectedValue}, found ${actualValue ?? "missing"}`);
+      }
+    }
+    if (actualAudit.missingSources?.length !== 0) {
+      errors.push(`source audit missingSources must be empty, found ${actualAudit.missingSources?.length ?? "missing"}`);
+    }
+    if (actualAudit.unknownSwfMagic?.length !== 0) {
+      errors.push(`source audit unknownSwfMagic must be empty, found ${actualAudit.unknownSwfMagic?.length ?? "missing"}`);
+    }
+    if (actualAudit.classificationHashDrift?.length !== 0) {
+      errors.push(`source audit classification bindings drifted, found ${actualAudit.classificationHashDrift?.length ?? "missing"}`);
+    }
   }
   return errors;
 }
