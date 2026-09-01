@@ -12,7 +12,7 @@
   },
   "status": "blocked",
   "requiredRoles": [
-    {"role": "product-owner", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 4, "backup": 0}, "independence": "final-scope-and-promotion-only"},
+    {"role": "product-owner", "primary": "dr-peter-hu", "backup": null, "minimumHoursPerWeek": {"primary": 4, "backup": 0}, "independence": "final-scope-and-promotion-only"},
     {"role": "migration-lead", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "orchestration-and-ledger"},
     {"role": "factory-toolchain-engineer", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "parser-ir-generator-cas-license"},
     {"role": "integration-engineer", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "registry-descriptor-route-host"},
@@ -34,6 +34,7 @@
   "m0Exit": false,
   "blockers": [
     "named-primary-and-backup-assignments-missing",
+    "product-owner-identity-self-attested-not-independently-verified",
     "effective-backups-not-verified",
     "budget-and-procurement-cap-missing",
     "original-runtime-containment-not-live-verified"

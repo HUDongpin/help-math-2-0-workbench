@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://helpmath.ai/schemas/g678-identity-intake-v1.schema.json",
+  "title": "HELP Math G6-G8 named identity intake v1",
+  "type": "object",
+  "required": ["schemaVersion", "artifactType", "intakeId", "identityId", "displayName", "declaredRole", "providedBy", "selfAttested", "verificationStatus", "governanceAssignment", "acceptanceEffects"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schemaVersion": {"const": 1},
+    "artifactType": {"const": "g678-identity-intake-v1"},
+    "intakeId": {"type": "string", "minLength": 1},
+    "identityId": {"const": "dr-peter-hu"},
+    "displayName": {"const": "Dr. Peter Hu"},
+    "declaredRole": {"const": "CTO"},
+    "providedBy": {"const": "user-message"},
+    "providedAt": {"type": "string", "format": "date"},
+    "selfAttested": {"const": true},
+    "verificationStatus": {"enum": ["self-attested-pending-independent-identity-verification", "verified"]},
+    "governanceAssignment": {"type": "object", "required": ["role", "primary", "backup", "minimumHoursPerWeek"], "properties": {"role": {"const": "product-owner"}, "primary": {"const": true}, "backup": {"const": false}, "minimumHoursPerWeek": {"const": 4}}, "additionalProperties": false},
+    "notAutomaticallyAssigned": {"type": "array", "items": {"type": "string"}},
+    "requiredFollowUp": {"type": "array", "items": {"type": "string"}},
+    "acceptanceEffects": {"type": "object", "additionalProperties": {"const": false}}
+  },
+  "additionalProperties": false
+}

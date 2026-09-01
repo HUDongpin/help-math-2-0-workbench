@@ -1,0 +1,50 @@
+{
+  "$schema": "../../schemas/g678-identity-intake-v1.schema.json",
+  "schemaVersion": 1,
+  "artifactType": "g678-identity-intake-v1",
+  "intakeId": "g678-dr-peter-hu-identity-intake-20260901",
+  "identityId": "dr-peter-hu",
+  "displayName": "Dr. Peter Hu",
+  "declaredRole": "CTO",
+  "providedBy": "user-message",
+  "providedAt": "2026-09-01",
+  "selfAttested": true,
+  "verificationStatus": "self-attested-pending-independent-identity-verification",
+  "governanceAssignment": {
+    "role": "product-owner",
+    "primary": true,
+    "backup": false,
+    "minimumHoursPerWeek": 4
+  },
+  "notAutomaticallyAssigned": [
+    "ccss-authority-reviewer",
+    "math-ccss-reviewer",
+    "independent-visual-reviewer",
+    "spanish-reviewer",
+    "audio-reviewer",
+    "authorized-original-runtime-operator",
+    "qa-strict-authority",
+    "owner-approver",
+    "release-custodian",
+    "governance-backup"
+  ],
+  "requiredFollowUp": [
+    "Owner must confirm whether CTO identity is also authorized as owner-approver.",
+    "Owner must provide a distinct product-owner backup if the project policy requires backup coverage.",
+    "Independent authority must verify the identity and effective decision authority before any approval receipt is accepted."
+  ],
+  "acceptanceEffects": {
+    "identityVerified": false,
+    "ccssAuthorityApproved": false,
+    "gradeMappingApproved": false,
+    "currentJavaScriptRegistered": false,
+    "authoritativeOriginalRuntime": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "released": false,
+    "published": false
+  }
+}
