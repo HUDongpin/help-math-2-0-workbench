@@ -505,10 +505,13 @@ export function sharedMiddleSchoolLessonKey(
   moduleCode: string,
   lesson: string | number,
 ): string | undefined {
-  const moduleDefinition = moduleValue(moduleCode);
+  const normalizedModuleCode = moduleValue(moduleCode);
   const lessonNumber = integerValue(lesson);
-  if (!moduleDefinition || !lessonNumber) return undefined;
-  return `shared-${moduleDefinition.toLowerCase()}-l${String(lessonNumber).padStart(2, '0')}`;
+  const lessonCount = normalizedModuleCode
+    ? EXPECTED_LESSON_COUNTS.get(normalizedModuleCode) ?? 0
+    : 0;
+  if (!normalizedModuleCode || !lessonNumber || lessonNumber > lessonCount) return undefined;
+  return `shared-${normalizedModuleCode.toLowerCase()}-l${String(lessonNumber).padStart(2, '0')}`;
 }
 
 export function sharedMiddleSchoolCourseKey(
@@ -516,8 +519,11 @@ export function sharedMiddleSchoolCourseKey(
   moduleCode: string,
   lesson: string | number,
 ): string | undefined {
-  const moduleDefinition = moduleValue(moduleCode);
+  const normalizedModuleCode = moduleValue(moduleCode);
   const lessonNumber = integerValue(lesson);
-  if (!moduleDefinition || !lessonNumber || ![6, 7, 8].includes(grade)) return undefined;
-  return `g${grade}-${moduleDefinition.toLowerCase()}-l${String(lessonNumber).padStart(2, '0')}`;
+  const lessonCount = normalizedModuleCode
+    ? EXPECTED_LESSON_COUNTS.get(normalizedModuleCode) ?? 0
+    : 0;
+  if (!normalizedModuleCode || !lessonNumber || lessonNumber > lessonCount || ![6, 7, 8].includes(grade)) return undefined;
+  return `g${grade}-${normalizedModuleCode.toLowerCase()}-l${String(lessonNumber).padStart(2, '0')}`;
 }

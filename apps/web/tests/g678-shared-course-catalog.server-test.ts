@@ -47,7 +47,9 @@ test('shared identity helpers are module-aware and normalized', () => {
   assert.equal(sharedMiddleSchoolCourseKey(6, 'NMS002', 1), 'g6-nms002-l01');
   assert.equal(sharedMiddleSchoolCourseKey(8, 'dat001', '08'), 'g8-dat001-l08');
   assert.equal(sharedMiddleSchoolLessonKey('UNKNOWN', 1), undefined);
+  assert.equal(sharedMiddleSchoolLessonKey('NMS002', 13), undefined);
   assert.equal(sharedMiddleSchoolCourseKey(5 as never, 'NMS002', 1), undefined);
+  assert.equal(sharedMiddleSchoolCourseKey(6, 'DAT001', 9), undefined);
 });
 
 test('local G6-G8 preview is explicit and production always closes it', () => {
