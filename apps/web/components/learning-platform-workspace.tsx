@@ -590,7 +590,7 @@ function LessonsScreen({
             lesson.status === 'released');
         const gradeLabel = lesson.moduleCode
           ? lesson.grade === null
-            ? `G6–G8 shared · ${lesson.moduleCode}`
+            ? (spanish ? `G6–G8 compartido · ${lesson.moduleCode}` : `G6–G8 shared · ${lesson.moduleCode}`)
             : `G${lesson.grade} · ${lesson.moduleCode}`
           : `G${lesson.grade}`;
         const statusLabel = learnerRunnable
