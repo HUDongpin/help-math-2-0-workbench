@@ -15,6 +15,7 @@ import {isG5L4ShowcaseAudioAuthorized} from '@/lib/g5-l4-preview-asset-policy';
 import {findLessonNavigationForRoute} from '@/lib/lesson-navigation';
 import {findPageOnlyCurrentJsNavigationForRoute} from '@/lib/page-only-current-js-navigation.server';
 import {
+  isG678GradeMappingAuthorityApproved,
   isG678LocalPreviewEnabled,
   isG678ModuleCode,
   sharedMiddleSchoolCourseKey,
@@ -114,6 +115,7 @@ export default async function CoursePage({
       : (!/^[3-5]$/u.test(grade) || !/^\d{1,2}$/u.test(lesson))
   ) notFound();
   if (sharedRoute && !isG678LocalPreviewEnabled()) notFound();
+  if (sharedRoute && !isG678GradeMappingAuthorityApproved()) notFound();
 
   const spanish = locale === 'es';
   const lessonNumber = Number(lesson);

@@ -1,5 +1,6 @@
 import 'server-only';
 
+import {createHash} from 'node:crypto';
 import {existsSync, readFileSync} from 'node:fs';
 import path from 'node:path';
 
@@ -134,6 +135,7 @@ export interface SharedMiddleSchoolCatalogSnapshot {
   readonly profilePath: string | null;
   readonly mappingPath: string | null;
   readonly sourceBacked: boolean;
+  readonly gradeMappingAuthorityApproved: boolean;
   readonly lessons: readonly SharedMiddleSchoolLesson[];
 }
 
@@ -256,6 +258,37 @@ function readJson(root: string, relativePath: string): unknown | null {
     // sourceBacked=false and therefore cannot open a route.
     return null;
   }
+}
+
+function fileSha256(root: string, relativePath: string): string | null {
+  const absolutePath = path.join(root, relativePath);
+  if (!existsSync(absolutePath)) return null;
+  try {
+    return createHash('sha256').update(readFileSync(absolutePath)).digest('hex');
+  } catch {
+    return null;
+  }
+}
+
+function hasApprovedGradeMapping(
+  root: string,
+  mappingPath: string | null,
+): boolean {
+  if (mappingPath === null) return false;
+  const report = record(readJson(root, 'reports/g678-grade-mapping-readiness.json'));
+  const ccss = record(report.ccss);
+  const summary = record(report.summary);
+  const source = record(report.source);
+  const profilePath = 'catalog/g678-shared-source-profile.v1.json';
+  const mappingRelativePath = 'catalog/g678-grade-mapping.v1.json';
+  return report.artifactType === 'help-math-g678-grade-mapping-readiness' &&
+    summary.gradeRouteGenerationAllowed === true &&
+    ccss.status === 'authority-approved' &&
+    source.profilePath === profilePath &&
+    source.mappingPath === mappingRelativePath &&
+    source.profileSha256 === fileSha256(root, profilePath) &&
+    source.mappingSha256 === fileSha256(root, mappingRelativePath) &&
+    mappingPath === mappingRelativePath;
 }
 
 function sourceXmlSha(recordValue: JsonRecord): string | null {
@@ -409,6 +442,7 @@ function readSnapshot(): SharedMiddleSchoolCatalogSnapshot {
       profilePath: null,
       mappingPath: null,
       sourceBacked: false,
+      gradeMappingAuthorityApproved: false,
       lessons: Object.freeze([]),
     });
   }
@@ -439,6 +473,7 @@ function readSnapshot(): SharedMiddleSchoolCatalogSnapshot {
 
   const profileRoot = record(profileValue);
   const mappingRoot = record(mappingValue);
+  const gradeMappingAuthorityApproved = hasApprovedGradeMapping(root, mappingPath);
   const profileId = stringValue(profileRoot.profileId ?? profileRoot.catalogId) ??
     'g678-shared-catalog-fallback-v1';
   const mappingVersion = stringValue(
@@ -458,7 +493,7 @@ function readSnapshot(): SharedMiddleSchoolCatalogSnapshot {
       const key = `${moduleDefinition.code}:${lesson}`;
       const normalized = normalizeLesson(
         sourceRecords.get(key),
-        mappingRecords.get(key),
+        gradeMappingAuthorityApproved ? mappingRecords.get(key) : undefined,
         moduleDefinition,
         lesson,
         mappingVersion,
@@ -485,6 +520,7 @@ function readSnapshot(): SharedMiddleSchoolCatalogSnapshot {
     profilePath,
     mappingPath,
     sourceBacked: lessons.some((lesson) => lesson.sourceBacked),
+    gradeMappingAuthorityApproved,
     lessons: Object.freeze(lessons),
   });
 }
@@ -499,6 +535,15 @@ export function sharedMiddleSchoolCatalog(): SharedMiddleSchoolCatalogSnapshot {
 
 export function sharedMiddleSchoolLessonCatalog(): readonly SharedMiddleSchoolLesson[] {
   return sharedMiddleSchoolCatalog().lessons;
+}
+
+/**
+ * A mapping record marked approved is not enough to create a grade route.
+ * The readiness report must also be hash-bound to the current profile and
+ * mapping bytes and carry an independently issued CCSS authority receipt.
+ */
+export function isG678GradeMappingAuthorityApproved(): boolean {
+  return sharedMiddleSchoolCatalog().gradeMappingAuthorityApproved;
 }
 
 export function sharedMiddleSchoolLessonKey(

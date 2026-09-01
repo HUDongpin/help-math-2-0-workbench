@@ -3,6 +3,7 @@ import test from 'node:test';
 
 import {
   G678_SHARED_MODULES,
+  isG678GradeMappingAuthorityApproved,
   isG678LocalPreviewEnabled,
   sharedMiddleSchoolCatalog,
   sharedMiddleSchoolCourseKey,
@@ -40,6 +41,7 @@ test('shared catalog projects the four modules and keeps placement counts', () =
   assert.equal(lessons.every((lesson) => lesson.sourceBacked), true);
   assert.equal(lessons.every((lesson) => lesson.primaryGrade === null), true);
   assert.equal(lessons.every((lesson) => lesson.courseKey === null), true);
+  assert.equal(isG678GradeMappingAuthorityApproved(), false);
 });
 
 test('shared identity helpers are module-aware and normalized', () => {

@@ -11,6 +11,7 @@ import {
 import {wholeLessonDescriptorMatchesNavigation} from './whole-lesson-player-descriptor';
 import {
   G678_SHARED_MODULES,
+  isG678GradeMappingAuthorityApproved,
   isG678LocalPreviewEnabled,
   sharedMiddleSchoolCourseKey,
   sharedMiddleSchoolLessonCatalog,
@@ -109,6 +110,7 @@ export function availableLearningLessons(
   return Object.freeze(wholeLessonCourseRegistrations().flatMap(
     ({descriptor}) => {
       const moduleCode = descriptor.course.moduleCode;
+      if (moduleCode && !isG678GradeMappingAuthorityApproved()) return [];
       const catalogNavigation = findLessonNavigationForRoute(
         catalog,
         descriptor.course.grade,
