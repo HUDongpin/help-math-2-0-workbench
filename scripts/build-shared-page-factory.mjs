@@ -875,6 +875,34 @@ function selectLessonTasks(profile, options) {
   })));
 }
 
+/**
+ * The G6-G8 factory may not silently turn a structural calibration into a
+ * batch-generation authorization. A future profile revision can carry a
+ * hash-bound representativeProductPathGate receipt; until then every extend
+ * scope remains closed, including dry-runs.
+ */
+export function ensureScaleOutAuthorization(profile, options) {
+  if (options?.mode !== "extend" || profile?.profileId !== "g678-shared-source-profile-v1") return;
+  const gate = profile.representativeProductPathGate ?? profile.scaleOutGate ?? null;
+  const authorized = gate?.status === "GO" &&
+    gate?.scaleOutAuthorized === true &&
+    gate?.selectedPageCount === 16 &&
+    gate?.registeredCurrentJsCount === 16 &&
+    gate?.modernMyLessonQaPassed === true &&
+    gate?.replayInteractionAudioQaPassed === true &&
+    gate?.desktopMobileQaPassed === true &&
+    typeof gate?.receiptSha256 === "string" && SHA256.test(gate.receiptSha256);
+  invariant(authorized, "SCALE_OUT_NOT_AUTHORIZED",
+    "G678 extend is blocked until the 16-page representative product path has a hash-bound GO receipt", {
+      required: [
+        "status=GO", "scaleOutAuthorized=true", "selectedPageCount=16", "registeredCurrentJsCount=16",
+        "modernMyLessonQaPassed=true", "replayInteractionAudioQaPassed=true", "desktopMobileQaPassed=true",
+        "receiptSha256=<64 lowercase hex>",
+      ],
+      observed: gate ?? null,
+    });
+}
+
 function findModulePageHint(profile, moduleCode, lessonNumber, ordinal, page) {
   const maps = [profile.laneOverrides, profile.pageHints, profile.auditHints, profile.placements,
     profile.calibrationSet, profile.calibration?.pages, profile.calibration?.members];
@@ -1559,6 +1587,7 @@ export async function runFactory(optionsInput) {
     requireReadOnly: options.requireReadOnly,
     maxArchiveReceiptBytes: options.maxArchiveReceiptBytes,
   });
+  ensureScaleOutAuthorization(profile, options);
   const scriptSha256 = await sha256File(SCRIPT_PATH);
   const tasks = options.mode === "check" && !options.moduleCode && !options.batch && !options.all
     ? await tasksFromExistingRun(options)

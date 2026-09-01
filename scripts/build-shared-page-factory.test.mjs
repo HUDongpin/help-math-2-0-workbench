@@ -10,6 +10,7 @@ import {
   classifyLane,
   computeCacheKey,
   enumerateSource,
+  ensureScaleOutAuthorization,
   loadProfile,
   parseLessonXml,
   runFactory,
@@ -273,4 +274,18 @@ test("cache key changes when source identity changes but excludes CLI check mode
     witnessIdentities: {"classification-manifest.jsonl": {sha256: "e".repeat(64)}},
   }}).cacheKey;
   assert.notEqual(calibrate, witnessChanged);
+});
+
+test("G678 extend is fail-closed until the representative product path receipt authorizes scale-out", () => {
+  assert.throws(
+    () => ensureScaleOutAuthorization(
+      {profileId: "g678-shared-source-profile-v1"},
+      {mode: "extend"},
+    ),
+    (error) => error?.code === "SCALE_OUT_NOT_AUTHORIZED",
+  );
+  assert.doesNotThrow(() => ensureScaleOutAuthorization(
+    {profileId: "other-profile"},
+    {mode: "extend"},
+  ));
 });
