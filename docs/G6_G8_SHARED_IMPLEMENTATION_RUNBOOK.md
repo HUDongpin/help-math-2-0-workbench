@@ -53,9 +53,15 @@ configured private staging root.
 npm run doctor
 npm run verify:sources
 
-node scripts/audit-shared-source.mjs \
+SOURCE_ROOT='/Volumes/WestWorld/HELP MATH Related Files/AWS Grade-Classified Courseware'
+HELP_MATH_G678_SOURCE_ROOT="$SOURCE_ROOT" node scripts/audit-shared-source.mjs \
   --profile catalog/g678-shared-source-profile.v1.json \
+  --source-root "$SOURCE_ROOT" \
+  --classification-manifest "$SOURCE_ROOT/classification-manifest.jsonl" \
+  --missing-dependencies "$SOURCE_ROOT/missing-dependencies.jsonl" \
+  --output catalog/g678-shared-catalog.v1.json \
   --check \
+  --strict-counts \
   --require-source
 
 node scripts/map-shared-grade.mjs \
