@@ -40,6 +40,7 @@ interface LessonNavigationDescriptorBase {
   readonly lesson: number;
   readonly moduleCode?: string;
   readonly courseKey?: string;
+  readonly gradeTags?: readonly number[];
   readonly titleEnglish: string;
   readonly titleSpanish: string | null;
   readonly expectedMemberCount: number;
@@ -97,8 +98,9 @@ export function buildLessonNavigationDescriptor(
   definition: LessonReleaseDefinition,
   animations: readonly CatalogAnimation[],
 ): LessonNavigationDescriptor | undefined {
+  const sharedScope = definition.scope.collection === 'g678-shared';
   if (definition.publicationMode !== 'atomic' ||
-    definition.scope.collection !== 'course' ||
+    (!sharedScope && definition.scope.collection !== 'course') ||
     typeof definition.scope.grade !== 'number' ||
     definition.scope.lesson === null ||
     definition.scope.excludeNonMembers !== true ||
@@ -106,6 +108,12 @@ export function buildLessonNavigationDescriptor(
     definition.expectedMemberCount < 1) {
     return undefined;
   }
+  if (sharedScope && (
+    typeof definition.scope.moduleCode !== 'string' ||
+    !definition.scope.moduleCode.trim() ||
+    typeof definition.scope.courseKey !== 'string' ||
+    !definition.scope.courseKey.trim()
+  )) return undefined;
 
   const animationById = new Map(animations.map((animation) => [animation.animationId, animation]));
   const boundMembers = definition.members.map((member) => {
@@ -238,6 +246,9 @@ export function buildLessonNavigationDescriptor(
     releaseId: definition.releaseId,
     grade: definition.scope.grade,
     lesson: definition.scope.lesson,
+    moduleCode: definition.scope.moduleCode,
+    courseKey: definition.scope.courseKey,
+    gradeTags: definition.scope.gradeTags,
     titleEnglish,
     titleSpanish: null,
     expectedMemberCount: definition.expectedMemberCount,

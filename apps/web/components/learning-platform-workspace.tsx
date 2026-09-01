@@ -612,7 +612,9 @@ function LessonsScreen({
               ? `${lesson.registeredPageCount}/${lesson.activePageCount} ${spanish ? 'páginas registradas' : 'pages registered'}`
               : `${lesson.activePageCount} ${spanish ? 'páginas · 8 pasos' : 'pages · 8 steps'}`}</span>
             {sharedLesson
-              ? <em className={styles.sourceGapLabel}>{lesson.evidenceBoundary}</em>
+              ? <em className={styles.sourceGapLabel}>{spanish
+                ? (lesson.evidenceBoundarySpanish ?? lesson.evidenceBoundary)
+                : lesson.evidenceBoundary}</em>
               : null}
           </span>
           <span className={`${styles.lessonStatus} ${learnerRunnable ? styles.lessonStatusOpen : ''}`} data-lesson-card-status>

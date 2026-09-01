@@ -95,6 +95,9 @@ function buildNavigation(
     ...(descriptor.course.courseKey
       ? {courseKey: descriptor.course.courseKey}
       : {}),
+    ...(descriptor.course.gradeTags
+      ? {gradeTags: descriptor.course.gradeTags}
+      : {}),
     titleEnglish: descriptor.course.labels.en.text,
     titleSpanish: descriptor.course.labels.es.usesEnglishFallback
       ? null

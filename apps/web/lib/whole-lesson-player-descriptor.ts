@@ -591,6 +591,7 @@ interface WholeLessonNavigationBindingBase {
   readonly lesson: number;
   readonly moduleCode?: string;
   readonly courseKey?: string;
+  readonly gradeTags?: readonly number[];
   readonly expectedMemberCount: number;
   readonly activePageCount: number;
   readonly pages: readonly Readonly<{
@@ -643,6 +644,10 @@ export function wholeLessonDescriptorMatchesNavigation(
     ((descriptor.course.courseKey !== undefined ||
       navigation.courseKey !== undefined) &&
       descriptor.course.courseKey !== navigation.courseKey) ||
+    ((descriptor.course.gradeTags !== undefined ||
+      navigation.gradeTags !== undefined) &&
+      JSON.stringify(descriptor.course.gradeTags ?? []) !==
+        JSON.stringify(navigation.gradeTags ?? [])) ||
     descriptor.course.expectedReleaseMemberCount !==
       navigation.expectedMemberCount ||
     descriptor.course.activePageCount !== navigation.activePageCount ||
