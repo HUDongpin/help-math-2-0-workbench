@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://helpmath.ai/schemas/ccss-authority-receipt-v1.schema.json",
+  "title": "HELP Math CCSS authority receipt v1",
+  "type": "object",
+  "required": [
+    "schemaVersion", "artifactType", "receiptId", "mappingVersion", "snapshotId",
+    "snapshotManifestPath", "snapshotContentSha256", "status", "reviewerId",
+    "reviewerRole", "reviewedAt", "approvalStatement", "acceptanceEffects"
+  ],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schemaVersion": {"const": 1},
+    "artifactType": {"const": "ccss-authority-receipt-v1"},
+    "receiptId": {"type": "string", "minLength": 1},
+    "mappingVersion": {"const": "ccss-math-2010-v1"},
+    "snapshotId": {"const": "ccss-math-2010-v1"},
+    "snapshotManifestPath": {"const": "catalog/ccss/ccss-math-2010-v1.snapshot.json"},
+    "snapshotContentSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "status": {"enum": ["pending-authority-review", "approved", "rejected"]},
+    "reviewerId": {"type": ["string", "null"]},
+    "reviewerRole": {"const": "ccss-authority"},
+    "reviewedAt": {"type": ["string", "null"], "format": "date-time"},
+    "approvalStatement": {"type": ["string", "null"]},
+    "requiredBeforeMappingUnlock": {"type": "array", "items": {"type": "string"}},
+    "acceptanceEffects": {
+      "type": "object",
+      "required": ["gradeMappingApproved", "gradeRoutesAllowed", "currentJavaScriptRegistered", "authoritativeOriginalRuntime", "visualFidelityAccepted", "audioAccepted", "humanVisualAccepted", "ownerAccepted", "strictComplete", "released", "published"],
+      "properties": {
+        "gradeMappingApproved": {"const": false},
+        "gradeRoutesAllowed": {"const": false},
+        "currentJavaScriptRegistered": {"const": false},
+        "authoritativeOriginalRuntime": {"const": false},
+        "visualFidelityAccepted": {"const": false},
+        "audioAccepted": {"const": false},
+        "humanVisualAccepted": {"const": false},
+        "ownerAccepted": {"const": false},
+        "strictComplete": {"const": false},
+        "released": {"const": false},
+        "published": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "notes": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

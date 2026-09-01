@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://helpmath.ai/schemas/ccss-math-snapshot-v1.schema.json",
+  "title": "HELP Math official CCSS Mathematics snapshot witness v1",
+  "type": "object",
+  "required": [
+    "schemaVersion", "artifactType", "snapshotId", "mappingVersion", "publisher",
+    "sourceUrl", "contentType", "retrievedAt", "contentBytes", "contentSha256",
+    "officialSourceObserved", "authorityStatus"
+  ],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schemaVersion": {"const": 1},
+    "artifactType": {"const": "official-ccss-math-snapshot"},
+    "snapshotId": {"const": "ccss-math-2010-v1"},
+    "mappingVersion": {"const": "ccss-math-2010-v1"},
+    "publisher": {"const": "Common Core State Standards Initiative"},
+    "title": {"type": "string", "minLength": 1},
+    "sourceUrl": {"type": "string", "format": "uri"},
+    "sourcePageUrl": {"type": "string", "format": "uri"},
+    "contentType": {"const": "application/pdf"},
+    "retrievedAt": {"type": "string", "format": "date-time"},
+    "retrievalMethod": {"type": "string", "minLength": 1},
+    "externalPathToken": {"type": "string", "pattern": "^\\$HELP_MATH_CCSS_SNAPSHOT_ROOT/"},
+    "contentBytes": {"type": "integer", "minimum": 1},
+    "contentSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "officialSourceObserved": {"const": true},
+    "authorityStatus": {"enum": ["pending-independent-authority-review", "authority-approved"]},
+    "notes": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

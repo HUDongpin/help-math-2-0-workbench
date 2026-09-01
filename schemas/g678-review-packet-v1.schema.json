@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://helpmath.ai/schemas/g678-review-packet-v1.schema.json",
+  "title": "HELP Math G6-G8 source and acceptance review packet v1",
+  "type": "object",
+  "required": ["schemaVersion", "artifactType", "packetId", "source", "conflicts", "geoAlternate", "dependencies", "audio", "licenseBoundary", "calibration", "overallStatus", "acceptanceEffects", "limitations"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schemaVersion": {"const": 1},
+    "artifactType": {"const": "help-math-g678-review-packet"},
+    "packetId": {"type": "string", "minLength": 1},
+    "generatedAt": {"type": "null"},
+    "source": {"type": "object", "required": ["profileId", "sourceManifestSha256", "catalogPath", "sourceRootToken", "canonicalArchive"], "properties": {"profileId": {"type": "string"}, "sourceManifestSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "catalogPath": {"type": "string"}, "sourceRootToken": {"const": "$HELP_MATH_G678_SOURCE_ROOT"}, "canonicalArchive": {"const": "NewHelpProgram"}}, "additionalProperties": true},
+    "conflicts": {"type": "object", "required": ["expectedCount", "records", "completedDecisionCount", "status"], "properties": {"expectedCount": {"const": 46}, "records": {"type": "array", "minItems": 46, "maxItems": 46}, "completedDecisionCount": {"const": 0}, "status": {"const": "blocked-pending-independent-source-choice-review"}}, "additionalProperties": true},
+    "geoAlternate": {"type": "object", "required": ["expectedLessonCount", "expectedActivePageCount", "records", "completedDecisionCount", "status"], "properties": {"expectedLessonCount": {"const": 1}, "expectedActivePageCount": {"const": 59}, "records": {"type": "array", "minItems": 59, "maxItems": 59}, "completedDecisionCount": {"const": 0}, "status": {"const": "blocked-pending-source-choice-review"}}, "additionalProperties": true},
+    "dependencies": {"type": "object", "required": ["holdCount", "uniqueReferenceCount", "uniqueReferences", "status"], "properties": {"holdCount": {"const": 92}, "uniqueReferenceCount": {"const": 28}, "uniqueReferences": {"type": "array", "minItems": 28, "maxItems": 28}, "status": {"const": "blocked-pending-dependency-closure-review"}}, "additionalProperties": true},
+    "audio": {"type": "object", "required": ["pageCandidatePages", "groupedFqEaCandidates", "status", "requiredHumanListening"], "properties": {"pageCandidatePages": {"const": 2133}, "groupedFqEaCandidates": {"const": 5562}, "status": {"const": "candidate-index-only"}, "requiredHumanListening": {"const": true}}, "additionalProperties": true},
+    "licenseBoundary": {"type": "object", "required": ["tools", "productBundleAdmission"], "properties": {"tools": {"type": "array", "minItems": 4}, "productBundleAdmission": {"const": "blocked-pending-reviewed-license-boundary"}}, "additionalProperties": true},
+    "calibration": {"type": "object", "required": ["expectedPageCount", "manualReviewCompleted", "scaleOutDecision", "placements"], "properties": {"expectedPageCount": {"const": 16}, "manualReviewCompleted": {"const": false}, "scaleOutDecision": {"const": "NO-GO-scale-out"}, "placements": {"type": "array", "minItems": 16, "maxItems": 16}}, "additionalProperties": true},
+    "overallStatus": {"const": "blocked-at-external-human-authority-gates"},
+    "acceptanceEffects": {"type": "object", "additionalProperties": {"const": false}},
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://helpmath.ai/schemas/g678-raw-zip-custody-verification-v1.schema.json",
+  "title": "HELP Math G6-G8 raw ZIP custody verification v1",
+  "type": "object",
+  "required": ["schemaVersion", "artifactType", "reportId", "verifiedAt", "method", "artifacts", "custodyStatus", "acceptanceEffects"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schemaVersion": {"const": 1},
+    "artifactType": {"const": "g678-raw-zip-custody-verification"},
+    "reportId": {"type": "string", "minLength": 1},
+    "verifiedAt": {"type": "string", "format": "date-time"},
+    "method": {
+      "type": "object",
+      "required": ["algorithm", "readMode", "writeMode", "symlinkPolicy", "comparison"],
+      "properties": {
+        "algorithm": {"const": "SHA-256"},
+        "readMode": {"const": "complete sequential read to EOF"},
+        "writeMode": {"type": "string"},
+        "symlinkPolicy": {"type": "string"},
+        "comparison": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "archiveRootToken": {"type": "string"},
+    "artifacts": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["artifactId", "relativePath", "bytes", "sha256", "declaredSha256", "memberManifestRelativePath", "memberManifestBytes", "memberManifestSha256", "memberManifestDeclaredSha256", "status"],
+        "properties": {
+          "artifactId": {"type": "string"},
+          "relativePath": {"type": "string"},
+          "bytes": {"type": "integer", "minimum": 1},
+          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "declaredSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "memberManifestRelativePath": {"type": "string"},
+          "memberManifestBytes": {"type": "integer", "minimum": 1},
+          "memberManifestSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "memberManifestDeclaredSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "status": {"const": "verified-current-byte-and-member-manifest"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "custodyStatus": {"const": "CUSTODY_VERIFIED_NO_PROMOTION"},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "acceptanceEffects": {
+      "type": "object",
+      "additionalProperties": {"const": false}
+    }
+  },
+  "additionalProperties": false
+}

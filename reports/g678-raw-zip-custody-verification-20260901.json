@@ -1,0 +1,60 @@
+{
+  "$schema": "../schemas/g678-raw-zip-custody-verification-v1.schema.json",
+  "schemaVersion": 1,
+  "artifactType": "g678-raw-zip-custody-verification",
+  "reportId": "g678-raw-zip-custody-verification-20260901",
+  "verifiedAt": "2026-09-01T09:49:00Z",
+  "method": {
+    "algorithm": "SHA-256",
+    "readMode": "complete sequential read to EOF",
+    "writeMode": "read-only; no source or archive mutation",
+    "symlinkPolicy": "explicit regular files only; no symlink traversal",
+    "comparison": "independent current hash compared with declared custody receipt"
+  },
+  "archiveRootToken": "$PRIVATE_RECOVERY_CONTAINERS",
+  "artifacts": [
+    {
+      "artifactId": "new-help-program-zip-copy1",
+      "relativePath": "containers/raw/NewHelpProgram.zip",
+      "bytes": 10495170599,
+      "sha256": "26da534ecc6d6df0298516283880e4a19ca241747102acde8492cf90a30b2e10",
+      "declaredSha256": "26da534ecc6d6df0298516283880e4a19ca241747102acde8492cf90a30b2e10",
+      "memberManifestRelativePath": "manifests/private/zip64-member-manifest-copy1.jsonl",
+      "memberManifestBytes": 130765530,
+      "memberManifestSha256": "13339a31d4f978d70d267591133e5f4b83c6abe59d5d5e3c4898ef931d03f79d",
+      "memberManifestDeclaredSha256": "13339a31d4f978d70d267591133e5f4b83c6abe59d5d5e3c4898ef931d03f79d",
+      "status": "verified-current-byte-and-member-manifest"
+    },
+    {
+      "artifactId": "help-program-stagingv4-zip-copy1",
+      "relativePath": "containers/raw/HelpProgramStagingv4.zip",
+      "bytes": 4430916509,
+      "sha256": "bd5c8b33b8587bec6debe1ce62d3c994db403c05069136539d8e1c92defa2300",
+      "declaredSha256": "bd5c8b33b8587bec6debe1ce62d3c994db403c05069136539d8e1c92defa2300",
+      "memberManifestRelativePath": "manifests/private/zip64-member-manifest-stagingv4-copy1.jsonl",
+      "memberManifestBytes": 42770915,
+      "memberManifestSha256": "4f65367b68b8aedda2efb0db88a8f010a76824268a09a0e392082519be9e6ece",
+      "memberManifestDeclaredSha256": "4f65367b68b8aedda2efb0db88a8f010a76824268a09a0e392082519be9e6ece",
+      "status": "verified-current-byte-and-member-manifest"
+    }
+  ],
+  "custodyStatus": "CUSTODY_VERIFIED_NO_PROMOTION",
+  "limitations": [
+    "The ZIP containers and manifests are custody evidence only; no source promotion is authorized.",
+    "ZIP member contents were not extracted or executed by this verification.",
+    "Nested ZIP holds remain closed, including the literal DA001.zip alias; no automatic rename or merge occurred.",
+    "This receipt does not establish FLA availability, runtime behavior, fidelity, audio, human review, Owner acceptance, strict completion, release, or publication."
+  ],
+  "acceptanceEffects": {
+    "canonicalSourcePromoted": false,
+    "currentJavaScriptRegistered": false,
+    "authoritativeOriginalRuntime": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "released": false,
+    "published": false
+  }
+}
