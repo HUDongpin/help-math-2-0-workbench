@@ -1,7 +1,7 @@
 import 'server-only';
 
 import {createHash} from 'node:crypto';
-import {existsSync, readFileSync} from 'node:fs';
+import {existsSync, readFileSync, statSync} from 'node:fs';
 import path from 'node:path';
 
 import {getWorkspaceRoot} from './catalog';
@@ -60,6 +60,12 @@ export interface SharedMiddleSchoolSourceProfileV1 {
   readonly version: string;
   readonly sourceManifestSha256?: string | null;
   readonly mappingManifestSha256?: string | null;
+  readonly sourceViewPath?: string | null;
+  readonly canonicalRootRule?: Readonly<Record<string, unknown>>;
+  readonly alternateRootRules?: readonly Readonly<Record<string, unknown>>[];
+  readonly archiveReceipts?: readonly Readonly<Record<string, unknown>>[];
+  readonly moduleDefinitions?: readonly Readonly<Record<string, unknown>>[];
+  readonly toolchainVersions?: Readonly<Record<string, unknown>>;
   readonly sourceView: Readonly<Record<string, unknown>>;
   readonly modules: readonly Readonly<Record<string, unknown>>[];
   readonly expected: Readonly<Record<string, number>>;
@@ -135,6 +141,7 @@ export interface SharedMiddleSchoolCatalogSnapshot {
   readonly profilePath: string | null;
   readonly mappingPath: string | null;
   readonly sourceBacked: boolean;
+  readonly sourceProjectionValid: boolean;
   readonly gradeMappingAuthorityApproved: boolean;
   readonly lessons: readonly SharedMiddleSchoolLesson[];
 }
@@ -186,6 +193,10 @@ function integerValue(value: unknown): number | null {
     : typeof value === 'string' && /^\d+$/u.test(value)
       ? Number(value)
       : null;
+}
+
+function positiveSafeInteger(value: unknown): value is number {
+  return typeof value === 'number' && Number.isSafeInteger(value) && value > 0;
 }
 
 function gradeValue(value: unknown): G678Grade | null {
@@ -247,6 +258,194 @@ function extractLessonRecords(value: unknown): readonly JsonRecord[] {
   return records;
 }
 
+/**
+ * Validate the checked-in source projection before the web adapter marks a
+ * shared lesson as source-backed.  This is deliberately stricter than the
+ * display projection: a catalog with the right aggregate counts but a
+ * tampered XML/page/audio identity must remain locked and non-runnable.
+ */
+export function sharedCatalogProjectionIsValid(value: unknown): boolean {
+  const root = record(value);
+  if (root.schemaVersion !== 1 || root.catalogKind !== 'help-math-g678-shared-source-catalog' ||
+      root.gradeScope !== 'G6-G8-shared' || root.canonicalLessonXmlCount !== 44 ||
+      root.activePagePlacementCount !== 2282 || root.uniqueActiveSwfSha256Count !== 2240) {
+    return false;
+  }
+  const audit = record(root.audit);
+  const fileCounts = record(audit.canonicalFileCounts);
+  if (audit.sourceRootKind !== 'private-external-read-only' ||
+      asArray(audit.missingSources).length !== 0 ||
+      asArray(audit.unknownSwfMagic).length !== 0 ||
+      asArray(audit.classificationHashDrift).length !== 0 ||
+      audit.commentedPageCount !== 315 || audit.bomXmlCount !== 39 ||
+      audit.bareAmpersandCount !== 7 || audit.variantPlacements !== 46 ||
+      audit.dependencyHolds !== 92 || audit.audioCandidatePages !== 2133 ||
+      audit.audioGroupedCandidateCount !== 5562 ||
+      audit.geoAlternateLessonCount !== 1 || audit.geoAlternateActivePageCount !== 59 ||
+      fileCounts.swf !== 2776 || fileCounts.mp3 !== 13353 ||
+      fileCounts.fla !== 0 || fileCounts.xml !== 44) return false;
+  const lessons = asArray(root.lessons).map(record);
+  if (lessons.length !== 44) return false;
+  const seenLessons = new Set<string>();
+  const seenPlacements = new Set<string>();
+  const seenSourcePaths = new Set<string>();
+  const seenAudioCueIds = new Set<string>();
+  const seenGroupedAudioIds = new Set<string>();
+  const seenGroupedAudioSources = new Set<string>();
+  let pageTotal = 0;
+  let groupedAudioTotal = 0;
+  for (const lesson of lessons) {
+    const moduleCode = moduleValue(lesson.moduleCode);
+    const lessonNumber = integerValue(lesson.lessonNumber);
+    const expectedLessonCount = moduleCode ? EXPECTED_LESSON_COUNTS.get(moduleCode) ?? 0 : 0;
+    const expectedPages = moduleCode ? EXPECTED_LESSON_PAGE_COUNTS.get(moduleCode)?.[Number(lessonNumber) - 1] : undefined;
+    const stableLessonKey = moduleCode && lessonNumber
+      ? `shared-${moduleCode.toLowerCase()}-l${String(lessonNumber).padStart(2, '0')}`
+      : null;
+    const key = moduleCode && lessonNumber
+      ? `${moduleCode}:${lessonNumber}`
+      : null;
+    const sourceXml = record(lesson.sourceXml);
+    const expectedXmlPath = moduleCode && lessonNumber
+      ? `G6-G8-shared/${moduleCode}/L${lessonNumber}/index.xml`
+      : null;
+    const sourceXmlSha256 = stringValue(sourceXml.sha256)?.toLowerCase();
+    if (!moduleCode || !lessonNumber || !key || seenLessons.has(key) ||
+        lesson.stableLessonKey !== stableLessonKey ||
+        lessonNumber > expectedLessonCount || lesson.activePageCount !== expectedPages ||
+        lesson.pagePlacementCount !== expectedPages || !Array.isArray(lesson.pages) ||
+        lesson.pages.length !== expectedPages ||
+        !expectedXmlPath || sourceXml.path !== expectedXmlPath ||
+        !sourceXmlSha256 || !SHA256.test(sourceXmlSha256) ||
+        sourceXml.sha256 !== sourceXmlSha256 ||
+        !positiveSafeInteger(sourceXml.bytes) ||
+        lesson.sourceXmlPath !== expectedXmlPath ||
+        lesson.sourceXmlSha256 !== sourceXmlSha256) {
+      return false;
+    }
+    seenLessons.add(key);
+    pageTotal += lesson.pages.length;
+
+    const groupedCandidates = asArray(lesson.audioGroupedCandidates);
+    groupedAudioTotal += groupedCandidates.length;
+    for (const groupedValue of groupedCandidates) {
+      const grouped = record(groupedValue);
+      const groupedId = stringValue(grouped.id);
+      const groupedSource = stringValue(grouped.source);
+      const groupedSourcePath = stringValue(grouped.sourcePath);
+      const groupedViewPath = stringValue(grouped.viewPath);
+      const groupedSha256 = stringValue(grouped.sha256)?.toLowerCase();
+      const groupedRelativePath = groupedSourcePath?.replace(/^HELP_COURSES\//u, '');
+      const expectedGroupedViewPath = groupedRelativePath
+        ? `G6-G8-shared/${groupedRelativePath}`
+        : null;
+      if (!groupedId || seenGroupedAudioIds.has(groupedId) ||
+          !groupedSource || !groupedSourcePath || seenGroupedAudioSources.has(groupedSourcePath) ||
+          groupedSource !== groupedSourcePath ||
+          !groupedSha256 || !SHA256.test(groupedSha256) || grouped.sha256 !== groupedSha256 ||
+          !positiveSafeInteger(grouped.bytes) ||
+          grouped.sourceRootKind !== 'canonical' ||
+          grouped.classificationStatus !== 'resolved-canonical' ||
+          grouped.binding !== 'FQ/EA' || grouped.language !== 'undetermined' ||
+          grouped.required !== null || grouped.acceptance !== 'candidate-index-only' ||
+          grouped.matchDisposition !== 'unmatched-page-basename' ||
+          !expectedGroupedViewPath || groupedViewPath !== expectedGroupedViewPath ||
+          !groupedSourcePath.startsWith(`HELP_COURSES/${moduleCode}/L${lessonNumber}/`) ||
+          !groupedViewPath.startsWith(`G6-G8-shared/${moduleCode}/L${lessonNumber}/`)) {
+        return false;
+      }
+      for (const field of ['startSemantics', 'hostTrigger', 'stopOrCompleteSemantics', 'replayBehavior']) {
+        if (typeof grouped[field] !== 'string' || grouped[field].length === 0) return false;
+      }
+      seenGroupedAudioIds.add(groupedId);
+      seenGroupedAudioSources.add(groupedSourcePath);
+    }
+
+    for (const [pageIndex, pageValue] of lesson.pages.entries()) {
+      const page = record(pageValue);
+      const placementId = stringValue(page.placementId);
+      const sourceSha = stringValue(page.sourceSha256)?.toLowerCase();
+      const expectedPlacementId = `${stableLessonKey}-p${String(pageIndex + 1).padStart(3, '0')}`;
+      const reference = stringValue(page.reference)?.replaceAll('\\', '/');
+      const expectedSourcePath = reference
+        ? `HELP_COURSES/${moduleCode}/L${lessonNumber}/${reference}`
+        : null;
+      const expectedViewPath = reference
+        ? `G6-G8-shared/${moduleCode}/L${lessonNumber}/${reference}`
+        : null;
+      const pageCandidates = asArray(page.audioCueCandidates);
+      const pageAudioIds = asArray(page.audioCueIds);
+      if (!placementId || placementId !== expectedPlacementId || seenPlacements.has(placementId) ||
+          page.stableLessonKey !== stableLessonKey || page.moduleCode !== moduleCode ||
+          page.lessonNumber !== lessonNumber ||
+          page.xmlOccurrence !== pageIndex + 1 ||
+          page.globalOrdinal !== pageIndex + 1 ||
+          !reference || reference.startsWith('/') || reference.startsWith('../') || reference.includes('/../') ||
+          !sourceSha || !SHA256.test(sourceSha) ||
+          page.sourceSha256 !== sourceSha ||
+          page.assetId !== `swf-${sourceSha}` ||
+          !positiveSafeInteger(page.sourceBytes) ||
+          page.animationId !== placementId ||
+          page.sourceStatus !== 'resolved-canonical' ||
+          page.sourceRootKind !== 'canonical' || page.variantOf !== null ||
+          !expectedSourcePath || page.sourcePath !== expectedSourcePath ||
+          page.expectedPath !== expectedSourcePath || page.viewPath !== expectedViewPath ||
+          !Array.isArray(page.audioCueCandidates) || !Array.isArray(page.audioCueIds) ||
+          pageAudioIds.length !== pageCandidates.length ||
+          pageAudioIds.some((id, index) => id !== record(pageCandidates[index]).id) ||
+          seenSourcePaths.has(page.sourcePath)) return false;
+      seenSourcePaths.add(page.sourcePath);
+
+      const pageCandidateIds = new Set<string>();
+      for (const candidateValue of pageCandidates) {
+        const candidate = record(candidateValue);
+        const candidateId = stringValue(candidate.id);
+        const candidateSource = stringValue(candidate.source);
+        const candidateSourcePath = stringValue(candidate.sourcePath);
+        const candidateViewPath = stringValue(candidate.viewPath);
+        const candidateSha256 = stringValue(candidate.sha256)?.toLowerCase();
+        const candidateRelativePath = candidateSourcePath?.replace(/^HELP_COURSES\//u, '');
+        const expectedCandidateViewPath = candidateRelativePath
+          ? `G6-G8-shared/${candidateRelativePath}`
+          : null;
+        const binding = candidate.binding;
+        if (!candidateId || pageCandidateIds.has(candidateId) || seenAudioCueIds.has(candidateId) ||
+            !candidateSource || !candidateSourcePath || candidateSource !== candidateSourcePath ||
+            !candidateViewPath || candidateViewPath !== expectedCandidateViewPath ||
+            !candidateSha256 || !SHA256.test(candidateSha256) || candidate.sha256 !== candidateSha256 ||
+            !positiveSafeInteger(candidate.bytes) ||
+            candidate.sourceRootKind !== 'canonical' ||
+            candidate.classificationStatus !== 'resolved-canonical' ||
+            candidate.language !== 'undetermined' || candidate.required !== null ||
+            candidate.acceptance !== 'candidate-index-only' ||
+            !['FQ/EA', 'FQ/SA', 'lesson-SA'].includes(String(binding)) ||
+            candidate.bindingKind !== `${String(binding)}-candidate` ||
+            candidate.durationMs !== null || candidate.frameDomain !== null ||
+            !candidateSourcePath.startsWith(`HELP_COURSES/${moduleCode}/L${lessonNumber}/`) ||
+            !candidateViewPath.startsWith(`G6-G8-shared/${moduleCode}/L${lessonNumber}/`)) {
+          return false;
+        }
+        for (const field of ['startSemantics', 'hostTrigger', 'stopOrCompleteSemantics', 'replayBehavior']) {
+          if (typeof candidate[field] !== 'string' || candidate[field].length === 0) return false;
+        }
+        pageCandidateIds.add(candidateId);
+        seenAudioCueIds.add(candidateId);
+      }
+      seenPlacements.add(placementId);
+    }
+  }
+  const acceptanceEffects = record(root.acceptanceEffects);
+  const requiredAcceptanceKeys = [
+    'canonicalSourcePromoted', 'currentJavaScriptRegistered',
+    'authoritativeOriginalRuntime', 'visualFidelityAccepted', 'audioAccepted',
+    'humanVisualAccepted', 'ownerAccepted', 'strictComplete', 'released',
+    'published',
+  ];
+  return seenLessons.size === 44 && pageTotal === 2282 && seenPlacements.size === 2282 &&
+    groupedAudioTotal === 5562 && seenGroupedAudioIds.size === 5562 &&
+    requiredAcceptanceKeys.every((key) => Object.hasOwn(acceptanceEffects, key) && acceptanceEffects[key] === false);
+}
+
 function readJson(root: string, relativePath: string): unknown | null {
   const absolutePath = path.join(root, relativePath);
   if (!existsSync(absolutePath)) return null;
@@ -261,13 +460,24 @@ function readJson(root: string, relativePath: string): unknown | null {
 }
 
 function fileSha256(root: string, relativePath: string): string | null {
-  const absolutePath = path.join(root, relativePath);
+  if (typeof relativePath !== 'string' || path.isAbsolute(relativePath)) return null;
+  const absolutePath = path.resolve(root, relativePath);
+  const relative = path.relative(root, absolutePath);
+  if (relative === '..' || relative.startsWith(`..${path.sep}`)) return null;
   if (!existsSync(absolutePath)) return null;
   try {
     return createHash('sha256').update(readFileSync(absolutePath)).digest('hex');
   } catch {
     return null;
   }
+}
+
+function safeRelativePath(root: string, value: unknown): string | null {
+  if (typeof value !== 'string' || value.trim().length === 0 || path.isAbsolute(value)) return null;
+  const absolute = path.resolve(root, value);
+  const relative = path.relative(root, absolute);
+  if (relative === '..' || relative.startsWith(`..${path.sep}`)) return null;
+  return relative.split(path.sep).join('/');
 }
 
 function hasApprovedGradeMapping(
@@ -281,13 +491,57 @@ function hasApprovedGradeMapping(
   const source = record(report.source);
   const profilePath = 'catalog/g678-shared-source-profile.v1.json';
   const mappingRelativePath = 'catalog/g678-grade-mapping.v1.json';
+  const snapshotPath = safeRelativePath(root, ccss.snapshotPath);
+  const receiptPath = safeRelativePath(root, ccss.authorityReceiptPath);
+  const snapshotSha256 = stringValue(ccss.snapshotSha256)?.toLowerCase();
+  const receiptSha256 = stringValue(ccss.authorityReceiptSha256)?.toLowerCase();
+  const receipt = receiptPath ? record(readJson(root, receiptPath)) : {};
+  const records = Array.isArray(report.records) ? report.records : [];
+  const expectedRecordKeys = new Set(
+    G678_SHARED_MODULES.flatMap((module) =>
+      Array.from({length: module.lessonCount}, (_value, index) =>
+        `${module.code}:${index + 1}`)),
+  );
+  const recordKeys = new Set<string>();
+  const recordsReady = records.length === 44 && records.every((entry) => {
+    const item = record(entry);
+    const moduleCode = moduleValue(item.moduleCode);
+    const lessonNumber = integerValue(item.lessonNumber);
+    const recordKey = moduleCode && lessonNumber ? `${moduleCode}:${lessonNumber}` : null;
+    if (!recordKey || recordKeys.has(recordKey)) return false;
+    recordKeys.add(recordKey);
+    return item.ready === true && item.status === 'approved' &&
+      expectedRecordKeys.has(recordKey) &&
+      gradeValue(item.primaryGrade) !== null &&
+      Array.isArray(item.ccssStandardCodes) && item.ccssStandardCodes.length > 0 &&
+      Array.isArray(item.blockers) && item.blockers.length === 0;
+  });
+  const receiptValid = receipt.schemaVersion === 1 &&
+    receipt.artifactType === 'ccss-authority-receipt-v1' &&
+    receipt.status === 'approved' &&
+    receipt.mappingVersion === ccss.mappingVersion &&
+    receipt.snapshotSha256 === snapshotSha256 &&
+    typeof receipt.reviewerId === 'string' && receipt.reviewerId.trim().length > 0 &&
+    typeof receipt.reviewedAt === 'string' && receipt.reviewedAt.length > 0 &&
+    Boolean(receiptPath && receiptSha256 && fileSha256(root, receiptPath) === receiptSha256);
+  const profile = record(readJson(root, profilePath));
+  const profileSourceManifestSha256 = stringValue(
+    profile.sourceManifestSha256 ?? record(profile.witnesses)['classification-manifest.jsonl'],
+  )?.toLowerCase();
   return report.artifactType === 'help-math-g678-grade-mapping-readiness' &&
+    report.schemaVersion === 1 &&
+    ccss.mappingVersion === 'ccss-math-2010-v1' &&
     summary.gradeRouteGenerationAllowed === true &&
     ccss.status === 'authority-approved' &&
+    typeof ccss.authorityReviewer === 'string' && ccss.authorityReviewer.trim().length > 0 &&
+    Boolean(snapshotPath && snapshotSha256 && fileSha256(root, snapshotPath) === snapshotSha256) &&
+    receiptValid && recordsReady &&
     source.profilePath === profilePath &&
     source.mappingPath === mappingRelativePath &&
     source.profileSha256 === fileSha256(root, profilePath) &&
     source.mappingSha256 === fileSha256(root, mappingRelativePath) &&
+    source.sourceManifestSha256 === profileSourceManifestSha256 &&
+    recordKeys.size === expectedRecordKeys.size &&
     mappingPath === mappingRelativePath;
 }
 
@@ -442,6 +696,7 @@ function readSnapshot(): SharedMiddleSchoolCatalogSnapshot {
       profilePath: null,
       mappingPath: null,
       sourceBacked: false,
+      sourceProjectionValid: false,
       gradeMappingAuthorityApproved: false,
       lessons: Object.freeze([]),
     });
@@ -473,6 +728,9 @@ function readSnapshot(): SharedMiddleSchoolCatalogSnapshot {
 
   const profileRoot = record(profileValue);
   const mappingRoot = record(mappingValue);
+  const catalogProjectionValid = profilePath === 'catalog/g678-shared-catalog.v1.json'
+    ? sharedCatalogProjectionIsValid(profileValue)
+    : false;
   const gradeMappingAuthorityApproved = hasApprovedGradeMapping(root, mappingPath);
   const profileId = stringValue(profileRoot.profileId ?? profileRoot.catalogId) ??
     'g678-shared-catalog-fallback-v1';
@@ -501,9 +759,11 @@ function readSnapshot(): SharedMiddleSchoolCatalogSnapshot {
       // The profile is a source-custody projection.  It can establish that a
       // card is source-backed even while the per-page SWF SHA values and grade
       // mapping remain pending; those downstream gates stay fail-closed.
-      lessons.push(profileIsRecognized && !normalized.sourceBacked
+      lessons.push(catalogProjectionValid && profileIsRecognized && !normalized.sourceBacked
         ? Object.freeze({...normalized, sourceBacked: true})
-        : normalized);
+        : catalogProjectionValid && profileIsRecognized
+          ? normalized
+          : Object.freeze({...normalized, sourceBacked: false}));
     }
   }
   const moduleOrder = new Map(
@@ -520,16 +780,44 @@ function readSnapshot(): SharedMiddleSchoolCatalogSnapshot {
     profilePath,
     mappingPath,
     sourceBacked: lessons.some((lesson) => lesson.sourceBacked),
+    sourceProjectionValid: catalogProjectionValid,
     gradeMappingAuthorityApproved,
     lessons: Object.freeze(lessons),
   });
 }
 
 let snapshot: SharedMiddleSchoolCatalogSnapshot | undefined;
+let snapshotFingerprint: string | undefined;
+
+function currentSnapshotFingerprint(root: string): string {
+  const paths = [
+    'catalog/g678-shared-catalog.v1.json',
+    'catalog/g678-shared-source-profile.v1.json',
+    'catalog/g678-grade-mapping.v1.json',
+    'reports/g678-grade-mapping-readiness.json',
+  ];
+  return paths.map((relativePath) => {
+    const absolutePath = path.join(root, relativePath);
+    try {
+      const stat = statSync(absolutePath);
+      return `${relativePath}:${stat.size}:${stat.mtimeMs}`;
+    } catch {
+      return `${relativePath}:missing`;
+    }
+  }).join('|');
+}
 
 /** Returns the immutable source-backed (or explicitly marked fallback) view. */
 export function sharedMiddleSchoolCatalog(): SharedMiddleSchoolCatalogSnapshot {
-  snapshot ??= readSnapshot();
+  if (process.env.NODE_ENV === 'production') {
+    return readSnapshot();
+  }
+  const root = getWorkspaceRoot();
+  const fingerprint = currentSnapshotFingerprint(root);
+  if (!snapshot || snapshotFingerprint !== fingerprint) {
+    snapshot = readSnapshot();
+    snapshotFingerprint = fingerprint;
+  }
   return snapshot;
 }
 

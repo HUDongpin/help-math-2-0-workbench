@@ -1,10 +1,12 @@
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import test from 'node:test';
 
 import {
   G678_SHARED_MODULES,
   isG678GradeMappingAuthorityApproved,
   isG678LocalPreviewEnabled,
+  sharedCatalogProjectionIsValid,
   sharedMiddleSchoolCatalog,
   sharedMiddleSchoolCourseKey,
   sharedMiddleSchoolLessonCatalog,
@@ -15,6 +17,21 @@ import {
   availableLearningLessons,
   wholeLessonEngineeringPreviewReady,
 } from '../lib/learning-lesson-availability.server';
+
+type MutableRecord = {[key: string]: unknown};
+type MutableCatalog = MutableRecord & {
+  lessons: Array<MutableRecord & {
+    sourceXml: MutableRecord;
+    pages: MutableRecord[];
+  }>;
+};
+
+function checkedInSharedCatalog(): MutableCatalog {
+  return JSON.parse(readFileSync(
+    new URL('../../../catalog/g678-shared-catalog.v1.json', import.meta.url),
+    'utf8',
+  )) as MutableCatalog;
+}
 
 test('shared catalog projects the four modules and keeps placement counts', () => {
   const snapshot = sharedMiddleSchoolCatalog();
@@ -95,6 +112,7 @@ test('All Lessons includes one locked card per shared lesson without opening rou
   assert.equal(shared.length, 44);
   assert.equal(shared.every((card) => card.href === null), true);
   assert.equal(shared.every((card) => card.status === 'source-mapping-pending'), true);
+  assert.equal(shared.every((card) => card.evidenceBoundarySpanish?.length), true);
   assert.equal(availableLearningLessons({NODE_ENV: 'production'}).length, 0);
   const productionCards = allLearningLessons({
     NODE_ENV: 'production',
@@ -102,4 +120,77 @@ test('All Lessons includes one locked card per shared lesson without opening rou
   });
   assert.equal(productionCards.length, 29);
   assert.equal(productionCards.some((card) => card.moduleCode !== null), false);
+});
+
+test('shared catalog projection rejects XML/page/audio identity drift', () => {
+  const baseline = checkedInSharedCatalog();
+  assert.equal(sharedCatalogProjectionIsValid(baseline), true);
+
+  const assertRejected = (mutate: (catalog: MutableCatalog) => void) => {
+    const candidate = checkedInSharedCatalog();
+    mutate(candidate);
+    assert.equal(sharedCatalogProjectionIsValid(candidate), false);
+  };
+
+  assertRejected((catalog) => {
+    const sourceXml = catalog.lessons[0]!.sourceXml;
+    sourceXml.bytes = 0;
+  });
+  assertRejected((catalog) => {
+    catalog.lessons[0]!.sourceXml.path = 'G6-G8-shared/NMS002/L2/index.xml';
+  });
+  assertRejected((catalog) => {
+    catalog.lessons[0]!.stableLessonKey = 'shared-nms002-l99';
+  });
+  assertRejected((catalog) => {
+    catalog.lessons[0]!.pages[0]!.sourcePath = 'HELP_COURSES/GEO001/L1/IR/L1IR01.swf';
+  });
+  assertRejected((catalog) => {
+    catalog.lessons[0]!.pages[0]!.sourceRootKind = 'canonical-newhelp';
+  });
+  assertRejected((catalog) => {
+    catalog.lessons[0]!.pages[0]!.variantOf = 'shared-nms002-l01-p001';
+  });
+
+  const audioLesson = baseline.lessons.find((lesson) =>
+    lesson.pages.some((page) => Array.isArray(page.audioCueCandidates) &&
+      page.audioCueCandidates.length > 0));
+  assert.ok(audioLesson, 'checked-in catalog should contain a page audio candidate');
+  const audioPage = audioLesson.pages.find((page) =>
+    Array.isArray(page.audioCueCandidates) && page.audioCueCandidates.length > 0)!;
+  const audioCandidate = (audioPage.audioCueCandidates as MutableRecord[])[0]!;
+
+  assertRejected((candidate) => {
+    const page = candidate.lessons.find((lesson) =>
+      lesson.pages.some((entry) => Array.isArray(entry.audioCueCandidates) &&
+        entry.audioCueCandidates.length > 0))!.pages.find((entry) =>
+      Array.isArray(entry.audioCueCandidates) && entry.audioCueCandidates.length > 0)!;
+    const audio = (page.audioCueCandidates as MutableRecord[])[0]!;
+    audio.classificationStatus = 'classification-row-missing';
+  });
+  assertRejected((candidate) => {
+    const page = candidate.lessons.find((lesson) =>
+      lesson.pages.some((entry) => Array.isArray(entry.audioCueCandidates) &&
+        entry.audioCueCandidates.length > 0))!.pages.find((entry) =>
+      Array.isArray(entry.audioCueCandidates) && entry.audioCueCandidates.length > 0)!;
+    const audio = (page.audioCueCandidates as MutableRecord[])[0]!;
+    audio.sha256 = 'not-a-sha256';
+  });
+  assertRejected((candidate) => {
+    const page = candidate.lessons.find((lesson) =>
+      lesson.pages.some((entry) => Array.isArray(entry.audioCueCandidates) &&
+        entry.audioCueCandidates.length > 0))!.pages.find((entry) =>
+      Array.isArray(entry.audioCueCandidates) && entry.audioCueCandidates.length > 0)!;
+    const audio = (page.audioCueCandidates as MutableRecord[])[0]!;
+    audio.bytes = 0;
+  });
+  assertRejected((candidate) => {
+    const page = candidate.lessons.find((lesson) =>
+      lesson.pages.some((entry) => Array.isArray(entry.audioCueCandidates) &&
+        entry.audioCueCandidates.length > 0))!.pages.find((entry) =>
+      Array.isArray(entry.audioCueCandidates) && entry.audioCueCandidates.length > 0)!;
+    page.audioCueIds = ['tampered-audio-id'];
+  });
+
+  assert.equal(audioCandidate.classificationStatus, 'resolved-canonical');
 });
