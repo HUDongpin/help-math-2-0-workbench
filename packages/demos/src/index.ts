@@ -8,10 +8,14 @@ export type {
   AudioTrack,
   FrameDomainMetadata,
   MovieMetadata,
+  PageAudioCandidate,
+  PageAudioCandidateAcceptance,
+  PageAudioCandidateBinding,
   ResolvedRuntimeContext,
   RuntimeContext,
   RuntimeScenario
 } from './contract';
+export {isPageAudioCandidate} from './contract';
 export {prototypeManifest, matchPrototype} from './prototype-manifest';
 export type {PrototypeKey, PrototypeManifestEntry} from './prototype-manifest';
 export {

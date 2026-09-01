@@ -128,6 +128,60 @@ export interface InteractiveAudioAsset {
 }
 
 /**
+ * Source-bound page audio candidate used by the shared middle-school
+ * adapter.  This is deliberately broader than `AudioCue`: a candidate may
+ * still need host-trigger, language, timing, and human listening decisions.
+ * `candidate-index-only` is the only status produced by source intake; the
+ * accepted states are reserved for an independently reviewed downstream
+ * evidence package.
+ */
+export type PageAudioCandidateBinding = 'FQ/EA' | 'FQ/SA' | 'lesson-SA';
+
+export type PageAudioCandidateAcceptance =
+  | 'candidate-index-only'
+  | 'accepted'
+  | 'accepted-not-required';
+
+export interface PageAudioCandidate {
+  readonly id: string;
+  readonly source: string;
+  readonly sha256: string;
+  readonly language: AnimationLanguage | 'shared' | 'undetermined';
+  readonly durationMs?: number;
+  readonly frameDomain?: string;
+  readonly startSemantics: string;
+  readonly hostTrigger: string;
+  readonly stopOrCompleteSemantics: string;
+  readonly replayBehavior: string;
+  readonly binding: PageAudioCandidateBinding;
+  readonly required: boolean;
+  readonly acceptance: PageAudioCandidateAcceptance;
+}
+
+const PAGE_AUDIO_SHA256 = /^[a-f0-9]{64}$/u;
+
+/** Structural-only guard for data arriving from a source/catalog adapter. */
+export function isPageAudioCandidate(value: unknown): value is PageAudioCandidate {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+  const candidate = value as Partial<PageAudioCandidate>;
+  const text = (entry: unknown) => typeof entry === 'string' && entry.trim().length > 0;
+  const language = candidate.language === 'en' || candidate.language === 'es' ||
+    candidate.language === 'shared' || candidate.language === 'undetermined';
+  const binding = candidate.binding === 'FQ/EA' || candidate.binding === 'FQ/SA' ||
+    candidate.binding === 'lesson-SA';
+  const acceptance = candidate.acceptance === 'candidate-index-only' ||
+    candidate.acceptance === 'accepted' || candidate.acceptance === 'accepted-not-required';
+  return text(candidate.id) && text(candidate.source) &&
+    typeof candidate.sha256 === 'string' && PAGE_AUDIO_SHA256.test(candidate.sha256) &&
+    language && text(candidate.startSemantics) && text(candidate.hostTrigger) &&
+    text(candidate.stopOrCompleteSemantics) && text(candidate.replayBehavior) &&
+    binding && typeof candidate.required === 'boolean' && acceptance &&
+    (candidate.durationMs === undefined ||
+      (typeof candidate.durationMs === 'number' && Number.isFinite(candidate.durationMs) && candidate.durationMs >= 0)) &&
+    (candidate.frameDomain === undefined || text(candidate.frameDomain));
+}
+
+/**
  * A modern, acceptance-neutral transport may be exposed only when a renderer
  * declares how seeking reconstructs state. This is intentionally separate
  * from source-host behavior: direct frame inspection does not establish
@@ -229,6 +283,8 @@ export interface AnimationModule<State = unknown> {
   readonly audioTracks?: readonly AudioTrack[];
   /** Exact, user-triggered audio assets addressable by typed lesson-host ID. */
   readonly interactiveAudioAssets?: readonly InteractiveAudioAsset[];
+  /** Explicit source-bound page-audio candidates for shared adapters. */
+  readonly pageAudioCandidates?: readonly PageAudioCandidate[];
   /** Explicit, fail-closed modern transport capability. Absence disables seeking. */
   readonly transport?: AnimationTransportCapability;
   /**
