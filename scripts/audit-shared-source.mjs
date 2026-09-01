@@ -8,6 +8,7 @@
  * or publication state.
  */
 
+import {createHash} from "node:crypto";
 import {access, mkdir, readFile, rename, rm, writeFile} from "node:fs/promises";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
@@ -145,6 +146,95 @@ async function optionalJsonl(filePath, label) {
   }
 }
 
+const SOURCE_WITNESS_NAMES = Object.freeze([
+  "README.md",
+  "classification-summary.json",
+  "classification-manifest.jsonl",
+  "conflicts.jsonl",
+  "missing-dependencies.jsonl",
+]);
+
+function sha256Bytes(bytes) {
+  return createHash("sha256").update(bytes).digest("hex");
+}
+
+function expectedWitnessSha256(profile, name) {
+  const declared = profile?.witnesses?.[name];
+  if (typeof declared === "string" && declared.length > 0) return declared.toLowerCase();
+  if (name === "classification-manifest.jsonl" && typeof profile?.sourceManifestSha256 === "string") {
+    return profile.sourceManifestSha256.toLowerCase();
+  }
+  return null;
+}
+
+/**
+ * The active classification view keeps its witness files beside the
+ * G6-G8-shared directory.  Accept either a parent source root or the direct
+ * shared root, but never silently proceed without the witnesses required by
+ * a strict, source-required audit.
+ */
+async function locateWitness(sourceRoot, name, explicitPath) {
+  if (explicitPath) return projectPath(explicitPath);
+  const root = path.resolve(sourceRoot);
+  const candidates = [
+    path.join(root, name),
+    path.join(root, "..", name),
+    path.join(root, "..", "..", name),
+  ];
+  for (const candidate of candidates) {
+    if (await pathExists(candidate)) return candidate;
+  }
+  return null;
+}
+
+export async function verifySourceWitnesses({options, profile, sourceRoot}) {
+  const explicit = {
+    "classification-manifest.jsonl": options.classificationManifest,
+    "missing-dependencies.jsonl": options.dependencyManifest,
+  };
+  const required = Boolean(options.strictCounts && options.requireSource && profile?.witnesses);
+  const verified = {};
+  for (const name of SOURCE_WITNESS_NAMES) {
+    const witnessPath = await locateWitness(sourceRoot, name, explicit[name] ?? null);
+    const expected = expectedWitnessSha256(profile, name);
+    if (!witnessPath) {
+      if (required && expected) {
+        throw new Error(`G678_WITNESS_REQUIRED: ${name} was not found beside the private source view`);
+      }
+      continue;
+    }
+    let bytes;
+    try {
+      bytes = await readFile(witnessPath);
+    } catch (error) {
+      throw new Error(`G678_WITNESS_UNREADABLE: ${name}: ${error.message}`);
+    }
+    const actual = sha256Bytes(bytes);
+    if (expected && actual !== expected) {
+      throw new Error(`G678_WITNESS_HASH_DRIFT: ${name}: expected ${expected}, found ${actual}`);
+    }
+    verified[name] = {path: witnessPath, sha256: actual};
+  }
+  if (required) {
+    for (const name of ["classification-manifest.jsonl", "missing-dependencies.jsonl"]) {
+      if (!verified[name]) {
+        throw new Error(`G678_WITNESS_REQUIRED: ${name} is required for --strict-counts --require-source`);
+      }
+    }
+  }
+  return verified;
+}
+
+async function readVerifiedJsonl(verified, name) {
+  const item = verified[name];
+  if (!item) return [];
+  try {
+    return await readJsonl(item.path);
+  } catch (error) {
+    throw new Error(`G678_WITNESS_INVALID: ${name}: ${error.message}`);
+  }
+}
+
 async function pathExists(target) {
   try {
     await access(target);
@@ -165,7 +255,7 @@ async function resolveSourceRoot(options, profile) {
 }
 
 export function helpText() {
-  return `G6-G8 shared source audit\n\nUsage:\n  node scripts/audit-shared-source.mjs --check [options]\n  node scripts/audit-shared-source.mjs --write --source-root <private-root> --output <catalog.json> [options]\n\nOptions:\n  --profile <path>                 source profile (default ${DEFAULT_PROFILE})\n  --mapping <path>                 Common Core mapping (default ${DEFAULT_MAPPING})\n  --source-root <path>             private G6-G8-shared root (or parent)\n  --classification-manifest <path> optional classification JSONL\n  --missing-dependencies <path>    optional dependency JSONL\n  --output <path>                  deterministic catalog output/check target\n  --strict-counts                  enforce profile lesson/page denominators\n  --require-source                 fail when private source root is absent\n  --include-variants               retain variant candidates in projection\n`;
+  return `G6-G8 shared source audit\n\nUsage:\n  node scripts/audit-shared-source.mjs --check [options]\n  node scripts/audit-shared-source.mjs --write --source-root <private-root> --output <catalog.json> [options]\n\nOptions:\n  --profile <path>                 source profile (default ${DEFAULT_PROFILE})\n  --mapping <path>                 Common Core mapping (default ${DEFAULT_MAPPING})\n  --source-root <path>             private G6-G8-shared root (or parent)\n  --classification-manifest <path> classification JSONL (auto-discovered beside source in strict mode)\n  --missing-dependencies <path>    dependency JSONL (auto-discovered beside source in strict mode)\n  --output <path>                  deterministic catalog output/check target\n  --strict-counts                  enforce profile lesson/page denominators\n  --require-source                 fail when private source root or strict witnesses are absent\n  --include-variants               retain variant candidates in projection\n`;
 }
 
 function summary(catalog) {
@@ -224,8 +314,20 @@ export async function runAudit(options) {
     }
     return result;
   }
-  const classificationRows = await optionalJsonl(options.classificationManifest, "classification manifest");
-  const dependencyRows = await optionalJsonl(options.dependencyManifest, "dependency manifest");
+  const verifiedWitnesses = await verifySourceWitnesses({
+    options,
+    profile,
+    sourceRoot,
+  });
+  // In strict source mode the sibling witnesses are discovered and verified
+  // automatically, so the package shortcut cannot accidentally report zero
+  // variants/dependencies merely because two optional flags were omitted.
+  const classificationRows = options.classificationManifest
+    ? await optionalJsonl(options.classificationManifest, "classification manifest")
+    : await readVerifiedJsonl(verifiedWitnesses, "classification-manifest.jsonl");
+  const dependencyRows = options.dependencyManifest
+    ? await optionalJsonl(options.dependencyManifest, "dependency manifest")
+    : await readVerifiedJsonl(verifiedWitnesses, "missing-dependencies.jsonl");
   const catalog = await buildSharedCatalog({
     sourceRoot,
     profile,

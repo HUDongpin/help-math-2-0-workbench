@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
-import {access, mkdtemp, rm} from "node:fs/promises";
+import {createHash} from "node:crypto";
+import {access, mkdir, mkdtemp, rm, writeFile} from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
@@ -9,6 +10,7 @@ import {
   DEFAULT_PROFILE,
   parseArguments,
   runAudit,
+  verifySourceWitnesses,
 } from "./audit-shared-source.mjs";
 
 test("CLI defaults to a non-mutating check and reports missing private source gracefully", async () => {
@@ -38,4 +40,50 @@ test("CLI write fails closed when the private source root is unavailable", async
   } finally {
     await rm(root, {recursive: true, force: true});
   }
+});
+
+test("strict source audit discovers and verifies sibling classification witnesses", async (t) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "g678-witness-fixture-"));
+  const shared = path.join(root, "G6-G8-shared");
+  await mkdir(shared, {recursive: true});
+  const contents = {
+    "README.md": "readme\n",
+    "classification-summary.json": "{}\n",
+    "classification-manifest.jsonl": "{\"path\":\"fixture\"}\n",
+    "conflicts.jsonl": "",
+    "missing-dependencies.jsonl": "",
+  };
+  const witnesses = {};
+  for (const [name, value] of Object.entries(contents)) {
+    await writeFile(path.join(root, name), value);
+    witnesses[name] = createHash("sha256").update(value).digest("hex");
+  }
+  t.after(() => rm(root, {recursive: true, force: true}));
+  const verified = await verifySourceWitnesses({
+    sourceRoot: shared,
+    profile: {witnesses},
+    options: {strictCounts: true, requireSource: true, classificationManifest: null, dependencyManifest: null},
+  });
+  assert.equal(Object.keys(verified).length, 5);
+  assert.equal(verified["classification-manifest.jsonl"].sha256, witnesses["classification-manifest.jsonl"]);
+});
+
+test("strict source audit rejects a missing or drifted required witness", async (t) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "g678-witness-drift-"));
+  const shared = path.join(root, "G6-G8-shared");
+  await mkdir(shared, {recursive: true});
+  const profile = {witnesses: {
+    "classification-manifest.jsonl": "a".repeat(64),
+    "missing-dependencies.jsonl": "b".repeat(64),
+  }};
+  await writeFile(path.join(root, "classification-manifest.jsonl"), "drift\n");
+  t.after(() => rm(root, {recursive: true, force: true}));
+  await assert.rejects(
+    () => verifySourceWitnesses({
+      sourceRoot: shared,
+      profile,
+      options: {strictCounts: true, requireSource: true, classificationManifest: null, dependencyManifest: null},
+    }),
+    /G678_WITNESS_HASH_DRIFT|G678_WITNESS_REQUIRED/u,
+  );
 });
