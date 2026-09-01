@@ -38,3 +38,30 @@ test("checked-in G6-G8 source projection and reports retain the exact page-only 
   assert.equal(mapping.summary.gradeRouteGenerationAllowed, false);
   assert.equal(governance.m0Exit, false);
 });
+
+test("G6-G8 artifact schemas resolve local definitions and admit their schema locator", async () => {
+  const pairs = [
+    ["catalog/g678-shared-source-profile.v1.json", "schemas/g678-shared-source-profile-v1.schema.json"],
+    ["catalog/g678-grade-mapping.v1.json", "schemas/g678-grade-mapping-v1.schema.json"],
+    ["catalog/g678-shared-catalog.v1.json", "schemas/g678-shared-source-catalog-v1.schema.json"],
+    ["catalog/g678-page-only-release-manifest.v1.json", "schemas/g678-page-only-release-manifest-v1.schema.json"],
+    ["reports/g678-acceptance-matrix.json", "schemas/g678-acceptance-matrix-v1.schema.json"],
+    ["reports/g678-grade-mapping-readiness.json", "schemas/g678-grade-mapping-readiness-v1.schema.json"],
+    ["catalog/g678-review-governance.v1.json", "schemas/g678-review-governance-v1.schema.json"],
+  ];
+  for (const [artifactPath, schemaPath] of pairs) {
+    const [artifact, schema] = await Promise.all([json(artifactPath), json(schemaPath)]);
+    assert.equal(
+      artifact.$schema,
+      `../${schemaPath}`,
+      `${artifactPath} must point at its checked-in schema`,
+    );
+    if (schema.additionalProperties === false) {
+      assert.ok(schema.properties?.$schema, `${schemaPath} must admit the artifact $schema field`);
+    }
+    const serialized = JSON.stringify(schema);
+    for (const match of serialized.matchAll(/#\/\$defs\/([A-Za-z0-9_-]+)/gu)) {
+      assert.ok(schema.$defs?.[match[1]], `${schemaPath} has an unresolved local definition ${match[1]}`);
+    }
+  }
+});
