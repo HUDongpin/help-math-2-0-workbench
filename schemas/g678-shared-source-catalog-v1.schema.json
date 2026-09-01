@@ -18,19 +18,20 @@
     "canonicalLessonXmlCount": {"const": 44},
     "uniqueActiveSwfSha256Count": {"const": 2240},
     "acceptanceEffects": {"type": "object", "additionalProperties": {"const": false}},
-    "audit": {"type": "object", "required": ["sourceRootKind", "missingSources", "unknownSwfMagic", "variantPlacements", "dependencyHolds", "audioCandidatePages", "canonicalFileCounts"], "properties": {"sourceRootKind": {"const": "private-external-read-only"}, "missingSources": {"type": "array"}, "unknownSwfMagic": {"type": "array"}, "variantPlacements": {"type": "integer", "minimum": 0}, "dependencyHolds": {"type": "integer", "minimum": 0}, "audioCandidatePages": {"type": "integer", "minimum": 0}, "canonicalFileCounts": {"type": "object", "properties": {"swf": {"type": "integer", "minimum": 0}, "mp3": {"type": "integer", "minimum": 0}, "fla": {"const": 0}, "xml": {"type": "integer", "minimum": 0}}}}, "additionalProperties": true}
+    "audit": {"type": "object", "required": ["sourceRootKind", "missingSources", "unknownSwfMagic", "variantPlacements", "dependencyHolds", "audioCandidatePages", "audioGroupedCandidateCount", "geoAlternateLessonCount", "geoAlternateActivePageCount", "canonicalFileCounts"], "properties": {"sourceRootKind": {"const": "private-external-read-only"}, "missingSources": {"type": "array"}, "unknownSwfMagic": {"type": "array"}, "variantPlacements": {"type": "integer", "minimum": 0}, "dependencyHolds": {"type": "integer", "minimum": 0}, "audioCandidatePages": {"type": "integer", "minimum": 0}, "audioGroupedCandidateCount": {"type": "integer", "minimum": 0}, "geoAlternateLessonCount": {"type": "integer", "minimum": 0}, "geoAlternateActivePageCount": {"type": "integer", "minimum": 0}, "canonicalFileCounts": {"type": "object", "properties": {"swf": {"type": "integer", "minimum": 0}, "mp3": {"type": "integer", "minimum": 0}, "fla": {"const": 0}, "xml": {"type": "integer", "minimum": 0}}}}, "additionalProperties": true}
   },
   "$defs": {
     "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
     "lesson": {
       "type": "object",
-      "required": ["moduleCode", "lessonNumber", "stableLessonKey", "sourceXml", "pages", "activePageCount", "pagePlacementCount", "mappingStatus", "acceptanceEffects"],
+      "required": ["moduleCode", "lessonNumber", "stableLessonKey", "sourceXml", "pages", "audioGroupedCandidates", "activePageCount", "pagePlacementCount", "mappingStatus", "acceptanceEffects"],
       "properties": {
         "moduleCode": {"enum": ["NMS002", "GEO001", "ALG001", "DAT001"]},
         "lessonNumber": {"type": "integer", "minimum": 1},
         "stableLessonKey": {"type": "string"},
         "sourceXml": {"type": "object", "required": ["path", "bytes", "sha256"], "properties": {"path": {"type": "string"}, "bytes": {"type": "integer", "minimum": 1}, "sha256": {"$ref": "#/$defs/sha256"}}, "additionalProperties": true},
         "pages": {"type": "array", "items": {"$ref": "#/$defs/page"}},
+        "audioGroupedCandidates": {"type": "array", "items": {"$ref": "#/$defs/audioGroupedCandidate"}},
         "activePageCount": {"type": "integer", "minimum": 1},
         "pagePlacementCount": {"type": "integer", "minimum": 1},
         "mappingStatus": {"enum": ["source-mapping-pending", "approved", "needs-adjudication", "rejected"]},
@@ -49,6 +50,31 @@
         "sourceSha256": {"$ref": "#/$defs/sha256"},
         "xmlOccurrence": {"type": "integer", "minimum": 1},
         "sectionCode": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "audioGroupedCandidate": {
+      "type": "object",
+      "required": ["id", "source", "sha256", "language", "startSemantics", "hostTrigger", "stopOrCompleteSemantics", "replayBehavior", "binding", "required", "acceptance", "matchDisposition"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "language": {"const": "undetermined"},
+        "durationMs": {"type": ["number", "null"], "minimum": 0},
+        "frameDomain": {"type": ["string", "null"]},
+        "startSemantics": {"type": "string", "minLength": 1},
+        "hostTrigger": {"type": "string", "minLength": 1},
+        "stopOrCompleteSemantics": {"type": "string", "minLength": 1},
+        "replayBehavior": {"type": "string", "minLength": 1},
+        "binding": {"const": "FQ/EA"},
+        "required": {"type": ["boolean", "null"]},
+        "acceptance": {"const": "candidate-index-only"},
+        "matchDisposition": {"const": "unmatched-page-basename"},
+        "sourcePath": {"type": "string", "minLength": 1},
+        "viewPath": {"type": "string", "minLength": 1},
+        "bytes": {"type": "integer", "minimum": 1},
+        "sourceRootKind": {"type": "string"}
       },
       "additionalProperties": true
     }

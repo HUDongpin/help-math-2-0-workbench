@@ -61,6 +61,9 @@ export const EXPECTED_COUNTS = Object.freeze({
   canonicalMp3Count: 13353,
   canonicalFlaCount: 0,
   samePathDifferentHashCount: 46,
+  dependencyHolds: 92,
+  audioCandidatePages: 2133,
+  audioGroupedCandidateCount: 5562,
   geoAlternateLessonCount: 1,
   geoAlternateActivePageCount: 59,
 });
@@ -323,6 +326,12 @@ export function parseSharedLessonXml({bytes, xmlPath, moduleCode = null}) {
     ...identity,
     warnings: [],
   };
+  if (rawBytes.length >= 3 && rawBytes[0] === 0xef && rawBytes[1] === 0xbb && rawBytes[2] === 0xbf) {
+    // Keep the original BOM bytes/hash intact, but surface the encoding
+    // condition as an auditable parser warning instead of silently normalizing
+    // the source projection.
+    context.warnings.push("utf8-bom:1");
+  }
   if (commentProjection.unterminatedCommentCount > 0) {
     context.warnings.push(`unterminated-xml-comment:${commentProjection.unterminatedCommentCount}`);
   }
@@ -456,6 +465,10 @@ export function parseSharedLessonXml({bytes, xmlPath, moduleCode = null}) {
     },
     sections,
     pages,
+    // FQ/EA answer audio does not share page SWF basenames in the shared
+    // source.  It is populated by the source audit as an unmatched,
+    // acceptance-neutral inventory (never as a playable/accepted cue).
+    audioGroupedCandidates: [],
     activePageCount: pages.length,
     pagePlacementCount: pages.length,
     commentedPageCount: countCommentedPageElements(rawText),
@@ -709,19 +722,55 @@ function audioCandidateNames(page) {
   return new Set([`${stem}.mp3`.toLowerCase(), `${stem}.MP3`.toLowerCase()]);
 }
 
+function isFqEaAudio(item) {
+  const normalized = String(item?.relativePath ?? "").replaceAll("\\", "/");
+  return /(?:^|\/)FQ\/EA\/[^/]+\.mp3$/iu.test(normalized);
+}
+
+function groupedAudioCandidate(lesson, item, ordinal, classificationIndex) {
+  const row = lookupClassification(classificationIndex, item.sourcePath, item.viewPath);
+  return {
+    // The ordinal is scoped to the lesson and path list, so duplicate bytes
+    // remain distinct source occurrences while IDs stay deterministic.
+    id: `${lesson.stableLessonKey}-fq-ea-a${String(ordinal).padStart(4, "0")}`,
+    source: item.sourcePath,
+    sha256: item.sha256,
+    language: "undetermined",
+    startSemantics: "pending-authorized-original-runtime",
+    hostTrigger: "pending-authorized-original-runtime",
+    stopOrCompleteSemantics: "pending-authorized-original-runtime",
+    replayBehavior: "pending-authorized-original-runtime",
+    binding: "FQ/EA",
+    // Unknown until an authorized runtime trace and audio reviewer establish
+    // whether a cue is required.  `null` is intentionally not acceptance.
+    required: null,
+    acceptance: "candidate-index-only",
+    // Source-audit compatibility fields.  Keep the normalized source paths
+    // and complete hash/byte identity alongside the generic candidate shape.
+    sourcePath: item.sourcePath,
+    viewPath: item.viewPath,
+    bytes: item.bytes,
+    sourceRootKind: row?.sourceRootKind ?? "canonical-newhelp",
+    matchDisposition: "unmatched-page-basename",
+  };
+}
+
 function addAudioCandidates(lesson, audioFiles, classificationIndex) {
   const byName = new Map();
-  for (const item of audioFiles) {
+  const orderedAudioFiles = [...audioFiles].sort((left, right) => compareText(left.sourcePath, right.sourcePath));
+  for (const item of orderedAudioFiles) {
     const basename = path.posix.basename(item.relativePath).toLowerCase();
     const bucket = byName.get(basename) ?? [];
     bucket.push(item);
     byName.set(basename, bucket);
   }
+  const matchedSourcePaths = new Set();
   for (const page of lesson.pages) {
     const candidates = [];
     for (const name of audioCandidateNames(page)) {
       for (const item of byName.get(name) ?? []) {
         const row = lookupClassification(classificationIndex, item.sourcePath, item.viewPath);
+        const normalizedRelativePath = item.relativePath.replaceAll("\\", "/");
         candidates.push({
           sourcePath: item.sourcePath,
           viewPath: item.viewPath,
@@ -729,17 +778,21 @@ function addAudioCandidates(lesson, audioFiles, classificationIndex) {
           sha256: item.sha256,
           language: null,
           sourceRootKind: row?.sourceRootKind ?? "canonical-newhelp",
-          bindingKind: item.relativePath.includes("/FQ/EA/")
+          bindingKind: /(?:^|\/)FQ\/EA\//iu.test(normalizedRelativePath)
             ? "FQ/EA-candidate"
-            : item.relativePath.includes("/FQ/SA/")
+            : /(?:^|\/)FQ\/SA\//iu.test(normalizedRelativePath)
               ? "FQ/SA-candidate"
               : "lesson-SA-candidate",
           acceptance: "candidate-index-only",
         });
+        matchedSourcePaths.add(item.sourcePath);
       }
     }
     page.audioCueCandidates = candidates.sort((left, right) => compareText(left.sourcePath, right.sourcePath));
   }
+  lesson.audioGroupedCandidates = orderedAudioFiles
+    .filter((item) => isFqEaAudio(item) && !matchedSourcePaths.has(item.sourcePath))
+    .map((item, index) => groupedAudioCandidate(lesson, item, index + 1, classificationIndex));
 }
 
 /**
@@ -770,6 +823,7 @@ export async function buildSharedCatalog({
     variantPlacements: 0,
     dependencyHolds: 0,
     audioCandidatePages: 0,
+    audioGroupedCandidateCount: 0,
     commentedPageCount: 0,
     bomXmlCount: 0,
     bareAmpersandCount: 0,
@@ -804,6 +858,10 @@ export async function buildSharedCatalog({
         xmlPath: `G6-G8-shared/${portable(xmlRelative)}`,
         moduleCode: module.moduleCode,
       });
+      // Keep source-parser diagnostics visible at both lesson and aggregate
+      // levels.  The aggregate list is intentionally de-duplicated below;
+      // raw XML bytes and their hash remain the authority.
+      audit.warnings.push(...lesson.warnings.map((warning) => `${lesson.stableLessonKey}:${warning}`));
       lesson.expectedActivePageCount = config?.activePageCounts?.[lessonNumber - 1] ?? null;
       if (lesson.expectedActivePageCount !== null && lesson.activePageCount !== lesson.expectedActivePageCount) {
         lesson.warnings.push(`active-page-count-drift:expected-${lesson.expectedActivePageCount}-actual-${lesson.activePageCount}`);
@@ -895,12 +953,14 @@ export async function buildSharedCatalog({
       }
       addAudioCandidates(lesson, audioFiles, classificationIndex);
       audit.audioCandidatePages += lesson.pages.filter((page) => page.audioCueCandidates.length > 0).length;
+      audit.audioGroupedCandidateCount += lesson.audioGroupedCandidates.length;
       lessons.push(lesson);
     }
   }
   const geoAlternate = await auditGeoAlternate(sourceRoot);
   audit.geoAlternateLessonCount = geoAlternate.lessonCount;
   audit.geoAlternateActivePageCount = geoAlternate.activePageCount;
+  audit.warnings = [...new Set(audit.warnings)].sort(compareText);
   lessons.sort((left, right) => {
     const moduleOrder = MODULES.findIndex((module) => module.moduleCode === left.moduleCode)
       - MODULES.findIndex((module) => module.moduleCode === right.moduleCode);
@@ -1031,6 +1091,76 @@ export function validateSharedProfile(profile) {
   if (profile.version !== "G6-G8-shared-v1") errors.push("profile version mismatch");
   if (profile.sourceView?.kind !== "private-external-read-only") errors.push("sourceView must be private-external-read-only");
   if (profile.sourceView?.canonicalArchive !== "NewHelpProgram") errors.push("canonical archive must be NewHelpProgram");
+  if (profile.profileId === PROFILE_ID) {
+    if (profile.sourceViewPath !== "$HELP_MATH_G678_SOURCE_ROOT") errors.push("sourceViewPath must use the HELP_MATH_G678_SOURCE_ROOT token");
+    if (profile.canonicalRootRule?.relativePath !== "G6-G8-shared" ||
+      profile.canonicalRootRule?.archive !== "NewHelpProgram" ||
+      profile.canonicalRootRule?.sourceRootKind !== "canonical") {
+      errors.push("canonicalRootRule must select the NewHelpProgram G6-G8-shared root");
+    }
+    if (!Array.isArray(profile.alternateRootRules) || profile.alternateRootRules.length < 2) {
+      errors.push("alternateRootRules must declare the GEO alternate and Stagingv4 conflict roots");
+    }
+    if (!Array.isArray(profile.archiveReceipts) || profile.archiveReceipts.length < 2) {
+      errors.push("archiveReceipts must retain both raw ZIP/member-manifest custody receipts");
+    }
+    if (!Array.isArray(profile.moduleDefinitions) || profile.moduleDefinitions.length !== 4) {
+      errors.push("moduleDefinitions must declare the four shared modules");
+    } else {
+      const legacyByCode = new Map((Array.isArray(profile.modules) ? profile.modules : [])
+        .filter((module) => module && typeof module === "object")
+        .map((module) => [module.moduleCode, module]));
+      const definitionCodes = new Set();
+      for (const definition of profile.moduleDefinitions) {
+        const code = definition?.moduleCode;
+        if (definitionCodes.has(code)) errors.push(`duplicate moduleDefinitions module: ${code ?? "<missing>"}`);
+        definitionCodes.add(code);
+        if (!MODULE_BY_CODE.has(code)) {
+          errors.push(`moduleDefinitions contains unknown module: ${code ?? "<missing>"}`);
+          continue;
+        }
+        const legacy = legacyByCode.get(code);
+        if (!legacy) {
+          errors.push(`moduleDefinitions module has no matching modules entry: ${code}`);
+          continue;
+        }
+        const expectedModule = MODULE_BY_CODE.get(code);
+        if (JSON.stringify(definition.lessonNumbers) !== JSON.stringify(legacy.lessonNumbers)) {
+          errors.push(`${code}: moduleDefinitions lesson number set mismatch`);
+        }
+        if (JSON.stringify(definition.activePageCounts) !== JSON.stringify(legacy.activePageCounts)) {
+          errors.push(`${code}: moduleDefinitions active page count set mismatch`);
+        }
+        if (JSON.stringify(definition.lessonNumbers) !== JSON.stringify(expectedModule.lessonNumbers)) {
+          errors.push(`${code}: moduleDefinitions lesson number set differs from canonical profile`);
+        }
+        if (JSON.stringify(definition.activePageCounts) !== JSON.stringify(expectedModule.activePageCounts)) {
+          errors.push(`${code}: moduleDefinitions active page count set differs from canonical profile`);
+        }
+        if (definition.moduleTitle !== expectedModule.moduleTitle) {
+          errors.push(`${code}: moduleDefinitions module title mismatch`);
+        }
+        if (definition.sourceRoot !== code) {
+          errors.push(`${code}: moduleDefinitions sourceRoot must be ${code}`);
+        }
+        if (definition.gradeScope !== GRADE_SCOPE) {
+          errors.push(`${code}: moduleDefinitions gradeScope must be ${GRADE_SCOPE}`);
+        }
+        const expectedXmlPathPattern = `${code}/L{lesson}/index.xml`;
+        if (definition.xmlPathPattern !== expectedXmlPathPattern) {
+          errors.push(`${code}: moduleDefinitions xmlPathPattern must be ${expectedXmlPathPattern}`);
+        }
+      }
+      for (const expectedModule of MODULES) {
+        if (!definitionCodes.has(expectedModule.moduleCode)) {
+          errors.push(`moduleDefinitions missing module: ${expectedModule.moduleCode}`);
+        }
+      }
+    }
+    if (!profile.toolchainVersions || typeof profile.toolchainVersions !== "object") {
+      errors.push("toolchainVersions must be declared");
+    }
+  }
   for (const field of ["sourceManifestSha256", "mappingManifestSha256"]) {
     if (profile[field] !== undefined && profile[field] !== null && !SHA256_PATTERN.test(String(profile[field]))) {
       errors.push(`profile ${field} must be lowercase SHA-256 or null`);
@@ -1038,7 +1168,11 @@ export function validateSharedProfile(profile) {
   }
   if (!Array.isArray(profile.modules) || profile.modules.length !== 4) errors.push("profile must define exactly four modules");
   const moduleCodes = new Set();
-  for (const module of profile.modules ?? []) {
+  for (const module of Array.isArray(profile.modules) ? profile.modules : []) {
+    if (!module || typeof module !== "object") {
+      errors.push("profile module must be an object");
+      continue;
+    }
     if (!MODULE_BY_CODE.has(module.moduleCode)) errors.push(`unsupported profile module: ${module.moduleCode}`);
     if (moduleCodes.has(module.moduleCode)) errors.push(`duplicate profile module: ${module.moduleCode}`);
     moduleCodes.add(module.moduleCode);
@@ -1046,7 +1180,8 @@ export function validateSharedProfile(profile) {
     if ((module.lessonNumbers?.length ?? 0) !== (module.activePageCounts?.length ?? -1)) errors.push(`${module.moduleCode}: lesson/page-count length mismatch`);
   }
   for (const expectedModule of MODULES) {
-    const actual = profile.modules?.find((module) => module.moduleCode === expectedModule.moduleCode);
+    const actual = (Array.isArray(profile.modules) ? profile.modules : [])
+      .find((module) => module && typeof module === "object" && module.moduleCode === expectedModule.moduleCode);
     if (!actual) {
       errors.push(`missing profile module: ${expectedModule.moduleCode}`);
       continue;
@@ -1072,14 +1207,82 @@ export function validateSharedCatalog(catalog, profile = null, {strictCounts = f
   const lessons = Array.isArray(catalog.lessons) ? catalog.lessons : [];
   const pageIds = new Set();
   const sourcePaths = new Set();
-  const expectedProfile = profile?.modules ? new Map(profile.modules.map((module) => [module.moduleCode, module])) : null;
+  const audioGroupedIds = new Set();
+  const audioGroupedSources = new Set();
+  let audioGroupedCandidateCount = 0;
+  const expectedProfile = Array.isArray(profile?.modules)
+    ? new Map(profile.modules
+      .filter((module) => module && typeof module === "object")
+      .map((module) => [module.moduleCode, module]))
+    : null;
   for (const lesson of lessons) {
+    if (!lesson || typeof lesson !== "object" || Array.isArray(lesson)) {
+      errors.push("lesson must be an object");
+      continue;
+    }
     if (!MODULE_BY_CODE.has(lesson.moduleCode)) errors.push(`unsupported lesson module: ${lesson.moduleCode}`);
     const key = stableLessonKey(lesson.moduleCode, lesson.lessonNumber);
     if (lesson.stableLessonKey !== key) errors.push(`${key}: stableLessonKey mismatch`);
     const module = expectedProfile?.get(lesson.moduleCode);
     const expectedPages = module?.activePageCounts?.[lesson.lessonNumber - 1];
     if (strictCounts && expectedPages !== undefined && lesson.activePageCount !== expectedPages) errors.push(`${key}: expected ${expectedPages} pages, found ${lesson.activePageCount}`);
+    const groupedCandidates = lesson.audioGroupedCandidates;
+    if (strictCounts && !Array.isArray(groupedCandidates)) {
+      errors.push(`${key}: audioGroupedCandidates must be an array`);
+    }
+    for (const candidate of Array.isArray(groupedCandidates) ? groupedCandidates : []) {
+      audioGroupedCandidateCount += 1;
+      if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) {
+        errors.push(`${key}: audioGroupedCandidate must be an object`);
+        continue;
+      }
+      if (typeof candidate.id !== "string" || candidate.id.length === 0) {
+        errors.push(`${key}: audioGroupedCandidate id is missing`);
+      } else if (audioGroupedIds.has(candidate.id)) {
+        errors.push(`duplicate audioGroupedCandidate id: ${candidate.id}`);
+      } else {
+        audioGroupedIds.add(candidate.id);
+      }
+      if (typeof candidate.source !== "string" || candidate.source.length === 0) {
+        errors.push(`${key}: audioGroupedCandidate source is missing`);
+      } else if (audioGroupedSources.has(candidate.source)) {
+        errors.push(`duplicate audioGroupedCandidate source: ${candidate.source}`);
+      } else {
+        audioGroupedSources.add(candidate.source);
+      }
+      if (typeof candidate.sha256 !== "string" || !SHA256_PATTERN.test(candidate.sha256)) {
+        errors.push(`${key}: audioGroupedCandidate SHA-256 is invalid`);
+      }
+      if (candidate.binding !== "FQ/EA") errors.push(`${key}: audioGroupedCandidate binding must be FQ/EA`);
+      if (candidate.language !== "undetermined") errors.push(`${key}: audioGroupedCandidate language must remain undetermined`);
+      if (candidate.acceptance !== "candidate-index-only") errors.push(`${key}: audioGroupedCandidate acceptance must remain candidate-index-only`);
+      if (candidate.required !== null && typeof candidate.required !== "boolean") {
+        errors.push(`${key}: audioGroupedCandidate required must be null or boolean`);
+      }
+      if (candidate.matchDisposition !== "unmatched-page-basename") {
+        errors.push(`${key}: audioGroupedCandidate matchDisposition must be unmatched-page-basename`);
+      }
+      for (const field of ["startSemantics", "hostTrigger", "stopOrCompleteSemantics", "replayBehavior"]) {
+        if (typeof candidate[field] !== "string" || candidate[field].length === 0) {
+          errors.push(`${key}: audioGroupedCandidate ${field} is missing`);
+        }
+      }
+      if (!Number.isSafeInteger(candidate.bytes) || candidate.bytes <= 0) {
+        errors.push(`${key}: audioGroupedCandidate bytes are invalid`);
+      }
+    }
+    if (strictCounts) {
+      const hasBom = lesson.sourceXml?.hasUtf8Bom === true;
+      const bomWarningCount = (lesson.warnings ?? [])
+        .filter((warning) => String(warning).startsWith("utf8-bom:"))
+        .length;
+      if (hasBom !== (bomWarningCount > 0)) {
+        errors.push(`${key}: UTF-8 BOM metadata/warning mismatch`);
+      }
+      if (bomWarningCount > 1) {
+        errors.push(`${key}: duplicate UTF-8 BOM warnings`);
+      }
+    }
     let previousOrdinal = 0;
     for (const page of lesson.pages ?? []) {
       if (page.xmlOccurrence !== previousOrdinal + 1) errors.push(`${key}: XML occurrence gap at ${page.xmlOccurrence}`);
@@ -1117,6 +1320,9 @@ export function validateSharedCatalog(catalog, profile = null, {strictCounts = f
       canonicalSwfCount: actualFileCounts.swf,
       canonicalMp3Count: actualFileCounts.mp3,
       canonicalFlaCount: actualFileCounts.fla,
+      dependencyHolds: actualAudit.dependencyHolds,
+      audioCandidatePages: actualAudit.audioCandidatePages,
+      audioGroupedCandidateCount: actualAudit.audioGroupedCandidateCount,
       // `variantPlacements` is the source projection's count of active
       // same-path/different-hash decisions. Keep the profile's historical
       // name as the comparison key for compatibility with the source report.
@@ -1124,6 +1330,14 @@ export function validateSharedCatalog(catalog, profile = null, {strictCounts = f
       geoAlternateLessonCount: actualAudit.geoAlternateLessonCount,
       geoAlternateActivePageCount: actualAudit.geoAlternateActivePageCount,
     };
+    if (actualAudit.audioGroupedCandidateCount !== audioGroupedCandidateCount) {
+      errors.push(`source audit audioGroupedCandidateCount is not derived from lessons, found ${actualAudit.audioGroupedCandidateCount ?? "missing"}`);
+    }
+    const bomWarningCount = lessons.reduce((sum, lesson) => sum +
+      (lesson.warnings ?? []).filter((warning) => String(warning).startsWith("utf8-bom:")).length, 0);
+    if (actualAudit.bomXmlCount !== bomWarningCount) {
+      errors.push(`source audit bomXmlCount is not derived from parser warnings, found ${actualAudit.bomXmlCount ?? "missing"}`);
+    }
     for (const [key, expectedValue] of Object.entries(expected)) {
       if (!Object.hasOwn(expectedAudit, key)) continue;
       const actualValue = expectedAudit[key];

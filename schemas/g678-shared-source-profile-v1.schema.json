@@ -3,7 +3,7 @@
   "$id": "https://helpmath.ai/schemas/g678-shared-source-profile-v1.schema.json",
   "title": "HELP Math G6-G8 shared source profile v1",
   "type": "object",
-  "required": ["schemaVersion", "artifactType", "profileId", "version", "sourceView", "modules", "expected", "gradeMapping"],
+  "required": ["schemaVersion", "artifactType", "profileId", "version", "sourceView", "sourceViewPath", "canonicalRootRule", "alternateRootRules", "archiveReceipts", "moduleDefinitions", "toolchainVersions", "modules", "expected", "gradeMapping"],
   "properties": {
     "$schema": {"type": "string"},
     "schemaVersion": {"const": 1},
@@ -12,6 +12,12 @@
     "version": {"type": "string", "const": "G6-G8-shared-v1"},
     "sourceManifestSha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
     "mappingManifestSha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+    "sourceViewPath": {"type": ["string", "null"]},
+    "canonicalRootRule": {"type": "object", "required": ["relativePath", "archive", "sourceRootKind", "selection"], "properties": {"relativePath": {"const": "G6-G8-shared"}, "archive": {"const": "NewHelpProgram"}, "sourceRootKind": {"const": "canonical"}, "selection": {"type": "string"}}, "additionalProperties": true},
+    "alternateRootRules": {"type": "array", "items": {"type": "object", "required": ["pathPattern", "defaultDecision"], "properties": {"pathPattern": {"type": "string"}, "defaultDecision": {"const": "hold-source-choice-review"}, "addsPlacementDenominator": {"const": false}}, "additionalProperties": true}},
+    "archiveReceipts": {"type": "array", "minItems": 2, "items": {"type": "object", "required": ["receiptId", "containerPath", "containerBytes", "containerSha256", "memberManifestPath", "memberManifestSha256", "disposition", "rehashRequiredAtRunStart"], "properties": {"receiptId": {"type": "string"}, "containerPath": {"type": "string"}, "containerBytes": {"type": "integer", "minimum": 1}, "containerSha256": {"$ref": "#/$defs/sha256"}, "memberManifestPath": {"type": "string"}, "memberManifestSha256": {"$ref": "#/$defs/sha256"}, "disposition": {"const": "CUSTODY_ONLY_NO_PROMOTION"}, "rehashRequiredAtRunStart": {"const": true}}, "additionalProperties": true}},
+    "moduleDefinitions": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "object", "required": ["moduleCode", "moduleTitle", "lessonNumbers", "activePageCounts", "sourceRoot", "xmlPathPattern", "gradeScope"], "properties": {"moduleCode": {"enum": ["NMS002", "GEO001", "ALG001", "DAT001"]}, "moduleTitle": {"type": "string"}, "lessonNumbers": {"type": "array", "items": {"type": "integer", "minimum": 1}, "minItems": 1}, "activePageCounts": {"type": "array", "items": {"type": "integer", "minimum": 0}, "minItems": 1}, "sourceRoot": {"type": "string", "pattern": "^(NMS002|GEO001|ALG001|DAT001)$"}, "xmlPathPattern": {"type": "string", "pattern": "^(NMS002|GEO001|ALG001|DAT001)/L\\{lesson\\}/index\\.xml$"}, "gradeScope": {"const": "G6-G8-shared"}}, "additionalProperties": true}},
+    "toolchainVersions": {"type": "object"},
     "sourceView": {
       "type": "object",
       "required": ["kind", "rootEnv", "relativeRoot", "canonicalArchive", "canonicalSourcePrefix", "viewPathPrefix"],
@@ -62,8 +68,8 @@
           "moduleTitle": {"type": "string", "minLength": 1},
           "lessonNumbers": {"type": "array", "items": {"type": "integer", "minimum": 1}, "minItems": 1},
           "activePageCounts": {"type": "array", "items": {"type": "integer", "minimum": 0}},
-          "sourceRoot": {"type": "string"},
-          "xmlPathPattern": {"type": "string"},
+          "sourceRoot": {"type": "string", "pattern": "^(NMS002|GEO001|ALG001|DAT001)$"},
+          "xmlPathPattern": {"type": "string", "pattern": "^(NMS002|GEO001|ALG001|DAT001)/L\\{lesson\\}/index\\.xml$"},
           "gradeScope": {"const": "G6-G8-shared"}
         },
         "additionalProperties": true
@@ -71,7 +77,7 @@
     },
     "expected": {
       "type": "object",
-      "required": ["canonicalLessonXmlCount", "activePagePlacementCount", "commentedPageCount", "canonicalSwfCount", "canonicalMp3Count", "canonicalFlaCount"],
+      "required": ["canonicalLessonXmlCount", "activePagePlacementCount", "uniqueActiveSwfSha256Count", "commentedPageCount", "bomXmlCount", "bareAmpersandCount", "canonicalSwfCount", "canonicalMp3Count", "canonicalFlaCount", "samePathDifferentHashCount", "dependencyHolds", "audioCandidatePages", "audioGroupedCandidateCount", "geoAlternateLessonCount", "geoAlternateActivePageCount"],
       "properties": {
         "canonicalLessonXmlCount": {"type": "integer", "const": 44},
         "activePagePlacementCount": {"type": "integer", "const": 2282},
@@ -83,6 +89,9 @@
         "canonicalMp3Count": {"type": "integer", "minimum": 0},
         "canonicalFlaCount": {"type": "integer", "minimum": 0},
         "samePathDifferentHashCount": {"type": "integer", "minimum": 0},
+        "dependencyHolds": {"type": "integer", "minimum": 0},
+        "audioCandidatePages": {"type": "integer", "minimum": 0},
+        "audioGroupedCandidateCount": {"type": "integer", "minimum": 0},
         "geoAlternateLessonCount": {"type": "integer", "minimum": 0},
         "geoAlternateActivePageCount": {"type": "integer", "minimum": 0}
       },

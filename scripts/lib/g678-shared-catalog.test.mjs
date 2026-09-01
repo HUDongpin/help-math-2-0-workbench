@@ -63,6 +63,7 @@ test("parser strips comments, preserves BOM diagnostics and active XML order", (
   assert.equal(parsed.moduleLesson, 1);
   assert.equal(parsed.sourceXmlSha256, parsed.sourceXml.sha256);
   assert.equal(parsed.pagePlacementCount, 3);
+  assert.ok(parsed.warnings.includes("utf8-bom:1"));
   assert.ok(parsed.warnings.includes("bare-ampersands:1"));
 });
 
@@ -257,6 +258,9 @@ test("audio candidate indexing distinguishes FQ/EA, FQ/SA, and lesson-SA paths",
     for (const directory of ["FQ/EA", "FQ/SA", "SA"]) {
       await writeFile(path.join(lessonRoot, directory, "L1FQ01.mp3"), Buffer.from(directory));
     }
+    // This cue has no page-SWF basename match and must remain a grouped,
+    // source-bound candidate rather than being silently discarded.
+    await writeFile(path.join(lessonRoot, "FQ/EA", "Q99.mp3"), Buffer.from("unmatched-answer"));
     const profile = {
       profileId: "g678-shared-source-profile-v1",
       version: "G6-G8-shared-v1",
@@ -269,6 +273,29 @@ test("audio candidate indexing distinguishes FQ/EA, FQ/SA, and lesson-SA paths",
       ["FQ/EA-candidate", "FQ/SA-candidate", "lesson-SA-candidate"],
     );
     assert.equal(catalog.audit.audioCandidatePages, 1);
+    assert.equal(catalog.audit.audioGroupedCandidateCount, 1);
+    assert.equal(catalog.lessons[0].audioGroupedCandidates.length, 1);
+    assert.deepEqual(
+      catalog.lessons[0].audioGroupedCandidates[0],
+      {
+        id: "shared-nms002-l01-fq-ea-a0001",
+        source: "HELP_COURSES/NMS002/L1/FQ/EA/Q99.mp3",
+        sha256: sha256(Buffer.from("unmatched-answer")),
+        language: "undetermined",
+        startSemantics: "pending-authorized-original-runtime",
+        hostTrigger: "pending-authorized-original-runtime",
+        stopOrCompleteSemantics: "pending-authorized-original-runtime",
+        replayBehavior: "pending-authorized-original-runtime",
+        binding: "FQ/EA",
+        required: null,
+        acceptance: "candidate-index-only",
+        sourcePath: "HELP_COURSES/NMS002/L1/FQ/EA/Q99.mp3",
+        viewPath: "G6-G8-shared/NMS002/L1/FQ/EA/Q99.mp3",
+        bytes: Buffer.from("unmatched-answer").length,
+        sourceRootKind: "canonical-newhelp",
+        matchDisposition: "unmatched-page-basename",
+      },
+    );
   } finally {
     await rm(root, {recursive: true, force: true});
   }
@@ -302,4 +329,17 @@ test("committed profile and pending mapping pass structural validators", async (
   assert.deepEqual(validateGradeMapping(mapping, profile), []);
   assert.equal(profile.expected.activePagePlacementCount, 2282);
   assert.equal(mapping.records.length, 44);
+});
+
+test("profile moduleDefinitions stay hash-independent but structurally identical to modules", async () => {
+  const profile = JSON.parse(await readFile(new URL("../../catalog/g678-shared-source-profile.v1.json", import.meta.url), "utf8"));
+  const pageCountDrift = structuredClone(profile);
+  pageCountDrift.moduleDefinitions[0].activePageCounts[0] += 1;
+  assert.ok(validateSharedProfile(pageCountDrift).some((error) =>
+    error.includes("moduleDefinitions active page count set")));
+
+  const pathPatternDrift = structuredClone(profile);
+  pathPatternDrift.moduleDefinitions[1].xmlPathPattern = "GEO001/L{lesson}/lesson.xml";
+  assert.ok(validateSharedProfile(pathPatternDrift).some((error) =>
+    error.includes("xmlPathPattern must be GEO001/L{lesson}/index.xml")));
 });

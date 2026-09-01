@@ -6,6 +6,62 @@
   "version": "G6-G8-shared-v1",
   "sourceManifestSha256": "712ba09b25db3d17dbc9afc54009e2c2c6d3414c987c275e1b0a42f31a28b9a2",
   "mappingManifestSha256": "227727135c22002f70a7b0618d00fadf271874ad2c7662856e40347000b8a629",
+  "sourceViewPath": "$HELP_MATH_G678_SOURCE_ROOT",
+  "canonicalRootRule": {
+    "relativePath": "G6-G8-shared",
+    "archive": "NewHelpProgram",
+    "sourceRootKind": "canonical",
+    "selection": "reviewed-canonical-active-page-closure-only"
+  },
+  "alternateRootRules": [
+    {
+      "kind": "source-variant",
+      "pathPattern": "G6-G8-shared/GEO001/_alternate/**",
+      "defaultDecision": "hold-source-choice-review",
+      "addsPlacementDenominator": false
+    },
+    {
+      "kind": "same-path-different-hash",
+      "pathPattern": "G6-G8-shared/**/_variants/HelpProgramStagingv4/**",
+      "defaultDecision": "hold-source-choice-review",
+      "addsPlacementDenominator": false
+    }
+  ],
+  "archiveReceipts": [
+    {
+      "receiptId": "new-help-program-zip-copy1",
+      "containerPath": "$PRIVATE_RECOVERY_CONTAINERS/containers/raw/NewHelpProgram.zip",
+      "containerBytes": 10495170599,
+      "containerSha256": "26da534ecc6d6df0298516283880e4a19ca241747102acde8492cf90a30b2e10",
+      "memberManifestPath": "$PRIVATE_RECOVERY_CONTAINERS/manifests/private/zip64-member-manifest-copy1.jsonl",
+      "memberManifestSha256": "13339a31d4f978d70d267591133e5f4b83c6abe59d5d5e3c4898ef931d03f79d",
+      "disposition": "CUSTODY_ONLY_NO_PROMOTION",
+      "rehashRequiredAtRunStart": true
+    },
+    {
+      "receiptId": "help-program-stagingv4-zip-copy1",
+      "containerPath": "$PRIVATE_RECOVERY_CONTAINERS/containers/raw/HelpProgramStagingv4.zip",
+      "containerBytes": 4430916509,
+      "containerSha256": "bd5c8b33b8587bec6debe1ce62d3c994db403c05069136539d8e1c92defa2300",
+      "memberManifestPath": "$PRIVATE_RECOVERY_CONTAINERS/manifests/private/zip64-member-manifest-stagingv4-copy1.jsonl",
+      "memberManifestSha256": "4f65367b68b8aedda2efb0db88a8a010a76824268a09a0e392082519be9e6ece",
+      "disposition": "CUSTODY_ONLY_NO_PROMOTION",
+      "rehashRequiredAtRunStart": true
+    }
+  ],
+  "moduleDefinitions": [
+    {"moduleCode": "NMS002", "moduleTitle": "Numbers Make Sense", "lessonNumbers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "activePageCounts": [47, 64, 56, 45, 49, 51, 52, 60, 53, 49, 47, 65], "sourceRoot": "NMS002", "xmlPathPattern": "NMS002/L{lesson}/index.xml", "gradeScope": "G6-G8-shared"},
+    {"moduleCode": "GEO001", "moduleTitle": "Geometry", "lessonNumbers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "activePageCounts": [59, 51, 49, 44, 51, 54, 63, 47, 44, 42, 52, 39], "sourceRoot": "GEO001", "xmlPathPattern": "GEO001/L{lesson}/index.xml", "gradeScope": "G6-G8-shared"},
+    {"moduleCode": "ALG001", "moduleTitle": "Algebra", "lessonNumbers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "activePageCounts": [56, 58, 56, 53, 63, 60, 62, 50, 41, 52, 44, 52], "sourceRoot": "ALG001", "xmlPathPattern": "ALG001/L{lesson}/index.xml", "gradeScope": "G6-G8-shared"},
+    {"moduleCode": "DAT001", "moduleTitle": "Data Analysis", "lessonNumbers": [1, 2, 3, 4, 5, 6, 7, 8], "activePageCounts": [56, 53, 63, 39, 61, 46, 50, 34], "sourceRoot": "DAT001", "xmlPathPattern": "DAT001/L{lesson}/index.xml", "gradeScope": "G6-G8-shared"}
+  ],
+  "toolchainVersions": {
+    "ffdec": "JPEXS Free Flash Decompiler v26.2.1",
+    "swfmill": "0.3.6",
+    "ffmpeg": "8.1.2",
+    "next2d": "MIT-structural-cross-check",
+    "openfl": "MIT-structural-cross-check"
+  },
   "sourceView": {
     "kind": "private-external-read-only",
     "rootEnv": "HELP_MATH_G678_SOURCE_ROOT",
@@ -125,6 +181,9 @@
     "canonicalMp3Count": 13353,
     "canonicalFlaCount": 0,
     "samePathDifferentHashCount": 46,
+    "dependencyHolds": 92,
+    "audioCandidatePages": 2133,
+    "audioGroupedCandidateCount": 5562,
     "geoAlternateLessonCount": 1,
     "geoAlternateActivePageCount": 59
   },
