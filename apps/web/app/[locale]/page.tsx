@@ -97,6 +97,13 @@ export default async function Home({
     && isMigrationStatusDesignerViewRequested(query.view);
   const state = workspaceState(query, designerToolsVisible);
   const availableLessons = availableLearningLessons();
+  // The workspace's Today/Words/progress surfaces still use the historical
+  // G4 L3 fixture. Never point that fixture at a shared middle-school route;
+  // a generic lesson-session model must be introduced before a G6–G8 lesson
+  // can become the active learner lesson.
+  const legacyAvailableLessons = availableLessons.filter((lesson) =>
+    lesson.moduleCode === undefined,
+  );
   const allLessons = allLearningLessons();
   let novaCourseHref: string | null = null;
   let novaCapabilities = EMPTY_NOVA_CLIENT_CAPABILITIES;
@@ -125,9 +132,9 @@ export default async function Home({
     break;
   }
   return <LearningPlatformWorkspace
-    activeLesson={availableLessons.find((lesson) =>
+    activeLesson={legacyAvailableLessons.find((lesson) =>
       lesson.grade === 4 && lesson.lesson === 3
-    ) ?? availableLessons[0] ?? null}
+    ) ?? legacyAvailableLessons[0] ?? null}
     allLessons={allLessons}
     authStatus={authSession.status}
     availableLessons={availableLessons}

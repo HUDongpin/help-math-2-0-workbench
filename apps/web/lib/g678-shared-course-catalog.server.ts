@@ -503,6 +503,30 @@ function hasApprovedGradeMapping(
   )?.toLowerCase();
   const profileMappingManifestSha256 = stringValue(profile.mappingManifestSha256)?.toLowerCase();
   const currentMappingSha256 = fileSha256(root, mappingRelativePath);
+  const catalog = record(readJson(root, 'catalog/g678-shared-catalog.v1.json'));
+  const generatedFrom = record(catalog.generatedFrom);
+  const expected = record(profile.expected);
+  // Grade approval is downstream of the exact source projection.  Bind the
+  // readiness report to the canonical profile and to the checked-in catalog;
+  // a locally edited report/profile pair must not unlock routes merely by
+  // preserving the public profile ID.
+  if (
+    profile.schemaVersion !== 1 ||
+    profile.artifactType !== 'help-math-g678-shared-source-profile' ||
+    profile.profileId !== 'g678-shared-source-profile-v1' ||
+    profile.version !== 'G6-G8-shared-v1' ||
+    !profileSourceManifestSha256 || !SHA256.test(profileSourceManifestSha256) ||
+    !profileMappingManifestSha256 || !SHA256.test(profileMappingManifestSha256) ||
+    expected.canonicalLessonXmlCount !== 44 ||
+    expected.activePagePlacementCount !== 2282 ||
+    expected.uniqueActiveSwfSha256Count !== 2240 ||
+    catalog.schemaVersion !== 1 ||
+    catalog.catalogKind !== 'help-math-g678-shared-source-catalog' ||
+    catalog.profileId !== profile.profileId ||
+    catalog.profileVersion !== profile.version ||
+    generatedFrom.sourceManifestSha256 !== profileSourceManifestSha256 ||
+    !sharedCatalogProjectionIsValid(catalog)
+  ) return false;
   const expectedRecordKeys = new Set(
     G678_SHARED_MODULES.flatMap((module) =>
       Array.from({length: module.lessonCount}, (_value, index) =>

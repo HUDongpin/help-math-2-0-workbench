@@ -215,11 +215,11 @@ function sharedAvailableLesson(
         lesson.moduleLesson,
       )
     : null;
-  return (courseKey ? byKey.get(courseKey) : undefined) ??
-    availableLessons.find((candidate) =>
-      candidate.moduleCode?.toUpperCase() === lesson.moduleCode &&
-      candidate.lesson === lesson.moduleLesson,
-    );
+  // A shared module/lesson number is not a globally unique route identity.
+  // Once a grade mapping exists, require the exact derived courseKey; a
+  // module/lesson-only fallback could bind a card to a different approved
+  // grade if the same source lesson is exposed more than once.
+  return courseKey ? byKey.get(courseKey) : undefined;
 }
 
 function sharedLessonCard(
