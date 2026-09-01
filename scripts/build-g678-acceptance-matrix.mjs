@@ -404,8 +404,11 @@ async function build(options) {
   const mapping = await readJson(mappingPath, 'mapping');
   const release = await readJson(releasePath, 'release manifest');
   const governance = await readJson(governancePath, 'governance');
-  if (release.value?.sourceOfTruth?.catalogSha256 !== profile.sha256) {
-    fail('release manifest is not bound to the selected catalog bytes');
+  if (release.value?.sourceOfTruth?.catalogSha256 !== profile.sha256 ||
+      release.value?.sourceOfTruth?.mappingSha256 !== mapping.sha256 ||
+      release.value?.sourceOfTruth?.catalogPath !== portable(path.relative(PROJECT_ROOT, profilePath)) ||
+      release.value?.sourceOfTruth?.mappingPath !== portable(path.relative(PROJECT_ROOT, mappingPath))) {
+    fail('release manifest is not bound to the selected catalog and mapping bytes');
   }
   if (release.value?.expectedCounts?.activeXmlReferencedPages !== 2282 ||
       release.value?.expectedCounts?.courseShells !== 0) {
