@@ -89,6 +89,12 @@ function buildNavigation(
     releaseId: descriptor.releaseId,
     grade: descriptor.course.grade,
     lesson: descriptor.course.lesson,
+    ...(descriptor.course.moduleCode
+      ? {moduleCode: descriptor.course.moduleCode}
+      : {}),
+    ...(descriptor.course.courseKey
+      ? {courseKey: descriptor.course.courseKey}
+      : {}),
     titleEnglish: descriptor.course.labels.en.text,
     titleSpanish: descriptor.course.labels.es.usesEnglishFallback
       ? null
@@ -127,10 +133,14 @@ const navigations = Object.freeze(productReleaseDocument.releases.flatMap(
 export function findPageOnlyCurrentJsNavigationForRoute(
   grade: string | number,
   lesson: string | number,
+  moduleCode?: string,
 ): PageOnlyLessonNavigationDescriptor | undefined {
+  const normalizedModuleCode = moduleCode?.trim().toUpperCase();
   const matches = navigations.filter((navigation) =>
     navigation.grade === Number(grade) &&
-    navigation.lesson === Number(lesson)
+    navigation.lesson === Number(lesson) &&
+    (normalizedModuleCode === undefined ||
+      navigation.moduleCode?.toUpperCase() === normalizedModuleCode)
   );
   return matches.length === 1 ? matches[0] : undefined;
 }

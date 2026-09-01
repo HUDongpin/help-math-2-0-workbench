@@ -15,7 +15,10 @@ import {useEffect, useLayoutEffect, useMemo, useRef, useState} from 'react';
 
 import {Link} from '@/i18n/navigation';
 import type {PublicAuthStatus} from '@/lib/auth-session';
-import type {AvailableLearningLesson} from '@/lib/learning-lesson-availability.server';
+import type {
+  AvailableLearningLesson,
+  LearningLessonCard,
+} from '@/lib/learning-lesson-availability.server';
 import {
   EMPTY_NOVA_CLIENT_CAPABILITIES,
   type NovaClientCapabilities,
@@ -42,7 +45,6 @@ import {
   LEARNING_HELPER_SAMPLE,
   LEARNING_PLATFORM_SAMPLE_BOUNDARY,
   LEARNING_SECTIONS,
-  LESSON_CATALOG_SAMPLE,
   NOVA_CONTROL_SAMPLE,
   TEACHER_ATTENTION_SAMPLE,
   TEACHER_ROSTER_SAMPLE,
@@ -525,20 +527,25 @@ function WordsScreen({
 }
 
 function LessonsScreen({
+  allLessons,
   availableLessons,
   locale,
 }: {
+  allLessons: readonly LearningLessonCard[];
   availableLessons: readonly AvailableLearningLesson[];
   locale: G4L3Locale;
 }) {
   const spanish = locale === 'es';
-  const [filter, setFilter] = useState<HelpMath1GradeFilter>('all');
-  const lessons = LESSON_CATALOG_SAMPLE.filter((lesson) => filter === 'all' || String(lesson.grade) === filter);
+  type LessonFilter = HelpMath1GradeFilter | 'shared';
+  const [filter, setFilter] = useState<LessonFilter>('all');
+  const lessons = allLessons.filter((lesson) => {
+    if (filter === 'all') return true;
+    if (filter === 'shared') return lesson.moduleCode !== null;
+    const grade = Number(filter);
+    return lesson.grade === grade || lesson.gradeTags.includes(grade);
+  });
   const lessonEmoji = LEARNING_PLATFORM_SAMPLE_BOUNDARY.prototypeUi.lessonEmojiByTitle as Readonly<Record<string, string>>;
-  const availableByKey = new Map(availableLessons.map((lesson) => [
-    `${lesson.grade}-${lesson.lesson}`,
-    lesson,
-  ]));
+  const sharedCount = allLessons.filter((lesson) => lesson.moduleCode !== null).length;
   let availabilityMessage = spanish
     ? 'El currículo principal de HELP Math 1.0 abarca los grados 3–8. Las lecciones se abrirán aquí cuando sus versiones modernas estén disponibles.'
     : 'HELP Math 1.0’s main curriculum spans Grades 3–8. Lessons will open here as their modern versions become available.';
@@ -551,6 +558,9 @@ function LessonsScreen({
       ? 'El currículo principal de HELP Math 1.0 abarca los grados 3–8. Abre una lección disponible; las demás aparecerán cuando sus versiones modernas estén listas.'
       : 'HELP Math 1.0’s main curriculum spans Grades 3–8. Open an available lesson; the others will appear as their modern versions are ready.';
   }
+  availabilityMessage += spanish
+    ? ` ${sharedCount} lecciones de módulos compartidos G6–G8 permanecen visibles como metadatos de migración; el mapeo Common Core, la fidelidad, el audio, la revisión humana y la aceptación del propietario son independientes.`
+    : ` ${sharedCount} G6–G8 shared-module lessons remain visible as migration metadata; Common Core mapping, Flash fidelity, audio, human review, and Owner acceptance are independent gates.`;
 
   return <section aria-labelledby="lessons-title" className={styles.screen} data-workspace-screen="lessons">
     <div className={styles.screenHeading}>
@@ -562,38 +572,64 @@ function LessonsScreen({
       <p>{availabilityMessage}</p>
     </div>
     <div aria-label={spanish ? 'Filtrar por grado' : 'Filter by grade'} className={styles.filterGroup} role="group">
-      {(['all', ...HELP_MATH_1_GRADE_FILTERS] as const).map((value) => <button aria-pressed={filter === value} key={value} onClick={() => setFilter(value)} type="button">{value === 'all' ? (spanish ? 'Todos' : 'All') : `${spanish ? 'Grado' : 'Grade'} ${value}`}</button>)}
+      {(['all', ...HELP_MATH_1_GRADE_FILTERS, 'shared'] as const).map((value) => <button aria-pressed={filter === value} key={value} onClick={() => setFilter(value)} type="button">{value === 'all'
+        ? (spanish ? 'Todos' : 'All')
+        : value === 'shared'
+          ? (spanish ? 'G6–G8 compartido' : 'G6–G8 shared')
+          : `${spanish ? 'Grado' : 'Grade'} ${value}`}</button>)}
     </div>
     {lessons.length
       ? <div className={styles.lessonGrid}>
         {lessons.map((lesson) => {
-        const key = `${lesson.grade}-${lesson.lesson}`;
-        const availableLesson = availableByKey.get(key);
-        const lessonHref = availableLesson?.href ?? null;
-        const learnerRunnable = availableLesson !== undefined;
+        const key = lesson.stableLessonKey;
+        const lessonHref = lesson.href;
+        const sharedLesson = lesson.moduleCode !== null;
+        const learnerRunnable = lessonHref !== null &&
+          (lesson.status === 'engineering-preview' ||
+            lesson.status === 'strict-complete' ||
+            lesson.status === 'released');
+        const gradeLabel = lesson.moduleCode
+          ? lesson.grade === null
+            ? `G6–G8 shared · ${lesson.moduleCode}`
+            : `G${lesson.grade} · ${lesson.moduleCode}`
+          : `G${lesson.grade}`;
+        const statusLabel = learnerRunnable
+          ? sharedLesson && lesson.status === 'engineering-preview'
+            ? (spanish ? 'Vista previa' : 'Preview')
+            : (spanish ? 'Abrir' : 'Open')
+          : sharedLesson && lesson.availabilityReason.startsWith('mapping-')
+            ? (spanish ? 'Mapeo pendiente' : 'Mapping pending')
+            : (spanish ? 'Muy pronto' : 'Coming soon');
         const content = <>
-          <span className={`${styles.lessonIcon} ${learnerRunnable ? styles.lessonIconOpen : ''}`}><Emoji>{lessonEmoji[lesson.title] ?? '🔢'}</Emoji></span>
+          <span className={`${styles.lessonIcon} ${learnerRunnable ? styles.lessonIconOpen : ''}`}><Emoji>{lessonEmoji[lesson.titleEnglish] ?? '🔢'}</Emoji></span>
           <span className={styles.lessonTileCopy} data-lesson-card-copy>
-            <small>G{lesson.grade} · L{lesson.lesson}</small>
-            <strong lang="en">{lesson.title}</strong>
-            {spanish && availableLesson && !availableLesson.titleSpanish
+            <small>{gradeLabel} · L{lesson.lesson}</small>
+            <strong lang={spanish && lesson.titleSpanish ? 'es' : 'en'}>{spanish && lesson.titleSpanish ? lesson.titleSpanish : lesson.titleEnglish}</strong>
+            {spanish && !lesson.titleSpanish
               ? <em className={styles.sourceGapLabel}>⚠️ inglés · sin título español en la fuente</em>
               : null}
-            <span>{availableLesson?.activePageCount ?? lesson.pages} {spanish ? 'páginas · 8 pasos' : 'pages · 8 steps'}</span>
+            <span>{sharedLesson
+              ? `${lesson.registeredPageCount}/${lesson.activePageCount} ${spanish ? 'páginas registradas' : 'pages registered'}`
+              : `${lesson.activePageCount} ${spanish ? 'páginas · 8 pasos' : 'pages · 8 steps'}`}</span>
+            {sharedLesson
+              ? <em className={styles.sourceGapLabel}>{lesson.evidenceBoundary}</em>
+              : null}
           </span>
           <span className={`${styles.lessonStatus} ${learnerRunnable ? styles.lessonStatusOpen : ''}`} data-lesson-card-status>
-            {learnerRunnable ? <><Check aria-hidden="true" size={15} />{spanish ? 'Abrir' : 'Open'}</> : <><LockKeyhole aria-hidden="true" size={15} />{spanish ? 'Muy pronto' : 'Coming soon'}</>}
+            {learnerRunnable ? <><Check aria-hidden="true" size={15} />{statusLabel}</> : <><LockKeyhole aria-hidden="true" size={15} />{statusLabel}</>}
           </span>
         </>;
-        return lessonHref
+        return lessonHref && learnerRunnable
           ? <Link className={styles.lessonTile} href={lessonHref} key={key}>{content}</Link>
-          : <article aria-label={`${lesson.title}: ${spanish ? 'no disponible' : 'not available'}`} className={`${styles.lessonTile} ${styles.lessonTileLocked}`} key={key}>{content}</article>;
+          : <article aria-label={`${lesson.titleEnglish}: ${spanish ? 'no disponible' : 'not available'}`} className={`${styles.lessonTile} ${styles.lessonTileLocked}`} key={key}>{content}</article>;
         })}
       </div>
       : <div className={styles.lessonEmptyState} role="status">
           <Emoji>🧭</Emoji>
           <div>
-            <strong>{spanish ? `Grado ${filter} forma parte de HELP Math.` : `Grade ${filter} is part of HELP Math.`}</strong>
+            <strong>{filter === 'shared'
+              ? (spanish ? 'Los módulos compartidos G6–G8 forman parte de HELP Math.' : 'G6–G8 shared modules are part of HELP Math.')
+              : (spanish ? `Grado ${filter} forma parte de HELP Math.` : `Grade ${filter} is part of HELP Math.`)}</strong>
             <p>{spanish
               ? 'Sus lecciones aparecerán aquí a medida que se preparen las versiones de HELP Math 2.0.'
               : 'Its lessons will appear here as the HELP Math 2.0 versions are prepared.'}</p>
@@ -735,6 +771,7 @@ function DesignNotesScreen({
 
 export function LearningPlatformWorkspace({
   activeLesson,
+  allLessons,
   authStatus,
   availableLessons,
   designerToolsVisible,
@@ -746,6 +783,7 @@ export function LearningPlatformWorkspace({
   novaCourseHref = null,
 }: {
   activeLesson: AvailableLearningLesson | null;
+  allLessons: readonly LearningLessonCard[];
   authStatus: PublicAuthStatus;
   availableLessons: readonly AvailableLearningLesson[];
   designerToolsVisible: boolean;
@@ -931,7 +969,7 @@ export function LearningPlatformWorkspace({
           {screen === 'today' ? <StudentToday browserProgress={browserProgress} flippedWords={flippedWords} g4L3Available={g4L3Available} locale={locale} novaCapabilities={novaCapabilities} novaCourseHref={novaCourseHref} onFlipWord={flipWord} onOpenWords={() => openScreen('words')} progress={progress} /> : null}
           {screen === 'practice' ? <PracticeScreen locale={locale} /> : null}
           {screen === 'words' ? <WordsScreen designerToolsVisible={designerToolsVisible} flippedWords={flippedWords} locale={locale} onFlipWord={flipWord} /> : null}
-          {screen === 'lessons' ? <LessonsScreen availableLessons={availableLessons} locale={locale} /> : null}
+          {screen === 'lessons' ? <LessonsScreen allLessons={allLessons} availableLessons={availableLessons} locale={locale} /> : null}
           {screen === 'class' ? <TeacherClassScreen locale={locale} onPlan={() => openScreen('prep')} /> : null}
           {screen === 'prep' ? <TeacherPrepScreen locale={locale} /> : null}
           {designerToolsVisible && screen === 'notes' ? <DesignNotesScreen locale={locale} migrationStatusAvailable={migrationStatusAvailable} /> : null}

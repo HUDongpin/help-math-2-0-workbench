@@ -121,11 +121,30 @@ function normalizeReleaseDefinitions(value: unknown, animations: readonly Catalo
   const animationById = new Map(animations.map((animation) => [animation.animationId, animation]));
   const definitions = document.releases.map((entry): LessonReleaseDefinition => {
     const release = rec(entry), expected = rec(release.expectedCounts), scope = rec(release.scope);
+    const scopeGrade = typeof scope.grade === 'number' ? scope.grade : Number.NaN;
+    const scopeLesson = typeof scope.lesson === 'number' ? scope.lesson : Number.NaN;
+    const moduleCode = str(scope.moduleCode).toUpperCase() || undefined;
+    const courseKey = str(scope.courseKey).toLowerCase() || undefined;
+    const gradeTags = Array.isArray(scope.gradeTags)
+      ? scope.gradeTags.filter((value): value is number =>
+          Number.isSafeInteger(value) && value >= 6 && value <= 8)
+      : undefined;
     const pageOnly = scope.pageOnly === true && expected.courseShells === 0;
     if (!str(release.releaseId) || release.publicationMode !== 'atomic' || !Array.isArray(release.members) ||
       !Number.isInteger(expected.members) || Number(expected.members) < 1 ||
-      !str(scope.collection) || !Number.isInteger(scope.grade) || !Number.isInteger(scope.lesson) ||
-      scope.excludeNonMembers !== true) {
+      !str(scope.collection) || !Number.isInteger(scopeGrade) || !Number.isInteger(scopeLesson) ||
+      scope.excludeNonMembers !== true ||
+      ((moduleCode !== undefined || courseKey !== undefined) &&
+        (moduleCode === undefined || courseKey === undefined ||
+          scopeGrade < 6 || scopeGrade > 8 ||
+          !/^[A-Z]{3}\d{3}$/u.test(moduleCode) ||
+          courseKey !==
+            `g${scopeGrade}-${moduleCode.toLowerCase()}-l${String(scopeLesson).padStart(2, '0')}`)) ||
+      (gradeTags !== undefined && (
+        gradeTags.length === 0 ||
+        new Set(gradeTags).size !== gradeTags.length ||
+        (moduleCode !== undefined && !gradeTags.includes(scopeGrade))
+      ))) {
       throw new Error('Malformed atomic lesson release definition');
     }
     const members = release.members.map((memberValue, index) => {
@@ -171,8 +190,11 @@ function normalizeReleaseDefinitions(value: unknown, animations: readonly Catalo
       expectedMemberCount: Number(expected.members),
       scope: Object.freeze({
         collection: str(scope.collection),
-        grade: Number(scope.grade),
-        lesson: Number(scope.lesson),
+        grade: scopeGrade,
+        lesson: scopeLesson,
+        ...(moduleCode ? {moduleCode} : {}),
+        ...(courseKey ? {courseKey} : {}),
+        ...(gradeTags ? {gradeTags: Object.freeze(gradeTags)} : {}),
         excludeNonMembers: true,
       }),
       members: Object.freeze(members),

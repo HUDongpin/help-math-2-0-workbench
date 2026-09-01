@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://helpmath.ai/schemas/g678-review-governance-v1.schema.json",
+  "title": "HELP Math G6-G8 review governance v1",
+  "description": "Named-human capacity and independence contract. Null assignments are an explicit blocked state, not an approval.",
+  "type": "object",
+  "required": ["schemaVersion", "artifactType", "governanceId", "scope", "status", "requiredRoles", "budget", "m0Exit", "blockers", "acceptanceEffects"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schemaVersion": {"const": 1},
+    "artifactType": {"const": "help-math-g678-review-governance"},
+    "governanceId": {"const": "g678-review-governance-v1"},
+    "scope": {"type": "object", "required": ["profileId", "mappingVersion", "lessonCount", "activePagePlacementCount", "legacyCourseShellExcluded"], "properties": {"profileId": {"type": "string"}, "mappingVersion": {"const": "ccss-math-2010-v1"}, "lessonCount": {"const": 44}, "activePagePlacementCount": {"const": 2282}, "legacyCourseShellExcluded": {"const": true}}, "additionalProperties": false},
+    "status": {"enum": ["blocked", "ready-for-m0", "active"]},
+    "requiredRoles": {"type": "array", "minItems": 12, "items": {"type": "object", "required": ["role", "primary", "backup", "minimumHoursPerWeek", "independence"], "properties": {"role": {"type": "string"}, "primary": {"type": ["string", "null"]}, "backup": {"type": ["string", "null"]}, "minimumHoursPerWeek": {"type": "object", "required": ["primary", "backup"], "properties": {"primary": {"type": "number", "minimum": 0}, "backup": {"type": "number", "minimum": 0}}, "additionalProperties": false}, "independence": {"type": "string"}}, "additionalProperties": false}},
+    "budget": {"type": "object", "required": ["currency", "weeklyCap", "procurementOwner", "status"], "properties": {"currency": {"const": "USD"}, "weeklyCap": {"type": ["number", "null"], "minimum": 0}, "procurementOwner": {"type": ["string", "null"]}, "status": {"type": "string"}}, "additionalProperties": false},
+    "m0Exit": {"type": "boolean"},
+    "blockers": {"type": "array", "items": {"type": "string"}},
+    "acceptanceEffects": {"type": "object", "additionalProperties": {"const": false}}
+  },
+  "additionalProperties": false
+}

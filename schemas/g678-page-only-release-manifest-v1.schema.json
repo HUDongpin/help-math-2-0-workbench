@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://helpmath.ai/schemas/g678-page-only-release-manifest-v1.schema.json",
+  "title": "HELP Math G6-G8 shared page-only release manifest v1",
+  "description": "Source-bound atomic membership plan. It is not a strict release or publication authority.",
+  "type": "object",
+  "required": ["schemaVersion", "artifactType", "manifestId", "generatedAt", "authority", "sourceOfTruth", "expectedCounts", "releases", "acceptanceEffects"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schemaVersion": {"const": 1},
+    "artifactType": {"const": "help-math-g678-page-only-release-manifest"},
+    "manifestId": {"const": "g678-page-only-release-manifest-v1"},
+    "generatedAt": {"type": "null"},
+    "authority": {"const": "source-bound-engineering-plan-not-release-authority"},
+    "sourceOfTruth": {"type": "object", "required": ["catalogPath", "catalogSha256", "mappingPath", "mappingSha256", "scope", "legacyCourseShellExcluded", "crosswalkStatus"], "properties": {"catalogPath": {"type": "string"}, "catalogSha256": {"$ref": "#/$defs/sha256"}, "mappingPath": {"type": "string"}, "mappingSha256": {"$ref": "#/$defs/sha256"}, "scope": {"const": "canonical-active-page-only"}, "legacyCourseShellExcluded": {"const": true}, "crosswalkStatus": {"type": "string"}, "legacyDocumentsRetained": {"type": "array", "items": {"type": "string"}}}, "additionalProperties": false},
+    "expectedCounts": {"type": "object", "required": ["releases", "activeXmlReferencedPages", "courseShells", "maxShardMembers"], "properties": {"releases": {"const": 44}, "activeXmlReferencedPages": {"const": 2282}, "courseShells": {"const": 0}, "maxShardMembers": {"const": 25}}, "additionalProperties": false},
+    "releases": {"type": "array", "minItems": 44, "maxItems": 44, "items": {"$ref": "#/$defs/release"}},
+    "acceptanceEffects": {"type": "object", "additionalProperties": {"const": false}}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "release": {
+      "type": "object",
+      "required": ["releaseId", "releaseType", "publicationMode", "status", "moduleCode", "moduleLesson", "sourceLesson", "expectedCounts", "scope", "shards", "members", "acceptanceEffects"],
+      "properties": {
+        "releaseId": {"type": "string"},
+        "releaseType": {"const": "complete-lesson"},
+        "publicationMode": {"const": "atomic"},
+        "status": {"const": "source-audit-only"},
+        "moduleCode": {"enum": ["NMS002", "GEO001", "ALG001", "DAT001"]},
+        "moduleLesson": {"type": "integer", "minimum": 1},
+        "sourceLesson": {"type": "object", "required": ["path", "bytes", "sha256", "sequenceAuthority"], "properties": {"path": {"type": "string"}, "bytes": {"type": ["integer", "null"]}, "sha256": {"anyOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]}, "sequenceAuthority": {"const": "course-xml-occurrence"}}, "additionalProperties": true},
+        "expectedCounts": {"type": "object", "required": ["activeXmlReferencedPages", "uniquePageAnimations", "courseShells", "members", "shards"], "properties": {"activeXmlReferencedPages": {"type": "integer", "minimum": 1}, "uniquePageAnimations": {"type": "integer", "minimum": 1}, "uniqueAssetSha256": {"type": "integer", "minimum": 0}, "courseShells": {"const": 0}, "members": {"type": "integer", "minimum": 1}, "shards": {"type": "integer", "minimum": 1}}, "additionalProperties": true},
+        "scope": {"type": "object", "required": ["collection", "gradeScope", "moduleCode", "lesson", "excludeNonMembers", "pageOnly", "legacyFlashCourseShellExcluded", "modernMyLessonHostRetained"], "properties": {"collection": {"const": "g678-shared"}, "gradeScope": {"const": "G6-G8-shared"}, "moduleCode": {"type": "string"}, "lesson": {"type": "integer"}, "excludeNonMembers": {"const": true}, "pageOnly": {"const": true}, "legacyFlashCourseShellExcluded": {"const": true}, "modernMyLessonHostRetained": {"const": true}}, "additionalProperties": true},
+        "shards": {"type": "array", "minItems": 1, "items": {"type": "object"}},
+        "members": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/member"}},
+        "acceptanceEffects": {"type": "object", "additionalProperties": {"const": false}}
+      },
+      "additionalProperties": true
+    },
+    "member": {
+      "type": "object",
+      "required": ["ordinal", "animationId", "assetId", "releaseRole", "source", "xmlOccurrence", "placementId", "registrationStatus"],
+      "properties": {
+        "ordinal": {"type": "integer", "minimum": 1},
+        "animationId": {"type": "string"},
+        "assetId": {"type": ["string", "null"]},
+        "releaseRole": {"const": "active-xml-referenced-page"},
+        "source": {"type": "object", "required": ["path", "sha256"], "properties": {"path": {"type": "string"}, "sha256": {"anyOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]}}, "additionalProperties": true},
+        "xmlOccurrence": {"type": "integer", "minimum": 1},
+        "placementId": {"type": "string"},
+        "registrationStatus": {"const": "unregistered-source-bound"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

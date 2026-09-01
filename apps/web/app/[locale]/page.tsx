@@ -4,7 +4,10 @@ import {notFound} from 'next/navigation';
 import {LearningPlatformWorkspace} from '@/components/learning-platform-workspace';
 import {isLocale} from '@/content';
 import {readAuthSession} from '@/lib/clerk-auth-session.server';
-import {availableLearningLessons} from '@/lib/learning-lesson-availability.server';
+import {
+  allLearningLessons,
+  availableLearningLessons,
+} from '@/lib/learning-lesson-availability.server';
 import {createPageMetadata} from '@/lib/metadata';
 import {
   isMigrationStatusAvailable,
@@ -94,6 +97,7 @@ export default async function Home({
     && isMigrationStatusDesignerViewRequested(query.view);
   const state = workspaceState(query, designerToolsVisible);
   const availableLessons = availableLearningLessons();
+  const allLessons = allLearningLessons();
   let novaCourseHref: string | null = null;
   let novaCapabilities = EMPTY_NOVA_CLIENT_CAPABILITIES;
   for (const [grade, lesson] of NOVA_HOME_COURSE_PRIORITY) {
@@ -124,6 +128,7 @@ export default async function Home({
     activeLesson={availableLessons.find((lesson) =>
       lesson.grade === 4 && lesson.lesson === 3
     ) ?? availableLessons[0] ?? null}
+    allLessons={allLessons}
     authStatus={authSession.status}
     availableLessons={availableLessons}
     designerToolsVisible={designerToolsVisible}

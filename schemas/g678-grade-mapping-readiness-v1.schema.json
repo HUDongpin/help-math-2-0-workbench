@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://helpmath.ai/schemas/g678-grade-mapping-readiness-v1.schema.json",
+  "title": "HELP Math G6-G8 shared grade mapping readiness v1",
+  "description": "A non-authorizing, hash-bound readiness report for the human-reviewed CCSS grade mapping gate.",
+  "type": "object",
+  "required": ["schemaVersion", "artifactType", "reportId", "generatedAt", "source", "ccss", "summary", "records", "acceptanceEffects"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "artifactType": {"const": "help-math-g678-grade-mapping-readiness"},
+    "reportId": {"const": "g678-grade-mapping-readiness-v1"},
+    "generatedAt": {"type": "null"},
+    "source": {
+      "type": "object",
+      "required": ["profilePath", "profileSha256", "mappingPath", "mappingSha256", "sourceManifestSha256"],
+      "properties": {
+        "profilePath": {"type": "string", "minLength": 1},
+        "profileSha256": {"$ref": "#/$defs/sha256"},
+        "mappingPath": {"type": "string", "minLength": 1},
+        "mappingSha256": {"$ref": "#/$defs/sha256"},
+        "sourceManifestSha256": {"anyOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]}
+      },
+      "additionalProperties": false
+    },
+    "ccss": {
+      "type": "object",
+      "required": ["mappingVersion", "snapshotPath", "snapshotSha256", "status"],
+      "properties": {
+        "mappingVersion": {"const": "ccss-math-2010-v1"},
+        "snapshotPath": {"type": ["string", "null"]},
+        "snapshotSha256": {"anyOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+        "status": {"enum": ["pending-official-snapshot", "hash-observed-pending-authority-review", "authority-approved"]},
+        "authorityReceiptPath": {"type": ["string", "null"]},
+        "authorityReviewer": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "object",
+      "required": ["recordCount", "approvedAndReadyCount", "statusCounts", "gradeRouteGenerationAllowed", "blockers"],
+      "properties": {
+        "recordCount": {"const": 44},
+        "approvedAndReadyCount": {"type": "integer", "minimum": 0, "maximum": 44},
+        "statusCounts": {"type": "object"},
+        "gradeRouteGenerationAllowed": {"type": "boolean"},
+        "blockers": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "records": {"type": "array", "minItems": 44, "maxItems": 44, "items": {"type": "object"}},
+    "acceptanceEffects": {"type": "object", "additionalProperties": {"const": false}}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  },
+  "additionalProperties": false
+}

@@ -36,6 +36,11 @@ import {
   isLocalAuthSessionApiPath,
 } from './lib/local-auth-access';
 import {
+  isG678LocalPreviewEnabled,
+  isG678ModuleCode,
+  isG678ModuleCoursePath,
+} from './lib/g678-preview-policy';
+import {
   isPageOnlyCurrentJsShowcaseAssetAuthorized,
   isPageOnlyCurrentJsShowcaseAssetSegments,
 } from './lib/page-only-current-js-showcase-asset-policy';
@@ -110,6 +115,9 @@ function isArchivePath(pathname: string, request: NextRequest) {
   }
   if (process.env.NODE_ENV === 'production') return false;
   if (pathname === '/library') return true;
+  if (isG678ModuleCoursePath(pathname)) {
+    return isG678LocalPreviewEnabled();
+  }
   if (/^\/courses\/[3-5]\/\d{1,2}$/u.test(pathname)) return true;
   if (/^\/animations\/[a-z0-9-]+$/u.test(pathname)) return true;
   return false;
@@ -129,6 +137,18 @@ function localeFreePath(pathname: string) {
     return pathname.slice(3) || '/';
   }
   return pathname;
+}
+
+function sharedCourseRouteParts(pathname: string) {
+  const match = pathname.match(
+    /^\/courses\/([6-8])\/([a-z]{3}\d{3})\/(\d{1,2})$/iu,
+  );
+  if (!match || !isG678ModuleCode(match[2]!)) return undefined;
+  return Object.freeze({
+    grade: match[1]!,
+    moduleCode: match[2]!.toUpperCase(),
+    lesson: match[3]!,
+  });
 }
 
 function isAllowed(pathname: string, request: NextRequest) {
@@ -238,13 +258,35 @@ export async function proxyForRequest(request: NextRequest) {
     || originalPath.startsWith('/en/')
     || originalPath === '/es'
     || originalPath.startsWith('/es/');
-  const response = localePrefixed || localeFreeAsset || localeFreeAuthApi
-    ? NextResponse.next()
-    : (() => {
-        const rewritten = request.nextUrl.clone();
-        rewritten.pathname = `/${routing.defaultLocale}${originalPath === '/' ? '' : originalPath}`;
-        return NextResponse.rewrite(rewritten);
-      })();
+  const sharedRoute = sharedCourseRouteParts(normalizedLocaleFree);
+  let response: NextResponse;
+  if (sharedRoute) {
+    // Next.js cannot register `[lesson]` and `[moduleCode]` as sibling dynamic
+    // segments.  Keep the stable legacy route as the implementation target,
+    // and carry the module identity through a server-only query parameter.
+    const rewritten = request.nextUrl.clone();
+    const localePrefix = originalPath === '/es' || originalPath.startsWith('/es/')
+      ? '/es'
+      : originalPath === '/en' || originalPath.startsWith('/en/')
+        ? '/en'
+        : `/${routing.defaultLocale}`;
+    rewritten.pathname = `${localePrefix}/courses/${sharedRoute.grade}/${sharedRoute.lesson}`;
+    rewritten.searchParams.set('moduleCode', sharedRoute.moduleCode);
+    response = NextResponse.rewrite(rewritten);
+  } else {
+    response = localePrefixed || localeFreeAsset || localeFreeAuthApi
+      ? NextResponse.next()
+      : (() => {
+          const rewritten = request.nextUrl.clone();
+          rewritten.pathname = `/${routing.defaultLocale}${originalPath === '/' ? '' : originalPath}`;
+          return NextResponse.rewrite(rewritten);
+        })();
+  }
+
+  if (sharedRoute) {
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive');
+    response.headers.set('Cache-Control', 'private, no-store, max-age=0');
+  }
 
   if (isReferencePath(normalizedLocaleFree)) {
     return protectLocalReferenceDiagnosticResponse(response);

@@ -1,3 +1,4 @@
+import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 
 import {LessonMap} from '@/components/lesson-navigation';
@@ -13,6 +14,11 @@ import {
 import {isG5L4ShowcaseAudioAuthorized} from '@/lib/g5-l4-preview-asset-policy';
 import {findLessonNavigationForRoute} from '@/lib/lesson-navigation';
 import {findPageOnlyCurrentJsNavigationForRoute} from '@/lib/page-only-current-js-navigation.server';
+import {
+  isG678LocalPreviewEnabled,
+  isG678ModuleCode,
+  sharedMiddleSchoolCourseKey,
+} from '@/lib/g678-shared-course-catalog.server';
 import {protectedAtomicReleaseIdForScope} from '@/lib/lesson-release-publication';
 import {
   isMigrationStatusAvailable,
@@ -25,7 +31,10 @@ import {
   isModernWideShellEnabled,
   resolveWholeLessonHostPresentation,
 } from '@/lib/whole-lesson-host-presentation';
-import {findWholeLessonCourseRegistration} from '@/lib/whole-lesson-course-registry';
+import {
+  findWholeLessonCourseRegistration,
+  findWholeLessonCourseRegistrationByKey,
+} from '@/lib/whole-lesson-course-registry';
 import {
   resolveWholeLessonReleaseView,
   wholeLessonDescriptorMatchesNavigation,
@@ -36,22 +45,75 @@ import {
 
 export const dynamic = 'force-dynamic';
 
-export default async function CoursePage({
+function firstQueryValue(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value;
+}
+
+/**
+ * The public URL for a shared lesson is module-aware, but the proxy rewrites
+ * it to this long-standing route with a server-only moduleCode query value.
+ * Emit a second, document-level noindex boundary in addition to the proxy
+ * response header. Legacy G3-G5 metadata continues to inherit from the page
+ * hierarchy unchanged.
+ */
+export async function generateMetadata({
   params,
   searchParams,
 }: {
   params: Promise<{locale: 'en' | 'es'; grade: string; lesson: string}>;
+  searchParams: Promise<{moduleCode?: string | string[]}>;
+}): Promise<Metadata> {
+  const [{locale, grade, lesson}, query] = await Promise.all([
+    params,
+    searchParams,
+  ]);
+  const moduleCode = firstQueryValue(query.moduleCode)?.trim().toUpperCase();
+  if (!moduleCode || !/^[6-8]$/u.test(grade) || !isG678ModuleCode(moduleCode)) {
+    return {};
+  }
+  return {
+    title: locale === 'es'
+      ? `Grado ${grade} · ${moduleCode} · Lección ${lesson}`
+      : `Grade ${grade} · ${moduleCode} · Lesson ${lesson}`,
+    robots: {
+      index: false,
+      follow: false,
+      noarchive: true,
+    },
+  };
+}
+
+export default async function CoursePage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{
+    locale: 'en' | 'es';
+    grade: string;
+    lesson: string;
+    moduleCode?: string;
+  }>;
   searchParams: Promise<{
     mode?: string | string[];
     view?: string | string[];
+    moduleCode?: string | string[];
   }>;
 }) {
-  const {locale, grade, lesson} = await params;
-  const {mode, view} = await searchParams;
+  const {locale, grade, lesson, moduleCode: rawModuleCode} = await params;
+  const {mode, view, moduleCode: queryModuleCode} = await searchParams;
   const novaTutorMode = resolveNovaTutorMode(mode);
   const designerView = isMigrationStatusAvailable()
     && isMigrationStatusDesignerViewRequested(view);
-  if (!/^[3-5]$/.test(grade) || !/^\d{1,2}$/.test(lesson)) notFound();
+  const moduleCode = (
+    rawModuleCode ?? firstQueryValue(queryModuleCode)
+  )?.trim().toUpperCase();
+  const sharedRoute = moduleCode !== undefined;
+  if (
+    sharedRoute
+      ? (!/^[6-8]$/u.test(grade) || !isG678ModuleCode(moduleCode ?? ''))
+      : (!/^[3-5]$/u.test(grade) || !/^\d{1,2}$/u.test(lesson))
+  ) notFound();
+  if (sharedRoute && !isG678LocalPreviewEnabled()) notFound();
 
   const spanish = locale === 'es';
   const lessonNumber = Number(lesson);
@@ -60,15 +122,25 @@ export default async function CoursePage({
   const complete = completeAnimations(catalog);
   const published = publishedAnimations(catalog);
 
-  const courseRegistration = findWholeLessonCourseRegistration(grade, lessonNumber);
+  const courseRegistration = sharedRoute
+    ? findWholeLessonCourseRegistrationByKey(
+        sharedMiddleSchoolCourseKey(
+          Number(grade) as 6 | 7 | 8,
+          moduleCode!,
+          lessonNumber,
+        ) ?? '',
+      )
+    : findWholeLessonCourseRegistration(grade, lessonNumber);
   const catalogNavigation = findLessonNavigationForRoute(
     catalog,
     grade,
     lessonNumber,
+    moduleCode,
   );
   const pageOnlyNavigation = findPageOnlyCurrentJsNavigationForRoute(
     grade,
     lessonNumber,
+    moduleCode,
   );
   // Select the exact navigation that cross-binds to the registered course.
   // This admits a formal page-only manifest when a superseded catalog release
@@ -82,7 +154,13 @@ export default async function CoursePage({
         ),
       )
     : catalogNavigation ?? pageOnlyNavigation;
-  const protectedReleaseId = protectedAtomicReleaseIdForScope(Number(grade), lessonNumber);
+  const protectedReleaseId = sharedRoute
+    ? undefined
+    : protectedAtomicReleaseIdForScope(Number(grade), lessonNumber);
+  // A shared route is admitted only through an exact registered descriptor and
+  // its source-order navigation binding.  Never fall through to the legacy
+  // catalog renderer for a mapped-but-unregistered G6-G8 lesson.
+  if (sharedRoute && (!courseRegistration || !releaseDescriptor)) notFound();
   if (!releaseDescriptor && protectedReleaseId) notFound();
   if (courseRegistration) {
     if (

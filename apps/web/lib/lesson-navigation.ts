@@ -38,6 +38,8 @@ interface LessonNavigationDescriptorBase {
   readonly releaseId: string;
   readonly grade: number;
   readonly lesson: number;
+  readonly moduleCode?: string;
+  readonly courseKey?: string;
   readonly titleEnglish: string;
   readonly titleSpanish: string | null;
   readonly expectedMemberCount: number;
@@ -278,10 +280,14 @@ export function findLessonNavigationForRoute(
   catalog: AnimationCatalog,
   grade: string | number,
   lesson: string | number,
+  moduleCode?: string,
 ): LessonNavigationDescriptor | undefined {
+  const normalizedModuleCode = moduleCode?.trim().toUpperCase();
   const matches = lessonNavigationDescriptors(catalog).filter(
     (descriptor) => String(descriptor.grade) === String(Number(grade)) &&
-      String(descriptor.lesson) === String(Number(lesson)),
+      String(descriptor.lesson) === String(Number(lesson)) &&
+      (normalizedModuleCode === undefined ||
+        descriptor.moduleCode?.toUpperCase() === normalizedModuleCode),
   );
   return matches.length === 1 ? matches[0] : undefined;
 }

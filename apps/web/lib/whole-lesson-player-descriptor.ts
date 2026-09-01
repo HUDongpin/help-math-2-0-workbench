@@ -388,6 +388,13 @@ export interface WholeLessonPlayerDescriptor {
   readonly course: Readonly<{
     grade: number;
     lesson: number;
+    /**
+     * Present for the G6-G8 shared source scope.  The module code is part of
+     * route identity because four different modules reuse lesson numbers.
+     */
+    moduleCode?: string;
+    courseKey?: string;
+    gradeTags?: readonly number[];
     href: string;
     domIdPrefix: string;
     activePageCount: number;
@@ -481,6 +488,13 @@ export interface PageOnlyLessonPlayerDescriptor {
   readonly course: Readonly<{
     grade: number;
     lesson: number;
+    /**
+     * Optional for backwards compatibility with G3-G5.  Shared middle-school
+     * descriptors must provide both values and use the module-aware route.
+     */
+    moduleCode?: string;
+    courseKey?: string;
+    gradeTags?: readonly number[];
     href: string;
     domIdPrefix: string;
     activePageCount: number;
@@ -575,6 +589,8 @@ interface WholeLessonNavigationBindingBase {
   readonly releaseId: string;
   readonly grade: number;
   readonly lesson: number;
+  readonly moduleCode?: string;
+  readonly courseKey?: string;
   readonly expectedMemberCount: number;
   readonly activePageCount: number;
   readonly pages: readonly Readonly<{
@@ -621,6 +637,12 @@ export function wholeLessonDescriptorMatchesNavigation(
     descriptor.releaseId !== navigation.releaseId ||
     descriptor.course.grade !== navigation.grade ||
     descriptor.course.lesson !== navigation.lesson ||
+    ((descriptor.course.moduleCode !== undefined ||
+      navigation.moduleCode !== undefined) &&
+      descriptor.course.moduleCode !== navigation.moduleCode) ||
+    ((descriptor.course.courseKey !== undefined ||
+      navigation.courseKey !== undefined) &&
+      descriptor.course.courseKey !== navigation.courseKey) ||
     descriptor.course.expectedReleaseMemberCount !==
       navigation.expectedMemberCount ||
     descriptor.course.activePageCount !== navigation.activePageCount ||

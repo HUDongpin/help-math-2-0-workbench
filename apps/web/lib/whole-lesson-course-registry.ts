@@ -1,5 +1,7 @@
 import {hasAnimationModule} from '@helpmath/demos/animation-registry';
 
+import {isG678ModuleCode} from './g678-preview-policy';
+
 import {G3_L2_WHOLE_LESSON_PLAYER_DESCRIPTOR} from './g3-l2-whole-lesson-player-descriptor';
 import {
   G4_L3_PAGE_ONLY_COURSE_DESCRIPTOR,
@@ -36,6 +38,34 @@ export interface WholeLessonCourseRegistration {
 export interface WholeLessonCourseRegistrationInput {
   readonly descriptor: DescriptorDrivenLessonPlayerDescriptor | undefined;
   readonly player: WholeLessonCoursePlayer;
+}
+
+function descriptorCourseRouteIsValid(
+  descriptor: DescriptorDrivenLessonPlayerDescriptor,
+): boolean {
+  const {courseKey, grade, gradeTags, href, lesson, moduleCode} =
+    descriptor.course;
+  if (moduleCode === undefined && courseKey === undefined) {
+    return href === `/courses/${grade}/${lesson}`;
+  }
+  if (
+    moduleCode === undefined ||
+    courseKey === undefined ||
+    grade < 6 ||
+    grade > 8 ||
+    !isG678ModuleCode(moduleCode) ||
+    href !== `/courses/${grade}/${moduleCode.toLowerCase()}/${lesson}` ||
+    courseKey !==
+      `g${grade}-${moduleCode.toLowerCase()}-l${String(lesson).padStart(2, '0')}`
+  ) {
+    return false;
+  }
+  return gradeTags === undefined || (
+    gradeTags.length > 0 &&
+    gradeTags.every((tag) => tag === 6 || tag === 7 || tag === 8) &&
+    new Set(gradeTags).size === gradeTags.length &&
+    gradeTags.includes(grade as 6 | 7 | 8)
+  );
 }
 
 function descriptorPagesAreRunnable(
@@ -152,8 +182,7 @@ export function buildWholeLessonCourseRegistration({
     !descriptor ||
     descriptor.course.grade < 1 ||
     descriptor.course.lesson < 1 ||
-    descriptor.course.href !==
-      `/courses/${descriptor.course.grade}/${descriptor.course.lesson}` ||
+    !descriptorCourseRouteIsValid(descriptor) ||
     descriptor.course.activePageCount !== descriptor.pages.length ||
     !/^[a-f0-9]{64}$/.test(descriptor.source.sourceXmlSha256) ||
     !descriptorPagesAreRunnable(descriptor)
@@ -254,6 +283,7 @@ export function wholeLessonCourseRegistrations(): readonly WholeLessonCourseRegi
 export function findWholeLessonCourseRegistration(
   grade: string | number,
   lesson: string | number,
+  moduleCode?: string,
 ): WholeLessonCourseRegistration | undefined {
   const normalizedGrade = Number(grade);
   const normalizedLesson = Number(lesson);
@@ -267,7 +297,29 @@ export function findWholeLessonCourseRegistration(
   const matches = registrations.filter(
     ({descriptor}) =>
       descriptor.course.grade === normalizedGrade &&
-      descriptor.course.lesson === normalizedLesson,
+      descriptor.course.lesson === normalizedLesson &&
+      (moduleCode === undefined ||
+        descriptor.course.moduleCode?.toUpperCase() ===
+          moduleCode.trim().toUpperCase()),
+  );
+  return matches.length === 1 ? matches[0] : undefined;
+}
+
+/**
+ * Module-aware lookup for shared middle-school lessons.  Requiring exactly
+ * one courseKey prevents G6-G8 lesson-number collisions from selecting a
+ * descriptor by array order.
+ */
+export function findWholeLessonCourseRegistrationByKey(
+  courseKey: string,
+): WholeLessonCourseRegistration | undefined {
+  const normalizedKey = courseKey.trim().toLowerCase();
+  const match = normalizedKey.match(/^g[6-8]-([a-z]{3}\d{3})-l\d{2}$/u);
+  if (!match || !isG678ModuleCode(match[1]!)) {
+    return undefined;
+  }
+  const matches = registrations.filter(
+    ({descriptor}) => descriptor.course.courseKey === normalizedKey,
   );
   return matches.length === 1 ? matches[0] : undefined;
 }

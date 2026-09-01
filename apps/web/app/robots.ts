@@ -7,9 +7,11 @@ import {getSiteUrl} from '@/lib/site';
 export default function robots(): MetadataRoute.Robots {
   const siteUrl = getSiteUrl();
   const {robotDisallow} = resolvePublicCourseDiscovery({
-    availableLessonRoutes: availableLearningLessons().map(({href}) =>
+    availableLessonRoutes: availableLearningLessons()
+      .filter(({moduleCode}) => moduleCode === undefined)
+      .map(({href}) =>
       href.split('?')[0]!
-    ),
+      ),
   });
 
   return {
@@ -30,6 +32,10 @@ export default function robots(): MetadataRoute.Robots {
         '/contact',
         '/migration-status',
         '/reference/',
+        // G6-G8 shared module routes are local engineering previews only.
+        '/courses/6/',
+        '/courses/7/',
+        '/courses/8/',
         '/es/demos/conversion-1-2',
         '/es/demos/conversion-1-4',
         ...robotDisallow,

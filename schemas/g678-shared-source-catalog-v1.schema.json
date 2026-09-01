@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://helpmath.ai/schemas/g678-shared-source-catalog-v1.schema.json",
+  "title": "HELP Math G6-G8 shared source catalog v1",
+  "description": "Hash-bound structural projection of the private shared source view; it is not a JavaScript or release approval.",
+  "type": "object",
+  "required": ["schemaVersion", "catalogKind", "profileId", "generatedFrom", "gradeScope", "lessons", "activePagePlacementCount", "canonicalLessonXmlCount", "uniqueActiveSwfSha256Count", "acceptanceEffects", "audit"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schemaVersion": {"const": 1},
+    "catalogKind": {"const": "help-math-g678-shared-source-catalog"},
+    "profileId": {"type": "string"},
+    "profileVersion": {"type": "string"},
+    "generatedFrom": {"type": "object", "required": ["sourceViewKind", "sourceRoot", "canonicalArchive", "sourceManifestSha256", "generatedAt"], "properties": {"sourceViewKind": {"const": "private-external-read-only"}, "sourceRoot": {"type": "string"}, "canonicalArchive": {"const": "NewHelpProgram"}, "sourceManifestSha256": {"anyOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]}, "generatedAt": {"type": "null"}}, "additionalProperties": true},
+    "gradeScope": {"const": "G6-G8-shared"},
+    "lessons": {"type": "array", "minItems": 44, "maxItems": 44, "items": {"$ref": "#/$defs/lesson"}},
+    "activePagePlacementCount": {"const": 2282},
+    "canonicalLessonXmlCount": {"const": 44},
+    "uniqueActiveSwfSha256Count": {"const": 2240},
+    "acceptanceEffects": {"type": "object", "additionalProperties": {"const": false}},
+    "audit": {"type": "object", "required": ["sourceRootKind", "missingSources", "unknownSwfMagic", "variantPlacements", "dependencyHolds", "audioCandidatePages", "canonicalFileCounts"], "properties": {"sourceRootKind": {"const": "private-external-read-only"}, "missingSources": {"type": "array"}, "unknownSwfMagic": {"type": "array"}, "variantPlacements": {"type": "integer", "minimum": 0}, "dependencyHolds": {"type": "integer", "minimum": 0}, "audioCandidatePages": {"type": "integer", "minimum": 0}, "canonicalFileCounts": {"type": "object", "properties": {"swf": {"type": "integer", "minimum": 0}, "mp3": {"type": "integer", "minimum": 0}, "fla": {"const": 0}, "xml": {"type": "integer", "minimum": 0}}}}, "additionalProperties": true}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "lesson": {
+      "type": "object",
+      "required": ["moduleCode", "lessonNumber", "stableLessonKey", "sourceXml", "pages", "activePageCount", "pagePlacementCount", "mappingStatus", "acceptanceEffects"],
+      "properties": {
+        "moduleCode": {"enum": ["NMS002", "GEO001", "ALG001", "DAT001"]},
+        "lessonNumber": {"type": "integer", "minimum": 1},
+        "stableLessonKey": {"type": "string"},
+        "sourceXml": {"type": "object", "required": ["path", "bytes", "sha256"], "properties": {"path": {"type": "string"}, "bytes": {"type": "integer", "minimum": 1}, "sha256": {"$ref": "#/$defs/sha256"}}, "additionalProperties": true},
+        "pages": {"type": "array", "items": {"$ref": "#/$defs/page"}},
+        "activePageCount": {"type": "integer", "minimum": 1},
+        "pagePlacementCount": {"type": "integer", "minimum": 1},
+        "mappingStatus": {"enum": ["source-mapping-pending", "approved", "needs-adjudication", "rejected"]},
+        "acceptanceEffects": {"type": "object", "additionalProperties": {"const": false}}
+      },
+      "additionalProperties": true
+    },
+    "page": {
+      "type": "object",
+      "required": ["placementId", "animationId", "assetId", "sourcePath", "sourceSha256", "xmlOccurrence", "sectionCode"],
+      "properties": {
+        "placementId": {"type": "string"},
+        "animationId": {"type": "string"},
+        "assetId": {"type": "string", "pattern": "^swf-[a-f0-9]{64}$"},
+        "sourcePath": {"type": "string"},
+        "sourceSha256": {"$ref": "#/$defs/sha256"},
+        "xmlOccurrence": {"type": "integer", "minimum": 1},
+        "sectionCode": {"type": "string"}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

@@ -8,9 +8,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
   const lastModified = new Date('2026-08-21T00:00:00.000Z');
   const {lessonRoutes} = resolvePublicCourseDiscovery({
-    availableLessonRoutes: availableLearningLessons().map(({href}) =>
+    availableLessonRoutes: availableLearningLessons()
+      .filter(({moduleCode}) => moduleCode === undefined)
+      .map(({href}) =>
       href.split('?')[0]!
-    ),
+      ),
   });
   const routes = ['/', ...lessonRoutes, '/privacy', '/terms'] as const;
 

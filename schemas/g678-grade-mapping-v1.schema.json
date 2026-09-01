@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://helpmath.ai/schemas/g678-grade-mapping-v1.schema.json",
+  "title": "HELP Math G6-G8 shared Common Core grade mapping v1",
+  "type": "object",
+  "required": ["schemaVersion", "artifactType", "mappingId", "mappingVersion", "gradeScope", "sourceProfileId", "policy", "records"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schemaVersion": {"const": 1},
+    "artifactType": {"const": "help-math-g678-grade-mapping"},
+    "mappingId": {"type": "string", "pattern": "^g678-grade-mapping-v[0-9]+$"},
+    "mappingVersion": {"const": "ccss-math-2010-v1"},
+    "gradeScope": {"const": "G6-G8-shared"},
+    "sourceProfileId": {"type": "string"},
+    "policy": {
+      "type": "object",
+      "required": ["minimumPrimaryScore", "minimumMargin", "requiredEvidenceLevels", "independentReviewRequired", "pendingDisposition"],
+      "properties": {
+        "minimumPrimaryScore": {"type": "integer", "minimum": 1},
+        "minimumMargin": {"type": "integer", "minimum": 0},
+        "requiredEvidenceLevels": {"type": "array", "items": {"enum": ["A", "B", "C", "D", "E"]}},
+        "independentReviewRequired": {"type": "boolean"},
+        "pendingDisposition": {"const": "source-mapping-pending"}
+      },
+      "additionalProperties": true
+    },
+    "status": {"enum": ["pending-review", "partially-approved", "approved", "blocked"]},
+    "records": {
+      "type": "array",
+      "minItems": 44,
+      "items": {
+        "type": "object",
+        "required": ["mappingId", "stableLessonKey", "moduleCode", "lessonNumber", "primaryGrade", "gradeTags", "ccssStandardCodes", "evidence", "scoresByGrade", "reviewers", "status", "decisionReason", "mappingVersion"],
+        "properties": {
+          "mappingId": {"type": "string"},
+          "stableLessonKey": {"type": "string", "pattern": "^shared-(nms002|geo001|alg001|dat001)-l[0-9]{2}$"},
+          "moduleCode": {"enum": ["NMS002", "GEO001", "ALG001", "DAT001"]},
+          "lessonNumber": {"type": "integer", "minimum": 1},
+          "primaryGrade": {"type": ["integer", "null"], "enum": [6, 7, 8, null]},
+          "gradeTags": {"type": "array", "items": {"enum": [6, 7, 8]}, "uniqueItems": true},
+          "ccssStandardCodes": {"type": "array", "items": {"type": "string", "pattern": "^CCSS[.]MATH[.]CONTENT[.]"}, "uniqueItems": true},
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["level", "kind", "source", "excerpt", "sha256"],
+              "properties": {
+                "level": {"enum": ["A", "B", "C", "D", "E"]},
+                "kind": {"type": "string"},
+                "source": {"type": "string"},
+                "excerpt": {"type": "string"},
+                "sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"}
+              },
+              "additionalProperties": true
+            }
+          },
+          "scoresByGrade": {
+            "type": "object",
+            "required": ["6", "7", "8"],
+            "properties": {"6": {"type": "integer", "minimum": 0}, "7": {"type": "integer", "minimum": 0}, "8": {"type": "integer", "minimum": 0}},
+            "additionalProperties": false
+          },
+          "reviewers": {"type": "array", "items": {"type": "object"}},
+          "status": {"enum": ["pending", "approved", "needs-adjudication", "rejected"]},
+          "decisionReason": {"type": "string", "minLength": 1},
+          "mappingVersion": {"const": "ccss-math-2010-v1"},
+          "sourceManifestSha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+          "courseKey": {"type": ["string", "null"]}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

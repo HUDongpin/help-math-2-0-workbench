@@ -12,6 +12,10 @@ export interface LessonReleaseScope {
   collection: string;
   grade: number | 'elementary' | null;
   lesson: number | null;
+  /** Shared middle-school identity; absent for the legacy G3-G5 catalog. */
+  moduleCode?: string;
+  courseKey?: string;
+  gradeTags?: readonly number[];
   excludeNonMembers: boolean;
 }
 

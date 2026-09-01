@@ -1,0 +1,143 @@
+{
+  "$schema": "../schemas/g678-shared-source-profile-v1.schema.json",
+  "schemaVersion": 1,
+  "artifactType": "help-math-g678-shared-source-profile",
+  "profileId": "g678-shared-source-profile-v1",
+  "version": "G6-G8-shared-v1",
+  "sourceManifestSha256": "712ba09b25db3d17dbc9afc54009e2c2c6d3414c987c275e1b0a42f31a28b9a2",
+  "mappingManifestSha256": "227727135c22002f70a7b0618d00fadf271874ad2c7662856e40347000b8a629",
+  "sourceView": {
+    "kind": "private-external-read-only",
+    "rootEnv": "HELP_MATH_G678_SOURCE_ROOT",
+    "relativeRoot": "G6-G8-shared",
+    "canonicalArchive": "NewHelpProgram",
+    "canonicalSourcePrefix": "HELP_COURSES",
+    "viewPathPrefix": "G6-G8-shared",
+    "alternateRoots": [
+      {
+        "kind": "source-variant",
+        "pathPattern": "_alternate/**",
+        "defaultDecision": "hold-source-choice-review"
+      },
+      {
+        "kind": "same-path-different-hash",
+        "pathPattern": "_variants/HelpProgramStagingv4/**",
+        "defaultDecision": "hold-source-choice-review"
+      }
+    ]
+  },
+  "witnesses": {
+    "README.md": "4de8250fad669ca5a0c5a461722ab792ba96f59155f03dd7b8e43d9496807f76",
+    "classification-summary.json": "690f72f3876d36b67a614ff76dd33d5388fe5cc093c7958a4698414a8f4572da",
+    "classification-manifest.jsonl": "712ba09b25db3d17dbc9afc54009e2c2c6d3414c987c275e1b0a42f31a28b9a2",
+    "conflicts.jsonl": "b5ffc69040d3d91f805c34c8a1fe9208420bb5813b0774a1e612d5d2ee0f6d91",
+    "missing-dependencies.jsonl": "635d4d1401beb222048574ee3d7e4a35576384e2e38b263466a08e8ebb7b190f"
+  },
+  "xmlParserVersion": "g678-shared-xml-projection-v1",
+  "toolchain": {
+    "node": ">=22 <27",
+    "hash": "sha256",
+    "swfMagic": ["CWS", "FWS", "ZWS"]
+  },
+  "licenseManifest": {
+    "ffdec": "GPL-3.0-only",
+    "swfmill": "GPL-2.0-or-later",
+    "next2d": "MIT",
+    "openfl": "MIT",
+    "productBundleAdmission": "blocked-pending-reviewed-license-boundary"
+  },
+  "gradeMapping": {
+    "gradeScope": "G6-G8-shared",
+    "standard": "CCSS-M",
+    "mappingVersion": "ccss-math-2010-v1",
+    "allowedGrades": [6, 7, 8],
+    "minimumPrimaryScore": 5,
+    "minimumMargin": 2,
+    "requiredEvidenceLevels": ["A", "B"],
+    "independentReviewRequired": true,
+    "unmappedDisposition": "source-mapping-pending"
+  },
+  "expectedSectionCodes": ["IR", "RW", "VB", "IN", "TI", "GS", "TS", "FQ"],
+  "calibrationSet": [
+    {"moduleCode": "NMS002", "lessonNumber": 1, "ordinal": 1, "lane": null, "selectionRole": "low-candidate", "selectionReason": "deterministic module sentinel; lane remains pending full SWF audit"},
+    {"moduleCode": "NMS002", "lessonNumber": 2, "ordinal": 20, "lane": null, "selectionRole": "interactive-candidate", "selectionReason": "section/interaction sentinel; lane remains pending full SWF audit"},
+    {"moduleCode": "NMS002", "lessonNumber": 5, "ordinal": 40, "lane": null, "selectionRole": "behavior-candidate", "selectionReason": "behavior/audio sentinel; lane remains pending full SWF audit"},
+    {"moduleCode": "NMS002", "lessonNumber": 11, "ordinal": 30, "lane": null, "selectionRole": "risk-sentinel", "selectionReason": "large/nested-risk sentinel; lane remains pending full SWF audit"},
+    {"moduleCode": "GEO001", "lessonNumber": 1, "ordinal": 1, "lane": null, "selectionRole": "low-candidate", "selectionReason": "deterministic module sentinel; lane remains pending full SWF audit"},
+    {"moduleCode": "GEO001", "lessonNumber": 2, "ordinal": 20, "lane": null, "selectionRole": "interactive-candidate", "selectionReason": "section/interaction sentinel; lane remains pending full SWF audit"},
+    {"moduleCode": "GEO001", "lessonNumber": 7, "ordinal": 40, "lane": null, "selectionRole": "behavior-candidate", "selectionReason": "behavior/audio sentinel; lane remains pending full SWF audit"},
+    {"moduleCode": "GEO001", "lessonNumber": 11, "ordinal": 30, "lane": null, "selectionRole": "risk-sentinel", "selectionReason": "large/nested-risk sentinel; lane remains pending full SWF audit"},
+    {"moduleCode": "ALG001", "lessonNumber": 1, "ordinal": 1, "lane": null, "selectionRole": "low-candidate", "selectionReason": "deterministic module sentinel; lane remains pending full SWF audit"},
+    {"moduleCode": "ALG001", "lessonNumber": 5, "ordinal": 30, "lane": null, "selectionRole": "interactive-candidate", "selectionReason": "section/interaction sentinel; lane remains pending full SWF audit"},
+    {"moduleCode": "ALG001", "lessonNumber": 6, "ordinal": 40, "lane": null, "selectionRole": "behavior-candidate", "selectionReason": "behavior/audio sentinel; lane remains pending full SWF audit"},
+    {"moduleCode": "ALG001", "lessonNumber": 8, "ordinal": 25, "lane": null, "selectionRole": "risk-sentinel", "selectionReason": "large/nested-risk sentinel; lane remains pending full SWF audit"},
+    {"moduleCode": "DAT001", "lessonNumber": 1, "ordinal": 1, "lane": null, "selectionRole": "low-candidate", "selectionReason": "deterministic module sentinel; lane remains pending full SWF audit"},
+    {"moduleCode": "DAT001", "lessonNumber": 3, "ordinal": 30, "lane": null, "selectionRole": "interactive-candidate", "selectionReason": "section/interaction sentinel; lane remains pending full SWF audit"},
+    {"moduleCode": "DAT001", "lessonNumber": 5, "ordinal": 40, "lane": null, "selectionRole": "behavior-candidate", "selectionReason": "behavior/audio sentinel; lane remains pending full SWF audit"},
+    {"moduleCode": "DAT001", "lessonNumber": 7, "ordinal": 25, "lane": null, "selectionRole": "risk-sentinel", "selectionReason": "large/nested-risk sentinel; lane remains pending full SWF audit"}
+  ],
+  "modules": [
+    {
+      "moduleCode": "NMS002",
+      "moduleTitle": "Numbers Make Sense",
+      "lessonNumbers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      "activePageCounts": [47, 64, 56, 45, 49, 51, 52, 60, 53, 49, 47, 65],
+      "sourceRoot": "NMS002",
+      "xmlPathPattern": "NMS002/L{lesson}/index.xml",
+      "gradeScope": "G6-G8-shared"
+    },
+    {
+      "moduleCode": "GEO001",
+      "moduleTitle": "Geometry",
+      "lessonNumbers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      "activePageCounts": [59, 51, 49, 44, 51, 54, 63, 47, 44, 42, 52, 39],
+      "sourceRoot": "GEO001",
+      "xmlPathPattern": "GEO001/L{lesson}/index.xml",
+      "gradeScope": "G6-G8-shared"
+    },
+    {
+      "moduleCode": "ALG001",
+      "moduleTitle": "Algebra",
+      "lessonNumbers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      "activePageCounts": [56, 58, 56, 53, 63, 60, 62, 50, 41, 52, 44, 52],
+      "sourceRoot": "ALG001",
+      "xmlPathPattern": "ALG001/L{lesson}/index.xml",
+      "gradeScope": "G6-G8-shared"
+    },
+    {
+      "moduleCode": "DAT001",
+      "moduleTitle": "Data Analysis",
+      "lessonNumbers": [1, 2, 3, 4, 5, 6, 7, 8],
+      "activePageCounts": [56, 53, 63, 39, 61, 46, 50, 34],
+      "sourceRoot": "DAT001",
+      "xmlPathPattern": "DAT001/L{lesson}/index.xml",
+      "gradeScope": "G6-G8-shared"
+    }
+  ],
+  "expected": {
+    "canonicalLessonXmlCount": 44,
+    "activePagePlacementCount": 2282,
+    "uniqueActiveSwfSha256Count": 2240,
+    "commentedPageCount": 315,
+    "bomXmlCount": 39,
+    "bareAmpersandCount": 7,
+    "canonicalSwfCount": 2776,
+    "canonicalMp3Count": 13353,
+    "canonicalFlaCount": 0,
+    "samePathDifferentHashCount": 46,
+    "geoAlternateLessonCount": 1,
+    "geoAlternateActivePageCount": 59
+  },
+  "acceptanceEffects": {
+    "canonicalSourcePromoted": false,
+    "currentJavaScriptRegistered": false,
+    "authoritativeOriginalRuntime": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "released": false,
+    "published": false
+  }
+}

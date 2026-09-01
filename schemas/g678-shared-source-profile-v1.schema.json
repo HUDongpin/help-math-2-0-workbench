@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://helpmath.ai/schemas/g678-shared-source-profile-v1.schema.json",
+  "title": "HELP Math G6-G8 shared source profile v1",
+  "type": "object",
+  "required": ["schemaVersion", "artifactType", "profileId", "version", "sourceView", "modules", "expected", "gradeMapping"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schemaVersion": {"const": 1},
+    "artifactType": {"const": "help-math-g678-shared-source-profile"},
+    "profileId": {"type": "string", "pattern": "^g678-shared-source-profile-v[0-9]+$"},
+    "version": {"type": "string", "const": "G6-G8-shared-v1"},
+    "sourceManifestSha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+    "mappingManifestSha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+    "sourceView": {
+      "type": "object",
+      "required": ["kind", "rootEnv", "relativeRoot", "canonicalArchive", "canonicalSourcePrefix", "viewPathPrefix"],
+      "properties": {
+        "kind": {"const": "private-external-read-only"},
+        "rootEnv": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]+$"},
+        "relativeRoot": {"const": "G6-G8-shared"},
+        "canonicalArchive": {"const": "NewHelpProgram"},
+        "canonicalSourcePrefix": {"const": "HELP_COURSES"},
+        "viewPathPrefix": {"const": "G6-G8-shared"},
+        "alternateRoots": {"type": "array"}
+      },
+      "additionalProperties": true
+    },
+    "witnesses": {
+      "type": "object",
+      "additionalProperties": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+    },
+    "xmlParserVersion": {"type": "string"},
+    "toolchain": {"type": "object"},
+    "licenseManifest": {"type": "object"},
+    "gradeMapping": {
+      "type": "object",
+      "required": ["gradeScope", "standard", "mappingVersion", "allowedGrades", "minimumPrimaryScore", "minimumMargin", "requiredEvidenceLevels", "unmappedDisposition"],
+      "properties": {
+        "gradeScope": {"const": "G6-G8-shared"},
+        "standard": {"const": "CCSS-M"},
+        "mappingVersion": {"const": "ccss-math-2010-v1"},
+        "allowedGrades": {"type": "array", "items": {"enum": [6, 7, 8]}, "minItems": 3, "maxItems": 3, "uniqueItems": true},
+        "minimumPrimaryScore": {"type": "integer", "minimum": 1},
+        "minimumMargin": {"type": "integer", "minimum": 0},
+        "requiredEvidenceLevels": {"type": "array", "items": {"enum": ["A", "B", "C", "D", "E"]}},
+        "independentReviewRequired": {"type": "boolean"},
+        "unmappedDisposition": {"const": "source-mapping-pending"}
+      },
+      "additionalProperties": true
+    },
+    "expectedSectionCodes": {"type": "array", "items": {"type": "string"}},
+    "modules": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["moduleCode", "moduleTitle", "lessonNumbers", "activePageCounts", "sourceRoot", "xmlPathPattern", "gradeScope"],
+        "properties": {
+          "moduleCode": {"enum": ["NMS002", "GEO001", "ALG001", "DAT001"]},
+          "moduleTitle": {"type": "string", "minLength": 1},
+          "lessonNumbers": {"type": "array", "items": {"type": "integer", "minimum": 1}, "minItems": 1},
+          "activePageCounts": {"type": "array", "items": {"type": "integer", "minimum": 0}},
+          "sourceRoot": {"type": "string"},
+          "xmlPathPattern": {"type": "string"},
+          "gradeScope": {"const": "G6-G8-shared"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "expected": {
+      "type": "object",
+      "required": ["canonicalLessonXmlCount", "activePagePlacementCount", "commentedPageCount", "canonicalSwfCount", "canonicalMp3Count", "canonicalFlaCount"],
+      "properties": {
+        "canonicalLessonXmlCount": {"type": "integer", "const": 44},
+        "activePagePlacementCount": {"type": "integer", "const": 2282},
+        "uniqueActiveSwfSha256Count": {"type": "integer", "minimum": 0},
+        "commentedPageCount": {"type": "integer", "const": 315},
+        "bomXmlCount": {"type": "integer", "minimum": 0},
+        "bareAmpersandCount": {"type": "integer", "minimum": 0},
+        "canonicalSwfCount": {"type": "integer", "minimum": 0},
+        "canonicalMp3Count": {"type": "integer", "minimum": 0},
+        "canonicalFlaCount": {"type": "integer", "minimum": 0},
+        "samePathDifferentHashCount": {"type": "integer", "minimum": 0},
+        "geoAlternateLessonCount": {"type": "integer", "minimum": 0},
+        "geoAlternateActivePageCount": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": true
+    },
+    "acceptanceEffects": {"type": "object", "additionalProperties": {"const": false}}
+  },
+  "additionalProperties": true
+}
