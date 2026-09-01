@@ -538,9 +538,13 @@ function hasApprovedGradeMapping(
     const moduleCode = moduleValue(item.moduleCode);
     const lessonNumber = integerValue(item.lessonNumber);
     const recordKey = moduleCode && lessonNumber ? `${moduleCode}:${lessonNumber}` : null;
+    const expectedStableLessonKey = moduleCode && lessonNumber
+      ? `shared-${moduleCode.toLowerCase()}-l${String(lessonNumber).padStart(2, '0')}`
+      : null;
     if (!recordKey || recordKeys.has(recordKey)) return false;
     recordKeys.add(recordKey);
     return item.ready === true && item.status === 'approved' &&
+      item.stableLessonKey === expectedStableLessonKey &&
       item.mappingVersion === ccss.mappingVersion &&
       item.sourceManifestSha256 === profileSourceManifestSha256 &&
       expectedRecordKeys.has(recordKey) &&
