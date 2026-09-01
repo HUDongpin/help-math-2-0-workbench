@@ -63,7 +63,17 @@ HELP_MATH_G678_SOURCE_ROOT="$SOURCE_ROOT" node scripts/audit-shared-source.mjs \
   --check \
   --strict-counts \
   --require-source
+```
 
+`source:g678:audit` is the shortcut for the same strict check when
+`HELP_MATH_G678_SOURCE_ROOT` is set. In strict source-required mode the audit
+automatically discovers the five sibling witness files (README, summary,
+classification, conflicts, and missing-dependencies), verifies their declared
+SHA-256 values, and parses the already-hashed classification/dependency bytes.
+If a witness is missing or drifts, the command stops before producing a
+catalog; it never silently reports zero variants or dependency holds.
+
+```bash
 node scripts/map-shared-grade.mjs \
   --profile catalog/g678-shared-source-profile.v1.json \
   --mapping catalog/g678-grade-mapping.v1.json \
@@ -79,7 +89,33 @@ node scripts/build-shared-page-factory.mjs \
   --profile catalog/g678-shared-source-profile.v1.json \
   --mode calibrate \
   --run-id <immutable-run-id> \
-  --check
+  --output work/g678-shared-page-factory/<immutable-run-id> \
+  --require-read-only
+
+node scripts/build-shared-page-factory.mjs \
+  --profile catalog/g678-shared-source-profile.v1.json \
+  --mode check \
+  --output work/g678-shared-page-factory/<immutable-run-id> \
+  --require-read-only
+
+# Optional W2 machine structural audit for the 16-page calibration set.
+# This invokes FFDec/swfmill only; it never creates JS or acceptance evidence.
+node scripts/audit-shared-calibration-structure.mjs \
+  --profile catalog/g678-shared-source-profile.v1.json \
+  --catalog catalog/g678-shared-catalog.v1.json \
+  --source-root "$SOURCE_ROOT" \
+  --output work/g678-shared-page-factory/<calibration-structure-run-id> \
+  --ffdec ffdec \
+  --swfmill swfmill \
+  --concurrency 2 \
+  --timeout-ms 120000
+
+node scripts/audit-shared-calibration-structure.mjs \
+  --check \
+  --profile catalog/g678-shared-source-profile.v1.json \
+  --catalog catalog/g678-shared-catalog.v1.json \
+  --source-root "$SOURCE_ROOT" \
+  --output work/g678-shared-page-factory/<calibration-structure-run-id>
 
 npm run generate:registry --workspace @helpmath/demos
 npm run check:registry --workspace @helpmath/demos
@@ -107,6 +143,12 @@ The factory command has three intentionally separate modes:
 - `extend` processes an explicitly frozen page batch;
 - `check` re-hashes and replays the run without overwriting it.
 
+Archive receipts for the two multi-gigabyte recovery ZIPs are deliberately
+reported as `blocked-unverified` unless an explicitly bounded, read-only hash
+operation is authorized. The default local calibration does not read those ZIP
+bytes; this is a source-custody hold, not a successful rehash. Do not change
+the gate to `hash-verified` from an old receipt or a size/CRC-only observation.
+
 The command may produce a structural candidate, but it must never mark a
 page `registered`, `strict-complete`, or `published` by itself. A reusable
 behavior fix belongs in the IR, generator, or maintained adapter and must be
@@ -117,6 +159,11 @@ records are pending independent Common Core review and no official CCSS
 snapshot has been hash-bound. `--require-approved` is available for a CI gate
 that must fail rather than return a structured blocked report. Do not replace
 the pending mapping with a guessed grade to make a route appear.
+
+The web route has a second defense-in-depth check: even an individually marked
+`approved` mapping cannot create a grade URL until the hash-bound readiness
+report says `authority-approved` and `gradeRouteGenerationAllowed=true`. A
+stale, missing, or unsigned readiness report leaves every shared card locked.
 
 `catalog/g678-review-governance.v1.json` is the machine-readable M0 staffing
 gate. It intentionally contains null primary/backup assignments and a null
@@ -180,6 +227,10 @@ for a bounded repair.
 Extraction may cache by `assetId = swf-<full-sha256>`, but registration remains
 placement-level. Batch size is capped at 25 placements and a lesson is not
 admitted to All Lessons until all of its active placements are registered.
+Shared adapters use the generic `PageAudioCandidate` contract exported by
+`packages/demos/src/contract.ts`; its binding is explicitly one of `FQ/EA`,
+`FQ/SA`, or `lesson-SA`, and intake emits only `candidate-index-only` until a
+natural original-runtime listening session and named reviewer exist.
 
 ## Local All Lessons states
 

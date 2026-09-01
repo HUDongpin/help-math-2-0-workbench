@@ -497,6 +497,12 @@ function hasApprovedGradeMapping(
   const receiptSha256 = stringValue(ccss.authorityReceiptSha256)?.toLowerCase();
   const receipt = receiptPath ? record(readJson(root, receiptPath)) : {};
   const records = Array.isArray(report.records) ? report.records : [];
+  const profile = record(readJson(root, profilePath));
+  const profileSourceManifestSha256 = stringValue(
+    profile.sourceManifestSha256 ?? record(profile.witnesses)['classification-manifest.jsonl'],
+  )?.toLowerCase();
+  const profileMappingManifestSha256 = stringValue(profile.mappingManifestSha256)?.toLowerCase();
+  const currentMappingSha256 = fileSha256(root, mappingRelativePath);
   const expectedRecordKeys = new Set(
     G678_SHARED_MODULES.flatMap((module) =>
       Array.from({length: module.lessonCount}, (_value, index) =>
@@ -511,6 +517,8 @@ function hasApprovedGradeMapping(
     if (!recordKey || recordKeys.has(recordKey)) return false;
     recordKeys.add(recordKey);
     return item.ready === true && item.status === 'approved' &&
+      item.mappingVersion === ccss.mappingVersion &&
+      item.sourceManifestSha256 === profileSourceManifestSha256 &&
       expectedRecordKeys.has(recordKey) &&
       gradeValue(item.primaryGrade) !== null &&
       Array.isArray(item.ccssStandardCodes) && item.ccssStandardCodes.length > 0 &&
@@ -524,10 +532,6 @@ function hasApprovedGradeMapping(
     typeof receipt.reviewerId === 'string' && receipt.reviewerId.trim().length > 0 &&
     typeof receipt.reviewedAt === 'string' && receipt.reviewedAt.length > 0 &&
     Boolean(receiptPath && receiptSha256 && fileSha256(root, receiptPath) === receiptSha256);
-  const profile = record(readJson(root, profilePath));
-  const profileSourceManifestSha256 = stringValue(
-    profile.sourceManifestSha256 ?? record(profile.witnesses)['classification-manifest.jsonl'],
-  )?.toLowerCase();
   return report.artifactType === 'help-math-g678-grade-mapping-readiness' &&
     report.schemaVersion === 1 &&
     ccss.mappingVersion === 'ccss-math-2010-v1' &&
@@ -540,6 +544,8 @@ function hasApprovedGradeMapping(
     source.mappingPath === mappingRelativePath &&
     source.profileSha256 === fileSha256(root, profilePath) &&
     source.mappingSha256 === fileSha256(root, mappingRelativePath) &&
+    profileMappingManifestSha256 !== null &&
+    profileMappingManifestSha256 === currentMappingSha256 &&
     source.sourceManifestSha256 === profileSourceManifestSha256 &&
     recordKeys.size === expectedRecordKeys.size &&
     mappingPath === mappingRelativePath;

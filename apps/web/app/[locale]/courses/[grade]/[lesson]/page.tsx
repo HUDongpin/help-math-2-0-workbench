@@ -111,7 +111,8 @@ export default async function CoursePage({
   const sharedRoute = moduleCode !== undefined;
   if (
     sharedRoute
-      ? (!/^[6-8]$/u.test(grade) || !isG678ModuleCode(moduleCode ?? ''))
+      ? (!/^[6-8]$/u.test(grade) || !/^\d{1,2}$/u.test(lesson) ||
+        !isG678ModuleCode(moduleCode ?? ''))
       : (!/^[3-5]$/u.test(grade) || !/^\d{1,2}$/u.test(lesson))
   ) notFound();
   if (sharedRoute && !isG678LocalPreviewEnabled()) notFound();

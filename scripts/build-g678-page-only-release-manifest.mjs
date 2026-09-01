@@ -114,13 +114,21 @@ function releaseId(lesson) {
   return `g678-${String(lesson.moduleCode).toLowerCase()}-l${String(lesson.lessonNumber).padStart(2, "0")}-page-only-v1`;
 }
 
+function expectedLessonCount(moduleCode) {
+  return LESSON_COUNTS[moduleCode] ?? 0;
+}
+
+function expectedPagePlacementId(moduleCode, lessonNumber, ordinal) {
+  return `shared-${moduleCode.toLowerCase()}-l${String(lessonNumber).padStart(2, "0")}-p${String(ordinal).padStart(3, "0")}`;
+}
+
 function buildShards(members) {
   const shards = [];
   for (let start = 0; start < members.length; start += SHARD_SIZE) {
     const chunk = members.slice(start, start + SHARD_SIZE);
     const ordinal = shards.length + 1;
     shards.push({
-      shardId: `shard-${String(ordinal).padStart(2, "2")}`,
+      shardId: `shard-${String(ordinal).padStart(2, "0")}`,
       batchId: `batch-${String(ordinal).padStart(3, "0")}`,
       ordinal,
       parallelGroup: "g678-shared-page-only",
@@ -283,30 +291,104 @@ export function validateReleaseManifest(manifest) {
   if (manifest?.artifactType !== "help-math-g678-page-only-release-manifest") errors.push("artifactType mismatch");
   const releases = array(manifest?.releases);
   if (releases.length !== 44) errors.push(`expected 44 releases, found ${releases.length}`);
+  const sourceOfTruth = object(manifest?.sourceOfTruth);
+  if (sourceOfTruth.scope !== "canonical-active-page-only") errors.push("sourceOfTruth scope must be canonical-active-page-only");
+  if (sourceOfTruth.legacyCourseShellExcluded !== true) errors.push("sourceOfTruth must exclude legacy course shells");
+  if (!SHA256.test(String(sourceOfTruth.catalogSha256 ?? "")) || !SHA256.test(String(sourceOfTruth.mappingSha256 ?? ""))) {
+    errors.push("sourceOfTruth catalog/mapping hashes must be lowercase SHA-256");
+  }
   const keys = new Set();
   let pages = 0;
   for (const release of releases) {
-    const key = `${release?.moduleCode}:${release?.moduleLesson}`;
+    const moduleCode = String(release?.moduleCode ?? "").toUpperCase();
+    const lessonNumber = Number(release?.moduleLesson);
+    const key = `${moduleCode}:${release?.moduleLesson}`;
+    const expectedReleaseId = `g678-${moduleCode.toLowerCase()}-l${String(lessonNumber).padStart(2, "0")}-page-only-v1`;
     if (keys.has(key)) errors.push(`duplicate release key ${key}`);
     keys.add(key);
+    if (!Object.hasOwn(LESSON_COUNTS, moduleCode)) errors.push(`${key}: unsupported module code`);
+    if (!Number.isSafeInteger(lessonNumber) || lessonNumber < 1 || lessonNumber > expectedLessonCount(moduleCode)) {
+      errors.push(`${key}: lesson number is outside the canonical module range`);
+    }
+    if (release?.releaseId !== expectedReleaseId) errors.push(`${key}: releaseId is not canonical`);
+    if (release?.releaseOrder !== keys.size) errors.push(`${key}: releaseOrder is not contiguous`);
+    const expectedStableLessonKey = `shared-${moduleCode.toLowerCase()}-l${String(lessonNumber).padStart(2, "0")}`;
+    if (release?.stableLessonKey !== expectedStableLessonKey) errors.push(`${key}: stableLessonKey is not canonical`);
     if (release?.publicationMode !== "atomic") errors.push(`${key}: publicationMode must be atomic`);
     if (release?.status !== "source-audit-only") errors.push(`${key}: status must remain source-audit-only`);
     if (release?.expectedCounts?.courseShells !== 0) errors.push(`${key}: courseShells must be zero`);
-    if (release?.scope?.pageOnly !== true || release?.scope?.legacyFlashCourseShellExcluded !== true) errors.push(`${key}: page-only shell boundary missing`);
+    if (release?.scope?.collection !== "g678-shared" ||
+      release?.scope?.moduleCode !== moduleCode ||
+      release?.scope?.lesson !== lessonNumber ||
+      release?.scope?.pageOnly !== true ||
+      release?.scope?.legacyFlashCourseShellExcluded !== true ||
+      release?.scope?.modernMyLessonHostRetained !== true) {
+      errors.push(`${key}: page-only/module-aware scope boundary missing`);
+    }
     const members = array(release?.members);
     if (release?.expectedCounts?.members !== members.length) errors.push(`${key}: member count mismatch`);
+    if (release?.expectedCounts?.activeXmlReferencedPages !== members.length) errors.push(`${key}: active page count/member count mismatch`);
+    const sourceLesson = object(release?.sourceLesson);
+    const expectedXmlPath = `G6-G8-shared/${moduleCode}/L${lessonNumber}/index.xml`;
+    if (sourceLesson.path !== expectedXmlPath) errors.push(`${key}: source XML path is not canonical/source-ordered`);
+    if (!Number.isSafeInteger(sourceLesson.bytes) || sourceLesson.bytes <= 0) errors.push(`${key}: source XML byte count is missing`);
+    if (!SHA256.test(String(sourceLesson.sha256 ?? ""))) errors.push(`${key}: source XML SHA-256 is missing or invalid`);
+    if (release?.mappingStatus === "approved") {
+      if (![6, 7, 8].includes(Number(release.primaryGrade))) errors.push(`${key}: approved mapping requires a primary grade`);
+    } else if (release?.primaryGrade !== null) {
+      errors.push(`${key}: non-approved mapping must keep primaryGrade null`);
+    }
     pages += members.length;
     const ids = new Set();
+    const sourcePaths = new Set();
     for (const [index, member] of members.entries()) {
       if (member?.ordinal !== index + 1) errors.push(`${key}: member ordinal gap at ${index + 1}`);
+      if (member?.xmlOccurrence !== index + 1) errors.push(`${key}: XML occurrence gap at ${index + 1}`);
+      const expectedPlacement = expectedPagePlacementId(moduleCode, lessonNumber, index + 1);
+      if (member?.placementId !== expectedPlacement || member?.animationId !== expectedPlacement) {
+        errors.push(`${key}: placement/animation identity drift at ordinal ${index + 1}`);
+      }
       if (ids.has(member?.placementId)) errors.push(`${key}: duplicate placement ${member?.placementId}`);
       ids.add(member?.placementId);
       if (member?.registrationStatus !== "unregistered-source-bound") errors.push(`${key}: member was implicitly registered`);
-      if (member?.assetId !== null && !/^swf-[a-f0-9]{64}$/u.test(String(member.assetId))) errors.push(`${key}: invalid asset identity`);
+      const source = object(member?.source);
+      if (typeof source.path !== "string" ||
+        !source.path.startsWith(`HELP_COURSES/${moduleCode}/L${lessonNumber}/`) ||
+        !source.path.endsWith(".swf") ||
+        source.path.includes("..") ||
+        source.path.includes("\\")) errors.push(`${key}: member source path is not canonical`);
+      if (sourcePaths.has(source.path)) errors.push(`${key}: duplicate member source path ${source.path}`);
+      sourcePaths.add(source.path);
+      if (!SHA256.test(String(source.sha256 ?? ""))) errors.push(`${key}: member source SHA-256 is missing or invalid`);
+      if (member?.assetId !== `swf-${source.sha256}`) errors.push(`${key}: asset identity does not match member source SHA-256`);
+      if (member?.sourceRootKind !== 'canonical') errors.push(`${key}: source root kind is not canonical`);
+      if (!['canonical', 'hold-source-choice-review'].includes(String(member?.variantDecision))) errors.push(`${key}: variant decision is not explicit`);
+      if (typeof member?.sectionCode !== "string" || member.sectionCode.length === 0) errors.push(`${key}: section code is missing`);
+      if (!Number.isSafeInteger(member?.audioCandidateCount) || member.audioCandidateCount < 0) errors.push(`${key}: audio candidate count is invalid`);
+      if (member?.audioStatus !== "candidate-index-only") errors.push(`${key}: audio status must remain candidate-index-only`);
     }
     const shards = array(release?.shards);
     if (release?.expectedCounts?.shards !== shards.length) errors.push(`${key}: shard count mismatch`);
-    if (shards.some((shard) => shard.memberCount > SHARD_SIZE)) errors.push(`${key}: shard exceeds ${SHARD_SIZE} members`);
+    const shardOrdinals = [];
+    for (const [shardIndex, shard] of shards.entries()) {
+      const expectedShardId = `shard-${String(shardIndex + 1).padStart(2, "0")}`;
+      const expectedBatchId = `batch-${String(shardIndex + 1).padStart(3, "0")}`;
+      const memberOrdinals = array(shard?.memberOrdinals);
+      if (shard?.shardId !== expectedShardId || shard?.batchId !== expectedBatchId || shard?.ordinal !== shardIndex + 1) {
+        errors.push(`${key}: shard identity/order drift at ${shardIndex + 1}`);
+      }
+      if (shard?.memberCount !== memberOrdinals.length || shard.memberCount > SHARD_SIZE) {
+        errors.push(`${key}: shard member count exceeds/mismatches ${SHARD_SIZE}`);
+      }
+      if (memberOrdinals.some((ordinal, index) => ordinal !== (shardOrdinals.length + index + 1))) {
+        errors.push(`${key}: shard member ordinal coverage drift at ${shardIndex + 1}`);
+      }
+      shardOrdinals.push(...memberOrdinals);
+    }
+    if (shardOrdinals.length !== members.length || shardOrdinals.some((ordinal, index) => ordinal !== index + 1)) {
+      errors.push(`${key}: shards do not cover the exact member ordinal set`);
+    }
+    if (release?.acceptanceEffects && stableJson(release.acceptanceEffects) !== stableJson(ALL_FALSE)) errors.push(`${key}: acceptance effects must remain false`);
   }
   if (pages !== 2282) errors.push(`expected 2282 active page members, found ${pages}`);
   if (manifest?.expectedCounts?.courseShells !== 0) errors.push("top-level courseShells must be zero");

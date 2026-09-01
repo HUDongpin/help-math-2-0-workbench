@@ -9,7 +9,7 @@
  */
 
 import {createHash} from "node:crypto";
-import {access, mkdir, readFile, rename, rm, writeFile} from "node:fs/promises";
+import {access, lstat, mkdir, readFile, realpath, rename, rm, writeFile} from "node:fs/promises";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {pathToFileURL} from "node:url";
@@ -177,6 +177,36 @@ async function locateWitness(sourceRoot, name, explicitPath) {
   return null;
 }
 
+/**
+ * Witnesses are allowed beside the canonical shared directory (the active
+ * classification view stores them at its parent), but an explicit path must
+ * not smuggle an arbitrary external file into the source receipt.  Check both
+ * the final directory entry and its resolved ancestor path so symlinks cannot
+ * bypass the lexical boundary.
+ */
+async function assertWitnessPath(witnessPath, sourceRoot, name) {
+  let info;
+  try {
+    info = await lstat(witnessPath);
+  } catch (error) {
+    if (error?.code === "ENOENT") throw new Error(`G678_WITNESS_REQUIRED: ${name} was not found beside the private source view`);
+    throw error;
+  }
+  if (!info.isFile() || info.isSymbolicLink()) {
+    throw new Error(`G678_WITNESS_NOT_REGULAR: ${name} must be a regular non-symlink file`);
+  }
+  const resolvedWitness = await realpath(witnessPath);
+  const roots = await Promise.all([
+    realpath(sourceRoot),
+    realpath(path.dirname(sourceRoot)),
+    realpath(path.dirname(path.dirname(sourceRoot))),
+  ]);
+  const allowed = roots.some((root) =>
+    resolvedWitness === root || resolvedWitness.startsWith(`${root}${path.sep}`),
+  );
+  if (!allowed) throw new Error(`G678_WITNESS_ESCAPES_SOURCE_VIEW: ${name} is outside the source-view witness roots`);
+}
+
 export async function verifySourceWitnesses({options, profile, sourceRoot}) {
   const explicit = {
     "classification-manifest.jsonl": options.classificationManifest,
@@ -193,6 +223,7 @@ export async function verifySourceWitnesses({options, profile, sourceRoot}) {
       }
       continue;
     }
+    await assertWitnessPath(witnessPath, sourceRoot, name);
     let bytes;
     try {
       bytes = await readFile(witnessPath);
@@ -247,8 +278,19 @@ async function resolveSourceRoot(options, profile) {
   const configured = options.sourceRoot || process.env[profile.sourceView?.rootEnv ?? "HELP_MATH_G678_SOURCE_ROOT"];
   if (!configured) return null;
   const absolute = projectPath(configured);
+  let info;
+  try {
+    info = await lstat(absolute);
+  } catch (error) {
+    if (error?.code === "ENOENT") return null;
+    throw error;
+  }
+  if (!info.isDirectory() || info.isSymbolicLink()) return null;
   if (await pathExists(path.join(absolute, profile.sourceView?.relativeRoot ?? "G6-G8-shared"))) {
-    return path.join(absolute, profile.sourceView?.relativeRoot ?? "G6-G8-shared");
+    const canonical = path.join(absolute, profile.sourceView?.relativeRoot ?? "G6-G8-shared");
+    const canonicalInfo = await lstat(canonical);
+    if (!canonicalInfo.isDirectory() || canonicalInfo.isSymbolicLink()) return null;
+    return canonical;
   }
   return absolute;
 }
@@ -270,6 +312,9 @@ function summary(catalog) {
     variantPlacements: catalog.audit.variantPlacements,
     dependencyHolds: catalog.audit.dependencyHolds,
     audioCandidatePages: catalog.audit.audioCandidatePages,
+    audioGroupedCandidateCount: catalog.audit.audioGroupedCandidateCount,
+    geoAlternateLessonCount: catalog.audit.geoAlternateLessonCount,
+    geoAlternateActivePageCount: catalog.audit.geoAlternateActivePageCount,
     acceptanceEffects: catalog.acceptanceEffects,
   };
 }

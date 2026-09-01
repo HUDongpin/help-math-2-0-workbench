@@ -103,6 +103,58 @@ test("profile supports sourceViewPath/modules and enumerates fixture pages", asy
   assert.equal(source.placements.every((entry) => entry.acceptanceEffects.currentJavaScriptRegistered === false), true);
 });
 
+test("explicit moduleDefinitions cannot erase legacy per-lesson page counts", async (t) => {
+  const value = await fixture();
+  t.after(() => cleanupFixture(value));
+  const profile = {
+    ...value.profile,
+    moduleDefinitions: [{
+      moduleCode: "NMS002",
+      moduleTitle: "Numbers Make Sense",
+      lessonNumbers: [1],
+      sourceRoot: "NMS002",
+      xmlPathPattern: "NMS002/L{lesson}/index.xml",
+      gradeScope: "G6-G8-shared",
+    }],
+  };
+  await writeFile(value.profilePath, `${JSON.stringify(profile)}\n`);
+  const loaded = await loadProfile(value.profilePath);
+  assert.equal(loaded.modules[0].expectedActivePageCount, 2);
+  assert.deepEqual(loaded.modules[0].expectedActivePagesByLesson, {"1": 2});
+  const source = await enumerateSource(loaded, [{moduleCode: "NMS002", lessonNumber: 1, ordinal: null, placementId: null, lane: "low"}]);
+  assert.equal(source.lessons[0].activePageCount, 2);
+});
+
+test("archive receipt declarations stay unverified by default and support bounded opt-in hashing", async (t) => {
+  const value = await fixture();
+  t.after(() => cleanupFixture(value));
+  const receipt = Buffer.from("small archive receipt\n");
+  const receiptPath = path.join(value.root, "receipt.lock");
+  await writeFile(receiptPath, receipt);
+  const profile = {
+    ...value.profile,
+    archiveReceipts: [{
+      id: "fixture-receipt",
+      tokenPath: "receipt.lock",
+      sha256: (await import("node:crypto")).createHash("sha256").update(receipt).digest("hex"),
+    }],
+  };
+  await writeFile(value.profilePath, `${JSON.stringify(profile)}\n`);
+  const declared = await loadProfile(value.profilePath);
+  assert.equal(declared.archiveReceipts[0].status, "declared-unverified");
+  assert.equal(declared.archiveReceipts[0].verification, "not-requested");
+  const verified = await loadProfile(value.profilePath, {
+    verifyArchiveReceipts: true,
+    maxArchiveReceiptBytes: 1024,
+  });
+  assert.equal(verified.archiveReceipts[0].status, "verified");
+  assert.equal(verified.archiveReceipts[0].verification, "explicit-bounded-hash");
+  await assert.rejects(
+    () => loadProfile(value.profilePath, {verifyArchiveReceipts: true, maxArchiveReceiptBytes: 4}),
+    (error) => error.code === "ARCHIVE_RECEIPT_TOO_LARGE",
+  );
+});
+
 test("calibrate build writes FactoryRunManifestV2 atomically and check is read-only", async (t) => {
   const value = await fixture();
   const output = await import("node:fs/promises").then(({mkdtemp}) => mkdtemp(path.join(WORK_ROOT, "g678-factory-test-")));
@@ -132,6 +184,15 @@ test("calibrate build writes FactoryRunManifestV2 atomically and check is read-o
   assert.equal(manifest.generator.extractionInvoked, false);
   assert.equal(manifest.placementIds.length, 2);
   assert.equal(manifest.acceptanceEffects.currentJavaScriptRegistered, false);
+  assert.match(manifest.inputManifestSha256, /^[a-f0-9]{64}$/u);
+  assert.match(manifest.parserSha256, /^[a-f0-9]{64}$/u);
+  assert.equal(manifest.profile.parserSha256, manifest.parserSha256);
+  assert.deepEqual(manifest.assetSha256, manifest.sourceAssetSha256);
+  assert.match(manifest.outputManifestSha256, /^[a-f0-9]{64}$/u);
+  assert.equal(manifest.irSchemaVersion, 1);
+  assert.equal(manifest.generatorSha256, manifest.generator.sha256);
+  assert.equal(manifest.failureCode, null);
+  assert.equal(manifest.reworkOfRunId, null);
   const checked = await runFactory({mode: "check", profile: value.profilePath, output: runOutputRelative, cache: cacheRelative});
   assert.equal(checked.status, "PASS");
   assert.equal(checked.runId, "fixture-run-001");
@@ -207,4 +268,9 @@ test("cache key changes when source identity changes but excludes CLI check mode
   assert.equal(calibrate, check);
   const changed = computeCacheKey({...base, selected: [{...selected[0], source: {sha256: "d".repeat(64)}}]}).cacheKey;
   assert.notEqual(calibrate, changed);
+  const witnessChanged = computeCacheKey({...base, profile: {
+    ...base.profile,
+    witnessIdentities: {"classification-manifest.jsonl": {sha256: "e".repeat(64)}},
+  }}).cacheKey;
+  assert.notEqual(calibrate, witnessChanged);
 });

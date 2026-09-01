@@ -20,6 +20,8 @@ import {constants as fsConstants} from "node:fs";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
 
+import {validateSharedProfile} from "./lib/g678-shared-catalog.mjs";
+
 const SCRIPT_PATH = fileURLToPath(import.meta.url);
 export const PROJECT_ROOT = path.resolve(path.dirname(SCRIPT_PATH), "..");
 export const FACTORY_NAME = "g678-shared-page-factory";
@@ -28,6 +30,9 @@ export const PROFILE_SCHEMA_VERSION = 1;
 export const DEFAULT_PROFILE = "catalog/g678-shared-source-profile.v1.json";
 export const DEFAULT_OUTPUT = `work/${FACTORY_NAME}`;
 export const DEFAULT_CACHE = `work/${FACTORY_NAME}-cache`;
+export const IR_SCHEMA_VERSION = 1;
+export const DEFAULT_MAX_ARCHIVE_RECEIPT_BYTES = 64 * 1024 * 1024;
+export const MAX_ARCHIVE_RECEIPT_BYTES = 512 * 1024 * 1024;
 
 const SHA256 = /^[a-f0-9]{64}$/;
 const MODULE_CODE = /^[A-Z][A-Z0-9]{2,15}$/;
@@ -158,6 +163,212 @@ async function optionalIdentity(filePath, label) {
     if (error?.code === "SOURCE_FILE_MISSING") return null;
     throw error;
   }
+}
+
+function expandEnvironmentPath(value) {
+  if (typeof value !== "string" || value.length === 0) return null;
+  return value.replace(/\$\{([A-Z][A-Z0-9_]*)\}|\$([A-Z][A-Z0-9_]*)/gu,
+    (match, braced, bare) => process.env[braced ?? bare] ?? match);
+}
+
+function archiveReceiptDeclarations(value) {
+  if (Array.isArray(value)) return value.map((entry, index) => [String(index), entry]);
+  if (value && typeof value === "object") return Object.entries(value);
+  return [];
+}
+
+function archiveReceiptPathCandidates(rawPath, {sourceViewPath, profilePath}) {
+  const expanded = expandEnvironmentPath(rawPath);
+  if (!expanded || typeof expanded !== "string") return [];
+  if (path.isAbsolute(expanded)) return [path.resolve(expanded)];
+  return [
+    path.resolve(sourceViewPath, expanded),
+    path.resolve(path.dirname(profilePath), expanded),
+  ];
+}
+
+async function regularFileMetadata(filePath, label) {
+  let info;
+  try {
+    info = await lstat(filePath);
+  } catch (error) {
+    if (error?.code === "ENOENT") return null;
+    throw error;
+  }
+  invariant(info.isFile() && !info.isSymbolicLink(), "ARCHIVE_RECEIPT_NOT_REGULAR",
+    `${label}: expected a regular non-symlink file`, {path: filePath});
+  return {
+    bytes: info.size,
+    mode: `0${(info.mode & 0o777).toString(8)}`,
+    writable: (info.mode & 0o222) !== 0,
+  };
+}
+
+/**
+ * Normalize archive receipt declarations without touching archive bytes by
+ * default. Explicit verification is bounded so a smoke run cannot
+ * accidentally read a multi-gigabyte recovery ZIP.
+ */
+export async function resolveArchiveReceipts(profile, profilePath, sourceViewPath, {
+  verify = false,
+  maxBytes = DEFAULT_MAX_ARCHIVE_RECEIPT_BYTES,
+  requireReadOnly = false,
+} = {}) {
+  invariant(Number.isSafeInteger(maxBytes) && maxBytes > 0 && maxBytes <= MAX_ARCHIVE_RECEIPT_BYTES,
+    "ARCHIVE_RECEIPT_LIMIT_INVALID",
+    `archive receipt verification byte limit must be between 1 and ${MAX_ARCHIVE_RECEIPT_BYTES} bytes`);
+  const declarations = archiveReceiptDeclarations(profile.archiveReceipts);
+  const receipts = [];
+  for (const [indexOrKey, value] of declarations) {
+    const declaration = value && typeof value === "object" ? value : {path: value};
+    const key = String(declaration.receiptId ?? declaration.id ?? indexOrKey);
+    const declaredPath = declaration.containerPath ?? declaration.path ?? declaration.receiptPath ??
+      declaration.file ?? declaration.archivePath ?? declaration.tokenPath ?? declaration.token ?? null;
+    const declaredSha256 = declaration.containerSha256 ?? declaration.sha256 ?? declaration.declaredSha256 ??
+      declaration.declaredHash ?? declaration.hash ?? declaration.digest ?? declaration.sha ?? null;
+    if (declaredSha256 !== null && declaredSha256 !== undefined && declaredSha256 !== "") {
+      validateSha(String(declaredSha256).toLowerCase(), `archiveReceipts.${key}.sha256`);
+    }
+    const memberManifestPathDeclared = declaration.memberManifestPath ?? null;
+    const memberManifestSha256 = declaration.memberManifestSha256 ?? null;
+    if (memberManifestSha256 !== null && memberManifestSha256 !== undefined && memberManifestSha256 !== "") {
+      validateSha(String(memberManifestSha256).toLowerCase(), `archiveReceipts.${key}.memberManifestSha256`);
+    }
+    const declaredBytes = declaration.containerBytes ?? declaration.bytes ?? null;
+    if (declaredBytes !== null && declaredBytes !== undefined) {
+      invariant(Number.isSafeInteger(Number(declaredBytes)) && Number(declaredBytes) > 0,
+        "ARCHIVE_RECEIPT_BYTES_INVALID", `${key}: declared bytes must be positive`);
+    }
+    const candidates = archiveReceiptPathCandidates(declaredPath, {sourceViewPath, profilePath});
+    const memberCandidates = archiveReceiptPathCandidates(memberManifestPathDeclared, {sourceViewPath, profilePath});
+    let resolvedPath = null;
+    let resolvedMemberPath = null;
+    for (const candidate of candidates) {
+      if (await regularFileMetadata(candidate, `archive receipt ${key}`)) {
+        resolvedPath = candidate;
+        break;
+      }
+    }
+    for (const candidate of memberCandidates) {
+      if (await regularFileMetadata(candidate, `archive member manifest ${key}`)) {
+        resolvedMemberPath = candidate;
+        break;
+      }
+    }
+    const primaryMetadata = resolvedPath
+      ? await regularFileMetadata(resolvedPath, `archive receipt ${key}`)
+      : null;
+    const memberMetadata = resolvedMemberPath
+      ? await regularFileMetadata(resolvedMemberPath, `archive member manifest ${key}`)
+      : null;
+    const binding = {
+      key,
+      receiptId: key,
+      declaredPath,
+      containerPath: declaredPath,
+      memberManifestPath: memberManifestPathDeclared,
+      resolvedPath,
+      resolvedMemberPath,
+      resolvedPathRelativeToSourceView: resolvedPath ? portable(path.relative(sourceViewPath, resolvedPath)) : null,
+      declaredSha256: declaredSha256 ? String(declaredSha256).toLowerCase() : null,
+      containerSha256: declaredSha256 ? String(declaredSha256).toLowerCase() : null,
+      memberManifestSha256: memberManifestSha256 ? String(memberManifestSha256).toLowerCase() : null,
+      containerBytes: declaredBytes === null || declaredBytes === undefined ? null : Number(declaredBytes),
+      disposition: declaration.disposition ?? "CUSTODY_ONLY_NO_PROMOTION",
+      rehashRequiredAtRunStart: declaration.rehashRequiredAtRunStart === true,
+      declaredStatus: declaration.status ?? null,
+      status: "declared-unverified",
+      reason: null,
+      candidates: [...candidates, ...memberCandidates].map((candidate) => portable(path.relative(sourceViewPath, candidate))),
+      identity: null,
+      memberManifestIdentity: null,
+      verification: verify ? "explicit-bounded-hash" : "not-requested",
+    };
+    const requiresMember = Boolean(memberManifestPathDeclared || memberManifestSha256);
+    if (!resolvedPath || (requiresMember && !resolvedMemberPath)) {
+      binding.reason = declaredPath ? "token-path-unresolved" : "token-path-not-declared";
+      if (verify) throw new FactoryError("ARCHIVE_RECEIPT_UNRESOLVED", `archive receipt ${key} cannot be resolved`, {
+        key, declaredPath, memberManifestPath: memberManifestPathDeclared, candidates, memberCandidates,
+      });
+    } else if (verify) {
+      const files = [{path: resolvedPath, metadata: primaryMetadata, expectedSha256: declaredSha256, expectedBytes: declaredBytes, label: "container"}];
+      if (requiresMember) files.push({path: resolvedMemberPath, metadata: memberMetadata, expectedSha256: memberManifestSha256, expectedBytes: null, label: "member manifest"});
+      for (const file of files) {
+        invariant(file.metadata && file.metadata.bytes <= maxBytes, "ARCHIVE_RECEIPT_TOO_LARGE",
+          `${key}: ${file.label} exceeds verification limit`, {path: file.path, bytes: file.metadata?.bytes, maxBytes});
+        invariant(file.expectedSha256, "ARCHIVE_RECEIPT_HASH_MISSING",
+          `${key}: ${file.label} has no declared SHA-256`, {path: file.path});
+        const identity = await regularFileIdentity(file.path, {label: `archive receipt ${key} ${file.label}`});
+        invariant(identity.sha256 === String(file.expectedSha256).toLowerCase(), "ARCHIVE_RECEIPT_HASH_DRIFT",
+          `${key}: ${file.label} SHA-256 drifted`, {path: file.path, expected: file.expectedSha256, actual: identity.sha256});
+        if (file.expectedBytes !== null && file.expectedBytes !== undefined) {
+          invariant(identity.bytes === Number(file.expectedBytes), "ARCHIVE_RECEIPT_BYTES_DRIFT",
+            `${key}: ${file.label} byte count drifted`, {path: file.path, expected: file.expectedBytes, actual: identity.bytes});
+        }
+        if (file.label === "container") binding.identity = identity;
+        else binding.memberManifestIdentity = identity;
+      }
+      if (requireReadOnly) invariant(binding.identity?.writable === false &&
+        (!requiresMember || binding.memberManifestIdentity?.writable === false),
+      "ARCHIVE_RECEIPT_WRITABLE", `${key}: verified archive evidence must be read-only`);
+      binding.status = "verified";
+      binding.reason = null;
+    } else {
+      binding.reason = declaredSha256 ? "declared-hash-not-verified" : "no-declared-hash";
+    }
+    receipts.push(Object.freeze(binding));
+  }
+  return Object.freeze(receipts);
+}
+
+// Backward-compatible internal name retained for callers of the first runner
+// draft; both APIs now share the bounded, declaration-preserving contract.
+async function resolveArchiveReceiptBindings(profile, profilePath, options = {}) {
+  return resolveArchiveReceipts(profile, profilePath, options.sourceViewPath ?? path.dirname(profilePath), {
+    verify: options.verifyArchiveReceipts === true,
+    maxBytes: options.maxArchiveReceiptBytes ?? DEFAULT_MAX_ARCHIVE_RECEIPT_BYTES,
+    requireReadOnly: options.requireReadOnly === true,
+  });
+}
+
+function archiveReceiptSummary(profile) {
+  return (profile.archiveReceipts ?? []).map((binding) => ({
+    key: binding.key ?? binding.receiptId,
+    receiptId: binding.receiptId ?? binding.key,
+    declaredPath: binding.declaredPath ?? binding.containerPath ?? null,
+    containerPath: binding.containerPath ?? binding.declaredPath ?? null,
+    memberManifestPath: binding.memberManifestPath ?? null,
+    resolvedPath: binding.resolvedPath ? `$EXTERNAL/${path.basename(binding.resolvedPath)}` : null,
+    resolvedMemberPath: binding.resolvedMemberPath ? `$EXTERNAL/${path.basename(binding.resolvedMemberPath)}` : null,
+    declaredSha256: binding.declaredSha256 ?? binding.containerSha256 ?? null,
+    containerSha256: binding.containerSha256 ?? binding.declaredSha256 ?? null,
+    memberManifestSha256: binding.memberManifestSha256 ?? null,
+    containerBytes: binding.containerBytes ?? null,
+    disposition: binding.disposition ?? null,
+    rehashRequiredAtRunStart: binding.rehashRequiredAtRunStart === true,
+    declaredStatus: binding.declaredStatus ?? null,
+    status: binding.status ?? "declared-unverified",
+    reason: binding.reason ?? null,
+    candidates: binding.candidates ?? [],
+    identity: binding.identity ? {bytes: binding.identity.bytes, sha256: binding.identity.sha256} : null,
+    memberManifestIdentity: binding.memberManifestIdentity
+      ? {bytes: binding.memberManifestIdentity.bytes, sha256: binding.memberManifestIdentity.sha256}
+      : null,
+    verification: binding.verification ?? "not-requested",
+  }));
+}
+
+function archiveReceiptGate(profile) {
+  const bindings = profile.archiveReceipts ?? [];
+  if (bindings.length === 0) return "not-declared";
+  return bindings.every((binding) => binding.status === "verified") ? "hash-verified" : "blocked-unverified";
+}
+
+function archiveReceiptVerification(options, profile) {
+  return {
+    status: options.verifyArchiveReceipts ? "explicit-bounded-hash" : "not-requested",
+    maxBytes: options.maxArchiveReceiptBytes ?? profile.maxArchiveReceiptBytes ?? DEFAULT_MAX_ARCHIVE_RECEIPT_BYTES,
+  };
 }
 
 function decodeXmlEntities(value) {
@@ -294,7 +505,13 @@ function validateSha(value, label, {optional = false} = {}) {
   return value;
 }
 
-export async function loadProfile(profilePathValue, {projectRoot = PROJECT_ROOT, sourceRootOverride = null} = {}) {
+export async function loadProfile(profilePathValue, {
+  projectRoot = PROJECT_ROOT,
+  sourceRootOverride = null,
+  verifyArchiveReceipts = false,
+  requireReadOnly = false,
+  maxArchiveReceiptBytes = null,
+} = {}) {
   const profilePath = resolvePath(profilePathValue || DEFAULT_PROFILE, "profile", {allowAbsolute: true, root: projectRoot});
   let raw;
   try {
@@ -314,11 +531,19 @@ export async function loadProfile(profilePathValue, {projectRoot = PROJECT_ROOT,
     `profile schemaVersion must be ${PROFILE_SCHEMA_VERSION}`);
   invariant(typeof profile.profileId === "string" && profile.profileId.length > 0, "PROFILE_ID_MISSING", "profileId is required");
   invariant(typeof profile.version === "string" && profile.version.length > 0, "PROFILE_VERSION_MISSING", "profile version is required");
+  if (profile.profileId === "g678-shared-source-profile-v1") {
+    const profileErrors = validateSharedProfile(profile);
+    invariant(profileErrors.length === 0, "PROFILE_CONTRACT_INVALID", profileErrors.join("; "));
+  }
   const sourceView = profile.sourceView && typeof profile.sourceView === "object" ? profile.sourceView : {};
   const relativeRoot = sourceView.relativeRoot ?? profile.canonicalRootRule?.relativePath ?? profile.canonicalRootRule ?? "G6-G8-shared";
   const normalizedRelativeRoot = portable(path.normalize(String(relativeRoot).replace(/^\/+/, "")));
   const rootEnvName = sourceView.rootEnv ?? "HELP_MATH_G678_SOURCE_ROOT";
-  const configuredRoot = profile.sourceViewPath ?? profile.sourceRoot ?? sourceView.path ?? null;
+  const declaredSourceViewPath = profile.sourceViewPath ?? null;
+  const sourceViewToken = typeof declaredSourceViewPath === "string" && /^\$[A-Z][A-Z0-9_]*$/u.test(declaredSourceViewPath);
+  const configuredRoot = sourceViewToken
+    ? null
+    : declaredSourceViewPath ?? profile.sourceRoot ?? sourceView.path ?? null;
   let sourceViewPath;
   if (sourceRootOverride) sourceViewPath = path.resolve(sourceRootOverride);
   else if (configuredRoot && path.isAbsolute(configuredRoot)) sourceViewPath = path.resolve(configuredRoot);
@@ -336,6 +561,7 @@ export async function loadProfile(profilePathValue, {projectRoot = PROJECT_ROOT,
       configuredNormalized === path.basename(normalizedRelativeRoot);
     sourceViewPath = fromEnv && looksLikeCanonicalRoot ? fromEnv : fromProfile;
   }
+  else if (sourceViewToken && process.env[rootEnvName]) sourceViewPath = path.resolve(process.env[rootEnvName]);
   else if (process.env[rootEnvName]) sourceViewPath = path.resolve(process.env[rootEnvName]);
   else throw new FactoryError("SOURCE_VIEW_ENV_MISSING", `source root is not configured; set ${rootEnvName} or pass --source-root`, {rootEnvName});
   if (path.basename(sourceViewPath) === path.basename(normalizedRelativeRoot)) {
@@ -364,9 +590,23 @@ export async function loadProfile(profilePathValue, {projectRoot = PROJECT_ROOT,
   invariant(canonicalRootInfo.isDirectory() && !canonicalRootInfo.isSymbolicLink(), "SOURCE_CANONICAL_ROOT_NOT_DIRECTORY",
     `canonical source root must be a non-symlink directory: ${canonicalRootPath}`);
   const declaredModulesValue = profile.moduleDefinitions ?? profile.modules;
-  const declaredModules = Array.isArray(declaredModulesValue)
+  const declaredModulesRaw = Array.isArray(declaredModulesValue)
     ? declaredModulesValue
     : Object.entries(declaredModulesValue ?? {}).map(([moduleCode, value]) => ({moduleCode, ...(value ?? {})}));
+  // The v1 profile carries both the explicit moduleDefinitions contract and
+  // the legacy `modules` projection.  Inherit omitted page-count/path fields
+  // from the latter so adding the compatibility contract can never silently
+  // turn expected counts into zero.
+  const legacyModuleByCode = new Map(
+    (Array.isArray(profile.modules) ? profile.modules : []).map((module) => [
+      String(module?.moduleCode ?? '').toUpperCase(),
+      module,
+    ]),
+  );
+  const declaredModules = declaredModulesRaw.map((module) => ({
+    ...(legacyModuleByCode.get(String(module?.moduleCode ?? '').toUpperCase()) ?? {}),
+    ...(module ?? {}),
+  }));
   invariant(Array.isArray(declaredModules) && declaredModules.length > 0,
     "PROFILE_MODULES_MISSING", "moduleDefinitions must be a non-empty array");
   const seenModules = new Set();
@@ -391,7 +631,7 @@ export async function loadProfile(profilePathValue, {projectRoot = PROJECT_ROOT,
     invariant(lessonNumbers.length > 0 && lessonNumbers.every((number) => Number.isSafeInteger(number) && number > 0),
       "PROFILE_LESSONS_INVALID", `${moduleCode}: lessonNumbers must be positive integers`);
     const expectedActivePageCount = module.expectedActivePageCount ?? module.activePageCount ??
-      (Number.isFinite(Number(countMap)) ? Number(countMap) : null) ??
+      (countMap !== null && Number.isFinite(Number(countMap)) ? Number(countMap) : null) ??
       (countMap && typeof countMap === "object" && Object.keys(countMap).length > 0 ? Object.values(countMap).reduce((sum, value) => {
         const numeric = typeof value === "number" ? value : value?.expectedActivePageCount ?? value?.activePageCount;
         return sum + (Number.isFinite(Number(numeric)) ? Number(numeric) : 0);
@@ -419,7 +659,10 @@ export async function loadProfile(profilePathValue, {projectRoot = PROJECT_ROOT,
     validateSha(expectedSha256, `witnesses.${relativePath}`);
     const witnessPath = resolvePath(relativePath, `witness ${relativePath}`, {root: sourceViewPath});
     ensureWithin(witnessPath, sourceViewPath, "WITNESS_ESCAPES_SOURCE_VIEW", `witness ${relativePath}`);
-    const identity = await regularFileIdentity(witnessPath, {label: `witness ${relativePath}`});
+    const identity = await regularFileIdentity(witnessPath, {
+      label: `witness ${relativePath}`,
+      requireReadOnly,
+    });
     invariant(identity.sha256 === expectedSha256, "WITNESS_HASH_DRIFT", `witness hash drifted: ${relativePath}`, {
       path: witnessPath,
       expected: expectedSha256,
@@ -429,6 +672,8 @@ export async function loadProfile(profilePathValue, {projectRoot = PROJECT_ROOT,
   }
   const toolchain = normalizeToolchain(profile.toolchain ?? profile.toolchainVersions);
   const license = await resolveLicenseManifest(profile, profilePath);
+  const parserModulePath = path.resolve(projectRoot, "scripts/lib/g678-shared-catalog.mjs");
+  const parserSha256 = await sha256File(parserModulePath);
   const sourceManifestSha256 = validateSha(
     profile.sourceManifestSha256 ?? profile.witnesses?.["classification-manifest.jsonl"],
     "sourceManifestSha256",
@@ -439,6 +684,12 @@ export async function loadProfile(profilePathValue, {projectRoot = PROJECT_ROOT,
     "mappingManifestSha256",
     {optional: true},
   );
+  const archiveReceiptBindings = await resolveArchiveReceiptBindings(profile, profilePath, {
+    sourceViewPath,
+    verifyArchiveReceipts,
+    requireReadOnly,
+    maxArchiveReceiptBytes,
+  });
   return Object.freeze({
     ...profile,
     schemaVersion: PROFILE_SCHEMA_VERSION,
@@ -451,8 +702,13 @@ export async function loadProfile(profilePathValue, {projectRoot = PROJECT_ROOT,
     witnessIdentities: Object.freeze(witnessIdentities),
     toolchain,
     license,
+    parserModulePath: relativeProject(parserModulePath),
+    parserSha256,
     sourceManifestSha256,
     mappingManifestSha256,
+    archiveReceipts: archiveReceiptBindings,
+    // Alias retained for internal callers from the first runner draft.
+    archiveReceiptBindings,
   });
 }
 
@@ -839,7 +1095,11 @@ export async function enumerateSource(profile, tasks, {requireReadOnly = false} 
         source,
         assetId: source.sha256 ? `swf-${source.sha256}` : null,
         animationId: placementId,
-        sourceRootKind: profile.sourceView?.canonicalArchive ? "canonical-newhelp" : "canonical",
+        // Keep the source-root enum consistent with the catalog/release
+        // contracts.  The selected archive is already bound separately by
+        // `canonicalArchive: NewHelpProgram`; callers should not need to
+        // special-case a second "canonical-newhelp" value.
+        sourceRootKind: "canonical",
         swfOnly: true,
         fla: null,
         lane: lane.lane,
@@ -907,8 +1167,15 @@ export function computeCacheKey({profile, selected, source, options, scriptSha25
     profileId: profile.profileId,
     profileVersion: profile.version,
     profileSha256: profile.profileSha256,
+    parserSha256: profile.parserSha256 ?? null,
     sourceManifestSha256: profile.sourceManifestSha256,
     mappingManifestSha256: profile.mappingManifestSha256,
+    archiveReceipts: archiveReceiptSummary(profile),
+    witnessIdentities: Object.fromEntries(
+      Object.entries(profile.witnessIdentities ?? {})
+        .map(([name, identity]) => [name, identity?.sha256 ?? null])
+        .sort(([left], [right]) => left.localeCompare(right, "en")),
+    ),
     selected: selected.map((entry) => ({
       placementId: entry.placementId,
       sourcePath: entry.source.path,
@@ -923,15 +1190,21 @@ export function computeCacheKey({profile, selected, source, options, scriptSha25
     license: profile.license,
     generator: {
       scriptSha256,
-      irSchemaVersion: 1,
+      irSchemaVersion: IR_SCHEMA_VERSION,
       adapterVersion: profile.adapterVersion ?? null,
       generatorVersion: profile.generatorVersion ?? null,
+      adapterSha256: profile.adapterSha256 ?? null,
     },
+    backendVersions: profile.backendVersions ?? profile.toolchainVersions ?? profile.toolchain,
     launcherArgs: profile.launcherArgs ?? [],
     // Scope is already represented by the ordered placement identities above.
     // Do not include the CLI mode/selector in the key: `check` must recompute
     // the same key as the producing `calibrate` or `extend` run.
-    configuration: {factoryScope: "placement-set"},
+    configuration: {
+      factoryScope: "placement-set",
+      archiveReceiptVerification: options.verifyArchiveReceipts ? "explicit-bounded-hash" : "not-requested",
+      maxArchiveReceiptBytes: options.maxArchiveReceiptBytes ?? DEFAULT_MAX_ARCHIVE_RECEIPT_BYTES,
+    },
     environment: {
       node: process.version,
       platform: process.platform,
@@ -939,6 +1212,56 @@ export function computeCacheKey({profile, selected, source, options, scriptSha25
     },
   };
   return {cacheKey: sha256Bytes(stableJson(payload)).slice(0, 64), payload};
+}
+
+export function computeInputManifestSha256({profile, source, selected, scriptSha256, options = {}}) {
+  return sha256Bytes(stableJson({
+    schemaVersion: 1,
+    profileId: profile.profileId,
+    profileSha256: profile.profileSha256,
+    sourceManifestSha256: profile.sourceManifestSha256,
+    mappingManifestSha256: profile.mappingManifestSha256,
+    archiveReceipts: archiveReceiptSummary(profile),
+    archiveReceiptVerification: {
+      status: options.verifyArchiveReceipts ? "explicit-bounded-hash" : "not-requested",
+      maxBytes: options.maxArchiveReceiptBytes ?? DEFAULT_MAX_ARCHIVE_RECEIPT_BYTES,
+    },
+    witnessIdentities: Object.fromEntries(
+      Object.entries(profile.witnessIdentities ?? {})
+        .map(([name, identity]) => [name, identity?.sha256 ?? null])
+        .sort(([left], [right]) => left.localeCompare(right, "en")),
+    ),
+    scriptSha256,
+    parserSha256: profile.parserSha256 ?? null,
+    irSchemaVersion: IR_SCHEMA_VERSION,
+    adapterSha256: profile.adapterSha256 ?? null,
+    placements: selected.map((entry) => ({
+      placementId: entry.placementId,
+      sourcePath: entry.source.path,
+      sourceSha256: entry.source.sha256,
+      sourceXmlPath: entry.sourceXml.path,
+      sourceXmlSha256: entry.sourceXml.sha256,
+      lane: entry.lane,
+    })),
+    lessonCount: source.lessons.length,
+  })).slice(0, 64);
+}
+
+function computeOutputManifestSha256(source) {
+  const sourceHashes = [...new Set(source.placements.map((entry) => entry.source.sha256).filter(Boolean))].sort();
+  const sourceXmlHashes = [...new Set(source.placements.map((entry) => entry.sourceXml.sha256).filter(Boolean))].sort();
+  return sha256Bytes(stableJson({
+    placementIds: source.placements.map((entry) => entry.placementId),
+    sourceAssetSha256: sourceHashes,
+    sourceXmlSha256: sourceXmlHashes,
+    sourcePlacements: source.placements.map((entry) => ({
+      placementId: entry.placementId,
+      sourcePath: entry.source.path,
+      sourceSha256: entry.source.sha256,
+      sourceXmlPath: entry.sourceXml.path,
+      sourceXmlSha256: entry.sourceXml.sha256,
+    })),
+  }));
 }
 
 async function directoryInventory(root, {exclude = []} = {}) {
@@ -999,6 +1322,10 @@ async function writeRunArtifacts(staging, {profile, source, cacheKey, runManifes
     canonicalRoot: profile.canonicalRoot,
     sourceManifestSha256: profile.sourceManifestSha256,
     mappingManifestSha256: profile.mappingManifestSha256,
+    parserSha256: profile.parserSha256 ?? null,
+    archiveReceiptGate: archiveReceiptGate(profile),
+    archiveReceipts: archiveReceiptSummary(profile),
+    archiveReceiptVerification: archiveReceiptVerification(options, profile),
   }));
   for (const lesson of source.lessons) {
     await writeExclusive(path.join(staging, "structural", "lessons", `${lesson.stableLessonKey}.json`), stableJson(lesson));
@@ -1049,6 +1376,9 @@ function buildSummary({profile, source, cacheKey, options, runManifest}) {
     missingSourcePlacementCount: missing,
     swfOnlyPlacementCount: placements.filter((entry) => entry.swfOnly).length,
     cacheKey,
+    archiveReceiptGate: archiveReceiptGate(profile),
+    archiveReceipts: archiveReceiptSummary(profile),
+    archiveReceiptVerification: archiveReceiptVerification(options, profile),
     acceptanceEffects: {...ACCEPTANCE_EFFECTS_FALSE},
     license: profile.license,
     toolchain: runManifest.toolchain,
@@ -1057,10 +1387,30 @@ function buildSummary({profile, source, cacheKey, options, runManifest}) {
   };
 }
 
-function buildRunManifest({profile, source, options, cacheKey, scriptSha256, runId}) {
+function buildRunManifest({
+  profile,
+  source,
+  options,
+  cacheKey,
+  scriptSha256,
+  runId,
+  stagingPath,
+  elapsedMachineMs,
+}) {
   const sourceHashes = [...new Set(source.placements.map((entry) => entry.source.sha256).filter(Boolean))].sort();
   const sourceXmlHashes = [...new Set(source.placements.map((entry) => entry.sourceXml.sha256).filter(Boolean))].sort();
   const generatorSha256 = scriptSha256;
+  const laneValues = [...new Set(source.placements.map((entry) => entry.lane))];
+  const outputManifestSha256 = computeOutputManifestSha256(source);
+  const warnings = [...new Set(source.placements.flatMap((entry) =>
+    (entry.warnings ?? []).map((warning) => warning.code ?? String(warning))))];
+  const inputManifestSha256 = computeInputManifestSha256({
+    profile,
+    source,
+    selected: source.placements,
+    scriptSha256,
+    options,
+  });
   return {
     schemaVersion: FACTORY_SCHEMA_VERSION,
     manifestKind: "FactoryRunManifestV2",
@@ -1068,6 +1418,23 @@ function buildRunManifest({profile, source, options, cacheKey, scriptSha256, run
     runId,
     createdAt: new Date().toISOString(),
     mode: options.mode,
+    archiveReceiptGate: archiveReceiptGate(profile),
+    archiveReceipts: archiveReceiptSummary(profile),
+    archiveReceiptVerification: archiveReceiptVerification(options, profile),
+    lane: laneValues.length === 1 ? laneValues[0] : "mixed",
+    inputManifestSha256,
+    parserSha256: profile.parserSha256 ?? null,
+    assetSha256: sourceHashes,
+    backendVersions: profile.backendVersions ?? profile.toolchainVersions ?? profile.toolchain,
+    irSchemaVersion: IR_SCHEMA_VERSION,
+    generatorSha256,
+    adapterSha256: profile.adapterSha256 ?? null,
+    stagingPath: portable(path.relative(PROJECT_ROOT, stagingPath)),
+    outputManifestSha256,
+    warnings,
+    failureCode: null,
+    elapsedMachineMs: Number.isFinite(elapsedMachineMs) ? Math.max(0, Math.round(elapsedMachineMs)) : 0,
+    reworkOfRunId: options.reworkOfRunId ?? null,
     profile: {
       path: profile.profilePathPortable,
       profileId: profile.profileId,
@@ -1077,6 +1444,7 @@ function buildRunManifest({profile, source, options, cacheKey, scriptSha256, run
       canonicalRoot: profile.canonicalRoot,
       sourceManifestSha256: profile.sourceManifestSha256,
       mappingManifestSha256: profile.mappingManifestSha256,
+      parserSha256: profile.parserSha256 ?? null,
     },
     placementIds: source.placements.map((entry) => entry.placementId),
     sourceAssetSha256: sourceHashes,
@@ -1099,7 +1467,7 @@ function buildRunManifest({profile, source, options, cacheKey, scriptSha256, run
     generator: {
       script: relativeProject(SCRIPT_PATH),
       sha256: generatorSha256,
-      irSchemaVersion: 1,
+      irSchemaVersion: IR_SCHEMA_VERSION,
       adapterVersion: profile.adapterVersion ?? null,
       generatorVersion: profile.generatorVersion ?? null,
       extractionInvoked: false,
@@ -1183,8 +1551,14 @@ async function tasksFromExistingRun(options) {
 }
 
 export async function runFactory(optionsInput) {
+  const runStartedAt = process.hrtime.bigint();
   const options = normalizeOptions(optionsInput);
-  const profile = await loadProfile(options.profile, {sourceRootOverride: options.sourceRoot});
+  const profile = await loadProfile(options.profile, {
+    sourceRootOverride: options.sourceRoot,
+    verifyArchiveReceipts: options.verifyArchiveReceipts,
+    requireReadOnly: options.requireReadOnly,
+    maxArchiveReceiptBytes: options.maxArchiveReceiptBytes,
+  });
   const scriptSha256 = await sha256File(SCRIPT_PATH);
   const tasks = options.mode === "check" && !options.moduleCode && !options.batch && !options.all
     ? await tasksFromExistingRun(options)
@@ -1211,6 +1585,9 @@ export async function runFactory(optionsInput) {
       laneCounts: Object.fromEntries(["low", "interactive-understood", "behavior-heavy", "unknown"].map((lane) => [lane, selected.filter((entry) => entry.lane === lane).length])),
       unsupportedPlacementCount: selected.filter((entry) => entry.unsupportedReasons.length > 0).length,
       missingSourcePlacementCount: selected.filter((entry) => !entry.source.sha256).length,
+      archiveReceiptGate: archiveReceiptGate(profile),
+      archiveReceipts: archiveReceiptSummary(profile),
+      archiveReceiptVerification: archiveReceiptVerification(options, profile),
       acceptanceEffects: {...ACCEPTANCE_EFFECTS_FALSE},
       status: "dry-run-structural-only",
     };
@@ -1222,7 +1599,16 @@ export async function runFactory(optionsInput) {
   const staging = `${output}.staging-${process.pid}-${randomUUID()}`;
   await mkdir(path.dirname(output), {recursive: true});
   await mkdir(staging, {recursive: false});
-  const runManifest = buildRunManifest({profile, source, options, cacheKey, scriptSha256, runId});
+  const runManifest = buildRunManifest({
+    profile,
+    source,
+    options,
+    cacheKey,
+    scriptSha256,
+    runId,
+    stagingPath: staging,
+    elapsedMachineMs: Number(process.hrtime.bigint() - runStartedAt) / 1e6,
+  });
   runManifest.staging.staging = portable(path.relative(PROJECT_ROOT, staging));
   try {
     const cache = await materializeCacheRecord(resolveCache(options.cache), cacheKey, {
@@ -1293,6 +1679,18 @@ async function checkRun(options, profile, source, cacheKey, scriptSha256) {
     "RUN_MANIFEST_SCHEMA_DRIFT", "run manifest schema/kind drifted");
   invariant(manifest.profile?.profileId === profile.profileId && manifest.profile?.sha256 === profile.profileSha256,
     "RUN_PROFILE_DRIFT", "run manifest profile identity drifted", {expected: profile.profileSha256, actual: manifest.profile?.sha256});
+  invariant(manifest.parserSha256 === profile.parserSha256 &&
+    manifest.profile?.parserSha256 === profile.parserSha256,
+  "RUN_PARSER_DRIFT", "run parser identity drifted", {
+    expected: profile.parserSha256,
+    actual: manifest.parserSha256 ?? manifest.profile?.parserSha256,
+  });
+  invariant(manifest.archiveReceiptGate === archiveReceiptGate(profile),
+    "RUN_ARCHIVE_RECEIPT_GATE_DRIFT", "run archive receipt gate drifted");
+  invariant(stableJson(manifest.archiveReceipts ?? []) === stableJson(archiveReceiptSummary(profile)),
+    "RUN_ARCHIVE_RECEIPT_BINDING_DRIFT", "run archive receipt bindings drifted");
+  invariant(stableJson(manifest.archiveReceiptVerification) === stableJson(archiveReceiptVerification(options, profile)),
+    "RUN_ARCHIVE_RECEIPT_VERIFICATION_DRIFT", "run archive receipt verification policy drifted");
   invariant(JSON.stringify(manifest.placementIds) === JSON.stringify(source.placements.map((entry) => entry.placementId)),
     "RUN_PLACEMENT_SET_DRIFT", "run manifest placement set/order drifted");
   invariant(JSON.stringify(manifest.sourceAssetSha256) === JSON.stringify([...new Set(source.placements.map((entry) => entry.source.sha256).filter(Boolean))].sort()),
@@ -1306,7 +1704,55 @@ async function checkRun(options, profile, source, cacheKey, scriptSha256) {
   }));
   invariant(stableJson(manifest.sourcePlacements) === stableJson(expectedSourcePlacements),
     "RUN_SOURCE_PLACEMENT_DRIFT", "run manifest source placement identities drifted");
-  invariant(manifest.generator?.sha256 === scriptSha256, "RUN_GENERATOR_DRIFT", "run was generated by a different runner source hash", {expected: scriptSha256, actual: manifest.generator?.sha256});
+  const expectedInputManifestSha256 = computeInputManifestSha256({
+    profile,
+    source,
+    selected: source.placements,
+    scriptSha256,
+    options,
+  });
+  invariant(manifest.inputManifestSha256 === expectedInputManifestSha256,
+    "RUN_INPUT_MANIFEST_DRIFT", "run input manifest identity drifted", {
+      expected: expectedInputManifestSha256,
+      actual: manifest.inputManifestSha256,
+    });
+  invariant(JSON.stringify(manifest.assetSha256) === JSON.stringify(manifest.sourceAssetSha256),
+    "RUN_ASSET_HASH_DRIFT", "run asset hash alias drifted");
+  invariant(manifest.irSchemaVersion === IR_SCHEMA_VERSION &&
+    manifest.generator?.irSchemaVersion === IR_SCHEMA_VERSION,
+  "RUN_IR_SCHEMA_DRIFT", "run IR schema version drifted");
+  invariant(manifest.generatorSha256 === scriptSha256 &&
+    manifest.generator?.sha256 === scriptSha256,
+  "RUN_GENERATOR_DRIFT", "run generator hash drifted", {
+    expected: scriptSha256,
+    actual: manifest.generatorSha256 ?? manifest.generator?.sha256,
+  });
+  invariant(manifest.adapterSha256 === (profile.adapterSha256 ?? null),
+    "RUN_ADAPTER_DRIFT", "run adapter hash drifted");
+  invariant(stableJson(manifest.backendVersions) === stableJson(
+    profile.backendVersions ?? profile.toolchainVersions ?? profile.toolchain,
+  ), "RUN_BACKEND_VERSION_DRIFT", "run backend version bindings drifted");
+  const expectedLaneValues = [...new Set(source.placements.map((entry) => entry.lane))];
+  const expectedLane = expectedLaneValues.length === 1 ? expectedLaneValues[0] : "mixed";
+  invariant(manifest.lane === expectedLane, "RUN_LANE_DRIFT", "run lane binding drifted", {
+    expected: expectedLane,
+    actual: manifest.lane,
+  });
+  const expectedWarnings = [...new Set(source.placements.flatMap((entry) =>
+    (entry.warnings ?? []).map((warning) => warning?.code ?? String(warning))))];
+  invariant(stableJson(manifest.warnings) === stableJson(expectedWarnings),
+    "RUN_WARNING_DRIFT", "run warning bindings drifted");
+  invariant(manifest.failureCode === null, "RUN_FAILURE_CODE_PRESENT", "successful run cannot carry a failure code");
+  invariant(Number.isFinite(Number(manifest.elapsedMachineMs)) && Number(manifest.elapsedMachineMs) >= 0,
+    "RUN_ELAPSED_INVALID", "run elapsedMachineMs must be a non-negative finite number");
+  invariant(typeof manifest.reworkOfRunId === "string" || manifest.reworkOfRunId === null,
+    "RUN_REWORK_BINDING_INVALID", "run reworkOfRunId must be a string or null");
+  invariant(typeof manifest.stagingPath === "string" && manifest.stagingPath.length > 0 &&
+    !path.isAbsolute(manifest.stagingPath) &&
+    manifest.stagingPath === manifest.staging?.staging,
+  "RUN_STAGING_BINDING_INVALID", "run staging path binding drifted");
+  invariant(manifest.outputManifestSha256 === computeOutputManifestSha256(source),
+    "RUN_OUTPUT_MANIFEST_DRIFT", "run output manifest identity drifted");
   invariant(manifest.cache?.cacheKey === cacheKey, "RUN_CACHE_KEY_DRIFT", "run cache key drifted", {expected: cacheKey, actual: manifest.cache?.cacheKey});
   invariant(stableJson(manifest.acceptanceEffects) === stableJson(ACCEPTANCE_EFFECTS_FALSE),
     "RUN_ACCEPTANCE_EFFECT_DRIFT", "run manifest contains an unexpected acceptance effect");
@@ -1341,10 +1787,23 @@ function normalizeOptions(options = {}) {
     batch: options.batch ?? null,
     all: Boolean(options.all),
     runId: options.runId ?? null,
+    reworkOfRunId: options.reworkOfRunId ?? null,
+    verifyArchiveReceipts: Boolean(options.verifyArchiveReceipts),
+    maxArchiveReceiptBytes: options.maxArchiveReceiptBytes === undefined || options.maxArchiveReceiptBytes === null
+      ? null
+      : Number(options.maxArchiveReceiptBytes),
     dryRun: Boolean(options.dryRun),
     requireReadOnly: Boolean(options.requireReadOnly),
   };
   if (normalized.lesson !== null) invariant(Number.isSafeInteger(normalized.lesson) && normalized.lesson > 0, "LESSON_INVALID", "--lesson must be a positive integer");
+  if (normalized.reworkOfRunId !== null) invariant(typeof normalized.reworkOfRunId === "string" && normalized.reworkOfRunId.trim().length > 0, "REWORK_RUN_ID_INVALID", "--rework-of-run-id must be a non-empty string");
+  if (normalized.maxArchiveReceiptBytes !== null) invariant(
+    Number.isSafeInteger(normalized.maxArchiveReceiptBytes) &&
+      normalized.maxArchiveReceiptBytes > 0 &&
+      normalized.maxArchiveReceiptBytes <= MAX_ARCHIVE_RECEIPT_BYTES,
+    "ARCHIVE_RECEIPT_LIMIT_INVALID",
+    `--max-archive-receipt-bytes must be between 1 and ${MAX_ARCHIVE_RECEIPT_BYTES}`,
+  );
   if (mode === "check") invariant(!normalized.all, "CHECK_ALL_INVALID", "--all is not valid in check mode");
   return Object.freeze(normalized);
 }
@@ -1367,6 +1826,9 @@ export function parseArguments(argv) {
     else if (argument === "--lesson") take("lesson");
     else if (argument === "--batch") take("batch");
     else if (argument === "--run-id") take("runId");
+    else if (argument === "--rework-of-run-id") take("reworkOfRunId");
+    else if (argument === "--verify-archive-receipts") options.verifyArchiveReceipts = true;
+    else if (argument === "--max-archive-receipt-bytes") take("maxArchiveReceiptBytes");
     else if (argument === "--all") options.all = true;
     else if (argument === "--dry-run" || argument === "--check-only") options.dryRun = true;
     else if (argument === "--require-read-only") options.requireReadOnly = true;
@@ -1377,7 +1839,7 @@ export function parseArguments(argv) {
 }
 
 function usage() {
-  return `Usage:\n  node scripts/build-shared-page-factory.mjs --profile <profile.json> [--source-root <private-root>] --mode calibrate --output <work-dir> [--dry-run]\n  node scripts/build-shared-page-factory.mjs --profile <profile.json> [--source-root <private-root>] --mode extend --module-code NMS002 [--lesson 1] [--output <work-dir>]\n  node scripts/build-shared-page-factory.mjs --profile <profile.json> --mode extend --batch <batch-id> [--output <work-dir>]\n  node scripts/build-shared-page-factory.mjs --profile <profile.json> --mode extend --all [--output <work-dir>]\n  node scripts/build-shared-page-factory.mjs --profile <profile.json> --mode check --output <existing-work-dir>`;
+  return `Usage:\n  node scripts/build-shared-page-factory.mjs --profile <profile.json> [--source-root <private-root>] --mode calibrate --run-id <id> [--rework-of-run-id <id>] [--verify-archive-receipts] [--max-archive-receipt-bytes <n>] --output <work-dir> [--dry-run]\n  node scripts/build-shared-page-factory.mjs --profile <profile.json> [--source-root <private-root>] --mode extend --module-code NMS002 [--lesson 1] [--run-id <id>] [--rework-of-run-id <id>] [--verify-archive-receipts] [--max-archive-receipt-bytes <n>] [--output <work-dir>]\n  node scripts/build-shared-page-factory.mjs --profile <profile.json> --mode extend --batch <batch-id> [--run-id <id>] [--rework-of-run-id <id>] [--output <work-dir>]\n  node scripts/build-shared-page-factory.mjs --profile <profile.json> --mode extend --all [--run-id <id>] [--rework-of-run-id <id>] [--output <work-dir>]\n  node scripts/build-shared-page-factory.mjs --profile <profile.json> --mode check --output <existing-work-dir> [--verify-archive-receipts] [--max-archive-receipt-bytes <n>]`;
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === SCRIPT_PATH) {

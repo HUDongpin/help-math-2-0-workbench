@@ -32,4 +32,5 @@ test('page audio candidate guard rejects malformed identity or timing fields', (
   assert.equal(isPageAudioCandidate({...base, binding: 'EAD'}), false);
   assert.equal(isPageAudioCandidate({...base, hostTrigger: ''}), false);
   assert.equal(isPageAudioCandidate({...base, required: 'yes'}), false);
+  assert.equal(isPageAudioCandidate({...base, required: null, durationMs: null, frameDomain: null}), true);
 });

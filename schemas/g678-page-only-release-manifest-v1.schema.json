@@ -29,7 +29,7 @@
         "status": {"const": "source-audit-only"},
         "moduleCode": {"enum": ["NMS002", "GEO001", "ALG001", "DAT001"]},
         "moduleLesson": {"type": "integer", "minimum": 1},
-        "sourceLesson": {"type": "object", "required": ["path", "bytes", "sha256", "sequenceAuthority"], "properties": {"path": {"type": "string"}, "bytes": {"type": ["integer", "null"]}, "sha256": {"anyOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]}, "sequenceAuthority": {"const": "course-xml-occurrence"}}, "additionalProperties": true},
+        "sourceLesson": {"type": "object", "required": ["path", "bytes", "sha256", "sequenceAuthority"], "properties": {"path": {"type": "string", "minLength": 1}, "bytes": {"type": "integer", "minimum": 1}, "sha256": {"$ref": "#/$defs/sha256"}, "sequenceAuthority": {"const": "course-xml-occurrence"}}, "additionalProperties": true},
         "expectedCounts": {"type": "object", "required": ["activeXmlReferencedPages", "uniquePageAnimations", "courseShells", "members", "shards"], "properties": {"activeXmlReferencedPages": {"type": "integer", "minimum": 1}, "uniquePageAnimations": {"type": "integer", "minimum": 1}, "uniqueAssetSha256": {"type": "integer", "minimum": 0}, "courseShells": {"const": 0}, "members": {"type": "integer", "minimum": 1}, "shards": {"type": "integer", "minimum": 1}}, "additionalProperties": true},
         "scope": {"type": "object", "required": ["collection", "gradeScope", "moduleCode", "lesson", "excludeNonMembers", "pageOnly", "legacyFlashCourseShellExcluded", "modernMyLessonHostRetained"], "properties": {"collection": {"const": "g678-shared"}, "gradeScope": {"const": "G6-G8-shared"}, "moduleCode": {"type": "string"}, "lesson": {"type": "integer"}, "excludeNonMembers": {"const": true}, "pageOnly": {"const": true}, "legacyFlashCourseShellExcluded": {"const": true}, "modernMyLessonHostRetained": {"const": true}}, "additionalProperties": true},
         "shards": {"type": "array", "minItems": 1, "items": {"type": "object"}},
@@ -40,15 +40,19 @@
     },
     "member": {
       "type": "object",
-      "required": ["ordinal", "animationId", "assetId", "releaseRole", "source", "xmlOccurrence", "placementId", "registrationStatus"],
+      "required": ["ordinal", "animationId", "assetId", "releaseRole", "source", "sourceRootKind", "variantDecision", "xmlOccurrence", "placementId", "audioCandidateCount", "audioStatus", "registrationStatus"],
       "properties": {
         "ordinal": {"type": "integer", "minimum": 1},
-        "animationId": {"type": "string"},
-        "assetId": {"type": ["string", "null"]},
+        "animationId": {"type": "string", "minLength": 1},
+        "assetId": {"type": "string", "pattern": "^swf-[a-f0-9]{64}$"},
         "releaseRole": {"const": "active-xml-referenced-page"},
-        "source": {"type": "object", "required": ["path", "sha256"], "properties": {"path": {"type": "string"}, "sha256": {"anyOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]}}, "additionalProperties": true},
+        "source": {"type": "object", "required": ["path", "sha256"], "properties": {"path": {"type": "string", "minLength": 1}, "sha256": {"$ref": "#/$defs/sha256"}}, "additionalProperties": true},
+        "sourceRootKind": {"const": "canonical"},
+        "variantDecision": {"enum": ["canonical", "hold-source-choice-review"]},
         "xmlOccurrence": {"type": "integer", "minimum": 1},
         "placementId": {"type": "string"},
+        "audioCandidateCount": {"type": "integer", "minimum": 0},
+        "audioStatus": {"const": "candidate-index-only"},
         "registrationStatus": {"const": "unregistered-source-bound"}
       },
       "additionalProperties": true

@@ -29,7 +29,7 @@
     },
     "sourceAudit": {
       "type": "object",
-      "required": ["canonicalLessonXmlCount", "activePagePlacementCount", "uniqueActiveSwfSha256Count", "commentedPageCount", "bomXmlCount", "bareAmpersandCount", "canonicalSwfCount", "canonicalMp3Count", "canonicalFlaCount", "missingSources", "unknownSwfMagic", "variantPlacements", "dependencyHolds", "audioCandidatePages", "acceptanceNeutral"],
+      "required": ["canonicalLessonXmlCount", "activePagePlacementCount", "uniqueActiveSwfSha256Count", "commentedPageCount", "bomXmlCount", "bareAmpersandCount", "canonicalSwfCount", "canonicalMp3Count", "canonicalFlaCount", "missingSources", "unknownSwfMagic", "variantPlacements", "dependencyHolds", "audioCandidatePages", "audioGroupedCandidateCount", "geoAlternateLessonCount", "geoAlternateActivePageCount", "acceptanceNeutral"],
       "properties": {
         "canonicalLessonXmlCount": {"const": 44},
         "activePagePlacementCount": {"const": 2282},
@@ -45,6 +45,9 @@
         "variantPlacements": {"type": "integer", "minimum": 0},
         "dependencyHolds": {"type": "integer", "minimum": 0},
         "audioCandidatePages": {"type": "integer", "minimum": 0},
+        "audioGroupedCandidateCount": {"type": "integer", "minimum": 0},
+        "geoAlternateLessonCount": {"type": "integer", "minimum": 0},
+        "geoAlternateActivePageCount": {"type": "integer", "minimum": 0},
         "acceptanceNeutral": {"const": true}
       },
       "additionalProperties": false

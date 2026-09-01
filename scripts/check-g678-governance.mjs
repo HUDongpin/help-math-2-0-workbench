@@ -35,16 +35,44 @@ export function evaluateGovernance(value) {
   const errors = [];
   if (value?.schemaVersion !== 1) errors.push("schemaVersion must be 1");
   if (value?.artifactType !== "help-math-g678-review-governance") errors.push("artifactType mismatch");
+  if (value?.governanceId !== "g678-review-governance-v1") errors.push("governanceId mismatch");
+  if (value?.scope?.profileId !== "g678-shared-source-profile-v1" ||
+    value?.scope?.mappingVersion !== "ccss-math-2010-v1" ||
+    value?.scope?.lessonCount !== 44 ||
+    value?.scope?.activePagePlacementCount !== 2282 ||
+    value?.scope?.legacyCourseShellExcluded !== true) {
+    errors.push("governance scope is not bound to the G6-G8 page-only contract");
+  }
   const roles = Array.isArray(value?.requiredRoles) ? value.requiredRoles : [];
   const roleNames = new Set(roles.map((role) => role?.role));
   for (const role of EXPECTED_ROLES) if (!roleNames.has(role)) errors.push(`missing role: ${role}`);
   if (roleNames.size !== EXPECTED_ROLES.size) errors.push("unexpected duplicate or extra role");
   const assignmentBlockers = [];
   const byRole = new Map(roles.map((role) => [role?.role, role]));
+  const minimumHours = {
+    "product-owner": [4, 0],
+    "migration-lead": [8, 4],
+    "factory-toolchain-engineer": [8, 4],
+    "integration-engineer": [8, 4],
+    "qa-strict-authority": [8, 4],
+    "authorized-original-runtime-operator": [20, 8],
+    "math-ccss-reviewer": [8, 4],
+    "spanish-reviewer": [8, 4],
+    "audio-reviewer": [8, 4],
+    "independent-visual-reviewer": [8, 4],
+    "owner-approver": [4, 2],
+    "release-custodian": [4, 2],
+  };
   for (const role of roles) {
     if (!role?.primary) assignmentBlockers.push(`${role?.role ?? "unknown"}:primary-missing`);
     if (!role?.backup && Number(role?.minimumHoursPerWeek?.backup ?? 0) > 0) assignmentBlockers.push(`${role?.role ?? "unknown"}:backup-missing`);
     if (role?.primary && role?.backup && role.primary === role.backup) assignmentBlockers.push(`${role.role}:primary-backup-must-differ`);
+    const expectedHours = minimumHours[role?.role];
+    const actualHours = role?.minimumHoursPerWeek;
+    if (expectedHours && (!actualHours || Number(actualHours.primary) !== expectedHours[0] ||
+      Number(actualHours.backup) !== expectedHours[1])) {
+      errors.push(`${role?.role ?? "unknown"}:minimum-hours-contract-drift`);
+    }
   }
   const assignment = (roleName, person) => byRole.get(roleName)?.[person] ?? null;
   const visual = assignment('independent-visual-reviewer', 'primary');
@@ -59,8 +87,17 @@ export function evaluateGovernance(value) {
       assignmentBlockers.push('owner-approver-must-be-separate-from-professional-reviewers');
     }
   }
-  if (value?.budget?.weeklyCap === null || !value?.budget?.procurementOwner) assignmentBlockers.push("budget-or-procurement-cap-missing");
+  if (value?.budget?.currency !== "USD" ||
+    value?.budget?.weeklyCap === null ||
+    !Number.isFinite(Number(value?.budget?.weeklyCap)) || Number(value?.budget?.weeklyCap) <= 0 ||
+    typeof value?.budget?.procurementOwner !== "string" || !value.budget.procurementOwner.trim()) {
+    assignmentBlockers.push("budget-or-procurement-cap-missing");
+  }
   if (value?.m0Exit !== false) errors.push("m0Exit must remain false until assignments and controls are verified");
+  const acceptanceEffects = value?.acceptanceEffects;
+  if (!acceptanceEffects || Object.values(acceptanceEffects).some((entry) => entry !== false)) {
+    errors.push("governance acceptance effects must remain false");
+  }
   return {
     status: errors.length ? "invalid" : assignmentBlockers.length ? "blocked" : "ready-for-m0",
     errors,

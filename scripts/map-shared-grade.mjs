@@ -120,6 +120,8 @@ function recordReadiness(record, profile) {
     stableLessonKey: record.stableLessonKey,
     moduleCode: record.moduleCode,
     lessonNumber: record.lessonNumber,
+    mappingVersion: record.mappingVersion ?? null,
+    sourceManifestSha256: record.sourceManifestSha256 ?? null,
     status,
     primaryGrade: record.primaryGrade,
     gradeTags: [...(record.gradeTags ?? [])],
@@ -152,6 +154,7 @@ export async function buildGradeMappingReadiness({
     snapshotSha256: null,
     status: "pending-official-snapshot",
     authorityReceiptPath: null,
+    authorityReceiptSha256: null,
     authorityReviewer: null,
   };
   let snapshotSha256 = null;
@@ -190,6 +193,7 @@ export async function buildGradeMappingReadiness({
       ...ccss,
       status: "authority-approved",
       authorityReceiptPath: portableProjectPath(receiptPath),
+      authorityReceiptSha256: receiptBytes.length > 0 ? sha256(receiptBytes) : null,
       authorityReviewer: receipt.reviewerId.trim(),
     };
   }

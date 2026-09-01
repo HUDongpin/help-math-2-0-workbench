@@ -19,12 +19,14 @@ node scripts/build-shared-page-factory.mjs \
 node scripts/build-shared-page-factory.mjs \
   --profile catalog/g678-shared-source-profile.v1.json \
   --mode calibrate \
+  --run-id g678-calibration-<date> \
   --output work/g678-shared-page-factory/calibration-v1
 
 # Extend one module/lesson (a module-wide or catalog-wide run must be explicit).
 node scripts/build-shared-page-factory.mjs \
   --profile catalog/g678-shared-source-profile.v1.json \
   --mode extend --module-code NMS002 --lesson 1 \
+  --run-id g678-nms002-l01-<date> \
   --output work/g678-shared-page-factory/nms002-l01-v1
 
 # Verify an existing run. With no scope flags the placement set is read from
@@ -63,7 +65,13 @@ counterparts; this is evidence, not an acceptance claim.
 Each successful run contains:
 
 * `run-manifest.json` (`FactoryRunManifestV2`) with profile/source/generator/
-  toolchain/license/cache hashes and all acceptance gates false;
+  toolchain/license/cache hashes, explicit input/asset/output manifest
+  identities, lane, adapter/IR versions, timing, warnings, and all acceptance
+  gates false;
+  Archive ZIP/member-manifest declarations are retained as
+  `declared-unverified` by default. Use `--verify-archive-receipts` only with
+  an explicitly bounded fixture or independently verified external receipt;
+  the runner refuses oversized or unresolved archive bytes.
 * `source-profile-lock.json`;
 * `structural/lessons.json` and `structural/placements.json` aggregate projections;
 * `structural/lessons/*.json` and `structural/placements/*.json`;

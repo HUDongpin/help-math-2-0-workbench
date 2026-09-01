@@ -18,7 +18,7 @@
     "canonicalLessonXmlCount": {"const": 44},
     "uniqueActiveSwfSha256Count": {"const": 2240},
     "acceptanceEffects": {"type": "object", "additionalProperties": {"const": false}},
-    "audit": {"type": "object", "required": ["sourceRootKind", "missingSources", "unknownSwfMagic", "variantPlacements", "dependencyHolds", "audioCandidatePages", "audioGroupedCandidateCount", "geoAlternateLessonCount", "geoAlternateActivePageCount", "canonicalFileCounts"], "properties": {"sourceRootKind": {"const": "private-external-read-only"}, "missingSources": {"type": "array"}, "unknownSwfMagic": {"type": "array"}, "variantPlacements": {"type": "integer", "minimum": 0}, "dependencyHolds": {"type": "integer", "minimum": 0}, "audioCandidatePages": {"type": "integer", "minimum": 0}, "audioGroupedCandidateCount": {"type": "integer", "minimum": 0}, "geoAlternateLessonCount": {"type": "integer", "minimum": 0}, "geoAlternateActivePageCount": {"type": "integer", "minimum": 0}, "canonicalFileCounts": {"type": "object", "properties": {"swf": {"type": "integer", "minimum": 0}, "mp3": {"type": "integer", "minimum": 0}, "fla": {"const": 0}, "xml": {"type": "integer", "minimum": 0}}}}, "additionalProperties": true}
+    "audit": {"type": "object", "required": ["sourceRootKind", "missingSources", "unknownSwfMagic", "unknownCanonicalSwfMagic", "variantPlacements", "dependencyHolds", "audioCandidatePages", "audioGroupedCandidateCount", "geoAlternateLessonCount", "geoAlternateActivePageCount", "canonicalFileCounts"], "properties": {"sourceRootKind": {"const": "private-external-read-only"}, "missingSources": {"type": "array"}, "unknownSwfMagic": {"type": "array"}, "unknownCanonicalSwfMagic": {"type": "array", "items": {"type": "string"}}, "variantPlacements": {"type": "integer", "minimum": 0}, "dependencyHolds": {"type": "integer", "minimum": 0}, "audioCandidatePages": {"type": "integer", "minimum": 0}, "audioGroupedCandidateCount": {"type": "integer", "minimum": 0}, "geoAlternateLessonCount": {"type": "integer", "minimum": 0}, "geoAlternateActivePageCount": {"type": "integer", "minimum": 0}, "canonicalFileCounts": {"type": "object", "properties": {"swf": {"type": "integer", "minimum": 0}, "mp3": {"type": "integer", "minimum": 0}, "fla": {"const": 0}, "xml": {"type": "integer", "minimum": 0}}}}, "additionalProperties": true}
   },
   "$defs": {
     "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
@@ -41,7 +41,7 @@
     },
     "page": {
       "type": "object",
-      "required": ["placementId", "animationId", "assetId", "sourcePath", "sourceSha256", "xmlOccurrence", "sectionCode"],
+      "required": ["placementId", "animationId", "assetId", "sourcePath", "sourceSha256", "xmlOccurrence", "sectionCode", "variantOf", "audioCueIds", "audioCueCandidates", "sourceRootKind", "sourceStatus", "variantDecision"],
       "properties": {
         "placementId": {"type": "string"},
         "animationId": {"type": "string"},
@@ -49,7 +49,13 @@
         "sourcePath": {"type": "string"},
         "sourceSha256": {"$ref": "#/$defs/sha256"},
         "xmlOccurrence": {"type": "integer", "minimum": 1},
-        "sectionCode": {"type": "string"}
+        "sectionCode": {"type": "string"},
+        "variantOf": {"type": ["string", "null"]},
+        "audioCueIds": {"type": "array", "items": {"type": "string"}},
+        "audioCueCandidates": {"type": "array", "items": {"$ref": "#/$defs/audioCandidate"}},
+        "sourceRootKind": {"const": "canonical"},
+        "sourceStatus": {"const": "resolved-canonical"},
+        "variantDecision": {"enum": ["canonical", "hold-source-choice-review"]}
       },
       "additionalProperties": true
     },
@@ -74,7 +80,33 @@
         "sourcePath": {"type": "string", "minLength": 1},
         "viewPath": {"type": "string", "minLength": 1},
         "bytes": {"type": "integer", "minimum": 1},
-        "sourceRootKind": {"type": "string"}
+        "sourceRootKind": {"type": "string"},
+        "classificationStatus": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "audioCandidate": {
+      "type": "object",
+      "required": ["id", "source", "sourcePath", "viewPath", "bytes", "sha256", "language", "durationMs", "frameDomain", "startSemantics", "hostTrigger", "stopOrCompleteSemantics", "replayBehavior", "binding", "required", "sourceRootKind", "classificationStatus", "acceptance"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "source": {"type": "string", "minLength": 1},
+        "sourcePath": {"type": "string", "minLength": 1},
+        "viewPath": {"type": "string", "minLength": 1},
+        "bytes": {"type": "integer", "minimum": 1},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "language": {"const": "undetermined"},
+        "durationMs": {"type": ["number", "null"], "minimum": 0},
+        "frameDomain": {"type": ["string", "null"]},
+        "startSemantics": {"type": "string", "minLength": 1},
+        "hostTrigger": {"type": "string", "minLength": 1},
+        "stopOrCompleteSemantics": {"type": "string", "minLength": 1},
+        "replayBehavior": {"type": "string", "minLength": 1},
+        "binding": {"enum": ["FQ/EA", "FQ/SA", "lesson-SA"]},
+        "required": {"type": ["boolean", "null"]},
+        "sourceRootKind": {"const": "canonical"},
+        "classificationStatus": {"const": "resolved-canonical"},
+        "acceptance": {"const": "candidate-index-only"}
       },
       "additionalProperties": true
     }

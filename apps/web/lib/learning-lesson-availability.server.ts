@@ -13,6 +13,7 @@ import {
   G678_SHARED_MODULES,
   isG678GradeMappingAuthorityApproved,
   isG678LocalPreviewEnabled,
+  sharedMiddleSchoolCatalog,
   sharedMiddleSchoolCourseKey,
   sharedMiddleSchoolLessonCatalog,
   type G678MappingStatus,
@@ -29,6 +30,7 @@ export interface LearningLessonCard {
   readonly activePageCount: number;
   readonly courseKey: string | null;
   readonly evidenceBoundary: string;
+  readonly evidenceBoundarySpanish?: string;
   readonly grade: number | null;
   readonly gradeTags: readonly number[];
   readonly href: string | null;
@@ -63,6 +65,7 @@ export interface AvailableLearningLesson {
   readonly registeredPageCount: number;
   readonly availability: Exclude<LessonAvailabilityStatus, 'unavailable' | 'source-mapping-pending'>;
   readonly evidenceBoundary: string;
+  readonly evidenceBoundarySpanish?: string;
   readonly stableLessonKey?: string;
   readonly titleEnglish: string;
   readonly titleSpanish: string | null;
@@ -172,6 +175,8 @@ export function availableLearningLessons(
           : 'engineering-preview' as const,
         evidenceBoundary:
           'Current-JS engineering preview; original Flash behavior, fidelity, audio, human review, Owner acceptance, strict completion, and release remain pending.',
+        evidenceBoundarySpanish:
+          'Vista previa de ingeniería Current-JS; el comportamiento Flash original, la fidelidad, el audio, la revisión humana, la aceptación del propietario, la finalización estricta y la publicación siguen pendientes.',
         stableLessonKey: descriptor.course.courseKey,
         titleEnglish: descriptor.course.labels.en.text,
         titleSpanish: descriptor.course.labels.es.usesEnglishFallback
@@ -222,6 +227,19 @@ function sharedLessonCard(
   availableLessons: readonly AvailableLearningLesson[],
 ): LearningLessonCard {
   const available = sharedAvailableLesson(lesson, availableLessons);
+  // Keep a truthful partial-registration count for the engineering dashboard.
+  // It is deliberately independent from `availableLearningLessons()`: a
+  // partially registered lesson must remain locked, but showing `0` would
+  // hide useful migration progress and could be mistaken for missing source
+  // pages.  No registration currently exists for G6–G8, so this resolves to
+  // zero until a real descriptor is admitted.
+  const registration = wholeLessonCourseRegistrations().find(({descriptor}) =>
+    descriptor.course.moduleCode?.toUpperCase() === lesson.moduleCode &&
+    descriptor.course.lesson === lesson.moduleLesson,
+  );
+  const registeredPageCount = registration?.descriptor.pages.filter(
+    (page) => page.rendererAvailability.kind === 'registered',
+  ).length ?? 0;
   const mapped = lesson.primaryGrade !== null &&
     lesson.mappingStatus === 'approved';
   const stableLessonKey = lesson.stableLessonKey;
@@ -231,6 +249,7 @@ function sharedLessonCard(
       activePageCount: available.activePageCount,
       courseKey: available.courseKey ?? courseKey,
       evidenceBoundary: available.evidenceBoundary,
+      evidenceBoundarySpanish: available.evidenceBoundarySpanish,
       grade: available.grade,
       gradeTags: Object.freeze([...(available.gradeTags ?? lesson.gradeTags)]),
       href: available.href,
@@ -258,13 +277,16 @@ function sharedLessonCard(
     evidenceBoundary: mapped
       ? 'Source mapping is approved, but the complete Current-JS page sequence is not registered yet.'
       : 'Common Core grade mapping is pending independent review; no learner route is available.',
+    evidenceBoundarySpanish: mapped
+      ? 'El mapeo de la fuente está aprobado, pero la secuencia completa de páginas Current-JS aún no está registrada.'
+      : 'El mapeo de grado Common Core está pendiente de revisión independiente; no hay una ruta de estudiante disponible.',
     grade: lesson.primaryGrade,
     gradeTags: lesson.gradeTags,
     href: null,
     lesson: lesson.moduleLesson,
     moduleCode: lesson.moduleCode,
     moduleTitle: lesson.moduleTitle,
-    registeredPageCount: 0,
+    registeredPageCount,
     releaseId: null,
     sourceXmlPath: lesson.sourceXmlPath,
     sourceXmlSha256: lesson.sourceXmlSha256,
@@ -338,7 +360,12 @@ export function allLearningLessons(
   // when a deployment accidentally carries the local preview environment
   // variable.  Local development may still show locked mapping-pending cards
   // without enabling their learner routes.
-  const shared = env.NODE_ENV === 'production'
+  const sharedSnapshot = sharedMiddleSchoolCatalog();
+  // A malformed or stale checked-in projection must not manufacture cards
+  // from fallback counts.  Keep the shared surface absent until the
+  // source-bound catalog validator succeeds; the migration dashboard can
+  // still report the failure separately.
+  const shared = env.NODE_ENV === 'production' || !sharedSnapshot.sourceProjectionValid
     ? []
     : sharedMiddleSchoolLessonCatalog().map((lesson) =>
         sharedLessonCard(lesson, availableLessons),

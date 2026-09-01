@@ -52,3 +52,18 @@ test("release validator rejects a shell or implicit registration", async () => {
   const errors = validateReleaseManifest(mutated);
   assert.equal(errors.some((error) => /courseShells|implicitly registered/u.test(error)), true);
 });
+
+test("release validator rejects shard, source-root, and identity drift", async () => {
+  const [catalog, mapping] = await Promise.all([
+    identity("catalog/g678-shared-catalog.v1.json"),
+    identity("catalog/g678-grade-mapping.v1.json"),
+  ]);
+  const manifest = buildReleaseManifest({catalog: catalog.value, mapping: mapping.value, catalogIdentity: catalog, mappingIdentity: mapping});
+  const mutated = structuredClone(manifest);
+  mutated.releases[0].shards[0].shardId = "shard-99";
+  mutated.releases[0].members[0].sourceRootKind = "canonical-newhelp";
+  mutated.releases[0].members[0].source.path = "HELP_COURSES/NMS002/L1/../L2/IR/L1IR01.swf";
+  mutated.releases[0].members[0].assetId = "swf-" + "a".repeat(64);
+  const errors = validateReleaseManifest(mutated);
+  assert.equal(errors.some((error) => /shard identity|source root|source path|asset identity/u.test(error)), true);
+});

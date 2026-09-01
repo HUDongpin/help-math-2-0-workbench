@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import {createHash} from "node:crypto";
-import {access, mkdir, mkdtemp, rm, writeFile} from "node:fs/promises";
+import {access, mkdir, mkdtemp, rm, symlink, writeFile} from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
@@ -85,5 +85,27 @@ test("strict source audit rejects a missing or drifted required witness", async 
       options: {strictCounts: true, requireSource: true, classificationManifest: null, dependencyManifest: null},
     }),
     /G678_WITNESS_HASH_DRIFT|G678_WITNESS_REQUIRED/u,
+  );
+});
+
+test("strict source audit rejects symlinked or out-of-bound witness paths", async (t) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), "g678-witness-boundary-"));
+  const shared = path.join(root, "G6-G8-shared");
+  const outside = await mkdtemp(path.join(os.tmpdir(), "g678-witness-outside-"));
+  await mkdir(shared, {recursive: true});
+  const target = path.join(outside, "classification-manifest.jsonl");
+  await writeFile(target, "outside\n");
+  await symlink(target, path.join(root, "classification-manifest.jsonl"));
+  t.after(async () => {
+    await rm(root, {recursive: true, force: true});
+    await rm(outside, {recursive: true, force: true});
+  });
+  await assert.rejects(
+    () => verifySourceWitnesses({
+      sourceRoot: shared,
+      profile: {witnesses: {"classification-manifest.jsonl": createHash("sha256").update("outside\n").digest("hex")}},
+      options: {strictCounts: true, requireSource: true, classificationManifest: path.join(root, "classification-manifest.jsonl"), dependencyManifest: null},
+    }),
+    /G678_WITNESS_NOT_REGULAR|G678_WITNESS_ESCAPES_SOURCE_VIEW/u,
   );
 });

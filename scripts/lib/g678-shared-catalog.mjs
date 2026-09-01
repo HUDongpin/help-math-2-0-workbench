@@ -68,6 +68,14 @@ export const EXPECTED_COUNTS = Object.freeze({
   geoAlternateActivePageCount: 59,
 });
 
+// These malformed headers are retained as inactive/commented source
+// evidence. They must remain in the forensic hold set and never enter the
+// active-page denominator.
+export const EXPECTED_UNKNOWN_CANONICAL_SWF_MAGIC = Object.freeze([
+  "HELP_COURSES/GEO001/L9/IR/L9RW01.swf",
+  "HELP_COURSES/ALG001/L8/IR/L8RW01.swf",
+]);
+
 export const ALL_FALSE_ACCEPTANCE_EFFECTS = Object.freeze({
   canonicalSourcePromoted: false,
   currentJavaScriptRegistered: false,
@@ -299,9 +307,11 @@ function parsePageElement(sectionBody, sectionCode, sectionNumber, pageOrdinal, 
     variantDecision: "pending-source-audit",
     variantStatus: "pending-source-audit",
     variants: [],
+    variantOf: null,
     dependencyStatus: "pending-source-audit",
     dependencyHolds: [],
     audioCueCandidates: [],
+    audioCueIds: [],
     audioStatus: "candidate-index-only",
     behaviorLane: "pending-structural-audit",
   };
@@ -701,6 +711,7 @@ function enrichPageWithClassification(page, row, bytes, flaExists) {
     if (manifestBytesDrift) page.warnings = [...(page.warnings ?? []), "classification-bytes-drift"];
   }
   page.authoringEvidence = flaExists ? "paired-fla" : "swf-only";
+  if (row?.sourceRootKind) page.sourceRootKind = String(row.sourceRootKind);
   page.flaPath = flaExists ? page.sourcePath.replace(/\.swf$/iu, ".fla") : null;
   page.variantDecision = rowVariantDisposition(row);
   page.variantStatus = page.variantDecision === "canonical"
@@ -718,13 +729,22 @@ function enrichPageWithClassification(page, row, bytes, flaExists) {
 }
 
 function audioCandidateNames(page) {
-  const stem = path.posix.basename(page.reference, ".swf");
+  const stem = path.posix.basename(page.reference).replace(/\.swf$/iu, "");
   return new Set([`${stem}.mp3`.toLowerCase(), `${stem}.MP3`.toLowerCase()]);
 }
 
 function isFqEaAudio(item) {
   const normalized = String(item?.relativePath ?? "").replaceAll("\\", "/");
   return /(?:^|\/)FQ\/EA\/[^/]+\.mp3$/iu.test(normalized);
+}
+
+function audioClassificationStatus(item, row) {
+  if (!row || typeof row !== "object") return "classification-row-missing";
+  const rowSha = typeof row.sha256 === "string" ? row.sha256.toLowerCase() : null;
+  const rowBytes = Number(row.bytes);
+  if (!rowSha || !SHA256_PATTERN.test(rowSha) || rowSha !== item.sha256) return "classification-hash-drift";
+  if (!Number.isSafeInteger(rowBytes) || rowBytes !== item.bytes) return "classification-bytes-drift";
+  return row.sourceRootKind === "canonical" ? "resolved-canonical" : "resolved-noncanonical";
 }
 
 function groupedAudioCandidate(lesson, item, ordinal, classificationIndex) {
@@ -751,6 +771,7 @@ function groupedAudioCandidate(lesson, item, ordinal, classificationIndex) {
     viewPath: item.viewPath,
     bytes: item.bytes,
     sourceRootKind: row?.sourceRootKind ?? "canonical-newhelp",
+    classificationStatus: audioClassificationStatus(item, row),
     matchDisposition: "unmatched-page-basename",
   };
 }
@@ -771,24 +792,42 @@ function addAudioCandidates(lesson, audioFiles, classificationIndex) {
       for (const item of byName.get(name) ?? []) {
         const row = lookupClassification(classificationIndex, item.sourcePath, item.viewPath);
         const normalizedRelativePath = item.relativePath.replaceAll("\\", "/");
+        const bindingKind = /(?:^|\/)FQ\/EA\//iu.test(normalizedRelativePath)
+          ? "FQ/EA"
+          : /(?:^|\/)FQ\/SA\//iu.test(normalizedRelativePath)
+            ? "FQ/SA"
+            : "lesson-SA";
+        const candidateId = `${page.placementId}-audio-${String(candidates.length + 1).padStart(3, "0")}`;
         candidates.push({
+          id: candidateId,
+          source: item.sourcePath,
           sourcePath: item.sourcePath,
           viewPath: item.viewPath,
           bytes: item.bytes,
           sha256: item.sha256,
-          language: null,
+          // Language is not inferable from the shared directory layout. Keep
+          // the explicit pending value accepted by PageAudioCandidate rather
+          // than using null (which would make the row incompatible with the
+          // runtime contract before human/original-runtime review).
+          language: "undetermined",
+          durationMs: null,
+          frameDomain: null,
+          startSemantics: "pending-authorized-original-runtime",
+          hostTrigger: "pending-authorized-original-runtime",
+          stopOrCompleteSemantics: "pending-authorized-original-runtime",
+          replayBehavior: "pending-authorized-original-runtime",
+          binding: bindingKind,
+          required: null,
           sourceRootKind: row?.sourceRootKind ?? "canonical-newhelp",
-          bindingKind: /(?:^|\/)FQ\/EA\//iu.test(normalizedRelativePath)
-            ? "FQ/EA-candidate"
-            : /(?:^|\/)FQ\/SA\//iu.test(normalizedRelativePath)
-              ? "FQ/SA-candidate"
-              : "lesson-SA-candidate",
+          classificationStatus: audioClassificationStatus(item, row),
+          bindingKind: `${bindingKind}-candidate`,
           acceptance: "candidate-index-only",
         });
         matchedSourcePaths.add(item.sourcePath);
       }
     }
     page.audioCueCandidates = candidates.sort((left, right) => compareText(left.sourcePath, right.sourcePath));
+    page.audioCueIds = page.audioCueCandidates.map((candidate) => candidate.id);
   }
   lesson.audioGroupedCandidates = orderedAudioFiles
     .filter((item) => isFqEaAudio(item) && !matchedSourcePaths.has(item.sourcePath))
@@ -1101,8 +1140,54 @@ export function validateSharedProfile(profile) {
     if (!Array.isArray(profile.alternateRootRules) || profile.alternateRootRules.length < 2) {
       errors.push("alternateRootRules must declare the GEO alternate and Stagingv4 conflict roots");
     }
+    else {
+      const alternateKinds = new Map(profile.alternateRootRules.map((rule) => [rule?.kind, rule]));
+      const geoAlternate = alternateKinds.get("source-variant");
+      const stagingVariant = alternateKinds.get("same-path-different-hash");
+      if (!geoAlternate || geoAlternate.pathPattern !== "G6-G8-shared/GEO001/_alternate/**" ||
+        geoAlternate.defaultDecision !== "hold-source-choice-review" ||
+        geoAlternate.addsPlacementDenominator !== false) {
+        errors.push("alternateRootRules source-variant must bind the GEO001 alternate root");
+      }
+      if (!stagingVariant || stagingVariant.pathPattern !== "G6-G8-shared/**/_variants/HelpProgramStagingv4/**" ||
+        stagingVariant.defaultDecision !== "hold-source-choice-review" ||
+        stagingVariant.addsPlacementDenominator !== false) {
+        errors.push("alternateRootRules same-path-different-hash must bind the Stagingv4 variant root");
+      }
+    }
     if (!Array.isArray(profile.archiveReceipts) || profile.archiveReceipts.length < 2) {
       errors.push("archiveReceipts must retain both raw ZIP/member-manifest custody receipts");
+    } else {
+      const receiptIds = profile.archiveReceipts.map((receipt) => receipt?.receiptId);
+      const requiredReceiptIds = [
+        "new-help-program-zip-copy1",
+        "help-program-stagingv4-zip-copy1",
+      ];
+      if (receiptIds.length !== requiredReceiptIds.length ||
+        new Set(receiptIds).size !== requiredReceiptIds.length ||
+        requiredReceiptIds.some((receiptId) => !receiptIds.includes(receiptId))) {
+        errors.push("archiveReceipts must contain exactly the canonical and Stagingv4 receipt identities");
+      }
+      for (const receipt of profile.archiveReceipts) {
+        const id = receipt?.receiptId ?? "<missing>";
+        if (typeof receipt?.containerPath !== "string" ||
+          typeof receipt?.memberManifestPath !== "string" ||
+          !SHA256_PATTERN.test(String(receipt?.containerSha256 ?? "")) ||
+          !SHA256_PATTERN.test(String(receipt?.memberManifestSha256 ?? "")) ||
+          !Number.isSafeInteger(receipt?.containerBytes) || receipt.containerBytes <= 0 ||
+          receipt?.disposition !== "CUSTODY_ONLY_NO_PROMOTION" ||
+          receipt?.rehashRequiredAtRunStart !== true) {
+          errors.push(`archive receipt ${id} is not a complete hash-bound custody declaration`);
+        }
+        if (id === "new-help-program-zip-copy1" &&
+          !String(receipt.containerPath).includes("NewHelpProgram.zip")) {
+          errors.push("NewHelpProgram receipt path identity drifted");
+        }
+        if (id === "help-program-stagingv4-zip-copy1" &&
+          !String(receipt.containerPath).includes("HelpProgramStagingv4.zip")) {
+          errors.push("Stagingv4 receipt path identity drifted");
+        }
+      }
     }
     if (!Array.isArray(profile.moduleDefinitions) || profile.moduleDefinitions.length !== 4) {
       errors.push("moduleDefinitions must declare the four shared modules");
@@ -1207,9 +1292,14 @@ export function validateSharedCatalog(catalog, profile = null, {strictCounts = f
   const lessons = Array.isArray(catalog.lessons) ? catalog.lessons : [];
   const pageIds = new Set();
   const sourcePaths = new Set();
+  const sourceHashes = new Set();
+  const lessonKeys = new Set();
   const audioGroupedIds = new Set();
   const audioGroupedSources = new Set();
   let audioGroupedCandidateCount = 0;
+  let audioCandidatePageCount = 0;
+  let variantPlacementCount = 0;
+  let dependencyHoldCount = 0;
   const expectedProfile = Array.isArray(profile?.modules)
     ? new Map(profile.modules
       .filter((module) => module && typeof module === "object")
@@ -1221,8 +1311,16 @@ export function validateSharedCatalog(catalog, profile = null, {strictCounts = f
       continue;
     }
     if (!MODULE_BY_CODE.has(lesson.moduleCode)) errors.push(`unsupported lesson module: ${lesson.moduleCode}`);
+    if (lesson.moduleCode !== String(lesson.moduleCode ?? '').toUpperCase()) {
+      errors.push(`lesson moduleCode must be canonical uppercase: ${lesson.moduleCode}`);
+    }
+    if (!Number.isSafeInteger(lesson.lessonNumber) || lesson.lessonNumber < 1) {
+      errors.push(`lesson lessonNumber must be a positive integer: ${lesson.lessonNumber}`);
+    }
     const key = stableLessonKey(lesson.moduleCode, lesson.lessonNumber);
     if (lesson.stableLessonKey !== key) errors.push(`${key}: stableLessonKey mismatch`);
+    if (lessonKeys.has(key)) errors.push(`duplicate lesson key: ${key}`);
+    lessonKeys.add(key);
     const module = expectedProfile?.get(lesson.moduleCode);
     const expectedPages = module?.activePageCounts?.[lesson.lessonNumber - 1];
     if (strictCounts && expectedPages !== undefined && lesson.activePageCount !== expectedPages) errors.push(`${key}: expected ${expectedPages} pages, found ${lesson.activePageCount}`);
@@ -1262,6 +1360,9 @@ export function validateSharedCatalog(catalog, profile = null, {strictCounts = f
       if (candidate.matchDisposition !== "unmatched-page-basename") {
         errors.push(`${key}: audioGroupedCandidate matchDisposition must be unmatched-page-basename`);
       }
+      if (strictCounts && candidate.classificationStatus !== "resolved-canonical") {
+        errors.push(`${key}: audioGroupedCandidate classification binding is not canonical`);
+      }
       for (const field of ["startSemantics", "hostTrigger", "stopOrCompleteSemantics", "replayBehavior"]) {
         if (typeof candidate[field] !== "string" || candidate[field].length === 0) {
           errors.push(`${key}: audioGroupedCandidate ${field} is missing`);
@@ -1284,6 +1385,7 @@ export function validateSharedCatalog(catalog, profile = null, {strictCounts = f
       }
     }
     let previousOrdinal = 0;
+    if ((lesson.dependencyHolds ?? []).length > 0) dependencyHoldCount += lesson.dependencyHolds.length;
     for (const page of lesson.pages ?? []) {
       if (page.xmlOccurrence !== previousOrdinal + 1) errors.push(`${key}: XML occurrence gap at ${page.xmlOccurrence}`);
       previousOrdinal = page.xmlOccurrence;
@@ -1295,17 +1397,80 @@ export function validateSharedCatalog(catalog, profile = null, {strictCounts = f
       if (page.placementId) pageIds.add(page.placementId);
       if (page.sourceSha256 !== null && !SHA256_PATTERN.test(page.sourceSha256)) errors.push(`${page.placementId}: invalid source SHA-256`);
       if (page.assetId !== null && page.assetId !== `swf-${page.sourceSha256}`) errors.push(`${page.placementId}: assetId/source SHA mismatch`);
+      if (typeof page.sourceSha256 === "string" && SHA256_PATTERN.test(page.sourceSha256)) sourceHashes.add(page.sourceSha256);
       if (strictCounts && page.sourceSha256 === null) errors.push(`${page.placementId}: active source SHA-256 is missing`);
+      if (strictCounts) {
+        const expectedSource = page.reference
+          ? canonicalSourcePath(lesson.moduleCode, lesson.lessonNumber, page.reference)
+          : null;
+        if (!expectedSource || page.sourcePath !== expectedSource || page.expectedPath !== expectedSource) {
+          errors.push(`${page.placementId}: canonical source path binding drifted`);
+        }
+        if (!Number.isSafeInteger(page.sourceBytes) || page.sourceBytes <= 0) {
+          errors.push(`${page.placementId}: active source byte count is missing`);
+        }
+      }
       if (strictCounts && page.sourceStatus === "classification-row-missing") {
         errors.push(`${page.placementId}: classification manifest row is missing`);
       }
       if (strictCounts && page.sourceStatus !== "resolved-canonical") errors.push(`${page.placementId}: active source is not a resolved canonical SWF`);
+      if (strictCounts && page.sourceRootKind !== "canonical") errors.push(`${page.placementId}: active source root kind is not canonical`);
+      if (strictCounts && page.variantOf !== null) errors.push(`${page.placementId}: canonical placement variantOf must be null`);
+      if (strictCounts && (!Array.isArray(page.audioCueIds) ||
+        stableJson(page.audioCueIds) !== stableJson((page.audioCueCandidates ?? []).map((candidate) => candidate.id)))) {
+        errors.push(`${page.placementId}: audioCueIds are not bound to page candidates`);
+      }
+      if (strictCounts) {
+        for (const candidate of Array.isArray(page.audioCueCandidates) ? page.audioCueCandidates : []) {
+          if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) {
+            errors.push(`${page.placementId}: page audio candidate must be an object`);
+            continue;
+          }
+          if (typeof candidate.id !== "string" || candidate.id.length === 0) {
+            errors.push(`${page.placementId}: page audio candidate id is missing`);
+          }
+          if (typeof candidate.source !== "string" || candidate.source.length === 0 ||
+            typeof candidate.sourcePath !== "string" || candidate.sourcePath !== candidate.source) {
+            errors.push(`${page.placementId}: page audio candidate source binding is invalid`);
+          }
+          if (typeof candidate.sha256 !== "string" || !SHA256_PATTERN.test(candidate.sha256)) {
+            errors.push(`${page.placementId}: page audio candidate SHA-256 is invalid`);
+          }
+          if (!Number.isSafeInteger(candidate.bytes) || candidate.bytes <= 0) {
+            errors.push(`${page.placementId}: page audio candidate bytes are invalid`);
+          }
+          if (!["FQ/EA", "FQ/SA", "lesson-SA"].includes(candidate.binding)) {
+            errors.push(`${page.placementId}: page audio candidate binding is invalid`);
+          }
+          if (candidate.language !== "undetermined") {
+            errors.push(`${page.placementId}: page audio candidate language must remain undetermined`);
+          }
+          if (candidate.required !== null && typeof candidate.required !== "boolean") {
+            errors.push(`${page.placementId}: page audio candidate required must be null or boolean`);
+          }
+          if (candidate.acceptance !== "candidate-index-only") {
+            errors.push(`${page.placementId}: page audio candidate acceptance must remain candidate-index-only`);
+          }
+          if (candidate.sourceRootKind !== "canonical" || candidate.classificationStatus !== "resolved-canonical") {
+            errors.push(`${page.placementId}: page audio candidate classification binding is not canonical`);
+          }
+        }
+      }
       if (page.variants?.length > 0 && page.variantDecision !== "hold-source-choice-review") {
         errors.push(`${page.placementId}: source variant is not held for explicit choice review`);
       }
+      if (page.variants?.length > 0) variantPlacementCount += 1;
     }
+    audioCandidatePageCount += (lesson.pages ?? [])
+      .filter((page) => Array.isArray(page.audioCueCandidates) && page.audioCueCandidates.length > 0)
+      .length;
   }
+  if (catalog.canonicalLessonXmlCount !== lessons.length) errors.push("catalog lesson count is not derived from lessons");
   if (catalog.activePagePlacementCount !== lessons.reduce((sum, lesson) => sum + (lesson.activePageCount ?? 0), 0)) errors.push("catalog active page count is not derived from lessons");
+  if (catalog.uniqueActiveSwfSha256Count !== sourceHashes.size) errors.push("catalog unique active SWF count is not derived from page hashes");
+  if (catalog.audit?.variantPlacements !== variantPlacementCount) errors.push("source audit variantPlacements is not derived from page variants");
+  if (catalog.audit?.dependencyHolds !== dependencyHoldCount) errors.push("source audit dependencyHolds is not derived from lesson holds");
+  if (catalog.audit?.audioCandidatePages !== audioCandidatePageCount) errors.push("source audit audioCandidatePages is not derived from pages");
   if (strictCounts) {
     const expected = profile?.expected ?? EXPECTED_COUNTS;
     const actualAudit = catalog.audit ?? {};
@@ -1351,8 +1516,24 @@ export function validateSharedCatalog(catalog, profile = null, {strictCounts = f
     if (actualAudit.unknownSwfMagic?.length !== 0) {
       errors.push(`source audit unknownSwfMagic must be empty, found ${actualAudit.unknownSwfMagic?.length ?? "missing"}`);
     }
+    if (profile?.expected?.canonicalLessonXmlCount === EXPECTED_COUNTS.canonicalLessonXmlCount &&
+      stableJson(actualAudit.unknownCanonicalSwfMagic ?? []) !==
+        stableJson(EXPECTED_UNKNOWN_CANONICAL_SWF_MAGIC)) {
+      errors.push("source audit unknownCanonicalSwfMagic inactive hold set drifted");
+    }
     if (actualAudit.classificationHashDrift?.length !== 0) {
       errors.push(`source audit classification bindings drifted, found ${actualAudit.classificationHashDrift?.length ?? "missing"}`);
+    }
+    const expectedLessonKeys = new Set();
+    for (const module of expectedProfile?.values?.() ?? []) {
+      for (const lessonNumber of module.lessonNumbers ?? []) {
+        expectedLessonKeys.add(stableLessonKey(module.moduleCode, lessonNumber));
+      }
+    }
+    if (expectedLessonKeys.size > 0 &&
+      (expectedLessonKeys.size !== lessonKeys.size ||
+        [...expectedLessonKeys].some((lessonKey) => !lessonKeys.has(lessonKey)))) {
+      errors.push("catalog lesson key set does not match the profile");
     }
   }
   return errors;

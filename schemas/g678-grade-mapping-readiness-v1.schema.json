@@ -24,13 +24,14 @@
     },
     "ccss": {
       "type": "object",
-      "required": ["mappingVersion", "snapshotPath", "snapshotSha256", "status"],
+      "required": ["mappingVersion", "snapshotPath", "snapshotSha256", "status", "authorityReceiptPath", "authorityReceiptSha256", "authorityReviewer"],
       "properties": {
         "mappingVersion": {"const": "ccss-math-2010-v1"},
         "snapshotPath": {"type": ["string", "null"]},
         "snapshotSha256": {"anyOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
         "status": {"enum": ["pending-official-snapshot", "hash-observed-pending-authority-review", "authority-approved"]},
         "authorityReceiptPath": {"type": ["string", "null"]},
+        "authorityReceiptSha256": {"anyOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
         "authorityReviewer": {"type": ["string", "null"]}
       },
       "additionalProperties": false
@@ -47,7 +48,7 @@
       },
       "additionalProperties": false
     },
-    "records": {"type": "array", "minItems": 44, "maxItems": 44, "items": {"type": "object"}},
+    "records": {"type": "array", "minItems": 44, "maxItems": 44, "items": {"type": "object", "required": ["stableLessonKey", "moduleCode", "lessonNumber", "mappingVersion", "sourceManifestSha256", "status", "ready"], "properties": {"stableLessonKey": {"type": "string"}, "moduleCode": {"enum": ["NMS002", "GEO001", "ALG001", "DAT001"]}, "lessonNumber": {"type": "integer", "minimum": 1}, "mappingVersion": {"type": ["string", "null"]}, "sourceManifestSha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"}, "status": {"enum": ["pending", "approved", "needs-adjudication", "rejected"]}, "ready": {"type": "boolean"}}, "additionalProperties": true}},
     "acceptanceEffects": {"type": "object", "additionalProperties": {"const": false}}
   },
   "$defs": {

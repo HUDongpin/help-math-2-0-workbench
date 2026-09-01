@@ -217,8 +217,18 @@ test("strict catalog validation binds every classification row and all source-au
       outputPath: page.viewPath,
       sha256: page.sourceSha256,
       bytes: page.sourceBytes,
+      sourceRootKind: "canonical",
       variants: [],
     }));
+    const audioCandidate = initial.lessons[0].pages[0].audioCueCandidates[0];
+    rows.push({
+      gradeBucket: "G6-G8-shared",
+      outputPath: audioCandidate.viewPath,
+      sha256: audioCandidate.sha256,
+      bytes: audioCandidate.bytes,
+      sourceRootKind: "canonical",
+      variants: [],
+    });
     const catalog = await buildSharedCatalog({
       sourceRoot: root,
       profile,
@@ -293,6 +303,7 @@ test("audio candidate indexing distinguishes FQ/EA, FQ/SA, and lesson-SA paths",
         viewPath: "G6-G8-shared/NMS002/L1/FQ/EA/Q99.mp3",
         bytes: Buffer.from("unmatched-answer").length,
         sourceRootKind: "canonical-newhelp",
+        classificationStatus: "classification-row-missing",
         matchDisposition: "unmatched-page-basename",
       },
     );
@@ -342,4 +353,25 @@ test("profile moduleDefinitions stay hash-independent but structurally identical
   pathPatternDrift.moduleDefinitions[1].xmlPathPattern = "GEO001/L{lesson}/lesson.xml";
   assert.ok(validateSharedProfile(pathPatternDrift).some((error) =>
     error.includes("xmlPathPattern must be GEO001/L{lesson}/index.xml")));
+});
+
+test("canonical profile retains distinct NewHelpProgram and Stagingv4 custody receipts", async () => {
+  const profile = JSON.parse(await readFile(new URL("../../catalog/g678-shared-source-profile.v1.json", import.meta.url), "utf8"));
+  assert.deepEqual(validateSharedProfile(profile), []);
+  const swapped = structuredClone(profile);
+  swapped.archiveReceipts[0].receiptId = swapped.archiveReceipts[1].receiptId;
+  assert.ok(validateSharedProfile(swapped).some((error) => error.includes("exactly the canonical and Stagingv4")));
+  const pathDrift = structuredClone(profile);
+  pathDrift.archiveReceipts[0].containerPath = "$PRIVATE_RECOVERY_CONTAINERS/containers/raw/HelpProgramStagingv4.zip";
+  assert.ok(validateSharedProfile(pathDrift).some((error) => error.includes("NewHelpProgram receipt path")));
+});
+
+test("canonical profile rejects swapped or duplicated alternate roots", async () => {
+  const profile = JSON.parse(await readFile(new URL("../../catalog/g678-shared-source-profile.v1.json", import.meta.url), "utf8"));
+  const pathDrift = structuredClone(profile);
+  pathDrift.alternateRootRules[0].pathPattern = "G6-G8-shared/ALG001/_alternate/**";
+  assert.ok(validateSharedProfile(pathDrift).some((error) => error.includes("source-variant")));
+  const duplicate = structuredClone(profile);
+  duplicate.alternateRootRules = [duplicate.alternateRootRules[1], duplicate.alternateRootRules[1]];
+  assert.ok(validateSharedProfile(duplicate).some((error) => error.includes("alternateRootRules")));
 });
