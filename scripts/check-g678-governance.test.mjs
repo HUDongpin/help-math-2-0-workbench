@@ -10,9 +10,22 @@ test("governance stays explicitly blocked until named primary and backup roles e
   assert.equal(result.m0Exit, false);
   assert.equal(result.blockers.includes("budget-or-procurement-cap-missing"), false);
   assert.ok(result.blockers.includes("procurement-controls-not-yet-live-verified"));
-  assert.ok(result.blockers.includes("remaining-named-primary-and-backup-assignments-missing"));
+  assert.ok(result.blockers.includes("all-required-primary-slots-named-capacity-not-verified"));
   assert.equal(result.blockers.includes("math-ccss-reviewer:primary-missing"), false);
   assert.ok(result.blockers.includes("math-ccss-reviewer:backup-missing"));
+  for (const role of [
+    "migration-lead", "factory-toolchain-engineer", "integration-engineer",
+    "qa-strict-authority", "authorized-original-runtime-operator", "spanish-reviewer",
+    "audio-reviewer", "independent-visual-reviewer", "release-custodian",
+  ]) {
+    assert.equal(result.blockers.includes(`${role}:primary-missing`), false);
+    assert.ok(result.blockers.includes(`${role}:backup-missing`));
+  }
+  assert.ok(result.blockers.includes("qa-strict-authority-must-be-independent-from-implementation"));
+  assert.ok(result.blockers.includes("authorized-original-runtime-operator-cannot-self-sign-implementation"));
+  assert.ok(result.blockers.includes("spanish-reviewer-must-be-separate-from-implementation-author"));
+  assert.ok(result.blockers.includes("independent-visual-reviewer-must-not-be-implementation-author"));
+  assert.ok(result.blockers.includes("owner-approver-must-be-separate-from-professional-reviewers"));
 });
 
 test("the evaluator rejects a missing required role", () => {

@@ -75,10 +75,18 @@ export function evaluateGovernance(value) {
     }
   }
   const assignment = (roleName, person) => byRole.get(roleName)?.[person] ?? null;
-  const visual = assignment('independent-visual-reviewer', 'primary');
-  for (const implementationRole of ['migration-lead', 'factory-toolchain-engineer', 'integration-engineer']) {
-    if (visual && visual === assignment(implementationRole, 'primary')) {
-      assignmentBlockers.push('independent-visual-reviewer-must-not-be-implementation-author');
+  const implementationRoles = ['migration-lead', 'factory-toolchain-engineer', 'integration-engineer'];
+  const independenceSensitiveRoles = [
+    ['qa-strict-authority', 'qa-strict-authority-must-be-independent-from-implementation'],
+    ['authorized-original-runtime-operator', 'authorized-original-runtime-operator-cannot-self-sign-implementation'],
+    ['spanish-reviewer', 'spanish-reviewer-must-be-separate-from-implementation-author'],
+    ['independent-visual-reviewer', 'independent-visual-reviewer-must-not-be-implementation-author'],
+  ];
+  for (const [reviewRole, blocker] of independenceSensitiveRoles) {
+    const reviewer = assignment(reviewRole, 'primary');
+    if (reviewer && implementationRoles.some((implementationRole) =>
+      reviewer === assignment(implementationRole, 'primary'))) {
+      assignmentBlockers.push(blocker);
     }
   }
   const owner = assignment('owner-approver', 'primary');
@@ -106,7 +114,7 @@ export function evaluateGovernance(value) {
   return {
     status: errors.length ? "invalid" : assignmentBlockers.length ? "blocked" : "ready-for-m0",
     errors,
-    blockers: assignmentBlockers,
+    blockers: [...new Set(assignmentBlockers)],
     roleCount: roles.length,
     m0Exit: Boolean(value?.m0Exit),
   };

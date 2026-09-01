@@ -215,6 +215,20 @@ named backup identity/capacity receipt. A storage backup is not a named-human
 backup assignment: each required backup stays null until an exact G678 path,
 person, role, and committed weekly hours are reviewed.
 
+A successor Owner assignment intake now also records Dr. Peter Hu as the
+primary migration lead, factory/toolchain engineer, integration engineer,
+QA/strict authority, authorized original-runtime operator, Spanish reviewer,
+audio reviewer, independent visual reviewer, and release custodian. These are
+valid records of the Owner's assignment intent, but they do not satisfy the
+independence contract: the same person cannot independently validate or sign
+their own implementation, original-runtime evidence, Spanish review, visual
+review, strict evidence, and Owner acceptance. The assigned governance roles
+carry an aggregate minimum of 88 hours per week for Dr. Peter Hu, while no
+committed capacity was supplied. The governance checker therefore keeps M0
+blocked on capacity, all backup slots, and the explicit identity-overlap
+conflicts until independent replacement reviewers or reviewed exceptions are
+provided.
+
 The web route has a second defense-in-depth check: even an individually marked
 `approved` mapping cannot create a grade URL until the hash-bound readiness
 report says `authority-approved` and `gradeRouteGenerationAllowed=true`. A

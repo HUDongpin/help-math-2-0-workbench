@@ -13,17 +13,17 @@
   "status": "blocked",
   "requiredRoles": [
     {"role": "product-owner", "primary": "dr-peter-hu", "backup": null, "minimumHoursPerWeek": {"primary": 4, "backup": 0}, "independence": "final-scope-and-promotion-only"},
-    {"role": "migration-lead", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "orchestration-and-ledger"},
-    {"role": "factory-toolchain-engineer", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "parser-ir-generator-cas-license"},
-    {"role": "integration-engineer", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "registry-descriptor-route-host"},
-    {"role": "qa-strict-authority", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "independent-validator-and-ledger"},
-    {"role": "authorized-original-runtime-operator", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 20, "backup": 8}, "independence": "cannot-self-sign-implementation"},
+    {"role": "migration-lead", "primary": "dr-peter-hu", "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "orchestration-and-ledger"},
+    {"role": "factory-toolchain-engineer", "primary": "dr-peter-hu", "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "parser-ir-generator-cas-license"},
+    {"role": "integration-engineer", "primary": "dr-peter-hu", "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "registry-descriptor-route-host"},
+    {"role": "qa-strict-authority", "primary": "dr-peter-hu", "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "independent-validator-and-ledger"},
+    {"role": "authorized-original-runtime-operator", "primary": "dr-peter-hu", "backup": null, "minimumHoursPerWeek": {"primary": 20, "backup": 8}, "independence": "cannot-self-sign-implementation"},
     {"role": "math-ccss-reviewer", "primary": "professor-eric", "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "grade-mapping-and-mathematical-semantics"},
-    {"role": "spanish-reviewer", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "language-and-behavior-review"},
-    {"role": "audio-reviewer", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "named-human-listening-and-sync"},
-    {"role": "independent-visual-reviewer", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "must-not-be-implementation-author"},
+    {"role": "spanish-reviewer", "primary": "dr-peter-hu", "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "language-and-behavior-review"},
+    {"role": "audio-reviewer", "primary": "dr-peter-hu", "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "named-human-listening-and-sync"},
+    {"role": "independent-visual-reviewer", "primary": "dr-peter-hu", "backup": null, "minimumHoursPerWeek": {"primary": 8, "backup": 4}, "independence": "must-not-be-implementation-author"},
     {"role": "owner-approver", "primary": "dr-peter-hu", "backup": null, "minimumHoursPerWeek": {"primary": 4, "backup": 2}, "independence": "separate-from-professional-reviewers"},
-    {"role": "release-custodian", "primary": null, "backup": null, "minimumHoursPerWeek": {"primary": 4, "backup": 2}, "independence": "atomic-release-and-publication-boundary"}
+    {"role": "release-custodian", "primary": "dr-peter-hu", "backup": null, "minimumHoursPerWeek": {"primary": 4, "backup": 2}, "independence": "atomic-release-and-publication-boundary"}
   ],
   "budget": {
     "currency": "USD",
@@ -33,7 +33,8 @@
   },
   "m0Exit": false,
   "blockers": [
-    "remaining-named-primary-and-backup-assignments-missing",
+    "all-required-primary-slots-named-capacity-not-verified",
+    "dr-peter-hu-aggregate-minimum-88h-per-week-capacity-not-verified",
     "product-owner-identity-self-attested-not-independently-verified",
     "owner-approver-identity-self-attested-not-independently-verified",
     "professor-eric-capacity-and-qualification-not-verified",

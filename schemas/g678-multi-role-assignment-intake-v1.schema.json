@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://helpmath.ai/schemas/g678-multi-role-assignment-intake-v1.schema.json",
+  "title": "HELP Math G6-G8 multi-role assignment intake v1",
+  "type": "object",
+  "required": ["schemaVersion", "artifactType", "intakeId", "identityId", "displayName", "declaredRole", "providedBy", "providedAt", "parentIdentityIntakePath", "parentIdentityIntakeSha256", "assignmentSourceText", "assignments", "existingAssignments", "aggregateMinimumRequiredHoursPerWeekForGovernanceRoles", "aggregateCommittedHoursPerWeek", "assignmentStatus", "independenceConflicts", "limitations", "acceptanceEffects"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schemaVersion": {"const": 1},
+    "artifactType": {"const": "g678-multi-role-assignment-intake-v1"},
+    "intakeId": {"type": "string", "minLength": 1},
+    "identityId": {"const": "dr-peter-hu"},
+    "displayName": {"const": "Dr. Peter Hu"},
+    "declaredRole": {"const": "CTO"},
+    "providedBy": {"const": "user-message"},
+    "providedAt": {"type": "string", "format": "date-time"},
+    "parentIdentityIntakePath": {"const": "catalog/owner-authorizations/g678-dr-peter-hu-identity-intake-20260901.json"},
+    "parentIdentityIntakeSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "assignmentSourceText": {"type": "string", "minLength": 1},
+    "assignments": {
+      "type": "array",
+      "minItems": 9,
+      "maxItems": 9,
+      "items": {
+        "type": "object",
+        "required": ["role", "slot", "minimumRequiredHoursPerWeek", "committedHoursPerWeek"],
+        "properties": {
+          "role": {"enum": ["migration-lead", "factory-toolchain-engineer", "integration-engineer", "qa-strict-authority", "authorized-original-runtime-operator", "spanish-reviewer", "audio-reviewer", "independent-visual-reviewer", "release-custodian"]},
+          "slot": {"const": "primary"},
+          "minimumRequiredHoursPerWeek": {"type": "number", "minimum": 0},
+          "committedHoursPerWeek": {"type": "null"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "existingAssignments": {"type": "array", "minItems": 3},
+    "aggregateMinimumRequiredHoursPerWeekForGovernanceRoles": {"const": 88},
+    "aggregateCommittedHoursPerWeek": {"type": "null"},
+    "assignmentStatus": {"const": "owner-declared-primary-assignments-capacity-and-independence-blocked"},
+    "independenceConflicts": {"type": "array", "minItems": 5, "items": {"type": "string"}},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "acceptanceEffects": {"type": "object", "additionalProperties": {"const": false}}
+  },
+  "additionalProperties": false
+}

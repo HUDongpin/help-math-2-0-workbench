@@ -1,0 +1,58 @@
+{
+  "$schema": "../../schemas/g678-multi-role-assignment-intake-v1.schema.json",
+  "schemaVersion": 1,
+  "artifactType": "g678-multi-role-assignment-intake-v1",
+  "intakeId": "g678-dr-peter-hu-multi-role-assignment-intake-20260901T131655Z",
+  "identityId": "dr-peter-hu",
+  "displayName": "Dr. Peter Hu",
+  "declaredRole": "CTO",
+  "providedBy": "user-message",
+  "providedAt": "2026-09-01T13:16:55Z",
+  "parentIdentityIntakePath": "catalog/owner-authorizations/g678-dr-peter-hu-identity-intake-20260901.json",
+  "parentIdentityIntakeSha256": "6dd894c0a025b351b96ad79ae5010d417fff7a5ac7654407343782a6c4622715",
+  "assignmentSourceText": "These are all Dr. Peter Hu: migration lead; factory/toolchain engineer; integration engineer; QA/strict authority; authorized original-runtime operator; Spanish reviewer; audio reviewer; independent visual reviewer; release custodian.",
+  "assignments": [
+    {"role": "migration-lead", "slot": "primary", "minimumRequiredHoursPerWeek": 8, "committedHoursPerWeek": null},
+    {"role": "factory-toolchain-engineer", "slot": "primary", "minimumRequiredHoursPerWeek": 8, "committedHoursPerWeek": null},
+    {"role": "integration-engineer", "slot": "primary", "minimumRequiredHoursPerWeek": 8, "committedHoursPerWeek": null},
+    {"role": "qa-strict-authority", "slot": "primary", "minimumRequiredHoursPerWeek": 8, "committedHoursPerWeek": null},
+    {"role": "authorized-original-runtime-operator", "slot": "primary", "minimumRequiredHoursPerWeek": 20, "committedHoursPerWeek": null},
+    {"role": "spanish-reviewer", "slot": "primary", "minimumRequiredHoursPerWeek": 8, "committedHoursPerWeek": null},
+    {"role": "audio-reviewer", "slot": "primary", "minimumRequiredHoursPerWeek": 8, "committedHoursPerWeek": null},
+    {"role": "independent-visual-reviewer", "slot": "primary", "minimumRequiredHoursPerWeek": 8, "committedHoursPerWeek": null},
+    {"role": "release-custodian", "slot": "primary", "minimumRequiredHoursPerWeek": 4, "committedHoursPerWeek": null}
+  ],
+  "existingAssignments": [
+    {"role": "product-owner", "slot": "primary", "minimumRequiredHoursPerWeek": 4},
+    {"role": "owner-approver", "slot": "primary", "minimumRequiredHoursPerWeek": 4},
+    {"role": "ccss-authority-reviewer", "slot": "primary", "minimumRequiredHoursPerWeek": null}
+  ],
+  "aggregateMinimumRequiredHoursPerWeekForGovernanceRoles": 88,
+  "aggregateCommittedHoursPerWeek": null,
+  "assignmentStatus": "owner-declared-primary-assignments-capacity-and-independence-blocked",
+  "independenceConflicts": [
+    "qa-strict-authority overlaps the migration, toolchain, and integration implementation roles",
+    "authorized-original-runtime-operator overlaps the implementation roles and cannot self-sign implementation evidence",
+    "Spanish reviewer overlaps the implementation roles",
+    "independent visual reviewer is the implementation author and therefore is not independent",
+    "Owner approver overlaps Spanish, audio, and independent visual professional review roles"
+  ],
+  "limitations": [
+    "The user's assignment intent is recorded exactly, but no committed weekly capacity was supplied.",
+    "A role assignment is not an acceptance record and does not authorize self-review or self-signing where independence is required.",
+    "All backup slots remain unassigned and null.",
+    "Independent replacement reviewers or independently reviewed exception authority are required before the affected gates can pass."
+  ],
+  "acceptanceEffects": {
+    "capacityVerified": false,
+    "independentReviewSatisfied": false,
+    "authoritativeOriginalRuntime": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "released": false,
+    "published": false
+  }
+}
