@@ -6,7 +6,7 @@ import {
   parseCaptureFrame,
   stageTargetId
 } from '@helpmath/demos/page-interaction';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 
 import {LessonCalculator} from '@/components/lesson-calculator';
 import {
@@ -83,6 +83,18 @@ function pageFlashFrame(
   return completed ? Math.max(1, page.frameCount) : 1;
 }
 
+function completeIfViewed(
+  current: ReadonlySet<string>,
+  page: LessonDescriptorPage | undefined
+): ReadonlySet<string> {
+  if (!page || pageHasRegisteredInteraction(page) || current.has(page.animationId)) {
+    return current;
+  }
+  const nextSet = new Set(current);
+  nextSet.add(page.animationId);
+  return nextSet;
+}
+
 export function LessonInteractionPlayer({
   descriptor,
   frameQuery,
@@ -94,7 +106,9 @@ export function LessonInteractionPlayer({
 }) {
   const labels = copy(locale);
   const [index, setIndex] = useState(0);
-  const [completed, setCompleted] = useState<ReadonlySet<string>>(() => new Set());
+  const [completed, setCompleted] = useState<ReadonlySet<string>>(() =>
+    completeIfViewed(new Set(), descriptor.pages[0])
+  );
   const [replayNonce, setReplayNonce] = useState(0);
   const [paused, setPaused] = useState(false);
   const [mapOpen, setMapOpen] = useState(false);
@@ -102,17 +116,6 @@ export function LessonInteractionPlayer({
   const [calculatorOpen, setCalculatorOpen] = useState(false);
 
   const page = descriptor.pages[Math.min(index, Math.max(0, descriptor.pages.length - 1))];
-
-  useEffect(() => {
-    if (!page || pageHasRegisteredInteraction(page)) return;
-    const animationId = page.animationId;
-    setCompleted((current) => {
-      if (current.has(animationId)) return current;
-      const nextSet = new Set(current);
-      nextSet.add(animationId);
-      return nextSet;
-    });
-  }, [page]);
 
   if (!page) {
     return (
@@ -139,6 +142,7 @@ export function LessonInteractionPlayer({
       setIndex(nextIndex);
       setReplayNonce((value) => value + 1);
       setMapOpen(false);
+      setCompleted((current) => completeIfViewed(current, descriptor.pages[nextIndex]));
     }
   };
 
