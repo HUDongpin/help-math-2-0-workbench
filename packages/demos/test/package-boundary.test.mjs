@@ -20,6 +20,7 @@ test("public exports contain only modern demo integration entry points", async (
     "./animation-registry",
     "./runtime",
     "./prototype-manifest",
+    "./page-interaction",
   ]);
   assert.equal(JSON.stringify(packageJson.exports).includes("ruffle"), false);
   assert.equal(JSON.stringify(packageJson.exports).includes(".swf"), false);
