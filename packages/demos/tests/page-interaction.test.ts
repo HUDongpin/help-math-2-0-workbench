@@ -8,6 +8,7 @@ import {
   placeTokenOnTarget,
   selectToken
 } from '../src/page-interaction/drag-drop';
+import {displayedFlashFrame} from '../src/page-interaction/frame';
 import {reducePointer} from '../src/page-interaction/pointer';
 import {
   hasPageInteraction,
@@ -99,4 +100,37 @@ test('cited Try It and Play It pages register stage target suffixes', () => {
     ids.filter((id) => id.includes('-ti-') || id.includes('-gs-')).length,
     ids.length
   );
+});
+
+test('capture frames freeze at the requested one-indexed Flash frame', () => {
+  assert.equal(displayedFlashFrame(5, 10, false), 5);
+  assert.equal(displayedFlashFrame(99, 10, true), 99);
+  assert.equal(displayedFlashFrame(undefined, 10, false), 1);
+  assert.equal(displayedFlashFrame(undefined, 10, true), 10);
+});
+
+test('subtraction Try It pages grade the difference and leave addend/sum as unused distractors', () => {
+  for (const animationId of ['course-g03-l02-ti-004', 'course-g03-l02-ti-005', 'course-g03-l02-ti-010']) {
+    const spec = pageInteractionFor(animationId);
+    assert.equal(spec?.kind, 'drag-drop-key-terms');
+    assert.equal(spec?.frameCount, 10);
+    const tokens = spec?.tokens ?? [];
+    const difference = tokens.find((token) => token.label.en === 'difference');
+    const addend = tokens.find((token) => token.label.en === 'addend');
+    const sum = tokens.find((token) => token.label.en === 'sum');
+    assert.deepEqual(difference?.correctTargetIds, ['slot-c']);
+    assert.deepEqual(addend?.correctTargetIds, []);
+    assert.deepEqual(sum?.correctTargetIds, []);
+    let state = createDragDropState(tokens);
+    state = placeTokenOnTarget(state, tokens, difference!.id, 'slot-c');
+    assert.equal(isDragDropSolved(state, tokens), true);
+    state = placeTokenOnTarget(state, tokens, addend!.id, 'slot-a');
+    assert.equal(isDragDropSolved(state, tokens), false);
+  }
+});
+
+test('Grade 4 Lesson 3 Try It uses number-line vocabulary instead of integer', () => {
+  const spec = pageInteractionFor('course-g04-l03-ti-005');
+  const labels = (spec?.tokens ?? []).map((token) => token.label.en);
+  assert.deepEqual(labels.sort(), ['negative', 'positive', 'zero']);
 });

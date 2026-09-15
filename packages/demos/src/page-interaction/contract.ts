@@ -63,6 +63,7 @@ export type PageInteractionSpec = Readonly<{
   animationId: string;
   kind: PageInteractionKind;
   stageTargetIdSuffix: string;
+  frameCount: number;
   pointerLifecycle: PointerLifecyclePolicy;
   prompt: LocalizedText;
   problem: LocalizedText;

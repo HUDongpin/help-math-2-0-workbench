@@ -3,6 +3,7 @@
 import {useEffect, useState} from 'react';
 
 import {localized, type AnimationLanguage, type PageInteractionSpec} from './contract';
+import {displayedFlashFrame} from './frame';
 
 function copy(lang: AnimationLanguage) {
   return lang === 'es'
@@ -19,12 +20,16 @@ function copy(lang: AnimationLanguage) {
 }
 
 export function SelectableTargetStage({
+  captureFrame,
+  interactive = true,
   lang,
   onSolved,
   replayNonce,
   spec,
   stageTargetId
 }: {
+  captureFrame?: number;
+  interactive?: boolean;
   lang: AnimationLanguage;
   onSolved?: () => void;
   replayNonce: number;
@@ -33,8 +38,11 @@ export function SelectableTargetStage({
 }) {
   const choices = spec.choices ?? [];
   const labels = copy(lang);
+  const frozen = !interactive || captureFrame != null;
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [status, setStatus] = useState<'idle' | 'correct' | 'incorrect'>('idle');
+  const solved = status === 'correct';
+  const flashFrame = displayedFlashFrame(captureFrame, spec.frameCount, solved);
 
   useEffect(() => {
     setSelectedId(null);
@@ -42,6 +50,7 @@ export function SelectableTargetStage({
   }, [replayNonce, spec.animationId]);
 
   const choose = (choiceId: string) => {
+    if (frozen) return;
     const choice = choices.find((item) => item.id === choiceId);
     if (!choice) return;
     setSelectedId(choiceId);
@@ -56,13 +65,14 @@ export function SelectableTargetStage({
   return (
     <div
       className="page-interaction-stage"
-      data-flash-frame="1"
+      data-flash-frame={String(flashFrame)}
+      data-interactive={frozen ? 'false' : 'true'}
       data-interaction-kind="selectable-targets"
       data-original-flash-pointer-lifecycle-established={
         spec.pointerLifecycle.originalFlashPointerLifecycleEstablished ? 'true' : 'false'
       }
       data-page-interaction-stage-target-id={stageTargetId}
-      data-solved={status === 'correct' ? 'true' : 'false'}
+      data-solved={solved ? 'true' : 'false'}
       id={stageTargetId}
     >
       <p className="page-interaction-stage__prompt">{localized(spec.prompt, lang)}</p>
@@ -73,6 +83,7 @@ export function SelectableTargetStage({
             aria-pressed={selectedId === choice.id}
             data-choice-id={choice.id}
             data-correct={choice.correct ? 'true' : 'false'}
+            disabled={frozen}
             key={choice.id}
             onClick={() => choose(choice.id)}
             type="button"

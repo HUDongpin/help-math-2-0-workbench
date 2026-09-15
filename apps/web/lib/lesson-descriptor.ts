@@ -23,8 +23,10 @@ export type LessonPageSource = {
     section: {code: string; label: string; titleEnglish?: string; titleSpanish?: string} | null;
     page: {number: number | null; ordinal: number | null} | null;
     titleDisplay: string;
+    titleEnglish?: string;
+    titleSpanish?: string | null;
   };
-  source: {path: string; sha256?: string};
+  source: {path: string; sha256?: string; swf?: {frameCount?: number; fps?: number}};
 };
 
 export type LessonDescriptorPage = {
@@ -33,7 +35,8 @@ export type LessonDescriptorPage = {
   sectionPageOrdinal: number;
   sectionCode: LessonSectionCode;
   animationId: string;
-  title: string;
+  title: {en: string; es: string};
+  frameCount: number;
   sourcePath: string;
   sourceSha256?: string;
   presentation?: {pageInteractionStageTargetIdSuffix: string};
@@ -57,7 +60,7 @@ export type LessonDescriptor = {
     lesson: number;
     href: string;
     domIdPrefix: string;
-    title: string;
+    title: {en: string; es: string};
     activePageCount: number;
   };
   stage: {width: 800; height: 600};
@@ -84,7 +87,7 @@ function pad(value: number, size: number): string {
 function defaultSectionLabel(code: LessonSectionCode): {en: string; es: string} {
   switch (code) {
     case 'IR':
-      return {en: 'Introduction', es: 'Introduction'};
+      return {en: 'Introduction', es: 'Introducción'};
     case 'RW':
       return {en: 'Your World', es: 'Tu mundo'};
     case 'VB':
@@ -104,6 +107,42 @@ function defaultSectionLabel(code: LessonSectionCode): {en: string; es: string} 
         throw new Error(`Unhandled section: ${String(exhaustive)}`);
       })(code);
   }
+}
+
+const LESSON_TITLE_ES: Readonly<Record<string, string>> = Object.freeze({
+  'Addition and Subtraction': 'Adición y sustracción',
+  'Negative Numbers': 'Números negativos',
+  'Add & Subtract Negative Numbers': 'Sumar y restar números negativos'
+});
+
+const PAGE_TITLE_ES: Readonly<Record<string, string>> = Object.freeze({
+  Introduction: 'Introducción'
+});
+
+function spanishNumberedTitle(kind: string, n: string): string | undefined {
+  switch (kind.toLowerCase()) {
+    case 'question':
+      return `Pregunta ${n}`;
+    case 'game':
+      return `Juego ${n}`;
+    case 'page':
+      return `Página ${n}`;
+    default:
+      return undefined;
+  }
+}
+
+export function localizedCatalogTitle(
+  english: string,
+  spanish?: string | null
+): {en: string; es: string} {
+  if (spanish && spanish.trim()) return {en: english, es: spanish};
+  const numbered = /^(Question|Game|Page)\s+(\d+)$/i.exec(english);
+  if (numbered) {
+    const localized = spanishNumberedTitle(numbered[1] ?? '', numbered[2] ?? '');
+    if (localized) return {en: english, es: localized};
+  }
+  return {en: english, es: PAGE_TITLE_ES[english] ?? LESSON_TITLE_ES[english] ?? english};
 }
 
 export function buildLessonDescriptor(
@@ -151,7 +190,11 @@ export function buildLessonDescriptor(
       sectionPageOrdinal,
       sectionCode,
       animationId: item.animationId,
-      title: item.classification.titleDisplay,
+      title: localizedCatalogTitle(
+        item.classification.titleDisplay,
+        item.classification.titleSpanish
+      ),
+      frameCount: item.source.swf?.frameCount ?? spec?.frameCount ?? 10,
       sourcePath: item.source.path,
       sourceSha256: item.source.sha256,
       ...(spec
@@ -189,7 +232,9 @@ export function buildLessonDescriptor(
       lesson,
       href: `/courses/${grade}/${lesson}`,
       domIdPrefix: `g${grade}-l${lesson}`,
-      title: pages[0]?.classification.lessonTitleDisplay ?? `Grade ${grade} Lesson ${lesson}`,
+      title: localizedCatalogTitle(
+        pages[0]?.classification.lessonTitleDisplay ?? `Grade ${grade} Lesson ${lesson}`
+      ),
       activePageCount: descriptorPages.length
     },
     stage: {width: 800, height: 600},

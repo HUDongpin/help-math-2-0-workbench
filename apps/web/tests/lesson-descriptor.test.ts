@@ -7,6 +7,7 @@ import {fileURLToPath} from 'node:url';
 import {
   buildLessonDescriptor,
   isCitedInteractiveLesson,
+  localizedCatalogTitle,
   pageHasRegisteredInteraction,
   pageRequiresInteraction,
   type LessonPageSource
@@ -36,6 +37,11 @@ test('Grade 3 Lesson 2 descriptor matches the production 70-page catalog sequenc
   assert.equal(pageHasRegisteredInteraction(tryIt[0]!), true);
   const intro = descriptor?.pages[0];
   assert.equal(intro && pageRequiresInteraction(intro), false);
+  assert.equal(tryIt[0]?.title.en, 'Question 1');
+  assert.equal(tryIt[0]?.title.es, 'Pregunta 1');
+  assert.equal(tryIt[0]?.frameCount, 10);
+  assert.equal(descriptor?.course.title.en, 'Addition and Subtraction');
+  assert.equal(descriptor?.course.title.es, 'Adición y sustracción');
 });
 
 test('cited Grade 4 and Grade 5 lessons register Try It overlays', () => {
@@ -45,4 +51,17 @@ test('cited Grade 4 and Grade 5 lessons register Try It overlays', () => {
   assert.equal(grade5?.pages.length, 56);
   assert.equal(grade4?.pages.find((page) => page.animationId === 'course-g04-l03-ti-002')?.presentation?.pageInteractionStageTargetIdSuffix, 'ti002-key-terms');
   assert.equal(grade5?.pages.find((page) => page.animationId === 'course-g05-l05-gs-002')?.presentation?.pageInteractionStageTargetIdSuffix, 'gs002-game');
+  assert.equal(grade4?.course.title.es, 'Números negativos');
+  assert.equal(grade5?.course.title.es, 'Sumar y restar números negativos');
+});
+
+test('catalog titles fall back to Spanish page and lesson names', () => {
+  assert.deepEqual(localizedCatalogTitle('Question 3'), {en: 'Question 3', es: 'Pregunta 3'});
+  assert.deepEqual(localizedCatalogTitle('Game 1'), {en: 'Game 1', es: 'Juego 1'});
+  assert.deepEqual(localizedCatalogTitle('Page 4'), {en: 'Page 4', es: 'Página 4'});
+  assert.deepEqual(localizedCatalogTitle('Introduction'), {en: 'Introduction', es: 'Introducción'});
+  assert.deepEqual(localizedCatalogTitle('Question 1', 'Pregunta uno'), {
+    en: 'Question 1',
+    es: 'Pregunta uno'
+  });
 });

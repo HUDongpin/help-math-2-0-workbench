@@ -48,6 +48,7 @@ function dragPage(options: {
     animationId: options.animationId,
     kind: 'drag-drop-key-terms',
     stageTargetIdSuffix: options.suffix,
+    frameCount: 10,
     pointerLifecycle: UNPROVEN_FLASH_POINTER_POLICY,
     prompt: DRAG_PROMPT,
     problem: options.problem,
@@ -74,6 +75,7 @@ function selectPage(options: {
     animationId: options.animationId,
     kind: 'selectable-targets',
     stageTargetIdSuffix: options.suffix,
+    frameCount: 10,
     pointerLifecycle: UNPROVEN_FLASH_POINTER_POLICY,
     prompt: GAME_PROMPT,
     problem: options.problem,
@@ -95,7 +97,6 @@ const SUBTRACTION = Object.freeze({en: 'subtraction', es: 'sustracción'});
 const POSITIVE = Object.freeze({en: 'positive', es: 'positivo'});
 const NEGATIVE = Object.freeze({en: 'negative', es: 'negativo'});
 const ZERO = Object.freeze({en: 'zero', es: 'cero'});
-const INTEGER = Object.freeze({en: 'integer', es: 'entero'});
 const OPPOSITE = Object.freeze({en: 'opposite', es: 'opuesto'});
 const ADD = Object.freeze({en: 'add', es: 'sumar'});
 const SUBTRACT = Object.freeze({en: 'subtract', es: 'restar'});
@@ -108,6 +109,14 @@ function additionTokens(leftId: string, rightId: string, sumId: string) {
     Object.freeze({id: leftId, label: ADDEND, correctTargetIds: Object.freeze(['slot-a', 'slot-b'])}),
     Object.freeze({id: rightId, label: ADDEND, correctTargetIds: Object.freeze(['slot-a', 'slot-b'])}),
     Object.freeze({id: sumId, label: SUM, correctTargetIds: Object.freeze(['slot-c'])})
+  ]);
+}
+
+function differenceWithDistractors(differenceId: string, addendId: string, sumId: string) {
+  return Object.freeze([
+    Object.freeze({id: differenceId, label: DIFFERENCE, correctTargetIds: Object.freeze(['slot-c'])}),
+    Object.freeze({id: addendId, label: ADDEND, correctTargetIds: Object.freeze([])}),
+    Object.freeze({id: sumId, label: SUM, correctTargetIds: Object.freeze([])})
   ]);
 }
 
@@ -135,11 +144,7 @@ const G03_L02: readonly PageInteractionSpec[] = Object.freeze([
     suffix: 'ti004-key-terms',
     sourceSwfPath: swfPath(3, 2, 'TI', 'L2TI04.swf'),
     problem: Object.freeze({en: '14 − 5 = 9', es: '14 − 5 = 9'}),
-    tokens: Object.freeze([
-      Object.freeze({id: 'g3l2-ti004-minuend', label: ADDEND, correctTargetIds: Object.freeze(['slot-a'])}),
-      Object.freeze({id: 'g3l2-ti004-subtrahend', label: ADDEND, correctTargetIds: Object.freeze(['slot-b'])}),
-      Object.freeze({id: 'g3l2-ti004-difference', label: DIFFERENCE, correctTargetIds: Object.freeze(['slot-c'])})
-    ]),
+    tokens: differenceWithDistractors('g3l2-ti004-difference', 'g3l2-ti004-addend', 'g3l2-ti004-sum'),
     targets: THREE_CELLS
   }),
   dragPage({
@@ -147,11 +152,7 @@ const G03_L02: readonly PageInteractionSpec[] = Object.freeze([
     suffix: 'ti005-key-terms',
     sourceSwfPath: swfPath(3, 2, 'TI', 'L2TI05.swf'),
     problem: Object.freeze({en: '20 − 8 = 12', es: '20 − 8 = 12'}),
-    tokens: Object.freeze([
-      Object.freeze({id: 'g3l2-ti005-a', label: ADDEND, correctTargetIds: Object.freeze(['slot-a', 'slot-b'])}),
-      Object.freeze({id: 'g3l2-ti005-b', label: ADDEND, correctTargetIds: Object.freeze(['slot-a', 'slot-b'])}),
-      Object.freeze({id: 'g3l2-ti005-difference', label: DIFFERENCE, correctTargetIds: Object.freeze(['slot-c'])})
-    ]),
+    tokens: differenceWithDistractors('g3l2-ti005-difference', 'g3l2-ti005-addend', 'g3l2-ti005-sum'),
     targets: THREE_CELLS
   }),
   dragPage({
@@ -173,7 +174,7 @@ const G03_L02: readonly PageInteractionSpec[] = Object.freeze([
     tokens: Object.freeze([
       Object.freeze({id: 'g3l2-ti007-addition', label: ADDITION, correctTargetIds: Object.freeze(['slot-a'])}),
       Object.freeze({id: 'g3l2-ti007-subtraction', label: SUBTRACTION, correctTargetIds: Object.freeze(['slot-b'])}),
-      Object.freeze({id: 'g3l2-ti007-sum', label: SUM, correctTargetIds: Object.freeze(['slot-c'])})
+      Object.freeze({id: 'g3l2-ti007-sum', label: SUM, correctTargetIds: Object.freeze([])})
     ]),
     targets: THREE_CELLS
   }),
@@ -198,11 +199,7 @@ const G03_L02: readonly PageInteractionSpec[] = Object.freeze([
     suffix: 'ti010-key-terms',
     sourceSwfPath: swfPath(3, 2, 'TI', 'L2TI10.swf'),
     problem: Object.freeze({en: '18 − 9 = 9', es: '18 − 9 = 9'}),
-    tokens: Object.freeze([
-      Object.freeze({id: 'g3l2-ti010-a', label: ADDEND, correctTargetIds: Object.freeze(['slot-a', 'slot-b'])}),
-      Object.freeze({id: 'g3l2-ti010-b', label: ADDEND, correctTargetIds: Object.freeze(['slot-a', 'slot-b'])}),
-      Object.freeze({id: 'g3l2-ti010-difference', label: DIFFERENCE, correctTargetIds: Object.freeze(['slot-c'])})
-    ]),
+    tokens: differenceWithDistractors('g3l2-ti010-difference', 'g3l2-ti010-addend', 'g3l2-ti010-sum'),
     targets: THREE_CELLS
   }),
   selectPage({
@@ -274,11 +271,14 @@ const G04_L03: readonly PageInteractionSpec[] = Object.freeze([
     animationId: 'course-g04-l03-ti-005',
     suffix: 'ti005-key-terms',
     sourceSwfPath: swfPath(4, 3, 'TI', 'L3TI05.swf'),
-    problem: Object.freeze({en: '−8 is an ___ because it is a whole number with a sign.', es: '−8 es un ___ porque es un número entero con signo.'}),
+    problem: Object.freeze({
+      en: 'On a number line: −8, 0, and 7',
+      es: 'En una recta numérica: −8, 0 y 7'
+    }),
     tokens: Object.freeze([
-      Object.freeze({id: 'g4l3-ti005-integer', label: INTEGER, correctTargetIds: Object.freeze(['slot-a'])}),
-      Object.freeze({id: 'g4l3-ti005-positive', label: POSITIVE, correctTargetIds: Object.freeze(['slot-b'])}),
-      Object.freeze({id: 'g4l3-ti005-zero', label: ZERO, correctTargetIds: Object.freeze(['slot-c'])})
+      Object.freeze({id: 'g4l3-ti005-negative', label: NEGATIVE, correctTargetIds: Object.freeze(['slot-a'])}),
+      Object.freeze({id: 'g4l3-ti005-zero', label: ZERO, correctTargetIds: Object.freeze(['slot-b'])}),
+      Object.freeze({id: 'g4l3-ti005-positive', label: POSITIVE, correctTargetIds: Object.freeze(['slot-c'])})
     ]),
     targets: THREE_CELLS
   }),

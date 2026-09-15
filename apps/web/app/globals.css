@@ -2259,11 +2259,15 @@ body:has(.capture-page) .site-header,body:has(.capture-page) .site-footer,.captu
 .page-interaction-stage__prompt,.page-interaction-stage__problem{font-weight:800}
 .page-interaction-stage__problem{font-size:1.4rem}
 .page-interaction-stage__cells{display:grid;gap:0.8rem;grid-template-columns:repeat(3,minmax(0,1fr));margin:1rem 0}
-.page-interaction-stage__cell{background:#fff;border:2px dashed #8d6400;border-radius:12px;min-height:72px;padding:0.6rem}
+.page-interaction-stage__cell{background:#fff;border:2px dashed #8d6400;border-radius:12px;cursor:pointer;min-height:72px;padding:0.6rem;text-align:left;width:100%}
+.page-interaction-stage__cell:disabled{cursor:not-allowed}
 .page-interaction-stage__cell span{display:block;font-size:0.75rem;font-weight:800;text-transform:uppercase}
 .page-interaction-stage__bank,.page-interaction-stage__choices{display:flex;flex-wrap:wrap;gap:0.5rem}
 .page-interaction-stage__bank button[aria-pressed=true],.page-interaction-stage__choices button[aria-pressed=true]{background:var(--yellow)}
 .page-interaction-stage__status{background:#e8f9f3;border-radius:8px;font-weight:800;padding:0.5rem 0.7rem}
+.page-interaction-stage[data-interactive=false]{pointer-events:none}
+.lesson-player__paused{background:#fff8d9;border-bottom:1px solid #c9b36a;font-weight:800;margin:0;padding:0.5rem 1rem}
+.lesson-player__stage[data-paused=true] .page-interaction-stage{opacity:0.6}
 @media(max-width:800px){
   .lesson-player__layout{grid-template-columns:1fr}
   .page-interaction-stage__cells{grid-template-columns:1fr}

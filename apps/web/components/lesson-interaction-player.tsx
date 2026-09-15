@@ -1,14 +1,20 @@
 'use client';
 
-import {PageInteractionStage, pageInteractionFor, stageTargetId} from '@helpmath/demos/page-interaction';
-import {useState} from 'react';
+import {
+  PageInteractionStage,
+  pageInteractionFor,
+  parseCaptureFrame,
+  stageTargetId
+} from '@helpmath/demos/page-interaction';
+import {useEffect, useState} from 'react';
 
 import {LessonCalculator} from '@/components/lesson-calculator';
 import {
   LESSON_PLAYER_ID,
   pageHasRegisteredInteraction,
   pageRequiresInteraction,
-  type LessonDescriptor
+  type LessonDescriptor,
+  type LessonDescriptorPage
 } from '@/lib/lesson-descriptor';
 
 function copy(locale: 'en' | 'es') {
@@ -25,6 +31,7 @@ function copy(locale: 'en' | 'es') {
         closeMap: 'Cerrar mapa',
         closeHelp: 'Cerrar ayuda',
         closeCalculator: 'Cerrar calculadora',
+        paused: 'Pausado.',
         pageOnly:
           'Esta página es visual de solo lectura en este workbench. El candidato current-JS de producción no está empaquetado aquí.',
         missingInteraction:
@@ -46,6 +53,7 @@ function copy(locale: 'en' | 'es') {
         closeMap: 'Close course map',
         closeHelp: 'Close help',
         closeCalculator: 'Close calculator',
+        paused: 'Paused.',
         pageOnly:
           'This page is visual-only in this workbench. Production current-JS artwork is not bundled in this snapshot.',
         missingInteraction:
@@ -62,11 +70,26 @@ function sectionLabel(descriptor: LessonDescriptor, code: string, locale: 'en' |
   return locale === 'es' ? (section?.label.es ?? code) : (section?.label.en ?? code);
 }
 
+function localizedTitle(title: {en: string; es: string}, locale: 'en' | 'es'): string {
+  return locale === 'es' ? title.es : title.en;
+}
+
+function pageFlashFrame(
+  page: LessonDescriptorPage,
+  captureFrame: number | undefined,
+  completed: boolean
+): number {
+  if (captureFrame != null) return captureFrame;
+  return completed ? Math.max(1, page.frameCount) : 1;
+}
+
 export function LessonInteractionPlayer({
   descriptor,
+  frameQuery,
   locale
 }: {
   descriptor: LessonDescriptor;
+  frameQuery?: string;
   locale: 'en' | 'es';
 }) {
   const labels = copy(locale);
@@ -79,6 +102,18 @@ export function LessonInteractionPlayer({
   const [calculatorOpen, setCalculatorOpen] = useState(false);
 
   const page = descriptor.pages[Math.min(index, Math.max(0, descriptor.pages.length - 1))];
+
+  useEffect(() => {
+    if (!page || pageHasRegisteredInteraction(page)) return;
+    const animationId = page.animationId;
+    setCompleted((current) => {
+      if (current.has(animationId)) return current;
+      const nextSet = new Set(current);
+      nextSet.add(animationId);
+      return nextSet;
+    });
+  }, [page]);
+
   if (!page) {
     return (
       <main className="lesson-player" id="main-content">
@@ -93,6 +128,10 @@ export function LessonInteractionPlayer({
   const next = descriptor.pages[index + 1];
   const percent = Math.round((completed.size / descriptor.pages.length) * 100);
   const missingRequired = pageRequiresInteraction(page) && !pageHasRegisteredInteraction(page);
+  const captureFrame = parseCaptureFrame(frameQuery, page.frameCount);
+  const flashFrame = pageFlashFrame(page, captureFrame, completed.has(page.animationId));
+  const interactive = !paused && captureFrame == null;
+  const pageTitle = localizedTitle(page.title, locale);
 
   const goTo = (animationId: string) => {
     const nextIndex = descriptor.pages.findIndex((item) => item.animationId === animationId);
@@ -147,7 +186,7 @@ export function LessonInteractionPlayer({
         <div className="lesson-player__layout">
           <aside className="lesson-player__spine" aria-label={locale === 'es' ? 'Directorio de la lección' : 'Lesson directory'}>
             <p className="lesson-player__spine-mark">
-              L{descriptor.course.lesson} · {descriptor.course.title}
+              L{descriptor.course.lesson} · {localizedTitle(descriptor.course.title, locale)}
             </p>
             <nav aria-label={locale === 'es' ? 'Navegación de la lección' : 'Lesson navigation'}>
               <ol>
@@ -184,17 +223,28 @@ export function LessonInteractionPlayer({
           <article className="lesson-player__column">
             <header className="lesson-player__heading">
               <p>{sectionLabel(descriptor, page.sectionCode, locale)}</p>
-              <h1>{page.title}</h1>
+              <h1>{pageTitle}</h1>
             </header>
             <div
               aria-label={`Grade ${descriptor.course.grade} · Lesson ${descriptor.course.lesson} · 800 by 600 stage`}
               className="lesson-player__stage-frame"
             >
-              <div className="lesson-shell2__stage lesson-player__stage" data-authored-stage="800x600">
+              <div
+                className="lesson-shell2__stage lesson-player__stage"
+                data-authored-stage="800x600"
+                data-capture={captureFrame != null ? 'true' : 'false'}
+                data-flash-frame={String(flashFrame)}
+                data-paused={paused ? 'true' : 'false'}
+              >
                 {paused ? (
-                  <p role="status">{locale === 'es' ? 'Pausado.' : 'Paused.'}</p>
-                ) : spec && targetId ? (
+                  <p className="lesson-player__paused" role="status">
+                    {labels.paused}
+                  </p>
+                ) : null}
+                {spec && targetId ? (
                   <PageInteractionStage
+                    captureFrame={captureFrame}
+                    interactive={interactive}
                     key={`${page.animationId}:${replayNonce}`}
                     lang={locale}
                     onSolved={markSolved}
@@ -205,10 +255,11 @@ export function LessonInteractionPlayer({
                 ) : (
                   <div
                     className="lesson-player__page-only"
+                    data-flash-frame={String(flashFrame)}
                     data-page-interaction-missing={missingRequired ? 'true' : 'false'}
                   >
                     <p className="lesson-player__page-kicker">
-                      {sectionLabel(descriptor, page.sectionCode, locale)} · {page.title}
+                      {sectionLabel(descriptor, page.sectionCode, locale)} · {pageTitle}
                     </p>
                     <p>{missingRequired ? labels.missingInteraction : labels.pageOnly}</p>
                     <p>
@@ -278,7 +329,7 @@ export function LessonInteractionPlayer({
                           onClick={() => goTo(item.animationId)}
                           type="button"
                         >
-                          {item.globalPageOrdinal}. {item.title}
+                          {item.globalPageOrdinal}. {localizedTitle(item.title, locale)}
                         </button>
                       </li>
                     ))}

@@ -5,12 +5,16 @@ import {KeyTermDragStage} from './KeyTermDragStage';
 import {SelectableTargetStage} from './SelectableTargetStage';
 
 export function PageInteractionStage({
+  captureFrame,
+  interactive = true,
   lang,
   onSolved,
   replayNonce,
   spec,
   stageTargetId
 }: {
+  captureFrame?: number;
+  interactive?: boolean;
   lang: AnimationLanguage;
   onSolved?: () => void;
   replayNonce: number;
@@ -21,6 +25,8 @@ export function PageInteractionStage({
     case 'drag-drop-key-terms':
       return (
         <KeyTermDragStage
+          captureFrame={captureFrame}
+          interactive={interactive}
           lang={lang}
           onSolved={onSolved}
           replayNonce={replayNonce}
@@ -31,6 +37,8 @@ export function PageInteractionStage({
     case 'selectable-targets':
       return (
         <SelectableTargetStage
+          captureFrame={captureFrame}
+          interactive={interactive}
           lang={lang}
           onSolved={onSolved}
           replayNonce={replayNonce}

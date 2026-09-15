@@ -2,6 +2,8 @@
 
 import {useMemo, useState} from 'react';
 
+import {evaluateCalculator, isCalculatorOperator} from '@/lib/lesson-calculator';
+
 export function LessonCalculator({locale, open}: {locale: 'en' | 'es'; open: boolean}) {
   const [display, setDisplay] = useState('0');
   const [stored, setStored] = useState<number | null>(null);
@@ -33,23 +35,18 @@ export function LessonCalculator({locale, open}: {locale: 'en' | 'es'; open: boo
     if (!Number.isFinite(current)) return;
     if (key === '=') {
       if (stored == null || operator == null) return;
-      const result =
-        operator === '+'
-          ? stored + current
-          : operator === '-'
-            ? stored - current
-            : operator === '*'
-              ? stored * current
-              : current === 0
-                ? stored
-                : stored / current;
-      setDisplay(String(result));
+      const result = evaluateCalculator(operator, stored, current);
+      if (result.ok) {
+        setDisplay(String(result.value));
+      } else {
+        setDisplay(result.display);
+      }
       setStored(null);
       setOperator(null);
       setFresh(true);
       return;
     }
-    if (key === '+' || key === '-' || key === '*' || key === '/') {
+    if (isCalculatorOperator(key)) {
       setStored(current);
       setOperator(key);
       setFresh(true);

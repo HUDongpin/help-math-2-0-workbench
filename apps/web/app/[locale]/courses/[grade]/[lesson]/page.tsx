@@ -8,12 +8,17 @@ import {buildLessonDescriptor, isCitedInteractiveLesson} from '@/lib/lesson-desc
 
 export const dynamic = 'force-dynamic';
 
+type Query = Record<string, string | string[] | undefined>;
+const first = (value: string | string[] | undefined) => (Array.isArray(value) ? value[0] : value);
+
 export default async function CoursePage({
-  params
+  params,
+  searchParams
 }: {
   params: Promise<{locale: 'en' | 'es'; grade: string; lesson: string}>;
+  searchParams: Promise<Query>;
 }) {
-  const {locale, grade, lesson} = await params;
+  const [{locale, grade, lesson}, query] = await Promise.all([params, searchParams]);
   if (!/^[3-5]$/.test(grade) || !/^\d{1,2}$/.test(lesson)) notFound();
   const gradeNumber = Number(grade);
   const lessonNumber = Number(lesson);
@@ -22,7 +27,13 @@ export default async function CoursePage({
   if (isCitedInteractiveLesson(gradeNumber, lessonNumber)) {
     const descriptor = buildLessonDescriptor(getCatalog().animations, gradeNumber, lessonNumber);
     if (!descriptor) notFound();
-    return <LessonInteractionPlayer descriptor={descriptor} locale={locale} />;
+    return (
+      <LessonInteractionPlayer
+        descriptor={descriptor}
+        frameQuery={first(query.frame)}
+        locale={locale}
+      />
+    );
   }
 
   const animations = completeAnimations()

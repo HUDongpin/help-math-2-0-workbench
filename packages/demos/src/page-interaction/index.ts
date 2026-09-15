@@ -38,6 +38,7 @@ export {
   pageInteractionFor,
   stageTargetId
 } from './registry';
+export {displayedFlashFrame, parseCaptureFrame} from './frame';
 export {PageInteractionStage} from './PageInteractionStage';
 export {KeyTermDragStage} from './KeyTermDragStage';
 export {SelectableTargetStage} from './SelectableTargetStage';

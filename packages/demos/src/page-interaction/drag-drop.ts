@@ -58,14 +58,23 @@ export function clearTarget(state: DragDropState, targetId: string): DragDropSta
   };
 }
 
+export function isRequiredToken(token: DragDropToken): boolean {
+  return token.correctTargetIds.length > 0;
+}
+
 export function isDragDropSolved(
   state: Pick<DragDropState, 'placements'>,
   tokens: readonly DragDropToken[]
 ): boolean {
-  if (tokens.length === 0) return false;
+  const required = tokens.filter(isRequiredToken);
+  if (required.length === 0) return false;
   const usedTargets = new Set<string>();
   for (const token of tokens) {
     const targetId = state.placements[token.id];
+    if (!isRequiredToken(token)) {
+      if (targetId) return false;
+      continue;
+    }
     if (!targetId || !token.correctTargetIds.includes(targetId) || usedTargets.has(targetId)) {
       return false;
     }
