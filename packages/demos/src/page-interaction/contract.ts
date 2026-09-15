@@ -8,6 +8,8 @@ export type LocalizedText = Readonly<{en: string; es: string}>;
 
 export type NativeRect = Readonly<{x: number; y: number; width: number; height: number}>;
 
+export type AnswerKeyMode = 'ungraded-practice' | 'source-backed';
+
 export type PageInteractionKind = 'drag-drop-key-terms' | 'selectable-targets';
 
 export type PointerLifecyclePolicy = Readonly<{
@@ -55,7 +57,7 @@ export type SelectableChoice = Readonly<{
 export type PageInteractionEvidence = Readonly<{
   sourceSwfPath: string;
   sourceSwfSha256?: string;
-  reconstruction: 'catalog-vocabulary-pending-swf-hit-test';
+  reconstruction: 'catalog-vocabulary-ungraded-practice' | 'source-backed-answer-key';
   notes: string;
 }>;
 
@@ -64,6 +66,7 @@ export type PageInteractionSpec = Readonly<{
   kind: PageInteractionKind;
   stageTargetIdSuffix: string;
   frameCount: number;
+  answerKey: AnswerKeyMode;
   pointerLifecycle: PointerLifecyclePolicy;
   prompt: LocalizedText;
   problem: LocalizedText;

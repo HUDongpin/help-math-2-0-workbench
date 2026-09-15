@@ -21,20 +21,21 @@ test('Grade 3 Lesson 2 Try It exposes real key-term drag targets', async ({page}
   await expect(page.locator('.lesson-shell2__stage button, .lesson-shell2__stage [data-drop-target-id]')).not.toHaveCount(0);
   await expect(page.locator('[data-drop-target-id="slot-a"]')).toBeEnabled();
 
-  await page.getByRole('button', {name: 'addend', exact: true}).first().focus();
+  await page.getByRole('button', {name: 'addend', exact: true}).focus();
   await page.keyboard.press('Enter');
   await page.locator('[data-drop-target-id="slot-a"]').focus();
   await page.keyboard.press('Enter');
-  await page.getByRole('button', {name: 'addend', exact: true}).focus();
+  await page.getByRole('button', {name: 'sum', exact: true}).focus();
   await page.keyboard.press('Enter');
   await page.locator('[data-drop-target-id="slot-b"]').focus();
   await page.keyboard.press('Enter');
-  await page.getByRole('button', {name: 'sum', exact: true}).focus();
+  await page.getByRole('button', {name: 'difference', exact: true}).focus();
   await page.keyboard.press('Enter');
   await page.locator('[data-drop-target-id="slot-c"]').focus();
   await page.keyboard.press('Enter');
-  await expect(page.getByRole('status')).toContainText('Correct');
+  await expect(page.getByRole('status')).toContainText('Practice recorded');
   await expect(page.locator('[data-solved="true"]')).toBeVisible();
+  await expect(page.locator('.page-interaction-stage')).toHaveAttribute('data-answer-key', 'ungraded-practice');
   expect(issues, `Unexpected browser errors:\n${issues.join('\n')}`).toEqual([]);
 });
 
@@ -43,8 +44,8 @@ test('Grade 3 Lesson 2 Play It exposes selectable answers and shell navigation s
   await page.goto('/courses/3/2', {waitUntil: 'networkidle'});
   await page.locator('[data-section-code="GS"]').first().click();
   await expect(page.locator('[data-current-animation-id="course-g03-l02-gs-002"]').first()).toBeVisible();
-  await page.getByRole('button', {name: '13'}).click();
-  await expect(page.getByRole('status')).toContainText('Correct');
+  await page.getByRole('button', {name: 'addend', exact: true}).click();
+  await expect(page.getByRole('status')).toContainText('Practice recorded');
   await page.getByRole('button', {name: 'Calculator'}).click();
   await expect(page.getByRole('button', {name: '7'})).toBeVisible();
   await page.getByRole('button', {name: '5', exact: true}).click();

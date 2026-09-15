@@ -9,11 +9,13 @@ function copy(lang: AnimationLanguage) {
   return lang === 'es'
     ? {
         success: 'Correcto.',
+        complete: 'Práctica registrada. Esta no es una clave calificada del Flash original.',
         retry: 'Esa no es la respuesta. Inténtalo de nuevo.',
         hint: 'Elige una respuesta. También puedes usar el teclado.'
       }
     : {
         success: 'Correct.',
+        complete: 'Practice recorded. This is not a graded Flash answer key.',
         retry: 'That is not the answer. Try again.',
         hint: 'Choose an answer. Keyboard activation works too.'
       };
@@ -40,8 +42,8 @@ export function SelectableTargetStage({
   const labels = copy(lang);
   const frozen = !interactive || captureFrame != null;
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [status, setStatus] = useState<'idle' | 'correct' | 'incorrect'>('idle');
-  const solved = status === 'correct';
+  const [status, setStatus] = useState<'idle' | 'complete' | 'correct' | 'incorrect'>('idle');
+  const solved = status === 'complete' || status === 'correct';
   const flashFrame = displayedFlashFrame(captureFrame, spec.frameCount, solved);
 
   useEffect(() => {
@@ -54,17 +56,30 @@ export function SelectableTargetStage({
     const choice = choices.find((item) => item.id === choiceId);
     if (!choice) return;
     setSelectedId(choiceId);
-    if (choice.correct) {
-      setStatus('correct');
-      onSolved?.();
-      return;
+    switch (spec.answerKey) {
+      case 'ungraded-practice':
+        setStatus('complete');
+        onSolved?.();
+        return;
+      case 'source-backed':
+        if (choice.correct) {
+          setStatus('correct');
+          onSolved?.();
+          return;
+        }
+        setStatus('incorrect');
+        return;
+      default: {
+        const exhaustive: never = spec.answerKey;
+        return exhaustive;
+      }
     }
-    setStatus('incorrect');
   };
 
   return (
     <div
       className="page-interaction-stage"
+      data-answer-key={spec.answerKey}
       data-flash-frame={String(flashFrame)}
       data-interactive={frozen ? 'false' : 'true'}
       data-interaction-kind="selectable-targets"
@@ -82,7 +97,7 @@ export function SelectableTargetStage({
           <button
             aria-pressed={selectedId === choice.id}
             data-choice-id={choice.id}
-            data-correct={choice.correct ? 'true' : 'false'}
+            data-correct={spec.answerKey === 'source-backed' && choice.correct ? 'true' : 'false'}
             disabled={frozen}
             key={choice.id}
             onClick={() => choose(choice.id)}
@@ -93,6 +108,11 @@ export function SelectableTargetStage({
         ))}
       </div>
       <p className="page-interaction-stage__hint">{labels.hint}</p>
+      {status === 'complete' ? (
+        <p className="page-interaction-stage__status" role="status">
+          {labels.complete}
+        </p>
+      ) : null}
       {status === 'correct' ? (
         <p className="page-interaction-stage__status" role="status">
           {labels.success}

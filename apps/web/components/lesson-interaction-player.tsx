@@ -39,7 +39,7 @@ function copy(locale: 'en' | 'es') {
         helpBody:
           'Usa Anterior y Siguiente para recorrer la lección. Try It y Play It incluyen controles reales cuando hay un overlay registrado. La calculadora es una herramienta de apoyo y no ejecuta ActionScript heredado.',
         reconstruction:
-          'Overlay interactivo reconstruido. El ciclo de puntero Flash original (hit-test AVM1) aún no está establecido.'
+          'Overlay interactivo reconstruido. No hay clave calificada: el archivo SWF original no está en este snapshot y no existe un workspace de migración.'
       }
     : {
         previous: 'Previous',
@@ -61,7 +61,7 @@ function copy(locale: 'en' | 'es') {
         helpBody:
           'Use Previous and Next to move through this lesson. Try It and Play It expose real controls when an overlay is registered. The calculator is a support tool and does not execute legacy ActionScript.',
         reconstruction:
-          'Reconstructed interaction overlay. Original Flash pointer lifecycle (AVM1 hit-test) is not established yet.'
+          'Reconstructed interaction overlay. Not a graded Flash answer key: the original SWF archive is missing here and no migration workspace exists yet.'
       };
 }
 
@@ -87,6 +87,9 @@ function completeIfViewed(
   current: ReadonlySet<string>,
   page: LessonDescriptorPage | undefined
 ): ReadonlySet<string> {
+  // Completion contract: page-only screens count when viewed. Registered
+  // Try It / Play It screens count when the learner finishes the ungraded
+  // practice (every token placed, or a Play It choice selected).
   if (!page || pageHasRegisteredInteraction(page) || current.has(page.animationId)) {
     return current;
   }

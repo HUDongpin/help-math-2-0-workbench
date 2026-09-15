@@ -3,7 +3,7 @@ import type {DragDropToken, DropTarget} from './contract';
 export type DragDropState = Readonly<{
   selectedTokenId: string | null;
   placements: Readonly<Record<string, string | null>>;
-  feedback: 'idle' | 'correct' | 'incorrect';
+  feedback: 'idle' | 'complete' | 'correct';
 }>;
 
 export function emptyPlacements(tokens: readonly DragDropToken[]): Record<string, string | null> {
@@ -44,7 +44,12 @@ export function placeTokenOnTarget(
   }
   placements[tokenId] = targetId;
   const next = {selectedTokenId: null, placements, feedback: 'idle' as const};
-  return {...next, feedback: isDragDropSolved(next, tokens) ? 'correct' : 'idle'};
+  const graded = isDragDropSolved(next, tokens);
+  const practiced = isDragDropPracticeComplete(next, tokens);
+  return {
+    ...next,
+    feedback: graded ? 'correct' : practiced ? 'complete' : 'idle'
+  };
 }
 
 export function clearTarget(state: DragDropState, targetId: string): DragDropState {
@@ -60,6 +65,13 @@ export function clearTarget(state: DragDropState, targetId: string): DragDropSta
 
 export function isRequiredToken(token: DragDropToken): boolean {
   return token.correctTargetIds.length > 0;
+}
+
+export function isDragDropPracticeComplete(
+  state: Pick<DragDropState, 'placements'>,
+  tokens: readonly DragDropToken[]
+): boolean {
+  return tokens.length > 0 && tokens.every((token) => Boolean(state.placements[token.id]));
 }
 
 export function isDragDropSolved(

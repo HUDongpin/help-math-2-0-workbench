@@ -4,6 +4,7 @@ import test from 'node:test';
 import {UNPROVEN_FLASH_POINTER_POLICY} from '../src/page-interaction/contract';
 import {
   createDragDropState,
+  isDragDropPracticeComplete,
   isDragDropSolved,
   placeTokenOnTarget,
   selectToken
@@ -93,6 +94,8 @@ test('cited Try It and Play It pages register stage target suffixes', () => {
   assert.ok(ids.includes('course-g05-l05-ti-002'));
   const spec = pageInteractionFor('course-g03-l02-ti-002');
   assert.equal(spec?.kind, 'drag-drop-key-terms');
+  assert.equal(spec?.answerKey, 'ungraded-practice');
+  assert.equal(spec?.evidence.reconstruction, 'catalog-vocabulary-ungraded-practice');
   assert.equal(spec?.pointerLifecycle.originalFlashPointerLifecycleEstablished, false);
   assert.equal(stageTargetId('g3-l2', spec!), 'g3-l2-ti002-key-terms');
   assert.equal(hasPageInteraction('course-g03-l02-ir-001-87689b4b'), false);
@@ -109,28 +112,27 @@ test('capture frames freeze at the requested one-indexed Flash frame', () => {
   assert.equal(displayedFlashFrame(undefined, 10, true), 10);
 });
 
-test('subtraction Try It pages grade the difference and leave addend/sum as unused distractors', () => {
-  for (const animationId of ['course-g03-l02-ti-004', 'course-g03-l02-ti-005', 'course-g03-l02-ti-010']) {
-    const spec = pageInteractionFor(animationId);
-    assert.equal(spec?.kind, 'drag-drop-key-terms');
-    assert.equal(spec?.frameCount, 10);
-    const tokens = spec?.tokens ?? [];
-    const difference = tokens.find((token) => token.label.en === 'difference');
-    const addend = tokens.find((token) => token.label.en === 'addend');
-    const sum = tokens.find((token) => token.label.en === 'sum');
-    assert.deepEqual(difference?.correctTargetIds, ['slot-c']);
-    assert.deepEqual(addend?.correctTargetIds, []);
-    assert.deepEqual(sum?.correctTargetIds, []);
-    let state = createDragDropState(tokens);
-    state = placeTokenOnTarget(state, tokens, difference!.id, 'slot-c');
-    assert.equal(isDragDropSolved(state, tokens), true);
-    state = placeTokenOnTarget(state, tokens, addend!.id, 'slot-a');
-    assert.equal(isDragDropSolved(state, tokens), false);
+test('cited overlays keep empty answer keys until a SWF audit exists', () => {
+  const spec = pageInteractionFor('course-g03-l02-ti-004');
+  assert.equal(spec?.answerKey, 'ungraded-practice');
+  assert.equal(spec?.problem.en, 'Question 3');
+  for (const token of spec?.tokens ?? []) {
+    assert.deepEqual(token.correctTargetIds, []);
   }
+  const labels = (spec?.tokens ?? []).map((token) => token.label.en).sort();
+  assert.deepEqual(labels, ['addend', 'difference', 'sum']);
+  let state = createDragDropState(spec!.tokens ?? []);
+  for (const [index, token] of (spec?.tokens ?? []).entries()) {
+    state = placeTokenOnTarget(state, spec!.tokens ?? [], token.id, `slot-${['a', 'b', 'c'][index]}`);
+  }
+  assert.equal(isDragDropSolved(state, spec!.tokens ?? []), false);
+  assert.equal(isDragDropPracticeComplete(state, spec!.tokens ?? []), true);
+  assert.equal(state.feedback, 'complete');
 });
 
-test('Grade 4 Lesson 3 Try It uses number-line vocabulary instead of integer', () => {
+test('Grade 4 Lesson 3 practice uses catalog number-line vocabulary', () => {
   const spec = pageInteractionFor('course-g04-l03-ti-005');
   const labels = (spec?.tokens ?? []).map((token) => token.label.en);
   assert.deepEqual(labels.sort(), ['negative', 'positive', 'zero']);
+  assert.ok((spec?.tokens ?? []).every((token) => token.correctTargetIds.length === 0));
 });

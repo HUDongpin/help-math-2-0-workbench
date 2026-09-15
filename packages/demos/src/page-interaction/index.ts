@@ -7,6 +7,7 @@ export {
   localized
 } from './contract';
 export type {
+  AnswerKeyMode,
   AnimationLanguage,
   DragDropToken,
   DropTarget,
@@ -22,6 +23,7 @@ export {
   createDragDropState,
   emptyPlacements,
   findDropTargetAtPoint,
+  isDragDropPracticeComplete,
   isDragDropSolved,
   placeTokenOnTarget,
   selectToken,

@@ -5,6 +5,7 @@ import {useEffect, useMemo, useState, type DragEvent} from 'react';
 import {localized, type AnimationLanguage, type PageInteractionSpec} from './contract';
 import {
   createDragDropState,
+  isDragDropPracticeComplete,
   isDragDropSolved,
   placeTokenOnTarget,
   selectToken,
@@ -19,6 +20,8 @@ function copy(lang: AnimationLanguage) {
         bank: 'Términos clave',
         drop: 'Suelta el término aquí',
         success: 'Correcto. Todos los términos están en su lugar.',
+        complete:
+          'Práctica registrada. Esta no es una clave calificada del Flash original.',
         hint: 'Arrastra un término o selecciónalo y luego activa una casilla.',
         place: (token: string, cell: string) => `Colocar ${token} en ${cell}`
       }
@@ -26,9 +29,24 @@ function copy(lang: AnimationLanguage) {
         bank: 'Key terms',
         drop: 'Drop the term here',
         success: 'Correct. Every key term is in place.',
+        complete: 'Practice recorded. This is not a graded Flash answer key.',
         hint: 'Drag a term, or select it and then activate a Key Term cell.',
         place: (token: string, cell: string) => `Place ${token} on ${cell}`
       };
+}
+
+function dragFinished(spec: PageInteractionSpec, state: DragDropState): boolean {
+  const tokens = spec.tokens ?? [];
+  switch (spec.answerKey) {
+    case 'ungraded-practice':
+      return isDragDropPracticeComplete(state, tokens);
+    case 'source-backed':
+      return isDragDropSolved(state, tokens);
+    default: {
+      const exhaustive: never = spec.answerKey;
+      return exhaustive;
+    }
+  }
 }
 
 export function KeyTermDragStage({
@@ -53,7 +71,7 @@ export function KeyTermDragStage({
   const labels = copy(lang);
   const frozen = !interactive || captureFrame != null;
   const [state, setState] = useState<DragDropState>(() => createDragDropState(tokens));
-  const solved = isDragDropSolved(state, tokens);
+  const solved = dragFinished(spec, state);
   const flashFrame = displayedFlashFrame(captureFrame, spec.frameCount, solved);
 
   useEffect(() => {
@@ -105,6 +123,7 @@ export function KeyTermDragStage({
   return (
     <div
       className="page-interaction-stage"
+      data-answer-key={spec.answerKey}
       data-flash-frame={String(flashFrame)}
       data-interactive={frozen ? 'false' : 'true'}
       data-interaction-kind="drag-drop-key-terms"
@@ -170,6 +189,11 @@ export function KeyTermDragStage({
       {state.feedback === 'correct' ? (
         <p className="page-interaction-stage__status" role="status">
           {labels.success}
+        </p>
+      ) : null}
+      {state.feedback === 'complete' ? (
+        <p className="page-interaction-stage__status" role="status">
+          {labels.complete}
         </p>
       ) : null}
     </div>
