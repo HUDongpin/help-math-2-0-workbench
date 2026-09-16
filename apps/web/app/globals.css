@@ -2230,3 +2230,45 @@ body:has(.capture-page) .site-header,body:has(.capture-page) .site-footer,.captu
 
 @media(max-width:900px){.filter-panel,.ledger-filters{grid-template-columns:repeat(2,minmax(0,1fr))}.animation-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.status-metrics{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:600px){.filter-panel,.ledger-filters,.animation-grid,.status-metrics,.animation-evidence{grid-template-columns:1fr}.lesson-section{grid-template-columns:1fr}.animation-title-row,.prototype-warning,.capture-controls,.runtime-toolbar{align-items:flex-start;flex-direction:column}}
+
+.lesson-player{background:#eef5fb;color:var(--ink);min-height:100vh}
+.lesson-player__session{align-items:center;background:#fff;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;padding:0.8rem 1.2rem}
+.lesson-player__session progress{height:0.65rem;width:min(240px,40vw)}
+.lesson-player__layout{display:grid;gap:1rem;grid-template-columns:minmax(180px,240px) minmax(0,1fr);padding:1rem}
+.lesson-player__spine{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1rem}
+.lesson-player__spine-mark{font-weight:800;margin-top:0}
+.lesson-player__spine ol{list-style:none;margin:0;padding:0}
+.lesson-player__spine li{margin:0.25rem 0}
+.lesson-player__spine button,.lesson-player__toolbar button,.lesson-player__overlay button,.page-interaction-stage button,.lesson-player__calculator button{background:#fff;border:2px solid var(--ink);border-radius:10px;cursor:pointer;padding:0.4rem 0.7rem}
+.lesson-player__spine button[aria-current=step]{background:var(--yellow)}
+.lesson-player__column{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1rem}
+.lesson-player__heading p{margin:0;text-transform:uppercase;font-size:0.8rem;font-weight:800}
+.lesson-player__heading h1{margin:0.2rem 0 1rem}
+.lesson-player__stage-frame{max-width:800px}
+.lesson-player__stage{aspect-ratio:800/600;background:#b8d8f7;border:2px solid var(--ink);overflow:auto;position:relative}
+.lesson-player__page-only,.page-interaction-stage{box-sizing:border-box;min-height:100%;padding:1.1rem 1.2rem}
+.lesson-player__page-kicker{font-weight:800}
+.lesson-player__reconstruction{background:#fff8d9;border-top:1px solid #c9b36a;font-size:0.85rem;margin:0;padding:0.6rem 1rem}
+.lesson-player__toolbar{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem}
+.lesson-player__overlay{background:#fff;border:2px solid var(--ink);border-radius:16px;box-shadow:var(--shadow);inset:auto 1rem 1rem auto;max-height:70vh;overflow:auto;padding:1rem;position:fixed;right:1rem;top:6rem;width:min(420px,calc(100vw - 2rem));z-index:20}
+.lesson-player__overlay header{align-items:center;display:flex;justify-content:space-between}
+.lesson-player__overlay ol{padding-left:1.2rem}
+.lesson-player__calculator{margin-top:0.8rem}
+.lesson-player__calculator output{background:#14213d;border-radius:8px;color:#fff;display:block;font-size:1.4rem;margin-bottom:0.5rem;padding:0.4rem 0.6rem;text-align:right}
+.lesson-player__calculator-keys{display:grid;gap:0.35rem;grid-template-columns:repeat(4,minmax(0,1fr))}
+.page-interaction-stage__prompt,.page-interaction-stage__problem{font-weight:800}
+.page-interaction-stage__problem{font-size:1.4rem}
+.page-interaction-stage__cells{display:grid;gap:0.8rem;grid-template-columns:repeat(3,minmax(0,1fr));margin:1rem 0}
+.page-interaction-stage__cell{background:#fff;border:2px dashed #8d6400;border-radius:12px;cursor:pointer;min-height:72px;padding:0.6rem;text-align:left;width:100%}
+.page-interaction-stage__cell:disabled{cursor:not-allowed}
+.page-interaction-stage__cell span{display:block;font-size:0.75rem;font-weight:800;text-transform:uppercase}
+.page-interaction-stage__bank,.page-interaction-stage__choices{display:flex;flex-wrap:wrap;gap:0.5rem}
+.page-interaction-stage__bank button[aria-pressed=true],.page-interaction-stage__choices button[aria-pressed=true]{background:var(--yellow)}
+.page-interaction-stage__status{background:#e8f9f3;border-radius:8px;font-weight:800;padding:0.5rem 0.7rem}
+.page-interaction-stage[data-interactive=false]{pointer-events:none}
+.lesson-player__paused{background:#fff8d9;border-bottom:1px solid #c9b36a;font-weight:800;margin:0;padding:0.5rem 1rem}
+.lesson-player__stage[data-paused=true] .page-interaction-stage{opacity:0.6}
+@media(max-width:800px){
+  .lesson-player__layout{grid-template-columns:1fr}
+  .page-interaction-stage__cells{grid-template-columns:1fr}
+}
