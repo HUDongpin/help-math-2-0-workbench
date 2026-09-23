@@ -123,6 +123,12 @@ function pick(pair: readonly [string, string], spanish: boolean) {
   return pair[spanish ? 1 : 0];
 }
 
+function withClassContext(href: string, classId: string | null) {
+  return classId
+    ? `${href}${href.includes('?') ? '&' : '?'}classId=${encodeURIComponent(classId)}`
+    : href;
+}
+
 function Emoji({children}: {children: string}) {
   return <span aria-hidden="true" className={styles.emoji}>{children}</span>;
 }
@@ -196,6 +202,7 @@ function WordCard({
 
 function StudentToday({
   browserProgress,
+  classId,
   flippedWords,
   g4L3Available,
   locale,
@@ -206,6 +213,7 @@ function StudentToday({
   progress,
 }: {
   browserProgress: G4L3WholeLessonProgress | null;
+  classId: string | null;
   flippedWords: ReadonlySet<string>;
   g4L3Available: boolean;
   locale: G4L3Locale;
@@ -309,7 +317,7 @@ function StudentToday({
             <span className={styles.browserResume}>{copy.browser} · {getG4L3SectionLabel(currentSection, locale).text}</span>
           </div>
           {g4L3Available
-            ? <Link className={styles.primaryAction} href="/courses/4/3?mode=focus">
+            ? <Link className={styles.primaryAction} href={withClassContext('/courses/4/3?mode=focus', classId)}>
                 {copy.continue}<ArrowRight aria-hidden="true" size={19} />
               </Link>
             : <span aria-disabled="true" className={`${styles.primaryAction} ${styles.actionDisabled}`}>
@@ -383,21 +391,23 @@ function StudentToday({
         </div>
 
         <aside className={styles.dashboardSide}>
-          <article className={`${styles.card} ${styles.novaCard}`} id="learning-help">
-            <div className={styles.novaHeading}>
-              <span className={styles.novaAvatar}><Emoji>🤖</Emoji></span>
-              <div><h2>Nova</h2><p>{copy.helper}</p></div>
-            </div>
-            <p>{copy.helperBody}</p>
-            {novaCourseHref && novaCapabilities.text
-              ? <Link className={styles.novaAction} href={novaCourseHref}>
+          {novaCourseHref && novaCapabilities.text
+            ? <article className={`${styles.card} ${styles.novaCard}`} id="learning-help">
+                <div className={styles.novaHeading}>
+                  <span className={styles.novaAvatar}><Emoji>🤖</Emoji></span>
+                  <div><h2>Nova</h2><p>{copy.helper}</p></div>
+                </div>
+                <p>{copy.helperBody}</p>
+                <Link className={styles.novaAction} href={novaCourseHref}>
                   {copy.talk}<ArrowRight aria-hidden="true" size={18} />
                 </Link>
-              : <span aria-disabled="true" className={`${styles.novaAction} ${styles.actionDisabled}`}>
-                  {copy.novaUnavailable}
-                  <LockKeyhole aria-hidden="true" size={18} />
-                </span>}
-          </article>
+              </article>
+            : <article className={styles.card} id="learning-help">
+                <h2>{spanish ? 'Ayuda para aprender' : 'Learning help'}</h2>
+                <p>{spanish
+                  ? 'Usa las palabras importantes, los ejemplos y los controles de la lección. Tu docente también puede ayudarte.'
+                  : 'Use Important Words, examples, and lesson controls. Your teacher can help too.'}</p>
+              </article>}
 
           <article className={styles.card} id="today-words">
             <div className={styles.panelHeader}>
@@ -526,9 +536,11 @@ function WordsScreen({
 
 function LessonsScreen({
   availableLessons,
+  classId,
   locale,
 }: {
   availableLessons: readonly AvailableLearningLesson[];
+  classId: string | null;
   locale: G4L3Locale;
 }) {
   const spanish = locale === 'es';
@@ -569,7 +581,8 @@ function LessonsScreen({
         {lessons.map((lesson) => {
         const key = `${lesson.grade}-${lesson.lesson}`;
         const availableLesson = availableByKey.get(key);
-        const lessonHref = availableLesson?.href ?? null;
+        const lessonHref = availableLesson
+          ? withClassContext(availableLesson.href, classId) : null;
         const learnerRunnable = availableLesson !== undefined;
         const content = <>
           <span className={`${styles.lessonIcon} ${learnerRunnable ? styles.lessonIconOpen : ''}`}><Emoji>{lessonEmoji[lesson.title] ?? '🔢'}</Emoji></span>
@@ -603,9 +616,11 @@ function LessonsScreen({
 }
 
 function TeacherClassScreen({
+  canManageNova,
   locale,
   onPlan,
 }: {
+  canManageNova: boolean;
   locale: G4L3Locale;
   onPlan: () => void;
 }) {
@@ -657,7 +672,13 @@ function TeacherClassScreen({
       </article>
       <div className={styles.teacherAside}>
         <article className={styles.teacherPanel}><h2>{spanish ? 'Te necesitan hoy' : 'Needs you today'}</h2><div className={styles.attentionList} data-teacher-attention>{TEACHER_ATTENTION_SAMPLE.map((item) => <div className={item.tone === 'peach' ? styles.attentionPeach : styles.attentionSun} key={item.name}><p><strong>{item.name}</strong> — {pick(item.why, spanish)}</p><small>→ {pick(item.action, spanish)}</small></div>)}</div></article>
-        <article className={styles.teacherPanel}><h2>{spanish ? 'Controles de Nova' : 'Nova controls'}</h2><p className={styles.controlBoundary}>{spanish ? 'Controles de vista previa: no cambian una clase real.' : 'Preview controls: they do not change a real class.'}</p><div className={styles.toggleList}>{NOVA_CONTROL_SAMPLE.map((control, index) => <button aria-pressed={controlState.has(index)} key={control.title[0]} onClick={() => setControlState((current) => toggleSet(current, index))} type="button"><span><strong>{pick(control.title, spanish)}</strong><small>{pick(control.detail, spanish)}</small></span><i aria-hidden="true" /></button>)}</div></article>
+        {process.env.NODE_ENV !== 'production'
+          ? <article className={styles.teacherPanel}><h2>{spanish ? 'Controles de Nova' : 'Nova controls'}</h2><p className={styles.controlBoundary}>{spanish ? 'Controles de vista previa: no cambian una clase real.' : 'Preview controls: they do not change a real class.'}</p><div className={styles.toggleList}>{NOVA_CONTROL_SAMPLE.map((control, index) => <button aria-pressed={controlState.has(index)} key={control.title[0]} onClick={() => setControlState((current) => toggleSet(current, index))} type="button"><span><strong>{pick(control.title, spanish)}</strong><small>{pick(control.detail, spanish)}</small></span><i aria-hidden="true" /></button>)}</div></article>
+          : <article className={styles.teacherPanel}><h2>{spanish ? 'Controles de Nova' : 'Nova controls'}</h2><p>{spanish
+            ? 'Esta pantalla es una vista de muestra. Solo los administradores escolares y docentes verificados pueden cambiar Nova en la página de controles.'
+            : 'This screen is a sample view. Only verified school administrators and teachers can change Nova on the controls page.'}</p>{canManageNova
+              ? <Link href="/nova-settings">{spanish ? 'Abrir controles reales' : 'Open real controls'}</Link>
+              : null}</article>}
       </div>
     </div>
   </section>;
@@ -737,6 +758,8 @@ export function LearningPlatformWorkspace({
   activeLesson,
   authStatus,
   availableLessons,
+  canManageNova = false,
+  classId = null,
   designerToolsVisible,
   initialRole,
   initialScreen,
@@ -748,6 +771,8 @@ export function LearningPlatformWorkspace({
   activeLesson: AvailableLearningLesson | null;
   authStatus: PublicAuthStatus;
   availableLessons: readonly AvailableLearningLesson[];
+  canManageNova?: boolean;
+  classId?: string | null;
   designerToolsVisible: boolean;
   initialRole: Role;
   initialScreen: Screen;
@@ -830,6 +855,7 @@ export function LearningPlatformWorkspace({
     localeParameters.set('screen', screen);
   }
   if (designerToolsVisible) localeParameters.set('view', 'designer');
+  if (classId) localeParameters.set('classId', classId);
   const localeHref = localeParameters.size ? `/?${localeParameters}` : '/';
 
   const studentNav = [
@@ -876,7 +902,7 @@ export function LearningPlatformWorkspace({
             <span className={styles.railGroup}>{spanish ? 'Aprender' : 'Learn'}</span>
             <button aria-current={screen === 'today' ? 'page' : undefined} className={styles.navItem} onClick={() => openScreen('today')} type="button"><span className={styles.navIcon}><Emoji>🏡</Emoji></span><span>{spanish ? 'Hoy' : 'Today'}</span><i>{spanish ? '2 pendientes' : '2 to do'}</i></button>
             {activeLesson
-              ? <Link className={styles.navItem} href={activeLesson.href}><span className={styles.navIcon}><Emoji>📺</Emoji></span><span>{spanish ? 'Mi lección' : 'My lesson'}</span></Link>
+              ? <Link className={styles.navItem} href={withClassContext(activeLesson.href, classId)}><span className={styles.navIcon}><Emoji>📺</Emoji></span><span>{spanish ? 'Mi lección' : 'My lesson'}</span></Link>
               : <span aria-disabled="true" className={`${styles.navItem} ${styles.navItemDisabled}`}><span className={styles.navIcon}><Emoji>📺</Emoji></span><span>{spanish ? 'Mi lección · no disponible' : 'My lesson · unavailable'}</span></span>}
             {studentNav.slice(1).map((item) => <button aria-current={screen === item.screen ? 'page' : undefined} className={styles.navItem} key={item.screen} onClick={() => openScreen(item.screen)} type="button"><span className={styles.navIcon}><Emoji>{item.emoji}</Emoji></span><span>{spanish ? item.es : item.en}</span>{item.tail ? <i>{item.tail}</i> : null}</button>)}
           </> : <>
@@ -913,9 +939,9 @@ export function LearningPlatformWorkspace({
             className={styles.authActions}
           >
             <Link href="/sign-in">{spanish ? 'Iniciar sesión' : 'Sign in'}</Link>
-            <Link className={styles.authPrimary} href="/sign-up">
+            {process.env.NODE_ENV !== 'production' ? <Link className={styles.authPrimary} href="/sign-up">
               {spanish ? 'Crear cuenta' : 'Create account'}
-            </Link>
+            </Link> : null}
           </nav> : null}
           {authStatus === 'signed-in' ? <nav
             aria-label={spanish ? 'Cuenta local' : 'Local account'}
@@ -924,15 +950,18 @@ export function LearningPlatformWorkspace({
             <Link className={styles.authPrimary} href="/account">
               {spanish ? 'Mi cuenta' : 'My account'}
             </Link>
+            {canManageNova ? <Link href="/nova-settings">
+              {spanish ? 'Controles de Nova' : 'Nova controls'}
+            </Link> : null}
           </nav> : null}
           <button aria-label={theme === 'light' ? (spanish ? 'Cambiar a tema oscuro' : 'Switch to dark theme') : (spanish ? 'Cambiar a tema claro' : 'Switch to light theme')} className={styles.themeButton} onClick={changeTheme} type="button">{theme === 'light' ? <Moon aria-hidden="true" /> : <Sun aria-hidden="true" />}</button>
         </header>
         <main className={styles.workspace} id="main-content" ref={workspaceRef} tabIndex={-1}>
-          {screen === 'today' ? <StudentToday browserProgress={browserProgress} flippedWords={flippedWords} g4L3Available={g4L3Available} locale={locale} novaCapabilities={novaCapabilities} novaCourseHref={novaCourseHref} onFlipWord={flipWord} onOpenWords={() => openScreen('words')} progress={progress} /> : null}
+          {screen === 'today' ? <StudentToday browserProgress={browserProgress} classId={classId} flippedWords={flippedWords} g4L3Available={g4L3Available} locale={locale} novaCapabilities={novaCapabilities} novaCourseHref={novaCourseHref} onFlipWord={flipWord} onOpenWords={() => openScreen('words')} progress={progress} /> : null}
           {screen === 'practice' ? <PracticeScreen locale={locale} /> : null}
           {screen === 'words' ? <WordsScreen designerToolsVisible={designerToolsVisible} flippedWords={flippedWords} locale={locale} onFlipWord={flipWord} /> : null}
-          {screen === 'lessons' ? <LessonsScreen availableLessons={availableLessons} locale={locale} /> : null}
-          {screen === 'class' ? <TeacherClassScreen locale={locale} onPlan={() => openScreen('prep')} /> : null}
+          {screen === 'lessons' ? <LessonsScreen availableLessons={availableLessons} classId={classId} locale={locale} /> : null}
+          {screen === 'class' ? <TeacherClassScreen canManageNova={canManageNova} locale={locale} onPlan={() => openScreen('prep')} /> : null}
           {screen === 'prep' ? <TeacherPrepScreen locale={locale} /> : null}
           {designerToolsVisible && screen === 'notes' ? <DesignNotesScreen locale={locale} migrationStatusAvailable={migrationStatusAvailable} /> : null}
           <span className={styles.srOnly}>Browser progress: {progress.percent}% · current section {currentSection.code}</span>

@@ -4,7 +4,7 @@ import {notFound} from 'next/navigation';
 import {ClerkSignInFlow} from '@/components/auth/clerk-auth-ui';
 import {LocalAuthFlowPage} from '@/components/auth/local-auth-page';
 import {isLocale} from '@/content';
-import {isLocalAuthEnabled} from '@/lib/local-auth-access';
+import {isAuthEnabled, isLocalAuthEnabled} from '@/lib/local-auth-access';
 
 export async function generateMetadata({
   params,
@@ -15,8 +15,8 @@ export async function generateMetadata({
   return {
     robots: {follow: false, index: false},
     title: locale === 'es'
-      ? 'Inicia sesión en el espacio de aprendizaje local'
-      : 'Sign in to the local learning workspace',
+      ? 'Inicia sesión en HELP Math'
+      : 'Sign in to HELP Math',
   };
 }
 
@@ -26,8 +26,8 @@ export default async function SignInPage({
   params: Promise<{locale: string}>;
 }) {
   const {locale} = await params;
-  if (!isLocale(locale) || !isLocalAuthEnabled()) notFound();
+  if (!isLocale(locale) || !isAuthEnabled()) notFound();
   return <LocalAuthFlowPage locale={locale} mode="sign-in">
-    <ClerkSignInFlow locale={locale} />
+    <ClerkSignInFlow allowSignUp={isLocalAuthEnabled()} locale={locale} />
   </LocalAuthFlowPage>;
 }

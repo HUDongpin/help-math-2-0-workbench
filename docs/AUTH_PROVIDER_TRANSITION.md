@@ -4,6 +4,13 @@ Status: local product decision plus a local-only Clerk implementation candidate,
 recorded 2026-08-14 and refreshed 2026-08-15. This document is not a deployment, security approval,
 privacy approval, or release receipt.
 
+2026-09-24 addendum: the Nova class policy candidate introduces a separate
+production SSO gate, `CLERK_PRODUCTION_SSO_ENABLED`, requiring production Clerk
+key forms and an enterprise identity with an active connection and stable
+provider subject. It remains default off. The earlier local-only observations
+below describe the 2026-08-15 baseline; see `docs/NOVA_CLASS_POLICY_ROLLOUT.md`
+for the new candidate and its pending district acceptance.
+
 ## Current product truth
 
 - HELP Math 2.0 now has local-only Sign in, Sign up, Sign out, account, and

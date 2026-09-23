@@ -2,6 +2,7 @@ import type {AppLocale} from '@/i18n/routing';
 
 import {
   isClerkLocalAuthConfigurationReady,
+  isClerkProductionSsoConfigurationReady,
   isValidClerkLocalAuthOrigin,
   type ClerkLocalAuthEnvironment,
 } from './clerk-local-auth-config';
@@ -21,6 +22,19 @@ export function isLocalAuthEnabled(
   environment: ClerkLocalAuthEnvironment = process.env,
 ) {
   return isClerkLocalAuthConfigurationReady(environment);
+}
+
+export function isProductionSsoAuthEnabled(
+  environment: ClerkLocalAuthEnvironment = process.env,
+) {
+  return isClerkProductionSsoConfigurationReady(environment);
+}
+
+export function isAuthEnabled(
+  environment: ClerkLocalAuthEnvironment = process.env,
+) {
+  return isLocalAuthEnabled(environment)
+    || isProductionSsoAuthEnabled(environment);
 }
 
 export function isLocalAuthPath(pathname: string) {

@@ -785,6 +785,8 @@ export function LegacyResponsiveLessonShell({
   const [spineCollapsed, setSpineCollapsed] = useState(false);
   const [volumeControlOpen, setVolumeControlOpen] = useState(false);
   const [tutorOpen, setTutorOpen] = useState(false);
+  const [revokedClassId, setRevokedClassId] = useState<string | null>(null);
+  const novaPolicyRevoked = revokedClassId === novaCapabilities.classId;
   // Study owns a persistent support column on wide screens. It must not turn
   // into an unsolicited modal during the first mobile render, so the viewport
   // effect below opts the desktop column in after the media query resolves.
@@ -905,7 +907,8 @@ export function LegacyResponsiveLessonShell({
   // fully opaque, so nothing drawn beneath it is visible in the legacy
   // presentation either.
   const modernWide = visualSkin.presentation === 'modern-wide';
-  const tutorAvailable = modernWide && novaCapabilities.text && Boolean(tutorContext);
+  const tutorAvailable = modernWide && novaCapabilities.text &&
+    !novaPolicyRevoked && Boolean(tutorContext);
   const tutorOpenForMode = tutorOpen &&
     tutorOpenMode === novaTutorMode;
   const studySupportOpenForMode = studySupportOpen &&
@@ -918,6 +921,55 @@ export function LegacyResponsiveLessonShell({
     novaTutorMode === 'classroom' && tutorOpenForMode;
   const tutorVisible = tutorPanelVisible || classroomBandVisible;
   const tutorSurfaceVisible = tutorPanelVisible || classroomBandVisible;
+  useEffect(() => {
+    const classId = novaCapabilities.classId;
+    if (!classId || !novaCapabilities.text) {
+      return;
+    }
+    let active = true;
+    let checking = false;
+    const check = async () => {
+      if (checking || !active) return;
+      checking = true;
+      try {
+        const response = await fetch(
+          `/api/nova-policy/classes/${encodeURIComponent(classId)}/access`,
+          {cache: 'no-store', credentials: 'same-origin'},
+        );
+        const result = response.ok
+          ? await response.json() as {allowed?: boolean}
+          : null;
+        if (active && result?.allowed !== true) {
+          setRevokedClassId(classId);
+          setTutorOpen(false);
+          setTutorOpenMode(null);
+          setStudySupportOpen(false);
+        }
+      } catch {
+        if (active) {
+          setRevokedClassId(classId);
+          setTutorOpen(false);
+          setTutorOpenMode(null);
+          setStudySupportOpen(false);
+        }
+      } finally {
+        checking = false;
+      }
+    };
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') void check();
+    };
+    void check();
+    const interval = window.setInterval(() => void check(), 10_000);
+    window.addEventListener('focus', check);
+    document.addEventListener('visibilitychange', onVisible);
+    return () => {
+      active = false;
+      window.clearInterval(interval);
+      window.removeEventListener('focus', check);
+      document.removeEventListener('visibilitychange', onVisible);
+    };
+  }, [novaCapabilities.classId, novaCapabilities.text]);
   const contentPlane = useMemo(
     () => wholeLessonContentPlane({
       stage: visualSkin.authoredStage,
@@ -3337,6 +3389,10 @@ export function LegacyResponsiveLessonShell({
               key={`${novaTutorMode}:${tutorContext.releaseId}:${tutorContext.globalPageOrdinal}:${tutorContext.animationId}`}
               locale={locale}
               modal={tutorPanelModal}
+              onAccessRevoked={() => {
+                if (novaCapabilities.classId) setRevokedClassId(novaCapabilities.classId);
+                closeTutor();
+              }}
               onClose={closeTutor}
               onProviderConfirmed={setConfirmedTutorProvider}
               placement={novaTutorMode === 'study' ? 'study' : 'focus'}
@@ -3352,6 +3408,10 @@ export function LegacyResponsiveLessonShell({
             id={tutorPanelId}
             key={`${novaTutorMode}:${tutorContext.releaseId}:${tutorContext.globalPageOrdinal}:${tutorContext.animationId}`}
             locale={locale}
+            onAccessRevoked={() => {
+              if (novaCapabilities.classId) setRevokedClassId(novaCapabilities.classId);
+              closeTutor();
+            }}
             onClose={closeTutor}
             onProviderConfirmed={setConfirmedTutorProvider}
           />

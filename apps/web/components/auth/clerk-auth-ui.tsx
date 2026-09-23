@@ -32,13 +32,18 @@ export function ClerkSignUpFlow({locale}: {locale: AppLocale}) {
   />;
 }
 
-export function ClerkSignInFlow({locale}: {locale: AppLocale}) {
+export function ClerkSignInFlow({allowSignUp, locale}: {
+  allowSignUp: boolean;
+  locale: AppLocale;
+}) {
   return <SignIn
     appearance={appearance}
     fallbackRedirectUrl={localizedAuthPath(locale, '/')}
     path={localizedAuthPath(locale, '/sign-in')}
     routing="path"
-    signUpUrl={localizedAuthPath(locale, '/sign-up')}
+    {...(allowSignUp ? {
+      signUpUrl: localizedAuthPath(locale, '/sign-up'),
+    } : {})}
   />;
 }
 

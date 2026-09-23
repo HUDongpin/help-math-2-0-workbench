@@ -4,6 +4,10 @@ export type AuthSession = Readonly<
   | {
       provider: 'clerk';
       providerSubject: string;
+      enterpriseIdentity?: Readonly<{
+        connectionId: string;
+        subject: string;
+      }>;
       sessionId: string;
       status: 'signed-in';
     }

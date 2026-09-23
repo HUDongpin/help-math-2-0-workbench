@@ -4,6 +4,7 @@ import {notFound} from 'next/navigation';
 import {LearningPlatformWorkspace} from '@/components/learning-platform-workspace';
 import {isLocale} from '@/content';
 import {readAuthSession} from '@/lib/clerk-auth-session.server';
+import {listNovaSettings, readNovaClassAccess} from '@/lib/nova-class-policy.server';
 import {availableLearningLessons} from '@/lib/learning-lesson-availability.server';
 import {createPageMetadata} from '@/lib/metadata';
 import {
@@ -89,6 +90,13 @@ export default async function Home({
   const [{locale}, query] = await Promise.all([params, searchParams]);
   if (!isLocale(locale)) notFound();
   const authSession = await readAuthSession();
+  const requestedClassId = first(query.classId);
+  const classAccess = requestedClassId
+    ? await readNovaClassAccess(requestedClassId, authSession).catch(() => null)
+    : null;
+  const settings = await listNovaSettings(authSession).catch(() => null);
+  const canManageNova = Boolean(settings &&
+    (settings.schools.length > 0 || settings.classes.length > 0));
   const migrationStatusAvailable = isMigrationStatusAvailable();
   const designerToolsVisible = migrationStatusAvailable
     && isMigrationStatusDesignerViewRequested(query.view);
@@ -115,9 +123,9 @@ export default async function Home({
         enabled: isModernWideShellEnabled(),
       }),
     });
-    if (!capabilities.text) continue;
-    novaCourseHref = learnerVisibleLesson.href;
-    novaCapabilities = capabilities;
+    if (!capabilities.text || !classAccess?.allowed) continue;
+    novaCourseHref = `${learnerVisibleLesson.href}?classId=${encodeURIComponent(classAccess.classId)}`;
+    novaCapabilities = {...capabilities, classId: classAccess.classId};
     break;
   }
   return <LearningPlatformWorkspace
@@ -125,6 +133,8 @@ export default async function Home({
       lesson.grade === 4 && lesson.lesson === 3
     ) ?? availableLessons[0] ?? null}
     authStatus={authSession.status}
+    canManageNova={canManageNova}
+    classId={classAccess?.classId ?? null}
     availableLessons={availableLessons}
     designerToolsVisible={designerToolsVisible}
     initialRole={state.role}

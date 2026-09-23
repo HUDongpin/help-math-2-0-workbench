@@ -32,6 +32,7 @@ import {
 } from './lib/migration-status-access';
 import {
   isLocalAuthEnabled,
+  isAuthEnabled,
   isLocalAuthPath,
   isLocalAuthSessionApiPath,
 } from './lib/local-auth-access';
@@ -133,9 +134,14 @@ function localeFreePath(pathname: string) {
 
 function isAllowed(pathname: string, request: NextRequest) {
   if (
-    isLocalAuthEnabled()
-    && (isLocalAuthPath(pathname) || isLocalAuthSessionApiPath(pathname))
+    isAuthEnabled()
+    && (isLocalAuthSessionApiPath(pathname)
+      || (isLocalAuthPath(pathname)
+        && (!pathname.startsWith('/sign-up') || isLocalAuthEnabled()))
+      || pathname === '/nova-settings'
+      || pathname.startsWith('/api/nova-policy/'))
   ) return true;
+  if (pathname === '/api/nova') return true;
   if (isReferencePath(pathname)) {
     return isLocalReferenceDiagnosticRequestAllowed({
       headers: request.headers,
@@ -233,7 +239,7 @@ export async function proxyForRequest(request: NextRequest) {
   // where no route exists, so source-bound images and Canvas runtimes fail as
   // 404s before their own integrity policy can evaluate them.
   const localeFreeAsset = originalPath.startsWith('/flash-assets/');
-  const localeFreeAuthApi = isLocalAuthSessionApiPath(originalPath);
+  const localeFreeAuthApi = originalPath.startsWith('/api/');
   const localePrefixed = originalPath === '/en'
     || originalPath.startsWith('/en/')
     || originalPath === '/es'
@@ -285,11 +291,11 @@ export default async function proxy(
   event?: NextFetchEvent,
 ): Promise<Response> {
   if (isLocalAuthSessionApiPath(request.nextUrl.pathname)) {
-    if (!isLocalAuthEnabled() || !event) return NextResponse.next();
+    if (!isAuthEnabled() || !event) return NextResponse.next();
     const response = await clerkAwareProxy(request, event) ?? NextResponse.next();
     return normalizeLocalClerkMiddlewareResponse(response, request.nextUrl);
   }
-  if (!isLocalAuthEnabled() || !event) return proxyForRequest(request);
+  if (!isAuthEnabled() || !event) return proxyForRequest(request);
   const response = await clerkAwareProxy(request, event) ?? NextResponse.next();
   return normalizeLocalClerkMiddlewareResponse(response, request.nextUrl);
 }
@@ -299,5 +305,7 @@ export const config = {
     '/((?!api|_next|_vercel|.*\\..*).*)',
     '/flash-assets/:path*',
     '/api/auth/session',
+    '/api/nova',
+    '/api/nova-policy/:path*',
   ],
 };

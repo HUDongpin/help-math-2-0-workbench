@@ -1,0 +1,43 @@
+.page {
+  max-width: 850px;
+  margin: 3rem auto 5rem;
+  padding: 0 1.25rem;
+  color: #14213d;
+}
+
+.page header { margin-bottom: 2rem; }
+.page h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; }
+.page h2 { margin: 2rem 0 1rem; }
+.page h3 { margin: 0 0 .4rem; }
+.page p { line-height: 1.5; }
+.eyebrow { color: #1768d4; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.25rem;
+  margin: .75rem 0;
+  border: 1px solid #bdcee4;
+  border-radius: 16px;
+  background: #fff;
+}
+.card button {
+  flex: none;
+  min-width: 7rem;
+  padding: .75rem 1rem;
+  border: 2px solid #1768d4;
+  border-radius: 999px;
+  background: #fff;
+  color: #124c9a;
+  font-weight: 800;
+  cursor: pointer;
+}
+.card button[aria-checked="true"] { background: #1768d4; color: #fff; }
+.card button:disabled { opacity: .55; cursor: not-allowed; }
+.card a { color: #124c9a; font-weight: 700; }
+.locked { color: #7d3150; font-weight: 700; }
+@media (max-width: 540px) {
+  .card { align-items: stretch; flex-direction: column; }
+  .card button { align-self: flex-start; }
+}

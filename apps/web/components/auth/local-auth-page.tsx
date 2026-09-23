@@ -3,6 +3,7 @@ import type {ReactNode} from 'react';
 
 import {Link} from '@/i18n/navigation';
 import type {AppLocale} from '@/i18n/routing';
+import {isLocalAuthEnabled} from '@/lib/local-auth-access';
 
 import styles from './local-auth.module.css';
 
@@ -17,6 +18,7 @@ export function LocalAuthFlowPage({
 }>) {
   const spanish = locale === 'es';
   const signUp = mode === 'sign-up';
+  const local = isLocalAuthEnabled();
   return <main
     className={`${styles.page} ${signUp ? styles.signUpPage : ''}`}
     id="main-content"
@@ -30,9 +32,13 @@ export function LocalAuthFlowPage({
               ? 'Vuelve a tu aprendizaje'
               : 'Return to your learning'}</h1>
           : null}
-        {!signUp ? <p>{spanish
-          ? 'Inicia sesión en la instancia local de desarrollo. No uses credenciales históricas de HELP Math.'
-          : 'Sign in to the local development instance. Never use historical HELP Math credentials.'}</p> : null}
+        {!signUp ? <p>{local
+          ? (spanish
+            ? 'Inicia sesión en la instancia local de desarrollo. No uses credenciales históricas de HELP Math.'
+            : 'Sign in to the local development instance. Never use historical HELP Math credentials.')
+          : (spanish
+            ? 'Inicia sesión con la cuenta de tu distrito escolar.'
+            : 'Sign in with your school district account.')}</p> : null}
       </header>
       {children}
     </div>
@@ -44,10 +50,13 @@ export function LocalAccountPage({
   locale,
 }: Readonly<{children: ReactNode; locale: AppLocale}>) {
   const spanish = locale === 'es';
+  const local = isLocalAuthEnabled();
   return <main className={styles.page} id="main-content" tabIndex={-1}>
     <section className={styles.accountCard}>
       <ShieldCheck aria-hidden="true" />
-      <h1>{spanish ? 'Sesión local activa' : 'Local session active'}</h1>
+      <h1>{spanish
+        ? (local ? 'Sesión local activa' : 'Sesión activa')
+        : (local ? 'Local session active' : 'Session active')}</h1>
       <p>{spanish
         ? 'Clerk verificó esta sesión en el servidor. HELP Math no muestra ni guarda aquí datos personales del proveedor.'
         : 'Clerk verified this session on the server. HELP Math does not display or store provider personal data here.'}</p>

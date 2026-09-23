@@ -9,6 +9,7 @@ import {getSiteContent} from '@/content';
 import type {Locale} from '@/content/types';
 import {LocaleProvider} from '@/i18n/navigation';
 import {routing} from '@/i18n/routing';
+import {isAuthEnabled, isLocalAuthEnabled} from '@/lib/local-auth-access';
 import {getSiteUrl, SITE_DESCRIPTION, SITE_NAME} from '@/lib/site';
 
 import 'katex/dist/katex.min.css';
@@ -71,7 +72,11 @@ export default async function LocaleLayout({
         />
       </head>
       <body>
-        <ClerkLocalAuthProvider locale={appLocale}>
+        <ClerkLocalAuthProvider
+          enabled={isAuthEnabled()}
+          localAuth={isLocalAuthEnabled()}
+          locale={appLocale}
+        >
           <LocaleProvider locale={appLocale}>
             <a className="skip-link" href="#main-content">
               {content.skipToContent}

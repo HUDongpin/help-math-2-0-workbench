@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {afterEach, describe, it} from 'node:test';
-import {POST} from '../app/api/nova/route';
+import {createNovaPost} from '../lib/nova-route-handler.server';
 import {
   isNovaFrameContextEnabled,
   isNovaTutorEnabled,
@@ -58,6 +58,8 @@ const originalEnv = Object.fromEntries(envKeys.map((key) => [key, process.env[ke
 const testApiKey = 'sk-or-v1-test-only-key-1234567890';
 const onePixelPng =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=';
+const syntheticClassId = '11111111-1111-4111-8111-111111111111';
+const POST = createNovaPost(async () => true);
 
 function inputForPage(index: number, locale: 'en' | 'es' = 'en') {
   const page = G4_L3_LESSON.pages[index]!;
@@ -65,6 +67,7 @@ function inputForPage(index: number, locale: 'en' | 'es' = 'en') {
   const pageLabel = getG4L3PageLabel(page, locale);
   const sectionLabel = getG4L3SectionLabel(section, locale);
   return {
+    classId: syntheticClassId,
     locale,
     mode: 'study' as const,
     message: locale === 'es' ? 'Ayúdame a entender esta página.' : 'Help me understand this page.',
@@ -161,7 +164,10 @@ function routeRequest(body: unknown, headers: Record<string, string> = {}) {
       'sec-fetch-site': 'same-origin',
       ...headers,
     },
-    body: typeof body === 'string' ? body : JSON.stringify(body),
+    body: typeof body === 'string' ? body : JSON.stringify({
+      ...(body as Record<string, unknown>),
+      classId: syntheticClassId,
+    }),
   });
 }
 
@@ -224,6 +230,45 @@ afterEach(() => {
 });
 
 describe('Nova Tutor OpenRouter GPT-5.6 Luna integration', () => {
+  it('rejects a direct Nova call without a verified class before provider access', async () => {
+    configureRouteEnvironment();
+    let providerCalls = 0;
+    globalThis.fetch = async () => {
+      providerCalls += 1;
+      return providerResponse();
+    };
+    const unaffiliatedInput = {...inputForPage(4), classId: undefined};
+    const response = await createNovaPost(async () => {
+      throw new Error('Class lookup must not run without a class ID');
+    })(new Request('https://www.helpmath.ai/api/nova', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        origin: 'https://www.helpmath.ai',
+        'sec-fetch-site': 'same-origin',
+      },
+      body: JSON.stringify(unaffiliatedInput),
+    }));
+    assert.equal(response.status, 403);
+    assert.equal((await response.json()).error.code, 'NOVA_CLASS_NOT_ALLOWED');
+    assert.equal(providerCalls, 0);
+  });
+
+  it('fails closed when the class policy service is unavailable', async () => {
+    configureRouteEnvironment();
+    let providerCalls = 0;
+    globalThis.fetch = async () => {
+      providerCalls += 1;
+      return providerResponse();
+    };
+    const response = await createNovaPost(async () => {
+      throw new Error('database unavailable');
+    })(routeRequest(inputForPage(4)));
+    assert.equal(response.status, 503);
+    assert.equal((await response.json()).error.code, 'NOVA_CLASS_NOT_ALLOWED');
+    assert.equal(providerCalls, 0);
+  });
+
   it('requires the exact NOVA_TUTOR_ENABLED=true switch before provider access', async () => {
     let providerCalls = 0;
     globalThis.fetch = async () => {

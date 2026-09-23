@@ -178,6 +178,10 @@ function novaErrorMessage(locale: 'en' | 'es', code: string) {
       return spanish
         ? 'Nova no está disponible para esta lección. Sigue usando los apoyos de la página.'
         : 'Nova is not available for this lesson. Keep using the supports on this page.';
+    case 'NOVA_CLASS_NOT_ALLOWED':
+      return spanish
+        ? 'Nova no está disponible para esta clase. Sigue usando los apoyos de la lección.'
+        : 'Nova is not available for this class. Keep using the lesson supports.';
     case 'NOVA_FRAME_NOT_AVAILABLE':
       return spanish
         ? 'No se puede compartir el fotograma actual. Quita el fotograma y envía solo el texto.'
@@ -214,14 +218,18 @@ function novaErrorMessage(locale: 'en' | 'es', code: string) {
 }
 
 function useNovaConversation({
+  classId,
   context,
   locale,
   mode,
+  onAccessRevoked,
   onProviderConfirmed,
 }: {
+  classId?: string;
   context: TutorPageContext;
   locale: 'en' | 'es';
   mode: NovaTutorMode;
+  onAccessRevoked?: () => void;
   onProviderConfirmed?: (model: NovaTutorModel) => void;
 }) {
   const [conversation, setConversation] = useState<NovaConversationEntry[]>([]);
@@ -268,6 +276,7 @@ function useNovaConversation({
         method: 'POST',
         headers: {'content-type': 'application/json'},
         body: JSON.stringify({
+          ...(classId ? {classId} : {}),
           locale,
           mode,
           message,
@@ -329,6 +338,7 @@ function useNovaConversation({
       const code = caught instanceof NovaClientError
         ? caught.code
         : 'NETWORK_ERROR';
+      if (code === 'NOVA_CLASS_NOT_ALLOWED') onAccessRevoked?.();
       if (mountedRef.current) setError(novaErrorMessage(locale, code));
       return false;
     } finally {
@@ -336,7 +346,8 @@ function useNovaConversation({
       busyRef.current = false;
       if (mountedRef.current) setBusy(false);
     }
-  }, [appendConversation, context, locale, mode, onProviderConfirmed]);
+  }, [appendConversation, classId, context, locale, mode,
+    onAccessRevoked, onProviderConfirmed]);
 
   return {askNova, busy, conversation, error, lastModel};
 }
@@ -541,6 +552,7 @@ export function LessonNovaTutor({
   id,
   locale,
   modal = false,
+  onAccessRevoked,
   onClose,
   onProviderConfirmed,
   placement = 'focus',
@@ -551,6 +563,7 @@ export function LessonNovaTutor({
   id: string;
   locale: 'en' | 'es';
   modal?: boolean;
+  onAccessRevoked?: () => void;
   onClose: () => void;
   onProviderConfirmed?: (model: NovaTutorModel) => void;
   placement?: 'focus' | 'study';
@@ -569,9 +582,11 @@ export function LessonNovaTutor({
   const placementKey = tutorPlacementKey(context);
   const contextLabel = tutorContextSummary(context);
   const nova = useNovaConversation({
+    classId: capabilities.classId,
     context,
     locale,
     mode: placement,
+    onAccessRevoked,
     onProviderConfirmed,
   });
   const currentFrameSnapshot = capabilities.currentLessonFrame &&
@@ -944,6 +959,7 @@ export function LessonNovaClassroomBand({
   frameSnapshot,
   id,
   locale,
+  onAccessRevoked,
   onClose,
   onProviderConfirmed,
 }: {
@@ -952,6 +968,7 @@ export function LessonNovaClassroomBand({
   frameSnapshot: TutorFrameSnapshot | null;
   id: string;
   locale: 'en' | 'es';
+  onAccessRevoked?: () => void;
   onClose: () => void;
   onProviderConfirmed?: (model: NovaTutorModel) => void;
 }) {
@@ -961,9 +978,11 @@ export function LessonNovaClassroomBand({
   const [question, setQuestion] = useState('');
   const [speechNotice, setSpeechNotice] = useState('');
   const nova = useNovaConversation({
+    classId: capabilities.classId,
     context,
     locale,
     mode: 'classroom',
+    onAccessRevoked,
     onProviderConfirmed,
   });
   const updateSpeechDraft = useCallback((transcript: string) => {

@@ -8,6 +8,8 @@ export interface NovaClientCapabilities {
   readonly text: boolean;
   readonly currentLessonFrame: boolean;
   readonly speechToDraft: boolean;
+  /** Present only after the server verifies a signed-in class member. */
+  readonly classId?: string;
 }
 
 export const EMPTY_NOVA_CLIENT_CAPABILITIES: NovaClientCapabilities =

@@ -144,6 +144,7 @@ function mismatch(context: z.RefinementCtx, path: (string | number)[]) {
  */
 export const novaTutorRequestSchema = z
   .object({
+    classId: z.string().uuid().optional(),
     locale: z.enum(novaLocales),
     mode: z.enum(novaModes).optional().default('focus'),
     // This optional, privacy-safe provenance marker exists only so the route

@@ -5,7 +5,7 @@ import {ClerkSignOutControl} from '@/components/auth/clerk-auth-ui';
 import {LocalAccountPage} from '@/components/auth/local-auth-page';
 import {isLocale} from '@/content';
 import {readAuthSession} from '@/lib/clerk-auth-session.server';
-import {isLocalAuthEnabled, localizedAuthPath} from '@/lib/local-auth-access';
+import {isAuthEnabled, localizedAuthPath} from '@/lib/local-auth-access';
 
 export async function generateMetadata({
   params,
@@ -16,8 +16,8 @@ export async function generateMetadata({
   return {
     robots: {follow: false, index: false},
     title: locale === 'es'
-      ? 'Cuenta de aprendizaje local'
-      : 'Local learning account',
+      ? 'Cuenta de HELP Math'
+      : 'HELP Math account',
   };
 }
 
@@ -27,7 +27,7 @@ export default async function AccountPage({
   params: Promise<{locale: string}>;
 }) {
   const {locale} = await params;
-  if (!isLocale(locale) || !isLocalAuthEnabled()) notFound();
+  if (!isLocale(locale) || !isAuthEnabled()) notFound();
 
   const session = await readAuthSession();
   if (session.status !== 'signed-in') {

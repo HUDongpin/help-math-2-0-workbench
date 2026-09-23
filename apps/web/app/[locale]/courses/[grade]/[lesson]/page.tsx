@@ -6,6 +6,8 @@ import {WholeLessonCoursePlayer} from '@/components/whole-lesson-course-player';
 import {Link} from '@/i18n/navigation';
 import {completeAnimations, getCatalog, isLessonReleasePublished, publishedAnimations} from '@/lib/catalog';
 import {readAuthSession} from '@/lib/clerk-auth-session.server';
+import {readNovaClassAccess} from '@/lib/nova-class-policy.server';
+import {EMPTY_NOVA_CLIENT_CAPABILITIES} from '@/lib/nova-capabilities';
 import {
   currentJsShowcasePublication,
   G5_L4_SHOWCASE_RELEASE_ID,
@@ -42,12 +44,13 @@ export default async function CoursePage({
 }: {
   params: Promise<{locale: 'en' | 'es'; grade: string; lesson: string}>;
   searchParams: Promise<{
+    classId?: string | string[];
     mode?: string | string[];
     view?: string | string[];
   }>;
 }) {
   const {locale, grade, lesson} = await params;
-  const {mode, view} = await searchParams;
+  const {classId: requestedClassId, mode, view} = await searchParams;
   const novaTutorMode = resolveNovaTutorMode(mode);
   const designerView = isMigrationStatusAvailable()
     && isMigrationStatusDesignerViewRequested(view);
@@ -124,13 +127,21 @@ export default async function CoursePage({
       declared: courseRegistration.descriptor.visualSkin.presentations,
       enabled: isModernWideShellEnabled(),
     });
-    const novaCapabilities = resolveNovaClientCapabilities({
+    const authSession = await readAuthSession();
+    const classId = Array.isArray(requestedClassId)
+      ? requestedClassId[0] : requestedClassId;
+    const classAccess = classId
+      ? await readNovaClassAccess(classId, authSession).catch(() => null)
+      : null;
+    const courseCapabilities = resolveNovaClientCapabilities({
       grade: Number(grade),
       lesson: lessonNumber,
       releaseId: courseRegistration.descriptor.releaseId,
       hostPresentation,
     });
-    const authSession = await readAuthSession();
+    const novaCapabilities = classAccess?.allowed && courseCapabilities.text
+      ? {...courseCapabilities, classId: classAccess.classId}
+      : EMPTY_NOVA_CLIENT_CAPABILITIES;
     return <WholeLessonCoursePlayer
       audioEnabled={
         courseRegistration.descriptor.releaseId === G5_L4_SHOWCASE_RELEASE_ID
