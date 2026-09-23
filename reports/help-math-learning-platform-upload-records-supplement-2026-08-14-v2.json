@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-08-13T22:08:26Z",
+  "status": "supplemental-persistent-canonical-upload-records-bound-to-protected-candidate-evidence",
+  "purpose": "Bind the separately persisted, privacy-safe 1,405-record canonical upload list to the already frozen HELP Math learning-platform candidate and upload-closure receipts without modifying either frozen receipt.",
+  "candidate": {
+    "deploymentId": "dpl_H8AfxcvrPGjKLNMdCLv7hW393DX9",
+    "receiptPath": "reports/help-math-learning-platform-candidate-2026-08-14-v2.json",
+    "receiptSha256": "5da32836cff20c04fa8d3f37ff1162ccdccbe900189ebc6d96036351246ba91a",
+    "receiptSidecarPath": "reports/help-math-learning-platform-candidate-2026-08-14-v2.sha256",
+    "receiptSidecarSha256": "985f23ad9872026b4621d4b638a6b10a254ab26729151e254c3c57216a3a6f50",
+    "protectedCandidateReady": true,
+    "publicCustomDomainPromotionAuthorized": false
+  },
+  "uploadClosureReceipt": {
+    "path": "reports/help-math-learning-platform-upload-closure-2026-08-14-v2.json",
+    "sha256": "6837f751837437275bc243be95825bb546375850de151e78230499958431b750",
+    "sourceDryManifestPath": "/tmp/help-math-vercel-dry-final-v4.json",
+    "sourceDryManifestSha256": "e8c622a9367582cbebc3beb44e0265fe568e80cceb80f324173aceb23d91f8b1"
+  },
+  "persistentCanonicalRecords": {
+    "path": "reports/help-math-learning-platform-upload-records-2026-08-14-v2.json",
+    "sha256": "2631e0dc81a3ce3ebdea7ea42a0694629c579e271d6ebca6f9744dd9d9a0e3dd",
+    "sidecarPath": "reports/help-math-learning-platform-upload-records-2026-08-14-v2.sha256",
+    "sidecarSha256": "962b94a3a0afeab9fbd26dd43c3fc5594a95ea1ea600568f087899d0ea818e69",
+    "format": "compact JSON array sorted by UTF-8 path bytes; each record contains only path, size, mode, and sha-or-null",
+    "entries": 1405,
+    "directories": 33,
+    "regularFiles": 1372,
+    "regularBytes": 377682526,
+    "symlinks": 0,
+    "canonicalClosureSha256": "2631e0dc81a3ce3ebdea7ea42a0694629c579e271d6ebca6f9744dd9d9a0e3dd",
+    "restrictedDescendantPayloadRecords": 0,
+    "secretOrEnvironmentPayloadRecords": 0
+  },
+  "deterministicGenerator": {
+    "path": "scripts/build-help-math-learning-platform-upload-records.mjs",
+    "sha256": "c671995aa42a1438b5429c2cfb08581ec7b81be29a03b3ddb20e1083fb4d99ca",
+    "reproductionComparedByteForByte": true,
+    "reproductionMatched": true
+  },
+  "relationship": {
+    "candidateReceiptCanonicalClosureSha256": "2631e0dc81a3ce3ebdea7ea42a0694629c579e271d6ebca6f9744dd9d9a0e3dd",
+    "uploadClosureReceiptCanonicalClosureSha256": "2631e0dc81a3ce3ebdea7ea42a0694629c579e271d6ebca6f9744dd9d9a0e3dd",
+    "persistentRecordsArtifactSha256": "2631e0dc81a3ce3ebdea7ea42a0694629c579e271d6ebca6f9744dd9d9a0e3dd",
+    "allThreeDigestsMatch": true
+  },
+  "authorityBoundary": [
+    "This supplement preserves and hash-binds the full privacy-safe canonical record list that the earlier frozen receipts deliberately did not embed.",
+    "The relationship between the dry upload closure and the Vercel deployment is evidence recorded by the controlled deployment workflow; Vercel metadata did not return or cryptographically sign the canonical closure digest.",
+    "This supplement does not authorize public custom-domain promotion, owner or legal approval, strict migration completion, Flash fidelity, audio acceptance, human review, or publication.",
+    "The current public www/apex aliases remain subject to the owner containment direction and legal-review gate recorded in the frozen candidate receipt."
+  ]
+}

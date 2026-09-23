@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "animationId": "formula-elementary-conversion-01-04",
+  "reviewedAt": "2026-07-21T17:20:00Z",
+  "reviewer": "Codex engineering prereview",
+  "authority": "engineering-prereview-only",
+  "qaReport": {
+    "path": "migrations/formula-elementary-conversion-01-04/evidence/product-audio-controls-qa.json",
+    "sha256": "ac33fb4b3da281ae9e9aaf936130df76b5a60f9d634478464028cc55fb789652"
+  },
+  "sharedContactSheet": {
+    "path": "output/playwright/formula-audio-controls-qa/contact-sheet.png",
+    "sha256": "7b204fc8cc953d6db0cfdfd8abf755e975d1d8d091e377f818e570ccab0046c1"
+  },
+  "inspectedViews": ["desktop-en", "desktop-es", "narrow-es", "capture-frame-001"],
+  "result": "pass-product-engineering-prereview",
+  "findings": [
+    "English mode shows one English control; Spanish mode shows English and Spanish controls without clipping.",
+    "The 390 px layout stacks native buttons and keeps the player inside the viewport.",
+    "The 780 x 379 capture contains only the stage; the Next.js development overlay and runtime toolbar are absent.",
+    "Every product screenshot records capture-only suppression before and after capture; the development launcher is absent from the reviewed pixels."
+  ],
+  "notProven": ["original indexELM perceptual listening parity", "original-host activation/timing parity", "human owner acceptance"],
+  "authoritativeAudioListeningGate": "blocked",
+  "acceptanceEffect": "none",
+  "strictAcceptanceEffect": false
+}

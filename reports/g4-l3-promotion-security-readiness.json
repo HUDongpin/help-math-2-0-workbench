@@ -1,0 +1,222 @@
+{
+  "acceptance": {
+    "acceptanceNeutral": true,
+    "authoritativeBaselineAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "releaseAuthorized": false,
+    "strictCompletions": 0
+  },
+  "externalDependencies": {
+    "captureOperatorIdentityAndAttestationBound": false,
+    "fixedOutOfBandTrustRootInstalled": false,
+    "independentAppendOnlyOwnerLedgerDurabilityProven": false,
+    "independentHumanReviewerBound": false,
+    "independentPromotionSecurityReviewComplete": false,
+    "liveSessionProductionAnchorMissingCode": "ORIGINAL_RUNTIME_LIVE_SESSION_PRODUCTION_ANCHOR_NOT_CONFIGURED",
+    "liveSessionProductionTrustRootPath": "/Library/Application Support/HELP Math 2.0/original-runtime-production-trust/trust-root.json",
+    "ownerRepresentativeBound": false,
+    "projectorSignatureVerificationIsPointInTimeOnly": true,
+    "realImmutableCandidateEndToEndQualified": false,
+    "releaseCustodianBound": false,
+    "trustedProjectorStrictSignatureVerified": true
+  },
+  "generator": {
+    "bytes": 13072,
+    "path": "scripts/build-g4-l3-promotion-security-readiness.mjs",
+    "sha256": "09a1fc4c848c3f04668ba8668182539249d2abdff5d906bb43fb076c76f03e15"
+  },
+  "legacyAdopterBoundary": {
+    "authoritative": false,
+    "candidateKind": null,
+    "canonicalWriteImplementationPresent": false,
+    "durablePromotionTransactionIntegrated": false,
+    "legacyAdopter": "read-only-diagnostic-only",
+    "legacyRegistryAndReviewAuthority": "self-hash-operational-records-not-digital-signatures",
+    "promotionWritesEnabled": false,
+    "remainingGates": [
+      {
+        "category": "authority",
+        "code": "SIGNED_RELEASE_BUNDLE_INTEGRATION_REQUIRED",
+        "requirement": "Load a fixed owner-controlled trust root outside the project; verify signed registry/revocation history plus distinct capture, human, owner, and release identities; and bind the signed release bundle to the exact derived output plan."
+      },
+      {
+        "category": "natural-trace-causality-dag",
+        "code": "TYPED_CAUSALITY_DAG_INTEGRATION_REQUIRED",
+        "requirement": "Consume the branded canonical root/natural candidate result, complete immutable typed DAG closure, ordered action/checkpoint/Replay causality, runtime and host identity, and full archive closure in the production plan."
+      },
+      {
+        "category": "transaction",
+        "code": "DURABLE_NONCE_AND_TRANSACTION_ENTRY_REQUIRED",
+        "requirement": "Atomically reserve the signed one-time nonce before canonical writes and connect production execute and recovery to the private hash-bound transaction plan; the existing execute/recover exports remain hard-disabled."
+      },
+      {
+        "category": "path-transaction",
+        "code": "KERNEL_ANCHORED_PATH_RACE_CLOSURE_REQUIRED",
+        "requirement": "Close ancestor path races across check/create/link/rename/unlink with a reviewed kernel-anchored strategy (for example fixed directory descriptors/openat-style operations) and prove coverage CAS plus no-replace outputs under adversarial replacement."
+      },
+      {
+        "category": "qualification",
+        "code": "REAL_CANDIDATE_E2E_AND_INDEPENDENT_REVIEW_REQUIRED",
+        "requirement": "Pass a real immutable candidate end-to-end with crash recovery, replay, revocation, role-reuse, path-race, and manifest-drift negatives, followed by independent security review before any production writer is introduced."
+      }
+    ],
+    "signedReleaseBundleIntegrated": false,
+    "strictAcceptanceEffect": false,
+    "typedNaturalCausalityIntegrated": false
+  },
+  "productionFuses": {
+    "allClosed": true,
+    "legacyAdopterCanonicalWriteImplementationPresent": false,
+    "legacyAdopterPromotionWritesEnabled": false,
+    "naturalPromotionEnabled": false,
+    "productionTrustAnchorConfigured": false,
+    "releaseBundleProductionEnabled": false,
+    "releaseBundleWritesEnabled": false,
+    "transactionWritesEnabled": false,
+    "trustPromotionWritesEnabled": false
+  },
+  "readiness": {
+    "authoritativeOriginalRuntimeCaptureMayStart": false,
+    "capturePromotionDisposition": "pending-candidate-only",
+    "diagnosticVerifierReady": true,
+    "kernelAnchoredAncestorRaceClosureProven": false,
+    "legacyAdopterStructurallyReadOnly": true,
+    "productionExecuteAndRecoveryConnected": false,
+    "productionPromotionWriterReady": false,
+    "protectedPreexistingDiagnosticPids": [
+      97581
+    ],
+    "retroactiveLiveSessionClaimRejected": true,
+    "signedLiveSessionConsumerReady": true,
+    "signedLiveSessionRequiredDistinctSubjectsAndKeys": 5,
+    "signedLiveSessionSuccessDisposition": "verified-live-session-pending-candidate",
+    "signedReleaseBundleIntegratedWithAdopter": false,
+    "state": "security-suite-passed-production-fail-closed",
+    "strictAcceptanceEffect": "none",
+    "testOnlyTransactionMechanismReady": true,
+    "typedCausalityDagIntegratedWithAdopter": false
+  },
+  "remainingProductionGates": [
+    {
+      "category": "authority",
+      "code": "SIGNED_RELEASE_BUNDLE_INTEGRATION_REQUIRED",
+      "requirement": "Load a fixed owner-controlled trust root outside the project; verify signed registry/revocation history plus distinct capture, human, owner, and release identities; and bind the signed release bundle to the exact derived output plan."
+    },
+    {
+      "category": "natural-trace-causality-dag",
+      "code": "TYPED_CAUSALITY_DAG_INTEGRATION_REQUIRED",
+      "requirement": "Consume the branded canonical root/natural candidate result, complete immutable typed DAG closure, ordered action/checkpoint/Replay causality, runtime and host identity, and full archive closure in the production plan."
+    },
+    {
+      "category": "transaction",
+      "code": "DURABLE_NONCE_AND_TRANSACTION_ENTRY_REQUIRED",
+      "requirement": "Atomically reserve the signed one-time nonce before canonical writes and connect production execute and recovery to the private hash-bound transaction plan; the existing execute/recover exports remain hard-disabled."
+    },
+    {
+      "category": "path-transaction",
+      "code": "KERNEL_ANCHORED_PATH_RACE_CLOSURE_REQUIRED",
+      "requirement": "Close ancestor path races across check/create/link/rename/unlink with a reviewed kernel-anchored strategy (for example fixed directory descriptors/openat-style operations) and prove coverage CAS plus no-replace outputs under adversarial replacement."
+    },
+    {
+      "category": "qualification",
+      "code": "REAL_CANDIDATE_E2E_AND_INDEPENDENT_REVIEW_REQUIRED",
+      "requirement": "Pass a real immutable candidate end-to-end with crash recovery, replay, revocation, role-reuse, path-race, and manifest-drift negatives, followed by independent security review before any production writer is introduced."
+    }
+  ],
+  "reportType": "g4-l3-promotion-security-readiness",
+  "schemaVersion": 1,
+  "sourceBindings": {
+    "modules": [
+      {
+        "bytes": 103970,
+        "path": "scripts/adopt-course-original-runtime-evidence.mjs",
+        "sha256": "032c3c2fac44af378067f31fd638d0ccbdb69c7628388bef2a06ca856adca59b"
+      },
+      {
+        "bytes": 73752,
+        "path": "scripts/lib/original-runtime-natural-causality.mjs",
+        "sha256": "53fa1d7d6979f6d71105cf1c07bf54a409065b6f455f2cab6516fc75acc1ab84"
+      },
+      {
+        "bytes": 61813,
+        "path": "scripts/lib/original-runtime-promotion-trust.mjs",
+        "sha256": "7358c0894b2c9ae6cf73981ea46fcf9b6de86d3fe6776b37a9ca28b6dc39124f"
+      },
+      {
+        "bytes": 83966,
+        "path": "scripts/lib/original-runtime-promotion-transaction.mjs",
+        "sha256": "7e86c1a4b3fb44fedf7cb09a8df888f509e215ef7c484f6ad1a0adb3ea765623"
+      },
+      {
+        "bytes": 38286,
+        "path": "scripts/lib/original-runtime-promotion-release-bundle.mjs",
+        "sha256": "179462a5515e50c9ff3dab5a58ae283a5d78c1d8163e1d9089425110100c7f0d"
+      },
+      {
+        "bytes": 48458,
+        "path": "scripts/lib/original-runtime-live-session-consumer.mjs",
+        "sha256": "1195917baeaf4479f8561ffc3d049e4e2e679c0a251bb99f6b883cc62e8774e6"
+      }
+    ],
+    "originalRuntimeEnvironment": {
+      "bytes": 11540,
+      "path": "reports/g4-l3-original-runtime-environment-readiness.json",
+      "sha256": "06534a424cc7065e85044fa04665197f518abcef87cf4ddeae200510db8c6a54"
+    },
+    "suites": [
+      {
+        "bytes": 40251,
+        "path": "scripts/adopt-course-original-runtime-evidence.test.mjs",
+        "sha256": "a601025e7356926a8cebee3f4e6a74692fcd95a8c2c4da0e7babdc88c4f1fa82"
+      },
+      {
+        "bytes": 51417,
+        "path": "scripts/original-runtime-natural-causality.test.mjs",
+        "sha256": "988d442c2f1ffd1b74bd44909cd64bd07627419c65974084c3f4c8bed87e9f3b"
+      },
+      {
+        "bytes": 21012,
+        "path": "scripts/original-runtime-promotion-trust.test.mjs",
+        "sha256": "7a22831b569152b246ee42df3c32fde71d0e3ce5b6cbf7d7f59081cefac02194"
+      },
+      {
+        "bytes": 31166,
+        "path": "scripts/original-runtime-promotion-transaction.test.mjs",
+        "sha256": "91315eed7cc0c5021f83c85897d301fb9eb2f8eada9b760ab9360305d22ee0c3"
+      },
+      {
+        "bytes": 27380,
+        "path": "scripts/original-runtime-promotion-release-bundle.test.mjs",
+        "sha256": "407bb324c2512279ba881da7da97f41ee575b960bd959057d2845eb4252aeffe"
+      },
+      {
+        "bytes": 31753,
+        "path": "scripts/original-runtime-live-session-consumer.test.mjs",
+        "sha256": "0949de2c417335dd1f8b306a18eb3d6b031edbca3e45f73a80a51ba11d4765eb"
+      }
+    ]
+  },
+  "testResult": {
+    "cancelled": 0,
+    "failed": 0,
+    "passed": 163,
+    "reporter": "tap",
+    "runner": "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/bin/node",
+    "tests": 163
+  },
+  "verifiedControls": [
+    "typed recursive candidate DAG closure and content hashing",
+    "signature tampering, role mismatch, signer reuse, revocation freshness, and nonce replay rejection",
+    "path traversal, symlink, external hardlink, and disguised media rejection",
+    "per-migration lock and concurrent promotion exclusion",
+    "coverage compare-and-swap and manifest/output drift rejection",
+    "no-replace canonical file and archive publication",
+    "segmented hash-addressed transaction journal",
+    "partial journal, process-exit, rollback, and repeated crash recovery",
+    "durable test-only nonce reservation and foreign-drift preservation",
+    "release-bundle substitution and Merkle inclusion failure handling",
+    "signed live-session prelaunch, fresh-process claim, completion CAS, five-role separation, fixed-name opaque evidence byte closure, and retroactive-PID rejection",
+    "legacy adopter has no filesystem mutation capability or latent promotion return path"
+  ]
+}

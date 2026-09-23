@@ -44,8 +44,8 @@
 - [ ] Metadata and every required timeline beat have automated tests.
 - [ ] Language variants, boundary frames, completion, and Replay have automated tests.
 - [ ] Every reachable scenario and every language has complete frame 1-through-terminal coverage.
-- [ ] All tests pass.
-- [ ] Production build passes.
+- [x] All tests pass.
+- [x] Production build passes.
 - [ ] Implementation images exist for every required keyframe.
 - [ ] Diff images and normalized RMSE values exist for every required keyframe.
 - [ ] Static keyframes meet RMSE `<= 0.05` or have an accepted written exception.

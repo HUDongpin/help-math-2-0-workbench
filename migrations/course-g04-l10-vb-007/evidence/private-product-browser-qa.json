@@ -1,0 +1,365 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "course-g04-l10-vb-007-private-product-browser-qa-v26",
+  "calibrationId": "g4-l10-candidate-to-product-v26",
+  "status": "passed-private-product-engineering-browser-qa",
+  "animationId": "course-g04-l10-vb-007",
+  "observedAt": {
+    "start": "2026-08-21T10:32:57+08:00",
+    "end": "2026-08-21T10:46:03+08:00",
+    "timezone": "Asia/Shanghai"
+  },
+  "scope": {
+    "routeEn": "/en/migration-status/g4-l10-product-bridge?mode=focus",
+    "routeEs": "/es/migration-status/g4-l10-product-bridge?mode=focus",
+    "routeVisibility": "private-development-only",
+    "globalPageOrdinal": 11,
+    "activePageCount": 46,
+    "sectionCode": "VB",
+    "sectionPageOrdinal": 6,
+    "complexityLane": "interactive-understood",
+    "privateRegistrationCount": 15,
+    "publicRegistrationCount": 0,
+    "unregisteredCandidateCount": 9,
+    "honestLowLaneCountAmongRemainder": 0,
+    "newCandidateSelectionCountInV26": 1,
+    "newWorkspaceCount": 0
+  },
+  "environment": {
+    "tool": "playwright-cli",
+    "browser": "Chromium",
+    "baseUrl": "http://127.0.0.1:3214",
+    "serverMode": "Next.js development server",
+    "browserSession": "g4l10vb007v26",
+    "developmentServerClosedAfterQa": true,
+    "browserSessionClosedAfterQa": true
+  },
+  "implementationBindings": {
+    "implementationBeforeFreeze": {
+      "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v25.json",
+      "bytes": 19897,
+      "sha256": "38edf57be2859a8d1255579730776eacb325aaee2e297f152f42cae305230b6e"
+    },
+    "registrySuccessor": {
+      "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v26.json",
+      "bytes": 9188,
+      "sha256": "305c2faefbd37313916d572ba2b3bee9c060debf73a0103ffbf30e2e91a12547"
+    },
+    "maintainedModule": {
+      "path": "packages/demos/src/modules/course-g04-l10-vb-007.tsx",
+      "bytes": 22976,
+      "sha256": "270d65a6b6e9ddf75ee23df03afbdb7b7a2523358183548b9274eceb68bcdf22"
+    },
+    "timelineContract": {
+      "path": "packages/demos/src/timelines/course-g04-l10-vb-007.ts",
+      "bytes": 2989,
+      "sha256": "c5d4de1d703f1ed582405ea704724fe98fa9daf0c4032a156b4fda21244e4e6e"
+    },
+    "audioMaterializer": {
+      "path": "scripts/materialize-g4-l10-vb007-private-audio.mjs",
+      "bytes": 17558,
+      "sha256": "8d0cbc6003cb14dbeda087fa2c1e7141a02b9f3c53bdbf605eb54f1d35359f1c"
+    },
+    "audioManifest": {
+      "path": "public/flash-assets/courses/course-g04-l10-vb-007/audio/manifest.json",
+      "bytes": 15204,
+      "sha256": "808aacefd8b157f5e4659f0780d34f55b654a53ab2dff0c2d7629c9529a8a156"
+    },
+    "audioReceipt": {
+      "path": "migrations/course-g04-l10-vb-007/audit/private-product-audio-assets.json",
+      "bytes": 15407,
+      "sha256": "b2f01e75f71b8d89b07f8f489623464eeea8758e87417ce60684ab33fa83f642"
+    },
+    "privateRegistry": {
+      "path": "packages/demos/private-current-js-registry.json",
+      "bytes": 3055,
+      "sha256": "e20275a08fa78e8639846de73eaba3c956845f105dae47c332fab2f37ce81391"
+    },
+    "generatedRegistry": {
+      "path": "packages/demos/src/registry.generated.ts",
+      "bytes": 29505,
+      "sha256": "d3fa2a497c22286a53733ff94713ad093af308c70abb95a52f967aad68d790d9"
+    },
+    "pageOnlyDescriptor": {
+      "path": "apps/web/lib/g4-l10-product-bridge-descriptor.ts",
+      "bytes": 26342,
+      "sha256": "ccd4bd936d42496dbfae353fd7b59730480a7226e24c1dea8202947b7f2c55b3"
+    },
+    "genericStageHostDescriptorContract": {
+      "path": "apps/web/lib/whole-lesson-player-descriptor.ts",
+      "bytes": 22138,
+      "sha256": "43fa019f6b07e1d546e2517ce61ae77f1cebd86ade927d381b6e184e18831f7c"
+    },
+    "modernMyLessonPlayer": {
+      "path": "apps/web/components/descriptor-driven-whole-lesson-player.tsx",
+      "bytes": 37803,
+      "sha256": "76a3b203206d8f65e7402456d23f1d83e95a4cbb5def9d89e28ff669157e0f82"
+    }
+  },
+  "browserDiscoveredCorrections": [],
+  "behaviorHeavyGates": {
+    "randomBranches": {
+      "status": "closed-private-product-engineering",
+      "sourceHostWrongCardinality": 3,
+      "sourceHostRightCardinality": 4,
+      "unitTestExhaustsAllReachableBranches": true,
+      "browserObservedFirstWrongBranch": {
+        "branchIndex": 1,
+        "sourceInstance": "Mc_Wrong_Feed1",
+        "sourceTimelineId": "sprite-73"
+      },
+      "browserObservedPostReplayWrongBranch": {
+        "branchIndex": 2,
+        "sourceInstance": "Mc_Wrong_Feed2",
+        "sourceTimelineId": "sprite-84"
+      },
+      "browserObservedFirstRightBranch": {
+        "branchIndex": 1,
+        "sourceInstance": "Mc_Right_Feed1",
+        "sourceTimelineId": "sprite-172"
+      },
+      "browserObservedPostReplayRightBranch": {
+        "branchIndex": 2,
+        "sourceInstance": "Mc_Right_Feed2",
+        "sourceTimelineId": "sprite-122"
+      },
+      "sourcePresentHostUnreachableTimelines": [
+        "sprite-45",
+        "sprite-203"
+      ],
+      "adobeRandomStateParityAccepted": false
+    },
+    "audioRouting": {
+      "status": "closed-private-product-engineering-listening-pending",
+      "productReachableEmbeddedStreamCount": 9,
+      "productReachableMainContinuationCount": 1,
+      "spanishHostTrackCount": 1,
+      "fullEofDecodePassedForEveryMaterializedAsset": true,
+      "englishRoute": "embedded-en",
+      "spanishRoute": "host-es-or-muted",
+      "observedExactHttp206Requests": [
+        {
+          "asset": "main-timeline.mp3",
+          "sha256": "3ac4c7a2e3d153a3f39427b519de2bf3d87f5d4873fcd9d2c4a655ed6c7aabd6"
+        },
+        {
+          "asset": "wrong-2.mp3",
+          "sha256": "d7a98a5d899d27fb01a48d98e1a3957f03edfe8c7f68dddfb40fe552e311c0d0"
+        },
+        {
+          "asset": "feedback-close.mp3",
+          "sha256": "ad4a86a727b8d4b5379655258cdffc62f85f89cb460a96565fad27d975a2aa38"
+        },
+        {
+          "asset": "right-2.mp3",
+          "sha256": "70f9eeb16521b9fe8c12f243af3c99482c185a39dab38b226eb3801ed204290b"
+        },
+        {
+          "asset": "main-continuation.mp3",
+          "sha256": "55aea0a63242d214a9b5b828347236971fc7083334da945d45e31507f2cb56b2"
+        },
+        {
+          "asset": "spanish-host-narration.mp3",
+          "sha256": "af50406afceff38f9395907b0b059dbe980f60e5b14eead7d6e3832e51b10396"
+        }
+      ],
+      "spokenLanguageAccepted": false,
+      "audioListeningAccepted": false
+    },
+    "timelineReachability": {
+      "status": "closed-private-product-engineering",
+      "quizStopFrame": 61,
+      "wrongFeedbackCanvasFrame": 61,
+      "correctContinuationFirstFrame": 62,
+      "correctTerminalProductFrame": 130,
+      "correctTerminalCanvasDataFlashFrame": 130,
+      "correctTerminalCanvasStatus": "ready",
+      "sprite41Disposition": "typed host owns exact sanitized wrong-feedback prose and width or measurement glossary requests; no ActionScript HTML or asfunction executes",
+      "sprite181Disposition": "product-unreachable because it occurs only inside Right5 outside the shipped random(4) range",
+      "strictFrameDomainDispositionMutated": false,
+      "authoritativeOriginalRuntimeAccepted": false
+    },
+    "replayEngineering": {
+      "status": "closed-private-product-engineering",
+      "audioStopVector": [
+        "host-narration",
+        "interactive-feedback-audio",
+        "interactive-main-continuation-audio",
+        "timeline-main-audio"
+      ],
+      "practiceResetVector": [
+        "outcome",
+        "branch",
+        "phase",
+        "feedback-timers",
+        "continuation-interval",
+        "continuation-frame",
+        "terminal-render-frame",
+        "memory-only-host-state"
+      ],
+      "observedAfter150Milliseconds": {
+        "practicePhase": "idle",
+        "feedbackBranch": "none",
+        "productRenderFrame": 3,
+        "canvasDataFlashFrame": 3,
+        "answerHandlersEnabled": false,
+        "sourceStageHandlerSurfaceMounted": false
+      },
+      "answersReenabledAtFrame": 61,
+      "sourceStageHandlerCountAtFrame61": 2,
+      "nextWrongBranchAdvancedFrom1To2": true,
+      "nextRightBranchAdvancedFrom1To2": true,
+      "authoritativeOriginalRuntimeReplayAccepted": false
+    }
+  },
+  "desktopEnglish": {
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "routeStatus": 200,
+    "sourceCanvasStatus": 200,
+    "pageLoaded": true,
+    "heading": "Length/Width Practice",
+    "registeredBoundaryVisible": "15/46",
+    "sourceStageTargetId": "g4-l10-product-bridge-vb007-arrow-handlers",
+    "companionTargetId": "g4-l10-product-bridge-vb007-practice-controls",
+    "sourceStageAnswerHandlers": [
+      {
+        "sourceCharacterId": 17,
+        "sourceInstance": "AnsBtn1",
+        "visibleTarget": "vertical 1 in. arrow",
+        "outcome": "incorrect"
+      },
+      {
+        "sourceCharacterId": 18,
+        "sourceInstance": "AnsBtn2",
+        "visibleTarget": "horizontal 3 in. arrow",
+        "outcome": "correct"
+      }
+    ],
+    "sourceStageHandlersClicked": true,
+    "wrongFeedbackExactText": "The width is usually the shorter measurement. Try again.",
+    "wrongFeedbackSurvivedWidthGlossaryOpenAndClose": true,
+    "tryAgainRestoredIdleAndFourAnswerEntryPoints": true,
+    "correctContinuationFrame62Observed": true,
+    "correctTerminalCanvasFrame130Observed": true,
+    "horizontalOverflowObserved": false
+  },
+  "mobileSpanish": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "routeStatus": 200,
+    "sourceCanvasStatus": 200,
+    "pageLoaded": true,
+    "heading": "Práctica de longitud y ancho",
+    "sourceVisualLanguage": "en",
+    "uiLanguage": "es",
+    "registeredBoundaryVisible": "15/46",
+    "spanishHostNarrationRequested": true,
+    "spanishHostNarrationHttpStatus": 206,
+    "rectangleGlossaryTitle": "Rectángulo",
+    "rectangleGlossaryDefinition": "Figura geométrica de 4 ángulos rectos y dos pares de lados paralelos iguales.",
+    "companionWrongHandlerClicked": true,
+    "tryAgainLabel": "Intentar de nuevo",
+    "sourceFeedbackRemainsExactEnglish": true,
+    "documentScrollWidth": 390,
+    "documentClientWidth": 390,
+    "horizontalOverflowObserved": false
+  },
+  "screenshots": [
+    {
+      "path": "output/playwright/g4-l10-vb007-private-product-qa/desktop-en-idle.png",
+      "bytes": 148844,
+      "sha256": "2004e3ff145b825ce5ac6785be5cc52083e4aa4ef6941e943ac17ab1e4c2e56d",
+      "pixelWidth": 1280,
+      "pixelHeight": 1261,
+      "visualPurpose": "desktop idle layout and source-stage handler placement"
+    },
+    {
+      "path": "output/playwright/g4-l10-vb007-private-product-qa/desktop-en-wrong-feedback.png",
+      "bytes": 147168,
+      "sha256": "3b194c11d8a454324bd0eac0962bf07484ad37547a962a09612ae3e477d25721",
+      "pixelWidth": 1280,
+      "pixelHeight": 1219,
+      "visualPurpose": "desktop exact wrong-feedback layout"
+    },
+    {
+      "path": "output/playwright/g4-l10-vb007-private-product-qa/desktop-en-correct-terminal-130.png",
+      "bytes": 138827,
+      "sha256": "292c79b45a315870bd519804ab8b2e4f5488596160932648634be506f74d0620",
+      "pixelWidth": 1280,
+      "pixelHeight": 1121,
+      "visualPurpose": "desktop correct terminal product and Canvas frame 130 state"
+    },
+    {
+      "path": "output/playwright/g4-l10-vb007-private-product-qa/mobile-es-idle.png",
+      "bytes": 136678,
+      "sha256": "d8bbdfc790a1a73e46a0715cb563159cf4ec41fdb43920ad9e2eba6f7d13037b",
+      "pixelWidth": 390,
+      "pixelHeight": 1885,
+      "visualPurpose": "mobile Spanish full-page engineering layout"
+    },
+    {
+      "path": "output/playwright/g4-l10-vb007-private-product-qa/mobile-es-top-viewport.png",
+      "bytes": 63669,
+      "sha256": "5fa632df9f4ffdc483df1d89b8ba4de0a6aac7b4c51df7c88c98f18991ed0104",
+      "pixelWidth": 390,
+      "pixelHeight": 844,
+      "visualPurpose": "mobile Spanish top viewport and fixed-English source canvas"
+    },
+    {
+      "path": "output/playwright/g4-l10-vb007-private-product-qa/mobile-es-wrong-feedback.png",
+      "bytes": 131840,
+      "sha256": "c1847bc1a18cdd470e99b8d80b2424426823318947e24d05caf30aa200759af6",
+      "pixelWidth": 390,
+      "pixelHeight": 1890,
+      "visualPurpose": "mobile Spanish full-page wrong-feedback engineering layout"
+    },
+    {
+      "path": "output/playwright/g4-l10-vb007-private-product-qa/mobile-es-wrong-feedback-surface.png",
+      "bytes": 16322,
+      "sha256": "e5103065b437ab87baad88ea9f0db809b4c1d8094bbe60e0bf0a855e4165a7d4",
+      "pixelWidth": 374,
+      "pixelHeight": 201,
+      "visualPurpose": "mobile exact source feedback with localized typed close handler"
+    }
+  ],
+  "browserHealth": {
+    "vb007RendererOrAudioRequestFailures": 0,
+    "vb007HttpErrors": 0,
+    "vb007CanvasRendererStatus": 200,
+    "testedAudioStatus": 206,
+    "uniqueDevelopmentConsoleNoise": [
+      "ClerkProvider child-key React development error",
+      "Clerk development-key warning"
+    ],
+    "wholeConsoleCleanClaimed": false
+  },
+  "verification": {
+    "focusedRegression": {
+      "passed": 61,
+      "failed": 0
+    },
+    "demosTypecheck": "passed",
+    "privateRegistryCurrentness": "passed",
+    "audioMaterializerCurrentness": "passed-13-outputs",
+    "webTypecheck": "failed-only-on-three-pre-existing-next-generated-route-export-contracts-contact-learning-events-nova",
+    "taskLocalTypeErrorObserved": false
+  },
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "behaviorParityAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "spokenLanguageAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "releaseEligible": false,
+    "published": false
+  },
+  "evidenceBoundary": "This receipt proves local private product engineering behavior only. Screenshots are inspected engineering evidence and do not constitute human visual, Owner, fidelity, audio-listening, strict-completion, release, or publication acceptance."
+}

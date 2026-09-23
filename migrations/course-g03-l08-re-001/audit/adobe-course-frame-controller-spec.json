@@ -1,0 +1,156 @@
+{
+  "animationId": "course-g03-l08-re-001",
+  "authorityBoundary": {
+    "authoritativeAudioClaimed": false,
+    "authoritativeBranchTraversalClaimed": false,
+    "authoritativeLanguageClaimed": false,
+    "authoritativeNaturalPlaybackClaimed": false,
+    "directSeekLimitation": "A parent gotoAndStop on the source-named local animation instance can establish only a source-addressed visual candidate after Adobe runtime verification. It does not prove natural traversal, nested timeline phase, host defaults, interaction branches, audio, language, Replay, scoring, or random outcomes.",
+    "humanReviewClaimed": false,
+    "originalHostBehaviorClaimed": false,
+    "ownerAcceptanceClaimed": false,
+    "runtimeProofStatus": "pending-authorized-adobe-gui-probe",
+    "strictBaselineClaimed": false
+  },
+  "canonicalFrameSelection": {
+    "evidence": {
+      "frame": 2,
+      "kind": "frame-label",
+      "label": "R1"
+    },
+    "frame": 2,
+    "strategy": "first-source-audited-local-frame-label-after-frame-1",
+    "structuralKey": true,
+    "visualNonEmptyClaimed": false
+  },
+  "canonicalTargetFrame": 2,
+  "evidencePins": [
+    {
+      "id": "scenario-inventory",
+      "path": "migrations/course-g03-l08-re-001/audit/scenario-inventory.json",
+      "sha256": "340e14373517cd77beade8e426f991fe445b7c8c6be900b18b713bcc7ca51c7a"
+    },
+    {
+      "id": "strict-readiness",
+      "path": "migrations/course-g03-l08-re-001/audit/strict-readiness.json",
+      "sha256": "c8f827436c8e7e95b7556b2e8ead065ab3c38ff28ae571b1cb52b1f4d2172e68"
+    },
+    {
+      "id": "audio-runtime-evidence",
+      "path": "migrations/course-g03-l08-re-001/audit/audio-runtime-evidence.json",
+      "sha256": "b69447ee9cd6098b3ab5a191d91f2e291fe78cfc6fb0ee294a269ae9070debcf"
+    },
+    {
+      "id": "ffdec-scripts",
+      "path": "migrations/course-g03-l08-re-001/audit/machine/ffdec-scripts.txt.gz",
+      "sha256": "81546d70e37dee258ff2f79f4eda7da861460f50e781ea4027c249d6754209b6"
+    },
+    {
+      "id": "swfmill-xml",
+      "path": "migrations/course-g03-l08-re-001/audit/machine/swfmill.xml.gz",
+      "sha256": "547b2ae4466ce60c4c6fd5290ec95953b8ddc4e02aa5e3e319229b0af5f14967"
+    }
+  ],
+  "fixtureKind": "hash-pinned-adobe-avm1-course-local-frame-controller",
+  "safetyPolicy": {
+    "appleEventsDeniedBySandbox": true,
+    "captureMode": "visual-only-audio-muted-and-stopped",
+    "fullStageOpaqueFailClosedCover": true,
+    "hostBindingsInjected": false,
+    "launchServicesOpenAndDatabaseDeniedBySandbox": true,
+    "lazyExplicitClick": true,
+    "networkDeniedBySandbox": true,
+    "originalCourseShellExecuted": false,
+    "outsideWritesDeniedBySandbox": true,
+    "postPinFullStageInputShield": true,
+    "sourceChildModified": false,
+    "unknownNetworkEndpointsExecuted": false
+  },
+  "schemaVersion": 1,
+  "source": {
+    "actionScriptVersion": "AS1/2",
+    "fixturePath": "lesson/RE/L8RE01.swf",
+    "fps": 12,
+    "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L8/RE/L8RE01.swf",
+    "rootFrameCount": 55,
+    "sha256": "e4a6403f6b45a3b4aecb48e0659aa20113acb0644e37b027a19fb51f34417f9b",
+    "stage": {
+      "height": 600,
+      "width": 800
+    }
+  },
+  "strictAcceptanceEffect": "none; this static factory and every unreviewed fixture output remain engineering candidates only",
+  "timelineContract": {
+    "consecutiveActualFrameChecksBeforeReveal": 3,
+    "local": {
+      "frameCount": 27,
+      "indexing": "one-indexed",
+      "namedAudioClipNames": [],
+      "objectId": 621,
+      "timelineId": "sprite-621"
+    },
+    "root": {
+      "entryFrame": 51,
+      "entryLabel": "Begin",
+      "frameCount": 55,
+      "placementDepth": 4,
+      "placementName": "animation",
+      "placementObjectId": 621
+    }
+  },
+  "unresolvedObligations": {
+    "audio": [
+      "all audio is intentionally muted and stopped; listening, identity, start cue, synchronization, and Replay remain outside this fixture"
+    ],
+    "hostBindings": [
+      "_global",
+      "_global.REVIEWANS",
+      "_global.arrayAnswer",
+      "_global.arrayCorrectAnswer",
+      "_global.arrayResponseAnswer",
+      "_global.arrayReview",
+      "_global.arrayWrongAnswer",
+      "_global.quizLabelArray",
+      "_global.revLabelArray",
+      "_global.reviewCount",
+      "_global.totQuizCount",
+      "_global.totalQuestionsCount",
+      "_parent.dtfREVIEWANS"
+    ],
+    "interactionCoverage": [
+      {
+        "count": 3,
+        "key": "buttonTargetObligations"
+      },
+      {
+        "count": 19,
+        "key": "conditionalBranchObligations"
+      },
+      {
+        "count": 2,
+        "key": "correctWrongObligations"
+      },
+      {
+        "count": 3,
+        "key": "handlerBehaviorGroups"
+      },
+      {
+        "count": 25,
+        "key": "labeledStateObligations"
+      },
+      {
+        "count": 2,
+        "key": "sideEffectObligations"
+      }
+    ],
+    "language": [
+      "English/Spanish host flags and visual branches are not established by direct local-frame seek"
+    ],
+    "randomObligationCount": 0,
+    "randomObligationIds": [],
+    "sideEffectApis": [
+      "getURL",
+      "javascript-url"
+    ]
+  }
+}

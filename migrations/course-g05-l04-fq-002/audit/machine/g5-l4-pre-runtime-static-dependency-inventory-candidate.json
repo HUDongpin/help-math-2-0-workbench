@@ -1,0 +1,91 @@
+{
+  "acceptanceEffects": {
+    "audioAccepted": false,
+    "authoritativeOriginalRuntime": false,
+    "currentJavaScriptCandidate": false,
+    "fidelityAccepted": false,
+    "humanVisualAccepted": false,
+    "implementationAuthorized": false,
+    "ownerAccepted": false,
+    "published": false,
+    "strictComplete": false
+  },
+  "animationId": "course-g05-l04-fq-002",
+  "artifactFingerprintSha256": "b44a68550a3860dbb3dbdae9d40f4651ea9a4b0de6a504211399745c7b1062c6",
+  "artifactType": "g5-l4-static-dependency-inventory-candidate",
+  "assetId": "swf-f54e7c22806c9d093253333129a9204279d112185eaca1ce6fefaa3ef22961a7",
+  "candidates": [
+    {
+      "api": "getURL",
+      "endpointOrTarget": "withheld-unresolved-static-source-not-executed",
+      "occurrences": 2,
+      "runtimeReachability": "unresolved",
+      "scriptIds": [
+        "ffdec-script-0001",
+        "ffdec-script-0007"
+      ],
+      "securityDisposition": "pending-human-review"
+    }
+  ],
+  "generatedBy": {
+    "bytes": 64642,
+    "dependencies": {
+      "swfDefinitionParser": {
+        "bytes": 53302,
+        "importedFunction": "collectSwfAssetDefinitions",
+        "path": "scripts/build-g4-l3-swf-asset-definition-census.mjs",
+        "sha256": "269ff4b858304021a1bf057f2425c98fcc80501a5a3d5a623f0be857e0427bc5"
+      }
+    },
+    "path": "scripts/materialize-g5-l4-pre-runtime-specification-candidates.mjs",
+    "sha256": "864666f9acc3d0a6963c8570a7f9db3245ef902cf76fa8a6f3122b8c57b08359",
+    "version": 1
+  },
+  "generatedMarker": "sha256:b44a68550a3860dbb3dbdae9d40f4651ea9a4b0de6a504211399745c7b1062c6",
+  "inputs": {
+    "ffdecScripts": {
+      "bytes": 3687,
+      "path": "migrations/course-g05-l04-fq-002/audit/machine/ffdec-scripts.txt.gz",
+      "sha256": "a4ca2b87942667325f5b3376f11a1a1ab433f00b9956a73e4186f201aa442e84"
+    },
+    "lessonReleaseCatalog": {
+      "bytes": 87864,
+      "path": "catalog/lesson-releases.json",
+      "sha256": "f3caa2ae0e9bfd6c02dd846aa2d45de5c2f746cc57ba01a09e506d4d3c42d632"
+    },
+    "machineAudit": {
+      "bytes": 77293,
+      "path": "migrations/course-g05-l04-fq-002/audit/machine/report.json",
+      "sha256": "f22a8c9ed1ca80fe849d8f69042a74bed6058a756c524fcb58302b711b022273"
+    },
+    "migrationManifest": {
+      "bytes": 5689,
+      "path": "migrations/course-g05-l04-fq-002/migration.json",
+      "sha256": "6855c13a788a27deaba58c6d4cb9eef3a9336d0adf1473896dccdcdc77b01275"
+    }
+  },
+  "noCandidateMeaning": "No machine candidate is not proof that runtime dependencies are absent.",
+  "ownership": {
+    "acceptanceEvidence": false,
+    "canonicalFile": false,
+    "owner": "g5-l4-pre-runtime-specification-candidate-materializer",
+    "safeToReplaceOnlyWithThisMaterializer": true
+  },
+  "releaseId": "lesson-g05-l04-number-lines",
+  "scanMethod": "Static API-name occurrence scan over the hash-bound FFDec ActionScript bundle; no target was contacted or executed.",
+  "schemaVersion": 1,
+  "summary": {
+    "apiCandidateCount": 1,
+    "canonicalManifestDependencyRecordsAdded": 0,
+    "executedLegacyEndpointCount": 0,
+    "occurrenceCount": 2,
+    "runtimeDependencyClearance": false
+  },
+  "unresolved": {
+    "endpointOrTarget": true,
+    "hostDependencyClosure": true,
+    "reviewedReplacementApi": true,
+    "runtimeReachability": true,
+    "securityDisposition": true
+  }
+}

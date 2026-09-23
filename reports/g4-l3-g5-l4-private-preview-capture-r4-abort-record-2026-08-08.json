@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "receiptType": "g4-l3-g5-l4-private-preview-capture-attempt-abort-record",
+  "issuedOn": "2026-08-08",
+  "recordedAt": "2026-08-07T17:07:33.683Z",
+  "revision": "r4",
+  "status": "aborted-after-capture-before-success-receipt",
+  "retainedAttemptInputs": {
+    "runner": {
+      "path": "scripts/run-g4-l3-g5-l4-private-preview-captures-2026-08-08-r4.mjs",
+      "bytes": 28692,
+      "sha256": "9d06c6e53458e889b21ad3fad04070fe969a17e4732ce20de55cd6aee38d5eca"
+    },
+    "g4CaptureManifest": {
+      "path": "output/playwright/g4-l3-current-js-v4/course-g04-l03-ts-006-en-current-r8/req-sprite-23-lesson-shell-natural-entry-en/capture-manifest.json",
+      "bytes": 269921,
+      "sha256": "5c6457fcb8b4b4e05a315f3517dd9564d210bf61d4f6571828d2c6203908aae8"
+    },
+    "g5CaptureManifest": {
+      "path": "output/playwright/g5-l4-executive-preview-current-js-v2/course-g05-l04-rw-002-en-current-r4/capture-manifest.json",
+      "bytes": 814265,
+      "sha256": "f089758f11868f720b60d42a42ef7390be9f79f098cf5ea16153d59323d70a71"
+    }
+  },
+  "observedResult": {
+    "g4": {
+      "status": "individual-current-javascript-capture-complete-but-not-a-cohort-success",
+      "frames": 128,
+      "png": {
+        "width": 800,
+        "height": 600
+      }
+    },
+    "g5": {
+      "status": "all-frames-captured-but-stage-png-dimensions-rejected",
+      "frames": 419,
+      "png": {
+        "width": 801,
+        "height": 601
+      }
+    },
+    "successReceiptWritten": false
+  },
+  "rootCause": {
+    "kind": "fractional-executive-preview-layout-offset",
+    "effect": "a-native-800-by-600-canvas-produced-an-801-by-601-Playwright-clip",
+    "disposition": "r5-must-use-a-new-output-root-after-the-narrow-capture-only-integer-pixel-layout-successor"
+  },
+  "remediationBoundary": {
+    "historicalArtifactsRewritten": false,
+    "r4OutputsReusedAsCohortEvidence": false,
+    "strictDimensionGuardRetained": true
+  },
+  "acceptanceEffects": {
+    "currentJavascriptCohortCapture": false,
+    "authoritativeOriginalRuntime": false,
+    "fullFrameBaselineComparison": false,
+    "audioAcceptance": false,
+    "interactionAcceptance": false,
+    "replayAcceptance": false,
+    "humanVisualReview": false,
+    "ownerAcceptance": false,
+    "strictCompletion": false,
+    "publication": false
+  }
+}

@@ -1,0 +1,516 @@
+{
+  "acceptance": {
+    "authoritativeBaselineAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "releaseAuthorized": false,
+    "strictCompletionsGrantedByThisReport": 0
+  },
+  "authority": "Acceptance-neutral security/readiness report. It cannot authorize runtime capture, evidence promotion, strict completion, review, Owner acceptance, or publication.",
+  "externalDependencies": {
+    "authorizedRuntimeHostAndContainmentBound": false,
+    "fixedOutOfBandTrustRootInstalled": false,
+    "independentAppendOnlyOwnerLedgerDurabilityProven": false,
+    "independentHumanReviewerBound": false,
+    "independentPromotionSecurityReviewComplete": false,
+    "ownerRepresentativeBound": false,
+    "perSessionNamedCaptureOperatorAttestationBound": false,
+    "realShellToRw02CandidateEndToEndQualified": false,
+    "releaseCustodianBound": false
+  },
+  "generator": {
+    "bytes": 42934,
+    "path": "scripts/build-lesson-promotion-security-readiness.mjs",
+    "sha256": "aaa0c485e773740cebc56e6eba350b4a0cc30726073fa4dd125411cf8ccba694"
+  },
+  "ledgerReproducibility": {
+    "allCurrent": true,
+    "completionLedger": {
+      "actualGeneratedMarker": "sha256:73ea261e65dee2ff6646523a7ef3bdd753aea6cf247cdfc3664b2b574208c6e3",
+      "current": true,
+      "expectedGeneratedMarker": "sha256:73ea261e65dee2ff6646523a7ef3bdd753aea6cf247cdfc3664b2b574208c6e3",
+      "reason": "current"
+    },
+    "releaseLedger": {
+      "actualGeneratedMarker": "sha256:6e408d412aae322128ff8e948f045b5ca04bf600539dd2b1ddf2de5133411e6b",
+      "current": true,
+      "expectedGeneratedMarker": "sha256:6e408d412aae322128ff8e948f045b5ca04bf600539dd2b1ddf2de5133411e6b",
+      "reason": "current"
+    }
+  },
+  "legacyAdopterBoundary": {
+    "authoritative": false,
+    "candidateKind": null,
+    "canonicalWriteImplementationPresent": false,
+    "durablePromotionTransactionIntegrated": false,
+    "legacyAdopter": "read-only-diagnostic-only",
+    "legacyRegistryAndReviewAuthority": "self-hash-operational-records-not-digital-signatures",
+    "promotionWritesEnabled": false,
+    "remainingGates": [
+      {
+        "category": "authority",
+        "code": "SIGNED_RELEASE_BUNDLE_INTEGRATION_REQUIRED",
+        "requirement": "Load a fixed owner-controlled trust root outside the project; verify signed registry/revocation history plus distinct capture, human, owner, and release identities; and bind the signed release bundle to the exact derived output plan."
+      },
+      {
+        "category": "natural-trace-causality-dag",
+        "code": "TYPED_CAUSALITY_DAG_INTEGRATION_REQUIRED",
+        "requirement": "Consume the branded canonical root/natural candidate result, complete immutable typed DAG closure, ordered action/checkpoint/Replay causality, runtime and host identity, and full archive closure in the production plan."
+      },
+      {
+        "category": "transaction",
+        "code": "DURABLE_NONCE_AND_TRANSACTION_ENTRY_REQUIRED",
+        "requirement": "Atomically reserve the signed one-time nonce before canonical writes and connect production execute and recovery to the private hash-bound transaction plan; the existing execute/recover exports remain hard-disabled."
+      },
+      {
+        "category": "path-transaction",
+        "code": "KERNEL_ANCHORED_PATH_RACE_CLOSURE_REQUIRED",
+        "requirement": "Close ancestor path races across check/create/link/rename/unlink with a reviewed kernel-anchored strategy (for example fixed directory descriptors/openat-style operations) and prove coverage CAS plus no-replace outputs under adversarial replacement."
+      },
+      {
+        "category": "qualification",
+        "code": "REAL_CANDIDATE_E2E_AND_INDEPENDENT_REVIEW_REQUIRED",
+        "requirement": "Pass a real immutable candidate end-to-end with crash recovery, replay, revocation, role-reuse, path-race, and manifest-drift negatives, followed by independent security review before any production writer is introduced."
+      }
+    ],
+    "signedReleaseBundleIntegrated": false,
+    "strictAcceptanceEffect": false,
+    "typedNaturalCausalityIntegrated": false
+  },
+  "machineFoundations": {
+    "durableNonceAndTransactionEntry": {
+      "canonicalExecutorConnected": false,
+      "evidenceReceiptIssuerIntegrated": false,
+      "foundationPresent": true,
+      "kernelAnchoredPathRaceClosureIntegrated": false,
+      "poisonedTmpdirRealProjectBypassRejectedBySyntheticTests": true,
+      "productionDurableNonceExecutionIntegrationPresent": false,
+      "productionEntryEnabled": false,
+      "productionModuleFilesystemMutationCapabilityPresent": false,
+      "productionModuleReadOnlyPlanningAndInspectionOnly": true,
+      "state": "foundation-only-production-disabled",
+      "strictAcceptanceEffect": "none",
+      "testOnlyReferenceHarnessCoversNonceOrderingRecoveryAndCrashSemantics": true
+    },
+    "evidenceReceiptIssuerFoundation": {
+      "authorityVerified": false,
+      "callerSuppliedStructuralPreflightOnly": true,
+      "capabilities": {
+        "callerCallbackInvocationPresent": false,
+        "callerOwnedObjectInputAccepted": false,
+        "canonicalJsonPrimitiveBoundaryPresent": true,
+        "externalSignerHandoffDescriptorPresent": true,
+        "preconditionEvaluatorPresent": true,
+        "rawAuthoritySubjectIdExported": false
+      },
+      "externalCryptographicVerificationRequired": true,
+      "filesystemWriterPresent": false,
+      "keyLoaderPresent": false,
+      "moduleType": "help-math-evidence-receipt-v1-issuer-foundation",
+      "productionIssuerPresent": false,
+      "receiptCreationPresent": false,
+      "releasePublicationChanged": false,
+      "schemaVersion": 1,
+      "signatureCreationPresent": false,
+      "status": "foundation-only-production-disabled",
+      "strictAcceptanceEffect": "none",
+      "strictCompletionsGranted": 0,
+      "writesEnabled": false
+    },
+    "kernelAnchoredPathRaceClosure": {
+      "authority": "acceptance-neutral-fail-closed-machine-diagnostic",
+      "blockers": [
+        {
+          "code": "NODE_DIRFD_RELATIVE_MUTATION_API_UNAVAILABLE",
+          "requirement": "The public Node.js fs API must not be used as a pathname fallback. It does not expose openat, mkdirat, fstatat, linkat, renameatx_np, or unlinkat operations relative to pinned directory descriptors."
+        },
+        {
+          "code": "REVIEWED_NATIVE_DIRFD_HELPER_REQUIRED",
+          "requirement": "Bind a separately reviewed and hash-pinned native helper or native addon that keeps root and ancestor directory descriptors open and performs every lookup and mutation relative to those descriptors with all-component no-symlink and beneath-root enforcement."
+        },
+        {
+          "code": "KERNEL_CONDITIONAL_COVERAGE_CAS_UNAVAILABLE",
+          "requirement": "Provide a kernel-linearizable conditional replacement of coverage bound to the expected destination inode and bytes, or redesign coverage as immutable content-addressed no-replace versions behind a separately reviewed commit protocol. rename swap followed by inspection is not CAS because a failed operation becomes transiently visible and rollback can overwrite an independent writer."
+        },
+        {
+          "code": "ADVERSARIAL_E2E_AND_INDEPENDENT_REVIEW_REQUIRED",
+          "requirement": "Prove ancestor replacement, real-directory substitution, symlink insertion, destination replacement, crash recovery, and concurrent-writer negatives against the exact production helper and filesystem, then complete independent security review."
+        }
+      ],
+      "coverageCas": {
+        "acceptableFutureDirections": [
+          "reviewed-kernel-conditional-destination-identity-cas",
+          "immutable-content-addressed-coverage-versions-with-no-replace-commit",
+          "trusted-single-writer-broker-with-all-readers-bound-to-its-commit-log"
+        ],
+        "kernelConditionalDestinationIdentityReplaceAvailable": false,
+        "reason": "Swap-then-inspect exposes replacement bytes before the expected destination identity is known and cannot safely roll back over an independent concurrent writer.",
+        "renameSwapThenInspectAccepted": false
+      },
+      "darwinNativeContractCandidate": {
+        "applicable": true,
+        "callableFromCurrentPublicNodeSurface": false,
+        "note": "These are requirements for a future reviewed native implementation, not capabilities granted by this JavaScript module.",
+        "requiredApis": [
+          "openat",
+          "fstatat",
+          "mkdirat",
+          "linkat",
+          "renameatx_np",
+          "unlinkat",
+          "fsync"
+        ],
+        "requiredResolutionControls": [
+          "O_NOFOLLOW_ANY",
+          "O_RESOLVE_BENEATH",
+          "AT_SYMLINK_NOFOLLOW_ANY",
+          "AT_RESOLVE_BENEATH",
+          "RENAME_NOFOLLOW_ANY",
+          "RENAME_RESOLVE_BENEATH",
+          "RENAME_EXCL"
+        ]
+      },
+      "productionReady": false,
+      "productionWritesEnabled": false,
+      "publicArtifactBoundary": {
+        "absoluteRootPathPermittedInPublicReportOrReceipt": false,
+        "operationPlanDisposition": "private-local-transaction-input-only"
+      },
+      "publicNodeSurface": {
+        "exportedPromiseMethods": [
+          "access",
+          "appendFile",
+          "chmod",
+          "chown",
+          "constants",
+          "copyFile",
+          "cp",
+          "default",
+          "glob",
+          "lchmod",
+          "lchown",
+          "link",
+          "lstat",
+          "lutimes",
+          "mkdir",
+          "mkdtemp",
+          "mkdtempDisposable",
+          "open",
+          "opendir",
+          "readFile",
+          "readdir",
+          "readlink",
+          "realpath",
+          "rename",
+          "rm",
+          "rmdir",
+          "stat",
+          "statfs",
+          "symlink",
+          "truncate",
+          "unlink",
+          "utimes",
+          "watch",
+          "writeFile"
+        ],
+        "exposedDirfdOperations": [],
+        "leafFlags": {
+          "oDirectory": true,
+          "oExclusiveCreate": true,
+          "oNoFollowAnyExposed": false,
+          "oNoFollowFinalComponent": true,
+          "oResolveBeneathExposed": false
+        },
+        "missingDirfdOperations": [
+          "fstatat",
+          "linkat",
+          "mkdirat",
+          "openat",
+          "renameat",
+          "renameatx_np",
+          "unlinkat"
+        ],
+        "pathnameFallbackPermitted": false
+      },
+      "reportType": "kernel-anchored-path-race-closure-capability",
+      "runtime": {
+        "architecture": "arm64",
+        "nodeVersion": "v24.18.0",
+        "platform": "darwin"
+      },
+      "schemaVersion": 1,
+      "strictAcceptanceEffect": "none"
+    }
+  },
+  "pathSafetyBoundary": {
+    "disposition": "userspace-diagnostic-hardening-only",
+    "fixedInputsUseSingleDescriptorSnapshot": true,
+    "hashAndJsonParseUseIdenticalBytes": true,
+    "kernelAnchoredPathRaceClosureClaimed": false,
+    "noFollowAndNonblockingOpenRequired": true,
+    "regularSingleLinkAndAncestorIdentityRechecked": true,
+    "reportTargetCreationCapabilityPresent": false,
+    "reportTargetsMustPreexist": true
+  },
+  "productionFuses": {
+    "allClosed": true,
+    "evidenceReceiptIssuerWritesEnabled": false,
+    "evidenceReceiptProductionIssuerPresent": false,
+    "kernelAnchoredPathRaceClosureWritesEnabled": false,
+    "legacyAdopterCanonicalWriteImplementationPresent": false,
+    "legacyAdopterPromotionWritesEnabled": false,
+    "naturalPromotionEnabled": false,
+    "productionEntryEnabled": false,
+    "productionEntryExecutorConnected": false,
+    "productionTrustAnchorConfigured": false,
+    "releaseBundleProductionEnabled": false,
+    "releaseBundleWritesEnabled": false,
+    "transactionWritesEnabled": false,
+    "trustPromotionWritesEnabled": false
+  },
+  "readiness": {
+    "authoritativeOriginalRuntimeCaptureMayStart": false,
+    "capturePromotionDisposition": "pending-candidate-only",
+    "diagnosticVerifierReady": true,
+    "durableNonceProductionIntegrationPresent": false,
+    "evidenceReceiptIssuancePreflightFoundationPresent": true,
+    "evidenceReceiptVerifierReady": true,
+    "inputLedgersReproducible": true,
+    "kernelAnchoredPathRaceClosureProductionReady": false,
+    "productionEntryReadOnlyFoundationPresent": true,
+    "productionPromotionWriterReady": false,
+    "productionReceiptIssuerPresent": false,
+    "releaseScopedProjectionCurrent": true,
+    "state": "security-suite-passed-production-fail-closed",
+    "strictAcceptanceEffect": "none"
+  },
+  "release": {
+    "expectedMemberCount": 57,
+    "ledgerBindingsCurrent": true,
+    "ledgerDisposition": "current",
+    "ledgerRowPresent": true,
+    "publicationMode": "atomic",
+    "published": false,
+    "releaseManifestFileSha256": "f3caa2ae0e9bfd6c02dd846aa2d45de5c2f746cc57ba01a09e506d4d3c42d632",
+    "shardCount": 3,
+    "strictCompleteCount": 0
+  },
+  "releaseId": "lesson-g05-l05-add-subtract-negative-numbers",
+  "releaseScopedProjection": {
+    "assetMismatchCount": 0,
+    "current": true,
+    "freshProjectionSha256": "34a83f6ae39925c822212cabe88bb187017ba581f76a396c2965f8d5102e8af8",
+    "membershipFingerprint": "40561ea9203c92058716374f8e4af7514aff6a1490c916717c22f63260a329c5",
+    "missingCount": 57,
+    "persistedProjectionSha256": "34a83f6ae39925c822212cabe88bb187017ba581f76a396c2965f8d5102e8af8",
+    "published": false,
+    "reason": "current",
+    "releaseDefinitionSha256": "c03cf04129a19758f1bbdadbc67c78b26dde783fca1587447bf6ff83f2af7f84",
+    "releaseLedgerProjectionSha256": "34a83f6ae39925c822212cabe88bb187017ba581f76a396c2965f8d5102e8af8",
+    "releaseLedgerRowCount": 1,
+    "strictCompleteCount": 0
+  },
+  "remainingProductionGates": [
+    {
+      "category": "authority",
+      "code": "SIGNED_RELEASE_BUNDLE_INTEGRATION_REQUIRED",
+      "requirement": "Load a fixed owner-controlled trust root outside the project; verify signed registry/revocation history plus distinct capture, human, owner, and release identities; and bind the signed release bundle to the exact derived output plan."
+    },
+    {
+      "category": "natural-trace-causality-dag",
+      "code": "TYPED_CAUSALITY_DAG_INTEGRATION_REQUIRED",
+      "requirement": "Consume the branded canonical root/natural candidate result, complete immutable typed DAG closure, ordered action/checkpoint/Replay causality, runtime and host identity, and full archive closure in the production plan."
+    },
+    {
+      "category": "transaction",
+      "code": "DURABLE_NONCE_AND_TRANSACTION_ENTRY_REQUIRED",
+      "requirement": "Atomically reserve the signed one-time nonce before canonical writes and connect production execute and recovery to the private hash-bound transaction plan; the existing execute/recover exports remain hard-disabled."
+    },
+    {
+      "category": "path-transaction",
+      "code": "KERNEL_ANCHORED_PATH_RACE_CLOSURE_REQUIRED",
+      "requirement": "Close ancestor path races across check/create/link/rename/unlink with a reviewed kernel-anchored strategy (for example fixed directory descriptors/openat-style operations) and prove coverage CAS plus no-replace outputs under adversarial replacement."
+    },
+    {
+      "category": "qualification",
+      "code": "REAL_CANDIDATE_E2E_AND_INDEPENDENT_REVIEW_REQUIRED",
+      "requirement": "Pass a real immutable candidate end-to-end with crash recovery, replay, revocation, role-reuse, path-race, and manifest-drift negatives, followed by independent security review before any production writer is introduced."
+    }
+  ],
+  "reportSha256": "e7d0ab348706604940a26777d6e6ed5371cdb11dcb745202c2eacc447c035b07",
+  "reportType": "lesson-promotion-security-readiness",
+  "schemaVersion": 1,
+  "sourceBindings": {
+    "completionLedger": {
+      "bytes": 95817,
+      "path": "catalog/completion-ledger.json",
+      "sha256": "7362d00397b30489be32a98fda807f9e31c399588e4745f99ecc8da6d21119b6"
+    },
+    "modules": [
+      {
+        "bytes": 10642,
+        "path": "scripts/build-completion-ledger.mjs",
+        "sha256": "922e8bf742c6916e492163b0c4787a71365d1d83177c02ad810b8f2f2fbd6ca0"
+      },
+      {
+        "bytes": 22577,
+        "path": "scripts/build-lesson-release-ledger.mjs",
+        "sha256": "c1881ab81ea897d3ac616abdf590644d9e773ccd47d1b810808160f153148a50"
+      },
+      {
+        "bytes": 165346,
+        "path": "skills/flash-to-js/scripts/validate_migration.mjs",
+        "sha256": "fdf214b3accf42d6801231bc4c6b5dd6ae9de32e7cb89f1f471ca838bc64d36d"
+      },
+      {
+        "bytes": 103970,
+        "path": "scripts/adopt-course-original-runtime-evidence.mjs",
+        "sha256": "032c3c2fac44af378067f31fd638d0ccbdb69c7628388bef2a06ca856adca59b"
+      },
+      {
+        "bytes": 73752,
+        "path": "scripts/lib/original-runtime-natural-causality.mjs",
+        "sha256": "53fa1d7d6979f6d71105cf1c07bf54a409065b6f455f2cab6516fc75acc1ab84"
+      },
+      {
+        "bytes": 61813,
+        "path": "scripts/lib/original-runtime-promotion-trust.mjs",
+        "sha256": "7358c0894b2c9ae6cf73981ea46fcf9b6de86d3fe6776b37a9ca28b6dc39124f"
+      },
+      {
+        "bytes": 76031,
+        "path": "scripts/lib/original-runtime-promotion-transaction.mjs",
+        "sha256": "2ee306c6bd0c2efe6c566581d335151ae1867ce69367542042d358ec74a75fe2"
+      },
+      {
+        "bytes": 17303,
+        "path": "scripts/lib/original-runtime-promotion-production-entry.mjs",
+        "sha256": "46b495fa01ce560a6f18cc6e9d19d3ad734cd9101faa99bc4fd76cf42937774a"
+      },
+      {
+        "bytes": 12850,
+        "path": "scripts/lib/kernel-anchored-path-race-closure.mjs",
+        "sha256": "c736f7b7159f094c1a2f72e20cc4bc224f4463839b476a29fdcbf05b6a6c3f97"
+      },
+      {
+        "bytes": 38286,
+        "path": "scripts/lib/original-runtime-promotion-release-bundle.mjs",
+        "sha256": "179462a5515e50c9ff3dab5a58ae283a5d78c1d8163e1d9089425110100c7f0d"
+      },
+      {
+        "bytes": 18208,
+        "path": "scripts/lib/evidence-receipt-v1.mjs",
+        "sha256": "78eccad30d99fd0dd370a56f6a726a91fded4ca0217affd596c521f5937dc67a"
+      },
+      {
+        "bytes": 33071,
+        "path": "scripts/lib/evidence-receipt-v1-issuer-foundation.mjs",
+        "sha256": "27b2817ec2de2ccd6dd1e2359cce6e7b4ef89b4dc713204e4d5571a38b3c5eda"
+      },
+      {
+        "bytes": 4884,
+        "path": "scripts/verify-evidence-receipt-v1.mjs",
+        "sha256": "be470383bf4af6936b4354a176d99e526433dbc527502f90ff0cd9c52383b5ee"
+      },
+      {
+        "bytes": 7820,
+        "path": "schemas/evidence-receipt-v1.schema.json",
+        "sha256": "a64405b93515714651aeae2dca631d1e81c7e7ff1fcd5759b7a92061d5362105"
+      },
+      {
+        "bytes": 18626,
+        "path": "docs/ORIGINAL_RUNTIME_EVIDENCE_PROMOTION.md",
+        "sha256": "d5480f31e44abf3fe02b95d830715fb53c53c699a5f1ae211a3c6525ef9da24e"
+      },
+      {
+        "bytes": 5206,
+        "path": "docs/EVIDENCE_RECEIPT_V1.md",
+        "sha256": "d6b4441c90a94cc22bfb489454bf67a23f8673715097d526d7102084f3f5cc97"
+      }
+    ],
+    "releaseLedger": {
+      "bytes": 78417,
+      "path": "catalog/lesson-release-ledger.json",
+      "sha256": "5745670ade56fe0a7157038f8e3b361133780b2a5212dcf6ca3b3fba91bb49ce"
+    },
+    "releaseManifest": {
+      "bytes": 87864,
+      "path": "catalog/lesson-releases.json",
+      "sha256": "f3caa2ae0e9bfd6c02dd846aa2d45de5c2f746cc57ba01a09e506d4d3c42d632"
+    },
+    "suites": [
+      {
+        "bytes": 40251,
+        "path": "scripts/adopt-course-original-runtime-evidence.test.mjs",
+        "sha256": "a601025e7356926a8cebee3f4e6a74692fcd95a8c2c4da0e7babdc88c4f1fa82"
+      },
+      {
+        "bytes": 51417,
+        "path": "scripts/original-runtime-natural-causality.test.mjs",
+        "sha256": "988d442c2f1ffd1b74bd44909cd64bd07627419c65974084c3f4c8bed87e9f3b"
+      },
+      {
+        "bytes": 21012,
+        "path": "scripts/original-runtime-promotion-trust.test.mjs",
+        "sha256": "7a22831b569152b246ee42df3c32fde71d0e3ce5b6cbf7d7f59081cefac02194"
+      },
+      {
+        "bytes": 46936,
+        "path": "scripts/original-runtime-promotion-transaction.test.mjs",
+        "sha256": "5c1cfd6a458d8a6f7ad2fa42dda54b14aeccf813c85de08db56075d47f53082c"
+      },
+      {
+        "bytes": 41770,
+        "path": "scripts/original-runtime-promotion-production-entry.test.mjs",
+        "sha256": "3bb77feb1bddb09f7cb54c3b379840b10ea0e5f4bcd085994e4c9e59126d5af6"
+      },
+      {
+        "bytes": 14965,
+        "path": "scripts/kernel-anchored-path-race-closure.test.mjs",
+        "sha256": "79ffcdb49dacfc7104ca88f0b9c7356ea24ce8c2743793b9b10a0e0d3be2385f"
+      },
+      {
+        "bytes": 27380,
+        "path": "scripts/original-runtime-promotion-release-bundle.test.mjs",
+        "sha256": "407bb324c2512279ba881da7da97f41ee575b960bd959057d2845eb4252aeffe"
+      },
+      {
+        "bytes": 9475,
+        "path": "scripts/evidence-receipt-v1.test.mjs",
+        "sha256": "c16f2929f051e043ee292eadcc71fb7b71e6001bc81dfa488438861ebf820df4"
+      },
+      {
+        "bytes": 25636,
+        "path": "scripts/evidence-receipt-v1-issuer-foundation.test.mjs",
+        "sha256": "bfaaf0f72c67322565015c192128548c3fed77113f6a89dd62b3b6f64f35e8ae"
+      }
+    ],
+    "workspaceReadiness": {
+      "bytes": 58439,
+      "path": "reports/g5-l5-workspace-readiness.json",
+      "sha256": "0315d71afae63c5323e8a73e9a4a796a38d949437bdfaf184b26a17fb74277c1"
+    }
+  },
+  "testResult": {
+    "cancelled": 0,
+    "failed": 0,
+    "nodeVersion": "v24.18.0",
+    "passed": 209,
+    "reporter": "tap",
+    "runner": "node",
+    "tests": 209
+  },
+  "verifiedSyntheticControls": [
+    "typed recursive candidate DAG closure and content hashing",
+    "signature tampering, role mismatch, revocation freshness, and replay rejection",
+    "path traversal, symlink, external hardlink, and disguised media rejection",
+    "per-migration lock, compare-and-swap, concurrent writer exclusion, and no-replace writes",
+    "segmented persistent journal, rollback, crash recovery, and foreign-drift preservation",
+    "a test-only isolated reference harness covers durable nonce ordering, execute-replay recovery routing, changed-plan nonce rejection, crash recovery, and poisoned-TMPDIR rejection while the production-entry module remains physically write-free",
+    "kernel path-capability detection, private-only operation planning, no pathname fallback, and zero-mutation adversarial ancestor/destination replacement negatives",
+    "release-bundle substitution and Merkle inclusion failure handling",
+    "EvidenceReceiptV1 exact counts, build drift, signature tampering, expiry, privacy, and failed-command rejection",
+    "the G5 L4-pinned EvidenceReceiptV1 structural preflight rejects incomplete releases, release/member/hash drift, stale revocation claims, command-shape drift, callbacks, key/signature/receipt injection, and cloned descriptors while requiring external command and cryptographic verification",
+    "legacy adopter has no filesystem mutation capability or latent promotion return path"
+  ]
+}

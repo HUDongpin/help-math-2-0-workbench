@@ -1,0 +1,4395 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l3-renderer-gap-closure",
+  "generatedBy": {
+    "script": "scripts/build-g4-l3-renderer-gap-closure.mjs",
+    "bytes": 14681,
+    "sha256": "4d7d983dcf7819cfd9ae2c93bf9e172491d278e69666856226d2ae912d77a0e8",
+    "deterministic": true
+  },
+  "scope": {
+    "releaseId": "lesson-g04-l03-negative-numbers",
+    "releaseMembers": 40,
+    "publicationMode": "atomic"
+  },
+  "bindings": {
+    "lessonRelease": {
+      "path": "catalog/lesson-releases.json",
+      "bytes": 87864,
+      "sha256": "f3caa2ae0e9bfd6c02dd846aa2d45de5c2f746cc57ba01a09e506d4d3c42d632"
+    },
+    "rendererSupportIndex": {
+      "path": "reports/g4-l3-renderer-frame-domain-support-index.json",
+      "bytes": 18527,
+      "sha256": "de081d0af7551dacb73492d7e190fe95e89e21a70d4a212a6c4282ebbbb24f88"
+    }
+  },
+  "summary": {
+    "declaredFrameDomains": 261,
+    "fullyRenderableFrameDomains": 36,
+    "partiallyRenderableFrameDomains": 38,
+    "nonRenderableFrameDomains": 187,
+    "notFullyRenderableFrameDomains": 225,
+    "fullyRenderableMembers": 2,
+    "renderableExactProbes": 232,
+    "blockedOrMismatchedProbes": 814,
+    "safeRendererOnlyImplementationDomainsNow": 0
+  },
+  "categoryCounts": {
+    "authoritative-root-runtime-evidence-gated": 38,
+    "spanish-visual-audio-evidence-gated": 38,
+    "natural-trace-parent-composition-and-renderer-gated": 149,
+    "fully-renderable-current-js": 36
+  },
+  "decision": {
+    "safeRendererOnlyImplementationAvailable": false,
+    "reason": "Every not-fully-renderable domain is gated by authoritative root runtime evidence, Spanish visual/audio evidence, or natural-trace parent-composition evidence. Treating any one as a plain adapter/registry task would invent source behavior or composition.",
+    "nextExecutableMilestone": "authorized-ts006-en-es-original-runtime-vertical-slice",
+    "runtimeLaunchAuthorized": false
+  },
+  "members": [
+    {
+      "sequence": 1,
+      "animationId": "course-g04-l03-ir-001-341242cc",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-ir-001-341242cc/audit/renderer-frame-domain-support.json",
+        "bytes": 19159,
+        "sha256": "825422c92ff8e319a1048598d797b8b5242f521b318537c31da8ff7d97ea00f4"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-ir-001-341242cc/migration.json",
+        "bytes": 12908,
+        "sha256": "47a28e3dbb4aff6cd89431b03ab6fadac9f1cac246438403c451eae311d493b7"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-ir-001-341242cc/evidence/full-frame-coverage.json",
+        "bytes": 25733,
+        "sha256": "d99f12a781392acc0fec3d5064ada831a427c6db04c60d0a8ef2d58f08df615e"
+      },
+      "declaredFrameDomains": 4,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-27",
+          "frameCount": 136,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-27:lesson-shell-natural-entry:en",
+            "req:sprite-27:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-9",
+          "frameCount": 135,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-9:lesson-shell-natural-entry:en",
+            "req:sprite-9:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-10",
+          "frameCount": 135,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-10:lesson-shell-natural-entry:en",
+            "req:sprite-10:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 2,
+      "animationId": "course-g04-l03-rw-002",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-rw-002/audit/renderer-frame-domain-support.json",
+        "bytes": 11749,
+        "sha256": "087a40c0ccae5daf584007a44e2f1b9d684ee7c423181aa7f678fddf5d617b42"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-rw-002/migration.json",
+        "bytes": 9959,
+        "sha256": "15f1d9f48f1c86c33e868a65233bd721e50b8b7f155b50646d7f9c5ad4305f55"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-rw-002/evidence/full-frame-coverage.json",
+        "bytes": 25772,
+        "sha256": "fc4f28ffa7f50dd06d270e35afca22cf091bb0e486809bd38b9130d162aae5e3"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-421",
+          "frameCount": 1289,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-421:lesson-shell-natural-entry:en",
+            "req:sprite-421:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        }
+      ]
+    },
+    {
+      "sequence": 3,
+      "animationId": "course-g04-l03-rw-003",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-rw-003/audit/renderer-frame-domain-support.json",
+        "bytes": 11730,
+        "sha256": "7ab1fadb81b7c516c73701e88a87c0db783b20519c380b36924e1b58995fed10"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-rw-003/migration.json",
+        "bytes": 10087,
+        "sha256": "54c329f90fc19de9b9e0852f4dbff853de281cc363da293bbd08c88020d993bd"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-rw-003/evidence/full-frame-coverage.json",
+        "bytes": 12322,
+        "sha256": "297f2d94953a05509d6699c7499faa2d224bceda4ee494282f28b212372ba2e9"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-49",
+          "frameCount": 278,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-49:lesson-shell-natural-entry:en",
+            "req:sprite-49:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        }
+      ]
+    },
+    {
+      "sequence": 4,
+      "animationId": "course-g04-l03-rw-004",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-rw-004/audit/renderer-frame-domain-support.json",
+        "bytes": 11740,
+        "sha256": "c2f082ffc05a1551fb3f062de03efbf2d04576767b814b99790478a22fa4a378"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-rw-004/migration.json",
+        "bytes": 9997,
+        "sha256": "54eae8b44c779c88e121a28beffdca64eb33986ff7c71c516a3f723d8d1f678d"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-rw-004/evidence/full-frame-coverage.json",
+        "bytes": 14467,
+        "sha256": "8995945dd06c475cdbed380fde78287e46a3138035b2685b0fe0eb5e0b5c40f7"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-121",
+          "frameCount": 442,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-121:lesson-shell-natural-entry:en",
+            "req:sprite-121:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        }
+      ]
+    },
+    {
+      "sequence": 5,
+      "animationId": "course-g04-l03-vb-002",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-vb-002/audit/renderer-frame-domain-support.json",
+        "bytes": 11721,
+        "sha256": "fe5d74522f1e67ed5b4c364c128d6f0b4e0a068551834815e4cf6ca3f4653d38"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-vb-002/migration.json",
+        "bytes": 10095,
+        "sha256": "9c66f7844962dc6a1f399a29f5fb1c94b91d8fd72390bc6fc20eb0bfb155c271"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-vb-002/evidence/full-frame-coverage.json",
+        "bytes": 11217,
+        "sha256": "f5529d11abdb672f9b611f8ece3248741c406efe85d4001e4e926a80ed83708b"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-52",
+          "frameCount": 193,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-52:lesson-shell-natural-entry:en",
+            "req:sprite-52:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        }
+      ]
+    },
+    {
+      "sequence": 6,
+      "animationId": "course-g04-l03-vb-003",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-vb-003/audit/renderer-frame-domain-support.json",
+        "bytes": 22718,
+        "sha256": "4f7f3093fe710b503911419b5f2043b9f5ca1c5a6079657e5102c4fbbc59c459"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-vb-003/migration.json",
+        "bytes": 13633,
+        "sha256": "225ff1e958230549af379c4d2c7d3c143c5895988f74eec503b2afcf1798dd67"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-vb-003/evidence/full-frame-coverage.json",
+        "bytes": 24789,
+        "sha256": "c67b50ea1ca7819e494c8f6cf1b259412057450ee41ef3445a50a342bcc101ca"
+      },
+      "declaredFrameDomains": 5,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-106",
+          "frameCount": 160,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-106:lesson-shell-natural-entry:en",
+            "req:sprite-106:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-99",
+          "frameCount": 16,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-99:lesson-shell-natural-entry:en",
+            "req:sprite-99:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-101",
+          "frameCount": 20,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-101:lesson-shell-natural-entry:en",
+            "req:sprite-101:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-105",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-105:lesson-shell-natural-entry:en",
+            "req:sprite-105:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 7,
+      "animationId": "course-g04-l03-vb-004",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-vb-004/audit/renderer-frame-domain-support.json",
+        "bytes": 11721,
+        "sha256": "bc9ff2f2977ce98b3163e274838e91a78967d22c00df504d22a6e3454768a29d"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-vb-004/migration.json",
+        "bytes": 10114,
+        "sha256": "5af92512df09742c23e1db5bc2b4fc4e21d19086a23f279cf8f48cfc76f3a907"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-vb-004/evidence/full-frame-coverage.json",
+        "bytes": 11893,
+        "sha256": "426355aee66217f1c209a31b3ac749cf02f92a85a848c4aa628446dcc18b0e50"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-53",
+          "frameCount": 245,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-53:lesson-shell-natural-entry:en",
+            "req:sprite-53:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        }
+      ]
+    },
+    {
+      "sequence": 8,
+      "animationId": "course-g04-l03-vb-005",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-vb-005/audit/renderer-frame-domain-support.json",
+        "bytes": 11721,
+        "sha256": "9a2e86293405ca9f85bb89be85e8eecf05f58ef5d3cbe33c8bede2cb88922164"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-vb-005/migration.json",
+        "bytes": 10113,
+        "sha256": "60cd13d03ac062167d78c88e4c19d34bf598b67619fc2c311341d11e890574d4"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-vb-005/evidence/full-frame-coverage.json",
+        "bytes": 11048,
+        "sha256": "3321e84613a83b92e593c9e362c741342b4c53b1523f5aa63547fcc0fb5345ab"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-53",
+          "frameCount": 180,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-53:lesson-shell-natural-entry:en",
+            "req:sprite-53:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        }
+      ]
+    },
+    {
+      "sequence": 9,
+      "animationId": "course-g04-l03-vb-006",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-vb-006/audit/renderer-frame-domain-support.json",
+        "bytes": 11721,
+        "sha256": "19878d879c129124a1f4a37a878eab4e14679308e562fac914c038d3d724ee60"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-vb-006/migration.json",
+        "bytes": 10063,
+        "sha256": "79a2f08bb109a6d10838a93734e10016de87975aa57984cba7c585bf3aae3df3"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-vb-006/evidence/full-frame-coverage.json",
+        "bytes": 10827,
+        "sha256": "eef9f36291bd80f5a491c48778cf5ea8e9f12763d1edd8d547d3365d385a2ee7"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-44",
+          "frameCount": 163,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-44:lesson-shell-natural-entry:en",
+            "req:sprite-44:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        }
+      ]
+    },
+    {
+      "sequence": 10,
+      "animationId": "course-g04-l03-vb-007",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-vb-007/audit/renderer-frame-domain-support.json",
+        "bytes": 59097,
+        "sha256": "8099cc23a124580942f5b29444f99bb3b0e9e921717d69cd4f241aad5afd5071"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-vb-007/migration.json",
+        "bytes": 21382,
+        "sha256": "34dbe67215a2b763dd5d8be33cbd988dbed724722ca59e6305b33fccac0ae757"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-vb-007/evidence/full-frame-coverage.json",
+        "bytes": 69168,
+        "sha256": "3837ea3f8a7561efaea1d305b6ad45e65b130948b5bd7c49a44c15ea72ca98aa"
+      },
+      "declaredFrameDomains": 15,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-271",
+          "frameCount": 69,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-271:lesson-shell-natural-entry:en",
+            "req:sprite-271:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-45",
+          "frameCount": 28,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-45:lesson-shell-natural-entry:en",
+            "req:sprite-45:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-63",
+          "frameCount": 27,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-63:lesson-shell-natural-entry:en",
+            "req:sprite-63:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-77",
+          "frameCount": 31,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-77:lesson-shell-natural-entry:en",
+            "req:sprite-77:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-105",
+          "frameCount": 28,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-105:lesson-shell-natural-entry:en",
+            "req:sprite-105:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-114",
+          "frameCount": 22,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-114:lesson-shell-natural-entry:en",
+            "req:sprite-114:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-136",
+          "frameCount": 26,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-136:lesson-shell-natural-entry:en",
+            "req:sprite-136:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-142",
+          "frameCount": 22,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-142:lesson-shell-natural-entry:en",
+            "req:sprite-142:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-166",
+          "frameCount": 19,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-166:lesson-shell-natural-entry:en",
+            "req:sprite-166:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-176",
+          "frameCount": 27,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-176:lesson-shell-natural-entry:en",
+            "req:sprite-176:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-202",
+          "frameCount": 31,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-202:lesson-shell-natural-entry:en",
+            "req:sprite-202:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-234",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-234:lesson-shell-natural-entry:en",
+            "req:sprite-234:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-267",
+          "frameCount": 27,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-267:lesson-shell-natural-entry:en",
+            "req:sprite-267:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-42",
+          "frameCount": 1,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 2,
+          "renderableCount": 0,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-42:lesson-shell-natural-entry:en",
+            "req:sprite-42:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 11,
+      "animationId": "course-g04-l03-vb-008",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-vb-008/audit/renderer-frame-domain-support.json",
+        "bytes": 47877,
+        "sha256": "101aed7b41c0bd6307864c20f241733a4ec7ae23b76a8ba0b93a46d602f84b57"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-vb-008/migration.json",
+        "bytes": 19130,
+        "sha256": "dcafea5bbdadc4e4a09080bfd559a12550467b4eeb914e09f841b2a8093fdb7a"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-vb-008/evidence/full-frame-coverage.json",
+        "bytes": 55748,
+        "sha256": "508918c0f45ac17a8c590553e44bc16d040c3ac93489a56cca9f3e1c920178a2"
+      },
+      "declaredFrameDomains": 12,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-195",
+          "frameCount": 62,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-195:lesson-shell-natural-entry:en",
+            "req:sprite-195:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-63",
+          "frameCount": 28,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-63:lesson-shell-natural-entry:en",
+            "req:sprite-63:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-74",
+          "frameCount": 28,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-74:lesson-shell-natural-entry:en",
+            "req:sprite-74:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-86",
+          "frameCount": 29,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-86:lesson-shell-natural-entry:en",
+            "req:sprite-86:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-98",
+          "frameCount": 31,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-98:lesson-shell-natural-entry:en",
+            "req:sprite-98:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-110",
+          "frameCount": 27,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-110:lesson-shell-natural-entry:en",
+            "req:sprite-110:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-138",
+          "frameCount": 28,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-138:lesson-shell-natural-entry:en",
+            "req:sprite-138:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-163",
+          "frameCount": 27,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-163:lesson-shell-natural-entry:en",
+            "req:sprite-163:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-179",
+          "frameCount": 28,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-179:lesson-shell-natural-entry:en",
+            "req:sprite-179:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-191",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-191:lesson-shell-natural-entry:en",
+            "req:sprite-191:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-54",
+          "frameCount": 1,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 2,
+          "renderableCount": 0,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-54:lesson-shell-natural-entry:en",
+            "req:sprite-54:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 12,
+      "animationId": "course-g04-l03-vb-009",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-vb-009/audit/renderer-frame-domain-support.json",
+        "bytes": 11721,
+        "sha256": "53db8dc503eb4d8078890f39470eaf831da09589e26d6c67cd1a21700656cfcd"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-vb-009/migration.json",
+        "bytes": 10076,
+        "sha256": "7815d260182d958e2ecf691056d8c185b87e254ea42fff8198aa1886f5e1a1fb"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-vb-009/evidence/full-frame-coverage.json",
+        "bytes": 10987,
+        "sha256": "0c3becae08ff104926cbba7949728199f3b3442acd56b6a4cb2886dbca48411e"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-24",
+          "frameCount": 175,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-24:lesson-shell-natural-entry:en",
+            "req:sprite-24:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        }
+      ]
+    },
+    {
+      "sequence": 13,
+      "animationId": "course-g04-l03-in-002",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-in-002/audit/renderer-frame-domain-support.json",
+        "bytes": 11721,
+        "sha256": "dfbd99fce34bec0936502a6e472dd0c17610af0bf4fc7da7686c84af3faafc49"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-in-002/migration.json",
+        "bytes": 10034,
+        "sha256": "963b0d23c5928fcc1711dd99dc8e2fcebed7182610e748f10c660f1393cc72dc"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-in-002/evidence/full-frame-coverage.json",
+        "bytes": 15108,
+        "sha256": "56bb9567ffe2117bf323c007b4cf2fae444ab351599f01c0aaa2b0bce2b2b28a"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-88",
+          "frameCount": 492,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-88:lesson-shell-natural-entry:en",
+            "req:sprite-88:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        }
+      ]
+    },
+    {
+      "sequence": 14,
+      "animationId": "course-g04-l03-in-003",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-in-003/audit/renderer-frame-domain-support.json",
+        "bytes": 11624,
+        "sha256": "e94c21de3d0b25ab859189cda3245893c95aaa6b1328c6d787a8dd3a15d21ec0"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-in-003/migration.json",
+        "bytes": 10153,
+        "sha256": "74c770e9fa0bf41d1beef971adb34bf274e39d3900022a3ee68c226b9ea1a079"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-in-003/evidence/full-frame-coverage.json",
+        "bytes": 14848,
+        "sha256": "1f6acd2ff90ac933000b8ea6f2c7a96826aa20a468ac92a2eb28bca140f071c0"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-84",
+          "frameCount": 472,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-84:lesson-shell-natural-entry:en",
+            "req:sprite-84:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        }
+      ]
+    },
+    {
+      "sequence": 15,
+      "animationId": "course-g04-l03-in-004",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-in-004/audit/renderer-frame-domain-support.json",
+        "bytes": 46765,
+        "sha256": "0e3be35b73aa5cef8441482f2b097cb115a8700b0c354ed9084e569fd7a97a47"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-in-004/migration.json",
+        "bytes": 18981,
+        "sha256": "2d0dfe152e2df9d311e03ad9ee187649087ad02ce4a8933c32da6d8ec320ca5d"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-in-004/evidence/full-frame-coverage.json",
+        "bytes": 53509,
+        "sha256": "3f7514d82f81360a02d8a144ab4362fe52c91aed7e122d2597db3fa5b924b621"
+      },
+      "declaredFrameDomains": 11,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-160",
+          "frameCount": 169,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-160:lesson-shell-natural-entry:en",
+            "req:sprite-160:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-53",
+          "frameCount": 55,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-53:lesson-shell-natural-entry:en",
+            "req:sprite-53:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-55",
+          "frameCount": 20,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-55:lesson-shell-natural-entry:en",
+            "req:sprite-55:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-72",
+          "frameCount": 28,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-72:lesson-shell-natural-entry:en",
+            "req:sprite-72:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-84",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-84:lesson-shell-natural-entry:en",
+            "req:sprite-84:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-98",
+          "frameCount": 32,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-98:lesson-shell-natural-entry:en",
+            "req:sprite-98:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-119",
+          "frameCount": 33,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-119:lesson-shell-natural-entry:en",
+            "req:sprite-119:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-131",
+          "frameCount": 28,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-131:lesson-shell-natural-entry:en",
+            "req:sprite-131:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-155",
+          "frameCount": 15,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-155:lesson-shell-natural-entry:en",
+            "req:sprite-155:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-159",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-159:lesson-shell-natural-entry:en",
+            "req:sprite-159:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 16,
+      "animationId": "course-g04-l03-in-005",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-in-005/audit/renderer-frame-domain-support.json",
+        "bytes": 24357,
+        "sha256": "783db4792a8d14fa95f2ba58ea3df933955645f9d4a51731a963c772726b7dd2"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-in-005/migration.json",
+        "bytes": 14083,
+        "sha256": "a89d154b6157f7b8ebe077a92ffa2bd197cc6c374039bb624bee081ebac88c3e"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-in-005/evidence/full-frame-coverage.json",
+        "bytes": 25075,
+        "sha256": "9151f6862e02513ab4ece365caab856d0c5443111e9a2e993d49f39cb82ecae0"
+      },
+      "declaredFrameDomains": 5,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-80",
+          "frameCount": 186,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-80:lesson-shell-natural-entry:en",
+            "req:sprite-80:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-47",
+          "frameCount": 20,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-47:lesson-shell-natural-entry:en",
+            "req:sprite-47:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-67",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-67:lesson-shell-natural-entry:en",
+            "req:sprite-67:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-79",
+          "frameCount": 15,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-79:lesson-shell-natural-entry:en",
+            "req:sprite-79:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 17,
+      "animationId": "course-g04-l03-in-006",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-in-006/audit/renderer-frame-domain-support.json",
+        "bytes": 42151,
+        "sha256": "dde1f4bfef0cbf4235010bd6ff21b2cd69fe69c118d1cc774026419728290d32"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-in-006/migration.json",
+        "bytes": 17554,
+        "sha256": "f73279d2630153401d172aaaa344b317fb3d0f96723ad37bff46df4df86ad11c"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-in-006/evidence/full-frame-coverage.json",
+        "bytes": 57739,
+        "sha256": "c82bd34cde5e849b676767f3ca0b1c9dc7b04b6abb43539b7bbe7a13d5bf1894"
+      },
+      "declaredFrameDomains": 10,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-151",
+          "frameCount": 1057,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-151:lesson-shell-natural-entry:en",
+            "req:sprite-151:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-122",
+          "frameCount": 3,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-122:lesson-shell-natural-entry:en",
+            "req:sprite-122:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-125",
+          "frameCount": 3,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-125:lesson-shell-natural-entry:en",
+            "req:sprite-125:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-130",
+          "frameCount": 4,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-130:lesson-shell-natural-entry:en",
+            "req:sprite-130:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-133",
+          "frameCount": 3,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-133:lesson-shell-natural-entry:en",
+            "req:sprite-133:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-142",
+          "frameCount": 2,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-142:lesson-shell-natural-entry:en",
+            "req:sprite-142:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-144",
+          "frameCount": 55,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-144:lesson-shell-natural-entry:en",
+            "req:sprite-144:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-146",
+          "frameCount": 20,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-146:lesson-shell-natural-entry:en",
+            "req:sprite-146:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-150",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-150:lesson-shell-natural-entry:en",
+            "req:sprite-150:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 18,
+      "animationId": "course-g04-l03-in-007",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-in-007/audit/renderer-frame-domain-support.json",
+        "bytes": 11721,
+        "sha256": "3ac3590cd60514b603776ba8da9cc76c62e1be469119b0a45c7e8dbc12b0bc63"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-in-007/migration.json",
+        "bytes": 9954,
+        "sha256": "acf865b39428c9781eda9c4749b3e70b5e56f2072fe08c022df4a062c50e03a0"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-in-007/evidence/full-frame-coverage.json",
+        "bytes": 15927,
+        "sha256": "b00e061c95a326a0f6e719a62985e6fd0b7f4bebfd87e382303d214c149e9d25"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-98",
+          "frameCount": 555,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-98:lesson-shell-natural-entry:en",
+            "req:sprite-98:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        }
+      ]
+    },
+    {
+      "sequence": 19,
+      "animationId": "course-g04-l03-in-008",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-in-008/audit/renderer-frame-domain-support.json",
+        "bytes": 21330,
+        "sha256": "0fda6e6914eab3ac2d006a548d0180294336a14f586dc3853118aaa6ed16bd02"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-in-008/migration.json",
+        "bytes": 13128,
+        "sha256": "b3259a6f847b4c7af605c1060eba7d3288dde29fc0f2eda70a43b1258e4ad0c1"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-in-008/evidence/full-frame-coverage.json",
+        "bytes": 25551,
+        "sha256": "1dd9fba550350b32b4775b2ba202f82c64ef1b9bf0b29d5efd919ee6d36f3d52"
+      },
+      "declaredFrameDomains": 5,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-57",
+          "frameCount": 217,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-57:lesson-shell-natural-entry:en",
+            "req:sprite-57:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-52",
+          "frameCount": 1,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 2,
+          "renderableCount": 0,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-52:lesson-shell-natural-entry:en",
+            "req:sprite-52:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-54",
+          "frameCount": 55,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-54:lesson-shell-natural-entry:en",
+            "req:sprite-54:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-56",
+          "frameCount": 20,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-56:lesson-shell-natural-entry:en",
+            "req:sprite-56:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 20,
+      "animationId": "course-g04-l03-in-009",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-in-009/audit/renderer-frame-domain-support.json",
+        "bytes": 11281,
+        "sha256": "d6ee8f22ebef885dfb119d8a0784b90e10e0fc9b9ea5a16798ac54e001eed55e"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-in-009/migration.json",
+        "bytes": 16671,
+        "sha256": "32daa9ed0a65f2f60cf47eab920ffc71dafbedebe00628735d9ec53ee34a8d8f"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-in-009/evidence/full-frame-coverage.json",
+        "bytes": 9375,
+        "sha256": "06e624d5575aee3d60686cb8caad0ea779d7e0c39c999b192ff57335d469e460"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 2,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:root:root-standalone:en",
+            "req:root:root-standalone:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-200",
+          "frameCount": 637,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-200:default:en",
+            "req:sprite-200:default:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        }
+      ]
+    },
+    {
+      "sequence": 21,
+      "animationId": "course-g04-l03-in-010",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-in-010/audit/renderer-frame-domain-support.json",
+        "bytes": 24258,
+        "sha256": "42b24ab0cd75c4a68932eef41978acbcdde27f41f4ebe8a1de38c0cf39af7398"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-in-010/migration.json",
+        "bytes": 14101,
+        "sha256": "71d509c30f9ab9ceedc5981cb68f2359a994bf5f3e99fb833ad167b027ca98dd"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-in-010/evidence/full-frame-coverage.json",
+        "bytes": 26089,
+        "sha256": "0c7399680777bf37d3d743e20f230c3fa1d0a7f933d563c944b4e6743609b5cd"
+      },
+      "declaredFrameDomains": 5,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-90",
+          "frameCount": 264,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-90:lesson-shell-natural-entry:en",
+            "req:sprite-90:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-52",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-52:lesson-shell-natural-entry:en",
+            "req:sprite-52:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-87",
+          "frameCount": 15,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-87:lesson-shell-natural-entry:en",
+            "req:sprite-87:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-89",
+          "frameCount": 20,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-89:lesson-shell-natural-entry:en",
+            "req:sprite-89:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 22,
+      "animationId": "course-g04-l03-in-011",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-in-011/audit/renderer-frame-domain-support.json",
+        "bytes": 11624,
+        "sha256": "12d9941145b5423072053e7664a78f4d973d7c38b44c00abb20a93e83ff49ff3"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-in-011/migration.json",
+        "bytes": 10056,
+        "sha256": "cb82a8f18ea9dd5d7944d81656f490eb8225b0ff9c36e89983dfe241f0d7f7b5"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-in-011/evidence/full-frame-coverage.json",
+        "bytes": 14445,
+        "sha256": "3548b661eced28e07dbab2f0aba3f91bbd6889ad2332b73e3d7033de28676a0d"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-51",
+          "frameCount": 441,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-51:lesson-shell-natural-entry:en",
+            "req:sprite-51:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        }
+      ]
+    },
+    {
+      "sequence": 23,
+      "animationId": "course-g04-l03-in-012",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-in-012/audit/renderer-frame-domain-support.json",
+        "bytes": 54103,
+        "sha256": "aeecf2d682e8dbbd8360f0691d8f55bdb0d3b347e8156c2c6f14d4bac8026d0f"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-in-012/migration.json",
+        "bytes": 20388,
+        "sha256": "94af4edd7d4c70506d1c81c08ed919eb51b88fde44520e7c119687bf943850fb"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-in-012/evidence/full-frame-coverage.json",
+        "bytes": 61926,
+        "sha256": "acdfa6fbd8bb5d3ccfa2866bdf83b769a6d0d6a15998a38a1ab141107a68a9e0"
+      },
+      "declaredFrameDomains": 13,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-228",
+          "frameCount": 215,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-228:lesson-shell-natural-entry:en",
+            "req:sprite-228:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-37",
+          "frameCount": 20,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-37:lesson-shell-natural-entry:en",
+            "req:sprite-37:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-46",
+          "frameCount": 22,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-46:lesson-shell-natural-entry:en",
+            "req:sprite-46:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-68",
+          "frameCount": 26,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-68:lesson-shell-natural-entry:en",
+            "req:sprite-68:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-74",
+          "frameCount": 22,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-74:lesson-shell-natural-entry:en",
+            "req:sprite-74:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-98",
+          "frameCount": 19,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-98:lesson-shell-natural-entry:en",
+            "req:sprite-98:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-108",
+          "frameCount": 27,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-108:lesson-shell-natural-entry:en",
+            "req:sprite-108:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-134",
+          "frameCount": 31,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-134:lesson-shell-natural-entry:en",
+            "req:sprite-134:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-166",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-166:lesson-shell-natural-entry:en",
+            "req:sprite-166:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-199",
+          "frameCount": 27,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-199:lesson-shell-natural-entry:en",
+            "req:sprite-199:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-223",
+          "frameCount": 15,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-223:lesson-shell-natural-entry:en",
+            "req:sprite-223:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-227",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-227:lesson-shell-natural-entry:en",
+            "req:sprite-227:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 24,
+      "animationId": "course-g04-l03-ti-002",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-ti-002/audit/renderer-frame-domain-support.json",
+        "bytes": 69934,
+        "sha256": "82ae330956cd8ee378ed100543a02d64c96afcfd7818ad24d83212520193cbab"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-ti-002/migration.json",
+        "bytes": 24134,
+        "sha256": "f56e00c25419a9f6a8fad698e70b3bd88d7bf4d15291f6916534607b5c670408"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-ti-002/evidence/full-frame-coverage.json",
+        "bytes": 79121,
+        "sha256": "65d9418f34ad2e271eb7edcbe8a83f62909a7d2a0212dba5b383a96a9042de67"
+      },
+      "declaredFrameDomains": 17,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-272",
+          "frameCount": 254,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-272:lesson-shell-natural-entry:en",
+            "req:sprite-272:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-159",
+          "frameCount": 2,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-159:lesson-shell-natural-entry:en",
+            "req:sprite-159:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-169",
+          "frameCount": 2,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-169:lesson-shell-natural-entry:en",
+            "req:sprite-169:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-174",
+          "frameCount": 10,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-174:lesson-shell-natural-entry:en",
+            "req:sprite-174:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-175",
+          "frameCount": 2,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-175:lesson-shell-natural-entry:en",
+            "req:sprite-175:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-178",
+          "frameCount": 2,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-178:lesson-shell-natural-entry:en",
+            "req:sprite-178:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-182",
+          "frameCount": 2,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-182:lesson-shell-natural-entry:en",
+            "req:sprite-182:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-186",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-186:lesson-shell-natural-entry:en",
+            "req:sprite-186:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-205",
+          "frameCount": 28,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-205:lesson-shell-natural-entry:en",
+            "req:sprite-205:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-217",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-217:lesson-shell-natural-entry:en",
+            "req:sprite-217:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-231",
+          "frameCount": 32,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-231:lesson-shell-natural-entry:en",
+            "req:sprite-231:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-252",
+          "frameCount": 33,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-252:lesson-shell-natural-entry:en",
+            "req:sprite-252:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-263",
+          "frameCount": 28,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-263:lesson-shell-natural-entry:en",
+            "req:sprite-263:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-267",
+          "frameCount": 15,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-267:lesson-shell-natural-entry:en",
+            "req:sprite-267:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-269",
+          "frameCount": 55,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-269:lesson-shell-natural-entry:en",
+            "req:sprite-269:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-271",
+          "frameCount": 20,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-271:lesson-shell-natural-entry:en",
+            "req:sprite-271:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 25,
+      "animationId": "course-g04-l03-ti-003",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-ti-003/audit/renderer-frame-domain-support.json",
+        "bytes": 31775,
+        "sha256": "c8cfcff872ac12df71042b595afc5b91d38c9ce598155485ca4412376a76885b"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-ti-003/migration.json",
+        "bytes": 15607,
+        "sha256": "38341110179920edac8eab288364a0867f74405faebaf71dc5bdfc7efcb46c08"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-ti-003/evidence/full-frame-coverage.json",
+        "bytes": 34580,
+        "sha256": "3653f9a49b0ad42a87aec7a2652a871d7db2a2927f8a445e5b06b07c1299e874"
+      },
+      "declaredFrameDomains": 7,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-126",
+          "frameCount": 140,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-126:lesson-shell-natural-entry:en",
+            "req:sprite-126:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-78",
+          "frameCount": 15,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-78:lesson-shell-natural-entry:en",
+            "req:sprite-78:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-82",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-82:lesson-shell-natural-entry:en",
+            "req:sprite-82:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-84",
+          "frameCount": 55,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-84:lesson-shell-natural-entry:en",
+            "req:sprite-84:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-86",
+          "frameCount": 35,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-86:lesson-shell-natural-entry:en",
+            "req:sprite-86:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-88",
+          "frameCount": 20,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-88:lesson-shell-natural-entry:en",
+            "req:sprite-88:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 26,
+      "animationId": "course-g04-l03-ti-004",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-ti-004/audit/renderer-frame-domain-support.json",
+        "bytes": 41745,
+        "sha256": "802fc90b63ad2f76c9098ee010adda122ae07efea5e963b806848521042f8577"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-ti-004/migration.json",
+        "bytes": 18235,
+        "sha256": "17e85157a42858aac17f4527a7cc867e73480e0926163e87a695cb984e5ccf61"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-ti-004/evidence/full-frame-coverage.json",
+        "bytes": 46975,
+        "sha256": "cdb45c99ae3376c7779d1603fc0addfde6201478fcb9669025b17a212342380e"
+      },
+      "declaredFrameDomains": 10,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-274",
+          "frameCount": 125,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-274:lesson-shell-natural-entry:en",
+            "req:sprite-274:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-212",
+          "frameCount": 7,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-212:lesson-shell-natural-entry:en",
+            "req:sprite-212:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-223",
+          "frameCount": 15,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-223:lesson-shell-natural-entry:en",
+            "req:sprite-223:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-225",
+          "frameCount": 55,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-225:lesson-shell-natural-entry:en",
+            "req:sprite-225:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-229",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-229:lesson-shell-natural-entry:en",
+            "req:sprite-229:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-231",
+          "frameCount": 35,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-231:lesson-shell-natural-entry:en",
+            "req:sprite-231:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-233",
+          "frameCount": 20,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-233:lesson-shell-natural-entry:en",
+            "req:sprite-233:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-236",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-236:lesson-shell-natural-entry:en",
+            "req:sprite-236:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-273",
+          "frameCount": 1,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 2,
+          "renderableCount": 0,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-273:lesson-shell-natural-entry:en",
+            "req:sprite-273:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 27,
+      "animationId": "course-g04-l03-ti-005",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-ti-005/audit/renderer-frame-domain-support.json",
+        "bytes": 25258,
+        "sha256": "f8c3c7ef08a2162864b194a091bb8f8793b046645b8b54d9b5bd16185399c4ad"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-ti-005/migration.json",
+        "bytes": 13997,
+        "sha256": "d9465dca0381fb7f821ad348c29be9f7f064fa95aaa24be8ab4478ea0c525331"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-ti-005/evidence/full-frame-coverage.json",
+        "bytes": 29637,
+        "sha256": "09ee562d9fedf53b19eb81b07b764ee86c9569ef29247e45f1cd0ff7f053bf55"
+      },
+      "declaredFrameDomains": 6,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-208",
+          "frameCount": 210,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-208:lesson-shell-natural-entry:en",
+            "req:sprite-208:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-179",
+          "frameCount": 5,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-179:lesson-shell-natural-entry:en",
+            "req:sprite-179:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-203",
+          "frameCount": 1,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 2,
+          "renderableCount": 0,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-203:lesson-shell-natural-entry:en",
+            "req:sprite-203:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-205",
+          "frameCount": 55,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-205:lesson-shell-natural-entry:en",
+            "req:sprite-205:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-207",
+          "frameCount": 20,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-207:lesson-shell-natural-entry:en",
+            "req:sprite-207:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 28,
+      "animationId": "course-g04-l03-ti-006",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-ti-006/audit/renderer-frame-domain-support.json",
+        "bytes": 35462,
+        "sha256": "0b15e95b8d0dba0165896533c7543da2c383c8aa4e0056258f35488d91604955"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-ti-006/migration.json",
+        "bytes": 16371,
+        "sha256": "3c96fcb6050750771ab7629a646dca73fea0b09d29b8d5a1b2dd190f1932431a"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-ti-006/evidence/full-frame-coverage.json",
+        "bytes": 39553,
+        "sha256": "963b076a928ab7a8b1c3142d4fa5d7ef20d0f1f723a4af4959e117d4324c866e"
+      },
+      "declaredFrameDomains": 8,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-269",
+          "frameCount": 167,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-269:lesson-shell-natural-entry:en",
+            "req:sprite-269:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-222",
+          "frameCount": 15,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-222:lesson-shell-natural-entry:en",
+            "req:sprite-222:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-224",
+          "frameCount": 55,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-224:lesson-shell-natural-entry:en",
+            "req:sprite-224:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-228",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-228:lesson-shell-natural-entry:en",
+            "req:sprite-228:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-230",
+          "frameCount": 35,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-230:lesson-shell-natural-entry:en",
+            "req:sprite-230:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-265",
+          "frameCount": 20,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-265:lesson-shell-natural-entry:en",
+            "req:sprite-265:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-268",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-268:lesson-shell-natural-entry:en",
+            "req:sprite-268:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 29,
+      "animationId": "course-g04-l03-gs-002",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-gs-002/audit/renderer-frame-domain-support.json",
+        "bytes": 49738,
+        "sha256": "d790439dd1148a686d5356d3b45794fda59136e77faf7143288a8c2ef9711467"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-gs-002/migration.json",
+        "bytes": 18882,
+        "sha256": "c14b2f83b9dc31f7cafc5b29824f74ea62fc2a73c2bcd6078df42b46942d1721"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-gs-002/evidence/full-frame-coverage.json",
+        "bytes": 60795,
+        "sha256": "a91ce7e17fac3e7a00038d72fb76e788868a946ceb1b19ee34dee7a0042210d3"
+      },
+      "declaredFrameDomains": 12,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-321",
+          "frameCount": 428,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-321:lesson-shell-natural-entry:en",
+            "req:sprite-321:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-69",
+          "frameCount": 35,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-69:lesson-shell-natural-entry:en",
+            "req:sprite-69:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-78",
+          "frameCount": 3,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-78:lesson-shell-natural-entry:en",
+            "req:sprite-78:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-90",
+          "frameCount": 7,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-90:lesson-shell-natural-entry:en",
+            "req:sprite-90:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-147",
+          "frameCount": 12,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-147:lesson-shell-natural-entry:en",
+            "req:sprite-147:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-149",
+          "frameCount": 10,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-149:lesson-shell-natural-entry:en",
+            "req:sprite-149:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-158",
+          "frameCount": 15,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-158:lesson-shell-natural-entry:en",
+            "req:sprite-158:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-206",
+          "frameCount": 2,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-206:lesson-shell-natural-entry:en",
+            "req:sprite-206:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-306",
+          "frameCount": 6,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-306:lesson-shell-natural-entry:en",
+            "req:sprite-306:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-318",
+          "frameCount": 16,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-318:lesson-shell-natural-entry:en",
+            "req:sprite-318:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-319",
+          "frameCount": 186,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-319:lesson-shell-natural-entry:en",
+            "req:sprite-319:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 30,
+      "animationId": "course-g04-l03-ts-002",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-ts-002/audit/renderer-frame-domain-support.json",
+        "bytes": 11721,
+        "sha256": "abc6bfbadf7ec06675c1d9fd9635e52b1491dba2f9187c2c553a7529e260a94b"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-ts-002/migration.json",
+        "bytes": 10101,
+        "sha256": "a5743ba2d0f9784193a185694fe036ff9e31958c2c89c0f19a8b577e51066ae2"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-ts-002/evidence/full-frame-coverage.json",
+        "bytes": 13327,
+        "sha256": "bdea8635d79f5ee48eb65538321c18a18ad3157776ef054ab49c2a2b8e74a73f"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-27",
+          "frameCount": 355,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-27:lesson-shell-natural-entry:en",
+            "req:sprite-27:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        }
+      ]
+    },
+    {
+      "sequence": 31,
+      "animationId": "course-g04-l03-ts-003",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-ts-003/audit/renderer-frame-domain-support.json",
+        "bytes": 11721,
+        "sha256": "a75151404b10afcc1a6a29b185b6d83596ba1bb71d400e5058048d89e95d3040"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-ts-003/migration.json",
+        "bytes": 9956,
+        "sha256": "5aa783823f2b10bc54c68790aaea924928243ea0e0a7d558ae79ba0eb05d4897"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-ts-003/evidence/full-frame-coverage.json",
+        "bytes": 11845,
+        "sha256": "3e655498884f0efde8aa928592e26dd39bc4000ff6ebae53738a578424c30f7a"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-25",
+          "frameCount": 241,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-25:lesson-shell-natural-entry:en",
+            "req:sprite-25:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        }
+      ]
+    },
+    {
+      "sequence": 32,
+      "animationId": "course-g04-l03-ts-004",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-ts-004/audit/renderer-frame-domain-support.json",
+        "bytes": 11721,
+        "sha256": "997ebf8b79c8e5b70c94d33b03db8c64afb2ecf09f26571711fd17e51a4286dd"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-ts-004/migration.json",
+        "bytes": 9956,
+        "sha256": "24b49d7ea7b42c4173de37919ef30858fec891e52b2ba0fa311f8e1507ba907a"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-ts-004/evidence/full-frame-coverage.json",
+        "bytes": 13080,
+        "sha256": "57896b9a9ed71663b6c85686c8ea190f57e85b1691ecbe3f8911a54c948de888"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-70",
+          "frameCount": 336,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-70:lesson-shell-natural-entry:en",
+            "req:sprite-70:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        }
+      ]
+    },
+    {
+      "sequence": 33,
+      "animationId": "course-g04-l03-ts-005",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-ts-005/audit/renderer-frame-domain-support.json",
+        "bytes": 11721,
+        "sha256": "c68584d2fa833ea61a5a6548bec0d57207898f3848986df10dcaef50418df257"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-ts-005/migration.json",
+        "bytes": 10101,
+        "sha256": "5ea0d94763f8cfd3e2a5b8e53369e14d9d7da3a5118ad52d3b23114db2ca12ef"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-ts-005/evidence/full-frame-coverage.json",
+        "bytes": 12287,
+        "sha256": "f1592b227f1e68f493caa21eede9aee9d5684906686065d2a9b371b5194cfb04"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-40",
+          "frameCount": 275,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-40:lesson-shell-natural-entry:en",
+            "req:sprite-40:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        }
+      ]
+    },
+    {
+      "sequence": 34,
+      "animationId": "course-g04-l03-ts-006",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-ts-006/audit/renderer-frame-domain-support.json",
+        "bytes": 11768,
+        "sha256": "1368bed877b39b4fde35b912dff9ba880059a901fa0c09f11dd436c5617a0407"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-ts-006/migration.json",
+        "bytes": 14053,
+        "sha256": "c065a67ddd72f5426ff3f71fa7ee92db7f5e06bb77dd8801ee0206d57b486590"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-ts-006/evidence/full-frame-coverage.json",
+        "bytes": 11080,
+        "sha256": "fc8608080a7a2a0af3dd46dfcd9419eda4f9a787f75e25316ae89bf386124b3f"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-23",
+          "frameCount": 128,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-23:lesson-shell-natural-entry:en",
+            "req:sprite-23:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        }
+      ]
+    },
+    {
+      "sequence": 35,
+      "animationId": "course-g04-l03-ts-007",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-ts-007/audit/renderer-frame-domain-support.json",
+        "bytes": 76080,
+        "sha256": "0ed8a168a60c460d6b9a71ca0b9861c0e300f53f212a944a3278a1d1f28d910a"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-ts-007/migration.json",
+        "bytes": 24641,
+        "sha256": "6b4d9627bc35ee283f67cd0683fd014292a577e344efb2c4cebdbdd847238331"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-ts-007/evidence/full-frame-coverage.json",
+        "bytes": 100215,
+        "sha256": "ca927c7b0efbedc3567b3a69e56bf55d8142805accc4a52aa58c718fb0f22a89"
+      },
+      "declaredFrameDomains": 19,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-441",
+          "frameCount": 696,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-441:lesson-shell-natural-entry:en",
+            "req:sprite-441:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-90",
+          "frameCount": 70,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-90:lesson-shell-natural-entry:en",
+            "req:sprite-90:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-114",
+          "frameCount": 97,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-114:lesson-shell-natural-entry:en",
+            "req:sprite-114:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-127",
+          "frameCount": 20,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-127:lesson-shell-natural-entry:en",
+            "req:sprite-127:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-183",
+          "frameCount": 83,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-183:lesson-shell-natural-entry:en",
+            "req:sprite-183:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-193",
+          "frameCount": 28,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-193:lesson-shell-natural-entry:en",
+            "req:sprite-193:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-211",
+          "frameCount": 27,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-211:lesson-shell-natural-entry:en",
+            "req:sprite-211:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-225",
+          "frameCount": 31,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-225:lesson-shell-natural-entry:en",
+            "req:sprite-225:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-253",
+          "frameCount": 28,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-253:lesson-shell-natural-entry:en",
+            "req:sprite-253:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-262",
+          "frameCount": 22,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-262:lesson-shell-natural-entry:en",
+            "req:sprite-262:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-284",
+          "frameCount": 26,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-284:lesson-shell-natural-entry:en",
+            "req:sprite-284:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-290",
+          "frameCount": 22,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-290:lesson-shell-natural-entry:en",
+            "req:sprite-290:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-314",
+          "frameCount": 19,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-314:lesson-shell-natural-entry:en",
+            "req:sprite-314:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-324",
+          "frameCount": 27,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-324:lesson-shell-natural-entry:en",
+            "req:sprite-324:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-350",
+          "frameCount": 31,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-350:lesson-shell-natural-entry:en",
+            "req:sprite-350:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-382",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-382:lesson-shell-natural-entry:en",
+            "req:sprite-382:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-415",
+          "frameCount": 27,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-415:lesson-shell-natural-entry:en",
+            "req:sprite-415:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-439",
+          "frameCount": 70,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-439:lesson-shell-natural-entry:en",
+            "req:sprite-439:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 36,
+      "animationId": "course-g04-l03-ts-008",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-ts-008/audit/renderer-frame-domain-support.json",
+        "bytes": 61210,
+        "sha256": "dfee24ce76f6d90dda8302f3acb6464abd3ce5733d5a0e1cb7844b04d8e55c58"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-ts-008/migration.json",
+        "bytes": 21630,
+        "sha256": "cc9f3067aabcf8ee8ce7b212afbd689b745f3d07d0282e219895ecb1b0effba5"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-ts-008/evidence/full-frame-coverage.json",
+        "bytes": 80638,
+        "sha256": "eb949ef1355ab1671060c2d26b23a1222a9af512a6a01fccd0f9b04a3dda9ab8"
+      },
+      "declaredFrameDomains": 15,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-350",
+          "frameCount": 789,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-350:lesson-shell-natural-entry:en",
+            "req:sprite-350:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-91",
+          "frameCount": 70,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-91:lesson-shell-natural-entry:en",
+            "req:sprite-91:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-142",
+          "frameCount": 21,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-142:lesson-shell-natural-entry:en",
+            "req:sprite-142:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-153",
+          "frameCount": 20,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-153:lesson-shell-natural-entry:en",
+            "req:sprite-153:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-197",
+          "frameCount": 28,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-197:lesson-shell-natural-entry:en",
+            "req:sprite-197:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-208",
+          "frameCount": 28,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-208:lesson-shell-natural-entry:en",
+            "req:sprite-208:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-220",
+          "frameCount": 29,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-220:lesson-shell-natural-entry:en",
+            "req:sprite-220:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-232",
+          "frameCount": 31,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-232:lesson-shell-natural-entry:en",
+            "req:sprite-232:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-260",
+          "frameCount": 28,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-260:lesson-shell-natural-entry:en",
+            "req:sprite-260:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-284",
+          "frameCount": 27,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-284:lesson-shell-natural-entry:en",
+            "req:sprite-284:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-300",
+          "frameCount": 28,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-300:lesson-shell-natural-entry:en",
+            "req:sprite-300:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-312",
+          "frameCount": 25,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-312:lesson-shell-natural-entry:en",
+            "req:sprite-312:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-324",
+          "frameCount": 28,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-324:lesson-shell-natural-entry:en",
+            "req:sprite-324:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-348",
+          "frameCount": 70,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-348:lesson-shell-natural-entry:en",
+            "req:sprite-348:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 37,
+      "animationId": "course-g04-l03-fq-001",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-fq-001/audit/renderer-frame-domain-support.json",
+        "bytes": 11714,
+        "sha256": "6ad294940cf1a47d1b4f26ed6bafc594b5d02ef92e055c95bea602b3340bef67"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-fq-001/migration.json",
+        "bytes": 9795,
+        "sha256": "c4496e399bb04796db10b9b96498ef4d9c1956ef8db6b4d19ff0bebc0d7392a3"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-fq-001/evidence/full-frame-coverage.json",
+        "bytes": 9431,
+        "sha256": "63ca7675fa7e0c9fa7570ec3a49137086716a4dbc37285cdea0b87af520e7e53"
+      },
+      "declaredFrameDomains": 2,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-41",
+          "frameCount": 52,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-41:lesson-shell-natural-entry:en",
+            "req:sprite-41:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        }
+      ]
+    },
+    {
+      "sequence": 38,
+      "animationId": "course-g04-l03-fq-002",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-fq-002/audit/renderer-frame-domain-support.json",
+        "bytes": 22853,
+        "sha256": "895d40d8fb85ffa870ace78c9d0be4ef8592e14ca2fcb68621f746f6f6be52dc"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-fq-002/migration.json",
+        "bytes": 21659,
+        "sha256": "3ba216dc931d0dd78178eea78ba0b7205ae026a50c72ccb02d20a6294f902cdb"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-fq-002/evidence/full-frame-coverage.json",
+        "bytes": 22662,
+        "sha256": "8de4e963f891b644b43db1d9c4001ef6056b6d9979a7358d68ff61a330f78e39"
+      },
+      "declaredFrameDomains": 5,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-899",
+          "frameCount": 68,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-899:lesson-shell-natural-entry:en",
+            "req:sprite-899:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-16",
+          "frameCount": 2,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-16:lesson-shell-natural-entry:en",
+            "req:sprite-16:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-65",
+          "frameCount": 8,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-65:lesson-shell-natural-entry:en",
+            "req:sprite-65:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-64",
+          "frameCount": 2,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-64:lesson-shell-natural-entry:en",
+            "req:sprite-64:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 39,
+      "animationId": "course-g04-l03-fq-003",
+      "rendererReport": {
+        "path": "migrations/course-g04-l03-fq-003/audit/renderer-frame-domain-support.json",
+        "bytes": 22853,
+        "sha256": "f409f6f2810513735347edd754bcf6090f6c6118592f52565f20029b1c8084e4"
+      },
+      "migrationManifest": {
+        "path": "migrations/course-g04-l03-fq-003/migration.json",
+        "bytes": 21659,
+        "sha256": "07d7bee721691a740f39fc087b2a98220f2649846b7e5cf89d3fc2b128820e2a"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/course-g04-l03-fq-003/evidence/full-frame-coverage.json",
+        "bytes": 22662,
+        "sha256": "fbc1b7495ac63d2e939a8c62738e163f311fcc283c7a652a7d251187cfcd4d38"
+      },
+      "declaredFrameDomains": 5,
+      "fullyRenderableFrameDomains": 0,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 10,
+          "category": "authoritative-root-runtime-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:root:lesson-shell-natural-entry:en",
+            "req:root:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-root-runtime-trace"
+        },
+        {
+          "frameDomain": "sprite-899",
+          "frameCount": 68,
+          "category": "spanish-visual-audio-evidence-gated",
+          "probeCount": 4,
+          "renderableCount": 2,
+          "blockedCount": 2,
+          "requirementIds": [
+            "req:sprite-899:lesson-shell-natural-entry:en",
+            "req:sprite-899:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-spanish-natural-trace-and-audio-listening-evidence"
+        },
+        {
+          "frameDomain": "sprite-16",
+          "frameCount": 2,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-16:lesson-shell-natural-entry:en",
+            "req:sprite-16:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-65",
+          "frameCount": 8,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-65:lesson-shell-natural-entry:en",
+            "req:sprite-65:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        },
+        {
+          "frameDomain": "sprite-64",
+          "frameCount": 2,
+          "category": "natural-trace-parent-composition-and-renderer-gated",
+          "probeCount": 4,
+          "renderableCount": 0,
+          "blockedCount": 4,
+          "requirementIds": [
+            "req:sprite-64:lesson-shell-natural-entry:en",
+            "req:sprite-64:lesson-shell-natural-entry:es"
+          ],
+          "requiredNextEvidence": "authorized-natural-trace-parent-composition-and-source-bound-renderer"
+        }
+      ]
+    },
+    {
+      "sequence": 40,
+      "animationId": "shell-course-g04-l03-index-local",
+      "rendererReport": {
+        "path": "migrations/shell-course-g04-l03-index-local/audit/renderer-frame-domain-support.json",
+        "bytes": 135441,
+        "sha256": "a4031583851af68590b0b1796fda3c60b1433b764011204b59bf7ac829c7d02b"
+      },
+      "migrationManifest": {
+        "path": "migrations/shell-course-g04-l03-index-local/migration.json",
+        "bytes": 204606,
+        "sha256": "2a44d479f6f9b2f3584165f489a0747c00937e0f2798f4f5b997cc46a312c56d"
+      },
+      "fullFrameCoverage": {
+        "path": "migrations/shell-course-g04-l03-index-local/evidence/full-frame-coverage.json",
+        "bytes": 179539,
+        "sha256": "30b6041f43e417a577f05eacb7b26d4d2e2f34dc50d54969d120588248e17833"
+      },
+      "declaredFrameDomains": 34,
+      "fullyRenderableFrameDomains": 34,
+      "domains": [
+        {
+          "frameDomain": "root",
+          "frameCount": 50,
+          "category": "fully-renderable-current-js",
+          "probeCount": 44,
+          "renderableCount": 44,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:root:source-root-structural:en",
+            "req:root:source-root-structural:es",
+            "req:root:lesson-map-audit:en",
+            "req:root:lesson-map-audit:es",
+            "req:root:section-ir:en",
+            "req:root:section-ir:es",
+            "req:root:section-rw:en",
+            "req:root:section-rw:es",
+            "req:root:section-vb:en",
+            "req:root:section-vb:es",
+            "req:root:section-in:en",
+            "req:root:section-in:es",
+            "req:root:section-ti:en",
+            "req:root:section-ti:es",
+            "req:root:section-gs:en",
+            "req:root:section-gs:es",
+            "req:root:section-ts:en",
+            "req:root:section-ts:es",
+            "req:root:section-fq:en",
+            "req:root:section-fq:es",
+            "req:root:quit-confirmation:en",
+            "req:root:quit-confirmation:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-1011",
+          "frameCount": 48,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-1011:native-menu-structural:en",
+            "req:sprite-1011:native-menu-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-132",
+          "frameCount": 100,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-132:preloader-progress-structural:en",
+            "req:sprite-132:preloader-progress-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-302",
+          "frameCount": 149,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-302:popup-control-structural:en",
+            "req:sprite-302:popup-control-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-327",
+          "frameCount": 132,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-327:mouse-object-control-structural:en",
+            "req:sprite-327:mouse-object-control-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-528",
+          "frameCount": 871,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-528:mover-tooltip-structural:en",
+            "req:sprite-528:mover-tooltip-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-112",
+          "frameCount": 2,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-112:progress-bar-control-structural:en",
+            "req:sprite-112:progress-bar-control-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-135",
+          "frameCount": 4,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-135:preloader-shell-structural:en",
+            "req:sprite-135:preloader-shell-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-152",
+          "frameCount": 2,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-152:login-error-structural:en",
+            "req:sprite-152:login-error-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-155",
+          "frameCount": 15,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-155:data-update-structural:en",
+            "req:sprite-155:data-update-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-164",
+          "frameCount": 5,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-164:quiz-report-structural:en",
+            "req:sprite-164:quiz-report-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-176",
+          "frameCount": 28,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-176:internal-preloader-structural:en",
+            "req:sprite-176:internal-preloader-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-199",
+          "frameCount": 36,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-199:course-title-structural:en",
+            "req:sprite-199:course-title-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-200",
+          "frameCount": 2,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-200:keyterms-top-center-state-structural:en",
+            "req:sprite-200:keyterms-top-center-state-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-266",
+          "frameCount": 34,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-266:next-animation-control-structural:en",
+            "req:sprite-266:next-animation-control-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-335",
+          "frameCount": 2,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-335:audio-mute-control-structural:en",
+            "req:sprite-335:audio-mute-control-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-549",
+          "frameCount": 2,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-549:bookmark-control-structural:en",
+            "req:sprite-549:bookmark-control-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-562",
+          "frameCount": 2,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-562:quit-control-structural:en",
+            "req:sprite-562:quit-control-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-586",
+          "frameCount": 2,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-586:calculator-center-state-structural:en",
+            "req:sprite-586:calculator-center-state-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-709",
+          "frameCount": 6,
+          "category": "fully-renderable-current-js",
+          "probeCount": 4,
+          "renderableCount": 4,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-709:keyterm-modal-structural:en",
+            "req:sprite-709:keyterm-modal-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-87",
+          "frameCount": 1,
+          "category": "fully-renderable-current-js",
+          "probeCount": 2,
+          "renderableCount": 2,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-87:keyterm-scroll-track-control-structural:en",
+            "req:sprite-87:keyterm-scroll-track-control-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-88",
+          "frameCount": 1,
+          "category": "fully-renderable-current-js",
+          "probeCount": 2,
+          "renderableCount": 2,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-88:keyterm-scrollbar-asset-structural:en",
+            "req:sprite-88:keyterm-scrollbar-asset-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-169",
+          "frameCount": 1,
+          "category": "fully-renderable-current-js",
+          "probeCount": 2,
+          "renderableCount": 2,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-169:root-stop-control-a-structural:en",
+            "req:sprite-169:root-stop-control-a-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-179",
+          "frameCount": 1,
+          "category": "fully-renderable-current-js",
+          "probeCount": 2,
+          "renderableCount": 2,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-179:root-stop-control-b-structural:en",
+            "req:sprite-179:root-stop-control-b-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-185",
+          "frameCount": 1,
+          "category": "fully-renderable-current-js",
+          "probeCount": 2,
+          "renderableCount": 2,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-185:media-slider-control-structural:en",
+            "req:sprite-185:media-slider-control-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-253",
+          "frameCount": 1,
+          "category": "fully-renderable-current-js",
+          "probeCount": 2,
+          "renderableCount": 2,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-253:replay-control-structural:en",
+            "req:sprite-253:replay-control-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-257",
+          "frameCount": 1,
+          "category": "fully-renderable-current-js",
+          "probeCount": 2,
+          "renderableCount": 2,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-257:play-control-structural:en",
+            "req:sprite-257:play-control-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-261",
+          "frameCount": 1,
+          "category": "fully-renderable-current-js",
+          "probeCount": 2,
+          "renderableCount": 2,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-261:pause-control-structural:en",
+            "req:sprite-261:pause-control-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-341",
+          "frameCount": 1,
+          "category": "fully-renderable-current-js",
+          "probeCount": 2,
+          "renderableCount": 2,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-341:next-control-structural:en",
+            "req:sprite-341:next-control-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-343",
+          "frameCount": 1,
+          "category": "fully-renderable-current-js",
+          "probeCount": 2,
+          "renderableCount": 2,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-343:previous-control-structural:en",
+            "req:sprite-343:previous-control-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-687",
+          "frameCount": 1,
+          "category": "fully-renderable-current-js",
+          "probeCount": 2,
+          "renderableCount": 2,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-687:keyterms-scroll-dragger-structural:en",
+            "req:sprite-687:keyterms-scroll-dragger-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-693",
+          "frameCount": 1,
+          "category": "fully-renderable-current-js",
+          "probeCount": 2,
+          "renderableCount": 2,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-693:keyterms-panel-structural:en",
+            "req:sprite-693:keyterms-panel-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-702",
+          "frameCount": 1,
+          "category": "fully-renderable-current-js",
+          "probeCount": 2,
+          "renderableCount": 2,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-702:keyterm-content-structural:en",
+            "req:sprite-702:keyterm-content-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        },
+        {
+          "frameDomain": "sprite-774",
+          "frameCount": 1,
+          "category": "fully-renderable-current-js",
+          "probeCount": 2,
+          "renderableCount": 2,
+          "blockedCount": 0,
+          "requirementIds": [
+            "req:sprite-774:calculator-panel-structural:en",
+            "req:sprite-774:calculator-panel-structural:es"
+          ],
+          "requiredNextEvidence": "authoritative-baseline-and-acceptance-chain"
+        }
+      ]
+    }
+  ],
+  "acceptance": {
+    "authoritativeRuntimeAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "published": false
+  },
+  "strictAcceptanceEffect": "none; this report partitions current renderer gaps without rendering, launching a runtime, changing coverage status, or advancing acceptance"
+}

@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 1,
+  "calibrationId": "g4-l10-candidate-to-product-v2",
+  "frozenAt": "2026-08-21T00:40:38+08:00",
+  "frozenGitHead": "71485baa601fe600e8f63c88fb0139492a4ad31e",
+  "status": "frozen-before-implementation",
+  "predecessor": {
+    "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v1.json",
+    "sha256": "c966f850ef4c6706b56904834c39922ddff2c8e7c4c9e51df80bc326e2f7e950",
+    "inheritedAnimationIds": [
+      "course-g04-l10-ir-001",
+      "course-g04-l10-vb-003",
+      "course-g04-l10-fq-001"
+    ]
+  },
+  "scope": {
+    "releaseId": "lesson-g04-l10-perimeter-area",
+    "activePageCount": 46,
+    "courseShellCount": 0,
+    "auditedSourceStaticCandidateCount": 24,
+    "privateRegistrationCountBeforeBatch": 3,
+    "newBatchAttemptCount": 1,
+    "newWorkspaceCount": 0,
+    "selectionRule": "Expand the lowest-risk remaining page only after source reachability and audio disposition are explicit. Reuse the checked-in preserved workspace, compact config, and generated Canvas asset; do not create a replacement implementation."
+  },
+  "selectedPages": [
+    {
+      "animationId": "course-g04-l10-ir-001",
+      "complexityLane": "behavior-heavy",
+      "selectionStatus": "inherited-from-v1"
+    },
+    {
+      "animationId": "course-g04-l10-vb-003",
+      "complexityLane": "interactive-understood",
+      "selectionStatus": "inherited-from-v1"
+    },
+    {
+      "animationId": "course-g04-l10-ts-006",
+      "assetId": "swf-b0ad832f7d755e2f94dddc53e3267414c5d8430ed0e8c28d498cc5ec3c05160e",
+      "globalPageOrdinal": 41,
+      "sectionCode": "TS",
+      "sectionPageOrdinal": 6,
+      "placementPath": "TS/L10TS06.swf",
+      "workspace": "migrations/course-g04-l10-ts-006",
+      "complexityLane": "low",
+      "selectionStatus": "frozen-new-batch-attempt",
+      "source": {
+        "swfPath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/TS/L10TS06.swf",
+        "swfSha256": "b0ad832f7d755e2f94dddc53e3267414c5d8430ed0e8c28d498cc5ec3c05160e",
+        "flaPath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/TS/L10TS06.fla",
+        "flaSha256": "4991dd4d87468d7c9162a88c94a15b8c7d251bc240e4c855b7b470976e887eb8"
+      },
+      "candidate": {
+        "modulePath": "packages/demos/src/modules/course-g04-l10-ts-006.tsx",
+        "moduleSha256BeforeBridge": "15d06bb6f9f5b25d1f7c7ceb63cca67fcbe8c3c97c9d690c0ea230cc689b3c4d",
+        "manifestPath": "public/flash-assets/courses/course-g04-l10-ts-006/manifest.json",
+        "manifestSha256": "698ba38db06bf0978234280c2cf63f358f2ab918f4de56d4b60e75188b663bc6",
+        "canvasRendererPath": "public/flash-assets/courses/course-g04-l10-ts-006/canvas-renderer.js",
+        "canvasRendererSha256": "ba4ab8464a6351576ee17bcd3ea0a542a0589652b9c6038b1da61328c02b2695",
+        "frameDomain": "sprite-13",
+        "frameCount": 245,
+        "rootBeginFrame": 6
+      },
+      "reachabilityDisposition": {
+        "scenarioInventory": {
+          "path": "migrations/course-g04-l10-ts-006/audit/scenario-inventory.json",
+          "sha256": "7a8a96207e483f0d4063f3841ea31ff01a866c511b47add60bf5d0d9c58aea84"
+        },
+        "frameDomainDisposition": {
+          "path": "migrations/course-g04-l10-ts-006/audit/frame-domain-disposition.json",
+          "sha256": "5f1cd1c471d749ab0ed58dd09c7dbd0fb6cc01f78d39440f086c6aba5be9495e",
+          "unresolvedTimelineCount": 0
+        },
+        "rootPlacement": {
+          "rootFrame": 6,
+          "instanceName": "animation",
+          "sourceTimelineId": "sprite-13",
+          "depth": "3"
+        },
+        "reachableInteractionCounts": {
+          "handlers": 0,
+          "buttons": 0,
+          "drags": 0,
+          "inputs": 0,
+          "randomBranches": 0,
+          "externalSideEffects": 0
+        },
+        "sourceScripts": [
+          "root frame 1: preloader jump_check plus stop",
+          "root frame 6: stop",
+          "sprite-13 frame 245: stop"
+        ],
+        "engineeringConclusion": "The source placement graph reaches one linear 245-frame content domain at root frame 6. No source-reachable interaction or random branch is admitted for this page. Natural Adobe runtime entry, visual fidelity, and terminal parity remain separate open gates."
+      },
+      "audioDisposition": {
+        "obligationMatrix": {
+          "path": "reports/lesson-g04-l10-perimeter-area-language-audio-cue-obligation-matrix.json",
+          "sha256": "d71e3f0bf05c6db20d02d8327d7ec53e99d9735d7045547af0a9231c69928e23",
+          "checkStatus": "current-pass",
+          "preListeningRouteResolutionRequired": false
+        },
+        "runtimeAudit": {
+          "path": "migrations/course-g04-l10-ts-006/audit/audio-runtime-evidence.json",
+          "sha256": "b96e4ff6112fb37bc3022fa40a15fd0dc3b719eb250284ff0e19f254acc9e37c"
+        },
+        "englishEngineeringCue": {
+          "sourceTimelineId": "sprite-13",
+          "firstLocalFrame": 1,
+          "lastLocalFrame": 245,
+          "blockCount": 245,
+          "totalDecodedSamples": 449856,
+          "sampleRateHz": 22050,
+          "channels": 1,
+          "extractedBytes": 101530,
+          "extractedSha256": "d27c65e6bd7b9087b168e2a54ff60568e9481c84bd9996b87ef50392d8cc77e6",
+          "spokenLanguage": "undetermined",
+          "routeMeaning": "English engineering cue by legacy host route and embedded/default-page convention only; spoken language is not accepted."
+        },
+        "spanishHostTrack": {
+          "sourcePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/SA/L10TS06.mp3",
+          "sha256": "c0ea9f1cede741945c763707ed89c5be76f651f761209880157bf0c45ded8688",
+          "bytes": 106848,
+          "durationMs": 7632,
+          "activation": "user",
+          "timelineBehavior": "pause-while-playing",
+          "spokenLanguage": "not-established-by-listening",
+          "routeMeaning": "Exact legacy SA-directory host track exposed only for the Spanish product context."
+        },
+        "accepted": false
+      },
+      "selectionReason": "Among the 21 unregistered source-static candidates, TS006 has zero reachable handlers or branches, zero unresolved frame-domain dispositions, a direct named root-to-content placement, and exactly one timed MP3 stream plus one exact Spanish host track. It is therefore the next low-lane bridge attempt once both audio paths remain explicitly engineering-only."
+    },
+    {
+      "animationId": "course-g04-l10-fq-001",
+      "complexityLane": "low",
+      "selectionStatus": "inherited-from-v1"
+    }
+  ],
+  "requiredProductPath": [
+    "source",
+    "existing-extraction",
+    "existing-compact-config",
+    "existing-generated-candidate",
+    "maintainable-shared-adapter",
+    "private-registry",
+    "source-ordered-page-only-descriptor",
+    "private-modern-my-lesson",
+    "replay-host-audio-lifecycle",
+    "desktop-and-mobile-browser-qa"
+  ],
+  "laneRules": {
+    "low": "May advance only with explicit source reachability and audio disposition; this does not close original-runtime, fidelity, listening, human, Owner, strict, release, or publication gates.",
+    "interactive-understood": "Must bind each reachable handler to an exact typed modern host contract before private registration.",
+    "behavior-heavy": "Must close random branches, audio assets and routing, timeline reachability, and Replay engineering behavior before private registration."
+  },
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "behaviorParityAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "releaseEligible": false,
+    "published": false
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "evidenceKind": "formal-evidence-invalidation",
+  "animationId": "course-g03-l08-re-001",
+  "status": "invalidated",
+  "generatedAt": "2026-07-22T16:06:34Z",
+  "invalidates": {
+    "path": "evidence/root-standalone-renderer-engineering-prereview.json",
+    "sha256": "392535c7bc9d547733faf3586205e62a2c86fd0c3fd2391bcf6316c3a6d6069c"
+  },
+  "trigger": {
+    "dependencies": [
+      {
+        "path": "packages/demos/src/modules/course-g03-l08-re-001.tsx",
+        "sha256": "0cc8784fcd04f0ab6d4192c86b121f283fe6471f23b80d0b284674305e43619d"
+      },
+      {
+        "path": "packages/demos/src/timelines/course-g03-l08-re-001.ts",
+        "sha256": "0a8e7a5c3cbcc3f11bcd894596e40a9dcb84ebd7416b03aaa5da2f48afbc3c2b"
+      },
+      {
+        "path": "packages/demos/tests/course-g03-l08-re-001.test.ts",
+        "sha256": "7b74f9f548c81e17d45091218d8ebe57323bd633332a904da09f8d69ce5c0509"
+      },
+      {
+        "path": "packages/demos/src/prototype-manifest.ts",
+        "sha256": "a4f7d629d63712de68d07186ba7fb2bb51413d436485714da7736767cc8d18c2"
+      }
+    ],
+    "supersededImplementationBindings": [
+      {
+        "artifact": "packages/demos/src/modules/course-g03-l08-re-001.tsx",
+        "recordedSha256": "c673ac0008c79686e8ea6f4757c4360c016349df06316b6fdc3304633e8384af"
+      },
+      {
+        "artifact": "packages/demos/src/timelines/course-g03-l08-re-001.ts",
+        "recordedSha256": "7c7794fd8e47de763b781cc892bfc28cf66b5b0547e640e95bf9d62ac8e51759"
+      },
+      {
+        "artifact": "packages/demos/tests/course-g03-l08-re-001.test.ts",
+        "recordedSha256": "d7cc9775984592e9434ea179ead9587888e921db163369b5e3f8cc1785de5155"
+      }
+    ],
+    "reason": "The historical engineering prereview and its RMSE bind superseded module, timeline, and test bytes. The runtime now enforces exact root versus sprite-621 scenario combinations and the product registry now exposes the nested frame domain, so the old implementation comparison cannot be reused for the current JavaScript output."
+  },
+  "disposition": "excluded-from-current-evidence; original prereview and historical metric retained byte-for-byte",
+  "regenerationRequirement": "Capture the current hash-bound implementation again and rebuild its baseline pairing, diffs, metrics, review conclusion, and dependency bindings before recording any current RMSE claim.",
+  "rmseReuseAllowed": false,
+  "migrationStatusChanged": false,
+  "acceptanceChanged": false,
+  "strictAcceptanceEffect": "none; invalidation removes stale evidence from the current set and satisfies no gate",
+  "generatedBy": {
+    "method": "owner-authorized manual evidence invalidation",
+    "deterministic": false
+  }
+}

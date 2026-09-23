@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "g5-l2-bounded-factory-calibration",
+  "reportId": "g5-l2-bounded-factory-calibration-v1",
+  "createdAt": "2026-08-22T04:18:00Z",
+  "scope": {
+    "grade": 5,
+    "lesson": 2,
+    "pageOnly": true,
+    "legacyFlashCourseShellExcluded": true,
+    "selectedAnimationIds": [
+      "course-g05-l02-fq-002",
+      "course-g05-l02-gs-002"
+    ],
+    "purpose": "Bounded post-promotion factory calibration of the two formerly missing active-page SWFs; no renderer registration or product release is in scope."
+  },
+  "sourceCustody": {
+    "canonicalActivePageCoverage": "64/64",
+    "promotionReceipt": {
+      "path": "catalog/source-promotions/g5-l2-active-source-promotion-main-applied-v1.json",
+      "bytes": 7768,
+      "sha256": "2ea6efdf214a786d08ce52adbe1e5e91bf6e546ef69fdd220a755645346010c0"
+    },
+    "canonicalFreeze": {
+      "fileCount": 9290,
+      "totalBytes": 3277781559,
+      "manifestSha256": "b98ce8fbf09860f19f96f57f99834fea1486d58d2cc7b578e06e99ecce775162",
+      "checksumSetSha256": "601ef15eac8787d6280dd0b40d9be2bfcd254956747c169c90ab1f990788812d",
+      "writableEntries": 0
+    },
+    "audioDependencyClosureEstablished": false
+  },
+  "toolchain": {
+    "ffdec": "JPEXS Free Flash Decompiler v.26.2.1",
+    "swfmill": "swfmill 0.3.6",
+    "java": "openjdk version 21.0.11 2026-04-21 LTS",
+    "python": "Python 3.13.3"
+  },
+  "members": [
+    {
+      "animationId": "course-g05-l02-fq-002",
+      "source": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L2/FQ/L2FQ02.swf",
+        "bytes": 47344,
+        "sha256": "7e121a21e1bf4fc98ac483fee74b32633d8ce70078f4c9931fcf2ebeb291ecbc"
+      },
+      "authoringSource": {
+        "status": "present-hash-matched-not-inspected-by-machine-audit",
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L2/FQ/L2FQ02.fla",
+        "bytes": 3704832,
+        "sha256": "a3d12f65b4fe4894a9557d1281486274c5be71aae3e31871ffbe3fd6db17ab84"
+      },
+      "machineAudit": {
+        "path": "migrations/course-g05-l02-fq-002/audit/machine/report.json",
+        "bytes": 92106,
+        "sha256": "fa5820806d88372b57e0561c52e68e2369aba21e35d94fb7e42240b31a65557b",
+        "status": "partial-no-extraction-failures",
+        "sourceHashMatchedBeforeAndAfter": true,
+        "header": {
+          "swfVersion": 7,
+          "stage": {
+            "width": 800,
+            "height": 600
+          },
+          "fps": 12,
+          "rootFrameCount": 10
+        },
+        "actionScriptVersion": "AS1/2",
+        "exportedScriptFileCount": 109,
+        "doActionTagCount": 14,
+        "externalCallCandidates": [
+          {
+            "api": "getURL",
+            "occurrences": 2
+          }
+        ],
+        "soundTagCount": 0,
+        "nestedDefinitionCount": 183,
+        "nestedLongerThanRootCount": 1,
+        "maximumNestedFrameCount": 63,
+        "unresolvedReachabilityCount": 183,
+        "runtimeCrossCheckAllMatch": true
+      },
+      "frameDomainEvidence": {
+        "path": "migrations/course-g05-l02-fq-002/audit/machine/swf-frame-domain-candidates.json",
+        "bytes": 61147,
+        "sha256": "7f43f11402b2adf32c649930a0effd3c7b3db0fa949268163ddc0e3cf0e62b92",
+        "completeRootReachableDomainInventory": false
+      },
+      "calibrationDisposition": "conditional-fla-assisted-behavior-calibration-only",
+      "sourceStaticAdapterEligibleNow": false,
+      "reason": "Paired FLA improves inspectability and the SWF has no embedded sound tags, but 109 exported AS files, two getURL candidates, and 183 unresolved nested definitions mean a root-only static adapter would discard source behavior and cannot be admitted from structural evidence alone.",
+      "nextEvidenceRequired": [
+        "FLA authoring-structure inspection with immutable receipt",
+        "ActionScript and getURL host-contract disposition",
+        "authoritative original-runtime interaction and terminal-state traces",
+        "reachable nested-timeline inventory",
+        "audio dependency closure and listening review if external audio is discovered",
+        "full-frame visual comparison and human review"
+      ]
+    },
+    {
+      "animationId": "course-g05-l02-gs-002",
+      "source": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L2/GS/L2GS02.swf",
+        "bytes": 2878956,
+        "sha256": "2ab6eb4912e457130de1cf0880a6fcd010b52d7acc511ca7ca9b00eeaf0b02bb"
+      },
+      "authoringSource": {
+        "status": "missing",
+        "path": "",
+        "bytes": 0,
+        "sha256": ""
+      },
+      "machineAudit": {
+        "path": "migrations/course-g05-l02-gs-002/audit/machine/report.json",
+        "bytes": 28725,
+        "sha256": "81624afdbe4419b693fbe5243ba2c8c4a475b8f00eea1ac20d7ff913f8384ffc",
+        "status": "partial-no-extraction-failures",
+        "sourceHashMatchedBeforeAndAfter": true,
+        "header": {
+          "swfVersion": 6,
+          "stage": {
+            "width": 800,
+            "height": 600
+          },
+          "fps": 12,
+          "rootFrameCount": 10
+        },
+        "actionScriptVersion": "AS1/2",
+        "exportedScriptFileCount": 101,
+        "doActionTagCount": 66,
+        "externalCallCandidates": [],
+        "soundTags": {
+          "DefineSound": 2,
+          "SoundStreamHead": 12,
+          "SoundStreamHead2": 26,
+          "SoundStreamBlock": 1939
+        },
+        "morphDefinitionCount": 13,
+        "nestedDefinitionCount": 37,
+        "nestedLongerThanRootCount": 13,
+        "maximumNestedFrameCount": 593,
+        "unresolvedReachabilityCount": 37,
+        "runtimeCrossCheckAllMatch": true
+      },
+      "frameDomainEvidence": {
+        "path": "migrations/course-g05-l02-gs-002/audit/machine/swf-frame-domain-candidates.json",
+        "bytes": 13607,
+        "sha256": "6b7b2a76f1f6d3e85f93964e7df35ce8182debb35482c75c46d085e373a3d61d",
+        "completeRootReachableDomainInventory": false
+      },
+      "calibrationDisposition": "hold-out-of-source-static-factory",
+      "sourceStaticAdapterEligibleNow": false,
+      "reason": "The SWF-only member contains extensive AS1/2 behavior, embedded and streaming audio, morphs, and thirteen nested timelines longer than the ten-frame root, including a 593-frame definition. Static extraction would not preserve its behavior or audio contract.",
+      "nextEvidenceRequired": [
+        "authoritative original-runtime gameplay and branch traces",
+        "complete reachable nested-timeline and entry-state disposition",
+        "embedded and streaming audio extraction, synchronization, and listening review",
+        "behavior-capable runtime strategy rather than a root-only static adapter",
+        "full-frame visual comparison and human review"
+      ]
+    }
+  ],
+  "decision": {
+    "lessonScaleOutEligibleFromThisSlice": false,
+    "factoryWriteModeStarted": false,
+    "rendererGenerated": false,
+    "rendererRegistered": false,
+    "productRouteAdded": false,
+    "recommendedNextMember": "course-g05-l02-fq-002",
+    "recommendedNextMode": "bounded FLA-assisted behavior calibration after explicit evidence preparation",
+    "summary": "Source promotion succeeded, but neither selected member is eligible for immediate source-static factory generation. FQ02 remains the lower-risk next calibration because it has a hash-matched paired FLA and no embedded SWF sound tags; GS02 remains outside the static factory path."
+  },
+  "acceptanceEffects": {
+    "canonicalSourceCustodyEstablishedForSelectedMembers": true,
+    "wholeLessonActivePageSourceCoverage": "64/64",
+    "currentJavaScriptRegistered": false,
+    "originalRuntimeAccepted": false,
+    "behaviorParityAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "released": false,
+    "published": false
+  }
+}

@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 1,
+  "evidenceKind": "PREVIEW_REAL_CANARY",
+  "generatedAt": "2026-08-24T05:44:20Z",
+  "status": "PASS_G4_L3_TEXT_ONLY_WITH_NON_BLOCKING_VERCEL_TOOLBAR_CSP_WARNING",
+  "scope": {
+    "course": "G4 L3",
+    "releaseId": "lesson-g04-l03-negative-numbers",
+    "locale": "en",
+    "mode": "focus",
+    "text": true,
+    "currentLessonFrame": false,
+    "speechToDraft": false,
+    "doesNotAuthorize": [
+      "G5 L4 or the other six registered courses",
+      "current lesson frame",
+      "speech to draft",
+      "Owner or privacy/legal approval",
+      "staged Production live",
+      "Production promotion or production-domain readiness"
+    ]
+  },
+  "authorization": {
+    "previewEnvironmentWrites": true,
+    "localLongTermOpenRouterKeyForPreview": true,
+    "acceptedNoIndependentHardSpendingLimit": true,
+    "maximumUserLevelLiveCanaries": 1,
+    "actualUserLevelLiveCanaries": 1,
+    "forbiddenActionsObserved": {
+      "productionEnvironmentWrite": false,
+      "productionAliasChange": false,
+      "firewallChange": false,
+      "drainChange": false,
+      "promote": false,
+      "commit": false,
+      "push": false
+    }
+  },
+  "candidate": {
+    "sourceCommit": "22ff85fd7eb6f69e981c8c91692e8ea4d60b5907",
+    "sourceTree": "e05b31d93c40f7e40f8f1c398f1755b8e77a1227",
+    "deploymentId": "dpl_E9pgBqTLgFvRFuKxQzKSxHVHmEac",
+    "deploymentUrl": "https://helpmath-ib0wv2bou-peter-dongpin-hu-s-projects.vercel.app",
+    "target": "preview",
+    "readyState": "READY",
+    "provenance": "CLI direct upload from an exact detached clean worktree; the runtime commit field is empty and is not presented as a Vercel Git binding"
+  },
+  "previewConfiguration": {
+    "scope": "preview only",
+    "masterEnabled": true,
+    "releaseIds": [
+      "lesson-g04-l03-negative-numbers"
+    ],
+    "frameEnabled": false,
+    "speechEnabled": false,
+    "providerBaseUrl": "https://openrouter.ai/api/v1",
+    "requestModel": "openai/gpt-5.6-luna",
+    "allowedVersionedResponseModel": "openai/gpt-5.6-luna-20260709",
+    "timeoutMs": 45000,
+    "maxOutputTokens": 700,
+    "applicationRateLimitPerMinute": 12,
+    "productionMetadataCountBefore": 33,
+    "productionMetadataCountAfter": 33,
+    "productionMetadataUnchanged": true,
+    "secretValuesRecorded": false
+  },
+  "preCanary": {
+    "deploymentProtection": {
+      "unauthenticatedStatus": 302,
+      "protectedByVercelSso": true,
+      "noindex": true,
+      "temporaryBrowserCookieRetained": false
+    },
+    "routes": {
+      "g4L3English": 200,
+      "g4L3Spanish": 200,
+      "g5L4English": 200,
+      "g5L4Spanish": 200
+    },
+    "ui": {
+      "g4L3AskNovaVisible": true,
+      "g5L4AskNovaVisible": false,
+      "fileInputCount": 0,
+      "currentLessonFrameControlCount": 0,
+      "microphoneControlCount": 0,
+      "textInputCount": 1
+    },
+    "invalidContentTypeProbe": {
+      "status": 400,
+      "code": "BAD_REQUEST",
+      "requestId": "5948f117-dd52-4a90-8f27-38d9f3ceadc6",
+      "providerAttempts": null,
+      "providerCalled": false
+    }
+  },
+  "canary": {
+    "promptFixtureId": "nova-g4l3-text-001",
+    "promptContainsPersonalInformation": false,
+    "browserApiPostCount": 1,
+    "request": {
+      "messageCharacters": 104,
+      "historyLength": 0,
+      "framePresent": false,
+      "locale": "en",
+      "mode": "focus",
+      "releaseId": "lesson-g04-l03-negative-numbers",
+      "grade": 4,
+      "lesson": 3,
+      "globalPageOrdinal": 1,
+      "animationId": "course-g04-l03-ir-001-341242cc",
+      "requestBytes": 533
+    },
+    "response": {
+      "status": 200,
+      "cacheControl": "no-store, max-age=0",
+      "contentType": "application/json",
+      "ok": true,
+      "requestId": "69c84f3f-6f90-4952-963d-b5e21cbabf95",
+      "model": "openai/gpt-5.6-luna",
+      "attempts": 1,
+      "durationMs": 2405,
+      "replyBytes": 126,
+      "replySha256": "46246c40a47cf5368acf189196fb6fb89fd0e5b2024381eab882693a50822159"
+    },
+    "replyAssertions": {
+      "nonEmpty": true,
+      "mentionsNegativeTwoAndNegativeFive": true,
+      "correctNumberLineComparison": true,
+      "asksOneCheckQuestion": true,
+      "containsHtml": false,
+      "solicitsSensitiveData": false
+    },
+    "uiAssertions": {
+      "lastReplyVerifiedVisible": true,
+      "exactModelLabelVisible": true,
+      "fileInputCount": 0,
+      "currentLessonFrameControlCount": 0,
+      "microphoneControlCount": 0,
+      "sendDisabledAfterQuestionCleared": true
+    },
+    "runtimeLog": {
+      "event": "nova_request_completed",
+      "deploymentId": "dpl_E9pgBqTLgFvRFuKxQzKSxHVHmEac",
+      "environment": "preview",
+      "releaseId": "lesson-g04-l03-negative-numbers",
+      "grade": 4,
+      "lesson": 3,
+      "locale": "en",
+      "assessment": false,
+      "framePresent": false,
+      "status": 200,
+      "durationMs": 2405,
+      "attempts": 1,
+      "failure": null,
+      "stage": null,
+      "upstreamStatus": null,
+      "model": "openai/gpt-5.6-luna",
+      "requestBytes": 533,
+      "containsLearnerContent": false
+    }
+  },
+  "browserEvidence": {
+    "traceWindow": {
+      "consoleErrorCount": 0,
+      "pageErrorCount": 0,
+      "failedRequestCount": 0,
+      "networkRequests": [
+        {
+          "method": "POST",
+          "path": "/api/learning-events",
+          "status": 200
+        },
+        {
+          "method": "POST",
+          "path": "/api/nova",
+          "status": 200
+        },
+        {
+          "method": "GET",
+          "path": "/_next/static/media/KaTeX_Main-Regular.77019597.woff2",
+          "status": 200
+        }
+      ]
+    },
+    "fullSessionObservation": {
+      "consoleErrorCount": 1,
+      "classification": "Vercel Preview feedback-toolbar script blocked by the application Content Security Policy",
+      "applicationImpact": "non-blocking",
+      "novaRequestImpact": "none"
+    },
+    "visualObservation": {
+      "severity": "P3",
+      "issue": "The rendered You speaker label and the canary prompt appear visually concatenated as YouIn without a separating space",
+      "impact": "cosmetic; the question, answer, model verification, and request flow remain readable and functional",
+      "fixedInThisDeployment": false
+    },
+    "instrumentationCorrection": {
+      "initialObservation": "The custom response waiter reached its 70000 ms timeout",
+      "rootCause": "The Playwright CLI run-code VM did not expose the URL global; the predicate caught that error and failed to match the already completed response",
+      "notAProviderTimeout": true,
+      "correctedBy": [
+        "browser network record: one /api/nova POST with status 200",
+        "Nova UI: Last reply verified and exact model label",
+        "runtime log: status 200, durationMs 2405, attempts 1"
+      ]
+    }
+  },
+  "artifacts": {
+    "root": "output/playwright/nova-tutor-preview-g4l3-canary-2026-08-24",
+    "secretScan": {
+      "actualOpenRouterKeyMatches": 0,
+      "openRouterKeyPrefixMatches": 0,
+      "vercelJwtMatches": 0,
+      "fullPromptMatches": 0
+    },
+    "files": {
+      "traces/trace-1787549356930.sanitized.trace": {
+        "bytes": 198418,
+        "sha256": "03d36d2a3752ba165ccbe1610abb60644e5a86cd314c7def86f5b7120357082e"
+      },
+      "traces/trace-1787549356930.sanitized.network": {
+        "bytes": 11621,
+        "sha256": "4dec2cf912b882a0673a288ddb0ffbbd549ef7396551a8bd695801cd8b3ec162"
+      },
+      "traces/trace-1787549356930.stacks": {
+        "bytes": 136,
+        "sha256": "fa437e9ef74ae896191c9828db8f2f06f1369ba5845f913f6b2044deae0e71ef"
+      },
+      "nova-panel-pre-send.sanitized.yml": {
+        "bytes": 5071,
+        "sha256": "644778850aa3955d79612c614b634305253866b6dad1848cc0b38c7550348775"
+      },
+      "nova-panel-pre-send.png": {
+        "bytes": 127719,
+        "sha256": "53423fd5cb88898b19d74e6bac60c56898088b75f9a53dabc62e3cbc0d0c190e"
+      },
+      "nova-panel-success.png": {
+        "bytes": 112168,
+        "sha256": "c51dc8dbd9aaae9183243176ea9703f3d19cf5d628fba6877b6ae698f9115aab"
+      }
+    },
+    "traceResources": {
+      "fileCount": 122,
+      "checksumSetSha256": "08c0b74951b2ccc616e073f54124dc2a1be75123a69a5c12b05224a49001b029",
+      "requestBodyUsesPromptFixtureId": true,
+      "responseBodyUsesReplyHashReceipt": true
+    }
+  },
+  "productionNonMutation": {
+    "wwwDeploymentIdBefore": "dpl_6pj5sVFj7P1r7M7Cg12DJngSXhhj",
+    "wwwDeploymentIdAfter": "dpl_6pj5sVFj7P1r7M7Cg12DJngSXhhj",
+    "readyStateAfter": "READY",
+    "targetAfter": "production",
+    "productionChanged": false
+  },
+  "resultBoundary": {
+    "proved": "The protected Preview deployment can run G4 L3 English text-only Nova through the real HELP Math route and OpenRouter exact Luna model",
+    "notProved": "The other seven courses, Spanish tutoring quality, assessment behavior, frame, speech, Owner/privacy/legal approval, staged Production live, Production rollout, observation window, or rollback drill"
+  }
+}

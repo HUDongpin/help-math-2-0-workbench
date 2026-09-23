@@ -1,0 +1,575 @@
+{
+  "schemaVersion": 1,
+  "animationId": "course-g05-l05-vb-010",
+  "auditStatus": "partial",
+  "migrationStatus": "preserved",
+  "migrationStatusUnchanged": true,
+  "source": {
+    "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L5/VB/L5VB10.swf",
+    "expectedSha256": "ff6b9fa3dba9ea36dc437b6eacec3d2fb2f08a675d93bac15d0e25e8e30ed5e6",
+    "observedSha256Before": "ff6b9fa3dba9ea36dc437b6eacec3d2fb2f08a675d93bac15d0e25e8e30ed5e6",
+    "observedSha256After": "ff6b9fa3dba9ea36dc437b6eacec3d2fb2f08a675d93bac15d0e25e8e30ed5e6",
+    "bytesBefore": 202531,
+    "bytesAfter": 202531,
+    "hashMatches": true
+  },
+  "authoringSource": {
+    "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L5/VB/L5VB10.fla",
+    "pairedFlaStatus": "present",
+    "expectedSha256": "4165f2626e6fa2b041c6b9a90b7ff5fdf145070b752ad9b64bc0420c4f15d895",
+    "observedSha256Before": "4165f2626e6fa2b041c6b9a90b7ff5fdf145070b752ad9b64bc0420c4f15d895",
+    "observedSha256After": "4165f2626e6fa2b041c6b9a90b7ff5fdf145070b752ad9b64bc0420c4f15d895",
+    "bytes": 1147392,
+    "hashMatches": true,
+    "adobeAnimateAvailable": true,
+    "inspectionStatus": "not-performed-by-this-script"
+  },
+  "tools": {
+    "ffdec": {
+      "command": "ffdec",
+      "version": "JPEXS Free Flash Decompiler v.26.2.1",
+      "success": true,
+      "exitCode": 0,
+      "error": ""
+    },
+    "swfmill": {
+      "command": "swfmill",
+      "version": "swfmill 0.3.6",
+      "success": true,
+      "exitCode": 0,
+      "error": ""
+    },
+    "java": {
+      "command": "java",
+      "version": "openjdk version \"21.0.11\" 2026-04-21 LTS",
+      "success": true,
+      "exitCode": 0,
+      "error": ""
+    },
+    "xmlParser": {
+      "command": "python3",
+      "version": "Python 3.13.3",
+      "success": true,
+      "exitCode": 0,
+      "error": "",
+      "library": "Python standard library xml.etree.ElementTree.iterparse"
+    }
+  },
+  "commands": {
+    "ffdecHeader": {
+      "command": [
+        "ffdec",
+        "-header",
+        "<SWF>"
+      ],
+      "status": "success",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "error": "",
+      "evidence": "audit/machine/ffdec-header.txt"
+    },
+    "ffdecTags": {
+      "command": [
+        "ffdec",
+        "-dumpSWF",
+        "<SWF>"
+      ],
+      "status": "success",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "error": "",
+      "evidence": "audit/machine/ffdec-tags.txt.gz"
+    },
+    "ffdecAs2Index": {
+      "command": [
+        "ffdec",
+        "-dumpAS2",
+        "<SWF>"
+      ],
+      "status": "success",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "error": "",
+      "evidence": "audit/machine/ffdec-script-index.txt"
+    },
+    "ffdecAs3Index": {
+      "command": [
+        "ffdec",
+        "-dumpAS3",
+        "<SWF>"
+      ],
+      "status": "success",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "error": "",
+      "evidence": "audit/machine/ffdec-script-index.txt"
+    },
+    "ffdecScripts": {
+      "command": [
+        "ffdec",
+        "-export",
+        "script",
+        "<TEMP_DIR>/scripts",
+        "<SWF>"
+      ],
+      "status": "success",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "error": "",
+      "evidence": "audit/machine/ffdec-scripts.txt.gz"
+    },
+    "swfmillXmlParser": {
+      "command": [
+        "python3",
+        "xml.etree.ElementTree.iterparse",
+        "<TEMP_DIR>/swfmill.xml"
+      ],
+      "status": "success",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "error": "",
+      "evidence": "audit/machine/swfmill-summary.json"
+    },
+    "swfmillXml": {
+      "command": [
+        "swfmill",
+        "-n",
+        "swf2xml",
+        "<SWF>",
+        "<TEMP_DIR>/swfmill.xml"
+      ],
+      "status": "success",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "error": "",
+      "evidence": "audit/machine/swfmill.xml.gz"
+    }
+  },
+  "findings": {
+    "ffdecHeader": {
+      "fileSize": 253464,
+      "version": 6,
+      "compression": "ZLIB",
+      "encrypted": false,
+      "gfx": false,
+      "displayRect": "[0, 0, 16000, 12000]",
+      "widthPx": 800,
+      "heightPx": 600,
+      "frameCount": 10,
+      "frameRate": 12
+    },
+    "swfmill": {
+      "actionScriptVersion": "AS1/2",
+      "backgroundColor": {
+        "alpha": 255,
+        "blue": 247,
+        "green": 216,
+        "red": 184
+      },
+      "categories": {
+        "externalImportTags": {},
+        "filterTags": {},
+        "fontDefinitions": {
+          "DefineFont2": 4
+        },
+        "morphDefinitions": {},
+        "scriptTags": {
+          "DoAction": 19
+        },
+        "soundTags": {
+          "SoundStreamBlock": 536,
+          "SoundStreamHead": 2
+        },
+        "videoTags": {}
+      },
+      "document": {
+        "compressed": "1",
+        "version": "6"
+      },
+      "fileAttributes": {},
+      "header": {
+        "framerate": "12",
+        "frames": "10",
+        "rectangle": {
+          "bottom": "12000",
+          "left": "0",
+          "right": "16000",
+          "top": "0"
+        }
+      },
+      "spriteDefinitions": [
+        {
+          "frames": 3,
+          "objectID": 49
+        },
+        {
+          "frames": 2,
+          "objectID": 50
+        },
+        {
+          "frames": 2,
+          "objectID": 51
+        },
+        {
+          "frames": 1,
+          "objectID": 55
+        },
+        {
+          "frames": 25,
+          "objectID": 59
+        },
+        {
+          "frames": 1,
+          "objectID": 62
+        },
+        {
+          "frames": 1,
+          "objectID": 76
+        },
+        {
+          "frames": 120,
+          "objectID": 77
+        },
+        {
+          "frames": 120,
+          "objectID": 78
+        },
+        {
+          "frames": 240,
+          "objectID": 79
+        },
+        {
+          "frames": 519,
+          "objectID": 83
+        }
+      ],
+      "tagCounts": {
+        "AddTyped": 6,
+        "BranchAlways": 5,
+        "BranchIfTrue": 6,
+        "Button": 60,
+        "CallFunction": 3,
+        "CallMethod": 35,
+        "ClippedBitmap": 2,
+        "Color": 161,
+        "ColorTransform2": 172,
+        "Condition": 8,
+        "CurveTo": 1508,
+        "DeclareFunction": 2,
+        "DefineBitsLossless2": 1,
+        "DefineButton2": 10,
+        "DefineFont2": 4,
+        "DefineShape": 17,
+        "DefineShape2": 11,
+        "DefineShape3": 8,
+        "DefineSprite": 11,
+        "DefineText": 21,
+        "Dictionary": 13,
+        "DoAction": 19,
+        "End": 12,
+        "EndAction": 31,
+        "EqualTyped": 10,
+        "Event": 8,
+        "FrameLabel": 1,
+        "GetMember": 57,
+        "GetVariable": 79,
+        "Glyph": 68,
+        "GlyphShape": 68,
+        "GotoExpression": 1,
+        "GotoFrame": 1,
+        "GradientItem": 41,
+        "Header": 1,
+        "LineStyle": 25,
+        "LineTo": 1742,
+        "LinearGradient": 15,
+        "LogicalAND": 4,
+        "LogicalNOT": 6,
+        "LogicalOR": 2,
+        "NextFrame": 1,
+        "PlaceObject2": 332,
+        "Pop": 36,
+        "PushData": 223,
+        "Rectangle": 58,
+        "RemoveObject2": 60,
+        "SetBackgroundColor": 1,
+        "SetMember": 27,
+        "SetVariable": 9,
+        "Shape": 36,
+        "ShapeSetup": 359,
+        "ShowFrame": 1044,
+        "Solid": 63,
+        "SoundStreamBlock": 536,
+        "SoundStreamHead": 2,
+        "StackBoolean": 17,
+        "StackDictionaryLookup": 192,
+        "StackDouble": 29,
+        "StackInteger": 42,
+        "StackString": 28,
+        "StackUndefined": 2,
+        "Stop": 16,
+        "String": 118,
+        "StyleList": 50,
+        "TextEntry": 199,
+        "TextRecord": 21,
+        "TextRecord6": 83,
+        "Trace": 2,
+        "Transform": 345,
+        "UnknownTag": 1,
+        "actions": 31,
+        "args": 2,
+        "bounds": 57,
+        "buttons": 10,
+        "color": 161,
+        "colorTransform": 172,
+        "conditions": 10,
+        "data": 540,
+        "edges": 104,
+        "events": 4,
+        "fillStyles": 50,
+        "flags": 1,
+        "glyphs": 56,
+        "gradientColors": 15,
+        "items": 223,
+        "latencySeek": 2,
+        "lineStyles": 50,
+        "matrix": 17,
+        "records": 42,
+        "shapes": 36,
+        "size": 1,
+        "strings": 13,
+        "styles": 50,
+        "swf": 1,
+        "tags": 12,
+        "transform": 328
+      }
+    },
+    "actionScriptVersion": "AS1/2",
+    "backgroundColor": "#b8d8f7",
+    "exportedScriptFileCount": 31,
+    "externalCallCandidates": [],
+    "runtimeCrossCheck": {
+      "ffdecVersionMatches": true,
+      "ffdecWidthMatches": true,
+      "ffdecHeightMatches": true,
+      "ffdecFrameRateMatches": true,
+      "ffdecFrameCountMatches": true,
+      "swfmillVersionMatches": true,
+      "swfmillWidthMatches": true,
+      "swfmillHeightMatches": true,
+      "swfmillFrameRateMatches": true,
+      "swfmillFrameCountMatches": true,
+      "allMatch": true
+    },
+    "frameDomainCandidates": {
+      "schemaVersion": 1,
+      "artifactType": "swf-frame-domain-candidates",
+      "animationId": "course-g05-l05-vb-010",
+      "source": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L5/VB/L5VB10.swf",
+        "sha256": "ff6b9fa3dba9ea36dc437b6eacec3d2fb2f08a675d93bac15d0e25e8e30ed5e6"
+      },
+      "extractionStatus": "swfmill-structural-definitions-extracted",
+      "root": {
+        "timelineId": "root",
+        "sourceTimelineId": "root",
+        "kind": "root",
+        "frameCount": 10,
+        "rootReachability": "root-by-definition",
+        "acceptanceDisposition": "declared-root-structural-domain"
+      },
+      "nestedDefinitions": [
+        {
+          "timelineId": "sprite-49",
+          "sourceTimelineId": "sprite-49",
+          "sourceObjectId": 49,
+          "kind": "nested-definition-candidate",
+          "frameCount": 3,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-50",
+          "sourceTimelineId": "sprite-50",
+          "sourceObjectId": 50,
+          "kind": "nested-definition-candidate",
+          "frameCount": 2,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-51",
+          "sourceTimelineId": "sprite-51",
+          "sourceObjectId": 51,
+          "kind": "nested-definition-candidate",
+          "frameCount": 2,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-55",
+          "sourceTimelineId": "sprite-55",
+          "sourceObjectId": 55,
+          "kind": "nested-definition-candidate",
+          "frameCount": 1,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-59",
+          "sourceTimelineId": "sprite-59",
+          "sourceObjectId": 59,
+          "kind": "nested-definition-candidate",
+          "frameCount": 25,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-62",
+          "sourceTimelineId": "sprite-62",
+          "sourceObjectId": 62,
+          "kind": "nested-definition-candidate",
+          "frameCount": 1,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-76",
+          "sourceTimelineId": "sprite-76",
+          "sourceObjectId": 76,
+          "kind": "nested-definition-candidate",
+          "frameCount": 1,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-77",
+          "sourceTimelineId": "sprite-77",
+          "sourceObjectId": 77,
+          "kind": "nested-definition-candidate",
+          "frameCount": 120,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-78",
+          "sourceTimelineId": "sprite-78",
+          "sourceObjectId": 78,
+          "kind": "nested-definition-candidate",
+          "frameCount": 120,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-79",
+          "sourceTimelineId": "sprite-79",
+          "sourceObjectId": 79,
+          "kind": "nested-definition-candidate",
+          "frameCount": 240,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-83",
+          "sourceTimelineId": "sprite-83",
+          "sourceObjectId": 83,
+          "kind": "nested-definition-candidate",
+          "frameCount": 519,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        }
+      ],
+      "summary": {
+        "rootDomainCount": 1,
+        "nestedDefinitionCount": 11,
+        "nestedLongerThanRootCount": 5,
+        "completeRootReachableDomainInventory": false,
+        "unresolvedReachabilityCount": 11
+      },
+      "limitations": [
+        "DefineSprite records are structural definitions, not proof that the root or an authorized host reaches them.",
+        "Placement, entry state, interaction causality, language, audio, terminal behavior, Replay, and natural traces remain unresolved.",
+        "This machine inventory cannot create original-runtime authority, visual or audio acceptance, human or owner review, strict completion, or publication."
+      ],
+      "acceptanceEffects": {
+        "authoritativeOriginalRuntime": false,
+        "completeFrameDomainDisposition": false,
+        "audioAccepted": false,
+        "humanVisualAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false,
+        "published": false
+      }
+    }
+  },
+  "outputs": [
+    {
+      "path": "audit/machine/ffdec-header.txt",
+      "format": "text",
+      "bytes": 188,
+      "sha256": "4e87e8440a258932efb826722526085b40e9e5e7e19475bf533789b353bd983f"
+    },
+    {
+      "path": "audit/machine/ffdec-script-index.txt",
+      "format": "text",
+      "bytes": 1677,
+      "sha256": "587d576b8d273cd17dd6555096375f5f4634a2a80ed2c9a134fd41292982b11a"
+    },
+    {
+      "path": "audit/machine/ffdec-scripts.txt.gz",
+      "format": "gzip+text/actionscript",
+      "bytes": 951,
+      "sha256": "5707eca0d940617fe5b4bdc8725a983d47c0bf16973369e3d9eedbd68a775c50",
+      "uncompressedBytes": 4927,
+      "uncompressedSha256": "17567417a446ed4f80ebfc073a30928527160d4c35904dc089982fbc9b7321de"
+    },
+    {
+      "path": "audit/machine/ffdec-tags.txt.gz",
+      "format": "gzip+text/ffdec-tag-dump",
+      "bytes": 61340,
+      "sha256": "2f8f71897d0e757dd91b278fa7d99512f796d47e56cf032eb8e19ed846774b18",
+      "uncompressedBytes": 270990,
+      "uncompressedSha256": "3db55b57f1359a6d98fb695d9380418fc137c18316cd4795fb1a6ebe60cea563"
+    },
+    {
+      "path": "audit/machine/swf-frame-domain-candidates.json",
+      "format": "text",
+      "bytes": 5093,
+      "sha256": "071a9a60bd4c0216fd887df86b075c5e69fad8b9201af832e12b61fad6d911bc"
+    },
+    {
+      "path": "audit/machine/swfmill-summary.json",
+      "format": "text",
+      "bytes": 3399,
+      "sha256": "e5bc16b3f4a9e98d9bf1681673f23d6c2163998f9eadc1e8f416cc0c6cd381c4"
+    },
+    {
+      "path": "audit/machine/swfmill.xml.gz",
+      "format": "gzip+xml/swfmill",
+      "bytes": 221910,
+      "sha256": "09c9b408d3390a6c9a279361de585fc07c88f7064a85296a7edfd9aa032ccea5",
+      "uncompressedBytes": 794590,
+      "uncompressedSha256": "08aa16e4462f6b7c2b71208574b7fa64f05a2f93f5097c490b84b6099445e678"
+    }
+  ],
+  "limitations": [
+    "No authoritative runtime traversal, interaction-branch capture, audio synchronization review, or visual baseline is part of this machine audit."
+  ]
+}

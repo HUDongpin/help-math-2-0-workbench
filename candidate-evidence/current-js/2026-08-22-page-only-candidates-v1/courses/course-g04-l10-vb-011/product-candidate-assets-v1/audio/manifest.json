@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "animationId": "course-g04-l10-vb-011",
+  "calibrationId": "g4-l10-candidate-to-product-v4",
+  "freeze": {
+    "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v4.json",
+    "sha256": "65a8a4a4aa6aec8638979cf606d21a477b6a9fcce65e9c47090a1fa6e599ff93"
+  },
+  "generatedBy": {
+    "path": "scripts/materialize-g4-l10-vb011-private-audio.mjs",
+    "sha256": "a2eddded23836661c1d736a97961ee6d2134e23732d3c7e94a0c08d24fe8d425",
+    "sharedParser": "scripts/extract-ti-soundstreams.mjs"
+  },
+  "sourceBindings": [
+    {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/VB/L10VB11.swf",
+      "sha256": "dd12bb87cffa76948020b1cfc34163f67fa4062bd286ea571bf4b08473709ba0"
+    },
+    {
+      "path": "migrations/course-g04-l10-vb-011/audit/machine/swfmill.xml.gz",
+      "sha256": "6dc5dd086a6d0a376d17681cc5cf384c85481866151b13b22c80abd2146bfc47"
+    },
+    {
+      "path": "migrations/course-g04-l10-vb-011/audit/audio-runtime-evidence.json",
+      "sha256": "0d84fe7f85aed5bd7d89709097ba9ed60a76ba94a3dc1747bdf34578e584a919"
+    },
+    {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/SA/L10VB11.mp3",
+      "sha256": "1508e26d670d3f53a9e5f3d2b3945c8167d1ba8cd0e7a1959bf726fcb203e87f"
+    }
+  ],
+  "assets": [
+    {
+      "id": "embedded-stream-0001",
+      "role": "english-engineering-timeline-cue",
+      "source": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/VB/L10VB11.swf",
+        "sha256": "dd12bb87cffa76948020b1cfc34163f67fa4062bd286ea571bf4b08473709ba0",
+        "sourceTimelineId": "sprite-31",
+        "sourceCharacterId": 31
+      },
+      "output": "public/flash-assets/courses/course-g04-l10-vb-011/audio/embedded-stream-0001.mp3",
+      "publicPath": "/flash-assets/courses/course-g04-l10-vb-011/audio/embedded-stream-0001.mp3",
+      "bytes": 62920,
+      "sha256": "ab8c00ecbf6c90d284a295fee5a785fc7e3478490382fcda0b7064be1bfd1e66",
+      "media": {
+        "codecName": "mp3",
+        "sampleRateHz": 22050,
+        "channels": 1,
+        "fullEofDecodePassed": true,
+        "durationMs": 12643
+      },
+      "frameDomain": "sprite-31",
+      "frame": 2,
+      "endFrame": 154,
+      "scenario": "source-static-frame",
+      "routeLanguage": "en",
+      "spokenLanguage": "undetermined",
+      "routeAuthority": "Legacy host route plus embedded/default-page convention only; no listening acceptance."
+    },
+    {
+      "id": "spanish-host-narration",
+      "role": "spanish-user-activated-host-track",
+      "source": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/SA/L10VB11.mp3",
+        "sha256": "1508e26d670d3f53a9e5f3d2b3945c8167d1ba8cd0e7a1959bf726fcb203e87f"
+      },
+      "output": "public/flash-assets/courses/course-g04-l10-vb-011/audio/spanish-host-narration.mp3",
+      "publicPath": "/flash-assets/courses/course-g04-l10-vb-011/audio/spanish-host-narration.mp3",
+      "bytes": 187152,
+      "sha256": "1508e26d670d3f53a9e5f3d2b3945c8167d1ba8cd0e7a1959bf726fcb203e87f",
+      "media": {
+        "codecName": "mp3",
+        "sampleRateHz": 48000,
+        "channels": 1,
+        "fullEofDecodePassed": true,
+        "durationMs": 13368
+      },
+      "frameDomains": [
+        "sprite-31"
+      ],
+      "activation": "user",
+      "timelineBehavior": "pause-while-playing",
+      "routeLanguage": "es",
+      "spokenLanguage": "not-established-by-listening",
+      "routeAuthority": "Exact legacy SA-directory association and Spanish host route only."
+    }
+  ],
+  "authority": "Byte-exact private Current-JS audio staging and engineering route mapping only.",
+  "authorityBoundary": "Spoken language/content, natural Adobe runtime reachability, start/stop/pause synchronization, audible quality, Replay parity, listening acceptance, human review, Owner acceptance, strict completion, release, and publication remain unresolved.",
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "audioAccepted": false,
+    "behaviorParityAccepted": false,
+    "visualFidelityAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "releaseEligible": false,
+    "published": false
+  },
+  "strictAcceptanceEffect": "none",
+  "artifactType": "g4-l10-vb011-private-product-audio-manifest",
+  "status": "byte-exact-private-current-js-audio-candidate"
+}

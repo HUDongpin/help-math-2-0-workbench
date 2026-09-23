@@ -33,7 +33,7 @@
     "generate:registry": "node scripts/generate-registry.mjs",
     "check:registry": "node scripts/generate-registry.mjs --check",
     "typecheck": "npm run check:registry && tsc --noEmit",
-    "test": "npm run check:registry && tsx --test test/*.test.mjs tests/**/*.test.ts"
+    "test": "npm run check:registry && tsx --test test/*.test.mjs tests/**/*.test.ts src/modules/*.test.tsx src/timelines/*.test.ts"
   },
   "peerDependencies": {
     "react": ">=18",

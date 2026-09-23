@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 2,
+  "animationId": "course-g03-l08-re-001",
+  "generatedBy": "scripts/audit-pilot-audio.mjs",
+  "scope": "strict-audio-structural-and-file-metadata-audit",
+  "migrationStatusBefore": null,
+  "migrationStatusBinding": "excluded-from-structural-audio-evidence",
+  "migrationStatusUnchanged": true,
+  "source": {
+    "swf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L8/RE/L8RE01.swf",
+    "expectedSha256": "e4a6403f6b45a3b4aecb48e0659aa20113acb0644e37b027a19fb51f34417f9b",
+    "observedSha256": "e4a6403f6b45a3b4aecb48e0659aa20113acb0644e37b027a19fb51f34417f9b",
+    "hashMatches": true
+  },
+  "tools": {
+    "ffprobe": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers",
+    "ffdec": "JPEXS Free Flash Decompiler v.26.2.1",
+    "swfmillEvidence": "swfmill 0.3.6"
+  },
+  "authority": {
+    "hostScript": {
+      "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/indexELM.swf",
+      "sha256": "04b5b25285268454a5fe24cd3f4ecf45a1cdaf0dcbc6e894f0ba0719054580bd",
+      "extractor": "JPEXS Free Flash Decompiler v.26.2.1",
+      "extractedScriptCount": 633,
+      "audioRelevantScriptCount": 2,
+      "combinedAudioRelevantScriptsSha256": "bdf58f23b647b1b78968873adfdda55f52baa63ce8dc42dea7dd2e6c0ba9b8d3",
+      "conventions": {
+        "formula": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "EAD is loaded when the formulas audio-language argument equals English; SAD is loaded by the Spanish/non-English branch."
+        },
+        "keyterm": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "The key-term host builds matching EAD and SAD MP3 paths and selects them from the English/Spanish language state."
+        },
+        "finalQuiz": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "Final-quiz language code EN maps to EA and SP maps to SA for question and answer MP3 paths."
+        },
+        "courseSpanishPage": {
+          "verified": true,
+          "evidenceScript": "scripts/frame_35/DoAction.as",
+          "finding": "The course host's Spanish-audio path is built from the loaded page basename under the sibling SA directory."
+        }
+      }
+    },
+    "xmlReferences": [],
+    "catalogAnimation": "catalog/animations.json",
+    "catalogAudioGroups": null
+  },
+  "externalAudio": {
+    "exactAssociations": [],
+    "lessonGroupCandidates": [],
+    "expectedButMissing": [],
+    "exactCount": 0,
+    "candidateOnlyCount": 0,
+    "missingExpectedCount": 0
+  },
+  "embeddedAudio": {
+    "rootTimeline": {
+      "frameRate": 12,
+      "declaredFrames": 55
+    },
+    "defineSounds": [],
+    "soundStreams": [],
+    "startSounds": [],
+    "exportedSoundLinkages": []
+  },
+  "actionScriptAudioOperations": [],
+  "strictNoAudioAssessment": {
+    "eligible": true,
+    "checks": [
+      {
+        "id": "source-swf-hash",
+        "passed": true
+      },
+      {
+        "id": "swf-audio-tags",
+        "passed": true
+      },
+      {
+        "id": "parsed-audio-structures",
+        "passed": true
+      },
+      {
+        "id": "actionscript-audio-operations",
+        "passed": true
+      },
+      {
+        "id": "catalog-audio-associations",
+        "passed": true
+      },
+      {
+        "id": "basename-mp3",
+        "passed": true
+      },
+      {
+        "id": "keyterm-xml-placement",
+        "passed": true
+      },
+      {
+        "id": "catalog-placement",
+        "passed": true
+      }
+    ],
+    "decision": "accepted-not-required",
+    "rationale": "The source-hash-bound shipped SWF contains no audio tag/data or audio ActionScript operation, the preserved archive has no matching MP3, and the source-bound catalog exposes no host placement that could create an external cue. This is a structural negative proof; there is no audio cue to listen to or synchronize.",
+    "scope": "shipped-SWF-and-preserved-host-placement-audio-reachability",
+    "source": {
+      "swf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L8/RE/L8RE01.swf",
+      "expectedSha256": "e4a6403f6b45a3b4aecb48e0659aa20113acb0644e37b027a19fb51f34417f9b",
+      "observedSha256": "e4a6403f6b45a3b4aecb48e0659aa20113acb0644e37b027a19fb51f34417f9b",
+      "pairedFla": null,
+      "pairedFlaSha256": null,
+      "note": "The FLA hash preserves authoring provenance; the negative audio decision is based on the shipped SWF and reachable host-placement evidence, not on unshipped/unused FLA library contents."
+    },
+    "machineEvidence": {
+      "swfmillSummary": {
+        "file": "audit/machine/swfmill-summary.json",
+        "sha256": "7c0958c1d7570db5635882b54b7de6c34d315b09508c8c67ba94e9fd37427727",
+        "soundTags": {}
+      },
+      "swfmillXml": {
+        "file": "audit/machine/swfmill.xml.gz",
+        "sha256": "547b2ae4466ce60c4c6fd5290ec95953b8ddc4e02aa5e3e319229b0af5f14967"
+      },
+      "ffdecScripts": {
+        "file": "audit/machine/ffdec-scripts.txt.gz",
+        "sha256": "81546d70e37dee258ff2f79f4eda7da861460f50e781ea4027c249d6754209b6",
+        "parsedAudioOperationCount": 0
+      },
+      "ffdecTags": {
+        "file": "audit/machine/ffdec-tags.txt.gz",
+        "sha256": "962d298bed8c2a0c310bba11633c681c9f60cc76dcfa48c7e8182dc5651ef142"
+      }
+    },
+    "archiveAssociationEvidence": {
+      "sourceFilesCatalog": {
+        "file": "catalog/source-files.json",
+        "sha256": "3c69ff32fd641910f63b24709b3c0225418ba1eee823155a99b307456eb1ee6c",
+        "checksumSetSha256": "0d6f20e50576c73aac38aa5a88610c654bbe29430044c2db43d8d6236cf8fe0f"
+      },
+      "animationsCatalog": {
+        "file": "catalog/animations.json",
+        "sha256": "0f8ee8fea46796b1f1d7ae7c410ef11e90e5eb4a16823cde0830777903332733"
+      },
+      "exactAudioAssociations": [],
+      "audioGroupIds": [],
+      "basenameMp3Matches": [],
+      "keytermXmlEvidence": [
+        {
+          "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTEG4.xml",
+          "catalogSha256": "bec389ce286b9a113297dfd87e052f28cf1da2640d93a277f91f669dfb3ef749",
+          "observedSha256": "bec389ce286b9a113297dfd87e052f28cf1da2640d93a277f91f669dfb3ef749",
+          "hashMatchesCatalog": true,
+          "basenameMentionCount": 0
+        },
+        {
+          "sourceFile": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTSG4.xml",
+          "catalogSha256": "7f12ce833f1429073a11a3ea0dd9d9964eb773804c18c025bde12552b3be5a00",
+          "observedSha256": "7f12ce833f1429073a11a3ea0dd9d9964eb773804c18c025bde12552b3be5a00",
+          "hashMatchesCatalog": true,
+          "basenameMentionCount": 0
+        }
+      ],
+      "catalogFlags": {
+        "referenced": false,
+        "unreferenced": true,
+        "variant": true,
+        "variantKind": "auxiliary-review",
+        "shell": false
+      },
+      "catalogReferences": {
+        "courseXml": [],
+        "keytermXml": []
+      }
+    }
+  },
+  "inventory": {
+    "file": "audio-inventory.csv",
+    "rowCount": 0,
+    "exactExternalRows": 0,
+    "embeddedRows": 0,
+    "manifestDeclaredAudioLanguages": [],
+    "inventoriedLanguages": [],
+    "lessonGroupCandidatesExcludedFromCsv": 0,
+    "rationale": "Candidate-only lesson audio is not promoted to a cue without a resolved host/runtime branch. Root SoundStream/StartSound cues use timeline-frame only when a root frame is structurally proven; verified host/user external tracks use host-user-activated; nested or unresolved cues use interaction-state. No root cue frame is guessed."
+  },
+  "acceptance": {
+    "structurallyAudited": true,
+    "authoritativeListeningComplete": false,
+    "hostStateTraversalComplete": false,
+    "synchronizationComplete": false,
+    "notApplicable": [
+      "authoritativeListeningComplete",
+      "hostStateTraversalComplete",
+      "synchronizationComplete"
+    ],
+    "strictAudioAcceptance": "accepted-not-required",
+    "strictAudioAcceptanceRationale": "The source-hash-bound shipped SWF contains no audio tag/data or audio ActionScript operation, the preserved archive has no matching MP3, and the source-bound catalog exposes no host placement that could create an external cue. This is a structural negative proof; there is no audio cue to listen to or synchronize.",
+    "manifestFollowUp": [],
+    "requirements": []
+  },
+  "limitations": [
+    "No playback/listening was performed because the source-hash-bound shipped SWF has no audio data or audio ActionScript and no preserved host placement can create an external cue.",
+    "The paired FLA was not used to infer shipped audio; unused authoring-library content, if any, cannot create runtime sound absent SWF audio data/calls and host placement.",
+    "No cue frame, branch reachability, URL resolution, language content, or synchronization was guessed."
+  ]
+}

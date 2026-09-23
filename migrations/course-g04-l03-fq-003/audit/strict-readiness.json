@@ -1,0 +1,293 @@
+{
+  "schemaVersion": 2,
+  "evidenceKind": "course-shell-strict-readiness",
+  "generatedBy": {
+    "script": "scripts/build-g4-l3-member-scenario-readiness.mjs",
+    "version": 1,
+    "sha256": "e1fc0a5cab54827b4818d1c39031a44680fd56e593f01ed4657b89c57f1fa7be",
+    "deterministic": true
+  },
+  "animationId": "course-g04-l03-fq-003",
+  "assessedOn": "2026-07-26",
+  "migrationStatusChanged": false,
+  "conclusion": {
+    "strictAcceptanceReady": false,
+    "completionClaimAllowed": false,
+    "localAuthoritativeBaselineCompletable": false,
+    "localExhaustiveBranchCaptureCompletable": false,
+    "risk": "critical",
+    "reason": "Hash-verified FLA/SWF, standard machine extraction, G4 L3 source audit, work-only authoring evidence where available, and the empty runtime-acquisition plan define conservative scenario obligations. They do not establish approved original-runtime natural entry, runtime reachability, exact ordered schedules, authoritative baselines, audio synchronization/listening acceptance, full-frame comparison, independent human review, or owner acceptance."
+  },
+  "source": {
+    "swf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/FQ/L3FQ03.swf",
+    "swfSha256": "f40e24b47e05de7dce02ac98344c8748b5941a67d908f85fc1fe152fe684b7dc",
+    "fla": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/FQ/L3FQ03.fla",
+    "flaSha256": "a873da8016d59b001db1fc5be359063342861809a33af194fec9fec81082a2f4",
+    "pairedFlaStatus": "present",
+    "sourceHashesVerified": true,
+    "technicalManifestProjection": "help-math-technical-manifest-v1",
+    "technicalManifestProjectionSha256": "1e623ffc76ca8c5d3220f00b696015d6457a950a9c9e477ae2bd7776028cc4c0",
+    "technicalManifestExcludedPaths": [
+      "status",
+      "created",
+      "confidence",
+      "classification",
+      "audit",
+      "toolVersions",
+      "baseline",
+      "evidence",
+      "fidelity",
+      "accessibility",
+      "acceptance",
+      "catalogEvidence",
+      "implementation.candidateQa",
+      "implementation.candidateMaturity",
+      "implementation.candidateProductQa",
+      "implementation.candidateVisualEvidence",
+      "implementation.productQaEvidence",
+      "implementation.productQaScope",
+      "audio.catalogGroupCandidates",
+      "audio.catalogExactAssociations",
+      "audio.acceptance",
+      "audio.authoritativeListeningComplete",
+      "audio.originalHostSynchronizationComplete",
+      "audio.strictAcceptance",
+      "audio.structuralAuditComplete"
+    ]
+  },
+  "machineAudit": {
+    "auditStatus": "partial",
+    "stage": {
+      "width": 800,
+      "height": 600
+    },
+    "fps": 12,
+    "rootFrameCount": 10,
+    "actionScriptVersion": "AS1/2",
+    "exportedScriptFileCount": 121,
+    "buttonHandlerFileCount": 6,
+    "clipHandlerFileCount": 101,
+    "pointerEventCandidateCount": 107,
+    "timelineNavigationCandidateCount": 31,
+    "randomCallCandidateCount": 0,
+    "externalApiCandidateCount": 1,
+    "staticallyRootReachableNestedDefinitionCount": 207,
+    "staticallyRootReachableDeclaredFrameCountSum": 293,
+    "allCommandsPassed": true,
+    "allOutputPinsVerified": true,
+    "observedBehaviorFromExtractedScripts": [
+      "Two independent static parsers agree on an 800x600 stage, 12 FPS, 10 one-indexed root frames, and AS1/2.",
+      "FFDec exported 121 ActionScript file(s), including 6 button-handler file(s) and 101 clip-handler file(s).",
+      "The source audit records 107 pointer-event candidate(s), 31 timeline-navigation candidate(s), 0 random-call candidate(s), and 1 external-API candidate(s); static occurrences do not prove runtime reachability.",
+      "The static root placement graph identifies 207 reachable nested definition(s) totaling 293 declared frame(s); every timeline still requires an independent-domain, composite-only, or proven-unreachable disposition.",
+      "Audio acquisition remains required for 0 embedded tag candidate(s) and 108 external association(s); cue, language, timing, synchronization, and listening acceptance remain unestablished."
+    ],
+    "report": {
+      "path": "migrations/course-g04-l03-fq-003/audit/machine/report.json",
+      "bytes": 10393,
+      "sha256": "f3f121d0a101e55d3abd2a8f4b620c06fb9011e3a545a980c51a14147c0d87c0"
+    }
+  },
+  "branchCaptureReadiness": {
+    "status": "partial-reference-only",
+    "authoritativeScheduleEstablished": false,
+    "runtimeSessionsExecuted": 0,
+    "requiredScenarioInventory": [
+      "EN independent natural-entry runtime path with a fresh isolated runtime profile",
+      "ES independent natural-entry runtime path with a fresh isolated runtime profile",
+      "universal evidence family: root-natural-entry-and-playback",
+      "universal evidence family: nested-frame-domain-disposition-and-every-reachable-transition",
+      "universal evidence family: english-language-path",
+      "universal evidence family: spanish-language-path",
+      "universal evidence family: terminal-state-and-complete-replay-reset",
+      "universal evidence family: previous-next-course-and-section-navigation-in-host-context",
+      "source-bound scenario candidate root-natural-entry-and-playback: 13 event candidate(s), 31 operation candidate(s), and 0 host-state signal candidate(s); exact ordered runtime schedule unresolved",
+      "source-bound scenario candidate pointer-and-clip-handler-paths: 107 event candidate(s), 107 operation candidate(s), and 0 host-state signal candidate(s); exact ordered runtime schedule unresolved",
+      "source-bound scenario candidate scoring-and-answer-paths: 105 event candidate(s), 221 operation candidate(s), and 262 host-state signal candidate(s); exact ordered runtime schedule unresolved",
+      "source-bound scenario candidate terminal-and-replay-reset-paths: 2 event candidate(s), 4 operation candidate(s), and 0 host-state signal candidate(s); exact ordered runtime schedule unresolved",
+      "source-bound scenario candidate english-spanish-host-state-paths: 106 event candidate(s), 227 operation candidate(s), and 375 host-state signal candidate(s); exact ordered runtime schedule unresolved",
+      "source-bound scenario candidate audio-control-and-cue-paths: 5 event candidate(s), 26 operation candidate(s), and 40 host-state signal candidate(s); exact ordered runtime schedule unresolved",
+      "source-bound scenario candidate legacy-external-side-effect-disposition-paths: 1 event candidate(s), 1 operation candidate(s), and 0 host-state signal candidate(s); exact ordered runtime schedule unresolved",
+      "static candidate family conditional-branch-candidates: 7 source event candidate(s); every reachable target and branch requires runtime proof",
+      "static candidate family external-api-candidates: 1 source event candidate(s); every reachable target and branch requires runtime proof",
+      "static candidate family pointer-handler-candidates: 107 source event candidate(s); every reachable target and branch requires runtime proof",
+      "static candidate family scoring-or-answer-state-candidates: 1 source event candidate(s); every reachable target and branch requires runtime proof",
+      "static candidate family timeline-navigation-candidates: 13 source event candidate(s); every reachable target and branch requires runtime proof",
+      "no static random call candidate; natural execution must still confirm the absence of reachable random behavior",
+      "audio: 0 embedded tag candidate(s) and 108 external association(s); preserve original bytes and prove EN/ES selection, cue, timing, synchronization, and complete listening review",
+      "host-native Previous, Next, section navigation, terminal state, and complete Replay reset"
+    ],
+    "missing": [
+      "source-hash-bound authorized original-runtime natural-entry capture",
+      "approved CR-01 through CR-08 containment controls and an authorized per-item execution decision",
+      "named original-runtime operator plus immutable session, runtime, host-tree, language, and profile identity",
+      "natural runtime reachability and final disposition for every nested timeline candidate",
+      "exact ordered event, frame, operation, state-hash, and deterministic-seed schedule for every reachable branch",
+      "complete independent English and Spanish frame, navigation, terminal, and Replay evidence",
+      "original audio bytes plus cue, language, timing, synchronization, and complete listening review",
+      "identity-matched implementation capture, per-frame diff, and normalized RMSE for every requirement",
+      "independent engineering and human visual review bound to the immutable evidence manifest",
+      "Owner acceptance and release-custodian atomic publication authorization"
+    ],
+    "captureIdentity": {
+      "requiredFields": [
+        "frameDomain",
+        "requirementId",
+        "trace",
+        "entryStateSha256",
+        "frame",
+        "scenario",
+        "lang",
+        "seed"
+      ],
+      "sourceSwfSha256": "f40e24b47e05de7dce02ac98344c8748b5941a67d908f85fc1fe152fe684b7dc",
+      "sourceFlaSha256": "a873da8016d59b001db1fc5be359063342861809a33af194fec9fec81082a2f4",
+      "orderedEventAndStateHashChainRequired": true,
+      "nativeStagePngRequired": true
+    },
+    "directSeekAuthority": "not-permitted-for-primary-evidence; supplemental diagnosis only after a complete natural trace"
+  },
+  "acceptance": {
+    "acceptanceNeutral": true,
+    "authoritativeOriginalRuntimeAccepted": false,
+    "audioAccepted": false,
+    "rmseAccepted": false,
+    "humanVisualAccepted": false,
+    "independentEngineeringAccepted": false,
+    "ownerAccepted": false,
+    "strictMigrationComplete": false
+  },
+  "review": {
+    "independentEngineeringReview": {
+      "role": "independent-engineering-reviewer",
+      "decision": "pending",
+      "reviewer": null,
+      "reviewedAt": null,
+      "signatureEnvelope": null
+    },
+    "humanVisualReview": {
+      "role": "independent-human-visual-reviewer",
+      "decision": "pending",
+      "reviewer": null,
+      "reviewedAt": null,
+      "signatureEnvelope": null
+    },
+    "ownerReview": {
+      "role": "owner-or-authorized-representative",
+      "decision": "pending",
+      "reviewer": null,
+      "reviewedAt": null,
+      "signatureEnvelope": null
+    }
+  },
+  "evidence": [
+    {
+      "id": "source-swf",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/FQ/L3FQ03.swf",
+      "bytes": 43689,
+      "sha256": "f40e24b47e05de7dce02ac98344c8748b5941a67d908f85fc1fe152fe684b7dc"
+    },
+    {
+      "id": "source-fla",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/FQ/L3FQ03.fla",
+      "bytes": 2228224,
+      "sha256": "a873da8016d59b001db1fc5be359063342861809a33af194fec9fec81082a2f4"
+    },
+    {
+      "id": "migration-technical-contract",
+      "path": "migrations/course-g04-l03-fq-003/migration.json",
+      "bytes": 21659,
+      "sha256": "07d7bee721691a740f39fc087b2a98220f2649846b7e5cf89d3fc2b128820e2a"
+    },
+    {
+      "id": "standard-machine-report",
+      "path": "migrations/course-g04-l03-fq-003/audit/machine/report.json",
+      "bytes": 10393,
+      "sha256": "f3f121d0a101e55d3abd2a8f4b620c06fb9011e3a545a980c51a14147c0d87c0"
+    },
+    {
+      "id": "standard-machine-output-01",
+      "path": "audit/machine/ffdec-header.txt",
+      "bytes": 188,
+      "sha256": "7713609cc508edcd1328b4b19b6f16e4befc679cf962bd4ba90de84adc6fa211"
+    },
+    {
+      "id": "standard-machine-output-02",
+      "path": "audit/machine/ffdec-script-index.txt",
+      "bytes": 13642,
+      "sha256": "b8b7fbc08e2639a063479b263fc4c1749e019c3cbfd741b69e4782644a54f0e4"
+    },
+    {
+      "id": "standard-machine-output-03",
+      "path": "audit/machine/ffdec-scripts.txt.gz",
+      "bytes": 3817,
+      "sha256": "16ca95d1e55d68d9eb94235403ac190d55b3687eb9c1a2d697550693c8acdfa0"
+    },
+    {
+      "id": "standard-machine-output-04",
+      "path": "audit/machine/ffdec-tags.txt.gz",
+      "bytes": 57879,
+      "sha256": "95ff1cae78534c45d8f453bc4afdc877f98d2063ca02c116ced9e064d1977384"
+    },
+    {
+      "id": "standard-machine-output-05",
+      "path": "audit/machine/swfmill-summary.json",
+      "bytes": 3026,
+      "sha256": "8345f59605a62d0e935e9061c84db30af2ce1afd4ac1733ad705d03f5733681d"
+    },
+    {
+      "id": "standard-machine-output-06",
+      "path": "audit/machine/swfmill.xml.gz",
+      "bytes": 137174,
+      "sha256": "69f6a10ae9305b6c314b62b80878c6157ad4aff6bebd86d982484d09eeb75a06"
+    },
+    {
+      "id": "g4-l3-source-audit",
+      "path": "migrations/course-g04-l03-fq-003/audit/machine/g4-l3-source-audit.json",
+      "bytes": 67354,
+      "sha256": "d0619b3dd00210acad91748e3b4ae023aa4d33077bede0f1625b751ed6a22755"
+    },
+    {
+      "id": "runtime-acquisition-plan",
+      "path": "migrations/course-g04-l03-fq-003/audit/machine/g4-l3-runtime-acquisition-plan.json",
+      "bytes": 18013,
+      "sha256": "ea1cb2d3ae11387acd56613c9c9677956fb41fbcafacc78cf04a6558370d92a2"
+    },
+    {
+      "id": "work-only-authoring-marker",
+      "path": "work/animate/dependency-authoring-audits/course-g04-l03-fq-003/runs/run-PnF3uG/controller-result.json",
+      "bytes": 338,
+      "sha256": "fd589a2b757975af063dd52f240d59cf0e999bdafe88c585207ef1403d9ef907"
+    },
+    {
+      "id": "work-only-authoring-png",
+      "path": "work/animate/dependency-authoring-audits/course-g04-l03-fq-003/runs/run-PnF3uG/L3FQ03.fla-frame-1.png",
+      "bytes": 1941,
+      "sha256": "28f45b590038bc563dc8a1fb62c891faf0a068052d2917c3ead495db035138a8"
+    },
+    {
+      "id": "work-only-authoring-report",
+      "path": "work/animate/dependency-authoring-audits/course-g04-l03-fq-003/runs/run-PnF3uG/L3FQ03.fla-authoring-audit.json",
+      "bytes": 6705296,
+      "sha256": "7cf5b0c39d8a4990d6aa6a5fc95ae58fc4c90bccae3b8969457cc73442fa71fc"
+    },
+    {
+      "id": "work-only-authoring-receipt",
+      "path": "work/animate/dependency-authoring-audits/course-g04-l03-fq-003/runs/run-PnF3uG/assisted-run-result.json",
+      "bytes": 5552,
+      "sha256": "d26decb3984ed0be297e37de01d1b4dca3a627c7d3768509d54ad8d07298912a"
+    },
+    {
+      "id": "work-only-authoring-evidence",
+      "path": "work/animate/dependency-authoring-audits/course-g04-l03-fq-003/runs/run-PnF3uG/dependency-authoring-audit-evidence.json",
+      "bytes": 5751,
+      "sha256": "b6c922c506e2e6148a38040f992218a582832f35164bb11a469d51331257f924"
+    }
+  ],
+  "limitations": [
+    "This readiness artifact is a static specification input. It launches neither Adobe Animate nor an original Flash runtime.",
+    "FFDec, swfmill, source-static placement graphs, and work-only authoring audits cannot prove natural runtime reachability, interaction behavior, visual fidelity, or audio timing.",
+    "No field in this artifact authorizes capture, satisfies a full-frame requirement, changes migration status, or supplies a human or owner signature."
+  ],
+  "strictAcceptanceEffect": "none; this fail-closed readiness artifact only supplies source-bound scenario obligations"
+}

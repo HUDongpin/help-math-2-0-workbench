@@ -1,0 +1,14 @@
+# Codex Desktop copies paths matched here after creating a worktree.
+#
+# The corresponding roots are locally excluded from the ordinary untracked
+# payload in `.git/info/exclude`. This keeps multi-gigabyte generated output,
+# extracted delivery packages, caches, and stale capture trees in the parent
+# checkout. Normal untracked source and evidence remain visible to Git and are
+# copied by Codex's ordinary worktree path. Tracked files remain available
+# normally and do not need entries here.
+
+# Preserve lightweight, source-like deliverables without copying extracted
+# packages or ZIP archives from outputs/.
+/outputs/*.md
+/outputs/*.mjs
+/outputs/*.json

@@ -1,0 +1,2563 @@
+{
+  "animationId": "course-g03-l01-vb-004",
+  "artifactStatus": "static-source-candidates-runtime-unverified",
+  "artifactType": "help-math-vb004-acceptance-neutral-source-branch-candidates",
+  "authorityBoundary": {
+    "audioListeningOrSynchronizationAccepted": false,
+    "authoritativeBaseline": false,
+    "completionClaimAllowed": false,
+    "humanReviewRecorded": false,
+    "originalRuntimeExecutionLog": false,
+    "ownerAcceptanceRecorded": false,
+    "readySchedule": false,
+    "replayOrTerminalAccepted": false,
+    "rmseOrVisualFidelityProven": false,
+    "runtimeReachabilityProven": false,
+    "strictAcceptanceEffect": "none"
+  },
+  "blockers": {
+    "branchCaptureMissing": [
+      {
+        "evidence": [
+          {
+            "evidenceId": "strict-readiness",
+            "path": "migrations/course-g03-l01-vb-004/audit/strict-readiness.json",
+            "sha256": "1cad9b8fb879daa40143ddc6687874711e330cbce0567fb8641f70ad57179d4d"
+          }
+        ],
+        "id": "branch-readiness-missing-01",
+        "statement": "source-hash-bound authorized original-runtime natural-entry capture",
+        "status": "unresolved"
+      },
+      {
+        "evidence": [
+          {
+            "evidenceId": "strict-readiness",
+            "path": "migrations/course-g03-l01-vb-004/audit/strict-readiness.json",
+            "sha256": "1cad9b8fb879daa40143ddc6687874711e330cbce0567fb8641f70ad57179d4d"
+          }
+        ],
+        "id": "branch-readiness-missing-02",
+        "statement": "deterministic parent/root/global fixture with denied legacy side effects",
+        "status": "unresolved"
+      },
+      {
+        "evidence": [
+          {
+            "evidenceId": "strict-readiness",
+            "path": "migrations/course-g03-l01-vb-004/audit/strict-readiness.json",
+            "sha256": "1cad9b8fb879daa40143ddc6687874711e330cbce0567fb8641f70ad57179d4d"
+          }
+        ],
+        "id": "branch-readiness-missing-03",
+        "statement": "exact interaction hit targets and complete state-transition map",
+        "status": "unresolved"
+      },
+      {
+        "evidence": [
+          {
+            "evidenceId": "strict-readiness",
+            "path": "migrations/course-g03-l01-vb-004/audit/strict-readiness.json",
+            "sha256": "1cad9b8fb879daa40143ddc6687874711e330cbce0567fb8641f70ad57179d4d"
+          }
+        ],
+        "id": "branch-readiness-missing-04",
+        "statement": "authoritative bilingual audio cue/listening/synchronization evidence",
+        "status": "unresolved"
+      },
+      {
+        "evidence": [
+          {
+            "evidenceId": "strict-readiness",
+            "path": "migrations/course-g03-l01-vb-004/audit/strict-readiness.json",
+            "sha256": "1cad9b8fb879daa40143ddc6687874711e330cbce0567fb8641f70ad57179d4d"
+          }
+        ],
+        "id": "branch-readiness-missing-05",
+        "statement": "terminal and Replay full-state reset evidence",
+        "status": "unresolved"
+      }
+    ],
+    "derived": [
+      {
+        "evidence": [
+          {
+            "evidenceId": "full-frame-coverage",
+            "path": "migrations/course-g03-l01-vb-004/evidence/full-frame-coverage.json",
+            "sha256": "488213e7ffd844865260cc438793944b26eb646bd03b758d690c57b9b5d29a52"
+          },
+          {
+            "artifact": "DefineSprite_231/frame_56/DoAction.as",
+            "evidenceId": "child-ffdec-scripts",
+            "lineEnd": 155,
+            "lineStart": 152,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+            "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538"
+          }
+        ],
+        "id": "coverage-range-requires-post-stop-actions",
+        "requiredResolution": "Split the first-stop trace from each source-proven interaction/random branch before defining an executable schedule.",
+        "statement": "Both current linear-to-quiz-stop requirements demand frames 1-222, while static source stops natural no-action playback at local frame 56.",
+        "status": "unresolved"
+      },
+      {
+        "evidence": [
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_35/DoAction.as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 1148,
+              "lineStart": 1134,
+              "normalizedSha256": "f73d57f8a113e421cfa2af337e38ea182512be8433fcab45477c3bb40fd80cd2",
+              "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "evidenceId": "trace-spec-en",
+            "path": "migrations/course-g03-l01-vb-004/audit/trace-specs/req-sprite-231-linear-to-quiz-stop-en.json",
+            "sha256": "d1cf82573fbea4935dd045ebd8cfc5a81d796aa9d7fe0b2df60a7a22f0de8912"
+          },
+          {
+            "evidenceId": "trace-spec-es",
+            "path": "migrations/course-g03-l01-vb-004/audit/trace-specs/req-sprite-231-linear-to-quiz-stop-es.json",
+            "sha256": "1e657f78e31e2214c77d96fe81eb6d90240f2024ce81e45ee3b084b3537bff21"
+          }
+        ],
+        "id": "feedback-random-unbound-to-trace-seed",
+        "requiredResolution": "Capture and bind each original random outcome or prove a source-faithful deterministic fixture.",
+        "statement": "The host selects correct feedback with random(4)+1 and wrong feedback with random(3)+1, but the trace seed has no proven binding to AVM1 random state.",
+        "status": "unresolved"
+      },
+      {
+        "evidence": [
+          {
+            "bundleLines": [
+              {
+                "bundleLine": 92,
+                "text": "if(_global.quizTryCount >= 2)"
+              },
+              {
+                "bundleLine": 94,
+                "text": "   _global.quizTryCount = 0;"
+              },
+              {
+                "bundleLine": 155,
+                "text": "_global.quizTryCount = 0;"
+              },
+              {
+                "bundleLine": 189,
+                "text": "if(_global.quizTryCount >= 2)"
+              },
+              {
+                "bundleLine": 191,
+                "text": "   _global.quizTryCount = 0;"
+              },
+              {
+                "bundleLine": 207,
+                "text": "if(_global.quizTryCount >= 2)"
+              },
+              {
+                "bundleLine": 209,
+                "text": "   _global.quizTryCount = 0;"
+              }
+            ],
+            "evidenceId": "child-ffdec-scripts",
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+            "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538"
+          },
+          {
+            "evidenceId": "scenario-inventory",
+            "jsonLocator": "dependencies.bindings[binding=_global.quizTryCount]",
+            "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+            "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+          }
+        ],
+        "id": "wrong-attempt-counter-has-no-observed-increment",
+        "requiredResolution": "Use authorized runtime observation or additional source evidence to resolve whether this is a legacy bug or an external mutation.",
+        "statement": "The child bundle has four resets and three >=2 tests for quizTryCount, but no observed increment; second-wrong forced continuation is not statically reachable from the visible assignments.",
+        "status": "unresolved"
+      },
+      {
+        "evidence": [
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_35/DoAction.as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 2058,
+              "lineStart": 2038,
+              "normalizedSha256": "9ba8fc1ac23d11d507b19dfdeedd2b3929baabb16ad2ce468455affb9c91ac58",
+              "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "evidenceId": "scenario-inventory",
+            "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+            "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+          }
+        ],
+        "id": "glossary-return-path-unresolved",
+        "requiredResolution": "Traverse every glossary activation and return path in the authorized same-lesson host.",
+        "statement": "The four child handlers stop the animation and call the host glossary function, but close/resume ordering is not bound to this child.",
+        "status": "unresolved"
+      },
+      {
+        "evidence": [
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_35/DoAction.as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 2319,
+              "lineStart": 2261,
+              "normalizedSha256": "abb340898358f226930e03caeea1dfd476433cf292d6ecddcbcaf625e3b738b3",
+              "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "evidenceId": "audio-runtime-evidence",
+            "path": "migrations/course-g03-l01-vb-004/audit/audio-runtime-evidence.json",
+            "sha256": "c4b948d2893d27477e7592e3657a85097f01054b83369beae2f512991e249184"
+          },
+          {
+            "evidenceId": "audio-listening-acceptance",
+            "path": "migrations/course-g03-l01-vb-004/evidence/audio-listening-acceptance.json",
+            "sha256": "1deaf7e4442d140cf87116c44c5dcdae9373d5c8cb6e071b4c39befb44f7d4c5"
+          },
+          {
+            "evidenceId": "spanish-mp3",
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/SA/L1VB04.mp3",
+            "sha256": "b594513fbc63da6f76cef1cfe55ed7e76dc5bb257a7007d4dda1d5295f6cf4f4"
+          }
+        ],
+        "id": "spanish-trigger-and-synchronization-unresolved",
+        "requiredResolution": "Record source button placement, trigger time, spoken-language listening, pause/resume, completion, and frame synchronization in the authorized host.",
+        "statement": "Spanish audio is a user-activated host path that stops the child, loads SA/L1VB04.mp3, and conditionally resumes; no exact trigger frame, listening result, or synchronization trace is accepted.",
+        "status": "unresolved"
+      },
+      {
+        "evidence": [
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "DefineButton2_244/BUTTONCONDACTION on(rollOver).as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 3,
+              "lineStart": 1,
+              "normalizedSha256": "cca75be6b88d2a9c9f58eddb17523396fcca3b008c6841da51754a7d6b8aea63",
+              "rawSha256": "07cf022112b7b7bf0bc7d67e3b7a69b5dd7ad6f04adbc014c18d4ffc1b037e0e"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "DefineButton2_244/BUTTONCONDACTION on(release).as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 11,
+              "lineStart": 1,
+              "normalizedSha256": "22acd57ac5aaeecf5d096276afc511192c78a1c7c874dd11fbf5805b5fb8a080",
+              "rawSha256": "3519f9dbc9e30c4c2bbe04fb78b21fa849d6c1949afa0582857b0cf23346386a"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_35/DoAction.as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 2012,
+              "lineStart": 1972,
+              "normalizedSha256": "cf48366ed5427e85f2426247a37e8023ed1c0e851cfdb59b68bf439cf4ab301c",
+              "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          }
+        ],
+        "id": "replay-full-reset-unresolved",
+        "requiredResolution": "Execute the actual Replay control and verify timeline, quiz attempts, feedback, random state, language, audio, overlays, and host navigation before/after reset.",
+        "statement": "A shell control labeled by rollover as replay reloads the current SWF, and a separate rewind control can return toward frame 1, but neither candidate proves the complete reset vector.",
+        "status": "unresolved"
+      },
+      {
+        "evidence": [
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_50/PlaceObject2_589_78/CLIPACTIONRECORD onClipEvent(enterFrame).as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 3,
+              "lineStart": 1,
+              "normalizedSha256": "c9b24d3bf25d6a41fd70cdcfd7fc0d0c9a7edd4b6ae0a94fb89f542441940da2",
+              "rawSha256": "0f74c16ab4c673bd21f5d82f4c7bd77f2c003198d8870bda7764b3cd7699c035"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_35/DoAction.as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 1707,
+              "lineStart": 1635,
+              "normalizedSha256": "e8947f523ba7efed833d3ba70fc3e0550c3b4a0522251bfda9af41ea2145719a",
+              "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "evidenceId": "same-lesson-host-binding",
+            "path": "migrations/course-g03-l01-vb-004/audit/same-lesson-shell-host-entry-binding.json",
+            "sha256": "44d3398edfc9f38001d69f695e215e04520b22e3add9c1ec7fae781d19cc912a"
+          }
+        ],
+        "id": "terminal-shell-event-ordering",
+        "requiredResolution": "Capture the complete same-lesson shell at frame 222 with event-order and terminal-state logging.",
+        "statement": "The child has no frame-222 stop action; the full shell enterFrame monitor may stop it at the total-frame boundary, so draw/monitor/stop order is runtime-unverified.",
+        "status": "unresolved"
+      },
+      {
+        "evidence": [
+          {
+            "evidenceId": "adapter-spec",
+            "path": "migrations/course-g03-l01-vb-004/audit/animate-createjs-adapter-spec.json",
+            "sha256": "56ae25c82a9ffe52e4f198bcda4badeb2f3680d40decc1078ef85cf1b33a8a49"
+          },
+          {
+            "evidenceId": "scenario-inventory",
+            "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+            "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+          }
+        ],
+        "id": "adapter-scenario-pin-stale",
+        "requiredResolution": "A named human must separately review any semantic pin refresh; this artifact must not update it.",
+        "statement": "The adapter records scenario inventory SHA b6ebdc8a410ce4080c2d60009ea04607e1be1750850469ac4e060c4b936abeec, while the current bound inventory SHA is ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c.",
+        "status": "unresolved"
+      },
+      {
+        "evidence": [
+          {
+            "evidenceId": "full-frame-coverage",
+            "path": "migrations/course-g03-l01-vb-004/evidence/full-frame-coverage.json",
+            "sha256": "488213e7ffd844865260cc438793944b26eb646bd03b758d690c57b9b5d29a52"
+          },
+          {
+            "evidenceId": "strict-readiness",
+            "path": "migrations/course-g03-l01-vb-004/audit/strict-readiness.json",
+            "sha256": "1cad9b8fb879daa40143ddc6687874711e330cbce0567fb8641f70ad57179d4d"
+          },
+          {
+            "evidenceId": "audio-listening-acceptance",
+            "path": "migrations/course-g03-l01-vb-004/evidence/audio-listening-acceptance.json",
+            "sha256": "1deaf7e4442d140cf87116c44c5dcdae9373d5c8cb6e071b4c39befb44f7d4c5"
+          }
+        ],
+        "id": "authoritative-captures-rmse-and-review-missing",
+        "requiredResolution": "Complete source-authoritative capture, per-frame metrics, diff review, audio acceptance, product QA, human review, and owner acceptance.",
+        "statement": "EN and ES nested requirements each have complete deterministic current-JavaScript implementation captures, but zero accepted original-runtime baseline frames, no paired RMSE metrics, and no terminal/audio/human/owner acceptance.",
+        "status": "unresolved"
+      }
+    ],
+    "strictGateBlockers": [
+      {
+        "evidence": [
+          {
+            "evidenceId": "strict-readiness",
+            "path": "migrations/course-g03-l01-vb-004/audit/strict-readiness.json",
+            "sha256": "1cad9b8fb879daa40143ddc6687874711e330cbce0567fb8641f70ad57179d4d"
+          }
+        ],
+        "id": "strict-gate-01",
+        "statement": "No authoritative native-stage runtime baseline covers every required frame domain, reachable scenario, branch, and language.",
+        "status": "unresolved"
+      },
+      {
+        "evidence": [
+          {
+            "evidenceId": "strict-readiness",
+            "path": "migrations/course-g03-l01-vb-004/audit/strict-readiness.json",
+            "sha256": "1cad9b8fb879daa40143ddc6687874711e330cbce0567fb8641f70ad57179d4d"
+          }
+        ],
+        "id": "strict-gate-02",
+        "statement": "A declared implementation route or engineering candidate does not establish full-frame parity; canonical captures, per-frame RMSE, diff review, and accepted exceptions remain incomplete.",
+        "status": "unresolved"
+      },
+      {
+        "evidence": [
+          {
+            "evidenceId": "strict-readiness",
+            "path": "migrations/course-g03-l01-vb-004/audit/strict-readiness.json",
+            "sha256": "1cad9b8fb879daa40143ddc6687874711e330cbce0567fb8641f70ad57179d4d"
+          }
+        ],
+        "id": "strict-gate-03",
+        "statement": "Audio acceptance remains pending: listening, host-state traversal, language/content, synchronization, and controls are not signed off.",
+        "status": "unresolved"
+      },
+      {
+        "evidence": [
+          {
+            "evidenceId": "strict-readiness",
+            "path": "migrations/course-g03-l01-vb-004/audit/strict-readiness.json",
+            "sha256": "1cad9b8fb879daa40143ddc6687874711e330cbce0567fb8641f70ad57179d4d"
+          }
+        ],
+        "id": "strict-gate-04",
+        "statement": "Accessibility, responsive, console/network product QA, human visual review, engineering review, and owner acceptance remain pending.",
+        "status": "unresolved"
+      }
+    ],
+    "upstreamScenarioInventoryUnknowns": [
+      {
+        "evidence": {
+          "artifactId": "swfmill-xml"
+        },
+        "evidenceFile": {
+          "evidenceId": "scenario-inventory",
+          "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+          "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+        },
+        "id": "runtime-reachability",
+        "resolution": "Traverse every generated state/handler/branch obligation in an authorized runtime and record the fixture plus capture hash.",
+        "statement": "Static placement reachability and exported scripts do not prove every state is reachable in Adobe runtime with the original parent shell.",
+        "status": "unresolved"
+      },
+      {
+        "evidence": {
+          "artifactId": "swfmill-xml"
+        },
+        "evidenceFile": {
+          "evidenceId": "scenario-inventory",
+          "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+          "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+        },
+        "id": "hit-geometry",
+        "resolution": "Resolve matrices and hit shapes or record authoritative pointer-coordinate probes for every target.",
+        "statement": "Button hit shape object IDs and placements are known, but exact stage-space hit bounds were not derived from vector geometry and all nested matrices.",
+        "status": "unresolved"
+      },
+      {
+        "evidence": {
+          "artifactId": "ffdec-scripts",
+          "lineEnd": 6,
+          "lineStart": 1,
+          "script": "DefineButton2_10/BUTTONCONDACTION on(release).as"
+        },
+        "evidenceFile": {
+          "evidenceId": "scenario-inventory",
+          "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+          "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+        },
+        "id": "host-defaults",
+        "resolution": "Use source initialization candidates where present; otherwise capture the original host values or keep the scenario unresolved.",
+        "statement": "External _root/_parent/_level0 values and unassigned _global values have no guessed original defaults in this inventory.",
+        "status": "unresolved"
+      },
+      {
+        "evidence": {
+          "artifactId": "strict-readiness"
+        },
+        "evidenceFile": {
+          "evidenceId": "scenario-inventory",
+          "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+          "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+        },
+        "id": "readiness-missing-01",
+        "resolution": "Must be supplied and evidenced before strict acceptance.",
+        "statement": "source-hash-bound authorized original-runtime natural-entry capture",
+        "status": "unresolved"
+      },
+      {
+        "evidence": {
+          "artifactId": "strict-readiness"
+        },
+        "evidenceFile": {
+          "evidenceId": "scenario-inventory",
+          "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+          "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+        },
+        "id": "readiness-missing-02",
+        "resolution": "Must be supplied and evidenced before strict acceptance.",
+        "statement": "deterministic parent/root/global fixture with denied legacy side effects",
+        "status": "unresolved"
+      },
+      {
+        "evidence": {
+          "artifactId": "strict-readiness"
+        },
+        "evidenceFile": {
+          "evidenceId": "scenario-inventory",
+          "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+          "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+        },
+        "id": "readiness-missing-03",
+        "resolution": "Must be supplied and evidenced before strict acceptance.",
+        "statement": "exact interaction hit targets and complete state-transition map",
+        "status": "unresolved"
+      },
+      {
+        "evidence": {
+          "artifactId": "strict-readiness"
+        },
+        "evidenceFile": {
+          "evidenceId": "scenario-inventory",
+          "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+          "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+        },
+        "id": "readiness-missing-04",
+        "resolution": "Must be supplied and evidenced before strict acceptance.",
+        "statement": "authoritative bilingual audio cue/listening/synchronization evidence",
+        "status": "unresolved"
+      },
+      {
+        "evidence": {
+          "artifactId": "strict-readiness"
+        },
+        "evidenceFile": {
+          "evidenceId": "scenario-inventory",
+          "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+          "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+        },
+        "id": "readiness-missing-05",
+        "resolution": "Must be supplied and evidenced before strict acceptance.",
+        "statement": "terminal and Replay full-state reset evidence",
+        "status": "unresolved"
+      },
+      {
+        "affectedTimelineIds": [
+          "sprite-63"
+        ],
+        "evidence": {
+          "artifactId": "swfmill-xml"
+        },
+        "evidenceFile": {
+          "evidenceId": "scenario-inventory",
+          "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+          "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+        },
+        "id": "unproven-nested-timelines",
+        "resolution": "Resolve dynamic linkage calls and runtime traversal; do not discard these timelines from acceptance coverage without proof.",
+        "statement": "1 DefineSprite timelines are not reached by the static root placement graph; attachMovie/exported-symbol or dead-code status is unresolved.",
+        "status": "unresolved"
+      },
+      {
+        "evidence": {
+          "artifactId": "ffdec-scripts"
+        },
+        "evidenceFile": {
+          "evidenceId": "scenario-inventory",
+          "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+          "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+        },
+        "id": "replay-target",
+        "resolution": "Identify the runtime Replay target and prove reset of timeline, score, random state, language, and audio.",
+        "statement": "No exported handler is unambiguously named Replay/repeat/restart; frame-1 transitions alone do not prove Replay semantics.",
+        "status": "unresolved"
+      }
+    ]
+  },
+  "branchCandidates": {
+    "attemptCounterAudit": {
+      "classification": "exhaustive-child-script-static-observation",
+      "evidence": [
+        {
+          "evidenceId": "child-ffdec-scripts",
+          "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+          "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538"
+        },
+        {
+          "evidenceId": "scenario-inventory",
+          "jsonLocator": "dependencies.bindings[binding=_global.quizTryCount]",
+          "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+          "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+        }
+      ],
+      "forcedContinuationReachabilityProven": false,
+      "incrementObserved": false,
+      "observedAssignments": [
+        {
+          "evidence": {
+            "artifactId": "ffdec-scripts",
+            "line": 94,
+            "script": "DefineSprite_109/frame_31/DoAction.as"
+          },
+          "expression": "0",
+          "operator": "=",
+          "target": "_global.quizTryCount"
+        },
+        {
+          "evidence": {
+            "artifactId": "ffdec-scripts",
+            "line": 155,
+            "script": "DefineSprite_231/frame_56/DoAction.as"
+          },
+          "expression": "0",
+          "operator": "=",
+          "target": "_global.quizTryCount"
+        },
+        {
+          "evidence": {
+            "artifactId": "ffdec-scripts",
+            "line": 191,
+            "script": "DefineSprite_85/frame_28/DoAction.as"
+          },
+          "expression": "0",
+          "operator": "=",
+          "target": "_global.quizTryCount"
+        },
+        {
+          "evidence": {
+            "artifactId": "ffdec-scripts",
+            "line": 209,
+            "script": "DefineSprite_97/frame_29/DoAction.as"
+          },
+          "expression": "0",
+          "operator": "=",
+          "target": "_global.quizTryCount"
+        }
+      ],
+      "observedLines": [
+        {
+          "bundleLine": 92,
+          "text": "if(_global.quizTryCount >= 2)"
+        },
+        {
+          "bundleLine": 94,
+          "text": "   _global.quizTryCount = 0;"
+        },
+        {
+          "bundleLine": 155,
+          "text": "_global.quizTryCount = 0;"
+        },
+        {
+          "bundleLine": 189,
+          "text": "if(_global.quizTryCount >= 2)"
+        },
+        {
+          "bundleLine": 191,
+          "text": "   _global.quizTryCount = 0;"
+        },
+        {
+          "bundleLine": 207,
+          "text": "if(_global.quizTryCount >= 2)"
+        },
+        {
+          "bundleLine": 209,
+          "text": "   _global.quizTryCount = 0;"
+        }
+      ],
+      "referenceCount": 7
+    },
+    "correctFeedback": [
+      {
+        "blockers": [
+          "feedback-random-unbound-to-trace-seed",
+          "runtime-reachability",
+          "terminal-shell-event-ordering"
+        ],
+        "candidateId": "correct-feedback-1",
+        "classification": "static-source-branch-candidate-runtime-unverified",
+        "evidence": [
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_35/DoAction.as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 1148,
+              "lineStart": 1134,
+              "normalizedSha256": "f73d57f8a113e421cfa2af337e38ea182512be8433fcab45477c3bb40fd80cd2",
+              "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "evidenceId": "scenario-inventory",
+            "jsonLocator": "timelineInventory[timelineId=sprite-213]",
+            "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+            "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+          },
+          {
+            "artifact": "DefineSprite_213/frame_27/DoAction.as",
+            "evidenceId": "child-ffdec-scripts",
+            "lineEnd": 137,
+            "lineStart": 132,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+            "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538"
+          },
+          {
+            "evidenceId": "child-swfmill-xml",
+            "frame": 56,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/swfmill.xml.gz",
+            "sha256": "1ded3d50d0d77bf74875b2eb922a37d50a4f5dc12322d1ade6cc43e6c54f7fd6",
+            "timelineId": "sprite-231"
+          }
+        ],
+        "feedbackTimeline": {
+          "continuationCandidate": "terminal script clears quizSection, resets the feedback clip, and calls _parent.play()",
+          "objectId": 213,
+          "playFromFrameCandidate": 2,
+          "terminalControlReasons": [
+            "exported-action-script",
+            "script-stop-state",
+            "structural-action:DoAction",
+            "terminal-structural-frame"
+          ],
+          "terminalFrame": 27,
+          "terminalScript": "DefineSprite_213/frame_27/DoAction.as",
+          "timelineId": "sprite-213"
+        },
+        "randomSelectionCandidate": {
+          "resultValue": 1,
+          "sourceExpression": "random(4) + 1",
+          "traceSeedBindingProven": false
+        },
+        "readySchedule": false,
+        "sourcePlacement": {
+          "depth": 126,
+          "entryFrame": 56,
+          "instanceName": "Mc_Right_Feed1",
+          "objectId": 213,
+          "timelineId": "sprite-231"
+        }
+      },
+      {
+        "blockers": [
+          "feedback-random-unbound-to-trace-seed",
+          "runtime-reachability",
+          "terminal-shell-event-ordering"
+        ],
+        "candidateId": "correct-feedback-2",
+        "classification": "static-source-branch-candidate-runtime-unverified",
+        "evidence": [
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_35/DoAction.as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 1148,
+              "lineStart": 1134,
+              "normalizedSha256": "f73d57f8a113e421cfa2af337e38ea182512be8433fcab45477c3bb40fd80cd2",
+              "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "evidenceId": "scenario-inventory",
+            "jsonLocator": "timelineInventory[timelineId=sprite-188]",
+            "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+            "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+          },
+          {
+            "artifact": "DefineSprite_188/frame_27/DoAction.as",
+            "evidenceId": "child-ffdec-scripts",
+            "lineEnd": 127,
+            "lineStart": 122,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+            "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538"
+          },
+          {
+            "evidenceId": "child-swfmill-xml",
+            "frame": 56,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/swfmill.xml.gz",
+            "sha256": "1ded3d50d0d77bf74875b2eb922a37d50a4f5dc12322d1ade6cc43e6c54f7fd6",
+            "timelineId": "sprite-231"
+          }
+        ],
+        "feedbackTimeline": {
+          "continuationCandidate": "terminal script clears quizSection, resets the feedback clip, and calls _parent.play()",
+          "objectId": 188,
+          "playFromFrameCandidate": 2,
+          "terminalControlReasons": [
+            "exported-action-script",
+            "script-stop-state",
+            "structural-action:DoAction",
+            "terminal-structural-frame"
+          ],
+          "terminalFrame": 27,
+          "terminalScript": "DefineSprite_188/frame_27/DoAction.as",
+          "timelineId": "sprite-188"
+        },
+        "randomSelectionCandidate": {
+          "resultValue": 2,
+          "sourceExpression": "random(4) + 1",
+          "traceSeedBindingProven": false
+        },
+        "readySchedule": false,
+        "sourcePlacement": {
+          "depth": 87,
+          "entryFrame": 56,
+          "instanceName": "Mc_Right_Feed2",
+          "objectId": 188,
+          "timelineId": "sprite-231"
+        }
+      },
+      {
+        "blockers": [
+          "feedback-random-unbound-to-trace-seed",
+          "runtime-reachability",
+          "terminal-shell-event-ordering"
+        ],
+        "candidateId": "correct-feedback-3",
+        "classification": "static-source-branch-candidate-runtime-unverified",
+        "evidence": [
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_35/DoAction.as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 1148,
+              "lineStart": 1134,
+              "normalizedSha256": "f73d57f8a113e421cfa2af337e38ea182512be8433fcab45477c3bb40fd80cd2",
+              "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "evidenceId": "scenario-inventory",
+            "jsonLocator": "timelineInventory[timelineId=sprite-229]",
+            "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+            "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+          },
+          {
+            "artifact": "DefineSprite_229/frame_28/DoAction.as",
+            "evidenceId": "child-ffdec-scripts",
+            "lineEnd": 147,
+            "lineStart": 142,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+            "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538"
+          },
+          {
+            "evidenceId": "child-swfmill-xml",
+            "frame": 56,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/swfmill.xml.gz",
+            "sha256": "1ded3d50d0d77bf74875b2eb922a37d50a4f5dc12322d1ade6cc43e6c54f7fd6",
+            "timelineId": "sprite-231"
+          }
+        ],
+        "feedbackTimeline": {
+          "continuationCandidate": "terminal script clears quizSection, resets the feedback clip, and calls _parent.play()",
+          "objectId": 229,
+          "playFromFrameCandidate": 2,
+          "terminalControlReasons": [
+            "exported-action-script",
+            "script-stop-state",
+            "structural-action:DoAction",
+            "terminal-structural-frame"
+          ],
+          "terminalFrame": 28,
+          "terminalScript": "DefineSprite_229/frame_28/DoAction.as",
+          "timelineId": "sprite-229"
+        },
+        "randomSelectionCandidate": {
+          "resultValue": 3,
+          "sourceExpression": "random(4) + 1",
+          "traceSeedBindingProven": false
+        },
+        "readySchedule": false,
+        "sourcePlacement": {
+          "depth": 135,
+          "entryFrame": 56,
+          "instanceName": "Mc_Right_Feed3",
+          "objectId": 229,
+          "timelineId": "sprite-231"
+        }
+      },
+      {
+        "blockers": [
+          "feedback-random-unbound-to-trace-seed",
+          "runtime-reachability",
+          "terminal-shell-event-ordering"
+        ],
+        "candidateId": "correct-feedback-4",
+        "classification": "static-source-branch-candidate-runtime-unverified",
+        "evidence": [
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_35/DoAction.as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 1148,
+              "lineStart": 1134,
+              "normalizedSha256": "f73d57f8a113e421cfa2af337e38ea182512be8433fcab45477c3bb40fd80cd2",
+              "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "evidenceId": "scenario-inventory",
+            "jsonLocator": "timelineInventory[timelineId=sprite-121]",
+            "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+            "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+          },
+          {
+            "artifact": "DefineSprite_121/frame_27/DoAction.as",
+            "evidenceId": "child-ffdec-scripts",
+            "lineEnd": 107,
+            "lineStart": 102,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+            "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538"
+          },
+          {
+            "evidenceId": "child-swfmill-xml",
+            "frame": 56,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/swfmill.xml.gz",
+            "sha256": "1ded3d50d0d77bf74875b2eb922a37d50a4f5dc12322d1ade6cc43e6c54f7fd6",
+            "timelineId": "sprite-231"
+          }
+        ],
+        "feedbackTimeline": {
+          "continuationCandidate": "terminal script clears quizSection, resets the feedback clip, and calls _parent.play()",
+          "objectId": 121,
+          "playFromFrameCandidate": 2,
+          "terminalControlReasons": [
+            "exported-action-script",
+            "script-stop-state",
+            "structural-action:DoAction",
+            "terminal-structural-frame"
+          ],
+          "terminalFrame": 27,
+          "terminalScript": "DefineSprite_121/frame_27/DoAction.as",
+          "timelineId": "sprite-121"
+        },
+        "randomSelectionCandidate": {
+          "resultValue": 4,
+          "sourceExpression": "random(4) + 1",
+          "traceSeedBindingProven": false
+        },
+        "readySchedule": false,
+        "sourcePlacement": {
+          "depth": 78,
+          "entryFrame": 56,
+          "instanceName": "Mc_Right_Feed4",
+          "objectId": 121,
+          "timelineId": "sprite-231"
+        }
+      }
+    ],
+    "correctTrigger": {
+      "candidateEffect": "disable quiz buttons, optionally report click, then call showRightFeed()",
+      "classification": "static-source-handler-candidate-runtime-unverified",
+      "event": "release",
+      "evidence": [
+        {
+          "evidenceId": "scenario-inventory",
+          "jsonLocator": "interactions.handlers[id=script-0006]",
+          "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+          "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+        },
+        {
+          "artifact": "DefineButton2_32/BUTTONCONDACTION on(release).as",
+          "bodySha256": "c37c473a6cc45d77614b3f4a4ffc802b3940f82ae4f7ce1fd4a2bfebd943ec31",
+          "evidenceId": "child-ffdec-scripts",
+          "lineEnd": 57,
+          "lineStart": 45,
+          "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+          "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538"
+        }
+      ],
+      "readySchedule": false,
+      "sourceTarget": {
+        "buttonObjectId": 32,
+        "exactStageBoundsStatus": "not-derived-from-hit-shape-geometry",
+        "handler": "DefineButton2_32/BUTTONCONDACTION on(release).as",
+        "placements": [
+          {
+            "depth": "30",
+            "frame": 56,
+            "hasClipActions": false,
+            "name": "AnsBtn1",
+            "objectId": "32",
+            "replace": "0",
+            "tag": "PlaceObject2",
+            "timelineContext": {
+              "activeFrameLabel": null,
+              "frame": 56,
+              "timelineId": "sprite-231"
+            },
+            "timelineId": "sprite-231"
+          }
+        ]
+      },
+      "stopFrame": 56
+    },
+    "glossaryHyperlink": [
+      {
+        "blockers": [
+          "hit-geometry",
+          "host-defaults",
+          "glossary-return-path-unresolved",
+          "runtime-reachability"
+        ],
+        "candidateId": "glossary-digit",
+        "classification": "static-source-interaction-candidate-runtime-unverified",
+        "evidence": [
+          {
+            "evidenceId": "scenario-inventory",
+            "jsonLocator": "interactions.handlers[id=script-0001]",
+            "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+            "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+          },
+          {
+            "artifact": "DefineButton2_10/BUTTONCONDACTION on(release).as",
+            "evidenceId": "child-ffdec-scripts",
+            "line": 3,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+            "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538"
+          },
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_35/DoAction.as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 2058,
+              "lineStart": 2038,
+              "normalizedSha256": "9ba8fc1ac23d11d507b19dfdeedd2b3929baabb16ad2ce468455affb9c91ac58",
+              "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "buttonObjectId": 10,
+            "evidenceId": "child-swfmill-xml",
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/swfmill.xml.gz",
+            "sha256": "1ded3d50d0d77bf74875b2eb922a37d50a4f5dc12322d1ade6cc43e6c54f7fd6"
+          }
+        ],
+        "hostEffectCandidate": {
+          "closeOrResumeEventProven": false,
+          "function": "DoHyperLinks",
+          "sourceAppendsLanguageSuffix": "~English"
+        },
+        "readySchedule": false,
+        "sourceTarget": {
+          "buttonObjectId": 10,
+          "event": "release",
+          "exactStageBoundsStatus": "not-derived-from-hit-shape-geometry",
+          "keyAttribute": "Digit",
+          "placements": [
+            {
+              "depth": "4",
+              "frame": 1,
+              "hasClipActions": false,
+              "name": "",
+              "objectId": "10",
+              "replace": "0",
+              "tag": "PlaceObject2",
+              "timelineContext": {
+                "activeFrameLabel": null,
+                "frame": 1,
+                "timelineId": "sprite-231"
+              },
+              "timelineId": "sprite-231"
+            }
+          ]
+        }
+      },
+      {
+        "blockers": [
+          "hit-geometry",
+          "host-defaults",
+          "glossary-return-path-unresolved",
+          "runtime-reachability"
+        ],
+        "candidateId": "glossary-tens-place",
+        "classification": "static-source-interaction-candidate-runtime-unverified",
+        "evidence": [
+          {
+            "evidenceId": "scenario-inventory",
+            "jsonLocator": "interactions.handlers[id=script-0002]",
+            "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+            "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+          },
+          {
+            "artifact": "DefineButton2_11/BUTTONCONDACTION on(release).as",
+            "evidenceId": "child-ffdec-scripts",
+            "line": 10,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+            "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538"
+          },
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_35/DoAction.as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 2058,
+              "lineStart": 2038,
+              "normalizedSha256": "9ba8fc1ac23d11d507b19dfdeedd2b3929baabb16ad2ce468455affb9c91ac58",
+              "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "buttonObjectId": 11,
+            "evidenceId": "child-swfmill-xml",
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/swfmill.xml.gz",
+            "sha256": "1ded3d50d0d77bf74875b2eb922a37d50a4f5dc12322d1ade6cc43e6c54f7fd6"
+          }
+        ],
+        "hostEffectCandidate": {
+          "closeOrResumeEventProven": false,
+          "function": "DoHyperLinks",
+          "sourceAppendsLanguageSuffix": "~English"
+        },
+        "readySchedule": false,
+        "sourceTarget": {
+          "buttonObjectId": 11,
+          "event": "release",
+          "exactStageBoundsStatus": "not-derived-from-hit-shape-geometry",
+          "keyAttribute": "Tens place",
+          "placements": [
+            {
+              "depth": "6",
+              "frame": 1,
+              "hasClipActions": false,
+              "name": "",
+              "objectId": "11",
+              "replace": "0",
+              "tag": "PlaceObject2",
+              "timelineContext": {
+                "activeFrameLabel": null,
+                "frame": 1,
+                "timelineId": "sprite-231"
+              },
+              "timelineId": "sprite-231"
+            }
+          ]
+        }
+      },
+      {
+        "blockers": [
+          "hit-geometry",
+          "host-defaults",
+          "glossary-return-path-unresolved",
+          "runtime-reachability"
+        ],
+        "candidateId": "glossary-value",
+        "classification": "static-source-interaction-candidate-runtime-unverified",
+        "evidence": [
+          {
+            "evidenceId": "scenario-inventory",
+            "jsonLocator": "interactions.handlers[id=script-0003]",
+            "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+            "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+          },
+          {
+            "artifact": "DefineButton2_12/BUTTONCONDACTION on(release).as",
+            "evidenceId": "child-ffdec-scripts",
+            "line": 17,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+            "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538"
+          },
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_35/DoAction.as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 2058,
+              "lineStart": 2038,
+              "normalizedSha256": "9ba8fc1ac23d11d507b19dfdeedd2b3929baabb16ad2ce468455affb9c91ac58",
+              "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "buttonObjectId": 12,
+            "evidenceId": "child-swfmill-xml",
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/swfmill.xml.gz",
+            "sha256": "1ded3d50d0d77bf74875b2eb922a37d50a4f5dc12322d1ade6cc43e6c54f7fd6"
+          }
+        ],
+        "hostEffectCandidate": {
+          "closeOrResumeEventProven": false,
+          "function": "DoHyperLinks",
+          "sourceAppendsLanguageSuffix": "~English"
+        },
+        "readySchedule": false,
+        "sourceTarget": {
+          "buttonObjectId": 12,
+          "event": "release",
+          "exactStageBoundsStatus": "not-derived-from-hit-shape-geometry",
+          "keyAttribute": "Value",
+          "placements": [
+            {
+              "depth": "8",
+              "frame": 1,
+              "hasClipActions": false,
+              "name": "",
+              "objectId": "12",
+              "replace": "0",
+              "tag": "PlaceObject2",
+              "timelineContext": {
+                "activeFrameLabel": null,
+                "frame": 1,
+                "timelineId": "sprite-231"
+              },
+              "timelineId": "sprite-231"
+            }
+          ]
+        }
+      },
+      {
+        "blockers": [
+          "hit-geometry",
+          "host-defaults",
+          "glossary-return-path-unresolved",
+          "runtime-reachability"
+        ],
+        "candidateId": "glossary-place-value-chart",
+        "classification": "static-source-interaction-candidate-runtime-unverified",
+        "evidence": [
+          {
+            "evidenceId": "scenario-inventory",
+            "jsonLocator": "interactions.handlers[id=script-0004]",
+            "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+            "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+          },
+          {
+            "artifact": "DefineButton2_22/BUTTONCONDACTION on(release).as",
+            "evidenceId": "child-ffdec-scripts",
+            "line": 24,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+            "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538"
+          },
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_35/DoAction.as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 2058,
+              "lineStart": 2038,
+              "normalizedSha256": "9ba8fc1ac23d11d507b19dfdeedd2b3929baabb16ad2ce468455affb9c91ac58",
+              "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "buttonObjectId": 22,
+            "evidenceId": "child-swfmill-xml",
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/swfmill.xml.gz",
+            "sha256": "1ded3d50d0d77bf74875b2eb922a37d50a4f5dc12322d1ade6cc43e6c54f7fd6"
+          }
+        ],
+        "hostEffectCandidate": {
+          "closeOrResumeEventProven": false,
+          "function": "DoHyperLinks",
+          "sourceAppendsLanguageSuffix": "~English"
+        },
+        "readySchedule": false,
+        "sourceTarget": {
+          "buttonObjectId": 22,
+          "event": "release",
+          "exactStageBoundsStatus": "not-derived-from-hit-shape-geometry",
+          "keyAttribute": "Place value chart",
+          "placements": [
+            {
+              "depth": "21",
+              "frame": 1,
+              "hasClipActions": false,
+              "name": "",
+              "objectId": "22",
+              "replace": "0",
+              "tag": "PlaceObject2",
+              "timelineContext": {
+                "activeFrameLabel": null,
+                "frame": 1,
+                "timelineId": "sprite-231"
+              },
+              "timelineId": "sprite-231"
+            },
+            {
+              "depth": "21",
+              "frame": 56,
+              "hasClipActions": false,
+              "name": "",
+              "objectId": "22",
+              "replace": "0",
+              "tag": "PlaceObject2",
+              "timelineContext": {
+                "activeFrameLabel": null,
+                "frame": 56,
+                "timelineId": "sprite-231"
+              },
+              "timelineId": "sprite-231"
+            },
+            {
+              "depth": "21",
+              "frame": 64,
+              "hasClipActions": false,
+              "name": "",
+              "objectId": "22",
+              "replace": "0",
+              "tag": "PlaceObject2",
+              "timelineContext": {
+                "activeFrameLabel": null,
+                "frame": 64,
+                "timelineId": "sprite-231"
+              },
+              "timelineId": "sprite-231"
+            }
+          ]
+        }
+      }
+    ],
+    "naturalToFirstQuizStop": {
+      "blockers": [
+        "runtime-reachability",
+        "readiness-missing-01",
+        "coverage-range-requires-post-stop-actions"
+      ],
+      "candidateId": "natural-to-first-quiz-stop",
+      "classification": "partial-static-source-path-runtime-unverified",
+      "entryCandidate": [
+        "The target child root frame 1 requests _level0.InternalPreloader.gotoAndPlay(\"jump_check\") and stops.",
+        "The same-lesson index_local.swf places animation_mc and InternalPreloader together on its root timeline.",
+        "The shell InternalPreloader source checks the loaded child and calls animation_mc.gotoAndPlay(\"begin\").",
+        "The target child has exactly one root label begin aligned with exactly one root placement named animation."
+      ],
+      "evidence": [
+        {
+          "evidenceId": "same-lesson-host-binding",
+          "path": "migrations/course-g03-l01-vb-004/audit/same-lesson-shell-host-entry-binding.json",
+          "sha256": "44d3398edfc9f38001d69f695e215e04520b22e3add9c1ec7fae781d19cc912a"
+        },
+        {
+          "evidenceId": "scenario-inventory",
+          "jsonLocator": "timelineInventory[timelineId=sprite-231].controlStates[frame=56]",
+          "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+          "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+        },
+        {
+          "artifact": "DefineSprite_231/frame_56/DoAction.as",
+          "evidenceId": "child-ffdec-scripts",
+          "lineEnd": 155,
+          "lineStart": 152,
+          "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+          "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538"
+        },
+        {
+          "evidenceId": "child-swfmill-xml",
+          "frameRange": [
+            1,
+            56
+          ],
+          "path": "migrations/course-g03-l01-vb-004/audit/machine/swfmill.xml.gz",
+          "sha256": "1ded3d50d0d77bf74875b2eb922a37d50a4f5dc12322d1ade6cc43e6c54f7fd6",
+          "timelineId": "sprite-231"
+        },
+        {
+          "evidenceId": "authoring-audit",
+          "jsonLocator": "authoringAudit.library[name=Animation03]",
+          "path": "migrations/course-g03-l01-vb-004/audit/adobe-animate-2021-authoring-audit.json",
+          "sha256": "38cbdd18a6d3f1fa2b75843fd6eb640ae59d6c36b670a100f7fb8bc018135e83"
+        }
+      ],
+      "firstStopCheckpointCandidate": {
+        "localFrame": 56,
+        "playback": "stopped",
+        "quizSection": true,
+        "quizTryCount": 0
+      },
+      "noUserActionCandidateWithinRange": true,
+      "postStopRange": {
+        "firstFrame": 57,
+        "lastFrame": 222,
+        "sourceEvidencedActionRequired": true
+      },
+      "readySchedule": false,
+      "sourceStructuredFrameRange": {
+        "firstFrame": 1,
+        "lastFrame": 56
+      }
+    },
+    "replayAndTerminal": {
+      "blockers": [
+        "replay-full-reset-unresolved",
+        "terminal-shell-event-ordering",
+        "readiness-missing-05",
+        "runtime-reachability"
+      ],
+      "classification": "static-source-host-candidates-runtime-unverified",
+      "readySchedule": false,
+      "replayCandidates": [
+        {
+          "buttonObjectId": 244,
+          "candidateId": "shell-reload-current-page",
+          "completeResetVectorProven": false,
+          "evidence": [
+            {
+              "evidenceId": "same-lesson-host-swf",
+              "extraction": {
+                "artifact": "DefineButton2_244/BUTTONCONDACTION on(rollOver).as",
+                "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+                "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+                "fullExportFileCount": 547,
+                "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+                "lineEnd": 3,
+                "lineStart": 1,
+                "normalizedSha256": "cca75be6b88d2a9c9f58eddb17523396fcca3b008c6841da51754a7d6b8aea63",
+                "rawSha256": "07cf022112b7b7bf0bc7d67e3b7a69b5dd7ad6f04adbc014c18d4ffc1b037e0e"
+              },
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+              "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+            },
+            {
+              "evidenceId": "same-lesson-host-swf",
+              "extraction": {
+                "artifact": "DefineButton2_244/BUTTONCONDACTION on(release).as",
+                "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+                "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+                "fullExportFileCount": 547,
+                "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+                "lineEnd": 11,
+                "lineStart": 1,
+                "normalizedSha256": "22acd57ac5aaeecf5d096276afc511192c78a1c7c874dd11fbf5805b5fb8a080",
+                "rawSha256": "3519f9dbc9e30c4c2bbe04fb78b21fa849d6c1949afa0582857b0cf23346386a"
+              },
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+              "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+            }
+          ],
+          "releaseEffectCandidate": "clear selected host flags, stop global sound, and call loadSWFMovie()",
+          "rolloverLabelCandidate": "replay"
+        },
+        {
+          "buttonObjectId": 585,
+          "candidateId": "shell-rewind-to-frame-one",
+          "completeResetVectorProven": false,
+          "evidence": [
+            {
+              "evidenceId": "same-lesson-host-swf",
+              "extraction": {
+                "artifact": "DefineButton2_585/BUTTONCONDACTION on(press).as",
+                "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+                "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+                "fullExportFileCount": 547,
+                "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+                "lineEnd": 17,
+                "lineStart": 1,
+                "normalizedSha256": "33c16011b475d4f5ceedde8786365b8597c6bad0ef465b9d71ce9d58fcedf249",
+                "rawSha256": "0cf751e903bc567871946de354aa4f1ea40fa7a8caa053c28b222c612eed70e9"
+              },
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+              "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+            },
+            {
+              "evidenceId": "same-lesson-host-swf",
+              "extraction": {
+                "artifact": "DefineButton2_585/BUTTONCONDACTION on(release, releaseOutside).as",
+                "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+                "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+                "fullExportFileCount": 547,
+                "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+                "lineEnd": 6,
+                "lineStart": 1,
+                "normalizedSha256": "e8978cba3017c32ddd71b6326ca1e08ca417fb460fd3d11c6920550eae32fd01",
+                "rawSha256": "155184e06d60d591c11901ccd566953f5c6039e4cea1e4a9e42edb6e83f2bd0d"
+              },
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+              "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+            },
+            {
+              "evidenceId": "same-lesson-host-swf",
+              "extraction": {
+                "artifact": "frame_50/PlaceObject2_117_forward&rewind clip_74/CLIPACTIONRECORD onClipEvent(enterFrame).as",
+                "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+                "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+                "fullExportFileCount": 547,
+                "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+                "lineEnd": 3,
+                "lineStart": 1,
+                "normalizedSha256": "1d8150f4f092ecb851235d6838b914d64a8dd783e0461352c19fe0b9959206c9",
+                "rawSha256": "f2e7defbc4410659333f2fc65590e09a49ffb9f0fafce09863fe188248841886"
+              },
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+              "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+            },
+            {
+              "evidenceId": "same-lesson-host-swf",
+              "extraction": {
+                "artifact": "frame_35/DoAction.as",
+                "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+                "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+                "fullExportFileCount": 547,
+                "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+                "lineEnd": 2012,
+                "lineStart": 1972,
+                "normalizedSha256": "cf48366ed5427e85f2426247a37e8023ed1c0e851cfdb59b68bf439cf4ab301c",
+                "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+              },
+              "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+              "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+            }
+          ],
+          "pressEffectCandidate": "set rewind mode; host doForAndRew subtracts 20 frames per monitor call and gotoAndPlay(1) at the lower boundary"
+        }
+      ],
+      "terminalCandidate": {
+        "authorizedEventOrderingProven": false,
+        "childStopActionAtFrame222Observed": false,
+        "childStructuralLastFrame": 222,
+        "evidence": [
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_50/PlaceObject2_589_78/CLIPACTIONRECORD onClipEvent(enterFrame).as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 3,
+              "lineStart": 1,
+              "normalizedSha256": "c9b24d3bf25d6a41fd70cdcfd7fc0d0c9a7edd4b6ae0a94fb89f542441940da2",
+              "rawSha256": "0f74c16ab4c673bd21f5d82f4c7bd77f2c003198d8870bda7764b3cd7699c035"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_35/DoAction.as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 1707,
+              "lineStart": 1635,
+              "normalizedSha256": "e8947f523ba7efed833d3ba70fc3e0550c3b4a0522251bfda9af41ea2145719a",
+              "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "evidenceId": "same-lesson-host-binding",
+            "path": "migrations/course-g03-l01-vb-004/audit/same-lesson-shell-host-entry-binding.json",
+            "sha256": "44d3398edfc9f38001d69f695e215e04520b22e3add9c1ec7fae781d19cc912a"
+          }
+        ],
+        "fullShellMonitorMayStopAtTotalFrame": true
+      }
+    },
+    "spanishAudio": {
+      "blockers": [
+        "spanish-trigger-and-synchronization-unresolved",
+        "readiness-missing-04",
+        "host-defaults",
+        "runtime-reachability"
+      ],
+      "buttonPlacementAndExactTriggerFrameProven": false,
+      "candidateBehavior": [
+        "release button 221 calls doPlaySpanishAudio()",
+        "the host stops sprite-231 and loads the sibling SA MP3 by basename",
+        "onSoundComplete resumes only when not at the terminal frame and quizSection is false",
+        "release button 215 stops Spanish audio and applies the same conditional resume rule"
+      ],
+      "candidateId": "spanish-audio-user-activated-host-path",
+      "childEmbeddedStream": {
+        "context": "sprite:231",
+        "durationMs": 17972,
+        "firstBlockFrame": 7,
+        "language": "und",
+        "lastBlockFrame": 222
+      },
+      "classification": "static-source-host-audio-candidate-runtime-and-listening-unverified",
+      "evidence": [
+        {
+          "evidenceId": "same-lesson-host-swf",
+          "extraction": {
+            "artifact": "DefineButton2_221/BUTTONCONDACTION on(release).as",
+            "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+            "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+            "fullExportFileCount": 547,
+            "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+            "lineEnd": 3,
+            "lineStart": 1,
+            "normalizedSha256": "0c57432147b74831cde8fae46320b50acfeef71d34d4dbeb4f64d0fc8561c6e6",
+            "rawSha256": "e064aea52a09a1bb080d2194628fd7518587fae66bd4a20440df81d4c89e31d3"
+          },
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+          "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+        },
+        {
+          "evidenceId": "same-lesson-host-swf",
+          "extraction": {
+            "artifact": "DefineButton2_215/BUTTONCONDACTION on(release).as",
+            "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+            "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+            "fullExportFileCount": 547,
+            "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+            "lineEnd": 3,
+            "lineStart": 1,
+            "normalizedSha256": "9da466c1795521bca9b460b3235d3b539279cd92c6fee91da647cb5ffdd7118f",
+            "rawSha256": "5dacf94a56789afb84d10eb6e3682c23241e82724da2a706c7d1f0fdf55cff15"
+          },
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+          "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+        },
+        {
+          "evidenceId": "same-lesson-host-swf",
+          "extraction": {
+            "artifact": "frame_35/DoAction.as",
+            "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+            "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+            "fullExportFileCount": 547,
+            "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+            "lineEnd": 2319,
+            "lineStart": 2261,
+            "normalizedSha256": "abb340898358f226930e03caeea1dfd476433cf292d6ecddcbcaf625e3b738b3",
+            "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+          },
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+          "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+        },
+        {
+          "evidenceId": "audio-runtime-evidence",
+          "path": "migrations/course-g03-l01-vb-004/audit/audio-runtime-evidence.json",
+          "sha256": "c4b948d2893d27477e7592e3657a85097f01054b83369beae2f512991e249184"
+        },
+        {
+          "evidenceId": "audio-listening-acceptance",
+          "path": "migrations/course-g03-l01-vb-004/evidence/audio-listening-acceptance.json",
+          "sha256": "1deaf7e4442d140cf87116c44c5dcdae9373d5c8cb6e071b4c39befb44f7d4c5"
+        },
+        {
+          "evidenceId": "spanish-mp3",
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/SA/L1VB04.mp3",
+          "sha256": "b594513fbc63da6f76cef1cfe55ed7e76dc5bb257a7007d4dda1d5295f6cf4f4"
+        }
+      ],
+      "externalTrack": {
+        "channels": 1,
+        "codec": "mp3",
+        "durationMs": 5640,
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/SA/L1VB04.mp3",
+        "sha256": "b594513fbc63da6f76cef1cfe55ed7e76dc5bb257a7007d4dda1d5295f6cf4f4",
+        "startSemantics": "host-user-activated"
+      },
+      "languageTimelineBranchProven": false,
+      "listeningAccepted": false,
+      "playButtonDefinition": 221,
+      "readySchedule": false,
+      "stopButtonDefinition": 215,
+      "synchronizationAccepted": false
+    },
+    "structurallyPresentButNotSelectedByObservedHostRandom": [
+      {
+        "instanceName": "Mc_Right_Feed5",
+        "objectId": 149,
+        "reason": "showRightFeed uses random(4)+1, whose static result domain is 1-4",
+        "runtimeDeadCodeProven": false
+      },
+      {
+        "instanceName": "Mc_Wrong_Feed4",
+        "objectId": 74,
+        "reason": "showWrongFeed uses random(3)+1, whose static result domain is 1-3",
+        "runtimeDeadCodeProven": false
+      }
+    ],
+    "wrongFeedback": [
+      {
+        "blockers": [
+          "feedback-random-unbound-to-trace-seed",
+          "runtime-reachability",
+          "terminal-shell-event-ordering"
+        ],
+        "candidateId": "wrong-feedback-1",
+        "classification": "static-source-branch-candidate-runtime-unverified",
+        "evidence": [
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_35/DoAction.as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 1148,
+              "lineStart": 1134,
+              "normalizedSha256": "f73d57f8a113e421cfa2af337e38ea182512be8433fcab45477c3bb40fd80cd2",
+              "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "evidenceId": "scenario-inventory",
+            "jsonLocator": "timelineInventory[timelineId=sprite-97]",
+            "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+            "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+          },
+          {
+            "artifact": "DefineSprite_97/frame_29/DoAction.as",
+            "evidenceId": "child-ffdec-scripts",
+            "lineEnd": 212,
+            "lineStart": 202,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+            "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538"
+          },
+          {
+            "evidenceId": "child-swfmill-xml",
+            "frame": 56,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/swfmill.xml.gz",
+            "sha256": "1ded3d50d0d77bf74875b2eb922a37d50a4f5dc12322d1ade6cc43e6c54f7fd6",
+            "timelineId": "sprite-231"
+          }
+        ],
+        "feedbackTimeline": {
+          "continuationCandidate": "terminal script re-enables quiz controls; _parent.play() is conditional on quizTryCount >= 2",
+          "objectId": 97,
+          "playFromFrameCandidate": 2,
+          "terminalControlReasons": [
+            "exported-action-script",
+            "script-stop-state",
+            "structural-action:DoAction",
+            "terminal-structural-frame"
+          ],
+          "terminalFrame": 29,
+          "terminalScript": "DefineSprite_97/frame_29/DoAction.as",
+          "timelineId": "sprite-97"
+        },
+        "randomSelectionCandidate": {
+          "resultValue": 1,
+          "sourceExpression": "random(3) + 1",
+          "traceSeedBindingProven": false
+        },
+        "readySchedule": false,
+        "sourcePlacement": {
+          "depth": 61,
+          "entryFrame": 56,
+          "instanceName": "Mc_Wrong_Feed1",
+          "objectId": 97,
+          "timelineId": "sprite-231"
+        }
+      },
+      {
+        "blockers": [
+          "feedback-random-unbound-to-trace-seed",
+          "runtime-reachability",
+          "terminal-shell-event-ordering"
+        ],
+        "candidateId": "wrong-feedback-2",
+        "classification": "static-source-branch-candidate-runtime-unverified",
+        "evidence": [
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_35/DoAction.as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 1148,
+              "lineStart": 1134,
+              "normalizedSha256": "f73d57f8a113e421cfa2af337e38ea182512be8433fcab45477c3bb40fd80cd2",
+              "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "evidenceId": "scenario-inventory",
+            "jsonLocator": "timelineInventory[timelineId=sprite-109]",
+            "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+            "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+          },
+          {
+            "artifact": "DefineSprite_109/frame_31/DoAction.as",
+            "evidenceId": "child-ffdec-scripts",
+            "lineEnd": 97,
+            "lineStart": 87,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+            "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538"
+          },
+          {
+            "evidenceId": "child-swfmill-xml",
+            "frame": 56,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/swfmill.xml.gz",
+            "sha256": "1ded3d50d0d77bf74875b2eb922a37d50a4f5dc12322d1ade6cc43e6c54f7fd6",
+            "timelineId": "sprite-231"
+          }
+        ],
+        "feedbackTimeline": {
+          "continuationCandidate": "terminal script re-enables quiz controls; _parent.play() is conditional on quizTryCount >= 2",
+          "objectId": 109,
+          "playFromFrameCandidate": 2,
+          "terminalControlReasons": [
+            "exported-action-script",
+            "script-stop-state",
+            "structural-action:DoAction",
+            "terminal-structural-frame"
+          ],
+          "terminalFrame": 31,
+          "terminalScript": "DefineSprite_109/frame_31/DoAction.as",
+          "timelineId": "sprite-109"
+        },
+        "randomSelectionCandidate": {
+          "resultValue": 2,
+          "sourceExpression": "random(3) + 1",
+          "traceSeedBindingProven": false
+        },
+        "readySchedule": false,
+        "sourcePlacement": {
+          "depth": 72,
+          "entryFrame": 56,
+          "instanceName": "Mc_Wrong_Feed2",
+          "objectId": 109,
+          "timelineId": "sprite-231"
+        }
+      },
+      {
+        "blockers": [
+          "feedback-random-unbound-to-trace-seed",
+          "runtime-reachability",
+          "terminal-shell-event-ordering"
+        ],
+        "candidateId": "wrong-feedback-3",
+        "classification": "static-source-branch-candidate-runtime-unverified",
+        "evidence": [
+          {
+            "evidenceId": "same-lesson-host-swf",
+            "extraction": {
+              "artifact": "frame_35/DoAction.as",
+              "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+              "ffdecVersion": "JPEXS Free Flash Decompiler v.26.2.1",
+              "fullExportFileCount": 547,
+              "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+              "lineEnd": 1148,
+              "lineStart": 1134,
+              "normalizedSha256": "f73d57f8a113e421cfa2af337e38ea182512be8433fcab45477c3bb40fd80cd2",
+              "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8"
+            },
+            "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+            "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+          },
+          {
+            "evidenceId": "scenario-inventory",
+            "jsonLocator": "timelineInventory[timelineId=sprite-85]",
+            "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+            "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+          },
+          {
+            "artifact": "DefineSprite_85/frame_28/DoAction.as",
+            "evidenceId": "child-ffdec-scripts",
+            "lineEnd": 194,
+            "lineStart": 184,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+            "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538"
+          },
+          {
+            "evidenceId": "child-swfmill-xml",
+            "frame": 56,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/swfmill.xml.gz",
+            "sha256": "1ded3d50d0d77bf74875b2eb922a37d50a4f5dc12322d1ade6cc43e6c54f7fd6",
+            "timelineId": "sprite-231"
+          }
+        ],
+        "feedbackTimeline": {
+          "continuationCandidate": "terminal script re-enables quiz controls; _parent.play() is conditional on quizTryCount >= 2",
+          "objectId": 85,
+          "playFromFrameCandidate": 2,
+          "terminalControlReasons": [
+            "exported-action-script",
+            "script-stop-state",
+            "structural-action:DoAction",
+            "terminal-structural-frame"
+          ],
+          "terminalFrame": 28,
+          "terminalScript": "DefineSprite_85/frame_28/DoAction.as",
+          "timelineId": "sprite-85"
+        },
+        "randomSelectionCandidate": {
+          "resultValue": 3,
+          "sourceExpression": "random(3) + 1",
+          "traceSeedBindingProven": false
+        },
+        "readySchedule": false,
+        "sourcePlacement": {
+          "depth": 48,
+          "entryFrame": 56,
+          "instanceName": "Mc_Wrong_Feed3",
+          "objectId": 85,
+          "timelineId": "sprite-231"
+        }
+      }
+    ],
+    "wrongTriggers": [
+      {
+        "candidateEffect": "set WrongFeed, disable quiz buttons, optionally report click, then call showWrongFeed()",
+        "classification": "static-source-handler-candidate-runtime-unverified",
+        "event": "release",
+        "evidence": [
+          {
+            "evidenceId": "scenario-inventory",
+            "jsonLocator": "interactions.handlers[id=script-0005]",
+            "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+            "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+          },
+          {
+            "artifact": "DefineButton2_31/BUTTONCONDACTION on(release).as",
+            "bodySha256": "a5fd2b0d352992e1d414a655abe4696c5925a0870d2a79bbafc4af9134ba5870",
+            "evidenceId": "child-ffdec-scripts",
+            "lineEnd": 43,
+            "lineStart": 29,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+            "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538"
+          }
+        ],
+        "readySchedule": false,
+        "sourceTarget": {
+          "buttonObjectId": 31,
+          "exactStageBoundsStatus": "not-derived-from-hit-shape-geometry",
+          "handler": "DefineButton2_31/BUTTONCONDACTION on(release).as",
+          "placements": [
+            {
+              "depth": "28",
+              "frame": 56,
+              "hasClipActions": false,
+              "name": "AnsBtn2",
+              "objectId": "31",
+              "replace": "0",
+              "tag": "PlaceObject2",
+              "timelineContext": {
+                "activeFrameLabel": null,
+                "frame": 56,
+                "timelineId": "sprite-231"
+              },
+              "timelineId": "sprite-231"
+            },
+            {
+              "depth": "34",
+              "frame": 56,
+              "hasClipActions": false,
+              "name": "AnsBtn2",
+              "objectId": "31",
+              "replace": "0",
+              "tag": "PlaceObject2",
+              "timelineContext": {
+                "activeFrameLabel": null,
+                "frame": 56,
+                "timelineId": "sprite-231"
+              },
+              "timelineId": "sprite-231"
+            },
+            {
+              "depth": "36",
+              "frame": 56,
+              "hasClipActions": false,
+              "name": "AnsBtn3",
+              "objectId": "31",
+              "replace": "0",
+              "tag": "PlaceObject2",
+              "timelineContext": {
+                "activeFrameLabel": null,
+                "frame": 56,
+                "timelineId": "sprite-231"
+              },
+              "timelineId": "sprite-231"
+            }
+          ]
+        },
+        "stopFrame": 56
+      },
+      {
+        "candidateEffect": "set WrongFeed, disable quiz buttons, optionally report click, then call showWrongFeed()",
+        "classification": "static-source-handler-candidate-runtime-unverified",
+        "event": "release",
+        "evidence": [
+          {
+            "evidenceId": "scenario-inventory",
+            "jsonLocator": "interactions.handlers[id=script-0007]",
+            "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+            "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+          },
+          {
+            "artifact": "DefineButton2_33/BUTTONCONDACTION on(release).as",
+            "bodySha256": "a5fd2b0d352992e1d414a655abe4696c5925a0870d2a79bbafc4af9134ba5870",
+            "evidenceId": "child-ffdec-scripts",
+            "lineEnd": 73,
+            "lineStart": 59,
+            "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+            "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538"
+          }
+        ],
+        "readySchedule": false,
+        "sourceTarget": {
+          "buttonObjectId": 33,
+          "exactStageBoundsStatus": "not-derived-from-hit-shape-geometry",
+          "handler": "DefineButton2_33/BUTTONCONDACTION on(release).as",
+          "placements": [
+            {
+              "depth": "32",
+              "frame": 56,
+              "hasClipActions": false,
+              "name": "AnsBtn3",
+              "objectId": "33",
+              "replace": "0",
+              "tag": "PlaceObject2",
+              "timelineContext": {
+                "activeFrameLabel": null,
+                "frame": 56,
+                "timelineId": "sprite-231"
+              },
+              "timelineId": "sprite-231"
+            }
+          ]
+        },
+        "stopFrame": 56
+      }
+    ]
+  },
+  "coverageQualification": {
+    "currentRequirements": [
+      {
+        "baselineAuthority": "unresolved",
+        "baselineCaptureManifestSha256": "",
+        "captureManifestSha256": "c5c0adafa4d5633201ef88437ea6f39fdb1086ca4cd3439728c7a1d1cff54349",
+        "capturedFrameCount": 222,
+        "entryStateSha256": "623cb972a545fd1a1cdc81bf038e51a3c977f800e23e39742bb19fc7858185b0",
+        "language": "en",
+        "metricsSha256": "",
+        "requiredRange": {
+          "firstFrame": 1,
+          "lastFrame": 222
+        },
+        "requirementId": "req:sprite-231:linear-to-quiz-stop:en",
+        "status": "blocked"
+      },
+      {
+        "baselineAuthority": "unresolved",
+        "baselineCaptureManifestSha256": "",
+        "captureManifestSha256": "66d9df7fe2575e18b531c93e2f61d4aaedc0614751743a96c84384c19ef7583e",
+        "capturedFrameCount": 222,
+        "entryStateSha256": "39b9e352648e7fe0e9b8e86a8304c3f5e968ca9b1be99ff83b2e78906c64bd7d",
+        "language": "es",
+        "metricsSha256": "",
+        "requiredRange": {
+          "firstFrame": 1,
+          "lastFrame": 222
+        },
+        "requirementId": "req:sprite-231:linear-to-quiz-stop:es",
+        "status": "blocked"
+      }
+    ],
+    "modifiesCurrentRequirements": false,
+    "qualification": "Current 1-222 requirements cannot be treated as no-action linear schedules because source-structured playback stops at frame 56.",
+    "recommendedRequirementFamilies": [
+      "natural-to-first-quiz-stop",
+      "correct-feedback-1-through-4-to-terminal",
+      "wrong-feedback-1-through-3-retry-and-any-source-proven-forced-continuation",
+      "four-glossary-open-and-return-paths",
+      "Spanish-audio-user-trigger-and-completion-paths",
+      "Replay-and-terminal-full-state-reset"
+    ]
+  },
+  "evidenceIndex": [
+    {
+      "bytes": 861554,
+      "evidenceId": "source-swf",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/VB/L1VB04.swf",
+      "sha256": "8c9860663714843b4d858a50528ad82d6783d8446c38d6f1cc77ec03a07ec72e"
+    },
+    {
+      "bytes": 5239296,
+      "evidenceId": "source-fla",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/VB/L1VB04.fla",
+      "sha256": "49f1694f1a7ec200d4d3455c1bc29699b83146043b7c0f25165228b32a9e3a1a"
+    },
+    {
+      "bytes": 663428,
+      "evidenceId": "same-lesson-host-swf",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+      "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+    },
+    {
+      "bytes": 14542,
+      "evidenceId": "course-xml",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index.xml",
+      "sha256": "f803cd0f01016385e8fd6d2ad11ee2b5379c82f252015999c62727c7fd581443"
+    },
+    {
+      "bytes": 78960,
+      "evidenceId": "spanish-mp3",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/SA/L1VB04.mp3",
+      "sha256": "b594513fbc63da6f76cef1cfe55ed7e76dc5bb257a7007d4dda1d5295f6cf4f4"
+    },
+    {
+      "bytes": 1676201,
+      "evidenceId": "authoring-audit",
+      "path": "migrations/course-g03-l01-vb-004/audit/adobe-animate-2021-authoring-audit.json",
+      "sha256": "38cbdd18a6d3f1fa2b75843fd6eb640ae59d6c36b670a100f7fb8bc018135e83"
+    },
+    {
+      "bytes": 470062,
+      "evidenceId": "scenario-inventory",
+      "path": "migrations/course-g03-l01-vb-004/audit/scenario-inventory.json",
+      "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+    },
+    {
+      "bytes": 20715,
+      "evidenceId": "same-lesson-host-binding",
+      "path": "migrations/course-g03-l01-vb-004/audit/same-lesson-shell-host-entry-binding.json",
+      "sha256": "44d3398edfc9f38001d69f695e215e04520b22e3add9c1ec7fae781d19cc912a"
+    },
+    {
+      "bytes": 13445,
+      "evidenceId": "strict-readiness",
+      "path": "migrations/course-g03-l01-vb-004/audit/strict-readiness.json",
+      "sha256": "1cad9b8fb879daa40143ddc6687874711e330cbce0567fb8641f70ad57179d4d"
+    },
+    {
+      "bytes": 19337,
+      "evidenceId": "audio-runtime-evidence",
+      "path": "migrations/course-g03-l01-vb-004/audit/audio-runtime-evidence.json",
+      "sha256": "c4b948d2893d27477e7592e3657a85097f01054b83369beae2f512991e249184"
+    },
+    {
+      "bytes": 8959,
+      "evidenceId": "audio-listening-acceptance",
+      "path": "migrations/course-g03-l01-vb-004/evidence/audio-listening-acceptance.json",
+      "sha256": "1deaf7e4442d140cf87116c44c5dcdae9373d5c8cb6e071b4c39befb44f7d4c5"
+    },
+    {
+      "bytes": 8463,
+      "evidenceId": "full-frame-coverage",
+      "path": "migrations/course-g03-l01-vb-004/evidence/full-frame-coverage.json",
+      "sha256": "488213e7ffd844865260cc438793944b26eb646bd03b758d690c57b9b5d29a52"
+    },
+    {
+      "bytes": 16277,
+      "evidenceId": "trace-spec-en",
+      "path": "migrations/course-g03-l01-vb-004/audit/trace-specs/req-sprite-231-linear-to-quiz-stop-en.json",
+      "sha256": "d1cf82573fbea4935dd045ebd8cfc5a81d796aa9d7fe0b2df60a7a22f0de8912"
+    },
+    {
+      "bytes": 16277,
+      "evidenceId": "trace-spec-es",
+      "path": "migrations/course-g03-l01-vb-004/audit/trace-specs/req-sprite-231-linear-to-quiz-stop-es.json",
+      "sha256": "1e657f78e31e2214c77d96fe81eb6d90240f2024ce81e45ee3b084b3537bff21"
+    },
+    {
+      "bytes": 12569,
+      "evidenceId": "adapter-spec",
+      "path": "migrations/course-g03-l01-vb-004/audit/animate-createjs-adapter-spec.json",
+      "sha256": "56ae25c82a9ffe52e4f198bcda4badeb2f3680d40decc1078ef85cf1b33a8a49"
+    },
+    {
+      "evidenceId": "migration-manifest",
+      "hashMode": "canonical-json-v1",
+      "path": "migrations/course-g03-l01-vb-004/migration.json",
+      "projection": "help-math-technical-manifest-v1",
+      "sha256": "1a7edf0137ee83cfc1a8e364fd50e315b0136edb984afa74cd21e11a89b322b2"
+    },
+    {
+      "bytes": 9876,
+      "evidenceId": "machine-report",
+      "path": "migrations/course-g03-l01-vb-004/audit/machine/report.json",
+      "sha256": "160973b850ddc01139f31eeeaa39d2389e94051d4c6ddb014096491d9764d02f"
+    },
+    {
+      "bytes": 781,
+      "evidenceId": "child-ffdec-scripts",
+      "path": "migrations/course-g03-l01-vb-004/audit/machine/ffdec-scripts.txt.gz",
+      "sha256": "e963fdcfa9648663d0c4abbe4c37b85e333f8d54a5761b227ef116a75e061538",
+      "uncompressedBytes": 5333,
+      "uncompressedSha256": "9cc062e1b3aa1a44aa421607db08b2c744e5a9f7296cf5093c01a0ae7daf7263"
+    },
+    {
+      "bytes": 942568,
+      "evidenceId": "child-swfmill-xml",
+      "path": "migrations/course-g03-l01-vb-004/audit/machine/swfmill.xml.gz",
+      "sha256": "1ded3d50d0d77bf74875b2eb922a37d50a4f5dc12322d1ade6cc43e6c54f7fd6",
+      "uncompressedBytes": 2732864,
+      "uncompressedSha256": "6ca43b6b1b3bbe6bc3b50ede3e7568ccc648904ed4a247e1d6f91b9b78bdd7cf"
+    }
+  ],
+  "finalQualification": {
+    "adapterOrSemanticPinChanged": false,
+    "approvalChanged": false,
+    "coverageChanged": false,
+    "migrationStatusAtGeneration": "preserved",
+    "migrationStatusChanged": false,
+    "scenarioInventoryChanged": false,
+    "statement": "This artifact is an acceptance-neutral deterministic inventory of static source branch candidates. It is not a ready event schedule, runtime execution, baseline, RMSE result, audio acceptance, fidelity proof, human review, owner acceptance, or completion record.",
+    "traceSpecsChanged": false
+  },
+  "generatedBy": {
+    "script": "scripts/build-vb004-source-branch-candidates.mjs",
+    "scriptSha256": "ba51e996fdf194daa582f4725bd2ced7d4c6163dda32711400538cf40066de0c",
+    "toolchain": {
+      "ffdec": {
+        "jarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+        "version": "JPEXS Free Flash Decompiler v.26.2.1"
+      }
+    },
+    "version": "1.2.0"
+  },
+  "hostActionScriptEvidence": {
+    "excerpts": [
+      {
+        "artifact": "frame_35/DoAction.as",
+        "exact": true,
+        "lineEnd": 1148,
+        "lineStart": 1134,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+        "normalizedBytes": 578,
+        "normalizedSha256": "f73d57f8a113e421cfa2af337e38ea182512be8433fcab45477c3bb40fd80cd2",
+        "rawBytes": 119626,
+        "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8",
+        "requiredTokens": [
+          "function showWrongFeed()",
+          "random(3)",
+          "function showRightFeed()",
+          "random(4)",
+          "gotoAndPlay(2)"
+        ],
+        "role": "host-feedback-random-selection",
+        "text": "function showWrongFeed()\n{\n   intMc_Name = random(3);\n   intMc_Name += 1;\n   eval(\"_root.animation_mc.animation.Mc_Wrong_Feed\" + intMc_Name)._visible = true;\n   eval(\"_root.animation_mc.animation.Mc_Wrong_Feed\" + intMc_Name).gotoAndPlay(2);\n   _global.gSound.setVolume(_global.volLevel);\n}\nfunction showRightFeed()\n{\n   intMc_Name = random(4);\n   intMc_Name += 1;\n   eval(\"_root.animation_mc.animation.Mc_Right_Feed\" + intMc_Name)._visible = true;\n   eval(\"_root.animation_mc.animation.Mc_Right_Feed\" + intMc_Name).gotoAndPlay(2);\n   _global.gSound.setVolume(_global.volLevel);\n"
+      },
+      {
+        "artifact": "frame_35/DoAction.as",
+        "exact": true,
+        "lineEnd": 1707,
+        "lineStart": 1635,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+        "normalizedBytes": 2594,
+        "normalizedSha256": "e8947f523ba7efed833d3ba70fc3e0550c3b4a0522251bfda9af41ea2145719a",
+        "rawBytes": 119626,
+        "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8",
+        "requiredTokens": [
+          "function doCheckPrevAndNext()",
+          "_root.doCheckSpanishAudio()",
+          "_root.animation_mc.animation.stop()"
+        ],
+        "role": "host-terminal-monitor",
+        "text": "function doCheckPrevAndNext()\n{\n   splitRootURL = _global.playSwfFileName.split(\"/\");\n   splitFileName = splitRootURL[splitRootURL.length - 1].split(\"FQ\");\n   strTempLID = splitFileName[0];\n   i = 0;\n   while(i < splitRootURL.length)\n   {\n      if(splitRootURL.indexOf(\"FQ02\") != -1)\n      {\n         strTempURL = splitRootURL(i);\n      }\n      i++;\n   }\n   if(_global.playSwfFileName.indexOf(\"FQ02\") != -1)\n   {\n      _root[strTempLID + \"FQ01\"]._visible = false;\n      _root[strTempLID + \"FQ02\"]._visible = false;\n      _root[strTempLID + \"FQ03\"]._visible = false;\n   }\n   if(_global.playSwfFileName.indexOf(\"FQ02\") == -1 && _global.playSwfFileName.indexOf(\"FQ03\") == -1)\n   {\n      ss = new Sound();\n      ss.setVolume(_global.volLevel);\n      if(_root.InternalPreloader._currentframe == 1 && _root.animation_mc.animation._currentframe > 1 && _root.animation_mc.animation._currentframe >= _root.animation_mc.animation._totalframes)\n      {\n         if(_root.nextani._currentframe == 1)\n         {\n            _root.nextani.gotoAndPlay(\"nextani\");\n         }\n      }\n      else\n      {\n         _root.nextani.gotoAndStop(1);\n      }\n      _root.doCheckSpanishAudio();\n      _root.BtnRewind.enabled = true;\n      _root.BtnForward.enabled = true;\n      if(_root.animation_mc.animation._currentframe <= 1)\n      {\n         _root.BtnRewind.enabled = false;\n         _root.BtnForward.enabled = true;\n         _global.rewind = 0;\n         _root.pause_mc._visible = false;\n         _root.play_mc._visible = true;\n      }\n      if(_root.animation_mc.animation._currentframe >= _root.animation_mc.animation._totalframes)\n      {\n         _root.BtnRewind.enabled = true;\n         _root.BtnForward.enabled = false;\n         _global.forward = 0;\n         _root.pause_mc._visible = false;\n         _root.play_mc._visible = true;\n      }\n      if(_root.animation_mc.animation._currentframe > 1 && _root.animation_mc.animation._currentframe >= _root.animation_mc.animation._totalframes)\n      {\n         _root.animation_mc.animation.stop();\n         if(_global.randomAudio == true)\n         {\n            _global.gSound.setVolume(0);\n         }\n         _root.animation_mc.animation.s_aud1.gotoAndStop(1);\n         _root.pause_mc._visible = false;\n         _root.play_mc._visible = false;\n         if(_global.Play == true && _global.CompClick == \"\")\n         {\n            _root.m_c._visible = false;\n            _root.glossary._visible = false;\n            _root.calculator._visible = false;\n            _root.m1_l1.gotoAndStop(\"m1_l1_content\");\n            _root.m1_l1._visible = false;\n         }\n      }\n"
+      },
+      {
+        "artifact": "frame_35/DoAction.as",
+        "exact": true,
+        "lineEnd": 2012,
+        "lineStart": 1972,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+        "normalizedBytes": 1367,
+        "normalizedSha256": "cf48366ed5427e85f2426247a37e8023ed1c0e851cfdb59b68bf439cf4ab301c",
+        "rawBytes": 119626,
+        "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8",
+        "requiredTokens": [
+          "function doForAndRew()",
+          "val -= 20",
+          "gotoAndPlay(1)"
+        ],
+        "role": "host-rewind-function",
+        "text": "function doForAndRew()\n{\n   var _loc1_ = _root;\n   var _loc2_ = _global;\n   if(_loc1_.animation_mc.animation.start == true && _loc2_.forward == 1)\n   {\n      _loc1_.animation_mc.animation.val = _loc1_.animation_mc.animation._currentframe;\n      _loc1_.animation_mc.animation.val += 20;\n      if(_loc1_.animation_mc.animation.val >= _loc1_.animation_mc.animation._totalframes)\n      {\n         _loc1_.popup.gotoAndStop(1);\n         _loc1_.animation_mc.animation.gotoAndStop(_loc1_.animation_mc.animation._totalframes);\n      }\n      else\n      {\n         _loc1_.animation_mc.animation.gotoAndStop(_loc1_.animation_mc.animation.val);\n         if(_loc2_.quizSection == false)\n         {\n            _loc1_.animation_mc.animation.play();\n         }\n      }\n   }\n   else if(_loc1_.animation_mc.animation.start == true && _loc2_.rewind == 1)\n   {\n      _loc1_.animation_mc.animation.val = _loc1_.animation_mc.animation._currentframe;\n      _loc1_.animation_mc.animation.val -= 20;\n      if(_loc1_.animation_mc.animation.val <= 1)\n      {\n         _loc1_.animation_mc.animation.gotoAndPlay(1);\n         _loc1_.popup.gotoAndStop(1);\n      }\n      else\n      {\n         _loc1_.animation_mc.animation.gotoAndStop(_loc1_.animation_mc.animation.val);\n         if(_loc2_.quizSection == false)\n         {\n            _loc1_.animation_mc.animation.play();\n         }\n      }\n   }\n}\n"
+      },
+      {
+        "artifact": "frame_35/DoAction.as",
+        "exact": true,
+        "lineEnd": 2058,
+        "lineStart": 2038,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+        "normalizedBytes": 624,
+        "normalizedSha256": "9ba8fc1ac23d11d507b19dfdeedd2b3929baabb16ad2ce468455affb9c91ac58",
+        "rawBytes": 119626,
+        "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8",
+        "requiredTokens": [
+          "function DoHyperLinks()",
+          "KeyAttribute += \"~English\"",
+          "doGetSubLink"
+        ],
+        "role": "host-glossary-function",
+        "text": "function DoHyperLinks()\n{\n   var _loc1_ = _root;\n   var _loc2_ = _global;\n   _loc2_.CompClick = \"HyperLink\";\n   _loc2_.Pause = true;\n   _loc2_.Play = false;\n   _loc1_.popup.gotoAndStop(1);\n   _loc1_.mover_mc.gotoAndStop(\"inactive\");\n   _loc1_.nextani.gotoAndStop(1);\n   _loc1_.navi.enabled = false;\n   _loc1_.glossary._visible = false;\n   _loc1_.m1_l1._visible = false;\n   _loc1_.calculator._visible = false;\n   _loc1_.ct_center.gotoAndStop(2);\n   _loc1_.m_c.gotoAndStop(6);\n   _loc1_.m_c._visible = true;\n   _loc2_.KeyAttribute += \"~English\";\n   _loc2_.openScrKey = true;\n   _loc1_.m_c.doGetSubLink(_loc2_.KeyAttribute);\n}\n"
+      },
+      {
+        "artifact": "frame_35/DoAction.as",
+        "exact": true,
+        "lineEnd": 2319,
+        "lineStart": 2261,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+        "normalizedBytes": 2233,
+        "normalizedSha256": "abb340898358f226930e03caeea1dfd476433cf292d6ecddcbcaf625e3b738b3",
+        "rawBytes": 119626,
+        "rawSha256": "b57dbad5ab4970f2f8e126af6c4e64ed05a6e263208522f2f917a710a261dbb8",
+        "requiredTokens": [
+          "function doPlaySpanishAudio()",
+          "animation.stop()",
+          "\"/SA/\"",
+          "loadSound",
+          "onSoundComplete",
+          "function doStopSpanishAudio()"
+        ],
+        "role": "host-spanish-audio-functions",
+        "text": "function doPlaySpanishAudio()\n{\n   if(_global.sectionNumber == 2 || _global.sectionNumber == 3 || _global.sectionNumber == 4 || _global.sectionNumber == 5 || _global.sectionNumber == 6 || _global.sectionNumber == 7 && _global.slideNumber != 2)\n   {\n      _root.SA._visible = false;\n      _root.SA_PLAY._alpha = 100;\n      _root.SA_PAUSE._alpha = 100;\n      _root.SA_PLAY._visible = false;\n      _root.SA_PAUSE._visible = true;\n      _root.EA._visible = true;\n      _global.spanSound = true;\n      SFTemFName = _global.playSwfFileName.split(\"/\");\n      SSTemFName = SFTemFName[SFTemFName.length - 1].split(\".\");\n      _root.animation_mc.animation.stop();\n      SndFName = _global.tempURL + \"/SA/\" + SSTemFName[0] + \".mp3\";\n      _global.gSound.loadSound(SndFName,1);\n      _global.gSound.onSoundComplete = function()\n      {\n         var _loc1_ = _root;\n         var _loc2_ = _global;\n         _loc2_.gSound.stop();\n         if(_loc1_.animation_mc.animation._currentframe != _loc1_.animation_mc.animation._totalframes && _loc2_.quizSection == false)\n         {\n            _loc1_.animation_mc.animation.play();\n         }\n         _loc1_.SA._visible = true;\n         _loc1_.SA_PLAY._visible = false;\n         _loc1_.SA_PAUSE._visible = false;\n         _loc1_.EA._visible = false;\n         _loc2_.spanSound = false;\n      };\n      i = 1;\n      while(i <= 4)\n      {\n         eval(\"_root.animation_mc.animation.Mc_Feed\" + i).gotoAndStop(1);\n         eval(\"_root.animation_mc.animation.Mc_Right_Feed\" + i).gotoAndStop(1);\n         eval(\"_root.animation_mc.animation.Mc_Wrong_Feed\" + i).gotoAndStop(1);\n         i++;\n      }\n      _root.animation_mc.animation.Feed_Right.gotoAndStop(1);\n      _root.animation_mc.animation.Feed_Wrong.gotoAndStop(1);\n      _global.gSound.start();\n   }\n}\nfunction doStopSpanishAudio()\n{\n   var _loc1_ = _root;\n   var _loc2_ = _global;\n   _loc2_.gSound.stop();\n   if(_loc1_.animation_mc.animation._currentframe != _loc1_.animation_mc.animation._totalframes && _loc2_.quizSection == false)\n   {\n      _loc1_.animation_mc.animation.play();\n   }\n   _loc1_.SA._visible = true;\n   _loc1_.SA_PLAY._visible = false;\n   _loc1_.SA_PAUSE._visible = false;\n   _loc1_.EA._visible = false;\n   _loc2_.spanSound = false;\n}\n"
+      },
+      {
+        "artifact": "DefineButton2_221/BUTTONCONDACTION on(release).as",
+        "exact": true,
+        "lineEnd": 3,
+        "lineStart": 1,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+        "normalizedBytes": 46,
+        "normalizedSha256": "0c57432147b74831cde8fae46320b50acfeef71d34d4dbeb4f64d0fc8561c6e6",
+        "rawBytes": 49,
+        "rawSha256": "e064aea52a09a1bb080d2194628fd7518587fae66bd4a20440df81d4c89e31d3",
+        "requiredTokens": [
+          "on(release)",
+          "_root.doPlaySpanishAudio()"
+        ],
+        "role": "spanish-play-button",
+        "text": "on(release){\n   _root.doPlaySpanishAudio();\n}\n"
+      },
+      {
+        "artifact": "DefineButton2_215/BUTTONCONDACTION on(release).as",
+        "exact": true,
+        "lineEnd": 3,
+        "lineStart": 1,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+        "normalizedBytes": 46,
+        "normalizedSha256": "9da466c1795521bca9b460b3235d3b539279cd92c6fee91da647cb5ffdd7118f",
+        "rawBytes": 49,
+        "rawSha256": "5dacf94a56789afb84d10eb6e3682c23241e82724da2a706c7d1f0fdf55cff15",
+        "requiredTokens": [
+          "on(release)",
+          "_root.doStopSpanishAudio()"
+        ],
+        "role": "spanish-stop-button",
+        "text": "on(release){\n   _root.doStopSpanishAudio();\n}\n"
+      },
+      {
+        "artifact": "DefineButton2_244/BUTTONCONDACTION on(rollOver).as",
+        "exact": true,
+        "lineEnd": 3,
+        "lineStart": 1,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+        "normalizedBytes": 54,
+        "normalizedSha256": "cca75be6b88d2a9c9f58eddb17523396fcca3b008c6841da51754a7d6b8aea63",
+        "rawBytes": 57,
+        "rawSha256": "07cf022112b7b7bf0bc7d67e3b7a69b5dd7ad6f04adbc014c18d4ffc1b037e0e",
+        "requiredTokens": [
+          "on(rollOver)",
+          "gotoAndPlay(\"replay\")"
+        ],
+        "role": "replay-rollover",
+        "text": "on(rollOver){\n   _root.popup.gotoAndPlay(\"replay\");\n}\n"
+      },
+      {
+        "artifact": "DefineButton2_244/BUTTONCONDACTION on(release).as",
+        "exact": true,
+        "lineEnd": 11,
+        "lineStart": 1,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+        "normalizedBytes": 264,
+        "normalizedSha256": "22acd57ac5aaeecf5d096276afc511192c78a1c7c874dd11fbf5805b5fb8a080",
+        "rawBytes": 275,
+        "rawSha256": "3519f9dbc9e30c4c2bbe04fb78b21fa849d6c1949afa0582857b0cf23346386a",
+        "requiredTokens": [
+          "on(release)",
+          "quizSection = false",
+          "gSound.stop()",
+          "_root.loadSWFMovie()"
+        ],
+        "role": "replay-release",
+        "text": "on(release){\n   _global.Play = true;\n   _global.Pause = false;\n   _global.CompClick = \"\";\n   _global.quizSection = false;\n   _global.gSound.stop();\n   _root.SA._visible = true;\n   _root.EA._visible = false;\n   _global.spanSound = false;\n   _root.loadSWFMovie();\n}\n"
+      },
+      {
+        "artifact": "DefineButton2_585/BUTTONCONDACTION on(press).as",
+        "exact": true,
+        "lineEnd": 17,
+        "lineStart": 1,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+        "normalizedBytes": 437,
+        "normalizedSha256": "33c16011b475d4f5ceedde8786365b8597c6bad0ef465b9d71ce9d58fcedf249",
+        "rawBytes": 454,
+        "rawSha256": "0cf751e903bc567871946de354aa4f1ea40fa7a8caa053c28b222c612eed70e9",
+        "requiredTokens": [
+          "on(press)",
+          "quizSection = false",
+          "animation.start = true",
+          "rewind = 1"
+        ],
+        "role": "rewind-press",
+        "text": "on(press){\n   _global.playaction = false;\n   _global.Play = true;\n   _global.Pause = false;\n   _global.CompClick = \"\";\n   _global.quizSection = false;\n   _global.gSound.stop();\n   _root.SA._visible = true;\n   _root.EA._visible = false;\n   _global.spanSound = false;\n   if(_root.animation_mc.animation._currentframe <= 1)\n   {\n      _root.doPlayPreviousMovie();\n   }\n   _root.animation_mc.animation.start = true;\n   _global.rewind = 1;\n}\n"
+      },
+      {
+        "artifact": "DefineButton2_585/BUTTONCONDACTION on(release, releaseOutside).as",
+        "exact": true,
+        "lineEnd": 6,
+        "lineStart": 1,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+        "normalizedBytes": 248,
+        "normalizedSha256": "e8978cba3017c32ddd71b6326ca1e08ca417fb460fd3d11c6920550eae32fd01",
+        "rawBytes": 254,
+        "rawSha256": "155184e06d60d591c11901ccd566953f5c6039e4cea1e4a9e42edb6e83f2bd0d",
+        "requiredTokens": [
+          "on(release, releaseOutside)",
+          "animation.start = false",
+          "rewind = 0"
+        ],
+        "role": "rewind-release",
+        "text": "on(release, releaseOutside){\n   _root.popup.gotoAndStop(1);\n   _root.animation_mc.animation.start = false;\n   _root.animation_mc.animation[_global.tempRandomSoundMc].gotoAndPlay(_root.animation_mc.animation._currentframe);\n   _global.rewind = 0;\n}\n"
+      },
+      {
+        "artifact": "frame_50/PlaceObject2_117_forward&rewind clip_74/CLIPACTIONRECORD onClipEvent(enterFrame).as",
+        "exact": true,
+        "lineEnd": 3,
+        "lineStart": 1,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+        "normalizedBytes": 51,
+        "normalizedSha256": "1d8150f4f092ecb851235d6838b914d64a8dd783e0461352c19fe0b9959206c9",
+        "rawBytes": 54,
+        "rawSha256": "f2e7defbc4410659333f2fc65590e09a49ffb9f0fafce09863fe188248841886",
+        "requiredTokens": [
+          "onClipEvent(enterFrame)",
+          "_root.doForAndRew()"
+        ],
+        "role": "rewind-enter-frame",
+        "text": "onClipEvent(enterFrame){\n   _root.doForAndRew();\n}\n"
+      },
+      {
+        "artifact": "frame_50/PlaceObject2_589_78/CLIPACTIONRECORD onClipEvent(enterFrame).as",
+        "exact": true,
+        "lineEnd": 3,
+        "lineStart": 1,
+        "missingTokens": [],
+        "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+        "normalizedBytes": 58,
+        "normalizedSha256": "c9b24d3bf25d6a41fd70cdcfd7fc0d0c9a7edd4b6ae0a94fb89f542441940da2",
+        "rawBytes": 61,
+        "rawSha256": "0f74c16ab4c673bd21f5d82f4c7bd77f2c003198d8870bda7764b3cd7699c035",
+        "requiredTokens": [
+          "onClipEvent(enterFrame)",
+          "_root.doCheckPrevAndNext()"
+        ],
+        "role": "terminal-enter-frame",
+        "text": "onClipEvent(enterFrame){\n   _root.doCheckPrevAndNext();\n}\n"
+      }
+    ],
+    "fullExportFileCount": 547,
+    "fullExportIndexHashMode": "stable-key-sorted-pretty-json-array-v1",
+    "fullExportIndexSha256": "d028db1e5af6808bc422f971efe06cfb10a8dd987c72d1b22eacdbdbf2b9ef27",
+    "sourceEvidence": {
+      "evidenceId": "same-lesson-host-swf",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L1/index_local.swf",
+      "sha256": "69d0f39b3e7b4e93f7354f7096a2c38f2335277aec116b8d9bf35d740a571a8f"
+    }
+  },
+  "schemaVersion": 1,
+  "scope": "deterministic hash-bound static evidence only",
+  "sourceFacts": {
+    "authoringAuditSchemaVersion": 2,
+    "childFrameDomain": {
+      "frameCount": 222,
+      "objectId": 231,
+      "timelineId": "sprite-231"
+    },
+    "fps": 12,
+    "nativeStage": {
+      "height": 600,
+      "width": 800
+    },
+    "rootEntryCandidate": {
+      "depth": 4,
+      "instanceName": "animation",
+      "label": "begin",
+      "localEntryFrame": 1,
+      "objectId": 231,
+      "rootFrame": 6
+    },
+    "rootFrameCount": 10,
+    "sameLessonHostBindingStatus": "static-candidate-runtime-unverified",
+    "scenarioInventoryStatus": "static-exhaustive-runtime-unverified"
+  },
+  "writeBoundary": {
+    "modifiesAdapterOrSemanticPin": false,
+    "modifiesCoverage": false,
+    "modifiesHumanOrOwnerApproval": false,
+    "modifiesMigrationStatus": false,
+    "modifiesScenarioInventory": false,
+    "modifiesSourceAssets": false,
+    "modifiesTraceSpecs": false,
+    "onlyOutput": "migrations/course-g03-l01-vb-004/audit/source-branch-candidates.json"
+  }
+}

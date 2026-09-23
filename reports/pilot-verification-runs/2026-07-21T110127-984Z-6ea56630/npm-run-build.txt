@@ -1,0 +1,43 @@
+
+> flash-conversion-html5-rebuild@0.1.0 build
+> npm run build --workspace @helpmath/web
+
+
+> @helpmath/web@0.1.0 build
+> next build
+
+▲ Next.js 16.2.10 (Turbopack)
+
+  Creating an optimized production build ...
+Turbopack build encountered 2 warnings:
+[next]/internal/font/google/fredoka_8b84d8f3.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap
+
+
+[next]/internal/font/google/nunito_sans_9b10f5df.module.css
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200..1000&display=swap
+
+
+
+> Build error occurred
+Error: Turbopack build failed with 2 errors:
+[next]/internal/font/google/fredoka_8b84d8f3.module.css
+next/font: error:
+Failed to fetch `Fredoka` from Google Fonts.
+
+
+[next]/internal/font/google/nunito_sans_9b10f5df.module.css
+next/font: error:
+Failed to fetch `Nunito Sans` from Google Fonts.
+
+
+    at ignore-listed frames
+npm error Lifecycle script `build` failed with error:
+npm error code 1
+npm error path /Users/peter/Desktop/HELP MATH_Flash_To_JS/apps/web
+npm error workspace @helpmath/web@0.1.0
+npm error location /Users/peter/Desktop/HELP MATH_Flash_To_JS/apps/web
+npm error command failed
+npm error command sh -c next build

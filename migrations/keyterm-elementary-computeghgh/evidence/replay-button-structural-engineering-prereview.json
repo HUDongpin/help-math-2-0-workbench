@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "engineering-visual-prereview",
+  "animationId": "keyterm-elementary-computeghgh",
+  "decision": "accepted",
+  "reviewer": "Codex engineering prereview",
+  "reviewedAt": "2026-07-21T18:43:29Z",
+  "scope": "Source-derived DefineButton2 up/over/down structural baselines, Adobe-lossless up/over compositor calibration, and source-structural down versus the modern pressed capture only.",
+  "sourceEvidence": {
+    "structuralBaselineManifest": "migrations/keyterm-elementary-computeghgh/baseline/swf-structural-button-states.json",
+    "structuralBaselineManifestSha256": "6d1bc537bbf4b337cd12ab3e26b25874c544f196e4d85ac5496f808728d564e4",
+    "swfSha256": "fc5c79792530092fa98d450ac00622f5f107c598bf2f313b69fe3b524a6d62e8",
+    "swfmillXmlSha256": "701edb158e02d0584b6ccffbbe454096509248c8e07f6e1e7ce261a44a77bf9a",
+    "swfmillXmlUncompressedSha256": "eb34f7b3dcdde2f1b9c49b466d3b65d58a6b4791d2149777ee210848e4db40b1"
+  },
+  "evidenceChainRefresh": {
+    "reason": "The deterministic machine audit was refreshed after Adobe Animate became available on the workstation. The structural baseline was rebuilt against the current machine-report hash; all rendered state PNGs, comparison diffs, and RMSE values remained byte-for-byte or numerically unchanged.",
+    "machineReportSha256": "8de16cf9f4e55ada403938284f3d7c465a646ee2297fb8b3599877b0b2be0739",
+    "structuralBaselineManifestSha256": "6d1bc537bbf4b337cd12ab3e26b25874c544f196e4d85ac5496f808728d564e4"
+  },
+  "inspectedPairs": [
+    {
+      "id": "adobe-up-v-source-structural-up",
+      "baselineFile": "artifacts/full-frame/pilot-baselines/keyterm-elementary-computeghgh/adobe-flash-player-32-interactions-replay-up.png",
+      "baselineSha256": "056133570fb8232d5a195c49b7d46a19bf89a8a111c62fb6e42678fc9378ce83",
+      "candidateFile": "artifacts/full-frame/pilot-baselines/keyterm-elementary-computeghgh/swf-structural-button-states/up.png",
+      "candidateSha256": "16bf113a21d877814852d3b0e3a6d24e4e1a713a3851ce721302862368d7227b",
+      "diffFile": "artifacts/full-frame/comparisons/keyterm-elementary-computeghgh/swf-structural-button-states/adobe-up-v-source-structural-up.png",
+      "diffSha256": "2d04d7b3daace734db5a16982a7dd02b1592e300a8e757ab185eff51283b145d",
+      "normalizedRmse": 0.03304564438666337,
+      "assignedThreshold": 0.05,
+      "metricResult": "pass",
+      "visualResult": "pass",
+      "notes": "The source-derived orange up artwork has the expected placement, registration, label, layering, and stage crop. Differences are renderer/raster antialiasing; no content or whole-stage transform error is visible."
+    },
+    {
+      "id": "adobe-over-v-source-structural-over",
+      "baselineFile": "artifacts/full-frame/pilot-baselines/keyterm-elementary-computeghgh/adobe-flash-player-32-interactions-replay-over.png",
+      "baselineSha256": "d88f12d0583a019e4b054f09416b5e93d46ec7a2e3d534d09208090c6c748532",
+      "candidateFile": "artifacts/full-frame/pilot-baselines/keyterm-elementary-computeghgh/swf-structural-button-states/over.png",
+      "candidateSha256": "e0f86f20fb00c749153fef19f1861cdf5b1c71bd4f322d9e2dda4d77d2634964",
+      "diffFile": "artifacts/full-frame/comparisons/keyterm-elementary-computeghgh/swf-structural-button-states/adobe-over-v-source-structural-over.png",
+      "diffSha256": "a4a7442f87454d292c26d8e0f2d50393513bfaa89c5a3943b24f8eb511c84213",
+      "normalizedRmse": 0.03204896869169158,
+      "assignedThreshold": 0.05,
+      "metricResult": "pass",
+      "visualResult": "pass",
+      "notes": "The source-derived blue over artwork has the expected placement, registration, label, layering, and stage crop. Differences are renderer/raster antialiasing; no state-color, content, or transform error is visible."
+    },
+    {
+      "id": "source-structural-down-v-modern-pressed",
+      "baselineFile": "artifacts/full-frame/pilot-baselines/keyterm-elementary-computeghgh/swf-structural-button-states/down.png",
+      "baselineSha256": "2ba02c2188f5e0d082d398fe48c614e5695a392070b6fa44f9d5feb01a10069a",
+      "candidateFile": "artifacts/full-frame/pilot-implementations/keyterm-elementary-computeghgh/replay-pressed/en/frame-035.png",
+      "candidateSha256": "b5b329c0fb4d463d522ae02c0196197460048655bffbf2103150a37f79b8cf31",
+      "diffFile": "artifacts/full-frame/comparisons/keyterm-elementary-computeghgh/swf-structural-button-states/source-structural-down-v-modern-pressed.png",
+      "diffSha256": "046d7391944009eefdda650c11323a714825450742a227d58eaf141cc5e26c43",
+      "normalizedRmse": 0.022170000867706856,
+      "assignedThreshold": 0.05,
+      "metricResult": "pass",
+      "visualResult": "pass",
+      "notes": "The modern pressed state matches the source-defined grayscale down artwork, Replay label, placement, registration, layering, and crop. The visible diff is confined to raster/SVG antialiasing; no wrong state or content error is visible."
+    }
+  ],
+  "runtimeConfirmation": {
+    "file": "migrations/keyterm-elementary-computeghgh/baseline/adobe-flash-player-32-replay-pressed-computer-use.jpeg",
+    "sha256": "d9f4ff90de057d40fc0e5b0e8bceedd46f5d541105dd51312f804ec3a4c1698e",
+    "observation": "The Adobe interaction JPEG qualitatively confirms a grayscale pressed Replay state at the same location, but the pointer obscures part of the artwork and the file contains player chrome and JPEG loss, so it remains excluded from RMSE."
+  },
+  "conclusion": "The source-structural compositor is calibrated by both lossless Adobe states, and the modern down state passes the hash-bound structural baseline at RMSE 0.022170000867706856. This closes the engineering pressed-state visual evidence gap without claiming a lossless Adobe down capture.",
+  "exclusions": [
+    "This is an engineering prereview; the project user's separate 2026-07-22 human visual approval covers the current keyframe/full-frame diff set without constituting owner acceptance.",
+    "It does not establish original-host English/Spanish identity or definitions.",
+    "This visual artifact does not itself establish audio behavior; the separate source-bound audio audit records accepted-not-required because no reachable shipped-runtime cue exists.",
+    "It does not constitute owner acceptance, strict-validator completion, status promotion, or publication approval."
+  ]
+}

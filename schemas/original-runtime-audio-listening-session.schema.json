@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://help-math.local/schemas/original-runtime-audio-listening-session.schema.json",
+  "title": "Original-runtime audio listening session",
+  "type": "object",
+  "required": ["schemaVersion", "evidenceType", "animationId", "cue", "reviewer", "observedAt", "runtime", "operationEvents", "observations", "artifacts"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "evidenceType": {"const": "original-runtime-audio-listening-session"},
+    "animationId": {"type": "string", "minLength": 1},
+    "cue": {"type": "object"},
+    "reviewer": {"$ref": "#/$defs/humanReviewer"},
+    "observedAt": {"type": "string", "format": "date-time"},
+    "runtime": {
+      "type": "object",
+      "required": ["runtimeId", "name", "version", "hostFile", "hostSha256", "toolchainReceipt"],
+      "properties": {
+        "runtimeId": {"enum": ["adobe-animate-test-movie", "adobe-flash-player-projector", "adobe-flash-player-authorized-legacy-browser"]},
+        "name": {"enum": ["Adobe Animate Test Movie", "Adobe Flash Player Projector", "Adobe Flash Player (Authorized Legacy Browser)"]},
+        "version": {"type": "string", "minLength": 1},
+        "hostFile": {"type": "string", "minLength": 1},
+        "hostSha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "toolchainReceipt": {"$ref": "#/$defs/fileBinding"}
+      },
+      "additionalProperties": false
+    },
+    "operationEvents": {"type": "array", "minItems": 5},
+    "observations": {"type": "object"},
+    "artifacts": {"type": "array", "minItems": 1}
+  },
+  "$defs": {
+    "fileBinding": {
+      "type": "object",
+      "required": ["file", "sha256"],
+      "properties": {
+        "file": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      },
+      "additionalProperties": false
+    },
+    "humanReviewer": {
+      "type": "object",
+      "required": ["kind", "fullName", "role", "organizationOrOwnerId", "contact"],
+      "properties": {"kind": {"const": "human"}}
+    }
+  },
+  "additionalProperties": false
+}

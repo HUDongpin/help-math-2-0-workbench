@@ -1,13 +1,116 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "animationId": "keyterm-elementary-acute-angle",
-  "frameCount": 0,
-  "languages": [
-    "en",
-    "es"
-  ],
-  "scenarios": [
-    "default"
-  ],
-  "combinations": []
+  "requirements": [
+    {
+      "requirementId": "req:root:default:en",
+      "scenario": "default",
+      "frameDomainId": "root",
+      "traceId": "trace:root:default:en:seed-0",
+      "language": "en",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 60
+      },
+      "entryState": {
+        "kind": "original-root-frame-accurate-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "default",
+        "language": "en",
+        "seed": "0"
+      },
+      "entryStateSha256": "0c9cb0a75fd7962e040a56e9359dee9f6afef997d1f9bf380656201980a5b5af",
+      "baselineAuthorityRequirement": "original-runtime-frame-accurate",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/DIG/acute_angle.swf",
+          "sha256": "dbc56af636e5551c582977f9230be2ae530874a05c901f0cf44dd5e2d5f2a347"
+        },
+        {
+          "file": "evidence/coverage-v1-prereview-archive.json",
+          "sha256": "9fb1f003aed55440175115fc1967583c56d4d589e209003b162ae11f46c39a61"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/keyterm-elementary-acute-angle-v2/req-root-default-en/capture-manifest.json",
+          "sha256": "fd5659724e4916fff67216640663b75218d7afec67d7e8126c773ade1771440a"
+        },
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "bfa8dac7bb9673fe32b574ecd2574b865d9de55f24bee821aada8a27a31bd363"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/keyterm-elementary-acute-angle-v3/req-root-default-en/capture-manifest.json",
+          "sha256": "ce5e5c97522430e67bc1d15c6f474fbf19f81f4843836885c8fe03f21d5e642a"
+        }
+      ],
+      "capturedFrameCount": 60,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/keyterm-elementary-acute-angle-v3/req-root-default-en/capture-manifest.json",
+      "captureManifestSha256": "ce5e5c97522430e67bc1d15c6f474fbf19f81f4843836885c8fe03f21d5e642a",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:default:es",
+      "scenario": "default",
+      "frameDomainId": "root",
+      "traceId": "trace:root:default:es:seed-0",
+      "language": "es",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 60
+      },
+      "entryState": {
+        "kind": "original-root-frame-accurate-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "default",
+        "language": "es",
+        "seed": "0"
+      },
+      "entryStateSha256": "43bb3bbbaab63924c885500cfcf7792349dacf6466c75081dcc1dbc2020654b3",
+      "baselineAuthorityRequirement": "original-runtime-frame-accurate",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/DIG/acute_angle.swf",
+          "sha256": "dbc56af636e5551c582977f9230be2ae530874a05c901f0cf44dd5e2d5f2a347"
+        },
+        {
+          "file": "evidence/coverage-v1-prereview-archive.json",
+          "sha256": "9fb1f003aed55440175115fc1967583c56d4d589e209003b162ae11f46c39a61"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/keyterm-elementary-acute-angle-v2/req-root-default-es/capture-manifest.json",
+          "sha256": "62192d84461730421f1352ad5d3bb4de3f3ebafaf9a2f434e09200cd20527cb0"
+        },
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "bfa8dac7bb9673fe32b574ecd2574b865d9de55f24bee821aada8a27a31bd363"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/keyterm-elementary-acute-angle-v3/req-root-default-es/capture-manifest.json",
+          "sha256": "317635b98e5647bbec8133543e3b6ab9c91f3eed900d49068c9476aeb7ebe2d6"
+        }
+      ],
+      "capturedFrameCount": 60,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/keyterm-elementary-acute-angle-v3/req-root-default-es/capture-manifest.json",
+      "captureManifestSha256": "317635b98e5647bbec8133543e3b6ab9c91f3eed900d49068c9476aeb7ebe2d6",
+      "metricsFile": "",
+      "metricsSha256": ""
+    }
+  ]
 }

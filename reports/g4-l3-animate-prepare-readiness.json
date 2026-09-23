@@ -1,0 +1,248 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l3-adobe-animate-prepare-only-readiness",
+  "scope": "Byte-identical read-only working copies and exact tool bindings only; no GUI execution or acceptance authority",
+  "authorityBoundary": {
+    "sourcePreparation": true,
+    "adobeAnimateAuthoringAudit": false,
+    "originalRuntimeBehavior": false,
+    "javascriptImplementation": false,
+    "audioListening": false,
+    "visualOrBehavioralParity": false,
+    "humanReview": false,
+    "ownerAcceptance": false,
+    "strictAcceptanceEffect": false
+  },
+  "contentAddressedManifest": {
+    "file": "work/animate/g4-l3-read-only-fla-copies/manifests/sha256/0607defa8de16ea0ca1985ccfa79e25514f9d98906938ed4d9ac94f35ea0559b.json",
+    "sha256": "0607defa8de16ea0ca1985ccfa79e25514f9d98906938ed4d9ac94f35ea0559b",
+    "bytes": 50011,
+    "address": "sha256:0607defa8de16ea0ca1985ccfa79e25514f9d98906938ed4d9ac94f35ea0559b",
+    "readOnly": true
+  },
+  "toolBindings": {
+    "adobeAnimate": {
+      "product": "Adobe Animate 2021",
+      "productVersion": "21.0.7",
+      "productBuild": "21.0.7.42652",
+      "executable": {
+        "file": "/Applications/Adobe Animate 2021/Adobe Animate 2021.app/Contents/MacOS/Adobe Animate 2021",
+        "sha256": "fc7903fe74b3ad16842274eeffef12e18bcb51cee8722d7fd69166948991fbcb",
+        "bytes": 104824720,
+        "executable": true
+      },
+      "infoPlist": {
+        "file": "/Applications/Adobe Animate 2021/Adobe Animate 2021.app/Contents/Info.plist",
+        "sha256": "cd61f3182c7a071be6f704a4dfc3cf88345e76f06372e714b52f4aadb97c569a",
+        "bytes": 7047
+      },
+      "coldStartInvocationShape": [
+        "--run-jsfl",
+        "-o",
+        "<absolute-controller.jsfl>"
+      ],
+      "launchedByThisCommand": false
+    },
+    "jsflAuditTemplate": {
+      "file": "scripts/animate-audit-current-document.jsfl",
+      "sha256": "043188cb940adc1895a8682ca2c5e146faf07e96a03bade11c62073055dda0ae",
+      "bytes": 15346,
+      "contract": {
+        "recursiveRootAndLibraryTimelines": true,
+        "frameAndInstanceElementInventory": true,
+        "actionScriptPresenceInventory": true,
+        "nativeStagePngExport": true
+      },
+      "executedByThisCommand": false
+    },
+    "existingAssistRunner": {
+      "file": "scripts/run-assisted-animate-authoring-audit.mjs",
+      "sha256": "b53bb812d087025a1eec5a4d2654a83cd63c278565fb818772cbc776f9c978af",
+      "bytes": 56454,
+      "compatibilityAudit": {
+        "registeredPilotMode": {
+          "compatibleWithUnscaffoldedG4L3Batch": false,
+          "reason": "The registered-pilot path invokes the migration authoring-audit finalizer and is limited to the pilot registry."
+        },
+        "dependencyFlaMode": {
+          "compatibleWithPairedFlaAndSwfItems": false,
+          "reason": "The dependency path explicitly asserts FLA-only evidence and missing shipped-SWF corroboration; using it here would be false provenance."
+        },
+        "pairedFlaSwfMode": {
+          "compatibleWithPairedFlaAndSwfItems": true,
+          "implementation": "scripts/run-assisted-animate-authoring-audit.mjs",
+          "prepareOnlyAvailable": true,
+          "requiresExactFlags": [
+            "--paired-swf",
+            "--paired-swf-sha256"
+          ],
+          "fullRunRequiresNamedHumanDialogOperator": true,
+          "automatedDialogInteractionAllowed": false,
+          "authoringAuditIsAcceptanceNeutral": true,
+          "shippedSwfExecutedByAuthoringAudit": false,
+          "reason": "The paired-source path binds independent read-only FLA and shipped-SWF copies without falsely claiming that the SWF was executed or that FLA/SWF equivalence was proven."
+        },
+        "prepareOnlyBatchStaging": {
+          "compatible": true,
+          "implementation": "scripts/stage-g4-l3-animate-fla-copies.mjs",
+          "guiRequired": false
+        },
+        "nextSafeAuthoringStep": {
+          "status": "paired-prepare-only-available-full-run-still-human-assisted",
+          "requirement": "Use the paired-source mode with --prepare-only to bind each selected FLA/SWF pair. A full cold-start authoring audit still requires a named human to acknowledge only the legacy conversion warning; the current unattended blank-document probe remains not ready."
+        }
+      },
+      "executedByThisCommand": false
+    },
+    "historicalDisposableDocumentProbe": {
+      "index": {
+        "file": "reports/pilot-animate-authoring-audit.json",
+        "sha256": "4d185869ba8fd4bed5fcf9dbcead6e8db0365b33815bdfeb40b46002c4854f43",
+        "bytes": 34219
+      },
+      "receipt": {
+        "file": "work/animate/jsfl-cli-probes/run-pbVdi8/probe-result.json",
+        "sha256": "941c75066249dbdd1c646d10b9131f79ce31c2648e2f17df0dc3b307b7d835aa",
+        "bytes": 2846
+      },
+      "status": "passed",
+      "animateVersion": "MAC 21,0,7,42652",
+      "scope": "disposable-blank-document",
+      "reusedAsLessonEvidence": false
+    },
+    "currentAutomatedDisposableDocumentProbe": {
+      "passed": false,
+      "status": "blocked-by-repeated-timeout-without-artifacts",
+      "attempts": [
+        {
+          "receipt": {
+            "file": "work/animate/jsfl-cli-probes/run-tQ3kYA/probe-result.json",
+            "sha256": "a36fa176e5a8ec1505dc94e31281a36fe9fde2439ff9cb1b48cf588f2e37d135",
+            "bytes": 2046
+          },
+          "status": "failed",
+          "scope": "disposable-blank-document",
+          "failure": "Animate JSFL probe timed out after 60000 ms",
+          "process": {
+            "exitCode": null,
+            "signal": "SIGTERM",
+            "timedOut": true,
+            "durationMs": 60298
+          },
+          "artifactsProduced": false,
+          "boundRunFiles": {
+            "generatedAudit": {
+              "file": "work/animate/jsfl-cli-probes/run-tQ3kYA/animate-audit-current-document.generated.jsfl",
+              "sha256": "4274ccdde5887f80ebe7db3b5a94c19945f0af1bdc1083bd8d32664dba6a0b7a",
+              "bytes": 15373
+            },
+            "controller": {
+              "file": "work/animate/jsfl-cli-probes/run-tQ3kYA/controller.jsfl",
+              "sha256": "394259b44350d88f4ae29d710447a339b50c9bcf1e6c9db48ffe4197e5c0888a",
+              "bytes": 1783
+            },
+            "stdout": {
+              "file": "work/animate/jsfl-cli-probes/run-tQ3kYA/stdout.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            },
+            "stderr": {
+              "file": "work/animate/jsfl-cli-probes/run-tQ3kYA/stderr.log",
+              "sha256": "eb651f2a01c49206bb533fc8649223a3506f6fc516458d0c800b34b47421898f",
+              "bytes": 2708
+            }
+          }
+        },
+        {
+          "receipt": {
+            "file": "work/animate/jsfl-cli-probes/run-k7g1FO/probe-result.json",
+            "sha256": "efc77dc6ca44cf891f9b18151d811a227f5bc17c2770531012b2be9afd638940",
+            "bytes": 2048
+          },
+          "status": "failed",
+          "scope": "disposable-blank-document",
+          "failure": "Animate JSFL probe timed out after 120000 ms",
+          "process": {
+            "exitCode": null,
+            "signal": "SIGTERM",
+            "timedOut": true,
+            "durationMs": 120329
+          },
+          "artifactsProduced": false,
+          "boundRunFiles": {
+            "generatedAudit": {
+              "file": "work/animate/jsfl-cli-probes/run-k7g1FO/animate-audit-current-document.generated.jsfl",
+              "sha256": "9a9b7711f97f69bd1cf28ac72d6f50aa7ef5b3fcb964a71090a5560cf63fceea",
+              "bytes": 15373
+            },
+            "controller": {
+              "file": "work/animate/jsfl-cli-probes/run-k7g1FO/controller.jsfl",
+              "sha256": "fff7d685799037171811cc3f04aeb7672ee97d02f047f3872705f62aa1e951a5",
+              "bytes": 1783
+            },
+            "stdout": {
+              "file": "work/animate/jsfl-cli-probes/run-k7g1FO/stdout.log",
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "bytes": 0
+            },
+            "stderr": {
+              "file": "work/animate/jsfl-cli-probes/run-k7g1FO/stderr.log",
+              "sha256": "356eae314345a2d1e1acf3dd9b93bb1ce53f7d0e330ef89161521d60fab151ae",
+              "bytes": 2708
+            }
+          }
+        }
+      ],
+      "implication": "Do not represent unattended Animate/JSFL execution as currently ready; no batch GUI audit is authorized or launched by this preparation."
+    },
+    "toolchain": {
+      "file": "catalog/toolchain.json",
+      "sha256": "07484eaf52751128f91b429b7ce1b7bb46259365c545d17c360b5d0c74c3b41f",
+      "bytes": 1709
+    },
+    "generator": {
+      "file": "scripts/stage-g4-l3-animate-fla-copies.mjs",
+      "sha256": "d1e3fdaa0fade226c5faa492b8ccb667adfe1c0820c3a205067a6232b6ede233",
+      "bytes": 34189
+    },
+    "node": {
+      "version": "v24.18.0",
+      "executable": {
+        "file": "/Users/peter/.local/share/node-v24.18.0-darwin-arm64/bin/node",
+        "sha256": "ee6fb0e015284d83a91e8ec5213f43a157f8a392b58555301682892ba928c04a",
+        "bytes": 120965360
+      }
+    }
+  },
+  "safetyContract": {
+    "prepareOnly": true,
+    "animateGuiLaunchAllowed": false,
+    "dialogInteractionAllowed": false,
+    "savePublishExportAllowed": false,
+    "sourceAssetWritesAllowed": false,
+    "migrationStatusReviewApprovalStrictWritesAllowed": false
+  },
+  "summary": {
+    "lessonCanonicalItems": 40,
+    "activePages": 39,
+    "flaBackedItems": 29,
+    "swfOnlyItemsNotStaged": 11,
+    "sourceBytes": 59227648,
+    "copiesReady": 29,
+    "allReadOnly": true,
+    "allByteIdentical": true,
+    "allSourceFreezeBound": true,
+    "animateGuiExecutions": 0,
+    "currentAutomatedAnimateProbePassed": false,
+    "authoringAuditsCompleted": 0,
+    "migrationOrAcceptanceWrites": 0,
+    "strictAcceptanceEffect": false
+  },
+  "pending": {
+    "perItemCaptureFrameSelection": 29,
+    "animateAuthoringAudits": 29,
+    "originalRuntimeBaselines": 40,
+    "javascriptImplementations": 39,
+    "note": "Staging does not open either closed migration batch gate and does not scaffold migrations."
+  }
+}

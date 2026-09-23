@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "g5-l13-bounded-stress-calibration",
+  "reportId": "g5-l13-bounded-stress-calibration-v1",
+  "createdAt": "2026-08-22T04:27:10Z",
+  "scope": {
+    "grade": 5,
+    "lesson": 13,
+    "pageOnly": true,
+    "legacyFlashCourseShellExcluded": true,
+    "selectedAnimationId": "course-g05-l13-rw-002",
+    "purpose": "Revalidate the existing large source-static structural candidate as a bounded factory stress slice without changing its maturity or acceptance status."
+  },
+  "lessonState": {
+    "activePagePlacements": 73,
+    "activeUniqueSources": 73,
+    "canonicalActivePageSources": 73,
+    "canonicalActivePageSourceCoverage": "73/73",
+    "registeredCandidateModules": 1,
+    "registeredCandidateMaturity": "legacy-prototype",
+    "privateCurrentJsWholeLessonComplete": false,
+    "audioDependencyClosureEstablished": false
+  },
+  "candidate": {
+    "animationId": "course-g05-l13-rw-002",
+    "source": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/RW/L13RW02.swf",
+      "bytes": 4796905,
+      "sha256": "bf9ab1d12832fbe54c5bef08d0dd51307169eefbae1f75188efd9db94ed9e4e6",
+      "pairedFlaStatus": "missing"
+    },
+    "migrationManifest": {
+      "path": "migrations/course-g05-l13-rw-002/migration.json",
+      "bytes": 18318,
+      "sha256": "471d4ec76cc5ee677157648c91f9d63060854015e153a488d08012007c51878c"
+    },
+    "machineAudit": {
+      "path": "migrations/course-g05-l13-rw-002/audit/machine/report.json",
+      "bytes": 9505,
+      "sha256": "a20787139d528e86c55cbd5c53edc9c83d1ebf5bcfb9326eb3a14b3a759787cd",
+      "status": "partial",
+      "sourceHashMatchedBeforeAndAfter": true,
+      "runtimeHeaderCrossCheckAllMatch": true,
+      "actionScriptVersion": "AS1/2",
+      "exportedScriptFileCount": 6,
+      "doActionTagCount": 5,
+      "embeddedSoundStreamBlockCount": 1870,
+      "morphDefinitionCount": 11
+    },
+    "adapterSpec": {
+      "path": "migrations/course-g05-l13-rw-002/audit/canvas-adapter-spec.json",
+      "bytes": 4069,
+      "sha256": "b46d319ca5fba3b183421560155b9591606869d07d35affc659f54296c3fc222"
+    },
+    "scenarioInventory": {
+      "path": "migrations/course-g05-l13-rw-002/audit/scenario-inventory.json",
+      "bytes": 182086,
+      "sha256": "088dfbcd1281aa844b7e66ed364ed996c3429961a7a63cb7f4dd1c77eb25e597"
+    },
+    "audioAudit": {
+      "path": "migrations/course-g05-l13-rw-002/audit/audio-runtime-evidence.json",
+      "bytes": 8115,
+      "sha256": "0aea70e9e10702ca3a7ee9608aeee365aae889cf287e731b767f383c3854f1c2",
+      "authoritativeListeningComplete": false,
+      "hostStateTraversalComplete": false,
+      "synchronizationComplete": false
+    },
+    "generatedRuntime": {
+      "classification": "engineering-structural-frame-candidate-not-strict-acceptance",
+      "renderer": {
+        "path": "public/flash-assets/courses/course-g05-l13-rw-002/canvas-renderer.js",
+        "bytes": 29528099,
+        "sha256": "74c68ad3a5988f9a11f580d958ca6666380a7a87c905afd8eb93bf8f133ba8b3"
+      },
+      "manifest": {
+        "path": "public/flash-assets/courses/course-g05-l13-rw-002/manifest.json",
+        "bytes": 10747,
+        "sha256": "c56c0ac30b72cc246deb4f9d2706d6f8d8d0f80281b14e7358f11ba4baa7ab42"
+      },
+      "rootFrameCount": 10,
+      "nestedTimelineId": "sprite-334",
+      "nestedFrameCount": 1873,
+      "nestedDurationMsAt12Fps": 156083.33333333334,
+      "playbackEndFrame": 673,
+      "staticAddressableRange": {
+        "firstFrame": 1,
+        "lastFrame": 1873
+      },
+      "boundaryStates": [
+        {
+          "frame": 673,
+          "sourceSchedulePhase": "frame-673-source-stop-awaiting-press",
+          "executionClaimed": false
+        },
+        {
+          "frame": 674,
+          "sourceSchedulePhase": "frames-674-1872-resumed-play",
+          "executionClaimed": false
+        },
+        {
+          "frame": 1873,
+          "sourceSchedulePhase": "frame-1873-terminal-source-stop",
+          "executionClaimed": false
+        }
+      ],
+      "safety": {
+        "legacyActionScriptExecuted": false,
+        "dynamicEvaluation": false,
+        "networkPrimitives": false,
+        "timersOrAutoplay": false,
+        "persistentStorage": false,
+        "ambientDomListeners": false,
+        "audioRendered": false
+      }
+    },
+    "registry": {
+      "path": "packages/demos/src/registry.generated.ts",
+      "bytes": 81216,
+      "sha256": "9a2430477acb442b20c5a9c64b77c086e73b8d02f511f30ecbeb94dee7e03c1d",
+      "maturity": "legacy-prototype",
+      "scope": "prototype"
+    }
+  },
+  "verification": {
+    "adapterCurrentness": {
+      "command": "node scripts/build-safe-ffdec-canvas-adapter.mjs --spec migrations/course-g05-l13-rw-002/audit/canvas-adapter-spec.json --check",
+      "status": "pass",
+      "checkedRendererBytes": 29528099,
+      "checkedRendererSha256": "74c68ad3a5988f9a11f580d958ca6666380a7a87c905afd8eb93bf8f133ba8b3",
+      "strictAcceptanceEffect": "none"
+    },
+    "candidateContractTests": {
+      "command": "npx tsx --test packages/demos/tests/course-g05-l13-rw-002.test.ts",
+      "status": "pass",
+      "passed": 12,
+      "failed": 0
+    },
+    "rwFactoryBoundaryTests": {
+      "command": "node --test --test-name-pattern=RW scripts/build-safe-ffdec-canvas-adapter.test.mjs scripts/qa-course-candidates.test.mjs",
+      "status": "pass",
+      "passed": 3,
+      "failed": 0
+    },
+    "broaderCandidateSuiteObservation": {
+      "status": "fail-outside-selected-slice",
+      "passed": 53,
+      "failed": 1,
+      "selectedRwTestsPassed": true,
+      "failure": "G4 L1 IR adapter spec pins an older scenario-inventory SHA-256; expected e27538c863839680275f3dbfbe2614e508201964f4406a78c700fa3336e34b97, observed 6dbc08b26fbfe65f921507b668ecf155ea6a4a903a4b4f4b4f51bfc7a7f0b6e1.",
+      "acceptanceEffect": "The unrelated failure is retained for the final full-gate audit and is not represented as an L13 pass or fixed by this calibration."
+    }
+  },
+  "decision": {
+    "stressSliceFactoryCurrent": true,
+    "factoryCanMaterializeLargeStaticDrawingArtifact": true,
+    "lessonScaleOutAuthorized": false,
+    "candidateMaturityChanged": false,
+    "currentJavaScriptWholeLessonComplete": false,
+    "recommendedUse": "Retain RW002 as a factory stress sentinel and engineering prototype. Do not infer that the other 72 L13 pages are safe for the same adapter lane.",
+    "reason": "The factory deterministically reproduces a 29.5 MB, 1,873-frame static drawing runtime and preserves exact boundary labels, but it does not execute the AVM1 click transition, embedded audio, natural host behavior, terminal semantics, or Replay."
+  },
+  "acceptanceEffects": {
+    "canonicalSourceCustodyForWholeLesson": true,
+    "currentJavaScriptRegisteredForSelectedCandidate": true,
+    "currentJavaScriptWholeLessonComplete": false,
+    "originalRuntimeAccepted": false,
+    "behaviorParityAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "released": false,
+    "published": false
+  }
+}

@@ -1,0 +1,521 @@
+{
+  "animationId": "course-g05-l13-rw-002",
+  "artifactType": "help-math-original-host-entry-contract",
+  "authority": {
+    "audioListeningPerformedByThisArtifact": false,
+    "baselineAuthorityClaimed": false,
+    "naturalTraceFramesCapturedByThisArtifact": 0,
+    "originalRuntimeExecutedByThisArtifact": false,
+    "sourceDerivationComplete": true,
+    "strictAcceptanceEffect": "none-until-hash-bound-original-runtime-execution-evidence-validates-this-contract"
+  },
+  "contracts": {
+    "automaticEnglishKeytermRead": {
+      "behavior": "At root frame 50, the host places glossary sprite 697, whose frame 1 places keyterms sprite 696. Sprite 696 immediately calls doInitKeyTerms, resolves the English ELKTEG4.xml path, and dispatches XML.load even though frame 50 later hides the glossary.",
+      "evidence": [
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+          "excerptId": "lesson-root-url-derivation",
+          "excerptSha256": "72de9547761ba2f24f1e8858ca3ad209f202896399377cc47e36fb0383c121b2",
+          "lineEnd": 3648,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 3645,
+          "text": "tempURL = _root._url;\nsplTempURL = tempURL.split(\"index\");\n_global.tempURL = splTempURL[0].substring(0,splTempURL[0].length - 1);\n_global.xmlPath = \"../../../HELP_KEYTERMS/KT/ELEMENTARY/\";\n"
+        },
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineSprite_696/frame_1/DoAction.as",
+          "excerptId": "keyterms-instance-auto-init",
+          "excerptSha256": "82818b6b3baf538b2b8d2ebc576600b1bd1335cf308bfb473687b5936a6f3abb",
+          "lineEnd": 17,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 9,
+          "text": "function C_L(M_Name)\n{\n   _root.doCreateGlossaryWord(M_Name);\n}\nfunction C_S(M_Name, Word)\n{\n   _root.doCreateGlossAlph(M_Name,Word);\n}\n_root.doInitKeyTerms();\n"
+        },
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+          "excerptId": "keyterms-english-path-and-load-dispatch",
+          "excerptSha256": "c20a2583dbffe4fe82c41fccec16000b8dde80397870979dadc7529a36a0308e",
+          "lineEnd": 2872,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 2858,
+          "text": "function doInitKeyTerms()\n{\n   var _loc1_ = _root;\n   var _loc2_ = _global;\n   _loc1_.glossary.keyterms.BtnBack._visible = false;\n   _loc2_.scrollUp;\n   _loc2_.scrollDown;\n   _loc2_.KeyTermVar = _loc2_.xmlPath + \"XML/ELKTEG4.xml\";\n   _loc1_.glossary.keyterms.DesEng.html = true;\n   _loc1_.glossary.keyterms.DesSpan.html = true;\n   _loc1_.glossary.keyterms.Display = \"\";\n   _loc1_.glossary.keyterms.title = \"\";\n   _loc1_.glossary.keyterms.spanish_title = \"\";\n   _loc1_.glossary.keyterms.C_L(\"Source\");\n   _loc1_.glossary.keyterms.stop();\n"
+        },
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+          "excerptId": "keyterms-xml-load",
+          "excerptSha256": "35e098d15c93e7302a4027af9d169e30e48b7b2af7887fd1a672b6455ba97495",
+          "lineEnd": 2422,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 2403,
+          "text": "function doCreateGlossaryWord(M_Name)\n{\n   var _loc1_ = _root;\n   var _loc2_ = _global;\n   i = 0;\n   while(i < _loc2_.arrKeyTermBank.length)\n   {\n      splKeyTerm = _loc2_.arrKeyTermBank[i].split(\"SPLDATA\");\n      _loc1_.glossary.keyterms.Sample[splKeyTerm[0]].removeMovieClip();\n      i++;\n   }\n   _loc2_.arrTempKeyTerm = new Array();\n   M_Name += \"_\";\n   _loc1_.glossary.keyterms.BtnBack._visible = false;\n   _loc1_.glossary.keyterms.TempTotCount = -1;\n   F_X = new XML();\n   _loc1_.QU = _loc2_.KeyTermVar;\n   F_X.load(_loc2_.KeyTermVar);\n   F_X.ignoreWhite = true;\n   F_X.onLoad = function()\n"
+        },
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_50/DoAction.as",
+          "excerptId": "default-startup-child-load",
+          "excerptSha256": "4fe09a314ca8cb7522296e2fe191469cdce381689359d7dc0ca7e76a3a6813f9",
+          "lineEnd": 18,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 1,
+          "text": "stop();\n_root.glossary.McKeyTermAngle1._visible = false;\n_root.glossary.McKeyTermAngle2._visible = false;\n_root.doCreateSlide();\n_root.title._visible = true;\n_root.top._y = _root.top_initial._y;\n_root.sideNavcontent._visible = true;\n_root.sideNav._visible = true;\n_root.sideexample._visible = true;\n_root.sideNav.dis.gotoAndStop(1);\n_root.map.enabled = true;\n_root.glossary._visible = false;\n_root.m_c.gotoAndStop(\"hide\");\n_root.calculator._visible = false;\n_root.l_s.gotoAndStop(\"map\");\n_global.quizSection = false;\n_root.doPutBackAndFinished();\n_root.loadSWFMovie();\n"
+        }
+      ],
+      "expectedResolvedFile": {
+        "bytes": 378783,
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTEG4.xml",
+        "role": "automatic-english-keyterm-xml-read-at-host-root-frame-50",
+        "sha256": "bec389ce286b9a113297dfd87e052f28cf1da2640d93a277f91f669dfb3ef749"
+      },
+      "runtimeRequirement": "Record the attempted resolved path plus onLoad success/failure and parse result; static reachability does not prove successful runtime parsing.",
+      "status": "source-proven-request-chain-runtime-load-and-parse-result-pending",
+      "structuralPlacementProof": {
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-placement-proof.json",
+        "sha256": "3349fc83ba03916b5d12e08530aed3d1edb3a10c740e24f5fbf276330af4d890"
+      }
+    },
+    "childLoad": {
+      "behavior": "The original host unloads animation_mc, then calls animation_mc.loadMovie with _global.playSwfFileName and the source's literal second argument 1.",
+      "evidence": [
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+          "excerptId": "host-child-load-setup",
+          "excerptSha256": "6a6324e7873ecc2e9edfe882f11382f8a4b758109713dc3351e5b31aee7c193c",
+          "lineEnd": 1072,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 1062,
+          "text": "function loadSWFMovie()\n{\n   var _loc1_ = _global;\n   var _loc2_ = _root;\n   _loc2_.SA._visible = false;\n   _loc2_.EA._visible = false;\n   _loc2_.SA_PLAY._visible = false;\n   _loc2_.SA_PAUSE._visible = false;\n   _loc1_.showWarnText = 1;\n   _loc2_.animation_mc.unloadMovie();\n   _loc2_.WarnText = \"Loading page. Please wait...\";\n"
+        },
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+          "excerptId": "host-child-load-call",
+          "excerptSha256": "620515eb38d4f54ed7e6bac07106a9c063b425a2d7d0114001640bc924ac0e4c",
+          "lineEnd": 1185,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 1181,
+          "text": "   _loc1_.updatedata = 1;\n   _loc1_.FileName = _loc1_.playSwfFileName;\n   _loc2_.Mc_Data_Update.gotoAndPlay(6);\n   _loc2_.animation_mc.loadMovie(_loc1_.playSwfFileName,1);\n}\n"
+        }
+      ],
+      "status": "source-proven"
+    },
+    "defaultStartup": {
+      "behavior": "With no accepted bookmark, the shell selects section 1 / slide index 2, derives IR/L13RW01.swf, and loads it before target navigation.",
+      "evidence": [
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_49/DoAction.as",
+          "excerptId": "default-startup-child-selection",
+          "excerptSha256": "31b7d6836b7db862ee723232f5be510b39f69267c2afb3fa81131b37a89100cf",
+          "lineEnd": 32,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 22,
+          "text": "if(_global.bookMark != false && _root.dtfBMID.text != \"\" && _root.dtfBMID.text != undefined && _root.dtfBMID.text != \"undefined\")\n{\n   _root.stop();\n   _root.bookmark_mc.gotoAndStop(2);\n}\nelse if(_global.sectionNumber == 0 || _global.sectionNumber == undefined)\n{\n   _global.sectionNumber = 1;\n   _global.slideNumber = 2;\n   _global.playSwfFileName = _global.tempURL + \"/IR/\" + _global.arrSection1_Details[_global.slideNumber];\n}\n"
+        },
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_50/DoAction.as",
+          "excerptId": "default-startup-child-load",
+          "excerptSha256": "4fe09a314ca8cb7522296e2fe191469cdce381689359d7dc0ca7e76a3a6813f9",
+          "lineEnd": 18,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 1,
+          "text": "stop();\n_root.glossary.McKeyTermAngle1._visible = false;\n_root.glossary.McKeyTermAngle2._visible = false;\n_root.doCreateSlide();\n_root.title._visible = true;\n_root.top._y = _root.top_initial._y;\n_root.sideNavcontent._visible = true;\n_root.sideNav._visible = true;\n_root.sideexample._visible = true;\n_root.sideNav.dis.gotoAndStop(1);\n_root.map.enabled = true;\n_root.glossary._visible = false;\n_root.m_c.gotoAndStop(\"hide\");\n_root.calculator._visible = false;\n_root.l_s.gotoAndStop(\"map\");\n_global.quizSection = false;\n_root.doPutBackAndFinished();\n_root.loadSWFMovie();\n"
+        },
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+          "excerptId": "lesson-root-url-derivation",
+          "excerptSha256": "72de9547761ba2f24f1e8858ca3ad209f202896399377cc47e36fb0383c121b2",
+          "lineEnd": 3648,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 3645,
+          "text": "tempURL = _root._url;\nsplTempURL = tempURL.split(\"index\");\n_global.tempURL = splTempURL[0].substring(0,splTempURL[0].length - 1);\n_global.xmlPath = \"../../../HELP_KEYTERMS/KT/ELEMENTARY/\";\n"
+        }
+      ],
+      "status": "source-proven"
+    },
+    "internalPreloaderEntryHandoff": {
+      "behavior": "Both the clean-start IR child and the RW02 target stop on child root frame 1 after sending InternalPreloader to jump_check. After the child reports complete bytes, both host completion branches stop the preloader and call _root.animation_mc.gotoAndPlay(\"begin\").",
+      "evidence": [
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/initial-child/frame_1/DoAction.as",
+          "excerptId": "initial-child-internal-preloader-activation",
+          "excerptSha256": "8edb4298364fccc1a492b99afd35910c38775e841df758cc2f8f09063e448862",
+          "lineEnd": 2,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 1,
+          "text": "_level0.InternalPreloader.gotoAndPlay(\"jump_check\");\nstop();\n"
+        },
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/target-child/frame_1/DoAction.as",
+          "excerptId": "target-child-internal-preloader-activation",
+          "excerptSha256": "8edb4298364fccc1a492b99afd35910c38775e841df758cc2f8f09063e448862",
+          "lineEnd": 2,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 1,
+          "text": "_level0.InternalPreloader.gotoAndPlay(\"jump_check\");\nstop();\n"
+        },
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineSprite_179/frame_2/DoAction.as",
+          "excerptId": "internal-preloader-frame-2-begin-handoff",
+          "excerptSha256": "6bf7e12013255f6b14ee4e415135fa8ea08cb6b05e3b837174ead2cbfbfbeffc",
+          "lineEnd": 12,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 1,
+          "text": "if(loadBar._width == getPercent * 100 && Math.round(getPercent * 100) >= 100 && _root.animation_mc.getBytesLoaded() >= _root.animation_mc.getBytesTotal())\n{\n   _global.showWarnText = 0;\n   _root.WarnText = \"\";\n   this.gotoAndStop(1);\n   _root.animation_mc.gotoAndPlay(\"begin\");\n}\nelse\n{\n   _root.WarnText = \"Loading page. Please wait...\";\n   play();\n}\n"
+        },
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineSprite_179/frame_3/DoAction.as",
+          "excerptId": "internal-preloader-frame-3-begin-handoff",
+          "excerptSha256": "5ddff1cbdcbbd78927c49c707b0509cb040fad56bcda963156934cc3f972e2fc",
+          "lineEnd": 19,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 1,
+          "text": "bytes_loaded = 0;\nbytes_total = 0;\nbytes_loaded = Math.round(_root.animation_mc.getBytesLoaded());\nbytes_total = Math.round(_root.animation_mc.getBytesTotal());\ngetPercent = bytes_loaded / bytes_total;\nloadBar._width = getPercent * 100;\nloadText = \"Loading \" + Math.round(getPercent * 100) + \"%\";\nif(loadBar._width == getPercent * 100 && Math.round(getPercent * 100) >= 100 && _root.animation_mc.getBytesLoaded() >= _root.animation_mc.getBytesTotal())\n{\n   _global.showWarnText = 0;\n   _root.WarnText = \"\";\n   this.gotoAndStop(1);\n   _root.animation_mc.gotoAndPlay(\"begin\");\n}\nelse\n{\n   _root.WarnText = \"Loading page. Please wait...\";\n   this.gotoAndPlay(2);\n}\n"
+        }
+      ],
+      "expectedTargetRootFrame": 6,
+      "hostSymbol": "DefineSprite 179 (InternalPreloader)",
+      "status": "source-proven",
+      "targetLabel": "begin"
+    },
+    "spanishAudioStopResume": {
+      "behavior": "The source play control stops the child animation, derives SA/<loaded-page-basename>.mp3, streams it, then resumes only when the child is nonterminal and quizSection is false; both natural completion and manual stop use that guard.",
+      "evidence": [
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineButton2_221/BUTTONCONDACTION on(release).as",
+          "excerptId": "spanish-audio-play-button",
+          "excerptSha256": "0c57432147b74831cde8fae46320b50acfeef71d34d4dbeb4f64d0fc8561c6e6",
+          "lineEnd": 3,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 1,
+          "text": "on(release){\n   _root.doPlaySpanishAudio();\n}\n"
+        },
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+          "excerptId": "spanish-audio-stop-load-and-completion-resume",
+          "excerptSha256": "64df27d2d35059de783ca86b16f7667536ad12a2f114d25266f328a3dea98927",
+          "lineEnd": 2374,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 2344,
+          "text": "function doPlaySpanishAudio()\n{\n   if(_global.sectionNumber == 2 || _global.sectionNumber == 3 || _global.sectionNumber == 4 || _global.sectionNumber == 5 || _global.sectionNumber == 6 || _global.sectionNumber == 7 && _global.slideNumber != 2)\n   {\n      _root.SA._visible = false;\n      _root.SA_PLAY._alpha = 100;\n      _root.SA_PAUSE._alpha = 100;\n      _root.SA_PLAY._visible = false;\n      _root.SA_PAUSE._visible = true;\n      _root.EA._visible = true;\n      _global.spanSound = true;\n      SFTemFName = _global.playSwfFileName.split(\"/\");\n      SSTemFName = SFTemFName[SFTemFName.length - 1].split(\".\");\n      _root.animation_mc.animation.stop();\n      SndFName = _global.tempURL + \"/SA/\" + SSTemFName[0] + \".mp3\";\n      _global.gSound.loadSound(SndFName,1);\n      _global.gSound.onSoundComplete = function()\n      {\n         var _loc1_ = _root;\n         var _loc2_ = _global;\n         _loc2_.gSound.stop();\n         if(_loc1_.animation_mc.animation._currentframe != _loc1_.animation_mc.animation._totalframes && _loc2_.quizSection == false)\n         {\n            _loc1_.animation_mc.animation.play();\n         }\n         _loc1_.SA._visible = true;\n         _loc1_.SA_PLAY._visible = false;\n         _loc1_.SA_PAUSE._visible = false;\n         _loc1_.EA._visible = false;\n         _loc2_.spanSound = false;\n      };\n"
+        },
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+          "excerptId": "spanish-audio-start",
+          "excerptSha256": "f28c3c6420b1d879e06fc418780b9219b80f3607e18db50ce632e795af6f7b28",
+          "lineEnd": 2387,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 2375,
+          "text": "      i = 1;\n      while(i <= 4)\n      {\n         eval(\"_root.animation_mc.animation.Mc_Feed\" + i).gotoAndStop(1);\n         eval(\"_root.animation_mc.animation.Mc_Right_Feed\" + i).gotoAndStop(1);\n         eval(\"_root.animation_mc.animation.Mc_Wrong_Feed\" + i).gotoAndStop(1);\n         i++;\n      }\n      _root.animation_mc.animation.Feed_Right.gotoAndStop(1);\n      _root.animation_mc.animation.Feed_Wrong.gotoAndStop(1);\n      _global.gSound.start();\n   }\n}\n"
+        },
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineButton2_215/BUTTONCONDACTION on(release).as",
+          "excerptId": "spanish-audio-stop-button",
+          "excerptSha256": "9da466c1795521bca9b460b3235d3b539279cd92c6fee91da647cb5ffdd7118f",
+          "lineEnd": 3,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 1,
+          "text": "on(release){\n   _root.doStopSpanishAudio();\n}\n"
+        },
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+          "excerptId": "spanish-audio-manual-stop-resume",
+          "excerptSha256": "3cc0f5c9d3fa201d6ac41c1fa9ad9d37cc58d9a707d638d744ecc056666708aa",
+          "lineEnd": 2401,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 2388,
+          "text": "function doStopSpanishAudio()\n{\n   var _loc1_ = _root;\n   var _loc2_ = _global;\n   _loc2_.gSound.stop();\n   if(_loc1_.animation_mc.animation._currentframe != _loc1_.animation_mc.animation._totalframes && _loc2_.quizSection == false)\n   {\n      _loc1_.animation_mc.animation.play();\n   }\n   _loc1_.SA._visible = true;\n   _loc1_.SA_PLAY._visible = false;\n   _loc1_.SA_PAUSE._visible = false;\n   _loc1_.EA._visible = false;\n   _loc2_.spanSound = false;\n"
+        }
+      ],
+      "expectedResolvedTrack": {
+        "bytes": 371616,
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/SA/L13RW02.mp3",
+        "role": "source-script-derived-spanish-user-activated-track",
+        "sha256": "2e809c69df60cec11427a71d38b37b830a0a9ec805e3c8ff4f68734cb53bfcd2"
+      },
+      "status": "source-proven-control-flow-runtime-listening-still-pending"
+    },
+    "targetNavigationInventory": {
+      "behavior": "The embedded map names RW/L13RW02.swf as the first Real World page. From the lone IR page, the source Next control increments beyond section 1, sets section 2 / slide index 2, derives RW/L13RW02.swf, and calls loadSWFMovie.",
+      "evidence": [
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+          "excerptId": "embedded-lesson-map",
+          "excerptSha256": "342c3b67c3f662874416e901c7dbd52fae4d4f4f6f84bc6f4a8854bfc4626743",
+          "lineEnd": 3501,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 3498,
+          "text": "LessonDetails = \"[CourseDetails]~CourseName,Counting on Numbers~LessonName,Counting on Numbers~TotalSection,8[Details_Split][Section1Details]~IR~L13RW01.swf[Details_Split][Section2Details]~RW~L13RW02.swf~L13RW03.swf~L13RW04.swf[Details_Split][Section3Details]~VB~L13VB01.swf~L13VB02.swf~L13VB03.swf~L13VB04.swf~L13VB05.swf~L13VB06.swf~L13VB07.swf~L13VB08.swf~L13VB09.swf~L13VB10.swf~L13VB11.swf~L13VB12.swf~L13VB13.swf~L13VB14.swf~L13VB15.swf~L13VB16.swf~L13VB17.swf~L13VB18.swf~L13VB19.swf~L13VB20.swf[Details_Split][Section4Details]~IN~L13IN01.swf~L13IN02.swf~L13IN03.swf~L13IN04.swf~L13IN05.swf~L13IN06.swf~L13IN07.swf~L13IN08.swf~L13IN09.swf~L13IN10.swf~L13IN11.swf~L13IN12.swf~L13IN13.swf~L13IN14a.swf~L13IN14b.swf~L13IN15a.swf~L13IN15b.swf~L13IN16.swf~L13IN17a.swf~L13IN17b.swf~L13IN18.swf~L13IN19.swf~L13IN20.swf~L13IN21a.swf~L13IN21b.swf~L13IN22.swf~L13IN23.swf~L13IN24.swf~L13IN25.swf~L13IN26.swf[Details_Split][Section5Details]~TI~L13TI01.swf~L13TI02.swf~L13TI03.swf~L13TI04.swf~L13TI05.swf~L13TI06.swf~L13TI07.swf~L13TI08.swf~L13TI09.swf~L13TI10.swf~L13TI11.swf[Details_Split][Section6Details]~GS~L13GS01.swf~L13GS02.swf[Details_Split][Section7Details]~TS~L13TS01.swf~L13TS02.swf~L13TS03.swf~L13TS04.swf~L13TS05.swf~L13TS06.swf~L13TS07.swf~L13TS08.swf[Details_Split][Section8Details]~FQ~L13FQ01.swf~L13FQ02.swf~L13FQ03.swf\";\nSlideSpaceDetails = \"[Section1Details]~IR[Details_Split][Section2Details]~RW[Details_Split][Section3Details]~VB~3~6~10~12~13[Details_Split][Section4Details]~IN~4~5~7~8~9~10~13~15~16~17~18~19[Details_Split][Section5Details]~TI[Details_Split][Section6Details]~GS[Details_Split][Section7Details]~TS[Details_Split][Section8Details]~FQ\";\nRandomAudioDetails = \"[Section1Details]~IR~L13RW01.swf[Details_Split][Section2Details]~RW[Details_Split][Section3Details]~VB~L13VB01.swf[Details_Split][Section4Details]~IN~L13IN01.swf[Details_Split][Section5Details]~TI~L13TI01.swf[Details_Split][Section6Details]~GS~L13GS01.swf[Details_Split][Section7Details]~TS\";\nBGTextDetails = \"[Section1Details]~IR~L13RW01.swf[Details_Split][Section2Details]~RW[Details_Split][Section3Details]~VB~L13VB01.swf[Details_Split][Section4Details]~IN~L13IN01.swf[Details_Split][Section5Details]~TI~L13TI01.swf[Details_Split][Section6Details]~GS~L13GS01.swf[Details_Split][Section7Details]~TS~L13TS01.swf\";\n"
+        },
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineButton2_344/BUTTONCONDACTION on(release).as",
+          "excerptId": "target-navigation-next-button",
+          "excerptSha256": "75209df5cab35512763c75487c2e7f76ba39b35ab758204b775b2ea22c7cefb5",
+          "lineEnd": 7,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 1,
+          "text": "on(release){\n   _global.gSound.stop();\n   _root.SA._visible = true;\n   _root.EA._visible = false;\n   _global.spanSound = false;\n   _root.doPlayNextMovie();\n}\n"
+        },
+        {
+          "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+          "excerptId": "target-navigation-ir-to-rw02",
+          "excerptSha256": "b85db0cceade8206a6189a1e4e772ee09ddb45f74f449fc795507c0e49251ae5",
+          "lineEnd": 812,
+          "lineEndingNormalization": "CRLF-or-CR-to-LF-with-one-terminal-LF",
+          "lineStart": 783,
+          "text": "function doPlayNextMovie()\n{\n   var _loc1_ = _global;\n   var _loc2_ = _root;\n   _loc1_.Play = true;\n   _loc1_.Pause = false;\n   _loc1_.CompClick = \"\";\n   _loc1_.quizSection = false;\n   _loc1_.needMoreBackURL = \"\";\n   _loc1_.slideNumber = _loc1_.slideNumber + 1;\n   _loc2_.animation_mc.unloadMovie();\n   _loc2_.glossary.keyterms.mouse_down._x = _loc2_.glossary.keyterms.x_pos;\n   _loc2_.glossary.keyterms.mouse_down._y = _loc2_.glossary.keyterms.y_pos;\n   _loc2_.glossary._visible = false;\n   _loc2_.calculator._visible = false;\n   _loc2_.m_c._visible = false;\n   _loc2_.popup.gotoAndStop(1);\n   _loc2_.next.gotoAndStop(\"inactive\");\n   _loc2_.replay.gotoAndStop(\"inactive\");\n   if(_loc1_.sectionNumber == 1)\n   {\n      if(_loc1_.slideNumber > _loc1_.arrSection1_Details.length - 1)\n      {\n         _loc1_.sectionNumber = 2;\n         _loc1_.slideNumber = 2;\n         _loc1_.playSwfFileName = _loc1_.tempURL + \"/RW/\" + _loc1_.arrSection2_Details[_loc1_.slideNumber];\n         _loc2_.doCreateSlide();\n         _loc2_.doPutBackAndFinished();\n         _loc2_.loadSWFMovie();\n      }\n"
+        }
+      ],
+      "status": "source-proven-clean-start-next-control-runtime-navigation-still-to-be-executed"
+    }
+  },
+  "extractedScripts": {
+    "childDependencyScans": [
+      {
+        "artifactNamespace": "initial-child",
+        "externalOrDynamicLoadFindingCount": 0,
+        "fullExportIndexSha256": "326e00a0af8de89effb41339cf97a973a547d324dcbbd18f11adc5aca317ecb4",
+        "rootEntryArtifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/initial-child/frame_1/DoAction.as",
+        "rootEntrySha256": "af7188282949f2613421ba9c8be629f489bbe2ee1e370a072024794b2d2cfc19",
+        "scriptCount": 9
+      },
+      {
+        "artifactNamespace": "target-child",
+        "externalOrDynamicLoadFindingCount": 0,
+        "fullExportIndexSha256": "77a394270f500e6b40425b242bc32afa9f08a3298f36d88221d5ed401c0b84ba",
+        "rootEntryArtifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/target-child/frame_1/DoAction.as",
+        "rootEntrySha256": "af7188282949f2613421ba9c8be629f489bbe2ee1e370a072024794b2d2cfc19",
+        "scriptCount": 6
+      }
+    ],
+    "fullExportFileCount": 570,
+    "fullExportIndexHashMode": "stable-json-array-of-path-bytes-sha256-v1",
+    "fullExportIndexSha256": "aa74a0e4f3eeb93c745fcd373134d551b81f1fd2b5c7d5cd8a565ce048b62185",
+    "selectedArtifactCount": 17,
+    "selectedArtifacts": [
+      {
+        "bytePreservation": "raw-FFDec-output-including-CRLF",
+        "bytes": 122477,
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+        "roles": [
+          "child-load",
+          "embedded-lesson-map",
+          "spanish-audio",
+          "side-effects"
+        ],
+        "sha256": "19a500653e0e71cb8c936373a709f13f6377e74f2d74c57e179a68710a8da08f"
+      },
+      {
+        "bytePreservation": "raw-FFDec-output-including-CRLF",
+        "bytes": 364,
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineSprite_179/frame_2/DoAction.as",
+        "roles": [
+          "internal-preloader-begin-handoff"
+        ],
+        "sha256": "dffd2e1e2ff957be7f673398946cad234b3031b5f787572e6a3bb87aa0447612"
+      },
+      {
+        "bytePreservation": "raw-FFDec-output-including-CRLF",
+        "bytes": 681,
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineSprite_179/frame_3/DoAction.as",
+        "roles": [
+          "internal-preloader-begin-handoff"
+        ],
+        "sha256": "7b9b8be2edb7b1da48700f03cd001a0ff80a99f226ce64edcbfe4c6bf163dd4d"
+      },
+      {
+        "bytePreservation": "raw-FFDec-output-including-CRLF",
+        "bytes": 876,
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_49/DoAction.as",
+        "roles": [
+          "default-startup-child-selection"
+        ],
+        "sha256": "4c7ca99715fc422e0a080421c3f2611e32652878ef7aba790578cd8d43bbd23d"
+      },
+      {
+        "bytePreservation": "raw-FFDec-output-including-CRLF",
+        "bytes": 769,
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_50/DoAction.as",
+        "roles": [
+          "default-startup-child-load"
+        ],
+        "sha256": "cafafc8a748ed024a9dc038722810d922372925ebcfee29a667d2cc262df2771"
+      },
+      {
+        "bytePreservation": "raw-FFDec-output-including-CRLF",
+        "bytes": 165,
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineButton2_344/BUTTONCONDACTION on(release).as",
+        "roles": [
+          "target-navigation-next-trigger"
+        ],
+        "sha256": "2b35a08f2ac378219c306b2f6c3c7ca0af484acf5f06cd11c9997387b91747c0"
+      },
+      {
+        "bytePreservation": "raw-FFDec-output-including-CRLF",
+        "bytes": 3348,
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineSprite_696/frame_1/DoAction.as",
+        "roles": [
+          "automatic-english-keyterm-read"
+        ],
+        "sha256": "5459e1edbf153cf43421fa4bd9ac1c1eae0dce7aec445e659cce1ba1b96c0645"
+      },
+      {
+        "bytePreservation": "raw-FFDec-output-including-CRLF",
+        "bytes": 49,
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineButton2_215/BUTTONCONDACTION on(release).as",
+        "roles": [
+          "spanish-audio-stop-trigger"
+        ],
+        "sha256": "5dacf94a56789afb84d10eb6e3682c23241e82724da2a706c7d1f0fdf55cff15"
+      },
+      {
+        "bytePreservation": "raw-FFDec-output-including-CRLF",
+        "bytes": 49,
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineButton2_221/BUTTONCONDACTION on(release).as",
+        "roles": [
+          "spanish-audio-play-trigger"
+        ],
+        "sha256": "e064aea52a09a1bb080d2194628fd7518587fae66bd4a20440df81d4c89e31d3"
+      },
+      {
+        "bytePreservation": "raw-FFDec-output-including-CRLF",
+        "bytes": 88,
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineButton2_151/BUTTONCONDACTION on(release).as",
+        "roles": [
+          "side-effects"
+        ],
+        "sha256": "38d29ddfd12174de22368d86c4d9143414d2bf90e5efb36a0d3a3a89a20fb82b"
+      },
+      {
+        "bytePreservation": "raw-FFDec-output-including-CRLF",
+        "bytes": 684,
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineButton2_251/BUTTONCONDACTION on(release).as",
+        "roles": [
+          "side-effects"
+        ],
+        "sha256": "a5a4451817923503d0f47fbaac60c50ddf44761d26a1c4d103bf47f183c6369f"
+      },
+      {
+        "bytePreservation": "raw-FFDec-output-including-CRLF",
+        "bytes": 826,
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineButton2_560/BUTTONCONDACTION on(release).as",
+        "roles": [
+          "side-effects"
+        ],
+        "sha256": "e247ae39aabc621f0ae1f861ff9bf20dc89d16b6b0ef8e1ccd8d5d16c346aaef"
+      },
+      {
+        "bytePreservation": "raw-FFDec-output-including-CRLF",
+        "bytes": 3335,
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineSprite_155/frame_15/DoAction.as",
+        "roles": [
+          "side-effects"
+        ],
+        "sha256": "e1a12ad5faa8c239ab4484e92335d45289093fc342b4e51c17c8c6c16e9c3fab"
+      },
+      {
+        "bytePreservation": "raw-FFDec-output-including-CRLF",
+        "bytes": 299,
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineSprite_164/frame_5/DoAction.as",
+        "roles": [
+          "side-effects"
+        ],
+        "sha256": "274e04582065419cd5e835eabf78b14eb69c5613ad92d915354446452f1ee14d"
+      },
+      {
+        "bytePreservation": "raw-FFDec-output-including-CRLF",
+        "bytes": 10375,
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/FScrollPaneSymbol.as",
+        "roles": [
+          "side-effects"
+        ],
+        "sha256": "a318cdc7d894bf3558d2a6be7c56d0451b20b4d5ac1aaf4de224dafb139fb945"
+      },
+      {
+        "bytePreservation": "raw-FFDec-output-including-CRLF",
+        "bytes": 63,
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/initial-child/frame_1/DoAction.as",
+        "roles": [
+          "child-internal-preloader-activation"
+        ],
+        "sha256": "af7188282949f2613421ba9c8be629f489bbe2ee1e370a072024794b2d2cfc19"
+      },
+      {
+        "bytePreservation": "raw-FFDec-output-including-CRLF",
+        "bytes": 63,
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/target-child/frame_1/DoAction.as",
+        "roles": [
+          "child-internal-preloader-activation"
+        ],
+        "sha256": "af7188282949f2613421ba9c8be629f489bbe2ee1e370a072024794b2d2cfc19"
+      }
+    ]
+  },
+  "generatedBy": {
+    "path": "scripts/build-rw002-original-host-entry-contract.mjs",
+    "sha256": "e866761348872d620251a8db82b2e645d2c7985d9db49ed88d94c84d9795df87"
+  },
+  "limitations": [
+    "FFDec decompilation is hash-bound forensic evidence for compiled control flow; it is not a runtime execution log.",
+    "The target-navigation click path, 1,873-frame natural trace, Spanish listening, pause/resume timing, and terminal behavior remain subject to authoritative original-runtime execution.",
+    "The automatic ELKTEG4.xml request is structurally proven, but its runtime load/parse outcome remains unobserved.",
+    "This report does not alter trace specifications, generate a trace candidate, change migration status, or grant human/owner acceptance."
+  ],
+  "schemaVersion": 1,
+  "scope": "read-only-source-derived-original-host-entry-and-audio-control-contract",
+  "sourceHost": {
+    "bytes": 676556,
+    "header": {
+      "actualCompressedBytes": 676556,
+      "compression": "zlib",
+      "declaredUncompressedBytes": 950711,
+      "fps": 12,
+      "nativeStage": {
+        "height": 600,
+        "width": 800
+      },
+      "rawFrameRateFixed8": 3072,
+      "rectNBits": 15,
+      "rootFrameCount": 50,
+      "signature": "CWS",
+      "stageRectTwips": {
+        "xMax": 16000,
+        "xMin": 0,
+        "yMax": 12000,
+        "yMin": 0
+      },
+      "swfVersion": 6
+    },
+    "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/index_local.swf",
+    "role": "unmodified-original-lesson-host",
+    "sha256": "956d8e90ca07d59aeb9b3e97bc20f7e2e14221125913d8f774b8c98a61d4292d"
+  },
+  "targetChild": {
+    "bytes": 4796905,
+    "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/RW/L13RW02.swf",
+    "role": "target-animation-child",
+    "sha256": "bf9ab1d12832fbe54c5bef08d0dd51307169eefbae1f75188efd9db94ed9e4e6"
+  },
+  "toolchain": {
+    "ffdec": {
+      "exportCommand": [
+        "ffdec",
+        "-onerror",
+        "abort",
+        "-export",
+        "script",
+        "<temporary-directory>",
+        "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/index_local.swf"
+      ],
+      "jarPath": "/Users/peter/Applications/FFDec.app/Contents/Resources/ffdec.jar",
+      "jarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+      "launcherPath": "/Users/peter/Applications/FFDec.app/Contents/Resources/ffdec.sh",
+      "version": "JPEXS Free Flash Decompiler v.26.2.1"
+    },
+    "swfmill": {
+      "executablePath": "/opt/homebrew/Cellar/swfmill/0.3.6_1/bin/swfmill",
+      "executableSha256": "b1299adad7f32d8e489574539e79b0f42c4960148170bc1ca48736e07ccbd311",
+      "structuralProof": {
+        "path": "migrations/course-g05-l13-rw-002/audit/original-host-placement-proof.json",
+        "sha256": "3349fc83ba03916b5d12e08530aed3d1edb3a10c740e24f5fbf276330af4d890"
+      },
+      "version": "swfmill 0.3.6"
+    }
+  }
+}

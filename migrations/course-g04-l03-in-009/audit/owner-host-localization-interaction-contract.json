@@ -1,0 +1,233 @@
+{
+  "schemaVersion": 1,
+  "animationId": "course-g04-l03-in-009",
+  "artifactType": "owner-host-localization-interaction-source-contract",
+  "compiledDate": "2026-07-22",
+  "scope": "Hash-bound static source findings for visual localization, Spanish host audio, glossary intent, Replay intent, and terminal intent. This is not runtime or acceptance evidence.",
+  "authority": {
+    "sourceStructureVerified": true,
+    "authorizedOriginalRuntimeExecuted": false,
+    "naturalHostEntryObserved": false,
+    "audioListened": false,
+    "audioSynchronizationValidated": false,
+    "interactionHitGeometryValidated": false,
+    "replayResetValidated": false,
+    "terminalOrderingValidated": false,
+    "humanAccepted": false,
+    "ownerAccepted": false,
+    "fidelityClaimed": false,
+    "migrationStatusChanged": false
+  },
+  "sources": {
+    "childSwf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN09.swf",
+      "sha256": "766b6ab686bbaf8ab1dacc30a7ffb96f33735102a1dff7df6b7a97976e3ab25c",
+      "bytes": 1967129
+    },
+    "sameLessonHost": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/index_local.swf",
+      "sha256": "817e599de43a7924f0a93791e950c8781755692371945a5b7ea4cdd2ad26c58e",
+      "bytes": 657421
+    },
+    "courseXml": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/index.xml",
+      "sha256": "0f1109321a5b65507c36fb8fd30380c4899cb7f381c2959aa7092d59bba990b0",
+      "bytes": 8976,
+      "placementLine": 77,
+      "placementLineNormalizedSha256": "5c3ed742dc73e671f976727afb59b0fe0197cc2895e5abcbc407ef0a20e446ae",
+      "subtitleLine": 84,
+      "subtitleLineNormalizedSha256": "f35e0c4bc1cb323167de7cb378cdbd8d85f1d85f02d7883f25ada9a8f12f36f5"
+    },
+    "spanishAudio": {
+      "sourcePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3IN09.mp3",
+      "publicPath": "public/flash-assets/audio/courses/course-g04-l03-in-009/es.mp3",
+      "publicUrl": "/flash-assets/audio/courses/course-g04-l03-in-009/es.mp3",
+      "sha256": "1d2370d59a6400dbd666a3f049fd4222a54d664e62055a1fb5f93596b9a2ea4b",
+      "bytes": 564816,
+      "durationMs": 40344,
+      "sampleRateHz": 48000,
+      "channels": 1,
+      "association": "exact-basename legacy-host routing",
+      "activation": "host-user-activated"
+    },
+    "glossaryXml": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTEG4.xml",
+      "sha256": "bec389ce286b9a113297dfd87e052f28cf1da2640d93a277f91f669dfb3ef749",
+      "bytes": 378783,
+      "measureLine": 373,
+      "measureLineNormalizedSha256": "3dad7a3767a0e829b50536f9b5357e081dc533fb9a48b6bd417a186f96f512ca",
+      "temperatureLine": 685,
+      "temperatureLineNormalizedSha256": "9fa14aff5e7513da57cc1d4dcaf017d8958866f4f78289512e8a588445ea2569"
+    },
+    "glossarySwfs": [
+      {
+        "key": "Measure",
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/DIG/measure.swf",
+        "sha256": "46a1d7c7fb971336970e48fb0438675e29d8121bee23dd0302e31a932a287381",
+        "bytes": 2484,
+        "migrationId": "keyterm-elementary-measure",
+        "migrationStatus": "discovered"
+      },
+      {
+        "key": "Temperature",
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/DIG/temperature.swf",
+        "sha256": "448dea48ff0327256372f3be5f7a3623e170ea710736f47afe951bcaf3134dc7",
+        "bytes": 45686,
+        "migrationId": "keyterm-elementary-temperature",
+        "migrationStatus": "discovered"
+      }
+    ]
+  },
+  "extractionBindings": {
+    "tool": "JPEXS Free Flash Decompiler v.26.2.1",
+    "childActionScript": {
+      "evidenceFile": "audit/machine/ffdec-scripts.txt.gz",
+      "evidenceFileSha256": "df530b06a5ae0c5a4329fdff597ef74e692a60e097554eb9d93cb54ef66b9dca",
+      "exhaustiveExportFileCount": 5,
+      "stableExportIndexSha256": "50475b5dcea4e665b474388fcc065e13c8722370dd2f624a6b077d397fa1d371",
+      "scripts": [
+        {
+          "artifact": "DefineButton2_67/BUTTONCONDACTION on(release).as",
+          "role": "Temperature glossary request",
+          "normalizedSha256": "878af7e1f1abe05293e1bd0a749851f9e361e59a987cc4a11aeac31197f88192"
+        },
+        {
+          "artifact": "DefineButton2_68/BUTTONCONDACTION on(release).as",
+          "role": "Measure glossary request",
+          "normalizedSha256": "89882ca358e076eab1333cd71d44259298bce33c95bad74f4f4e89a1f04db825"
+        },
+        {
+          "artifact": "DefineSprite_200/frame_637/DoAction.as",
+          "role": "empty terminal action tag"
+        },
+        {
+          "artifact": "frame_1/DoAction.as",
+          "role": "request parent InternalPreloader jump_check and stop root",
+          "normalizedSha256": "8edb4298364fccc1a492b99afd35910c38775e841df758cc2f8f09063e448862"
+        },
+        {
+          "artifact": "frame_6/DoAction.as",
+          "role": "stop root at begin placement",
+          "normalizedSha256": "c71f185593d153c467266a494ebee471c04c9b64044e6cf491e0d91d739e92fd"
+        }
+      ]
+    },
+    "sameLessonHostActionScript": {
+      "bindingEvidence": "audit/same-lesson-shell-host-entry-binding.json",
+      "exhaustiveExportFileCount": 528,
+      "stableExportIndexSha256": "8ed284fc85b0db7072787dcbe14ba0301e30c4ffa0d0aac1617aad01b4e257c3",
+      "frame35FullScriptRawBytes": 114674,
+      "frame35FullScriptRawSha256": "db99ac0db1bcdedfa36b89d196d04e86ae09fac9b06fdbac0e582e52a19dfd87",
+      "excerpts": [
+        {
+          "artifact": "frame_35/DoAction.as",
+          "function": "doCheckSpanishAudio",
+          "lineStart": 787,
+          "lineEnd": 837,
+          "normalizedSha256": "ee87a71638ef22687309ca146d9c076c85053a07ba9d68b434ec04f0d2f14cc1",
+          "proves": "The same-lesson shell exposes Spanish-audio controls for eligible lesson sections/pages."
+        },
+        {
+          "artifact": "frame_35/DoAction.as",
+          "function": "DoHyperLinks",
+          "lineStart": 1944,
+          "lineEnd": 1964,
+          "normalizedSha256": "9ba8fc1ac23d11d507b19dfdeedd2b3929baabb16ad2ce468455affb9c91ac58",
+          "proves": "The shell pauses course state and forwards KeyAttribute plus ~English to its glossary controller."
+        },
+        {
+          "artifact": "frame_35/DoAction.as",
+          "function": "doPlaySpanishAudio",
+          "lineStart": 2167,
+          "lineEnd": 2210,
+          "normalizedSha256": "c1feaec232c4b987bb1fb4fc2fd3ffbbbddb77c6321f7a21d9919335a00c926a",
+          "proves": "The shell derives SA/<child-basename>.mp3, stops animation_mc.animation, starts gSound, and conditionally resumes on completion."
+        },
+        {
+          "artifact": "frame_35/DoAction.as",
+          "function": "doStopSpanishAudio",
+          "lineStart": 2211,
+          "lineEnd": 2225,
+          "normalizedSha256": "e7382123f209381d043bd69335692b870a1ac123a779e9cdb28fa781ac530ff5",
+          "proves": "The shell stops gSound and conditionally resumes the child when Spanish audio is manually stopped."
+        },
+        {
+          "artifact": "frame_35/DoAction.as",
+          "function": "doCheckPrevAndNext",
+          "lineStart": 1541,
+          "lineEnd": 1693,
+          "normalizedSha256": "e011b28b066da77caee8f130f462276ddfb125395f7a1cd51340220798d359e2",
+          "proves": "The full shell monitors the nested timeline and contains a stop branch at or beyond its terminal frame."
+        },
+        {
+          "artifact": "DefineButton2_217/BUTTONCONDACTION on(release).as",
+          "normalizedSha256": "0c57432147b74831cde8fae46320b50acfeef71d34d4dbeb4f64d0fc8561c6e6",
+          "proves": "The Spanish-audio play control calls doPlaySpanishAudio."
+        },
+        {
+          "artifact": "DefineButton2_211/BUTTONCONDACTION on(release).as",
+          "normalizedSha256": "9da466c1795521bca9b460b3235d3b539279cd92c6fee91da647cb5ffdd7118f",
+          "proves": "The Spanish-audio stop control calls doStopSpanishAudio."
+        },
+        {
+          "artifact": "DefineButton2_252/BUTTONCONDACTION on(release).as",
+          "normalizedSha256": "22acd57ac5aaeecf5d096276afc511192c78a1c7c874dd11fbf5805b5fb8a080",
+          "proves": "Replay resets host flags and Spanish-audio UI state, stops gSound, and calls loadSWFMovie."
+        }
+      ]
+    }
+  },
+  "sourceConclusions": {
+    "childVisualLocalization": {
+      "status": "source-shared-untranslated-visual",
+      "exhaustiveChildScriptCount": 5,
+      "finding": "The child has one deterministic visual timeline and no child ActionScript language branch. The same-lesson Spanish-audio host functions pause/resume that same child and do not switch its visual content.",
+      "qualification": "This is a static source-contract finding, not an authorized runtime observation and not permission to label the English artwork as translated Spanish content."
+    },
+    "externalSpanishAudio": {
+      "status": "exact-owner-file-and-host-routing-proven-runtime-unvalidated",
+      "finding": "The active child basename, the sibling SA/L3IN09.mp3, the host basename-routing function, and the byte-identical public copy agree.",
+      "implementationDisposition": "Do not expose the track through generic timeline audio controls until stop/resume, completion, manual stop, Replay, listening, and synchronization are implemented and validated."
+    },
+    "glossary": {
+      "status": "source-destination-intent-proven-host-runtime-unvalidated",
+      "keys": ["Temperature", "Measure"],
+      "finding": "Child release handlers, host DoHyperLinks, owner glossary XML, and owner glossary SWFs establish the requested term identities and legacy destinations.",
+      "implementationDisposition": "Keep the scenarios fail-closed until exact hit geometry and a reviewed modern glossary route are available; both destination migrations remain discovered rather than complete."
+    },
+    "replay": {
+      "status": "source-reload-intent-proven-complete-reset-unvalidated",
+      "finding": "The same-lesson host Replay handler resets playback, quiz, overlay, sound, and Spanish-audio state before reloading the current SWF.",
+      "implementationDisposition": "The current generic Replay button is only a candidate playhead reset and must not be described as source-equivalent."
+    },
+    "terminal": {
+      "status": "source-stop-intent-proven-runtime-ordering-unvalidated",
+      "finding": "The full lesson shell enter-frame monitor can stop the child at its total-frame boundary.",
+      "implementationDisposition": "Do not replace the candidate loop with once/stopped behavior until authorized execution establishes event ordering and terminal state."
+    }
+  },
+  "strictDisposition": {
+    "strictAcceptanceEffect": "none",
+    "resolvedAtStaticSourceContractLevel": [
+      "The child does not contain a script-controlled Spanish visual branch.",
+      "The exact owner Spanish MP3 and legacy host basename route are identified.",
+      "The Temperature and Measure glossary request keys and owner destinations are identified.",
+      "The source Replay reload intent and terminal stop intent are identified."
+    ],
+    "remainingBlockers": [
+      "Authorized original same-lesson host execution must reach this child and establish natural entry and event ordering.",
+      "A qualified listener must verify the Spanish MP3 spoken language/content and the embedded stream language/content.",
+      "Spanish audio start, child pause, completion/manual-stop resume, terminal behavior, and Replay reset require runtime validation.",
+      "Every reachable trace and frame in both root and sprite-200 domains still lacks an authoritative complete baseline and full-frame RMSE evidence.",
+      "Glossary button hit geometry and reviewed modern destinations are not implemented or validated.",
+      "Keyboard, reduced-motion, mobile, console, network, human diff review, and owner acceptance remain outside this static artifact."
+    ]
+  },
+  "limitations": [
+    "Static ActionScript proves coded intent, not that the original runtime executed the branch in the expected order.",
+    "Directory naming and host routing prove intended Spanish association, not spoken content; no listening is recorded here.",
+    "No audio is rendered by the current JavaScript candidate, and this artifact does not add an audio cue.",
+    "The current generated Canvas asset still fails closed for lang=es; updating that reviewed generator contract is a separate implementation/review step.",
+    "No screenshot, pixel comparison, RMSE result, interaction trace, human decision, owner decision, or status change is created by this artifact."
+  ]
+}

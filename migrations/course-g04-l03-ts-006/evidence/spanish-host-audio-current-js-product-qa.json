@@ -1,0 +1,397 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "ts006-current-js-spanish-host-audio-product-qa",
+  "animationId": "course-g04-l03-ts-006",
+  "recordedAt": "2026-07-27T14:51:36.409Z",
+  "generatedBy": {
+    "script": "scripts/qa-ts006-spanish-host-audio.mjs",
+    "scriptSha256": "7b585d5ceb88974aa54e7c671f5ab6f8ee6fb6550f0db4029eeebaa4fba740d2",
+    "invocation": "node scripts/qa-ts006-spanish-host-audio.mjs --base-url http://127.0.0.1:3214",
+    "deterministic": false,
+    "checkCommand": "node scripts/qa-ts006-spanish-host-audio.mjs --check"
+  },
+  "status": "passed-current-js-product-qa-acceptance-neutral",
+  "acceptanceEffect": "none",
+  "strictAcceptanceEffect": false,
+  "migrationStatusChanged": false,
+  "humanReviewRecorded": false,
+  "ownerReviewRecorded": false,
+  "authority": "Local Playwright observation of the current JavaScript TS006 source-static candidate host-audio control and exact staged MP3 request routing only",
+  "authorityBoundary": "This report verifies only the current JavaScript product control, its exact same-origin candidate MP3 route, its generic pause-while-playing state, capture-mode withholding, and bound file identities. It does not establish source-media matching to captured runtime audio, Spanish speech or content, human listening, original Flash host semantics, embedded SoundStream behavior, synchronization, bilingual visual parity, full-frame fidelity, RMSE, human review, Owner acceptance, strict completion, or release readiness.",
+  "toolchain": {
+    "playwright": "1.61.1",
+    "browser": "Chromium 149.0.7827.55",
+    "server": "Next.js development server at http://127.0.0.1:3214"
+  },
+  "bindings": {
+    "module": {
+      "file": "packages/demos/src/modules/course-g04-l03-ts-006.tsx",
+      "sha256": "b9e49c45b5e2c677b5a8544f37372ab87c80b54902bc1b3b8c749f0799963bf5"
+    },
+    "timeline": {
+      "file": "packages/demos/src/timelines/course-g04-l03-ts-006.ts",
+      "sha256": "c80e7ce77f59d47eadbaf8dd999ba463354311320865f3eacd38b85e614eaf8f"
+    },
+    "productRuntime": {
+      "file": "apps/web/components/animation-runtime.tsx",
+      "sha256": "3621eb78bdf26321d4fd13a3b8bdf9fc033aeca1686463d01f8eef6d70fba1d9"
+    },
+    "runtimeContract": {
+      "file": "packages/demos/src/contract.ts",
+      "sha256": "e0bedca504601df93c3bc33a79f842cda5aeae4a15c244a8d104f2c1a2febde3"
+    },
+    "runtimeHelpers": {
+      "file": "packages/demos/src/runtime.ts",
+      "sha256": "1a551b447e12c9db366ef7101aa8ea79496efc201a28ac4b2d3e27be5b9610ee"
+    },
+    "traceSpecification": {
+      "file": "migrations/course-g04-l03-ts-006/audit/trace-specs/req-sprite-23-lesson-shell-natural-entry-en.json",
+      "hashMode": "canonical-json-v1",
+      "projection": "ts006-current-js-capture-identity-v1",
+      "sha256": "a577035f3624278474d8321db2dcbe4c43fff1e35b587a0d60a6e40fcf55e764",
+      "excludedPaths": [
+        "authorityStatement",
+        "acquisitionPlan",
+        "sourceBindings",
+        "schedule",
+        "unresolvedMappings",
+        "separateBehaviorUnknowns",
+        "inventoryContext",
+        "executionEvidence"
+      ]
+    },
+    "sourceMp3": {
+      "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3TS06.mp3",
+      "sha256": "c0ea9f1cede741945c763707ed89c5be76f651f761209880157bf0c45ded8688"
+    },
+    "publicMp3": {
+      "file": "public/flash-assets/courses/course-g04-l03-ts-006/audio/spanish-host-narration.mp3",
+      "sha256": "c0ea9f1cede741945c763707ed89c5be76f651f761209880157bf0c45ded8688"
+    },
+    "embeddedMp3": {
+      "file": "public/flash-assets/courses/course-g04-l03-ts-006/audio/embedded-stream-0001.mp3",
+      "sha256": "4d50cee1ee64bec0919933132ec250212474f236c699cd007a40f9ff2dce3122"
+    },
+    "mainTimelineAudioCandidateReport": {
+      "file": "reports/g4-l3-current-js-main-timeline-audio-candidates.json",
+      "sha256": "36dda5f0a2fc1443f4b98b3d1c1dbbcb105349622a3f71e1573152c325f501e1"
+    },
+    "machineAudioAudit": {
+      "file": "migrations/course-g04-l03-ts-006/audit/audio-runtime-evidence.json",
+      "sha256": "a48da143ef3ed0f41912eb420cf9bc094a515ff1bdd49badb28031543d4bcb9e"
+    },
+    "assetInventory": {
+      "file": "migrations/course-g04-l03-ts-006/asset-inventory.csv",
+      "sha256": "916210a15c8e293d9de89b9e2f0c1ad725d411f43ebc4873084fdb2265ed90e7"
+    },
+    "productQaGenerator": {
+      "file": "scripts/qa-ts006-spanish-host-audio.mjs",
+      "sha256": "7b585d5ceb88974aa54e7c671f5ab6f8ee6fb6550f0db4029eeebaa4fba740d2"
+    }
+  },
+  "bindingsUnchangedDuringObservation": true,
+  "audioAssetIdentity": {
+    "sourceMp3Sha256": "c0ea9f1cede741945c763707ed89c5be76f651f761209880157bf0c45ded8688",
+    "publicMp3Sha256": "c0ea9f1cede741945c763707ed89c5be76f651f761209880157bf0c45ded8688",
+    "embeddedMp3Sha256": "4d50cee1ee64bec0919933132ec250212474f236c699cd007a40f9ff2dce3122",
+    "exactBytesIdentical": true,
+    "expectedMp3Sha256": "c0ea9f1cede741945c763707ed89c5be76f651f761209880157bf0c45ded8688",
+    "expectedEmbeddedMp3Sha256": "4d50cee1ee64bec0919933132ec250212474f236c699cd007a40f9ff2dce3122",
+    "currentJsAudioCandidate": {
+      "animationId": "course-g04-l03-ts-006",
+      "integration": "specialized-module-generated-english-cue",
+      "frameDomain": "sprite-23",
+      "scenario": "source-static-frame",
+      "fps": 12,
+      "sourceEmbeddedStreamCount": 1,
+      "excludedCompanionStreamCount": 0,
+      "embedded": {
+        "sourcePath": "artifacts/g4-l3-embedded-audio/sha256/4d/4d50cee1ee64bec0919933132ec250212474f236c699cd007a40f9ff2dce3122.mp3",
+        "outputPath": "public/flash-assets/courses/course-g04-l03-ts-006/audio/embedded-stream-0001.mp3",
+        "publicPath": "/flash-assets/courses/course-g04-l03-ts-006/audio/embedded-stream-0001.mp3",
+        "bytes": 52910,
+        "sha256": "4d50cee1ee64bec0919933132ec250212474f236c699cd007a40f9ff2dce3122",
+        "headFrame": 1,
+        "firstBlockFrame": 1,
+        "lastBlockFrame": 128,
+        "endFrame": 129,
+        "blockCount": 128,
+        "durationMs": 10582,
+        "spokenLanguage": "undetermined"
+      },
+      "spanish": {
+        "sourcePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3TS06.mp3",
+        "outputPath": "public/flash-assets/courses/course-g04-l03-ts-006/audio/spanish-host-narration.mp3",
+        "publicPath": "/flash-assets/courses/course-g04-l03-ts-006/audio/spanish-host-narration.mp3",
+        "bytes": 106848,
+        "sha256": "c0ea9f1cede741945c763707ed89c5be76f651f761209880157bf0c45ded8688",
+        "durationMs": 7632,
+        "normalizedLanguageCandidate": "es",
+        "spokenLanguageEstablished": false
+      },
+      "authority": {
+        "exactSourceBytesPreserved": true,
+        "transcoded": false,
+        "sourceFrameMappingStructuralOnly": true,
+        "languageEstablished": false,
+        "naturalRuntimeReachabilityEstablished": false,
+        "originalRuntimeSynchronizationEstablished": false,
+        "listeningAcceptanceEstablished": false,
+        "ownerAccepted": false,
+        "strictMigrationComplete": false,
+        "lessonPublished": false,
+        "strictAcceptanceEffect": "none"
+      }
+    },
+    "pass": true
+  },
+  "normalPlaybackPage": {
+    "url": "http://127.0.0.1:3214/animations/course-g04-l03-ts-006?frameDomain=sprite-23&scenario=source-static-frame&lang=en&seed=0",
+    "httpStatus": 200,
+    "beforeClick": {
+      "frame": "7",
+      "frameDomain": "sprite-23",
+      "rootFrame": "6",
+      "scenario": "source-static-frame",
+      "language": "en",
+      "requirementId": "runtime-source-static-frame-sprite-23-en",
+      "traceId": "source-static-frame-sprite-23-en",
+      "entryStateSha256": null,
+      "captureIdentityStatus": null,
+      "candidateStatus": "source-static-engineering-not-strict",
+      "candidateCanvasStatus": "ready",
+      "candidateAudioRendered": "false",
+      "timelinePaused": "false",
+      "control": {
+        "text": "Play Spanish audio",
+        "ariaPressed": "false",
+        "disabled": false,
+        "timelineBehavior": "pause-while-playing"
+      }
+    },
+    "afterClick": {
+      "frame": "7",
+      "frameDomain": "sprite-23",
+      "rootFrame": "6",
+      "scenario": "source-static-frame",
+      "language": "en",
+      "requirementId": "runtime-source-static-frame-sprite-23-en",
+      "traceId": "source-static-frame-sprite-23-en",
+      "entryStateSha256": null,
+      "captureIdentityStatus": null,
+      "candidateStatus": "source-static-engineering-not-strict",
+      "candidateCanvasStatus": "ready",
+      "candidateAudioRendered": "false",
+      "timelinePaused": "true",
+      "control": {
+        "text": "Stop Spanish audio",
+        "ariaPressed": "true",
+        "disabled": false,
+        "timelineBehavior": "pause-while-playing"
+      }
+    },
+    "pausedFrameSample": {
+      "frame": "7",
+      "frameDomain": "sprite-23",
+      "rootFrame": "6",
+      "scenario": "source-static-frame",
+      "language": "en",
+      "requirementId": "runtime-source-static-frame-sprite-23-en",
+      "traceId": "source-static-frame-sprite-23-en",
+      "entryStateSha256": null,
+      "captureIdentityStatus": null,
+      "candidateStatus": "source-static-engineering-not-strict",
+      "candidateCanvasStatus": "ready",
+      "candidateAudioRendered": "false",
+      "timelinePaused": "true",
+      "control": {
+        "text": "Stop Spanish audio",
+        "ariaPressed": "true",
+        "disabled": false,
+        "timelineBehavior": "pause-while-playing"
+      }
+    },
+    "observations": {
+      "mp3RequestsBeforeClick": [
+        {
+          "url": "http://127.0.0.1:3214/flash-assets/courses/course-g04-l03-ts-006/audio/embedded-stream-0001.mp3",
+          "method": "GET",
+          "resourceType": "media",
+          "sameOrigin": true,
+          "pathname": "/flash-assets/courses/course-g04-l03-ts-006/audio/embedded-stream-0001.mp3"
+        }
+      ],
+      "mediaRequestsBeforeClick": [
+        {
+          "url": "http://127.0.0.1:3214/flash-assets/courses/course-g04-l03-ts-006/audio/embedded-stream-0001.mp3",
+          "method": "GET",
+          "resourceType": "media",
+          "sameOrigin": true,
+          "pathname": "/flash-assets/courses/course-g04-l03-ts-006/audio/embedded-stream-0001.mp3"
+        }
+      ],
+      "exactEmbeddedMp3RequestsBeforeClick": [
+        {
+          "url": "http://127.0.0.1:3214/flash-assets/courses/course-g04-l03-ts-006/audio/embedded-stream-0001.mp3",
+          "method": "GET",
+          "resourceType": "media",
+          "sameOrigin": true,
+          "pathname": "/flash-assets/courses/course-g04-l03-ts-006/audio/embedded-stream-0001.mp3"
+        }
+      ],
+      "onlyExactEmbeddedMp3MediaRequestedBeforeClick": true,
+      "requestsAfterClick": [
+        {
+          "url": "http://127.0.0.1:3214/flash-assets/courses/course-g04-l03-ts-006/audio/spanish-host-narration.mp3",
+          "method": "GET",
+          "resourceType": "media",
+          "sameOrigin": true,
+          "pathname": "/flash-assets/courses/course-g04-l03-ts-006/audio/spanish-host-narration.mp3"
+        }
+      ],
+      "mediaRequestsAfterClick": [
+        {
+          "url": "http://127.0.0.1:3214/flash-assets/courses/course-g04-l03-ts-006/audio/spanish-host-narration.mp3",
+          "method": "GET",
+          "resourceType": "media",
+          "sameOrigin": true,
+          "pathname": "/flash-assets/courses/course-g04-l03-ts-006/audio/spanish-host-narration.mp3"
+        }
+      ],
+      "mp3RequestsAfterClick": [
+        {
+          "url": "http://127.0.0.1:3214/flash-assets/courses/course-g04-l03-ts-006/audio/spanish-host-narration.mp3",
+          "method": "GET",
+          "resourceType": "media",
+          "sameOrigin": true,
+          "pathname": "/flash-assets/courses/course-g04-l03-ts-006/audio/spanish-host-narration.mp3"
+        }
+      ],
+      "exactMp3RequestsAfterClick": [
+        {
+          "url": "http://127.0.0.1:3214/flash-assets/courses/course-g04-l03-ts-006/audio/spanish-host-narration.mp3",
+          "method": "GET",
+          "resourceType": "media",
+          "sameOrigin": true,
+          "pathname": "/flash-assets/courses/course-g04-l03-ts-006/audio/spanish-host-narration.mp3"
+        }
+      ],
+      "onlyExactSameOriginMp3MediaRequestedAfterClick": true,
+      "timelineRemainedAtPausedFrame": true
+    },
+    "diagnostics": {
+      "externalRequests": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "pageErrors": []
+    },
+    "pass": true
+  },
+  "deterministicCapturePage": {
+    "url": "http://127.0.0.1:3214/animations/course-g04-l03-ts-006?frame=1&frameDomain=sprite-23&requirementId=req%3Asprite-23%3Alesson-shell-natural-entry%3Aen&trace=trace%3Asprite-23%3Alesson-shell-natural-entry%3Aen%3Aseed-0&entryStateSha256=d4f9baef8ce19c9503ff128aee12901b46f32736afbbd74833cdf9691bb51b4e&scenario=source-static-frame&lang=en&seed=0&capture=1",
+    "httpStatus": 200,
+    "expectedIdentity": {
+      "frame": "1",
+      "frameDomain": "sprite-23",
+      "rootFrame": "6",
+      "scenario": "source-static-frame",
+      "language": "en",
+      "requirementId": "req:sprite-23:lesson-shell-natural-entry:en",
+      "traceId": "trace:sprite-23:lesson-shell-natural-entry:en:seed-0",
+      "entryStateSha256": "d4f9baef8ce19c9503ff128aee12901b46f32736afbbd74833cdf9691bb51b4e",
+      "captureIdentityStatus": "verified"
+    },
+    "beforeDisabledClick": {
+      "frame": "1",
+      "frameDomain": "sprite-23",
+      "rootFrame": "6",
+      "scenario": "source-static-frame",
+      "language": "en",
+      "requirementId": "req:sprite-23:lesson-shell-natural-entry:en",
+      "traceId": "trace:sprite-23:lesson-shell-natural-entry:en:seed-0",
+      "entryStateSha256": "d4f9baef8ce19c9503ff128aee12901b46f32736afbbd74833cdf9691bb51b4e",
+      "captureIdentityStatus": "verified",
+      "candidateStatus": "source-static-engineering-not-strict",
+      "candidateCanvasStatus": "ready",
+      "candidateAudioRendered": "false",
+      "timelinePaused": "false",
+      "control": {
+        "text": "Play Spanish audio",
+        "ariaPressed": "false",
+        "disabled": true,
+        "timelineBehavior": "pause-while-playing"
+      }
+    },
+    "afterDisabledClick": {
+      "frame": "1",
+      "frameDomain": "sprite-23",
+      "rootFrame": "6",
+      "scenario": "source-static-frame",
+      "language": "en",
+      "requirementId": "req:sprite-23:lesson-shell-natural-entry:en",
+      "traceId": "trace:sprite-23:lesson-shell-natural-entry:en:seed-0",
+      "entryStateSha256": "d4f9baef8ce19c9503ff128aee12901b46f32736afbbd74833cdf9691bb51b4e",
+      "captureIdentityStatus": "verified",
+      "candidateStatus": "source-static-engineering-not-strict",
+      "candidateCanvasStatus": "ready",
+      "candidateAudioRendered": "false",
+      "timelinePaused": "false",
+      "control": {
+        "text": "Play Spanish audio",
+        "ariaPressed": "false",
+        "disabled": true,
+        "timelineBehavior": "pause-while-playing"
+      }
+    },
+    "observations": {
+      "forcedClickHadNoEffect": true,
+      "mp3Requests": [],
+      "mediaRequests": []
+    },
+    "diagnostics": {
+      "externalRequests": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "consoleErrors": [],
+      "consoleWarnings": [],
+      "pageErrors": []
+    },
+    "pass": true
+  },
+  "audioAcceptance": {
+    "exactSourceAndPublicBytesStaged": true,
+    "currentJsUserActivatedControlObserved": true,
+    "deterministicCaptureWithholdingObserved": true,
+    "sourceMediaMatchEstablished": false,
+    "spokenSpanishLanguageVerified": false,
+    "spokenContentVerified": false,
+    "authoritativeListeningComplete": false,
+    "originalHostStateTraversalComplete": false,
+    "originalHostPauseResumeSynchronizationComplete": false,
+    "embeddedSoundStreamSynchronizationComplete": false,
+    "replayAudioResetAccepted": false,
+    "strictAudioAcceptance": "pending"
+  },
+  "claims": {
+    "authoritativeOriginalRuntimeBaseline": false,
+    "naturalOriginalRuntimeTraversal": false,
+    "sourceMediaMatchEstablished": false,
+    "spokenSpanishLanguageVerified": false,
+    "spokenContentVerified": false,
+    "authoritativeListeningComplete": false,
+    "originalHostAudioBehaviorParity": false,
+    "embeddedStreamAudioParity": false,
+    "audioSynchronizationComplete": false,
+    "audioParity": false,
+    "bilingualVisualParity": false,
+    "fullFrameCoverage": false,
+    "rmseAcceptance": false,
+    "humanVisualReview": false,
+    "engineeringAcceptance": false,
+    "ownerAcceptance": false,
+    "strictMigrationCompletion": false,
+    "publicLessonRelease": false
+  }
+}

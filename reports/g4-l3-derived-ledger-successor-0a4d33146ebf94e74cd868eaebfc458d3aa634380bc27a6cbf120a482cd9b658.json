@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l3-derived-ledger-successor-receipt",
+  "transactionId": "0a4d33146ebf94e74cd868eaebfc458d3aa634380bc27a6cbf120a482cd9b658",
+  "status": "verified-acceptance-neutral-ledger-successor-strict-zero-unpublished",
+  "plan": {
+    "path": "work/g4-l3-derived-ledger-successor-transactions/0a4d33146ebf94e74cd868eaebfc458d3aa634380bc27a6cbf120a482cd9b658/transaction-plan.json",
+    "bytes": 3081,
+    "sha256": "3ab03d9ab8f3c2e3c74eee77d5a973989dee603355fd1e63d85ae4ac5844f61a",
+    "mode": 292
+  },
+  "transitions": [
+    {
+      "ordinal": 1,
+      "id": "completion-ledger",
+      "target": "catalog/completion-ledger.json",
+      "preimage": {
+        "bytes": 64286,
+        "sha256": "ea4d1c8d167beee79cde00e71db955624bf8bbed3895b149a781070e903651be",
+        "mode": 420
+      },
+      "postimage": {
+        "bytes": 64287,
+        "sha256": "92cb2c644a3b1be978f653ff3c1ffd0fb2d781f1d7af8dd080f820a2322f8332",
+        "mode": 420
+      },
+      "immutablePreimageCopy": "work/g4-l3-derived-ledger-successor-transactions/0a4d33146ebf94e74cd868eaebfc458d3aa634380bc27a6cbf120a482cd9b658/copies/0.preimage.bin",
+      "immutablePostimageCopy": "work/g4-l3-derived-ledger-successor-transactions/0a4d33146ebf94e74cd868eaebfc458d3aa634380bc27a6cbf120a482cd9b658/copies/0.postimage.bin"
+    },
+    {
+      "ordinal": 2,
+      "id": "lesson-release-ledger",
+      "target": "catalog/lesson-release-ledger.json",
+      "preimage": {
+        "bytes": 49048,
+        "sha256": "48771b9f20d7a28d5d3e9d9164020de796c3f866d72c54669ffb0640c6f95a86",
+        "mode": 420
+      },
+      "postimage": {
+        "bytes": 49048,
+        "sha256": "a47acc4ce895c935fcaa0d46de3a589eb63a47102745e45aed499822eaf1deea",
+        "mode": 420
+      },
+      "immutablePreimageCopy": "work/g4-l3-derived-ledger-successor-transactions/0a4d33146ebf94e74cd868eaebfc458d3aa634380bc27a6cbf120a482cd9b658/copies/1.preimage.bin",
+      "immutablePostimageCopy": "work/g4-l3-derived-ledger-successor-transactions/0a4d33146ebf94e74cd868eaebfc458d3aa634380bc27a6cbf120a482cd9b658/copies/1.postimage.bin"
+    }
+  ],
+  "semanticState": {
+    "completion": {
+      "strictComplete": 0,
+      "strictFailed": 110,
+      "migrationDirectories": 110,
+      "generatedMarker": "sha256:6a0d7c20c33860df03dd29625900ffd630c0b8f49efb50d31ac9b7cf8ff48743"
+    },
+    "g4LessonRelease": {
+      "releaseId": "lesson-g04-l03-negative-numbers",
+      "expectedMemberCount": 40,
+      "strictCompleteCount": 0,
+      "published": false,
+      "status": "unpublished"
+    }
+  },
+  "preservation": {
+    "oldLedgerBytesStoredOutsideGit": true,
+    "historicalReceiptsModified": false,
+    "protectedPinConstantsModified": false,
+    "sourceAssetsModified": false,
+    "canonicalWrites": 2,
+    "writeMode": "locked-multi-file-compare-and-swap-with-preimage-quarantine",
+    "defaultMode": "dry-run"
+  },
+  "authorityBoundary": {
+    "acceptanceNeutral": true,
+    "derivedLedgerRefreshOnly": true,
+    "originalRuntimeAuthorityCreated": false,
+    "authoritativeRuntimeTraceCreated": false,
+    "visualParityOrRmseCreated": false,
+    "audioAcceptanceCreated": false,
+    "independentHumanReviewCreated": false,
+    "ownerAcceptanceCreated": false,
+    "strictCompletionCreated": false,
+    "publicReleaseAuthorized": false,
+    "protectedHistoricalReceiptRewritten": false,
+    "protectedPinConstantRewritten": false,
+    "strictAcceptanceEffect": "none",
+    "releaseEffect": "none"
+  },
+  "limitations": [
+    "This transaction refreshes derived ledgers only and preserves strict completion at zero.",
+    "It creates no original-runtime, RMSE, audio-listening, independent-human, owner, strict-completion, or release authority.",
+    "The G4 L3 atomic release remains unpublished at 0/40."
+  ],
+  "receiptFingerprintSha256": "79b63bb3a650ed3a8e1f3b0170143af72ef40b4dd47442f0a14554fd94996c7f"
+}

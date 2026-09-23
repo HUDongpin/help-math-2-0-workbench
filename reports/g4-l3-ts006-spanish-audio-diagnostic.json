@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 2,
+  "reportType": "g4-l3-ts006-spanish-audio-diagnostic",
+  "animationId": "course-g04-l03-ts-006",
+  "classification": "current-admin-account-runtime-audio-failure-diagnostic-not-strict-evidence",
+  "authority": {
+    "runtimeAuthorityClaimed": false,
+    "audioParityClaimed": false,
+    "spanishLanguageAccepted": false,
+    "humanReviewAccepted": false,
+    "ownerAccepted": false,
+    "strictAcceptanceEffect": "none"
+  },
+  "capture": {
+    "manifest": {
+      "path": "artifacts/full-frame/g4-l3/ts006-spanish-audio-manual-diagnostic-2026-07-26T06-22-07Z/raw-capture/capture-manifest.json",
+      "bytes": 378063,
+      "sha256": "db17b1d241b6ba0e6f075e7380a98da15d99ea25627adb5f7afea4b88924402f"
+    },
+    "startedAt": "2026-07-26T06:23:25Z",
+    "endedAt": "2026-07-26T06:24:55Z",
+    "windowTitle": "file:///Volumes/WestWorld/HELP MATH 2.0/work/original-runtime-host-trees/course-g04-l03-ts-006/root/HELP_COURSES/ELMGR4/L3/index_local.swf",
+    "frameCount": 1069,
+    "droppedOrIncompleteFrameCount": 0,
+    "stage": {
+      "width": 800,
+      "height": 600
+    },
+    "nominalFps": 12,
+    "audio": {
+      "path": "artifacts/full-frame/g4-l3/ts006-spanish-audio-manual-diagnostic-2026-07-26T06-22-07Z/raw-capture/system-audio-lossless.m4a",
+      "bytes": 8683087,
+      "sha256": "41a56f6d4c22e34f7badf3e880c0c1c13b9ec8f9d6e0a899e308dc1ed9855761",
+      "codec": "alac",
+      "sampleRate": 48000,
+      "channels": 2,
+      "durationSeconds": 90.112,
+      "meanVolumeDb": -91,
+      "maxVolumeDb": -91,
+      "silenceIntervalCount": 1,
+      "totalSilenceDurationSeconds": 90.04,
+      "longestSilenceDurationSeconds": 90.04
+    }
+  },
+  "runtimeControl": {
+    "crop": "32x26+766+82",
+    "buttonVisualRuns": [
+      {
+        "firstFrame": 1,
+        "lastFrame": 156,
+        "visualState": "play-icon-visible",
+        "cropSignature": "9331f4ed672b7aad3388e8b912ebb0bc28e836198aa56a9c5c6045c46d57cb25",
+        "firstRelativeTimeSeconds": 0,
+        "lastRelativeTimeSeconds": 13.066468125
+      },
+      {
+        "firstFrame": 157,
+        "lastFrame": 562,
+        "visualState": "transitional-icon-hidden-or-hover",
+        "cropSignature": "5ef8ba5dfdf25b72282479e40b4deb7b1a8d58788e4072d92ec040219a9b5701",
+        "firstRelativeTimeSeconds": 13.151746292,
+        "lastRelativeTimeSeconds": 47.298566042
+      },
+      {
+        "firstFrame": 563,
+        "lastFrame": 1069,
+        "visualState": "pause-icon-visible",
+        "cropSignature": "361aeafcc964387d3db68abcd67f5bb289c52f1ee7c48d91892424e1769dec3c",
+        "firstRelativeTimeSeconds": 47.380766083,
+        "lastRelativeTimeSeconds": 90.077776542
+      }
+    ],
+    "advancedToPauseVisualState": true,
+    "interpretation": "The control reached the pause-icon state, establishing UI state change only; it does not establish decoded or emitted audio."
+  },
+  "sourceAudio": {
+    "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3TS06.mp3",
+    "bytes": 106848,
+    "sha256": "c0ea9f1cede741945c763707ed89c5be76f651f761209880157bf0c45ded8688",
+    "codec": "mp3",
+    "sampleRate": 48000,
+    "channels": 1,
+    "durationSeconds": 7.632,
+    "meanVolumeDb": -21,
+    "maxVolumeDb": -4.7,
+    "silenceIntervalCount": 1,
+    "totalSilenceDurationSeconds": 0.682833,
+    "longestSilenceDurationSeconds": 0.682833
+  },
+  "actionScript": {
+    "auditPath": "migrations/shell-course-g04-l03-index-local/audit/machine/ffdec-scripts.txt.gz",
+    "auditCompressedBytes": 24865,
+    "auditCompressedSha256": "c837d68c69d82cf025b9775a66f26ebb4f5a76dfb7e4d06eee43aaffce4d04f7",
+    "verifiedFragments": [
+      "function doPlaySpanishAudio()",
+      "SndFName = _global.tempURL + \"/SA/\" + SSTemFName[0] + \".mp3\";",
+      "_global.gSound.loadSound(SndFName,1);",
+      "_global.gSound.start();"
+    ],
+    "expectedRuntimeUrl": "file:///Volumes/WestWorld/HELP%20MATH%202.0/work/original-runtime-host-trees/course-g04-l03-ts-006/root/HELP_COURSES/ELMGR4/L3/SA/L3TS06.mp3",
+    "finding": "The shell derives /SA/L3TS06.mp3, invokes streaming loadSound, and then start; the diagnostic does not establish a successful file open, decode, or emitted sound."
+  },
+  "pathWhitespaceExperiment": {
+    "classification": "unsigned-current-turn-diagnostic-observation",
+    "readOnlyCopyRoot": "/Volumes/WestWorld/HM2_DIAG_TS006",
+    "sourceSwfSha256": "817e599de43a7924f0a93791e950c8781755692371945a5b7ea4cdd2ad26c58e",
+    "sourceMp3Sha256": "c0ea9f1cede741945c763707ed89c5be76f651f761209880157bf0c45ded8688",
+    "naturalEntry": "TS002 -> TS003 -> TS004 -> TS005 -> TS006",
+    "result": "The TS006 control again reached the pause-icon state without an observed L3TS06.mp3 file handle; whitespace is not supported as the cause.",
+    "strictAcceptanceEffect": "none"
+  },
+  "conclusion": {
+    "capturedAudioDigitalSilence": true,
+    "sourceMp3NonSilent": true,
+    "runtimeAudioEmissionObservedCandidate": false,
+    "causalAttributionAvailable": false,
+    "runtimeAudioEmissionEstablished": false,
+    "audioAcceptance": false,
+    "strictAcceptanceEffect": "none"
+  },
+  "unresolved": [
+    "The capture used the current administrator account and is diagnostic-only.",
+    "The control-state transition does not establish an authoritative audio trigger or successful media load.",
+    "The trusted-local sandbox/load-failure explanation remains a hypothesis pending a reversible trust/trace experiment.",
+    "Spoken-language identity, cue timing, listening quality, independent review, Owner acceptance, and strict completion remain pending."
+  ],
+  "tools": {
+    "magick": {
+      "command": "magick",
+      "commandPath": "/opt/homebrew/bin/magick",
+      "executableRealPath": "/opt/homebrew/Cellar/imagemagick/7.1.2-27/bin/magick",
+      "executableSha256": "135bd0d8f79549844bf6bf669c8ea2df8a3902948094c097657e9b6829fd4a38",
+      "versionFirstLine": "Version: ImageMagick 7.1.2-27 Q16-HDRI aarch64 e4c2b403b:20260705 https://imagemagick.org"
+    },
+    "ffprobe": {
+      "command": "ffprobe",
+      "commandPath": "/opt/homebrew/bin/ffprobe",
+      "executableRealPath": "/opt/homebrew/Cellar/ffmpeg/8.1.2_1/bin/ffprobe",
+      "executableSha256": "cfeefcc9207eb3fa424679228fe3848db2921b15537d26c1ccc4a7a61de95d00",
+      "versionFirstLine": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers"
+    },
+    "ffmpeg": {
+      "command": "ffmpeg",
+      "commandPath": "/opt/homebrew/bin/ffmpeg",
+      "executableRealPath": "/opt/homebrew/Cellar/ffmpeg/8.1.2_1/bin/ffmpeg",
+      "executableSha256": "dad4b30b36a1a999bfa4b6ffbde138bd17ee496c69e12eef638227dff2c6415c",
+      "versionFirstLine": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers"
+    }
+  },
+  "generator": {
+    "path": "scripts/analyze-g4-l3-ts006-spanish-audio-diagnostic.mjs",
+    "sha256": "a308f5d44cc7818c2876e16964015d00d832876757c8891e233edba129e41e4a"
+  },
+  "strictAcceptanceEffect": "none"
+}

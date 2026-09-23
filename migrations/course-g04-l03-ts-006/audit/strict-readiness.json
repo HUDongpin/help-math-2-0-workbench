@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 2,
+  "evidenceKind": "course-shell-strict-readiness",
+  "generatedBy": {
+    "script": "scripts/build-g4-l3-ts006-scenario-readiness.mjs",
+    "version": 1,
+    "sha256": "cfb9ef5a37f9117c3ea9b335a315a1cf8c24c9d4d334f72674bdb45c384d3ada",
+    "deterministic": true
+  },
+  "animationId": "course-g04-l03-ts-006",
+  "assessedOn": "2026-07-25",
+  "migrationStatusChanged": false,
+  "conclusion": {
+    "strictAcceptanceReady": false,
+    "completionClaimAllowed": false,
+    "localAuthoritativeBaselineCompletable": false,
+    "localExhaustiveBranchCaptureCompletable": false,
+    "risk": "high",
+    "reason": "Static source, FFDec/swfmill, work-only authoring, host-tree, and operator-protocol evidence identify the TS006 root and nested timeline obligations, but no approved original-runtime natural trace, authoritative baseline, audio listening/synchronization review, full-frame comparison, human visual review, or owner acceptance exists."
+  },
+  "source": {
+    "swf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.swf",
+    "swfSha256": "fa8962a6ca72c0bb213605a9836b62600992cb5c1cf955f7c871e857e90ddf47",
+    "fla": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.fla",
+    "flaSha256": "3f500c60b73b735eb001993b31ff101bf1615384c86b6a28987a84feef5b70dd",
+    "sourceHashesVerified": true,
+    "technicalManifestProjection": "help-math-technical-manifest-v1",
+    "technicalManifestProjectionSha256": "7d4a37b2985d2af68a06dcb57e3279c9586e8b848513583d4622bb585c1129a2",
+    "technicalManifestExcludedPaths": [
+      "status",
+      "created",
+      "confidence",
+      "classification",
+      "audit",
+      "toolVersions",
+      "baseline",
+      "evidence",
+      "fidelity",
+      "accessibility",
+      "acceptance",
+      "catalogEvidence",
+      "implementation.candidateQa",
+      "implementation.candidateMaturity",
+      "implementation.candidateProductQa",
+      "implementation.candidateVisualEvidence",
+      "implementation.productQaEvidence",
+      "implementation.productQaScope",
+      "audio.catalogGroupCandidates",
+      "audio.catalogExactAssociations",
+      "audio.acceptance",
+      "audio.authoritativeListeningComplete",
+      "audio.originalHostSynchronizationComplete",
+      "audio.strictAcceptance",
+      "audio.structuralAuditComplete"
+    ]
+  },
+  "machineAudit": {
+    "auditStatus": "partial",
+    "stage": {
+      "width": 800,
+      "height": 600
+    },
+    "fps": 12,
+    "rootFrameCount": 10,
+    "actionScriptVersion": "AS1/2",
+    "exportedScriptFileCount": 3,
+    "allCommandsPassed": true,
+    "allOutputPinsVerified": true,
+    "observedBehaviorFromExtractedScripts": [
+      "Root frame 1 calls _level0.InternalPreloader.gotoAndPlay(\"jump_check\") and stops; natural entry therefore requires the same-lesson host rather than direct child-SWF launch.",
+      "Root frame 6 places the one-frame Mc_Page_Title timeline sprite-3 and the 128-frame Animation03 timeline sprite-23, then stops the root playhead.",
+      "sprite-23 owns 128 declared frames, a terminal stop, and embedded streaming MP3 structure; static extraction does not establish natural reachability, language, cue timing, synchronization, or listening acceptance."
+    ],
+    "report": {
+      "path": "migrations/course-g04-l03-ts-006/audit/machine/report.json",
+      "bytes": 9033,
+      "sha256": "ea6aa27fe418c6f54b9e0a19c2ab24782f2d0c3c4b62f46828cbdc8ada387d5b"
+    }
+  },
+  "branchCaptureReadiness": {
+    "status": "partial-reference-only",
+    "authoritativeScheduleEstablished": false,
+    "runtimeSessionsExecuted": 0,
+    "requiredScenarioInventory": [
+      "English natural entry through the complete same-lesson shell host path",
+      "Spanish natural entry through a fresh independent runtime profile and complete same-lesson shell host path",
+      "all naturally reached one-indexed root frames and the frame-6 entry state",
+      "all naturally reached sprite-23 frames 1-128 through its terminal stop",
+      "evidence-backed disposition of root-placed sprite-3 without treating static placement as runtime reachability",
+      "embedded and external audio selection, cue, language, timing, synchronization, and complete listening review",
+      "host-native Replay with full root, nested, audio, language, and navigation-state reset",
+      "host-native Previous and Next navigation plus natural re-entry to TS006"
+    ],
+    "missing": [
+      "source-hash-bound authorized original-runtime natural-entry capture",
+      "approved containment, named runtime operator, owner authorization, and external trust-root bindings",
+      "natural runtime reachability and final disposition for every root-placed timeline",
+      "complete English and Spanish frame, audio, navigation, terminal, and Replay evidence",
+      "implementation captures, full-frame RMSE, independent human review, and owner acceptance"
+    ],
+    "directSeekAuthority": "not-permitted-for-primary-evidence; supplemental diagnosis only after a complete natural trace"
+  },
+  "acceptance": {
+    "acceptanceNeutral": true,
+    "authoritativeOriginalRuntimeAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictMigrationComplete": false
+  },
+  "evidence": [
+    {
+      "id": "source-swf",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.swf",
+      "bytes": 55154,
+      "sha256": "fa8962a6ca72c0bb213605a9836b62600992cb5c1cf955f7c871e857e90ddf47"
+    },
+    {
+      "id": "source-fla",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.fla",
+      "bytes": 3950592,
+      "sha256": "3f500c60b73b735eb001993b31ff101bf1615384c86b6a28987a84feef5b70dd"
+    },
+    {
+      "id": "migration-technical-contract",
+      "path": "migrations/course-g04-l03-ts-006/migration.json",
+      "bytes": 14053,
+      "sha256": "c065a67ddd72f5426ff3f71fa7ee92db7f5e06bb77dd8801ee0206d57b486590"
+    },
+    {
+      "id": "standard-machine-report",
+      "path": "migrations/course-g04-l03-ts-006/audit/machine/report.json",
+      "bytes": 9033,
+      "sha256": "ea6aa27fe418c6f54b9e0a19c2ab24782f2d0c3c4b62f46828cbdc8ada387d5b"
+    },
+    {
+      "id": "standard-machine-output-01",
+      "path": "audit/machine/ffdec-header.txt",
+      "bytes": 187,
+      "sha256": "5219a1809bab9caf0fbbabbe656d9de249fcba23559813a98313192a034d8056"
+    },
+    {
+      "id": "standard-machine-output-02",
+      "path": "audit/machine/ffdec-script-index.txt",
+      "bytes": 117,
+      "sha256": "ca8803cdcc56f5ab3f887a15a2bfe8d739c128c691fb0078473cff2624ef0e83"
+    },
+    {
+      "id": "standard-machine-output-03",
+      "path": "audit/machine/ffdec-scripts.txt.gz",
+      "bytes": 142,
+      "sha256": "52f16acea1b946a2fe85fa7cfc1a021c9a32f3ea463a571216a9332261b46962"
+    },
+    {
+      "id": "standard-machine-output-04",
+      "path": "audit/machine/ffdec-tags.txt.gz",
+      "bytes": 14637,
+      "sha256": "3d6db2625197a9798f11339ec9fe53831a569e6662499c77afd2ce1bf513478f"
+    },
+    {
+      "id": "standard-machine-output-05",
+      "path": "audit/machine/swfmill-summary.json",
+      "bytes": 1928,
+      "sha256": "a8851ba839e75ed89b3257aa916f65b75ce110e4d963032f4bc56a98996a83f5"
+    },
+    {
+      "id": "standard-machine-output-06",
+      "path": "audit/machine/swfmill.xml.gz",
+      "bytes": 65042,
+      "sha256": "91af7991711a2c9eeaf2012bf536b22fc768a080bc90fe2fe30abf4aaad3346f"
+    },
+    {
+      "id": "g4-l3-source-audit",
+      "path": "migrations/course-g04-l03-ts-006/audit/machine/g4-l3-source-audit.json",
+      "bytes": 8195,
+      "sha256": "e27f043f7c2153896128cdd780a67b1d2c0e87557af9a622d42d4c0b76f41cfc"
+    },
+    {
+      "id": "original-runtime-protocol-draft",
+      "path": "reports/g4-l3-ts006-original-runtime-session-protocol-draft.json",
+      "bytes": 18849,
+      "sha256": "690b8c68c67f3b85220208ccb27d15021897f9801a7865b6f408db3b55813c03"
+    },
+    {
+      "id": "first-session-readiness",
+      "path": "reports/g4-l3-first-original-runtime-session-readiness.json",
+      "bytes": 24129,
+      "sha256": "156e04690dc0ed06f3b98f041e54d3e412db07e656f6045eb49c8aa92e001ca7"
+    }
+  ],
+  "limitations": [
+    "This readiness artifact is a static specification input. It launches neither Adobe Animate nor an original Flash runtime.",
+    "The standard machine audit re-extracts source structure but cannot prove runtime reachability, interaction behavior, visual fidelity, or audio timing.",
+    "No field in this artifact authorizes capture, satisfies a full-frame requirement, changes migration status, or supplies a human or owner signature."
+  ],
+  "strictAcceptanceEffect": "none; this fail-closed readiness artifact only supplies source-bound scenario obligations"
+}

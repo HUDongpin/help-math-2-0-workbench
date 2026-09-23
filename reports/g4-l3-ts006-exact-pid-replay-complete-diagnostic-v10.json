@@ -1,0 +1,899 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l3-ts006-exact-pid-replay-complete-diagnostic-v10",
+  "status": "verified-acceptance-neutral-diagnostic-not-promotion-eligible",
+  "animationId": "course-g04-l03-ts-006",
+  "languageLabel": "en",
+  "scope": "Exact bytes, exact-PID/display crop, alpha, frame cadence, horizontal registration, ALAC/decoded PCM, and deterministic Replay visual segmentation.",
+  "authority": {
+    "exactPidSelectionCreatesRuntimeAuthority": false,
+    "authorizedNaturalTraceEstablished": false,
+    "replayInputCausalityEstablished": false,
+    "sourcePlayheadMappingEstablished": false,
+    "authoritativeOriginalRuntimeTrace": false,
+    "authoritativeBaseline": false,
+    "baselineAccepted": false,
+    "englishAudioAccepted": false,
+    "spanishAudioAccepted": false,
+    "audioLanguageCorrectnessAccepted": false,
+    "audioSynchronizationAccepted": false,
+    "independentHumanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictMigrationComplete": false,
+    "publicRelease": false
+  },
+  "acceptance": {
+    "exactPidSelectionCreatesRuntimeAuthority": false,
+    "authorizedNaturalTraceEstablished": false,
+    "replayInputCausalityEstablished": false,
+    "sourcePlayheadMappingEstablished": false,
+    "authoritativeOriginalRuntimeTrace": false,
+    "authoritativeBaseline": false,
+    "baselineAccepted": false,
+    "englishAudioAccepted": false,
+    "spanishAudioAccepted": false,
+    "audioLanguageCorrectnessAccepted": false,
+    "audioSynchronizationAccepted": false,
+    "independentHumanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictMigrationComplete": false,
+    "publicRelease": false
+  },
+  "sourceBindings": {
+    "primaryCaptureManifest": {
+      "path": "artifacts/full-frame/g4-l3/ts006-en-exact-pid-replay-complete-diagnostic-20260726T220817+0800/capture-manifest.json",
+      "bytes": 191669,
+      "sha256": "2e2154fd5af712a388fead07e91303c017167152ca1aa7db9f96a31ce6e3c313"
+    },
+    "stagedLessonShell": {
+      "path": "work/original-runtime-host-trees/course-g04-l03-ts-006/root/HELP_COURSES/ELMGR4/L3/index_local.swf",
+      "bytes": 657421,
+      "sha256": "817e599de43a7924f0a93791e950c8781755692371945a5b7ea4cdd2ad26c58e",
+      "exactWindowTitle": "file:///Volumes/WestWorld/HELP MATH 2.0/work/original-runtime-host-trees/course-g04-l03-ts-006/root/HELP_COURSES/ELMGR4/L3/index_local.swf"
+    },
+    "analyzer": {
+      "path": "scripts/analyze-g4-l3-ts006-exact-pid-replay-complete-diagnostic-v10.mjs",
+      "bytes": 52361,
+      "sha256": "f4395c23531acd2511ea1f6e1886e95ea472afca48697075b2d5bcf540d071c0"
+    }
+  },
+  "primaryCapture": {
+    "sessionId": "ts006-en-exact-pid-replay-complete-diagnostic-20260726T220817+0800",
+    "evidenceType": "g4-l3-lossless-window-frame-and-system-audio-capture",
+    "status": "raw-capture-not-yet-bound-to-runtime-trace",
+    "startedAt": "2026-07-26T14:08:36Z",
+    "endedAt": "2026-07-26T14:09:21Z",
+    "exactPidAndDisplayCrop": {
+      "expectedProcessID": 97581,
+      "includedProcessID": 97581,
+      "includedApplicationName": "Flash Player",
+      "includedBundleIdentifier": "com.macromedia.Flash Player.app",
+      "sourceKind": "waited-first-window-exact-pid",
+      "waitForPidSeconds": 2,
+      "resolvedDisplaySourceRect": "0.0,58.0,800.0,600.0",
+      "exactPidManifestSelectionVerified": true,
+      "runtimeAuthorityEffect": "none"
+    },
+    "window": {
+      "frameHeight": 628,
+      "frameWidth": 800,
+      "frameX": 0,
+      "frameY": 30,
+      "onScreen": true,
+      "ownerName": "Flash Player",
+      "title": "file:///Volumes/WestWorld/HELP MATH 2.0/work/original-runtime-host-trees/course-g04-l03-ts-006/root/HELP_COURSES/ELMGR4/L3/index_local.swf",
+      "windowID": 6310
+    },
+    "frames": {
+      "count": 537,
+      "completeFrameCount": 537,
+      "width": 800,
+      "height": 600,
+      "droppedOrIncompleteFrameCount": 0,
+      "totalPngBytes": 59501779,
+      "orderedFrameSetSha256": "cc5ac73561910a29e41933e4b54d4d083a9302f68ed915c60a270e26dbb01926",
+      "contentCropSequenceSha256": "724c1c57d8a77faf3c373ea29b4017383c074cff8bb5c864f70da0e7b14677cb",
+      "instructionalPixelSequenceSha256": "ab389adb4aaf1d0621e9cb947bd9e1bcb30f6eceeb29ada3beaf102bab285bd1",
+      "timing": {
+        "durationSeconds": 45.116886042,
+        "effectiveFps": 11.880252540058493,
+        "nominalFps": 12,
+        "nominalFpsToleranceFraction": 0.02,
+        "nominalFpsErrorFraction": 0.009978954995125614,
+        "nominalCadenceWithinTolerance": true,
+        "intervalSeconds": {
+          "minimum": 0.08333079099999985,
+          "median": 0.08333374999999954,
+          "p95": 0.09999766700000023,
+          "maximum": 0.100003375
+        }
+      }
+    },
+    "alphaMask": {
+      "declaredSha256": "61a3e6ea1072d68e50f8ff6353e8af4e9657994bd3262d106d549e7e82fa88ca",
+      "alphaMaskSha256": "61a3e6ea1072d68e50f8ff6353e8af4e9657994bd3262d106d549e7e82fa88ca",
+      "nonOpaquePixelCount": 116,
+      "nonOpaqueBounds": {
+        "minimumX": 0,
+        "minimumY": 582,
+        "maximumX": 799,
+        "maximumY": 599
+      },
+      "nonOpaquePixelsByRow": [
+        {
+          "y": 582,
+          "count": 2
+        },
+        {
+          "y": 583,
+          "count": 2
+        },
+        {
+          "y": 584,
+          "count": 2
+        },
+        {
+          "y": 585,
+          "count": 2
+        },
+        {
+          "y": 586,
+          "count": 2
+        },
+        {
+          "y": 587,
+          "count": 2
+        },
+        {
+          "y": 588,
+          "count": 2
+        },
+        {
+          "y": 589,
+          "count": 2
+        },
+        {
+          "y": 590,
+          "count": 2
+        },
+        {
+          "y": 591,
+          "count": 2
+        },
+        {
+          "y": 592,
+          "count": 4
+        },
+        {
+          "y": 593,
+          "count": 4
+        },
+        {
+          "y": 594,
+          "count": 6
+        },
+        {
+          "y": 595,
+          "count": 8
+        },
+        {
+          "y": 596,
+          "count": 10
+        },
+        {
+          "y": 597,
+          "count": 12
+        },
+        {
+          "y": 598,
+          "count": 16
+        },
+        {
+          "y": 599,
+          "count": 36
+        }
+      ],
+      "distinctMaskCount": 1,
+      "verifiedFrameCount": 537,
+      "stableAcrossAllFrames": true
+    },
+    "horizontalRegistration": {
+      "detectedLeftStageOffsetsPixels": [
+        0
+      ],
+      "staticTopAnchorDistinctSha256Count": 1,
+      "staticTopAnchorSha256": "6819d161027fa7df113182b669bf7d00d63ee8da6817e3f416c2b595d0bf8e90",
+      "staticTopAnchorFrameCount": 537,
+      "completeHeader108DistinctSha256Count": 1,
+      "completeHeader108Sha256": "6efff69d60b6a592a3ea084d323746810b3444828c6b53220d81a9eab31315d6",
+      "completeHeader108FrameCount": 537,
+      "noHorizontalRegistrationDriftDetected": true,
+      "algorithmBoundary": "Leading-black-column detector plus exact RGB SHA-256 of native x=0,y=0,w=800,h=60."
+    },
+    "audio": {
+      "file": "artifacts/full-frame/g4-l3/ts006-en-exact-pid-replay-complete-diagnostic-20260726T220817+0800/system-audio-lossless.m4a",
+      "bytes": 5145502,
+      "sha256": "dcebe8af5e012b395f46ffebe8edae1a575807e5d2164924a133cd4a783fec06",
+      "containerFormat": "mov,mp4,m4a,3gp,3g2,mj2",
+      "durationSeconds": 45.141333,
+      "stream": {
+        "index": 0,
+        "codecName": "alac",
+        "codecLongName": "ALAC (Apple Lossless Audio Codec)",
+        "sampleRate": 48000,
+        "channels": 2,
+        "channelLayout": "stereo",
+        "bitsPerRawSample": 24
+      },
+      "decodedPcm": {
+        "format": "signed-32-bit-little-endian-stereo",
+        "bytes": 17326080,
+        "sha256": "bb6750534eeddafb73188b101c17e7a4a47bd804fabe0ab1036cb9e70c46ad1f",
+        "nonZeroByteCount": 5556452,
+        "captureManifestPayloadBytesMatch": true,
+        "captureManifestInputNonZeroByteCount": 8005808,
+        "captureManifestNonZeroByteCountComparable": false
+      },
+      "tools": {
+        "ffprobe": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers",
+        "ffmpeg": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "manifestInputContainsNonZeroAudio": true,
+      "manifestBufferCount": 2256,
+      "firstPresentationOffsetFromFirstVideoFrameSeconds": -0.010464915991178714,
+      "lastPresentationOffsetFromLastVideoFrameSeconds": -0.027350958000170067,
+      "acceptanceEffect": "none"
+    }
+  },
+  "replayDiagnostic": {
+    "algorithm": "body-rgb-sha256-adjacent-rmse-terminal-marker-and-long-hold-segmentation-v1",
+    "thresholds": {
+      "longPixelIdenticalHoldMinimumFrames": 10,
+      "significantAdjacentRmse": 0.02,
+      "terminalMarkerChangedPixelsMinimum": 1000,
+      "terminalLikeRmseToInitialMaximum": 0.02
+    },
+    "stableInstructionalTerminalPrefix": {
+      "firstOrdinal": 1,
+      "lastOrdinal": 16,
+      "frameCount": 16,
+      "instructionalRgbaSha256": "75517815135d65354d3cd89eea5143731489244762b4160af89d0cb033da3636",
+      "excludedControlRegions": [
+        {
+          "id": "replay-control-tooltip",
+          "x": 515,
+          "y": 498,
+          "width": 110,
+          "height": 26
+        },
+        {
+          "id": "next-control-tooltip",
+          "x": 680,
+          "y": 490,
+          "width": 120,
+          "height": 34
+        }
+      ],
+      "interpretation": "After excluding two control-tooltip rectangles, terminal instructional pixels are byte-identical through the complete pre-reset prefix; ordinals 14-16 contain only a control-hover overlay."
+    },
+    "interactionNeutralTerminalPrefix": {
+      "firstOrdinal": 1,
+      "lastOrdinal": 13,
+      "frameCount": 13,
+      "interpretation": "Terminal lesson content is present before pointer-hover pixels appear."
+    },
+    "preResetInteractionVisual": {
+      "firstOrdinal": 14,
+      "lastOrdinal": 16,
+      "frameCount": 3,
+      "firstSignificantAdjacentChangeOrdinal": 14,
+      "interpretation": "Pixels change while terminal content remains present; cursor pixels are excluded, so this is consistent with a control hover prelude but does not prove an input event."
+    },
+    "replayResetVisualTransition": {
+      "firstOrdinal": 17,
+      "lastOrdinal": 17,
+      "frameCount": 1,
+      "normalizedAdjacentBodyRmse": 0.12224216383938988,
+      "interpretation": "The largest adjacent body change in the capture removes terminal content."
+    },
+    "resetLikePlateau": {
+      "firstOrdinal": 18,
+      "lastOrdinal": 30,
+      "frameCount": 13,
+      "contentCropSha256": "55ff1230643a8550a51dc3ae7c7553571ad23b4a198b3a03a6ba8bd45fb7b3d9",
+      "interpretation": "The body pixels are identical for 13 frames after the reset transition."
+    },
+    "observedRevealAnimation": {
+      "firstOrdinal": 31,
+      "lastOrdinal": 261,
+      "frameCount": 231,
+      "completeThroughTerminalReveal": true,
+      "transitions": [
+        {
+          "firstOrdinal": 31,
+          "lastOrdinal": 38,
+          "frameCount": 8,
+          "leadsToHold": "check-your-work"
+        },
+        {
+          "firstOrdinal": 120,
+          "lastOrdinal": 125,
+          "frameCount": 6,
+          "leadsToHold": "strategies-heading"
+        },
+        {
+          "firstOrdinal": 156,
+          "lastOrdinal": 161,
+          "frameCount": 6,
+          "leadsToHold": "strategy-list"
+        },
+        {
+          "firstOrdinal": 253,
+          "lastOrdinal": 261,
+          "frameCount": 9,
+          "leadsToHold": "terminal-show-your-work"
+        }
+      ],
+      "pixelIdenticalHolds": [
+        {
+          "firstOrdinal": 39,
+          "lastOrdinal": 119,
+          "frameCount": 81,
+          "contentCropSha256": "bb45ef3095986b2f128c9c475ac1f15d12b6fe51d732f602bfd1cb90838215d1",
+          "diagnosticLabel": "check-your-work-hold"
+        },
+        {
+          "firstOrdinal": 126,
+          "lastOrdinal": 155,
+          "frameCount": 30,
+          "contentCropSha256": "708aa29fb297820536e7383aeb4d556f85f8b863190786bf6dd6aabf7c834fc9",
+          "diagnosticLabel": "strategies-heading-hold"
+        },
+        {
+          "firstOrdinal": 162,
+          "lastOrdinal": 252,
+          "frameCount": 91,
+          "contentCropSha256": "f3d04c454a615b2a6fe64050a1c0e2abe6240c417817544747a0886da667c8f6",
+          "diagnosticLabel": "strategy-list-hold"
+        }
+      ]
+    },
+    "terminalLikeSuffix": {
+      "firstOrdinal": 262,
+      "lastOrdinal": 537,
+      "frameCount": 276,
+      "initialPixelIdenticalHold": {
+        "firstOrdinal": 262,
+        "lastOrdinal": 288,
+        "frameCount": 27,
+        "contentCropSha256": "511a10734dd1a0351880020bffdd0dd3749908756d241130bbe0f0d2d30db7d9"
+      },
+      "fullFramePixelStaticTail": {
+        "firstOrdinal": 536,
+        "lastOrdinal": 537,
+        "frameCount": 2,
+        "frameSha256": "742a7cdf68d77c5c0b38c134dc74c276e9021f7b38ce87d5f1a95d6ea958ef54",
+        "note": "Only this tail is full-frame pixel-static because footer controls and the source terminal pulse continue changing earlier frames."
+      },
+      "normalizedRmseToInitialBody": {
+        "minimum": 0,
+        "maximum": 0.018598012646235472,
+        "mean": 0.005725647355080095
+      },
+      "terminalMarkerChangedPixels": {
+        "minimum": 1146,
+        "maximum": 1146,
+        "mean": 1146
+      },
+      "instructionalRgbaSha256": "75517815135d65354d3cd89eea5143731489244762b4160af89d0cb033da3636",
+      "instructionalPixelsEqualToTerminalPrefix": true,
+      "interpretation": "Terminal content remains present through capture end; later per-frame variation is the source terminal pulse, so the suffix is terminal-like rather than pixel-static."
+    },
+    "visualSequenceEstablished": true,
+    "replayInputCausalityEstablished": false,
+    "sourcePlayheadMappingEstablished": false,
+    "semanticRuntimeAuthorityEstablished": false,
+    "contentCrop": {
+      "x": 0,
+      "y": 108,
+      "width": 800,
+      "height": 416,
+      "purpose": "Lesson body between the 108px header and the footer beginning at y=524."
+    },
+    "terminalMarkerRegion": {
+      "x": 190,
+      "y": 305,
+      "width": 250,
+      "height": 36,
+      "purpose": "Source-stage region containing the terminal Show your work row."
+    },
+    "instructionalPixelExclusions": [
+      {
+        "id": "replay-control-tooltip",
+        "x": 515,
+        "y": 498,
+        "width": 110,
+        "height": 26
+      },
+      {
+        "id": "next-control-tooltip",
+        "x": 680,
+        "y": 490,
+        "width": 120,
+        "height": 34
+      }
+    ],
+    "keyFrames": {
+      "1": {
+        "ordinal": 1,
+        "relativeTimeSeconds": 0,
+        "presentationTimeSeconds": 107405.397206916,
+        "frameSha256": "1a76ce934ea99a3df93a77e34a40991881afdf2e59c1fe265bca8b0a864fee95",
+        "contentCropSha256": "bdf5c8a4b8f720988d828bf0605f1b3d9e381407a9b1ad8017fcfba056eef95c",
+        "rmseToInitialContent": 0,
+        "adjacentContentRmse": 0,
+        "terminalMarkerChangedPixels": 1146
+      },
+      "13": {
+        "ordinal": 13,
+        "relativeTimeSeconds": 1.00000475,
+        "presentationTimeSeconds": 107406.397211666,
+        "frameSha256": "626efebe7578be31d7e7e2b7451e11ec5b046746d0e8c149a7c4c7d8ae84c7e8",
+        "contentCropSha256": "862acc6c4c9286144bc6a9611e307bf92853b2e619325d715819f695b1d4b7dc",
+        "rmseToInitialContent": 0.002165052837683746,
+        "adjacentContentRmse": 0.0011276149136508048,
+        "terminalMarkerChangedPixels": 1146
+      },
+      "14": {
+        "ordinal": 14,
+        "relativeTimeSeconds": 1.100005209,
+        "presentationTimeSeconds": 107406.497212125,
+        "frameSha256": "0a20941da04fcf31380ebf6ed7125db9b3920fe7c99f93508911c05b8a88ea44",
+        "contentCropSha256": "27a707163ae237de25a908b9145a9ac3e73a4749f53c5e9b44cf45a60fd9543d",
+        "rmseToInitialContent": 0.023902924664563334,
+        "adjacentContentRmse": 0.02390250708155035,
+        "terminalMarkerChangedPixels": 1146
+      },
+      "16": {
+        "ordinal": 16,
+        "relativeTimeSeconds": 1.266672709,
+        "presentationTimeSeconds": 107406.663879625,
+        "frameSha256": "380f67231463900b8f75ba161e3980aafe11852876b3a54daf6e2a021bd18ecc",
+        "contentCropSha256": "0a3994fe2579141b2cf1ef3f259ee7e88223ffeba2837cffdbb21edd303a2bc0",
+        "rmseToInitialContent": 0.023900077802366616,
+        "adjacentContentRmse": 0.001032758093774675,
+        "terminalMarkerChangedPixels": 1146
+      },
+      "17": {
+        "ordinal": 17,
+        "relativeTimeSeconds": 1.350006417,
+        "presentationTimeSeconds": 107406.747213333,
+        "frameSha256": "1fcaa714349db445781525b3af3e62b79f7f641563f6e685daf1637d2f300b3c",
+        "contentCropSha256": "d9d0706cb91593beb44e61daa1c6c7b96ef633c52a76260d1f432d19c28daa68",
+        "rmseToInitialContent": 0.12448574476432347,
+        "adjacentContentRmse": 0.12224216383938988,
+        "terminalMarkerChangedPixels": 0
+      },
+      "18": {
+        "ordinal": 18,
+        "relativeTimeSeconds": 1.433340167,
+        "presentationTimeSeconds": 107406.830547083,
+        "frameSha256": "394f8fe301c7059a6828051a55bd12ed2c39167d5ea529f7259eff0c150279dd",
+        "contentCropSha256": "55ff1230643a8550a51dc3ae7c7553571ad23b4a198b3a03a6ba8bd45fb7b3d9",
+        "rmseToInitialContent": 0.12217427519674248,
+        "adjacentContentRmse": 0.023877753865866873,
+        "terminalMarkerChangedPixels": 0
+      },
+      "30": {
+        "ordinal": 30,
+        "relativeTimeSeconds": 2.433342084,
+        "presentationTimeSeconds": 107407.830549,
+        "frameSha256": "4b076458a0c98640f8f4236f583dba7dfa705b3c7b7bfc35d6c97388955a4c8f",
+        "contentCropSha256": "55ff1230643a8550a51dc3ae7c7553571ad23b4a198b3a03a6ba8bd45fb7b3d9",
+        "rmseToInitialContent": 0.12217427519674248,
+        "adjacentContentRmse": 0,
+        "terminalMarkerChangedPixels": 0
+      },
+      "31": {
+        "ordinal": 31,
+        "relativeTimeSeconds": 2.516678667,
+        "presentationTimeSeconds": 107407.913885583,
+        "frameSha256": "287b5b32ff3401579e02f30a8e7c6800c326181135c59437ceef155692671dce",
+        "contentCropSha256": "645289d993ac2255b7066011c8f55737323fc9eba17e6ec825ebed193c9b5086",
+        "rmseToInitialContent": 0.12203705553974971,
+        "adjacentContentRmse": 0.005346408263480068,
+        "terminalMarkerChangedPixels": 0
+      },
+      "38": {
+        "ordinal": 38,
+        "relativeTimeSeconds": 3.116681584,
+        "presentationTimeSeconds": 107408.5138885,
+        "frameSha256": "b6e51c58bcc542316de6650984add95d0bc6464e61190d0cfc9ac33cfda0db6d",
+        "contentCropSha256": "1afe22305feb91b04c600ef6fe79e72687d5438d69f7a70d78089b4d6eedc8b6",
+        "rmseToInitialContent": 0.11745230241223269,
+        "adjacentContentRmse": 0.04244822028253743,
+        "terminalMarkerChangedPixels": 0
+      },
+      "39": {
+        "ordinal": 39,
+        "relativeTimeSeconds": 3.200015375,
+        "presentationTimeSeconds": 107408.597222291,
+        "frameSha256": "5ebf0dfa56fb9184eab48f377178b05e624e2f96d01019614d8a85b6f617b04a",
+        "contentCropSha256": "bb45ef3095986b2f128c9c475ac1f15d12b6fe51d732f602bfd1cb90838215d1",
+        "rmseToInitialContent": 0.10709302909082818,
+        "adjacentContentRmse": 0.04822993325814984,
+        "terminalMarkerChangedPixels": 0
+      },
+      "119": {
+        "ordinal": 119,
+        "relativeTimeSeconds": 9.933378334,
+        "presentationTimeSeconds": 107415.33058525,
+        "frameSha256": "a555346bc9635676965d00e370f5b0daea39a79a7e64c6e202f3a15d7d9b991d",
+        "contentCropSha256": "bb45ef3095986b2f128c9c475ac1f15d12b6fe51d732f602bfd1cb90838215d1",
+        "rmseToInitialContent": 0.10709302909082818,
+        "adjacentContentRmse": 0,
+        "terminalMarkerChangedPixels": 0
+      },
+      "120": {
+        "ordinal": 120,
+        "relativeTimeSeconds": 10.033381625,
+        "presentationTimeSeconds": 107415.430588541,
+        "frameSha256": "67c7cba1f4a6f200de3aa178d2a97686293fa8a47fc837a1f241531cd3906f4a",
+        "contentCropSha256": "af122f12fc1fc49f89d9a20ad75b3f919ef5ff71c1d673146b20e0aeeab38cde",
+        "rmseToInitialContent": 0.10686846058419078,
+        "adjacentContentRmse": 0.004332815465598552,
+        "terminalMarkerChangedPixels": 0
+      },
+      "125": {
+        "ordinal": 125,
+        "relativeTimeSeconds": 10.450047459,
+        "presentationTimeSeconds": 107415.847254375,
+        "frameSha256": "5cf712e01309dd8ff4dd8b9b282ae39baa87797c0cb4c3399b8a5c5375de0700",
+        "contentCropSha256": "876f830261f2d00071f05b3570a37ea90900af1286c88b6ffc9b34ca34fee44c",
+        "rmseToInitialContent": 0.10578390062664811,
+        "adjacentContentRmse": 0.02403783834797833,
+        "terminalMarkerChangedPixels": 0
+      },
+      "126": {
+        "ordinal": 126,
+        "relativeTimeSeconds": 10.533384084,
+        "presentationTimeSeconds": 107415.930591,
+        "frameSha256": "bc57a96a9a8f2441497e95e4983dfb09f93aefad07fb8e7443a0dbb6a885456c",
+        "contentCropSha256": "708aa29fb297820536e7383aeb4d556f85f8b863190786bf6dd6aabf7c834fc9",
+        "rmseToInitialContent": 0.10201397109805396,
+        "adjacentContentRmse": 0.027988985915784314,
+        "terminalMarkerChangedPixels": 0
+      },
+      "155": {
+        "ordinal": 155,
+        "relativeTimeSeconds": 12.966729209,
+        "presentationTimeSeconds": 107418.363936125,
+        "frameSha256": "cb86570001cdd296fd00af99ccf1f6c1838745be3532f6b868a959fbbd413f2e",
+        "contentCropSha256": "708aa29fb297820536e7383aeb4d556f85f8b863190786bf6dd6aabf7c834fc9",
+        "rmseToInitialContent": 0.10201397109805396,
+        "adjacentContentRmse": 0,
+        "terminalMarkerChangedPixels": 0
+      },
+      "156": {
+        "ordinal": 156,
+        "relativeTimeSeconds": 13.050062875,
+        "presentationTimeSeconds": 107418.447269791,
+        "frameSha256": "8f2e7a68b4677ea88e2e08a8a24579cd1ea1e69223d2fdf87690842953b529d1",
+        "contentCropSha256": "53590f362b4dfb292a12908ae48c5ce21d479c99bccb576abf7f63cb3db147bb",
+        "rmseToInitialContent": 0.09080710624091604,
+        "adjacentContentRmse": 0.012251135041976198,
+        "terminalMarkerChangedPixels": 0
+      },
+      "161": {
+        "ordinal": 161,
+        "relativeTimeSeconds": 13.483398334,
+        "presentationTimeSeconds": 107418.88060525,
+        "frameSha256": "29e930bb0bb99eb18b7760b69a52830ae0c5272dfa04c38d49a498ff3c98ab72",
+        "contentCropSha256": "2fd5acaca92b27a7fc536ace0f6aa2182f1f30679f749c9b9f604fa6ccca9fc5",
+        "rmseToInitialContent": 0.04144481945516629,
+        "adjacentContentRmse": 0.014884610762814873,
+        "terminalMarkerChangedPixels": 32
+      },
+      "162": {
+        "ordinal": 162,
+        "relativeTimeSeconds": 13.566729209,
+        "presentationTimeSeconds": 107418.963936125,
+        "frameSha256": "b4f1618ddb623bbd0dd76563f2b2ae13d5289c257c8208bccd5ce3347a5bee94",
+        "contentCropSha256": "f3d04c454a615b2a6fe64050a1c0e2abe6240c417817544747a0886da667c8f6",
+        "rmseToInitialContent": 0.038620486089319145,
+        "adjacentContentRmse": 0.015037656529394334,
+        "terminalMarkerChangedPixels": 32
+      },
+      "252": {
+        "ordinal": 252,
+        "relativeTimeSeconds": 21.133435459,
+        "presentationTimeSeconds": 107426.530642375,
+        "frameSha256": "9d221e8bb14b4195274513ef0daf0efee537baf559385c36c6bd010dca6891f6",
+        "contentCropSha256": "f3d04c454a615b2a6fe64050a1c0e2abe6240c417817544747a0886da667c8f6",
+        "rmseToInitialContent": 0.038620486089319145,
+        "adjacentContentRmse": 0,
+        "terminalMarkerChangedPixels": 32
+      },
+      "253": {
+        "ordinal": 253,
+        "relativeTimeSeconds": 21.216766334,
+        "presentationTimeSeconds": 107426.61397325,
+        "frameSha256": "6f73a6bd2cd8de93954b03c3ec933860f47c146ff53453bdee6e45d7a5751852",
+        "contentCropSha256": "27d3dd3e07aeea026cc8dccf9d6b661ddc3da6dd993e7ebe85fdacb29b871ba0",
+        "rmseToInitialContent": 0.03911115601358888,
+        "adjacentContentRmse": 0.006175805934774497,
+        "terminalMarkerChangedPixels": 93
+      },
+      "261": {
+        "ordinal": 261,
+        "relativeTimeSeconds": 21.900105875,
+        "presentationTimeSeconds": 107427.297312791,
+        "frameSha256": "b7e830cdf635d95923495228a34e4d8cab7728b1da9924ea1f3d88c1a266bd9b",
+        "contentCropSha256": "9b01cc0ff296bd053acec04e80824a7ef285d8f4b6333ba117eb068134b6143f",
+        "rmseToInitialContent": 0.023387291468590633,
+        "adjacentContentRmse": 0.014180244280239946,
+        "terminalMarkerChangedPixels": 1140
+      },
+      "262": {
+        "ordinal": 262,
+        "relativeTimeSeconds": 21.983439667,
+        "presentationTimeSeconds": 107427.380646583,
+        "frameSha256": "be50136d615c72cd4308a436078d3f564bfbf31d0bd6e8733cede61e8cf64233",
+        "contentCropSha256": "511a10734dd1a0351880020bffdd0dd3749908756d241130bbe0f0d2d30db7d9",
+        "rmseToInitialContent": 0.018598012646235472,
+        "adjacentContentRmse": 0.014180244280239946,
+        "terminalMarkerChangedPixels": 1146
+      },
+      "288": {
+        "ordinal": 288,
+        "relativeTimeSeconds": 24.166783625,
+        "presentationTimeSeconds": 107429.563990541,
+        "frameSha256": "ac2b316637131f84e24ae63a4f3f313be41ce583f43ae73a04e4d97d0f5ffd40",
+        "contentCropSha256": "511a10734dd1a0351880020bffdd0dd3749908756d241130bbe0f0d2d30db7d9",
+        "rmseToInitialContent": 0.018598012646235472,
+        "adjacentContentRmse": 0,
+        "terminalMarkerChangedPixels": 1146
+      },
+      "289": {
+        "ordinal": 289,
+        "relativeTimeSeconds": 24.250117375,
+        "presentationTimeSeconds": 107429.647324291,
+        "frameSha256": "f6a1d3e23b77301489e27483827d782d69c306756151048f6df56629dae12fc0",
+        "contentCropSha256": "95d0acc1d1082f47daa7c729f0f36dc63bc4066da3f9dc283047cacbeb5dcdeb",
+        "rmseToInitialContent": 0.008004414305241599,
+        "adjacentContentRmse": 0.016160462736298727,
+        "terminalMarkerChangedPixels": 1146
+      },
+      "537": {
+        "ordinal": 537,
+        "relativeTimeSeconds": 45.116886042,
+        "presentationTimeSeconds": 107450.514092958,
+        "frameSha256": "742a7cdf68d77c5c0b38c134dc74c276e9021f7b38ce87d5f1a95d6ea958ef54",
+        "contentCropSha256": "13f6835dc0906bb02c5bf6b3867262a3b2a507162a68af8da8a8eb3c75ae2dd2",
+        "rmseToInitialContent": 0.0010966666954320635,
+        "adjacentContentRmse": 0,
+        "terminalMarkerChangedPixels": 1146
+      }
+    },
+    "conclusion": "Pixels establish terminal prefix, control-hover prelude, reset transition and plateau, four reveal transitions, and a terminal-like suffix through capture end. They do not prove the Replay input event, exact source playhead values, natural-entry causality, or runtime authority."
+  },
+  "diagnosticSibling": {
+    "sessionId": "ts006-es-page-audio-exact-pid-diagnostic-20260726T221112+0800",
+    "role": "separate-exact-pid-spanish-page-audio-diagnostic-sibling",
+    "sourceBinding": {
+      "path": "artifacts/full-frame/g4-l3/ts006-es-page-audio-exact-pid-diagnostic-20260726T221112+0800/capture-manifest.json",
+      "bytes": 86863,
+      "sha256": "04a130e60b07abf9df399fd0dc53f5e48d92f8c388f3a9c5a4692ce8bb98cf8f"
+    },
+    "languageLabel": "es-operator-label-not-runtime-language-authority",
+    "exactPidAndDisplayCrop": {
+      "includedProcessID": 97581,
+      "resolvedDisplaySourceRect": "0.0,58.0,800.0,600.0",
+      "exactPidManifestSelectionVerified": true
+    },
+    "frames": {
+      "count": 240,
+      "completeFrameCount": 240,
+      "droppedOrIncompleteFrameCount": 0,
+      "orderedFrameSetSha256": "a0279d853ebdb58dd6b9a62940f712c50dfd59d28bad74ad49048c583834376c",
+      "timing": {
+        "durationSeconds": 20.116765208,
+        "effectiveFps": 11.880637743137495,
+        "nominalFps": 12,
+        "nominalFpsToleranceFraction": 0.02,
+        "nominalFpsErrorFraction": 0.009946854738542102,
+        "nominalCadenceWithinTolerance": true,
+        "intervalSeconds": {
+          "minimum": 0.08333079099999985,
+          "median": 0.08333374999999954,
+          "p95": 0.09999762500000031,
+          "maximum": 0.10000329200000024
+        }
+      }
+    },
+    "alphaMask": {
+      "declaredSha256": "61a3e6ea1072d68e50f8ff6353e8af4e9657994bd3262d106d549e7e82fa88ca",
+      "alphaMaskSha256": "61a3e6ea1072d68e50f8ff6353e8af4e9657994bd3262d106d549e7e82fa88ca",
+      "nonOpaquePixelCount": 116,
+      "nonOpaqueBounds": {
+        "minimumX": 0,
+        "minimumY": 582,
+        "maximumX": 799,
+        "maximumY": 599
+      },
+      "nonOpaquePixelsByRow": [
+        {
+          "y": 582,
+          "count": 2
+        },
+        {
+          "y": 583,
+          "count": 2
+        },
+        {
+          "y": 584,
+          "count": 2
+        },
+        {
+          "y": 585,
+          "count": 2
+        },
+        {
+          "y": 586,
+          "count": 2
+        },
+        {
+          "y": 587,
+          "count": 2
+        },
+        {
+          "y": 588,
+          "count": 2
+        },
+        {
+          "y": 589,
+          "count": 2
+        },
+        {
+          "y": 590,
+          "count": 2
+        },
+        {
+          "y": 591,
+          "count": 2
+        },
+        {
+          "y": 592,
+          "count": 4
+        },
+        {
+          "y": 593,
+          "count": 4
+        },
+        {
+          "y": 594,
+          "count": 6
+        },
+        {
+          "y": 595,
+          "count": 8
+        },
+        {
+          "y": 596,
+          "count": 10
+        },
+        {
+          "y": 597,
+          "count": 12
+        },
+        {
+          "y": 598,
+          "count": 16
+        },
+        {
+          "y": 599,
+          "count": 36
+        }
+      ],
+      "stableAcrossAllFrames": true
+    },
+    "horizontalRegistration": {
+      "detectedLeftStageOffsetsPixels": [
+        0
+      ],
+      "staticTopAnchorDistinctSha256Count": 1,
+      "staticTopAnchorSha256": "6819d161027fa7df113182b669bf7d00d63ee8da6817e3f416c2b595d0bf8e90",
+      "staticTopAnchorFrameCount": 240,
+      "completeHeader108DistinctSha256Count": 6,
+      "completeHeader108Sha256": null,
+      "completeHeader108FrameCount": null,
+      "noHorizontalRegistrationDriftDetected": true,
+      "algorithmBoundary": "Leading-black-column detector plus exact RGB SHA-256 of native x=0,y=0,w=800,h=60."
+    },
+    "audio": {
+      "file": "artifacts/full-frame/g4-l3/ts006-es-page-audio-exact-pid-diagnostic-20260726T221112+0800/system-audio-lossless.m4a",
+      "bytes": 2489897,
+      "sha256": "02165163f0c8692ee6194c6250705aa0aceba2506c2e4b93c31f375de23e7600",
+      "containerFormat": "mov,mp4,m4a,3gp,3g2,mj2",
+      "durationSeconds": 20.138667,
+      "stream": {
+        "index": 0,
+        "codecName": "alac",
+        "codecLongName": "ALAC (Apple Lossless Audio Codec)",
+        "sampleRate": 48000,
+        "channels": 2,
+        "channelLayout": "stereo",
+        "bitsPerRawSample": 24
+      },
+      "decodedPcm": {
+        "format": "signed-32-bit-little-endian-stereo",
+        "bytes": 7726080,
+        "sha256": "95ec3b93269be7eac06398406c7015717417b5007fc7832184c95eddeb36283e",
+        "nonZeroByteCount": 3767444,
+        "captureManifestPayloadBytesMatch": true,
+        "captureManifestInputNonZeroByteCount": 5313466,
+        "captureManifestNonZeroByteCountComparable": false
+      },
+      "tools": {
+        "ffprobe": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers",
+        "ffmpeg": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers"
+      },
+      "manifestInputContainsNonZeroAudio": true,
+      "acceptanceEffect": "none"
+    },
+    "independentMacOsAccountEstablished": false,
+    "naturalTraceEstablished": false,
+    "spanishLanguageCorrectnessEstablished": false,
+    "audioCueCausalityEstablished": false,
+    "humanListeningAccepted": false,
+    "ownerAccepted": false,
+    "strictAcceptanceEffect": "none"
+  },
+  "supersededDiagnostic": {
+    "sessionId": "ts006-en-exact-pid-replay-diagnostic-20260726T220036+0800",
+    "manifest": {
+      "path": "artifacts/full-frame/g4-l3/ts006-en-exact-pid-replay-diagnostic-20260726T220036+0800/capture-manifest.json",
+      "bytes": 136902,
+      "sha256": "bea19a213bf5a4f38c00e0689adc2baec4d9b7d2efb974241736c73e3b7c8192"
+    },
+    "frameCount": 382,
+    "classification": "retained-superseded-incomplete-diagnostic-not-v10-primary",
+    "deletedOrOverwritten": false,
+    "contributesToReplaySegmentation": false,
+    "acceptanceEffect": "none"
+  },
+  "verifiedFacts": {
+    "primaryManifestBytesBound": true,
+    "stagedLessonShellBytesBound": true,
+    "exactPid97581ManifestSelectionVerified": true,
+    "resolvedDisplayCrop0x58x800x600Verified": true,
+    "all537PrimaryFramesBytesHashesAndPngsVerified": true,
+    "primaryCaptureToolReportedZeroDrops": true,
+    "primaryAlphaMaskStableAcross537Frames": true,
+    "primaryNoHorizontalRegistrationDriftDetected": true,
+    "primaryAlac48kHzStereo24BitVerified": true,
+    "primaryDecodedPcmHashAndNonzeroSignalVerified": true,
+    "terminalResetAnimationTerminalPixelSequenceVerified": true,
+    "spanishSibling240FramesAndZeroDropsVerified": true,
+    "spanishSiblingAlphaMaskStableAcross240Frames": true,
+    "spanishSiblingAlacAndNonzeroDecodedPcmVerified": true
+  },
+  "unresolvedGates": [
+    "no-hash-chained-operation-event-log-proving-the-Replay-click",
+    "no-source-playhead-telemetry-or-authoritative-ordinal-mapping",
+    "no-authorized-natural-entry-trace-execution-report",
+    "no-independent-English-and-Spanish-macOS-account-isolation",
+    "no-English-or-Spanish-audio-language-correctness-acceptance",
+    "no-audio-cue-causality-or-human-listening-acceptance",
+    "no-independent-human-visual-review",
+    "no-owner-acceptance"
+  ],
+  "acceptanceEffect": "none",
+  "strictAcceptanceEffect": "none",
+  "coverageMutationPerformed": false,
+  "candidateMutationPerformed": false,
+  "completionLedgerMutationPerformed": false,
+  "releaseLedgerMutationPerformed": false,
+  "protectedPinsMutationPerformed": false,
+  "reportFingerprintSha256": "6099d15ff79030e329d5d1f1740cbd5b8f4714ba40304ad1cdb67c038b4b16cb"
+}

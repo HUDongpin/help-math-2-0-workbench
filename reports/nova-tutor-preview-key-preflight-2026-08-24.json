@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "evidenceKind": "PREVIEW_OPENROUTER_KEY_PREFLIGHT",
+  "recordedAtUtc": "2026-08-24T04:47:14Z",
+  "branch": "codex/help-math-learning-platform-nova-fq",
+  "branchHead": "22ff85fd7eb6f69e981c8c91692e8ea4d60b5907",
+  "status": "SUPERSEDED_SENSITIVE_READBACK_CORRECTION",
+  "authorization": {
+    "previewScopedNovaEnvironmentChanges": true,
+    "g4L3TextOnly": true,
+    "frameMustRemainDisabled": true,
+    "speechMustRemainDisabled": true,
+    "maximumPreviewRealCanaryRequests": 1,
+    "productionChangesAllowed": false,
+    "productionAliasChangesAllowed": false,
+    "firewallChangesAllowed": false,
+    "drainChangesAllowed": false,
+    "promoteAllowed": false,
+    "commitAllowed": false,
+    "pushAllowed": false
+  },
+  "vercel": {
+    "deviceLoginSucceeded": true,
+    "isolatedGlobalConfigMode": "0700",
+    "previewEnvironmentReadSucceeded": true,
+    "productionEnvironmentReadOnlyComparisonSucceeded": true,
+    "remoteEnvironmentVariablesChanged": false,
+    "deploymentCreated": false
+  },
+  "currentPreviewNonSecretConfiguration": {
+    "masterEnabled": true,
+    "selectedReleaseCount": 0,
+    "frameEnabled": false,
+    "speechToDraftEnabled": false,
+    "modernWideEnabled": true,
+    "g4L3ShowcaseEnabled": true,
+    "officialOpenRouterBaseUrl": true,
+    "exactLunaModel": true,
+    "timeoutMs": 45000,
+    "maxOutputTokens": 700,
+    "applicationRateLimitPerMinute": 12,
+    "providerKeyPresent": true
+  },
+  "currentVercelKeyFinding": {
+    "sensitiveReadbackRedacted": true,
+    "readbackSentinelLength": 11,
+    "actualPreviewAndProductionEqualityVerifiable": false,
+    "openRouterCheckWasAgainstRedactionSentinel": true,
+    "actualKeyStatusVerifiableFromPull": false,
+    "priorSharedAnd401InferenceWithdrawn": true
+  },
+  "localLongTermKeyFinding": {
+    "present": true,
+    "distinctFromCurrentVercelPreview": true,
+    "distinctFromCurrentVercelProduction": true,
+    "openRouterCurrentKeyStatus": 200,
+    "expiresAtConfigured": false,
+    "hardSpendingLimitConfigured": false,
+    "limitRemainingAvailable": false,
+    "legacyRateLimitFieldDeprecated": true,
+    "technicallyUsableForPreview": true,
+    "approvedForPreviewWithoutHardBudget": true
+  },
+  "canary": {
+    "authorizedMaximum": 1,
+    "realProviderRequestsUsed": 0,
+    "remainingAuthorizedRequests": 1
+  },
+  "temporarySecretHandling": {
+    "previewEnvironmentSnapshotRemoved": true,
+    "productionEnvironmentSnapshotRemoved": true,
+    "secretValuePrinted": false,
+    "keyHashPersisted": false,
+    "providerRawBodyPersisted": false
+  },
+  "decisionRequired": {
+    "optionA": "Keep the long-term key without an expiry and add a recurring spending limit.",
+    "optionB": "Explicitly accept using the long-term key in Preview without an OpenRouter hard spending limit.",
+    "keyExpirationIsIndependentFromBudgetReset": true,
+    "ownerSelectedOptionB": true,
+    "selectedAtLaterTurn": true
+  },
+  "scopeBoundary": {
+    "previewModified": false,
+    "productionModified": false,
+    "productionAliasModified": false,
+    "firewallModified": false,
+    "drainModified": false,
+    "promoted": false,
+    "committed": false,
+    "pushed": false
+  },
+  "privacy": {
+    "storesSecretValue": false,
+    "storesKeyHash": false,
+    "storesAccountLabel": false,
+    "storesPromptOrReplyText": false,
+    "storesProviderResponseBody": false,
+    "storesHeaders": false
+  }
+}

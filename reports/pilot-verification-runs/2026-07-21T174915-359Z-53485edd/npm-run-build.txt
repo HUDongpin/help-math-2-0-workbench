@@ -1,0 +1,225 @@
+
+> flash-conversion-html5-rebuild@0.1.0 build
+> npm run build --workspace @helpmath/web
+
+
+> @helpmath/web@0.1.0 build
+> next build
+
+▲ Next.js 16.2.10 (Turbopack)
+
+  Creating an optimized production build ...
+Turbopack build encountered 7 warnings:
+[next]/internal/font/google/24ce79ed121239f3-s.woff2
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t7R-tQKr51pE8.woff2
+
+
+[next]/internal/font/google/5d52bd6c4cb3f315-s.p.woff2
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.gstatic.com/s/fredoka/v17/X7n64b87HvSqjb_WIi2yDCRwoQ_k7367_DWu89XgHPyh.woff2
+
+
+[next]/internal/font/google/d261779aa92de579-s.woff2
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t6R-tQKr51pE8.woff2
+
+
+[next]/internal/font/google/dcd150d580a10316-s.woff2
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7txR-tQKr51pE8.woff2
+
+
+[next]/internal/font/google/eeba9b1ad34c1404-s.woff2
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.gstatic.com/s/fredoka/v17/X7n64b87HvSqjb_WIi2yDCRwoQ_k7367_DWg89XgHPyhRMw.woff2
+
+
+[next]/internal/font/google/f141b5b7abe57afc-s.p.woff2
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t1R-tQKr51.woff2
+
+
+[next]/internal/font/google/f813d0b748b050e0-s.woff2
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.gstatic.com/s/nunitosans/v19/pe0TMImSLYBIv1o4X1M8ce2xCx3yop4tQpF_MeTm0lfGWVpNn64CL7U8upHZIbMV51Q42ptCp7t4R-tQKr51pE8.woff2
+
+
+
+> Build error occurred
+Error: Turbopack build failed with 7 errors:
+[next]/internal/font/google/fredoka_8b84d8f3.module.css:18:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  [90m16 |[0m   font-stretch: [35m100[0m%;
+  [90m17 |[0m   font-display: swap;
+[31m[1m>[0m [90m18 |[0m   src: url(@vercel/turbopack-next/internal/font/google/font?{%[35m22[0murl%[35m22[0m:%[35m22[0mhttps:[90m//fonts.gs...[0m
+  [90m   |[0m        [31m[1m^[0m
+  [90m19 |[0m   unicode-range: [33mU[0m+[35m0100[0m-[35m02[0m[33mBA[0m, [33mU[0m+[35m02[0m[33mBD[0m-[35m02[0m[33mC5[0m, [33mU[0m+[35m02[0m[33mC7[0m-[35m02[0m[33mCC[0m, [33mU[0m+[35m02[0m[33mCE[0m-[35m02[0m[33mD7[0m, [33mU[0m+[35m02[0m[33mDD[0m-[35m02[0m[33mFF[0m, [33mU[0m+[35m0304[0m, [33m.[0m.[35m.[0m
+  [90m20 |[0m }
+  [90m21 |[0m [90m/* latin */[0m
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/fredoka_8b84d8f3.module.css
+    [next]/internal/font/google/fredoka_8b84d8f3.js
+    ./apps/web/app/[locale]/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/fredoka_8b84d8f3.module.css:28:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  [90m26 |[0m   font-stretch: [35m100[0m%;
+  [90m27 |[0m   font-display: swap;
+[31m[1m>[0m [90m28 |[0m   src: url(@vercel/turbopack-next/internal/font/google/font?{%[35m22[0murl%[35m22[0m:%[35m22[0mhttps:[90m//fonts.gs...[0m
+  [90m   |[0m        [31m[1m^[0m
+  [90m29 |[0m   unicode-range: [33mU[0m+[35m0000[0m-[35m00[0m[33mFF[0m, [33mU[0m+[35m0131[0m, [33mU[0m+[35m0152[0m-[35m0153[0m, [33mU[0m+[35m02[0m[33mBB[0m-[35m02[0m[33mBC[0m, [33mU[0m+[35m02[0m[33mC6[0m, [33mU[0m+[35m02[0m[33mDA[0m, [33mU[0m+[35m02[0m[33mDC[0m, [33mU[0m+[35m...[0m
+  [90m30 |[0m }
+  [90m31 |[0m @font-face {
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/fredoka_8b84d8f3.module.css
+    [next]/internal/font/google/fredoka_8b84d8f3.js
+    ./apps/web/app/[locale]/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/nunito_sans_9b10f5df.module.css:8:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  [90m 6 |[0m   font-stretch: [35m100[0m%;
+  [90m 7 |[0m   font-display: swap;
+[31m[1m>[0m [90m 8 |[0m   src: url(@vercel/turbopack-next/internal/font/google/font?{%[35m22[0murl%[35m22[0m:%[35m22[0mhttps:[90m//fonts.gs...[0m
+  [90m   |[0m        [31m[1m^[0m
+  [90m 9 |[0m   unicode-range: [33mU[0m+[35m0460[0m-[35m052[0m[33mF[0m, [33mU[0m+[35m1[0m[33mC80[0m-[35m1[0m[33mC8A[0m, [33mU[0m+[35m20[0m[33mB4[0m, [33mU[0m+[35m2[0m[33mDE0[0m-[35m2[0m[33mDFF[0m, [33mU[0m+[33mA640[0m-[33mA69F[0m, [33mU[0m+[33mFE2E[0m-[33mFE2F[0m;
+  [90m10 |[0m }
+  [90m11 |[0m [90m/* cyrillic */[0m
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/nunito_sans_9b10f5df.module.css
+    [next]/internal/font/google/nunito_sans_9b10f5df.js
+    ./apps/web/app/[locale]/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/nunito_sans_9b10f5df.module.css:18:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  [90m16 |[0m   font-stretch: [35m100[0m%;
+  [90m17 |[0m   font-display: swap;
+[31m[1m>[0m [90m18 |[0m   src: url(@vercel/turbopack-next/internal/font/google/font?{%[35m22[0murl%[35m22[0m:%[35m22[0mhttps:[90m//fonts.gs...[0m
+  [90m   |[0m        [31m[1m^[0m
+  [90m19 |[0m   unicode-range: [33mU[0m+[35m0301[0m, [33mU[0m+[35m0400[0m-[35m045[0m[33mF[0m, [33mU[0m+[35m0490[0m-[35m0491[0m, [33mU[0m+[35m04[0m[33mB0[0m-[35m04[0m[33mB1[0m, [33mU[0m+[35m2116[0m;
+  [90m20 |[0m }
+  [90m21 |[0m [90m/* vietnamese */[0m
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/nunito_sans_9b10f5df.module.css
+    [next]/internal/font/google/nunito_sans_9b10f5df.js
+    ./apps/web/app/[locale]/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/nunito_sans_9b10f5df.module.css:28:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  [90m26 |[0m   font-stretch: [35m100[0m%;
+  [90m27 |[0m   font-display: swap;
+[31m[1m>[0m [90m28 |[0m   src: url(@vercel/turbopack-next/internal/font/google/font?{%[35m22[0murl%[35m22[0m:%[35m22[0mhttps:[90m//fonts.gs...[0m
+  [90m   |[0m        [31m[1m^[0m
+  [90m29 |[0m   unicode-range: [33mU[0m+[35m0102[0m-[35m0103[0m, [33mU[0m+[35m0110[0m-[35m0111[0m, [33mU[0m+[35m0128[0m-[35m0129[0m, [33mU[0m+[35m0168[0m-[35m0169[0m, [33mU[0m+[35m01[0m[33mA0[0m-[35m01[0m[33mA1[0m, [33mU[0m+[35m01[0m[33mAF[0m-[35m0.[0m[33m..[0m
+  [90m30 |[0m }
+  [90m31 |[0m [90m/* latin-ext */[0m
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/nunito_sans_9b10f5df.module.css
+    [next]/internal/font/google/nunito_sans_9b10f5df.js
+    ./apps/web/app/[locale]/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/nunito_sans_9b10f5df.module.css:38:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  [90m36 |[0m   font-stretch: [35m100[0m%;
+  [90m37 |[0m   font-display: swap;
+[31m[1m>[0m [90m38 |[0m   src: url(@vercel/turbopack-next/internal/font/google/font?{%[35m22[0murl%[35m22[0m:%[35m22[0mhttps:[90m//fonts.gs...[0m
+  [90m   |[0m        [31m[1m^[0m
+  [90m39 |[0m   unicode-range: [33mU[0m+[35m0100[0m-[35m02[0m[33mBA[0m, [33mU[0m+[35m02[0m[33mBD[0m-[35m02[0m[33mC5[0m, [33mU[0m+[35m02[0m[33mC7[0m-[35m02[0m[33mCC[0m, [33mU[0m+[35m02[0m[33mCE[0m-[35m02[0m[33mD7[0m, [33mU[0m+[35m02[0m[33mDD[0m-[35m02[0m[33mFF[0m, [33mU[0m+[35m0304[0m, [33m.[0m.[35m.[0m
+  [90m40 |[0m }
+  [90m41 |[0m [90m/* latin */[0m
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/nunito_sans_9b10f5df.module.css
+    [next]/internal/font/google/nunito_sans_9b10f5df.js
+    ./apps/web/app/[locale]/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/nunito_sans_9b10f5df.module.css:48:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  [90m46 |[0m   font-stretch: [35m100[0m%;
+  [90m47 |[0m   font-display: swap;
+[31m[1m>[0m [90m48 |[0m   src: url(@vercel/turbopack-next/internal/font/google/font?{%[35m22[0murl%[35m22[0m:%[35m22[0mhttps:[90m//fonts.gs...[0m
+  [90m   |[0m        [31m[1m^[0m
+  [90m49 |[0m   unicode-range: [33mU[0m+[35m0000[0m-[35m00[0m[33mFF[0m, [33mU[0m+[35m0131[0m, [33mU[0m+[35m0152[0m-[35m0153[0m, [33mU[0m+[35m02[0m[33mBB[0m-[35m02[0m[33mBC[0m, [33mU[0m+[35m02[0m[33mC6[0m, [33mU[0m+[35m02[0m[33mDA[0m, [33mU[0m+[35m02[0m[33mDC[0m, [33mU[0m+[35m...[0m
+  [90m50 |[0m }
+  [90m51 |[0m @font-face {
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/nunito_sans_9b10f5df.module.css
+    [next]/internal/font/google/nunito_sans_9b10f5df.js
+    ./apps/web/app/[locale]/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> ([next]/internal/font/google/fredoka_8b84d8f3.module.css:18:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/fredoka_8b84d8f3.module.css:28:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/nunito_sans_9b10f5df.module.css:8:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/nunito_sans_9b10f5df.module.css:18:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/nunito_sans_9b10f5df.module.css:28:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/nunito_sans_9b10f5df.module.css:38:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/nunito_sans_9b10f5df.module.css:48:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+npm error Lifecycle script `build` failed with error:
+npm error code 1
+npm error path /Users/peter/Desktop/HELP MATH_Flash_To_JS/apps/web
+npm error workspace @helpmath/web@0.1.0
+npm error location /Users/peter/Desktop/HELP MATH_Flash_To_JS/apps/web
+npm error command failed
+npm error command sh -c next build

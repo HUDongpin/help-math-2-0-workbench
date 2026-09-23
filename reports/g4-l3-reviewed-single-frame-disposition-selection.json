@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "decisionType": "g4-l3-reviewed-single-frame-static-disposition-selection",
+  "reviewedOn": "2026-07-26",
+  "review": {
+    "reviewerKind": "codex-engineering-source-proof-review",
+    "humanReviewer": false,
+    "humanSignature": null,
+    "ownerAcceptance": false,
+    "decision": "accept-exact-eligible-set-for-static-independent-local-playhead-disposition-only",
+    "reason": "The exact hash-bound candidate set was reviewed against the strong single-frame proof boundary: each selected timeline is structurally root-reachable, has exactly one declared and observed frame, has no direct or attributed DoAction/DoInitAction, has no FFDec frame script, has at least one resolved incoming placement, has no unresolved outgoing placement object, has no clipActions, and is not already declared as an independent frame domain. The same 576 scriptless timelines remain selected after the five scripted exclusions were materialized as explicit pending capture-domain candidates. The classification removes only a nonexistent independent local playhead; it does not accept the containing visual, interaction, behavior, audio, RMSE, human-review, owner, or release obligations."
+  },
+  "candidateReport": {
+    "path": "reports/g4-l3-single-frame-disposition-candidates.json",
+    "sha256": "fb030c7427229322ece3de1d354c8762cd5c466fede02144d961edcd1f8af67f",
+    "schemaVersion": 1,
+    "reportType": "g4-l3-single-frame-disposition-candidates",
+    "generatorSha256": "b2cad27ef7fce8aae03a6cf6b0d8159f4760b20ee1f3ed1fa06c815d52340542"
+  },
+  "acceptedSet": {
+    "selector": "every members[].eligibleCandidates[] entry in the exact candidate-report bytes",
+    "candidateCount": 576,
+    "memberCount": 36,
+    "canonicalPairEncoding": "UTF-8 lines sorted lexicographically as <animationId> TAB <timelineId> LF",
+    "canonicalPairBytes": 18876,
+    "canonicalPairSetSha256": "db93711464a0e590b88bda01f1ca38a02414675fb7aeffb7ad5520b633d4ac76"
+  },
+  "excludedSet": {
+    "candidateCount": 5,
+    "selector": "every members[].disqualifiedOneFrameTimelines[] entry in the exact candidate-report bytes",
+    "decision": "declared-as-pending-capture-domain-candidates",
+    "reason": "Each excluded one-frame timeline has direct DoAction and an exported FFDec frame script, so the scriptless composite proof does not apply. All five are now explicit pending domains; that declaration is not runtime reachability or acceptance evidence."
+  },
+  "requiredReverification": [
+    "Rehash the complete candidate report and its generator binding.",
+    "Recompute the canonical accepted animationId/timelineId pair-set digest and exact counts.",
+    "Re-run the strong source proof from the physical SWF, swfmill XML, FFDec scripts, scenario inventory, and migration technical manifest for every selected member.",
+    "Reject the whole selected member if the recomputed eligible ID set differs from the reviewed set by any ID or count.",
+    "Preserve all visual, button, interaction, behavior, audio, full-frame/RMSE, independent human-review, owner-acceptance, and release obligations."
+  ],
+  "acceptance": {
+    "acceptanceNeutral": true,
+    "authoritativeRuntimeAccepted": false,
+    "audioAccepted": false,
+    "visualOrBehaviorParityAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictMigrationComplete": false
+  },
+  "strictAcceptanceEffect": "none; this engineering review pins only the exact set eligible for a source-reverified single-frame independent-local-playhead disposition"
+}

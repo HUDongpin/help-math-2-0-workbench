@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l3-g5-l4-current-javascript-capture-successor",
+  "issuedOn": "2026-08-07",
+  "status": "current-javascript-captures-current-unadopted-shell-blocked-all-strict-gates-closed",
+  "generator": {
+    "path": "scripts/build-g4-l3-g5-l4-current-js-capture-successor-2026-08-07-r1.mjs",
+    "bytes": 22381,
+    "sha256": "fc433a0a2b395fe46c4a2ffba96c0c4dc03a237f14ef83b381e4f75da8104c16"
+  },
+  "securityAndCaptureImplementation": {
+    "localCaptureAccess": {
+      "path": "apps/web/lib/executive-preview-access.ts",
+      "bytes": 9277,
+      "sha256": "2f18d3ddf4afe0fd8e9f21c0161ea8418d56264adfdfdfc735f82528f4fc0e25"
+    },
+    "proxy": {
+      "path": "apps/web/proxy.ts",
+      "bytes": 6092,
+      "sha256": "60de3869f102d727e0cc1d717e103a7a52e280bde49377bf1c1e7992631a3613"
+    },
+    "productionAnimationRoute": {
+      "path": "apps/web/app/[locale]/animations/[animationId]/page.tsx",
+      "bytes": 11105,
+      "sha256": "a140bf37a6d335e1e76273c8dbab2e3ab589dd074abf5cd5bb641df110ced1d4"
+    },
+    "keyframeCapture": {
+      "path": "scripts/capture-animation-keyframes.mjs",
+      "bytes": 31388,
+      "sha256": "1bd17a35008a0e77ed168ace46602434cc86ab3cd5d2d571765436a1479129a6"
+    },
+    "coverageCapture": {
+      "path": "scripts/capture-coverage-v2-requirements.mjs",
+      "bytes": 52740,
+      "sha256": "add07e7a5bb8a83f99e4485dbeb694c568c72171d82321da5db82daff05c4489"
+    },
+    "tests": [
+      {
+        "path": "scripts/capture-coverage-v2-requirements.test.mjs",
+        "bytes": 32720,
+        "sha256": "54c2dc0fae2862cf1e08b6718c5c070293750385b5a3cc61eba6e06af8f2d15b"
+      },
+      {
+        "path": "apps/web/tests/executive-preview-access.test.ts",
+        "bytes": 7975,
+        "sha256": "179d08ca7a33e079c5e0299e17e3ee3ee7c4ab3b1f496c50eefd4661a0156314"
+      }
+    ],
+    "boundary": {
+      "exactLoopbackHost": "127.0.0.1",
+      "explicitEnableFlagRequired": true,
+      "strongEnvironmentTokenRequired": true,
+      "deploymentMarkersFailClosed": true,
+      "tokenOrTokenHashRecorded": false,
+      "requestHeaderScopedToExactLoopbackOrigin": true,
+      "publicPreviewBypassCreated": false
+    }
+  },
+  "retainedFailedAttempts": [
+    {
+      "attempt": "r1",
+      "cause": "private-preview-session-redirect-prevented-capture-stage",
+      "captureManifest": {
+        "path": "output/playwright/g4-l3-current-js-v3/course-g04-l03-ts-006-en-current-r1/req-sprite-23-lesson-shell-natural-entry-en/capture-manifest.json",
+        "bytes": 33828,
+        "sha256": "a830dd826716c7337fcf6b6aac30ac36835d09eb520c6af0fa64ce830d50f12e"
+      },
+      "status": "failed",
+      "capturedFrameCount": 0,
+      "retained": true,
+      "repairedInPlace": false
+    },
+    {
+      "attempt": "r2",
+      "cause": "local-proxy-access-succeeded-but-production-animation-route-returned-404",
+      "captureManifest": {
+        "path": "output/playwright/g4-l3-current-js-v3/course-g04-l03-ts-006-en-current-r2/req-sprite-23-lesson-shell-natural-entry-en/capture-manifest.json",
+        "bytes": 35529,
+        "sha256": "6c7b3d4b3332a53da0d3956dfbcb988a76c75f4901b118bfd41a530b75c6b854"
+      },
+      "status": "failed",
+      "capturedFrameCount": 0,
+      "retained": true,
+      "repairedInPlace": false
+    }
+  ],
+  "successfulCaptures": [
+    {
+      "animationId": "course-g04-l03-ts-006",
+      "requirementId": "req:sprite-23:lesson-shell-natural-entry:en",
+      "frameDomainId": "sprite-23",
+      "language": "en",
+      "scenario": "source-static-frame",
+      "capturedAt": "2026-08-07T14:25:05.398Z",
+      "orchestration": {
+        "path": "output/playwright/g4-l3-current-js-v3/course-g04-l03-ts-006-en-current-r3/capture-orchestration.json",
+        "bytes": 8504,
+        "sha256": "4e04ca0abf934f787ca5a26a9bae4a46e0de25a5ffc9e136d85212be9e42e5fa"
+      },
+      "captureManifest": {
+        "path": "output/playwright/g4-l3-current-js-v3/course-g04-l03-ts-006-en-current-r3/req-sprite-23-lesson-shell-natural-entry-en/capture-manifest.json",
+        "bytes": 270105,
+        "sha256": "bf39479fb223f286f622f7f5ad3617b6c2d1f821004708defa79afeea7403609"
+      },
+      "frameArchive": {
+        "fileCount": 128,
+        "totalBytes": 3077120,
+        "aggregateSha256": "e9d067105352e826b5ea6a2dea4381fe90b7895b42d312684e7c8366a66d067f"
+      },
+      "implementationArtifactClosure": {
+        "artifactCount": 137,
+        "projectionCount": 7,
+        "totalBytes": 16042569,
+        "aggregateSha256": "0562686622370882d89a777669bd8711a2cadd7c16d51fa7e4071514754d888b",
+        "currentAtSuccessorBuild": true
+      },
+      "authority": {
+        "currentJavascriptImplementationCaptureOnly": true,
+        "originalRuntimeBaseline": false,
+        "visualOrBehavioralParity": false,
+        "rmseAcceptance": false,
+        "audioAcceptance": false,
+        "humanVisualReview": false,
+        "ownerAcceptance": false,
+        "migrationCompletion": false
+      }
+    },
+    {
+      "animationId": "course-g05-l04-rw-002",
+      "requirementId": "req:sprite-341:lesson-shell-natural-entry:en",
+      "frameDomainId": "sprite-341",
+      "language": "en",
+      "scenario": "source-static-frame",
+      "capturedAt": "2026-08-07T14:32:41.127Z",
+      "orchestration": {
+        "path": "output/playwright/g5-l4-current-js-v1/course-g05-l04-rw-002-en-current-r1/capture-orchestration.json",
+        "bytes": 16664,
+        "sha256": "123c3904097f64d99b09828f8afdb709e5a028e8fdd3fc89815c9135bdb670a6"
+      },
+      "captureManifest": {
+        "path": "output/playwright/g5-l4-current-js-v1/course-g05-l04-rw-002-en-current-r1/req-sprite-341-lesson-shell-natural-entry-en/capture-manifest.json",
+        "bytes": 807438,
+        "sha256": "5b2a1e7c1c4fab3c0e6a095722f4aa9628f21efed966b349901fc7b1755c023b"
+      },
+      "frameArchive": {
+        "fileCount": 419,
+        "totalBytes": 140992340,
+        "aggregateSha256": "b662501d55b9ce7ef75d1b215cfbb316149c555ec2732a88493c3eb4add65623"
+      },
+      "implementationArtifactClosure": {
+        "artifactCount": 117,
+        "projectionCount": 7,
+        "totalBytes": 25353424,
+        "aggregateSha256": "bb913e016a4308f9d19e74f420c0797fd50d322c12a5a89625dbc3222878eed6",
+        "currentAtSuccessorBuild": true
+      },
+      "authority": {
+        "currentJavascriptImplementationCaptureOnly": true,
+        "originalRuntimeBaseline": false,
+        "visualOrBehavioralParity": false,
+        "rmseAcceptance": false,
+        "audioAcceptance": false,
+        "humanVisualReview": false,
+        "ownerAcceptance": false,
+        "migrationCompletion": false
+      }
+    }
+  ],
+  "captureSummary": {
+    "requirementCount": 2,
+    "frameCount": 547,
+    "totalPngBytes": 144069460,
+    "allImplementationClosuresCurrent": true,
+    "adoptionPerformed": false
+  },
+  "g5ShellBlocker": {
+    "animationId": "shell-course-g05-l04-index-local",
+    "migration": {
+      "path": "migrations/shell-course-g05-l04-index-local/migration.json",
+      "bytes": 6037,
+      "sha256": "50f5af32026dc0140390d610d8e326f67432be490d53a9abf8c14348385af113"
+    },
+    "fullFrameCoverage": {
+      "path": "migrations/shell-course-g05-l04-index-local/evidence/full-frame-coverage.json",
+      "bytes": 3010,
+      "sha256": "819f880a3d82a93c51cc7586a00fdf0f26bbbc512826efabf6c2494e57185cd3"
+    },
+    "planningOutcome": "blocked-before-capture",
+    "exactError": "migration.implementation.route must be a non-empty string",
+    "implementationRoutePresent": false,
+    "componentPresent": false,
+    "registryModulePresent": false,
+    "fabricatedReplacementAllowed": false
+  },
+  "predecessorAndCurrentnessBindings": {
+    "strictGapSuccessor": {
+      "path": "reports/g4-l3-g5-l4-strict-gap-currentness-successor-2026-08-07-r1.json",
+      "bytes": 30322,
+      "sha256": "e3819464138b4e3411b2b19c1633fb3fde1ec3ae6530895b7fa6091d0f45c023"
+    },
+    "g4AssetInventorySuccessor": {
+      "path": "reports/g4-l3-ts006-asset-inventory-currentness-successor-2026-08-07-r1.json",
+      "bytes": 3222,
+      "sha256": "4b49ef2bfc76a438db401eeaaefe6d97ff75a1f3db64320dfdd030a0a7271ef3"
+    },
+    "g4HistoricalHumanApproval": {
+      "path": "reports/g4-l3-current-javascript-output-human-approval-page-001.json",
+      "bytes": 454747,
+      "sha256": "9c37edff956cb8d0dc902d1c188b483de9707761141e8f7c08f23dc53752fe40"
+    },
+    "g4HistoricalCaptureAdoption": {
+      "path": "migrations/course-g04-l03-ts-006/evidence/current-javascript-implementation-capture-adoption.json",
+      "bytes": 3755,
+      "sha256": "adb05629e2c6715528ac2f16fff18902fac551bcf082a5cbf71a70150c1acc01"
+    },
+    "g5CurrentJavascriptCandidate": {
+      "path": "migrations/course-g05-l04-rw-002/evidence/source-static-current-js-candidate.json",
+      "bytes": 4824,
+      "sha256": "9b6931023a4db2965f7476620e7da2a91f53505cb7000daedd19a9e455d40ea8"
+    },
+    "historicalEvidenceRewritten": false,
+    "historicalApprovalCurrentnessInherited": false,
+    "newCapturesAdopted": false
+  },
+  "acceptanceEffects": {
+    "currentJavascriptCaptureEvidenceAdded": true,
+    "implementationAccepted": false,
+    "authoritativeOriginalRuntime": false,
+    "fullFrameRmseAccepted": false,
+    "audioAccepted": false,
+    "interactionAccepted": false,
+    "replayAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "published": false
+  },
+  "nextSteps": [
+    "A separately authorized adoption or invalidation successor is required before the new current-JavaScript captures can change migration evidence files.",
+    "Authoritative original-runtime natural traces and full-frame baselines remain required for Flash comparison and RMSE.",
+    "G5 shell capture remains blocked until an evidence-grounded implementation route, component, and registry module exist; the product shell is not a substitute.",
+    "Human visual and Owner acceptance must be separately performed and signed after authoritative comparison and audio, interaction, and Replay review."
+  ]
+}

@@ -1,0 +1,274 @@
+{
+  "schemaVersion": 1,
+  "reportType": "g4-l3-ts006-spanish-audio-control-es-002-diagnostic",
+  "status": "verified-pending-candidate-diagnostic-no-acceptance-effect",
+  "animationId": "course-g04-l03-ts-006",
+  "sessionId": "ts006-es-b8ba2818-cc71-4d20-84a8-4ae1ccda0b26",
+  "language": "es",
+  "inputs": {
+    "pendingCandidate": {
+      "path": "artifacts/full-frame/g4-l3/ts006-es-b8ba2818-cc71-4d20-84a8-4ae1ccda0b26/evidence/pending-candidates/spanish-audio-control-es-002.pending-candidate.json",
+      "bytes": 12965,
+      "sha256": "7c59ee39e8b82827c48107bf702630f5438c3626d44258c54477bb7da62b0f10",
+      "status": "pending-candidate-unresolved-trace-specifications",
+      "candidateFingerprintSha256": "c71577d01124ea515773153637701c8a190c782ab1254db2d85ecd97515aba2f"
+    },
+    "generator": {
+      "path": "scripts/analyze-g4-l3-ts006-spanish-audio-control-capture.mjs",
+      "bytes": 38390,
+      "sha256": "39d2bb4f1badff784a2b87bd095143bf0a7457861f331ce0ff792fd15707104d"
+    }
+  },
+  "capture": {
+    "manifest": {
+      "path": "artifacts/full-frame/g4-l3/ts006-es-b8ba2818-cc71-4d20-84a8-4ae1ccda0b26/evidence/raw-captures/spanish-audio-control-es-002/capture-manifest.json",
+      "bytes": 191646,
+      "sha256": "9ea09d0c172da9571c3a2a1b8d1ff0c23e06165aae86225eb0ed81e776535304"
+    },
+    "startedAt": "2026-07-26T11:04:48Z",
+    "endedAt": "2026-07-26T11:05:34Z",
+    "processId": 79108,
+    "window": {
+      "frameHeight": 628,
+      "frameWidth": 800,
+      "frameX": 0,
+      "frameY": 30,
+      "onScreen": true,
+      "ownerName": "Flash Player",
+      "title": "file:///Volumes/WestWorld/HELP MATH 2.0/work/original-runtime-host-trees/course-g04-l03-ts-006/root/HELP_COURSES/ELMGR4/L3/index_local.swf",
+      "windowID": 5467
+    },
+    "configuration": {
+      "audio": "system-audio-48kHz-2ch-ALAC",
+      "cursor": "excluded",
+      "fps": "12",
+      "minimumWindowHeight": "628",
+      "minimumWindowWidth": "800",
+      "outputHeight": "600",
+      "outputWidth": "800",
+      "pixelFormat": "BGRA",
+      "sourceKind": "waited-first-window-exact-pid",
+      "sourceRect": "0.0,28.0,800.0,600.0",
+      "waitForPidSeconds": "120.0"
+    },
+    "frames": {
+      "expectedCount": 539,
+      "verifiedCount": 539,
+      "allManifestBytesAndHashesRevalidated": true,
+      "allPngHeadersRevalidated": true,
+      "width": 800,
+      "height": 600,
+      "totalPngBytes": 59695123,
+      "first": {
+        "ordinal": 1,
+        "file": "frames/frame-000001.png",
+        "bytes": 110591,
+        "sha256": "4ab21679eb3edfad85a8c5671671f3eab0a91731d28266058931c06c0d26006f",
+        "width": 800,
+        "height": 600
+      },
+      "last": {
+        "ordinal": 539,
+        "file": "frames/frame-000539.png",
+        "bytes": 110144,
+        "sha256": "b3f517f410de617563a21397c440e6020d4047dbdf3aed47835e3e5f7d5549f7",
+        "width": 800,
+        "height": 600
+      },
+      "requestedFps": 12,
+      "durationSeconds": 45.178051875,
+      "effectiveFps": 11.908437342286353,
+      "droppedOrIncompleteFrameCount": 0,
+      "orderedFrameSetAlgorithm": "ordinal-null-path-null-sha256-newline-v1",
+      "orderedFrameSetSha256": "32bd3a077379b7aab0c0b5f32bdc0cd1500fe3e454af20f0a7f09c5f6b43d5a3"
+    },
+    "audio": {
+      "path": "artifacts/full-frame/g4-l3/ts006-es-b8ba2818-cc71-4d20-84a8-4ae1ccda0b26/evidence/raw-captures/spanish-audio-control-es-002/system-audio-lossless.m4a",
+      "bytes": 4903077,
+      "sha256": "e4f07700a9bc48876aee780a54a9b8d46ae158d204b6aea809933a6c002f05c7",
+      "ffprobe": {
+        "codecName": "alac",
+        "codecLongName": "ALAC (Apple Lossless Audio Codec)",
+        "sampleRate": 48000,
+        "channels": 2,
+        "channelLayout": "stereo",
+        "durationSeconds": 45.141333,
+        "containerFormat": "mov,mp4,m4a,3gp,3g2,mj2"
+      },
+      "captureToolInputAudit": {
+        "inputPayloadBytes": 17333760,
+        "inputNonZeroBytes": 5313158,
+        "inputContainsNonZeroAudio": true
+      },
+      "machineAnalysis": {
+        "threshold": "silencedetect=noise=-80dB:d=0.1",
+        "meanVolumeDb": -26,
+        "maxVolumeDb": -5.2,
+        "silenceIntervals": [
+          {
+            "startSeconds": 0,
+            "endSeconds": 26.235125,
+            "durationSeconds": 26.235125
+          },
+          {
+            "startSeconds": 31.435271,
+            "endSeconds": 32.274479,
+            "durationSeconds": 0.839208
+          },
+          {
+            "startSeconds": 34.490521,
+            "endSeconds": 34.952979,
+            "durationSeconds": 0.462458
+          },
+          {
+            "startSeconds": 41.41775,
+            "endSeconds": 45.14,
+            "durationSeconds": 3.72225
+          }
+        ]
+      }
+    }
+  },
+  "runtimeControl": {
+    "crop": "32x26+766+82",
+    "visualRuns": [
+      {
+        "firstFrame": 1,
+        "lastFrame": 312,
+        "visualState": "non-pause-control-state",
+        "cropSignature": "5ef8ba5dfdf25b72282479e40b4deb7b1a8d58788e4072d92ec040219a9b5701",
+        "firstRelativeTimeSeconds": 0,
+        "lastRelativeTimeSeconds": 26.1115275
+      },
+      {
+        "firstFrame": 313,
+        "lastFrame": 494,
+        "visualState": "pause-icon-visible",
+        "cropSignature": "361aeafcc964387d3db68abcd67f5bb289c52f1ee7c48d91892424e1769dec3c",
+        "firstRelativeTimeSeconds": 26.194895291,
+        "lastRelativeTimeSeconds": 41.404350166
+      },
+      {
+        "firstFrame": 495,
+        "lastFrame": 539,
+        "visualState": "non-pause-control-state",
+        "cropSignature": "5ef8ba5dfdf25b72282479e40b4deb7b1a8d58788e4072d92ec040219a9b5701",
+        "firstRelativeTimeSeconds": 41.487711916,
+        "lastRelativeTimeSeconds": 45.178051875
+      }
+    ],
+    "pauseIconObserved": true,
+    "stateClaimBoundary": "The crop signatures establish only the observed pixels and their frame ranges; they do not establish which user event caused the state or whether source audio was loaded, decoded, or emitted."
+  },
+  "sourceAudio": {
+    "canonical": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3TS06.mp3",
+      "bytes": 106848,
+      "sha256": "c0ea9f1cede741945c763707ed89c5be76f651f761209880157bf0c45ded8688",
+      "codecName": "mp3",
+      "sampleRate": 48000,
+      "channels": 1,
+      "durationSeconds": 7.632,
+      "meanVolumeDb": -21,
+      "maxVolumeDb": -4.7
+    },
+    "stagedHostCopy": {
+      "path": "work/original-runtime-host-trees/course-g04-l03-ts-006/root/HELP_COURSES/ELMGR4/L3/SA/L3TS06.mp3",
+      "bytes": 106848,
+      "sha256": "c0ea9f1cede741945c763707ed89c5be76f651f761209880157bf0c45ded8688"
+    },
+    "stagedCopyByteIdenticalToCanonical": true,
+    "sourceMediaMatchEstablished": false,
+    "matchBoundary": "Byte identity between the canonical and staged MP3 proves only source-copy identity. No hash-chained runtime media-request record, isolated application-audio capture, decoded-sample alignment, or named-human listening record binds the system-audio waveform to this MP3."
+  },
+  "temporalAssociation": {
+    "ptsMapping": {
+      "audioFirstPresentationTimeSeconds": 96377.083582541,
+      "firstVideoFramePresentationTimeSeconds": 96377.061953625,
+      "audioPtsOriginOffsetSeconds": 0.021628916001645848
+    },
+    "controlPauseVisualInterval": {
+      "firstFrame": 313,
+      "lastFrame": 494,
+      "firstRelativeTimeSeconds": 26.194895291,
+      "lastRelativeTimeSeconds": 41.404350166
+    },
+    "nonSilenceEnvelope": {
+      "firstAudioRelativeSeconds": 26.235125,
+      "lastAudioRelativeSeconds": 41.41775,
+      "firstVideoRelativeSeconds": 26.256753916001646,
+      "lastVideoRelativeSeconds": 41.439378916001644
+    },
+    "nominalFrameToleranceSeconds": 0.08333333333333333,
+    "startBoundaryOffsetFromFirstPauseFrameSeconds": 0.061858625001644185,
+    "endBoundaryOffsetFromLastPauseFrameSeconds": 0.035028750001643516,
+    "temporalAssociationObserved": true,
+    "eventTriggerLogPresent": false,
+    "sourceMediaRequestLogPresent": false,
+    "causalAttributionEstablished": false,
+    "sourceMediaMatchEstablished": false,
+    "interpretation": "After mapping the audio PTS origin to video-relative time, the outer non-silent envelope begins and ends within one requested 12 FPS frame of the observed pause-icon interval. This is temporal association only; no hash-chained click/event log, media-request proof, isolated application-audio attribution, source waveform match, or listening record exists."
+  },
+  "machineFindings": {
+    "pendingCandidateBytesRevalidated": true,
+    "captureManifestBytesRevalidated": true,
+    "all539PngBytesHashesAndDimensionsRevalidated": true,
+    "exactPidWindowAndNativeCropRevalidated": true,
+    "losslessAlacBytesAndTechnicalPropertiesRevalidated": true,
+    "nonSilentSystemAudioObserved": true,
+    "threeControlCropRunsObserved": true,
+    "temporalAssociationObserved": true
+  },
+  "authority": {
+    "classification": "machine-integrity-and-temporal-association-only",
+    "eventTriggerLogPresent": false,
+    "naturalTraceExecutionEstablished": false,
+    "authoritativeOriginalRuntimeTrace": false,
+    "authoritativeBaseline": false,
+    "causalAttributionEstablished": false,
+    "runtimeAudioEmissionEstablished": false,
+    "sourceMediaMatchEstablished": false,
+    "spanishSpokenLanguageIdentityEstablished": false,
+    "namedHumanOriginalRuntimeListeningAccepted": false,
+    "independentHumanVisualReviewAccepted": false,
+    "ownerAccepted": false,
+    "audioAccepted": false,
+    "strictMigrationComplete": false,
+    "publicRelease": false,
+    "promotionEligible": false,
+    "acceptanceEffect": "none",
+    "completionLedgerEffect": "none",
+    "lessonReleaseLedgerEffect": "none"
+  },
+  "unresolved": [
+    "No hash-chained operation-event log records the control activation.",
+    "System audio is not isolated to Flash Player and is not matched to the source MP3.",
+    "Spanish spoken-language identity and cue correctness have not been established.",
+    "No named-human original-runtime listening acceptance exists.",
+    "Natural-trace execution, independent visual review, Owner acceptance, strict completion, and publication remain closed."
+  ],
+  "tools": {
+    "magick": {
+      "command": "magick",
+      "commandPath": "/opt/homebrew/bin/magick",
+      "executableRealPath": "/opt/homebrew/Cellar/imagemagick/7.1.2-27/bin/magick",
+      "executableSha256": "135bd0d8f79549844bf6bf669c8ea2df8a3902948094c097657e9b6829fd4a38",
+      "versionFirstLine": "Version: ImageMagick 7.1.2-27 Q16-HDRI aarch64 e4c2b403b:20260705 https://imagemagick.org"
+    },
+    "ffprobe": {
+      "command": "ffprobe",
+      "commandPath": "/opt/homebrew/bin/ffprobe",
+      "executableRealPath": "/opt/homebrew/Cellar/ffmpeg/8.1.2_1/bin/ffprobe",
+      "executableSha256": "cfeefcc9207eb3fa424679228fe3848db2921b15537d26c1ccc4a7a61de95d00",
+      "versionFirstLine": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers"
+    },
+    "ffmpeg": {
+      "command": "ffmpeg",
+      "commandPath": "/opt/homebrew/bin/ffmpeg",
+      "executableRealPath": "/opt/homebrew/Cellar/ffmpeg/8.1.2_1/bin/ffmpeg",
+      "executableSha256": "dad4b30b36a1a999bfa4b6ffbde138bd17ee496c69e12eef638227dff2c6415c",
+      "versionFirstLine": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers"
+    }
+  },
+  "strictAcceptanceEffect": "none"
+}

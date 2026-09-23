@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "animationId": "course-g03-l01-vb-004",
+  "reviewKind": "safe-animate-createjs-adapter-engineering-prereview",
+  "reviewedAt": "2026-07-21",
+  "verdict": "engineering-candidate-passes-local-safety-and-deterministic-frame-smoke; strict migration acceptance remains blocked",
+  "migrationStatusBefore": "preserved",
+  "migrationStatusUnchanged": true,
+  "productionRegistered": false,
+  "strictAcceptanceEffect": "none; this prereview neither advances migration status nor satisfies authoritative runtime, full-frame, audio, interaction, human-review, or owner-acceptance gates",
+  "sourceIntegrity": {
+    "flaSha256": "49f1694f1a7ec200d4d3455c1bc29699b83146043b7c0f25165228b32a9e3a1a",
+    "swfSha256": "8c9860663714843b4d858a50528ad82d6783d8446c38d6f1cc77ec03a07ec72e",
+    "originalsModified": false
+  },
+  "implementation": {
+    "spec": {
+      "file": "audit/animate-createjs-adapter-spec.json",
+      "sha256": "161aa811fd4a0f1c9b0cb3837184137df7170039e4a99ff2020d2e0b529dca9a"
+    },
+    "generator": {
+      "file": "scripts/build-safe-animate-createjs-adapter.mjs",
+      "sha256": "fbc0098f25722c595a83f9b2d30e7bea7432d606094fbe6d2fd25f4b0df7165e"
+    },
+    "tests": {
+      "file": "scripts/build-safe-animate-createjs-adapter.test.mjs",
+      "sha256": "23f308f23c9ebfc30bb7bf8b2aecbafbc7f74efe5f62dd128cd2a2d0fd0f1259",
+      "result": "9/9 pass"
+    },
+    "generatedManifest": {
+      "file": "public/flash-assets/courses/course-g03-l01-vb-004/manifest.json",
+      "sha256": "6aa77ec9e94e71371fb002014a8d3a4402c554b04318ea81fc7c4f1223cc304d"
+    },
+    "runtime": {
+      "nativeStage": {
+        "width": 800,
+        "height": 600
+      },
+      "fpsMetadata": 12,
+      "rootFrame": 6,
+      "localFrameDomain": "sprite-231",
+      "localFrameCount": 222,
+      "defaultScenario": "linear-to-quiz-stop",
+      "defaultScenarioFrames": "1..56",
+      "inspectionScenarioFrames": "1..222",
+      "oneIndexedDataAttribute": "data-flash-frame",
+      "ambientPlaybackLoop": false,
+      "tickerRegistrationRemoved": true,
+      "supportedLanguages": [
+        "en"
+      ]
+    },
+    "createjs": {
+      "easeljs": {
+        "version": "1.0.2",
+        "upstreamSha256": "9b895d5dd6bad4309956ebc2100019787940b0391e30432dac7ebc75fd6cc4c1"
+      },
+      "tweenjs": {
+        "version": "1.0.2",
+        "upstreamSha256": "a7fd9431277d14034c3b19696a73dc91a59997673cdbba25adbdcf853550bc15",
+        "patch": "automatic registration with the global CreateJS Ticker removed"
+      },
+      "license": "MIT",
+      "licenseSha256": "550bf73ead08a888cf0f48e0945e71e38d5e6609c1b3508ee6f5eee18824fd90"
+    },
+    "authoritativeGlyphCorrection": {
+      "source": "JPEXS vector export of shipped SWF DefineSprite 231",
+      "sourceSha256": "85bbb79f7db8c31fad9e29dd205e51c992740ce44e688f936ddc1682cad4d7e5",
+      "font": "Bauhaus Md BT",
+      "correctedContent": "initial place-value chart shapes and embedded vector glyphs",
+      "correctedLocalFrames": "1..56",
+      "laterTextCorrected": false
+    }
+  },
+  "browserSmoke": {
+    "tool": "playwright-cli 0.1.17",
+    "browser": "HeadlessChrome/150.0.0.0",
+    "baseUrl": "http://127.0.0.1:3216/flash-assets/courses/course-g03-l01-vb-004/index.html",
+    "successfulFrames": [
+      {
+        "frame": 1,
+        "scenario": "linear-to-quiz-stop",
+        "localCurrentFrameZeroIndexed": 0,
+        "screenshot": "output/playwright/course-g03-l01-vb-004-safe-createjs-adapter/frame-0001.png",
+        "sha256": "33726d2b34a77299d6bfaf77b62e34ac84f3572edfc5b85814739f1b7e673790"
+      },
+      {
+        "frame": 6,
+        "scenario": "linear-to-quiz-stop",
+        "localCurrentFrameZeroIndexed": 5,
+        "screenshot": "output/playwright/course-g03-l01-vb-004-safe-createjs-adapter/frame-0006.png",
+        "sha256": "f2dfd952340687b18010afcd3f893e7888a0d30f9ade01adce306a7b281dc424"
+      },
+      {
+        "frame": 55,
+        "scenario": "linear-to-quiz-stop",
+        "localCurrentFrameZeroIndexed": 54,
+        "screenshot": "output/playwright/course-g03-l01-vb-004-safe-createjs-adapter/frame-0055.png",
+        "sha256": "524b6d9df9e2cca0cf1fde879bf536f9792610b1e6014ab2ba025b4698b2a9a2"
+      },
+      {
+        "frame": 56,
+        "scenario": "linear-to-quiz-stop",
+        "localCurrentFrameZeroIndexed": 55,
+        "screenshot": "output/playwright/course-g03-l01-vb-004-safe-createjs-adapter/frame-0056.png",
+        "sha256": "524b6d9df9e2cca0cf1fde879bf536f9792610b1e6014ab2ba025b4698b2a9a2"
+      },
+      {
+        "frame": 57,
+        "scenario": "authoring-frame-inspection",
+        "localCurrentFrameZeroIndexed": 56,
+        "runtimeReachability": "structural-only-runtime-reachability-unproven",
+        "screenshot": "output/playwright/course-g03-l01-vb-004-safe-createjs-adapter/frame-0057-structural.png",
+        "sha256": "e9735545c951c586ecea79a5bcc09650e543bf535efe464d06858b0ff68452c4"
+      },
+      {
+        "frame": 222,
+        "scenario": "authoring-frame-inspection",
+        "localCurrentFrameZeroIndexed": 221,
+        "runtimeReachability": "structural-only-runtime-reachability-unproven",
+        "screenshot": "output/playwright/course-g03-l01-vb-004-safe-createjs-adapter/frame-0222-structural.png",
+        "sha256": "65e6d20537c3759c9ce54de2f4fab2106e6a8297e160e70f2a552cfeee71d14e"
+      }
+    ],
+    "diagnostics": {
+      "rootPaused": true,
+      "localPaused": true,
+      "tickerInitialized": false,
+      "tweenHeadPresent": false,
+      "consoleErrors": 0,
+      "consoleWarnings": 0,
+      "requests": {
+        "count": 8,
+        "sameOriginOnly": true,
+        "unexpected": 0
+      }
+    },
+    "failClosedChecks": [
+      {
+        "request": "?frame=1&scenario=linear-to-quiz-stop&lang=es&seed=7",
+        "result": "error",
+        "message": "unsupported source-proven language: es"
+      },
+      {
+        "request": "?frame=57&scenario=linear-to-quiz-stop&lang=en&seed=7",
+        "result": "error",
+        "message": "frame must be within 1..56 for scenario linear-to-quiz-stop"
+      }
+    ],
+    "stability": {
+      "frame": 56,
+      "minimumElapsedSeconds": 1,
+      "beforeSha256": "524b6d9df9e2cca0cf1fde879bf536f9792610b1e6014ab2ba025b4698b2a9a2",
+      "afterSha256": "524b6d9df9e2cca0cf1fde879bf536f9792610b1e6014ab2ba025b4698b2a9a2",
+      "normalizedRmse": 0,
+      "mismatchedPixels": 0,
+      "evidence": "output/playwright/course-g03-l01-vb-004-safe-createjs-adapter/frame-0056-stability.json"
+    },
+    "responsive": {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "canvasCssBounds": {
+        "x": 20,
+        "y": 20,
+        "width": 350,
+        "height": 262.5
+      },
+      "documentScrollWidth": 390,
+      "horizontalOverflow": false,
+      "screenshot": "output/playwright/course-g03-l01-vb-004-safe-createjs-adapter/mobile-390x844-frame-0056.png",
+      "sha256": "9b9a33d012aab71eec7c4be8556166728f826620b907e5421536b4ee1fcb5d3b"
+    }
+  },
+  "visualSanityCheck": {
+    "acceptanceMetric": false,
+    "reason": "The standalone root-frame-6 capture allows its nested child to advance and therefore does not establish an authoritative local-frame-6 mapping. This comparison is engineering-only.",
+    "baseline": "artifacts/full-frame/pilot-baselines/course-g03-l01-vb-004/adobe-flash-player-32-standalone-default/frame-0006.png",
+    "candidate": "output/playwright/course-g03-l01-vb-004-safe-createjs-adapter/frame-0006.png",
+    "normalizedRmse": 0.032594366592465236,
+    "mismatchedPixels": 7321,
+    "mismatchedPixelRatio": 0.015252083333333333,
+    "diff": "output/playwright/course-g03-l01-vb-004-safe-createjs-adapter/frame-0006-vs-standalone-root-0006-diff.png",
+    "diffSha256": "cda69455fa3fa4357a36e0385ddbfc9cb8312e8f7f08d4fcd9947b8936292374",
+    "uncorrectedAuthoringExportNormalizedRmse": 0.06457975030677975,
+    "finding": "The shipped-SWF vector chart correction reduces this non-authoritative sanity-check RMSE by about 49.5%, but does not replace full-frame local-timeline baselines."
+  },
+  "blockedAcceptanceGates": [
+    "Capture an authoritative one-indexed baseline for every reachable local frame and every interaction state; standalone root stepping is insufficient.",
+    "Resolve the AS1/2 host bindings and prove glossary activations, correct answer, first wrong/retry, second wrong/forced continuation, scoring, completion, and Replay/reset behavior.",
+    "Perform authoritative listening and cue mapping for the 11 embedded sound streams and the exact Spanish L1VB04.mp3 association.",
+    "Prove host language selection and Spanish behavior; the candidate intentionally rejects lang=es.",
+    "Replace or validate later substituted text and all feedback/question states against shipped-SWF or FLA evidence.",
+    "Run complete all-frame/all-scenario RMSE comparison, interaction tests, accessibility/product QA, human review, and owner acceptance."
+  ],
+  "regression": {
+    "generatorCheck": "pass",
+    "adapterTests": "9/9 pass",
+    "fullNodeTests": "125/125 pass",
+    "sourceArchiveVerification": {
+      "result": "pass",
+      "fileCount": 7919,
+      "totalBytes": 2779928841
+    },
+    "workbenchVerification": {
+      "result": "fail-unrelated-shared-state",
+      "reason": "catalog/completion-ledger.json is stale while other pilot work is changing shared acceptance evidence"
+    },
+    "productionBuild": {
+      "result": "fail-unrelated-shared-app-environment",
+      "reason": "Next.js could not retrieve the existing Fredoka and Nunito Sans Google font resources and Turbopack reported unresolved internal font modules from apps/web/app/[locale]/layout.tsx",
+      "candidateProductionRegistered": false
+    }
+  },
+  "humanReview": {
+    "complete": false,
+    "reviewer": null,
+    "date": null
+  },
+  "ownerAcceptance": {
+    "complete": false,
+    "owner": null,
+    "date": null
+  }
+}

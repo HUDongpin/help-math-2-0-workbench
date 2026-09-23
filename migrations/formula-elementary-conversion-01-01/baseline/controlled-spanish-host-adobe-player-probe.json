@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "animationId": "formula-elementary-conversion-01-01",
+  "status": "engineering-runtime-cross-check-not-full-frame-baseline",
+  "capturedAt": "2026-07-21T08:57:45.428Z",
+  "reviewer": "Codex engineering runtime probe",
+  "authority": {
+    "kind": "controlled-hash-pinned-parent-with-original-child-in-adobe-flash-player",
+    "tool": "Adobe Flash Player 32.0.0.414",
+    "statement": "The sandboxed, hash-pinned AVM1 parent set the source-evidenced dtfSpanishFormulas=ON field, loaded the untouched child SWF, and its deterministic controller visibly reported requested=actual for frames 1 and 94.",
+    "limitations": [
+      "This parent is not the original indexELM shell.",
+      "JPEG app-window probes are runtime cross-checks and are not eligible for full-frame RMSE.",
+      "Only root frames 1, 52, and 94 were observed; this does not prove all 94 frames.",
+      "Direct child gotoAndStop controls the root timeline but does not advance nested movie-clip timelines as natural playback would. Frame 52 therefore confirms the root Spanish panel state only; its other visible child content is not a natural-playback frame-52 baseline.",
+      "Audio was intentionally excluded and is not accepted by this evidence.",
+      "This is not human visual review or owner acceptance."
+    ]
+  },
+  "fixture": {
+    "manifest": "work/adobe-course-host-fixtures-formulas/generated/formula-elementary-conversion-01-01/7969a40b818ff0ad21f099de/fixture-manifest.json",
+    "manifestSha256": "05beb20bbbb90381a350f218460203bcdf3e85b7c38f26b4511008d172175232",
+    "fixtureDigest": "7969a40b818ff0ad21f099de2b8de805a8a2fd251e7839805513cb9fa1a48b33",
+    "hostSha256": "50e2bee5600463333a55d4dc87e099b238b56263d2fec37eb224c9ef30893b32",
+    "sourceSwf": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SWF/Conversion_1_1.swf",
+    "sourceSwfSha256": "72d1e337b81939bace7eddf0b4994b469b73f3e4c8b103d82c06bda858dcd8a3",
+    "sandboxGuiSmokeApproval": "work/adobe-course-host-fixtures-formulas/generated/formula-elementary-conversion-01-01/7969a40b818ff0ad21f099de/capture/sandbox-gui-smoke-test.json"
+  },
+  "observations": [
+    {
+      "requestedFrame": 1,
+      "actualFrame": 1,
+      "spanishPanelVisible": true,
+      "controllerText": "READY requested=1 actual=1",
+      "file": "baseline/controlled-spanish-host-adobe-player-frame-0001.jpeg",
+      "sha256": "8894f22b9df7ccef1206296448bf72742536a799f44d71aa59fe730cc353aa03"
+    },
+    {
+      "requestedFrame": 52,
+      "actualFrame": 52,
+      "spanishPanelVisible": true,
+      "controllerText": "READY requested=52 actual=52",
+      "file": "baseline/controlled-spanish-host-adobe-player-root-frame-0052.jpeg",
+      "sha256": "1acce8f061c8b24b73192011def779c85131b6812fe8fe79e2c990d7053212e8",
+      "scope": "root Spanish-panel state only; nested timelines were not naturally advanced"
+    },
+    {
+      "requestedFrame": 94,
+      "actualFrame": 94,
+      "spanishPanelVisible": true,
+      "controllerText": "READY requested=94 actual=94",
+      "file": "baseline/controlled-spanish-host-adobe-player-frame-0094.jpeg",
+      "sha256": "fdcda6496c0924cde8d80c96c6067bd955560a6762ccfcd1eb1b72741895a779"
+    }
+  ],
+  "strictAcceptanceEffect": "partial runtime cross-check only; does not change migration status, full-frame/RMSE, audio, human review, or owner acceptance"
+}

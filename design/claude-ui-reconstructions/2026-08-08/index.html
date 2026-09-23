@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231768d4'/%3E%3Cpath d='M8 9h4v5h8V9h4v14h-4v-5h-8v5H8z' fill='white'/%3E%3C/svg%3E">
+  <title>HELP Math 2.0 · Claude UI reconstruction archive</title>
+  <style>
+    :root {
+      --paper: #f4f7fb;
+      --surface: #ffffff;
+      --surface-soft: #eef3f9;
+      --ink: #10233e;
+      --muted: #536b87;
+      --faint: #4f6680;
+      --line: #cbd8e7;
+      --line-strong: #9db2ca;
+      --navy: #0c2f63;
+      --cobalt: #1768d4;
+      --amber: #d97706;
+      --amber-soft: #fff4dc;
+      --indigo: #413db0;
+      --indigo-soft: #efefff;
+      --green: #08775f;
+      --green-soft: #e7f6f1;
+      --red: #a63f24;
+      --red-soft: #fcede8;
+      --ring: #1597c5;
+      --shadow: 0 20px 50px -32px rgba(10, 36, 72, .45);
+      font-family: "Avenir Next", Avenir, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #081321;
+        --surface: #102033;
+        --surface-soft: #142a42;
+        --ink: #edf4ff;
+        --muted: #b4c5da;
+        --faint: #a9bad0;
+        --line: #2b4562;
+        --line-strong: #476582;
+        --navy: #0a2550;
+        --cobalt: #70adfa;
+        --amber: #ffb24f;
+        --amber-soft: #3a290f;
+        --indigo: #aaa7ff;
+        --indigo-soft: #292756;
+        --green: #67d6bc;
+        --green-soft: #123b32;
+        --red: #ffab94;
+        --red-soft: #43231d;
+        --ring: #62d3f5;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; min-width: 320px; background: var(--paper); color: var(--ink); line-height: 1.55; }
+    button, a { font: inherit; }
+    button { touch-action: manipulation; }
+    a { color: var(--cobalt); text-underline-offset: 3px; }
+    :where(a, button):focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; }
+    .skip { position: absolute; left: 12px; top: 10px; z-index: 30; transform: translateY(-160%); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; color: var(--ink); }
+    .skip:focus { transform: none; }
+    .mast { background: linear-gradient(124deg, #092857 0%, #114b99 64%, #1768d4 100%); color: white; }
+    .mast__inner { width: min(1500px, calc(100% - 40px)); margin: 0 auto; padding: clamp(34px, 5vw, 76px) 0 clamp(30px, 4vw, 58px); }
+    .eyebrow { margin: 0 0 12px; font-size: 12px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; color: #bcd9ff; }
+    h1 { max-width: 17ch; margin: 0; font-size: clamp(34px, 5vw, 68px); letter-spacing: -.045em; line-height: .98; text-wrap: balance; }
+    .lede { max-width: 72ch; margin: 22px 0 0; font-size: clamp(16px, 1.7vw, 21px); color: #dcecff; }
+    .mast__meta { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 26px; }
+    .mast__meta span { border: 1px solid rgba(255, 255, 255, .3); border-radius: 999px; padding: 7px 11px; font-size: 12px; font-weight: 750; background: rgba(4, 25, 57, .22); }
+    main { width: min(1500px, calc(100% - 40px)); margin: 0 auto; padding: 28px 0 72px; }
+    .boundary { display: grid; grid-template-columns: auto 1fr; gap: 13px; align-items: start; margin-bottom: 28px; padding: 17px 18px; border: 1px solid #e1b15a; border-left: 6px solid var(--amber); border-radius: 12px; background: var(--amber-soft); color: var(--ink); }
+    .boundary__label { margin: 1px 0 0; padding: 3px 8px; border-radius: 5px; background: var(--amber); color: #211300; font-size: 11px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    .boundary p { margin: 0; }
+    .layout { display: grid; grid-template-columns: minmax(320px, 430px) minmax(0, 1fr); gap: 24px; align-items: start; }
+    .catalog { display: flex; flex-direction: column; gap: 12px; }
+    .catalog__head { display: flex; justify-content: space-between; gap: 16px; align-items: end; padding: 0 2px 4px; }
+    .catalog h2, .preview h2 { margin: 0; font-size: 22px; letter-spacing: -.02em; }
+    .count { color: var(--muted); font-size: 13px; }
+    .entry { width: 100%; min-height: 120px; border: 1px solid var(--line); border-radius: 13px; padding: 16px; text-align: left; color: var(--ink); background: var(--surface); cursor: pointer; box-shadow: 0 1px 0 rgba(9, 35, 67, .03); transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease; }
+    .entry:hover { border-color: var(--line-strong); box-shadow: var(--shadow); }
+    .entry[aria-pressed="true"] { border-color: var(--cobalt); background: color-mix(in srgb, var(--surface) 92%, var(--cobalt)); box-shadow: 0 0 0 2px color-mix(in srgb, var(--cobalt) 28%, transparent), var(--shadow); }
+    .entry__top { display: flex; justify-content: space-between; gap: 12px; align-items: start; }
+    .entry h3 { margin: 0; font-size: 17px; letter-spacing: -.015em; }
+    .entry p { margin: 7px 0 0; color: var(--muted); font-size: 13px; line-height: 1.45; }
+    .tag { flex: none; display: inline-flex; align-items: center; min-height: 25px; border-radius: 999px; padding: 3px 8px; font-size: 10px; font-weight: 850; letter-spacing: .06em; text-transform: uppercase; }
+    .tag--contract { background: var(--indigo-soft); color: var(--indigo); }
+    .tag--replay { background: var(--green-soft); color: var(--green); }
+    .tag--partial { background: var(--red-soft); color: var(--red); }
+    .tag--study { background: var(--surface-soft); color: var(--muted); }
+    .entry__meta { display: flex; flex-wrap: wrap; gap: 7px 12px; margin-top: 12px; color: var(--faint); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10px; }
+    .preview { position: sticky; top: 18px; min-width: 0; border: 1px solid var(--line); border-radius: 15px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow); }
+    .preview__bar { display: flex; justify-content: space-between; gap: 18px; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--line); background: var(--surface); }
+    .preview__title { min-width: 0; }
+    .preview__title p { margin: 2px 0 0; color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .preview__actions { display: flex; gap: 8px; flex: none; }
+    .action { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; border: 1px solid var(--line-strong); border-radius: 9px; padding: 9px 13px; background: var(--surface); color: var(--ink); text-decoration: none; font-size: 13px; font-weight: 760; cursor: pointer; }
+    .action:hover { border-color: var(--cobalt); color: var(--cobalt); }
+    .action--primary { background: var(--cobalt); border-color: var(--cobalt); color: white; }
+    .action--primary:hover { color: white; filter: brightness(1.08); }
+    .framewrap { position: relative; aspect-ratio: 16 / 10; min-height: 540px; background: #e8eef7; }
+    iframe { display: block; width: 100%; height: 100%; min-height: 540px; border: 0; background: white; }
+    .preview__foot { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: center; padding: 13px 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    .preview__foot p { margin: 0; }
+    .preview__foot a { font-weight: 740; }
+    .provenance { margin-top: 30px; border-top: 1px solid var(--line); padding-top: 26px; }
+    .provenance h2 { margin: 0 0 8px; font-size: 22px; }
+    .provenance p { max-width: 86ch; margin: 0 0 12px; color: var(--muted); }
+    .provenance__links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .provenance__links a { min-height: 44px; display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 9px; padding: 8px 12px; background: var(--surface); text-decoration: none; font-size: 13px; font-weight: 720; }
+    @media (max-width: 1020px) {
+      .layout { grid-template-columns: 1fr; }
+      .catalog { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .catalog__head { grid-column: 1 / -1; }
+      .preview { position: static; }
+    }
+    @media (max-width: 680px) {
+      .mast__inner, main { width: min(100% - 24px, 1500px); }
+      .catalog { grid-template-columns: 1fr; }
+      .preview__bar { align-items: start; flex-direction: column; }
+      .preview__actions { width: 100%; }
+      .preview__actions .action { flex: 1; }
+      .framewrap { width: 100%; height: 480px; min-height: 0; aspect-ratio: auto; }
+      iframe { height: 100%; min-height: 0; }
+      .preview__foot { grid-template-columns: 1fr; }
+      .boundary { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#catalog">Skip to design catalog</a>
+  <header class="mast">
+    <div class="mast__inner">
+      <p class="eyebrow">Internal design evidence · reconstructed August 12, 2026</p>
+      <h1>Claude’s HELP Math UI design set, reconstructed.</h1>
+      <p class="lede">Seven missing standalone HTML studies were rebuilt from Claude Code’s recorded Write/Edit history. A separate eighth page applies the later modern-wide, Nova Tutor, reviewer, accessibility, and sharpness support contracts.</p>
+      <div class="mast__meta" aria-label="Archive summary">
+        <span>8 interactive pages</span>
+        <span>6 complete transcript replays</span>
+        <span>1 reconstructed with a replacement image</span>
+        <span>1 current-contract derivative</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="catalog">
+    <aside class="boundary" aria-label="Acceptance boundary">
+      <span class="boundary__label">Boundary</span>
+      <p>This is an inspectable internal design handoff. It does not establish original-byte identity, production integration, deployment, Flash/runtime fidelity, audio acceptance, a connected Nova provider, human or owner acceptance, strict completion, release, or publication.</p>
+    </aside>
+
+    <div class="layout">
+      <section class="catalog" aria-labelledby="catalog-title">
+        <div class="catalog__head">
+          <h2 id="catalog-title">Design catalog</h2>
+          <span class="count">Choose a page to preview</span>
+        </div>
+
+        <button class="entry" type="button" data-page="help-math-player-support-contract" aria-pressed="true">
+          <span class="entry__top"><h3>Lesson player · current contract</h3><span class="tag tag--contract">Recommended</span></span>
+          <p>The recovered Claude player adapted to the later 800×415, offline Nova, mobile sheet, and reviewer-boundary contracts.</p>
+          <span class="entry__meta"><span>derived 2026-08-12</span><span>current support files</span></span>
+        </button>
+
+        <button class="entry" type="button" data-page="help-math-player" aria-pressed="false">
+          <span class="entry__top"><h3>Lesson player + Nova Tutor</h3><span class="tag tag--replay">Replay</span></span>
+          <p>Claude’s published Focus, Study, and Classroom placement prototype, preserved as recorded—including its historical simulated replies.</p>
+          <span class="entry__meta"><span>Aug 7</span><span>artifact 2e0e81e3…</span></span>
+        </button>
+
+        <button class="entry" type="button" data-page="helpmath-2-ui" aria-pressed="false">
+          <span class="entry__top"><h3>Whole-platform interface</h3><span class="tag tag--replay">Replay</span></span>
+          <p>Eight learner, teacher, assessment, course, and progress screens with bilingual interface behavior.</p>
+          <span class="entry__meta"><span>Aug 8–9</span><span>artifact deee5744…</span></span>
+        </button>
+
+        <button class="entry" type="button" data-page="helpmath-2-kids" aria-pressed="false">
+          <span class="entry__top"><h3>Kid-first visual direction</h3><span class="tag tag--replay">Replay</span></span>
+          <p>A more playful platform treatment exploring classroom warmth, illustration, reward, and simplified hierarchy.</p>
+          <span class="entry__meta"><span>Aug 10</span><span>artifact da8b6d63…</span></span>
+        </button>
+
+        <button class="entry" type="button" data-page="helpmath-2-soft" aria-pressed="false">
+          <span class="entry__top"><h3>Soft visual direction</h3><span class="tag tag--replay">Replay</span></span>
+          <p>A quieter alternate visual system with softer surfaces and a calmer learner-facing presentation.</p>
+          <span class="entry__meta"><span>Aug 10</span><span>artifact 5eba322d…</span></span>
+        </button>
+
+        <button class="entry" type="button" data-page="helpmath-identity" aria-pressed="false">
+          <span class="entry__top"><h3>HELP Math 2.0 identity</h3><span class="tag tag--replay">Regenerated</span></span>
+          <p>The Claude presentation page regenerated from its recovered builder and ten surviving hash-bound SVG inputs.</p>
+          <span class="entry__meta"><span>Aug 10–11</span><span>artifact f5d75bd4…</span></span>
+        </button>
+
+        <button class="entry" type="button" data-page="g4-ui-review" aria-pressed="false">
+          <span class="entry__top"><h3>G4 control-surface review</h3><span class="tag tag--partial">Replaced embed</span></span>
+          <p>The review’s source structure is replayed; its vanished 263,146-byte screenshot is replaced by a labeled same-project historical capture.</p>
+          <span class="entry__meta"><span>Aug 6</span><span>artifact 3fda4104…</span></span>
+        </button>
+
+        <button class="entry" type="button" data-page="help-math-ui-geometry" aria-pressed="false">
+          <span class="entry__top"><h3>Player geometry study</h3><span class="tag tag--study">Unpublished study</span></span>
+          <p>The intermediate mathematical layout study behind the modern-wide lesson-plane recommendation.</p>
+          <span class="entry__meta"><span>Aug 7</span><span>no artifact URL</span></span>
+        </button>
+      </section>
+
+      <section class="preview" aria-labelledby="preview-title">
+        <header class="preview__bar">
+          <div class="preview__title">
+            <h2 id="preview-title">Lesson player · current contract</h2>
+            <p id="preview-path">pages/help-math-player-support-contract.html</p>
+          </div>
+          <div class="preview__actions">
+            <a class="action action--primary" id="open-page" href="pages/help-math-player-support-contract.html" target="_blank" rel="noopener">Open full page</a>
+            <a class="action" href="reconstruction-manifest.json">Manifest</a>
+          </div>
+        </header>
+        <div class="framewrap">
+          <iframe id="preview-frame" title="Preview: Lesson player current contract" src="pages/help-math-player-support-contract.html" sandbox="allow-scripts"></iframe>
+        </div>
+        <footer class="preview__foot">
+          <p id="preview-status" role="status" aria-live="polite">Showing the support-contract reconstruction. The preview runs in an isolated iframe.</p>
+          <a id="artifact-link" href="https://claude.ai/code/artifact/2e0e81e3-78eb-485f-9bd0-43881bf9bf25" target="_blank" rel="noopener">Recorded Claude artifact</a>
+        </footer>
+      </section>
+    </div>
+
+    <section class="provenance" aria-labelledby="provenance-title">
+      <h2 id="provenance-title">Provenance and use</h2>
+      <p>The replay tool consumes only successful, explicitly listed Claude Write/Edit operations and whitelisted local text transformations. It does not replay historical deletion, preview-copy, browser, server, network, publication, or Git commands. Re-running it validates the surviving input hash for the embedded lesson image.</p>
+      <div class="provenance__links">
+        <a href="README.md">Read the handoff</a>
+        <a href="QA.md">Read browser QA</a>
+        <a href="replay-results.json">Replay output hashes</a>
+        <a href="recover-from-claude-sessions.mjs">Inspect the replayer</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+      var pages = {
+        "help-math-player-support-contract": { title: "Lesson player · current contract", path: "pages/help-math-player-support-contract.html", artifact: "https://claude.ai/code/artifact/2e0e81e3-78eb-485f-9bd0-43881bf9bf25", note: "Showing the current support-contract derivative. No provider is connected and nothing is sent." },
+        "help-math-player": { title: "Lesson player + Nova Tutor", path: "pages/help-math-player.html", artifact: "https://claude.ai/code/artifact/2e0e81e3-78eb-485f-9bd0-43881bf9bf25", note: "Showing Claude’s deterministic transcript-replay candidate. Historical tutor replies are simulated locally." },
+        "helpmath-2-ui": { title: "Whole-platform interface", path: "pages/helpmath-2-ui.html", artifact: "https://claude.ai/code/artifact/deee5744-d302-4667-8d4c-4a074d53bc6b", note: "Showing the final bilingual whole-platform transcript-replay candidate." },
+        "helpmath-2-kids": { title: "Kid-first visual direction", path: "pages/helpmath-2-kids.html", artifact: "https://claude.ai/code/artifact/da8b6d63-3ee8-46a1-97f6-03aeaa14534d", note: "Showing the kid-first visual-direction transcript-replay candidate." },
+        "helpmath-2-soft": { title: "Soft visual direction", path: "pages/helpmath-2-soft.html", artifact: "https://claude.ai/code/artifact/5eba322d-47d5-485e-b038-35376bc03090", note: "Showing the soft visual-direction transcript-replay candidate." },
+        "helpmath-identity": { title: "HELP Math 2.0 identity", path: "pages/helpmath-identity.html", artifact: "https://claude.ai/code/artifact/f5d75bd4-cfb5-4391-bc63-93f6965cde51", note: "Showing the identity page regenerated from the recovered builder and surviving SVG inputs." },
+        "g4-ui-review": { title: "G4 control-surface review", path: "pages/g4-ui-review.html", artifact: "https://claude.ai/code/artifact/3fda4104-1afb-4852-a5f1-2ccd018e30f8", note: "Showing the structural replay with a replacement historical screenshot. Original embedded image bytes are unavailable." },
+        "help-math-ui-geometry": { title: "Player geometry study", path: "pages/help-math-ui-geometry.html", artifact: null, note: "Showing an exactly replayable intermediate study that was not published as a Claude artifact." }
+      };
+      var entries = Array.prototype.slice.call(document.querySelectorAll(".entry"));
+      var frame = document.getElementById("preview-frame");
+      var title = document.getElementById("preview-title");
+      var path = document.getElementById("preview-path");
+      var status = document.getElementById("preview-status");
+      var open = document.getElementById("open-page");
+      var artifact = document.getElementById("artifact-link");
+
+      function select(key, updateHash) {
+        var item = pages[key] || pages["help-math-player-support-contract"];
+        entries.forEach(function (entry) { entry.setAttribute("aria-pressed", String(entry.dataset.page === key)); });
+        title.textContent = item.title;
+        path.textContent = item.path;
+        frame.title = "Preview: " + item.title;
+        frame.src = item.path;
+        open.href = item.path;
+        status.textContent = item.note + " The preview runs in an isolated iframe.";
+        artifact.hidden = !item.artifact;
+        if (item.artifact) artifact.href = item.artifact;
+        if (updateHash && history.replaceState) history.replaceState(null, "", "#" + key);
+      }
+      entries.forEach(function (entry) { entry.addEventListener("click", function () { select(entry.dataset.page, true); }); });
+      var initial = location.hash.slice(1);
+      if (pages[initial]) select(initial, false);
+    })();
+  </script>
+</body>
+</html>

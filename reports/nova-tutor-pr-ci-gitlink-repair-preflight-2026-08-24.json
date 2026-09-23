@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "evidenceKind": "LOCAL_GIT_METADATA_REPAIR_PREFLIGHT",
+  "recordedAtUtc": "2026-08-24T08:58:27Z",
+  "status": "READY_FOR_AUTHORIZED_PARENT_TREE_FIX",
+  "parentRepository": {
+    "branch": "codex/help-math-learning-platform-nova-fq",
+    "head": "eee37e3cc4b25edf0fe330d85116ddb081f24f5f",
+    "draftPullRequest": 4,
+    "latestFailedRun": 32707426288,
+    "siteWorkspaceJob": 97371399739,
+    "workbenchJob": 97371400160,
+    "failureStage": "actions checkout before install or tests",
+    "failure": "No url found for the tracked gitlink in .gitmodules"
+  },
+  "trackedPath": {
+    "path": ".codex-validation-p51-e355",
+    "parentTreeMode": "160000",
+    "parentTreeObject": "af33bcecff686dc49e143a698f56fd5e938ff498",
+    "actualLocalType": "linked Git worktree",
+    "actualLocalHead": "af33bcecff686dc49e143a698f56fd5e938ff498",
+    "actualLocalOrigin": "same HELP Math GitHub repository",
+    "dirtyEntriesObserved": 27,
+    "contentDeletionAuthorized": false,
+    "contentMustBePreserved": true,
+    "validProductSubmodule": false
+  },
+  "preparedLocalRepair": {
+    "ignoreRule": "/.codex-validation-*/",
+    "ignoreRuleFile": ".gitignore",
+    "isolatedIndexDryRun": true,
+    "isolatedIndexDiff": [
+      {
+        "status": "D",
+        "path": ".codex-validation-p51-e355"
+      }
+    ],
+    "realIndexModified": false,
+    "temporaryIndexRetained": false,
+    "linkedWorktreeDirectoryModified": false
+  },
+  "requiredAuthorizedRemoteFix": {
+    "removeGitlinkFromParentTree": true,
+    "retainLinkedWorktreeDirectory": true,
+    "retainIgnoreRule": true,
+    "addSyntheticGitmodulesEntry": false,
+    "rerunLatestPullRequestChecks": true
+  },
+  "mutationBoundary": {
+    "stagedFiles": 0,
+    "commits": 0,
+    "pushes": 0,
+    "pullRequestComments": 0,
+    "vercelWrites": 0,
+    "providerRequests": 0
+  },
+  "resultBoundary": {
+    "proved": "The latest pull request checks fail before Nova tests because a local linked worktree was committed as an unconfigured gitlink, and the safe parent-tree repair can remove only that gitlink while preserving all linked-worktree content.",
+    "notProved": "That the remote pull request is repaired, that CI passes after repair, or that any new Preview or Production artifact contains the current local Nova patch."
+  }
+}

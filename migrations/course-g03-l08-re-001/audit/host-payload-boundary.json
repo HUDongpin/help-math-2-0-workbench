@@ -1,0 +1,486 @@
+{
+  "acceptance": {
+    "audioAcceptance": false,
+    "authoritativeOriginalRuntimeBaseline": false,
+    "behaviorParity": false,
+    "coverageAcceptance": false,
+    "fullFrameRmseAcceptance": false,
+    "humanVisualReview": false,
+    "migrationCompletion": false,
+    "migrationStatusChanged": false,
+    "ownerAcceptance": false,
+    "rendererAcceptance": false,
+    "strictAcceptance": false
+  },
+  "activeCourseXml": {
+    "activeFqPageSourceLines": [
+      {
+        "matches": [
+          {
+            "line": 171,
+            "text": "<Page Title=\"Introduction\" RandomAudio=\"\" BGText=\"\" Navigation=\"ON\">FQ/L8FQ01.swf</Page>"
+          }
+        ],
+        "page": "FQ/L8FQ01.swf"
+      },
+      {
+        "matches": [
+          {
+            "line": 172,
+            "text": "<Page Title=\"Page 1\" RandomAudio=\"\" BGText=\"\" Navigation=\"OFF\">FQ/L8FQ02.swf</Page>"
+          }
+        ],
+        "page": "FQ/L8FQ02.swf"
+      },
+      {
+        "matches": [
+          {
+            "line": 173,
+            "text": "<Page Title=\"Page 2\" RandomAudio=\"\" BGText=\"\" Navigation=\"ON\">FQ/L8FQ03.swf</Page>"
+          }
+        ],
+        "page": "FQ/L8FQ03.swf"
+      }
+    ],
+    "activeFqPages": [
+      "FQ/L8FQ01.swf",
+      "FQ/L8FQ02.swf",
+      "FQ/L8FQ03.swf"
+    ],
+    "conclusion": "The active Grade 3 Lesson 8 XML has no RE section or L8RE01 placement. Its FQ page 2 and page 3 references are exact-path missing sources.",
+    "historicalReviewExactPlacementCount": 0,
+    "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L8/index.xml",
+    "reviewSectionCount": 0,
+    "sha256": "b3f545ec540a042e8369cc2d1d75d5ed69754ac167ca7de67947b39e5a54d72a",
+    "targetBasenameMatchCount": 0,
+    "targetExactPlacementCount": 0
+  },
+  "activeMissingFqSources": [
+    {
+      "activeReference": "FQ/L8FQ02.swf",
+      "activeXmlOccurrence": 60,
+      "exists": false,
+      "expectedPath": "HELP_COURSES/ELMGR3/L8/FQ/L8FQ02.swf",
+      "resolvedPath": null
+    },
+    {
+      "activeReference": "FQ/L8FQ03.swf",
+      "activeXmlOccurrence": 61,
+      "exists": false,
+      "expectedPath": "HELP_COURSES/ELMGR3/L8/FQ/L8FQ03.swf",
+      "resolvedPath": null
+    }
+  ],
+  "animationId": "course-g03-l08-re-001",
+  "boundaryConclusion": {
+    "activeFqPage2SourceAvailable": false,
+    "activeFqPage3SourceAvailable": false,
+    "authoritativeReviewAnsPayloadAvailable": false,
+    "historicalPayloadTransferToTargetObserved": false,
+    "historicalVariantMaySubstituteForMissingActiveSource": false,
+    "legacyBackNaturalExecutionObserved": false,
+    "payloadProducerInActiveLessonEvidence": false,
+    "previousNextNaturalExecutionObserved": false,
+    "rendererScenarioUnblocked": false,
+    "sameLessonHostCarriesPayload": false,
+    "targetR11ThroughR25ReachabilityResolved": false,
+    "targetR1ThroughR10RuntimeStateResolved": false
+  },
+  "evidenceDelta": {
+    "implementationFramesAdded": 0,
+    "requirementsAdded": 0
+  },
+  "evidenceType": "re001-host-payload-boundary",
+  "generatedBy": {
+    "ffdec": {
+      "jarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f",
+      "version": "JPEXS Free Flash Decompiler v.26.2.1"
+    },
+    "path": "scripts/build-re001-host-payload-boundary.mjs",
+    "sha256": "d4a4c5daf68fe6f957c660c76bf44d7d3f5259cdf53aa32f0f7da27ec5d754f5"
+  },
+  "historicalFqReviewCrossReference": {
+    "activeExactPlacement": false,
+    "authority": "cross-reference-only; basename similarity and a structurally compatible seven-segment builder do not establish the missing active FQ runtime or target host handoff",
+    "catalogUnreferenced": true,
+    "catalogVariantKind": "review",
+    "indexHashMode": "stable-key-sorted-pretty-json-array-v1",
+    "indexSha256": "55f0f69a935f2db6a44c35a852d5c3282835bde57b096d7e44db7afa4f3e0682",
+    "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+    "normalizedBodyMultisetHashMode": "stable-key-sorted-pretty-json-array-v1",
+    "normalizedBodyMultisetSha256": "c307abd26c7a177753d6eda0c704ceed90a7b54b0bc11540684610ac46a94131",
+    "payloadBuilder": {
+      "final": {
+        "derivedSegmentCount": 7,
+        "derivedSegmentOrder": [
+          "arrayCorrectAnswer",
+          "arrayWrongAnswer",
+          "arrayResponseAnswer",
+          "quizLabelArray",
+          "revLabelArray",
+          "arrayAnswer",
+          "arrayReview"
+        ],
+        "expression": "_global.REVIEWANS = _global.arrayCorrectAnswer + \"SPL\" + _global.arrayWrongAnswer + \"SPL\" + _global.arrayResponseAnswer + \"SPL\" + _global.REVIEWANS + \"SPL\" + _global.arrayAnswer + \"SPL\" + _global.arrayReview;",
+        "nestedSeedSegmentCount": 2,
+        "outerLiteralSplDelimiterCount": 5,
+        "script": {
+          "exact": true,
+          "missingTokens": [],
+          "normalizedBytes": 1322,
+          "normalizedSha256": "185c3c3e593d46d5ddf7929268ba5c11f3b0672498d9a42ceb63bcc9c7e0eab7",
+          "path": "DefineSprite_135/frame_2/DoAction.as",
+          "rawBytes": 1352,
+          "rawSha256": "9df2de68181dcb47d44c587c14e510a50ae5afa80a3d9ca09eb8b8a359312bd5",
+          "requiredTokens": [
+            "_global.REVIEWANS = _global.arrayCorrectAnswer + \"SPL\" + _global.arrayWrongAnswer + \"SPL\" + _global.arrayResponseAnswer + \"SPL\" + _global.REVIEWANS + \"SPL\" + _global.arrayAnswer + \"SPL\" + _global.arrayReview;"
+          ]
+        }
+      },
+      "seed": {
+        "expression": "_global.REVIEWANS = _global.quizLabelArray + \"SPL\" + _global.revLabelArray;",
+        "script": {
+          "exact": true,
+          "missingTokens": [],
+          "normalizedBytes": 7706,
+          "normalizedSha256": "da3be6002d4967cff9c4328a8dc7787011db2b90f0a8005e42b2976278dfbee4",
+          "path": "DefineSprite_962/frame_1/DoAction.as",
+          "rawBytes": 7930,
+          "rawSha256": "f0609e42d9973f4ff1af3358e610dc48393508fcc38d4af2d81ac0b467b70b30",
+          "requiredTokens": [
+            "_global.REVIEWANS = _global.quizLabelArray + \"SPL\" + _global.revLabelArray;"
+          ]
+        },
+        "segmentCount": 2,
+        "segmentOrder": [
+          "quizLabelArray",
+          "revLabelArray"
+        ]
+      }
+    },
+    "payloadTransferIntoL8RE01Observed": false,
+    "requirementUnlockEffect": "none",
+    "reviewAnsSearch": {
+      "caseSensitive": false,
+      "id": "historical-reviewans-token",
+      "matchingFileCount": 2,
+      "matchingFiles": [
+        {
+          "occurrenceCount": 4,
+          "path": "DefineSprite_135/frame_2/DoAction.as"
+        },
+        {
+          "occurrenceCount": 1,
+          "path": "DefineSprite_962/frame_1/DoAction.as"
+        }
+      ],
+      "occurrenceCount": 5,
+      "query": "REVIEWANS"
+    },
+    "scriptCount": 135,
+    "sourcePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L8/FQ/Review/L8FQ03.swf",
+    "sourceSha256": "097b6faa8d1c2a449e438b53965f81d8b3a73dd444d3d60031395d2fb2dac80f"
+  },
+  "limitations": [
+    "This report is a reproducible static boundary audit, not an authorized original-runtime trace.",
+    "The target SWF proves that sprite-621 consumes seven SPL-delimited segments and clamps reviewCount to 1..10, but neither the payload values nor their target handoff are present in the active lesson evidence.",
+    "The same-lesson index_local SWF has no REVIEWANS carrier or L8RE01 binding in all 573 exported scripts.",
+    "The active FQ/L8FQ02.swf and FQ/L8FQ03.swf sources are missing. The existing FQ/Review/L8FQ03.swf is unreferenced historical cross-evidence only and cannot be substituted by basename.",
+    "No renderer state, capture requirement, implementation frame, baseline, RMSE, audio, human review, owner acceptance, parity, status, or strict-completion gate changes."
+  ],
+  "machineEvidence": {
+    "childScripts": {
+      "path": "migrations/course-g03-l08-re-001/audit/machine/ffdec-scripts.txt.gz",
+      "sha256": "81546d70e37dee258ff2f79f4eda7da861460f50e781ea4027c249d6754209b6",
+      "uncompressedBytes": 6419,
+      "uncompressedSha256": "a8048306b6bb1dfc5a00a65876a8e9b297786d80b99b679aa367337874f8978c"
+    },
+    "childStructure": {
+      "path": "migrations/course-g03-l08-re-001/audit/machine/swfmill.xml.gz",
+      "sha256": "547b2ae4466ce60c4c6fd5290ec95953b8ddc4e02aa5e3e319229b0af5f14967",
+      "uncompressedBytes": 2431028,
+      "uncompressedSha256": "8c7d8c6cb7c7a00c92cd7aa6ef3b78f38226a98bb452c611b83bf044f78600e1"
+    },
+    "missingReferences": {
+      "path": "catalog/missing-references.json",
+      "sha256": "9ef033c7c0c85e86007eb4eea1dfef07e6f86688b4a651e25b0e9201b2e89b59"
+    },
+    "report": {
+      "exportedScriptFileCount": 6,
+      "path": "migrations/course-g03-l08-re-001/audit/machine/report.json",
+      "sha256": "67498d27774da6b0a7dd38566574940346865304d1edab6295681b142d117f5d",
+      "sourceHashMatches": true
+    },
+    "unreferenced": {
+      "path": "catalog/unreferenced.json",
+      "sha256": "35d2ce28d60752ee1dca54c70f603a35fb9263548742e5b76fb04e875dd50ebd"
+    }
+  },
+  "qualificationIssues": [],
+  "sameLessonHostActionScript": {
+    "conclusion": "All 573 FFDec-exported same-lesson index_local scripts were searched. No REVIEWANS/dtfREVIEWANS token or L8RE01 path binding was found.",
+    "indexHashMode": "stable-key-sorted-pretty-json-array-v1",
+    "indexSha256": "0cfa87ccc385846a323734fa60b2ddddee49992755ff1a5ffdc45a4dbc544ebb",
+    "normalization": "CRLF-or-CR-to-LF; remove terminal newlines; append exactly one LF",
+    "normalizedBodyMultisetHashMode": "stable-key-sorted-pretty-json-array-v1",
+    "normalizedBodyMultisetSha256": "e2755c226308a12b0c66406a0dfda112a541ad7e5db638a7c59defe2231925e1",
+    "reviewAnsCarrierFound": false,
+    "reviewAnsProducerFound": false,
+    "scriptCount": 573,
+    "searches": [
+      {
+        "caseSensitive": false,
+        "id": "reviewans-token",
+        "matchingFileCount": 0,
+        "matchingFiles": [],
+        "occurrenceCount": 0,
+        "query": "REVIEWANS"
+      },
+      {
+        "caseSensitive": false,
+        "id": "dtf-reviewans-field",
+        "matchingFileCount": 0,
+        "matchingFiles": [],
+        "occurrenceCount": 0,
+        "query": "dtfREVIEWANS"
+      },
+      {
+        "caseSensitive": false,
+        "id": "target-basename",
+        "matchingFileCount": 0,
+        "matchingFiles": [],
+        "occurrenceCount": 0,
+        "query": "L8RE01"
+      },
+      {
+        "caseSensitive": false,
+        "id": "target-exact-relative-path",
+        "matchingFileCount": 0,
+        "matchingFiles": [],
+        "occurrenceCount": 0,
+        "query": "RE/L8RE01.swf"
+      }
+    ],
+    "sourcePath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L8/index_local.swf",
+    "sourceSha256": "3c3a21c70d3d05eec2d9358f7c28e999ff811d7733fa7ed4b7bf353697e42999",
+    "targetLoaderBindingFound": false
+  },
+  "schemaVersion": 1,
+  "scope": "read-only-static-source-and-machine-evidence-boundary",
+  "sourceCatalog": {
+    "checksumSetSha256": "0d6f20e50576c73aac38aa5a88610c654bbe29430044c2db43d8d6236cf8fe0f",
+    "path": "catalog/source-files.json",
+    "sha256": "3c69ff32fd641910f63b24709b3c0225418ba1eee823155a99b307456eb1ee6c"
+  },
+  "sources": {
+    "courseXml": {
+      "bytes": 13549,
+      "catalogPath": "HELP_COURSES/ELMGR3/L8/index.xml",
+      "frozenCatalogBinding": "verified-current-read-only-source",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L8/index.xml",
+      "role": "active-same-lesson-course-xml",
+      "sha256": "b3f545ec540a042e8369cc2d1d75d5ed69754ac167ca7de67947b39e5a54d72a",
+      "sourceMode": "0500"
+    },
+    "historicalFqReview": {
+      "bytes": 186870,
+      "catalogPath": "HELP_COURSES/ELMGR3/L8/FQ/Review/L8FQ03.swf",
+      "frozenCatalogBinding": "verified-current-read-only-source",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L8/FQ/Review/L8FQ03.swf",
+      "role": "unreferenced-historical-fq-review-cross-reference-only",
+      "sha256": "097b6faa8d1c2a449e438b53965f81d8b3a73dd444d3d60031395d2fb2dac80f",
+      "sourceMode": "0500"
+    },
+    "sameLessonHost": {
+      "bytes": 672216,
+      "catalogPath": "HELP_COURSES/ELMGR3/L8/index_local.swf",
+      "frozenCatalogBinding": "verified-current-read-only-source",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L8/index_local.swf",
+      "role": "same-lesson-course-shell",
+      "sha256": "3c3a21c70d3d05eec2d9358f7c28e999ff811d7733fa7ed4b7bf353697e42999",
+      "sourceMode": "0500"
+    },
+    "target": {
+      "bytes": 153236,
+      "catalogPath": "HELP_COURSES/ELMGR3/L8/RE/L8RE01.swf",
+      "frozenCatalogBinding": "verified-current-read-only-source",
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR3/L8/RE/L8RE01.swf",
+      "role": "target-historical-review-swf",
+      "sha256": "e4a6403f6b45a3b4aecb48e0659aa20113acb0644e37b027a19fb51f34417f9b",
+      "sourceMode": "0500"
+    }
+  },
+  "status": "host-payload-producer-unavailable-cross-reference-bounded",
+  "targetMachineContract": {
+    "exportedScriptCount": 6,
+    "rootDynamicFields": [
+      {
+        "initialText": null,
+        "initialTextAttributePresent": false,
+        "instanceName": "dtfSTUDENT",
+        "objectId": "3",
+        "placementDepth": "2",
+        "readOnly": true,
+        "variableName": "STUDENT"
+      },
+      {
+        "initialText": null,
+        "initialTextAttributePresent": false,
+        "instanceName": "dtfREVIEWANS",
+        "objectId": "4",
+        "placementDepth": "3",
+        "readOnly": true,
+        "variableName": "REVIEWANS"
+      }
+    ],
+    "rootFrames": {
+      "frame1": {
+        "exact": true,
+        "missingTokens": [],
+        "normalizedBytes": 39,
+        "normalizedSha256": "e17667d554a8cef8a9c4de97de8638d64502a0525cd7d9aa1fd4a6a1a198b8c2",
+        "path": "frame_1/DoAction.as",
+        "requiredTokens": [
+          "_global.REVIEWANS = dtfREVIEWANS.text;"
+        ]
+      },
+      "frame51": {
+        "exact": true,
+        "missingTokens": [],
+        "normalizedBytes": 34,
+        "normalizedSha256": "ae7a946d5767e85113e182ae24dfbd55283303f5e804d0aea6c1b076c2162875",
+        "path": "frame_51/DoAction.as",
+        "requiredTokens": [
+          "stop();",
+          "animation.gotoAndPlay(1);"
+        ]
+      }
+    },
+    "sprite621": {
+      "back": {
+        "safeModernExecutionAuthorized": false,
+        "script": {
+          "exact": true,
+          "missingTokens": [],
+          "normalizedBytes": 55,
+          "normalizedSha256": "4fa81af1ddf7c03387000e8cdc6fa695b05c4fc36c922ba4c3e1330e536aa7a5",
+          "path": "DefineButton2_85/BUTTONCONDACTION on(release).as",
+          "requiredTokens": [
+            "getURL(\"javascript:history.back()\");"
+          ]
+        },
+        "sourceOperation": "getURL(\"javascript:history.back()\")"
+      },
+      "boundedReviewNavigation": {
+        "next": {
+          "exact": true,
+          "missingTokens": [],
+          "normalizedBytes": 203,
+          "normalizedSha256": "f0a254a014a5ad2fd1b34b316f8c7c92b9c4d0b5cdddc3432e2b7991fb757d8a",
+          "path": "DefineButton2_75/BUTTONCONDACTION on(release).as",
+          "requiredTokens": [
+            "_global.reviewCount++;",
+            "_global.reviewCount > parseInt(_global.totalQuestionsCount)",
+            "_global.reviewCount = parseInt(_global.totalQuestionsCount);",
+            "doGetReview();"
+          ]
+        },
+        "previous": {
+          "exact": true,
+          "missingTokens": [],
+          "normalizedBytes": 131,
+          "normalizedSha256": "05135a536c567a8b43f5da0b0383bc70ae4065763bf610cde00a8f221fb26f9a",
+          "path": "DefineButton2_80/BUTTONCONDACTION on(release).as",
+          "requiredTokens": [
+            "_global.reviewCount--;",
+            "_global.reviewCount < 1",
+            "_global.reviewCount = 1;",
+            "doGetReview();"
+          ]
+        },
+        "reachableCounterLowerBound": 1,
+        "reachableCounterUpperBound": 10,
+        "sourceTotalQuestionsCount": 10
+      },
+      "entry": {
+        "exact": true,
+        "missingTokens": [],
+        "normalizedBytes": 5654,
+        "normalizedSha256": "a223cce9f16811a3824e158deb4b66469ad1133978b03987c41496c74f735e74",
+        "path": "DefineSprite_621/frame_1/DoAction.as",
+        "requiredTokens": [
+          "stop();",
+          "_global.REVIEWANS = _parent.dtfREVIEWANS.text;",
+          "splRevAnsValue = _global.REVIEWANS.split(\"SPL\");",
+          "_global.arrayCorrectAnswer = splRevAnsValue[0].split(\",\");",
+          "_global.arrayWrongAnswer = splRevAnsValue[1].split(\",\");",
+          "_global.arrayResponseAnswer = splRevAnsValue[2].split(\",\");",
+          "_global.quizLabelArray = splRevAnsValue[3].split(\",\");",
+          "_global.revLabelArray = splRevAnsValue[4].split(\",\");",
+          "_global.arrayAnswer = splRevAnsValue[5].split(\",\");",
+          "_global.arrayReview = splRevAnsValue[6].split(\",\");",
+          "_global.totalQuestionsCount = \"10\";",
+          "_global.reviewCount = 0;",
+          "_global.reviewCount++;",
+          "doGetReview();"
+        ]
+      },
+      "splPayload": {
+        "delimiter": "SPL",
+        "requiredSegmentCount": 7,
+        "requiredSegmentIndexes": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "segmentOrder": [
+          "arrayCorrectAnswer",
+          "arrayWrongAnswer",
+          "arrayResponseAnswer",
+          "quizLabelArray",
+          "revLabelArray",
+          "arrayAnswer",
+          "arrayReview"
+        ],
+        "sourcePayloadAvailable": false
+      },
+      "structure": {
+        "frameCount": 27,
+        "frameLabels": [
+          "FirstSection",
+          "R1",
+          "R2",
+          "R3",
+          "R4",
+          "R5",
+          "R6",
+          "R7",
+          "R8",
+          "R9",
+          "R10",
+          "R11",
+          "R12",
+          "R13",
+          "R14",
+          "R15",
+          "R16",
+          "R17",
+          "R18",
+          "R19",
+          "R20",
+          "R21",
+          "R22",
+          "R23",
+          "R24",
+          "R25"
+        ],
+        "showFrameCount": 27,
+        "sourceObjectId": "621"
+      }
+    }
+  }
+}

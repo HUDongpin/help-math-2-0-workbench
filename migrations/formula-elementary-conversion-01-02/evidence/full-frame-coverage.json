@@ -1,13 +1,116 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "animationId": "formula-elementary-conversion-01-02",
-  "frameCount": 0,
-  "languages": [
-    "en",
-    "es"
-  ],
-  "scenarios": [
-    "default"
-  ],
-  "combinations": []
+  "requirements": [
+    {
+      "requirementId": "req:root:default:en",
+      "scenario": "default",
+      "frameDomainId": "root",
+      "traceId": "trace:root:default:en:seed-0",
+      "language": "en",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 109
+      },
+      "entryState": {
+        "kind": "original-root-frame-accurate-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "default",
+        "language": "en",
+        "seed": "0"
+      },
+      "entryStateSha256": "0c9cb0a75fd7962e040a56e9359dee9f6afef997d1f9bf380656201980a5b5af",
+      "baselineAuthorityRequirement": "original-runtime-frame-accurate",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SWF/Conversion_1_2.swf",
+          "sha256": "91d63f9f045d2097cd0f46c59ceacd4faefd95851f9039003589d8052c39e758"
+        },
+        {
+          "file": "evidence/coverage-v1-prereview-archive.json",
+          "sha256": "79630b62197eb7bbc5e70e5e5b636b72c34d585628cb8d2cc1efa95ec8788f60"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/formula-elementary-conversion-01-02-v2/req-root-default-en/capture-manifest.json",
+          "sha256": "e0bc9d0000561898baaea2d2a5bd57b0f28edf52418138ab8264840e7ed4e688"
+        },
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "e1fdfebca9bd0472adc8021ef26d8f239c4591b4bd75dd2c705eaa6023dc6415"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/formula-elementary-conversion-01-02-v3/req-root-default-en/capture-manifest.json",
+          "sha256": "8c16a5c8cef8a1b4efaf0212d73293b388d80d0326e9ff47b29bcf822455af5a"
+        }
+      ],
+      "capturedFrameCount": 109,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/formula-elementary-conversion-01-02-v3/req-root-default-en/capture-manifest.json",
+      "captureManifestSha256": "8c16a5c8cef8a1b4efaf0212d73293b388d80d0326e9ff47b29bcf822455af5a",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:default:es",
+      "scenario": "default",
+      "frameDomainId": "root",
+      "traceId": "trace:root:default:es:seed-0",
+      "language": "es",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 109
+      },
+      "entryState": {
+        "kind": "original-root-frame-accurate-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "default",
+        "language": "es",
+        "seed": "0"
+      },
+      "entryStateSha256": "43bb3bbbaab63924c885500cfcf7792349dacf6466c75081dcc1dbc2020654b3",
+      "baselineAuthorityRequirement": "original-runtime-frame-accurate",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_FORMULAS/ELEMENTARY/SWF/Conversion_1_2.swf",
+          "sha256": "91d63f9f045d2097cd0f46c59ceacd4faefd95851f9039003589d8052c39e758"
+        },
+        {
+          "file": "evidence/coverage-v1-prereview-archive.json",
+          "sha256": "79630b62197eb7bbc5e70e5e5b636b72c34d585628cb8d2cc1efa95ec8788f60"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/formula-elementary-conversion-01-02-v2/req-root-default-es/capture-manifest.json",
+          "sha256": "e5ebb38b18575dcb71a64010a13b7b20823817e78de88093fb967bd252584142"
+        },
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "e1fdfebca9bd0472adc8021ef26d8f239c4591b4bd75dd2c705eaa6023dc6415"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/formula-elementary-conversion-01-02-v3/req-root-default-es/capture-manifest.json",
+          "sha256": "c6af437ac40745a3840b01ba6e1e6dcba6d8a1f4e4ced8df00610d804e52e33d"
+        }
+      ],
+      "capturedFrameCount": 109,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/formula-elementary-conversion-01-02-v3/req-root-default-es/capture-manifest.json",
+      "captureManifestSha256": "c6af437ac40745a3840b01ba6e1e6dcba6d8a1f4e4ced8df00610d804e52e33d",
+      "metricsFile": "",
+      "metricsSha256": ""
+    }
+  ]
 }

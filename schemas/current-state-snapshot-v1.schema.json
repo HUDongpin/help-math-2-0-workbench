@@ -1,0 +1,311 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://help-math.local/schemas/current-state-snapshot-v1.schema.json",
+  "title": "HELP Math CurrentStateSnapshotV1",
+  "description": "Unsigned, privacy-safe diagnostic receipt for a release-scoped repository state. It records observed command outcomes and exact input hashes but grants no fidelity, review, acceptance, promotion, strict-completion, or publication authority.",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "evidenceType",
+    "snapshotId",
+    "releaseId",
+    "capturedAt",
+    "capturePhase",
+    "authority",
+    "temporalBoundary",
+    "schema",
+    "generator",
+    "repository",
+    "tools",
+    "release",
+    "inputs",
+    "commands",
+    "observedState",
+    "knownBoundaries",
+    "acceptanceEffects",
+    "privacy",
+    "integrity"
+  ],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "evidenceType": {"const": "help-math-current-state-snapshot-v1"},
+    "snapshotId": {"$ref": "#/$defs/logicalId"},
+    "releaseId": {"$ref": "#/$defs/logicalId"},
+    "capturedAt": {"type": "string", "format": "date-time"},
+    "capturePhase": {"$ref": "#/$defs/logicalId"},
+    "authority": {"type": "string", "minLength": 1},
+    "temporalBoundary": {
+      "type": "object",
+      "required": ["requestedBaselineDate", "preExistingWork", "statement"],
+      "properties": {
+        "requestedBaselineDate": {"type": "string", "format": "date"},
+        "preExistingWork": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "statement": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "schema": {"$ref": "#/$defs/artifact"},
+    "generator": {"$ref": "#/$defs/artifact"},
+    "repository": {
+      "type": "object",
+      "required": [
+        "headState",
+        "headSha",
+        "branch",
+        "dirty",
+        "statusEntryCount",
+        "trackedEntryCount",
+        "untrackedEntryCount",
+        "statusSha256",
+        "excludedSnapshotOutputCount",
+        "pathsWithheld"
+      ],
+      "properties": {
+        "headState": {"enum": ["attached", "unborn"]},
+        "headSha": {
+          "oneOf": [
+            {"type": "string", "pattern": "^[a-f0-9]{40}$"},
+            {"type": "null"}
+          ]
+        },
+        "branch": {"$ref": "#/$defs/logicalId"},
+        "dirty": {"type": "boolean"},
+        "statusEntryCount": {"type": "integer", "minimum": 0},
+        "trackedEntryCount": {"type": "integer", "minimum": 0},
+        "untrackedEntryCount": {"type": "integer", "minimum": 0},
+        "statusSha256": {"$ref": "#/$defs/sha256"},
+        "excludedSnapshotOutputCount": {"const": 2},
+        "pathsWithheld": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "tools": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["name", "version"],
+        "properties": {
+          "name": {"$ref": "#/$defs/logicalId"},
+          "version": {"type": "string", "minLength": 1, "maxLength": 256}
+        },
+        "additionalProperties": false
+      }
+    },
+    "release": {
+      "type": "object",
+      "required": [
+        "title",
+        "definitionSha256",
+        "memberIdentitySetSha256",
+        "expectedMemberCount",
+        "activePageCount",
+        "shellCount",
+        "publicationMode"
+      ],
+      "properties": {
+        "title": {"type": "string", "minLength": 1, "maxLength": 256},
+        "definitionSha256": {"$ref": "#/$defs/sha256"},
+        "memberIdentitySetSha256": {"$ref": "#/$defs/sha256"},
+        "expectedMemberCount": {"type": "integer", "minimum": 1},
+        "activePageCount": {"type": "integer", "minimum": 1},
+        "shellCount": {"type": "integer", "minimum": 1},
+        "publicationMode": {"const": "atomic"}
+      },
+      "additionalProperties": false
+    },
+    "inputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/artifact"}
+    },
+    "commands": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "commandId",
+          "scope",
+          "argv",
+          "startedAt",
+          "endedAt",
+          "exitCode",
+          "signal",
+          "outcome",
+          "stdoutBytes",
+          "stdoutSha256",
+          "stderrBytes",
+          "stderrSha256"
+        ],
+        "properties": {
+          "commandId": {"$ref": "#/$defs/logicalId"},
+          "scope": {"$ref": "#/$defs/logicalId"},
+          "argv": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"type": "string", "minLength": 1, "maxLength": 512}
+          },
+          "startedAt": {"type": "string", "format": "date-time"},
+          "endedAt": {"type": "string", "format": "date-time"},
+          "exitCode": {"type": "integer", "minimum": 0, "maximum": 255},
+          "signal": {
+            "oneOf": [
+              {"type": "string", "minLength": 1, "maxLength": 64},
+              {"type": "null"}
+            ]
+          },
+          "outcome": {"enum": ["passed", "failed"]},
+          "stdoutBytes": {"type": "integer", "minimum": 0},
+          "stdoutSha256": {"$ref": "#/$defs/sha256"},
+          "stderrBytes": {"type": "integer", "minimum": 0},
+          "stderrSha256": {"$ref": "#/$defs/sha256"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "observedState": {
+      "type": "object",
+      "required": [
+        "expectedMemberCount",
+        "draftValidWorkspaceCount",
+        "implementationStartedCount",
+        "strictCompleteCount",
+        "published",
+        "publicRoutesOpen",
+        "authoritativeRuntimeSessionCount",
+        "authoringAuditCount",
+        "audioAcceptedFileCount",
+        "ownerDecisionReceiptCount",
+        "namedRoleAssignmentReceiptCount",
+        "completionLedgerCurrent",
+        "releaseLedgerCurrent",
+        "diagnosticCommandCount",
+        "passedDiagnosticCommandCount",
+        "failedDiagnosticCommandCount",
+        "machinePacketReadyForOwnerReview",
+        "m0ExitReady",
+        "m1Authorized"
+      ],
+      "properties": {
+        "expectedMemberCount": {"type": "integer", "minimum": 1},
+        "draftValidWorkspaceCount": {"type": "integer", "minimum": 0},
+        "implementationStartedCount": {"type": "integer", "minimum": 0},
+        "strictCompleteCount": {"type": "integer", "minimum": 0},
+        "published": {"const": false},
+        "publicRoutesOpen": {"const": false},
+        "authoritativeRuntimeSessionCount": {"const": 0},
+        "authoringAuditCount": {"const": 0},
+        "audioAcceptedFileCount": {"const": 0},
+        "ownerDecisionReceiptCount": {"const": 0},
+        "namedRoleAssignmentReceiptCount": {"const": 0},
+        "completionLedgerCurrent": {"type": "boolean"},
+        "releaseLedgerCurrent": {"type": "boolean"},
+        "diagnosticCommandCount": {"type": "integer", "minimum": 1},
+        "passedDiagnosticCommandCount": {"type": "integer", "minimum": 0},
+        "failedDiagnosticCommandCount": {"type": "integer", "minimum": 0},
+        "machinePacketReadyForOwnerReview": {"const": true},
+        "m0ExitReady": {"const": false},
+        "m1Authorized": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "knownBoundaries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "acceptanceEffects": {
+      "type": "object",
+      "required": [
+        "authoritativeOriginalRuntime",
+        "fidelityAccepted",
+        "audioAccepted",
+        "humanReviewAccepted",
+        "ownerAccepted",
+        "strictComplete",
+        "promotionAuthorized",
+        "published"
+      ],
+      "properties": {
+        "authoritativeOriginalRuntime": {"const": false},
+        "fidelityAccepted": {"const": false},
+        "audioAccepted": {"const": false},
+        "humanReviewAccepted": {"const": false},
+        "ownerAccepted": {"const": false},
+        "strictComplete": {"const": false},
+        "promotionAuthorized": {"const": false},
+        "published": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "privacy": {
+      "type": "object",
+      "required": [
+        "exportClass",
+        "containsRawFrames",
+        "containsRawAudio",
+        "containsPrivatePaths",
+        "containsContactInformation",
+        "containsStudentData",
+        "containsSecrets",
+        "storesCommandOutput"
+      ],
+      "properties": {
+        "exportClass": {"const": "public-hash-metadata-only"},
+        "containsRawFrames": {"const": false},
+        "containsRawAudio": {"const": false},
+        "containsPrivatePaths": {"const": false},
+        "containsContactInformation": {"const": false},
+        "containsStudentData": {"const": false},
+        "containsSecrets": {"const": false},
+        "storesCommandOutput": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "integrity": {
+      "type": "object",
+      "required": ["inputSetSha256", "commandSetSha256", "snapshotPayloadSha256"],
+      "properties": {
+        "inputSetSha256": {"$ref": "#/$defs/sha256"},
+        "commandSetSha256": {"$ref": "#/$defs/sha256"},
+        "snapshotPayloadSha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "logicalId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$"
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["logicalId", "artifactType", "path", "bytes", "sha256"],
+      "properties": {
+        "logicalId": {"$ref": "#/$defs/logicalId"},
+        "artifactType": {"$ref": "#/$defs/logicalId"},
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+        },
+        "bytes": {"type": "integer", "minimum": 0},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

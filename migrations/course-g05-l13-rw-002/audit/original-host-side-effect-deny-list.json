@@ -1,0 +1,243 @@
+{
+  "animationId": "course-g05-l13-rw-002",
+  "artifactType": "help-math-original-host-side-effect-deny-list",
+  "authority": {
+    "sandboxEnforcedByThisArtifact": false,
+    "sideEffectsExecutedByThisArtifact": false,
+    "strictAcceptanceEffect": "none-policy-input-for-future-authoritative-execution"
+  },
+  "defaultPolicy": "deny-all-external-effects-and-dynamic-loads-except-hash-bound-local-read-allowlist",
+  "deniedCapabilities": [
+    {
+      "capability": "network",
+      "covers": [
+        "getURL",
+        "loadVariablesNum",
+        "remote XML.load",
+        "remote MovieClip.loadMovie",
+        "remote Sound.loadSound"
+      ]
+    },
+    {
+      "capability": "javascript-or-browser-navigation",
+      "covers": [
+        "javascript: getURL",
+        "window.open",
+        "parent.close"
+      ]
+    },
+    {
+      "capability": "persistent-or-user-profile-storage",
+      "covers": [
+        "SharedObject reads/writes outside the isolated ephemeral capture profile",
+        "SharedObject state reuse across sessions",
+        "writes outside an isolated ephemeral runtime directory"
+      ]
+    },
+    {
+      "capability": "process-and-window-control",
+      "covers": [
+        "fscommand quit",
+        "fullscreen",
+        "allowscale",
+        "showmenu",
+        "trapallkeys"
+      ]
+    },
+    {
+      "capability": "apple-events-launch-services-and-child-processes",
+      "covers": [
+        "defense-in-depth sandbox boundary"
+      ]
+    },
+    {
+      "capability": "unmanifested-local-file-read",
+      "covers": [
+        "keyterm XML",
+        "keyterm diagram SWFs",
+        "FScrollPane dynamic URL"
+      ]
+    }
+  ],
+  "generatedBy": {
+    "path": "scripts/build-rw002-original-host-entry-contract.mjs",
+    "sha256": "e866761348872d620251a8db82b2e645d2c7985d9db49ed88d94c84d9795df87"
+  },
+  "localReadAllowlist": [
+    {
+      "bytes": 676556,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/index_local.swf",
+      "role": "unmodified-original-lesson-host",
+      "sha256": "956d8e90ca07d59aeb9b3e97bc20f7e2e14221125913d8f774b8c98a61d4292d"
+    },
+    {
+      "bytes": 54864,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/IR/L13RW01.swf",
+      "role": "source-script-proven-default-startup-child",
+      "sha256": "bf91ca582fab1b414950af18fa10c2e5676804102e26c1b2ceadef338405473e"
+    },
+    {
+      "bytes": 4796905,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/RW/L13RW02.swf",
+      "role": "target-animation-child",
+      "sha256": "bf9ab1d12832fbe54c5bef08d0dd51307169eefbae1f75188efd9db94ed9e4e6"
+    },
+    {
+      "bytes": 371616,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/SA/L13RW02.mp3",
+      "role": "source-script-derived-spanish-user-activated-track",
+      "sha256": "2e809c69df60cec11427a71d38b37b830a0a9ec805e3c8ff4f68734cb53bfcd2"
+    },
+    {
+      "bytes": 378783,
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/XML/ELKTEG4.xml",
+      "role": "automatic-english-keyterm-xml-read-at-host-root-frame-50",
+      "sha256": "bec389ce286b9a113297dfd87e052f28cf1da2640d93a277f91f669dfb3ef749"
+    }
+  ],
+  "operatorConstraints": [
+    "Use a sandbox that denies network, Apple Events, LaunchServices open/database changes, child processes, and persistent writes.",
+    "Permit SharedObject only inside a new isolated ephemeral capture profile, verify that no incoming cookiename state exists, and never reuse that profile between traces.",
+    "Do not activate Close, Help, hyperlink, reporting, final-quiz submission, glossary, or keyterm controls; permit and log only the automatic ELKTEG4.xml read.",
+    "Permit dynamic movie/audio reads only when the resolved local path and SHA-256 match the minimal-tree allowlist.",
+    "Treat any unallowlisted load attempt, network attempt, unexpected process/window action, or persistent write as a failed capture.",
+    "Record denied attempts and unexpected events in the original-runtime execution report; do not silently suppress them from evidence."
+  ],
+  "schemaVersion": 1,
+  "scope": "original-host-capture-sandbox-and-operator-policy",
+  "sourceFindings": {
+    "counts": {
+      "MovieClip.loadMovie": 5,
+      "SharedObject.getLocal": 1,
+      "Sound.loadSound": 1,
+      "XML.load": 2,
+      "fscommand": 5,
+      "getURL": 3,
+      "loadVariablesNum": 3
+    },
+    "findings": [
+      {
+        "api": "getURL",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineButton2_151/BUTTONCONDACTION on(release).as",
+        "line": 2,
+        "sourceLine": "   getURL(\"javascript:void(parent.close());\");"
+      },
+      {
+        "api": "fscommand",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineButton2_151/BUTTONCONDACTION on(release).as",
+        "line": 3,
+        "sourceLine": "   fscommand(\"quit\");"
+      },
+      {
+        "api": "getURL",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineButton2_251/BUTTONCONDACTION on(release).as",
+        "line": 18,
+        "sourceLine": "   getURL(\"javascript:void(window.open(\\'\" + STHelpURL + \"\\'));\",\"\");"
+      },
+      {
+        "api": "getURL",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineButton2_560/BUTTONCONDACTION on(release).as",
+        "line": 14,
+        "sourceLine": "      getURL(strURL,\"\");"
+      },
+      {
+        "api": "loadVariablesNum",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineSprite_155/frame_15/DoAction.as",
+        "line": 65,
+        "sourceLine": "               loadVariablesNum(strURL,0,\"POST\");"
+      },
+      {
+        "api": "loadVariablesNum",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineSprite_155/frame_15/DoAction.as",
+        "line": 76,
+        "sourceLine": "               loadVariablesNum(strURL,0,\"POST\");"
+      },
+      {
+        "api": "loadVariablesNum",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/DefineSprite_164/frame_5/DoAction.as",
+        "line": 8,
+        "sourceLine": "   loadVariablesNum(finalQuizURL,0,\"POST\");"
+      },
+      {
+        "api": "MovieClip.loadMovie",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/FScrollPaneSymbol.as",
+        "line": 169,
+        "sourceLine": "   _loc1_.loadTemp.loadMovie(url);"
+      },
+      {
+        "api": "MovieClip.loadMovie",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+        "line": 1184,
+        "sourceLine": "   _loc2_.animation_mc.loadMovie(_loc1_.playSwfFileName,1);"
+      },
+      {
+        "api": "Sound.loadSound",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+        "line": 2359,
+        "sourceLine": "      _global.gSound.loadSound(SndFName,1);"
+      },
+      {
+        "api": "XML.load",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+        "line": 2420,
+        "sourceLine": "   F_X.load(_loc2_.KeyTermVar);"
+      },
+      {
+        "api": "XML.load",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+        "line": 2529,
+        "sourceLine": "   F_X.load(_loc2_.KeyTermVar);"
+      },
+      {
+        "api": "MovieClip.loadMovie",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+        "line": 2856,
+        "sourceLine": "   _loc1_.glossary.keyterms.keyterm_diagram.loadMovie(exampleSwfFileName,7);"
+      },
+      {
+        "api": "MovieClip.loadMovie",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+        "line": 3174,
+        "sourceLine": "   _loc1_.glossary.keyterms.keyterm_diagram.loadMovie(exampleSwfFileName,7);"
+      },
+      {
+        "api": "MovieClip.loadMovie",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+        "line": 3488,
+        "sourceLine": "   _loc1_.m_c.keyterm_diagram.loadMovie(exampleSwfFileName,6);"
+      },
+      {
+        "api": "fscommand",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+        "line": 3503,
+        "sourceLine": "fscommand(\"fullscreen\",\"true\");"
+      },
+      {
+        "api": "fscommand",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+        "line": 3504,
+        "sourceLine": "fscommand(\"allowscale\",\"true\");"
+      },
+      {
+        "api": "fscommand",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+        "line": 3505,
+        "sourceLine": "fscommand(\"showmenu\",\"false\");"
+      },
+      {
+        "api": "fscommand",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+        "line": 3506,
+        "sourceLine": "fscommand(\"trapallkeys\",\"true\");"
+      },
+      {
+        "api": "SharedObject.getLocal",
+        "artifact": "migrations/course-g05-l13-rw-002/audit/original-host-entry/ffdec-scripts/frame_35/DoAction.as",
+        "line": 3631,
+        "sourceLine": "myCookie = SharedObject.getLocal(\"cookiename\");"
+      }
+    ],
+    "fullExportIndexSha256": "aa74a0e4f3eeb93c745fcd373134d551b81f1fd2b5c7d5cd8a565ce048b62185",
+    "inspectedFfdecScriptCount": 570
+  }
+}

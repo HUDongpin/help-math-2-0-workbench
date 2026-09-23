@@ -1,0 +1,885 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://help-math.local/schemas/static-frame-domain-disposition-evidence.schema.json",
+  "title": "HELP Math hash-bound static composite frame-domain evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "evidenceType",
+    "animationId",
+    "status",
+    "migrationStatusChanged",
+    "authorityStatement",
+    "generatedFrom",
+    "nativeStage",
+    "claimSetContracts",
+    "claims",
+    "acceptanceEffects",
+    "strictAcceptanceEffect"
+  ],
+  "properties": {
+    "schemaVersion": {"const": 2},
+    "evidenceType": {"const": "static-frame-domain-disposition-evidence"},
+    "animationId": {"type": "string", "pattern": "^(course|shell-course|formula)-"},
+    "status": {"const": "verified-static-composite-claims"},
+    "migrationStatusChanged": {"const": false},
+    "authorityStatement": {"type": "array", "minItems": 3, "items": {"type": "string", "minLength": 1}},
+    "generatedFrom": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceSwf", "migrationManifest", "scenarioInventory", "swfmillStructure", "ffdecScripts"],
+      "properties": {
+        "sourceSwf": {"$ref": "#/definitions/hashedArtifact"},
+        "migrationManifest": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "projection", "hashMode", "sha256", "excludedPaths"],
+          "properties": {
+            "path": {"const": "migration.json"},
+            "projection": {"const": "help-math-technical-manifest-v1"},
+            "hashMode": {"const": "canonical-json-v1"},
+            "sha256": {"$ref": "#/definitions/sha256"},
+            "excludedPaths": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+          }
+        },
+        "scenarioInventory": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["path", "sha256", "schemaVersion"],
+          "properties": {
+            "path": {"const": "audit/scenario-inventory.json"},
+            "sha256": {"$ref": "#/definitions/sha256"},
+            "schemaVersion": {"const": 1}
+          }
+        },
+        "swfmillStructure": {"$ref": "#/definitions/compressedArtifact"},
+        "ffdecScripts": {"$ref": "#/definitions/compressedArtifact"},
+        "reviewedSingleFrameSelection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["selection", "candidateReport", "memberSelection"],
+          "properties": {
+            "selection": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "sha256", "schemaVersion", "decision", "humanReviewer", "ownerAcceptance"],
+              "properties": {
+                "path": {"const": "reports/g4-l3-reviewed-single-frame-disposition-selection.json"},
+                "sha256": {"$ref": "#/definitions/sha256"},
+                "schemaVersion": {"const": 1},
+                "decision": {"const": "accept-exact-eligible-set-for-static-independent-local-playhead-disposition-only"},
+                "humanReviewer": {"const": false},
+                "ownerAcceptance": {"const": false}
+              }
+            },
+            "candidateReport": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "sha256", "schemaVersion", "reportType", "acceptedPairSetSha256"],
+              "properties": {
+                "path": {"const": "reports/g4-l3-single-frame-disposition-candidates.json"},
+                "sha256": {"$ref": "#/definitions/sha256"},
+                "schemaVersion": {"const": 1},
+                "reportType": {"const": "g4-l3-single-frame-disposition-candidates"},
+                "acceptedPairSetSha256": {"$ref": "#/definitions/sha256"}
+              }
+            },
+            "memberSelection": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["animationId", "expectedTimelineCount", "expectedTimelineIds"],
+              "properties": {
+                "animationId": {"type": "string", "minLength": 1},
+                "expectedTimelineCount": {"type": "integer", "minimum": 1},
+                "expectedTimelineIds": {
+                  "type": "array",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {"type": "string", "pattern": "^sprite-[0-9]+$"}
+                }
+              }
+            }
+          }
+        },
+        "reviewedMultiFrameSelection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["selection", "candidateReport", "memberSelection"],
+          "properties": {
+            "selection": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "sha256", "schemaVersion", "decision", "humanReviewer", "ownerAcceptance"],
+              "properties": {
+                "path": {"const": "reports/g4-l3-reviewed-multi-frame-disposition-selection.json"},
+                "sha256": {"$ref": "#/definitions/sha256"},
+                "schemaVersion": {"const": 1},
+                "decision": {"const": "accept-exact-eligible-set-and-preserve-exact-excluded-set"},
+                "humanReviewer": {"const": false},
+                "ownerAcceptance": {"const": false}
+              }
+            },
+            "candidateReport": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "sha256", "schemaVersion", "reportType", "acceptedPairSetSha256", "excludedPairSetSha256"],
+              "properties": {
+                "path": {"const": "reports/g4-l3-multi-frame-disposition-candidates.json"},
+                "sha256": {"$ref": "#/definitions/sha256"},
+                "schemaVersion": {"const": 1},
+                "reportType": {"const": "g4-l3-multi-frame-disposition-candidates"},
+                "acceptedPairSetSha256": {"$ref": "#/definitions/sha256"},
+                "excludedPairSetSha256": {"$ref": "#/definitions/sha256"}
+              }
+            },
+            "memberSelection": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["animationId", "expectedTimelineCount", "expectedTimelineIds", "excludedTimelineIds"],
+              "properties": {
+                "animationId": {"type": "string", "minLength": 1},
+                "expectedTimelineCount": {"type": "integer", "minimum": 1},
+                "expectedTimelineIds": {
+                  "type": "array",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {"type": "string", "pattern": "^sprite-[0-9]+$"}
+                },
+                "excludedTimelineIds": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {"type": "string", "pattern": "^sprite-[0-9]+$"}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "nativeStage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["twipsPerPixel", "boundsTwips", "widthPixels", "heightPixels"],
+      "properties": {
+        "twipsPerPixel": {"const": 20},
+        "boundsTwips": {"$ref": "#/definitions/bounds"},
+        "widthPixels": {"type": "number", "exclusiveMinimum": 0},
+        "heightPixels": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "claimSetContracts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/definitions/claimSetContract"}
+    },
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          {"$ref": "#/definitions/audioClaim"},
+          {"$ref": "#/definitions/singleFrameClaim"},
+          {"$ref": "#/definitions/multiFrameClaim"}
+        ]
+      }
+    },
+    "acceptanceEffects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["buttonAccepted", "interactionAccepted", "audioAccepted", "behaviorAccepted", "fullFrameAccepted", "rmseAccepted", "humanReviewAccepted", "ownerReviewAccepted"],
+      "properties": {
+        "buttonAccepted": {"const": false},
+        "interactionAccepted": {"const": false},
+        "audioAccepted": {"const": false},
+        "behaviorAccepted": {"const": false},
+        "fullFrameAccepted": {"const": false},
+        "rmseAccepted": {"const": false},
+        "humanReviewAccepted": {"const": false},
+        "ownerReviewAccepted": {"const": false}
+      }
+    },
+    "strictAcceptanceEffect": {"type": "string", "pattern": "^none;"}
+  },
+  "definitions": {
+    "claimSetContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["proofType", "expectedTimelineCount", "expectedTimelineIds", "verifiedTimelineCount", "verifiedTimelineIds", "exactMatch"],
+      "properties": {
+        "proofType": {"enum": ["audio-only-offstage-visual-marker", "single-frame-scriptless-structural-child", "multi-frame-scriptless-parent-clock-composite-child"]},
+        "expectedTimelineCount": {"type": "integer", "minimum": 1},
+        "expectedTimelineIds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^sprite-[0-9]+$"}},
+        "verifiedTimelineCount": {"type": "integer", "minimum": 1},
+        "verifiedTimelineIds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^sprite-[0-9]+$"}},
+        "exactMatch": {"const": true}
+      }
+    },
+    "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "hashedArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/definitions/sha256"}
+      }
+    },
+    "compressedArtifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "uncompressedSha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/definitions/sha256"},
+        "uncompressedSha256": {"$ref": "#/definitions/sha256"}
+      }
+    },
+    "matrix": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["a", "b", "c", "d", "tx", "ty"],
+      "properties": {
+        "a": {"type": "number"},
+        "b": {"type": "number"},
+        "c": {"type": "number"},
+        "d": {"type": "number"},
+        "tx": {"type": "number"},
+        "ty": {"type": "number"}
+      }
+    },
+    "bounds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["left", "right", "top", "bottom"],
+      "properties": {
+        "left": {"type": "number"},
+        "right": {"type": "number"},
+        "top": {"type": "number"},
+        "bottom": {"type": "number"}
+      }
+    },
+    "scriptReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["script", "line", "sourceLine"],
+      "properties": {
+        "script": {"type": "string", "minLength": 1},
+        "line": {"type": "integer", "minimum": 1},
+        "sourceLine": {"type": "string", "minLength": 1}
+      }
+    },
+    "scriptRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["script", "frame", "bodySha256", "lineStart", "lineEnd"],
+      "properties": {
+        "script": {"type": "string", "minLength": 1},
+        "frame": {"type": "integer", "minimum": 1},
+        "bodySha256": {"$ref": "#/definitions/sha256"},
+        "lineStart": {"type": "integer", "minimum": 1},
+        "lineEnd": {"type": "integer", "minimum": 1}
+      }
+    },
+    "placement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parentTimelineId", "childTimelineId", "sourceObjectId", "frame", "depth", "instanceName", "tag", "matrix"],
+      "properties": {
+        "parentTimelineId": {"type": "string", "minLength": 1},
+        "childTimelineId": {"type": ["string", "null"]},
+        "sourceObjectId": {"type": "string", "pattern": "^[0-9]+$"},
+        "frame": {"type": "integer", "minimum": 1},
+        "depth": {"type": "string", "pattern": "^[0-9]+$"},
+        "instanceName": {"type": "string"},
+        "tag": {"enum": ["PlaceObject", "PlaceObject2", "PlaceObject3"]},
+        "definitionTag": {"enum": ["DefineShape", "DefineShape2", "DefineShape3", "DefineShape4"]},
+        "matrix": {"$ref": "#/definitions/matrix"}
+      }
+    },
+    "obligation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "satisfiedByDisposition", "status"],
+      "properties": {
+        "required": {"const": true},
+        "satisfiedByDisposition": {"const": false},
+        "status": {"type": "string", "minLength": 1}
+      }
+    },
+    "audioClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "timelineId",
+        "sourceObjectId",
+        "frameCount",
+        "disposition",
+        "parentTimelineId",
+        "parentSourceObjectId",
+        "parentFrameDomainId",
+        "role",
+        "tagCensus",
+        "audioStructure",
+        "placementChain",
+        "lifetime",
+        "visualBounds",
+        "scriptReferenceAudit",
+        "preservedObligations"
+      ],
+      "properties": {
+        "timelineId": {"type": "string", "pattern": "^sprite-[0-9]+$"},
+        "sourceObjectId": {"type": "string", "pattern": "^[0-9]+$"},
+        "frameCount": {"type": "integer", "minimum": 1},
+        "disposition": {"const": "composite-child-with-parent"},
+        "parentTimelineId": {"type": "string", "pattern": "^(root|sprite-[0-9]+)$"},
+        "parentSourceObjectId": {"type": "string", "pattern": "^[0-9]+$"},
+        "parentFrameDomainId": {"type": "string", "minLength": 1},
+        "role": {"const": "audio-only-offstage-visual-marker"},
+        "tagCensus": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["observed", "allowedTags", "declaredFrameCount", "observedShowFrameCount", "exactMatch"],
+          "properties": {
+            "observed": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "integer", "minimum": 0}},
+            "allowedTags": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+            "declaredFrameCount": {"type": "integer", "minimum": 1},
+            "observedShowFrameCount": {"type": "integer", "minimum": 1},
+            "exactMatch": {"const": true}
+          }
+        },
+        "audioStructure": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["required", "acceptanceSatisfied", "headTag", "headCount", "blockCount", "compressionCode", "playbackRateCode", "playbackStereo", "sourceFrameDomain"],
+          "properties": {
+            "required": {"const": true},
+            "acceptanceSatisfied": {"const": false},
+            "headTag": {"enum": ["SoundStreamHead", "SoundStreamHead2"]},
+            "headCount": {"const": 1},
+            "blockCount": {"type": "integer", "minimum": 1},
+            "compressionCode": {"const": 2},
+            "playbackRateCode": {"type": "integer", "minimum": 0},
+            "playbackStereo": {"type": "boolean"},
+            "sourceFrameDomain": {"type": "string", "pattern": "^sprite-[0-9]+$"}
+          }
+        },
+        "placementChain": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"$ref": "#/definitions/placement"}},
+        "lifetime": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["parentPlacementFrame", "parentRemovalFrame", "parentPlacementUpdateCount", "childPlacementUpdateCount", "clipActionCount"],
+          "properties": {
+            "parentPlacementFrame": {"type": "integer", "minimum": 1},
+            "parentRemovalFrame": {"type": "integer", "minimum": 1},
+            "parentPlacementUpdateCount": {"const": 0},
+            "childPlacementUpdateCount": {"const": 0},
+            "clipActionCount": {"const": 0}
+          }
+        },
+        "visualBounds": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["sourceShapeObjectId", "sourceShapeBoundsTwips", "compositeMatrix", "stageBoundsTwips", "nativeStageBoundsTwips", "nativeStageIntersection", "proof"],
+          "properties": {
+            "sourceShapeObjectId": {"type": "string", "pattern": "^[0-9]+$"},
+            "sourceShapeBoundsTwips": {"$ref": "#/definitions/bounds"},
+            "compositeMatrix": {"$ref": "#/definitions/matrix"},
+            "stageBoundsTwips": {"$ref": "#/definitions/bounds"},
+            "nativeStageBoundsTwips": {"$ref": "#/definitions/bounds"},
+            "nativeStageIntersection": {"const": false},
+            "proof": {"type": "string", "minLength": 1}
+          }
+        },
+        "scriptReferenceAudit": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["candidateTimelineScripts", "selectorPrefix", "selectorVariable", "directInstanceName", "parentSelection", "parentTrigger", "selectorOutcome", "unsupportedReferenceCount"],
+          "properties": {
+            "candidateTimelineScripts": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"$ref": "#/definitions/scriptRecord"}},
+            "selectorPrefix": {"$ref": "#/definitions/tokenReferences"},
+            "selectorVariable": {"$ref": "#/definitions/tokenReferences"},
+            "directInstanceName": {"$ref": "#/definitions/tokenReferences"},
+            "parentSelection": {"$ref": "#/definitions/scriptRecord"},
+            "parentTrigger": {"$ref": "#/definitions/scriptRecord"},
+            "selectorOutcome": {"enum": [0, 1]},
+            "unsupportedReferenceCount": {"const": 0}
+          }
+        },
+        "preservedObligations": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["audio", "behavior", "fullFrame"],
+          "properties": {
+            "audio": {"$ref": "#/definitions/obligation"},
+            "behavior": {"$ref": "#/definitions/obligation"},
+            "fullFrame": {"$ref": "#/definitions/obligation"}
+          }
+        }
+      }
+    },
+    "resolvedPlacement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parentTimelineId", "placedTimelineId", "sourceObjectId", "declaredSourceObjectId", "inheritedObjectIdentity", "frame", "depth", "instanceName", "tag", "replace", "hasClipActions"],
+      "properties": {
+        "parentTimelineId": {"type": "string", "pattern": "^(root|sprite-[0-9]+)$"},
+        "placedTimelineId": {"type": ["string", "null"], "pattern": "^sprite-[0-9]+$"},
+        "sourceObjectId": {"type": "string", "pattern": "^[0-9]+$"},
+        "declaredSourceObjectId": {"type": ["string", "null"], "pattern": "^[0-9]+$"},
+        "inheritedObjectIdentity": {"type": "boolean"},
+        "frame": {"type": "integer", "minimum": 1},
+        "depth": {"type": "string", "pattern": "^[0-9]+$"},
+        "instanceName": {"type": "string"},
+        "tag": {"enum": ["PlaceObject", "PlaceObject2", "PlaceObject3"]},
+        "replace": {"type": "string"},
+        "hasClipActions": {"const": false}
+      }
+    },
+    "singleFrameClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "timelineId",
+        "sourceObjectId",
+        "frameCount",
+        "disposition",
+        "role",
+        "claimScope",
+        "structuralReachability",
+        "tagCensus",
+        "scriptAudit",
+        "placementAudit",
+        "declaredFrameDomainAudit",
+        "preservedObligations"
+      ],
+      "properties": {
+        "timelineId": {"type": "string", "pattern": "^sprite-[0-9]+$"},
+        "sourceObjectId": {"type": "string", "pattern": "^[0-9]+$"},
+        "frameCount": {"const": 1},
+        "disposition": {"const": "composite-child-with-parent"},
+        "role": {"const": "single-frame-scriptless-structural-child"},
+        "claimScope": {"const": "independent-local-playhead-only"},
+        "structuralReachability": {"const": "reachable-from-root-placement-graph"},
+        "tagCensus": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["observed", "declaredFrameCount", "observedShowFrameCount", "doActionTagCount", "doInitActionTagCount"],
+          "properties": {
+            "observed": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "integer", "minimum": 0}},
+            "declaredFrameCount": {"const": 1},
+            "observedShowFrameCount": {"const": 1},
+            "doActionTagCount": {"const": 0},
+            "doInitActionTagCount": {"const": 0}
+          }
+        },
+        "scriptAudit": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["ffdecFrameScriptCount", "ffdecFrameScripts", "attributedDoInitActionCount", "attributedDoInitActions", "scriptless"],
+          "properties": {
+            "ffdecFrameScriptCount": {"const": 0},
+            "ffdecFrameScripts": {"type": "array", "maxItems": 0},
+            "attributedDoInitActionCount": {"const": 0},
+            "attributedDoInitActions": {"type": "array", "maxItems": 0},
+            "scriptless": {"const": true}
+          }
+        },
+        "placementAudit": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["incomingPlacementCount", "outgoingPlacementCount", "exportedPlacementCount", "unresolvedOutgoingObjectCount", "clipActionCount", "allExportedPlacementsHaveNoClipActions", "incomingPlacements", "outgoingPlacements"],
+          "properties": {
+            "incomingPlacementCount": {"type": "integer", "minimum": 1},
+            "outgoingPlacementCount": {"type": "integer", "minimum": 0},
+            "exportedPlacementCount": {"type": "integer", "minimum": 1},
+            "unresolvedOutgoingObjectCount": {"const": 0},
+            "clipActionCount": {"const": 0},
+            "allExportedPlacementsHaveNoClipActions": {"const": true},
+            "incomingPlacements": {"type": "array", "minItems": 1, "items": {"$ref": "#/definitions/resolvedPlacement"}},
+            "outgoingPlacements": {"type": "array", "items": {"$ref": "#/definitions/resolvedPlacement"}}
+          }
+        },
+        "declaredFrameDomainAudit": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["sourceTimelineDomainCount", "frameDomainIds", "notDeclared"],
+          "properties": {
+            "sourceTimelineDomainCount": {"const": 0},
+            "frameDomainIds": {"type": "array", "maxItems": 0},
+            "notDeclared": {"const": true}
+          }
+        },
+        "preservedObligations": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["button", "interaction", "behavior", "fullFrame", "audio"],
+          "properties": {
+            "button": {"$ref": "#/definitions/obligation"},
+            "interaction": {"$ref": "#/definitions/obligation"},
+            "behavior": {"$ref": "#/definitions/obligation"},
+            "fullFrame": {"$ref": "#/definitions/obligation"},
+            "audio": {"$ref": "#/definitions/obligation"}
+          }
+        }
+      }
+    },
+    "multiFramePlacement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["frame", "depth", "tag", "declaredSourceObjectId", "instanceName", "replace", "hasClipActions", "matrix"],
+      "properties": {
+        "frame": {"type": "integer", "minimum": 1},
+        "depth": {"type": "string", "pattern": "^[0-9]+$"},
+        "tag": {"enum": ["PlaceObject", "PlaceObject2", "PlaceObject3"]},
+        "declaredSourceObjectId": {"type": "string", "pattern": "^[0-9]+$"},
+        "instanceName": {"type": "string"},
+        "replace": {"const": "0"},
+        "hasClipActions": {"const": false},
+        "matrix": {"$ref": "#/definitions/matrix"}
+      }
+    },
+    "multiFrameUpdate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["frame", "depth", "tag", "replace", "declaredSourceObjectId", "preservesInstanceIdentity", "localFrame", "hasClipActions", "matrix"],
+      "properties": {
+        "frame": {"type": "integer", "minimum": 1},
+        "depth": {"type": "string", "pattern": "^[0-9]+$"},
+        "tag": {"enum": ["PlaceObject", "PlaceObject2", "PlaceObject3"]},
+        "replace": {"type": "string"},
+        "declaredSourceObjectId": {"type": "null"},
+        "preservesInstanceIdentity": {"const": true},
+        "localFrame": {"type": "integer", "minimum": 1},
+        "hasClipActions": {"const": false},
+        "matrix": {"$ref": "#/definitions/matrix"}
+      }
+    },
+    "lifetimeBoundary": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["kind", "frame", "depth", "tag"],
+      "properties": {
+        "kind": {"enum": ["removal", "replacement", "parent-timeline-terminal"]},
+        "frame": {"type": "integer", "minimum": 1},
+        "depth": {"type": "string", "pattern": "^[0-9]+$"},
+        "tag": {"type": "string", "minLength": 1},
+        "replacementSourceObjectId": {"type": "string", "pattern": "^[0-9]+$"}
+      }
+    },
+    "playheadSegment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "parentStartFrame", "parentEndFrame", "localStartFrame", "localEndFrame"],
+      "properties": {
+        "kind": {"enum": ["entry", "scriptless-wrap"]},
+        "parentStartFrame": {"type": "integer", "minimum": 1},
+        "parentEndFrame": {"type": "integer", "minimum": 1},
+        "localStartFrame": {"type": "integer", "minimum": 1},
+        "localEndFrame": {"type": "integer", "minimum": 1}
+      }
+    },
+    "multiFrameLifetime": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["placementOrdinal", "parentTimelineId", "parentFrameDomainId", "sourceObjectId", "depth", "startFrame", "endFrame", "durationFrames", "depthWasEmptyBeforePlacement", "predecessorBoundary", "placement", "updates", "termination", "localPlayhead"],
+      "properties": {
+        "placementOrdinal": {"type": "integer", "minimum": 1},
+        "parentTimelineId": {"type": "string", "pattern": "^(root|sprite-[0-9]+)$"},
+        "parentFrameDomainId": {"type": "string", "minLength": 1},
+        "sourceObjectId": {"type": "string", "pattern": "^[0-9]+$"},
+        "depth": {"type": "string", "pattern": "^[0-9]+$"},
+        "startFrame": {"type": "integer", "minimum": 1},
+        "endFrame": {"type": "integer", "minimum": 1},
+        "durationFrames": {"type": "integer", "minimum": 1},
+        "depthWasEmptyBeforePlacement": {"const": true},
+        "predecessorBoundary": {"$ref": "#/definitions/lifetimeBoundary"},
+        "placement": {"$ref": "#/definitions/multiFramePlacement"},
+        "updates": {"type": "array", "items": {"$ref": "#/definitions/multiFrameUpdate"}},
+        "termination": {"$ref": "#/definitions/lifetimeBoundary"},
+        "terminalAtParentEndPermittedByPinnedSpec": {"const": true},
+        "localPlayhead": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["indexing", "entryLocalFrame", "parentFrameToLocalFrameFormula", "frameCount", "terminalLocalFrame", "completeVisibleCycleCount", "wrapCount", "implicitResetCount", "explicitFreshPlacementResetCount", "segments"],
+          "properties": {
+            "indexing": {"const": "one-indexed"},
+            "entryLocalFrame": {"const": 1},
+            "parentFrameToLocalFrameFormula": {"const": "((parentFrame - startFrame) % frameCount) + 1"},
+            "frameCount": {"type": "integer", "minimum": 2},
+            "terminalLocalFrame": {"type": "integer", "minimum": 1},
+            "completeVisibleCycleCount": {"type": "integer", "minimum": 0},
+            "wrapCount": {"type": "integer", "minimum": 0},
+            "zeroWrapPermittedByPinnedSpec": {"const": true},
+            "implicitResetCount": {"const": 0},
+            "explicitFreshPlacementResetCount": {"const": 1},
+            "segments": {"type": "array", "minItems": 1, "items": {"$ref": "#/definitions/playheadSegment"}}
+          }
+        }
+      }
+    },
+    "internalDisplayPlacementEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "frame", "depth", "tag", "declaredSourceObjectId", "effectiveSourceObjectId", "previousSourceObjectId", "placedTimelineId", "instanceName", "replace", "hasClipActions", "matrix"],
+      "properties": {
+        "kind": {"enum": ["place", "replace", "update"]},
+        "frame": {"type": "integer", "minimum": 1},
+        "depth": {"type": "string", "pattern": "^[0-9]+$"},
+        "tag": {"enum": ["PlaceObject", "PlaceObject2", "PlaceObject3"]},
+        "declaredSourceObjectId": {"type": ["string", "null"], "pattern": "^[0-9]+$"},
+        "effectiveSourceObjectId": {"type": "string", "pattern": "^[0-9]+$"},
+        "previousSourceObjectId": {"type": ["string", "null"], "pattern": "^[0-9]+$"},
+        "placedTimelineId": {"type": ["string", "null"], "pattern": "^sprite-[0-9]+$"},
+        "instanceName": {"type": "string"},
+        "replace": {"type": "string"},
+        "hasClipActions": {"const": false},
+        "matrix": {"$ref": "#/definitions/matrix"}
+      }
+    },
+    "internalDisplayRemovalEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "frame", "depth", "tag", "removedSourceObjectId"],
+      "properties": {
+        "kind": {"const": "remove"},
+        "frame": {"type": "integer", "minimum": 1},
+        "depth": {"type": "string", "pattern": "^[0-9]+$"},
+        "tag": {"enum": ["RemoveObject", "RemoveObject2"]},
+        "removedSourceObjectId": {"type": "string", "pattern": "^[0-9]+$"}
+      }
+    },
+    "playheadControlReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["script", "line", "sourceLine", "receiver", "method", "targetCandidate"],
+      "properties": {
+        "script": {"type": "string", "minLength": 1},
+        "line": {"type": "integer", "minimum": 1},
+        "sourceLine": {"type": "string", "minLength": 1},
+        "receiver": {"type": ["string", "null"]},
+        "method": {"enum": ["gotoAndPlay", "gotoAndStop", "nextFrame", "prevFrame", "play", "stop"]},
+        "targetCandidate": {"const": false}
+      }
+    },
+    "multiFrameClaim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["timelineId", "sourceObjectId", "frameCount", "disposition", "role", "claimScope", "structuralReachability", "sourceBinding", "parentBinding", "tagCensus", "scriptAudit", "placementLifecycleAudit", "internalDisplayGraph", "declaredFrameDomainAudit", "sourcePlayheadRule", "preservedObligations"],
+      "properties": {
+        "timelineId": {"type": "string", "pattern": "^sprite-[0-9]+$"},
+        "sourceObjectId": {"type": "string", "pattern": "^[0-9]+$"},
+        "frameCount": {"type": "integer", "minimum": 2},
+        "disposition": {"const": "composite-child-with-parent"},
+        "role": {"const": "multi-frame-scriptless-parent-clock-composite-child"},
+        "claimScope": {"const": "local-playhead-fully-derived-from-declared-parent-clock"},
+        "structuralReachability": {"const": "reachable-from-root-placement-graph"},
+        "sourceBinding": {"$ref": "#/definitions/hashedArtifact"},
+        "parentBinding": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["parentTimelineId", "parentSourceObjectId", "parentFrameDomainId", "parentFrameCount", "rootPlacement"],
+          "properties": {
+            "parentTimelineId": {"type": "string", "pattern": "^(root|sprite-[0-9]+)$"},
+            "parentSourceObjectId": {"type": ["string", "null"], "pattern": "^[0-9]+$"},
+            "parentFrameDomainId": {"type": "string", "minLength": 1},
+            "parentFrameCount": {"type": "integer", "minimum": 1},
+            "parentBindingMode": {"const": "nested-declared-parent-local-clock-only"},
+            "parentEntryStateEstablished": {"const": false},
+            "parentRootPath": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["parentTimelineId", "childTimelineId", "sourceObjectId", "frame", "depth", "instanceName", "tag", "replace", "hasClipActions"],
+                "properties": {
+                  "parentTimelineId": {"type": "string", "pattern": "^(root|sprite-[0-9]+)$"},
+                  "childTimelineId": {"type": "string", "pattern": "^sprite-[0-9]+$"},
+                  "sourceObjectId": {"type": "string", "pattern": "^[0-9]+$"},
+                  "frame": {"type": "integer", "minimum": 1},
+                  "depth": {"type": "string", "pattern": "^[0-9]+$"},
+                  "instanceName": {"type": "string", "minLength": 1},
+                  "tag": {"const": "PlaceObject2"},
+                  "replace": {"const": "0"},
+                  "hasClipActions": {"const": false}
+                }
+              }
+            },
+            "rootPlacement": {
+              "oneOf": [
+                {"type": "null"},
+                {"$ref": "#/definitions/multiFramePlacement"}
+              ]
+            }
+          }
+        },
+        "tagCensus": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["observed", "expected", "declaredFrameCount", "observedShowFrameCount", "doActionTagCount", "doInitActionTagCount", "endTagCount", "exactMatch"],
+          "properties": {
+            "observed": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "integer", "minimum": 0}},
+            "expected": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "integer", "minimum": 0}},
+            "declaredFrameCount": {"type": "integer", "minimum": 2},
+            "observedShowFrameCount": {"type": "integer", "minimum": 2},
+            "doActionTagCount": {"const": 0},
+            "doInitActionTagCount": {"const": 0},
+            "endTagCount": {"const": 1},
+            "exactMatch": {"const": true}
+          }
+        },
+        "scriptAudit": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["ffdecFrameScriptCount", "ffdecFrameScripts", "attributedDoInitActionCount", "attributedDoInitActions", "globalDoInitActionCount", "namedIncomingInstanceCount", "namedIncomingInstances", "dynamicAddressingReferenceCount", "dynamicAddressingReferences", "externalTargetControlCount", "externalTargetControls", "nonTargetPlayheadControlReferenceCount", "nonTargetPlayheadControlReferences", "scriptlessLocalTimeline"],
+          "properties": {
+            "ffdecFrameScriptCount": {"const": 0},
+            "ffdecFrameScripts": {"type": "array", "maxItems": 0},
+            "attributedDoInitActionCount": {"const": 0},
+            "attributedDoInitActions": {"type": "array", "maxItems": 0},
+            "globalDoInitActionCount": {"type": "integer", "minimum": 0},
+            "globalDoInitActionSpriteObjectIds": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {"type": "string", "pattern": "^[0-9]+$"}
+            },
+            "expectedGlobalDoInitActionSpriteObjectIds": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {"type": "string", "pattern": "^[0-9]+$"}
+            },
+            "globalDoInitActionSetExactMatch": {"const": true},
+            "namedIncomingInstanceCount": {"const": 0},
+            "namedIncomingInstances": {"type": "array", "maxItems": 0},
+            "dynamicAddressingReferenceCount": {"const": 0},
+            "dynamicAddressingReferences": {"type": "array", "maxItems": 0},
+            "externalTargetControlCount": {"const": 0},
+            "externalTargetControls": {"type": "array", "maxItems": 0},
+            "nonTargetPlayheadControlReferenceCount": {"type": "integer", "minimum": 0},
+            "nonTargetPlayheadControlReferences": {"type": "array", "items": {"$ref": "#/definitions/playheadControlReference"}},
+            "scriptlessLocalTimeline": {"const": true}
+          }
+        },
+        "placementLifecycleAudit": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["incomingPlacementCount", "parentUpdateCount", "explicitRemovalCount", "replacementTerminationCount", "clipActionCount", "allInstancesFreshAtEmptyDepth", "allLifetimesMapped", "lifetimes"],
+          "properties": {
+            "incomingPlacementCount": {"type": "integer", "minimum": 1},
+            "parentUpdateCount": {"type": "integer", "minimum": 0},
+            "explicitRemovalCount": {"type": "integer", "minimum": 1},
+            "parentTerminalTerminationCount": {"type": "integer", "minimum": 1},
+            "replacementTerminationCount": {"const": 0},
+            "zeroWrapLifetimeCount": {"type": "integer", "minimum": 1},
+            "clipActionCount": {"const": 0},
+            "allInstancesFreshAtEmptyDepth": {"const": true},
+            "allLifetimesMapped": {"const": true},
+            "lifetimes": {"type": "array", "minItems": 1, "items": {"$ref": "#/definitions/multiFrameLifetime"}}
+          }
+        },
+        "internalDisplayGraph": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["eventCount", "placementEventCount", "removalEventCount", "unresolvedObjectCount", "clipActionCount", "allEventsHaveNoClipActions", "events"],
+          "properties": {
+            "eventCount": {"type": "integer", "minimum": 1},
+            "placementEventCount": {"type": "integer", "minimum": 1},
+            "removalEventCount": {"type": "integer", "minimum": 0},
+            "unresolvedObjectCount": {"const": 0},
+            "clipActionCount": {"const": 0},
+            "allEventsHaveNoClipActions": {"const": true},
+            "events": {"type": "array", "minItems": 1, "items": {"oneOf": [{"$ref": "#/definitions/internalDisplayPlacementEvent"}, {"$ref": "#/definitions/internalDisplayRemovalEvent"}]}}
+          }
+        },
+        "declaredFrameDomainAudit": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["sourceTimelineDomainCount", "frameDomainIds", "notDeclared", "representedByParentFrameDomainId"],
+          "properties": {
+            "sourceTimelineDomainCount": {"const": 0},
+            "frameDomainIds": {"type": "array", "maxItems": 0},
+            "notDeclared": {"const": true},
+            "representedByParentFrameDomainId": {"type": "string", "minLength": 1}
+          }
+        },
+        "sourcePlayheadRule": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["indexing", "defaultAdvance", "terminalBehavior", "placementBehavior", "updateBehavior", "removalBehavior", "sourceGraphProvesAllWrapsAndResets", "inferredLoopOrResetCount"],
+          "properties": {
+            "indexing": {"const": "one-indexed"},
+            "defaultAdvance": {"type": "string", "minLength": 1},
+            "terminalBehavior": {"type": "string", "minLength": 1},
+            "placementBehavior": {"type": "string", "minLength": 1},
+            "updateBehavior": {"type": "string", "minLength": 1},
+            "removalBehavior": {"type": "string", "minLength": 1},
+            "sourceGraphProvesAllWrapsAndResets": {"const": true},
+            "inferredLoopOrResetCount": {"const": 0}
+          }
+        },
+        "preservedObligations": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["visual", "button", "interaction", "behavior", "fullFrame", "rmse", "audio"],
+          "properties": {
+            "visual": {"$ref": "#/definitions/obligation"},
+            "button": {"$ref": "#/definitions/obligation"},
+            "interaction": {"$ref": "#/definitions/obligation"},
+            "behavior": {"$ref": "#/definitions/obligation"},
+            "fullFrame": {"$ref": "#/definitions/obligation"},
+            "rmse": {"$ref": "#/definitions/obligation"},
+            "audio": {"$ref": "#/definitions/obligation"}
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "parentBinding": {
+                "required": ["parentBindingMode"],
+                "properties": {
+                  "parentBindingMode": {"const": "nested-declared-parent-local-clock-only"}
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "parentBinding": {
+                "required": ["parentBindingMode", "parentEntryStateEstablished", "parentRootPath"],
+                "properties": {
+                  "rootPlacement": {"type": "null"}
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "parentBinding": {
+                "not": {
+                  "anyOf": [
+                    {"required": ["parentBindingMode"]},
+                    {"required": ["parentEntryStateEstablished"]},
+                    {"required": ["parentRootPath"]}
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tokenReferences": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value", "occurrenceCount", "references"],
+      "properties": {
+        "value": {"type": "string", "minLength": 1},
+        "occurrenceCount": {"type": "integer", "minimum": 0},
+        "references": {"type": "array", "items": {"$ref": "#/definitions/scriptReference"}}
+      }
+    }
+  }
+}

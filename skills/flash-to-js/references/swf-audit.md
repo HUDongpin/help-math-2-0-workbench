@@ -2,6 +2,13 @@
 
 Use this reference during intake and extraction. Preserve commands and outputs inside the migration workspace so another engineer can reproduce the audit.
 
+## Contents
+
+- Preserve and identify sources
+- Inspect SWF tags and exports
+- Inspect FLA authoring data safely
+- Build behavior, dependency, and confidence maps
+
 ## 1. Preserve And Identify
 
 Work from copies. Record hashes before opening authoring tools:
@@ -60,6 +67,8 @@ FFDec launcher and command-line switches vary by platform package. Run the insta
 
 ## 4. Inspect FLA Authoring Data
 
+For legacy HELP binary FLA files, open only a byte-identical, read-only working copy under the reviewed Animate protocol. Record the named operator, source/copy hashes, Animate version, conversion warning, open method, and whether the document remained unsaved. Never save or publish a converted in-memory legacy document; doing so can alter the only authoring evidence and does not recreate the preserved shipped SWF.
+
 When Adobe Animate is available, record:
 
 - Animate version and document type.
@@ -71,7 +80,7 @@ When Adobe Animate is available, record:
 - Embedded/device font choices and language-specific layers.
 - External files and relative paths.
 
-Publish only to a separate audit directory. Never save changes back into the preserved FLA.
+For a modern or nonlegacy FLA, publish a test SWF only when separately authorized and only to a disposable audit directory. Label it generated audit output, never the shipped runtime source. Never save changes back into a preserved FLA.
 
 ## 5. Build The Behavior Map
 
@@ -101,9 +110,9 @@ Do not call legacy endpoints during audit. Record them, redact tokens, and desig
 
 Use one of these labels per audit area:
 
-- `verified`: directly supported by FLA/SWF structure and runtime evidence.
+- `verified`: directly supported by the named source and evidence type recorded for that finding.
 - `inferred`: reconstructed from partial evidence with a stated rationale.
 - `missing`: required evidence is unavailable.
 - `not-applicable`: the feature is absent.
 
-Lower the final fidelity claim whenever scripts, fonts, morphs, external assets, or authoritative playback remain `missing`.
+Static structure can verify stage metadata, tags, scripts, symbols, and declared assets; it cannot by itself verify original-runtime appearance, interaction causality, audible output, or acceptance. Lower the final fidelity claim whenever scripts, fonts, morphs, external assets, shipped SWF, or authoritative playback remain `missing`.

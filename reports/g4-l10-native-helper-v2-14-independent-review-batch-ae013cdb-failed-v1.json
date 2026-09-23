@@ -1,0 +1,269 @@
+{
+  "schemaVersion": "help-math.g4-l10-native-helper-v2-14-independent-review-failure-receipt.v1",
+  "status": "FAILED_INVALIDATED_NONQUALIFYING",
+  "createdAt": "2026-08-06T18:56:12Z",
+  "target": {
+    "absolutePath": "/Volumes/WestWorld/HELP MATH 2.0/docs/G4_L10_NATIVE_HELPER_V2_14_SECURITY_CONTRACT_SUCCESSOR.md",
+    "sha256": "a86c726ca5e3ae89cfb110c1a3dedb751c3cb2c51d1b737a908a91ddd0bf9510",
+    "bytes": 50310,
+    "lfCount": 173,
+    "finalLf": 1,
+    "type": "Regular File",
+    "mode": "0444",
+    "nlink": 1,
+    "inode": 5914134,
+    "device": 16777244,
+    "uid": 501,
+    "gid": 20,
+    "flags": "-",
+    "mtimeEpoch": 1786019793,
+    "xattrs": [
+      {
+        "name": "com.apple.provenance",
+        "hex": "01 02 00 22 02 11 CD 1E 32 E5 B0",
+        "authorityEffect": false
+      }
+    ],
+    "aclEntryCount": 0,
+    "parentImmediateFinalRecheck": "match"
+  },
+  "terminalSafeChunkPlan": {
+    "absolutePath": "/Volumes/WestWorld/HELP MATH 2.0/reports/g4-l10-native-helper-v2-14-independent-review-chunk-plan-v1.md",
+    "sha256": "74be5cf1b6fbb3603b217c09f1e01cbb2804bb5b785e41bbc6819003f2c81d39",
+    "bytes": 8059,
+    "lfCount": 108,
+    "mode": "0444",
+    "chunkCount": 21,
+    "maximumChunkBytes": 3037,
+    "aggregateBytes": 50310,
+    "aggregateLfCount": 173,
+    "orderedReconstructionSha256": "a86c726ca5e3ae89cfb110c1a3dedb751c3cb2c51d1b737a908a91ddd0bf9510",
+    "frozenBeforeTaskCreation": true
+  },
+  "batch": {
+    "domain": "HMG4RB4",
+    "preimageBytes": 184,
+    "preimageFinalLf": 1,
+    "sha256": "ae013cdb3b78751a0d23a7699c7d054555e928b174ddfd216a4410bf99208c6f",
+    "orderedScopes": [
+      "schema",
+      "adversarial",
+      "whole"
+    ],
+    "orderedTaskIds": [
+      "019fd851-1dca-7c42-bec4-f3ca5b8cc5f1",
+      "019fd851-3e71-7060-92e3-620f31005254",
+      "019fd851-60ed-77d0-b9c8-3e5cac4548a0"
+    ],
+    "taskIdsNonempty": true,
+    "taskIdsDistinct": true,
+    "taskIdsFresh": true,
+    "userOwnedTasks": true,
+    "reusedPriorTaskId": false,
+    "reusedPriorHmg4rb4": false
+  },
+  "originalTaskOutputs": [
+    {
+      "scope": "schema",
+      "taskId": "019fd851-1dca-7c42-bec4-f3ca5b8cc5f1",
+      "turnId": "019fd853-488a-79a3-9f95-7d7f2ca6ab7b",
+      "taskSystemFinalItemId": "item-155",
+      "completionState": "completed",
+      "completionTimestampEpoch": 1786042507,
+      "completionTimestamp": "2026-08-06T18:55:07Z",
+      "exactUtf8Bytes": 17190,
+      "outputSha256": "4e34f294ba3bb2824a2d49cd0b941bafc163093e915bf8837d10b88a06ab2ffe",
+      "finalLf": 1,
+      "reviewResult": "INVALIDATED_NONQUALIFYING_SCHEMA_REVIEW",
+      "reviewValid": false,
+      "priorityCounts": {
+        "p0": null,
+        "p1": null,
+        "p2": null,
+        "interpretation": "NOT_GRADED_ZERO_NOT_CLAIMED"
+      },
+      "processInvalidations": [
+        {
+          "id": "V214-SCHEMA-INHERITED-PRODUCTION-GRAMMAR-SYNTAX-ERROR",
+          "commandLabel": "INHERITED-PRODUCTION-GRAMMAR",
+          "exitCode": 1,
+          "error": "SyntaxError: Unterminated template",
+          "correctedOrRerun": false
+        }
+      ],
+      "canonicalSubstantiveFindingRecordedBeforeInvalidation": false,
+      "zeroFindingClaimAllowed": false,
+      "targetBeforeAfterMatch": true
+    },
+    {
+      "scope": "adversarial",
+      "taskId": "019fd851-3e71-7060-92e3-620f31005254",
+      "turnId": "019fd853-493a-70a2-9703-8d831de2e265",
+      "taskSystemFinalItemId": "item-83",
+      "completionState": "completed",
+      "completionTimestampEpoch": 1786042375,
+      "completionTimestamp": "2026-08-06T18:52:55Z",
+      "exactUtf8Bytes": 18791,
+      "outputSha256": "b5807348f12d731381c68e278df3bba38787573894c5230af4e3b12934ea56b7",
+      "finalLf": 0,
+      "reviewResult": "INVALIDATED_NONQUALIFYING",
+      "reviewValid": false,
+      "priorityCounts": {
+        "p0": 4,
+        "p1": null,
+        "p2": null,
+        "interpretation": "P1_P2_NOT_GRADED_AFTER_PERMANENT_INVALIDATION"
+      },
+      "processInvalidations": [
+        {
+          "id": "V214-ADV-DIAGNOSTIC-AND-TMP-SEQUENCE-NONCONFORMING"
+        },
+        {
+          "id": "V214-ADV-LIN1-ABSOLUTE-RG-PATH-FAILED",
+          "exitCode": 127,
+          "error": "/opt/homebrew/bin/rg: no such file or directory"
+        },
+        {
+          "id": "V214-ADV-PE-MAPPING-AGGREGATION-MALFORMED",
+          "observedFalseSummary": "mapping-edges=2; canonical-targets=3",
+          "laterNoncuringObservation": "mapping-edges=23; canonical-targets=12"
+        },
+        {
+          "id": "V214-ADV-GL4-DELTA-EXTRACTION-OVERMATCH",
+          "exitCode": 41,
+          "observedRows": 59,
+          "expectedRows": 57
+        }
+      ],
+      "zeroFindingClaimAllowed": false,
+      "targetBeforeAfterMatch": true
+    },
+    {
+      "scope": "whole",
+      "taskId": "019fd851-60ed-77d0-b9c8-3e5cac4548a0",
+      "turnId": "019fd853-49ec-7923-afe3-43caba9dd98d",
+      "taskSystemFinalItemId": "item-108",
+      "completionState": "completed",
+      "completionTimestampEpoch": 1786042248,
+      "completionTimestamp": "2026-08-06T18:50:48Z",
+      "exactUtf8Bytes": 19910,
+      "outputSha256": "80225b3b83e0bbb542e0a714b77a08894154a993754a99e095e7ffb1e16754f5",
+      "finalLf": 1,
+      "reviewResult": "INVALIDATED_NONQUALIFYING_WITH_FINDINGS",
+      "reviewValid": false,
+      "priorityCounts": {
+        "p0": 2,
+        "p1": 1,
+        "p2": 0
+      },
+      "processInvalidations": [
+        {
+          "id": "V214-WHOLE-HMG4FR3-FAILED-SUBCOMMAND-SUPPRESSED",
+          "errorSuppressed": true
+        },
+        {
+          "id": "V214-WHOLE-V212-CHUNK-PATH-TYPO",
+          "error": "No such file or directory",
+          "correctedLater": true,
+          "correctionCurative": false
+        }
+      ],
+      "substantiveFindings": [
+        {
+          "priority": "P1",
+          "id": "V214-CLEAN-ROOM-RETAINED-PREDECESSOR-RULES-UNAVAILABLE",
+          "summary": "v2.14 keeps detailed v2.12 and v2.13 clauses normative by reference while the retained exact clean-room closed-membership list exposes v2 through v2.6 and v2.14, but not the referenced v2.12 or v2.13 texts. A future implementer must either lack binding rules or violate closed membership."
+        }
+      ],
+      "zeroFindingClaimAllowed": false,
+      "targetBeforeAfterMatch": true
+    }
+  ],
+  "consolidation": {
+    "allTaskTurnsCompleted": true,
+    "allOriginalFinalItemsReadThroughTaskSystem": true,
+    "allOriginalFinalOutputIdentitiesRecorded": true,
+    "allTasksTargetedUnchangedV2_14Bytes": true,
+    "allTasksReviewValid": false,
+    "allTasksP0P1P2Zero": false,
+    "combinedPriorityCounts": null,
+    "findingUnionEmpty": false,
+    "specReviewQualified": false,
+    "implementationStageMayBegin": false,
+    "batchReusable": false,
+    "result": "PERMANENT_FAILED_BATCH"
+  },
+  "verifiedPartialStructuralObservations": {
+    "qualifyingEvidence": false,
+    "hmg4gl4": {
+      "rows": 57,
+      "bytes": 2811,
+      "rowsSha256": "088ffbf94d7fc0c32c59af1575d3d2d393ff62475487b71a34fc9aa4e5fa7a3b",
+      "domainSha256": "2bb9189a08cc95b0690cac14d7b95a8750d99799d9e53f5cdf4cf8413a3a47a9"
+    },
+    "hmg4al3": {
+      "rows": 21,
+      "mappingEdges": 23,
+      "canonicalTargets": 12,
+      "bytes": 5064,
+      "sha256": "2ff22afbae318ee9dad10ed2cad0a28f55479fff4c05ae194febd200473409ad",
+      "domainSha256": "276023765967427a64c110e53ef119a8f557df4409749d866cc3812c1014484e"
+    },
+    "hmg4pe1": {
+      "rows": 21,
+      "decodedParagraphs": 42,
+      "bytes": 33705,
+      "sha256": "f4cdd9d5d2ee797e05fc3a63d32af0281ebd19e4e07f58dc2c485235f4aa099d",
+      "domainSha256": "1c8fbfc16a57e294a4824b3388c6d396fcb2369105c4006815addbbbabca8851"
+    },
+    "hmg4fr3": {
+      "rows": 3,
+      "bytes": 587,
+      "rowsSha256": "477d9d3375fd579bb9c5cdd8ee38ff4947b218234395f20a7c1ab72ead22e9bb",
+      "domainSha256": "ecfefa4e0426805a5baa22fc7a47d929cfd7891a18cbd7e2f41cafebd9e68e54",
+      "interpretation": "PERMANENT_FAILED_V2_13_RECEIPT_NOT_V2_14_EVIDENCE"
+    }
+  },
+  "operationalState": {
+    "v28SelectedFiles": 57,
+    "v28WritableFiles": 57,
+    "v28Mode": "0644",
+    "v28NativeMembers": 48,
+    "v28NonGateATopLevelRunners": 9,
+    "v28TotalBytes": 553897,
+    "v28ChecksumSetSha256": "cfa98f5fd9a101c35944b4ef59a8b5db36f3a799ee7821ca4e286476acea3200",
+    "v28NativeRootMode": "0755",
+    "operationalFreeze": false,
+    "v28TransitionPerformed": false
+  },
+  "authority": {
+    "contractEditAuthorized": false,
+    "productionHelperImplementationAuthorized": false,
+    "productionHelperTestAuthorized": false,
+    "protectedInstallationAuthorized": false,
+    "helperExecutionAuthorized": false,
+    "originalRuntimeLaunchAuthorized": false,
+    "applyAuthorized": false,
+    "recoverAuthorized": false,
+    "acceptanceAuthorized": false,
+    "sourcePromotionAuthorized": false,
+    "courseIntegrationAuthorized": false,
+    "releaseAuthorized": false,
+    "publicationAuthorized": false
+  },
+  "grade4Effects": {
+    "v7V8ObjectPromotionCount": 0,
+    "sourceAssetMutation": false,
+    "sqlCourseMapMutation": false,
+    "lessonOrderMutation": false,
+    "quizMutation": false,
+    "keyTermsMutation": false,
+    "enEsBindingMutation": false,
+    "audioBindingMutation": false,
+    "missingMp3DispositionChanged": false,
+    "migrationWorkspaceMutation": false,
+    "rendererMutation": false,
+    "runtimeBaselineMutation": false,
+    "wholeCourseIntegrationMutation": false
+  }
+}

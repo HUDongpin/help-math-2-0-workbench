@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "evidenceKind": "LOCAL_REAL_G4_L3_TEXT_ONLY_CANARY",
+  "recordedAtUtc": "2026-08-24T03:52:20Z",
+  "branch": "codex/help-math-learning-platform-nova-fq",
+  "branchHead": "22ff85fd7eb6f69e981c8c91692e8ea4d60b5907",
+  "status": "PASS_WITH_LOCAL_CLERK_WARNING",
+  "promptFixtureId": "negative-number-order-two-sentences-check-question-v1",
+  "route": "/en/courses/4/3?mode=focus",
+  "releaseId": "lesson-g04-l03-negative-numbers",
+  "requestId": "13198d27-fa1c-4f8a-b685-485021f356c5",
+  "apiStatus": 200,
+  "cacheControl": "no-store, max-age=0",
+  "durationMs": 2431,
+  "attempts": 1,
+  "requestBytes": 533,
+  "model": "openai/gpt-5.6-luna",
+  "replyBytes": 126,
+  "replySha256": "cc20d96516e324758f12c7b3213c72a59ed6b88bb965a10304b645aa60e41fa4",
+  "realProviderRequestCount": 1,
+  "assertions": {
+    "askNovaVisibleForSelectedCourse": true,
+    "askNovaAbsentForUnselectedG5L4": true,
+    "lastReplyVerifiedVisible": true,
+    "requestIdIsUuid": true,
+    "replyNonEmpty": true,
+    "replyMathRelationCorrect": true,
+    "replyIncludesOneCheckQuestion": true,
+    "replyHasNoRawExecutableHtml": true,
+    "replyHasNoSensitiveDataSolicitation": true,
+    "frameAbsent": true,
+    "frameControlAbsent": true,
+    "speechNotUsed": true,
+    "speechControlAbsent": true,
+    "localFileInputAbsent": true
+  },
+  "knownBrowserMessages": {
+    "clerkDevelopmentReactKeyErrorCount": 1,
+    "clerkDevelopmentKeyWarningCount": 1,
+    "novaRelated": false,
+    "strictBrowserPass": false
+  },
+  "localConfiguration": {
+    "fileMode": "0600",
+    "gitIgnored": true,
+    "masterEnabled": true,
+    "selectedReleaseCount": 1,
+    "selectedReleaseId": "lesson-g04-l03-negative-numbers",
+    "frameEnabled": false,
+    "speechToDraftEnabled": false,
+    "officialOpenRouterBaseUrl": true,
+    "exactLunaModel": true,
+    "providerKeyPresent": true
+  },
+  "localVerification": {
+    "fullWebTests": "414/414 PASS",
+    "novaServerTests": "61/61 PASS",
+    "typecheck": "PASS",
+    "fullStackFakeUpstream": "74/74 PASS",
+    "modernWideClientRenderMock": "54/54 PASS",
+    "productionAssetProfile": "16/16 PASS",
+    "productionAssetClosure": "1135 public + 185 server = 1320 files",
+    "productionAssetChecksumSetSha256": "54e11e77a8d684fcf9542ba7458c12add3edb1a85c16ac99db756a34ed5c6ad4",
+    "productionBuild": "PASS (28/28 static pages)",
+    "lint": "PASS_WITH_3_EXISTING_WARNINGS",
+    "sensitiveValuesScanned": 5,
+    "candidateDiffSensitiveValueMatches": 0,
+    "buildSensitiveValueMatches": 0,
+    "buildFilesScanned": 1666,
+    "fullStackTempDirectory": "external-workspace-volume",
+    "fullStackUsesRealOpenRouter": false
+  },
+  "artifacts": {
+    "screenshot": {
+      "path": "output/playwright/nova-tutor-local-canary-2026-08-24/g4-l3-text-canary.png",
+      "sha256": "2cde5f6f8d56eb8b6fdc2641779e032acc53c741ca746c81fb0ff547d9d995b2"
+    },
+    "trace": {
+      "path": "output/playwright/nova-tutor-local-canary-2026-08-24/g4-l3-text-canary.trace",
+      "sha256": "a3f83e0883ab2edc7e65627f4398698acc58ef7dbb1a11c1608ef843481fef6d"
+    },
+    "network": {
+      "path": "output/playwright/nova-tutor-local-canary-2026-08-24/g4-l3-text-canary.network",
+      "sha256": "46b030a67392f7a8ababeadee93dd37afc3ff9baf823db3e0026c71a98b22924"
+    }
+  },
+  "privacy": {
+    "storesPromptOrReplyText": false,
+    "storesProviderResponseId": false,
+    "storesHeadersOrSecrets": false,
+    "storesRawIp": false,
+    "storesFrameOrAudio": false
+  },
+  "scopeBoundary": {
+    "vercelModified": false,
+    "previewModified": false,
+    "productionModified": false,
+    "committed": false,
+    "pushed": false
+  }
+}

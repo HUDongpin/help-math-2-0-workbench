@@ -1,0 +1,439 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "help-math-g4-active-source-promotion-applied-receipt",
+  "lifecycle": "final",
+  "applied": true,
+  "transactionId": "20260802T040219914Z-1635d216a5c2",
+  "claim": "partial-source-promotion-only",
+  "plan": {
+    "path": "catalog/source-promotions/g4-active-source-promotion-2026-08-02.json",
+    "sha256": "61fbb021fbab57c427e1c0459c30cf94a88b449d0080c125d616213687833a87",
+    "copyRecordSetSha256": "118691f7e2a301f6a5056f196bd17a77eb3c42d80b73a43244d41445c19a4de6"
+  },
+  "inputs": {
+    "intakeReadmeSha256": "fd3f300739e63e84b9a263d724fdbeda55dd3a1b4eee077b472de5228cc76f5e",
+    "intakeReceiptSha256": "3633334999488f1df0c95fc7bece4669d7d9db86845f1aeab1924fd560802fd4",
+    "grade4IntakePlanSha256": "ff6b31f75d246f33834af9686b035f614a27ae2bbbc30e4b5975773863a0634f",
+    "grade4QuarantineManifestSha256": "27c0dc167ed771ffa4f560d71f03f4e373c0d08ff3a52d2868db2bdef11ede4c",
+    "baseSourceManifestSha256": "a9625fb4a99e026fea09e4a1929edc2fa9d47ccf6cdbca7de4ba9ca75adf211e",
+    "baseSourceCatalogSha256": "3c69ff32fd641910f63b24709b3c0225418ba1eee823155a99b307456eb1ee6c",
+    "baseAnimationsCatalogSha256": "0f8ee8fea46796b1f1d7ae7c410ef11e90e5eb4a16823cde0830777903332733",
+    "baseLessonsCatalogSha256": "96602f48c3c2089ab90d63262645de267a58522dc2bae57ab3e87745f3547905",
+    "baseMissingReferencesSha256": "9ef033c7c0c85e86007eb4eea1dfef07e6f86688b4a651e25b0e9201b2e89b59"
+  },
+  "exactPromotion": {
+    "copyRecordCount": 1228,
+    "copyBytes": 434656573,
+    "bySourceType": {
+      "active-page-swf": 202,
+      "runtime-bound-audio": 883,
+      "same-path-fla": 143
+    },
+    "priorDispositionCounts": {
+      "candidate-new-source-in-quarantine": 1070,
+      "hold-historical-custody-review": 113,
+      "hold-placement-alias-review": 45
+    },
+    "copiedGenericCandidateCount": 1070,
+    "excludedGenericCandidateCount": 1022,
+    "existingBindingCount": 883,
+    "existingBindingsBySourceType": {
+      "lesson-xml-binding": 9,
+      "runtime-bound-audio": 854,
+      "same-path-fla": 20
+    },
+    "expectedPostManifestSha256": "f0a33c8a3d15afd7340e9ea5523385428bae7546bd8d4227a3a8977ab8914318",
+    "expectedPostCatalogChecksumSha256": "30dfa12b7cd76e7200fb89115155e7d32af1356247c07e3a4f79227e93f34875"
+  },
+  "stagedVerification": {
+    "freeze": {
+      "fileCount": 9147,
+      "totalBytes": 3214585414,
+      "manifestSha256": "f0a33c8a3d15afd7340e9ea5523385428bae7546bd8d4227a3a8977ab8914318",
+      "readOnlyEnforced": true,
+      "writableEntriesAfterFreeze": 0
+    },
+    "catalog": {
+      "fileCount": 9147,
+      "totalBytes": 3214585414,
+      "checksumSetSha256": "30dfa12b7cd76e7200fb89115155e7d32af1356247c07e3a4f79227e93f34875",
+      "checksumFileSha256": "30dfa12b7cd76e7200fb89115155e7d32af1356247c07e3a4f79227e93f34875",
+      "swfPlacements": 2096,
+      "resolvedCourseReferences": 1361,
+      "missingCourseReferences": 389
+    },
+    "durability": {
+      "cloneEvidence": {
+        "source": {
+          "backend": "/bin/cp -c -R -p -P",
+          "sourceStructure": {
+            "recordCount": 8334,
+            "fileCount": 7919,
+            "directoryCount": 415,
+            "totalBytes": 2779928841,
+            "structureSha256": "2eb27ddcbba88e97ca86ca747df25a8a4af9444b12d7566400e59c19d9a19703"
+          },
+          "destinationStructure": {
+            "recordCount": 8334,
+            "fileCount": 7919,
+            "directoryCount": 415,
+            "totalBytes": 2779928841,
+            "structureSha256": "2eb27ddcbba88e97ca86ca747df25a8a4af9444b12d7566400e59c19d9a19703"
+          },
+          "destinationParentFsynced": true
+        },
+        "catalog": {
+          "backend": "/bin/cp -c -R -p -P",
+          "sourceStructure": {
+            "recordCount": 45,
+            "fileCount": 42,
+            "directoryCount": 3,
+            "totalBytes": 25619057,
+            "structureSha256": "a432a717b4f0462620fce76cacc02b6134a25dce43d2bca48ed259d7ec1cee29"
+          },
+          "destinationStructure": {
+            "recordCount": 45,
+            "fileCount": 42,
+            "directoryCount": 3,
+            "totalBytes": 25619057,
+            "structureSha256": "a432a717b4f0462620fce76cacc02b6134a25dce43d2bca48ed259d7ec1cee29"
+          },
+          "destinationParentFsynced": true,
+          "exactTreeSha256": "39695b3d879e945740e5f17a86b206242199dbdd2c1e69f6a0ffc28be55bdc31",
+          "exactFileCount": 42,
+          "exactTotalBytes": 25619057
+        }
+      },
+      "source": {
+        "fileCount": 9147,
+        "directoryCount": 424,
+        "totalBytes": 3214585414
+      },
+      "catalog": {
+        "fileCount": 42,
+        "directoryCount": 3,
+        "totalBytes": 28092046
+      },
+      "noFollow": true,
+      "allRegularFilesAndDirectoriesFsynced": true
+    }
+  },
+  "unresolvedDependencies": {
+    "closureComplete": false,
+    "count": 16,
+    "pathSetSha256": "439fce1e41ef10591c165f0eed65638d1a7afc81080db182770911bd1d8c4286",
+    "records": [
+      {
+        "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q22A.mp3",
+        "sourceType": "runtime-bound-audio",
+        "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+        "audioBindingKind": "final-quiz-question-answer",
+        "requiredBy": [
+          "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+          "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+        ],
+        "resolution": "absent-from-current-canonical-and-owner-authorized-quarantine"
+      },
+      {
+        "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q22B.mp3",
+        "sourceType": "runtime-bound-audio",
+        "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+        "audioBindingKind": "final-quiz-question-answer",
+        "requiredBy": [
+          "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+          "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+        ],
+        "resolution": "absent-from-current-canonical-and-owner-authorized-quarantine"
+      },
+      {
+        "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q22C.mp3",
+        "sourceType": "runtime-bound-audio",
+        "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+        "audioBindingKind": "final-quiz-question-answer",
+        "requiredBy": [
+          "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+          "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+        ],
+        "resolution": "absent-from-current-canonical-and-owner-authorized-quarantine"
+      },
+      {
+        "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q22D.mp3",
+        "sourceType": "runtime-bound-audio",
+        "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+        "audioBindingKind": "final-quiz-question-answer",
+        "requiredBy": [
+          "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+          "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+        ],
+        "resolution": "absent-from-current-canonical-and-owner-authorized-quarantine"
+      },
+      {
+        "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q23A.mp3",
+        "sourceType": "runtime-bound-audio",
+        "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+        "audioBindingKind": "final-quiz-question-answer",
+        "requiredBy": [
+          "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+          "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+        ],
+        "resolution": "absent-from-current-canonical-and-owner-authorized-quarantine"
+      },
+      {
+        "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q23B.mp3",
+        "sourceType": "runtime-bound-audio",
+        "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+        "audioBindingKind": "final-quiz-question-answer",
+        "requiredBy": [
+          "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+          "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+        ],
+        "resolution": "absent-from-current-canonical-and-owner-authorized-quarantine"
+      },
+      {
+        "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q23C.mp3",
+        "sourceType": "runtime-bound-audio",
+        "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+        "audioBindingKind": "final-quiz-question-answer",
+        "requiredBy": [
+          "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+          "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+        ],
+        "resolution": "absent-from-current-canonical-and-owner-authorized-quarantine"
+      },
+      {
+        "canonicalPath": "HELP_COURSES/ELMGR4/L2/FQ/EA/Q23D.mp3",
+        "sourceType": "runtime-bound-audio",
+        "bindingReason": "host-final-quiz-EA-SA-route-plus-target-quiz-label-and-four-option-contract",
+        "audioBindingKind": "final-quiz-question-answer",
+        "requiredBy": [
+          "HELP_COURSES/ELMGR4/L2/FQ/L2FQ02.swf",
+          "HELP_COURSES/ELMGR4/L2/FQ/L2FQ03.swf"
+        ],
+        "resolution": "absent-from-current-canonical-and-owner-authorized-quarantine"
+      },
+      {
+        "canonicalPath": "HELP_COURSES/ELMGR4/L2/SA/L2IN21.mp3",
+        "sourceType": "runtime-bound-audio",
+        "bindingReason": "host-spanish-page-audio-same-basename-SA",
+        "audioBindingKind": "ordinary-spanish-page",
+        "requiredBy": [
+          "HELP_COURSES/ELMGR4/L2/IN/L2IN21.swf"
+        ],
+        "resolution": "absent-from-current-canonical-and-owner-authorized-quarantine"
+      },
+      {
+        "canonicalPath": "HELP_COURSES/ELMGR4/L2/SA/L2IN22.mp3",
+        "sourceType": "runtime-bound-audio",
+        "bindingReason": "host-spanish-page-audio-same-basename-SA",
+        "audioBindingKind": "ordinary-spanish-page",
+        "requiredBy": [
+          "HELP_COURSES/ELMGR4/L2/IN/L2IN22.swf"
+        ],
+        "resolution": "absent-from-current-canonical-and-owner-authorized-quarantine"
+      },
+      {
+        "canonicalPath": "HELP_COURSES/ELMGR4/L2/SA/L2IN23.mp3",
+        "sourceType": "runtime-bound-audio",
+        "bindingReason": "host-spanish-page-audio-same-basename-SA",
+        "audioBindingKind": "ordinary-spanish-page",
+        "requiredBy": [
+          "HELP_COURSES/ELMGR4/L2/IN/L2IN23.swf"
+        ],
+        "resolution": "absent-from-current-canonical-and-owner-authorized-quarantine"
+      },
+      {
+        "canonicalPath": "HELP_COURSES/ELMGR4/L2/SA/L2IN24.mp3",
+        "sourceType": "runtime-bound-audio",
+        "bindingReason": "host-spanish-page-audio-same-basename-SA",
+        "audioBindingKind": "ordinary-spanish-page",
+        "requiredBy": [
+          "HELP_COURSES/ELMGR4/L2/IN/L2IN24.swf"
+        ],
+        "resolution": "absent-from-current-canonical-and-owner-authorized-quarantine"
+      },
+      {
+        "canonicalPath": "HELP_COURSES/ELMGR4/L2/SA/L2IN25.mp3",
+        "sourceType": "runtime-bound-audio",
+        "bindingReason": "host-spanish-page-audio-same-basename-SA",
+        "audioBindingKind": "ordinary-spanish-page",
+        "requiredBy": [
+          "HELP_COURSES/ELMGR4/L2/IN/L2IN25.swf"
+        ],
+        "resolution": "absent-from-current-canonical-and-owner-authorized-quarantine"
+      },
+      {
+        "canonicalPath": "HELP_COURSES/ELMGR4/L2/SA/L2IN26.mp3",
+        "sourceType": "runtime-bound-audio",
+        "bindingReason": "host-spanish-page-audio-same-basename-SA",
+        "audioBindingKind": "ordinary-spanish-page",
+        "requiredBy": [
+          "HELP_COURSES/ELMGR4/L2/IN/L2IN26.swf"
+        ],
+        "resolution": "absent-from-current-canonical-and-owner-authorized-quarantine"
+      },
+      {
+        "canonicalPath": "HELP_COURSES/ELMGR4/L6/SA/L6GS03.mp3",
+        "sourceType": "runtime-bound-audio",
+        "bindingReason": "host-spanish-page-audio-same-basename-SA",
+        "audioBindingKind": "ordinary-spanish-page",
+        "requiredBy": [
+          "HELP_COURSES/ELMGR4/L6/GS/L6GS03.swf"
+        ],
+        "resolution": "absent-from-current-canonical-and-owner-authorized-quarantine"
+      },
+      {
+        "canonicalPath": "HELP_COURSES/ELMGR4/L8/SA/L8GS03.mp3",
+        "sourceType": "runtime-bound-audio",
+        "bindingReason": "host-spanish-page-audio-same-basename-SA",
+        "audioBindingKind": "ordinary-spanish-page",
+        "requiredBy": [
+          "HELP_COURSES/ELMGR4/L8/GS/L8GS03.swf"
+        ],
+        "resolution": "absent-from-current-canonical-and-owner-authorized-quarantine"
+      }
+    ],
+    "effect": "explicit source gaps and audio-fidelity blockers; not copied, invented, or silently omitted"
+  },
+  "anomalies": {
+    "zipContainerFla": {
+      "path": "HELP_COURSES/ELMGR4/L1/IN/L1IN07.fla",
+      "bytes": 1513718,
+      "sha256": "782bd6d283c2eea38798ecda41ec0a5b93c7d5ebedcff3624a2cc48b471cf073",
+      "observedContainerSignature": "PK-ZIP",
+      "unzipTest": {
+        "exitStatus": 2,
+        "compressedEntries": "OK",
+        "missingBytesWarning": "unzip reports 54 bytes missing from the zipfile",
+        "centralDirectoryWarning": "unzip reports the central-directory length as 54 bytes too long and compensates"
+      },
+      "treatment": "preserved byte-for-byte as an FLA source record; not rewritten or normalized"
+    }
+  },
+  "evidenceBoundary": {
+    "sourcePromotionOnly": true,
+    "sourceDerivedReachabilityIsRuntimePlaybackProof": false,
+    "audioLanguageContentVerified": false,
+    "audioSynchronizationVerified": false,
+    "flashFidelityEffect": "none",
+    "javascriptImplementationEffect": "none",
+    "humanOrOwnerAcceptanceEffect": "none",
+    "strictCompletionEffect": "none",
+    "publicationEffect": "none",
+    "missingDependencyEffect": "The 16 absent MP3 paths remain explicit source gaps and audio-fidelity blockers; they are not invented or silently omitted from the expected closure."
+  },
+  "swaps": {
+    "source": {
+      "status": "swapped-and-parent-fsynced",
+      "allowedParent": "/Volumes/WestWorld/HELP MATH 2.0/source-assets/flash",
+      "firstDirectory": "/Volumes/WestWorld/HELP MATH 2.0/source-assets/flash/HELP MATH_ORIGINAL FILES",
+      "secondDirectory": "/Volumes/WestWorld/HELP MATH 2.0/source-assets/flash/.HELP MATH_ORIGINAL FILES.g4-active-source-recovery-20260802T040219914Z-1635d216a5c2",
+      "before": {
+        "first": {
+          "dev": "16777246",
+          "ino": "64153"
+        },
+        "second": {
+          "dev": "16777246",
+          "ino": "3920820"
+        }
+      },
+      "after": {
+        "first": {
+          "dev": "16777246",
+          "ino": "3920820"
+        },
+        "second": {
+          "dev": "16777246",
+          "ino": "64153"
+        }
+      },
+      "native": {
+        "status": "swapped",
+        "parentFsynced": true
+      },
+      "nativeSourceSha256": "7befe04c75b995cf7deae97651648277d44f59f94b2cb2e560e6443f74659d98",
+      "cleanupWarning": null
+    },
+    "catalog": {
+      "status": "swapped-and-parent-fsynced",
+      "allowedParent": "/Volumes/WestWorld/HELP MATH 2.0",
+      "firstDirectory": "/Volumes/WestWorld/HELP MATH 2.0/catalog",
+      "secondDirectory": "/Volumes/WestWorld/HELP MATH 2.0/.catalog.g4-active-source-recovery-20260802T040219914Z-1635d216a5c2",
+      "before": {
+        "first": {
+          "dev": "16777246",
+          "ino": "10991"
+        },
+        "second": {
+          "dev": "16777246",
+          "ino": "3930402"
+        }
+      },
+      "after": {
+        "first": {
+          "dev": "16777246",
+          "ino": "3930402"
+        },
+        "second": {
+          "dev": "16777246",
+          "ino": "10991"
+        }
+      },
+      "native": {
+        "status": "swapped",
+        "parentFsynced": true
+      },
+      "nativeSourceSha256": "7befe04c75b995cf7deae97651648277d44f59f94b2cb2e560e6443f74659d98",
+      "cleanupWarning": null
+    }
+  },
+  "postchecks": {
+    "live": {
+      "freeze": {
+        "fileCount": 9147,
+        "totalBytes": 3214585414,
+        "manifestSha256": "f0a33c8a3d15afd7340e9ea5523385428bae7546bd8d4227a3a8977ab8914318",
+        "readOnlyEnforced": true,
+        "writableEntriesAfterFreeze": 0
+      },
+      "catalog": {
+        "fileCount": 9147,
+        "totalBytes": 3214585414,
+        "checksumSetSha256": "30dfa12b7cd76e7200fb89115155e7d32af1356247c07e3a4f79227e93f34875",
+        "checksumFileSha256": "30dfa12b7cd76e7200fb89115155e7d32af1356247c07e3a4f79227e93f34875",
+        "swfPlacements": 2096,
+        "resolvedCourseReferences": 1361,
+        "missingCourseReferences": 389
+      },
+      "promotedActiveSwfResolvedCount": 202,
+      "unresolvedDependencyCount": 16,
+      "dependencyClosureComplete": false
+    },
+    "retainedPrePromotionRoots": {
+      "freeze": {
+        "fileCount": 7919,
+        "totalBytes": 2779928841,
+        "manifestSha256": "a9625fb4a99e026fea09e4a1929edc2fa9d47ccf6cdbca7de4ba9ca75adf211e",
+        "readOnlyEnforced": true,
+        "writableEntriesAfterFreeze": 0
+      },
+      "catalog": {
+        "fileCount": 7919,
+        "totalBytes": 2779928841,
+        "checksumSetSha256": "0d6f20e50576c73aac38aa5a88610c654bbe29430044c2db43d8d6236cf8fe0f",
+        "treeSha256": "39695b3d879e945740e5f17a86b206242199dbdd2c1e69f6a0ffc28be55bdc31"
+      }
+    },
+    "preparedReceipt": {
+      "relativePath": "source-promotions/g4-active-source-promotion-2026-08-02-prepared-20260802T040219914Z-1635d216a5c2.json",
+      "sha256": "34d8d4707a9bc64450a2283cd77b95f3233bfbb8908c97450cbcaa756ce86e17",
+      "immutable": true
+    }
+  },
+  "retainedRecoveryRoots": {
+    "source": "/Volumes/WestWorld/HELP MATH 2.0/source-assets/flash/.HELP MATH_ORIGINAL FILES.g4-active-source-recovery-20260802T040219914Z-1635d216a5c2",
+    "catalog": "/Volumes/WestWorld/HELP MATH 2.0/.catalog.g4-active-source-recovery-20260802T040219914Z-1635d216a5c2",
+    "deletionPolicy": "retained; this executor never deletes pre-promotion roots"
+  },
+  "completedAt": "2026-08-02T04:02:54.364Z"
+}

@@ -1,0 +1,908 @@
+{
+  "acceptance": {
+    "acceptanceNeutral": true,
+    "authoritativeOriginalRuntimeAccepted": false,
+    "containmentPlanApproved": false,
+    "exactStaticExternalSurfaceEstablished": true,
+    "humanVisualAccepted": false,
+    "implementationAuthorized": false,
+    "ownerAccepted": false,
+    "runtimeApproved": false,
+    "runtimeReachabilityEstablished": false,
+    "statement": "This report binds exact static ActionScript side-effect candidates and specifies fail-closed controls. It launches no runtime and executes no endpoint. Static calls do not prove reachability, and unselected controls do not constitute containment, authorization, baseline evidence, acceptance, parity, or completion.",
+    "strictMigrationComplete": false
+  },
+  "containmentPlan": {
+    "allowedOutboundDestinations": [],
+    "authorizedHostContext": null,
+    "controls": [
+      {
+        "approved": false,
+        "controlId": "CR-01",
+        "requirement": "Disable outbound networking at the host or disposable-session boundary and prove the deny state before launching the player.",
+        "selectedMechanism": null,
+        "verified": false
+      },
+      {
+        "approved": false,
+        "controlId": "CR-02",
+        "requirement": "Materialize one read-only, hash-allowlisted local lesson tree for the selected SWF and every permitted local dependency.",
+        "selectedMechanism": null,
+        "verified": false
+      },
+      {
+        "approved": false,
+        "controlId": "CR-03",
+        "requirement": "Use an isolated disposable runtime profile with an empty Flash SharedObject store and discard it after the one-item session.",
+        "selectedMechanism": null,
+        "verified": false
+      },
+      {
+        "approved": false,
+        "controlId": "CR-04",
+        "requirement": "Run one SWF in one fresh player process; abort on any unexpected dialog, browser navigation, host command, or unallowlisted resource request.",
+        "selectedMechanism": null,
+        "verified": false
+      },
+      {
+        "approved": false,
+        "controlId": "CR-05",
+        "requirement": "Record a connection/request audit proving that no legacy request reached a server and inventory every attempted local or blocked resource load.",
+        "selectedMechanism": null,
+        "verified": false
+      },
+      {
+        "approved": false,
+        "controlId": "CR-06",
+        "requirement": "Keep telemetry POSTs, javascript URLs, external browser opens, fscommand host effects, and persistent bookmark writes disabled.",
+        "selectedMechanism": null,
+        "verified": false
+      },
+      {
+        "approved": false,
+        "controlId": "CR-07",
+        "requirement": "Run a fresh storage-capacity preflight immediately before every bounded capture session.",
+        "selectedMechanism": null,
+        "verified": false
+      },
+      {
+        "approved": false,
+        "controlId": "CR-08",
+        "requirement": "Bind explicit owner approval, a named original-runtime operator, the exact host, launch path, and stop conditions before execution.",
+        "selectedMechanism": null,
+        "verified": false
+      }
+    ],
+    "controlsApproved": 0,
+    "controlsSpecified": 8,
+    "controlsVerified": 0,
+    "controlsWithSelectedMechanism": 0,
+    "launchCommand": null,
+    "legacyEndpointAllowlist": [],
+    "namedOriginalRuntimeOperator": null,
+    "ownerApprovalReceipt": null,
+    "readOnlyLessonTree": null,
+    "runtimeProfilePath": null,
+    "state": "requirements-specified-controls-unselected-unapproved"
+  },
+  "executionGate": {
+    "authorizedHostContextIdentified": false,
+    "emptySharedObjectStoreVerified": false,
+    "ephemeralRuntimeProfileBound": false,
+    "exactExternalSurfaceBound": true,
+    "executesLegacyEndpointsByThisBuilder": false,
+    "installedRuntimeCandidateBound": true,
+    "launchesRuntimeByThisBuilder": false,
+    "liveCapacityPreflightPassed": false,
+    "namedOriginalRuntimeOperatorSupplied": false,
+    "noEgressVerificationPassed": false,
+    "oneItemPerFreshProcessRequired": true,
+    "originalRuntimeExecutionReady": false,
+    "outboundDenyMechanismApproved": false,
+    "outboundDenyMechanismSelected": false,
+    "ownerRuntimeApprovalBound": false,
+    "readOnlyLocalDependencyAllowlistBound": false,
+    "reason": "The exact 23-operation static side-effect surface is bound, but no network-deny mechanism, local dependency allowlist, ephemeral profile, named runtime operator, authorized host, owner approval, or live capacity pass is bound.",
+    "state": "closed-awaiting-approved-side-effect-containment"
+  },
+  "generator": {
+    "bytes": 24496,
+    "file": "scripts/build-g4-l3-original-runtime-containment-readiness.mjs",
+    "sha256": "6913d2fe9fca169a52b1ef0aad3136c21fcab780c4fe11f840454340c8d93b73"
+  },
+  "installedCandidateBinding": {
+    "approvedForExecution": false,
+    "executable": {
+      "architecture": "Mach-O 64-bit executable x86_64",
+      "bytes": 23199312,
+      "mode": "0755",
+      "path": "/Applications/Adobe Animate 2021/Players/Flash Player.app/Contents/MacOS/Flash Player",
+      "sha256": "8f4e10c8c28698f3429a1489f9592f6ae5697fb6eb7d15c4cfe83e925b1ebc30"
+    },
+    "runtimeId": "adobe-flash-player-projector",
+    "version": "32.0.0.414"
+  },
+  "reportType": "g4-l3-original-runtime-containment-readiness",
+  "schemaVersion": 1,
+  "scope": {
+    "activePages": 39,
+    "canonicalItems": 40,
+    "courseShells": 1,
+    "purpose": "static external-side-effect inventory and pre-execution containment requirements only",
+    "releaseId": "lesson-g04-l03-negative-numbers"
+  },
+  "sourceBindings": {
+    "originalRuntimeEnvironmentReadiness": {
+      "bytes": 11540,
+      "file": "reports/g4-l3-original-runtime-environment-readiness.json",
+      "generator": {
+        "bytes": 27334,
+        "file": "scripts/build-g4-l3-original-runtime-environment-readiness.mjs",
+        "sha256": "f8abea8b108a9adb93b8c6b146c8af2d22c4a40c7397437a7917439b55c88fec"
+      },
+      "reportType": "g4-l3-original-runtime-environment-readiness",
+      "schemaVersion": 1,
+      "sha256": "06534a424cc7065e85044fa04665197f518abcef87cf4ddeae200510db8c6a54"
+    },
+    "shellLegacyHostDependencyContract": {
+      "bytes": 44952,
+      "file": "reports/g4-l3-shell-legacy-host-dependency-contract.json",
+      "generator": {
+        "bytes": 41211,
+        "file": "scripts/build-g4-l3-shell-legacy-host-dependency-contract.mjs",
+        "sha256": "1aa6e629bee829ef10c73fee85ed5b6cd11c1ce9f962e0111665be50af9b88c2"
+      },
+      "reportType": "g4-l3-shell-legacy-host-dependency-disposition-contract",
+      "schemaVersion": 1,
+      "sha256": "fc2bd9e5f3832b85d9078f6fecb7d28c61acbc0e999c1fa2ebc6fb945903161f"
+    },
+    "sourceOperationIndexV2": {
+      "bytes": 8904942,
+      "file": "reports/g4-l3-source-operation-index-v2.json",
+      "generator": {
+        "bytes": 70118,
+        "file": "scripts/build-g4-l3-source-operation-index-v2.mjs",
+        "sha256": "7ba2436cddb5ec544013d6ad1a9dd210f53326a89dadf6864180ff0f50f1591d"
+      },
+      "reportType": "g4-l3-actionscript-source-operation-index",
+      "schemaVersion": 2,
+      "sha256": "2b3d3b89d61dabcbcf3f6a40d8728b0429535c254180065fea7fa594c2879f3e"
+    }
+  },
+  "staticExternalSurface": {
+    "affectedMembers": [
+      {
+        "animationId": "course-g04-l03-fq-002",
+        "apiCounts": {
+          "getURL": 2
+        },
+        "exactExternalOperationCount": 2,
+        "operations": [
+          {
+            "animationId": "course-g04-l03-fq-002",
+            "api": "getURL",
+            "argumentExpressions": [
+              "strURL",
+              "\"\""
+            ],
+            "exactExpression": "getURL(strURL,\"\");",
+            "executionAuthorized": false,
+            "lineNumber": 14,
+            "operationFingerprintSha256": "af3a1b500c23d81640aec7bcc775afc5b50a093d0587bb115162b3097a53caeb",
+            "operationId": "operation-00002",
+            "riskClass": "outbound-or-script-navigation",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": 12,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": null
+            },
+            "scriptPath": "DefineButton2_12/BUTTONCONDACTION on(release).as",
+            "scriptSha256": "f96cd6ef551caebcc7af4898e4e1985ba6366a3129a4498197777c5c3fefac05",
+            "sourceEventIds": [
+              "source-event-0001"
+            ]
+          },
+          {
+            "animationId": "course-g04-l03-fq-002",
+            "api": "getURL",
+            "argumentExpressions": [
+              "strURL",
+              "\"\""
+            ],
+            "exactExpression": "getURL(strURL,\"\");",
+            "executionAuthorized": false,
+            "lineNumber": 80,
+            "operationFingerprintSha256": "033c1c0d270e68b3bce39a34bacd62e41e65a9277dc961e20c683f1faa8a6260",
+            "operationId": "operation-00065",
+            "riskClass": "outbound-or-script-navigation",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": null,
+              "frameDomainCandidate": "sprite-899",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": 1
+            },
+            "scriptPath": "DefineSprite_899/frame_1/DoAction.as",
+            "scriptSha256": "818543cb14a259790afb733c553a6dd00b7a8b916c5d955efa0281e16dbf99f7",
+            "sourceEventIds": [
+              "source-event-0016"
+            ]
+          }
+        ],
+        "releaseRole": "active-xml-referenced-page",
+        "riskCounts": {
+          "outbound-or-script-navigation": 2
+        },
+        "runtimeReachabilityEstablished": false,
+        "safeToExecuteNow": false,
+        "sequence": 38,
+        "sourceSwf": {
+          "bytes": 44106,
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/FQ/L3FQ02.swf",
+          "physicalHashVerified": true,
+          "physicalHashVerifiedNow": true,
+          "sha256": "ab1940815259d7b73f9e9bf6e1f33351e00d3ec02e37286e480806409955882b"
+        }
+      },
+      {
+        "animationId": "course-g04-l03-fq-003",
+        "apiCounts": {
+          "getURL": 1
+        },
+        "exactExternalOperationCount": 1,
+        "operations": [
+          {
+            "animationId": "course-g04-l03-fq-003",
+            "api": "getURL",
+            "argumentExpressions": [
+              "strURL",
+              "\"\""
+            ],
+            "exactExpression": "getURL(strURL,\"\");",
+            "executionAuthorized": false,
+            "lineNumber": 14,
+            "operationFingerprintSha256": "828095f46a2eee69a5cffebe04db92f738453953d291352faca5dc92e49bf7e0",
+            "operationId": "operation-00002",
+            "riskClass": "outbound-or-script-navigation",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": 12,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": null
+            },
+            "scriptPath": "DefineButton2_12/BUTTONCONDACTION on(release).as",
+            "scriptSha256": "f96cd6ef551caebcc7af4898e4e1985ba6366a3129a4498197777c5c3fefac05",
+            "sourceEventIds": [
+              "source-event-0001"
+            ]
+          }
+        ],
+        "releaseRole": "active-xml-referenced-page",
+        "riskCounts": {
+          "outbound-or-script-navigation": 1
+        },
+        "runtimeReachabilityEstablished": false,
+        "safeToExecuteNow": false,
+        "sequence": 39,
+        "sourceSwf": {
+          "bytes": 43689,
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/FQ/L3FQ03.swf",
+          "physicalHashVerified": true,
+          "physicalHashVerifiedNow": true,
+          "sha256": "f40e24b47e05de7dce02ac98344c8748b5941a67d908f85fc1fe152fe684b7dc"
+        }
+      },
+      {
+        "animationId": "shell-course-g04-l03-index-local",
+        "apiCounts": {
+          "SharedObject.getLocal": 1,
+          "Sound.loadSound": 1,
+          "XML.load": 2,
+          "fscommand": 5,
+          "getURL": 3,
+          "loadMovie": 5,
+          "loadVariablesNum": 3
+        },
+        "exactExternalOperationCount": 20,
+        "operations": [
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "getURL",
+            "argumentExpressions": [
+              "\"javascript:void(parent.close());\""
+            ],
+            "exactExpression": "getURL(\"javascript:void(parent.close());\");",
+            "executionAuthorized": false,
+            "lineNumber": 2,
+            "operationFingerprintSha256": "3f984bd55503e23b2de85915bceb7dfc78fb18e183b6e2b2ab3c5df0c2f7b586",
+            "operationId": "operation-00049",
+            "riskClass": "outbound-or-script-navigation",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": 151,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": null
+            },
+            "scriptPath": "DefineButton2_151/BUTTONCONDACTION on(release).as",
+            "scriptSha256": "8865745d8c2ae3625e56aa78139806409711bc2c44ae4bd2b087f2031a962a1c",
+            "sourceEventIds": [
+              "source-event-0019"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "fscommand",
+            "argumentExpressions": [
+              "\"quit\""
+            ],
+            "exactExpression": "fscommand(\"quit\");",
+            "executionAuthorized": false,
+            "lineNumber": 3,
+            "operationFingerprintSha256": "684045f7ff073e2bbc6ae92afc73484227197caffb73e0e14746bbd1441a91d5",
+            "operationId": "operation-00050",
+            "riskClass": "host-control",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": 151,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": null
+            },
+            "scriptPath": "DefineButton2_151/BUTTONCONDACTION on(release).as",
+            "scriptSha256": "8865745d8c2ae3625e56aa78139806409711bc2c44ae4bd2b087f2031a962a1c",
+            "sourceEventIds": [
+              "source-event-0019"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "getURL",
+            "argumentExpressions": [
+              "\"javascript:void(window.open(\\'\" + STHelpURL + \"\\'));\"",
+              "\"\""
+            ],
+            "exactExpression": "getURL(\"javascript:void(window.open(\\'\" + STHelpURL + \"\\'));\",\"\");",
+            "executionAuthorized": false,
+            "lineNumber": 18,
+            "operationFingerprintSha256": "78c0ff21ae71b2dc3dcfc84b79289e1c81d962d8adc4c25a484be8cf7dd99ae6",
+            "operationId": "operation-00079",
+            "riskClass": "outbound-or-script-navigation",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": 247,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": null
+            },
+            "scriptPath": "DefineButton2_247/BUTTONCONDACTION on(release).as",
+            "scriptSha256": "83476fc4e1b2f737f217b73db41fd5b4af11f1fd2efe6b7b5b59bdc6075e537b",
+            "sourceEventIds": [
+              "source-event-0029"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "getURL",
+            "argumentExpressions": [
+              "strURL",
+              "\"\""
+            ],
+            "exactExpression": "getURL(strURL,\"\");",
+            "executionAuthorized": false,
+            "lineNumber": 7,
+            "operationFingerprintSha256": "b47bf9f199c8e85db5e33e5993a65506711bdc5d5625f0e6c1dcd11937b8487d",
+            "operationId": "operation-00156",
+            "riskClass": "outbound-or-script-navigation",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": 556,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": null
+            },
+            "scriptPath": "DefineButton2_556/BUTTONCONDACTION on(release).as",
+            "scriptSha256": "87ca54926a97fa05f26af17be815cd554f3490083a3b9c190bac1646820cc599",
+            "sourceEventIds": [
+              "source-event-0057"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "loadVariablesNum",
+            "argumentExpressions": [
+              "strURL",
+              "0",
+              "\"POST\""
+            ],
+            "exactExpression": "loadVariablesNum(strURL,0,\"POST\");",
+            "executionAuthorized": false,
+            "lineNumber": 16,
+            "operationFingerprintSha256": "ed7160687466980f0af787251f3d515a53d4588bc1215816c17134586c2a6b85",
+            "operationId": "operation-00393",
+            "riskClass": "outbound-post",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": null,
+              "frameDomainCandidate": "sprite-155",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": 15
+            },
+            "scriptPath": "DefineSprite_155/frame_15/DoAction.as",
+            "scriptSha256": "3bf2025d5901799cb932e90157390db5a909c87b0e2a67b999c6a645206ace97",
+            "sourceEventIds": [
+              "source-event-0185"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "loadVariablesNum",
+            "argumentExpressions": [
+              "strURL",
+              "0",
+              "\"POST\""
+            ],
+            "exactExpression": "loadVariablesNum(strURL,0,\"POST\");",
+            "executionAuthorized": false,
+            "lineNumber": 74,
+            "operationFingerprintSha256": "5c4f4d8e55dca516d284b04356094ae6ab6e87a2dae03b2490ed515e49e6ba91",
+            "operationId": "operation-00395",
+            "riskClass": "outbound-post",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": null,
+              "frameDomainCandidate": "sprite-155",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": 15
+            },
+            "scriptPath": "DefineSprite_155/frame_15/DoAction.as",
+            "scriptSha256": "3bf2025d5901799cb932e90157390db5a909c87b0e2a67b999c6a645206ace97",
+            "sourceEventIds": [
+              "source-event-0185"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "loadVariablesNum",
+            "argumentExpressions": [
+              "finalQuizURL",
+              "0",
+              "\"POST\""
+            ],
+            "exactExpression": "loadVariablesNum(finalQuizURL,0,\"POST\");",
+            "executionAuthorized": false,
+            "lineNumber": 2,
+            "operationFingerprintSha256": "d8a76e185cef0ebade7a4200fd63d63d58ef0cf9fd2fedf06c05b422a78e9181",
+            "operationId": "operation-00398",
+            "riskClass": "outbound-post",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": null,
+              "frameDomainCandidate": "sprite-164",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": 5
+            },
+            "scriptPath": "DefineSprite_164/frame_5/DoAction.as",
+            "scriptSha256": "97968c0ceccc8e94edcd6e51b6f8bdefde0c1a0a192788f4cc7c61435523b8a3",
+            "sourceEventIds": [
+              "source-event-0187"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "loadMovie",
+            "argumentExpressions": [
+              "_loc1_.playSwfFileName",
+              "1"
+            ],
+            "exactExpression": "_loc2_.animation_mc.loadMovie(_loc1_.playSwfFileName,1);",
+            "executionAuthorized": false,
+            "lineNumber": 1007,
+            "operationFingerprintSha256": "7d893933bf9fec01bd62bd438d35be9ec959e23febeff243773db655537ffa4c",
+            "operationId": "operation-00756",
+            "riskClass": "external-resource-load",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": null,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": 35
+            },
+            "scriptPath": "frame_35/DoAction.as",
+            "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+            "sourceEventIds": [
+              "source-event-0389"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "Sound.loadSound",
+            "argumentExpressions": [
+              "SndFName",
+              "1"
+            ],
+            "exactExpression": "_global.gSound.loadSound(SndFName,1);",
+            "executionAuthorized": false,
+            "lineNumber": 2182,
+            "operationFingerprintSha256": "982f6a31e568fafda752b5c860fa5d6a8df8e2b1c2eec87d2eb695da59b80975",
+            "operationId": "operation-00831",
+            "riskClass": "external-resource-load",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": null,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": 35
+            },
+            "scriptPath": "frame_35/DoAction.as",
+            "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+            "sourceEventIds": [
+              "source-event-0389"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "XML.load",
+            "argumentExpressions": [
+              "_loc2_.KeyTermVar"
+            ],
+            "exactExpression": "F_X.load(_loc2_.KeyTermVar);",
+            "executionAuthorized": false,
+            "lineNumber": 2243,
+            "operationFingerprintSha256": "a3d46b268f31a59e1ba361379441ac7f9fb6b27f3869044cf5a534b3178a5834",
+            "operationId": "operation-00842",
+            "riskClass": "external-resource-load",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": null,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": 35
+            },
+            "scriptPath": "frame_35/DoAction.as",
+            "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+            "sourceEventIds": [
+              "source-event-0389"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "XML.load",
+            "argumentExpressions": [
+              "_loc2_.KeyTermVar"
+            ],
+            "exactExpression": "F_X.load(_loc2_.KeyTermVar);",
+            "executionAuthorized": false,
+            "lineNumber": 2352,
+            "operationFingerprintSha256": "cbf9b3d19428b7998a901770d6d796fdbf137c0f7a706f9e1defd27a9ac1095e",
+            "operationId": "operation-00843",
+            "riskClass": "external-resource-load",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": null,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": 35
+            },
+            "scriptPath": "frame_35/DoAction.as",
+            "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+            "sourceEventIds": [
+              "source-event-0389"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "loadMovie",
+            "argumentExpressions": [
+              "exampleSwfFileName",
+              "7"
+            ],
+            "exactExpression": "_loc1_.glossary.keyterms.keyterm_diagram.loadMovie(exampleSwfFileName,7);",
+            "executionAuthorized": false,
+            "lineNumber": 2679,
+            "operationFingerprintSha256": "a2eca71c5b4e331f376b4308ab8af3f9e0c16f49e64515aa2ef5e793fe31e17f",
+            "operationId": "operation-00844",
+            "riskClass": "external-resource-load",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": null,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": 35
+            },
+            "scriptPath": "frame_35/DoAction.as",
+            "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+            "sourceEventIds": [
+              "source-event-0389"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "loadMovie",
+            "argumentExpressions": [
+              "exampleSwfFileName",
+              "7"
+            ],
+            "exactExpression": "_loc1_.glossary.keyterms.keyterm_diagram.loadMovie(exampleSwfFileName,7);",
+            "executionAuthorized": false,
+            "lineNumber": 2997,
+            "operationFingerprintSha256": "c4aff9f76ec27a26271a400c7f39b6c3f722cb4633e6729da5bf6a8d52188726",
+            "operationId": "operation-00846",
+            "riskClass": "external-resource-load",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": null,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": 35
+            },
+            "scriptPath": "frame_35/DoAction.as",
+            "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+            "sourceEventIds": [
+              "source-event-0389"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "loadMovie",
+            "argumentExpressions": [
+              "exampleSwfFileName",
+              "6"
+            ],
+            "exactExpression": "_loc1_.m_c.keyterm_diagram.loadMovie(exampleSwfFileName,6);",
+            "executionAuthorized": false,
+            "lineNumber": 3311,
+            "operationFingerprintSha256": "07c6ff7044a0e211b2f5005e2d4b0e34afaa17ef9185c9460b5de013ec7ea761",
+            "operationId": "operation-00853",
+            "riskClass": "external-resource-load",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": null,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": 35
+            },
+            "scriptPath": "frame_35/DoAction.as",
+            "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+            "sourceEventIds": [
+              "source-event-0389"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "fscommand",
+            "argumentExpressions": [
+              "\"fullscreen\"",
+              "\"true\""
+            ],
+            "exactExpression": "fscommand(\"fullscreen\",\"true\");",
+            "executionAuthorized": false,
+            "lineNumber": 3326,
+            "operationFingerprintSha256": "1a2a2a5524c8d0ee3c57e57ae1c2f498214ad333c8e9a53a863966d01e30b987",
+            "operationId": "operation-00854",
+            "riskClass": "host-control",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": null,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": 35
+            },
+            "scriptPath": "frame_35/DoAction.as",
+            "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+            "sourceEventIds": [
+              "source-event-0389"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "fscommand",
+            "argumentExpressions": [
+              "\"allowscale\"",
+              "\"true\""
+            ],
+            "exactExpression": "fscommand(\"allowscale\",\"true\");",
+            "executionAuthorized": false,
+            "lineNumber": 3327,
+            "operationFingerprintSha256": "bc9b368104c55b688496245252604c54cd50f220bcf34a53945b60c88ae4a812",
+            "operationId": "operation-00855",
+            "riskClass": "host-control",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": null,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": 35
+            },
+            "scriptPath": "frame_35/DoAction.as",
+            "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+            "sourceEventIds": [
+              "source-event-0389"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "fscommand",
+            "argumentExpressions": [
+              "\"showmenu\"",
+              "\"false\""
+            ],
+            "exactExpression": "fscommand(\"showmenu\",\"false\");",
+            "executionAuthorized": false,
+            "lineNumber": 3328,
+            "operationFingerprintSha256": "20e3721e098d4cccf5b732c9752e9d91c8e1389305f76412016d413ebc8e6311",
+            "operationId": "operation-00856",
+            "riskClass": "host-control",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": null,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": 35
+            },
+            "scriptPath": "frame_35/DoAction.as",
+            "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+            "sourceEventIds": [
+              "source-event-0389"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "fscommand",
+            "argumentExpressions": [
+              "\"trapallkeys\"",
+              "\"true\""
+            ],
+            "exactExpression": "fscommand(\"trapallkeys\",\"true\");",
+            "executionAuthorized": false,
+            "lineNumber": 3329,
+            "operationFingerprintSha256": "9f78b4c991f4921ba175c9c3fdf9d946e479521a7966b281ee2c8423c10bf917",
+            "operationId": "operation-00857",
+            "riskClass": "host-control",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": null,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": 35
+            },
+            "scriptPath": "frame_35/DoAction.as",
+            "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+            "sourceEventIds": [
+              "source-event-0389"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "SharedObject.getLocal",
+            "argumentExpressions": [
+              "\"cookiename\""
+            ],
+            "exactExpression": "SharedObject.getLocal(\"cookiename\");",
+            "executionAuthorized": false,
+            "lineNumber": 3454,
+            "operationFingerprintSha256": "1d51dc4ee521ec78ce479b7856ccce4d56c121c49a837496d1110e0300d62c25",
+            "operationId": "operation-00893",
+            "riskClass": "local-persistent-state",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": null,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": 35
+            },
+            "scriptPath": "frame_35/DoAction.as",
+            "scriptSha256": "c070856dfd4868480ac5b826a8a155e2441f4dea353e6d8eeb9775108d899db0",
+            "sourceEventIds": [
+              "source-event-0389"
+            ]
+          },
+          {
+            "animationId": "shell-course-g04-l03-index-local",
+            "api": "loadMovie",
+            "argumentExpressions": [
+              "url"
+            ],
+            "exactExpression": "_loc1_.loadTemp.loadMovie(url);",
+            "executionAuthorized": false,
+            "lineNumber": 169,
+            "operationFingerprintSha256": "b1be11b1e7ec2b463b4c93b85f531ae2b13f2fbb582439306253ce9abc935e05",
+            "operationId": "operation-00943",
+            "riskClass": "external-resource-load",
+            "runtimeReachabilityEstablished": false,
+            "scope": {
+              "buttonCharacterId": null,
+              "frameDomainCandidate": "root",
+              "placedCharacterId": null,
+              "placementDepth": null,
+              "sourceFrame": null
+            },
+            "scriptPath": "FScrollPaneSymbol.as",
+            "scriptSha256": "e57a51c62b1e9e7c13dbd4d78ca535b6f741c40b5a63fb9f71471383bd288d29",
+            "sourceEventIds": [
+              "source-event-0407"
+            ]
+          }
+        ],
+        "releaseRole": "course-shell",
+        "riskCounts": {
+          "external-resource-load": 8,
+          "host-control": 5,
+          "local-persistent-state": 1,
+          "outbound-or-script-navigation": 3,
+          "outbound-post": 3
+        },
+        "runtimeReachabilityEstablished": false,
+        "safeToExecuteNow": false,
+        "sequence": 40,
+        "sourceSwf": {
+          "bytes": 657421,
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/index_local.swf",
+          "physicalHashVerified": true,
+          "physicalHashVerifiedNow": true,
+          "sha256": "817e599de43a7924f0a93791e950c8781755692371945a5b7ea4cdd2ad26c58e"
+        }
+      }
+    ],
+    "apiCounts": {
+      "SharedObject.getLocal": 1,
+      "Sound.loadSound": 1,
+      "XML.load": 2,
+      "fscommand": 5,
+      "getURL": 6,
+      "loadMovie": 5,
+      "loadVariablesNum": 3
+    },
+    "classification": "exact-static-source-operations-not-runtime-reachability",
+    "exactExternalOperationCount": 23,
+    "hostControlOperations": 5,
+    "localPersistentStateOperations": 1,
+    "networkCapableOrScriptNavigationOperations": 17,
+    "riskCounts": {
+      "external-resource-load": 8,
+      "host-control": 5,
+      "local-persistent-state": 1,
+      "outbound-or-script-navigation": 6,
+      "outbound-post": 3
+    },
+    "runtimeReachabilityEstablished": false
+  },
+  "summary": {
+    "affectedMembers": 3,
+    "authoritativeBaselinePackagesEstablished": 0,
+    "canonicalItems": 40,
+    "containmentControlsApproved": 0,
+    "containmentControlsSpecified": 8,
+    "exactExternalOperations": 23,
+    "hostControlOperations": 5,
+    "localPersistentStateOperations": 1,
+    "networkCapableOrScriptNavigationOperations": 17,
+    "runtimeSessionsExecuted": 0,
+    "strictCompletions": 0
+  }
+}

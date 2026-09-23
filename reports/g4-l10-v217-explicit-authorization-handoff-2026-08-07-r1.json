@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "g4-l10-v2-17-explicit-authorization-handoff",
+  "issuedOn": "2026-08-07",
+  "status": "authoring-validated-awaiting-new-explicit-user-authorization-no-review-set-created",
+  "generator": {
+    "path": "scripts/build-g4-l10-v217-explicit-authorization-handoff-2026-08-07-r1.mjs",
+    "bytes": 10585,
+    "sha256": "1ac58f43a14917c8318cca18f47ac67d32f228f7a95c0e19307e05fd7ad38865"
+  },
+  "fixedAuthoringInputs": {
+    "securityTarget": {
+      "path": "docs/G4_L10_NATIVE_HELPER_V2_17_SECURITY_CONTRACT_SUCCESSOR.md",
+      "bytes": 11120,
+      "sha256": "bbeb9bfb7a436e6144026b18b8c3629af192a0cf035f87bd0de26484bf346ef3"
+    },
+    "reviewProtocol": {
+      "path": "docs/G4_L10_NATIVE_HELPER_V2_17_REVIEW_PROTOCOL_SUCCESSOR.md",
+      "bytes": 15452,
+      "sha256": "7d4fd2861d53f57c1d1ee06b006784fbf1933739a92ec04733c4364723460f44"
+    },
+    "verifier": {
+      "path": "scripts/g4-l10-native-helper-v2_17-review-verifier.mjs",
+      "bytes": 86865,
+      "sha256": "20bdbd5e481f898d5c64c89b6487bd0c6ad125c547e96ff66ad8c6c6f6723bf0"
+    },
+    "focusedTest": {
+      "path": "scripts/g4-l10-native-helper-v2_17-review-verifier.test.mjs",
+      "bytes": 25546,
+      "sha256": "f25d0b78eff61f9184baddf10da6fee467e69cc53be9b0c63a91b8d4897cf8d1"
+    },
+    "migrationTemplateContract": {
+      "path": "reports/g4-l10-complete-migration-template-contract-v13-2026-08-07.json",
+      "bytes": 278558,
+      "sha256": "fa9719d7950878f4db1b928b9501348b47f37f25273e9459348aeb46f6e1a18b"
+    }
+  },
+  "authoringValidation": {
+    "securityTargetHashMatchesProtocol": true,
+    "focusedTestCommand": "node --test scripts/g4-l10-native-helper-v2_17-review-verifier.test.mjs",
+    "focusedTestObservedOn20260807": {
+      "tests": 25,
+      "passed": 25,
+      "failed": 0,
+      "authorityEffect": "none"
+    },
+    "v13ContractCheckCommand": "node scripts/build-g4-l10-complete-migration-template-contract-v13.mjs --check",
+    "v13ContractCurrent": true
+  },
+  "migrationBoundary": {
+    "requirements": 520,
+    "rootReady": 94,
+    "unresolvedNested": 426,
+    "naturalScheduleReady": 0,
+    "authoritativeFrames": 0,
+    "requiredAuthoritativeFrames": 44488,
+    "templateStable": false
+  },
+  "futureReviewSet": {
+    "reviewSetCreatedByThisHandoff": false,
+    "reviewerTasksCreatedByThisHandoff": 0,
+    "taskIdsAssigned": false,
+    "reviewerNoncesAssigned": false,
+    "outputLeavesAssigned": false,
+    "authorizationTurnBound": false,
+    "requiredOrderedScopes": [
+      "schema",
+      "adversarial",
+      "whole"
+    ],
+    "reviewerTasksMustBeDistinct": true,
+    "reviewResultsInheritedFromPriorVersions": false,
+    "sameReviewSetRetryAllowed": false
+  },
+  "requiredUserHandoff": {
+    "suggestedAuthorizationText": "我明确授权为 G4 L10 native-helper v2.17 创建一个全新的 authenticated independent-review set，仅限 schema、adversarial、whole 三项独立审查；不得继承 v2.14-v2.16 的结果，不得启动 helper、Flash/Animate、原始运行时、source promotion、验收、集成、发布或公开访问。",
+    "suggestedAuthorizationTextSha256": "d502f5bc569676ad7ac1f42efac221bf73a38699e5f9a9f9550253e368498c80",
+    "warning": "The text stored here is a template only. It becomes authorization only if the user sends a new explicit instruction that can be bound to its real source task and authorization turn."
+  },
+  "postReviewBoundary": {
+    "qualifyingCountsRequiredPerScope": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 0
+    },
+    "qualifyingReviewActivatesRuntimeAutomatically": false,
+    "laterRuntimeSessionStillRequiresExactReceiptGatedAuthorization": true,
+    "keyTermsIncluded": false,
+    "missingMp3Included": false,
+    "polynomialSwfIncluded": false,
+    "sourcePromotionIncluded": false,
+    "acceptanceIncluded": false,
+    "releaseIncluded": false,
+    "publicationIncluded": false
+  },
+  "authorityEffects": {
+    "createReviewSet": false,
+    "createReviewerTasks": false,
+    "permissionTransition": false,
+    "helperImplementation": false,
+    "helperExecution": false,
+    "originalRuntimeCapture": false,
+    "sourcePromotion": false,
+    "audioAcceptance": false,
+    "humanAcceptance": false,
+    "ownerAcceptance": false,
+    "strictCompletion": false,
+    "integration": false,
+    "release": false,
+    "publication": false
+  }
+}

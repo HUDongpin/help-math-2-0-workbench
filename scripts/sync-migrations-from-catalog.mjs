@@ -6,8 +6,10 @@ import {fileURLToPath} from "node:url";
 
 const scriptPath = fileURLToPath(import.meta.url);
 const projectRoot = path.resolve(path.dirname(scriptPath), "..");
+const defaultLessonReleasesPath = path.join(projectRoot, "catalog", "lesson-releases.json");
 const archivePrefix = "source-assets/flash/HELP MATH_ORIGINAL FILES/";
-const audioHeader = "cue_id,language,source_file,sha256,start_frame,duration_ms,format,channels,sample_rate_hz,source_character_id,notes";
+const audioHeader = "cue_id,language,source_file,sha256,start_frame,start_frame_domain_id,start_semantics,duration_ms,format,channels,sample_rate_hz,source_character_id,notes";
+const safeCatalogId = /^[a-z0-9][a-z0-9-]{2,127}$/;
 
 function compareText(left, right) {
   return left < right ? -1 : left > right ? 1 : 0;
@@ -35,6 +37,8 @@ function renderAudioInventory(entries) {
     entry.language || "unknown",
     `${archivePrefix}${entry.path}`,
     entry.sha256 || "",
+    "",
+    "",
     "",
     "",
     path.extname(entry.path).slice(1).toLowerCase(),
@@ -77,19 +81,102 @@ async function isDirectory(value) {
   }
 }
 
+function requireSafeCatalogId(value, label) {
+  if (typeof value !== "string" || !safeCatalogId.test(value)) {
+    throw new Error(`${label} is not a safe catalog ID: ${value || "missing"}`);
+  }
+}
+
+export async function resolveLessonReleaseAnimationIds({
+  releaseId,
+  requestedAnimationIds = [],
+  lessonReleasesPath = defaultLessonReleasesPath,
+} = {}) {
+  requireSafeCatalogId(releaseId, "Lesson release ID");
+  if (!Array.isArray(requestedAnimationIds)) {
+    throw new Error("Requested animation IDs must be an array");
+  }
+  if (new Set(requestedAnimationIds).size !== requestedAnimationIds.length) {
+    throw new Error("Requested animation IDs must not be repeated");
+  }
+  for (const id of requestedAnimationIds) requireSafeCatalogId(id, "Requested animation ID");
+
+  let releaseDocument;
+  try {
+    releaseDocument = JSON.parse(await readFile(lessonReleasesPath, "utf8"));
+  } catch (error) {
+    throw new Error(`Cannot read lesson release catalog (${error.message})`);
+  }
+  if (releaseDocument?.schemaVersion !== 1 || !Array.isArray(releaseDocument.releases)) {
+    throw new Error("Lesson release catalog is malformed");
+  }
+  const matches = releaseDocument.releases.filter((release) => release?.releaseId === releaseId);
+  if (matches.length !== 1) {
+    throw new Error(matches.length
+      ? `Lesson release ID is duplicated: ${releaseId}`
+      : `Unknown lesson release: ${releaseId}`);
+  }
+
+  const release = matches[0];
+  if (release.publicationMode !== "atomic") {
+    throw new Error(`${releaseId}: publicationMode must remain atomic`);
+  }
+  if (
+    !Number.isSafeInteger(release.expectedCounts?.members) ||
+    release.expectedCounts.members <= 0 ||
+    !Array.isArray(release.members) ||
+    release.members.length !== release.expectedCounts.members
+  ) {
+    throw new Error(`${releaseId}: release membership is incomplete`);
+  }
+
+  const orderedIds = [];
+  const memberIds = new Set();
+  for (const [index, member] of release.members.entries()) {
+    if (member?.ordinal !== index + 1) {
+      throw new Error(`${releaseId}: member ordinals must be contiguous`);
+    }
+    requireSafeCatalogId(member.animationId, `${releaseId} member animation ID`);
+    if (memberIds.has(member.animationId)) {
+      throw new Error(`${releaseId}: duplicate member animation ID: ${member.animationId}`);
+    }
+    memberIds.add(member.animationId);
+    orderedIds.push(member.animationId);
+  }
+
+  if (!requestedAnimationIds.length) return orderedIds;
+  const requested = new Set(requestedAnimationIds);
+  const missing = requestedAnimationIds.filter((id) => !memberIds.has(id));
+  if (missing.length) {
+    throw new Error(`Explicit ID(s) are not members of lesson release ${releaseId}: ${missing.join(", ")}`);
+  }
+  return orderedIds.filter((id) => requested.has(id));
+}
+
 export async function syncMigrationsFromCatalog({
   catalogPath = path.join(projectRoot, "catalog", "animations.json"),
   migrationsRoot = path.join(projectRoot, "migrations"),
   dryRun = false,
+  animationIds = null,
 } = {}) {
   const catalogDocument = JSON.parse(await readFile(catalogPath, "utf8"));
   if (!Array.isArray(catalogDocument.animations)) throw new Error("Catalog must contain an animations array");
+  const selectedIds = animationIds == null ? null : new Set(animationIds);
+  if (selectedIds && (selectedIds.size !== animationIds.length || [...selectedIds].some((id) => typeof id !== "string" || !id))) {
+    throw new Error("Selected animation IDs must be non-empty and unique");
+  }
   const byId = new Map(catalogDocument.animations.map((animation) => [animation.animationId, animation]));
   const bySource = new Map(catalogDocument.animations.map((animation) => [catalogRelativeSource(animation.source?.path), animation]));
-  const entries = (await readdir(migrationsRoot, {withFileTypes: true}))
-    .filter((entry) => entry.isDirectory())
-    .sort((left, right) => compareText(left.name, right.name));
+  const directoryEntries = (await readdir(migrationsRoot, {withFileTypes: true}))
+    .filter((entry) => entry.isDirectory());
+  const directoryEntriesByName = new Map(directoryEntries.map((entry) => [entry.name, entry]));
+  const entries = selectedIds
+    ? animationIds
+      .map((id) => directoryEntriesByName.get(id))
+      .filter(Boolean)
+    : directoryEntries.sort((left, right) => compareText(left.name, right.name));
   const results = [];
+  const seenSelectedIds = new Set();
 
   for (const entry of entries) {
     const workspace = path.join(migrationsRoot, entry.name);
@@ -109,6 +196,10 @@ export async function syncMigrationsFromCatalog({
       results.push({id: manifest.animationId || entry.name, action: "unmatched"});
       continue;
     }
+    if (selectedIds && !selectedIds.has(animation.animationId)) {
+      throw new Error(`${entry.name}: selected workspace resolved to unexpected catalog animation ${animation.animationId}`);
+    }
+    seenSelectedIds.add(animation.animationId);
     if (manifest.assetId && animation.assetId && manifest.assetId !== animation.assetId) {
       throw new Error(`${entry.name}: assetId conflicts with catalog evidence`);
     }
@@ -162,35 +253,64 @@ export async function syncMigrationsFromCatalog({
     }
     results.push({id: manifest.animationId || entry.name, action: dryRun ? "would-sync" : "synced", audioAssociations: exactAudio.length});
   }
+  if (selectedIds) {
+    const missing = animationIds.filter((id) => !seenSelectedIds.has(id));
+    if (missing.length) throw new Error(`Selected migration workspaces are missing or unmatched: ${missing.join(", ")}`);
+  }
   return results;
 }
 
 function usage() {
   return `Usage:
-  node scripts/sync-migrations-from-catalog.mjs [--dry-run] [--catalog <file>] [--migrations <directory>]
+  node scripts/sync-migrations-from-catalog.mjs [--dry-run] [--catalog <file>] [--migrations <directory>] [--release-id <lesson-release-id>] [--id <animation-id> ...]
 
 Imports only catalog-backed intake classification, alias/variant, and audio-association
-evidence. It never advances migration status or claims that audio timing is audited.`;
+evidence. Without --release-id, repeat --id to select exact canonical workspaces
+in the supplied order. With --release-id, omit --id for the complete atomic release,
+or repeat --id for a verified subset; that subset is processed in release ordinal
+order. It never advances migration status or claims that audio timing is audited.`;
 }
 
-async function main() {
-  const options = {};
-  const argumentsList = process.argv.slice(2);
+export function parseArguments(argumentsList) {
+  const options = {animationIds: [], releaseId: null, help: false};
   for (let index = 0; index < argumentsList.length; index += 1) {
     const value = argumentsList[index];
     if (value === "--help" || value === "-h") {
-      console.log(usage());
-      return;
+      options.help = true;
+      continue;
     }
     if (value === "--dry-run") options.dryRun = true;
-    else if (value === "--catalog" || value === "--migrations") {
+    else if (value === "--catalog" || value === "--migrations" || value === "--release-id" || value === "--id") {
       const next = argumentsList[index + 1];
-      if (!next) throw new Error(`${value} requires a value`);
+      if (!next || next.startsWith("-")) throw new Error(`${value} requires a value`);
       if (value === "--catalog") options.catalogPath = path.resolve(next);
-      else options.migrationsRoot = path.resolve(next);
+      else if (value === "--migrations") options.migrationsRoot = path.resolve(next);
+      else if (value === "--release-id") {
+        if (options.releaseId !== null) throw new Error("--release-id may be specified only once");
+        options.releaseId = next;
+      } else options.animationIds.push(next);
       index += 1;
     } else throw new Error(`Unknown option: ${value}`);
   }
+  return options;
+}
+
+async function main() {
+  const options = parseArguments(process.argv.slice(2));
+  if (options.help) {
+    console.log(usage());
+    return;
+  }
+  if (options.releaseId !== null) {
+    options.animationIds = await resolveLessonReleaseAnimationIds({
+      releaseId: options.releaseId,
+      requestedAnimationIds: options.animationIds,
+    });
+  } else if (!options.animationIds.length) {
+    options.animationIds = null;
+  }
+  delete options.releaseId;
+  delete options.help;
   const results = await syncMigrationsFromCatalog(options);
   for (const result of results) console.log(`${result.action.toUpperCase()}: ${result.id}${result.audioAssociations == null ? "" : ` (${result.audioAssociations} exact audio)`}`);
   const counts = Object.groupBy(results, (result) => result.action);

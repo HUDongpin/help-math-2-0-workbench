@@ -1,10 +1,14 @@
 import assert from "node:assert/strict";
-import {mkdtemp, mkdir, readFile, writeFile} from "node:fs/promises";
+import {mkdtemp, mkdir, readFile, rm, writeFile} from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-import {syncMigrationsFromCatalog} from "./sync-migrations-from-catalog.mjs";
+import {
+  parseArguments,
+  resolveLessonReleaseAnimationIds,
+  syncMigrationsFromCatalog,
+} from "./sync-migrations-from-catalog.mjs";
 
 async function fixture() {
   const root = await mkdtemp(path.join(os.tmpdir(), "helpmath-catalog-sync-"));
@@ -59,7 +63,7 @@ async function fixture() {
 }
 
 function audioHeaderForTest() {
-  return "cue_id,language,source_file,sha256,start_frame,duration_ms,format,channels,sample_rate_hz,source_character_id,notes";
+  return "cue_id,language,source_file,sha256,start_frame,start_frame_domain_id,start_semantics,duration_ms,format,channels,sample_rate_hz,source_character_id,notes";
 }
 
 test("sync imports evidence without advancing migration status", async () => {
@@ -102,8 +106,147 @@ test("a repeated sync does not replace an audited audio inventory", async () => 
   const {catalogPath, migrationsRoot, workspace} = await fixture();
   await syncMigrationsFromCatalog({catalogPath, migrationsRoot});
   const inventoryPath = path.join(workspace, "audio-inventory.csv");
-  const audited = `${audioHeaderForTest()}\naudited,en,source.mp3,${"c".repeat(64)},7,1200,mp3,2,44100,,reviewed\n`;
+  const audited = `${audioHeaderForTest()}\naudited,en,source.mp3,${"c".repeat(64)},7,timeline-frame,1200,mp3,2,44100,,reviewed\n`;
   await writeFile(inventoryPath, audited);
   await syncMigrationsFromCatalog({catalogPath, migrationsRoot});
   assert.equal(await readFile(inventoryPath, "utf8"), audited);
+});
+
+test("an explicit animation selection cannot mutate or silently omit another workspace", async () => {
+  const {catalogPath, migrationsRoot, workspace} = await fixture();
+  const otherWorkspace = path.join(migrationsRoot, "other-workspace");
+  await mkdir(otherWorkspace, {recursive: true});
+  const untouched = JSON.stringify({animationId: "other-workspace", status: "preserved"});
+  await writeFile(path.join(otherWorkspace, "migration.json"), untouched);
+
+  const result = await syncMigrationsFromCatalog({
+    catalogPath,
+    migrationsRoot,
+    animationIds: ["formula-test"],
+  });
+  assert.deepEqual(result.map(({id}) => id), ["formula-test"]);
+  assert.equal(await readFile(path.join(otherWorkspace, "migration.json"), "utf8"), untouched);
+  assert.equal(JSON.parse(await readFile(path.join(workspace, "migration.json"), "utf8")).classification.status, "confirmed");
+
+  await assert.rejects(
+    syncMigrationsFromCatalog({catalogPath, migrationsRoot, animationIds: ["missing-workspace"]}),
+    /missing or unmatched/,
+  );
+});
+
+async function orderedReleaseFixture() {
+  const root = await mkdtemp(path.join(os.tmpdir(), "helpmath-release-catalog-sync-"));
+  const migrationsRoot = path.join(root, "migrations");
+  const ids = ["formula-zeta", "formula-alpha"];
+  const animations = [];
+  for (const [index, id] of ids.entries()) {
+    const sha256 = String(index + 1).repeat(64);
+    const sourcePath = `HELP_FORMULAS/${id}.swf`;
+    await mkdir(path.join(migrationsRoot, id), {recursive: true});
+    await writeFile(path.join(migrationsRoot, id, "migration.json"), JSON.stringify({
+      animationId: id,
+      assetId: `swf-${sha256}`,
+      status: "preserved",
+      classification: {status: "unresolved"},
+      source: {
+        placementPath: `source-assets/flash/HELP MATH_ORIGINAL FILES/${sourcePath}`,
+        swfSha256: sha256,
+      },
+      audio: {required: false, languages: [], cues: []},
+    }));
+    animations.push({
+      animationId: id,
+      canonicalAnimationId: id,
+      assetId: `swf-${sha256}`,
+      source: {path: sourcePath, sha256},
+      classification: {status: "confirmed"},
+      flags: {variant: false, shell: false},
+      audio: {exact: [], groupIds: []},
+    });
+  }
+  const catalogPath = path.join(root, "animations.json");
+  const lessonReleasesPath = path.join(root, "lesson-releases.json");
+  await writeFile(catalogPath, JSON.stringify({schemaVersion: 1, animations}));
+  await writeFile(lessonReleasesPath, JSON.stringify({
+    schemaVersion: 1,
+    releases: [{
+      releaseId: "lesson-fixture-order",
+      publicationMode: "atomic",
+      expectedCounts: {members: ids.length},
+      members: ids.map((animationId, index) => ({ordinal: index + 1, animationId})),
+    }],
+  }));
+  return {root, migrationsRoot, catalogPath, lessonReleasesPath, ids};
+}
+
+test("lesson release selection is exact and drives sync in catalog ordinal order", async () => {
+  const fixture = await orderedReleaseFixture();
+  try {
+    const complete = await resolveLessonReleaseAnimationIds({
+      releaseId: "lesson-fixture-order",
+      lessonReleasesPath: fixture.lessonReleasesPath,
+    });
+    assert.deepEqual(complete, fixture.ids);
+
+    const subset = await resolveLessonReleaseAnimationIds({
+      releaseId: "lesson-fixture-order",
+      requestedAnimationIds: [...fixture.ids].reverse(),
+      lessonReleasesPath: fixture.lessonReleasesPath,
+    });
+    assert.deepEqual(subset, fixture.ids);
+
+    const results = await syncMigrationsFromCatalog({
+      catalogPath: fixture.catalogPath,
+      migrationsRoot: fixture.migrationsRoot,
+      dryRun: true,
+      animationIds: subset,
+    });
+    assert.deepEqual(results.map(({id}) => id), fixture.ids);
+  } finally {
+    await rm(fixture.root, {recursive: true, force: true});
+  }
+});
+
+test("CLI selection semantics reject ambiguous and non-member release requests", async () => {
+  const fixture = await orderedReleaseFixture();
+  try {
+    const options = parseArguments([
+      "--dry-run",
+      "--release-id", "lesson-fixture-order",
+      "--id", "formula-alpha",
+      "--id", "formula-zeta",
+    ]);
+    assert.equal(options.releaseId, "lesson-fixture-order");
+    assert.deepEqual(options.animationIds, ["formula-alpha", "formula-zeta"]);
+    assert.throws(() => parseArguments(["--release-id"]), /requires a value/);
+    assert.throws(
+      () => parseArguments(["--release-id", "lesson-one", "--release-id", "lesson-two"]),
+      /only once/,
+    );
+    await assert.rejects(
+      resolveLessonReleaseAnimationIds({
+        releaseId: "lesson-missing",
+        lessonReleasesPath: fixture.lessonReleasesPath,
+      }),
+      /Unknown lesson release/,
+    );
+    await assert.rejects(
+      resolveLessonReleaseAnimationIds({
+        releaseId: "lesson-fixture-order",
+        requestedAnimationIds: ["formula-outside"],
+        lessonReleasesPath: fixture.lessonReleasesPath,
+      }),
+      /not members of lesson release/,
+    );
+    await assert.rejects(
+      resolveLessonReleaseAnimationIds({
+        releaseId: "lesson-fixture-order",
+        requestedAnimationIds: ["formula-alpha", "formula-alpha"],
+        lessonReleasesPath: fixture.lessonReleasesPath,
+      }),
+      /must not be repeated/,
+    );
+  } finally {
+    await rm(fixture.root, {recursive: true, force: true});
+  }
 });

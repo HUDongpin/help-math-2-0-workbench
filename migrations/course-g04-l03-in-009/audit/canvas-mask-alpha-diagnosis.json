@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "animationId": "course-g04-l03-in-009",
+  "recordedAt": "2026-07-21T19:16:00+08:00",
+  "status": "source-proven-mask-alpha-defect-corrected-in-engineering-candidate",
+  "acceptanceEffect": "none",
+  "source": {
+    "swf": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN09.swf",
+      "sha256": "766b6ab686bbaf8ab1dacc30a7ffb96f33735102a1dff7df6b7a97976e3ab25c"
+    },
+    "ffdecFrames": {
+      "path": "work/course-assets/course-g04-l03-in-009-main-canvas/DefineSprite_200/frames.html",
+      "sha256": "ea0d20076c67b2ce0e32187e05d826a02f310c5c2ce64662719ad7df4233e658",
+      "tool": "JPEXS Free Flash Decompiler v.26.2.1"
+    },
+    "controlledAdobeProbe": {
+      "report": {
+        "path": "migrations/course-g04-l03-in-009/baseline/controlled-local-frame-0637-adobe-player-probe.json",
+        "sha256": "bd020d8c34975f51981ac2a8aa83970a5c2216532e6a53354bb4b3b5708efff0"
+      },
+      "stageImage": {
+        "path": "migrations/course-g04-l03-in-009/baseline/controlled-local-frame-0637-adobe-player-stage.jpeg",
+        "sha256": "608316840f892798dbba2bc0a29ec6bac06cebbc9613c643f1b5db8c94946997",
+        "width": 800,
+        "height": 600,
+        "format": "JPEG"
+      },
+      "authority": "source-addressed Adobe Flash Player engineering cross-check only",
+      "rmseEligible": false
+    }
+  },
+  "diagnosis": {
+    "symptom": "The initial FFDec-derived Canvas frame preserved geometry and content but rendered the masked lesson artwork at roughly one-fifth opacity, producing a washed-out, low-saturation stage.",
+    "rootCause": "FFDec emitted vector mask shape6 with its authored 0.2 fill alpha and then used that raster as a destination-in mask. Adobe Flash treats this ordinary vector mask as geometric coverage; its visual fill alpha does not attenuate the masked child. The uncorrected Canvas adapter therefore multiplied the entire child display by the mask's 0.2 alpha.",
+    "sourceFacts": {
+      "spriteFunction": "sprite200",
+      "publicFrameDomain": "1..637",
+      "exportFrame637": 636,
+      "maskShapeExample": "shape6",
+      "maskShapeExampleFill": "rgba(0,0,0,0.2)",
+      "ffdecMaskRenderBlocks": 1624,
+      "pairedContextMarkers": 1624,
+      "pairedClipCommitMarkers": 1624,
+      "adobeObservation": "At controlled local frame 637, the untouched source displayed fully saturated characters, photograph, labels, and thermometer rather than the 20%-opacity FFDec Canvas result."
+    },
+    "confidence": "verified for this source-derived Canvas candidate from SWF/FFDec structure plus the controlled Adobe runtime cross-check"
+  },
+  "correction": {
+    "generator": {
+      "path": "scripts/build-in-009-ffdec-canvas-candidate.mjs",
+      "sha256": "4d750e0df1c8ad0492f0037eed3eef39eaa84b906c0a15cd4f5f95988d611501"
+    },
+    "spec": {
+      "path": "migrations/course-g04-l03-in-009/audit/canvas-candidate-spec.json",
+      "sha256": "c13c3b9748eb976f54d9b03e16597726fb5d641f1799892331cdca35f9e1824d"
+    },
+    "method": "The generator now verifies all 1,624 paired FFDec mask-render blocks, enters a scoped mask-render depth for each block, and maps only nonzero transformed alpha to opaque coverage while the mask itself is rasterized. Ordinary visible drawing retains its authored alpha. The scope uses try/finally and remains fail-closed on changed marker counts.",
+    "runtime": {
+      "path": "public/flash-assets/courses/course-g04-l03-in-009/canvas-renderer.js",
+      "sha256": "a27405f651fe898c8d5f10a21cd64d80b36c3cd2f5c75591ff33492116f5414f",
+      "bytes": 16241767
+    },
+    "runtimeManifest": {
+      "path": "public/flash-assets/courses/course-g04-l03-in-009/manifest.json",
+      "sha256": "5de7f3d0569d88120cbeace2a129bbf40e102870ecaf076bd90b4261ff3a298b"
+    },
+    "tests": {
+      "generator": {
+        "path": "scripts/build-in-009-ffdec-canvas-candidate.test.mjs",
+        "sha256": "ae3150cdf938a46ad1ea745c90b1a97332832859f4c09731f3520f45b4071766",
+        "result": "5/5 pass"
+      },
+      "module": {
+        "path": "packages/demos/tests/course-g04-l03-in-009.test.ts",
+        "sha256": "e8df9e9db6ad15342ecaed6526304d6307f524176487e4a664d55962fef90dca",
+        "result": "6/6 pass"
+      }
+    }
+  },
+  "engineeringComparison": {
+    "purpose": "quantify the corrected wash-out defect against the controlled Adobe engineering image",
+    "roi": {
+      "geometry": "697x397+69+88",
+      "reason": "Compares the lesson panel shared by the blue standalone composition and white controlled-host composition; excludes the different outer host background."
+    },
+    "before": {
+      "implementation": {
+        "path": "output/playwright/course-g04-l03-in-009-canvas-candidate/frame-0637.png",
+        "sha256": "45a0acde34ddd71b7136cda9e30239fa89beaa716a59f510ca074d11c7586c7a"
+      },
+      "normalizedRgbRmse": 0.200604,
+      "diff": {
+        "path": "migrations/course-g04-l03-in-009/evidence/diffs/controlled-jpeg-frame-0637-before-mask-fix-roi.png",
+        "sha256": "a472d9f6583cee7894d2f4ac3af10166cd62004aa11b481c2efa7a3d4f787764"
+      }
+    },
+    "after": {
+      "implementation": {
+        "path": "output/playwright/course-g04-l03-in-009-mask-fixed/frame-637.png",
+        "sha256": "8105f4b0216502eaec00ace8ce48df5abac9986f701f3e07cad16c48391f7553"
+      },
+      "normalizedRgbRmse": 0.0823979,
+      "relativeRmseReduction": 0.5892509620944747,
+      "diff": {
+        "path": "migrations/course-g04-l03-in-009/evidence/diffs/controlled-jpeg-frame-0637-after-mask-fix-roi.png",
+        "sha256": "39c9df60d08cf8f468d5128435299589bc1d66c5a5b83e5e0fe3437c58260cb7"
+      }
+    },
+    "directRuntimeVersusNextRouteRmse": 0,
+    "strictThresholdApplied": false,
+    "reasonNotStrict": "The Adobe probe is JPEG-derived, contains a pointer, uses a controlled direct nested-frame seek, and is not a lossless authoritative baseline. These metrics diagnose the defect and demonstrate improvement; they cannot satisfy strict full-frame RMSE."
+  },
+  "nextRouteEvidence": {
+    "captureManifest": {
+      "path": "output/playwright/course-g04-l03-in-009-mask-fixed/capture-manifest.json",
+      "sha256": "a288afe9a276a5e52eb3990c76665b6bde0c50c08338ef97381efd4f822fbbc6",
+      "status": "complete",
+      "frames": [
+        1,
+        318,
+        637
+      ],
+      "nativeDimensions": "800x600",
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "httpErrors": 0,
+      "unexpectedRequests": 0
+    },
+    "candidateQa": {
+      "path": "migrations/course-g04-l03-in-009/evidence/native-canvas-candidate-qa.json",
+      "sha256": "814c8f790645b69275508a82855f49fb888e4b9f2b0d9e2a4ecad541d615e540",
+      "status": "pass",
+      "scope": [
+        "exact source and generated-runtime hashes",
+        "deterministic frames 1, 318, and 637",
+        "native 800x600 captures",
+        "Replay by mouse, Enter, and Space with reset to frame 1 and resume",
+        "Spanish and both glossary obligations fail closed",
+        "390x844 mobile layout without horizontal overflow",
+        "reduced-motion frame 1",
+        "zero console errors, failed requests, HTTP errors, and external network requests"
+      ]
+    }
+  },
+  "limitations": [
+    "This correction does not create an authoritative full 637-frame Adobe baseline or strict RMSE record.",
+    "The root preloader/host contract and natural nested-timeline phase remain unresolved.",
+    "The embedded English SoundStream, external Spanish MP3, Spanish visual behavior, Temperature/Measure glossary host interactions, and exact hit regions remain blocked.",
+    "The candidate remains legacy-prototype/preserved. No human visual review, owner acceptance, strict-validator pass, or complete migration is represented."
+  ],
+  "claims": {
+    "washOutDefectCorrected": true,
+    "authoritativeBaseline": false,
+    "strictFullFrameRmse": false,
+    "audioParity": false,
+    "spanishParity": false,
+    "glossaryBranchParity": false,
+    "humanReviewed": false,
+    "ownerAccepted": false,
+    "strictComplete": false
+  }
+}

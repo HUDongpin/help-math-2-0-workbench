@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "historical-browser-qa-stale-disposition",
+  "animationId": "course-g03-l08-re-001",
+  "status": "verified-historical-stale",
+  "migrationStatusChanged": false,
+  "authorityStatement": [
+    "The prior browser QA report is retained byte-for-byte as historical candidate evidence.",
+    "Its producer, module, timeline, and candidate-test hashes all differ from the current root bilingual disposition implementation, so it is not current evidence and cannot be promoted or adopted.",
+    "No browser capture was run and no screenshot, implementation capture, coverage record, review decision, or acceptance field was changed while producing this receipt."
+  ],
+  "staleArtifact": {
+    "path": "migrations/course-g03-l08-re-001/evidence/native-canvas-candidate-qa.pre-root-bilingual-disposition.stale.json",
+    "sha256": "41e66586f4b0b20cfb8f97f5a01fabe8f52f0823e6b2ac0931ce377c34f6c025",
+    "originalActivePath": "migrations/course-g03-l08-re-001/evidence/native-canvas-candidate-qa.json",
+    "schemaVersion": 3,
+    "recordedAt": "2026-07-23T06:21:01.271Z",
+    "priorStatus": "pass",
+    "priorCaseCount": 6,
+    "disposition": "retained-unmodified-historical-stale"
+  },
+  "recordedBindings": {
+    "producer": {
+      "path": "scripts/qa-re-001-candidate.mjs",
+      "sha256": "6b1b9493900fd858d05af3719a6d206a967aea3d9ed857dc61014b42fb9fb12b"
+    },
+    "module": {
+      "path": "packages/demos/src/modules/course-g03-l08-re-001.tsx",
+      "sha256": "0cc8784fcd04f0ab6d4192c86b121f283fe6471f23b80d0b284674305e43619d"
+    },
+    "timeline": {
+      "path": "packages/demos/src/timelines/course-g03-l08-re-001.ts",
+      "sha256": "b8bfa39e73171afcecd521180a6a20bea0e4bf5bc4c6b8c0c84440b52b9032b8"
+    },
+    "test": {
+      "path": "packages/demos/tests/course-g03-l08-re-001.test.ts",
+      "sha256": "7b74f9f548c81e17d45091218d8ebe57323bd633332a904da09f8d69ce5c0509"
+    }
+  },
+  "currentBindings": {
+    "producer": {
+      "path": "scripts/qa-re-001-candidate.mjs",
+      "sha256": "08d556519fdee1e9b475f3d8a917e30d13ba5cead6a4ddafd70974380ab32402",
+      "bytes": 47277
+    },
+    "module": {
+      "path": "packages/demos/src/modules/course-g03-l08-re-001.tsx",
+      "sha256": "89ee12e3ee2bc7c34eea12fa3cba007aff9042e6c2039ce9e352500abed7d5b4",
+      "bytes": 8874
+    },
+    "timeline": {
+      "path": "packages/demos/src/timelines/course-g03-l08-re-001.ts",
+      "sha256": "ae1725c7801c9b7e6e93e70c384cd2ec5c42e16769a6b1eb72b0af2fa9b52d9a",
+      "bytes": 20576
+    },
+    "test": {
+      "path": "packages/demos/tests/course-g03-l08-re-001.test.ts",
+      "sha256": "a43bce0662c260630ef74700a3040b439a694093bc19e418a0515a5400b12024",
+      "bytes": 23096
+    }
+  },
+  "staleChecks": {
+    "producerHashChanged": true,
+    "moduleHashChanged": true,
+    "timelineHashChanged": true,
+    "testHashChanged": true,
+    "replacementBrowserQaGenerated": false,
+    "screenshotsReusedAsCurrent": false,
+    "implementationCaptureRun": false,
+    "coverageAdopted": false
+  },
+  "acceptanceEffects": {
+    "browserQaCurrent": false,
+    "authoritativeOriginalRuntimeBaseline": false,
+    "spanishTranslation": false,
+    "visualParity": false,
+    "behaviorParity": false,
+    "audioAcceptance": false,
+    "fullFrameCoverage": false,
+    "rmseAcceptance": false,
+    "humanVisualReview": false,
+    "engineeringAcceptance": false,
+    "ownerAcceptance": false,
+    "strictMigrationCompletion": false
+  },
+  "strictAcceptanceEffect": "none; this receipt only proves that the exact prior browser QA report is stale and retained unmodified"
+}

@@ -1,13 +1,184 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "animationId": "course-g03-l01-vb-004",
-  "frameCount": 0,
-  "languages": [
-    "en",
-    "es"
-  ],
-  "scenarios": [
-    "default"
-  ],
-  "combinations": []
+  "requirements": [
+    {
+      "requirementId": "req:root:root-standalone:en",
+      "scenario": "root-standalone",
+      "frameDomainId": "root",
+      "traceId": "trace:root:root-standalone:en:seed-0",
+      "language": "en",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 10
+      },
+      "entryState": {
+        "kind": "original-root-frame-accurate-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "root-standalone",
+        "language": "en",
+        "seed": "0"
+      },
+      "entryStateSha256": "4dfbb3290627139f130afd170b4c6d925c09dd7262e32d9cbc1e1142632f9deb",
+      "baselineAuthorityRequirement": "original-runtime-frame-accurate",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/course-g03-l01-vb-004/req-root-root-standalone-en/capture-manifest.json",
+          "sha256": "efa00dac86be7d34cd17f6f738b745cf5d168d91c5021be94969309ba00b4ee7"
+        }
+      ],
+      "capturedFrameCount": 10,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/course-g03-l01-vb-004/req-root-root-standalone-en/capture-manifest.json",
+      "captureManifestSha256": "efa00dac86be7d34cd17f6f738b745cf5d168d91c5021be94969309ba00b4ee7",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:root:root-standalone:es",
+      "scenario": "root-standalone",
+      "frameDomainId": "root",
+      "traceId": "trace:root:root-standalone:es:seed-0",
+      "language": "es",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 10
+      },
+      "entryState": {
+        "kind": "original-root-frame-accurate-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 1,
+        "scenario": "root-standalone",
+        "language": "es",
+        "seed": "0"
+      },
+      "entryStateSha256": "437c8f45bab24d4e392fe021c9731ea0d96ac832931de29d38648196e7e44eea",
+      "baselineAuthorityRequirement": "original-runtime-frame-accurate",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/course-g03-l01-vb-004/req-root-root-standalone-es/capture-manifest.json",
+          "sha256": "5289208e124e134be6c3bebc4f0beb3a86fb1480339cea89c976a21bb564dba5"
+        }
+      ],
+      "capturedFrameCount": 10,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/course-g03-l01-vb-004/req-root-root-standalone-es/capture-manifest.json",
+      "captureManifestSha256": "5289208e124e134be6c3bebc4f0beb3a86fb1480339cea89c976a21bb564dba5",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:sprite-231:linear-to-quiz-stop:en",
+      "scenario": "linear-to-quiz-stop",
+      "frameDomainId": "sprite-231",
+      "traceId": "trace:sprite-231:linear-to-quiz-stop:en:seed-0",
+      "language": "en",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 222
+      },
+      "entryState": {
+        "kind": "natural-root-placement-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 6,
+        "instanceId": "main-animation",
+        "frameDomainId": "sprite-231",
+        "localEntryFrame": 1,
+        "scenario": "linear-to-quiz-stop",
+        "language": "en",
+        "seed": "0"
+      },
+      "entryStateSha256": "623cb972a545fd1a1cdc81bf038e51a3c977f800e23e39742bb19fc7858185b0",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/course-g03-l01-vb-004/req-sprite-231-linear-to-quiz-stop-en/capture-manifest.json",
+          "sha256": "c5c0adafa4d5633201ef88437ea6f39fdb1086ca4cd3439728c7a1d1cff54349"
+        }
+      ],
+      "capturedFrameCount": 222,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/course-g03-l01-vb-004/req-sprite-231-linear-to-quiz-stop-en/capture-manifest.json",
+      "captureManifestSha256": "c5c0adafa4d5633201ef88437ea6f39fdb1086ca4cd3439728c7a1d1cff54349",
+      "metricsFile": "",
+      "metricsSha256": ""
+    },
+    {
+      "requirementId": "req:sprite-231:linear-to-quiz-stop:es",
+      "scenario": "linear-to-quiz-stop",
+      "frameDomainId": "sprite-231",
+      "traceId": "trace:sprite-231:linear-to-quiz-stop:es:seed-0",
+      "language": "es",
+      "seed": "0",
+      "requiredRange": {
+        "firstFrame": 1,
+        "lastFrame": 222
+      },
+      "entryState": {
+        "kind": "natural-root-placement-entry",
+        "rootTimelineId": "root",
+        "rootEntryFrame": 6,
+        "instanceId": "main-animation",
+        "frameDomainId": "sprite-231",
+        "localEntryFrame": 1,
+        "scenario": "linear-to-quiz-stop",
+        "language": "es",
+        "seed": "0"
+      },
+      "entryStateSha256": "39b9e352648e7fe0e9b8e86a8304c3f5e968ca9b1be99ff83b2e78906c64bd7d",
+      "baselineAuthorityRequirement": "original-runtime-natural-trace",
+      "baselineAuthority": "unresolved",
+      "status": "blocked",
+      "blockingReason": "A deterministic native-stage JavaScript implementation capture now covers every declared frame for this requirement. Original-runtime baseline authority and paired per-frame RMSE metrics remain unresolved; audio, behavior, human, and owner acceptance also remain unresolved where applicable. This implementation capture alone is non-authoritative.",
+      "blockingEvidence": [
+        {
+          "file": "audit/scenario-inventory.json",
+          "sha256": "ea40576e9ff190c818d180088ecc6389f7f0b1a821df59da4ceb77cf1334334c"
+        },
+        {
+          "file": "output/playwright/schema-v4-queue/course-g03-l01-vb-004/req-sprite-231-linear-to-quiz-stop-es/capture-manifest.json",
+          "sha256": "66d9df7fe2575e18b531c93e2f61d4aaedc0614751743a96c84384c19ef7583e"
+        }
+      ],
+      "capturedFrameCount": 222,
+      "missingFrames": [],
+      "baselineCaptureManifest": "",
+      "baselineCaptureManifestSha256": "",
+      "captureManifest": "output/playwright/schema-v4-queue/course-g03-l01-vb-004/req-sprite-231-linear-to-quiz-stop-es/capture-manifest.json",
+      "captureManifestSha256": "66d9df7fe2575e18b531c93e2f61d4aaedc0614751743a96c84384c19ef7583e",
+      "metricsFile": "",
+      "metricsSha256": ""
+    }
+  ]
 }

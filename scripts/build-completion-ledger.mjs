@@ -15,7 +15,7 @@ const scriptPath = fileURLToPath(import.meta.url);
 const projectRoot = path.resolve(path.dirname(scriptPath), "..");
 const validatorAbsolutePath = path.join(projectRoot, "skills", "flash-to-js", "scripts", "validate_migration.mjs");
 const LEDGER_SCHEMA_VERSION = 1;
-const LEDGER_GENERATOR_VERSION = "1.0.0";
+const LEDGER_GENERATOR_VERSION = "1.1.0";
 const DEFAULT_MIGRATIONS_ROOT = path.join(projectRoot, "migrations");
 const DEFAULT_OUTPUT_PATH = path.join(projectRoot, "catalog", "completion-ledger.json");
 
@@ -62,6 +62,13 @@ function acceptanceSummary(manifest) {
     reviewedAt: value?.reviewedAt || "",
     ...(value?.reason ? { reason: value.reason } : {}),
     ...(value?.scope ? { scope: value.scope } : {}),
+    ...(value?.record ? {
+      record: {
+        path: value.record.path,
+        bytes: value.record.bytes,
+        sha256: value.record.sha256,
+      },
+    } : {}),
   });
   return {
     engineeringReview: review(acceptance.engineeringReview),
@@ -124,7 +131,9 @@ export async function generateCompletionLedger({ migrationsRoot = DEFAULT_MIGRAT
     if (status === "complete") declaredComplete += 1;
     let result;
     try {
-      result = await validateMigration(directory.workspace);
+      result = await validateMigration(directory.workspace, {
+        evidenceProjectRoot: path.dirname(resolvedMigrationsRoot),
+      });
     } catch (error) {
       result = { ok: false, mode: "strict", errors: [`Validator threw: ${error.message}`], warnings: [] };
     }

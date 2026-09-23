@@ -1,0 +1,85 @@
+{
+  "animationId": "course-g03-l06-ti-001",
+  "authority": {
+    "audioClaimed": false,
+    "humanReviewClaimed": false,
+    "naturalPlaybackClaimed": false,
+    "originalCourseShellExecuted": false,
+    "originalHostBehaviorClaimed": false,
+    "ownerAcceptanceClaimed": false,
+    "sourceChildUntouched": true,
+    "strictBaselineClaimed": false
+  },
+  "controllerContract": {
+    "audioPolicy": "The loaded movie is set to volume zero; Mc_Sound_0, Mc_Sound_1, and all sounds are repeatedly stopped.",
+    "canonicalTargetFrame": 14,
+    "failurePresentation": "The child is hidden behind an opaque full-stage FRAME CONTROL FAILED CLOSED screen.",
+    "localFrameDomain": {
+      "endInclusive": 142,
+      "indexing": "one-indexed",
+      "start": 1
+    },
+    "localTimeline": "sprite-21",
+    "postPinInputPolicy": "A transparent top-depth shield blocks pointer interaction while the monitor keeps root/local timelines stopped.",
+    "sourceFps": 12,
+    "sourceRootFrame": 6,
+    "sourceRootLabel": "begin",
+    "sourceStage": {
+      "height": 600,
+      "width": 800
+    },
+    "stableChecksBeforeReveal": 3,
+    "successPresentation": "The exact untouched child is visible with no controller pixels after all checks pass."
+  },
+  "decision": "static-and-compiled-factory-passed-runtime-frame-control-not-yet-proven",
+  "factory": {
+    "canonicalFixture": {
+      "deterministicDoubleBuild": true,
+      "fixtureDigest": "6294208aded26501baddcd9c2e72aabb31229e50f62e3c1479b389a5721d7acd",
+      "hostSha256": "52c3a884801012fc08cfcd3ec927b5914ce8c7c3475261ec0c7e4cad196d780e",
+      "manifest": "work/adobe-course-host-fixtures-frame-controller/generated/course-g03-l06-ti-001/frame-0014/6294208aded26501baddcd9c/fixture-manifest.json",
+      "manifestSha256": "91a6aa3994f099f3577a1d2d4ef91d744e8e125b39516c9a724031217ea9aa02",
+      "targetFrame": 14
+    },
+    "generator": {
+      "path": "scripts/build-adobe-ti-frame-controller-fixture.mjs",
+      "sha256": "af68ecb5ca6f3e96d3d6df0504f7808d243c265cef4ff64cf50ee2137fb063f6"
+    },
+    "specification": {
+      "path": "migrations/course-g03-l06-ti-001/audit/adobe-frame-controller-spec.json",
+      "sha256": "99e6e51239191389f9963c3a2179c70e6d60d5b0f656678d03ef15f84899ebda"
+    },
+    "supportModule": {
+      "path": "scripts/build-adobe-course-host-fixtures.mjs",
+      "sha256": "92fffd1cca82962a7ce1034e60a957b0ff356ade4a2b8746a22f7f8b49a92891"
+    },
+    "verificationCommands": [
+      "node scripts/build-adobe-ti-frame-controller-fixture.mjs --verify work/adobe-course-host-fixtures-frame-controller/generated/course-g03-l06-ti-001/frame-0014/6294208aded26501baddcd9c/fixture-manifest.json",
+      "node scripts/build-adobe-ti-frame-controller-fixture.mjs --check",
+      "node scripts/build-adobe-ti-frame-controller-fixture.mjs --frame 14"
+    ]
+  },
+  "limitations": [
+    "Direct gotoAndStop is a visual engineering seek. It does not reproduce elapsed-time traversal through preceding local frames.",
+    "The fixture intentionally suppresses the two embedded sound streams and therefore cannot support audio listening, cue, synchronization, stop, or Replay acceptance.",
+    "The source random(2) branch is neither seeded nor classified by this visual controller.",
+    "Interaction, drag, component, Replay, language, and original-course-shell behavior are outside this fixture's authority.",
+    "A successful Adobe probe would establish only a controlled visual-frame candidate; strict comparison, product QA, human review, and owner acceptance remain separate gates."
+  ],
+  "migrationStatusChanged": false,
+  "reportKind": "adobe-avm1-local-frame-controller-engineering-candidate",
+  "runtimeProofStillRequired": [
+    "Run the content-addressed fixture through the sandbox in the authorized Adobe Flash Player and observe that the opaque cover disappears only after one explicit load click.",
+    "Record a lossless native 800x600 stage capture and a separate fixture/target-frame identity record; the current factory performs no GUI action or capture.",
+    "Confirm that direct AVM1 parent control of the loaded child resolves _root.animation_mc.animation as expected in Adobe Player 32 and remains pinned without drift."
+  ],
+  "schemaVersion": 1,
+  "staticallyProven": [
+    "Every input is hash-pinned, including the untouched source SWF, scenario/audio/binding evidence, generator, and shared sandbox/base-SWF support module.",
+    "The generated host was compiled twice from the same deterministic input and both SWF hashes matched.",
+    "The compiled host was decompiled and checked for required fail-closed/frame-controller markers and blocked legacy primitives.",
+    "The sandbox syntax, fixture-local write, outside-write denial, and loopback-network denial probes passed.",
+    "The controller exposes a content-addressed per-target-frame build path for every one-indexed frame 1..142."
+  ],
+  "strictAcceptanceEffect": "none; retain every baseline, language, audio, behavior, product, human, owner, validator, regression, and build blocker"
+}

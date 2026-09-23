@@ -1,0 +1,254 @@
+{
+  "schemaVersion": 1,
+  "evidenceKind": "LOCAL_REMEDIATION_REGRESSION",
+  "recordedAtUtc": "2026-08-24T08:18:15Z",
+  "status": "PASS_LOCAL_PATCH_NOT_IN_VERIFIED_PREVIEW_ARTIFACT",
+  "base": {
+    "branch": "codex/help-math-learning-platform-nova-fq",
+    "head": "22ff85fd7eb6f69e981c8c91692e8ea4d60b5907",
+    "verifiedPreviewDeploymentId": "dpl_E9pgBqTLgFvRFuKxQzKSxHVHmEac",
+    "patchCommitted": false,
+    "patchPushed": false,
+    "patchDeployed": false
+  },
+  "localPatch": {
+    "userSpeakerSeparation": {
+      "english": "You followed by a visible space",
+      "spanish": "Tú followed by a visible space",
+      "productionSource": "apps/web/components/lesson-nova-tutor.tsx",
+      "staticRegressionTest": "apps/web/tests/nova-ui-capabilities.test.ts",
+      "fullStackRegressionTest": "apps/web/e2e/nova-full-stack.spec.ts"
+    },
+    "currentLessonFrameLifecycle": {
+      "coveredActions": [
+        "attach without sending",
+        "remove before sending",
+        "close and reopen clears the attachment",
+        "page navigation clears and rebinds the attachment identity",
+        "successful send clears the attachment exactly once"
+      ],
+      "identityContract": "releaseId + globalPageOrdinal + animationId",
+      "providerRequestsBeforeExplicitSend": 0,
+      "fullStackRegressionTest": "apps/web/e2e/nova-full-stack.spec.ts"
+    },
+    "speechDraftCancellationLifecycle": {
+      "coveredActions": [
+        "final transcript becomes an editable draft",
+        "clear the completed transcript",
+        "close and reopen the Nova panel"
+      ],
+      "providerRequests": 0,
+      "fullStackRegressionTest": "apps/web/e2e/nova-speech-negative.spec.ts"
+    },
+    "providerFailureFrameLifecycle": {
+      "fakeMode": "provider-unavailable",
+      "userRequests": 2,
+      "providerAttemptsPerUserRequest": 2,
+      "providerStatuses": [
+        503,
+        503,
+        503,
+        503
+      ],
+      "routeStatuses": [
+        502,
+        502
+      ],
+      "frameRetainedAfterFailure": true,
+      "samePlacementRetainedForExplicitRetry": true,
+      "explicitRemoveAfterRetry": true,
+      "contentFreeReceipts": true,
+      "fullStackRegressionTest": "apps/web/e2e/nova-provider-failure.spec.ts"
+    },
+    "clientBusyAndFirewallErrors": {
+      "evidenceKind": "CLIENT_RENDER_MOCK",
+      "nonJson429MapsTo": "NOVA_BUSY",
+      "busySynchronousDoubleActivationRequests": 1,
+      "productionRouteOrProviderProof": false,
+      "regressionTest": "apps/web/e2e/prototype-acceptance.spec.ts"
+    },
+    "fullStackTemporaryStorage": {
+      "directory": "work/tmp/nova-full-stack",
+      "gitExcluded": true,
+      "reason": "Keep Playwright test-only traces and receipts off the capacity-constrained system temporary volume",
+      "productRuntimeChanged": false
+    },
+    "browserHydrationSynchronization": {
+      "contract": "[data-lesson-player][data-hydrated=\"true\"]",
+      "reason": "Prevent a fast browser from clicking server-rendered lesson or Nova controls before React attaches event handlers",
+      "businessAssertionsRelaxed": false
+    },
+    "statusOnlySpeechTelemetry": {
+      "event": "nova_speech_status",
+      "allowedFields": [
+        "locale",
+        "status"
+      ],
+      "coveredStatuses": [
+        "draft-ready",
+        "confirmed-send"
+      ],
+      "excludedData": [
+        "transcript",
+        "question",
+        "course context",
+        "learner identity"
+      ]
+    },
+    "modernWideWorkerAlignment": {
+      "packageScript": "test:e2e:modern-wide",
+      "localWorkers": 2,
+      "ciWorkers": 2,
+      "guardTest": "apps/web/tests/nova-fake-transport-build-guard.test.ts",
+      "businessAssertionsRelaxed": false,
+      "productLogicChanged": false
+    },
+    "k12InputOutputHardening": {
+      "learnerDisclosureLocales": [
+        "en",
+        "es"
+      ],
+      "sensitiveSolicitationLocales": [
+        "en",
+        "es"
+      ],
+      "obfuscationCoverage": [
+        "zero-width characters",
+        "punctuation between letters",
+        "leet substitutions",
+        "lowercase Cyrillic confusables",
+        "uppercase Cyrillic confusables"
+      ],
+      "sensitiveCategories": [
+        "name",
+        "school or class",
+        "student ID",
+        "credentials",
+        "address or birthday",
+        "medical, IEP, 504, or disability information",
+        "photo",
+        "voice"
+      ],
+      "inputAction": "Replace a disclosure-shaped learner turn with a content-free placeholder before provider transfer",
+      "inputPositiveControls": "Ordinary EN/ES mathematics language containing class, address, condition, diagnosis, or 504 remains unchanged",
+      "assessmentGuard": "Explicit EN/ES answer statements, answer-choice commands, true/false answers, zero-width variants, and LaTeX boxed answers fail closed only on trusted assessment pages",
+      "positiveControls": "EN/ES scaffolding remains allowed, and ordinary non-assessment math answers remain allowed",
+      "evidenceBoundary": "Fixed synthetic strings with fake or stub provider responses only; not human safety, legal, accessibility, or live-provider proof"
+    },
+    "untrustedBrowserHistoryBoundary": {
+      "browserAssistantRoleGrantedProviderAuthority": false,
+      "providerAssistantMessagesFromBrowserHistory": 0,
+      "transport": "One quoted, labeled, user-side untrusted transcript followed by the current learner question",
+      "systemInstructionSource": "Server only",
+      "eachHistoryEntryMinimizedIndependently": true,
+      "regressionTest": "apps/web/tests/nova-openrouter-route.server-test.ts"
+    },
+    "frameDecoderHardening": {
+      "rejectedEnvelopes": [
+        "empty bytes",
+        "malformed base64",
+        "SVG",
+        "GIF",
+        "WebP",
+        "corrupt PNG",
+        "corrupt JPEG",
+        "animated PNG"
+      ],
+      "maximumDecodedWidth": 2048,
+      "maximumDecodedHeight": 2048,
+      "maximumDecodedPixels": 4194304,
+      "maximumDecodedEnvelopeBytes": 18432,
+      "regressionTest": "apps/web/tests/nova-frame-normalization.server-test.ts"
+    }
+  },
+  "diagnosticHistory": {
+    "firstAllOnRun": {
+      "passed": 66,
+      "failed": 1,
+      "failure": "Nova launcher click was issued before hydration in the speech double-activation case",
+      "isolatedReproductionAfterward": "1/1 PASS"
+    },
+    "secondAllOnRun": {
+      "passed": 63,
+      "failed": 1,
+      "didNotRun": 3,
+      "failure": "G5 L5 ES Next click was issued before hydration and the page remained at ordinal 1"
+    },
+    "focusedPostFix": "2/2 PASS",
+    "expandedLifecycleRun": {
+      "firstAllOnResult": "68/69 PASS",
+      "failure": "The service-not-allowed case clicked the server-rendered Nova launcher before React attached the click handler",
+      "focusedAfterSpeechHelperHydrationGate": "1/1 PASS",
+      "businessAssertionsRelaxed": false,
+      "playwrightRetriesAdded": false
+    },
+    "finalFullStack": {
+      "allOn": "69/69 PASS",
+      "providerDownFrameRetry": "1/1 PASS",
+      "failClosedScenarios": "7/7 PASS",
+      "total": "77/77 PASS"
+    },
+    "modernWideClientRenderMock": {
+      "firstFiveWorkerRun": "50/54 PASS; four failures",
+      "firstFailureIsolation": "4/4 PASS",
+      "secondFiveWorkerRun": "51/54 PASS; three different failures",
+      "secondFailureIsolation": "3/3 PASS",
+      "stableFullRun": "54/54 PASS with one worker before the governed script adjustment",
+      "originalCommandAfterAlignment": "55/55 PASS with the script-defined two workers after adding busy and non-JSON 429 coverage",
+      "evidence": "No product console or page errors in the first trace set; initial chunks took about 6-8.6 seconds, and the second run recorded one explicit Next proxy ECONNRESET",
+      "classification": "HISTORICAL_FIVE_WORKER_DEV_FLAKE_RESOLVED_BY_LOCAL_CI_ALIGNMENT"
+    }
+  },
+  "verification": {
+    "webUnit": "418/418 PASS",
+    "novaServerOnly": "68/68 PASS",
+    "novaFullStackFakeUpstream": "77/77 PASS: 69 all-on plus 1 provider-down frame retry plus 7 fail-closed scenarios",
+    "modernWideClientRenderMock": "55/55 PASS from the unmodified command surface after package-script alignment to two workers",
+    "workerAlignmentGuard": "8/8 PASS in the focused fake-transport/build-guard file",
+    "typecheck": "PASS",
+    "lint": "PASS_WITH_0_ERRORS_AND_3_EXISTING_WARNINGS",
+    "productionBuild": "PASS_WITH_28_OF_28_STATIC_PAGES",
+    "deploymentAssetTests": "11/11 PASS",
+    "gitDiffCheck": "PASS"
+  },
+  "secretReview": {
+    "localServerSensitiveEntries": 5,
+    "localServerSensitiveValueCount": 4,
+    "candidateDiffBytes": 2639045,
+    "candidateDiffExactSensitiveValueMatches": 0,
+    "candidateWorktreeScope": "all present modified and untracked regular files reported by Git, including non-tracked source and evidence candidates but excluding ignored files",
+    "candidateWorktreeFiles": 47220,
+    "candidateWorktreeBytes": 16576660005,
+    "candidateWorktreeExactSensitiveValueMatches": 0,
+    "buildFiles": 1666,
+    "buildBytes": 62398634,
+    "buildExactSensitiveValueMatches": 0,
+    "evidenceScope": "all regular files under reports and output/playwright",
+    "evidenceFiles": 51971,
+    "evidenceBytes": 5162061530,
+    "evidenceExactSensitiveValueMatches": 0,
+    "testTemporaryScope": "all regular files under the Git-excluded work/tmp/nova-full-stack directory",
+    "testTemporaryFiles": 20,
+    "testTemporaryBytes": 348637,
+    "testTemporaryExactSensitiveValueMatches": 0,
+    "browserStaticFiles": 586,
+    "browserForbiddenConfigurationNamesChecked": 16,
+    "novaOrOpenRouterSensitiveConfigurationNameMatches": 0,
+    "unrelatedObservation": "One inherited Clerk client chunk contains the literal CLERK_SECRET_KEY environment-variable name, but no actual server-sensitive value matched"
+  },
+  "externalMutationBoundary": {
+    "realOpenRouterRequests": 0,
+    "vercelPreviewWrites": 0,
+    "vercelProductionWrites": 0,
+    "productionAliasChanges": 0,
+    "firewallChanges": 0,
+    "drainChanges": 0,
+    "promotions": 0,
+    "commits": 0,
+    "pushes": 0
+  },
+  "resultBoundary": {
+    "proved": "The local You/Tú spacing patch, status-only speech telemetry, frame and speech cancellation lifecycle, provider-failure frame retention and explicit retry, client busy/non-JSON 429 handling, real-route fake-upstream browser suite, K-12 learner-input minimization and provider-output defense-in-depth, browser-history role de-privileging, and frame-decoder boundary tests pass after waiting for the existing hydration contract; the governed modern-wide command is aligned with CI at two workers and passes 55/55",
+    "notProved": "That the already verified Preview artifact contains this local P3/telemetry/test-lane/K-12/media/error patch, that an unsupported five-worker local dev run is stable, that automated patterns replace human safety or legal review, or that any Production deployment contains the remediation"
+  }
+}

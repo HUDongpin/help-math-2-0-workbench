@@ -1,0 +1,204 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "g4-l3-workspace-source-audit",
+  "identity": {
+    "releaseId": "lesson-g04-l03-negative-numbers",
+    "queueId": "release-g04-l03-negative-numbers",
+    "ordinal": 14,
+    "animationId": "course-g04-l03-in-003",
+    "assetId": "swf-ae967172d85728e42e4338f5ed74710b9b10eeb447fa6c6d86668bd63cc0dc7f",
+    "releaseRole": "active-xml-referenced-page",
+    "batchId": "batch-001",
+    "shardId": "shard-01"
+  },
+  "acceptance": {
+    "acceptanceNeutral": true,
+    "migrationStatusChanges": 0,
+    "reviewOrApprovalChanges": 0,
+    "completionLedgerChanges": 0,
+    "lessonPublicationChanges": 0,
+    "originalRuntimeSessions": 0,
+    "animateDocumentsOpened": 0,
+    "acceptanceEffect": "none",
+    "migrationManifestBindings": 0,
+    "statement": "Artifact-only static machine evidence; this artifact does not mutate or bind migration.json and does not prove fidelity, parity, acceptance, or completion."
+  },
+  "provenance": {
+    "materializer": {
+      "path": "scripts/materialize-g4-l3-workspace-source-audits.mjs",
+      "version": 2,
+      "sha256": "9da52c9d17bfec652a9cf58f90419978dcfc76588fd428e1f371b00661d23630"
+    },
+    "upstreamMachineAudit": {
+      "path": "reports/g4-l3-machine-source-audits.json",
+      "bytes": 5152829,
+      "sha256": "c7f987904de8e2a5bca907931feedab0e3bd61ffdcf26b56ef5d7295e49ab9f6",
+      "schemaVersion": 1,
+      "auditSetSha256": "ef3e3f2d6757778662d280d10a4b04f46da84f0bd402c9d6c41017f58da69709",
+      "itemJsonPointer": "/items/13",
+      "itemFingerprintSha256": "0fe13b2f6d01a18468d852f0645ada8ee7966b0785c748011e49fab931d3dcee"
+    },
+    "lessonReleaseManifest": {
+      "path": "catalog/lesson-releases.json",
+      "bytes": 54579,
+      "sha256": "ab0ad5dac373f7bf192b603c4c2b0bc4dae9f73fe770eba3be7507d458bfc375",
+      "schemaVersion": 1,
+      "releaseJsonPointer": "/releases/0",
+      "memberJsonPointer": "/releases/0/members/13"
+    },
+    "source": {
+      "sourceKind": "fla+swf",
+      "swf": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN03.swf",
+        "bytes": 152888,
+        "sha256": "ae967172d85728e42e4338f5ed74710b9b10eeb447fa6c6d86668bd63cc0dc7f",
+        "physicalHashVerified": true
+      },
+      "fla": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN03.fla",
+        "bytes": 1682432,
+        "sha256": "c960c1bef6638b6fa71c9e8016c7cd7f9d99594d99aae1f4af0724c2eb0d63f0",
+        "physicalHashVerified": true,
+        "authoringAuditPerformed": false
+      }
+    }
+  },
+  "machineFindings": {
+    "runtime": {
+      "swfSignature": "CWS",
+      "swfVersion": 6,
+      "declaredFileLength": 202633,
+      "stage": {
+        "width": 800,
+        "height": 600
+      },
+      "fps": 12,
+      "rootFrameCount": 10,
+      "durationMs": 833.3333333333334,
+      "backgroundColor": "#b8d8f7",
+      "actionScriptVersion": "AS1/2",
+      "actionScriptTagCounts": {
+        "DoAction": 2,
+        "DoInitAction": 0,
+        "DoABCDefine": 0,
+        "DoABC": 0
+      },
+      "structureFingerprintSha256": "9e41a01868211907281f834470b608c124494e68998c08f5365050dc4e9cb068"
+    },
+    "scripts": {
+      "extraction": "FFDec script export; normalized LF; sorted project-independent relative paths",
+      "actionScriptVersion": "AS1/2",
+      "exportedScriptFileCount": 2,
+      "normalizedBytes": 69,
+      "frameScriptFileCount": 2,
+      "buttonHandlerFileCount": 0,
+      "clipHandlerFileCount": 0,
+      "contentManifestSha256": "7e2e39d5563d2b92fb5cfce1931baaddab6568c0b0ef8f9d42e7015ece68cf70",
+      "normalizedBundleSha256": "cef51df50700d55e67647e27ab73cf0f548b0de922c931ed311b942f11bd71a9",
+      "files": [
+        {
+          "path": "frame_1/DoAction.as",
+          "bytes": 61,
+          "sha256": "8edb4298364fccc1a492b99afd35910c38775e841df758cc2f8f09063e448862"
+        },
+        {
+          "path": "frame_6/DoAction.as",
+          "bytes": 8,
+          "sha256": "c71f185593d153c467266a494ebee471c04c9b64044e6cf491e0d91d739e92fd"
+        }
+      ],
+      "signals": [
+        {
+          "id": "timeline-navigation",
+          "pattern": "\\b(?:gotoAndPlay|gotoAndStop|nextFrame|prevFrame|play|stop)\\s*\\(",
+          "occurrences": 3,
+          "files": [
+            {
+              "path": "frame_1/DoAction.as",
+              "sha256": "8edb4298364fccc1a492b99afd35910c38775e841df758cc2f8f09063e448862",
+              "occurrences": 2
+            },
+            {
+              "path": "frame_6/DoAction.as",
+              "sha256": "c71f185593d153c467266a494ebee471c04c9b64044e6cf491e0d91d739e92fd",
+              "occurrences": 1
+            }
+          ]
+        }
+      ],
+      "random": {
+        "id": "random-calls",
+        "occurrences": 0,
+        "files": []
+      },
+      "externalApiCandidates": [],
+      "externalCallsExecutedDuringAudit": false,
+      "scriptEvidenceFingerprintSha256": "07b22dcd77db8cca467b698fe15634e977770b014ac292924c11f7ea293856d8"
+    },
+    "auditCandidates": {
+      "masks": {
+        "method": "Physical SWF PlaceObject2/PlaceObject3 HasClipDepth field parse across root and DefineSprite timelines.",
+        "candidateOnly": true,
+        "items": []
+      },
+      "morphs": {
+        "method": "Hash-bound upstream SWF definition-tag counts.",
+        "candidateOnly": true,
+        "items": [
+          {
+            "source": "g4-l3-static-machine-source-audit",
+            "kind": "morph-definition-candidate",
+            "status": "static-definition-runtime-use-unresolved",
+            "tag": "DefineMorphShape",
+            "count": 2,
+            "evidence": "audit/machine/g4-l3-source-audit.json#/machineFindings/auditCandidates/morphs/items/0"
+          }
+        ]
+      },
+      "filters": {
+        "method": "Physical SWF PlaceObject3 HasFilterList field parse across root and DefineSprite timelines.",
+        "candidateOnly": true,
+        "placeObject3TagCount": 0,
+        "items": []
+      },
+      "networkCalls": {
+        "method": "Hash-bound FFDec ActionScript pattern matches plus SWF ImportAssets/ImportAssets2 tags; no candidate was executed.",
+        "candidateOnly": true,
+        "legacyEndpointInvocationsDuringAudit": 0,
+        "items": []
+      }
+    },
+    "toolBindings": {
+      "ffdec": {
+        "command": "ffdec",
+        "version": "JPEXS Free Flash Decompiler v.26.2.1",
+        "launcherSha256": "1a242c6333aa8dba0f18f635f9ea2585a988f4131aa5164b70eb00ad9e662bab",
+        "ffdecJarSha256": "090ab695053ad94cba6408574c7d7eea20ec60b6ae789ee6056a23f45106762f"
+      },
+      "swfParser": {
+        "name": "g4-l3 deterministic SWF parser",
+        "version": 1,
+        "generatorPath": "scripts/build-g4-l3-machine-source-audits.mjs",
+        "generatorSha256": "079ae4c5f3034de39520ec1508079be1b8fe482c81b1d879ed2ba1a3a625a4dd"
+      }
+    },
+    "evidenceLimits": {
+      "authoritativeRuntimeLaunched": false,
+      "animateAuthoringDocumentOpened": false,
+      "runtimeReachabilityEstablished": false,
+      "frameDomainDispositionEstablished": false,
+      "visualBaselineEstablished": false,
+      "behavioralParityEstablished": false,
+      "audioAcceptanceEstablished": false,
+      "humanOrOwnerAcceptanceEstablished": false
+    }
+  },
+  "limitations": [
+    "The paired FLA hash is verified, but Adobe Animate authoring inspection was not performed by this materializer.",
+    "Static SWF and ActionScript extraction does not establish runtime reachability, interaction behavior, frame-domain disposition, or Replay behavior.",
+    "Background, clip-depth masks, morph definitions, filter placements, imports, and API matches are static source facts or candidates; they are not rendered-output or parity evidence.",
+    "No authoritative original-runtime baseline, deterministic capture, RMSE comparison, bilingual audio cue/listening acceptance, browser QA, human review, or owner acceptance is created.",
+    "This artifact has no effect on migration status, completion-ledger admission, lesson publication, or strict acceptance."
+  ],
+  "artifactFingerprintSha256": "7cd83361fd72f782da38994f959aa3ebbe985a03cf6b6ae136d463a1590e7b52"
+}

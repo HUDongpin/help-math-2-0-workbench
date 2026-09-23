@@ -1,0 +1,394 @@
+{
+  "schemaVersion": 1,
+  "evidenceType": "renderer-frame-domain-support-audit",
+  "animationId": "course-g05-l04-in-018",
+  "status": "renderer-frame-domain-support-incomplete",
+  "migrationStatusAtGeneration": null,
+  "migrationStatusBinding": "excluded-from-technical-projection-and-deterministic-audit-output",
+  "migrationStatusChanged": false,
+  "authorityStatement": [
+    "This deterministic engineering audit calls the registered animation module's pure getFrameState function directly; host DOM attributes and capture wrappers are not consulted.",
+    "For every manifest implementation.frameDomains × scenarioIds × en/es combination, the first and last one-indexed frames are requested and the returned frameDomain, frame, scenario, and language must match exactly.",
+    "A state whose status is blocked or whose blocker is non-null is recorded but never counted as renderable, even when all identity fields match.",
+    "This audit does not prove visual fidelity, natural-runtime reachability, ActionScript behavior, audio synchronization, accessibility, human review, or owner acceptance."
+  ],
+  "generatedFrom": {
+    "migrationManifest": {
+      "path": "migration.json",
+      "hashMode": "canonical-json-v1",
+      "technicalProjection": "help-math-technical-manifest-v1",
+      "technicalProjectionSha256": "0a9c13e2380411d96a1744b0c342b8eea767df84d10479e908b1502f35e90537",
+      "excludedPaths": [
+        "status",
+        "created",
+        "confidence",
+        "classification",
+        "audit",
+        "toolVersions",
+        "baseline",
+        "evidence",
+        "fidelity",
+        "accessibility",
+        "acceptance",
+        "catalogEvidence",
+        "implementation.candidateQa",
+        "implementation.candidateMaturity",
+        "implementation.candidateProductQa",
+        "implementation.candidateVisualEvidence",
+        "implementation.productQaEvidence",
+        "implementation.productQaScope",
+        "audio.catalogGroupCandidates",
+        "audio.catalogExactAssociations",
+        "audio.acceptance",
+        "audio.authoritativeListeningComplete",
+        "audio.originalHostSynchronizationComplete",
+        "audio.strictAcceptance",
+        "audio.structuralAuditComplete"
+      ]
+    },
+    "prototypeRuntime": {
+      "path": "packages/demos/src/prototype-manifest.ts",
+      "sha256": "a56dda011879d1c72c9b111373862eb96f218519a6e8d137ec733695beee5e75"
+    },
+    "animationRegistry": {
+      "path": "packages/demos/src/animation-registry.ts",
+      "sha256": "a72f2bff040f4ed533435fea4620d7cb011a1748fce9be370892b15d276923ab"
+    },
+    "animationModule": {
+      "path": "packages/demos/src/modules/course-g05-l04-in-018.tsx",
+      "sha256": "52f4806d1bd4f0bdb52ac0e6a3b5fce242b4ee133b20941512b41473a4d4b513"
+    },
+    "pureTimeline": {
+      "path": "packages/demos/src/timelines/course-g05-l04-in-018.ts",
+      "sha256": "569ead52877b520e44fa0564f8e2f661c6a8ebd6eb54dcbd610f451ead862a7e"
+    },
+    "runtimeContract": {
+      "path": "packages/demos/src/contract.ts",
+      "sha256": "0949531fc5121bb0369ae968a4ff18af59f1a24b242c89815bd6a1c182791336"
+    },
+    "auditContract": {
+      "path": "scripts/evidence-projections.mjs",
+      "sha256": "0a5a4126fd72fa8137af6105a8a22759ebbaab8a46f7538bd13074af7d9e7a08"
+    },
+    "auditBuilder": {
+      "path": "scripts/build-renderer-frame-domain-support.mjs",
+      "sha256": "d5902b3bf7785c823ec5c057f583617fb770b0b686cca5c4938f484a8845ad03"
+    },
+    "auditProbe": {
+      "path": "scripts/probe-renderer-frame-domain-support.ts",
+      "sha256": "bc7ba85a6e84caf30d8e7b0f4e84e2179afb8723a00377e5f03bebaa3b720782"
+    }
+  },
+  "loadedRuntime": {
+    "prototypeKey": "course-g05-l04-in-018",
+    "rootFrameCount": 10,
+    "defaultFrameDomain": "sprite-220",
+    "frameDomains": [
+      {
+        "id": "root",
+        "frameCount": 10
+      },
+      {
+        "id": "sprite-220",
+        "frameCount": 275
+      }
+    ],
+    "moduleMaturity": "legacy-prototype",
+    "moduleScenarioIds": [
+      "source-static-frame",
+      "root-unavailable"
+    ]
+  },
+  "summary": {
+    "declaredFrameDomainCount": 2,
+    "fullyRenderableFrameDomainCount": 0,
+    "probeCount": 8,
+    "exactIdentityCount": 8,
+    "blockedCount": 7,
+    "renderableCount": 1,
+    "outcomeCounts": {
+      "renderable-exact": 1,
+      "blocked-not-renderable": 7,
+      "scenario-undeclared-by-module": 0,
+      "identity-mismatch": 0,
+      "probe-error": 0
+    }
+  },
+  "domainSupport": [
+    {
+      "frameDomain": "root",
+      "frameCount": 10,
+      "scenarioIds": [
+        "root-unavailable"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 10
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 4,
+      "blockedCount": 4,
+      "renderableCount": 0,
+      "fullyRenderable": false
+    },
+    {
+      "frameDomain": "sprite-220",
+      "frameCount": 275,
+      "scenarioIds": [
+        "source-static-frame"
+      ],
+      "prototypeRuntime": {
+        "status": "exact",
+        "reportedFrameCount": 275
+      },
+      "probeCount": 4,
+      "exactIdentityCount": 4,
+      "blockedCount": 3,
+      "renderableCount": 1,
+      "fullyRenderable": false
+    }
+  ],
+  "probes": [
+    {
+      "request": {
+        "requestId": "root::root-unavailable::en::1",
+        "frameDomain": "root",
+        "frame": 1,
+        "scenario": "root-unavailable",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "root",
+        "frame": 1,
+        "scenario": "root-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "root-baseline-unavailable"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "blocked-not-renderable",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "root::root-unavailable::en::10",
+        "frameDomain": "root",
+        "frame": 10,
+        "scenario": "root-unavailable",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "root",
+        "frame": 10,
+        "scenario": "root-unavailable",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "root-baseline-unavailable"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "blocked-not-renderable",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "root::root-unavailable::es::1",
+        "frameDomain": "root",
+        "frame": 1,
+        "scenario": "root-unavailable",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "root",
+        "frame": 1,
+        "scenario": "root-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "spanish-visual-and-audio-unvalidated"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "blocked-not-renderable",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "root::root-unavailable::es::10",
+        "frameDomain": "root",
+        "frame": 10,
+        "scenario": "root-unavailable",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "root",
+        "frame": 10,
+        "scenario": "root-unavailable",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "spanish-visual-and-audio-unvalidated"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "blocked-not-renderable",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-220::source-static-frame::en::1",
+        "frameDomain": "sprite-220",
+        "frame": 1,
+        "scenario": "source-static-frame",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "sprite-220",
+        "frame": 1,
+        "scenario": "source-static-frame",
+        "language": "en",
+        "status": "ready",
+        "blocker": null
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": false,
+      "renderable": true,
+      "outcome": "renderable-exact",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-220::source-static-frame::en::275",
+        "frameDomain": "sprite-220",
+        "frame": 275,
+        "scenario": "source-static-frame",
+        "language": "en",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "sprite-220",
+        "frame": 275,
+        "scenario": "source-static-frame",
+        "language": "en",
+        "status": "blocked",
+        "blocker": "source-behavior-dependent-frame-unvalidated"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "blocked-not-renderable",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-220::source-static-frame::es::1",
+        "frameDomain": "sprite-220",
+        "frame": 1,
+        "scenario": "source-static-frame",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "sprite-220",
+        "frame": 1,
+        "scenario": "source-static-frame",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "spanish-visual-and-audio-unvalidated"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "blocked-not-renderable",
+      "error": null
+    },
+    {
+      "request": {
+        "requestId": "sprite-220::source-static-frame::es::275",
+        "frameDomain": "sprite-220",
+        "frame": 275,
+        "scenario": "source-static-frame",
+        "language": "es",
+        "seed": 0
+      },
+      "moduleScenarioDeclared": true,
+      "actual": {
+        "frameDomain": "sprite-220",
+        "frame": 275,
+        "scenario": "source-static-frame",
+        "language": "es",
+        "status": "blocked",
+        "blocker": "spanish-visual-and-audio-unvalidated"
+      },
+      "identityChecks": {
+        "frameDomain": true,
+        "frame": true,
+        "scenario": true,
+        "language": true
+      },
+      "identityExact": true,
+      "blocked": true,
+      "renderable": false,
+      "outcome": "blocked-not-renderable",
+      "error": null
+    }
+  ],
+  "strictAcceptanceEffect": "none; this audit only exposes renderer-addressability gaps and does not advance migration status or satisfy strict acceptance"
+}

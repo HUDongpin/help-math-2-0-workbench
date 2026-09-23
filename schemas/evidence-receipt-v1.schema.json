@@ -1,0 +1,200 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://help-math.local/schemas/evidence-receipt-v1.schema.json",
+  "title": "HELP Math lesson release evidence receipt v1",
+  "description": "Public, hash-only, release-authority-signed receipt for one atomically published lesson release. This receipt does not contain or replace private runtime evidence, human reviews, owner decisions, or the production promotion bundle; it binds their hashes.",
+  "type": "object",
+  "required": ["payload", "signature"],
+  "properties": {
+    "payload": {"$ref": "#/$defs/payload"},
+    "signature": {"$ref": "#/$defs/signature"}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "logicalId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$"
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["logicalId", "artifactType", "bytes", "sha256"],
+      "properties": {
+        "logicalId": {"$ref": "#/$defs/logicalId"},
+        "artifactType": {"$ref": "#/$defs/logicalId"},
+        "bytes": {"type": "integer", "minimum": 0},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "tool": {
+      "type": "object",
+      "required": ["name", "version", "artifactSha256"],
+      "properties": {
+        "name": {"$ref": "#/$defs/logicalId"},
+        "version": {"type": "string", "minLength": 1, "maxLength": 128},
+        "artifactSha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "command": {
+      "type": "object",
+      "required": ["commandId", "argv", "startedAt", "endedAt", "exitCode", "stdoutSha256", "stderrSha256"],
+      "properties": {
+        "commandId": {"$ref": "#/$defs/logicalId"},
+        "argv": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1, "maxLength": 512}
+        },
+        "startedAt": {"type": "string", "format": "date-time"},
+        "endedAt": {"type": "string", "format": "date-time"},
+        "exitCode": {"type": "integer", "minimum": 0, "maximum": 255},
+        "stdoutSha256": {"$ref": "#/$defs/sha256"},
+        "stderrSha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "build": {
+      "type": "object",
+      "required": ["commitSha", "releaseDefinitionSha256", "sourceManifestSha256", "rendererRegistrySha256", "completionLedgerSha256", "releaseLedgerSha256"],
+      "properties": {
+        "commitSha": {"type": "string", "pattern": "^(?:[a-f0-9]{40}|[a-f0-9]{64})$"},
+        "releaseDefinitionSha256": {"$ref": "#/$defs/sha256"},
+        "sourceManifestSha256": {"$ref": "#/$defs/sha256"},
+        "rendererRegistrySha256": {"$ref": "#/$defs/sha256"},
+        "completionLedgerSha256": {"$ref": "#/$defs/sha256"},
+        "releaseLedgerSha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "execution": {
+      "type": "object",
+      "required": ["runner", "tools", "commands", "inputs", "outputs"],
+      "properties": {
+        "runner": {"$ref": "#/$defs/tool"},
+        "tools": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/tool"}
+        },
+        "commands": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/command"}
+        },
+        "inputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/artifact"}
+        },
+        "outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/artifact"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "acceptance": {
+      "type": "object",
+      "required": ["expectedMemberCount", "strictCompleteCount", "expectedPublishedCount", "publishedCount", "strictValidatorSha256", "reviewDecisionSha256", "ownerDecisionSha256", "promotionReleaseBundleSha256", "allExactAssetsCurrent", "atomicPublicationAuthorized"],
+      "properties": {
+        "expectedMemberCount": {"type": "integer", "minimum": 1},
+        "strictCompleteCount": {"type": "integer", "minimum": 0},
+        "expectedPublishedCount": {"const": 1},
+        "publishedCount": {"type": "integer", "minimum": 0, "maximum": 1},
+        "strictValidatorSha256": {"$ref": "#/$defs/sha256"},
+        "reviewDecisionSha256": {"$ref": "#/$defs/sha256"},
+        "ownerDecisionSha256": {"$ref": "#/$defs/sha256"},
+        "promotionReleaseBundleSha256": {"$ref": "#/$defs/sha256"},
+        "allExactAssetsCurrent": {"const": true},
+        "atomicPublicationAuthorized": {"const": true}
+      },
+      "additionalProperties": false
+    },
+    "binding": {
+      "type": "object",
+      "required": ["kind", "logicalId", "sha256"],
+      "properties": {
+        "kind": {
+          "enum": [
+            "source-manifest",
+            "renderer-registry",
+            "release-definition",
+            "completion-ledger",
+            "release-ledger",
+            "candidate-evidence",
+            "review-decision",
+            "owner-decision",
+            "promotion-release-bundle"
+          ]
+        },
+        "logicalId": {"$ref": "#/$defs/logicalId"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "additionalProperties": false
+    },
+    "invalidation": {
+      "type": "object",
+      "required": ["policy", "bindings"],
+      "properties": {
+        "policy": {"const": "exact-hash-drift-closes-release-v1"},
+        "bindings": {
+          "type": "array",
+          "minItems": 9,
+          "items": {"$ref": "#/$defs/binding"}
+        }
+      },
+      "additionalProperties": false
+    },
+    "privacy": {
+      "type": "object",
+      "required": ["exportClass", "containsRawFrames", "containsRawAudio", "containsPrivatePaths", "containsContactInformation", "containsStudentData", "containsSecrets"],
+      "properties": {
+        "exportClass": {"const": "public-hash-metadata-only"},
+        "containsRawFrames": {"const": false},
+        "containsRawAudio": {"const": false},
+        "containsPrivatePaths": {"const": false},
+        "containsContactInformation": {"const": false},
+        "containsStudentData": {"const": false},
+        "containsSecrets": {"const": false}
+      },
+      "additionalProperties": false
+    },
+    "payload": {
+      "type": "object",
+      "required": ["schemaVersion", "evidenceType", "receiptId", "releaseId", "issuedAt", "expiresAt", "build", "execution", "acceptance", "invalidation", "privacy"],
+      "properties": {
+        "schemaVersion": {"const": 1},
+        "evidenceType": {"const": "help-math-lesson-evidence-receipt-v1"},
+        "receiptId": {"$ref": "#/$defs/logicalId"},
+        "releaseId": {"$ref": "#/$defs/logicalId"},
+        "issuedAt": {"type": "string", "format": "date-time"},
+        "expiresAt": {"type": "string", "format": "date-time"},
+        "build": {"$ref": "#/$defs/build"},
+        "execution": {"$ref": "#/$defs/execution"},
+        "acceptance": {"$ref": "#/$defs/acceptance"},
+        "invalidation": {"$ref": "#/$defs/invalidation"},
+        "privacy": {"$ref": "#/$defs/privacy"}
+      },
+      "additionalProperties": false
+    },
+    "signature": {
+      "type": "object",
+      "required": ["algorithm", "subjectId", "keyFingerprintSha256", "signatureBase64"],
+      "properties": {
+        "algorithm": {"const": "Ed25519"},
+        "subjectId": {"$ref": "#/$defs/logicalId"},
+        "keyFingerprintSha256": {"$ref": "#/$defs/sha256"},
+        "signatureBase64": {"type": "string", "minLength": 88, "maxLength": 88, "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

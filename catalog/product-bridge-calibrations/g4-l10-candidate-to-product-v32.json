@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "calibrationId": "g4-l10-candidate-to-product-v32",
+  "status": "immutable-implementation-before-correction-freeze",
+  "frozenAt": "2026-08-21T12:53:34+08:00",
+  "frozenGitHead": "8770c56e2e0e63645df7c209db9b575f8dea1a9c",
+  "predecessor": {
+    "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v31.json",
+    "bytes": 23020,
+    "sha256": "7729ca9cc648c98148d29f1f19adf0ad46a5ce4cec622b6213348dc359cabbd2",
+    "disposition": "preserved-failed-closed-implementation-before-freeze",
+    "preservedConclusions": [
+      "V31 selected only course-g04-l10-in-008 and preserved the six unselected pages as unregistered behavior-heavy candidates.",
+      "V31 correctly bound the source SWF, FLA, Spanish host track, candidate inputs, five handlers, three wrong branches, four right branches, and eight non-main product-reachable embedded streams.",
+      "V31 recorded abbreviated source-analysis notes as if they were complete SHA-256 values for the sprite-210 main stream and continuation. The materializer rejected the first mismatching full-stream hash before creating any output.",
+      "V31 is not rewritten; this successor changes only the two complete sprite-210 SHA-256 values and the calibration binding used by the authorized IN008 implementation."
+    ]
+  },
+  "scope": {
+    "releaseId": "lesson-g04-l10-perimeter-area",
+    "selectedAnimationId": "course-g04-l10-in-008",
+    "batchCardinality": 1,
+    "privateRegistrationCountBeforeBatch": 17,
+    "expectedPrivateRegistrationCountAfterSuccessfulImplementation": 18,
+    "unregisteredRemainderCount": 6,
+    "honestLowLaneCount": 0
+  },
+  "failedClosedAttempt": {
+    "command": "node scripts/materialize-g4-l10-in008-private-audio.mjs",
+    "exitCode": 1,
+    "failure": "sprite-210 extracted MP3 differs from V31",
+    "outputsCreated": false,
+    "auditReceiptCreated": false,
+    "registrationPerformed": false,
+    "descriptorRegistrationPerformed": false
+  },
+  "correction": {
+    "source": {
+      "swfPath": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L10/IN/L10IN08.swf",
+      "swfBytes": 213973,
+      "swfSha256": "7f089cf7aa466477a103341fca1bd87fde93fbb94eab32fdaac10f7b08a94d2c",
+      "swfmillXmlPath": "migrations/course-g04-l10-in-008/audit/machine/swfmill.xml.gz",
+      "swfmillXmlBytes": 304918,
+      "swfmillXmlSha256": "64d304daea5669d0f14f441b69a26f14c7d49ee12a5648739dffc7d256574dbe"
+    },
+    "extractionRule": "For each selected SoundStreamBlock, remove only its four-byte decoded-sample-count and seek-sample header, then concatenate the original MP3 payload bytes in source order.",
+    "fullMainStream": {
+      "sourceTimelineId": "sprite-210",
+      "characterId": 210,
+      "headFrame": 1,
+      "firstBlockFrame": 5,
+      "lastBlockFrame": 129,
+      "blockFrameRanges": [
+        {"first": 5, "last": 54},
+        {"first": 63, "last": 129}
+      ],
+      "blockCount": 117,
+      "totalDecodedSamples": 212544,
+      "sampleRateHz": 22050,
+      "channels": 1,
+      "durationMs": 9639,
+      "bytes": 47970,
+      "v31IncorrectSha256": "ef5155fcfd520fac1a63291550bc608124735f6566371c2405d9889d992f17e3",
+      "correctedSha256": "ef5155fcf01f212a2381a273003bf60bb60285b0e0fe3a7b92d9d207b6ad17e3"
+    },
+    "correctContinuation": {
+      "sourceTimelineId": "sprite-210",
+      "characterId": 210,
+      "firstFrame": 53,
+      "lastFrame": 129,
+      "blockFrameRanges": [
+        {"first": 53, "last": 54},
+        {"first": 63, "last": 129}
+      ],
+      "sourceBlockStartIndex": 48,
+      "blockCount": 69,
+      "totalDecodedSamples": 124992,
+      "sampleRateHz": 22050,
+      "channels": 1,
+      "durationMs": 5669,
+      "bytes": 28210,
+      "v31IncorrectSha256": "741ba763e0a24e00cc00912841d0bad44bbf7eca82e78334aac32ea33a7b2a1",
+      "correctedSha256": "741ba76391efe55455c13a556c5a239abcbb481c8968281b5ec532b478b272a1"
+    },
+    "independentRecomputation": {
+      "sharedParser": "scripts/extract-ti-soundstreams.mjs",
+      "fullMainBlockStartIndex": 0,
+      "continuationBlockStartIndex": 48,
+      "fullMainHashRecomputedFromPhysicalBytes": true,
+      "continuationHashRecomputedFromPhysicalBytes": true
+    }
+  },
+  "carriedForwardV31Bindings": {
+    "selectedPage": "course-g04-l10-in-008",
+    "complexityLane": "interactive-understood",
+    "randomBranchGate": "three-wrong-four-right-closed-for-product-engineering",
+    "audioRouteGate": "corrected-design-bound-before-implementation-listening-pending",
+    "timelineReachabilityGate": "stop-52-continuation-53-terminal-129-design-bound",
+    "replayEngineeringGate": "reset-vector-design-bound",
+    "legacyReporting": "blocked",
+    "publicRegistryMutationAuthorized": false,
+    "strictDispositionMutationAuthorized": false
+  },
+  "implementationAuthorization": {
+    "authorizedAnimationIds": ["course-g04-l10-in-008"],
+    "authorizedOutputs": [
+      "the same one-page outputs authorized by V31, with the two corrected sprite-210 hashes from this successor",
+      "one private registry entry only after focused handler, branch, audio, timeline, Replay, generator, descriptor, and product QA checks pass",
+      "one later immutable registry-successor freeze"
+    ],
+    "unselectedImplementationAuthorized": false,
+    "automaticRemainderRegistration": false,
+    "relabelRemainderLow": false,
+    "publicRegistryMutationAuthorized": false
+  },
+  "remainingCandidates": {
+    "count": 6,
+    "disposition": "behavior-heavy-gated",
+    "animationIds": [
+      "course-g04-l10-fq-002",
+      "course-g04-l10-fq-003",
+      "course-g04-l10-in-006",
+      "course-g04-l10-in-011",
+      "course-g04-l10-in-013",
+      "course-g04-l10-ti-003"
+    ],
+    "automaticRegistrationAuthorized": false,
+    "lowRelabelAuthorized": false
+  },
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "behaviorParityAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "spokenLanguageAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "releaseEligible": false,
+    "published": false
+  },
+  "strictAcceptanceEffect": "none"
+}
