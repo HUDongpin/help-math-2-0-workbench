@@ -9981,8 +9981,9 @@ body:has(.lesson-shell2[data-tutor-modal='true']) {
   font-size: .875rem;
 }
 
-/* Mobile learner composition. The desktop section spine becomes a horizontal
-   lesson-step strip so the authored plane keeps the full phone width. */
+/* Mobile learner composition. The desktop section spine becomes a wrapping
+   lesson-step strip so every section name stays readable on a phone width.
+   The strip stays in the row above the authored plane and playback controls. */
 @media (max-width: 680px) {
   body:has(.lesson-shell2[data-host-presentation='modern-wide']) {
     background: #edf3fa;
@@ -10027,17 +10028,19 @@ body:has(.lesson-shell2[data-tutor-modal='true']) {
   .lesson-shell2[data-host-presentation='modern-wide']
     .lesson-shell2__spine ol {
     flex-direction: row;
+    flex-wrap: wrap;
     gap: .35rem;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    padding-block-end: .2rem;
-    scroll-snap-type: x proximity;
+    overflow: visible;
+    overscroll-behavior-inline: auto;
+    padding-block-end: 0;
+    scroll-snap-type: none;
   }
 
   .lesson-shell2[data-host-presentation='modern-wide']
     .lesson-shell2__spine li {
-    flex: 0 0 auto;
-    scroll-snap-align: start;
+    flex: 0 1 auto;
+    max-width: 100%;
+    scroll-snap-align: unset;
   }
 
   .lesson-shell2[data-host-presentation='modern-wide']
@@ -10045,6 +10048,8 @@ body:has(.lesson-shell2[data-tutor-modal='true']) {
     border-radius: 8px;
     font-size: .875rem;
     gap: .35rem;
+    height: auto;
+    max-width: 100%;
     min-height: 44px;
     padding: .4rem .5rem;
     width: auto;
@@ -10052,7 +10057,11 @@ body:has(.lesson-shell2[data-tutor-modal='true']) {
 
   .lesson-shell2[data-host-presentation='modern-wide']
     .lesson-shell2__spine-name {
-    max-width: 7.5rem;
+    max-width: none;
+    min-width: 0;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
   }
 
   .lesson-shell2[data-host-presentation='modern-wide']

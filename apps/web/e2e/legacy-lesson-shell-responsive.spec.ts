@@ -836,6 +836,74 @@ test('G5 FQ002 and FQ003 advance and Replay to a clean first question', async ({
   await expectNoRuntimeIssues(page, issues);
 });
 
+test('390px phone width shows full lesson section labels without a horizontal tab scroll', async ({
+  baseURL,
+  page,
+}) => {
+  const cases = [
+    {
+      path: '/courses/4/3',
+      labels: ['Important Words', 'Practice Test'],
+    },
+    {
+      path: '/es/courses/4/3',
+      labels: ['Palabras importantes', 'Plan de los cuatro pasos'],
+    },
+  ] as const;
+
+  await page.setViewportSize({height: 844, width: 390});
+  const issues = collectRuntimeIssues(page, new URL(baseURL!).origin);
+
+  for (const scenario of cases) {
+    await openLesson(page, baseURL!, scenario.path);
+    const layout = await page.evaluate(() => {
+      const list = document.querySelector<HTMLElement>('.lesson-shell2__spine ol')!;
+      const spine = document.querySelector<HTMLElement>('.lesson-shell2__spine')!
+        .getBoundingClientRect();
+      const toolbar = document.querySelector<HTMLElement>(
+        '.lesson-shell2__modern-toolbar',
+      )!.getBoundingClientRect();
+      const viewportWidth = document.documentElement.clientWidth;
+      const labels = [...list.querySelectorAll<HTMLElement>('.lesson-shell2__spine-name')]
+        .map((name) => {
+          const box = name.getBoundingClientRect();
+          const style = getComputedStyle(name);
+          return {
+            text: name.textContent ?? '',
+            clipped: style.textOverflow === 'ellipsis'
+              && name.scrollWidth > name.clientWidth + 1,
+            insideViewport: box.width > 0
+              && box.left >= -1
+              && box.right <= viewportWidth + 1,
+          };
+        });
+      return {
+        documentWidth: document.documentElement.scrollWidth,
+        labels,
+        listOverflow: getComputedStyle(list).overflowX,
+        listScrolls: list.scrollWidth > list.clientWidth + 1,
+        listWrap: getComputedStyle(list).flexWrap,
+        toolbarClearsSpine: toolbar.top + 1 >= spine.bottom,
+        viewportWidth,
+      };
+    });
+
+    expect(layout.listWrap).toBe('wrap');
+    expect(layout.listOverflow).toBe('visible');
+    expect(layout.listScrolls).toBe(false);
+    expect(layout.toolbarClearsSpine).toBe(true);
+    expect(layout.documentWidth).toBeLessThanOrEqual(layout.viewportWidth + 1);
+    expect(layout.labels.map((label) => label.text)).toEqual(
+      expect.arrayContaining([...scenario.labels]),
+    );
+    for (const label of layout.labels) {
+      expect(label.clipped, label.text).toBe(false);
+      expect(label.insideViewport, label.text).toBe(true);
+    }
+  }
+  await expectNoRuntimeIssues(page, issues);
+});
+
 test.describe('coarse-pointer companion layout', () => {
   test.use({
     hasTouch: true,

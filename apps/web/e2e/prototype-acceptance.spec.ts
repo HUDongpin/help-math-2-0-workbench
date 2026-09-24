@@ -1115,25 +1115,58 @@ test.describe('CLIENT_RENDER_MOCK · prototype composition', () => {
     await expect(root).toHaveAttribute('data-tutor-open', 'false');
     expect(await readPersistedLessonProgress(page)).toEqual(persistedBefore);
 
-    await page.setViewportSize({width: 375, height: 812});
+    await page.setViewportSize({width: 390, height: 844});
     await expect(spine.locator('.lesson-shell2__spine-toggle')).toBeHidden();
     await expect(spine.locator('.lesson-shell2__spine-name').first())
       .toBeVisible();
     const mobileLayout = await page.evaluate(() => {
       const body = document.querySelector<HTMLElement>('.lesson-shell2__body')!;
       const list = document.querySelector<HTMLElement>('.lesson-shell2__spine ol')!;
+      const spineBox = document.querySelector<HTMLElement>('.lesson-shell2__spine')!
+        .getBoundingClientRect();
+      const toolbarBox = document.querySelector<HTMLElement>(
+        '.lesson-shell2__modern-toolbar',
+      )!.getBoundingClientRect();
+      const viewportWidth = document.documentElement.clientWidth;
+      const labels = [...list.querySelectorAll<HTMLElement>('.lesson-shell2__spine-name')]
+        .map((name) => {
+          const box = name.getBoundingClientRect();
+          const style = getComputedStyle(name);
+          return {
+            text: name.textContent ?? '',
+            clipped: style.textOverflow === 'ellipsis'
+              && name.scrollWidth > name.clientWidth + 1,
+            insideViewport: box.width > 0
+              && box.left >= -1
+              && box.right <= viewportWidth + 1,
+          };
+        });
       return {
         bodyColumns: getComputedStyle(body).gridTemplateColumns
           .trim().split(/\s+/u),
         documentWidth: document.documentElement.scrollWidth,
+        labels,
         listDirection: getComputedStyle(list).flexDirection,
         listOverflow: getComputedStyle(list).overflowX,
-        viewportWidth: document.documentElement.clientWidth,
+        listScrolls: list.scrollWidth > list.clientWidth + 1,
+        listWrap: getComputedStyle(list).flexWrap,
+        toolbarClearsSpine: toolbarBox.top + 1 >= spineBox.bottom,
+        viewportWidth,
       };
     });
     expect(mobileLayout.bodyColumns).toHaveLength(1);
     expect(mobileLayout.listDirection).toBe('row');
-    expect(mobileLayout.listOverflow).toBe('auto');
+    expect(mobileLayout.listWrap).toBe('wrap');
+    expect(mobileLayout.listOverflow).toBe('visible');
+    expect(mobileLayout.listScrolls).toBe(false);
+    expect(mobileLayout.toolbarClearsSpine).toBe(true);
+    expect(mobileLayout.labels.map((label) => label.text)).toEqual(
+      expect.arrayContaining(['Important Words', 'Practice Test']),
+    );
+    for (const label of mobileLayout.labels) {
+      expect(label.clipped, label.text).toBe(false);
+      expect(label.insideViewport, label.text).toBe(true);
+    }
     expect(mobileLayout.documentWidth)
       .toBeLessThanOrEqual(mobileLayout.viewportWidth + 1);
     await expect(progress).toBeVisible();

@@ -115,6 +115,58 @@ test('Learning Home keeps lesson and teacher information readable across EN/ES v
       13,
     );
 
+    if (scenario.viewport.width <= 520) {
+      const navFit = await workspaceRail.locator('[class*="navScroller"]').evaluate((scroller) => {
+        const scrollerBox = scroller.getBoundingClientRect();
+        const topbar = scroller.closest('[data-learning-platform-home]')
+          ?.querySelector<HTMLElement>('[class*="topbar"]');
+        const topbarBox = topbar?.getBoundingClientRect() ?? null;
+        const viewportWidth = window.innerWidth;
+        const labels = [...scroller.querySelectorAll<HTMLElement>('[class*="navItem"]')].map((item) => {
+          const box = item.getBoundingClientRect();
+          const label = [...item.children].find((child): child is HTMLElement =>
+            child instanceof HTMLElement
+            && child.tagName === 'SPAN'
+            && !String(child.className).includes('navIcon'));
+          const labelStyle = label ? getComputedStyle(label) : null;
+          return {
+            text: label?.textContent?.trim() ?? '',
+            clipped: Boolean(
+              label
+              && labelStyle?.textOverflow === 'ellipsis'
+              && label.scrollWidth > label.clientWidth + 1,
+            ),
+            insideScroller: box.left >= scrollerBox.left - 1
+              && box.right <= scrollerBox.right + 1,
+            insideViewport: box.width > 0
+              && box.left >= -1
+              && box.right <= viewportWidth + 1,
+          };
+        });
+        return {
+          labels,
+          scrollable: scroller.scrollWidth > scroller.clientWidth + 1,
+          topbarClearsNav: topbarBox === null || topbarBox.top + 1 >= scrollerBox.bottom,
+        };
+      });
+      expect(navFit.scrollable).toBe(false);
+      expect(navFit.topbarClearsNav).toBe(true);
+      const requiredLabels = scenario.path.startsWith('/es')
+        ? ['Hoy', 'Practicar', 'Mis palabras', 'Todas las lecciones']
+        : ['Today', 'Practice', 'My words', 'All lessons'];
+      expect(navFit.labels.map((label) => label.text)).toEqual(
+        expect.arrayContaining(requiredLabels),
+      );
+      expect(navFit.labels.some((label) => label.text.startsWith(
+        scenario.path.startsWith('/es') ? 'Mi lección' : 'My lesson',
+      ))).toBe(true);
+      for (const label of navFit.labels) {
+        expect(label.clipped, label.text).toBe(false);
+        expect(label.insideScroller, label.text).toBe(true);
+        expect(label.insideViewport, label.text).toBe(true);
+      }
+    }
+
     // The count remains visible/audible on wide layouts and becomes
     // presentation-only on compact layouts; the navigation label is stable.
     await page.getByRole('button', {name: scenario.lessons}).click();
