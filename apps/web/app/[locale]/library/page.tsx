@@ -2,7 +2,7 @@ import type {Metadata} from 'next';
 
 import {Container} from '@/components/ui';
 import {Link} from '@/i18n/navigation';
-import {completeAnimations} from '@/lib/catalog';
+import {getCatalog, publishedAnimations} from '@/lib/catalog';
 
 export const metadata: Metadata = {title: 'Animation library'};
 export const dynamic = 'force-dynamic';
@@ -13,7 +13,7 @@ export default async function LibraryPage({params, searchParams}: {params: Promi
   const [{locale}, query] = await Promise.all([params, searchParams]);
   const spanish = locale === 'es';
   const grade = first(query.grade); const domain = first(query.domain); const collection = first(query.collection); const lang = first(query.lang) || locale;
-  const all = completeAnimations();
+  const all = publishedAnimations(getCatalog());
   const domains = [...new Set(all.map((item) => item.classification.domain))].sort();
   const visible = all.filter((item) => (!grade || String(item.classification.grade ?? '') === grade) && (!domain || item.classification.domain === domain) && (!collection || item.classification.collection === collection));
   return <main id="main-content">

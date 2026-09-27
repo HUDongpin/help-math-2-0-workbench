@@ -1,6 +1,6 @@
 'use client';
 
-import {useLayoutEffect, useRef, type ReactNode} from 'react';
+import React, {useLayoutEffect, useRef, type ReactNode} from 'react';
 
 export function AccessibleLegacyFrame({children, lang, kind, onReplay}: {
   children: ReactNode;

@@ -1,4 +1,166 @@
 import type {NextConfig} from 'next';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {existsSync} from 'node:fs';
+
+import {isClerkLocalAuthConfigurationReady} from './lib/clerk-local-auth-config';
+import {
+  CLERK_SYNTHETIC_DIST_DIR,
+  CLERK_SYNTHETIC_DIST_DIR_AUTHORIZATION,
+} from './lib/clerk-synthetic-execution';
+import {
+  CURRENT_JS_CANDIDATE_QA_AUTHORIZATION,
+  currentJsCandidateAssetRecords,
+} from './lib/current-js-asset-profile';
+import {
+  CONTROLLED_CURRENT_JS_PREVIEW,
+  controlledCurrentJsPreviewBuildRequested,
+  controlledCurrentJsPreviewEnvironmentAllowed,
+} from './lib/controlled-current-js-preview';
+
+import {CURRENT_JS_1751_PUBLIC_PRODUCTION, public1751BuildRequested, public1751EnvironmentAllowed} from './lib/current-js-1751-public-production';
+
+const webDirectory = path.dirname(fileURLToPath(import.meta.url));
+const controlledPreviewBuild = controlledCurrentJsPreviewBuildRequested()
+  && controlledCurrentJsPreviewEnvironmentAllowed();
+if (controlledCurrentJsPreviewBuildRequested() && !controlledPreviewBuild) {
+  throw new Error('Controlled Current-JS preview requires the exact protected Preview project or explicit local production verification.');
+}
+const public1751Build = public1751BuildRequested() && public1751EnvironmentAllowed();
+if (public1751BuildRequested() && (!public1751Build || controlledCurrentJsPreviewBuildRequested())) {
+  throw new Error('Public 1751-page production requires the exact production project or explicit local verification, without the Preview build flag.');
+}
+const controlledCourseBuild = controlledPreviewBuild || public1751Build;
+if (process.env.NODE_ENV === 'production' && !controlledCourseBuild && existsSync(
+  path.resolve(webDirectory, '../../deployment/current-js-controlled-preview-v2/manifest.json'),
+)) {
+  throw new Error('This candidate contains the controlled-preview asset pack and cannot build as public production.');
+}
+const g4L3WholeLessonPackageBuild =
+  process.env.G4_L3_WHOLE_LESSON_PACKAGE === '1';
+const g4L3WholeLessonPackageV31Build =
+  g4L3WholeLessonPackageBuild
+  && process.env.G4_L3_WHOLE_LESSON_PACKAGE_V3_1 === '1';
+const g4L3WholeLessonPackageV32Build =
+  g4L3WholeLessonPackageBuild
+  && process.env.G4_L3_WHOLE_LESSON_PACKAGE_V3_2 === '1';
+const g4L3WholeLessonPackageV33Build =
+  g4L3WholeLessonPackageBuild
+  && process.env.G4_L3_WHOLE_LESSON_PACKAGE_V3_3 === '1';
+const g5L4WholeLessonPackageBuild =
+  process.env.G5_L4_WHOLE_LESSON_PACKAGE === '1';
+const localReferenceDiagnosticBuild =
+  process.env.HELP_MATH_LOCAL_REFERENCE_DIAGNOSTIC === '1'
+  && process.env.NODE_ENV === 'production'
+  && process.env.VERCEL_ENV === undefined;
+const clerkSyntheticBuild =
+  process.env.HELP_MATH_CLERK_SYNTHETIC_BUILD
+    === CLERK_SYNTHETIC_DIST_DIR_AUTHORIZATION
+  && process.env.NODE_ENV === 'development'
+  && process.env.VERCEL_ENV === undefined;
+const currentJsCandidateQaBuild =
+  process.env.HELP_MATH_CURRENT_JS_CANDIDATE_QA
+    === CURRENT_JS_CANDIDATE_QA_AUTHORIZATION
+  && process.env.CURRENT_JS_CANDIDATE_PROFILE_ENABLED === 'true'
+  && process.env.NODE_ENV === 'development'
+  && process.env.VERCEL_ENV === undefined;
+const currentJsCandidateQaRewrites = currentJsCandidateAssetRecords().map(
+  ({assetPath}) => ({
+    source: `/flash-assets/${assetPath}`,
+    destination: `/current-js-candidate-assets-internal/${assetPath}`,
+  }),
+);
+const novaFullStackFakeTransportRequested = [
+  process.env.NOVA_TEST_FAKE_TRANSPORT_AUTHORIZATION,
+  process.env.NOVA_TEST_FAKE_TRANSPORT_MODE,
+  process.env.NOVA_TEST_FAKE_TRANSPORT_ORIGIN,
+  process.env.NOVA_TEST_FAKE_TRANSPORT_RECEIPT_PATH,
+].some((value) => value !== undefined);
+const localClerkAuthBuild = isClerkLocalAuthConfigurationReady(process.env);
+const localClerkScriptSources = localClerkAuthBuild
+  ? ' https://*.clerk.accounts.dev https://*.clerk.com https://*.protect.clerk.com'
+  : '';
+const localClerkConnectSources = localClerkAuthBuild
+  ? ' https://api.clerk.com https://*.clerk.accounts.dev https://*.clerk.com https://*.protect.clerk.com https://img.clerk.com'
+  : '';
+const localClerkImageSources = localClerkAuthBuild
+  ? ' https://img.clerk.com'
+  : '';
+const localClerkFrameSources = localClerkAuthBuild
+  ? ' https://*.protect.clerk.com'
+  : '';
+if (g4L3WholeLessonPackageBuild && g5L4WholeLessonPackageBuild) {
+  throw new Error(
+    'G4 L3 and G5 L4 standalone package builds are mutually exclusive.',
+  );
+}
+if (
+  process.env.NODE_ENV === 'production' &&
+  novaFullStackFakeTransportRequested
+) {
+  throw new Error(
+    'Nova full-stack fake transport is forbidden in production builds.',
+  );
+}
+if (
+  process.env.G4_L3_WHOLE_LESSON_PACKAGE_V3_1 === '1'
+  && !g4L3WholeLessonPackageBuild
+) {
+  throw new Error(
+    'G4 L3 v3.1 package mode requires G4_L3_WHOLE_LESSON_PACKAGE=1.',
+  );
+}
+if (
+  process.env.G4_L3_WHOLE_LESSON_PACKAGE_V3_2 === '1'
+  && !g4L3WholeLessonPackageBuild
+) {
+  throw new Error(
+    'G4 L3 v3.2 package mode requires G4_L3_WHOLE_LESSON_PACKAGE=1.',
+  );
+}
+if (
+  process.env.G4_L3_WHOLE_LESSON_PACKAGE_V3_3 === '1'
+  && !g4L3WholeLessonPackageBuild
+) {
+  throw new Error(
+    'G4 L3 v3.3 package mode requires G4_L3_WHOLE_LESSON_PACKAGE=1.',
+  );
+}
+if (
+  [
+    g4L3WholeLessonPackageV31Build,
+    g4L3WholeLessonPackageV32Build,
+    g4L3WholeLessonPackageV33Build,
+  ].filter(Boolean).length > 1
+) {
+  throw new Error(
+    'G4 L3 v3.1, v3.2, and v3.3 package modes are mutually exclusive.',
+  );
+}
+const wholeLessonPackageBuild =
+  g4L3WholeLessonPackageBuild || g5L4WholeLessonPackageBuild;
+if (localReferenceDiagnosticBuild && wholeLessonPackageBuild) {
+  throw new Error(
+    'The local reference diagnostic build and whole-lesson package builds are mutually exclusive.',
+  );
+}
+if (
+  clerkSyntheticBuild
+  && (localReferenceDiagnosticBuild || wholeLessonPackageBuild)
+) {
+  throw new Error(
+    'The Clerk synthetic dev build is mutually exclusive with diagnostic and package builds.',
+  );
+}
+const wholeLessonPackageDistDir = g5L4WholeLessonPackageBuild
+  ? '.next-g5-l4-package'
+  : g4L3WholeLessonPackageV33Build
+    ? '.next-g4-l3-package-v3-3'
+    : g4L3WholeLessonPackageV32Build
+      ? '.next-g4-l3-package-v3-2'
+      : g4L3WholeLessonPackageV31Build
+        ? '.next-g4-l3-package-v3-1'
+        : '.next-g4-l3-package';
 
 const securityHeaders = [
   {
@@ -6,23 +168,50 @@ const securityHeaders = [
     value: [
       "default-src 'self'",
       "base-uri 'self'",
-      "connect-src 'self' https://challenges.cloudflare.com",
+      `connect-src 'self' https://challenges.cloudflare.com${localClerkConnectSources}`,
       "font-src 'self' data:",
       "form-action 'self'",
       "frame-ancestors 'none'",
-      "frame-src https://challenges.cloudflare.com",
-      "img-src 'self' data: blob:",
+      `frame-src 'self' https://challenges.cloudflare.com${localClerkFrameSources}`,
+      `img-src 'self' data: blob:${localClerkImageSources}`,
       "object-src 'none'",
-      `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'production' ? '' : " 'unsafe-eval' 'wasm-unsafe-eval'"} https://challenges.cloudflare.com`,
+      `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'production' ? '' : " 'unsafe-eval' 'wasm-unsafe-eval'"} https://challenges.cloudflare.com${localClerkScriptSources}`,
+      "style-src 'self' 'unsafe-inline'",
+      "worker-src 'self' blob:"
+    ].join('; ')
+  },
+  {key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups'},
+  // Nova voice input uses the browser's speech-recognition control. HELP Math
+  // never receives the audio stream; only the learner-approved transcript is
+  // posted to the same-origin Nova route. Device camera access stays blocked.
+  {key: 'Permissions-Policy', value: 'camera=(), microphone=(self), geolocation=()'},
+  {key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin'},
+  {key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload'},
+  {key: 'X-Content-Type-Options', value: 'nosniff'},
+  {key: 'X-Frame-Options', value: 'DENY'}
+];
+
+const embeddedCourseAdapterHeaders = [
+  {
+    key: 'Content-Security-Policy',
+    value: [
+      "default-src 'self'",
+      "base-uri 'self'",
+      "connect-src 'none'",
+      "font-src 'none'",
+      "form-action 'none'",
+      "frame-ancestors 'self'",
+      "img-src 'self' data:",
+      "object-src 'none'",
+      "script-src 'self' 'unsafe-inline'",
       "style-src 'self' 'unsafe-inline'"
     ].join('; ')
   },
   {key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups'},
   {key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()'},
-  {key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin'},
-  {key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload'},
+  {key: 'Referrer-Policy', value: 'no-referrer'},
   {key: 'X-Content-Type-Options', value: 'nosniff'},
-  {key: 'X-Frame-Options', value: 'DENY'}
+  {key: 'X-Frame-Options', value: 'SAMEORIGIN'}
 ];
 
 const legacyRedirects: NonNullable<NextConfig['redirects']> = async () => [
@@ -43,11 +232,114 @@ const legacyRedirects: NonNullable<NextConfig['redirects']> = async () => [
 ];
 
 const nextConfig: NextConfig = {
+  // Keep the learner-facing local preview free of the development badge so
+  // screenshot and projector review reflect the actual course surface.
+  devIndicators: false,
+  env: {
+    HELP_MATH_1751_PUBLIC_PRODUCTION_BUILD: public1751Build ? CURRENT_JS_1751_PUBLIC_PRODUCTION : '',
+    HELP_MATH_CONTROLLED_CURRENT_JS_PREVIEW_BUILD: controlledCourseBuild
+      ? CONTROLLED_CURRENT_JS_PREVIEW
+      : '',
+    HELP_MATH_CURRENT_JS_CANDIDATE_QA_BUILD: currentJsCandidateQaBuild
+      ? CURRENT_JS_CANDIDATE_QA_AUTHORIZATION
+      : '',
+  },
+  distDir: clerkSyntheticBuild
+    ? CLERK_SYNTHETIC_DIST_DIR
+    : currentJsCandidateQaBuild
+      ? '.next-current-js-candidate-qa'
+    : localReferenceDiagnosticBuild
+      ? '.next-local-reference-diagnostic'
+      : wholeLessonPackageBuild
+        ? wholeLessonPackageDistDir
+        : '.next',
+  output: wholeLessonPackageBuild || controlledCourseBuild
+    ? 'standalone'
+    : undefined,
+  outputFileTracingRoot: path.resolve(webDirectory, '../..'),
+  outputFileTracingIncludes: {
+    '/*': [
+      '../../catalog/animations.json',
+      '../../catalog/missing-references.json',
+      '../../catalog/completion-ledger.json',
+      '../../catalog/lesson-releases.json',
+      '../../catalog/lesson-release-ledger.json',
+      '../../catalog/lessons.json',
+      '../../reports/g5-l4-source-scope-freeze.json',
+      '../../apps/web/server-assets/flash-assets/courses/**/*.mp3',
+    ],
+  },
+  outputFileTracingExcludes: {
+    '*': [
+      ...(controlledCourseBuild ? [
+        '../../work/**/*',
+        '../../migrations/**/*',
+        '../../source-assets/**/*',
+        '../../private-archive/**/*',
+        '../../candidate-evidence/**/*',
+        '../../deployment/**/*',
+        './candidate-assets/**/*',
+        './public/current-js-preview-assets/**/*',
+        './public/flash-assets/**/*',
+      ] : []),
+      ...(wholeLessonPackageBuild
+        ? [
+          '../../artifacts/**/*',
+          '../../migrations/**/*',
+          '../../private-archive/**/*',
+          '../../source-assets/**/*',
+        ]
+        : []),
+      '../../work/g4-l12-vb036-behavior-canvas-v1/**',
+      '../../work/g4-l12-vb036-behavior-canvas-v2/**',
+      '../../work/g4-l12-vb036-behavior-canvas-v3/**',
+      '../../../../American Dream/g4-l12-vb036-pcm-calibration-20260905.a1ZKIn/**',
+    ],
+  },
   poweredByHeader: false,
   reactStrictMode: true,
   transpilePackages: ['@helpmath/demos'],
   async headers() {
-    return [{source: '/(.*)', headers: securityHeaders}];
+    return [
+      ...(controlledCourseBuild ? [{
+        source: '/:path*',
+        headers: [
+          {key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive, noimageindex'},
+          {key: 'Cache-Control', value: 'private, no-store, max-age=0'},
+        ],
+      }] : []),
+      {
+        source: controlledCourseBuild
+          ? '/((?!flash-assets/courses/|current-js-preview-assets/).*)'
+          : '/((?!flash-assets/courses/).*)',
+        headers: securityHeaders
+      },
+      ...(controlledCourseBuild ? [{source: '/current-js-preview-assets/:path*', headers: embeddedCourseAdapterHeaders}] : []),
+      {
+        source: '/flash-assets/courses/:path*',
+        headers: embeddedCourseAdapterHeaders
+      },
+      {
+        source:
+          '/flash-assets/courses/shell-course-g04-l03-index-local/host-composite-assets/:path*',
+        headers: [
+          {key: 'Cache-Control', value: 'private, no-store, max-age=0'},
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow, noarchive, noimageindex',
+          },
+        ],
+      }
+    ];
+  },
+  async rewrites() {
+    return {
+      beforeFiles: currentJsCandidateQaBuild
+        ? currentJsCandidateQaRewrites
+        : [],
+      afterFiles: [],
+      fallback: [],
+    };
   },
   redirects: legacyRedirects
 };
