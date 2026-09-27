@@ -84,6 +84,9 @@ jobs:
       - name: Type-check site
         run: npm run typecheck
 
+      - name: Restore hash-bound site test assets
+        run: node ../../scripts/prepare-site-ci-assets.mjs
+
       - name: Test site
         run: npm test
 
