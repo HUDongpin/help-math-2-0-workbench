@@ -586,11 +586,16 @@ export async function requestGithubOidcToken({requestUrl, requestToken, issuer, 
   invariant(typeof requestUrl === "string", "GitHub OIDC request URL is unavailable");
   invariant(typeof requestToken === "string" && requestToken.length >= 20, "GitHub OIDC request token is unavailable");
   invariant(claims?.aud === "https://vercel.com/helpmath-production", "OIDC audience drifted");
+  // The runner supplies a request endpoint; it is not the JWT issuer URL.
+  // GitHub documents *.actions.githubusercontent.com for OIDC token retrieval.
   const url = new URL(requestUrl);
   invariant(
-    url.origin === "https://token.actions.githubusercontent.com"
+    url.protocol === "https:"
+      && url.hostname.endsWith(".actions.githubusercontent.com")
+      && url.port === ""
       && url.username === ""
-      && url.password === "",
+      && url.password === ""
+      && url.hash === "",
     "GitHub OIDC request origin drifted",
   );
   url.searchParams.set("audience", claims.aud);
@@ -601,7 +606,8 @@ export async function requestGithubOidcToken({requestUrl, requestToken, issuer, 
   });
   invariant(response.status === 200, `GitHub OIDC endpoint returned ${response.status}`);
   const body = await response.json();
-  exactKeys(body, ["value"], "GitHub OIDC response");
+  // Match the official toolkit response contract: consume value, not metadata.
+  invariant(plainObject(body), "GitHub OIDC response must be a plain object");
   validateGithubOidcClaims(body.value, {issuer, claims});
   return body.value;
 }
