@@ -71,7 +71,7 @@ export function validatePolicy(policy) {
     "trustedSource",
     "vercel",
   ], "policy");
-  invariant(policy.schemaVersion === 2, "policy schemaVersion must be 2");
+  invariant(policy.schemaVersion === 3, "policy schemaVersion must be 3");
   invariant(
     policy.status === "prepared-not-activated" || policy.status === "active",
     "policy status must be prepared-not-activated or active",
@@ -114,8 +114,9 @@ export function validatePolicy(policy) {
     "postflight workflow ref drifted",
   );
   invariant(policy.github.candidateWorkflowRef !== policy.github.postflightWorkflowRef, "workflow refs must be distinct");
-  exactKeys(policy.github.vercelApp, ["installationId", "senderLogin", "senderType"], "policy.github.vercelApp");
+  exactKeys(policy.github.vercelApp, ["installationId", "senderId", "senderLogin", "senderType"], "policy.github.vercelApp");
   invariant(policy.github.vercelApp.senderLogin === "vercel[bot]", "Vercel App sender login drifted");
+  invariant(policy.github.vercelApp.senderId === "35613825", "Vercel App immutable sender id drifted");
   invariant(policy.github.vercelApp.senderType === "Bot", "Vercel App sender type drifted");
   const providerId = (value) => typeof value === "string" && /^[1-9][0-9]{0,19}$/u.test(value);
   if (policy.status === "prepared-not-activated") {
@@ -263,15 +264,23 @@ export function validateDispatch({action, payload, checkoutSha, eventOrigin, wor
   invariant(action === expectedAction, `unexpected repository_dispatch action: ${action}`);
   validateWorkflowContext(workflowContext, policy, mode);
   invariant(SHA256.test(checkoutSha), "checkout SHA must be a full lowercase Git SHA");
-  exactKeys(eventOrigin, ["installationId", "senderLogin", "senderType"], "dispatch origin");
-  invariant(eventOrigin.installationId === policy.github.vercelApp.installationId, "dispatch installation id drifted");
+  exactKeys(eventOrigin, ["installationId", "senderId", "senderLogin", "senderType"], "dispatch origin");
+  // Actions does not expose the sender App installation in this real dispatch.
+  // Authenticate the GitHub-owned event envelope, never client_payload fields.
+  invariant(eventOrigin.senderId === policy.github.vercelApp.senderId, "dispatch sender id drifted");
+  invariant(eventOrigin.installationId === null || eventOrigin.installationId === policy.github.vercelApp.installationId, "dispatch installation id drifted");
   invariant(eventOrigin.senderLogin === policy.github.vercelApp.senderLogin, "dispatch sender login drifted");
   invariant(eventOrigin.senderType === policy.github.vercelApp.senderType, "dispatch sender type drifted");
 
-  exactKeys(payload, ["environment", "git", "id", "project", "state", "url"], "dispatch payload");
+  exactKeys(payload, ["environment", "git", "id", "project", "state", "url", ...(Object.hasOwn(payload, "alias") ? ["alias"] : [])], "dispatch payload");
+  if (Object.hasOwn(payload, "alias")) {
+    invariant(Array.isArray(payload.alias) && payload.alias.length <= 20 && payload.alias.every(
+      (host) => typeof host === "string" && host.length <= 253 && /^[a-z0-9]+(?:[a-z0-9.-]*[a-z0-9])?$/u.test(host),
+    ), "dispatch alias metadata is invalid");
+  }
   exactKeys(payload.project, ["id", "name"], "dispatch project");
   exactKeys(payload.git, ["ref", "sha", "shortSha"], "dispatch git");
-  exactKeys(payload.state, ["type"], "dispatch state");
+  exactKeys(payload.state, mode === "candidate" ? ["type", "detail"] : ["type"], "dispatch state");
   invariant(payload.project.id === policy.vercel.projectId, "dispatch project id drifted");
   invariant(payload.project.name === policy.vercel.projectName, "dispatch project name drifted");
   invariant(payload.environment === policy.vercel.environment, "dispatch environment is not production");
@@ -286,12 +295,15 @@ export function validateDispatch({action, payload, checkoutSha, eventOrigin, wor
     "dispatch short SHA is invalid",
   );
   invariant(DEPLOYMENT_ID.test(payload.id), "dispatch deployment id is invalid");
-  invariant(payload.state.type === (mode === "candidate" ? "pending" : "promoted"), "dispatch state is invalid");
+  invariant(payload.state.type === (mode === "candidate" ? "ready" : "promoted"), "dispatch state is invalid");
+  if (mode === "candidate") invariant(payload.state.detail === "before_alias", "dispatch state detail is not before_alias");
   const deploymentUrl = validatedDeploymentUrl(payload.url);
   return Object.freeze({
     deploymentId: payload.id,
     deploymentUrl,
-    githubAppInstallationId: eventOrigin.installationId,
+    githubAppInstallationId: policy.github.vercelApp.installationId,
+    eventInstallationId: eventOrigin.installationId,
+    githubAppSenderId: eventOrigin.senderId,
     githubAppSenderLogin: eventOrigin.senderLogin,
     gitRef: policy.trustedSource.claims.ref,
     gitSha: payload.git.sha,
@@ -397,6 +409,8 @@ export async function runSmoke({policy, mode, deployment, oidcToken, fetchImpl =
     deployment.githubAppInstallationId === policy.github.vercelApp.installationId,
     "deployment installation id drifted",
   );
+  invariant(deployment.githubAppSenderId === policy.github.vercelApp.senderId, "smoke sender id drifted");
+  invariant(deployment.eventInstallationId === null || deployment.eventInstallationId === policy.github.vercelApp.installationId, "smoke event installation id drifted");
   const eventDeploymentUrl = validatedDeploymentUrl(deployment.deploymentUrl);
   const baseOrigin = mode === "candidate"
     ? eventDeploymentUrl
@@ -468,7 +482,7 @@ export async function runSmoke({policy, mode, deployment, oidcToken, fetchImpl =
   invariant(generatedAt instanceof Date && Number.isFinite(generatedAt.getTime()), "receipt time is invalid");
   invariant(observedDeploymentIdentity !== null, "deployment provenance was not observed");
   return {
-    schemaVersion: 2,
+    schemaVersion: 3,
     evidenceKind: mode === "candidate"
       ? "HELP_MATH_VERCEL_GIT_PRODUCTION_CANDIDATE_SMOKE"
       : "HELP_MATH_VERCEL_GIT_PRODUCTION_POSTFLIGHT",
@@ -481,7 +495,11 @@ export async function runSmoke({policy, mode, deployment, oidcToken, fetchImpl =
     },
     githubServiceIdentity: {
       appSender: policy.github.vercelApp.senderLogin,
-      installationId: deployment.githubAppInstallationId,
+      configuredInstallationId: deployment.githubAppInstallationId,
+      eventInstallationId: deployment.eventInstallationId ?? null,
+      senderId: deployment.githubAppSenderId,
+      originEvidence: "github-authenticated-event-envelope",
+      installationEvidence: "operator-verified-project-binding-not-event-proof",
       storedCredential: false,
     },
     eventDeploymentIdentity: {

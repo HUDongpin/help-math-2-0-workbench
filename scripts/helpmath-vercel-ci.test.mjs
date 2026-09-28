@@ -91,7 +91,7 @@ function payload({mode = "candidate", overrides = {}} = {}) {
     git: {ref: "main", sha: gitSha, shortSha: gitSha.slice(0, 9)},
     id: deploymentId,
     project: {id: activePolicy.vercel.projectId, name: activePolicy.vercel.projectName},
-    state: {type: mode === "candidate" ? "pending" : "promoted"},
+    state: mode === "candidate" ? {type: "ready", detail: "before_alias"} : {type: "promoted"},
     url: deploymentUrl,
   };
   return Object.assign(value, overrides);
@@ -146,7 +146,7 @@ test("candidate dispatch binds the exact project, production main SHA, and deplo
     action: "vercel.deployment.ready",
     payload: payload(),
     checkoutSha: gitSha,
-    eventOrigin: {installationId: "12345678", senderLogin: "vercel[bot]", senderType: "Bot"},
+    eventOrigin: {installationId: "12345678", senderId: "35613825", senderLogin: "vercel[bot]", senderType: "Bot"},
     workflowContext: workflowContext(),
     mode: "candidate",
     policy: activePolicy,
@@ -155,6 +155,8 @@ test("candidate dispatch binds the exact project, production main SHA, and deplo
     deploymentId,
     deploymentUrl,
     githubAppInstallationId: "12345678",
+    eventInstallationId: "12345678",
+    githubAppSenderId: "35613825",
     githubAppSenderLogin: "vercel[bot]",
     gitRef: "refs/heads/main",
     gitSha,
@@ -168,7 +170,7 @@ test("postflight dispatch requires the promoted event and state", () => {
     action: "vercel.deployment.promoted",
     payload: payload({mode: "postflight"}),
     checkoutSha: gitSha,
-    eventOrigin: {installationId: "12345678", senderLogin: "vercel[bot]", senderType: "Bot"},
+    eventOrigin: {installationId: "12345678", senderId: "35613825", senderLogin: "vercel[bot]", senderType: "Bot"},
     workflowContext: workflowContext({}, "postflight"),
     mode: "postflight",
     policy: activePolicy,
@@ -192,7 +194,7 @@ test("dispatch validation rejects project, branch, SHA, environment, URL, and st
       action: "vercel.deployment.ready",
       payload: value,
       checkoutSha: gitSha,
-      eventOrigin: {installationId: "12345678", senderLogin: "vercel[bot]", senderType: "Bot"},
+      eventOrigin: {installationId: "12345678", senderId: "35613825", senderLogin: "vercel[bot]", senderType: "Bot"},
       workflowContext: workflowContext(),
       mode: "candidate",
       policy: activePolicy,
@@ -210,13 +212,13 @@ test("dispatch validation rejects inactive policy and event-origin drift before 
   };
   assert.throws(() => validateDispatch({
     ...common,
-    eventOrigin: {installationId: "12345678", senderLogin: "vercel[bot]", senderType: "Bot"},
+    eventOrigin: {installationId: "12345678", senderId: "35613825", senderLogin: "vercel[bot]", senderType: "Bot"},
     policy,
   }), /not active/iu);
   for (const eventOrigin of [
-    {installationId: "87654321", senderLogin: "vercel[bot]", senderType: "Bot"},
-    {installationId: "12345678", senderLogin: "attacker[bot]", senderType: "Bot"},
-    {installationId: "12345678", senderLogin: "vercel[bot]", senderType: "User"},
+    {installationId: "87654321", senderId: "35613825", senderLogin: "vercel[bot]", senderType: "Bot"},
+    {installationId: "12345678", senderId: "35613825", senderLogin: "attacker[bot]", senderType: "Bot"},
+    {installationId: "12345678", senderId: "35613825", senderLogin: "vercel[bot]", senderType: "User"},
   ]) {
     assert.throws(() => validateDispatch({...common, eventOrigin, policy: activePolicy}), /dispatch (installation id|sender)/iu);
   }
@@ -227,7 +229,7 @@ test("dispatch validation rejects immutable repository identity and workflow_ref
     action: "vercel.deployment.ready",
     payload: payload(),
     checkoutSha: gitSha,
-    eventOrigin: {installationId: "12345678", senderLogin: "vercel[bot]", senderType: "Bot"},
+    eventOrigin: {installationId: "12345678", senderId: "35613825", senderLogin: "vercel[bot]", senderType: "Bot"},
     mode: "candidate",
     policy: activePolicy,
   };
@@ -274,7 +276,7 @@ test("candidate smoke checks all 66 protected routes and emits no token or respo
   const receipt = await runSmoke({
     policy: activePolicy,
     mode: "candidate",
-    deployment: {deploymentId, deploymentUrl, gitSha, githubAppInstallationId: "12345678"},
+    deployment: {deploymentId, deploymentUrl, gitSha, githubAppInstallationId: "12345678", githubAppSenderId: "35613825", eventInstallationId: null},
     oidcToken: secret,
     fetchImpl: async (url, options) => {
       assert.equal(options.headers[activePolicy.trustedSource.header], secret);
@@ -286,7 +288,7 @@ test("candidate smoke checks all 66 protected routes and emits no token or respo
   assert.equal(receipt.checks.routeCount, 66);
   assert.equal(receipt.checks.passed, 66);
   assert.equal(receipt.checks.apexRedirect, null);
-  assert.equal(receipt.schemaVersion, 2);
+  assert.equal(receipt.schemaVersion, 3);
   assert.deepEqual(receipt.eventDeploymentIdentity, {
     projectId: activePolicy.vercel.projectId,
     deploymentId,
@@ -308,7 +310,11 @@ test("candidate smoke checks all 66 protected routes and emits no token or respo
   assert.equal(receipt.vercel.accessIdentity, "github-actions-oidc-trusted-source");
   assert.deepEqual(receipt.githubServiceIdentity, {
     appSender: "vercel[bot]",
-    installationId: "12345678",
+    configuredInstallationId: "12345678",
+    eventInstallationId: null,
+    senderId: "35613825",
+    originEvidence: "github-authenticated-event-envelope",
+    installationEvidence: "operator-verified-project-binding-not-event-proof",
     storedCredential: false,
   });
   assert.equal(JSON.stringify(receipt).includes(secret), false);
@@ -320,7 +326,7 @@ test("candidate smoke fails closed without protected noindex evidence", async ()
     runSmoke({
       policy: activePolicy,
       mode: "candidate",
-      deployment: {deploymentId, deploymentUrl, gitSha, githubAppInstallationId: "12345678"},
+      deployment: {deploymentId, deploymentUrl, gitSha, githubAppInstallationId: "12345678", githubAppSenderId: "35613825", eventInstallationId: null},
       oidcToken: `header.${"x".repeat(180)}.signature`,
       fetchImpl: async (url) => responseFor(url, {candidate: false}),
     }),
@@ -333,7 +339,7 @@ test("candidate smoke does not follow a redirect carrying its OIDC token", async
     runSmoke({
       policy: activePolicy,
       mode: "candidate",
-      deployment: {deploymentId, deploymentUrl, gitSha, githubAppInstallationId: "12345678"},
+      deployment: {deploymentId, deploymentUrl, gitSha, githubAppInstallationId: "12345678", githubAppSenderId: "35613825", eventInstallationId: null},
       oidcToken: `header.${"x".repeat(180)}.signature`,
       fetchImpl: async (url, options) => {
         assert.equal(options.redirect, "manual");
@@ -354,7 +360,7 @@ test("candidate smoke rejects an oversized response before retaining its body", 
     runSmoke({
       policy: activePolicy,
       mode: "candidate",
-      deployment: {deploymentId, deploymentUrl, gitSha, githubAppInstallationId: "12345678"},
+      deployment: {deploymentId, deploymentUrl, gitSha, githubAppInstallationId: "12345678", githubAppSenderId: "35613825", eventInstallationId: null},
       oidcToken: `header.${"x".repeat(180)}.signature`,
       fetchImpl: async (url) => {
         const response = new Response("x", {
@@ -377,7 +383,7 @@ test("public postflight checks routes plus exact apex path and query preservatio
   const receipt = await runSmoke({
     policy: activePolicy,
     mode: "postflight",
-    deployment: {deploymentId, deploymentUrl, gitSha, githubAppInstallationId: "12345678"},
+    deployment: {deploymentId, deploymentUrl, gitSha, githubAppInstallationId: "12345678", githubAppSenderId: "35613825", eventInstallationId: null},
     fetchImpl: async (url, options) => {
       assert.equal(options.headers[activePolicy.trustedSource.header], undefined);
       return responseFor(url, {candidate: false});
@@ -434,7 +440,7 @@ test("public postflight rejects missing or mismatched deployment provenance", as
       runSmoke({
         policy: activePolicy,
         mode: "postflight",
-        deployment: {deploymentId, deploymentUrl, gitSha, githubAppInstallationId: "12345678"},
+        deployment: {deploymentId, deploymentUrl, gitSha, githubAppInstallationId: "12345678", githubAppSenderId: "35613825", eventInstallationId: null},
         fetchImpl: async (url) => responseFor(url, {
           candidate: false,
           provenance: item.provenance,
@@ -452,7 +458,7 @@ test("public postflight rejects an alias change during the route sweep", async (
     runSmoke({
       policy: activePolicy,
       mode: "postflight",
-      deployment: {deploymentId, deploymentUrl, gitSha, githubAppInstallationId: "12345678"},
+      deployment: {deploymentId, deploymentUrl, gitSha, githubAppInstallationId: "12345678", githubAppSenderId: "35613825", eventInstallationId: null},
       fetchImpl: async (url) => {
         const parsed = new URL(url);
         if (parsed.origin === "https://helpmath.ai") {
@@ -585,4 +591,39 @@ test("checked-in activation binds observed installation and immutable repository
   assert.equal(checkedInPolicy.github.vercelApp.installationId, "145587056");
   assert.equal(checkedInPolicy.trustedSource.claims.repository_id, "1325197994");
   assert.equal(checkedInPolicy.trustedSource.claims.repository_owner_id, "47708816");
+});
+
+test("real Vercel ready event accepts absent installation without inventing event evidence", () => {
+  const input = {
+    action: "vercel.deployment.ready",
+    payload: payload({overrides: {alias: ["helpmath-web-git-main-peter-dongpin-hu-s-projects.vercel.app"]}}),
+    checkoutSha: gitSha,
+    eventOrigin: {installationId: null, senderId: "35613825", senderLogin: "vercel[bot]", senderType: "Bot"},
+    workflowContext: workflowContext(), mode: "candidate", policy: activePolicy,
+  };
+  const result = validateDispatch(input);
+  assert.equal(result.eventInstallationId, null);
+  assert.equal(result.githubAppInstallationId, "12345678");
+  for (const senderId of [undefined, "", "47708816", "35613826"]) {
+    assert.throws(() => validateDispatch({...input, eventOrigin: {...input.eventOrigin, senderId}}), /sender id/iu);
+  }
+  for (const state of [{type: "pending"}, {type: "ready", detail: "after_alias"}, {type: "success", detail: "before_alias"}]) {
+    assert.throws(() => validateDispatch({...input, payload: {...input.payload, state}}), /state/iu);
+  }
+  for (const alias of [["https://evil.example/"], ["bad\nname"], "not-an-array"]) {
+    assert.throws(() => validateDispatch({...input, payload: {...input.payload, alias}}), /alias/iu);
+  }
+  assert.throws(() => validateDispatch({...input, payload: {...input.payload, installation: {id: "12345678"}}}), /payload/iu);
+});
+
+test("captured provider run 36424817371 validates against real policy and reports null event installation", async () => {
+  const event = JSON.parse(await readFile(new URL('./fixtures/vercel-production-ready-36424817371.json', import.meta.url), 'utf8'));
+  const result = validateDispatch({action: event.action, payload: event.client_payload,
+    checkoutSha: event.client_payload.git.sha,
+    eventOrigin: {installationId: event.installation, senderId: String(event.sender.id), senderLogin: event.sender.login, senderType: event.sender.type},
+    workflowContext: workflowContext({repositoryId: checkedInPolicy.trustedSource.claims.repository_id, repositoryOwnerId: checkedInPolicy.trustedSource.claims.repository_owner_id}),
+    mode: 'candidate', policy: checkedInPolicy});
+  assert.equal(result.deploymentId, 'dpl_5VfPQxscmucmo5FUVqrGnBE6NjYg');
+  assert.equal(result.eventInstallationId, null);
+  assert.equal(result.githubAppSenderId, '35613825');
 });
