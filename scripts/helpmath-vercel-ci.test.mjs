@@ -478,20 +478,20 @@ test("public postflight rejects an alias change during the route sweep", async (
   assert.equal(publicRouteResponses, 2);
 });
 
-test("OIDC exchange requests the fixed audience and returns only a JWT", async () => {
+test("OIDC exchange uses the runner endpoint, fixed audience and validated JWT", async () => {
   let observed;
   const tokenValue = jwt({
     iss: activePolicy.trustedSource.issuer,
     ...activePolicy.trustedSource.claims,
   });
   const token = await requestGithubOidcToken({
-    requestUrl: "https://token.actions.githubusercontent.com/request?job=1",
+    requestUrl: "https://example.run.actions.githubusercontent.com/request?job=1",
     requestToken: "ephemeral-request-token-value",
     issuer: activePolicy.trustedSource.issuer,
     claims: activePolicy.trustedSource.claims,
     fetchImpl: async (url, options) => {
-      observed = {url: url.href, authorization: options.headers.authorization};
-      return new Response(JSON.stringify({value: tokenValue}), {
+      observed = {url: url.href, authorization: options.headers.authorization, redirect: options.redirect};
+      return new Response(JSON.stringify({value: tokenValue, count: 1}), {
         status: 200,
         headers: {"content-type": "application/json"},
       });
@@ -500,6 +500,9 @@ test("OIDC exchange requests the fixed audience and returns only a JWT", async (
   assert.equal(token, tokenValue);
   assert.equal(new URL(observed.url).searchParams.get("audience"), activePolicy.github.oidcAudience);
   assert.equal(observed.authorization, "bearer ephemeral-request-token-value");
+  assert.equal(new URL(observed.url).hostname, "example.run.actions.githubusercontent.com");
+  assert.equal(new URL(observed.url).searchParams.get("job"), "1");
+  assert.equal(observed.redirect, "error");
   await assert.rejects(
     requestGithubOidcToken({
       requestUrl: "https://attacker.invalid/request",
@@ -510,6 +513,42 @@ test("OIDC exchange requests the fixed audience and returns only a JWT", async (
     }),
     /origin drifted/iu,
   );
+});
+
+test("OIDC endpoint rejects lookalikes, credentials, ports and insecure transport before sending a token", async () => {
+  for (const requestUrl of [
+    "https://actions.githubusercontent.com/request",
+    "https://evilactions.githubusercontent.com/request",
+    "https://run.actions.githubusercontent.com.attacker.invalid/request",
+    "https://run.actions.githubusercontent.com@attacker.invalid/request",
+    "https://user:password@run.actions.githubusercontent.com/request",
+    "http://run.actions.githubusercontent.com/request",
+    "https://run.actions.githubusercontent.com:8443/request",
+    "https://run.actions.githubusercontent.com/request#fragment",
+  ]) {
+    let called = false;
+    await assert.rejects(requestGithubOidcToken({
+      requestUrl, requestToken: "ephemeral-request-token-value",
+      issuer: activePolicy.trustedSource.issuer, claims: activePolicy.trustedSource.claims,
+      fetchImpl: async () => { called = true; throw new Error("must not fetch"); },
+    }), /origin drifted/iu);
+    assert.equal(called, false);
+  }
+});
+
+test("OIDC runner response still rejects redirects, missing JWTs and issuer drift", async () => {
+  for (const [status, body, error] of [
+    [302, {}, /endpoint returned 302/iu],
+    [200, {count: 0}, /did not contain a JWT/iu],
+    [200, {value: jwt({...activePolicy.trustedSource.claims, iss: "https://attacker.invalid"})}, /iss claim drifted/iu],
+  ]) {
+    await assert.rejects(requestGithubOidcToken({
+      requestUrl: "https://example.run.actions.githubusercontent.com/request",
+      requestToken: "ephemeral-request-token-value",
+      issuer: activePolicy.trustedSource.issuer, claims: activePolicy.trustedSource.claims,
+      fetchImpl: async () => new Response(JSON.stringify(body), {status}),
+    }), error);
+  }
 });
 
 test("OIDC claim validation rejects immutable repository and workflow identity drift", () => {
