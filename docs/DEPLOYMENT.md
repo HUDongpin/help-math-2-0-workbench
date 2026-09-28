@@ -129,3 +129,8 @@ Before cutover, identify the last known-good production deployment and retain th
 - Contact delivery failure: disable or replace the public contact call-to-action with the documented support fallback in a reviewed deployment; never expose an unverified sender or silently discard requests.
 
 Vercel Pro can roll back to eligible deployments that previously served a production domain; details and caveats are in [Instant Rollback](https://vercel.com/docs/instant-rollback). Record incident time, release SHA, deployment IDs, DNS changes, decision owner, and verification evidence.
+
+
+## CI/CD service-identity successor
+
+The 2026-09-28 successor is prepared-not-activated. See CI_CD_SERVICE_IDENTITY.md. Keep the repository Actions variable HELP_MATH_CICD_IDENTITY_ACTIVATED absent until the exact revised candidate and repository/project identity are verified. Vercel Deployment Checks, protection and independent review remain mandatory.

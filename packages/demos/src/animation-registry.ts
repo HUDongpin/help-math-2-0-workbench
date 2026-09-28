@@ -1,15 +1,24 @@
 import type {AnimationModule} from './contract';
 import {animationModuleLoaders} from './registry.generated';
+import {withSourceLessonAudio} from './source-lesson-audio';
 
-export type {AnimationModuleLoader} from './registry.generated';
-export type {AnimationModule} from './contract';
+export type {
+  AnimationModuleLoader,
+  AnimationModuleRegistration,
+  AnimationModuleRegistrationScope,
+  AnimationRegistryScope,
+} from './registry.generated';
+export type {AnimationModule, AnimationRendererProps} from './contract';
 
-export const registeredAnimationKeys = Object.freeze(Object.keys(animationModuleLoaders));
-
-export function hasAnimationModule(key: string): boolean {
-  return Object.hasOwn(animationModuleLoaders, key);
-}
+export {
+  animationModuleRegistration,
+  hasAnimationModule,
+  privateRegisteredAnimationKeys,
+  registeredAnimationKeys,
+  registeredPrivateCurrentJsAnimationKeys,
+} from './animation-registry-metadata';
 
 export async function loadAnimationModule(key: string): Promise<AnimationModule | undefined> {
-  return animationModuleLoaders[key]?.();
+  const module = await animationModuleLoaders[key]?.();
+  return module ? withSourceLessonAudio(module) : undefined;
 }

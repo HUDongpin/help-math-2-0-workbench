@@ -28,3 +28,17 @@ test("invalid batch size and unknown IDs fail", () => {
     /1 to 25/,
   );
 });
+
+
+test("historical batch identities resolve through exact assets and reject ambiguous or changed assets", () => {
+  const assetId = "swf-" + "a".repeat(64);
+  const batch = {batchId: "renamed", items: [{canonicalAnimationId: "old-name", assetId}]};
+  const canonical = {animationId: "current-name", assetId, isCanonical: true, source: {path: "lesson.swf"}};
+  const alias = {animationId: "old-name", assetId, isCanonical: false};
+  for (const animations of [[canonical], [canonical, alias]]) {
+    assert.deepEqual(pilotsForBatch(batch, {animations}), [{id: "current-name", swf: "source-assets/flash/HELP MATH_ORIGINAL FILES/lesson.swf"}]);
+  }
+  assert.throws(() => pilotsForBatch(batch, {animations: []}), /found 0/);
+  assert.throws(() => pilotsForBatch(batch, {animations: [canonical, {...canonical, animationId: "duplicate"}]}), /found 2/);
+  assert.throws(() => pilotsForBatch(batch, {animations: [canonical, {...alias, assetId: "swf-" + "b".repeat(64)}]}), /assetId mismatch/);
+});

@@ -1,10 +1,43 @@
 import {BookOpenText, GraduationCap, School, UsersRound} from 'lucide-react';
 
-import type {HomeContent, Locale} from '@/content/types';
+import type {CalloutContent, FeatureCard, HeroContent, LinkContent, Locale, PageMetadata} from '@/content/types';
 
 import {FeatureGrid} from './feature-grid';
 import {MathPlayground} from './math-playground';
 import {Action, Callout, Container, DotPattern, Eyebrow, Section, SectionHeading} from './ui';
+
+// Retain the original contract with this legacy component; current routes use the
+// newer home surface and no longer export its content type.
+interface HomeContent {
+  metadata: PageMetadata;
+  hero: HeroContent & {
+    supportingNote: string;
+  };
+  status: CalloutContent & {
+    label: string;
+  };
+  audiences: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    cards: FeatureCard[];
+  };
+  approach: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    cards: FeatureCard[];
+    action: LinkContent;
+  };
+  demos: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    items: Array<FeatureCard & { action: LinkContent }>;
+    note: string;
+  };
+  closing: CalloutContent;
+}
 
 const audienceIcons = [GraduationCap, School, UsersRound];
 

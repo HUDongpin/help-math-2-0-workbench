@@ -18,6 +18,7 @@ test("public exports contain only modern demo integration entry points", async (
     "./registry",
     "./styles.css",
     "./animation-registry",
+    "./animation-registry-metadata",
     "./runtime",
     "./prototype-manifest",
   ]);

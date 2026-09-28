@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 2,
+  "status": "active",
+  "repository": "HUDongpin/help-math-2-0-workbench",
+  "defaultBranch": "main",
+  "activationVariable": "HELP_MATH_CICD_IDENTITY_ACTIVATED",
+  "activationVariableScope": "repository-actions-variable",
+  "vercel": {
+    "projectId": "prj_q3v5Ue0zCL1T9rzTFD21KpNc5tzu",
+    "projectName": "helpmath-web",
+    "environment": "production"
+  },
+  "github": {
+    "environment": "helpmath-production",
+    "oidcAudience": "https://vercel.com/helpmath-production",
+    "candidateStatusContext": "Vercel - helpmath-web: production-smoke",
+    "postflightStatusContext": "Vercel - helpmath-web: production-postflight",
+    "candidateWorkflowRef": "HUDongpin/help-math-2-0-workbench/.github/workflows/vercel-production-smoke.yml@refs/heads/main",
+    "postflightWorkflowRef": "HUDongpin/help-math-2-0-workbench/.github/workflows/vercel-production-postflight.yml@refs/heads/main",
+    "vercelApp": {
+      "installationId": "145587056",
+      "senderLogin": "vercel[bot]",
+      "senderType": "Bot"
+    }
+  },
+  "trustedSource": {
+    "issuer": "https://token.actions.githubusercontent.com",
+    "header": "x-vercel-trusted-oidc-idp-token",
+    "claims": {
+      "aud": "https://vercel.com/helpmath-production",
+      "repository": "HUDongpin/help-math-2-0-workbench",
+      "repository_id": "1325197994",
+      "repository_owner": "HUDongpin",
+      "repository_owner_id": "47708816",
+      "ref": "refs/heads/main",
+      "environment": "helpmath-production",
+      "event_name": "repository_dispatch",
+      "workflow_ref": "HUDongpin/help-math-2-0-workbench/.github/workflows/vercel-production-smoke.yml@refs/heads/main"
+    }
+  },
+  "routes": {
+    "roots": [
+      {
+        "path": "/",
+        "status": 200,
+        "marker": "HELP Math"
+      },
+      {
+        "path": "/es",
+        "status": 200,
+        "marker": "HELP Math"
+      }
+    ],
+    "courses": [
+      {
+        "path": "/courses/3/1",
+        "pageCount": 74
+      },
+      {
+        "path": "/courses/3/2",
+        "pageCount": 70
+      },
+      {
+        "path": "/courses/3/3",
+        "pageCount": 63
+      },
+      {
+        "path": "/courses/3/4",
+        "pageCount": 67
+      },
+      {
+        "path": "/courses/3/5",
+        "pageCount": 62
+      },
+      {
+        "path": "/courses/3/6",
+        "pageCount": 56
+      },
+      {
+        "path": "/courses/3/8",
+        "pageCount": 61
+      },
+      {
+        "path": "/courses/3/9",
+        "pageCount": 93
+      },
+      {
+        "path": "/courses/4/1",
+        "pageCount": 80
+      },
+      {
+        "path": "/courses/4/2",
+        "pageCount": 67
+      },
+      {
+        "path": "/courses/4/3",
+        "pageCount": 39
+      },
+      {
+        "path": "/courses/4/4",
+        "pageCount": 54
+      },
+      {
+        "path": "/courses/4/5",
+        "pageCount": 53
+      },
+      {
+        "path": "/courses/4/6",
+        "pageCount": 49
+      },
+      {
+        "path": "/courses/4/7",
+        "pageCount": 48
+      },
+      {
+        "path": "/courses/4/8",
+        "pageCount": 46
+      },
+      {
+        "path": "/courses/4/9",
+        "pageCount": 43
+      },
+      {
+        "path": "/courses/4/10",
+        "pageCount": 46
+      },
+      {
+        "path": "/courses/4/11",
+        "pageCount": 43
+      },
+      {
+        "path": "/courses/4/12",
+        "pageCount": 77
+      },
+      {
+        "path": "/courses/5/1",
+        "pageCount": 82
+      },
+      {
+        "path": "/courses/5/2",
+        "pageCount": 64
+      },
+      {
+        "path": "/courses/5/3",
+        "pageCount": 65
+      },
+      {
+        "path": "/courses/5/4",
+        "pageCount": 54
+      },
+      {
+        "path": "/courses/5/5",
+        "pageCount": 56
+      },
+      {
+        "path": "/courses/5/6",
+        "pageCount": 40
+      },
+      {
+        "path": "/courses/5/7",
+        "pageCount": 55
+      },
+      {
+        "path": "/courses/5/8",
+        "pageCount": 71
+      },
+      {
+        "path": "/courses/5/13",
+        "pageCount": 73
+      }
+    ],
+    "forbidden": [
+      "/courses/6/1",
+      "/courses/3/999",
+      "/es/courses/6/1",
+      "/reference/not-authorized",
+      "/migration-status",
+      "/flash-assets/not-authorized.mp3"
+    ],
+    "apexProbe": "/courses/4/5?probe=ci-service-identity"
+  },
+  "releaseBoundary": {
+    "currentJsLessons": 29,
+    "currentJsPagePlacements": 1751,
+    "strictCompletionClaim": false,
+    "formalPublishedReleaseClaim": false,
+    "novaEnabled": false,
+    "lrsEnabled": false,
+    "contactEnabled": false,
+    "deploymentInputInventorySha256": "73f4b73d96d2fbd3f1e0585ce7cce09ea53dd29ae956df8f95e25c4aac930d32"
+  }
+}

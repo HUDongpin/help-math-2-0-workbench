@@ -28,13 +28,21 @@ export function selectCatalogBatch(batchDocument, batchId) {
 
 export function pilotsForBatch(batch, catalogDocument) {
   if (!Array.isArray(catalogDocument.animations)) throw new Error("Catalog must contain an animations array");
-  const canonicalById = new Map(catalogDocument.animations
-    .filter((animation) => animation.isCanonical)
-    .map((animation) => [animation.animationId, animation]));
+  const placementsById = new Map(catalogDocument.animations.map((animation) => [animation.animationId, animation]));
+  const canonicalByAsset = new Map();
+  for (const animation of catalogDocument.animations.filter((entry) => entry.isCanonical)) {
+    const matches = canonicalByAsset.get(animation.assetId) || [];
+    matches.push(animation);
+    canonicalByAsset.set(animation.assetId, matches);
+  }
   return batch.items.map((item) => {
-    const animation = canonicalById.get(item.canonicalAnimationId);
-    if (!animation) throw new Error(`${batch.batchId}: missing canonical catalog animation ${item.canonicalAnimationId}`);
-    if (animation.assetId !== item.assetId) throw new Error(`${batch.batchId}: assetId mismatch for ${item.canonicalAnimationId}`);
+    // Historical batch names may become aliases after catalog deduplication.
+    // Resolve only through the unchanged content-addressed asset identity.
+    const placement = placementsById.get(item.canonicalAnimationId);
+    if (placement && placement.assetId !== item.assetId) throw new Error(`${batch.batchId}: assetId mismatch for ${item.canonicalAnimationId}`);
+    const matches = canonicalByAsset.get(item.assetId) || [];
+    if (matches.length !== 1) throw new Error(`${batch.batchId}: expected one canonical catalog animation for ${item.assetId}, found ${matches.length}`);
+    const animation = matches[0];
     if (!animation.source?.path) throw new Error(`${batch.batchId}: missing SWF source path for ${item.canonicalAnimationId}`);
     return {
       id: animation.animationId,

@@ -19,20 +19,54 @@ env:
   NEXT_PUBLIC_SITE_URL: https://www.helpmath.ai
 
 jobs:
+  cicd-service-identity:
+    name: CI/CD service identity
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out the release source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 1
+          lfs: false
+          persist-credentials: false
+
+      - name: Use the repository Node.js version
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Test the secretless CI/CD service identity package
+        run: node --test scripts/helpmath-vercel-ci.test.mjs scripts/verify-helpmath-cicd-service-identity.test.mjs
+
+      - name: Verify the CI/CD service identity policy
+        run: node scripts/verify-helpmath-cicd-service-identity.mjs
+
+      - name: Restore hash-bound deployment test assets
+        run: node scripts/prepare-site-ci-assets.mjs
+
+      - name: Verify the exact deployment asset closure
+        run: npm run verify:asset-profiles:deployment --workspace @helpmath/web
+
   workbench:
     name: Workbench
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - name: Check out source without Git LFS objects
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           fetch-depth: 1
           lfs: false
           persist-credentials: false
 
       - name: Use repository Node.js version
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -62,14 +96,14 @@ jobs:
         working-directory: apps/web
     steps:
       - name: Check out source without Git LFS objects
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
           fetch-depth: 1
           lfs: false
           persist-credentials: false
 
       - name: Use repository Node.js version
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -84,14 +118,25 @@ jobs:
       - name: Type-check site
         run: npm run typecheck
 
+      - name: Restore hash-bound site test assets
+        run: node ../../scripts/prepare-site-ci-assets.mjs
+
       - name: Test site
         run: npm test
 
       - name: Build site
+        env:
+          # Loopback-only CI validation; never configure this LOCAL flag on Vercel.
+          HELP_MATH_1751_PUBLIC_PRODUCTION: current-js-1751-public-production-v1
+          HELP_MATH_1751_PUBLIC_PRODUCTION_LOCAL: current-js-1751-public-production-v1
         run: npm run build
 
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
       - name: Run browser and accessibility tests
+        env:
+          # Loopback-only CI validation; never configure this LOCAL flag on Vercel.
+          HELP_MATH_1751_PUBLIC_PRODUCTION: current-js-1751-public-production-v1
+          HELP_MATH_1751_PUBLIC_PRODUCTION_LOCAL: current-js-1751-public-production-v1
         run: npm run test:e2e
