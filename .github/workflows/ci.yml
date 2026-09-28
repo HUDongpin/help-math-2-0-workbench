@@ -47,6 +47,9 @@ jobs:
       - name: Verify the CI/CD service identity policy
         run: node scripts/verify-helpmath-cicd-service-identity.mjs
 
+      - name: Restore hash-bound deployment test assets
+        run: node scripts/prepare-site-ci-assets.mjs
+
       - name: Verify the exact deployment asset closure
         run: npm run verify:asset-profiles:deployment --workspace @helpmath/web
 

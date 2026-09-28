@@ -87,3 +87,10 @@ test("static verifier rejects a stored GitHub secret and a promotion CLI", async
     /must not invoke a Vercel mutation CLI/u,
   );
 });
+
+
+test("service identity requires the clean-checkout asset restoration", async () => {
+  const base = await checkedInDocuments();
+  const withoutRestore = base.ciWorkflow.replace("node scripts/prepare-site-ci-assets.mjs", "removed-restore-command");
+  assert.throws(() => validateServiceIdentityDocuments({...base, ciWorkflow: withoutRestore}), /omitted node scripts\/prepare-site-ci-assets/u);
+});

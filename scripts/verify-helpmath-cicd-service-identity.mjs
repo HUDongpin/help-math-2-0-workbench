@@ -143,6 +143,7 @@ export function validateServiceIdentityDocuments(documents) {
     "npm ci",
     "node --test scripts/helpmath-vercel-ci.test.mjs scripts/verify-helpmath-cicd-service-identity.test.mjs",
     "node scripts/verify-helpmath-cicd-service-identity.mjs",
+    "node scripts/prepare-site-ci-assets.mjs",
     "npm run verify:asset-profiles:deployment --workspace @helpmath/web",
   ], "CI/CD service-identity job");
   invariant(!serviceIdentityJob.includes("npm run verify:workbench"), "service-identity release check must not depend on the private source-complete Workbench gate");
