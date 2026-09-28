@@ -91,10 +91,18 @@ jobs:
         run: npm test
 
       - name: Build site
+        env:
+          # Loopback-only CI validation; never configure this LOCAL flag on Vercel.
+          HELP_MATH_1751_PUBLIC_PRODUCTION: current-js-1751-public-production-v1
+          HELP_MATH_1751_PUBLIC_PRODUCTION_LOCAL: current-js-1751-public-production-v1
         run: npm run build
 
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
       - name: Run browser and accessibility tests
+        env:
+          # Loopback-only CI validation; never configure this LOCAL flag on Vercel.
+          HELP_MATH_1751_PUBLIC_PRODUCTION: current-js-1751-public-production-v1
+          HELP_MATH_1751_PUBLIC_PRODUCTION_LOCAL: current-js-1751-public-production-v1
         run: npm run test:e2e

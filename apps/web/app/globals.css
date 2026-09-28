@@ -3048,7 +3048,7 @@ body:has(.lesson-shell2) {
   font-weight: 850;
   letter-spacing: .09em;
   line-height: 1.2;
-  opacity: .75;
+  opacity: 1;
   text-transform: uppercase;
 }
 
@@ -3128,8 +3128,8 @@ body:has(.lesson-shell2) {
   color: #0d3f7f;
 }
 
-/* The caption is dimmed to sit behind the state line, but not on the filled
-   treatment, where the same dimming drops it into the background. */
+/* Keep the caption nearly opaque on the filled playing treatment so its
+   text remains readable against the blue background. */
 .lesson-shell2__narration[data-narration-status='playing']
   .lesson-shell2__narration-name {
   opacity: .9;

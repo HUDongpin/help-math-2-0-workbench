@@ -5,6 +5,10 @@ const baseURL = `http://127.0.0.1:${port}`;
 
 export default defineConfig({
   testDir: './e2e',
+  // Select the suite for the build profile; preserve the historical marketing-site contract.
+  testMatch: process.env.HELP_MATH_1751_PUBLIC_PRODUCTION === 'current-js-1751-public-production-v1'
+    ? '**/public-1751.spec.ts'
+    : '**/site.spec.ts',
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,
@@ -26,7 +30,8 @@ export default defineConfig({
   },
   webServer: {
     command: `npm run start -- --hostname 127.0.0.1 --port ${port}`,
-    url: `${baseURL}/robots.txt`,
+    // Wait for application routing, not only the static robots response.
+    url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
   },
