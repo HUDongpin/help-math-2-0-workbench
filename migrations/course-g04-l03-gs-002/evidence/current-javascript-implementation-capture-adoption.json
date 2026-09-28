@@ -6,13 +6,13 @@
   "authority": "Deterministic current JavaScript output only. This record does not establish original-runtime baseline authority, visual parity, audio or behavior fidelity, human/owner acceptance, or strict completion.",
   "generatedBy": {
     "script": "scripts/adopt-course-implementation-captures.mjs",
-    "sha256": "3529a196d35e384f37fa4ac8f188072d18f34f9b0c835c9909811c41091036f0"
+    "sha256": "b99d5947271f07ba510ef1419942489570fa61e384b9f7dcd3691a2ecfdca998"
   },
   "migrationTechnicalContract": {
     "path": "migration.json",
     "hashMode": "canonical-json-v1",
     "projection": "help-math-technical-manifest-v1",
-    "sha256": "622a59caedfa29489e797ff901df2f849a5bbadd395748de2a4addfec85cb41d",
+    "sha256": "0e6b7fb2dea4fcb04be3de5340a897c301406fdb3a39020d3986dce15a0b3912",
     "excludedPaths": [
       "status",
       "created",
@@ -45,7 +45,7 @@
     "path": "evidence/full-frame-coverage.json",
     "hashMode": "canonical-json-v1",
     "projection": "help-math-trace-coverage-identity-v1",
-    "sha256": "739fbd11fff6221c7867a2028d0201ba87f38ed1dbf1512f9909a603760e0457",
+    "sha256": "b03be6a8ea0cef918631933d2ce2876b07e10040f973f0b9a65a5fc9d35667f0",
     "includedPaths": [
       "requirementId",
       "scenario",
@@ -75,6 +75,22 @@
   },
   "requirements": [
     {
+      "requirementId": "req:sprite-319:lesson-shell-natural-entry:en",
+      "frameDomainId": "sprite-319",
+      "traceId": "trace:sprite-319:lesson-shell-natural-entry:en:seed-0",
+      "entryStateSha256": "114c35df4901349d34eebe8abb45638c4d3e8656147ee173d40a7c1d15ccf5a1",
+      "scenario": "source-static-reachable-domain",
+      "language": "en",
+      "seed": "0",
+      "captureManifest": {
+        "path": "output/playwright/coverage-v2/course-g04-l03-gs-002-main-plus-sprite319-en-r1/req-sprite-319-lesson-shell-natural-entry-en/capture-manifest.json",
+        "sha256": "fbf4b5fd64eb6aaf24cb3745711a6a3af4f7af95dc8f0c35b9dedb5f7a016e3d"
+      },
+      "capturedFrameCount": 186,
+      "frameSetSha256": "a2221f1dd2c94df92e67928a43dd79687c528ad4072f7d29434c279b57678011",
+      "result": "validated-current-javascript-output-only"
+    },
+    {
       "requirementId": "req:sprite-321:lesson-shell-natural-entry:en",
       "frameDomainId": "sprite-321",
       "traceId": "trace:sprite-321:lesson-shell-natural-entry:en:seed-0",
@@ -83,25 +99,44 @@
       "language": "en",
       "seed": "0",
       "captureManifest": {
-        "path": "output/playwright/g4-l3-current-js-v2/course-g04-l03-gs-002-en-current/req-sprite-321-lesson-shell-natural-entry-en/capture-manifest.json",
-        "sha256": "af3fd5a63cba6ad02680f7c6b3ce5db4f5366330bd71f8fde142e79f8e2cf1c0"
+        "path": "output/playwright/coverage-v2/course-g04-l03-gs-002-main-plus-sprite319-en-r1/req-sprite-321-lesson-shell-natural-entry-en/capture-manifest.json",
+        "sha256": "1426a5832a622d389aa761c7e9b8636cbafb246676234290d67d28bc88f015c6"
       },
       "capturedFrameCount": 428,
-      "frameSetSha256": "88a3f8e4fd7bd3ce2a980431fb027f62480f57159aa62a1147bd57e7bf8e6745",
+      "frameSetSha256": "913f701fda15f9c1b0cf824e9d2183ae90e4afd30bbfe6d940fc2e8863104706",
       "result": "validated-current-javascript-output-only"
     }
   ],
   "summary": {
-    "declaredRequirementCount": 4,
-    "requirementCount": 1,
-    "capturedFrameCount": 428,
-    "missingRequirementCount": 3,
+    "declaredRequirementCount": 24,
+    "requirementCount": 2,
+    "capturedFrameCount": 614,
+    "missingRequirementCount": 22,
     "missingRequirementIds": [
       "req:root:lesson-shell-natural-entry:en",
       "req:root:lesson-shell-natural-entry:es",
-      "req:sprite-321:lesson-shell-natural-entry:es"
+      "req:sprite-147:lesson-shell-natural-entry:en",
+      "req:sprite-147:lesson-shell-natural-entry:es",
+      "req:sprite-149:lesson-shell-natural-entry:en",
+      "req:sprite-149:lesson-shell-natural-entry:es",
+      "req:sprite-158:lesson-shell-natural-entry:en",
+      "req:sprite-158:lesson-shell-natural-entry:es",
+      "req:sprite-206:lesson-shell-natural-entry:en",
+      "req:sprite-206:lesson-shell-natural-entry:es",
+      "req:sprite-306:lesson-shell-natural-entry:en",
+      "req:sprite-306:lesson-shell-natural-entry:es",
+      "req:sprite-318:lesson-shell-natural-entry:en",
+      "req:sprite-318:lesson-shell-natural-entry:es",
+      "req:sprite-319:lesson-shell-natural-entry:es",
+      "req:sprite-321:lesson-shell-natural-entry:es",
+      "req:sprite-69:lesson-shell-natural-entry:en",
+      "req:sprite-69:lesson-shell-natural-entry:es",
+      "req:sprite-78:lesson-shell-natural-entry:en",
+      "req:sprite-78:lesson-shell-natural-entry:es",
+      "req:sprite-90:lesson-shell-natural-entry:en",
+      "req:sprite-90:lesson-shell-natural-entry:es"
     ],
-    "missingFrameCount": 448,
+    "missingFrameCount": 846,
     "validationErrors": 0
   },
   "strictAcceptanceEffect": "none"

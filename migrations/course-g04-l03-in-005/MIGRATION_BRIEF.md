@@ -1,5 +1,14 @@
 # course-g04-l03-in-005 Migration Brief
 
+## 2026-09-08 现代数轴页面复核
+
+- Placement: `course-g04-l03-in-005`，G4 L3 Learn It。
+- 本轮复杂度：`behavior-heavy`；路线：有界 advanced-manual：维护排序状态机与共享查词适配器。复用已有源审计、注册和现代 My Lesson 宿主，按已观察到的问题作有界修复，无批量生成。
+- 仅在七个整数全部排好后报告完成；接通 Order、Least、Greatest 三个源词条，修复顶部裁切。完成提示移到结果下方，手机端同步显示排序结果。
+- 共享音频修复记录原生媒体的结束事件：已经结束的旁白不会因查词开关重播；新页面、Replay 与实际时间轴回退仍可重新播放。音频文件和原有时长未改变。
+- 当前源哈希、实现与浏览器证据见 [本轮结果](../../work/g4-l3-modern-product-review/20260908-learn-it-number-line/REVIEW.md) 和同目录 `product-review-receipt.json`。
+- 未修改原始 FLA/SWF 或生成的 Canvas 文件；本轮未新增原 Flash 实跑、听审、人审、Owner、严格完成或发布结论。
+
 Created: 2026-07-24
 
 ## Objective

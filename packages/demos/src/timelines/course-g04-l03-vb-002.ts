@@ -1,3 +1,4 @@
+import type {CourseG04L03SourceGlossaryConfig} from "./course-g04-l03-source-glossary-interaction";
 import type {SourceStaticCanvasCandidateConfig} from "../source-static-canvas-candidate";
 
 export const COURSE_G04_L03_VB_002_SOURCE = Object.freeze({
@@ -19,6 +20,88 @@ export const COURSE_G04_L03_VB_002_SOURCE = Object.freeze({
   rootPlacementTwips: Object.freeze({x: 8_026, y: 4_885}),
   rootPlacementPixels: Object.freeze({x: 401.3, y: 244.25}),
 });
+
+// Source-locked glossary placements; geometry remains audit metadata.
+export const COURSE_G04_L03_VB_002_GLOSSARY_HOTSPOTS = Object.freeze([
+  Object.freeze({
+    id: "number-line",
+    characterId: 11,
+    keyAttribute: "Number line",
+    firstFrame: 1,
+    lastFrame: 193,
+    depth: 59,
+    sourceBounds: Object.freeze({left: 98.19298400878908, right: 212.11263351440428, top: 119.41440429687499, bottom: 141.92681655883788}),
+    entryIds: Object.freeze({en: "en-0424-79116d5cfb19", es: "es-0571-2c68dc77903f"}),
+    labels: Object.freeze({en: "Number line", es: "Recta numérica"}),
+  }),
+  Object.freeze({
+    id: "line",
+    characterId: 12,
+    keyAttribute: "Line",
+    firstFrame: 1,
+    lastFrame: 193,
+    depth: 61,
+    sourceBounds: Object.freeze({left: 251.65653076171876, right: 287.01417541503906, top: 119.41440429687499, bottom: 141.92681655883788}),
+    entryIds: Object.freeze({en: "en-0348-26540cbc2a59", es: "es-0382-cd0a6592bc4a"}),
+    labels: Object.freeze({en: "Line", es: "Línea"}),
+  }),
+  Object.freeze({
+    id: "order",
+    characterId: 13,
+    keyAttribute: "Order",
+    firstFrame: 1,
+    lastFrame: 193,
+    depth: 63,
+    sourceBounds: Object.freeze({left: 321.37017211914065, right: 405.0604904174805, top: 119.41440429687499, bottom: 141.92681655883788}),
+    entryIds: Object.freeze({en: "en-0438-85eefb739783", es: "es-0468-0de078d08617"}),
+    labels: Object.freeze({en: "Order", es: "Ordenar"}),
+  }),
+  Object.freeze({
+    id: "value",
+    characterId: 14,
+    keyAttribute: "Value",
+    firstFrame: 1,
+    lastFrame: 193,
+    depth: 65,
+    sourceBounds: Object.freeze({left: 571.5701568603515, right: 624.0863334655762, top: 119.41440429687499, bottom: 141.92681655883788}),
+    entryIds: Object.freeze({en: "en-0737-920ae135dd07", es: "es-0714-a437c574a1bc"}),
+    labels: Object.freeze({en: "Value", es: "Valor"}),
+  }),
+  Object.freeze({
+    id: "positive-number",
+    characterId: 47,
+    keyAttribute: "Positive number",
+    firstFrame: 124,
+    lastFrame: 193,
+    depth: 72,
+    sourceBounds: Object.freeze({left: 475.3126159667969, right: 637.5529678344726, top: 336.414404296875, bottom: 358.9268165588379}),
+    entryIds: Object.freeze({en: "en-0499-e54dca5d8b22", es: "es-0458-9770130a5961"}),
+    labels: Object.freeze({en: "Positive number", es: "Número positivo"}),
+  }),
+  Object.freeze({
+    id: "negative-number",
+    characterId: 51,
+    keyAttribute: "Negative number",
+    firstFrame: 177,
+    lastFrame: 193,
+    depth: 76,
+    sourceBounds: Object.freeze({left: 179.47935791015624, right: 351.6779754638672, top: 336.414404296875, bottom: 358.9268165588379}),
+    entryIds: Object.freeze({en: "en-0411-1954bd66c84d", es: "es-0456-9da6d6ebd619"}),
+    labels: Object.freeze({en: "Negative number", es: "Número negativo"}),
+  }),
+] as const);
+
+export const COURSE_G04_L03_VB_002_GLOSSARY_CONFIG = Object.freeze({
+  animationId: "course-g04-l03-vb-002",
+  frameDomain: "sprite-52",
+  terms: COURSE_G04_L03_VB_002_GLOSSARY_HOTSPOTS,
+  learnerPrompt: "A number line orders numbers by their value. Values increase to the right and decrease to the left.",
+  playbackDisposition: "reversible-support-pause",
+  sourceAction: "DoHyperLinks",
+  sourceStopTarget: "_root.animation_mc.animation.stop()",
+  glossaryAuthority: "grade-wide-shell-keyterms-static-candidate",
+  glossarySourceDisposition: "unresolved-lesson-vs-grade-wide",
+} satisfies CourseG04L03SourceGlossaryConfig);
 
 export const COURSE_G04_L03_VB_002_CONFIG = Object.freeze({
   animationId: "course-g04-l03-vb-002",

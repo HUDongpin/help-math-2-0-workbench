@@ -157,6 +157,33 @@ test("schema v2 accepts exactly one bounded selection and verifies its coverage 
   );
 });
 
+test("schema v2 placement-path preserves a complete alternate entry without strict full-domain authority", () => {
+  const unsigned = {
+    requirementSchemaVersion: 2,
+    coverageRole: "placement-path",
+    coverageGroupId: "coverage-group:alternate-placement",
+    requiredRange: {firstFrame: 1, lastFrame: 5},
+  };
+  const requirement = {
+    ...unsigned,
+    selectionSha256: selectionSha256(unsigned, 5),
+  };
+  const normalized = normalizeRequirementSelection(requirement, 5);
+  assert.equal(normalized.coverageRole, "placement-path");
+  assert.deepEqual(normalized.selectedPhysicalFrames, [1, 2, 3, 4, 5]);
+  assert.throws(
+    () => normalizeRequirementSelection({
+      ...requirement,
+      requiredRange: {firstFrame: 1, lastFrame: 4},
+      selectionSha256: selectionSha256({
+        ...unsigned,
+        requiredRange: {firstFrame: 1, lastFrame: 4},
+      }, 5),
+    }, 5),
+    /placement-path must select the complete physical frame domain/,
+  );
+});
+
 test("schema v2 frame sets are non-empty, bounded, integral, unique, and strictly increasing", () => {
   assert.throws(() => normalizeRequirementSelection(v2Set([], "partial-path"), 5), /non-empty/);
   assert.throws(() => normalizeRequirementSelection(v2Set([1, 1], "partial-path"), 5), /strictly increasing/);

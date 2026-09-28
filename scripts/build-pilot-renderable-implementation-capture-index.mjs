@@ -206,9 +206,10 @@ function rendererDisposition(requirement, audit, animationId) {
   }
   const fullDomainCoverage = requirement.requiredRange.firstFrame === 1 && requirement.requiredRange.lastFrame === runtimeDomain.frameCount;
   const allEndpointsRenderableExact = matches.every(({outcome}) => outcome === "renderable-exact");
-  const partialPath = requirement.coverageRole === "partial-path";
+  const supplementalPath = ["partial-path", "placement-path"]
+    .includes(requirement.coverageRole);
   return {
-    classification: partialPath
+    classification: supplementalPath
       ? "supplemental-partial-current-javascript-capture"
       : fullDomainCoverage && allEndpointsRenderableExact
         ? "fully-renderable-current-javascript-requirement"

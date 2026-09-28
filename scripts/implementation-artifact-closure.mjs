@@ -63,6 +63,9 @@ const RENDERER_OUTPUT_ROOTS = Object.freeze([
   "public/flash-assets/",
   "apps/web/candidate-assets/flash-assets/",
 ]);
+const SERVER_AUDIO_OUTPUT_ROOT = "apps/web/server-assets/flash-assets/";
+const CURRENT_JS_PRODUCTION_PROFILE_PATH =
+  "apps/web/config/current-js-production-assets.v1.json";
 const PROJECTION_MANAGED_GLOBAL_FILES = new Set([
   "catalog/animations.json",
   "packages/demos/prototype-registry.json",
@@ -715,17 +718,91 @@ function publicRendererPath(value) {
 }
 
 function isRendererStoragePath(relativePath) {
-  return RENDERER_OUTPUT_ROOTS.some((root) => relativePath.startsWith(root));
+  return RENDERER_OUTPUT_ROOTS.some((root) => relativePath.startsWith(root))
+    || relativePath.startsWith(SERVER_AUDIO_OUTPUT_ROOT);
 }
 
 async function resolvePublicRendererBinding(projectRoot, binding) {
-  const resolved = await resolveCurrentJsCandidateAssetBinding({
+  let resolved;
+  try {
+    resolved = await resolveCurrentJsCandidateAssetBinding({
+      projectRoot,
+      logicalPath: binding.path,
+      expectedBytes: binding.bytes,
+      expectedSha256: binding.sha256,
+    });
+  } catch (error) {
+    // A production-profile server-audio binding can be resolved without a
+    // candidate profile in isolated fixtures. Preserve every other failure.
+    if (error?.code !== "ENOENT") throw error;
+  }
+  if (resolved) return resolved;
+
+  const normalized = normalizeProjectPath(binding.path);
+  const publicPrefix = "public/flash-assets/";
+  if (!normalized.startsWith(publicPrefix)) return null;
+  const assetPath = normalized.slice(publicPrefix.length);
+  if (!assetPath.startsWith("courses/")) return null;
+
+  const profilePath = path.resolve(projectRoot, CURRENT_JS_PRODUCTION_PROFILE_PATH);
+  if (!(await exists(profilePath))) return null;
+  const profileBytes = await readFile(profilePath);
+  let profile;
+  try {
+    profile = JSON.parse(profileBytes.toString("utf8"));
+  } catch (error) {
+    throw new Error(`Current-JS production asset profile is not valid JSON: ${error.message}`);
+  }
+  const record = profile?.entries?.find((entry) =>
+    entry?.assetPath === assetPath && entry?.storageRoot === "server-audio");
+  if (!record) return null;
+  invariant(
+    /^[a-f0-9]{64}$/.test(record.sha256 || "")
+      && Number.isSafeInteger(record.bytes)
+      && record.bytes > 0,
+    `Current-JS production asset profile record is invalid: ${assetPath}`,
+  );
+  if (binding.sha256 && binding.sha256 !== record.sha256) {
+    throw new Error(`${normalized}: production profile SHA-256 does not match the declared binding`);
+  }
+  if (Number.isInteger(binding.bytes) && binding.bytes !== record.bytes) {
+    throw new Error(`${normalized}: production profile byte count does not match the declared binding`);
+  }
+  const absolutePath = path.resolve(
     projectRoot,
-    logicalPath: binding.path,
-    expectedBytes: binding.bytes,
-    expectedSha256: binding.sha256,
-  });
-  return resolved;
+    SERVER_AUDIO_OUTPUT_ROOT,
+    assetPath,
+  );
+  const physical = await assertRealFileWithinProject(
+    projectRoot,
+    absolutePath,
+    "Current-JS server-audio asset",
+  );
+  invariant(
+    physical.metadata.size === record.bytes,
+    `${normalized}: server-audio asset byte count differs from its profile`,
+  );
+  const digest = await sha256File(absolutePath);
+  invariant(
+    digest === record.sha256,
+    `${normalized}: server-audio asset SHA-256 differs from its profile`,
+  );
+  return {
+    kind: "production-server-audio-profile",
+    logicalPath: normalized,
+    assetPath,
+    absolutePath,
+    relativePath: physical.relativePath,
+    profile: {
+      path: CURRENT_JS_PRODUCTION_PROFILE_PATH,
+      bytes: profileBytes.length,
+      sha256: createHash("sha256").update(profileBytes).digest("hex"),
+      profileId: profile.profileId,
+      version: profile.version || null,
+      authority: structuredClone(profile.authority || {}),
+    },
+    record: structuredClone(record),
+  };
 }
 
 async function bindResolvedCandidateProfile(sourceFiles, projectRoot,

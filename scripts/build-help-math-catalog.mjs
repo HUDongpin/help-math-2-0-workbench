@@ -1629,7 +1629,7 @@ function serializableFileIdentity(info) {
   };
 }
 
-async function readImmutableProfileAuthorityReceipt(receiptPath) {
+async function readImmutableProfileAuthorityReceipt(receiptPath, exactFqReceiptSha256) {
   const initial = await lstat(receiptPath, { bigint: true }).catch((error) => {
     if (error?.code === "ENOENT") return null;
     throw error;
@@ -1667,7 +1667,18 @@ async function readImmutableProfileAuthorityReceipt(receiptPath) {
   } catch (error) {
     throw new Error(`Current source profile authority receipt is invalid UTF-8 JSON: ${error.message}`);
   }
-  if (receipt?.schemaVersion !== "help-math-fla-swf-counterpart-successor-applied-receipt/v2"
+  if (exactFqReceiptSha256) {
+    if (createHash("sha256").update(bytes).digest("hex") !== exactFqReceiptSha256
+      || receipt?.schemaVersion !== "help-math-g4-l3-fq-audio-admission/v1"
+      || receipt?.artifactType !== "help-math-g4-l3-fq-audio-applied-receipt"
+      || receipt?.lifecycle !== "final" || receipt?.applied !== true
+      || receipt?.reportingGate?.canonicalCountsReportable !== true
+      || receipt?.reportingGate?.observedCanonical !== true
+      || receipt?.expectedCatalogProfile?.path !== CURRENT_SOURCE_PROFILE_FILENAME
+      || !SHA256_PATTERN.test(receipt?.expectedCatalogProfile?.sha256)) {
+      throw new Error("Final Quiz audio admission receipt does not match its exact applied binding");
+    }
+  } else if (receipt?.schemaVersion !== "help-math-fla-swf-counterpart-successor-applied-receipt/v2"
     || receipt?.artifactType !== "help-math-fla-swf-counterpart-successor-applied-receipt"
     || receipt?.lifecycle !== "final"
     || receipt?.applied !== true
@@ -1689,6 +1700,19 @@ async function resolveImplicitProfileAuthority(resolvedOutputRoot, profilePath) 
   const defaultProfilePath = path.join(resolvedOutputRoot, CURRENT_SOURCE_PROFILE_FILENAME);
   if (profilePath !== defaultProfilePath) {
     throw new Error("An explicit expectedProfile requires expectedProfileSha256");
+  }
+  // This successor adds only the 142 Owner-approved G4 L3 Final Quiz MP3s.
+  // Its immutable applied receipt pins the observed profile; older fixtures and
+  // recovery trees continue through their existing authority below.
+  const fqReceipt = await readImmutableProfileAuthorityReceipt(path.join(
+    resolvedOutputRoot, "source-promotions", "g4-l3-fq-audio-2026-09-08-applied.json",
+  ), "4d9e3e5cb8f2c965dce6f990b118b00b657dce55a7429937cc4ab3a4cddb3bd8");
+  if (fqReceipt) {
+    return {
+      expectedProfileSha256: fqReceipt.expectedProfileSha256,
+      authority: {type: "immutable-final-quiz-audio-admission-receipt",
+        path: fqReceipt.path, bytes: fqReceipt.bytes, sha256: fqReceipt.sha256},
+    };
   }
   const receiptPath = path.join(
     resolvedOutputRoot,

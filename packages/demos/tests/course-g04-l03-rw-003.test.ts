@@ -185,8 +185,7 @@ test("RW003 source KeyAttribute hotspots retain exact frame windows, bounds, and
       type: "open-keyterm",
       entryId: "en-0496-498b59d01013",
       sourceAnimationId: "course-g04-l03-rw-003",
-      playbackDisposition:
-        "source-stop-timeline-and-audio-until-explicit-resume",
+      playbackDisposition: "reversible-support-pause",
     },
   );
 });
@@ -341,7 +340,7 @@ test("RW003 module remains prototype-only and blocked UI states are explicit", a
   );
   assert.equal(
     COURSE_G04_L03_RW_003_SOURCE_CONTRACT.currentJavascriptInteractionScope.includes(
-      "source-stop-timeline-and-audio-until-explicit-resume",
+      "host-support-tool-pause-session",
     ),
     true,
   );
@@ -396,16 +395,18 @@ test("RW003 live rendering exposes source-bound terms while deterministic captur
   assert.match(positive, /data-current-js-functional-candidate="true"/);
   assert.match(
     positive,
-    /data-source-animation-stop-modeled="source-stop-timeline-and-audio-until-explicit-resume"/,
+    /data-source-animation-stop-modeled="reversible-support-pause"/,
   );
   assert.match(positive, /data-source-key-attribute="Positive"/);
   assert.doesNotMatch(positive, /data-source-key-attribute="Negative"/);
+  assert.doesNotMatch(positive, /Positive numbers are greater than zero\. Negative numbers are less than zero\./);
 
   const both = renderToStaticMarkup(
     createElement(courseRw003.Renderer, {...common, frame: 159}),
   );
   assert.match(both, /data-source-key-attribute="Positive"/);
   assert.match(both, /data-source-key-attribute="Negative"/);
+  assert.match(both, /Positive numbers are greater than zero\. Negative numbers are less than zero\./);
 
   const deterministicCapture = renderToStaticMarkup(
     createElement(courseRw003.Renderer, {

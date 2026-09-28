@@ -1,5 +1,7 @@
 "use client";
 
+import {TS008_BEHAVIOR} from "../timelines/course-g04-l03-ts-008-behavior.generated";
+
 import React, {
   useEffect,
   useMemo,
@@ -11,11 +13,12 @@ import type {Dispatch, KeyboardEvent} from "react";
 import {createPortal} from "react-dom";
 
 import type {AnimationRendererProps} from "../contract";
+import {createCourseG04L03SourceGlossaryOpenResult} from "../timelines/course-g04-l03-source-glossary-interaction";
+import {Ts008HelpNumberLine} from "./course-g04-l03-ts-008-help-number-line";
 import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
 import {
   COURSE_G04_L03_TS_008_CHOICES,
   COURSE_G04_L03_TS_008_DONOR_POLICY,
-  COURSE_G04_L03_TS_008_GLOSSARY,
   COURSE_G04_L03_TS_008_INTERACTION_AUTHORITY,
   COURSE_G04_L03_TS_008_NEED_MORE_HELP,
   COURSE_G04_L03_TS_008_PLAYBACK_POLICY,
@@ -31,6 +34,7 @@ import {
 } from "../timelines/course-g04-l03-ts-008-practice-question-interaction";
 import {
   COURSE_G04_L03_TS_008_CONFIG,
+  COURSE_G04_L03_TS_008_HELP_GLOSSARY_CONFIG,
   COURSE_G04_L03_TS_008_SOURCE,
 } from "../timelines/course-g04-l03-ts-008";
 
@@ -55,16 +59,6 @@ type SourceCanvasStatus =
   | "error"
   | "blocked";
 
-const visuallyHiddenStyle = {
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  whiteSpace: "nowrap",
-  width: 1,
-} as const;
-
 function isDeterministicEvidenceCapture({
   entryStateSha256,
 }: AnimationRendererProps) {
@@ -73,12 +67,12 @@ function isDeterministicEvidenceCapture({
 
 function sourceCanvasStatusMessage(status: SourceCanvasStatus) {
   if (status === "error") {
-    return "The current-JavaScript source drawing could not load. Controls remain disabled.";
+    return "The page could not load. Use Replay to try again.";
   }
   if (status === "blocked") {
-    return "This source drawing is unavailable for the requested context. Controls remain disabled.";
+    return "This activity is unavailable in the selected mode.";
   }
-  return "Loading the current-JavaScript source drawing before controls are enabled…";
+  return "Loading the activity…";
 }
 
 function donorFrameForInteraction(
@@ -132,13 +126,8 @@ function feedbackExplanation(
     return "Toni has positive seven dollars, the greatest amount. Answer D is correct.";
   }
   return interaction.wrongTryCount === 0
-    ? "This is the first incorrect attempt. Continue to return to the same answer choices."
-    : "This is the second incorrect attempt. Continue to the source-script-derived terminal state.";
-}
-
-function formatRemainingMs(remainingMs: number | null) {
-  if (remainingMs === null) return "";
-  return `${Math.max(0, remainingMs / 1_000).toFixed(1)} seconds`;
+    ? "That answer is not correct. Compare the positive and negative amounts, then try again."
+    : "That answer is not correct. Toni has +7 dollars, the greatest amount. Review the answer, then use Replay to try again.";
 }
 
 function handleModalKeys(
@@ -152,9 +141,10 @@ function handleModalKeys(
   }
   if (event.key === "Tab") {
     event.preventDefault();
-    event.currentTarget
-      .querySelector<HTMLButtonElement>("button:not(:disabled)")
-      ?.focus();
+    const controls = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>("button:not(:disabled)"));
+    const index = controls.indexOf(document.activeElement as HTMLButtonElement);
+    const next = (index + (event.shiftKey ? -1 : 1) + controls.length) % controls.length;
+    controls[next]?.focus();
   }
 }
 
@@ -205,23 +195,6 @@ function StepText({
   );
 }
 
-function SourceGlossaryBoundary() {
-  return (
-    <div
-      aria-label="Three source glossary callbacks are unavailable in this current JavaScript candidate."
-      data-host-glossary-actions="safe-disabled"
-      data-host-glossary-function="DoHyperLinks-unresolved"
-      style={visuallyHiddenStyle}
-    >
-      {COURSE_G04_L03_TS_008_GLOSSARY.map(({term}) => (
-        <span aria-disabled="true" key={term} role="link">
-          {term}
-        </span>
-      ))}
-    </div>
-  );
-}
-
 interface SharedSurfaceProps {
   readonly canvasStatus: SourceCanvasStatus;
   readonly controlsReady: boolean;
@@ -232,6 +205,7 @@ interface SharedSurfaceProps {
   readonly onFinishFeedback: () => void;
   readonly onFocusControl: (key: string | null) => void;
   readonly onReplay: () => void;
+  readonly onLessonHostRequest: AnimationRendererProps["onLessonHostRequest"];
   readonly paused: boolean;
   readonly reducedMotion: boolean;
 }
@@ -244,10 +218,12 @@ function NeedMoreHelpContent({
   close,
   controlsReady,
   focusPrefix,
+  onLessonHostRequest,
 }: {
   readonly close: () => void;
   readonly controlsReady: boolean;
   readonly focusPrefix: "stage" | "mobile";
+  readonly onLessonHostRequest: AnimationRendererProps["onLessonHostRequest"];
 }) {
   return (
     <>
@@ -256,32 +232,20 @@ function NeedMoreHelpContent({
         {COURSE_G04_L03_TS_008_NEED_MORE_HELP.text[0]}.{" "}
         {COURSE_G04_L03_TS_008_NEED_MORE_HELP.text[1]}.
       </p>
-      <div
-        aria-label="Number line from negative ten through positive ten"
-        className="course-g04-l03-ts-008-help-number-line"
-      >
-        <span>−10</span>
-        <span>−5</span>
-        <span>0</span>
-        <span>+5</span>
-        <span>+10</span>
-      </div>
-      <div
-        aria-label="Unavailable glossary links"
-        className="course-g04-l03-ts-008-help-glossary"
-        role="group"
-      >
-        {COURSE_G04_L03_TS_008_GLOSSARY.map(({term, visibleText}) => (
-          <button
-            aria-label={`${term} glossary is unavailable because the legacy host callback is unresolved`}
-            data-source-glossary-term={term}
-            disabled
-            key={term}
-            type="button"
-          >
-            {visibleText}
-          </button>
-        ))}
+      <Ts008HelpNumberLine />
+      <div aria-label="Key Terms in this help" className="course-g04-l03-ts-008-help-glossary" role="group">
+        {COURSE_G04_L03_TS_008_HELP_GLOSSARY_CONFIG.terms.map(term => <button
+          key={term.id} data-source-glossary-term={term.keyAttribute}
+          aria-haspopup="dialog"
+          disabled={!controlsReady || !onLessonHostRequest}
+          onClick={event => {
+            if (!controlsReady || !onLessonHostRequest) return;
+            const result = createCourseG04L03SourceGlossaryOpenResult({
+              config: COURSE_G04_L03_TS_008_HELP_GLOSSARY_CONFIG,
+              frame: 1, lang: "en", termId: term.id,
+            });
+            if (result) onLessonHostRequest(result.request, {trigger: event.currentTarget});
+          }} type="button">{term.labels.en}</button>)}
       </div>
       <button
         data-modal-surface={focusPrefix}
@@ -306,6 +270,7 @@ function MobileSurface({
   onFinishFeedback,
   onFocusControl,
   onReplay,
+  onLessonHostRequest,
   paused,
   placement,
   reducedMotion,
@@ -316,7 +281,7 @@ function MobileSurface({
 
   return (
     <section
-      aria-label="Current-JavaScript question walkthrough and answer controls"
+      aria-label="Practice question controls"
       className={
         "course-g04-l03-ts-008-mobile-controls "
         + `course-g04-l03-ts-008-mobile-controls--${placement}`
@@ -324,7 +289,14 @@ function MobileSurface({
       data-current-js-controls-ready={controlsReady ? "true" : "false"}
       data-current-js-modern-reconstruction="true"
       data-interaction-companion-placement={placement}
-      data-interaction-companion-surface="mobile"
+      data-interaction-companion-surface="practice-question"
+      data-feedback-remaining-ms={feedbackRemainingMs ?? undefined}
+      data-feedback-reduced-motion={reducedMotion ? "true" : "false"}
+      data-ts008-live-frame={interaction.frame}
+      data-ts008-walkthrough-gate={interaction.walkthroughGate ?? "none"}
+      data-ts008-box-revealed={interaction.walkthroughBoxRevealed ? "true" : "false"}
+      data-ts008-wrong-try-count={interaction.wrongTryCount}
+      data-ts008-selected-choice={interaction.selectedChoiceId ?? "none"}
       data-interaction-phase={interaction.phase}
       data-source-canvas-status={canvasStatus}
       onFocusCapture={(event) => {
@@ -335,14 +307,6 @@ function MobileSurface({
         );
       }}
     >
-      <p className="course-g04-l03-ts-008-modern-label">
-        <strong>Modern reconstruction</strong>
-        <span>
-          Functional current-JavaScript controls; source composite and visual
-          parity remain unestablished.
-        </span>
-      </p>
-
       {!controlsReady ? (
         <p
           aria-live={canvasStatus === "error" ? "assertive" : "polite"}
@@ -357,7 +321,7 @@ function MobileSurface({
         {COURSE_G04_L03_TS_008_QUESTION.prompt}
       </p>
 
-      {completed > 0 ? (
+      {completed > 0 && interaction.phase === "walkthrough" ? (
         <div
           aria-label={`${completed} completed reasoning steps`}
           className="course-g04-l03-ts-008-mobile-steps"
@@ -436,7 +400,7 @@ function MobileSurface({
                 type="button"
               >
                 <strong>{choice.id}</strong>
-                <span>{choice.person}</span>
+                <span>{choice.person}</span><small>{choice.sourceStatement}</small>
               </button>
             ))}
           </div>
@@ -464,21 +428,9 @@ function MobileSurface({
           role="status"
           tabIndex={-1}
         >
-          <strong>{interaction.feedback.copy}</strong>
+          <strong>{interaction.feedback.kind === "wrong" && interaction.wrongTryCount === 1 ? "Review the answer" : interaction.feedback.copy}</strong>
           <p>{feedbackExplanation(interaction)}</p>
-          <p>
-            Current-JavaScript projection of source branch{" "}
-            {interaction.feedback.kind}
-            {interaction.feedback.branch}; feedback artwork and audio parity
-            are not established.
-          </p>
-          <p>
-            {paused
-              ? `Paused with ${formatRemainingMs(feedbackRemainingMs)} remaining.`
-              : reducedMotion
-                ? "Reduced motion: static feedback is held until Continue."
-                : `Source-window timing projection: approximately ${formatRemainingMs(feedbackRemainingMs)}.`}
-          </p>
+          {paused ? <p>Paused.</p> : null}
           <button
             disabled={!controlsReady || paused}
             onClick={onFinishFeedback}
@@ -502,6 +454,7 @@ function MobileSurface({
             close={onCloseNeedMoreHelp}
             controlsReady={controlsReady}
             focusPrefix="mobile"
+            onLessonHostRequest={onLessonHostRequest}
           />
         </div>
       ) : null}
@@ -511,21 +464,30 @@ function MobileSurface({
           aria-live="polite"
           className="course-g04-l03-ts-008-mobile-terminal"
           data-original-runtime-terminal-parity="false"
+          data-question-answered-correctly={interaction.selectedChoiceId === "D" ? "true" : "false"}
           data-ts008-focus-control="terminal"
           role="status"
           tabIndex={-1}
         >
-          <strong>Question complete</strong>
+          <strong>{interaction.selectedChoiceId === "D" ? "Question complete" : "Review the answer"}</strong>
           <p>D. Toni has the most money with $7.</p>
           <button
             disabled={controlsDisabled}
             onClick={onReplay}
             type="button"
           >
-            Replay
+            Replay question
           </button>
         </div>
       ) : null}
+      {completed > 0 && interaction.phase !== "walkthrough" && interaction.phase !== "need-more-help" ? <details>
+        <summary>Review the four-step solution</summary>
+        <div className="course-g04-l03-ts-008-mobile-steps">
+          {COURSE_G04_L03_TS_008_WALKTHROUGH_STEPS.slice(0, completed).map(step => <article key={step.id}>
+            <strong>Step {step.id}</strong><StepText step={step} />
+          </article>)}
+        </div>
+      </details> : null}
     </section>
   );
 }
@@ -590,306 +552,24 @@ function StageWorksheetReconstruction({
   );
 }
 
-function StageSurface({
-  canvasStatus,
-  controlsReady,
-  dispatch,
-  feedbackRemainingMs,
-  interaction,
-  onCloseNeedMoreHelp,
-  onFinishFeedback,
-  onFocusControl: _onFocusControl,
-  onReplay,
-  paused,
-  reducedMotion,
-}: SharedSurfaceProps) {
-  const controlsDisabled = !controlsReady || paused;
-  const currentStep = currentWalkthroughStep(interaction);
-
-  return (
-    <svg
-      aria-busy={!controlsReady}
-      aria-label="Current-JavaScript reconstructed four-step reasoning and practice controls"
-      className="course-g04-l03-ts-008-stage-surface"
-      data-behavior-parity-established="false"
-      data-current-js-controls-ready={controlsReady ? "true" : "false"}
-      data-current-js-modern-reconstruction="true"
-      data-interaction-phase={interaction.phase}
-      data-source-canvas-status={canvasStatus}
-      role="group"
-      style={{
-        height: "auto",
-        inset: 0,
-        pointerEvents: "none",
-        position: "absolute",
-        width: "100%",
-        zIndex: 4,
-      }}
-      viewBox="0 0 800 600"
-    >
-      <foreignObject height="600" width="800" x="0" y="0">
-        <div
-          style={{
-            fontFamily: SOURCE_FONT,
-            height: 600,
-            pointerEvents: "none",
-            position: "relative",
-            width: 800,
-          }}
-        >
-          <p className="course-g04-l03-ts-008-stage-modern-label">
-            <strong>Modern reconstruction</strong>
-            <span>
-              Frames 592, 712, and 770 have unresolved natural composites.
-            </span>
-          </p>
-
-          <span style={visuallyHiddenStyle}>
-            {COURSE_G04_L03_TS_008_QUESTION.prompt}
-          </span>
-
-          {!controlsReady ? (
-            <span
-              aria-live={canvasStatus === "error" ? "assertive" : "polite"}
-              role={canvasStatus === "error" ? "alert" : "status"}
-              style={visuallyHiddenStyle}
-            >
-              {sourceCanvasStatusMessage(canvasStatus)}
-            </span>
-          ) : null}
-
-          <StageWorksheetReconstruction interaction={interaction} />
-
-          {interaction.phase === "walkthrough" && currentStep ? (
-            <>
-              {!interaction.walkthroughBoxRevealed ? (
-                <button
-                  aria-label={`Reveal reasoning step ${currentStep.id}`}
-                  className="course-g04-l03-ts-008-source-hit-button"
-                  data-source-overlay-button-object-id={
-                    currentStep.sourceOverlayButtonObjectId
-                  }
-                  data-source-underlay-object-id={
-                    currentStep.sourceUnderlayObjectId
-                  }
-                  data-ts008-focus-control={
-                    `walkthrough-step-${currentStep.id}`
-                  }
-                  disabled={controlsDisabled}
-                  onClick={() =>
-                    dispatch(
-                      currentStep.revealThenClose
-                        ? {type: "reveal-walkthrough-box"}
-                        : {type: "continue-walkthrough"},
-                    )}
-                  style={{
-                    height: currentStep.hitBounds.height,
-                    left: currentStep.hitBounds.x,
-                    top: currentStep.hitBounds.y,
-                    width: currentStep.hitBounds.width,
-                  }}
-                  type="button"
-                >
-                  Reveal reasoning step {currentStep.id}
-                </button>
-              ) : (
-                <>
-                  <button
-                    className="course-g04-l03-ts-008-stage-close"
-                    data-source-close-button-object-id={
-                      currentStep.sourceCloseButtonObjectId ?? undefined
-                    }
-                    data-ts008-focus-control={
-                      `walkthrough-box-${currentStep.id}-close`
-                    }
-                    disabled={controlsDisabled}
-                    onClick={() =>
-                      dispatch({type: "close-walkthrough-box"})}
-                    style={{
-                      left:
-                        currentStep.hitBounds.x
-                        + currentStep.hitBounds.width
-                        - 78,
-                      top:
-                        currentStep.hitBounds.y
-                        + currentStep.hitBounds.height
-                        - 39,
-                    }}
-                    type="button"
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="course-g04-l03-ts-008-stage-help-button"
-                    data-source-button-object-id={
-                      COURSE_G04_L03_TS_008_NEED_MORE_HELP
-                        .sourceButtonObjectId
-                    }
-                    data-ts008-focus-control="need-more-help"
-                    disabled={controlsDisabled}
-                    onClick={() =>
-                      dispatch({type: "open-need-more-help"})}
-                    style={{
-                      height:
-                        COURSE_G04_L03_TS_008_NEED_MORE_HELP.buttonBounds
-                          .height,
-                      left:
-                        COURSE_G04_L03_TS_008_NEED_MORE_HELP.buttonBounds.x,
-                      top:
-                        COURSE_G04_L03_TS_008_NEED_MORE_HELP.buttonBounds.y,
-                      width:
-                        COURSE_G04_L03_TS_008_NEED_MORE_HELP.buttonBounds
-                          .width,
-                    }}
-                    type="button"
-                  >
-                    Need More Help
-                  </button>
-                </>
-              )}
-            </>
-          ) : null}
-
-          {interaction.phase === "quiz" ? (
-            <>
-              <div aria-label="Answer choices" role="group">
-                {COURSE_G04_L03_TS_008_CHOICES.map((choice) => (
-                  <button
-                    aria-label={accessibleChoiceLabel(choice)}
-                    className="course-g04-l03-ts-008-source-hit-button"
-                    data-source-button-object-id={choice.sourceButtonObjectId}
-                    data-source-instance={choice.sourceInstance}
-                    data-ts008-focus-control={`choice-${choice.id}`}
-                    disabled={controlsDisabled}
-                    key={choice.id}
-                    onClick={() =>
-                      dispatch({type: "choose", choiceId: choice.id})}
-                    style={{
-                      height: choice.hitBounds.height,
-                      left: choice.hitBounds.x,
-                      top: choice.hitBounds.y,
-                      width: choice.hitBounds.width,
-                    }}
-                    type="button"
-                  >
-                    {accessibleChoiceLabel(choice)}
-                  </button>
-                ))}
-              </div>
-              <button
-                className="course-g04-l03-ts-008-stage-help-button"
-                data-source-button-object-id={
-                  COURSE_G04_L03_TS_008_NEED_MORE_HELP.sourceButtonObjectId
-                }
-                data-ts008-focus-control="need-more-help"
-                disabled={controlsDisabled}
-                onClick={() =>
-                  dispatch({type: "open-need-more-help"})}
-                style={{
-                  height:
-                    COURSE_G04_L03_TS_008_NEED_MORE_HELP.buttonBounds.height,
-                  left: COURSE_G04_L03_TS_008_NEED_MORE_HELP.buttonBounds.x,
-                  top: COURSE_G04_L03_TS_008_NEED_MORE_HELP.buttonBounds.y,
-                  width:
-                    COURSE_G04_L03_TS_008_NEED_MORE_HELP.buttonBounds.width,
-                }}
-                type="button"
-              >
-                Need More Help
-              </button>
-            </>
-          ) : null}
-
-          {interaction.phase === "feedback" && interaction.feedback ? (
-            <div
-              aria-atomic="true"
-              aria-live="assertive"
-              className="course-g04-l03-ts-008-stage-feedback"
-              data-feedback-branch={
-                `${interaction.feedback.kind}${interaction.feedback.branch}`
-              }
-              data-feedback-source-visual-parity-established="false"
-              data-ts008-focus-control="feedback-status"
-              role="status"
-              tabIndex={-1}
-            >
-              <strong>{interaction.feedback.copy}</strong>
-              <p>{feedbackExplanation(interaction)}</p>
-              <p>
-                Modern projection of source feedback branch{" "}
-                {interaction.feedback.kind}
-                {interaction.feedback.branch}; artwork and audio parity remain
-                unestablished.
-              </p>
-              <p>
-                {paused
-                  ? `Paused with ${formatRemainingMs(feedbackRemainingMs)} remaining.`
-                  : reducedMotion
-                    ? "Reduced motion: static feedback is held until Continue."
-                    : `Timing projection: ${formatRemainingMs(feedbackRemainingMs)}.`}
-              </p>
-              <button
-                disabled={!controlsReady || paused}
-                onClick={onFinishFeedback}
-                type="button"
-              >
-                Continue
-              </button>
-            </div>
-          ) : null}
-
-          {interaction.phase === "need-more-help" ? (
-            <div
-              aria-label="Need More Help"
-              aria-modal="true"
-              className="course-g04-l03-ts-008-stage-dialog"
-              data-source-popup-object-id={
-                COURSE_G04_L03_TS_008_NEED_MORE_HELP.sourcePopupObjectId
-              }
-              onKeyDown={(event) =>
-                handleModalKeys(event, onCloseNeedMoreHelp)}
-              role="dialog"
-              style={{
-                height:
-                  COURSE_G04_L03_TS_008_NEED_MORE_HELP.popupBounds.height,
-                left: COURSE_G04_L03_TS_008_NEED_MORE_HELP.popupBounds.x,
-                top: COURSE_G04_L03_TS_008_NEED_MORE_HELP.popupBounds.y,
-                width:
-                  COURSE_G04_L03_TS_008_NEED_MORE_HELP.popupBounds.width,
-              }}
-            >
-              <NeedMoreHelpContent
-                close={onCloseNeedMoreHelp}
-                controlsReady={controlsReady}
-                focusPrefix="stage"
-              />
-            </div>
-          ) : null}
-
-          {interaction.phase === "terminal" ? (
-            <div
-              aria-live="polite"
-              className="course-g04-l03-ts-008-stage-terminal"
-              data-original-runtime-terminal-parity="false"
-              data-ts008-focus-control="terminal"
-              role="status"
-              tabIndex={-1}
-            >
-              <strong>D. Toni has the most money with $7.</strong>
-              <span>Replay resets the complete reconstructed state.</span>
-              <button
-                disabled={controlsDisabled}
-                onClick={onReplay}
-                type="button"
-              >
-                Replay
-              </button>
-            </div>
-          ) : null}
-        </div>
-      </foreignObject>
-    </svg>
-  );
+function StageSurface({controlsReady, dispatch, interaction, paused}: SharedSurfaceProps) {
+  return <svg aria-label="Source worksheet and answer choices"
+    className="course-g04-l03-ts-008-stage-surface" data-interaction-phase={interaction.phase}
+    style={{height: "auto", inset: 0, pointerEvents: "none", position: "absolute", width: "100%", zIndex: 4}}
+    role="group" viewBox="0 0 800 600">
+    <foreignObject height="600" width="800" x="0" y="0">
+      <div style={{fontFamily: SOURCE_FONT, height: 600, pointerEvents: "none", position: "relative", width: 800}}>
+        <StageWorksheetReconstruction interaction={interaction} />
+        {interaction.phase === "quiz" ? COURSE_G04_L03_TS_008_CHOICES.map(choice => <button
+          aria-label={accessibleChoiceLabel(choice)} className="course-g04-l03-ts-008-source-hit-button"
+          data-source-button-object-id={choice.sourceButtonObjectId} data-source-instance={choice.sourceInstance}
+          data-ts008-focus-control={`choice-${choice.id}`} disabled={!controlsReady || paused} key={choice.id}
+          onClick={() => dispatch({type: "choose", choiceId: choice.id})}
+          style={{height: choice.hitBounds.height, left: choice.hitBounds.x, top: choice.hitBounds.y, width: choice.hitBounds.width}}
+          type="button">{accessibleChoiceLabel(choice)}</button>) : null}
+      </div>
+    </foreignObject>
+  </svg>;
 }
 
 export function CourseG04L03Ts008Renderer(
@@ -955,7 +635,13 @@ export function CourseG04L03Ts008Renderer(
   const sourceCanvasRenderKey =
     `source-ts008-${props.replay ?? 0}-${props.seed}-${sourceVisualFrame}`;
   const controlsReady =
-    interactionEnabled && canvasStatus === "ready";
+    interactionEnabled && canvasStatus === "ready"
+    && (!props.pageInteractionCompanionTargetId || companionTarget !== null);
+  useEffect(() => {
+    if (controlsReady && interaction.phase === TS008_BEHAVIOR.completion.phase) {
+      props.onActivityComplete?.();
+    }
+  }, [controlsReady, interaction.phase, props.onActivityComplete]);
   const feedbackIdentity = interaction.feedback
     ? `${interaction.feedback.kind}-${interaction.feedback.branch}-${interaction.feedback.choiceId}-${interaction.wrongTryCount}`
     : "";
@@ -1133,6 +819,7 @@ export function CourseG04L03Ts008Renderer(
       lastFocusedControlRef.current = key;
     },
     onReplay: replay,
+    onLessonHostRequest: props.onLessonHostRequest,
     paused: props.paused ?? false,
     reducedMotion: props.reducedMotion ?? false,
   };
@@ -1205,46 +892,6 @@ export function CourseG04L03Ts008Renderer(
       }}
     >
       <style>{`
-        .course-g04-l03-ts-008-mobile-fallback-slot,
-        .course-g04-l03-ts-008-mobile-controls {
-          display: none;
-        }
-
-        .course-g04-l03-ts-008-stage-surface button {
-          font-family: ${SOURCE_FONT};
-        }
-
-        .course-g04-l03-ts-008-stage-surface button:focus-visible,
-        .course-g04-l03-ts-008-stage-surface
-        [tabindex="-1"]:focus-visible {
-          outline: 4px solid #ffdf00;
-          outline-offset: 3px;
-        }
-
-        .course-g04-l03-ts-008-stage-modern-label {
-          align-items: center;
-          background: rgb(11 43 85 / 94%);
-          border: 2px solid #fff;
-          border-radius: 9px;
-          color: #fff;
-          display: flex;
-          font-family: system-ui, sans-serif;
-          font-size: 13px;
-          gap: 9px;
-          left: 176px;
-          margin: 0;
-          padding: 6px 11px;
-          pointer-events: none;
-          position: absolute;
-          top: 10px;
-          z-index: 8;
-        }
-
-        .course-g04-l03-ts-008-stage-modern-label strong {
-          color: #ffe34e;
-          white-space: nowrap;
-        }
-
         .course-g04-l03-ts-008-stage-step-content {
           background: #fff8f5;
           box-sizing: border-box;
@@ -1297,307 +944,45 @@ export function CourseG04L03Ts008Renderer(
           outline: none !important;
         }
 
-        .course-g04-l03-ts-008-stage-close,
-        .course-g04-l03-ts-008-stage-help-button,
-        .course-g04-l03-ts-008-stage-feedback button,
-        .course-g04-l03-ts-008-stage-dialog button,
-        .course-g04-l03-ts-008-stage-terminal button {
-          background: linear-gradient(#fff36b, #48cbd2);
-          border: 2px solid #173f80;
-          border-radius: 999px;
-          color: #111;
-          cursor: pointer;
-          font-weight: 850;
-          pointer-events: auto;
+        .course-g04-l03-ts-008-mobile-controls {
+          background: #edf7ff; border: 2px solid #224b8e; border-radius: 12px; box-sizing: border-box;
+          color: #17395f; display: grid; font: 16px/1.5 system-ui,sans-serif; gap: 10px;
+          margin: 10px 0; padding: 14px 16px; position: relative; width: 100%;
         }
-
-        .course-g04-l03-ts-008-stage-close {
-          font-size: 13px;
-          min-height: 32px;
-          padding: 4px 13px;
-          position: absolute;
-          z-index: 6;
-        }
-
-        .course-g04-l03-ts-008-stage-help-button {
-          box-sizing: border-box;
-          font-size: 11px;
-          padding: 2px 5px;
-          position: absolute;
-          z-index: 6;
-        }
-
-        .course-g04-l03-ts-008-stage-surface button:disabled {
-          cursor: default;
-          opacity: .55;
-        }
-
-        .course-g04-l03-ts-008-stage-feedback,
-        .course-g04-l03-ts-008-stage-dialog {
-          background: #fffde0;
-          border: 4px solid #164986;
-          border-radius: 16px;
-          box-shadow: 0 10px 30px rgb(0 0 0 / 32%);
-          box-sizing: border-box;
-          color: #102b49;
-          display: grid;
-          font-family: system-ui, sans-serif;
-          gap: 8px;
-          padding: 16px 22px;
-          pointer-events: auto;
-          position: absolute;
-          text-align: center;
-          z-index: 9;
-        }
-
-        .course-g04-l03-ts-008-stage-feedback {
-          left: 160px;
-          top: 165px;
-          width: 480px;
-        }
-
-        .course-g04-l03-ts-008-stage-feedback > *,
-        .course-g04-l03-ts-008-stage-dialog > * {
-          margin: 0;
-        }
-
-        .course-g04-l03-ts-008-stage-feedback strong,
-        .course-g04-l03-ts-008-stage-dialog > strong {
-          font-size: 23px;
-        }
-
-        .course-g04-l03-ts-008-stage-feedback button,
-        .course-g04-l03-ts-008-stage-dialog > button {
-          justify-self: center;
-          min-height: 38px;
-          padding: 5px 18px;
-        }
-
-        .course-g04-l03-ts-008-help-number-line {
-          align-items: center;
-          border-top: 3px solid #183d92;
-          display: flex;
-          justify-content: space-between;
-          margin-top: 8px !important;
-          padding-top: 4px;
-        }
-
-        .course-g04-l03-ts-008-help-number-line span:nth-child(n + 3) {
-          color: #d11616;
-        }
-
-        .course-g04-l03-ts-008-help-glossary {
-          display: flex;
-          gap: 7px;
-          justify-content: center;
-        }
-
-        .course-g04-l03-ts-008-help-glossary button {
-          background: #eef3f9;
-          border-radius: 7px;
-          font-size: 11px;
-          min-height: 28px;
-          padding: 3px 7px;
-        }
-
-        .course-g04-l03-ts-008-stage-terminal {
-          align-items: center;
-          background: rgb(255 255 255 / 96%);
-          border: 3px solid #164986;
-          border-radius: 14px;
-          bottom: 24px;
-          box-shadow: 0 5px 16px rgb(0 0 0 / 24%);
-          display: flex;
-          font-family: system-ui, sans-serif;
-          gap: 13px;
-          justify-content: center;
-          left: 154px;
-          padding: 10px 16px;
-          pointer-events: auto;
-          position: absolute;
-          right: 154px;
-        }
-
-        .course-g04-l03-ts-008-stage-terminal button {
-          min-height: 38px;
-          padding: 5px 16px;
+        .course-g04-l03-ts-008-mobile-controls--fallback {inset: auto; max-height: none; overflow: visible; position: relative;}
+        .course-g04-l03-ts-008-mobile-fallback-slot {aspect-ratio: auto; display: block; position: relative;}
+        .course-g04-l03-ts-008-mobile-steps {display: grid; gap: 10px; grid-template-columns: repeat(2,minmax(0,1fr));}
+        .course-g04-l03-ts-008-mobile-steps article {background: #fff; border: 1px solid #bdd2e7; border-radius: 8px; padding: 10px 12px;}
+        .course-g04-l03-ts-008-mobile-steps p {margin: 4px 0;}
+        .course-g04-l03-ts-008-mobile-action {display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px;}
+        .course-g04-l03-ts-008-mobile-controls button {background: linear-gradient(#fff5b0,#f4d567); border: 2px solid #43617a; border-radius: 10px; color: #17395f; cursor: pointer; font: 700 16px/1.4 system-ui,sans-serif; min-height: 48px; min-width: 48px; padding: 9px 14px;}
+        .course-g04-l03-ts-008-mobile-controls button:disabled {cursor: default; opacity: .56;}
+        .course-g04-l03-ts-008-mobile-controls button:focus-visible,
+        .course-g04-l03-ts-008-mobile-controls summary:focus-visible,
+        .course-g04-l03-ts-008-mobile-controls [tabindex="-1"]:focus-visible {outline: 3px solid #001d6d; outline-offset: 2px; box-shadow: 0 0 0 3px #ffdf00;}
+        .course-g04-l03-ts-008-mobile-choices {display: none;}
+        .course-g04-l03-ts-008-mobile-question {font-size: 18px; font-weight: 700; margin: 0;}
+        .course-g04-l03-ts-008-mobile-feedback,
+        .course-g04-l03-ts-008-mobile-dialog,
+        .course-g04-l03-ts-008-mobile-terminal {background: #fffde9; border: 2px solid #537298; border-radius: 10px; display: grid; gap: 10px; padding: 14px; text-align: center;}
+        .course-g04-l03-ts-008-mobile-feedback > *,
+        .course-g04-l03-ts-008-mobile-dialog > *,
+        .course-g04-l03-ts-008-mobile-terminal > * {margin: 0;}
+        .course-g04-l03-ts-008-help-glossary {display: grid; gap: 8px; grid-template-columns: repeat(3,minmax(0,1fr));}
+        .course-g04-l03-ts-008-help-axis {margin: 0 auto; max-width: 550px; width: 100%;}
+        .course-g04-l03-ts-008-help-axis svg {height: auto; width: 100%;}
+        .course-g04-l03-ts-008-help-axis figcaption {font-size: 14px;}
+        .course-g04-l03-ts-008-mobile-controls summary {cursor: pointer; min-height: 44px; padding: 8px 0;}
+        @media ${RESPONSIVE_CONTROLS_MEDIA} {
+          .course-g04-l03-ts-008-mobile-choices {display: grid; gap: 10px; grid-template-columns: repeat(2,minmax(0,1fr));}
+          .course-g04-l03-ts-008-mobile-choices button {display: grid; gap: 5px;}
+          .course-g04-l03-ts-008-mobile-choices small {font-size: 14px; font-weight: 400;}
+          .course-g04-l03-ts-008-mobile-steps {grid-template-columns: minmax(0,1fr);}
+          .course-g04-l03-ts-008-help-glossary {grid-template-columns: minmax(0,1fr);}
         }
 
         @media ${RESPONSIVE_CONTROLS_MEDIA} {
-          .course-g04-l03-ts-008-stage-surface {
-            display: none;
-          }
-
-          .course-g04-l03-ts-008-mobile-fallback-slot {
-            aspect-ratio: 4 / 3;
-            display: block;
-            inset: 0 0 auto;
-            pointer-events: none;
-            position: absolute;
-            width: 100%;
-            z-index: 5;
-          }
-
-          .course-g04-l03-ts-008-mobile-controls {
-            background: #e9f7ff;
-            border: 2px solid #224b8e;
-            border-radius: 12px;
-            box-sizing: border-box;
-            color: #111;
-            display: grid;
-            font-family: system-ui, sans-serif;
-            gap: 10px;
-            padding: 12px;
-          }
-
-          .course-g04-l03-ts-008-mobile-controls--fallback {
-            inset: 3%;
-            max-height: 94%;
-            overflow: auto;
-            pointer-events: auto;
-            position: absolute;
-          }
-
-          .course-g04-l03-ts-008-mobile-controls--portal {
-            margin: 12px 0;
-            max-width: 100%;
-            pointer-events: auto;
-            position: relative;
-            width: 100%;
-          }
-
-          .course-g04-l03-ts-008-modern-label {
-            display: grid;
-            font-size: 13px;
-            gap: 2px;
-            margin: 0;
-            text-align: center;
-          }
-
-          .course-g04-l03-ts-008-modern-label strong {
-            color: #163f82;
-          }
-
-          .course-g04-l03-ts-008-mobile-loading,
-          .course-g04-l03-ts-008-mobile-question {
-            font-size: 15px;
-            line-height: 1.32;
-            margin: 0;
-            text-align: center;
-          }
-
-          .course-g04-l03-ts-008-mobile-steps {
-            display: grid;
-            gap: 8px;
-          }
-
-          .course-g04-l03-ts-008-mobile-steps article {
-            background: #fff8f5;
-            border: 2px solid #ef9b6c;
-            border-radius: 10px;
-            display: grid;
-            font-family: ${SOURCE_FONT};
-            font-size: 13px;
-            gap: 3px;
-            padding: 9px;
-          }
-
-          .course-g04-l03-ts-008-mobile-steps article p {
-            line-height: 1.25;
-            margin: 0;
-          }
-
-          .course-g04-l03-ts-008-mobile-action,
-          .course-g04-l03-ts-008-mobile-choices {
-            display: grid;
-            gap: 8px;
-            grid-template-columns: repeat(2, minmax(48px, 1fr));
-          }
-
-          .course-g04-l03-ts-008-mobile-controls button {
-            background: linear-gradient(#fff36b, #48cbd2);
-            border: 2px solid #173f80;
-            border-radius: 10px;
-            box-sizing: border-box;
-            color: #111;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 800;
-            min-height: 48px;
-            min-width: 48px;
-            padding: 8px 10px;
-          }
-
-          .course-g04-l03-ts-008-mobile-choices button {
-            align-items: center;
-            display: flex;
-            gap: 9px;
-            justify-content: center;
-          }
-
-          .course-g04-l03-ts-008-mobile-choices button strong {
-            background: #ffcf18;
-            border-radius: 999px;
-            display: grid;
-            height: 30px;
-            place-items: center;
-            width: 30px;
-          }
-
-          .course-g04-l03-ts-008-mobile-controls button:focus-visible,
-          .course-g04-l03-ts-008-mobile-controls
-          [tabindex="-1"]:focus-visible {
-            box-shadow: 0 0 0 3px #ffdf00;
-            outline: 3px solid #001d6d;
-            outline-offset: 2px;
-          }
-
-          .course-g04-l03-ts-008-mobile-controls button:disabled {
-            cursor: default;
-            opacity: .56;
-          }
-
-          .course-g04-l03-ts-008-mobile-feedback,
-          .course-g04-l03-ts-008-mobile-dialog,
-          .course-g04-l03-ts-008-mobile-terminal {
-            background: #fffde0;
-            border: 3px solid #164986;
-            border-radius: 12px;
-            display: grid;
-            gap: 8px;
-            padding: 12px;
-            text-align: center;
-          }
-
-          .course-g04-l03-ts-008-mobile-feedback > *,
-          .course-g04-l03-ts-008-mobile-dialog > *,
-          .course-g04-l03-ts-008-mobile-terminal > * {
-            margin: 0;
-          }
-
-          .course-g04-l03-ts-008-help-number-line {
-            font-size: 13px;
-          }
-
-          .course-g04-l03-ts-008-help-glossary {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(48px, 1fr));
-          }
-        }
-
-        @media (max-width: 390px) {
-          .course-g04-l03-ts-008-mobile-action,
-          .course-g04-l03-ts-008-mobile-choices,
-          .course-g04-l03-ts-008-help-glossary {
-            grid-template-columns: 1fr;
-          }
-        }
-
-        @media (min-width: 1280px) and (any-pointer: coarse) {
-          .course-g04-l03-ts-008-mobile-controls--portal {
-            grid-column: 1 / -1;
-            grid-row: 7;
-          }
+          .course-g04-l03-ts-008-stage-surface {display: none;}
         }
       `}</style>
 
@@ -1622,7 +1007,6 @@ export function CourseG04L03Ts008Renderer(
 
       {interactionEnabled ? (
         <>
-          <SourceGlossaryBoundary />
           <StageSurface {...sharedSurfaceProps} />
           {companionTarget
             ? createPortal(mobileSurface, companionTarget)
@@ -1631,12 +1015,6 @@ export function CourseG04L03Ts008Renderer(
                   {mobileSurface}
                 </div>
               )}
-          <p style={visuallyHiddenStyle}>
-            This current-JavaScript functional overlay uses clean donor frames.
-            Natural source composites at frames 592, 712, and 770; feedback
-            artwork and audio; original-runtime parity; human review; owner
-            acceptance; strict completion; and publication are not established.
-          </p>
         </>
       ) : null}
     </div>
@@ -1663,12 +1041,12 @@ export const COURSE_G04_L03_TS_008_SOURCE_CONTRACT = Object.freeze({
     "seeded-three-wrong-and-four-right-source-copy-projections",
     "first-wrong-retry-and-second-wrong-or-correct-terminal-projection",
     "source-number-line-need-more-help-popup-modern-reconstruction",
-    "three-source-glossary-callbacks-safe-disabled",
+    "three-source-glossary-callbacks-through-typed-modern-host-only-while-help-open",
     "pause-freezes-feedback-remaining-time",
     "reduced-motion-static-feedback-held-until-continue",
     "whole-state-replay-reset-and-source-canvas-remount",
     "responsive-mobile-and-coarse-pointer-companion-surface",
-    "wide-coarse-companion-grid-row-seven",
+    "readable-companion-controls-on-desktop-and-phone",
     "desktop-mobile-focus-migration-and-modal-close-focus-return",
     "functional-source-canvas-aria-inert-and-pointer-event-isolated",
     "controls-fail-closed-until-donor-canvas-ready",
@@ -1683,7 +1061,7 @@ export const COURSE_G04_L03_TS_008_SOURCE_CONTRACT = Object.freeze({
   sourceTimingParityEstablished: false,
   associatedAudioModeled: false,
   needMoreHelpSourceVisualAccepted: false,
-  glossaryHostCallbacks: "safe-disabled-unresolved",
+  glossaryHostCallbacks: "typed-modern-help-keyterms-original-host-parity-unestablished",
   pauseAndReducedMotionPolicy: COURSE_G04_L03_TS_008_PLAYBACK_POLICY,
   interactionAuthority: COURSE_G04_L03_TS_008_INTERACTION_AUTHORITY,
   behaviorParityEstablished: false,
@@ -1701,6 +1079,13 @@ export const buildCourseG04L03Ts008CaptureAttributes =
 
 export default Object.freeze({
   ...candidate.module,
+  completionMode: "activity" as const,
+  lessonHost: Object.freeze({
+    capabilities: Object.freeze(["keyterm"] as const),
+    legacyOperations: "blocked" as const,
+    auditStorage: "memory-only" as const,
+    storesPersonalData: false as const,
+  }),
   reducedMotionFrame: FUNCTIONAL_ENTRY_FRAME,
   Renderer: CourseG04L03Ts008Renderer,
 });

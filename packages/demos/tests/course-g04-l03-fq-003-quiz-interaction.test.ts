@@ -9,6 +9,7 @@ import fq003, {
 } from "../src/modules/course-g04-l03-fq-003";
 import {
   COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT,
+  createCourseG04L03FinalQuizFunctionalRenderer,
 } from "../src/modules/course-g04-l03-fq-002";
 import {
   COURSE_G04_L03_FQ_003_INTERACTION_AUTHORITY,
@@ -19,6 +20,8 @@ import {
   gradeCourseG04L03Fq003LegacyScore,
   reduceCourseG04L03Fq003Interaction,
 } from "../src/timelines/course-g04-l03-fq-003-quiz-interaction";
+import {createSourceStaticCanvasCandidate} from "../src/source-static-canvas-candidate";
+import {COURSE_G04_L03_FQ_003_CONFIG} from "../src/timelines/course-g04-l03-fq-003";
 import type {
   CourseG04L03Fq002InteractionAction,
   CourseG04L03Fq002InteractionState,
@@ -70,6 +73,7 @@ const completeQuiz = (
 };
 
 test("FQ003 always presents the source 25-question sequence", () => {
+  assert.equal(fq003.completionMode, "activity");
   const expectedOrder = Array.from({length: 25}, (_, index) => index + 1);
   assert.deepEqual(COURSE_G04_L03_FQ_003_QUESTION_ORDER, expectedOrder);
 
@@ -299,7 +303,7 @@ test("FQ003 functional renderer exposes 25-question responsive controls", () => 
   );
   assert.match(
     markup,
-    /\.course-g04-l03-fq-002-stage-panel \{[\s\S]*?left: 50%;[\s\S]*?top: 66px;[\s\S]*?transform: translateX\(-50%\);[\s\S]*?width: 564px;/,
+    /\.course-g04-l03-fq-002-stage-panel \{[\s\S]*?left: 50%;[\s\S]*?top: 121px;[\s\S]*?transform: translateX\(-50%\);[\s\S]*?width: 700px;/,
   );
   assert.doesNotMatch(markup, /left: 397px/);
   assert.match(markup, /data-source-lms-enabled="false"/);
@@ -379,4 +383,31 @@ test("FQ003 keeps source Q8 scoring while presenting the requested TS007 visual"
     COURSE_G04_L03_FQ_003_SOURCE_CONTRACT.sourceReviewVisualParityEstablished,
     false,
   );
+});
+
+
+test("25-question learner results show the actual percentage without the mismatched legacy grade", () => {
+  const state = completeQuiz(9);
+  assert.equal(state.results?.grade, "Advanced"); // Preserved source evidence.
+  const ResultsRenderer = createCourseG04L03FinalQuizFunctionalRenderer({
+    animationId: "course-g04-l03-fq-003",
+    createInteractionState: () => state,
+    functionalEntryFrame: 1,
+    functionalHostFrameEnd: 43,
+    functionalScope: "results-presentation-regression",
+    getReviewItem: getCourseG04L03Fq003ReviewItem,
+    reduceInteraction: reduceCourseG04L03Fq003Interaction,
+    resultsDonorFrame: 43,
+    resultsGradeLabel: "Legacy source performance level",
+    sourceCandidate: createSourceStaticCanvasCandidate(COURSE_G04_L03_FQ_003_CONFIG),
+    sourceDomain: "sprite-899",
+    sourceScenario: "source-static-frame",
+  });
+  const markup = renderToStaticMarkup(createElement(ResultsRenderer, {
+    frame: 1, frameDomain: "sprite-899", scenario: "source-static-frame", lang: "en", seed: 0,
+  }));
+  assert.match(markup, /<strong>9<\/strong><span>of 25 correct<\/span>/);
+  assert.match(markup, />36% correct<\/p>/);
+  assert.match(markup, />16 incorrect answers\.<\/p>/);
+  assert.doesNotMatch(markup, /<strong>Advanced<\/strong>|Legacy source performance level:/);
 });

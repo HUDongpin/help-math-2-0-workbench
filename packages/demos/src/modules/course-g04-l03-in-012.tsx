@@ -11,15 +11,19 @@ import type {Dispatch, DragEvent, RefObject} from "react";
 import {createPortal} from "react-dom";
 
 import type {AnimationRendererProps} from "../contract";
+import {getG4L3VisibleCompanionAudioCandidates} from "../g4-l3-visible-companion-audio.generated";
+import {createCourseG04L03SourceGlossaryCandidate} from "./course-g04-l03-source-glossary-candidate";
 import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
+import {
+  isSourceStaticBehaviorCompositeCaptureRequest,
+  SourceStaticBehaviorCompositeCapture,
+} from "../source-static-behavior-composite-capture";
 import {
   COURSE_G04_L03_IN_012_CARDS,
   COURSE_G04_L03_IN_012_CORRECT_FEEDBACK,
   COURSE_G04_L03_IN_012_CURRENT_JS_TIMING,
   COURSE_G04_L03_IN_012_FINAL_CORRECT_FEEDBACK,
-  COURSE_G04_L03_IN_012_INSTRUCTION,
   COURSE_G04_L03_IN_012_INTERACTION_AUTHORITY,
-  COURSE_G04_L03_IN_012_SOURCE_GLOSSARY_TERMS,
   COURSE_G04_L03_IN_012_WRONG_FEEDBACK,
   createCourseG04L03In012OwingDragState,
   getCourseG04L03In012PlacementCount,
@@ -31,13 +35,49 @@ import {
 } from "../timelines/course-g04-l03-in-012-owing-drag-interaction";
 import {
   COURSE_G04_L03_IN_012_CONFIG,
+  COURSE_G04_L03_IN_012_GLOSSARY_CONFIG,
+  COURSE_G04_L03_IN_012_DIRECT_COMPANION_COMPOSITE_CAPTURES,
+  COURSE_G04_L03_IN_012_DIRECT_COMPANION_COMPOSITE_CONFIGS,
+  COURSE_G04_L03_IN_012_NATURAL_PARENT_COMPOSITE_CAPTURES,
+  COURSE_G04_L03_IN_012_NATURAL_PARENT_COMPOSITE_CONFIG,
+  COURSE_G04_L03_IN_012_PARENT_COMPOSITE_CAPTURES,
+  COURSE_G04_L03_IN_012_PARENT_COMPOSITE_CONFIG,
   COURSE_G04_L03_IN_012_SOURCE,
 } from "../timelines/course-g04-l03-in-012";
 
 const candidate = createSourceStaticCanvasCandidate(
   COURSE_G04_L03_IN_012_CONFIG,
 );
+const visibleCompanionAudioCandidates =
+  getG4L3VisibleCompanionAudioCandidates("course-g04-l03-in-012");
 const SourceStaticRenderer = candidate.Renderer;
+const parentCompositeCandidate = createSourceStaticCanvasCandidate(
+  COURSE_G04_L03_IN_012_PARENT_COMPOSITE_CONFIG,
+);
+const ParentCompositeSourceRenderer = parentCompositeCandidate.Renderer;
+const naturalParentCompositeCandidate = createSourceStaticCanvasCandidate(
+  COURSE_G04_L03_IN_012_NATURAL_PARENT_COMPOSITE_CONFIG,
+);
+const NaturalParentCompositeSourceRenderer =
+  naturalParentCompositeCandidate.Renderer;
+const directCompanionCandidates = new Map(
+  COURSE_G04_L03_IN_012_DIRECT_COMPANION_COMPOSITE_CONFIGS.map((config) => [
+    config.animationId,
+    createSourceStaticCanvasCandidate(config),
+  ]),
+);
+const visibleCompanionPlaybackEndFrameByDomain = Object.freeze(
+  Object.fromEntries(
+    [
+      ...COURSE_G04_L03_IN_012_PARENT_COMPOSITE_CAPTURES,
+      ...COURSE_G04_L03_IN_012_NATURAL_PARENT_COMPOSITE_CAPTURES,
+      ...COURSE_G04_L03_IN_012_DIRECT_COMPANION_COMPOSITE_CAPTURES,
+    ].map(({frameDomain, localFrameCount}) => [
+      frameDomain,
+      localFrameCount,
+    ]),
+  ),
+);
 
 const SOURCE_INTERACTION_FRAME = 174;
 const SOURCE_CLEAN_QUESTION_FRAME = 173;
@@ -48,6 +88,180 @@ const SOURCE_FONT =
   '"Bauhaus Md BT", "Arial Rounded MT Bold", "Trebuchet MS", ui-rounded, sans-serif';
 const RESPONSIVE_CONTROLS_MEDIA =
   "(max-width: 640px), (any-pointer: coarse)";
+
+type ParentCompositeCapture =
+  (typeof COURSE_G04_L03_IN_012_PARENT_COMPOSITE_CAPTURES)[number];
+type NaturalParentCompositeCapture =
+  (typeof COURSE_G04_L03_IN_012_NATURAL_PARENT_COMPOSITE_CAPTURES)[number];
+type DirectCompanionCompositeCapture =
+  (typeof COURSE_G04_L03_IN_012_DIRECT_COMPANION_COMPOSITE_CAPTURES)[number];
+
+function findParentCompositeCapture(
+  props: Pick<
+    AnimationRendererProps,
+    | "entryStateSha256"
+    | "frame"
+    | "frameDomain"
+    | "lang"
+    | "requirementId"
+    | "scenario"
+    | "traceId"
+  >,
+): ParentCompositeCapture | undefined {
+  return COURSE_G04_L03_IN_012_PARENT_COMPOSITE_CAPTURES.find(
+    (mapping) =>
+      props.requirementId === mapping.requirementId
+      && props.traceId === mapping.traceId
+      && props.entryStateSha256 === mapping.entryStateSha256
+      && isSourceStaticBehaviorCompositeCaptureRequest(props, mapping),
+  );
+}
+
+function findNaturalParentCompositeCapture(
+  props: Pick<
+    AnimationRendererProps,
+    | "entryStateSha256"
+    | "frame"
+    | "frameDomain"
+    | "lang"
+    | "requirementId"
+    | "scenario"
+    | "traceId"
+  >,
+): NaturalParentCompositeCapture | undefined {
+  return COURSE_G04_L03_IN_012_NATURAL_PARENT_COMPOSITE_CAPTURES.find(
+    (mapping) =>
+      props.requirementId === mapping.requirementId
+      && props.traceId === mapping.traceId
+      && props.entryStateSha256 === mapping.entryStateSha256
+      && isSourceStaticBehaviorCompositeCaptureRequest(props, mapping),
+  );
+}
+
+function findDirectCompanionCompositeCapture(
+  props: Pick<
+    AnimationRendererProps,
+    | "entryStateSha256"
+    | "frame"
+    | "frameDomain"
+    | "lang"
+    | "requirementId"
+    | "scenario"
+    | "traceId"
+  >,
+): DirectCompanionCompositeCapture | undefined {
+  return COURSE_G04_L03_IN_012_DIRECT_COMPANION_COMPOSITE_CAPTURES.find(
+    (mapping) =>
+      props.requirementId === mapping.requirementId
+      && props.traceId === mapping.traceId
+      && props.entryStateSha256 === mapping.entryStateSha256
+      && isSourceStaticBehaviorCompositeCaptureRequest(props, mapping),
+  );
+}
+
+function ParentCompositeEvidenceRenderer({
+  mapping,
+  props,
+}: {
+  mapping: ParentCompositeCapture;
+  props: AnimationRendererProps;
+}) {
+  const behaviorCompositeState =
+    `${mapping.behaviorCompositeStatePrefix}${String(props.frame).padStart(3, "0")}`;
+  const sourceState = useMemo(() => {
+    const base = parentCompositeCandidate.getFrameState(mapping.sourceFrame, {
+      frameDomain: mapping.sourceFrameDomain,
+      scenario: mapping.sourceScenario,
+      lang: mapping.language,
+      seed: props.seed,
+    });
+    return Object.freeze({
+      ...base,
+      behaviorCompositeContractId: mapping.behaviorCompositeContractId,
+      behaviorCompositeState,
+    });
+  }, [behaviorCompositeState, mapping, props.seed]);
+  return (
+    <SourceStaticBehaviorCompositeCapture
+      mapping={mapping}
+      props={props}
+      sourceState={sourceState}
+      SourceRenderer={ParentCompositeSourceRenderer}
+    />
+  );
+}
+
+function NaturalParentCompositeEvidenceRenderer({
+  mapping,
+  props,
+}: {
+  mapping: NaturalParentCompositeCapture;
+  props: AnimationRendererProps;
+}) {
+  const behaviorCompositeState =
+    `${mapping.behaviorCompositeStatePrefix}${String(props.frame).padStart(3, "0")}`;
+  const sourceState = useMemo(() => {
+    const base = naturalParentCompositeCandidate.getFrameState(
+      mapping.sourceFrame,
+      {
+        frameDomain: mapping.sourceFrameDomain,
+        scenario: mapping.sourceScenario,
+        lang: mapping.language,
+        seed: props.seed,
+      },
+    );
+    return Object.freeze({
+      ...base,
+      behaviorCompositeContractId: mapping.behaviorCompositeContractId,
+      behaviorCompositeState,
+    });
+  }, [behaviorCompositeState, mapping, props.seed]);
+  return (
+    <SourceStaticBehaviorCompositeCapture
+      mapping={mapping}
+      props={props}
+      sourceState={sourceState}
+      SourceRenderer={NaturalParentCompositeSourceRenderer}
+    />
+  );
+}
+
+function DirectCompanionCompositeEvidenceRenderer({
+  mapping,
+  props,
+}: {
+  mapping: DirectCompanionCompositeCapture;
+  props: AnimationRendererProps;
+}) {
+  const selectedCandidate = directCompanionCandidates.get(mapping.assetKey);
+  if (!selectedCandidate) {
+    throw new Error(`Missing direct companion asset: ${mapping.assetKey}`);
+  }
+  const SourceRenderer = selectedCandidate.Renderer;
+  const behaviorCompositeState =
+    `${mapping.behaviorCompositeStatePrefix}${String(props.frame).padStart(3, "0")}`;
+  const sourceState = useMemo(() => {
+    const base = selectedCandidate.getFrameState(mapping.sourceFrame, {
+      frameDomain: mapping.sourceFrameDomain,
+      scenario: mapping.sourceScenario,
+      lang: mapping.language,
+      seed: props.seed,
+    });
+    return Object.freeze({
+      ...base,
+      behaviorCompositeContractId: mapping.behaviorCompositeContractId,
+      behaviorCompositeState,
+    });
+  }, [behaviorCompositeState, mapping, props.seed, selectedCandidate]);
+  return (
+    <SourceStaticBehaviorCompositeCapture
+      mapping={mapping}
+      props={props}
+      sourceState={sourceState}
+      SourceRenderer={SourceRenderer}
+    />
+  );
+}
 
 type SourceCanvasStatus =
   | "idle"
@@ -140,37 +354,6 @@ interface SharedSurfaceProps {
   readonly wrongCloseRef: RefObject<HTMLButtonElement | null>;
 }
 
-function SourceGlossaryBoundary() {
-  return (
-    <div
-      aria-label="Three source glossary actions are unavailable in this current JavaScript candidate."
-      data-host-glossary-actions="safe-disabled"
-      data-host-glossary-function="DoHyperLinks-unresolved"
-      style={visuallyHiddenStyle}
-    >
-      {COURSE_G04_L03_IN_012_SOURCE_GLOSSARY_TERMS.map((term, index) => (
-        <span
-          aria-disabled="true"
-          data-source-glossary-height={term.bounds.height}
-          data-source-glossary-key={term.keyAttribute}
-          data-source-glossary-term={term.visibleText}
-          data-source-glossary-width={term.bounds.width}
-          data-source-glossary-x={term.bounds.x}
-          data-source-glossary-y={term.bounds.y}
-          key={term.id}
-          role="link"
-        >
-          {term.visibleText}
-          {index
-            < COURSE_G04_L03_IN_012_SOURCE_GLOSSARY_TERMS.length - 1
-            ? ", "
-            : ""}
-        </span>
-      ))}
-    </div>
-  );
-}
-
 function StageCardCopy({
   amountText,
   person,
@@ -242,7 +425,7 @@ function StageSurface({
   return (
     <svg
       aria-busy={!controlsReady}
-      aria-label="Source-script-bound current JavaScript owing card activity"
+      aria-label="Place money cards on the number line"
       className="course-g04-l03-in-012-stage-surface"
       data-audio-feedback="inventoried-unimplemented-unaccepted"
       data-behavior-parity-established="false"
@@ -489,21 +672,20 @@ function StageSurface({
               data-source-copy="source-authoring-text-without-original-runtime-causality"
               style={{
                 alignItems: "center",
-                background: "linear-gradient(#bd00e9, #8e00c0)",
-                border: "5px solid #7b007c",
-                borderRadius: 22,
+                background: "#e4f5df",
+                border: "2px solid #28743b",
+                borderRadius: 12,
                 boxSizing: "border-box",
-                color: "#fff",
                 display: "flex",
-                fontSize: 46,
+                fontSize: 26,
                 fontWeight: 900,
-                height: 132,
+                height: 52,
                 justifyContent: "center",
-                left: 244,
+                left: 200,
                 position: "absolute",
-                textShadow: "2px 2px 0 #73008e",
-                top: 235,
-                width: 320,
+                color: "#17572a",
+                top: 390,
+                width: 400,
               }}
             >
               {COURSE_G04_L03_IN_012_FINAL_CORRECT_FEEDBACK}
@@ -517,21 +699,20 @@ function StageSurface({
               data-original-runtime-terminal-parity="false"
               style={{
                 alignItems: "center",
-                background: "linear-gradient(#bd00e9, #8e00c0)",
-                border: "5px solid #7b007c",
-                borderRadius: 22,
+                background: "#e4f5df",
+                border: "2px solid #28743b",
+                borderRadius: 12,
                 boxSizing: "border-box",
-                color: "#fff",
                 display: "flex",
-                fontSize: 46,
+                fontSize: 26,
                 fontWeight: 900,
-                height: 132,
+                height: 52,
                 justifyContent: "center",
-                left: 244,
+                left: 200,
                 position: "absolute",
-                textShadow: "2px 2px 0 #73008e",
-                top: 235,
-                width: 320,
+                color: "#17572a",
+                top: 390,
+                width: 400,
               }}
             >
               {COURSE_G04_L03_IN_012_FINAL_CORRECT_FEEDBACK}
@@ -544,11 +725,40 @@ function StageSurface({
               : interaction.outcome === "final-correct-feedback"
                 ? COURSE_G04_L03_IN_012_FINAL_CORRECT_FEEDBACK
                 : interaction.outcome === "complete"
-                  ? `${COURSE_G04_L03_IN_012_FINAL_CORRECT_FEEDBACK} Current JavaScript terminal state.`
+                  ? `${COURSE_G04_L03_IN_012_FINAL_CORRECT_FEEDBACK} All 5 cards placed correctly.`
                   : interaction.feedback ?? ""}
           </span>
         </div>
       </foreignObject>
+    </svg>
+  );
+}
+
+function MobileNumberLinePreview({interaction}: {readonly interaction: CourseG04L03In012OwingDragState}) {
+  return (
+    <svg
+      aria-label="Money card positions on the number line, from left to right"
+      className="course-g04-l03-in-012-mobile-preview"
+      data-owing-preview-count={getCourseG04L03In012PlacementCount(interaction)}
+      role="img"
+      style={{height: "auto", inset: 0, pointerEvents: "none", position: "absolute", width: "100%", zIndex: 3}}
+      viewBox="0 0 800 600"
+    >
+      {targetOrder.map((target, index) => {
+        const placed = placedCardForTarget(interaction, target.targetId);
+        return (
+          <g key={target.id}>
+            <rect x={target.targetBounds.left} y={target.targetBounds.top} width={target.targetBounds.width} height={target.targetBounds.height} rx="6" fill={placed ? "#e4f5df" : "#fff"} stroke={placed ? "#28743b" : "#224b8e"} strokeWidth="2" />
+            <text x={target.targetCenter.x} y={target.targetCenter.y - (placed ? 15 : 0)} textAnchor="middle" fill="#152a4d" fontFamily="system-ui, sans-serif" fontSize={placed ? 12 : 18} fontWeight="700">
+              {placed ? placed.person : index + 1}
+              {placed ? <tspan x={target.targetCenter.x} dy="18">{placed.relation} {placed.amountText}</tspan> : null}
+            </text>
+          </g>
+        );
+      })}
+      {COURSE_G04_L03_IN_012_CARDS.filter((card) => interaction.placements[card.id] !== null).map((card) => (
+        <rect key={card.id} x={card.sourceBounds.left - 5} y={card.sourceBounds.top - 5} width={card.sourceBounds.width + 10} height={card.sourceBounds.height + 10} fill={SOURCE_STAGE_BACKGROUND} />
+      ))}
     </svg>
   );
 }
@@ -587,7 +797,7 @@ function MobileSurface({
       data-source-canvas-status={canvasStatus}
     >
       <p className="course-g04-l03-in-012-mobile-instruction">
-        {COURSE_G04_L03_IN_012_INSTRUCTION}
+        Choose a person’s card, then choose its numbered position on the number line. Positions 1–5 run from left to right. Having money is positive; owing money is negative.
       </p>
       {!controlsReady ? (
         <p
@@ -607,7 +817,7 @@ function MobileSurface({
           : interaction.outcome === "final-correct-feedback"
             ? COURSE_G04_L03_IN_012_FINAL_CORRECT_FEEDBACK
             : interaction.outcome === "complete"
-              ? `${COURSE_G04_L03_IN_012_FINAL_CORRECT_FEEDBACK} Current JavaScript terminal state.`
+              ? `${COURSE_G04_L03_IN_012_FINAL_CORRECT_FEEDBACK} All 5 cards placed correctly.`
               : selected
                 ? `${selected.accessibleLabel} selected. Choose its number-line position.`
                 : `${placementCount} of 5 cards placed.`}
@@ -704,7 +914,7 @@ function MobileSurface({
           role="status"
         >
           <strong>{COURSE_G04_L03_IN_012_FINAL_CORRECT_FEEDBACK}</strong>
-          <p>Final current JavaScript feedback is playing.</p>
+          <p>All 5 cards placed correctly.</p>
         </div>
       ) : null}
 
@@ -718,7 +928,7 @@ function MobileSurface({
         >
           <strong>{COURSE_G04_L03_IN_012_FINAL_CORRECT_FEEDBACK}</strong>
           <p>
-            Current JavaScript terminal state. Use Replay to practice again.
+            All 5 cards placed correctly. Use Replay to practice again.
           </p>
         </div>
       ) : null}
@@ -726,7 +936,7 @@ function MobileSurface({
   );
 }
 
-export function CourseG04L03In012Renderer(
+function CourseG04L03In012MainRenderer(
   props: AnimationRendererProps,
 ) {
   const [interaction, dispatch] = useReducer(
@@ -815,6 +1025,12 @@ export function CourseG04L03In012Renderer(
     dispatch({type: "replay"});
     setCanvasStatus(interactionEnabled ? "loading" : "idle");
   }, [interactionEnabled, props.replay, props.seed]);
+
+  useEffect(() => {
+    if (interactionEnabled && interaction.outcome === "complete") {
+      props.onActivityComplete?.();
+    }
+  }, [interactionEnabled, interaction.outcome, props.onActivityComplete]);
 
   useEffect(() => {
     if (!props.pageInteractionCompanionTargetId) {
@@ -1018,6 +1234,7 @@ export function CourseG04L03In012Renderer(
       }}
     >
       <style>{`
+        .course-g04-l03-in-012-mobile-preview,
         .course-g04-l03-in-012-mobile-fallback-slot,
         .course-g04-l03-in-012-mobile-controls {
           display: none;
@@ -1029,6 +1246,7 @@ export function CourseG04L03In012Renderer(
         }
 
         @media ${RESPONSIVE_CONTROLS_MEDIA} {
+          .course-g04-l03-in-012-mobile-preview { display: block; }
           .course-g04-l03-in-012-stage-surface {
             display: none;
           }
@@ -1077,7 +1295,7 @@ export function CourseG04L03In012Renderer(
           .course-g04-l03-in-012-mobile-loading,
           .course-g04-l03-in-012-mobile-status {
             font-family: system-ui, sans-serif;
-            font-size: 15px;
+            font-size: 16px;
             line-height: 1.3;
             margin: 0;
           }
@@ -1158,8 +1376,8 @@ export function CourseG04L03In012Renderer(
           }
 
           .course-g04-l03-in-012-mobile-complete {
-            background: #9900ff;
-            color: #fff;
+            background: #e4f5df;
+            color: #17572a;
           }
 
           .course-g04-l03-in-012-mobile-complete strong {
@@ -1201,7 +1419,7 @@ export function CourseG04L03In012Renderer(
       </div>
       {interactionEnabled ? (
         <>
-          <SourceGlossaryBoundary />
+          <MobileNumberLinePreview interaction={interaction} />
           <StageSurface
             canvasStatus={canvasStatus}
             controlsReady={controlsReady}
@@ -1223,11 +1441,37 @@ export function CourseG04L03In012Renderer(
   );
 }
 
+function CourseG04L03In012ActivityRenderer(
+  props: AnimationRendererProps,
+) {
+  const directMapping = findDirectCompanionCompositeCapture(props);
+  if (directMapping) {
+    return (
+      <DirectCompanionCompositeEvidenceRenderer
+        mapping={directMapping}
+        props={props}
+      />
+    );
+  }
+  const naturalMapping = findNaturalParentCompositeCapture(props);
+  if (naturalMapping) {
+    return (
+      <NaturalParentCompositeEvidenceRenderer
+        mapping={naturalMapping}
+        props={props}
+      />
+    );
+  }
+  const mapping = findParentCompositeCapture(props);
+  return mapping
+    ? <ParentCompositeEvidenceRenderer mapping={mapping} props={props} />
+    : <CourseG04L03In012MainRenderer {...props} />;
+}
+
 export {COURSE_G04_L03_IN_012_SOURCE};
 export const COURSE_G04_L03_IN_012_MOVIE = candidate.movie;
 export const COURSE_G04_L03_IN_012_RUNTIME = candidate.runtime;
-export const COURSE_G04_L03_IN_012_SOURCE_CONTRACT = Object.freeze({
-  ...candidate.sourceContract,
+const INTERACTION_SOURCE_CONTRACT = Object.freeze({
   currentJavascriptInteractionStatus:
     "source-script-bound-functional-candidate",
   currentJavascriptInteractionScope: Object.freeze([
@@ -1238,7 +1482,7 @@ export const COURSE_G04_L03_IN_012_SOURCE_CONTRACT = Object.freeze({
     "per-card-correct-feedback-before-fifth-card-final-feedback",
     "fifth-card-two-stage-feedback-and-persistent-current-js-terminal",
     "unfilled-position-labels-do-not-disclose-source-answer-values",
-    "three-source-glossary-callback-hits-safe-disabled",
+    "three-source-glossary-typed-keyterm-host-requests",
     "host-pause-freezes-current-js-per-card-and-final-feedback-delays",
     "reduced-motion-immediate-current-js-feedback-transitions",
     "whole-renderer-replay-reset-and-source-canvas-remount",
@@ -1259,7 +1503,7 @@ export const COURSE_G04_L03_IN_012_SOURCE_CONTRACT = Object.freeze({
   correctFeedbackTextStatus: "modern-assistive-not-source-exact",
   finalCorrectFeedbackTextStatus:
     "source-authoring-text-without-original-runtime-causality",
-  sourceGlossaryActionStatus: "three-source-hits-safe-disabled",
+  sourceGlossaryActionStatus: "typed-keyterm-host-integrated",
   localControlStatus: "no-help-clear-or-new-number-controls",
   mainTimelineAudioStatus: "current-js-engineering-candidate-unaccepted",
   interactionFeedbackAudioStatus:
@@ -1269,19 +1513,130 @@ export const COURSE_G04_L03_IN_012_SOURCE_CONTRACT = Object.freeze({
   naturalTerminalContinuationEstablished: false,
   behaviorParityEstablished: false,
   replayParityEstablished: false,
+  parentCompositeCaptureStatus:
+    "three-source-static-placement-paths-current-js-only",
+  parentCompositeAsset: Object.freeze({
+    path: COURSE_G04_L03_IN_012_PARENT_COMPOSITE_CONFIG.assetSource,
+    sha256: COURSE_G04_L03_IN_012_PARENT_COMPOSITE_CONFIG.assetSha256,
+    manifest:
+      "public/flash-assets/courses/course-g04-l03-in-012-parent-composite/manifest.json",
+    report: "reports/g4-l3-parent-composite-assets.json",
+  }),
+  naturalParentCompositeCaptureStatus:
+    "two-source-static-parent-domains-current-js-only",
+  naturalParentCompositeAsset: Object.freeze({
+    path: COURSE_G04_L03_IN_012_NATURAL_PARENT_COMPOSITE_CONFIG.assetSource,
+    sha256:
+      COURSE_G04_L03_IN_012_NATURAL_PARENT_COMPOSITE_CONFIG.assetSha256,
+    manifest:
+      "public/flash-assets/courses/course-g04-l03-in-012-natural-parent-composite/manifest.json",
+    report: "reports/g4-l3-natural-parent-composite-assets.json",
+  }),
+  directCompanionCompositeCaptureStatus:
+    "five-source-static-direct-companion-domains-current-js-only",
+  directCompanionCompositeAssets:
+    COURSE_G04_L03_IN_012_DIRECT_COMPANION_COMPOSITE_CONFIGS.map((config) =>
+      Object.freeze({
+        path: config.assetSource,
+        sha256: config.assetSha256,
+        report: "reports/g4-l3-natural-parent-composite-assets.json",
+      })),
+  visibleCompanionAudioStatus:
+    "six-exact-source-payload-local-domain-candidates-listening-and-runtime-sync-pending",
+  visibleCompanionAudioReport:
+    "reports/g4-l3-visible-companion-audio-candidates.json",
+  unresolvedCompanionAudioCueCount: 2,
+  visibleCompanionPlaybackStatus:
+    "deterministic-local-domain-only-parent-and-root-synchronization-pending",
   originalRuntimeAuthorityEstablished: false,
   ownerAccepted: false,
   strictMigrationComplete: false,
   strictAcceptanceEffect: "none",
 });
-export const COURSE_G04_L03_IN_012_SCENARIOS = candidate.scenarios;
+export const COURSE_G04_L03_IN_012_SCENARIOS = Object.freeze([
+  ...candidate.scenarios,
+  Object.freeze({
+    id: "source-static-reachable-domain",
+    label: "Source-static reachable companion diagnostic",
+    description:
+      "English-only exact placement-path inspection; not original runtime or fidelity acceptance.",
+  }),
+]);
 export const normalizeCourseG04L03In012Frame = candidate.normalizeFrame;
-export const getCourseG04L03In012FrameState = candidate.getFrameState;
+export function getCourseG04L03In012FrameState(
+  frame: number,
+  context: Parameters<typeof candidate.getFrameState>[1],
+) {
+  const base = candidate.getFrameState(frame, context);
+  const request = {
+    entryStateSha256: context.entryStateSha256,
+    frame,
+    frameDomain: context.frameDomain,
+    lang: context.lang,
+    requirementId: context.requirementId,
+    scenario: context.scenario,
+    traceId: context.traceId,
+  };
+  const mapping = findParentCompositeCapture(request)
+    ?? findNaturalParentCompositeCapture(request)
+    ?? findDirectCompanionCompositeCapture(request);
+  if (!mapping) return base;
+  return Object.freeze({
+    ...base,
+    blocker: null,
+    exportFrame: null,
+    frame,
+    frameDomain: mapping.frameDomain,
+    language: mapping.language,
+    rootFrame: mapping.rootEntryFrame,
+    scenario: mapping.scenario,
+    sourceStaticVisualReady: true,
+    status: "ready" as const,
+    visibleSourceMarkers: Object.freeze([
+      `${mapping.frameDomain}-path-${mapping.pathIndex}-source-behavior-composite-frame-${frame}`,
+    ]),
+  });
+}
 export const buildCourseG04L03In012CaptureAttributes =
   candidate.buildCaptureAttributes;
 
-export default Object.freeze({
+const activityModule = Object.freeze({
   ...candidate.module,
+  completionMode: "activity" as const,
+  audioCues: Object.freeze([
+    ...candidate.module.audioCues,
+    ...visibleCompanionAudioCandidates,
+  ]),
+  playbackEndFrameByDomain: Object.freeze({
+    ...candidate.module.playbackEndFrameByDomain,
+    ...visibleCompanionPlaybackEndFrameByDomain,
+  }),
+  defaultScenarioByFrameDomain: Object.freeze({
+    ...candidate.module.defaultScenarioByFrameDomain,
+    "sprite-68": "source-static-reachable-domain",
+    "sprite-74": "source-static-reachable-domain",
+    "sprite-98": "source-static-reachable-domain",
+    "sprite-108": "source-static-reachable-domain",
+    "sprite-134": "source-static-reachable-domain",
+    "sprite-166": "source-static-reachable-domain",
+    "sprite-199": "source-static-reachable-domain",
+    "sprite-223": "source-static-reachable-domain",
+    "sprite-227": "source-static-reachable-domain",
+  }),
+  scenarios: COURSE_G04_L03_IN_012_SCENARIOS,
+  getFrameState: getCourseG04L03In012FrameState,
   reducedMotionFrame: SOURCE_INTERACTION_FRAME,
-  Renderer: CourseG04L03In012Renderer,
+  Renderer: CourseG04L03In012ActivityRenderer,
 });
+
+const glossaryCandidate = createCourseG04L03SourceGlossaryCandidate(
+  {...candidate, Renderer: CourseG04L03In012ActivityRenderer, module: activityModule},
+  COURSE_G04_L03_IN_012_GLOSSARY_CONFIG,
+  {scenario: "source-static-frame", canvasCandidateStatus: "source-static-engineering-not-strict", surfacePlacement: "companion"},
+);
+export const CourseG04L03In012Renderer = glossaryCandidate.Renderer;
+export const COURSE_G04_L03_IN_012_SOURCE_CONTRACT = Object.freeze({
+  ...glossaryCandidate.sourceContract,
+  ...INTERACTION_SOURCE_CONTRACT,
+});
+export default glossaryCandidate.module;

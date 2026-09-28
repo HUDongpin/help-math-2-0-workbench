@@ -845,7 +845,7 @@ test("TS006 remains prototype-only with every acceptance gate closed", async () 
   assert.equal(registered?.maturity, "legacy-prototype");
   assert.equal(registered?.audioCues.length, 1);
   assert.equal(registered?.audioTracks?.length, 1);
-  assert.equal(courseTs006.reducedMotionFrame, 1);
+  assert.equal(courseTs006.reducedMotionFrame, 128);
   assert.equal(COURSE_G04_L03_TS_006_SOURCE_CONTRACT.ownerAccepted, false);
   assert.equal(
     COURSE_G04_L03_TS_006_SOURCE_CONTRACT.shellStructuralAssetManifestSha256,

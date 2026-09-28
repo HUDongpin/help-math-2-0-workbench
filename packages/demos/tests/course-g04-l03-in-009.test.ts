@@ -10,6 +10,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { loadAnimationModule } from "../src/animation-registry";
 import courseIn009, {
   buildCourseG04L03In009CaptureAttributes,
+  COURSE_G04_L03_IN_009_PRODUCT_SOURCE_CONTRACT,
 } from "../src/modules/course-g04-l03-in-009";
 import { matchPrototype } from "../src/prototype-manifest";
 import {
@@ -23,6 +24,24 @@ import {
 
 const repositoryRoot = fileURLToPath(new URL("../../../", import.meta.url));
 const migrationRoot = `${repositoryRoot}migrations/course-g04-l03-in-009`;
+
+test("IN009 binds modern glossary controls only to its default child scenario", () => {
+  const render = (frameDomain: string, scenario: string, entryStateSha256 = "") => renderToStaticMarkup(
+    createElement(courseIn009.Renderer, {
+      frame: 142, frameDomain, scenario, lang: "en", seed: 0,
+      pageInteractionStageTargetId: "modern-stage", entryStateSha256,
+    }),
+  );
+  const modern = render("sprite-200", "default");
+  assert.match(modern, /data-source-term-count="2"/);
+  assert.match(modern, /data-source-key-attribute="Temperature"/);
+  assert.match(modern, /data-source-key-attribute="Measure"/);
+  assert.doesNotMatch(modern, /Candidate controls and limitations/);
+  assert.equal(COURSE_G04_L03_IN_009_PRODUCT_SOURCE_CONTRACT.currentJavascriptFunctionalEntry.scenario, "default");
+  for (const markup of [render("root", "root-standalone"), render("sprite-200", "source-static-frame"), render("sprite-200", "default", "a".repeat(64))]) {
+    assert.doesNotMatch(markup, /data-source-term-count=/);
+  }
+});
 
 function sha256(bytes: Buffer | string): string {
   return createHash("sha256").update(bytes).digest("hex");
@@ -43,12 +62,12 @@ test("IN09 preserves source identity and separates the 10-frame root from sprite
     { id: "sprite-200", frameCount: 637, fps: 12, rootFrame: 6 },
   ]);
   assert.equal(courseIn009.runtime, COURSE_G04_L03_IN_009_RUNTIME);
-  assert.equal(courseIn009.playbackMode, "loop");
+  assert.equal(courseIn009.playbackMode, "once");
   assert.deepEqual(courseIn009.playbackEndFrameByDomain, {
     root: 1,
     "sprite-200": 637,
   });
-  assert.equal(courseIn009.reducedMotionFrame, 1);
+  assert.equal(courseIn009.reducedMotionFrame, 637);
   assert.equal(
     sha256(
       await readFile(`${repositoryRoot}${COURSE_G04_L03_IN_009_SOURCE.swf}`),

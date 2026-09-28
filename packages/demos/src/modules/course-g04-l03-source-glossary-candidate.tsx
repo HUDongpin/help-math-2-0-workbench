@@ -23,6 +23,15 @@ type SourceStaticCandidate<
   Readonly<{module: Module; sourceContract: SourceContract}>;
 
 const SOURCE_ACTIVITY_SCENARIO = "source-static-frame";
+type GlossaryRendererBinding = Readonly<{
+  scenario: "source-static-frame" | "default";
+  canvasCandidateStatus: "source-static-engineering-not-strict" | "engineering-not-strict";
+  surfacePlacement?: "companion";
+}>;
+const DEFAULT_RENDERER_BINDING: GlossaryRendererBinding = Object.freeze({
+  scenario: SOURCE_ACTIVITY_SCENARIO,
+  canvasCandidateStatus: "source-static-engineering-not-strict",
+});
 const SOURCE_FONT =
   '"Arial Rounded MT Bold", "Trebuchet MS", ui-rounded, sans-serif';
 const useClientLayoutEffect =
@@ -56,9 +65,13 @@ export function buildCourseG04L03SourceGlossaryHitStyle(
 
 function VisibleStageContentPortal({
   children,
+  companionTargetId,
+  preferCompanion = false,
   targetId,
 }: {
   children: React.ReactNode;
+  companionTargetId?: string;
+  preferCompanion?: boolean;
   targetId?: string;
 }) {
   const [stageTarget, setStageTarget] = useState<HTMLElement | null>(null);
@@ -68,11 +81,23 @@ function VisibleStageContentPortal({
       setStageTarget(null);
       return;
     }
-    const target = document.getElementById(targetId);
-    setStageTarget(
-      target?.dataset.pageInteractionStageHost === "true" ? target : null,
-    );
-  }, [targetId]);
+    const narrow = window.matchMedia("(max-width: 520px)");
+    const updateTarget = () => {
+      const companion = companionTargetId
+        ? document.getElementById(companionTargetId) : null;
+      if ((preferCompanion || narrow.matches) && companion?.dataset.pageInteractionCompanionHost === "true") {
+        setStageTarget(companion);
+        return;
+      }
+      const target = document.getElementById(targetId);
+      setStageTarget(
+        target?.dataset.pageInteractionStageHost === "true" ? target : null,
+      );
+    };
+    updateTarget();
+    narrow.addEventListener("change", updateTarget);
+    return () => narrow.removeEventListener("change", updateTarget);
+  }, [companionTargetId, preferCompanion, targetId]);
 
   return stageTarget ? createPortal(children, stageTarget) : children;
 }
@@ -129,7 +154,7 @@ function GlossaryTermButtons({
       data-glossary-source-authority={config.glossaryAuthority}
       data-glossary-source-disposition={config.glossarySourceDisposition}
       data-page-interaction-companion-surface="source-glossary"
-      data-source-glossary-placement="visible-stage-content-bottom"
+      data-source-glossary-placement="stage-bottom-or-narrow-companion"
       data-source-animation-stop-modeled={
         config.playbackDisposition ?? "host-support-pause-session"
       }
@@ -141,6 +166,9 @@ function GlossaryTermButtons({
           ? "Abrir un término clave de esta animación"
           : "Open a Key Term from this animation"}
       </span>
+      {config.learnerPrompt && terms.length === config.terms.length ? (
+        <p className="course-g04-l03-source-glossary-prompt">{config.learnerPrompt}</p>
+      ) : null}
       <div
         aria-label={lang === "es" ? "Términos clave" : "Key Terms"}
         role="group"
@@ -150,7 +178,9 @@ function GlossaryTermButtons({
             data-source-character-id={term.characterId}
             data-source-key-attribute={term.keyAttribute}
             disabled={!controlsReady}
-            key={term.id}
+            // Source frame segments can change while the lookup target stays
+            // the same. Keep its button mounted so keyboard focus survives.
+            key={term.entryIds[lang]}
             onClick={(event) => openTerm(term.id, event.currentTarget)}
             type="button"
           >
@@ -171,9 +201,11 @@ function GlossaryTermButtons({
 
 function SourceGlossaryInteraction({
   config,
+  rendererBinding,
   frame,
   lang,
   onLessonHostRequest,
+  pageInteractionCompanionTargetId,
   pageInteractionStageTargetId,
   replay = 0,
   terms,
@@ -183,10 +215,12 @@ function SourceGlossaryInteraction({
   | "frame"
   | "lang"
   | "onLessonHostRequest"
+  | "pageInteractionCompanionTargetId"
   | "pageInteractionStageTargetId"
   | "replay"
 > & {
   config: CourseG04L03SourceGlossaryConfig;
+  rendererBinding: GlossaryRendererBinding;
   terms: readonly CourseG04L03SourceGlossaryTerm[];
   visualHostRef: React.RefObject<HTMLDivElement | null>;
 }) {
@@ -201,7 +235,7 @@ function SourceGlossaryInteraction({
     }
     const update = () => {
       const candidate = host.querySelector<HTMLElement>(
-        '[data-candidate-status="source-static-engineering-not-strict"]' +
+        `[data-candidate-status="${rendererBinding.canvasCandidateStatus}"]` +
           "[data-canvas-status]",
       );
       const status = candidate?.dataset.canvasStatus;
@@ -219,7 +253,7 @@ function SourceGlossaryInteraction({
       subtree: true,
     });
     return () => observer.disconnect();
-  }, [replay, visualHostRef]);
+  }, [rendererBinding, replay, visualHostRef]);
 
   return (
     <>
@@ -295,7 +329,38 @@ function SourceGlossaryInteraction({
           text-align: center;
         }
 
+        [data-page-interaction-companion-host="true"]
+          .course-g04-l03-source-glossary-stage-surface {
+          aspect-ratio: auto;
+          inset: auto;
+          margin: 8px 0;
+          padding: 0;
+          position: relative;
+        }
+
+        .course-g04-l03-source-glossary-prompt {
+          display: none;
+        }
+
+        [data-page-interaction-companion-host="true"]
+          .course-g04-l03-source-glossary-prompt {
+          background: #f4f9ff;
+          border: 1px solid #b9cbe3;
+          border-radius: 8px;
+          color: #17395f;
+          display: block;
+          font: 600 16px/1.45 system-ui, sans-serif;
+          margin: 0 0 6px;
+          padding: 10px 12px;
+        }
+
         @media (max-width: 520px) {
+          [data-page-interaction-companion-host="true"]
+            .course-g04-l03-source-glossary-stage-surface > div[role="group"]:has(> button:nth-child(4)) {
+            grid-auto-flow: row;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+          }
+
           .course-g04-l03-source-glossary-stage-surface {
             padding-bottom: 5px;
             padding-inline: 5px;
@@ -314,7 +379,11 @@ function SourceGlossaryInteraction({
           }
         }
       `}</style>
-      <VisibleStageContentPortal targetId={pageInteractionStageTargetId}>
+      <VisibleStageContentPortal
+        companionTargetId={pageInteractionCompanionTargetId}
+        preferCompanion={rendererBinding.surfacePlacement === "companion"}
+        targetId={pageInteractionStageTargetId}
+      >
         <GlossaryTermButtons
           config={config}
           controlsReady={controlsReady}
@@ -334,6 +403,7 @@ export function createCourseG04L03SourceGlossaryCandidate<
 >(
   candidate: SourceStaticCandidate<SourceContract, Module>,
   unsafeConfig: CourseG04L03SourceGlossaryConfig,
+  rendererBinding: GlossaryRendererBinding = DEFAULT_RENDERER_BINDING,
 ) {
   const config = validateCourseG04L03SourceGlossaryConfig(unsafeConfig);
   const SourceStaticRenderer = candidate.Renderer;
@@ -349,7 +419,7 @@ export function createCourseG04L03SourceGlossaryCandidate<
     const terms = visibleCourseG04L03SourceGlossaryTerms(config, props.frame);
     const interactionVisible =
       frameDomain === config.frameDomain &&
-      props.scenario === SOURCE_ACTIVITY_SCENARIO &&
+      props.scenario === rendererBinding.scenario &&
       props.lang === "en" &&
       terms.length > 0 &&
       !isDeterministicEvidenceCapture(props);
@@ -386,9 +456,11 @@ export function createCourseG04L03SourceGlossaryCandidate<
           {interactionVisible ? (
             <SourceGlossaryInteraction
               config={config}
+              rendererBinding={rendererBinding}
               frame={props.frame}
               lang={props.lang}
               onLessonHostRequest={props.onLessonHostRequest}
+              pageInteractionCompanionTargetId={props.pageInteractionCompanionTargetId}
               pageInteractionStageTargetId={props.pageInteractionStageTargetId}
               replay={props.replay}
               terms={terms}
@@ -407,7 +479,7 @@ export function createCourseG04L03SourceGlossaryCandidate<
     currentJavascriptFunctionalEntry: Object.freeze({
       frameDomain: config.frameDomain,
       frame: Math.min(...config.terms.map(({firstFrame}) => firstFrame)),
-      scenario: SOURCE_ACTIVITY_SCENARIO,
+      scenario: rendererBinding.scenario,
       language: "en",
       deterministicCaptureOverlayEnabled: false,
     }),
@@ -416,7 +488,7 @@ export function createCourseG04L03SourceGlossaryCandidate<
       "source-audit-bounds-retained-not-rendered",
       "typed-memory-only-keyterm-host-request",
       playbackScope,
-      "current-js-visible-stage-bottom-keyterm-controls",
+      "current-js-responsive-stage-and-companion-keyterm-controls",
       "deterministic-capture-overlay-suppression",
     ]),
     sourceCanvasControlStatus: "disabled-preserved-visual-only",

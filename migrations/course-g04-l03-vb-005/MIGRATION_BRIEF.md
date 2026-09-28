@@ -1,5 +1,13 @@
 # course-g04-l03-vb-005 Migration Brief
 
+## 2026-09-08 现代产品复核
+
+- Placement: `course-g04-l03-vb-005`，G4 L3 Important Words。
+- 本次工作复杂度：`interactive-understood`；路线：编译器辅助提取 + 维护的呈现适配器。选择原因是复用已注册页面及源审计，修复已确认的教学/交互问题，无批量生成。
+- 源第 177 帧移除独立负号；现代一次播放结束时保留第 176 帧的完整 −6 示例，源文件、音频时长和带身份的证据捕获保持原样。增加窄屏负数说明，并回归查词。
+- 源身份、实际浏览器证据和当前代码哈希见 [本轮结果](../../work/g4-l3-modern-product-review/20260908-important-words/REVIEW.md) 与同目录 `product-review-receipt.json`。
+- 本轮是 Current-JS 工程检查；未新增人审、听审或 Owner 批准，不改变严格完成、发布及冻结 16 页校准结果。
+
 Created: 2026-07-24
 
 ## Objective

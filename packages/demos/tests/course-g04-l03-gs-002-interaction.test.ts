@@ -7,6 +7,7 @@ import test from "node:test";
 
 import gs002, {
   COURSE_G04_L03_GS_002_SOURCE_CONTRACT,
+  getCourseG04L03Gs002FrameState,
 } from "../src/modules/course-g04-l03-gs-002";
 import {
   COURSE_G04_L03_GS_002_ALLOWED_INITIAL_VIRUS_INDICES,
@@ -25,6 +26,7 @@ import {
 } from "../src/timelines/course-g04-l03-gs-002-interaction";
 import {
   COURSE_G04_L03_GS_002_INTERACTION_BASE_CONFIG,
+  COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE,
 } from "../src/timelines/course-g04-l03-gs-002";
 
 const sha256 = (value: Uint8Array | string) =>
@@ -490,6 +492,9 @@ test("GS002 ordinary English frame-427 playback exposes one viewport-appropriate
     assert.equal(sha256(png), declaredSha256);
   }
   assert.equal(gs002.reducedMotionFrame, 427);
+  assert.equal(gs002.completionMode, "activity");
+  assert.match(markup, /data-current-js-controls-ready="false"/);
+  assert.match(markup, /aria-label="Number of spaces"[^>]*disabled=""/);
 });
 
 test("GS002 keeps standalone mobile controls but defers a declared companion until its client host resolves", () => {
@@ -577,6 +582,52 @@ test("GS002 hash-bound capture, Spanish, pre-game, and wrong-domain paths keep i
   );
 });
 
+test("GS002 exposes only the exact English sprite-319 behavior-composite capture", () => {
+  const identity = {
+    entryStateSha256: "a".repeat(64),
+    frameDomain: "sprite-319",
+    lang: "en" as const,
+    requirementId: "req:sprite-319:lesson-shell-natural-entry:en",
+    scenario: "source-static-reachable-domain",
+    seed: 0,
+    traceId: "trace:sprite-319:lesson-shell-natural-entry:en:seed-0",
+  };
+  const state = getCourseG04L03Gs002FrameState(186, identity);
+  assert.equal(state.status, "ready");
+  assert.equal(state.frameDomain, "sprite-319");
+  assert.equal(state.frame, 186);
+  assert.equal(state.rootFrame, 6);
+  assert.deepEqual(state.visibleSourceMarkers, [
+    "sprite-319-source-behavior-composite-frame-186",
+  ]);
+
+  const markup = renderToStaticMarkup(createElement(gs002.Renderer, {
+    ...identity,
+    frame: 186,
+  }));
+  assert.match(
+    markup,
+    /data-source-static-behavior-composite-capture="sprite-319-frames-1-186"/,
+  );
+  assert.doesNotMatch(markup, /data-current-js-controls-enabled=/);
+
+  for (const context of [
+    {...identity, lang: "es" as const},
+    {...identity, scenario: "source-static-frame"},
+    {...identity, frameDomain: "sprite-318"},
+    {...identity, requirementId: ""},
+  ]) {
+    assert.equal(
+      getCourseG04L03Gs002FrameState(1, context).status,
+      "blocked",
+    );
+  }
+  assert.equal(COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE.assetSha256,
+    "de9057d5e2d1ddf8c562acd92124a5a379173736cc0edd3b4f55af674b8b3556");
+  assert.equal(COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE.uniqueTargetVisualCount,
+    103);
+});
+
 test("GS002 functional scope advances current JS only and leaves every legacy acceptance boundary false", () => {
   assert.equal(
     COURSE_G04_L03_GS_002_SOURCE_CONTRACT.currentJavascriptInteractionStatus,
@@ -595,9 +646,17 @@ test("GS002 functional scope advances current JS only and leaves every legacy ac
       "source-sprite321-case426-clean-base-without-pixel-interpolation",
       "current-javascript-visible-hit-and-score-feedback",
       "need-more-help-text-dialog",
+      "host-completion-after-game-timer-expires",
+      "source-canvas-ready-gated-controls-and-clock",
+      "intro-source-frame-bound-positive-and-negative-sign-glossary",
+      "help-and-feedback-escape-close-and-tab-focus-containment",
+      "focus-restoration-after-movement-hit-and-new-game",
+      "mobile-readable-position-timer-and-score-summary",
+      "nonmodal-completed-round-result-keeps-course-navigation-reachable",
       "whole-renderer-new-game-and-host-replay-reset",
       "host-pause-freezes-current-javascript-clock",
       "responsive-mobile-touch-control-surface",
+      "sprite-319-frames-1-186-source-static-behavior-composite-diagnostic",
     ],
   );
   assert.deepEqual(

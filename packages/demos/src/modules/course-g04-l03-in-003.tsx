@@ -1,6 +1,7 @@
 "use client";
 
 import React, {useEffect, useRef, useState} from "react";
+import {createPortal} from "react-dom";
 
 import type {
   AnimationModule,
@@ -214,6 +215,7 @@ export function CourseG04L03In003Renderer({
   frame,
   frameDomain,
   lang,
+  pageInteractionCompanionTargetId,
   requirementId = "",
   scenario,
   seed,
@@ -230,6 +232,12 @@ export function CourseG04L03In003Renderer({
       });
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [canvasStatus, setCanvasStatus] = useState<CanvasStatus>("idle");
+  const [companionTarget, setCompanionTarget] = useState<HTMLElement | null>(null);
+  useEffect(() => {
+    setCompanionTarget(pageInteractionCompanionTargetId
+      ? document.getElementById(pageInteractionCompanionTargetId)
+      : null);
+  }, [pageInteractionCompanionTargetId]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -372,6 +380,20 @@ export function CourseG04L03In003Renderer({
         original-runtime synchronization, visual review, and acceptance are
         not claimed.
       </p>
+      {companionTarget && !entryStateSha256 && canvasStatus === "ready"
+        && deterministicState.status === "ready" && deterministicState.frame === 472
+        ? createPortal(
+            <p data-number-line-summary="in003" style={{
+              background: "#f2f8ff", border: "1px solid #bccbdb", borderRadius: 10,
+              color: "#15354e", fontSize: 16, lineHeight: 1.5, margin: 0, padding: "12px 16px",
+            }}>
+              {"Numbers increase to the right and decrease to the left. For example, "}
+              <span style={{whiteSpace: "nowrap"}}>{"−10 < −8"}</span>
+              {" and "}
+              <span style={{whiteSpace: "nowrap"}}>{"10 > 8."}</span>
+            </p>, companionTarget,
+          )
+        : null}
     </section>
   );
 }
@@ -381,9 +403,9 @@ const animationModule: AnimationModule<CourseG04L03In003FrameState> =
     key: ANIMATION_ID,
     movie: COURSE_G04_L03_IN_003_MOVIE,
     runtime: COURSE_G04_L03_IN_003_RUNTIME,
-    playbackMode: "loop",
+    playbackMode: "once",
     playbackEndFrameByDomain: Object.freeze({root: 1, "sprite-84": 472}),
-    reducedMotionFrame: 1,
+    reducedMotionFrame: 472,
     defaultScenarioByFrameDomain: Object.freeze({
       root: "root-unavailable",
       "sprite-84": "source-static-frame",

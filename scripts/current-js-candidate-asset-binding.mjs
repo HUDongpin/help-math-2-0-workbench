@@ -7,6 +7,7 @@ export const CURRENT_JS_CANDIDATE_PROFILE_PATH =
 
 const SHA256 = /^[a-f0-9]{64}$/u;
 const SAFE_SEGMENT = /^[A-Za-z0-9._-]+$/u;
+const ALLOWED_ASSET_PREFIXES = Object.freeze(["courses/", "audio/courses/"]);
 
 function invariant(condition, message) {
   if (!condition) throw new Error(message);
@@ -37,7 +38,7 @@ function logicalAssetPath(value) {
       : null;
   if (
     !assetPath
-    || !assetPath.startsWith("courses/")
+    || !ALLOWED_ASSET_PREFIXES.some((prefix) => assetPath.startsWith(prefix))
     || assetPath.split("/").some((segment) => (
       !SAFE_SEGMENT.test(segment) || segment === "." || segment === ".."
     ))
@@ -46,6 +47,11 @@ function logicalAssetPath(value) {
     assetPath,
     logicalPath: `public/flash-assets/${assetPath}`,
   };
+}
+
+function assetRelativePath(assetPath) {
+  const prefix = ALLOWED_ASSET_PREFIXES.find((candidate) => assetPath.startsWith(candidate));
+  return prefix ? assetPath.slice(prefix.length) : null;
 }
 
 async function exists(filePath) {
@@ -123,16 +129,17 @@ function validateCandidateProfile(profile) {
   const records = new Map();
   for (const [index, entry] of profile.entries.entries()) {
     const label = `Current-JS candidate asset profile entry ${index + 1}`;
+    const relativePath = assetRelativePath(entry?.assetPath || "");
     invariant(
       typeof entry?.assetPath === "string"
-        && entry.assetPath.startsWith("courses/")
+        && relativePath !== null
         && entry.assetPath.split("/").every((segment) => (
           SAFE_SEGMENT.test(segment) && segment !== "." && segment !== ".."
         )),
       `${label} assetPath is invalid`,
     );
     invariant(
-      entry.relativePath === entry.assetPath.slice("courses/".length),
+      entry.relativePath === relativePath,
       `${label} relativePath is invalid`,
     );
     invariant(entry.storageRoot === "candidate",

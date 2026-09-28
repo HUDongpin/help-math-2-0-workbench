@@ -72,9 +72,10 @@ test("the final six G4 L3 engineering modules bind exact source and timeline ide
       registered?.audioCues.length,
       page.id === "course-g04-l03-ir-001-341242cc"
         ? 2
+        : page.id === "course-g04-l03-ts-007"
+          ? 11 // One main-domain cue plus ten hash-bound companion diagnostics.
         : [
             "course-g04-l03-gs-002",
-            "course-g04-l03-ts-007",
             "course-g04-l03-ts-008",
           ].includes(page.id)
           ? 1

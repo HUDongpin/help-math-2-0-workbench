@@ -206,25 +206,12 @@ test("IN010 frame 264 exposes fail-closed controls over memoized frame 263", () 
   assert.match(markup, /\(any-pointer: coarse\)/);
   assert.match(markup, /grid-row: 7/);
   assert.match(markup, /min-height: 48px/);
-  assert.match(markup, /data-host-glossary-actions="safe-disabled"/);
-  assert.match(
-    markup,
-    /data-host-glossary-function="DoHyperLinks-unresolved"/,
-  );
-  assert.equal(markup.match(/data-source-glossary-term="/g)?.length, 2);
-  for (const [visibleText, keyAttribute] of [
-    ["temperature", "Temperature"],
-    ["thermometer", "Thermometer"],
-  ]) {
-    assert.match(
-      markup,
-      new RegExp(`data-source-glossary-term="${visibleText}"`),
-    );
-    assert.match(
-      markup,
-      new RegExp(`data-source-glossary-key="${keyAttribute}"`),
-    );
-  }
+  assert.equal(courseIn010.completionMode, "activity");
+  assert.match(markup, /data-source-term-count="2"/);
+  assert.match(markup, /data-source-key-attribute="Temperature"/);
+  assert.match(markup, /data-source-key-attribute="Thermometer"/);
+  assert.match(markup, /data-source-host-action="DoHyperLinks"/);
+  assert.doesNotMatch(markup, /data-host-glossary-actions="safe-disabled"/);
   assert.doesNotMatch(markup, /aria-label="Open Need More Help"/);
   assert.doesNotMatch(markup, /aria-label="Clear"/);
   assert.doesNotMatch(markup, /aria-label="New Number"/);
@@ -305,7 +292,7 @@ test("IN010 frame 264 exposes fail-closed controls over memoized frame 263", () 
   );
   assert.equal(
     COURSE_G04_L03_IN_010_SOURCE_CONTRACT.sourceGlossaryActionStatus,
-    "two-source-hits-safe-disabled",
+    "typed-keyterm-host-integrated",
   );
   for (const scope of [
     "html-drag-and-drop-and-select-then-target-keyboard-alternative",
@@ -405,7 +392,7 @@ test("IN010 entry-state capture preserves source frame 264 with zero overlays", 
   assert.doesNotMatch(markup, /inert=""/);
   assert.doesNotMatch(
     markup,
-    /aria-label="Source-script-bound current JavaScript temperature placement activity"/,
+    /aria-label="Place cities on the thermometer"/,
   );
   assert.doesNotMatch(markup, /data-source-card="/);
   assert.doesNotMatch(markup, /data-source-target="/);

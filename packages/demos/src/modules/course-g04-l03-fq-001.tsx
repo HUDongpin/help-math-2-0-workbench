@@ -21,4 +21,7 @@ export const buildCourseG04L03Fq001CaptureAttributes =
   candidate.buildCaptureAttributes;
 export const CourseG04L03Fq001Renderer = candidate.Renderer;
 
-export default candidate.module;
+export default Object.freeze({
+  ...candidate.module,
+  reducedMotionFrame: COURSE_G04_L03_FQ_001_SOURCE.terminalStopFrame,
+});

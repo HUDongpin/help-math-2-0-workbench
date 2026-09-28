@@ -11,6 +11,7 @@ import type {Dispatch, DragEvent, RefObject} from "react";
 import {createPortal} from "react-dom";
 
 import type {AnimationRendererProps} from "../contract";
+import {IN004_FEEDBACK_AUDIO} from "../g4-l3-in004-feedback-audio.generated";
 import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
 import {
   COURSE_G04_L03_IN_004_COMPLETION_FEEDBACK,
@@ -47,6 +48,15 @@ const SOURCE_FONT =
 const RESPONSIVE_CONTROLS_MEDIA =
   "(max-width: 640px), (any-pointer: coarse)";
 const CURRENT_JS_CORRECT_FEEDBACK = "Correct.";
+
+// Exact entries in the existing G4 English Key Terms index. The source page
+// requests these titles through DefineButton2_44 / DefineButton2_45.
+export const IN004_KEYTERM_ENTRIES = Object.freeze({
+  Position: "en-0495-b62037868041",
+  "Number line": "en-0424-79116d5cfb19",
+});
+type GlossaryTerm = keyof typeof IN004_KEYTERM_ENTRIES;
+type OpenGlossary = (term: GlossaryTerm, trigger: HTMLButtonElement) => void;
 
 type SourceCanvasStatus =
   | "idle"
@@ -132,24 +142,26 @@ function placedCardForTarget(
   return COURSE_G04_L03_IN_004_NUMBER_CARDS.find(({id}) => id === targetId);
 }
 
-function SourceGlossaryBoundary() {
+function GlossaryLinks({enabled, onOpen}: {enabled: boolean; onOpen?: OpenGlossary}) {
   return (
     <div
-      aria-label="The two source glossary actions are unavailable in this current JavaScript candidate."
-      data-host-hyperlinks="safe-disabled"
+      aria-label="Key Terms"
+      className="course-g04-l03-in-004-mobile-keyterms"
+      data-host-hyperlinks={onOpen ? "modern-keyterms" : "unavailable"}
       data-source-glossary-action-count="2"
-      style={visuallyHiddenStyle}
     >
       {COURSE_G04_L03_IN_004_GLOSSARY.map(({definition, term}) => (
-        <span
-          aria-disabled="true"
+        <button
+          aria-label={`Open ${term} definition`}
           data-source-glossary-definition={definition}
           data-source-glossary-term={term}
           key={term}
-          role="link"
+          disabled={!enabled || !onOpen}
+          onClick={(event) => onOpen?.(term, event.currentTarget)}
+          type="button"
         >
-          {term}: {definition}
-        </span>
+          {term}
+        </button>
       ))}
     </div>
   );
@@ -161,6 +173,7 @@ interface SharedSurfaceProps {
   readonly dispatch: Dispatch<CourseG04L03In004NumberLineDragAction>;
   readonly interaction: CourseG04L03In004NumberLineDragState;
   readonly onCloseWrong: () => void;
+  readonly onOpenGlossary?: OpenGlossary;
   readonly wrongCloseRef: RefObject<HTMLButtonElement | null>;
 }
 
@@ -170,6 +183,7 @@ function StageSurface({
   dispatch,
   interaction,
   onCloseWrong,
+  onOpenGlossary,
   wrongCloseRef,
 }: SharedSurfaceProps) {
   const locked = !controlsReady || interaction.mode !== "ready";
@@ -209,7 +223,7 @@ function StageSurface({
       aria-busy={!controlsReady}
       aria-label="Source-script-bound current JavaScript number-line card activity"
       className="course-g04-l03-in-004-stage-surface"
-      data-audio-feedback="inventoried-unimplemented-unaccepted"
+      data-audio-feedback="source-bound-host-playback-review-pending"
       data-behavior-parity-established="false"
       data-current-js-controls-ready={controlsReady ? "true" : "false"}
       data-current-js-functional-candidate="true"
@@ -385,40 +399,43 @@ function StageSurface({
           })}
 
           <div
-            aria-label="Source glossary actions are safe-disabled"
-            data-host-hyperlinks="safe-disabled"
+            aria-label="Key Terms"
+            data-host-hyperlinks={onOpenGlossary ? "modern-keyterms" : "unavailable"}
             data-source-glossary-action-count="2"
           >
             {COURSE_G04_L03_IN_004_GLOSSARY.map((entry) => {
               const bounds = GLOSSARY_HIT_REGIONS[entry.term];
               return (
-                <span
-                  aria-disabled="true"
-                  aria-label={`${entry.term}. ${entry.definition} Source host glossary action unavailable.`}
+                <button
+                  aria-label={`Open ${entry.term} definition`}
+                  disabled={!controlsReady || !onOpenGlossary || interaction.mode === "wrong-feedback"}
                   data-source-glossary-definition={entry.definition}
                   data-source-glossary-term={entry.term}
                   key={entry.term}
-                  role="link"
+                  onClick={(event) => onOpenGlossary?.(entry.term, event.currentTarget)}
                   style={{
                     color: "transparent",
+                    background: "transparent",
+                    border: 0,
+                    cursor: onOpenGlossary ? "help" : "default",
                     height: bounds.height,
                     left: bounds.left,
-                    pointerEvents: "none",
+                    pointerEvents: "auto",
                     position: "absolute",
                     top: bounds.top,
                     width: bounds.width,
                   }}
-                  tabIndex={-1}
+                  type="button"
                 >
                   {entry.term}
-                </span>
+                </button>
               );
             })}
           </div>
 
           {interaction.mode === "wrong-feedback" ? (
             <div
-              aria-describedby="course-g04-l03-in-004-stage-wrong-copy course-g04-l03-in-004-stage-wrong-boundary"
+              aria-describedby="course-g04-l03-in-004-stage-wrong-copy"
               aria-label="Incorrect placement feedback"
               aria-modal="true"
               data-host-wrong-feedback-resolved="false"
@@ -449,12 +466,6 @@ function StageSurface({
                 >
                   {COURSE_G04_L03_IN_004_WRONG_FEEDBACK}
                 </p>
-                <small
-                  id="course-g04-l03-in-004-stage-wrong-boundary"
-                  style={{font: "12px/1.2 system-ui, sans-serif"}}
-                >
-                  Authored fallback shown; the source host global remains unresolved.
-                </small>
               </div>
               <button
                 aria-label="Close feedback and try the same card again"
@@ -517,14 +528,14 @@ function StageSurface({
                 boxSizing: "border-box",
                 color: "#fff",
                 display: "flex",
-                fontSize: 46,
+                fontSize: 32,
                 fontWeight: 900,
-                height: 132,
+                height: 72,
                 justifyContent: "center",
                 left: 244,
                 position: "absolute",
                 textShadow: "2px 2px 0 #73008e",
-                top: 235,
+                top: 376,
                 width: 320,
               }}
             >
@@ -555,6 +566,7 @@ function MobileSurface({
   dispatch,
   interaction,
   onCloseWrong,
+  onOpenGlossary,
   placement,
   wrongCloseRef,
 }: MobileSurfaceProps) {
@@ -655,7 +667,10 @@ function MobileSurface({
         </div>
       </fieldset>
 
-      <SourceGlossaryBoundary />
+      <GlossaryLinks
+        enabled={controlsReady && interaction.mode !== "wrong-feedback"}
+        onOpen={onOpenGlossary}
+      />
 
       {interaction.mode === "wrong-feedback" ? (
         <div
@@ -668,9 +683,6 @@ function MobileSurface({
         >
           <strong>Incorrect placement</strong>
           <p>{COURSE_G04_L03_IN_004_WRONG_FEEDBACK}</p>
-          <small>
-            Authored fallback shown; the source host global remains unresolved.
-          </small>
           <button
             aria-label="Close feedback and try the same card again"
             data-in004-focus-control="close-wrong"
@@ -775,6 +787,9 @@ export function CourseG04L03In004Renderer(
     : props.state;
   const controlsReady =
     interactionEnabled && canvasStatus === "ready";
+  useEffect(() => {
+    if (interactionEnabled && interaction.mode === "completed") props.onActivityComplete?.();
+  }, [interactionEnabled, interaction.mode, props.onActivityComplete]);
 
   const focusControl = (focusControlKey: string) => {
     window.requestAnimationFrame(() => {
@@ -795,9 +810,17 @@ export function CourseG04L03In004Renderer(
 
   const dispatchInteraction:
     Dispatch<CourseG04L03In004NumberLineDragAction> = (action) => {
+      if (props.paused) return;
       if (action.type === "place-card") {
         lastAttemptedCardRef.current =
           action.cardId ?? interaction.selectedCardId;
+        const next = reduceCourseG04L03In004NumberLineDrag(interaction, action);
+        if (next !== interaction && props.audioEnabled !== false) {
+          const cueId = next.mode === "wrong-feedback"
+            ? "in004-feedback-wrong"
+            : next.mode === "correct-feedback" ? "in004-feedback-correct" : null;
+          if (cueId) props.onLessonHostRequest?.({type: "play-audio", cueId});
+        }
       }
       dispatch(action);
     };
@@ -859,7 +882,8 @@ export function CourseG04L03In004Renderer(
 
   useEffect(() => {
     if (interaction.mode !== "correct-feedback") return;
-    if (props.reducedMotion) {
+    if (props.paused) return;
+    if (props.reducedMotion && !(props.audioEnabled !== false && props.onLessonHostRequest)) {
       const nextCard = COURSE_G04_L03_IN_004_NUMBER_CARDS.find(
         ({id}) => !interaction.placedCardIds.includes(id),
       );
@@ -867,8 +891,6 @@ export function CourseG04L03In004Renderer(
       if (nextCard) focusControl(`card-${nextCard.id}`);
       return;
     }
-    if (props.paused) return;
-
     const startedAt = performance.now();
     const timeout = window.setTimeout(() => {
       correctFeedbackRemainingMs.current =
@@ -897,6 +919,21 @@ export function CourseG04L03In004Renderer(
     focusRenderedControl(mobileWrongCloseRef, stageWrongCloseRef);
   }, [interaction.mode]);
 
+  const audioHostRef = useRef(props.onLessonHostRequest);
+  audioHostRef.current = props.onLessonHostRequest;
+  const completionAudioRequested = useRef(false);
+  useEffect(() => {
+    if (!interactionEnabled || interaction.mode !== "completed") {
+      completionAudioRequested.current = false;
+      return;
+    }
+    if (props.activeInteractiveAudioId === "in004-feedback-correct") return;
+    if (!props.paused && !completionAudioRequested.current && props.audioEnabled !== false) {
+      completionAudioRequested.current = true;
+      audioHostRef.current?.({type: "play-audio", cueId: "in004-feedback-complete"});
+    }
+  }, [interactionEnabled, interaction.mode, props.audioEnabled, props.activeInteractiveAudioId, props.paused]);
+
   useEffect(() => {
     const media = window.matchMedia(RESPONSIVE_CONTROLS_MEDIA);
     const moveFocusToVisibleSurface = () => {
@@ -922,8 +959,19 @@ export function CourseG04L03In004Renderer(
 
   const closeWrong = () => {
     const wrongCardId = lastAttemptedCardRef.current;
+    props.onLessonHostRequest?.({type: "stop-audio", cueId: "in004-feedback-wrong"});
     dispatch({type: "close-wrong-feedback"});
     if (wrongCardId) focusControl(`card-${wrongCardId}`);
+  };
+
+  const openGlossary: OpenGlossary = (term, trigger) => {
+    if (!controlsReady || !props.onLessonHostRequest) return;
+    props.onLessonHostRequest({
+      type: "open-keyterm",
+      entryId: IN004_KEYTERM_ENTRIES[term],
+      sourceAnimationId: "course-g04-l03-in-004",
+      playbackDisposition: "reversible-support-pause",
+    }, {trigger});
   };
 
   const mobileSurface = (
@@ -933,6 +981,7 @@ export function CourseG04L03In004Renderer(
       dispatch={dispatchInteraction}
       interaction={interaction}
       onCloseWrong={closeWrong}
+      onOpenGlossary={props.onLessonHostRequest ? openGlossary : undefined}
       placement={companionTarget ? "portal" : "fallback"}
       wrongCloseRef={mobileWrongCloseRef}
     />
@@ -953,7 +1002,7 @@ export function CourseG04L03In004Renderer(
       data-host-wrong-feedback-resolved="false"
       data-owner-accepted="false"
       data-replay-parity-established="false"
-      data-source-glossary-actions="safe-disabled"
+      data-source-glossary-actions={props.onLessonHostRequest ? "modern-keyterms" : "unavailable"}
       data-strict-acceptance-effect="none"
       data-strict-migration-complete="false"
       onBlurCapture={(event) => {
@@ -981,6 +1030,30 @@ export function CourseG04L03In004Renderer(
       }}
     >
       <style>{`
+        .course-g04-l03-in-004-mobile-keyterms {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 8px;
+          margin-top: 12px;
+        }
+        .course-g04-l03-in-004-mobile-keyterms button {
+          min-height: 48px;
+          border: 2px solid #375c82;
+          border-radius: 10px;
+          background: #fff;
+          color: #12366d;
+          font: inherit;
+          cursor: pointer;
+        }
+        /* This fixed stage is a crop, not a scrollable document. Keyboard
+           focus must not move the artwork behind its interaction overlay. */
+        .lesson-shell2[data-host-presentation='modern-wide']
+          .lesson-shell2__stage:has(.course-g04-l03-in-004-stage-surface),
+        .lesson-shell2[data-host-presentation='modern-wide']
+          .lesson-shell2__legacy-stage:has(.course-g04-l03-in-004-stage-surface) {
+          overflow: clip;
+        }
+
         .course-g04-l03-in-004-mobile-fallback-slot,
         .course-g04-l03-in-004-mobile-controls {
           display: none;
@@ -1176,6 +1249,7 @@ export function CourseG04L03In004Renderer(
             dispatch={dispatchInteraction}
             interaction={interaction}
             onCloseWrong={closeWrong}
+            onOpenGlossary={props.onLessonHostRequest ? openGlossary : undefined}
             wrongCloseRef={stageWrongCloseRef}
           />
           {companionTarget
@@ -1208,7 +1282,7 @@ export const COURSE_G04_L03_IN_004_SOURCE_CONTRACT = Object.freeze({
     "host-pause-freezes-current-js-correct-feedback-delay",
     "reduced-motion-immediate-current-js-feedback-transition",
     "whole-renderer-replay-and-seed-reset",
-    "two-source-glossary-actions-safe-disabled-without-invented-help",
+    "two-source-glossary-actions-to-modern-keyterms",
     "responsive-mobile-and-coarse-pointer-touch-control-surface",
     "page-interaction-companion-portal-with-stage-fallback",
     "desktop-mobile-focus-migration-and-wrong-close-focus-restoration",
@@ -1221,9 +1295,9 @@ export const COURSE_G04_L03_IN_004_SOURCE_CONTRACT = Object.freeze({
   interactionAuthority: COURSE_G04_L03_IN_004_INTERACTION_AUTHORITY,
   wrongFeedbackTextStatus:
     "authored-fallback-host-global-runtime-value-unresolved",
-  glossaryActionStatus: "two-source-host-actions-safe-disabled",
+  glossaryActionStatus: "two-source-host-actions-modern-keyterms",
   helpStatus: "no-help-control-invented",
-  interactionFeedbackAudioStatus: "inventoried-unimplemented-unaccepted",
+  interactionFeedbackAudioStatus: "source-bound-host-playback-review-pending",
   spanishInteractionStatus: "unimplemented-disabled",
   naturalTerminalContinuationEstablished: false,
   sourceDragDropExecuted: false,
@@ -1244,6 +1318,20 @@ export const buildCourseG04L03In004CaptureAttributes =
 
 export default Object.freeze({
   ...candidate.module,
+  lessonHost: Object.freeze({
+    capabilities: Object.freeze(["audio", "keyterm"] as const),
+    legacyOperations: "blocked" as const,
+    auditStorage: "memory-only" as const,
+    storesPersonalData: false as const,
+  }),
+  interactiveAudioAssets: IN004_FEEDBACK_AUDIO,
+  // The introduction ends at the question. Resuming an answer sound must not
+  // also restart the later source narration from the frozen question frame.
+  audioCues: Object.freeze(candidate.module.audioCues.map((cue) =>
+    cue.frameDomain === SOURCE_INTERACTION_DOMAIN
+      ? Object.freeze({...cue, endFrame: SOURCE_INTERACTION_FRAME}) : cue
+  )),
   reducedMotionFrame: SOURCE_INTERACTION_FRAME,
+  completionMode: "activity" as const,
   Renderer: CourseG04L03In004Renderer,
 });

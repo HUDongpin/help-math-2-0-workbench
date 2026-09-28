@@ -6,6 +6,9 @@ import {fileURLToPath} from "node:url";
 import {createElement} from "react";
 import {renderToStaticMarkup} from "react-dom/server";
 
+import {FQ_NUMBER_LINES, FQ_SYMBOL_NAMES} from "../src/timelines/course-g04-l03-fq-number-lines";
+import {COURSE_G04_L03_FQ_002_QUESTIONS} from "../src/timelines/course-g04-l03-fq-002-quiz-interaction";
+
 import {loadAnimationModule} from "../src/animation-registry";
 import animationModule, {
   COURSE_G04_L03_FQ_002_MOVIE,
@@ -61,6 +64,7 @@ test("FQ002 retains exact source, root, nested-domain, and registry identity", a
   assert.equal(animationModule.key, "course-g04-l03-fq-002");
   assert.equal(animationModule.maturity, "legacy-prototype");
   assert.equal(animationModule.reducedMotionFrame, 1);
+  assert.equal(animationModule.completionMode, "activity");
   assert.equal(animationModule.playbackEndFrameByDomain?.["sprite-899"], 1);
   assert.equal(animationModule.Renderer, CourseG04L03Fq002Renderer);
   assert.equal(
@@ -125,9 +129,10 @@ test("functional entry binds seeded question 7 to source frame 8 and one modern 
   assert.match(markup, /data-answer-transition-locked="false"/);
   assert.match(
     markup,
-    /data-source-symbol-projection="exact-source-canvas-option-pixels"/,
+    /data-source-symbol-projection="source-bound-semantic-number-line-and-shapes"/,
   );
-  assert.match(markup, /data-source-symbol-crop="target"/);
+  assert.doesNotMatch(markup, /data-source-symbol-crop="target"|Target shown/);
+  assert.match(markup, /data-number-line-question="7"/);
   assert.match(markup, /inert=""/);
   assert.match(markup, /data-flash-frame="8"/);
   assert.match(markup, /Question 1 of 10/);
@@ -141,14 +146,14 @@ test("functional entry binds seeded question 7 to source frame 8 and one modern 
     ["C", 3],
     ["D", 4],
   ] as const) {
-    assert.match(markup, new RegExp(`Source symbol ${optionId}`));
+    assert.match(markup, new RegExp(`aria-label="${optionId}\\. ${{A: "Square", B: "Circle", C: "Triangle", D: "Heart"}[optionId]}"`));
     assert.match(
       markup,
       new RegExp(`data-source-option-instance="A7Opt${optionNumber}"`),
     );
     assert.match(
       markup,
-      new RegExp(`data-source-symbol-option-number="${optionNumber}"`),
+      new RegExp(`data-number-line-symbol="${{A: "Square", B: "Circle", C: "Triangle", D: "Heart"}[optionId]}"`),
     );
   }
   assert.match(
@@ -309,7 +314,7 @@ test("functional contract records masking and modern enhancements while every ac
   assert.ok(
     COURSE_G04_L03_FQ_002_SOURCE_CONTRACT.currentJavascriptInteractionScope
       .includes(
-        "Q7-Q12-source-canvas-pixel-bound-target-and-choice-projection",
+        "Q7-Q12-source-bound-complete-number-lines-and-named-shape-choices",
       ),
   );
   assert.doesNotMatch(
@@ -318,4 +323,19 @@ test("functional contract records masking and modern enhancements while every ac
     ),
     /TS007|cross-placement/,
   );
+});
+
+
+test("the six number-line questions keep all source symbols and correct integer positions", () => {
+  assert.deepEqual(FQ_SYMBOL_NAMES, {A: "Square", B: "Circle", C: "Triangle", D: "Heart"});
+  const targets = [-4, -2, -8, -1, -11, -6];
+  for (let index = 0; index < targets.length; index++) {
+    const question = COURSE_G04_L03_FQ_002_QUESTIONS[index + 6]!;
+    const line = FQ_NUMBER_LINES[question.id]!;
+    assert.equal(Object.keys(line.positions).length, 4);
+    assert.equal(line.positions[question.correctOptionId], targets[index]);
+    assert.ok(Object.values(line.positions).every(value => Number.isInteger(value) && value >= line.min && value <= line.max));
+  }
+  assert.deepEqual(FQ_NUMBER_LINES[9]!.positions, {A: -8, B: -1, C: 4, D: 8});
+  assert.deepEqual(FQ_NUMBER_LINES[11]!.positions, {A: -11, B: -6, C: 6, D: 11});
 });

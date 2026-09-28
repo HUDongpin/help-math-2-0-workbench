@@ -115,6 +115,13 @@ export function isExactInteractiveAudioAsset(
     isSameOriginAssetSource(asset.source);
 }
 
+export function interactiveAudioMatchesLanguage(
+  asset: InteractiveAudioAsset,
+  lang: 'en' | 'es',
+): boolean {
+  return asset.language === lang || asset.visibleWhen?.includes(lang) === true;
+}
+
 function lessonHostCapabilityForRequest(
   request: LessonHostRequest,
 ): LessonHostCapability | null {
@@ -173,26 +180,32 @@ export function moduleSupportsDirectRuntimeAudioHost(
 }
 
 /**
- * A page has finished playing once its authored timeline reaches its end
+ * A timeline page has finished playing once its authored timeline reaches its end
  * frame. That is the last frame of the first pass, so a looping page reports
  * completion once instead of never.
  *
- * Two cases have nothing to play and are finished the moment they render: a
+ * Two timeline cases have nothing to play and finish when they render: a
  * reduced-motion device, which holds a single authored frame, and a movie with
  * no live frame rate. Neither should cost a learner their progress.
+ * Interactive exercises instead require an explicit successful activity result,
+ * including when reduced motion holds the question at a static frame.
  *
  * A page that has not rendered, cannot render its requested domain, or is
  * frozen at a deterministic capture frame reports nothing.
  */
 export function playbackReachedEnd({
+  activityComplete,
   captureFrame,
+  completionMode,
   fps,
   frame,
   playbackEndFrame,
   reducedMotion,
   rendererDomainSupported,
 }: Readonly<{
+  activityComplete?: boolean;
   captureFrame: number | undefined;
+  completionMode?: AnimationModule['completionMode'];
   fps: number;
   frame: number;
   playbackEndFrame: number;
@@ -202,6 +215,7 @@ export function playbackReachedEnd({
   if (!rendererDomainSupported) return false;
   if (captureFrame !== undefined) return false;
   if (reducedMotion === undefined) return false;
+  if (completionMode === 'activity') return activityComplete === true;
   if (reducedMotion) return true;
   return !fps || frame >= playbackEndFrame;
 }
@@ -371,6 +385,8 @@ function useFrame(movie: AnimationModule['movie'] | undefined, playbackMode: Ani
 
 function useAudio(module: AnimationModule | undefined, frame: number, fps: number, frameDomain: string, lang: 'en' | 'es', enabled: boolean, replay: number, scenario: string, seed: number, volume: number, onAutoplayBlocked: (cue: RuntimeAudioCue | null) => void, onSounding: (sounding: boolean) => void = ignoreAudioActivity) {
   const active = useRef<Map<string, HTMLAudioElement>>(new Map()), previous = useRef(0);
+  const endedCueIds = useRef(new Set<string>());
+  const observedFrame = useRef(0);
   const explicitlyStopped = useRef(false);
   const safeVolume = Math.max(0, Math.min(1, volume));
   // The host narration control reads timeline cues back as playback state, so
@@ -397,6 +413,12 @@ function useAudio(module: AnimationModule | undefined, frame: number, fps: numbe
     explicitlyStopped.current = true;
     stopActive();
   }, [stopActive]);
+  // Pausing a support tool must not forget that narration already ended.
+  // A new page, Replay, or a real timeline rewind may play those cues again.
+  useEffect(() => {
+    endedCueIds.current.clear();
+    observedFrame.current = 0;
+  }, [module, frameDomain, lang, replay, scenario, seed]);
   useEffect(() => {
     explicitlyStopped.current = false;
     stopActive();
@@ -406,12 +428,14 @@ function useAudio(module: AnimationModule | undefined, frame: number, fps: numbe
     for (const audio of active.current.values()) audio.volume = safeVolume;
   }, [safeVolume]);
   useEffect(() => {
+    if (frame < observedFrame.current) endedCueIds.current.clear();
+    observedFrame.current = frame;
     if (!module || !enabled) return;
     if (explicitlyStopped.current) {
       previous.current = frame;
       return;
     }
-    const transition = resolveAudioCueTransition(module.audioCues, {previousFrame: previous.current, frame, fps, frameDomain, lang, scenario, seed});
+    const transition = resolveAudioCueTransition(module.audioCues, {previousFrame: previous.current, frame, fps, frameDomain, lang, scenario, seed, endedCueIds: endedCueIds.current});
     previous.current = frame;
     for (const cueId of transition.stopIds) {
       const audio = active.current.get(cueId);
@@ -434,7 +458,11 @@ function useAudio(module: AnimationModule | undefined, frame: number, fps: numbe
         if (active.current.get(cue.id) === audio) active.current.delete(cue.id);
         reportSounding();
       };
-      audio.addEventListener('ended', done, {once: true});
+      audio.addEventListener('ended', () => {
+        if (active.current.get(cue.id) !== audio) return;
+        endedCueIds.current.add(cue.id);
+        done();
+      }, {once: true});
       audio.addEventListener('error', done, {once: true});
       void audio.play().then(
         () => {
@@ -583,6 +611,7 @@ function useHostAudioTracks({module, lang, frameDomain = 'root', fallbackCue = n
 
 interface InteractiveAudioOptions {
   readonly disabled?: boolean;
+  readonly paused?: boolean;
   readonly lang: 'en' | 'es';
   readonly module: AnimationModule | undefined;
   readonly replay: number;
@@ -596,6 +625,7 @@ interface InteractiveAudioOptions {
  */
 function useInteractiveAudioAssets({
   disabled = false,
+  paused = false,
   lang,
   module,
   replay,
@@ -619,7 +649,7 @@ function useInteractiveAudioAssets({
     () => Object.freeze(
       (module?.interactiveAudioAssets ?? []).filter(
         (asset) =>
-          asset.language === lang && isExactInteractiveAudioAsset(asset),
+          interactiveAudioMatchesLanguage(asset, lang) && isExactInteractiveAudioAsset(asset),
       ),
     ),
     [lang, module],
@@ -650,8 +680,22 @@ function useInteractiveAudioAssets({
   useEffect(() => {
     if (active.current) active.current.audio.volume = safeVolume;
   }, [safeVolume]);
+  const wasPaused = useRef(paused);
+  const pausedRef = useRef(paused);
+  pausedRef.current = paused;
+  useEffect(() => {
+    const current = active.current;
+    if (paused) current?.audio.pause();
+    else if (wasPaused.current && current) {
+      void current.audio.play().catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === 'AbortError' && pausedRef.current) return;
+        if (active.current === current) stop(current.asset.id);
+      });
+    }
+    wasPaused.current = paused;
+  }, [paused, stop]);
   const play = useCallback((assetId: string) => {
-    if (disabled) return false;
+    if (disabled || paused) return false;
     const asset = assets.find((candidate) => candidate.id === assetId);
     if (!asset) return false;
     const prior = active.current;
@@ -674,9 +718,12 @@ function useInteractiveAudioAssets({
     };
     audio.addEventListener('ended', done, {once: true});
     audio.addEventListener('error', done, {once: true});
-    void audio.play().catch(done);
+    void audio.play().catch((error: unknown) => {
+      if (error instanceof DOMException && error.name === 'AbortError' && pausedRef.current) return;
+      done();
+    });
     return true;
-  }, [assets, disabled, identity, safeVolume]);
+  }, [assets, disabled, identity, paused, safeVolume]);
   return {assets, play, playing, stop};
 }
 
@@ -850,7 +897,7 @@ export function AnimationRuntime({
             (!track.frameDomains ||
               track.frameDomains.includes(audioContext.frameDomain))) ||
         audioModule.interactiveAudioAssets?.some((asset) =>
-          asset.language === audioContext.lang &&
+          interactiveAudioMatchesLanguage(asset, audioContext.lang) &&
             isExactInteractiveAudioAsset(asset))
       ),
   );
@@ -939,7 +986,8 @@ export function AnimationRuntime({
     playing: playingInteractiveAudioId,
     stop: stopInteractiveAudio,
   } = useInteractiveAudioAssets({
-    disabled: narrationDisabled,
+    disabled: capture || context?.captureFrame !== undefined || !audioEnabled,
+    paused,
     lang: resolvedAudioLanguage,
     module: audioModule,
     replay,
@@ -971,7 +1019,7 @@ export function AnimationRuntime({
   }, [directAudioLessonHostIdentity]);
   const narrationSounding = timelineAudioSounding ||
     playingNarrationTrackId !== null ||
-    playingInteractiveAudioId !== null;
+    (!paused && playingInteractiveAudioId !== null);
   // A refused cue stays on the module for as long as the page is open, because
   // it is what the manual track is built from. A request on this page is the
   // gesture the browser was holding out for, so once one exists the control
@@ -987,7 +1035,7 @@ export function AnimationRuntime({
         ? 'blocked'
         : narrationTracks.length > 0
           ? 'idle'
-          : interactiveAudioAssets.length > 0
+          : interactiveAudioAssets.some((asset) => asset.activation !== 'interaction-feedback')
             ? 'interactive'
             : 'waiting';
   const lastNarrationRequestRef = useRef(0);
@@ -1116,12 +1164,20 @@ export function AnimationRuntime({
       animationModule?.lessonHost?.capabilities.length
       ? handleRendererLessonHostRequest
       : undefined;
+  const completionIdentity = `${playbackIdentity}:${replay}`;
+  const activityIdentity = `${completionIdentity}:${seekRevision}`;
+  const [completedActivityIdentity, setCompletedActivityIdentity] = useState<string | null>(null);
+  const handleActivityComplete = useCallback(() => {
+    setCompletedActivityIdentity(activityIdentity);
+  }, [activityIdentity]);
   const playbackComplete = Boolean(
     animationModule &&
       activeMovie &&
       !captureIdentityFailure &&
       playbackReachedEnd({
+        activityComplete: completedActivityIdentity === activityIdentity,
         captureFrame: context?.captureFrame,
+        completionMode: animationModule.completionMode,
         fps: activeMovie.fps,
         frame: liveFrame,
         playbackEndFrame: resolvePlaybackEndFrame(
@@ -1132,7 +1188,6 @@ export function AnimationRuntime({
         rendererDomainSupported,
       }),
   );
-  const completionIdentity = `${playbackIdentity}:${replay}`;
   const reportedCompletionRef = useRef<string | null>(null);
   useEffect(() => {
     if (!playbackComplete) return;
@@ -1202,7 +1257,7 @@ export function AnimationRuntime({
             traceId={playbackContext.traceId}
             width={runtimeMetadata.stage.width}
           />
-        : <Renderer activeInteractiveAudioId={playingInteractiveAudioId} audioEnabled={audioEnabled} entryStateSha256={playbackContext.entryStateSha256} frame={playbackContext.frame} frameDomain={playbackContext.frameDomain} key={rendererKey} lang={playbackContext.lang} onLessonHostRequest={rendererLessonHostRequest} onReplay={onReplay} pageInteractionCompanionTargetId={pageInteractionCompanionTargetId} pageInteractionStageTargetId={pageInteractionStageTargetId} paused={paused || hostAudioPaused} reducedMotion={reduced === true} replay={playbackContext.replay} requirementId={playbackContext.requirementId} rootFrame={playbackContext.rootFrame} scenario={playbackContext.scenario} seed={playbackContext.seed} state={state} traceId={playbackContext.traceId} uiLanguage={uiLanguage ?? playbackContext.lang} />}
+        : <Renderer activeInteractiveAudioId={playingInteractiveAudioId} audioEnabled={audioEnabled} entryStateSha256={playbackContext.entryStateSha256} frame={playbackContext.frame} frameDomain={playbackContext.frameDomain} key={rendererKey} lang={playbackContext.lang} onActivityComplete={animationModule.completionMode === 'activity' && !capture ? handleActivityComplete : undefined} onLessonHostRequest={rendererLessonHostRequest} onReplay={onReplay} pageInteractionCompanionTargetId={pageInteractionCompanionTargetId} pageInteractionStageTargetId={pageInteractionStageTargetId} paused={paused || hostAudioPaused} reducedMotion={reduced === true} replay={playbackContext.replay} requirementId={playbackContext.requirementId} rootFrame={playbackContext.rootFrame} scenario={playbackContext.scenario} seed={playbackContext.seed} state={state} traceId={playbackContext.traceId} uiLanguage={uiLanguage ?? playbackContext.lang} />}
     </div>
   </div>;
 }

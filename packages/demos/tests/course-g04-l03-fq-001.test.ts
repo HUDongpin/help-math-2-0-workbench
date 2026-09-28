@@ -41,6 +41,7 @@ test("FQ001 preserves the root, sprite-41, terminal stop, and source boundaries"
   assert.equal(COURSE_G04_L03_FQ_001_SOURCE.sharedCatalogAudioAssociationCount, 108);
   assert.equal(COURSE_G04_L03_FQ_001_SOURCE.embeddedAudioStreamCount, 0);
   assert.equal(courseFq001.runtime, COURSE_G04_L03_FQ_001_RUNTIME);
+  assert.equal(courseFq001.reducedMotionFrame, 52);
   assert.deepEqual(courseFq001.playbackEndFrameByDomain, {root: 1, "sprite-22": 1});
   for (const [path, expected] of [
     [COURSE_G04_L03_FQ_001_SOURCE.swf, COURSE_G04_L03_FQ_001_SOURCE.swfSha256],

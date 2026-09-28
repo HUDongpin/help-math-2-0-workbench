@@ -96,6 +96,34 @@ test('timeline audio resolves exact scenario/seed branches and source removal bo
   assert.deepEqual(stop.stopIds, ['seed-even']);
 });
 
+test('pause or tool-close resumes only audio with time remaining; Replay can start it again', () => {
+  const cue = {id: 'narration', frame: 5, language: 'en' as const, source: '/narration.mp3', durationMs: 1000};
+  const context = {previousFrame: 0, fps: 12, frameDomain: 'root', lang: 'en' as const, scenario: 'default', seed: 0};
+  const remaining = resolveAudioCueTransition([cue], {...context, frame: 16});
+  assert.equal(remaining.start[0]?.offsetSeconds, 11 / 12);
+  assert.deepEqual(resolveAudioCueTransition([cue], {...context, frame: 17}).start, []);
+  assert.deepEqual(resolveAudioCueTransition([cue], {...context, frame: 25}).start, []);
+  assert.equal(resolveAudioCueTransition([cue], {...context, previousFrame: 25, frame: 5}).start[0]?.offsetSeconds, 0);
+
+  const rw002 = {...cue, frame: 1, durationMs: 106_522};
+  assert.deepEqual(resolveAudioCueTransition([rw002], {...context, frame: 1289}).start, []);
+  const {durationMs: _durationMs, ...withoutDuration} = cue;
+  assert.equal(resolveAudioCueTransition([withoutDuration], {...context, frame: 25}).start.length, 1);
+});
+
+test('an ended narration stays ended when a question is held before the audio duration', () => {
+  const cue = {id: 'in005-introduction', frame: 5, endFrame: 187, language: 'en' as const, source: '/introduction.mp3', durationMs: 13_754};
+  const context = {previousFrame: 0, frame: 144, fps: 12, frameDomain: 'sprite-80', lang: 'en' as const, scenario: 'source-static-frame', seed: 0};
+  // The timeline has stopped at the question, but the media element has
+  // already reached its end. Frame-derived duration checks alone miss this.
+  const endedCueIds = new Set([cue.id]);
+  assert.deepEqual(resolveAudioCueTransition([cue], {...context, endedCueIds}).start, []);
+  assert.equal(resolveAudioCueTransition([cue], context).start.length, 1, 'unfinished narration must still resume');
+  // A fresh Replay identity clears native ended events before entering cues.
+  endedCueIds.clear();
+  assert.equal(resolveAudioCueTransition([cue], {...context, frame: 5, endedCueIds}).start[0]?.offsetSeconds, 0);
+});
+
 test('createRuntimeContext keeps capture intent separate from normal playback', () => {
   const live = createRuntimeContext({lang: 'es'}, movie, scenarios);
   assert.equal(live.frame, 1);

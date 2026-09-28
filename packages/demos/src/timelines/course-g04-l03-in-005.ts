@@ -1,3 +1,4 @@
+import type {CourseG04L03SourceGlossaryConfig} from "./course-g04-l03-source-glossary-interaction";
 import type {SourceStaticCanvasCandidateConfig} from "../source-static-canvas-candidate";
 
 export const COURSE_G04_L03_IN_005_SOURCE = Object.freeze({
@@ -28,6 +29,54 @@ export const COURSE_G04_L03_IN_005_SOURCE = Object.freeze({
   rootPlacementTwips: Object.freeze({x: 8_268, y: 5_666}),
   rootPlacementPixels: Object.freeze({x: 413.4, y: 283.3}),
 });
+
+// Source-locked glossary placements; geometry remains audit metadata.
+export const COURSE_G04_L03_IN_005_GLOSSARY_HOTSPOTS = Object.freeze([
+  Object.freeze({
+    id: "order",
+    characterId: 20,
+    keyAttribute: "Order",
+    firstFrame: 52,
+    lastFrame: 186,
+    depth: 4,
+    sourceBounds: Object.freeze({left: 407.0330463534221, right: 457.283716940321, top: 98.90000494952547, bottom: 117.47768476477358}),
+    entryIds: Object.freeze({en: "en-0438-85eefb739783", es: "es-0468-0de078d08617"}),
+    labels: Object.freeze({en: "Order", es: "Ordenar"}),
+  }),
+  Object.freeze({
+    id: "least",
+    characterId: 21,
+    keyAttribute: "Least",
+    firstFrame: 52,
+    lastFrame: 186,
+    depth: 6,
+    sourceBounds: Object.freeze({left: 512.2294267967343, right: 556.9761572524906, top: 97.40000494952547, bottom: 115.97768476477358}),
+    entryIds: Object.freeze({en: "en-0336-e901fd012b0c", es: "es-0432-72256d1b5835"}),
+    labels: Object.freeze({en: "Least", es: "Mínimo"}),
+  }),
+  Object.freeze({
+    id: "greatest",
+    characterId: 22,
+    keyAttribute: "Greatest",
+    firstFrame: 52,
+    lastFrame: 186,
+    depth: 8,
+    sourceBounds: Object.freeze({left: 588.002296920307, right: 667.5256041212007, top: 97.40000494952547, bottom: 115.97768476477358}),
+    entryIds: Object.freeze({en: "en-0259-2523835ab61e", es: "es-0224-900eda2eaf76"}),
+    labels: Object.freeze({en: "Greatest", es: "El mayor"}),
+  }),
+] as const);
+
+export const COURSE_G04_L03_IN_005_GLOSSARY_CONFIG = Object.freeze({
+  animationId: "course-g04-l03-in-005",
+  frameDomain: "sprite-80",
+  terms: COURSE_G04_L03_IN_005_GLOSSARY_HOTSPOTS,
+  playbackDisposition: "reversible-support-pause",
+  sourceAction: "DoHyperLinks",
+  sourceStopTarget: "_root.animation_mc.animation.stop()",
+  glossaryAuthority: "grade-wide-shell-keyterms-static-candidate",
+  glossarySourceDisposition: "unresolved-lesson-vs-grade-wide",
+} satisfies CourseG04L03SourceGlossaryConfig);
 
 export const COURSE_G04_L03_IN_005_CONFIG = Object.freeze({
   animationId: "course-g04-l03-in-005",

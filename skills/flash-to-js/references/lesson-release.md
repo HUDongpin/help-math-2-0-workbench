@@ -10,6 +10,12 @@ Use this reference after implementation and evidence work. Migration completion 
 4. Run `npm run ledger:build` and `npm run ledger:check`.
 5. Confirm the current manifest hash and strict result appear in `catalog/completion-ledger.json`.
 
+Use the canonical workspace for the strict validator:
+
+```bash
+node skills/flash-to-js/scripts/validate_migration.mjs migrations/<animation-id>
+```
+
 A green build, deterministic renderer audit, current-JS approval, complete implementation captures, or owner preview does not make a migration strict complete.
 
 ## Release A Lesson Atomically

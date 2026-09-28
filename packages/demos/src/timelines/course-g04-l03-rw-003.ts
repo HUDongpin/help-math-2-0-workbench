@@ -111,8 +111,8 @@ export const COURSE_G04_L03_RW_003_GLOSSARY_CONFIG = Object.freeze({
   animationId: "course-g04-l03-rw-003",
   frameDomain: "sprite-49",
   terms: COURSE_G04_L03_RW_003_GLOSSARY_HOTSPOTS,
-  playbackDisposition:
-    "source-stop-timeline-and-audio-until-explicit-resume",
+  learnerPrompt: "Positive numbers are greater than zero. Negative numbers are less than zero.",
+  playbackDisposition: "reversible-support-pause",
   sourceAction: "DoHyperLinks",
   sourceStopTarget: "_root.animation_mc.animation.stop()",
   glossaryAuthority: "grade-wide-shell-keyterms-static-candidate",

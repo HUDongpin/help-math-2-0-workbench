@@ -101,6 +101,21 @@ test("preserves an existing workbench-public file without consulting candidate s
   assert.equal(result.profile, null);
 });
 
+test("resolves an existing workbench-public course audio identity", async (t) => {
+  const input = await fixture();
+  t.after(() => rm(input.projectRoot, {recursive: true, force: true}));
+  const audioLogicalPath = "public/flash-assets/audio/courses/course-fixture/es.mp3";
+  await write(input.projectRoot, audioLogicalPath, "audio bytes\n");
+  const result = await resolveCurrentJsCandidateAssetBinding({
+    projectRoot: input.projectRoot,
+    logicalPath: audioLogicalPath,
+  });
+  assert.equal(result.kind, "legacy-workbench-public");
+  assert.equal(result.logicalPath, audioLogicalPath);
+  assert.equal(result.relativePath, audioLogicalPath);
+  assert.equal(result.profile, null);
+});
+
 test("fails closed on a declared digest mismatch or candidate byte drift", async (t) => {
   const input = await fixture();
   t.after(() => rm(input.projectRoot, {recursive: true, force: true}));

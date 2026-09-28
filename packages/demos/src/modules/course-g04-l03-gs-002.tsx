@@ -1,11 +1,17 @@
 "use client";
 
-import React, {useEffect, useReducer, useRef, useState} from "react";
-import type {FormEvent} from "react";
+import React, {useEffect, useMemo, useReducer, useRef, useState} from "react";
+import type {FormEvent, KeyboardEvent} from "react";
 import {createPortal} from "react-dom";
 
 import type {AnimationRendererProps} from "../contract";
 import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
+import {createCourseG04L03SourceGlossaryCandidate} from "./course-g04-l03-source-glossary-candidate";
+import {visibleCourseG04L03SourceGlossaryTerms} from "../timelines/course-g04-l03-source-glossary-interaction";
+import {
+  isSourceStaticBehaviorCompositeCaptureRequest,
+  SourceStaticBehaviorCompositeCapture,
+} from "../source-static-behavior-composite-capture";
 import {
   COURSE_G04_L03_GS_002_CURRENT_JS_TIMING,
   COURSE_G04_L03_GS_002_HELP,
@@ -17,8 +23,11 @@ import {
 } from "../timelines/course-g04-l03-gs-002-interaction";
 import {
   COURSE_G04_L03_GS_002_CONFIG,
+  COURSE_G04_L03_GS_002_GLOSSARY_CONFIG,
   COURSE_G04_L03_GS_002_INTERACTION_BASE_CONFIG,
   COURSE_G04_L03_GS_002_SOURCE,
+  COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE,
+  COURSE_G04_L03_GS_002_SPRITE_319_CONFIG,
 } from "../timelines/course-g04-l03-gs-002";
 
 const candidate = createSourceStaticCanvasCandidate(
@@ -29,10 +38,15 @@ const interactionBaseCandidate = createSourceStaticCanvasCandidate(
   COURSE_G04_L03_GS_002_INTERACTION_BASE_CONFIG,
 );
 const InteractionBaseRenderer = interactionBaseCandidate.Renderer;
+const sprite319Candidate = createSourceStaticCanvasCandidate(
+  COURSE_G04_L03_GS_002_SPRITE_319_CONFIG,
+);
+const Sprite319SourceRenderer = sprite319Candidate.Renderer;
 
 const SOURCE_GAME_FRAME = 427;
 const SOURCE_GAME_DOMAIN = "sprite-321";
 const SOURCE_GAME_SCENARIO = "source-static-frame";
+const SOURCE_STATIC_REACHABLE_SCENARIO = "source-static-reachable-domain";
 const STAGE_BASE_X = 412.4;
 const STAGE_BASE_Y = 283.3;
 const SOURCE_SHIP_LEFT = STAGE_BASE_X - 298.2;
@@ -120,14 +134,17 @@ function PageInteractionCompanionPortal({
 }
 
 function CourseG04L03Gs002InteractionOverlay({
+  canvasReady,
+  onActivityComplete,
   pageInteractionCompanionTargetId,
   paused = false,
   reducedMotion = false,
   replay = 0,
   seed,
-}: Pick<
+}: {canvasReady: boolean} & Pick<
   AnimationRendererProps,
   | "pageInteractionCompanionTargetId"
+  | "onActivityComplete"
   | "paused"
   | "reducedMotion"
   | "replay"
@@ -149,6 +166,7 @@ function CourseG04L03Gs002InteractionOverlay({
   const terminalNewGameRef = useRef<HTMLButtonElement>(null);
   const mobileTerminalNewGameRef = useRef<HTMLButtonElement>(null);
   const priorModeRef = useRef(interaction.mode);
+  const priorCanvasReadyRef = useRef(false);
 
   useEffect(() => {
     dispatch({type: "replay", seed});
@@ -156,7 +174,8 @@ function CourseG04L03Gs002InteractionOverlay({
 
   useEffect(() => {
     if (
-      paused
+      !canvasReady
+      || paused
       || interaction.mode === "expired"
       || interaction.mode === "help"
       || interaction.mode === "feedback"
@@ -195,23 +214,33 @@ function CourseG04L03Gs002InteractionOverlay({
       document.removeEventListener("visibilitychange", resetClockOrigin);
       cancelAnimationFrame(animationFrame);
     };
-  }, [interaction.mode, paused]);
+  }, [canvasReady, interaction.mode, paused]);
 
   useEffect(() => {
-    if (!reducedMotion || paused) return;
+    if (!canvasReady || !reducedMotion || paused) return;
     if (interaction.mode === "moving") {
       dispatch({type: "movement-step"});
     } else if (interaction.mode === "hit-resolving") {
       dispatch({type: "resolve-hit"});
     }
-  }, [interaction.mode, interaction.remainingMoveCount, paused, reducedMotion]);
+  }, [canvasReady, interaction.mode, interaction.remainingMoveCount, paused, reducedMotion]);
+
+  useEffect(() => {
+    if (canvasReady && interaction.mode === "expired") onActivityComplete?.();
+  }, [canvasReady, interaction.mode, onActivityComplete]);
 
   useEffect(() => {
     const priorMode = priorModeRef.current;
     priorModeRef.current = interaction.mode;
-    const focusVisible = <T extends HTMLElement,>(...elements: Array<T | null>) =>
-      elements.find((element) => element && element.getClientRects().length > 0)
-        ?.focus();
+    const firstReady = canvasReady && !priorCanvasReadyRef.current;
+    priorCanvasReadyRef.current = canvasReady;
+    if (!canvasReady) return;
+    let deferredFocus = 0;
+    const focusVisible = <T extends HTMLElement,>(...elements: Array<T | null>) => {
+      const target = elements.find((element) => element && element.getClientRects().length > 0);
+      target?.focus();
+      return Boolean(target);
+    };
     if (interaction.mode === "feedback" || interaction.mode === "help") {
       focusVisible(modalCloseRef.current, mobileModalCloseRef.current);
     } else if (interaction.mode === "expired") {
@@ -219,27 +248,46 @@ function CourseG04L03Gs002InteractionOverlay({
         terminalNewGameRef.current,
         mobileTerminalNewGameRef.current,
       );
-    } else if (interaction.mode === "ready" && priorMode === "feedback") {
+    } else if (interaction.mode === "ready" && (
+      firstReady || priorMode === "feedback" || priorMode === "moving"
+      || priorMode === "hit-resolving" || priorMode === "expired"
+    )) {
       if (interaction.sign) {
         focusVisible(distanceInputRef.current, mobileDistanceInputRef.current);
       } else {
-        focusVisible(plusInputRef.current, mobilePlusInputRef.current);
+        if (!focusVisible(plusInputRef.current, mobilePlusInputRef.current) && firstReady) {
+          // The mobile companion may finish its portal commit after this effect.
+          deferredFocus = requestAnimationFrame(() => {
+            focusVisible(plusInputRef.current, mobilePlusInputRef.current);
+          });
+        }
       }
     } else if (interaction.mode === "ready" && priorMode === "help") {
       focusVisible(helpButtonRef.current, mobileHelpButtonRef.current);
     }
-  }, [interaction.mode, interaction.sign]);
+    return () => cancelAnimationFrame(deferredFocus);
+  }, [canvasReady, interaction.mode, interaction.sign]);
 
   const shipTop = sourceShipTop(interaction.shipIndex);
   const virusTop = sourceVirusTop(interaction.virusIndex);
-  const ready = interaction.mode === "ready";
+  const ready = canvasReady && interaction.mode === "ready";
   const modalOpen =
     interaction.mode === "feedback" || interaction.mode === "help";
   const submitMove = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch({type: "submit-move"});
+    if (ready) dispatch({type: "submit-move"});
   };
   const resetGame = () => dispatch({type: "new-game"});
+  const handleDialogKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Escape" && interaction.mode !== "expired") {
+      event.preventDefault();
+      event.stopPropagation();
+      dispatch({type: interaction.mode === "help" ? "close-help" : "close-feedback"});
+    } else if (event.key === "Tab") {
+      event.preventDefault();
+      event.currentTarget.querySelector<HTMLButtonElement>("button")?.focus();
+    }
+  };
   const liveStatus = interaction.mode === "moving"
     ? `Ship moving. Current position ${formatCourseG04L03Gs002Position(
         interaction.shipIndex,
@@ -274,7 +322,19 @@ function CourseG04L03Gs002InteractionOverlay({
           display: none;
         }
 
-        @media (max-width: 640px) {
+        .course-g04-l03-gs-002-stage-control:focus-visible,
+        .course-g04-l03-gs-002-stage-control input:focus-visible,
+        .course-g04-l03-gs-002-mobile-controls :focus-visible {
+          outline: 3px solid #0758ba;
+          outline-offset: 3px;
+        }
+
+        .course-g04-l03-gs-002-stage-control label:has(input:focus-visible) {
+          border-radius: 8px;
+          outline: 3px solid #0758ba;
+        }
+
+        @media (max-width: 640px), (any-pointer: coarse) {
           .course-g04-l03-gs-002-stage-control {
             display: none !important;
           }
@@ -302,6 +362,17 @@ function CourseG04L03Gs002InteractionOverlay({
             grid-template-columns: 1fr 1fr;
             margin: 0;
             padding: 0;
+          }
+
+          .course-g04-l03-gs-002-mobile-summary {
+            background: #fff;
+            border: 1px solid #b9cbe3;
+            border-radius: 10px;
+            display: grid;
+            font: 700 16px/1.5 system-ui, sans-serif;
+            gap: 4px 12px;
+            grid-template-columns: 1fr 1fr;
+            padding: 10px 12px;
           }
 
           .course-g04-l03-gs-002-mobile-controls legend,
@@ -387,11 +458,17 @@ function CourseG04L03Gs002InteractionOverlay({
         }
       `}</style>
     <svg
-      aria-label="Source-script-bound current JavaScript positive and negative number game"
+      aria-label="Move the ship with positive and negative numbers"
       data-audio-feedback="unimplemented-unaccepted"
       data-behavior-parity-established="false"
       data-current-js-functional-candidate="true"
       data-game-mode={interaction.mode}
+      data-game-ship-index={interaction.shipIndex}
+      data-game-target-index={interaction.virusIndex}
+      data-game-score={interaction.score}
+      data-game-timer={interaction.timerDisplay}
+      data-game-draw-count={interaction.drawCount}
+      data-current-js-controls-ready={canvasReady ? "true" : "false"}
       data-legacy-actionscript-executed="false"
       data-source-script-bound="true"
       data-timing-authority="current-js-product-clock-and-source-informed-movement-not-original-runtime-trace"
@@ -452,6 +529,7 @@ function CourseG04L03Gs002InteractionOverlay({
                   interaction.mode === "hit-resolving" && !reducedMotion
                     ? `${COURSE_G04_L03_GS_002_CURRENT_JS_TIMING.hitResolutionMs}ms ease-in-out both course-g04-l03-gs-002-hit-feedback`
                     : undefined,
+                animationPlayState: paused ? "paused" : "running",
                 height: 31,
                 left: SOURCE_VIRUS_LEFT - SOURCE_VIRUS_IMAGE_ALPHA_OFFSET_X,
                 opacity: 1,
@@ -472,6 +550,7 @@ function CourseG04L03Gs002InteractionOverlay({
                 animation: reducedMotion
                   ? undefined
                   : `${COURSE_G04_L03_GS_002_CURRENT_JS_TIMING.hitResolutionMs}ms ease-out both course-g04-l03-gs-002-score-feedback`,
+                animationPlayState: paused ? "paused" : "running",
                 background: "#ffdd29",
                 border: "2px solid #173f86",
                 borderRadius: 999,
@@ -717,6 +796,7 @@ function CourseG04L03Gs002InteractionOverlay({
               aria-labelledby="course-g04-l03-gs-002-dialog-title"
               aria-modal="true"
               className="course-g04-l03-gs-002-stage-control"
+              onKeyDown={handleDialogKeyDown}
               role="dialog"
               style={{
                 background: "#ffffcc",
@@ -766,7 +846,7 @@ function CourseG04L03Gs002InteractionOverlay({
                   fontFamily: SOURCE_FONT,
                   fontSize: 18,
                   marginTop: 10,
-                  minHeight: 44,
+                  minHeight: 48,
                   padding: "6px 22px",
                 }}
                 type="button"
@@ -775,12 +855,12 @@ function CourseG04L03Gs002InteractionOverlay({
           ) : null}
 
           {interaction.mode === "expired" ? (
-            <div
+            <section
               aria-describedby="course-g04-l03-gs-002-expired-detail"
               aria-labelledby="course-g04-l03-gs-002-expired-title"
-              aria-modal="true"
               className="course-g04-l03-gs-002-stage-control"
-              role="dialog"
+              data-game-result="completed-round"
+              role="region"
               style={{
                 background: "#def4ff",
                 border: "4px solid #224b8e",
@@ -822,7 +902,7 @@ function CourseG04L03Gs002InteractionOverlay({
                 }}
                 type="button"
               >New Game</button>
-            </div>
+            </section>
           ) : null}
         </form>
       </foreignObject>
@@ -837,6 +917,15 @@ function CourseG04L03Gs002InteractionOverlay({
         data-page-interaction-companion-surface="gs002-mobile"
         onSubmit={submitMove}
       >
+      <div className="course-g04-l03-gs-002-mobile-summary" aria-label="Game progress">
+        <span>Ship: {formatCourseG04L03Gs002Position(interaction.shipIndex)}</span>
+        <span>Target: {formatCourseG04L03Gs002Position(interaction.virusIndex)}</span>
+        <span>Time: {interaction.timerDisplay.slice(3)}</span>
+        <span>Score: {interaction.score}</span>
+      </div>
+      <p style={{font: "16px/1.45 system-ui, sans-serif", margin: 0}}>
+        Choose + to move up or − to move down. Enter how many spaces to move, then choose Go.
+      </p>
       <fieldset disabled={!ready}>
         <legend>Direction</legend>
         {(["+", "-"] as const).map((sign) => (
@@ -899,6 +988,7 @@ function CourseG04L03Gs002InteractionOverlay({
           aria-labelledby="course-g04-l03-gs-002-mobile-dialog-title"
           aria-modal="true"
           className="course-g04-l03-gs-002-mobile-dialog"
+          onKeyDown={handleDialogKeyDown}
           role="dialog"
         >
           <strong id="course-g04-l03-gs-002-mobile-dialog-title">
@@ -923,12 +1013,12 @@ function CourseG04L03Gs002InteractionOverlay({
         </div>
       ) : null}
       {interaction.mode === "expired" ? (
-        <div
+        <section
           aria-describedby="course-g04-l03-gs-002-mobile-expired-detail"
           aria-labelledby="course-g04-l03-gs-002-mobile-expired-title"
-          aria-modal="true"
           className="course-g04-l03-gs-002-mobile-dialog"
-          role="dialog"
+          data-game-result="completed-round"
+          role="region"
         >
           <strong id="course-g04-l03-gs-002-mobile-expired-title">
             Time&apos;s up
@@ -941,7 +1031,7 @@ function CourseG04L03Gs002InteractionOverlay({
             ref={mobileTerminalNewGameRef}
             type="button"
           >New Game</button>
-        </div>
+        </section>
       ) : null}
       </form>
     </PageInteractionCompanionPortal>
@@ -949,8 +1039,41 @@ function CourseG04L03Gs002InteractionOverlay({
   );
 }
 
-export function CourseG04L03Gs002Renderer(props: AnimationRendererProps) {
+function Sprite319EvidenceRenderer(props: AnimationRendererProps) {
+  const behaviorCompositeState =
+    `${COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE.behaviorCompositeStatePrefix}${String(props.frame).padStart(3, "0")}`;
+  const sourceState = useMemo(() => {
+    const base = sprite319Candidate.getFrameState(
+      COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE.sourceFrame,
+      {
+        frameDomain:
+          COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE.sourceFrameDomain,
+        scenario: SOURCE_GAME_SCENARIO,
+        lang: "en",
+        seed: props.seed,
+      },
+    );
+    return Object.freeze({
+      ...base,
+      behaviorCompositeContractId:
+        COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE
+          .behaviorCompositeContractId,
+      behaviorCompositeState,
+    });
+  }, [behaviorCompositeState, props.seed]);
+  return (
+    <SourceStaticBehaviorCompositeCapture
+      mapping={COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE}
+      props={props}
+      sourceState={sourceState}
+      SourceRenderer={Sprite319SourceRenderer}
+    />
+  );
+}
+
+function CourseG04L03Gs002MainRenderer(props: AnimationRendererProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const [canvasReady, setCanvasReady] = useState(false);
   const frameDomain = props.frameDomain ?? SOURCE_GAME_DOMAIN;
   const interactionEnabled =
     props.frame === SOURCE_GAME_FRAME
@@ -960,15 +1083,27 @@ export function CourseG04L03Gs002Renderer(props: AnimationRendererProps) {
     && !isDeterministicEvidenceCapture(props);
 
   useEffect(() => {
-    const canvas = wrapperRef.current?.querySelector<HTMLCanvasElement>(
-      'canvas[data-course-canvas="course-g04-l03-gs-002-interaction-base"]',
-    );
-    if (!canvas || !interactionEnabled) return;
-    canvas.setAttribute("aria-hidden", "true");
-    return () => {
-      canvas.removeAttribute("aria-hidden");
+    const host = wrapperRef.current;
+    if (!host || !interactionEnabled) {
+      setCanvasReady(false);
+      return;
+    }
+    const update = () => {
+      const canvas = host.querySelector<HTMLCanvasElement>(
+        'canvas[data-course-canvas="course-g04-l03-gs-002-interaction-base"]',
+      );
+      const status = host.querySelector<HTMLElement>("[data-canvas-status]")?.dataset.canvasStatus;
+      setCanvasReady(status === "ready");
+      canvas?.setAttribute("aria-hidden", "true");
+      canvas?.setAttribute("inert", "");
     };
-  }, [interactionEnabled]);
+    update();
+    const observer = new MutationObserver(update);
+    observer.observe(host, {attributes: true, attributeFilter: ["data-canvas-status"], childList: true, subtree: true});
+    return () => {
+      observer.disconnect();
+    };
+  }, [interactionEnabled, props.replay]);
 
   return (
     <div
@@ -985,6 +1120,8 @@ export function CourseG04L03Gs002Renderer(props: AnimationRendererProps) {
         : <SourceStaticRenderer {...props} />}
       {interactionEnabled ? (
         <CourseG04L03Gs002InteractionOverlay
+          canvasReady={canvasReady}
+          onActivityComplete={props.onActivityComplete}
           pageInteractionCompanionTargetId={
             props.pageInteractionCompanionTargetId
           }
@@ -996,6 +1133,27 @@ export function CourseG04L03Gs002Renderer(props: AnimationRendererProps) {
       ) : null}
     </div>
   );
+}
+
+const glossaryCandidate = createCourseG04L03SourceGlossaryCandidate(
+  {...candidate, Renderer: CourseG04L03Gs002MainRenderer},
+  COURSE_G04_L03_GS_002_GLOSSARY_CONFIG,
+);
+const IntroGlossaryRenderer = glossaryCandidate.Renderer;
+
+export function CourseG04L03Gs002Renderer(props: AnimationRendererProps) {
+  return isSourceStaticBehaviorCompositeCaptureRequest(
+    props,
+    COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE,
+  )
+    ? <Sprite319EvidenceRenderer {...props} />
+    : props.lang === "en"
+      && (props.frameDomain ?? SOURCE_GAME_DOMAIN) === SOURCE_GAME_DOMAIN
+      && props.scenario === SOURCE_GAME_SCENARIO
+      && !isDeterministicEvidenceCapture(props)
+      && visibleCourseG04L03SourceGlossaryTerms(COURSE_G04_L03_GS_002_GLOSSARY_CONFIG, props.frame).length > 0
+      ? <IntroGlossaryRenderer {...props} />
+      : <CourseG04L03Gs002MainRenderer {...props} />;
 }
 
 export {COURSE_G04_L03_GS_002_SOURCE};
@@ -1016,9 +1174,17 @@ export const COURSE_G04_L03_GS_002_SOURCE_CONTRACT = Object.freeze({
     "source-sprite321-case426-clean-base-without-pixel-interpolation",
     "current-javascript-visible-hit-and-score-feedback",
     "need-more-help-text-dialog",
+    "host-completion-after-game-timer-expires",
+    "source-canvas-ready-gated-controls-and-clock",
+    "intro-source-frame-bound-positive-and-negative-sign-glossary",
+    "help-and-feedback-escape-close-and-tab-focus-containment",
+    "focus-restoration-after-movement-hit-and-new-game",
+    "mobile-readable-position-timer-and-score-summary",
+    "nonmodal-completed-round-result-keeps-course-navigation-reachable",
     "whole-renderer-new-game-and-host-replay-reset",
     "host-pause-freezes-current-javascript-clock",
     "responsive-mobile-touch-control-surface",
+    "sprite-319-frames-1-186-source-static-behavior-composite-diagnostic",
   ]),
   currentJavascriptTiming: COURSE_G04_L03_GS_002_CURRENT_JS_TIMING,
   sourceSpriteExports: Object.freeze({
@@ -1043,20 +1209,76 @@ export const COURSE_G04_L03_GS_002_SOURCE_CONTRACT = Object.freeze({
     acceptanceEffect: "none",
   }),
   associatedAudioStatus: "inventoried-unimplemented-unaccepted",
-  glossaryHostStatus: "source-bound-unimplemented",
+  glossaryHostStatus: "intro-source-frame-bound-modern-keyterms-adapter",
+  glossaryRuntimeParityEstablished: false,
   spanishInteractionStatus: "unimplemented-disabled",
   terminalFrameReachabilityEstablished: false,
   behaviorParityEstablished: false,
+  sprite319CaptureStatus:
+    "source-static-parent-composite-frame-override-not-original-runtime-or-fidelity",
+  sprite319UniqueTargetVisualCount:
+    COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE.uniqueTargetVisualCount,
+  sprite319CompositeAsset: Object.freeze({
+    path: COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE.assetSource,
+    sha256: COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE.assetSha256,
+    manifest: COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE.assetManifest,
+    report: COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE.assetReport,
+  }),
   strictAcceptanceEffect: "none",
 });
-export const COURSE_G04_L03_GS_002_SCENARIOS = candidate.scenarios;
+export const COURSE_G04_L03_GS_002_SCENARIOS = Object.freeze([
+  ...candidate.scenarios,
+  Object.freeze({
+    id: SOURCE_STATIC_REACHABLE_SCENARIO,
+    label: "Source-static reachable companion diagnostic",
+    description:
+      "English-only source behavior-composite inspection; not original runtime or fidelity acceptance.",
+  }),
+]);
 export const normalizeCourseG04L03Gs002Frame = candidate.normalizeFrame;
-export const getCourseG04L03Gs002FrameState = candidate.getFrameState;
+export function getCourseG04L03Gs002FrameState(
+  frame: number,
+  context: Parameters<typeof candidate.getFrameState>[1],
+) {
+  const base = candidate.getFrameState(frame, context);
+  if (!isSourceStaticBehaviorCompositeCaptureRequest({
+    entryStateSha256: context.entryStateSha256,
+    frame,
+    frameDomain: context.frameDomain,
+    lang: context.lang,
+    requirementId: context.requirementId,
+    scenario: context.scenario,
+    traceId: context.traceId,
+  }, COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE)) return base;
+  return Object.freeze({
+    ...base,
+    blocker: null,
+    exportFrame: null,
+    frame,
+    frameDomain: COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE.frameDomain,
+    language: COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE.language,
+    rootFrame: COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE.rootEntryFrame,
+    scenario: COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE.scenario,
+    sourceStaticVisualReady: true,
+    status: "ready" as const,
+    visibleSourceMarkers: Object.freeze([
+      `sprite-319-source-behavior-composite-frame-${frame}`,
+    ]),
+  });
+}
 export const buildCourseG04L03Gs002CaptureAttributes =
   candidate.buildCaptureAttributes;
 
 export default Object.freeze({
-  ...candidate.module,
+  ...glossaryCandidate.module,
+  completionMode: "activity" as const,
+  defaultScenarioByFrameDomain: Object.freeze({
+    ...candidate.module.defaultScenarioByFrameDomain,
+    [COURSE_G04_L03_GS_002_SPRITE_319_CAPTURE.frameDomain]:
+      SOURCE_STATIC_REACHABLE_SCENARIO,
+  }),
+  scenarios: COURSE_G04_L03_GS_002_SCENARIOS,
+  getFrameState: getCourseG04L03Gs002FrameState,
   reducedMotionFrame: SOURCE_GAME_FRAME,
   Renderer: CourseG04L03Gs002Renderer,
 });

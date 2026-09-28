@@ -28,7 +28,7 @@ export const COURSE_G04_L03_FQ_001_SOURCE = Object.freeze({
 
 export const COURSE_G04_L03_FQ_001_CONFIG = Object.freeze({
   animationId: "course-g04-l03-fq-001",
-  title: "Final Quiz Introduction — English source-static engineering candidate",
+  title: "Final Quiz Introduction",
   sourceSwfSha256: COURSE_G04_L03_FQ_001_SOURCE.swfSha256,
   assetSource:
     "/flash-assets/courses/course-g04-l03-fq-001/canvas-renderer.js",

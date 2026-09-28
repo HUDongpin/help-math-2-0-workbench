@@ -8,6 +8,27 @@ Use this reference during intake and extraction. Preserve commands and outputs i
 - Inspect SWF tags and exports
 - Inspect FLA authoring data safely
 - Build behavior, dependency, and confidence maps
+- Record the implementation specification
+
+## Select The Evidence Path
+
+- With FLA and shipped SWF, inspect both. Use the FLA for authoring structure
+  and the SWF for shipped runtime behavior.
+- With SWF only, extract metadata, scripts, and assets with FFDec and/or
+  swfmill. Mark inferred authoring names and structure as inferred.
+- With FLA only, treat it as authoring evidence. For legacy HELP FLA files,
+  inspect a byte-identical read-only working copy and never save or publish a
+  converted in-memory document. Without the preserved shipped SWF, keep strict
+  fidelity blocked.
+- With screenshots or notes only, label the result an approximation and do not
+  claim parity.
+- Keep a Ruffle route when useful for observation, but resolve disagreements
+  from FLA/SWF structure and authorized original-runtime evidence.
+
+For automatic-conversion decisions, turn the audited handlers, objects, domains
+and dependencies into the per-page capability assessment in
+[capability-support.md](capability-support.md#assess-an-actual-page). Record
+unresolved dynamic references rather than omitting them from the required set.
 
 ## 1. Preserve And Identify
 
@@ -51,7 +72,12 @@ Do not infer visual frames only from tag order; nested sprites have independent 
 
 ## 3. Export With FFDec
 
-Use the current stable FFDec package and record its exact version. Inspect the SWF in the GUI before bulk export. Export into a migration-specific directory, never beside the originals.
+Use the current stable FFDec package and record its exact version. Inspect the
+SWF in the GUI when source structure, tool behavior, or export results remain
+uncertain. A calibrated, source-bound CLI extraction does not require a repeated
+GUI visit. Export into a migration-specific directory, never beside the
+originals. The separate Animate and original-runtime operator protocols still
+apply to those operations.
 
 Export these categories when present:
 
@@ -116,3 +142,32 @@ Use one of these labels per audit area:
 - `not-applicable`: the feature is absent.
 
 Static structure can verify stage metadata, tags, scripts, symbols, and declared assets; it cannot by itself verify original-runtime appearance, interaction causality, audible output, or acceptance. Lower the final fidelity claim whenever scripts, fonts, morphs, external assets, shipped SWF, or authoritative playback remain `missing`.
+
+## Implementation Specification
+
+For a new renderer, complete `migration.json`, `asset-inventory.csv`,
+`audio-inventory.csv`, `keyframes.csv`, `evidence/full-frame-coverage.json`, and
+`MIGRATION_BRIEF.md` before implementation. For an existing renderer, update
+the source-bound specification affected by the change. Record at least:
+
+- Exact source paths, SHA-256 hashes, provenance, placement `animationId`,
+  immutable `assetId = swf-<full-sha256>`, and alias/variant relationships.
+- SWF signature/version, native stage, background, FPS, root frame count,
+  duration, and ActionScript generation.
+- Every reachable root and nested timeline, placement/entry state, script,
+  label, stop, navigation action, button, keyboard path, score, branch,
+  terminal state, and Replay behavior.
+- Symbols, instances, depth, transforms, masks, morphs, filters, blend modes,
+  fonts, glyphs, exact strings, localization, bitmaps, audio, video, and
+  external dependencies.
+- Each reachable scenario, language, deterministic seed, trace, and
+  source-evidenced event schedule.
+- Every audio cue's source hash, language, duration, start/stop semantics,
+  synchronization, host dependency, and Replay behavior.
+
+Enumerate every root-reachable timeline in `audit/frame-domain-disposition.json`.
+An unresolved disposition, missing source, font, script, runtime path, or
+dependency blocks strict acceptance; report it instead of inventing evidence.
+Use [renderer-implementation.md](renderer-implementation.md) for the renderer
+contract and [fidelity-validation.md](fidelity-validation.md) for coverage-v2
+requirement identities and trace authority.

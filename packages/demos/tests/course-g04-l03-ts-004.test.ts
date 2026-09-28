@@ -112,6 +112,7 @@ test("TS004 remains prototype-only with every acceptance gate closed", async () 
   assert.equal(registered?.maturity, "legacy-prototype");
   assert.equal(registered?.audioCues.length, 1);
   assert.equal(registered?.audioTracks?.length, 1);
+  assert.equal(registered?.reducedMotionFrame, 336);
   assert.equal(COURSE_G04_L03_TS_004_SOURCE_CONTRACT.ownerAccepted, false);
   for (const [name, value] of Object.entries(COURSE_G04_L03_TS_004_AUTHORITY)) {
     if (name === "registryIsPrototypeOnly" || name === "strictAcceptanceEffect") continue;

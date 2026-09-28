@@ -8,7 +8,9 @@ import type {
   RuntimeContext,
 } from "../contract";
 import {getG4L3MainTimelineAudioCandidate} from "../g4-l3-main-timeline-audio.generated";
+import {createCourseG04L03SourceGlossaryCandidate} from "./course-g04-l03-source-glossary-candidate";
 import {
+  COURSE_G04_L03_IN_009_GLOSSARY_CONFIG,
   COURSE_G04_L03_IN_009_MOVIE,
   COURSE_G04_L03_IN_009_RUNTIME,
   COURSE_G04_L03_IN_009_SOURCE_CONTRACT,
@@ -150,18 +152,20 @@ export function buildCourseG04L03In009CaptureAttributes({
   } as const;
 }
 
-export function CourseG04L03In009Renderer({
+function CourseG04L03In009VisualRenderer({
   entryStateSha256 = "",
   frame,
   frameDomain,
   lang,
   onReplay,
+  pageInteractionStageTargetId,
   requirementId = "",
   scenario,
   seed,
   state,
   traceId = "",
 }: AnimationRendererProps) {
+  const modernLesson = Boolean(pageInteractionStageTargetId) && !entryStateSha256;
   const deterministicState = isFrameState(state)
     ? state
     : getCourseG04L03In009FrameState(frame, {
@@ -322,7 +326,7 @@ export function CourseG04L03In009Renderer({
           </>
         )}
       </div>
-      <div
+      {!modernLesson ? <div
         aria-label="Candidate controls and limitations"
         style={{
           alignItems: "center",
@@ -339,7 +343,7 @@ export function CourseG04L03In009Renderer({
           Modern candidate reset control only; source reload intent is known,
           but complete audio and overlay reset parity remains unresolved.
         </span>
-      </div>
+      </div> : null}
     </section>
   );
 }
@@ -349,9 +353,9 @@ const animationModule: AnimationModule<CourseG04L03In009FrameState> =
     key: ANIMATION_ID,
     movie: COURSE_G04_L03_IN_009_MOVIE,
     runtime: COURSE_G04_L03_IN_009_RUNTIME,
-    playbackMode: "loop",
+    playbackMode: "once",
     playbackEndFrameByDomain: Object.freeze({ root: 1, "sprite-200": 637 }),
-    reducedMotionFrame: 1,
+    reducedMotionFrame: 637,
     defaultScenarioByFrameDomain: Object.freeze({ root: "root-standalone", "sprite-200": "default" }),
     scenarios: Object.freeze([
       Object.freeze({
@@ -384,9 +388,21 @@ const animationModule: AnimationModule<CourseG04L03In009FrameState> =
       ? {audioTracks: AUDIO_CANDIDATE.audioTracks}
       : {}),
     maturity: "legacy-prototype",
-    Renderer: CourseG04L03In009Renderer,
+    Renderer: CourseG04L03In009VisualRenderer,
     getFrameState: (frame: number, context: RuntimeContext) =>
       getCourseG04L03In009FrameState(frame, context),
   });
 
-export default animationModule;
+const glossaryCandidate = createCourseG04L03SourceGlossaryCandidate(
+  {
+    Renderer: CourseG04L03In009VisualRenderer,
+    movie: COURSE_G04_L03_IN_009_MOVIE,
+    module: animationModule,
+    sourceContract: COURSE_G04_L03_IN_009_SOURCE_CONTRACT,
+  },
+  COURSE_G04_L03_IN_009_GLOSSARY_CONFIG,
+  Object.freeze({scenario: "default", canvasCandidateStatus: "engineering-not-strict", surfacePlacement: "companion"}),
+);
+export const CourseG04L03In009Renderer = glossaryCandidate.Renderer;
+export const COURSE_G04_L03_IN_009_PRODUCT_SOURCE_CONTRACT = glossaryCandidate.sourceContract;
+export default glossaryCandidate.module;

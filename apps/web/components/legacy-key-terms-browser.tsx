@@ -15,6 +15,7 @@ export interface LegacyKeyTermSelectionRequest {
 interface KeyTermSublink {
   readonly sourceText: string;
   readonly targetTitle: string | null;
+  readonly targetEntryId?: string;
 }
 
 export interface KeyTermEntry {
@@ -32,6 +33,72 @@ export interface KeyTermEntry {
     declaredFilename: string;
     webResolutionStatus: 'not-hash-bound-for-web';
   }>;
+}
+
+/** Keep archived definitions intact while correcting exact learner-copy defects. */
+export function getKeyTermDisplayDefinitions(
+  entry: KeyTermEntry,
+  showEvidenceNotes: boolean,
+): KeyTermEntry['definitions'] {
+  if (
+    !showEvidenceNotes &&
+    ['en-0760-6575e63919df', 'es-0057-e01a19219cce'].includes(entry.id) &&
+    entry.titles.en === 'Zero' &&
+    entry.definitions.en ===
+      'The number that has no value; zero is neither negative nor positive.'
+  ) {
+    return {
+      en: 'A number that represents none; zero is neither negative nor positive.',
+      es: 'Un número que representa una cantidad nula; el cero no es negativo ni positivo.',
+    };
+  }
+  if (
+    !showEvidenceNotes &&
+    ['en-0412-b773bc431c0b', 'es-0628-56899e0c404a'].includes(entry.id) &&
+    entry.titles.en === 'Negative sign' &&
+    entry.definitions.en ===
+      'A mark, or symbol, used to represent the value of the numbers to the left of on the number line. We use the sign – to show a negative number. For example: - 4 is read as negative 4.'
+  ) {
+    return {
+      ...entry.definitions,
+      en: 'A mark, or symbol, used to represent the value of the numbers to the left of 0 on the number line. We use the sign − to show a negative number. For example: −4 is read as negative 4.',
+    };
+  }
+  if (
+    !showEvidenceNotes &&
+    ['en-0536-4421c49635ec', 'es-0520-f501c3e40839'].includes(entry.id) &&
+    entry.titles.en === 'Question' &&
+    entry.definitions.en === 'A problem to solve. For example: Find the mean of this set of numbers {1, 2, 5, 10}' &&
+    entry.definitions.es === 'Un problema para resolver. Por ejemplo: Encontrar la mediana de este conjunto de números {1,2,5,10}'
+  ) {
+    return {
+      ...entry.definitions,
+      es: 'Un problema para resolver. Por ejemplo: Encontrar la media de este conjunto de números {1, 2, 5, 10}.',
+    };
+  }
+  return entry.definitions;
+}
+
+export function getKeyTermDisplaySublinks(
+  entry: KeyTermEntry,
+  showEvidenceNotes: boolean,
+): KeyTermEntry['sublinks'] {
+  if (entry.titles.en !== 'Question' ||
+      getKeyTermDisplayDefinitions(entry, showEvidenceNotes) === entry.definitions) {
+    return entry.sublinks;
+  }
+  return {
+    ...entry.sublinks,
+    es: entry.sublinks.es.map((link) =>
+      link.sourceText === 'mediana' && link.targetTitle === 'Mediana'
+        ? {
+            sourceText: 'media', targetTitle: 'Media',
+            // Mean and Average share the Spanish title Media. Bind the
+            // source English meaning to its actual entry in the same index.
+            targetEntryId: entry.id === 'en-0536-4421c49635ec'
+              ? 'en-0371-4f9ffb111096' : 'es-0395-723ce3bf28fa',
+          } : link),
+  };
 }
 
 interface LegacyKeyTermsDocument {
@@ -551,10 +618,12 @@ export function createKeyTermTitleIndex(
 export function LegacyKeyTermsBrowser({
   locale,
   selectionRequest,
+  showEvidenceNotes = true,
   shellCandidate,
 }: {
   locale: IndexLanguage;
   selectionRequest?: LegacyKeyTermSelectionRequest | null;
+  showEvidenceNotes?: boolean;
   shellCandidate?: WholeLessonShellImplementationCandidate;
 }) {
   const [indexLanguage, setIndexLanguage] = useState<IndexLanguage>(locale);
@@ -652,11 +721,18 @@ export function LegacyKeyTermsBrowser({
       entry.titles.es,
       entry.definitions.en,
       entry.definitions.es,
+      ...Object.values(getKeyTermDisplayDefinitions(entry, showEvidenceNotes)),
     ].join(' ')).includes(normalizedQuery);
-  }), [entries, indexLanguage, normalizedQuery, selectedLetter]);
+  }), [entries, indexLanguage, normalizedQuery, selectedLetter, showEvidenceNotes]);
   const selectedEntry = selectedId
     ? entries.find(({id}) => id === selectedId) ?? null
     : null;
+  const selectedDefinitions = selectedEntry
+    ? getKeyTermDisplayDefinitions(selectedEntry, showEvidenceNotes)
+    : null;
+  const selectedSublinks = selectedEntry
+    ? getKeyTermDisplaySublinks(selectedEntry, showEvidenceNotes)
+    : {en: [], es: []};
   const idsByTitle = useMemo(
     () => createKeyTermTitleIndex(entries, indexLanguage),
     [entries, indexLanguage],
@@ -769,7 +845,7 @@ export function LegacyKeyTermsBrowser({
       ? 'content-manager-authorized-reference-lesson-source-gap-open'
       : 'unresolved-lesson-vs-grade-wide'}
   >
-    <div className="lesson-shell2__key-terms-boundary">
+    {showEvidenceNotes ? <div className="lesson-shell2__key-terms-boundary">
       <strong>{sourceBoundShellCandidate
         ? (spanishUi
             ? 'Referencia autorizada del glosario combinado de primaria'
@@ -784,7 +860,7 @@ export function LegacyKeyTermsBrowser({
         : (spanishUi
             ? 'El shell enviado apunta a este glosario, pero el XML de la lección declara L3KTE01/L3KTS01, que faltan. Esta vista no los sustituye ni establece paridad de ejecución.'
             : 'The shipped shell points to this glossary, but the lesson XML declares missing L3KTE01/L3KTS01 files. This view neither substitutes for them nor establishes runtime parity.')}</p>
-    </div>
+    </div> : null}
 
     <div className="lesson-shell2__key-terms-toolbar">
       <div role="group" aria-label={spanishUi ? 'Idioma del índice' : 'Index language'}>
@@ -835,7 +911,9 @@ export function LegacyKeyTermsBrowser({
     </div>
 
     <label className="lesson-shell2__key-terms-search">
-      <span>{spanishUi
+      <span>{!showEvidenceNotes
+        ? (spanishUi ? 'Buscar definiciones' : 'Search definitions')
+        : spanishUi
         ? 'Buscar en definiciones (mejora de HELP Math 2.0)'
         : 'Search definitions (HELP Math 2.0 enhancement)'}</span>
       <input
@@ -851,7 +929,9 @@ export function LegacyKeyTermsBrowser({
     </label>
 
     {activeLoadError
-      ? <p role="alert">{spanishUi
+      ? <p role="alert">{!showEvidenceNotes
+          ? (spanishUi ? 'No se pudieron cargar las definiciones. Inténtalo de nuevo.' : 'Definitions could not load. Please try again.')
+          : spanishUi
           ? `El glosario se cerró de forma segura: ${activeLoadError}`
           : `Glossary failed closed: ${activeLoadError}`}</p>
       : !activeDocument
@@ -873,22 +953,25 @@ export function LegacyKeyTermsBrowser({
                 <section lang="en">
                   <span>English</span>
                   <h4>{selectedEntry.titles.en}</h4>
-                  <p>{selectedEntry.definitions.en}</p>
+                  <p>{selectedDefinitions?.en}</p>
                 </section>
                 <section lang="es">
                   <span>Español</span>
                   <h4>{selectedEntry.titles.es}</h4>
-                  <p>{selectedEntry.definitions.es}</p>
+                  <p>{selectedDefinitions?.es}</p>
                 </section>
               </div>
-              {selectedEntry.sublinks[indexLanguage].length
+              {selectedSublinks[indexLanguage].length
                 ? <section className="lesson-shell2__key-term-related">
                     <h4>{spanishUi ? 'Términos relacionados' : 'Related terms'}</h4>
                     <div>
-                      {selectedEntry.sublinks[indexLanguage].map((link, index) => {
-                        const matches = link.targetTitle
-                          ? idsByTitle.get(normalizeSearch(link.targetTitle)) ?? []
-                          : [];
+                      {selectedSublinks[indexLanguage].map((link, index) => {
+                        const matches = link.targetEntryId
+                          ? entries.filter((entry) => entry.id === link.targetEntryId &&
+                              entry.titles[indexLanguage] === link.targetTitle).map((entry) => entry.id)
+                          : link.targetTitle
+                            ? idsByTitle.get(normalizeSearch(link.targetTitle)) ?? []
+                            : [];
                         return <button
                           data-link-resolution={matches.length === 1
                             ? 'unique-local-entry'
@@ -904,17 +987,19 @@ export function LegacyKeyTermsBrowser({
                     </div>
                   </section>
                 : null}
-              <aside className="lesson-shell2__key-term-example">
+              {showEvidenceNotes ? <aside className="lesson-shell2__key-term-example">
                 <strong>Example</strong>
                 <span>{selectedEntry.diagram.declaredFilename}</span>
                 <small>{spanishUi
                   ? 'Declarado por la fuente, pero sin un activo web local enlazado por hash; no se ejecuta.'
                   : 'Declared by source, but no hash-bound local web asset is available; it is not executed.'}</small>
-              </aside>
+              </aside> : null}
             </article>
           : <>
               <p className="lesson-shell2__key-terms-count" role="status">
-                {spanishUi
+                {!showEvidenceNotes
+                  ? (spanishUi ? `${filteredEntries.length} términos` : `${filteredEntries.length} terms`)
+                  : spanishUi
                   ? `${filteredEntries.length} de ${entries.length} entradas candidatas · orden del archivo fuente`
                   : `${filteredEntries.length} of ${entries.length} candidate entries · source-file order`}
               </p>
@@ -934,7 +1019,7 @@ export function LegacyKeyTermsBrowser({
               </ol>
             </>}
 
-    <details className="lesson-shell2__key-terms-blueprint">
+    {showEvidenceNotes ? <details className="lesson-shell2__key-terms-blueprint">
       <summary>{spanishUi
         ? 'Ver referencia visual estática del shell'
         : 'View shell static visual reference'}</summary>
@@ -949,6 +1034,6 @@ export function LegacyKeyTermsBrowser({
           '/flash-assets/courses/shell-course-g04-l03-index-local/sprite-693/visual-001-f1bb347922d6.png'}
         width={staticVisualReference?.width ?? 1608}
       />
-    </details>
+    </details> : null}
   </section>;
 }

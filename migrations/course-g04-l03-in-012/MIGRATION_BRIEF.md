@@ -104,3 +104,12 @@ List every unresolved mismatch, unavailable tool/source, accepted emulator diffe
 - Owner review status:
 - Owner decision, reviewer/date, or explicit not-required reason:
 - Strict validator result:
+
+
+## 2026-09-08 modern-product follow-up
+
+- Complexity / lane: behavior-heavy / bounded advanced-manual hybrid.
+- Selection reason and maintained implementation: 保留 hash-bound Sprite228、frame174 交互停点和 frame173 干净图形；维持五人金额 reducer 及 120 种顺序，修复 activity 完成门槛、手机数轴位置与结果同步、说明裁切和最终反馈遮挡，接入三个源词条。既有 parent/natural/direct companion 采集映射及六个 companion 音频候选保持。
+- Evidence: `work/g4-l3-modern-product-review/20260908-owing/REVIEW.md` and its hash-bound receipt.
+- Source extraction, maintained React/SVG host integration and exact Current-JS registration remain part of the canonical hybrid workflow. Generated source drawing and original binaries are unchanged.
+- This record does not establish original-runtime execution, Flash timing/Replay parity, audio listening acceptance, human/Owner approval, strict completion, lesson publication or deployment.

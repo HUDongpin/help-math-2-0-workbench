@@ -1,5 +1,7 @@
 "use client";
 
+import React, {useMemo} from "react";
+import type {AnimationRendererProps} from "../contract";
 import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
 import {createCourseG04L03SourceGlossaryCandidate} from "./course-g04-l03-source-glossary-candidate";
 import {
@@ -12,8 +14,32 @@ import {
 const sourceStaticCandidate = createSourceStaticCanvasCandidate(
   COURSE_G04_L03_VB_005_CONFIG,
 );
+const SourceStaticRenderer = sourceStaticCandidate.Renderer;
+
+function NegativeNumberPresentation(props: AnimationRendererProps) {
+  const frameDomain = props.frameDomain ?? "sprite-53";
+  // The source removes the separate minus glyph at frame 177. Preserve the
+  // complete -6 example when the modern, once-playing page reaches its end.
+  const preserveNegativeExample = props.frame >= 177
+    && frameDomain === "sprite-53"
+    && props.scenario === "source-static-frame"
+    && props.lang === "en"
+    && !props.entryStateSha256;
+  const signedExampleState = useMemo(() => sourceStaticCandidate.getFrameState(176, {
+    frameDomain,
+    lang: props.lang,
+    scenario: props.scenario,
+    seed: props.seed,
+    requirementId: props.requirementId,
+    traceId: props.traceId,
+  }), [frameDomain, props.lang, props.scenario, props.seed, props.requirementId, props.traceId]);
+  return <SourceStaticRenderer {...props}
+    frame={preserveNegativeExample ? 176 : props.frame}
+    state={preserveNegativeExample ? signedExampleState : props.state}
+  />;
+}
 const candidate = createCourseG04L03SourceGlossaryCandidate(
-  sourceStaticCandidate,
+  {...sourceStaticCandidate, Renderer: NegativeNumberPresentation},
   COURSE_G04_L03_VB_005_GLOSSARY_CONFIG,
 );
 

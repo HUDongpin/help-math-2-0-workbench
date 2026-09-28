@@ -246,7 +246,10 @@ async function openLesson(
   route = '/courses/4/3',
   initialProgress: unknown = null,
 ) {
-  await page.addInitScript(({progress, storageKey}) => {
+  // Seed once on this origin. An init script also clears saved progress on
+  // reload, preventing the resume tests from exercising real persistence.
+  await page.goto('/robots.txt', {waitUntil: 'domcontentloaded'});
+  await page.evaluate(({progress, storageKey}) => {
     window.localStorage.clear();
     window.sessionStorage.clear();
     if (progress !== null) {
@@ -578,17 +581,71 @@ async function expectModernFinalQuizPresentation(
   ]);
   expect(maskBox).not.toBeNull();
   expect(sourceBox).not.toBeNull();
-  expect(Math.abs(maskBox!.x - sourceBox!.x)).toBeLessThanOrEqual(1);
-  expect(Math.abs(maskBox!.y - sourceBox!.y)).toBeLessThanOrEqual(1);
-  expect(Math.abs(maskBox!.width - sourceBox!.width)).toBeLessThanOrEqual(1);
-  expect(Math.abs(maskBox!.height - sourceBox!.height)).toBeLessThanOrEqual(1);
+  // The semantic quiz fills the host, while its preserved donor canvas stays
+  // at native resolution. The opaque cover must contain that smaller donor.
+  expect(maskBox!.x).toBeLessThanOrEqual(sourceBox!.x + 1);
+  expect(maskBox!.y).toBeLessThanOrEqual(sourceBox!.y + 1);
+  expect(maskBox!.x + maskBox!.width)
+    .toBeGreaterThanOrEqual(sourceBox!.x + sourceBox!.width - 1);
+  expect(maskBox!.y + maskBox!.height)
+    .toBeGreaterThanOrEqual(sourceBox!.y + sourceBox!.height - 1);
+
+  const visibleStage = await page.locator('.lesson-shell2__legacy-stage').boundingBox();
+  const panel = quiz.locator('.course-g04-l03-fq-002-stage-panel:visible');
+  const panelBox = await panel.boundingBox();
+  expect(visibleStage).not.toBeNull();
+  expect(panelBox).not.toBeNull();
+  for (const box of [panelBox!, ...await panel.getByRole('button').evaluateAll(
+    (buttons) => buttons.map((button) => {
+      const rect = button.getBoundingClientRect();
+      return {x: rect.x, y: rect.y, width: rect.width, height: rect.height};
+    }),
+  )]) {
+    expect(box.x).toBeGreaterThanOrEqual(visibleStage!.x - 1);
+    expect(box.y).toBeGreaterThanOrEqual(visibleStage!.y - 1);
+    expect(box.x + box.width).toBeLessThanOrEqual(visibleStage!.x + visibleStage!.width + 1);
+    expect(box.y + box.height).toBeLessThanOrEqual(visibleStage!.y + visibleStage!.height + 1);
+  }
 
   await expect(quiz.locator(
     '.course-g04-l03-fq-002-stage-panel:visible',
   )).toHaveCount(1);
   await expect(quiz.locator(
     '.course-g04-l03-fq-002-eyebrow span:visible',
-  ).filter({hasText: 'Modern reconstruction'})).toHaveCount(1);
+  ).filter({hasText: 'Modern reconstruction'})).toHaveCount(0);
+  await expect(quiz).toHaveAttribute('data-fq-reading-enabled', 'true');
+  await expect(quiz.getByRole('combobox', {name: 'Reading language'}))
+    .toBeVisible();
+}
+
+async function readCurrentQuizQuestion(
+  page: Page,
+  quiz: Locator,
+  language: 'en' | 'es',
+) {
+  const questionId = Number(await quiz.getAttribute('data-fq-reading-question-id'));
+  expect(questionId).toBeGreaterThanOrEqual(1);
+  expect(questionId).toBeLessThanOrEqual(25);
+  const sequence = await quiz.getAttribute('data-current-js-sequence-number');
+  const languageControl = page.locator(
+    '[data-fq002-focus-control="reading-language"]:visible',
+  );
+  await expect(languageControl).toHaveCount(1);
+  await languageControl.selectOption(language);
+  const audioPath = '/flash-assets/courses/course-g04-l03-fq-audio/'
+    + `${language === 'es' ? 'SA' : 'EA'}/Q${questionId}.mp3`;
+  const response = page.waitForResponse((candidate) =>
+    new URL(candidate.url()).pathname === audioPath
+    && [200, 206].includes(candidate.status()),
+  );
+  await page.locator('[data-fq002-focus-control="read-question"]:visible')
+    .press('Enter');
+  await response;
+  await expect(page.locator('.runtime-shell')).toHaveAttribute(
+    'data-interactive-audio-playing',
+    `g4-l3-fq-${language}-q${questionId}-question`,
+  );
+  await expect(quiz).toHaveAttribute('data-current-js-sequence-number', sequence!);
 }
 
 test.describe('CLIENT_RENDER_MOCK · prototype composition', () => {
@@ -2583,8 +2640,11 @@ test.describe('CLIENT_RENDER_MOCK · prototype composition', () => {
       + '.course-g04-l03-fq-002-choices button',
     ).first();
     await expect(fq2Choice).toBeEnabled();
+    await readCurrentQuizQuestion(page, fq2, 'en');
     await fq2Choice.click();
     await expect(fq2).toHaveAttribute('data-current-js-sequence-number', '2');
+    await expect(page.locator('.runtime-shell'))
+      .not.toHaveAttribute('data-interactive-audio-playing');
     await expect(fq2).toHaveAttribute('data-current-js-controls-ready', 'true', {
       timeout: 10_000,
     });
@@ -2674,7 +2734,7 @@ test.describe('CLIENT_RENDER_MOCK · prototype composition', () => {
     )).toHaveCount(0);
   });
 
-  test('Spanish Final Quiz remains source-only and does not expose the English modern controls', async ({page}) => {
+  test('Spanish Final Quiz presents the source questions with Spanish reading on pages 38 and 39', async ({page}) => {
     await openLesson(
       page,
       {width: 1920, height: 1080},
@@ -2699,26 +2759,37 @@ test.describe('CLIENT_RENDER_MOCK · prototype composition', () => {
       const quiz = page.locator(
         `[data-final-quiz-animation-id="${animationId}"]`,
       );
-      await expect(quiz).toHaveAttribute(
-        'data-current-js-controls-enabled',
-        'false',
-      );
-      await expect(quiz).toHaveAttribute('data-current-js-overlay-count', '0');
-      await expect(quiz.locator('[data-current-js-functional-overlay]'))
-        .toHaveCount(0);
-      const sourceHost = quiz.locator(
-        ':scope > [data-source-canvas-accessibility-isolated="false"]',
-      );
-      await expect(sourceHost).toHaveCount(1);
-      await expect(sourceHost).toHaveAttribute(
-        'data-source-canvas-visual-exposure',
-        'source-only',
-      );
-      await expect(sourceHost).not.toHaveAttribute('aria-hidden', 'true');
-      await expect(sourceHost).not.toHaveAttribute('inert', '');
-      await expect(page.getByText('Modern reconstruction', {exact: true}))
-        .toHaveCount(0);
+      await expectModernFinalQuizPresentation(page, animationId);
+      // The host locale selects Spanish source audio. The retained source
+      // question text and functional source entry are still English.
+      await expect(quiz).toHaveAttribute('data-current-js-functional-entry', /:en$/u);
+      await expect(quiz).toHaveAttribute('data-fq-reading-language', 'es');
+      await readCurrentQuizQuestion(page, quiz, 'es');
+      await page.getByRole('combobox', {name: 'Reading language'})
+        .selectOption('en');
+      await expect(page.locator('.runtime-shell'))
+        .not.toHaveAttribute('data-interactive-audio-playing');
+      await readCurrentQuizQuestion(page, quiz, 'en');
+      await quiz.locator('[data-fq002-focus-control="choice-A"]:visible').click();
+      await expect(quiz).toHaveAttribute('data-current-js-sequence-number', '2');
+      await expect(page.locator('.runtime-shell'))
+        .not.toHaveAttribute('data-interactive-audio-playing');
     }
+
+    await page.setViewportSize({width: 390, height: 844});
+    await page.reload({waitUntil: 'domcontentloaded'});
+    const continueButton = page.locator('[data-resume-choice="continue"]:visible');
+    await expect(continueButton).toBeVisible();
+    await continueButton.press('Enter');
+    const quiz = page.locator('[data-final-quiz-animation-id="course-g04-l03-fq-003"]');
+    await expect(quiz).toHaveAttribute('data-current-js-controls-ready', 'true');
+    await expect(page.locator('[data-fq002-focus-control="reading-language"]:visible'))
+      .toHaveValue('es');
+    await readCurrentQuizQuestion(page, quiz, 'es');
+    await page.getByRole('button', {name: 'Repetir', exact: true}).click();
+    await expect(quiz).toHaveAttribute('data-current-js-sequence-number', '1');
+    await expect(page.locator('.runtime-shell'))
+      .not.toHaveAttribute('data-interactive-audio-playing');
   });
 
   test('the Page 34 Canvas asset loads without a locale-prefixed 404', async ({page}) => {

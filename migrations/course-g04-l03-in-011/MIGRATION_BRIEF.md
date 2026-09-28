@@ -104,3 +104,12 @@ List every unresolved mismatch, unavailable tool/source, accepted emulator diffe
 - Owner review status:
 - Owner decision, reviewer/date, or explicit not-required reason:
 - Strict validator result:
+
+
+## 2026-09-08 modern-product follow-up
+
+- Complexity / lane: interactive-understood / compiler-assisted shared host adapter.
+- Selection reason and maintained implementation: 保留 hash-bound Sprite51 的 441 帧源图形与原音频候选；接入 Positive / Negative 两个源词条，减少动画偏好展示完整末画面，外部说明明确欠 $5 为 −5、有 $2 为 +2。
+- Evidence: `work/g4-l3-modern-product-review/20260908-owing/REVIEW.md` and its hash-bound receipt.
+- Source extraction, maintained React/SVG host integration and exact Current-JS registration remain part of the canonical hybrid workflow. Generated source drawing and original binaries are unchanged.
+- This record does not establish original-runtime execution, Flash timing/Replay parity, audio listening acceptance, human/Owner approval, strict completion, lesson publication or deployment.

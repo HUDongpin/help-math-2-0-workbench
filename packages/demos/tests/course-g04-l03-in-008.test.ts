@@ -52,6 +52,7 @@ test("IN008 preserves the root, sprite-57, random quiz, and domain facts", async
   assert.equal(COURSE_G04_L03_IN_008_SOURCE.embeddedAudioStreamSha256.length, 4);
   assert.equal(courseIn008.runtime, COURSE_G04_L03_IN_008_RUNTIME);
   assert.equal(courseIn008.reducedMotionFrame, 216);
+  assert.equal(courseIn008.completionMode, "activity");
   assert.equal(courseIn008.playbackEndFrameByDomain?.["sprite-57"], 216);
   assert.equal(courseIn008.playbackEndFrameByDomain?.root, 1);
   for (const [path, expected] of [

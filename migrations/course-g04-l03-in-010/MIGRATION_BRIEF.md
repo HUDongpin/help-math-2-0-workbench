@@ -104,3 +104,13 @@ List every unresolved mismatch, unavailable tool/source, accepted emulator diffe
 - Owner review status:
 - Owner decision, reviewer/date, or explicit not-required reason:
 - Strict validator result:
+
+## 2026-09-08 modern-product temperature follow-up
+
+- Exact placement: `course-g04-l03-in-010`, G4 L3, Learn It 9/11, whole-lesson page 21/39, Temperature placement practice. Existing workspace and registration retained.
+- Complexity and lane: **behavior-heavy / bounded advanced-manual state machine in the hybrid workflow**. The maintained product slice is bounded to this page and its existing support adapter, with no factory scale-out claim.
+- Source and implementation decision: Retain the source-bound six-card reducer, suffix-matched targets, per-card and final feedback phases, and pause-aware timers. Correct pairs are Houston 80 F, Seattle 51 F, Pittsburgh 34 F, Reno 33 F, Chicago -4 F, Fraser -18 F in top-to-bottom thermometer order. New York 43 F is a provided reference, not a seventh answer. Add success-driven completion, typed glossary requests, readable feedback, mobile numbered callouts and synchronized placement values. Source Canvas and FLA/SWF bytes are retained; current product overlays do not claim source hide or exact post-drop appearance parity.
+- Source evidence: `work/g4-l3-modern-product-review/20260908-temperature/glossary-source-evidence.json` and `temperature-source-contracts.json`, including current SWF/XML/ActionScript hashes, glossary windows and entries, and host or city facts.
+- Product integration: existing modern My Lesson route `/en/courses/4/3`; glossary controls use the external companion area so they do not cover mathematical labels.
+- Evidence: `work/g4-l3-modern-product-review/20260908-temperature/REVIEW.md`, browser verification, regression logs, current audio and registry bindings, and the review receipt.
+- Separate gates remain unchanged: authoritative original-runtime behavior, audio listening and synchronization, human visual/Owner acceptance, strict completion, whole-lesson acceptance, frozen calibration, release and publication. No new Owner approval is inferred.

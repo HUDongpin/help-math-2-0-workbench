@@ -2,6 +2,38 @@
 
 Created: 2026-07-24
 
+## Current Modern Product Scope — 2026-09-08
+
+This G4 L3 Your World page (whole-lesson page 2) retains its maintained Canvas
+drawing and existing audio. The bounded change connects the three source
+glossary actions to the modern My Lesson Key Terms panel. The Owner's current
+criterion is mathematical correctness, effective instruction, and modern web
+usability; reproducing the Flash UI is not required.
+
+- Source SWF SHA-256: `8b2aa7afd7e82fc582b8e7b936d178c87fea16106b26061f872c81ea7d422785`.
+- Source main timeline: `sprite-421`, 1,289 frames at 12 FPS. Buttons 377,
+  378, and 379 appear at frame 1099 at depths 101, 103, and 105 and remain
+  through frame 1289. Their `KeyAttribute` values are `Negative number`,
+  `Less than`, and `Zero`; each calls `DoHyperLinks` and stops the animation.
+- Complexity and lane: `interactive-understood`, compiler-assisted extraction
+  plus the existing maintained glossary adapter. Exact source geometry is
+  audit metadata; the product uses visible keyboard and touch buttons.
+- Modern behavior: opening a definition pauses the page; closing it restores
+  the prior play/pause state and keyboard focus. The generated drawing files,
+  source bytes, and legacy ActionScript are not modified or executed.
+- Maintained configuration: `packages/demos/src/timelines/course-g04-l03-rw-002.ts`.
+  Integration: `packages/demos/src/modules/course-g04-l03-rw-002.tsx`.
+- [Source geometry and action evidence](../../work/g4-l3-modern-product-review/20260908-rw002/glossary-source-evidence.json)
+  is reproducible with the adjacent `extract-glossary-source.py` and preserves
+  the source/XML/helper hashes. Both language indexes resolve the existing
+  glossary entries; this page's visual review scope remains English.
+- Current checks: 20 relevant checks, demos type checking, and registry
+  checking pass. Browser product checks are recorded in the current worklist.
+  This page has not yet received Owner product approval or deployment.
+
+The original scaffold below remains historical planning context; it does not
+grant Flash fidelity, strict audio acceptance, or lesson publication.
+
 ## Objective
 
 Describe the instructional purpose, target users, required languages, interactions, and exact stakeholder request.

@@ -142,6 +142,10 @@ export async function buildPendingProjectorLaunchPlan({language}) {
       expectedExecutionReport: indexed.expectedExecutionReport,
     };
   }));
+  const captureOutput = preflight.captureDestination?.sessionOutputDirectories
+    .find((item) => item.language === language && item.sessionId === selected.sessionId);
+  invariant(!preflight.captureDestination || captureOutput,
+    "capture destination does not bind the selected language/session");
   return {
     schemaVersion: 1,
     evidenceType: "g4-l3-ts006-pending-candidate-empty-projector-launch-plan",
@@ -159,6 +163,8 @@ export async function buildPendingProjectorLaunchPlan({language}) {
     arguments: ["-f", sandboxPath, PROJECTOR],
     environment: profileEnvironment(profileRoot),
     preflight,
+    ...(captureOutput ? {captureOutputDirectory: captureOutput.path,
+      captureDestinationBinding: preflight.captureDestination.configuration} : {}),
     traceSpecificationBindings: {
       index: {path: traceIndex.path, bytes: traceIndex.bytes, sha256: traceIndex.sha256},
       requirements: traceSpecifications,
@@ -306,6 +312,8 @@ async function launch(plan) {
     sandboxPath: plan.arguments[1],
     preflightSha256: sha256(preflightBytes),
     workingDirectory: plan.workingDirectory,
+    ...(plan.captureOutputDirectory ? {captureOutputDirectory: plan.captureOutputDirectory,
+      captureDestinationBinding: plan.captureDestinationBinding} : {}),
     argv: [plan.executable],
     commandLineSwfArgumentUsed: false,
     shellOpenedByLauncher: false,
@@ -329,6 +337,8 @@ async function launch(plan) {
     pid: child.pid,
     operator: plan.operator,
     launchReceiptSha256: sha256(Buffer.from(pretty(launchReceipt))),
+    ...(plan.captureOutputDirectory ? {captureOutputDirectory: plan.captureOutputDirectory,
+      captureDestinationBinding: plan.captureDestinationBinding} : {}),
     requiredAction: {
       performedByLauncher: false,
       menuPath: ["File", "Open File…"],

@@ -51,6 +51,22 @@ export const COURSE_G04_L03_TI_005_SOURCE = Object.freeze({
   rootPlacementPixels: Object.freeze({x: 412.4, y: 283.3}),
 });
 
+export const COURSE_G04_L03_TI_005_SPRITE_179_CAPTURE = Object.freeze({
+  animationId: "course-g04-l03-ti-005",
+  frameDomain: "sprite-179",
+  localFrameCount: 5,
+  sourceParentFrameDomain: "sprite-208",
+  sourceParentFirstFrame: 75,
+  rootEntryFrame: 6,
+  scenario: "source-static-reachable-domain",
+  language: "en" as const,
+  placementPathAudit: "reports/g4-l3-unresolved-root-entry-placement-path-audit.json",
+  placementPathAuditSha256: "346b3e80e76e560c252776a92daacdda5d15a90fde5fdcf830d6d35d8f1784c0",
+  authority: "source-static-parent-composite-frame-diagnostic-not-original-runtime-or-fidelity",
+  embeddedSoundDisposition: "source-sound-stream-not-rendered-or-accepted",
+  strictAcceptanceEffect: "none",
+});
+
 export const COURSE_G04_L03_TI_005_CONFIG = Object.freeze({
   animationId: "course-g04-l03-ti-005",
   title: "Question 4 — English source-static engineering candidate",

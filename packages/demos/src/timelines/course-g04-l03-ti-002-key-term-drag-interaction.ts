@@ -37,6 +37,7 @@ export interface CourseG04L03Ti002Card {
     | "negative"
     | "positive";
   readonly definition: string;
+  readonly sourceDefinition?: string;
   readonly pictureKind:
     | "decrease"
     | "negative"
@@ -201,8 +202,10 @@ export const COURSE_G04_L03_TI_002_CARDS:
     freezeCard({
       id: "Scr_2",
       term: "zero",
-      definition:
+      sourceDefinition:
         "the number that has no value; zero is neither negative nor positive",
+      definition:
+        "a number that represents none; zero is neither negative nor positive",
       pictureKind: "zero",
       sourceText: "zero",
       accessibleLabel: "zero",

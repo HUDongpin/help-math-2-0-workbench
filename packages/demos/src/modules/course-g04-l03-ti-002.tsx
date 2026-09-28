@@ -2,6 +2,7 @@
 
 import React, {
   useEffect,
+  useMemo,
   useReducer,
   useRef,
   useState,
@@ -10,13 +11,17 @@ import type {Dispatch, DragEvent, RefObject} from "react";
 import {createPortal} from "react-dom";
 
 import type {AnimationRendererProps} from "../contract";
+import {createCourseG04L03SourceGlossaryCandidate} from "./course-g04-l03-source-glossary-candidate";
 import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
+import {
+  isSourceStaticBehaviorCompositeCaptureRequest,
+  SourceStaticBehaviorCompositeCapture,
+} from "../source-static-behavior-composite-capture";
 import {
   COURSE_G04_L03_TI_002_CARDS,
   COURSE_G04_L03_TI_002_COMPLETION_FEEDBACK,
   COURSE_G04_L03_TI_002_CORRECT_FEEDBACK,
   COURSE_G04_L03_TI_002_CURRENT_JS_TIMING,
-  COURSE_G04_L03_TI_002_INSTRUCTION,
   COURSE_G04_L03_TI_002_INTERACTION_AUTHORITY,
   COURSE_G04_L03_TI_002_WRONG_FEEDBACK,
   createCourseG04L03Ti002KeyTermDragState,
@@ -30,34 +35,30 @@ import {
 } from "../timelines/course-g04-l03-ti-002-key-term-drag-interaction";
 import {
   COURSE_G04_L03_TI_002_CONFIG,
+  COURSE_G04_L03_TI_002_GLOSSARY_CONFIG,
   COURSE_G04_L03_TI_002_SOURCE,
+  COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE,
+  COURSE_G04_L03_TI_002_SPRITE_174_CONFIG,
 } from "../timelines/course-g04-l03-ti-002";
 
 const candidate = createSourceStaticCanvasCandidate(
   COURSE_G04_L03_TI_002_CONFIG,
 );
 const SourceStaticRenderer = candidate.Renderer;
+const sprite174Candidate = createSourceStaticCanvasCandidate(
+  COURSE_G04_L03_TI_002_SPRITE_174_CONFIG,
+);
+const Sprite174SourceRenderer = sprite174Candidate.Renderer;
 
 const SOURCE_INTERACTION_FRAME = 238;
 const SOURCE_CLEAN_QUESTION_FRAME = 237;
 const SOURCE_INTERACTION_DOMAIN = "sprite-272";
 const SOURCE_INTERACTION_SCENARIO = "source-static-frame";
+const SOURCE_STATIC_REACHABLE_SCENARIO = "source-static-reachable-domain";
 const SOURCE_FONT =
   '"Bauhaus Md BT", "Arial Rounded MT Bold", "Trebuchet MS", ui-rounded, sans-serif';
 const RESPONSIVE_CONTROLS_MEDIA =
   "(max-width: 640px), (any-pointer: coarse)";
-const SOURCE_GLOSSARY_TERMS = Object.freeze([
-  "Order",
-  "Less than",
-  "Zero",
-  "Value",
-  "Line",
-  "Ordering",
-  "Greater than",
-  "Negative",
-  "Positive",
-]);
-
 type SourceCanvasStatus =
   | "idle"
   | "loading"
@@ -91,6 +92,71 @@ function isDeterministicEvidenceCapture({
   entryStateSha256,
 }: AnimationRendererProps) {
   return Boolean(entryStateSha256);
+}
+
+type Ti002FrameContext = Parameters<typeof candidate.getFrameState>[1];
+
+export function getCourseG04L03Ti002FrameState(
+  frame: number,
+  context: Ti002FrameContext,
+) {
+  const base = candidate.getFrameState(frame, context);
+  if (!isSourceStaticBehaviorCompositeCaptureRequest({
+    entryStateSha256: context.entryStateSha256,
+    frame,
+    frameDomain: context.frameDomain,
+    lang: context.lang,
+    requirementId: context.requirementId,
+    scenario: context.scenario,
+    traceId: context.traceId,
+  }, COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE)) return base;
+  return Object.freeze({
+    ...base,
+    blocker: null,
+    exportFrame: null,
+    frame,
+    frameDomain: COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE.frameDomain,
+    language: COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE.language,
+    rootFrame: COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE.rootEntryFrame,
+    scenario: COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE.scenario,
+    sourceStaticVisualReady: true,
+    status: "ready" as const,
+    visibleSourceMarkers: Object.freeze([
+      `sprite-174-source-behavior-composite-frame-${frame}`,
+    ]),
+  });
+}
+
+function Sprite174EvidenceRenderer(props: AnimationRendererProps) {
+  const behaviorCompositeState =
+    `${COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE.behaviorCompositeStatePrefix}${String(props.frame).padStart(3, "0")}`;
+  const sourceState = useMemo(() => {
+    const base = sprite174Candidate.getFrameState(
+      COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE.sourceFrame,
+      {
+        frameDomain:
+          COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE.sourceFrameDomain,
+        scenario: SOURCE_INTERACTION_SCENARIO,
+        lang: "en",
+        seed: props.seed,
+      },
+    );
+    return Object.freeze({
+      ...base,
+      behaviorCompositeContractId:
+        COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE
+          .behaviorCompositeContractId,
+      behaviorCompositeState,
+    });
+  }, [behaviorCompositeState, props.seed]);
+  return (
+    <SourceStaticBehaviorCompositeCapture
+      mapping={COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE}
+      props={props}
+      sourceState={sourceState}
+      SourceRenderer={Sprite174SourceRenderer}
+    />
+  );
 }
 
 function isVisible(element: HTMLElement | null): element is HTMLElement {
@@ -143,28 +209,6 @@ function sourceCardOriginMaskBackground(
   return `linear-gradient(90deg, ${
     sourceTableFillColor(left, card.sourceCenter.y)
   }, ${sourceTableFillColor(right, card.sourceCenter.y)})`;
-}
-
-function SourceGlossaryBoundary() {
-  return (
-    <div
-      aria-label="Source glossary links are unavailable in this current JavaScript candidate."
-      data-host-hyperlinks="safe-disabled"
-      style={visuallyHiddenStyle}
-    >
-      {SOURCE_GLOSSARY_TERMS.map((term, index) => (
-        <span
-          aria-disabled="true"
-          data-source-glossary-term={term}
-          key={term}
-          role="link"
-        >
-          {term}
-          {index < SOURCE_GLOSSARY_TERMS.length - 1 ? ", " : ""}
-        </span>
-      ))}
-    </div>
-  );
 }
 
 function TermPicture({card}: {readonly card: CourseG04L03Ti002Card}) {
@@ -220,6 +264,40 @@ function TermPicture({card}: {readonly card: CourseG04L03Ti002Card}) {
   );
 }
 
+function TeachingVisuals({interaction}: {readonly interaction: CourseG04L03Ti002KeyTermDragState}) {
+  const zero = COURSE_G04_L03_TI_002_CARDS.find((card) => card.term === "zero")!;
+  return (
+    <svg aria-hidden="true" data-ti002-preview-count={getCourseG04L03Ti002PlacementCount(interaction)}
+      style={{height: "auto", inset: 0, pointerEvents: "none", position: "absolute", width: "100%", zIndex: 2}}
+      viewBox="0 0 800 600">
+      <foreignObject x="263" y="400" width="225" height="78">
+        <div data-modern-zero-definition="quantity-none" style={{
+          background: `linear-gradient(90deg, ${sourceTableFillColor(263, 439)}, ${sourceTableFillColor(488, 439)})`,
+          boxSizing: "border-box", color: "#111", font: `16px/1.12 ${SOURCE_FONT}`,
+          height: "100%", padding: "4px 0 0 2px", width: "100%",
+        }}>{zero.definition}</div>
+      </foreignObject>
+      <foreignObject x="490" y="400" width="276" height="78">
+        <div style={{background: sourceTableFillColor(628, 439), height: "100%", display: "grid", alignItems: "center"}}>
+          <TermPicture card={zero} />
+        </div>
+      </foreignObject>
+      <g className="course-g04-l03-ti-002-mobile-answers">
+        {COURSE_G04_L03_TI_002_CARDS.filter((card) => interaction.placements[card.id] !== null).map((card) => (
+          <g key={card.id}>
+            <rect x={Math.max(60, card.sourceCenter.x - card.sourceSize.width / 2 - 3)}
+              y={card.sourceCenter.y - card.sourceSize.height / 2 - 3}
+              width={card.sourceSize.width + 6} height={card.sourceSize.height + 6}
+              fill={sourceTableFillColor(card.sourceCenter.x, card.sourceCenter.y)} />
+            <text x={card.targetCenter.x} y={card.targetCenter.y + 5}
+              textAnchor="middle" fill="#111" fontFamily={SOURCE_FONT} fontSize="16">{card.term}</text>
+          </g>
+        ))}
+      </g>
+    </svg>
+  );
+}
+
 interface StageSurfaceProps {
   readonly canvasStatus: SourceCanvasStatus;
   readonly controlsReady: boolean;
@@ -247,6 +325,8 @@ function StageSurface({
 }: StageSurfaceProps) {
   const locked =
     !controlsReady || interaction.locked || expandedTargetId !== null;
+  const picturesLocked = !controlsReady || expandedTargetId !== null
+    || (interaction.locked && interaction.outcome !== "complete");
   const startDrag = (
     event: DragEvent<HTMLButtonElement>,
     cardId: CourseG04L03Ti002CardId,
@@ -281,7 +361,7 @@ function StageSurface({
 
   return (
     <svg
-      aria-label="Source-script-bound current JavaScript key-term matching activity"
+      aria-label="Match key terms with definitions and pictures"
       className="course-g04-l03-ti-002-stage-surface"
       data-audio-feedback="inventoried-unimplemented-unaccepted"
       data-behavior-parity-established="false"
@@ -479,7 +559,7 @@ function StageSurface({
               aria-label={`Enlarge picture for ${card.definition}`}
               data-source-picture={card.targetId}
               data-ti002-focus-control={`picture-${card.targetId}`}
-              disabled={locked}
+              disabled={picturesLocked}
               key={card.targetId}
               onClick={() => onOpenPicture(card.targetId)}
               style={{
@@ -552,7 +632,6 @@ function StageSurface({
             </div>
           ) : null}
 
-          <SourceGlossaryBoundary />
 
           {interaction.outcome === "wrong" ? (
             <div
@@ -630,32 +709,6 @@ function StageSurface({
             </div>
           ) : null}
 
-          {interaction.outcome === "complete" ? (
-            <div
-              aria-hidden="true"
-              style={{
-                alignItems: "center",
-                background: "linear-gradient(#bd00e9, #8e00c0)",
-                border: "5px solid #7b007c",
-                borderRadius: 22,
-                boxSizing: "border-box",
-                color: "#fff",
-                display: "flex",
-                fontSize: 46,
-                fontWeight: 900,
-                height: 132,
-                justifyContent: "center",
-                left: 244,
-                position: "absolute",
-                textShadow: "2px 2px 0 #73008e",
-                top: 235,
-                width: 320,
-              }}
-            >
-              {COURSE_G04_L03_TI_002_COMPLETION_FEEDBACK}
-            </div>
-          ) : null}
-
           <span aria-live="polite" role="status" style={visuallyHiddenStyle}>
             {interaction.outcome === "correct-feedback"
               ? `${COURSE_G04_L03_TI_002_CORRECT_FEEDBACK} ${placementCount} of 5 cards placed.`
@@ -711,7 +764,7 @@ function MobileSurface({
       data-source-canvas-status={canvasStatus}
     >
       <p className="course-g04-l03-ti-002-mobile-instruction">
-        {COURSE_G04_L03_TI_002_INSTRUCTION}
+        Choose a key term, then choose its matching definition. You can enlarge each picture to see it clearly.
       </p>
       {!controlsReady ? (
         <p
@@ -752,7 +805,8 @@ function MobileSurface({
         </div>
       </fieldset>
 
-      <fieldset disabled={locked}>
+      <fieldset disabled={!controlsReady || expandedTargetId !== null
+        || (interaction.locked && interaction.outcome !== "complete")}>
         <legend>2. Choose the matching definition and picture</legend>
         <div className="course-g04-l03-ti-002-mobile-target-grid">
           {targetOrder.map((targetCard) => {
@@ -788,7 +842,8 @@ function MobileSurface({
                   aria-haspopup="dialog"
                   aria-label={`Enlarge picture for ${targetCard.definition}`}
                   data-ti002-focus-control={`picture-${targetCard.targetId}`}
-                  disabled={locked}
+                  disabled={!controlsReady || expandedTargetId !== null
+                    || (interaction.locked && interaction.outcome !== "complete")}
                   onClick={() => onOpenPicture(targetCard.targetId)}
                   type="button"
                 >
@@ -825,7 +880,6 @@ function MobileSurface({
         </div>
       ) : null}
 
-      <SourceGlossaryBoundary />
 
       {interaction.outcome === "wrong" ? (
         <div
@@ -862,7 +916,7 @@ function MobileSurface({
   );
 }
 
-export function CourseG04L03Ti002Renderer(props: AnimationRendererProps) {
+function CourseG04L03Ti002MainRenderer(props: AnimationRendererProps) {
   const [interaction, dispatch] = useReducer(
     reduceCourseG04L03Ti002KeyTermDrag,
     undefined,
@@ -888,12 +942,16 @@ export function CourseG04L03Ti002Renderer(props: AnimationRendererProps) {
   const frameDomain = props.frameDomain ?? SOURCE_INTERACTION_DOMAIN;
   const deterministicEvidenceCapture =
     isDeterministicEvidenceCapture(props);
-  const interactionEnabled =
-    props.frame === SOURCE_INTERACTION_FRAME
-    && frameDomain === SOURCE_INTERACTION_DOMAIN
+  const sourceContextEligible =
+    frameDomain === SOURCE_INTERACTION_DOMAIN
     && props.scenario === SOURCE_INTERACTION_SCENARIO
     && props.lang === "en"
     && !deterministicEvidenceCapture;
+  const interactionEnabled =
+    props.frame === SOURCE_INTERACTION_FRAME && sourceContextEligible;
+  // The source table reaches its final layout at frame 23. Keep the clarified
+  // zero row visible during the introduction as well as at the quiz stop.
+  const teachingVisualsEligible = sourceContextEligible && props.frame >= 23;
   const sourceVisualFrame = interactionEnabled
     ? SOURCE_CLEAN_QUESTION_FRAME
     : props.frame;
@@ -902,17 +960,14 @@ export function CourseG04L03Ti002Renderer(props: AnimationRendererProps) {
     props.seed,
     sourceVisualFrame,
   );
-  const sourceVisualState = interactionEnabled
-    ? candidate.getFrameState(sourceVisualFrame, {
-        entryStateSha256: props.entryStateSha256,
-        frameDomain,
-        lang: props.lang,
-        requirementId: props.requirementId,
-        scenario: props.scenario,
-        seed: props.seed,
-        traceId: props.traceId,
-      })
-    : props.state;
+  const cleanSourceVisualState = useMemo(() => candidate.getFrameState(
+    SOURCE_CLEAN_QUESTION_FRAME,
+    {entryStateSha256: props.entryStateSha256, frameDomain, lang: props.lang,
+      requirementId: props.requirementId, scenario: props.scenario, seed: props.seed,
+      traceId: props.traceId},
+  ), [frameDomain, props.entryStateSha256, props.lang, props.requirementId,
+    props.scenario, props.seed, props.traceId]);
+  const sourceVisualState = interactionEnabled ? cleanSourceVisualState : props.state;
   const controlsReady =
     interactionEnabled && canvasStatus === "ready";
 
@@ -940,6 +995,10 @@ export function CourseG04L03Ti002Renderer(props: AnimationRendererProps) {
   }, [interactionEnabled, props.replay, props.seed]);
 
   useEffect(() => {
+    if (interactionEnabled && interaction.outcome === "complete") props.onActivityComplete?.();
+  }, [interactionEnabled, interaction.outcome, props.onActivityComplete]);
+
+  useEffect(() => {
     if (!props.pageInteractionCompanionTargetId) {
       setCompanionTarget(null);
       return;
@@ -951,7 +1010,7 @@ export function CourseG04L03Ti002Renderer(props: AnimationRendererProps) {
 
   useEffect(() => {
     const host = visualHostRef.current;
-    if (!host || !interactionEnabled) {
+    if (!host || !teachingVisualsEligible) {
       setCanvasStatus("idle");
       return;
     }
@@ -981,7 +1040,7 @@ export function CourseG04L03Ti002Renderer(props: AnimationRendererProps) {
       subtree: true,
     });
     return () => observer.disconnect();
-  }, [interactionEnabled, props.replay, sourceVisualFrame]);
+  }, [interactionEnabled, teachingVisualsEligible, props.replay]);
 
   useEffect(() => {
     correctFeedbackRemainingMs.current =
@@ -1063,6 +1122,12 @@ export function CourseG04L03Ti002Renderer(props: AnimationRendererProps) {
     if (targetId) focusControl(`picture-${targetId}`);
   };
 
+  const desktopCompletion = interaction.outcome === "complete" ? (
+    <div className="course-g04-l03-ti-002-desktop-complete" role="status">
+      {COURSE_G04_L03_TI_002_COMPLETION_FEEDBACK} All 5 key terms matched. Use Replay to practice again.
+    </div>
+  ) : null;
+
   const mobileSurface = (
     <MobileSurface
       canvasStatus={canvasStatus}
@@ -1118,6 +1183,7 @@ export function CourseG04L03Ti002Renderer(props: AnimationRendererProps) {
       }}
     >
       <style>{`
+        .course-g04-l03-ti-002-mobile-answers,
         .course-g04-l03-ti-002-mobile-fallback-slot,
         .course-g04-l03-ti-002-mobile-controls {
           display: none;
@@ -1129,7 +1195,14 @@ export function CourseG04L03Ti002Renderer(props: AnimationRendererProps) {
           outline-offset: 3px;
         }
 
+        .course-g04-l03-ti-002-desktop-complete {
+          background: #e4f5df; border: 2px solid #28743b; border-radius: 12px;
+          color: #17572a; font: 700 18px/1.4 system-ui, sans-serif;
+          margin-top: 12px; padding: 12px;
+        }
         @media ${RESPONSIVE_CONTROLS_MEDIA} {
+          .course-g04-l03-ti-002-mobile-answers { display: block; }
+          .course-g04-l03-ti-002-desktop-complete { display: none; }
           .course-g04-l03-ti-002-stage-surface {
             display: none;
           }
@@ -1178,7 +1251,7 @@ export function CourseG04L03Ti002Renderer(props: AnimationRendererProps) {
           .course-g04-l03-ti-002-mobile-loading,
           .course-g04-l03-ti-002-mobile-status {
             font-family: system-ui, sans-serif;
-            font-size: 15px;
+            font-size: 16px;
             line-height: 1.3;
             margin: 0;
           }
@@ -1285,8 +1358,8 @@ export function CourseG04L03Ti002Renderer(props: AnimationRendererProps) {
           }
 
           .course-g04-l03-ti-002-mobile-complete {
-            background: #9900ff;
-            color: #fff;
+            background: #e4f5df;
+            color: #17572a;
           }
 
           .course-g04-l03-ti-002-mobile-complete strong {
@@ -1332,6 +1405,9 @@ export function CourseG04L03Ti002Renderer(props: AnimationRendererProps) {
           state={sourceVisualState}
         />
       </div>
+      {teachingVisualsEligible && canvasStatus === "ready" ? (
+        <TeachingVisuals interaction={interaction} />
+      ) : null}
       {interactionEnabled ? (
         <>
           <StageSurface
@@ -1346,6 +1422,7 @@ export function CourseG04L03Ti002Renderer(props: AnimationRendererProps) {
             pictureCloseRef={stagePictureCloseRef}
             wrongCloseRef={stageWrongCloseRef}
           />
+          {companionTarget ? createPortal(desktopCompletion, companionTarget) : desktopCompletion}
           {companionTarget
             ? createPortal(mobileSurface, companionTarget)
             : (
@@ -1359,11 +1436,19 @@ export function CourseG04L03Ti002Renderer(props: AnimationRendererProps) {
   );
 }
 
+function CourseG04L03Ti002ActivityRenderer(props: AnimationRendererProps) {
+  return isSourceStaticBehaviorCompositeCaptureRequest(
+    props,
+    COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE,
+  )
+    ? <Sprite174EvidenceRenderer {...props} />
+    : <CourseG04L03Ti002MainRenderer {...props} />;
+}
+
 export {COURSE_G04_L03_TI_002_SOURCE};
 export const COURSE_G04_L03_TI_002_MOVIE = candidate.movie;
 export const COURSE_G04_L03_TI_002_RUNTIME = candidate.runtime;
-export const COURSE_G04_L03_TI_002_SOURCE_CONTRACT = Object.freeze({
-  ...candidate.sourceContract,
+const INTERACTION_SOURCE_CONTRACT = Object.freeze({
   currentJavascriptInteractionStatus:
     "source-script-bound-functional-candidate",
   currentJavascriptInteractionScope: Object.freeze([
@@ -1373,7 +1458,7 @@ export const COURSE_G04_L03_TI_002_SOURCE_CONTRACT = Object.freeze({
     "source-target-reveal-and-card-hide",
     "five-card-completion-feedback",
     "five-source-picture-click-targets-with-modern-enlargement-dialogs",
-    "source-geturl-glossary-actions-safe-disabled",
+    "source-keyattribute-typed-keyterm-host-requests",
     "host-pause-freezes-current-js-correct-feedback-delay",
     "whole-renderer-replay-reset",
     "responsive-mobile-and-coarse-pointer-touch-control-surface",
@@ -1383,15 +1468,27 @@ export const COURSE_G04_L03_TI_002_SOURCE_CONTRACT = Object.freeze({
     "answer-controls-fail-closed-until-source-canvas-ready",
     "frame-237-source-visual-with-key-term-origin-masks-under-frame-238-functional-overlay",
     "deterministic-evidence-capture-preserves-requested-frame-without-overlay",
+    "sprite-174-frames-1-10-source-static-behavior-composite-diagnostic",
   ]),
   currentJavascriptTiming: COURSE_G04_L03_TI_002_CURRENT_JS_TIMING,
   interactionAuthority: COURSE_G04_L03_TI_002_INTERACTION_AUTHORITY,
   wrongFeedbackTextStatus: "modern-assistive-not-source-exact",
   pictureEnlargementStatus:
     "source-script-bound-modern-svg-representation-not-pixel-parity",
-  sourceGlossaryActionStatus: "safe-disabled",
+  sourceGlossaryActionStatus: "typed-keyterm-host-integrated",
   embeddedCoachAudioStatus: "inventoried-unimplemented-unaccepted",
   associatedAudioStatus: "inventoried-unimplemented-unaccepted",
+  sprite174CaptureStatus:
+    "source-static-parent-composite-frame-override-not-original-runtime-or-fidelity",
+  sprite174UniqueTargetVisualCount:
+    COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE.uniqueTargetVisualCount,
+  sprite174CompositeAsset: Object.freeze({
+    path: COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE.assetSource,
+    sha256: COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE.assetSha256,
+    manifest:
+      COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE.assetManifest,
+    report: COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE.assetReport,
+  }),
   spanishInteractionStatus: "unimplemented-disabled",
   naturalTerminalContinuationEstablished: false,
   behaviorParityEstablished: false,
@@ -1401,14 +1498,41 @@ export const COURSE_G04_L03_TI_002_SOURCE_CONTRACT = Object.freeze({
   strictMigrationComplete: false,
   strictAcceptanceEffect: "none",
 });
-export const COURSE_G04_L03_TI_002_SCENARIOS = candidate.scenarios;
+export const COURSE_G04_L03_TI_002_SCENARIOS = Object.freeze([
+  ...candidate.scenarios,
+  Object.freeze({
+    id: SOURCE_STATIC_REACHABLE_SCENARIO,
+    label: "Source-static reachable companion diagnostic",
+    description:
+      "English-only source behavior-composite inspection; not original runtime or fidelity acceptance.",
+  }),
+]);
 export const normalizeCourseG04L03Ti002Frame = candidate.normalizeFrame;
-export const getCourseG04L03Ti002FrameState = candidate.getFrameState;
 export const buildCourseG04L03Ti002CaptureAttributes =
   candidate.buildCaptureAttributes;
 
-export default Object.freeze({
+const activityModule = Object.freeze({
   ...candidate.module,
+  completionMode: "activity" as const,
+  defaultScenarioByFrameDomain: Object.freeze({
+    ...candidate.module.defaultScenarioByFrameDomain,
+    [COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE.frameDomain]:
+      SOURCE_STATIC_REACHABLE_SCENARIO,
+  }),
+  scenarios: COURSE_G04_L03_TI_002_SCENARIOS,
+  getFrameState: getCourseG04L03Ti002FrameState,
   reducedMotionFrame: SOURCE_INTERACTION_FRAME,
-  Renderer: CourseG04L03Ti002Renderer,
+  Renderer: CourseG04L03Ti002ActivityRenderer,
 });
+
+const glossaryCandidate = createCourseG04L03SourceGlossaryCandidate(
+  {...candidate, Renderer: CourseG04L03Ti002ActivityRenderer, module: activityModule},
+  COURSE_G04_L03_TI_002_GLOSSARY_CONFIG,
+  {scenario: "source-static-frame", canvasCandidateStatus: "source-static-engineering-not-strict", surfacePlacement: "companion"},
+);
+export const CourseG04L03Ti002Renderer = glossaryCandidate.Renderer;
+export const COURSE_G04_L03_TI_002_SOURCE_CONTRACT = Object.freeze({
+  ...glossaryCandidate.sourceContract,
+  ...INTERACTION_SOURCE_CONTRACT,
+});
+export default glossaryCandidate.module;

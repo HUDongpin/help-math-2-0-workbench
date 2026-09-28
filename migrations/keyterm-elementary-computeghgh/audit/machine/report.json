@@ -48,7 +48,7 @@
     },
     "xmlParser": {
       "command": "python3",
-      "version": "Python 3.12.7",
+      "version": "Python 3.14.7",
       "success": true,
       "exitCode": 0,
       "error": "",
@@ -201,6 +201,7 @@
           "top": "0"
         }
       },
+      "spriteDefinitions": [],
       "tagCounts": {
         "Button": 9,
         "Color": 91,
@@ -275,6 +276,46 @@
       "swfmillFrameRateMatches": true,
       "swfmillFrameCountMatches": true,
       "allMatch": true
+    },
+    "frameDomainCandidates": {
+      "schemaVersion": 1,
+      "artifactType": "swf-frame-domain-candidates",
+      "animationId": "keyterm-elementary-computeghgh",
+      "source": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_KEYTERMS/KT/ELEMENTARY/DIG/computeghgh.swf",
+        "sha256": "fc5c79792530092fa98d450ac00622f5f107c598bf2f313b69fe3b524a6d62e8"
+      },
+      "extractionStatus": "swfmill-structural-definitions-extracted",
+      "root": {
+        "timelineId": "root",
+        "sourceTimelineId": "root",
+        "kind": "root",
+        "frameCount": 35,
+        "rootReachability": "root-by-definition",
+        "acceptanceDisposition": "declared-root-structural-domain"
+      },
+      "nestedDefinitions": [],
+      "summary": {
+        "rootDomainCount": 1,
+        "nestedDefinitionCount": 0,
+        "nestedLongerThanRootCount": 0,
+        "completeRootReachableDomainInventory": false,
+        "unresolvedReachabilityCount": 0
+      },
+      "limitations": [
+        "DefineSprite records are structural definitions, not proof that the root or an authorized host reaches them.",
+        "Placement, entry state, interaction causality, language, audio, terminal behavior, Replay, and natural traces remain unresolved.",
+        "This machine inventory cannot create original-runtime authority, visual or audio acceptance, human or owner review, strict completion, or publication."
+      ],
+      "acceptanceEffects": {
+        "authoritativeOriginalRuntime": false,
+        "completeFrameDomainDisposition": false,
+        "audioAccepted": false,
+        "humanVisualAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false,
+        "published": false
+      }
     }
   },
   "outputs": [
@@ -307,10 +348,16 @@
       "uncompressedSha256": "63b801ec0d14e1b14da7ebc82df74aed64bd899ae449024dc9be4f5bd1f41c4a"
     },
     {
+      "path": "audit/machine/swf-frame-domain-candidates.json",
+      "format": "text",
+      "bytes": 1547,
+      "sha256": "0ab9e060a3887db137c66d34bc342d1c29a9d98d8c10f69ff2bd0779513cf769"
+    },
+    {
       "path": "audit/machine/swfmill-summary.json",
       "format": "text",
-      "bytes": 1753,
-      "sha256": "31f4a25666d8072e9713b78639ad2aab12f9274418f18cc30dabbcc796ccd1fd"
+      "bytes": 1780,
+      "sha256": "d9d5e8e906f81b8f15d40cf7acbcee7c37e40944784fabfdf9cc73ecd56cd665"
     },
     {
       "path": "audit/machine/swfmill.xml.gz",

@@ -164,11 +164,11 @@ test("IN004 normal frame 126 SSR uses clean frame 125 under functional controls"
   assert.match(markup, /\sinert=""/);
   assert.match(markup, /style="pointer-events:none"/);
   assert.match(markup, /data-host-wrong-feedback-resolved="false"/);
-  assert.match(markup, /data-source-glossary-actions="safe-disabled"/);
+  assert.match(markup, /data-source-glossary-actions="unavailable"/);
   assert.equal((markup.match(/data-source-card="Scr_/g) ?? []).length, 5);
   assert.equal((markup.match(/data-source-target="Mc_Tar_/g) ?? []).length, 5);
   assert.equal((markup.match(/data-source-glossary-term=/g) ?? []).length, 4);
-  assert.equal((markup.match(/<button\b/g) ?? []).length, 20);
+  assert.equal((markup.match(/<button\b/g) ?? []).length, 24);
   assert.doesNotMatch(markup, /data-source-target-reveal=/);
   assert.doesNotMatch(markup, /Need More Help/);
 });
@@ -308,7 +308,7 @@ test("IN004 exact mappings and current-JS-only source contract remain locked", (
       "host-pause-freezes-current-js-correct-feedback-delay",
       "reduced-motion-immediate-current-js-feedback-transition",
       "whole-renderer-replay-and-seed-reset",
-      "two-source-glossary-actions-safe-disabled-without-invented-help",
+      "two-source-glossary-actions-to-modern-keyterms",
       "responsive-mobile-and-coarse-pointer-touch-control-surface",
       "page-interaction-companion-portal-with-stage-fallback",
       "desktop-mobile-focus-migration-and-wrong-close-focus-restoration",
@@ -332,7 +332,7 @@ test("IN004 exact mappings and current-JS-only source contract remain locked", (
   );
   assert.equal(
     COURSE_G04_L03_IN_004_SOURCE_CONTRACT.glossaryActionStatus,
-    "two-source-host-actions-safe-disabled",
+    "two-source-host-actions-modern-keyterms",
   );
   assert.equal(
     COURSE_G04_L03_IN_004_SOURCE_CONTRACT.helpStatus,

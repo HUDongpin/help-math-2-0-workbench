@@ -1,106 +1,58 @@
 # course-g04-l03-ts-004 Migration Brief
 
-Created: 2026-07-24
+Updated: 2026-09-08. Bounded modern-product engineering review.
 
-## Objective
+## Identity and scope
 
-Describe the instructional purpose, target users, required languages, interactions, and exact stakeholder request.
+- Placement: Grade 4, Lesson 3, Practice Test / 4 - Step Plan, active source-ordered page 32 of 39.
+- Source teaching content: 3. Solve the problem.
+- Complexity/lane: interactive-understood source-linear page with glossary callbacks; compiler-assisted extraction plus the maintained glossary/reading adapter.
+- Existing renderer and modern My Lesson route `/en/courses/4/3` are retained. No new registration, legacy shell implementation, factory scale-out or publication is claimed.
 
-## Identity And Classification
+## Source binding
 
-- Immutable `assetId` (`swf-<full SHA-256>`):
-- Placement `animationId`:
-- Collection, grade, lesson, section, and page:
-- Raw title and reviewed display title:
-- Knowledge point in English and Spanish:
-- Controlled mathematics domain:
-- Classification evidence, status, and confidence:
-- Alias or variant relationship:
+SWF: `source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS04.swf`, 134253 bytes, SHA-256 `ec56922f78cb0096feb504be6b35a0957e5d178b703e0b586d0ed949f620ab76`.
 
-## Source Evidence
+FLA: No canonical same-path FLA is present; retain this SWF-only source binding.
 
-- FLA: ``
-- SWF: `source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS04.swf`
-- Source owner/provenance:
-- SHA-256 values:
-- Missing source files:
-- Evidence conflicts and resolution:
+The read-only source audit rechecks swfmill geometry, FFDec scripts, glyph-map text and the root placement. The 800×600, 12-fps source root has 10 frames and enters at frame 6. Main domain `sprite-70` contains 336 frames and stops at its last frame. The root preloader and companion remain independent from the current-JS main-domain playback; source ActionScript is not executed.
 
-## Runtime Audit
+## Current product behavior
 
-- SWF signature/version:
-- Stage width and height:
-- Frame rate, frame count, duration:
-- Background/transparency:
-- ActionScript generation and scripts:
-- Symbols, masks, morphs, filters, blend modes:
-- Embedded fonts and exact strings:
-- Audio/video:
-- Audio cue IDs, language tracks, hashes, durations, and start frames (`audio-inventory.csv`):
-- FlashVars, URLs, external assets, and legacy APIs:
-- Stops, labels, buttons, Replay, and user interactions:
-- Audit tools and exact versions:
-- Confidence by audit area:
+Ordinary playback runs once to frame 336. Reduced-motion presentation now selects that same complete ending, instead of frame 1. Linear completion remains tied to the current-JS narrative ending; these pages have no new quiz-answer requirement.
 
-## Baseline
+The modern host applies the bounded 32-pixel/4cqw content offset to keep the teaching heading inside its crop. Source drawing bytes are unchanged. At the completed main frame, a readable HTML explanation appears on narrow screens and remains available to assistive technology on wider screens. It is absent for unsupported languages/domains/scenarios, earlier frames, missing canvas readiness and deterministic evidence captures. Source table progression and page-specific wording are preserved.
 
-- Authoritative runtime or renderer:
-- Ruffle/Animate/browser version:
-- Native viewport and device scale factor:
-- Capture method:
-- Required keyframes and why they matter:
-- Known emulator differences:
+Maintained learner lines:
 
-## Rendering Decision
+- Circle your answer.
 
-- Selected renderer: React + SVG / Canvas + CreateJS / Canvas + PixiJS / other
-- Why it fits this animation:
-- Rejected alternatives and tradeoffs:
-- Accessibility and localization approach:
+Source strategies, normalized only for capitalization, line breaks and punctuation:
 
-## Timeline Specification
+- Write an equation and solve it.
+- Draw a picture.
+- Look for a pattern.
+- Systematically guess and check.
+- Act it out.
+- Make a table.
+- Work a simpler problem.
+- Work backwards.
 
-Summarize object phases, one-indexed frame windows, transforms, alpha, depth, text/count changes, audio cues, and interaction transitions. Keep the full frame list in `keyframes.csv`.
+## Glossary and focus
 
-List every reachable scenario/branch, its deterministic seed, and its terminal/Replay state. Every scenario and language must receive full one-indexed frame coverage.
+The compiled source contains 10 glossary button definitions. The modern control configuration has 11 exact source frame/geometry intervals. Distinct exposed lookup targets: Solve, Problem, Strategy, Data tables, Equation, Pattern, Table, Simple / Simpler / Simplest.
 
-## Asset Strategy
+Source key spelling and case remain recorded. Case-insensitive title matching and the explicit `strategies` → `Strategy` inflection are modern lookup decisions, not proof of original host resolution. Repeated targets are consolidated without widening their frame windows. The shared control uses the language-specific entry ID as its React key, preserving focus when a source interval changes while its lookup target stays the same. All 28 current G4 L3 glossary configurations were checked for simultaneous target collisions; none were found.
 
-Summarize extracted, converted, redrawn, and generated assets. Record each item in `asset-inventory.csv`, including source character/symbol IDs and transformation notes.
+The Question entry's English example asks for a mean while its archived Spanish text says median. The exact two G4 learner entries now display `media` and resolve the related link to the actual Mean entry in the same index; the distinct Mean/Average entries share the Spanish title Media. Original definitions and sublinks remain unchanged in evidence mode and generated files.
 
-## Implementation Map
+## Audio and validation
 
-- Next.js route:
-- React component:
-- Pure timeline module:
-- Unit test file:
-- Ruffle reference route:
-- Standalone package:
-- Deterministic `?frame=` capture mode:
-- Deterministic `?scenario=`, `?lang=`, and `?seed=` modes:
-- Mandatory stage attribute `data-flash-frame`:
+- en: `apps/web/public/flash-assets/courses/course-g04-l03-ts-004/audio/embedded-stream-0001.mp3`, SHA-256 `391c37eb6f1d942a14c02150e9dc6b54dfc186a81caebd3e6f126b9dd8313ce2`, 27430 ms. Existing bytes and host metadata are retained.
+- es: `apps/web/public/flash-assets/courses/course-g04-l03-ts-004/audio/spanish-host-narration.mp3`, SHA-256 `a2505e6988cca2f44777711d87175b385564a51c2cb5284c05d6246635cf5dbf`, 20040 ms. Existing bytes and host metadata are retained.
 
-## Verification Evidence
+The bounded tests cover source identity, one-indexed frame domains, capture exclusion, unsupported contexts, glossary windows, reduced-motion endpoints and TS006 diagnostic preservation. The final combined demos suite has 66 passing tests; 12 Web tests cover learner-copy/related-link behavior and completion. Demos type/registry checks pass; the full Web typecheck retains six existing mixed-Playwright installation conflicts. Earlier temporary constructor/audio-binding failures were corrected and their logs retained.
 
-- Unit tests:
-- Production build:
-- Native-size keyframe captures:
-- Full-frame coverage manifest and archive:
-- Per-frame metrics files and checksums:
-- RMSE and diff-image results:
-- Replay and keyboard checks:
-- Desktop/mobile overflow checks:
-- Console and network checks:
-- Human reviewer and review date for all keyframe/full-frame diffs:
+Actual desktop/mobile, pause/resume, lookup and Replay observations are collected in `work/g4-l3-modern-product-review/20260908-four-step-plan/REVIEW.md`, its browser records and final receipt. The local preview's 15 page canvas/audio assets have no candidate override and match production-manifest bytes; this is not deployment evidence.
 
-## Exceptions And Decisions
-
-List every unresolved mismatch, unavailable tool/source, accepted emulator difference, owner decision, and follow-up. Do not leave this section blank; write `None` when there are no exceptions.
-
-## Completion
-
-- Engineering reviewer:
-- Review date:
-- Owner review status:
-- Owner decision, reviewer/date, or explicit not-required reason:
-- Strict validator result:
+Engineering reviewer: Codex. Actual human audio/visual reviewer and Owner decision: pending. Original runtime, fidelity, audio listening/synchronization, human/Owner review, strict completion, the frozen calibration batch, release and publication remain separate gates. Prior IN004 approval retains its original snapshot binding; this review adds no Owner approvals. Existing registration remains 39/39, with zero new registrations. Model cost, factory efficiency and human-review effort were not measured.

@@ -2,6 +2,7 @@
 
 import React, {
   useEffect,
+  useMemo,
   useReducer,
   useRef,
   useState,
@@ -10,6 +11,8 @@ import type {Dispatch, DragEvent, RefObject} from "react";
 import {createPortal} from "react-dom";
 
 import type {AnimationRendererProps} from "../contract";
+import {createCourseG04L03SourceGlossaryCandidate} from "./course-g04-l03-source-glossary-candidate";
+import {createCourseG04L03SourceGlossaryOpenResult} from "../timelines/course-g04-l03-source-glossary-interaction";
 import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
 import {
   COURSE_G04_L03_TI_006_CARDS,
@@ -30,6 +33,8 @@ import {
 } from "../timelines/course-g04-l03-ti-006-number-line-drag-interaction";
 import {
   COURSE_G04_L03_TI_006_CONFIG,
+  COURSE_G04_L03_TI_006_GLOSSARY_CONFIG,
+  COURSE_G04_L03_TI_006_HELP_GLOSSARY_CONFIG,
   COURSE_G04_L03_TI_006_SOURCE,
 } from "../timelines/course-g04-l03-ti-006";
 
@@ -47,6 +52,7 @@ const SOURCE_FONT =
   '"Bauhaus Md BT", "Arial Rounded MT Bold", "Trebuchet MS", ui-rounded, sans-serif';
 const RESPONSIVE_CONTROLS_MEDIA =
   "(max-width: 640px), (any-pointer: coarse)";
+const MOBILE_INSTRUCTION = "Choose a person's card, then choose its position on the number line.";
 const HELP_LINES = Object.freeze([
   "Owing money means negative numbers",
   "Having money means positive numbers",
@@ -133,6 +139,8 @@ interface StageSurfaceProps {
   readonly controlsReady: boolean;
   readonly dispatch: Dispatch<CourseG04L03Ti006NumberLineDragAction>;
   readonly helpButtonRef: RefObject<HTMLButtonElement | null>;
+  readonly helpCloseRef: RefObject<HTMLButtonElement | null>;
+  readonly onLessonHostRequest: AnimationRendererProps["onLessonHostRequest"];
   readonly helpOpen: boolean;
   readonly interaction: CourseG04L03Ti006NumberLineDragState;
   readonly onCloseHelp: () => void;
@@ -141,11 +149,103 @@ interface StageSurfaceProps {
   readonly wrongCloseRef: RefObject<HTMLButtonElement | null>;
 }
 
+function handleDialogKeys(event: React.KeyboardEvent<HTMLDivElement>, close: () => void) {
+  if (event.key === "Escape") {
+    event.preventDefault();
+    event.stopPropagation();
+    close();
+    return;
+  }
+  if (event.key !== "Tab") return;
+  const controls = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>("button:not(:disabled)"))
+    .filter((button) => button.getClientRects().length > 0);
+  const first = controls[0];
+  const last = controls.at(-1);
+  if (!first || !last) return;
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
+function HelpKeyTerms({onLessonHostRequest, controlsReady}: {
+  readonly onLessonHostRequest: AnimationRendererProps["onLessonHostRequest"];
+  readonly controlsReady: boolean;
+}) {
+  const [blocked, setBlocked] = useState(false);
+  return (
+    <div className="course-g04-l03-ti-006-help-keyterms" aria-label="Key Terms in Need More Help" role="group">
+      {COURSE_G04_L03_TI_006_HELP_GLOSSARY_CONFIG.terms.map((term) => (
+        <button key={term.id} type="button" data-source-key-attribute={term.keyAttribute}
+          disabled={!controlsReady || !onLessonHostRequest}
+          onClick={(event) => {
+            if (!controlsReady || !onLessonHostRequest) return;
+            const result = createCourseG04L03SourceGlossaryOpenResult({
+              config: COURSE_G04_L03_TI_006_HELP_GLOSSARY_CONFIG,
+              frame: SOURCE_INTERACTION_FRAME, lang: "en", termId: term.id,
+            });
+            if (!result) { setBlocked(true); return; }
+            const decision = onLessonHostRequest(result.request, {trigger: event.currentTarget});
+            setBlocked(Boolean(decision && decision.status === "blocked"));
+          }}>{term.labels.en}</button>
+      ))}
+      {blocked ? <p role="alert">The Key Terms request could not open.</p> : null}
+    </div>
+  );
+}
+
+function HelpNumberLine() {
+  return (
+    <figure className="course-g04-l03-ti-006-help-number-line">
+      <svg viewBox="0 0 520 116" role="img"
+        aria-label="Number line from negative 10 to positive 10. Values decrease to the left and increase to the right.">
+        <text x="133" y="25" textAnchor="middle" fill="#a31d37" fontSize="20">Negative numbers</text>
+        <text x="387" y="25" textAnchor="middle" fill="#124ca1" fontSize="20">Positive numbers</text>
+        <path d="M8 66H512 M8 66l12 -8 M8 66l12 8 M512 66l-12 -8 M512 66l-12 8" stroke="#142f4c" strokeWidth="2" fill="none" />
+        {Array.from({length: 21}, (_, index) => index - 10).map((value) => (
+          <g key={value} data-help-tick={value}>
+            <path d={`M${260 + value * 23} 57v18`} stroke={value < 0 ? "#a31d37" : value > 0 ? "#124ca1" : "#142f4c"} strokeWidth={value === 0 ? 3 : 2} />
+            {value % 5 === 0 ? <text x={260 + value * 23} y="105" textAnchor="middle" fontSize="27" fill="#142f4c">{value < 0 ? `−${Math.abs(value)}` : value}</text> : null}
+          </g>
+        ))}
+      </svg>
+    </figure>
+  );
+}
+
+function MobileMoneyAnswerPreview({interaction}: {readonly interaction: CourseG04L03Ti006NumberLineDragState}) {
+  return (
+    <svg aria-hidden="true" className="course-g04-l03-ti-006-mobile-answers"
+      data-ti006-preview-count={getCourseG04L03Ti006PlacementCount(interaction)}
+      style={{height: "auto", inset: 0, pointerEvents: "none", position: "absolute", width: "100%", zIndex: 2}}
+      viewBox="0 0 800 600">
+      {COURSE_G04_L03_TI_006_CARDS.filter((card) => interaction.placements[card.id] !== null).map((card) => (
+        <g key={card.id} data-ti006-placed-card={card.id}>
+          <rect x={card.sourceCenter.x - card.sourceSize.width / 2 - 4} y={card.sourceCenter.y - card.sourceSize.height / 2 - 4}
+            width={card.sourceSize.width + 8} height={card.sourceSize.height + 8} fill={SOURCE_STAGE_BACKGROUND} />
+          <rect x={card.targetCenter.x - card.targetSize.width / 2} y={card.targetCenter.y - card.targetSize.height / 2}
+            width={card.targetSize.width} height={card.targetSize.height} fill="#fff" stroke="#224b8e" />
+          <text x={card.targetCenter.x} y={card.targetCenter.y - 14} textAnchor="middle" fill="#111" fontFamily="Arial, sans-serif" fontSize="13">
+            <tspan x={card.targetCenter.x}>{card.name}</tspan>
+            <tspan x={card.targetCenter.x} dy="16">{card.relationship}</tspan>
+            <tspan x={card.targetCenter.x} dy="16">{card.amountText}</tspan>
+          </text>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
 function StageSurface({
   canvasStatus,
   controlsReady,
   dispatch,
   helpButtonRef,
+  helpCloseRef,
+  onLessonHostRequest,
   helpOpen,
   interaction,
   onCloseHelp,
@@ -186,7 +286,7 @@ function StageSurface({
 
   return (
     <svg
-      aria-label="Source-script-bound current JavaScript number-line card activity"
+      aria-label="Place money cards on the number line"
       className="course-g04-l03-ti-006-stage-surface"
       data-audio-feedback="inventoried-unimplemented-unaccepted"
       data-behavior-parity-established="false"
@@ -194,6 +294,7 @@ function StageSurface({
       data-current-js-functional-candidate="true"
       data-help-open={helpOpen ? "true" : "false"}
       data-interaction-outcome={interaction.outcome}
+      data-placement-count={placementCount}
       data-legacy-actionscript-executed="false"
       data-source-canvas-status={canvasStatus}
       data-source-script-bound="true"
@@ -310,8 +411,8 @@ function StageSurface({
                 onDrop={(event) => dropOnTarget(event, targetCard.targetId)}
                 style={{
                   alignItems: "center",
-                  background: "transparent",
-                  border: 0,
+                  background: placedCard ? "#fff" : interaction.selectedCardId ? "rgb(255 221 41 / 24%)" : "transparent",
+                  border: placedCard ? "1px solid #224b8e" : interaction.selectedCardId ? "2px dashed #224b8e" : 0,
                   boxSizing: "border-box",
                   color: "transparent",
                   cursor: targetLocked ? "default" : "pointer",
@@ -356,41 +457,50 @@ function StageSurface({
           })}</> : null}
 
           <button
-            aria-label={helpOpen ? "Close Need More Help" : "Open Need More Help"}
+            aria-haspopup="dialog"
+            aria-label="Open Need More Help"
             data-ti006-focus-control="help"
-            disabled={!controlsReady || (!helpOpen && interaction.locked)}
-            onClick={helpOpen ? onCloseHelp : onOpenHelp}
+            disabled={!controlsReady || (interaction.locked && interaction.outcome !== "complete") || helpOpen}
+            onClick={onOpenHelp}
             ref={helpButtonRef}
             style={{
-              background: "transparent",
-              border: 0,
-              color: "transparent",
+              background: "linear-gradient(#d9f6ff, #4ebddd)",
+              border: "2px solid #4b6f89",
+              borderRadius: 10,
+              boxSizing: "border-box",
+              color: "#113560",
               cursor: "pointer",
-              height: helpBounds.height,
+              font: `700 15px ${SOURCE_FONT}`,
+              height: 48,
               left: helpBounds.left,
               margin: 0,
               padding: 0,
               pointerEvents: "auto",
               position: "absolute",
-              top: helpBounds.top,
+              top: helpBounds.y - 24,
               width: helpBounds.width,
             }}
             type="button"
           >
-            {helpOpen ? "Close" : "Need More Help"}
+            Need More Help
           </button>
 
           {helpOpen ? (
-            <div
-              aria-describedby="course-g04-l03-ti-006-stage-help-copy"
-              aria-label="Need More Help"
-              data-host-hyperlinks="safe-disabled"
-              role="dialog"
-              style={visuallyHiddenStyle}
-            >
-              <span id="course-g04-l03-ti-006-stage-help-copy">
-                {HELP_LINES.join(". ")}. Source glossary links are unavailable in this current JavaScript candidate.
-              </span>
+            <div aria-label="Need More Help" aria-modal="true" role="dialog"
+              onKeyDown={(event) => handleDialogKeys(event, onCloseHelp)}
+              data-host-hyperlinks="typed-keyterm-host-integrated"
+              style={{background: "#fffff4", border: "3px solid #224b8e", borderRadius: 16,
+                boxSizing: "border-box", color: "#111", display: "grid", gap: 10,
+                left: 60, top: 110, width: 680, padding: 16,
+                pointerEvents: "auto", position: "absolute"}}>
+              <div style={{alignItems: "center", display: "flex", justifyContent: "space-between", gap: 12}}>
+                <strong style={{fontSize: 24}}>Need More Help</strong>
+                <button className="course-g04-l03-ti-006-help-close" aria-label="Close Need More Help"
+                  data-ti006-focus-control="close-help" onClick={onCloseHelp} ref={helpCloseRef} type="button">Close</button>
+              </div>
+              {HELP_LINES.map((line) => <p key={line} style={{font: "18px/1.35 system-ui, sans-serif", margin: 0}}>{line}.</p>)}
+              <HelpNumberLine />
+              <HelpKeyTerms controlsReady={controlsReady} onLessonHostRequest={onLessonHostRequest} />
             </div>
           ) : null}
 
@@ -399,6 +509,8 @@ function StageSurface({
               aria-describedby="course-g04-l03-ti-006-stage-wrong-copy"
               aria-label="Incorrect placement feedback"
               data-source-copy="modern-assistive-not-source-exact"
+              aria-modal="true"
+              onKeyDown={(event) => handleDialogKeys(event, onCloseWrong)}
               role="alertdialog"
               style={{
                 alignItems: "center",
@@ -462,7 +574,7 @@ function StageSurface({
                 left: 252,
                 position: "absolute",
                 textShadow: "1px 1px 0 #fff1a0",
-                top: 142,
+                top: 420,
                 width: 296,
               }}
             >
@@ -470,31 +582,6 @@ function StageSurface({
             </div>
           ) : null}
 
-          {interaction.outcome === "complete" ? (
-            <div
-              aria-hidden="true"
-              style={{
-                alignItems: "center",
-                background: "linear-gradient(#bd00e9, #8e00c0)",
-                border: "5px solid #7b007c",
-                borderRadius: 22,
-                boxSizing: "border-box",
-                color: "#fff",
-                display: "flex",
-                fontSize: 46,
-                fontWeight: 900,
-                height: 132,
-                justifyContent: "center",
-                left: 244,
-                position: "absolute",
-                textShadow: "2px 2px 0 #73008e",
-                top: 235,
-                width: 320,
-              }}
-            >
-              {COURSE_G04_L03_TI_006_COMPLETION_FEEDBACK}
-            </div>
-          ) : null}
 
           <span aria-live="polite" role="status" style={visuallyHiddenStyle}>
             {interaction.outcome === "correct-feedback"
@@ -518,6 +605,8 @@ function MobileSurface({
   controlsReady,
   dispatch,
   helpButtonRef,
+  helpCloseRef,
+  onLessonHostRequest,
   helpOpen,
   interaction,
   onCloseHelp,
@@ -547,7 +636,7 @@ function MobileSurface({
       data-source-canvas-status={canvasStatus}
     >
       <p className="course-g04-l03-ti-006-mobile-instruction">
-        {COURSE_G04_L03_TI_006_INSTRUCTION}
+        {MOBILE_INSTRUCTION}
       </p>
       {!controlsReady ? (
         <p
@@ -569,12 +658,12 @@ function MobileSurface({
       <button
         className="course-g04-l03-ti-006-mobile-help"
         data-ti006-focus-control="help"
-        disabled={!controlsReady || (!helpOpen && interaction.locked)}
-        onClick={helpOpen ? onCloseHelp : onOpenHelp}
+        disabled={!controlsReady || (interaction.locked && interaction.outcome !== "complete") || helpOpen}
+        onClick={onOpenHelp}
         ref={helpButtonRef}
         type="button"
       >
-        {helpOpen ? "Close Help" : "Need More Help"}
+        Need More Help
       </button>
 
       <fieldset disabled={locked}>
@@ -610,7 +699,7 @@ function MobileSurface({
             );
             return (
               <button
-                aria-label={`Position ${spokenPosition(targetCard)}`}
+                aria-label={placed ? `${placed.name} placed at ${spokenPosition(targetCard)}` : `Position ${spokenPosition(targetCard)}`}
                 data-ti006-focus-control={`target-${targetCard.targetId}`}
                 disabled={
                   locked
@@ -627,7 +716,7 @@ function MobileSurface({
                 {targetCard.numericValue > 0
                   ? `+${targetCard.numericValue}`
                   : targetCard.numericValue}
-                {placed ? " ✓" : ""}
+                {placed ? <small>{placed.name} ✓</small> : null}
               </button>
             );
           })}
@@ -635,17 +724,15 @@ function MobileSurface({
       </fieldset>
 
       {helpOpen ? (
-        <div
-          aria-label="Need More Help"
-          className="course-g04-l03-ti-006-mobile-dialog"
-          data-host-hyperlinks="safe-disabled"
-          role="dialog"
-        >
+        <div aria-label="Need More Help" aria-modal="true" role="dialog"
+          onKeyDown={(event) => handleDialogKeys(event, onCloseHelp)}
+          className="course-g04-l03-ti-006-mobile-dialog" data-host-hyperlinks="typed-keyterm-host-integrated">
           <strong>Need More Help</strong>
-          {HELP_LINES.map((line) => <p key={line}>{line}</p>)}
-          <small>
-            Source glossary links are unavailable in this current JavaScript candidate.
-          </small>
+          {HELP_LINES.map((line) => <p key={line}>{line}.</p>)}
+          <HelpNumberLine />
+          <HelpKeyTerms controlsReady={controlsReady} onLessonHostRequest={onLessonHostRequest} />
+          <button className="course-g04-l03-ti-006-help-close" aria-label="Close Need More Help"
+            data-ti006-focus-control="close-help" onClick={onCloseHelp} ref={helpCloseRef} type="button">Close</button>
         </div>
       ) : null}
 
@@ -654,6 +741,8 @@ function MobileSurface({
           aria-label="Incorrect placement feedback"
           className="course-g04-l03-ti-006-mobile-dialog"
           data-source-copy="modern-assistive-not-source-exact"
+          aria-modal="true"
+          onKeyDown={(event) => handleDialogKeys(event, onCloseWrong)}
           role="alertdialog"
         >
           <strong>Incorrect placement</strong>
@@ -684,7 +773,7 @@ function MobileSurface({
   );
 }
 
-export function CourseG04L03Ti006Renderer(props: AnimationRendererProps) {
+function CourseG04L03Ti006ActivityRenderer(props: AnimationRendererProps) {
   const [interaction, dispatch] = useReducer(
     reduceCourseG04L03Ti006NumberLineDrag,
     undefined,
@@ -702,9 +791,12 @@ export function CourseG04L03Ti006Renderer(props: AnimationRendererProps) {
   const mobileWrongCloseRef = useRef<HTMLButtonElement>(null);
   const stageHelpButtonRef = useRef<HTMLButtonElement>(null);
   const mobileHelpButtonRef = useRef<HTMLButtonElement>(null);
+  const stageHelpCloseRef = useRef<HTMLButtonElement>(null);
+  const mobileHelpCloseRef = useRef<HTMLButtonElement>(null);
   const correctFeedbackRemainingMs = useRef(
     COURSE_G04_L03_TI_006_CURRENT_JS_TIMING.correctFeedbackMs,
   );
+  const previousOutcomeRef = useRef(interaction.outcome);
 
   const frameDomain = props.frameDomain ?? SOURCE_INTERACTION_DOMAIN;
   const interactionEnabled =
@@ -714,14 +806,14 @@ export function CourseG04L03Ti006Renderer(props: AnimationRendererProps) {
     && props.lang === "en"
     && !isDeterministicEvidenceCapture(props);
   const sourceVisualFrame = interactionEnabled
-    ? helpOpen ? SOURCE_INTERACTION_FRAME : SOURCE_CLEAN_QUESTION_FRAME
+    ? SOURCE_CLEAN_QUESTION_FRAME
     : props.frame;
   const sourceCanvasRenderKey = getCourseG04L03Ti006SourceCanvasRenderKey(
     props.replay ?? 0,
     props.seed,
     sourceVisualFrame,
   );
-  const sourceVisualState = interactionEnabled
+  const sourceVisualState = useMemo(() => interactionEnabled
     ? candidate.getFrameState(sourceVisualFrame, {
         entryStateSha256: props.entryStateSha256,
         frameDomain,
@@ -731,8 +823,10 @@ export function CourseG04L03Ti006Renderer(props: AnimationRendererProps) {
         seed: props.seed,
         traceId: props.traceId,
       })
-    : props.state;
-  const controlsReady = canvasStatus === "ready";
+    : props.state,
+  [interactionEnabled, sourceVisualFrame, frameDomain, props.entryStateSha256,
+    props.lang, props.requirementId, props.scenario, props.seed, props.traceId, props.state]);
+  const controlsReady = interactionEnabled && canvasStatus === "ready";
 
   const focusControl = (focusControlKey: string) => {
     window.requestAnimationFrame(() => {
@@ -756,6 +850,10 @@ export function CourseG04L03Ti006Renderer(props: AnimationRendererProps) {
     setHelpOpen(false);
     setCanvasStatus(interactionEnabled ? "loading" : "idle");
   }, [interactionEnabled, props.replay, props.seed]);
+
+  useEffect(() => {
+    if (interactionEnabled && interaction.outcome === "complete") props.onActivityComplete?.();
+  }, [interactionEnabled, interaction.outcome, props.onActivityComplete]);
 
   useEffect(() => {
     if (!props.pageInteractionCompanionTargetId) {
@@ -809,11 +907,7 @@ export function CourseG04L03Ti006Renderer(props: AnimationRendererProps) {
   useEffect(() => {
     if (interaction.outcome !== "correct-feedback") return;
     if (props.reducedMotion) {
-      const nextCard = COURSE_G04_L03_TI_006_CARDS.find(
-        ({id}) => interaction.placements[id] === null,
-      );
       dispatch({type: "feedback-complete"});
-      if (nextCard) focusControl(`card-${nextCard.id}`);
       return;
     }
     if (props.paused) return;
@@ -822,11 +916,7 @@ export function CourseG04L03Ti006Renderer(props: AnimationRendererProps) {
     const timeout = window.setTimeout(() => {
       correctFeedbackRemainingMs.current =
         COURSE_G04_L03_TI_006_CURRENT_JS_TIMING.correctFeedbackMs;
-      const nextCard = COURSE_G04_L03_TI_006_CARDS.find(
-        ({id}) => interaction.placements[id] === null,
-      );
       dispatch({type: "feedback-complete"});
-      if (nextCard) focusControl(`card-${nextCard.id}`);
     }, correctFeedbackRemainingMs.current);
     return () => {
       window.clearTimeout(timeout);
@@ -836,6 +926,17 @@ export function CourseG04L03Ti006Renderer(props: AnimationRendererProps) {
       );
     };
   }, [interaction.outcome, props.paused, props.reducedMotion]);
+
+  useEffect(() => {
+    const previousOutcome = previousOutcomeRef.current;
+    previousOutcomeRef.current = interaction.outcome;
+    if (previousOutcome !== "correct-feedback"
+      || !["ready", "complete"].includes(interaction.outcome)) return;
+    const nextCard = COURSE_G04_L03_TI_006_CARDS.find(
+      ({id}) => interaction.placements[id] === null,
+    );
+    focusControl(nextCard ? `card-${nextCard.id}` : "help");
+  }, [interaction.outcome, interaction.placements]);
 
   useEffect(() => {
     if (interaction.outcome !== "wrong") return;
@@ -869,19 +970,29 @@ export function CourseG04L03Ti006Renderer(props: AnimationRendererProps) {
   };
   const openHelp = () => {
     setHelpOpen(true);
-    focusRenderedControl(mobileHelpButtonRef, stageHelpButtonRef);
+    focusRenderedControl(mobileHelpCloseRef, stageHelpCloseRef);
   };
   const closeHelp = () => {
     setHelpOpen(false);
     focusControl("help");
   };
 
+  const desktopNotice = (
+    <p className="course-g04-l03-ti-006-desktop-notice" role="status"
+      data-complete={interaction.outcome === "complete" ? "true" : "false"}>
+      {interaction.outcome === "complete"
+        ? "All 5 cards are correctly placed. Use Replay to practice again or Next to continue."
+        : "Choose or drag a person's card to its position on the number line."}
+    </p>
+  );
   const mobileSurface = (
     <MobileSurface
       canvasStatus={canvasStatus}
       controlsReady={controlsReady}
       dispatch={dispatch}
       helpButtonRef={mobileHelpButtonRef}
+      helpCloseRef={mobileHelpCloseRef}
+      onLessonHostRequest={props.onLessonHostRequest}
       helpOpen={helpOpen}
       interaction={interaction}
       onCloseHelp={closeHelp}
@@ -925,6 +1036,7 @@ export function CourseG04L03Ti006Renderer(props: AnimationRendererProps) {
       }}
     >
       <style>{`
+        .course-g04-l03-ti-006-mobile-answers,
         .course-g04-l03-ti-006-mobile-fallback-slot,
         .course-g04-l03-ti-006-mobile-controls {
           display: none;
@@ -936,7 +1048,20 @@ export function CourseG04L03Ti006Renderer(props: AnimationRendererProps) {
           outline-offset: 3px;
         }
 
+        .course-g04-l03-ti-006-help-keyterms { display: flex; flex-wrap: wrap; gap: 8px; }
+        .course-g04-l03-ti-006-help-keyterms button,
+        .course-g04-l03-ti-006-help-close {
+          background: #fff; border: 2px solid #224b8e; border-radius: 8px; color: #153b6a;
+          cursor: pointer; font: 700 16px system-ui, sans-serif; min-height: 48px; min-width: 48px; padding: 8px 12px;
+        }
+        .course-g04-l03-ti-006-help-number-line { margin: 0; }
+        .course-g04-l03-ti-006-help-number-line svg { display: block; width: 100%; height: auto; }
+        .course-g04-l03-ti-006-desktop-notice { color: #153b6a; font: 600 16px/1.4 system-ui, sans-serif; margin: 10px 0; }
+        .course-g04-l03-ti-006-desktop-notice[data-complete="true"] { background: #e4f5df; border: 2px solid #28743b; border-radius: 12px; color: #17572a; padding: 12px; }
+
         @media ${RESPONSIVE_CONTROLS_MEDIA} {
+          .course-g04-l03-ti-006-mobile-answers { display: block; }
+          .course-g04-l03-ti-006-desktop-notice { display: none; }
           .course-g04-l03-ti-006-stage-surface {
             display: none;
           }
@@ -1075,8 +1200,9 @@ export function CourseG04L03Ti006Renderer(props: AnimationRendererProps) {
           }
 
           .course-g04-l03-ti-006-mobile-complete {
-            background: #9900ff;
-            color: #fff;
+            background: #e4f5df;
+            border-color: #28743b;
+            color: #17572a;
           }
 
           .course-g04-l03-ti-006-mobile-complete strong {
@@ -1090,8 +1216,10 @@ export function CourseG04L03Ti006Renderer(props: AnimationRendererProps) {
           }
 
           .course-g04-l03-ti-006-mobile-target-grid {
-            grid-template-columns: repeat(5, minmax(48px, 1fr));
+            grid-template-columns: repeat(2, minmax(48px, 1fr));
           }
+          .course-g04-l03-ti-006-mobile-target-grid button { display: grid; gap: 4px; }
+          .course-g04-l03-ti-006-mobile-target-grid small { font: 700 14px system-ui, sans-serif; }
         }
 
         @media (min-width: 1280px) and (any-pointer: coarse) {
@@ -1103,6 +1231,8 @@ export function CourseG04L03Ti006Renderer(props: AnimationRendererProps) {
       `}</style>
       <div
         aria-hidden={interactionEnabled ? true : undefined}
+        inert={interactionEnabled ? true : undefined}
+        style={{pointerEvents: interactionEnabled ? "none" : undefined}}
         ref={visualHostRef}
       >
         <SourceStaticRenderer
@@ -1116,11 +1246,14 @@ export function CourseG04L03Ti006Renderer(props: AnimationRendererProps) {
       </div>
       {interactionEnabled ? (
         <>
+          {controlsReady && !helpOpen ? <MobileMoneyAnswerPreview interaction={interaction} /> : null}
           <StageSurface
             canvasStatus={canvasStatus}
             controlsReady={controlsReady}
             dispatch={dispatch}
             helpButtonRef={stageHelpButtonRef}
+            helpCloseRef={stageHelpCloseRef}
+            onLessonHostRequest={props.onLessonHostRequest}
             helpOpen={helpOpen}
             interaction={interaction}
             onCloseHelp={closeHelp}
@@ -1128,6 +1261,7 @@ export function CourseG04L03Ti006Renderer(props: AnimationRendererProps) {
             onOpenHelp={openHelp}
             wrongCloseRef={stageWrongCloseRef}
           />
+          {companionTarget ? createPortal(desktopNotice, companionTarget) : desktopNotice}
           {companionTarget
             ? createPortal(mobileSurface, companionTarget)
             : (
@@ -1144,8 +1278,7 @@ export function CourseG04L03Ti006Renderer(props: AnimationRendererProps) {
 export {COURSE_G04_L03_TI_006_SOURCE};
 export const COURSE_G04_L03_TI_006_MOVIE = candidate.movie;
 export const COURSE_G04_L03_TI_006_RUNTIME = candidate.runtime;
-export const COURSE_G04_L03_TI_006_SOURCE_CONTRACT = Object.freeze({
-  ...candidate.sourceContract,
+const INTERACTION_SOURCE_CONTRACT = Object.freeze({
   currentJavascriptInteractionStatus:
     "source-script-bound-functional-candidate",
   currentJavascriptInteractionScope: Object.freeze([
@@ -1154,7 +1287,10 @@ export const COURSE_G04_L03_TI_006_SOURCE_CONTRACT = Object.freeze({
     "modern-assistive-wrong-feedback-and-close-retry",
     "source-target-reveal-and-card-hide",
     "five-card-completion-feedback",
-    "source-help-copy-with-host-glossary-links-safe-disabled",
+    "host-completion-after-fifth-card-feedback-finishes",
+    "mobile-source-person-card-and-target-result-preview",
+    "help-and-wrong-dialog-escape-close-and-tab-focus-containment",
+    "source-help-copy-with-state-bound-typed-keyterm-host-links",
     "host-pause-freezes-current-js-correct-feedback-delay",
     "whole-renderer-replay-reset",
     "responsive-mobile-and-coarse-pointer-touch-control-surface",
@@ -1165,7 +1301,9 @@ export const COURSE_G04_L03_TI_006_SOURCE_CONTRACT = Object.freeze({
   ]),
   currentJavascriptTiming: COURSE_G04_L03_TI_006_CURRENT_JS_TIMING,
   wrongFeedbackTextStatus: "modern-assistive-not-source-exact",
-  helpTextStatus: "source-exact-copy-host-links-safe-disabled",
+  helpTextStatus: "source-copy-with-state-bound-typed-keyterm-host-links",
+  helpSourceCopy: HELP_LINES,
+  instructionSourceCopy: COURSE_G04_L03_TI_006_INSTRUCTION,
   embeddedCoachAudioStatus: "inventoried-unimplemented-unaccepted",
   associatedAudioStatus: "inventoried-unimplemented-unaccepted",
   spanishInteractionStatus: "unimplemented-disabled",
@@ -1180,8 +1318,20 @@ export const getCourseG04L03Ti006FrameState = candidate.getFrameState;
 export const buildCourseG04L03Ti006CaptureAttributes =
   candidate.buildCaptureAttributes;
 
-export default Object.freeze({
+const activityModule = Object.freeze({
   ...candidate.module,
+  completionMode: "activity" as const,
   reducedMotionFrame: SOURCE_INTERACTION_FRAME,
-  Renderer: CourseG04L03Ti006Renderer,
+  Renderer: CourseG04L03Ti006ActivityRenderer,
 });
+const glossaryCandidate = createCourseG04L03SourceGlossaryCandidate(
+  {...candidate, Renderer: CourseG04L03Ti006ActivityRenderer, module: activityModule},
+  COURSE_G04_L03_TI_006_GLOSSARY_CONFIG,
+  {scenario: "source-static-frame", canvasCandidateStatus: "source-static-engineering-not-strict", surfacePlacement: "companion"},
+);
+export const CourseG04L03Ti006Renderer = glossaryCandidate.Renderer;
+export const COURSE_G04_L03_TI_006_SOURCE_CONTRACT = Object.freeze({
+  ...glossaryCandidate.sourceContract,
+  ...INTERACTION_SOURCE_CONTRACT,
+});
+export default glossaryCandidate.module;

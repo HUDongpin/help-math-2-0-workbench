@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-09-27T02:57:18.976137+00:00",
+  "scope": "Three representative existing Current-JS implementations; not a catalog-wide support inventory or release gate.",
+  "examples": [
+    {
+      "animationId": "course-g04-l03-in-009",
+      "source": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN09.swf",
+        "bytes": 1967129,
+        "sha256": "766b6ab686bbaf8ab1dacc30a7ffb96f33735102a1dff7df6b7a97976e3ab25c"
+      },
+      "sourceHashMatchesMigration": true,
+      "evidence": [
+        {
+          "path": "migrations/course-g04-l03-in-009/audit/machine/ffdec-scripts.txt.gz",
+          "bytes": 259,
+          "sha256": "df530b06a5ae0c5a4329fdff597ef74e692a60e097554eb9d93cb54ef66b9dca"
+        }
+      ],
+      "implementation": [
+        {
+          "path": "packages/demos/src/timelines/course-g04-l03-in-009.ts",
+          "bytes": 9067,
+          "sha256": "1e8d5151681864c2f591add4fc51cac6c1ae0fd9aa5456c3accf862e605443d7"
+        },
+        {
+          "path": "packages/demos/src/modules/course-g04-l03-in-009.tsx",
+          "bytes": 13949,
+          "sha256": "f97b6ac6178b58d0d5059873ca469d20e52fe81adab9ddf13462a7bf23b5e6ab"
+        },
+        {
+          "path": "scripts/build-in-009-ffdec-canvas-candidate.mjs",
+          "bytes": 70815,
+          "sha256": "7126bfd9d7458771f8b0ea38ea80e2edae98c070977f5b2ebe004d0c41d27478"
+        }
+      ],
+      "tests": [
+        {
+          "path": "packages/demos/tests/course-g04-l03-in-009.test.ts",
+          "bytes": 19608,
+          "sha256": "624664ba80a2fbbe97681161fe5bb3d6bf2a01b4e0331f351e9f11b8ccd7df6a"
+        }
+      ],
+      "limitations": [
+        "Generator check blocked by audio audit hash drift.",
+        "Existing module tests do not establish a fresh generation or arbitrary AVM1 recovery."
+      ],
+      "automaticWholePageConversionEstablished": false
+    },
+    {
+      "animationId": "course-g04-l03-ts-008",
+      "source": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS08.swf",
+        "bytes": 693079,
+        "sha256": "9c7288f67f764e02f4320655b64dbb57d3d690a75951b549ee5113f385e6b885"
+      },
+      "sourceHashMatchesMigration": true,
+      "evidence": [
+        {
+          "path": "migrations/course-g04-l03-ts-008/audit/machine/ffdec-scripts.txt.gz",
+          "bytes": 1033,
+          "sha256": "271619937ef999980753232bc2dbcb9ea589dbebe7f5e83c7cf0c7e3fe7b29fb"
+        }
+      ],
+      "implementation": [
+        {
+          "path": "packages/demos/src/timelines/course-g04-l03-ts-008-practice-question-interaction.ts",
+          "bytes": 22916,
+          "sha256": "e32be3bc5a2b7ec87a3f3a173b1659c2a9dd611ba2d7cc2438cb723f412c60cd"
+        },
+        {
+          "path": "packages/demos/src/timelines/practice-question-feedback.ts",
+          "bytes": 1218,
+          "sha256": "3833f7a80381a4c088df65032ff05a9583ba3ad20fbbdee13a5605c1c43e9905"
+        }
+      ],
+      "tests": [
+        {
+          "path": "packages/demos/tests/course-g04-l03-ts-008-practice-question-interaction.test.ts",
+          "bytes": 25025,
+          "sha256": "cbc2c073d6982e53e2ed376be0ddea9fa416c6f69979c5661437a9254977077c"
+        },
+        {
+          "path": "packages/demos/tests/practice-question-feedback.test.ts",
+          "bytes": 1897,
+          "sha256": "1fb777b827aa23bd878db367a2e235a3a97f6e6214f02a7a870c27347df614aa"
+        }
+      ],
+      "limitations": [
+        "Source random parity and timing parity remain unestablished.",
+        "This is an existing maintained adapter, not automatic inference of arbitrary answers, scoring or branches."
+      ],
+      "automaticWholePageConversionEstablished": false
+    },
+    {
+      "animationId": "course-g04-l03-ti-003",
+      "source": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TI/L3TI03.swf",
+        "bytes": 100853,
+        "sha256": "7abcc6151596b89d7b3142985bf8de2aae1d31ddb6eb47b14d2b9950c095a262"
+      },
+      "sourceHashMatchesMigration": true,
+      "evidence": [
+        {
+          "path": "migrations/course-g04-l03-ti-003/audit/machine/ffdec-scripts.txt.gz",
+          "bytes": 1200,
+          "sha256": "17d465f9e1b1ef97c11c1031505a31612a7f7c0b21f048cfe2e24c7d9702d485"
+        }
+      ],
+      "implementation": [
+        {
+          "path": "packages/demos/src/timelines/course-g04-l03-ti-003-number-line-drag-interaction.ts",
+          "bytes": 13052,
+          "sha256": "53bdec4cba77eb4139930cd120b4d2209d9a7aedacaeeb4fdbbd9fccdbe7e719"
+        }
+      ],
+      "tests": [
+        {
+          "path": "packages/demos/tests/course-g04-l03-ti-003-number-line-drag-interaction.test.ts",
+          "bytes": 15550,
+          "sha256": "448f590bb94a0324de40fad8443afa77a6cf75203b7adb8f5221cb62578bd20c"
+        }
+      ],
+      "limitations": [
+        "Host wrong feedback, key-term links and continuation remain unresolved.",
+        "Embedded coach and associated audio are not modeled by this reducer.",
+        "This is a page-specific six-card adapter, not a general shared drag compiler."
+      ],
+      "automaticWholePageConversionEstablished": false
+    }
+  ],
+  "verification": {
+    "testCommand": [
+      "node",
+      "--import",
+      "tsx",
+      "--test",
+      "packages/demos/tests/course-g04-l03-in-009.test.ts",
+      "packages/demos/tests/course-g04-l03-ts-008-practice-question-interaction.test.ts",
+      "packages/demos/tests/course-g04-l03-ti-003-number-line-drag-interaction.test.ts",
+      "packages/demos/tests/practice-question-feedback.test.ts"
+    ],
+    "testExitCode": 0,
+    "testsPassed": 34,
+    "generatorCheck": {
+      "command": [
+        "node",
+        "scripts/build-in-009-ffdec-canvas-candidate.mjs",
+        "--check"
+      ],
+      "exitCode": 1,
+      "status": "blocked-input-drift",
+      "firstFailure": "audio audit SHA-256 mismatch",
+      "expectedSha256": "b1e554ef69b2367a5b4b68e8f861a51b02c831d1358610037bd9bb84d4a7d5e7",
+      "observed": {
+        "path": "migrations/course-g04-l03-in-009/audit/audio-runtime-evidence.json",
+        "bytes": 10217,
+        "sha256": "5d8998cddb20e402e92f99fa2d18542116c881c9ab3d123f97ca009992e1c8e5"
+      },
+      "specification": {
+        "path": "migrations/course-g04-l03-in-009/audit/canvas-candidate-spec.json",
+        "bytes": 6096,
+        "sha256": "23ec3f036d101adfb93b7facc1f2495160e8e168376ab0986764a2e31697237a"
+      },
+      "laterGeneratorChecks": "not reached"
+    }
+  },
+  "acceptanceEffect": "none",
+  "refreshPolicy": "Rehash these bindings and rerun the listed checks before treating this dated audit as current. Do not rewrite generator expected hashes solely to make checks pass."
+}

@@ -30,7 +30,7 @@ test('G4 L3 source glossary requests use the typed memory-only Key Terms host', 
   ]);
 
   assert.match(player, /createMemoryOnlyLessonHost/);
-  assert.match(player, /enabledCapabilities: \['keyterm'\]/);
+  assert.match(player, /enabledCapabilities: animationId === 'course-g04-l03-in-004'\s*\? \['keyterm', 'audio'\] : \['keyterm'\]/);
   assert.match(player, /mode: 'audit'/);
   assert.match(player, /releasePublished: false/);
   assert.match(player, /request\.type !== 'open-keyterm'/);
@@ -50,7 +50,7 @@ test('G4 L3 source glossary requests use the typed memory-only Key Terms host', 
   assert.match(adapter, /capabilities: Object\.freeze\(\["keyterm"\] as const\)/);
   assert.match(adapter, /legacyOperations: "blocked" as const/);
   assert.match(adapter, /className="course-g04-l03-source-glossary-stage-surface"/);
-  assert.match(adapter, /data-source-glossary-placement="visible-stage-content-bottom"/);
+  assert.match(adapter, /data-source-glossary-placement="stage-bottom-or-narrow-companion"/);
   assert.match(
     adapter,
     /data-source-glossary-visual-plane="source-static-canvas"[\s\S]*?ref=\{visualHostRef\}[\s\S]*?style=\{\{position: "relative"\}\}[\s\S]*?<SourceStaticRenderer[\s\S]*?<SourceGlossaryInteraction/,
@@ -67,7 +67,7 @@ test('G4 L3 source glossary requests use the typed memory-only Key Terms host', 
     adapter,
     /\.course-g04-l03-source-glossary-stage-surface > div\[role="group"\] \{[\s\S]*?grid-auto-flow: column;[\s\S]*?pointer-events: auto;/,
   );
-  assert.match(adapter, /current-js-visible-stage-bottom-keyterm-controls/);
+  assert.match(adapter, /current-js-responsive-stage-and-companion-keyterm-controls/);
   assert.match(adapter, /source-audit-bounds-retained-not-rendered/);
   assert.match(
     shell,
@@ -83,10 +83,8 @@ test('G4 L3 source glossary requests use the typed memory-only Key Terms host', 
   );
   assert.match(runtime, /pageInteractionStageTargetId=\{pageInteractionStageTargetId\}/);
   assert.match(player, /G4_L3_PAGE_INTERACTION_STAGE_TARGET_ID/);
-  assert.doesNotMatch(
-    adapter,
-    /PageInteractionCompanionPortal|pageInteractionCompanionTargetId/,
-  );
+  assert.match(adapter, /companionTargetId=\{pageInteractionCompanionTargetId\}/);
+  assert.match(adapter, /\(preferCompanion \|\| narrow\.matches\) && companion\?\.dataset\.pageInteractionCompanionHost === "true"/);
   assert.doesNotMatch(adapter, /Explore this page’s source terms/);
   assert.doesNotMatch(adapter, /without executing legacy ActionScript/);
   assert.match(browser, /data-host-selection-resolution=\{selectionResolution\}/);

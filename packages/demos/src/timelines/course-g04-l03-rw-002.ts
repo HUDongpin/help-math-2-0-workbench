@@ -1,4 +1,5 @@
 import type {SourceStaticCanvasCandidateConfig} from "../source-static-canvas-candidate";
+import type {CourseG04L03SourceGlossaryConfig} from "./course-g04-l03-source-glossary-interaction";
 
 export const COURSE_G04_L03_RW_002_SOURCE = Object.freeze({
   swf: "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/RW/L3RW02.swf",
@@ -19,6 +20,71 @@ export const COURSE_G04_L03_RW_002_SOURCE = Object.freeze({
   rootPlacementTwips: Object.freeze({x: 7_219, y: 5_460}),
   rootPlacementPixels: Object.freeze({x: 360.95, y: 273}),
 });
+
+// Source: sprite-421 frame 1099, DefineButton2 377–379. Native hit bounds
+// remain audit metadata; the maintained adapter presents readable buttons.
+export const COURSE_G04_L03_RW_002_GLOSSARY_HOTSPOTS = Object.freeze([
+  Object.freeze({
+    id: "negative-number",
+    characterId: 377,
+    keyAttribute: "Negative number",
+    firstFrame: 1099,
+    lastFrame: 1289,
+    depth: 101,
+    sourceBounds: Object.freeze({
+      left: 189.5017242431641,
+      right: 317.4922355651855,
+      top: 367.3775390625,
+      bottom: 382.5827606201172,
+    }),
+    entryIds: Object.freeze({en: "en-0411-1954bd66c84d", es: "es-0456-9da6d6ebd619"}),
+    labels: Object.freeze({en: "Negative number", es: "Número negativo"}),
+  }),
+  Object.freeze({
+    id: "less-than",
+    characterId: 378,
+    keyAttribute: "Less than",
+    firstFrame: 1099,
+    lastFrame: 1289,
+    depth: 103,
+    sourceBounds: Object.freeze({
+      left: 345.66961975097655,
+      right: 408.2785087585449,
+      top: 367.0275390625,
+      bottom: 382.2327606201172,
+    }),
+    entryIds: Object.freeze({en: "en-0344-ac5e44095a38", es: "es-0401-7b42de19e998"}),
+    labels: Object.freeze({en: "Less than", es: "Menor que"}),
+  }),
+  Object.freeze({
+    id: "zero",
+    characterId: 379,
+    keyAttribute: "Zero",
+    firstFrame: 1099,
+    lastFrame: 1289,
+    depth: 105,
+    sourceBounds: Object.freeze({
+      left: 410.7820556640625,
+      right: 442.7914245605469,
+      top: 367.0275390625,
+      bottom: 382.2327606201172,
+    }),
+    entryIds: Object.freeze({en: "en-0760-6575e63919df", es: "es-0057-e01a19219cce"}),
+    labels: Object.freeze({en: "Zero", es: "Cero"}),
+  }),
+] as const);
+
+export const COURSE_G04_L03_RW_002_GLOSSARY_CONFIG = Object.freeze({
+  animationId: "course-g04-l03-rw-002",
+  frameDomain: "sprite-421",
+  terms: COURSE_G04_L03_RW_002_GLOSSARY_HOTSPOTS,
+  learnerPrompt: "Negative numbers are less than zero.",
+  playbackDisposition: "reversible-support-pause",
+  sourceAction: "DoHyperLinks",
+  sourceStopTarget: "_root.animation_mc.animation.stop()",
+  glossaryAuthority: "grade-wide-shell-keyterms-static-candidate",
+  glossarySourceDisposition: "unresolved-lesson-vs-grade-wide",
+} satisfies CourseG04L03SourceGlossaryConfig);
 
 export const COURSE_G04_L03_RW_002_CONFIG = Object.freeze({
   animationId: "course-g04-l03-rw-002",

@@ -1,5 +1,7 @@
 "use client";
 
+import {G4_L3_FQ_AUDIO} from "../g4-l3-fq-audio.generated";
+
 import {
   COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT,
   createCourseG04L03FinalQuizFunctionalRenderer,
@@ -61,10 +63,10 @@ export const COURSE_G04_L03_FQ_003_SOURCE_CONTRACT = Object.freeze({
     "source-shape-atomic-answer-and-immediate-advance",
     "stale-and-double-answer-dispatch-rejected",
     "physical-double-click-answer-transition-lock",
-    "Q7-and-Q9-Q12-source-canvas-pixel-bound-target-and-choice-projection",
+    "Q7-and-Q9-Q12-source-bound-complete-number-lines-and-named-shape-choices",
     "Q8-owner-directed-current-javascript-cross-placement-from-course-g04-l03-ts-007",
     "Q8-cross-placement-does-not-establish-final-quiz-source-visual-parity",
-    "source-legacy-raw-score-bands-preserved-with-documented-total-mismatch",
+    "source-legacy-raw-score-bands-retained-as-evidence-learner-results-show-score-and-percentage",
     "current-javascript-text-review-previous-next-enhancement",
     "source-question-and-review-frame-donor-projection",
     "deterministic-capture-preserves-unmodified-source-static-drawing-with-zero-overlay",
@@ -85,8 +87,11 @@ export const COURSE_G04_L03_FQ_003_SOURCE_CONTRACT = Object.freeze({
   sourceReviewVisualParityEstablished: false,
   sourceResultsVisualParityEstablished: false,
   sourceLegacyGradePresentationLabel: "Legacy source performance level",
-  sourceAudioEnabled: false,
+  sourceAudioEnabled: true,
+  interactiveReading: "source-host-bound-en-es-user-activated",
+  humanAudioReviewAccepted: false,
   sourceSpanishEnabled: false,
+  sourceSpanishReadingEnabled: true,
   sourceLmsAndGetUrlEnabled: false,
   sourceHostCloseReportEnabled: false,
   behaviorParityEstablished: false,
@@ -107,6 +112,11 @@ export const buildCourseG04L03Fq003CaptureAttributes =
 
 export default Object.freeze({
   ...candidate.module,
+  lessonHost: Object.freeze({capabilities: Object.freeze(['audio'] as const),
+    legacyOperations: 'blocked' as const, auditStorage: 'memory-only' as const,
+    storesPersonalData: false as const}),
+  interactiveAudioAssets: G4_L3_FQ_AUDIO,
+  completionMode: "activity" as const,
   reducedMotionFrame: FUNCTIONAL_ENTRY_FRAME,
   Renderer: CourseG04L03Fq003Renderer,
 });

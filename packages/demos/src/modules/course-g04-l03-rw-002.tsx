@@ -2,8 +2,10 @@
 
 import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
 import type {AnimationModule} from "../contract";
+import {createCourseG04L03SourceGlossaryCandidate} from "./course-g04-l03-source-glossary-candidate";
 import {
   COURSE_G04_L03_RW_002_CONFIG,
+  COURSE_G04_L03_RW_002_GLOSSARY_CONFIG,
   COURSE_G04_L03_RW_002_SOURCE,
 } from "../timelines/course-g04-l03-rw-002";
 
@@ -14,13 +16,11 @@ const candidate = createSourceStaticCanvasCandidate(
 export {COURSE_G04_L03_RW_002_SOURCE};
 export const COURSE_G04_L03_RW_002_MOVIE = candidate.movie;
 export const COURSE_G04_L03_RW_002_RUNTIME = candidate.runtime;
-export const COURSE_G04_L03_RW_002_SOURCE_CONTRACT = candidate.sourceContract;
 export const COURSE_G04_L03_RW_002_SCENARIOS = candidate.scenarios;
 export const normalizeCourseG04L03Rw002Frame = candidate.normalizeFrame;
 export const getCourseG04L03Rw002FrameState = candidate.getFrameState;
 export const buildCourseG04L03Rw002CaptureAttributes =
   candidate.buildCaptureAttributes;
-export const CourseG04L03Rw002Renderer = candidate.Renderer;
 
 const animationModule: AnimationModule = Object.freeze({
   ...candidate.module,
@@ -58,4 +58,11 @@ const animationModule: AnimationModule = Object.freeze({
   ]),
 });
 
-export default animationModule;
+const glossaryCandidate = createCourseG04L03SourceGlossaryCandidate(
+  {...candidate, module: animationModule},
+  COURSE_G04_L03_RW_002_GLOSSARY_CONFIG,
+);
+
+export const COURSE_G04_L03_RW_002_SOURCE_CONTRACT = glossaryCandidate.sourceContract;
+export const CourseG04L03Rw002Renderer = glossaryCandidate.Renderer;
+export default glossaryCandidate.module;

@@ -1,18 +1,18 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "evidenceType": "current-javascript-implementation-capture-adoption",
   "animationId": "course-g04-l03-vb-007",
   "status": "partial-non-authoritative-implementation-capture",
   "authority": "Deterministic current JavaScript output only. This record does not establish original-runtime baseline authority, visual parity, audio or behavior fidelity, human/owner acceptance, or strict completion.",
   "generatedBy": {
     "script": "scripts/adopt-course-implementation-captures.mjs",
-    "sha256": "3529a196d35e384f37fa4ac8f188072d18f34f9b0c835c9909811c41091036f0"
+    "sha256": "b99d5947271f07ba510ef1419942489570fa61e384b9f7dcd3691a2ecfdca998"
   },
   "migrationTechnicalContract": {
     "path": "migration.json",
     "hashMode": "canonical-json-v1",
     "projection": "help-math-technical-manifest-v1",
-    "sha256": "31aae8e024b465d9d8431d7d1f8d1ed08b429c710bb02d43ef72b08124aa0bb3",
+    "sha256": "bb368a9edc98d7d6c6118a324c7453c997a607f3f60be686f36a7f190c8df7be",
     "excludedPaths": [
       "status",
       "created",
@@ -45,18 +45,25 @@
     "path": "evidence/full-frame-coverage.json",
     "hashMode": "canonical-json-v1",
     "projection": "help-math-trace-coverage-identity-v1",
-    "sha256": "8f1cd883c4c659901fbe753da6d3fde9079a3c77126d211693a2727bc65b3bac",
+    "sha256": "cf9cd00208ac4e452eb7a4c5f4e693b0d1c3b86fef645688dd94a83f0ef4e1e2",
     "includedPaths": [
       "requirementId",
+      "requirementSchemaVersion",
+      "coverageRole",
+      "coverageGroupId",
       "scenario",
       "frameDomainId",
       "traceId",
       "language",
       "seed",
       "requiredRange",
+      "requiredFrameSet",
+      "selectionSha256",
+      "naturalPath",
       "entryState",
       "entryStateSha256",
-      "baselineAuthorityRequirement"
+      "baselineAuthorityRequirement",
+      "strictAcceptanceEffect"
     ],
     "excludedPaths": [
       "status",
@@ -73,7 +80,908 @@
       "metricsSha256"
     ]
   },
+  "captureOrchestration": {
+    "path": "output/playwright/coverage-v2/course-g04-l03-vb-007-all-visible-companions-en-r5/capture-orchestration.json",
+    "bytes": 42750,
+    "sha256": "f2cbd9d63417026a3da7b5971be8625510bb84c6b7658e8c1542de1df5d26b4b",
+    "schemaVersion": 2,
+    "selectionContract": "normalized-requirement-physical-frame-selection-v1"
+  },
+  "currentJavascriptPhysicalFrameAggregate": {
+    "schemaVersion": 1,
+    "authority": "validated-current-javascript-physical-frames-only",
+    "strictAcceptanceEffect": "none",
+    "orchestration": {
+      "path": "output/playwright/coverage-v2/course-g04-l03-vb-007-all-visible-companions-en-r5/capture-orchestration.json",
+      "sha256": "f2cbd9d63417026a3da7b5971be8625510bb84c6b7658e8c1542de1df5d26b4b",
+      "selectionContract": "normalized-requirement-physical-frame-selection-v1"
+    },
+    "groups": [
+      {
+        "coverageGroupId": "coverage-group:sprite-166:lesson-shell-natural-entry-path-2:en:seed-0",
+        "requirementSchemaVersion": 2,
+        "legacySingleton": false,
+        "frameDomainId": "sprite-166",
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": "0",
+        "entryStateSha256": "c3968134acb22145f1bfb35bc54a286ce0009fc567d26e772bb50bdd38059485",
+        "requiredUniverse": {
+          "firstFrame": 1,
+          "lastFrame": 19
+        },
+        "declaredRequirementIds": [
+          "req:sprite-166:lesson-shell-natural-entry-path-2:en"
+        ],
+        "contributingRequirementIds": [
+          "req:sprite-166:lesson-shell-natural-entry-path-2:en"
+        ],
+        "coveredFrameCount": 19,
+        "coveredFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "missingFrames": [],
+        "status": "complete"
+      },
+      {
+        "coverageGroupId": "legacy-singleton:req:sprite-105:lesson-shell-natural-entry:en",
+        "requirementSchemaVersion": 1,
+        "legacySingleton": true,
+        "frameDomainId": "sprite-105",
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": "0",
+        "entryStateSha256": "94606c2d7326b99c69e7727a7d4a0aed0322208350de38c3c1f62ed6c6a70bc2",
+        "requiredUniverse": {
+          "firstFrame": 1,
+          "lastFrame": 28
+        },
+        "declaredRequirementIds": [
+          "req:sprite-105:lesson-shell-natural-entry:en"
+        ],
+        "contributingRequirementIds": [
+          "req:sprite-105:lesson-shell-natural-entry:en"
+        ],
+        "coveredFrameCount": 28,
+        "coveredFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ],
+        "missingFrames": [],
+        "status": "complete"
+      },
+      {
+        "coverageGroupId": "legacy-singleton:req:sprite-136:lesson-shell-natural-entry:en",
+        "requirementSchemaVersion": 1,
+        "legacySingleton": true,
+        "frameDomainId": "sprite-136",
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": "0",
+        "entryStateSha256": "415fdfe0f86e2846fbdff786a68ad6b0d4400b066022a98fc87de16c580b4f8f",
+        "requiredUniverse": {
+          "firstFrame": 1,
+          "lastFrame": 26
+        },
+        "declaredRequirementIds": [
+          "req:sprite-136:lesson-shell-natural-entry:en"
+        ],
+        "contributingRequirementIds": [
+          "req:sprite-136:lesson-shell-natural-entry:en"
+        ],
+        "coveredFrameCount": 26,
+        "coveredFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26
+        ],
+        "missingFrames": [],
+        "status": "complete"
+      },
+      {
+        "coverageGroupId": "legacy-singleton:req:sprite-142:lesson-shell-natural-entry:en",
+        "requirementSchemaVersion": 1,
+        "legacySingleton": true,
+        "frameDomainId": "sprite-142",
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": "0",
+        "entryStateSha256": "54e0b0922ae3295d938527704caa21f7d954bf4c2de7e8805c2bab2d26da6830",
+        "requiredUniverse": {
+          "firstFrame": 1,
+          "lastFrame": 22
+        },
+        "declaredRequirementIds": [
+          "req:sprite-142:lesson-shell-natural-entry:en"
+        ],
+        "contributingRequirementIds": [
+          "req:sprite-142:lesson-shell-natural-entry:en"
+        ],
+        "coveredFrameCount": 22,
+        "coveredFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22
+        ],
+        "missingFrames": [],
+        "status": "complete"
+      },
+      {
+        "coverageGroupId": "legacy-singleton:req:sprite-166:lesson-shell-natural-entry:en",
+        "requirementSchemaVersion": 1,
+        "legacySingleton": true,
+        "frameDomainId": "sprite-166",
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": "0",
+        "entryStateSha256": "ee0cc4b279c5a53bd3ed409c46d18448b4f3a07645112299be08a07ac6052268",
+        "requiredUniverse": {
+          "firstFrame": 1,
+          "lastFrame": 19
+        },
+        "declaredRequirementIds": [
+          "req:sprite-166:lesson-shell-natural-entry:en"
+        ],
+        "contributingRequirementIds": [
+          "req:sprite-166:lesson-shell-natural-entry:en"
+        ],
+        "coveredFrameCount": 19,
+        "coveredFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "missingFrames": [],
+        "status": "complete"
+      },
+      {
+        "coverageGroupId": "legacy-singleton:req:sprite-176:lesson-shell-natural-entry:en",
+        "requirementSchemaVersion": 1,
+        "legacySingleton": true,
+        "frameDomainId": "sprite-176",
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": "0",
+        "entryStateSha256": "df059bb5b3071b129dd7cf26d6759ff0d65a74c4febc922f1f6eacfbfe36c7b0",
+        "requiredUniverse": {
+          "firstFrame": 1,
+          "lastFrame": 27
+        },
+        "declaredRequirementIds": [
+          "req:sprite-176:lesson-shell-natural-entry:en"
+        ],
+        "contributingRequirementIds": [
+          "req:sprite-176:lesson-shell-natural-entry:en"
+        ],
+        "coveredFrameCount": 27,
+        "coveredFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27
+        ],
+        "missingFrames": [],
+        "status": "complete"
+      },
+      {
+        "coverageGroupId": "legacy-singleton:req:sprite-202:lesson-shell-natural-entry:en",
+        "requirementSchemaVersion": 1,
+        "legacySingleton": true,
+        "frameDomainId": "sprite-202",
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": "0",
+        "entryStateSha256": "90608e41a1fc2b5b8470666ce8c5ba46d3394f4d74ca3f3907df83f35cfc3353",
+        "requiredUniverse": {
+          "firstFrame": 1,
+          "lastFrame": 31
+        },
+        "declaredRequirementIds": [
+          "req:sprite-202:lesson-shell-natural-entry:en"
+        ],
+        "contributingRequirementIds": [
+          "req:sprite-202:lesson-shell-natural-entry:en"
+        ],
+        "coveredFrameCount": 31,
+        "coveredFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31
+        ],
+        "missingFrames": [],
+        "status": "complete"
+      },
+      {
+        "coverageGroupId": "legacy-singleton:req:sprite-234:lesson-shell-natural-entry:en",
+        "requirementSchemaVersion": 1,
+        "legacySingleton": true,
+        "frameDomainId": "sprite-234",
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": "0",
+        "entryStateSha256": "3905fde629172b1985c56f74a617d28802ee9578f2469940fa1850ea0a31dca0",
+        "requiredUniverse": {
+          "firstFrame": 1,
+          "lastFrame": 25
+        },
+        "declaredRequirementIds": [
+          "req:sprite-234:lesson-shell-natural-entry:en"
+        ],
+        "contributingRequirementIds": [
+          "req:sprite-234:lesson-shell-natural-entry:en"
+        ],
+        "coveredFrameCount": 25,
+        "coveredFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25
+        ],
+        "missingFrames": [],
+        "status": "complete"
+      },
+      {
+        "coverageGroupId": "legacy-singleton:req:sprite-267:lesson-shell-natural-entry:en",
+        "requirementSchemaVersion": 1,
+        "legacySingleton": true,
+        "frameDomainId": "sprite-267",
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": "0",
+        "entryStateSha256": "e191e63fea38cc786654bc9af5161151dd27b610c226358bccf8e0a68194de21",
+        "requiredUniverse": {
+          "firstFrame": 1,
+          "lastFrame": 27
+        },
+        "declaredRequirementIds": [
+          "req:sprite-267:lesson-shell-natural-entry:en"
+        ],
+        "contributingRequirementIds": [
+          "req:sprite-267:lesson-shell-natural-entry:en"
+        ],
+        "coveredFrameCount": 27,
+        "coveredFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27
+        ],
+        "missingFrames": [],
+        "status": "complete"
+      },
+      {
+        "coverageGroupId": "legacy-singleton:req:sprite-271:lesson-shell-natural-entry:en",
+        "requirementSchemaVersion": 1,
+        "legacySingleton": true,
+        "frameDomainId": "sprite-271",
+        "scenario": "source-static-frame",
+        "language": "en",
+        "seed": "0",
+        "entryStateSha256": "7cd786d5913ed1607feeb7bbb356e033c203dcffabd4509a9c541631f5b47ca9",
+        "requiredUniverse": {
+          "firstFrame": 1,
+          "lastFrame": 69
+        },
+        "declaredRequirementIds": [
+          "req:sprite-271:lesson-shell-natural-entry:en"
+        ],
+        "contributingRequirementIds": [
+          "req:sprite-271:lesson-shell-natural-entry:en"
+        ],
+        "coveredFrameCount": 69,
+        "coveredFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69
+        ],
+        "missingFrames": [],
+        "status": "complete"
+      },
+      {
+        "coverageGroupId": "legacy-singleton:req:sprite-45:lesson-shell-natural-entry:en",
+        "requirementSchemaVersion": 1,
+        "legacySingleton": true,
+        "frameDomainId": "sprite-45",
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": "0",
+        "entryStateSha256": "f6b3032996d22b025c1a1c3b7265b2afd327cc9729456177532c40d01bf68259",
+        "requiredUniverse": {
+          "firstFrame": 1,
+          "lastFrame": 28
+        },
+        "declaredRequirementIds": [
+          "req:sprite-45:lesson-shell-natural-entry:en"
+        ],
+        "contributingRequirementIds": [
+          "req:sprite-45:lesson-shell-natural-entry:en"
+        ],
+        "coveredFrameCount": 28,
+        "coveredFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28
+        ],
+        "missingFrames": [],
+        "status": "complete"
+      },
+      {
+        "coverageGroupId": "legacy-singleton:req:sprite-63:lesson-shell-natural-entry:en",
+        "requirementSchemaVersion": 1,
+        "legacySingleton": true,
+        "frameDomainId": "sprite-63",
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": "0",
+        "entryStateSha256": "279bfeceff681a4bccede0525917ab6ed4564314c3e0695293103e04287cd951",
+        "requiredUniverse": {
+          "firstFrame": 1,
+          "lastFrame": 27
+        },
+        "declaredRequirementIds": [
+          "req:sprite-63:lesson-shell-natural-entry:en"
+        ],
+        "contributingRequirementIds": [
+          "req:sprite-63:lesson-shell-natural-entry:en"
+        ],
+        "coveredFrameCount": 27,
+        "coveredFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27
+        ],
+        "missingFrames": [],
+        "status": "complete"
+      },
+      {
+        "coverageGroupId": "legacy-singleton:req:sprite-77:lesson-shell-natural-entry:en",
+        "requirementSchemaVersion": 1,
+        "legacySingleton": true,
+        "frameDomainId": "sprite-77",
+        "scenario": "source-static-reachable-domain",
+        "language": "en",
+        "seed": "0",
+        "entryStateSha256": "6d289ccfd21aef3cc29a679348745d19062a009c0f26f09d5cfa4546753ef4dd",
+        "requiredUniverse": {
+          "firstFrame": 1,
+          "lastFrame": 31
+        },
+        "declaredRequirementIds": [
+          "req:sprite-77:lesson-shell-natural-entry:en"
+        ],
+        "contributingRequirementIds": [
+          "req:sprite-77:lesson-shell-natural-entry:en"
+        ],
+        "coveredFrameCount": 31,
+        "coveredFrames": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31
+        ],
+        "missingFrames": [],
+        "status": "complete"
+      }
+    ]
+  },
   "requirements": [
+    {
+      "requirementId": "req:sprite-105:lesson-shell-natural-entry:en",
+      "frameDomainId": "sprite-105",
+      "traceId": "trace:sprite-105:lesson-shell-natural-entry:en:seed-0",
+      "entryStateSha256": "94606c2d7326b99c69e7727a7d4a0aed0322208350de38c3c1f62ed6c6a70bc2",
+      "scenario": "source-static-reachable-domain",
+      "language": "en",
+      "seed": "0",
+      "captureManifest": {
+        "path": "output/playwright/coverage-v2/course-g04-l03-vb-007-all-visible-companions-en-r5/req-sprite-105-lesson-shell-natural-entry-en/capture-manifest.json",
+        "sha256": "af189a7004518352a5416618c11e552fa923a23b18d37d3b52111c57358c2d03"
+      },
+      "capturedFrameCount": 28,
+      "frameSetSha256": "0fa23124ba6cdc824ae1096568be4684eeec6b49fc8fffbdae21c0bdf85fe8d4",
+      "result": "validated-current-javascript-output-only"
+    },
+    {
+      "requirementId": "req:sprite-136:lesson-shell-natural-entry:en",
+      "frameDomainId": "sprite-136",
+      "traceId": "trace:sprite-136:lesson-shell-natural-entry:en:seed-0",
+      "entryStateSha256": "415fdfe0f86e2846fbdff786a68ad6b0d4400b066022a98fc87de16c580b4f8f",
+      "scenario": "source-static-reachable-domain",
+      "language": "en",
+      "seed": "0",
+      "captureManifest": {
+        "path": "output/playwright/coverage-v2/course-g04-l03-vb-007-all-visible-companions-en-r5/req-sprite-136-lesson-shell-natural-entry-en/capture-manifest.json",
+        "sha256": "ab43d06c1cbd0e3e097f88f49fcd9552602a7b30d894efab52e73036bfad8a56"
+      },
+      "capturedFrameCount": 26,
+      "frameSetSha256": "7c42c345b77e137e0152d6c999500ed8848a2a6fbc7c323d624d14fa84d9f220",
+      "result": "validated-current-javascript-output-only"
+    },
+    {
+      "requirementId": "req:sprite-142:lesson-shell-natural-entry:en",
+      "frameDomainId": "sprite-142",
+      "traceId": "trace:sprite-142:lesson-shell-natural-entry:en:seed-0",
+      "entryStateSha256": "54e0b0922ae3295d938527704caa21f7d954bf4c2de7e8805c2bab2d26da6830",
+      "scenario": "source-static-reachable-domain",
+      "language": "en",
+      "seed": "0",
+      "captureManifest": {
+        "path": "output/playwright/coverage-v2/course-g04-l03-vb-007-all-visible-companions-en-r5/req-sprite-142-lesson-shell-natural-entry-en/capture-manifest.json",
+        "sha256": "40e43d03670672267d4bbc56fb3cf994ffa5bc542050341458c14c2eab7c76bc"
+      },
+      "capturedFrameCount": 22,
+      "frameSetSha256": "fa3088e74b98a23f7fe733804b79f80151cd2613dd7e4002ca02edf97fe97d68",
+      "result": "validated-current-javascript-output-only"
+    },
+    {
+      "requirementId": "req:sprite-166:lesson-shell-natural-entry-path-2:en",
+      "frameDomainId": "sprite-166",
+      "traceId": "trace:sprite-166:lesson-shell-natural-entry-path-2:en:seed-0",
+      "entryStateSha256": "c3968134acb22145f1bfb35bc54a286ce0009fc567d26e772bb50bdd38059485",
+      "scenario": "source-static-reachable-domain",
+      "language": "en",
+      "seed": "0",
+      "requirementSchemaVersion": 2,
+      "coverageRole": "placement-path",
+      "coverageGroupId": "coverage-group:sprite-166:lesson-shell-natural-entry-path-2:en:seed-0",
+      "selectionKind": "required-range",
+      "selectionSha256": "ca49a349a9744bc4230db0ae45569ae7cdd98b513eaf835834ca66e4ea4edec1",
+      "requiredUniverse": {
+        "firstFrame": 1,
+        "lastFrame": 19
+      },
+      "selectedPhysicalFrames": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "orchestration": {
+        "path": "output/playwright/coverage-v2/course-g04-l03-vb-007-all-visible-companions-en-r5/capture-orchestration.json",
+        "sha256": "f2cbd9d63417026a3da7b5971be8625510bb84c6b7658e8c1542de1df5d26b4b"
+      },
+      "captureManifest": {
+        "path": "output/playwright/coverage-v2/course-g04-l03-vb-007-all-visible-companions-en-r5/req-sprite-166-lesson-shell-natural-entry-path-2-en/capture-manifest.json",
+        "sha256": "01139b2401ef07ba579318cd8e438183e8392564dc8b59adac3c6c63beb78df6"
+      },
+      "capturedFrameCount": 19,
+      "frameSetSha256": "21e7eb16cc39bc3b3a13c617c64b6f92d73cf0e439324be02481c4111f9439eb",
+      "result": "validated-current-javascript-output-only"
+    },
+    {
+      "requirementId": "req:sprite-166:lesson-shell-natural-entry:en",
+      "frameDomainId": "sprite-166",
+      "traceId": "trace:sprite-166:lesson-shell-natural-entry:en:seed-0",
+      "entryStateSha256": "ee0cc4b279c5a53bd3ed409c46d18448b4f3a07645112299be08a07ac6052268",
+      "scenario": "source-static-reachable-domain",
+      "language": "en",
+      "seed": "0",
+      "captureManifest": {
+        "path": "output/playwright/coverage-v2/course-g04-l03-vb-007-all-visible-companions-en-r5/req-sprite-166-lesson-shell-natural-entry-en/capture-manifest.json",
+        "sha256": "319b71bd741325553278490af8032f4372d69798b9fcfbc7f0e1c3f78e6574c0"
+      },
+      "capturedFrameCount": 19,
+      "frameSetSha256": "14c1f8ed8f87592a0cb36cbd9fd3e6f07d54ee98112ac4f43f4f5057d0471eac",
+      "result": "validated-current-javascript-output-only"
+    },
+    {
+      "requirementId": "req:sprite-176:lesson-shell-natural-entry:en",
+      "frameDomainId": "sprite-176",
+      "traceId": "trace:sprite-176:lesson-shell-natural-entry:en:seed-0",
+      "entryStateSha256": "df059bb5b3071b129dd7cf26d6759ff0d65a74c4febc922f1f6eacfbfe36c7b0",
+      "scenario": "source-static-reachable-domain",
+      "language": "en",
+      "seed": "0",
+      "captureManifest": {
+        "path": "output/playwright/coverage-v2/course-g04-l03-vb-007-all-visible-companions-en-r5/req-sprite-176-lesson-shell-natural-entry-en/capture-manifest.json",
+        "sha256": "4c5b27f847765e4a35c00ff06b5eccfcde1a546242f8417b75ebe40dad39c618"
+      },
+      "capturedFrameCount": 27,
+      "frameSetSha256": "9a5d1a9f7bb5f3773bf3c368ef92485ae164768957ee219d2046c136c43f50a2",
+      "result": "validated-current-javascript-output-only"
+    },
+    {
+      "requirementId": "req:sprite-202:lesson-shell-natural-entry:en",
+      "frameDomainId": "sprite-202",
+      "traceId": "trace:sprite-202:lesson-shell-natural-entry:en:seed-0",
+      "entryStateSha256": "90608e41a1fc2b5b8470666ce8c5ba46d3394f4d74ca3f3907df83f35cfc3353",
+      "scenario": "source-static-reachable-domain",
+      "language": "en",
+      "seed": "0",
+      "captureManifest": {
+        "path": "output/playwright/coverage-v2/course-g04-l03-vb-007-all-visible-companions-en-r5/req-sprite-202-lesson-shell-natural-entry-en/capture-manifest.json",
+        "sha256": "9e56c6cf7fa9eb63d8ff56d5af35e68b193b7a8e06fdb717ffab0ede721e4b78"
+      },
+      "capturedFrameCount": 31,
+      "frameSetSha256": "f75c35b084924f2a44435b93c38a8ab372fe24774d13118365aeb51638dfe39c",
+      "result": "validated-current-javascript-output-only"
+    },
+    {
+      "requirementId": "req:sprite-234:lesson-shell-natural-entry:en",
+      "frameDomainId": "sprite-234",
+      "traceId": "trace:sprite-234:lesson-shell-natural-entry:en:seed-0",
+      "entryStateSha256": "3905fde629172b1985c56f74a617d28802ee9578f2469940fa1850ea0a31dca0",
+      "scenario": "source-static-reachable-domain",
+      "language": "en",
+      "seed": "0",
+      "captureManifest": {
+        "path": "output/playwright/coverage-v2/course-g04-l03-vb-007-all-visible-companions-en-r5/req-sprite-234-lesson-shell-natural-entry-en/capture-manifest.json",
+        "sha256": "3f879c5f6c9a85c8febd7166058a341ff49cfd31f4d7364e315debc8853954b7"
+      },
+      "capturedFrameCount": 25,
+      "frameSetSha256": "8f7468b1f61c5f60c8b37c7982e331124cb7578857c525b16d65c8c2101d9eba",
+      "result": "validated-current-javascript-output-only"
+    },
+    {
+      "requirementId": "req:sprite-267:lesson-shell-natural-entry:en",
+      "frameDomainId": "sprite-267",
+      "traceId": "trace:sprite-267:lesson-shell-natural-entry:en:seed-0",
+      "entryStateSha256": "e191e63fea38cc786654bc9af5161151dd27b610c226358bccf8e0a68194de21",
+      "scenario": "source-static-reachable-domain",
+      "language": "en",
+      "seed": "0",
+      "captureManifest": {
+        "path": "output/playwright/coverage-v2/course-g04-l03-vb-007-all-visible-companions-en-r5/req-sprite-267-lesson-shell-natural-entry-en/capture-manifest.json",
+        "sha256": "f5d0daca75ebec3352f12544a38d93d08a1bd133eddfcca345d98f8e6de79aa2"
+      },
+      "capturedFrameCount": 27,
+      "frameSetSha256": "73a54c62e3c42272ba9f75de94ad4fd520c6449039ff45616fd9cfa3e66ab62c",
+      "result": "validated-current-javascript-output-only"
+    },
     {
       "requirementId": "req:sprite-271:lesson-shell-natural-entry:en",
       "frameDomainId": "sprite-271",
@@ -83,25 +991,91 @@
       "language": "en",
       "seed": "0",
       "captureManifest": {
-        "path": "output/playwright/g4-l3-current-js-v2/course-g04-l03-vb-007-en-current/req-sprite-271-lesson-shell-natural-entry-en/capture-manifest.json",
-        "sha256": "fcdbbaf881781bb81d7d234e63d6d3f0f7f6aed11e299fa18bc94c2ce534b284"
+        "path": "output/playwright/coverage-v2/course-g04-l03-vb-007-all-visible-companions-en-r5/req-sprite-271-lesson-shell-natural-entry-en/capture-manifest.json",
+        "sha256": "317ad5431e3c075d18d0eeaec5bbd975273601ab6b2e3bc70a8e422ea7d5819b"
       },
       "capturedFrameCount": 69,
-      "frameSetSha256": "56f80e45a085f26de0b9676e75faef74a0a9b461837166fcf21226684e26c6f4",
+      "frameSetSha256": "1a366d817ec068f8b0a69bd09c4f1dc7d66132f021a10e117e814aba72956767",
+      "result": "validated-current-javascript-output-only"
+    },
+    {
+      "requirementId": "req:sprite-45:lesson-shell-natural-entry:en",
+      "frameDomainId": "sprite-45",
+      "traceId": "trace:sprite-45:lesson-shell-natural-entry:en:seed-0",
+      "entryStateSha256": "f6b3032996d22b025c1a1c3b7265b2afd327cc9729456177532c40d01bf68259",
+      "scenario": "source-static-reachable-domain",
+      "language": "en",
+      "seed": "0",
+      "captureManifest": {
+        "path": "output/playwright/coverage-v2/course-g04-l03-vb-007-all-visible-companions-en-r5/req-sprite-45-lesson-shell-natural-entry-en/capture-manifest.json",
+        "sha256": "35ee460530d234d733b8e9da64868531df7484f44ce3a158d6f347251b26b509"
+      },
+      "capturedFrameCount": 28,
+      "frameSetSha256": "12bc55f201489f91f000c62f816d5b1f666b5ba084ef97475dbf73aae4656bf6",
+      "result": "validated-current-javascript-output-only"
+    },
+    {
+      "requirementId": "req:sprite-63:lesson-shell-natural-entry:en",
+      "frameDomainId": "sprite-63",
+      "traceId": "trace:sprite-63:lesson-shell-natural-entry:en:seed-0",
+      "entryStateSha256": "279bfeceff681a4bccede0525917ab6ed4564314c3e0695293103e04287cd951",
+      "scenario": "source-static-reachable-domain",
+      "language": "en",
+      "seed": "0",
+      "captureManifest": {
+        "path": "output/playwright/coverage-v2/course-g04-l03-vb-007-all-visible-companions-en-r5/req-sprite-63-lesson-shell-natural-entry-en/capture-manifest.json",
+        "sha256": "c3a4515d95627df46a638b723ab9fddc7a5a83a218304646e2052dcc70caf35e"
+      },
+      "capturedFrameCount": 27,
+      "frameSetSha256": "ef6e7f3a4a9706057e0bcccbb8a63be65b83760194c2f1ea5c8042a558967a0d",
+      "result": "validated-current-javascript-output-only"
+    },
+    {
+      "requirementId": "req:sprite-77:lesson-shell-natural-entry:en",
+      "frameDomainId": "sprite-77",
+      "traceId": "trace:sprite-77:lesson-shell-natural-entry:en:seed-0",
+      "entryStateSha256": "6d289ccfd21aef3cc29a679348745d19062a009c0f26f09d5cfa4546753ef4dd",
+      "scenario": "source-static-reachable-domain",
+      "language": "en",
+      "seed": "0",
+      "captureManifest": {
+        "path": "output/playwright/coverage-v2/course-g04-l03-vb-007-all-visible-companions-en-r5/req-sprite-77-lesson-shell-natural-entry-en/capture-manifest.json",
+        "sha256": "ea31ded181d7e8ce7d50f29d4b84b89645d44a904156ee16df1765e684f2e57c"
+      },
+      "capturedFrameCount": 31,
+      "frameSetSha256": "accb9bf2be07a8785fd25d01ad20742199f19413d8cbf0dacd68640946c516a1",
       "result": "validated-current-javascript-output-only"
     }
   ],
   "summary": {
-    "declaredRequirementCount": 4,
-    "requirementCount": 1,
-    "capturedFrameCount": 69,
-    "missingRequirementCount": 3,
+    "declaredRequirementCount": 31,
+    "requirementCount": 13,
+    "capturedFrameCount": 379,
+    "missingRequirementCount": 18,
     "missingRequirementIds": [
       "req:root:lesson-shell-natural-entry:en",
       "req:root:lesson-shell-natural-entry:es",
-      "req:sprite-271:lesson-shell-natural-entry:es"
+      "req:sprite-105:lesson-shell-natural-entry:es",
+      "req:sprite-114:lesson-shell-natural-entry:en",
+      "req:sprite-114:lesson-shell-natural-entry:es",
+      "req:sprite-136:lesson-shell-natural-entry:es",
+      "req:sprite-142:lesson-shell-natural-entry:es",
+      "req:sprite-166:lesson-shell-natural-entry:es",
+      "req:sprite-176:lesson-shell-natural-entry:es",
+      "req:sprite-202:lesson-shell-natural-entry:es",
+      "req:sprite-234:lesson-shell-natural-entry:es",
+      "req:sprite-267:lesson-shell-natural-entry:es",
+      "req:sprite-271:lesson-shell-natural-entry:es",
+      "req:sprite-42:lesson-shell-natural-entry:en",
+      "req:sprite-42:lesson-shell-natural-entry:es",
+      "req:sprite-45:lesson-shell-natural-entry:es",
+      "req:sprite-63:lesson-shell-natural-entry:es",
+      "req:sprite-77:lesson-shell-natural-entry:es"
     ],
-    "missingFrameCount": 89,
+    "missingFrameCount": 426,
+    "currentJavascriptPhysicalAggregateGroupCount": 13,
+    "currentJavascriptPhysicalCoveredFrameCount": 379,
+    "currentJavascriptPhysicalMissingFrameCount": 0,
     "validationErrors": 0
   },
   "strictAcceptanceEffect": "none"

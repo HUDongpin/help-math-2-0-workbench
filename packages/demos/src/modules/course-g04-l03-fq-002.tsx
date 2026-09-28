@@ -9,7 +9,11 @@ import React, {
 } from "react";
 import {createPortal} from "react-dom";
 
+import {FQ_NUMBER_LINES, FQ_SYMBOL_NAMES} from "../timelines/course-g04-l03-fq-number-lines";
+
 import type {AnimationRendererProps} from "../contract";
+import {G4_L3_FQ_AUDIO} from "../g4-l3-fq-audio.generated";
+import {getFinalQuizReadingAsset, type FinalQuizAudioPart} from "../timelines/course-g04-l03-fq-reading";
 import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
 import {
   COURSE_G04_L03_FQ_002_DISABLED_INTEGRATIONS,
@@ -21,7 +25,6 @@ import {
   type CourseG04L03Fq002InteractionAction,
   type CourseG04L03Fq002InteractionState,
   type CourseG04L03Fq002OptionId,
-  type CourseG04L03Fq002OptionNumber,
   type CourseG04L03Fq002Question,
   type CourseG04L03Fq002ReviewItem,
 } from "../timelines/course-g04-l03-fq-002-quiz-interaction";
@@ -192,15 +195,6 @@ export interface FinalQuizFunctionalRendererConfig {
   readonly resultsGradeLabel: string;
 }
 
-// Native 800×600 coordinates shared by the A–D option-symbol cells in Q7–Q12.
-const SOURCE_SYMBOL_CROP = Object.freeze({
-  x: 108,
-  y: 256,
-  width: 64,
-  height: 57,
-  rowStep: 49,
-});
-
 const visuallyHiddenStyle = {
   clip: "rect(0 0 0 0)",
   clipPath: "inset(50%)",
@@ -219,86 +213,53 @@ function isDeterministicEvidenceCapture({
 
 function sourceCanvasStatusMessage(status: SourceCanvasStatus) {
   if (status === "error") {
-    return "The source question drawing could not load. Quiz controls remain disabled.";
+    return "The question could not load. Please replay the quiz to try again.";
   }
   if (status === "blocked") {
-    return "The source question drawing is unavailable for this context. Quiz controls remain disabled.";
+    return "This question is unavailable.";
   }
-  return "Loading the source question drawing before quiz controls are enabled…";
+  return "Loading the question…";
 }
 
-function SourceSymbolCrop({
-  optionNumber,
-  snapshot,
-  usage,
-}: {
-  readonly optionNumber: CourseG04L03Fq002OptionNumber;
-  readonly snapshot: SourceCanvasSnapshot | null;
-  readonly usage: "choice" | "review" | "target";
-}) {
-  const cropRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const crop = cropRef.current;
-    const context = crop?.getContext("2d");
-    if (!crop || !context) return;
-    context.clearRect(0, 0, crop.width, crop.height);
-    if (!snapshot) return;
-    context.drawImage(
-      snapshot.element,
-      SOURCE_SYMBOL_CROP.x,
-      SOURCE_SYMBOL_CROP.y
-        + (optionNumber - 1) * SOURCE_SYMBOL_CROP.rowStep,
-      SOURCE_SYMBOL_CROP.width,
-      SOURCE_SYMBOL_CROP.height,
-      0,
-      0,
-      crop.width,
-      crop.height,
-    );
-  }, [optionNumber, snapshot]);
-
+function FinalQuizSymbol({optionId}: {readonly optionId: CourseG04L03Fq002OptionId}) {
   return (
-    <canvas
-      aria-hidden="true"
-      className="course-g04-l03-fq-002-source-symbol-crop"
-      data-source-symbol-crop={usage}
-      data-source-symbol-option-number={optionNumber}
-      data-source-symbol-projection-frame={snapshot?.frame}
-      height={SOURCE_SYMBOL_CROP.height}
-      ref={cropRef}
-      width={SOURCE_SYMBOL_CROP.width}
-    />
+    <svg aria-hidden="true" className="course-g04-l03-fq-002-choice-symbol" focusable="false" viewBox="0 0 56 44">
+      <g fill="#d99a00" stroke="#b66518" strokeWidth="2" strokeLinejoin="round">
+        {optionId === "A" ? <rect x="13" y="7" width="30" height="30" />
+          : optionId === "B" ? <circle cx="28" cy="22" r="16" />
+          : optionId === "C" ? <path d="M28 5 47 38H9Z" />
+          : <path d="M28 39C20 32 8 24 8 14c0-7 5-11 11-11 4 0 7 2 9 5 2-3 5-5 9-5 6 0 11 4 11 11 0 10-12 18-20 25Z" />}
+      </g>
+    </svg>
   );
 }
 
-function SourceSymbolTarget({
-  crossPlacement = false,
-  question,
-  snapshot,
-}: {
-  readonly crossPlacement?: boolean;
-  readonly question: CourseG04L03Fq002Question;
-  readonly snapshot: SourceCanvasSnapshot | null;
-}) {
-  if (
-    question.options[0]?.contentKind !== "source-symbol-only"
-    || crossPlacement
-  ) return null;
+function FinalQuizNumberLine({question}: {readonly question: CourseG04L03Fq002Question}) {
+  const line = FQ_NUMBER_LINES[question.id];
+  if (!line) return null;
+  const xFor = (value: number) => 32 + (value - line.min) * 556 / (line.max - line.min);
+  const description = `Number line from ${line.min} to ${line.max}, with one tick per integer. `
+    + Object.entries(line.positions).map(([id, value]) =>
+      `${FQ_SYMBOL_NAMES[id as CourseG04L03Fq002OptionId]} at ${value}`).join("; ") + ".";
   return (
-    <div
-      aria-label="Target symbol projected from the legacy question drawing"
-      className="course-g04-l03-fq-002-source-symbol-target"
-      data-source-symbol-projection="exact-source-canvas-option-pixels"
-      role="img"
-    >
-      <span>Target shown in the source question</span>
-      <SourceSymbolCrop
-        optionNumber={question.correctOptionNumber}
-        snapshot={snapshot}
-        usage="target"
-      />
-    </div>
+    <svg aria-label={description} className="course-g04-l03-fq-002-number-line"
+      data-number-line-question={question.id}
+      data-presentation-kind="source-bound-semantic-number-line"
+      role="img" viewBox="0 0 620 142">
+      <path d="M12 82H608M12 82l10-7M12 82l10 7M608 82l-10-7M608 82l-10 7" fill="none" stroke="#213c66" strokeWidth="2" />
+      {Array.from({length: line.max - line.min + 1}, (_, index) => index + line.min).map((value) => (
+        <g key={value} data-number-line-value={value}>
+          <line x1={xFor(value)} x2={xFor(value)} y1={value % 5 === 0 ? 73 : 77} y2="90" stroke="#213c66" strokeWidth={value % 5 === 0 ? 2 : 1.4} />
+          {value % 5 === 0 ? <text x={xFor(value)} y="119" textAnchor="middle" fill="#213c66" fontSize="26" fontFamily="system-ui, sans-serif">{value < 0 ? `−${-value}` : value}</text> : null}
+        </g>
+      ))}
+      {(Object.entries(line.positions) as [CourseG04L03Fq002OptionId, number][]).map(([id, value]) => (
+        <g key={id} data-number-line-symbol={FQ_SYMBOL_NAMES[id]} data-number-line-position={value}>
+          <foreignObject x={xFor(value) - 28} y="13" width="56" height="44"><FinalQuizSymbol optionId={id} /></foreignObject>
+          <line x1={xFor(value)} x2={xFor(value)} y1="58" y2="71" stroke="#6b86a9" strokeWidth="1.5" />
+        </g>
+      ))}
+    </svg>
   );
 }
 
@@ -407,16 +368,7 @@ function QuestionContext({
   }
 
   if (question.id >= 7 && question.id <= 12) {
-    return (
-      <p
-        aria-label={`Source number-line labels: ${question.contextText.join(", ")}`}
-        className="course-g04-l03-fq-002-number-line-labels"
-      >
-        {question.contextText.map((label) => (
-          <span key={label}>{label}</span>
-        ))}
-      </p>
-    );
+    return <FinalQuizNumberLine question={question} />;
   }
 
   return (
@@ -426,7 +378,62 @@ function QuestionContext({
   );
 }
 
+interface QuizReading {
+  readonly enabled: boolean;
+  readonly language: 'en' | 'es';
+  readonly activeCueId: string | null;
+  readonly setLanguage: (language: 'en' | 'es') => void;
+  readonly cueId: (questionId: number, part: FinalQuizAudioPart) => string | null;
+  readonly read: (questionId: number, part: FinalQuizAudioPart) => void;
+}
+
+function ReadingButton({reading, questionId, part, disabled, showLabel = false}: {
+  readonly reading: QuizReading;
+  readonly questionId: number;
+  readonly part: FinalQuizAudioPart;
+  readonly disabled: boolean;
+  readonly showLabel?: boolean;
+}) {
+  const cueId = reading.cueId(questionId, part);
+  const playing = cueId !== null && cueId === reading.activeCueId;
+  const subject = part === 'question' ? 'question' : `option ${part}`;
+  const label = `${playing ? 'Stop' : 'Read'} ${subject} in ${reading.language === 'en' ? 'English' : 'Spanish'}`;
+  return <button aria-label={label} aria-pressed={playing}
+    className="course-g04-l03-fq-002-reading-button"
+    data-fq-reading-part={part} data-fq-reading-question={questionId}
+    data-fq-reading-cue-id={cueId ?? undefined}
+    data-fq002-focus-control={`read-${part}`}
+    disabled={disabled || !cueId}
+    onClick={() => reading.read(questionId, part)} title={label} type="button">
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="20" height="20">
+      {playing ? <rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" />
+        : <g fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4 6 8H3v8h3l5 4V4Z" /><path d="M15 8a6 6 0 0 1 0 8M18 5a10 10 0 0 1 0 14" /></g>}
+    </svg>
+    {showLabel ? <span>{playing ? 'Stop' : part === 'question' ? 'Read question' : `Read ${part}`}</span> : null}
+  </button>;
+}
+
+function ReadingToolbar({reading, questionId, disabled, review = false}: {
+  readonly reading: QuizReading;
+  readonly questionId: number;
+  readonly disabled: boolean;
+  readonly review?: boolean;
+}) {
+  if (!reading.enabled) return null;
+  return <div aria-label="Question audio" className="course-g04-l03-fq-002-reading-toolbar" role="group">
+    <label>Audio <select aria-label="Reading language" data-fq002-focus-control="reading-language"
+      disabled={disabled} value={reading.language}
+      onChange={event => reading.setLanguage(event.currentTarget.value === 'es' ? 'es' : 'en')}>
+      <option value="en" lang="en">English</option><option value="es" lang="es">Español</option>
+    </select></label>
+    <ReadingButton reading={reading} questionId={questionId} part="question" disabled={disabled} showLabel />
+    {review ? (['A', 'B', 'C', 'D'] as const).map(part =>
+      <ReadingButton key={part} reading={reading} questionId={questionId} part={part} disabled={disabled} showLabel />) : null}
+  </div>;
+}
+
 interface SharedSurfaceProps {
+  readonly reading: QuizReading;
   readonly answerTransitionLocked: boolean;
   readonly canvasStatus: SourceCanvasStatus;
   readonly controlsReady: boolean;
@@ -445,7 +452,6 @@ interface SharedSurfaceProps {
   readonly reducedMotion: boolean;
   readonly resultsGradeLabel: string;
   readonly reviewItem: CourseG04L03Fq002ReviewItem | null;
-  readonly sourceCanvasSnapshot: SourceCanvasSnapshot | null;
 }
 
 interface MobileSurfaceProps extends SharedSurfaceProps {
@@ -460,8 +466,9 @@ function BoundQuestionChoices({
   onAnswer,
   paused,
   question,
-  sourceCanvasSnapshot,
+  reading,
 }: {
+  readonly reading: QuizReading;
   readonly answerTransitionLocked: boolean;
   readonly controlsReady: boolean;
   readonly crossPlacement?: boolean;
@@ -469,7 +476,6 @@ function BoundQuestionChoices({
   readonly onAnswer: SharedSurfaceProps["onAnswer"];
   readonly paused: boolean;
   readonly question: CourseG04L03Fq002Question;
-  readonly sourceCanvasSnapshot: SourceCanvasSnapshot | null;
 }) {
   const sequenceNumber = interaction.sequenceNumber;
   const ts007CrossPlacement = crossPlacement;
@@ -483,8 +489,10 @@ function BoundQuestionChoices({
         const ts007Choice = ts007CrossPlacement
           ? ts007ChoiceForId(option.id)
           : undefined;
-        const presentedLabel = ts007Choice?.symbol ?? option.label;
+        const presentedLabel = ts007Choice?.symbol
+          ?? (option.contentKind === "source-symbol-only" ? FQ_SYMBOL_NAMES[option.id] : option.label);
         return (
+        <div className="course-g04-l03-fq-002-choice-row" key={option.id}>
         <button
           aria-label={`${option.id}. ${presentedLabel}`}
           data-fq002-focus-control={`choice-${option.id}`}
@@ -502,7 +510,6 @@ function BoundQuestionChoices({
             || paused
             || sequenceNumber === null
           }
-          key={option.id}
           onClick={() => {
             if (sequenceNumber === null) return;
             onAnswer(option.id, question.id, sequenceNumber);
@@ -513,14 +520,13 @@ function BoundQuestionChoices({
           {ts007Choice ? (
             <Ts007Symbol choice={ts007Choice} />
           ) : option.contentKind === "source-symbol-only" ? (
-            <SourceSymbolCrop
-              optionNumber={option.optionNumber}
-              snapshot={sourceCanvasSnapshot}
-              usage="choice"
-            />
+            <FinalQuizSymbol optionId={option.id} />
           ) : null}
           <span>{presentedLabel}</span>
         </button>
+        {reading.enabled ? <ReadingButton reading={reading} questionId={question.id} part={option.id}
+          disabled={!controlsReady || answerTransitionLocked || paused || sequenceNumber === null} /> : null}
+        </div>
         );
       })}
     </div>
@@ -556,16 +562,15 @@ function ResultsContent({
       role="status"
     >
       <p className="course-g04-l03-fq-002-eyebrow">
-        Current-JavaScript results
+        Final Quiz
       </p>
       <h2>Quiz complete</h2>
       <p className="course-g04-l03-fq-002-score">
         <strong>{results.score}</strong>
         <span>of {results.total} correct</span>
       </p>
-      <p>
-        {resultsGradeLabel}: <strong>{results.grade}</strong>
-      </p>
+      <p className="course-g04-l03-fq-002-percent">{Math.round(results.score / results.total * 100)}% correct</p>
+      {results.total === 10 ? <p>{resultsGradeLabel}: <strong>{results.grade}</strong></p> : null}
       <p>{results.wrong} incorrect answer{results.wrong === 1 ? "" : "s"}.</p>
       <div className="course-g04-l03-fq-002-actions">
         <button
@@ -599,7 +604,7 @@ function ReviewContent({
   onReturnToResults,
   paused,
   reviewItem,
-  sourceCanvasSnapshot,
+  reading,
 }: Pick<
   SharedSurfaceProps,
   | "answerTransitionLocked"
@@ -611,7 +616,7 @@ function ReviewContent({
   | "onReturnToResults"
   | "paused"
   | "reviewItem"
-  | "sourceCanvasSnapshot"
+  | "reading"
 >) {
   if (reviewItem === null) return null;
   const lastReview =
@@ -629,12 +634,12 @@ function ReviewContent({
   const selectedLabel = selected
     ? (crossPlacement
         ? ts007ChoiceForId(selected.id)?.symbol ?? selected.label
-        : selected.label)
+        : selected.contentKind === "source-symbol-only" ? FQ_SYMBOL_NAMES[selected.id] : selected.label)
     : undefined;
   const correctLabel = correct
     ? (crossPlacement
         ? ts007ChoiceForId(correct.id)?.symbol ?? correct.label
-        : correct.label)
+        : correct.contentKind === "source-symbol-only" ? FQ_SYMBOL_NAMES[correct.id] : correct.label)
     : undefined;
 
   return (
@@ -649,15 +654,12 @@ function ReviewContent({
         }{interaction.responses.length}
       </p>
       <h2>{presentedQuestionText(reviewItem.question, crossPlacement)}</h2>
+      <ReadingToolbar reading={reading} questionId={reviewItem.question.id}
+        disabled={!controlsReady || answerTransitionLocked || paused} review />
       <QuestionContext
         compact
         crossPlacement={crossPlacement}
         question={reviewItem.question}
-      />
-      <SourceSymbolTarget
-        crossPlacement={crossPlacement}
-        question={reviewItem.question}
-        snapshot={sourceCanvasSnapshot}
       />
       <p
         className={
@@ -734,8 +736,7 @@ function StageSurface(props: SharedSurfaceProps) {
     onAnswer,
     paused,
     reducedMotion,
-    sourceCanvasSnapshot,
-  } = props;
+    } = props;
   const question = interaction.currentQuestion;
   const ts007CrossPlacement = isTs007CrossPlacementQuestion(
     question,
@@ -745,7 +746,7 @@ function StageSurface(props: SharedSurfaceProps) {
   return (
     <svg
       aria-busy={!controlsReady}
-      aria-label="Current-JavaScript final quiz controls"
+      aria-label="Final quiz"
       className="course-g04-l03-fq-002-stage-surface"
       data-answer-transition-locked={
         answerTransitionLocked ? "true" : "false"
@@ -781,7 +782,7 @@ function StageSurface(props: SharedSurfaceProps) {
             {interaction.phase === "question" && question ? (
               <>
                 <p className="course-g04-l03-fq-002-eyebrow">
-                  <span>Modern reconstruction</span>
+                  <span>Final Quiz</span>
                   <strong>
                     Question {interaction.sequenceNumber} of{
                       " "
@@ -789,22 +790,13 @@ function StageSurface(props: SharedSurfaceProps) {
                   </strong>
                 </p>
                 <h2>{presentedQuestionText(question, ts007CrossPlacement)}</h2>
+                <ReadingToolbar reading={props.reading} questionId={question.id}
+                  disabled={!controlsReady || answerTransitionLocked || paused} />
                 <QuestionContext
                   compact
                   crossPlacement={ts007CrossPlacement}
                   question={question}
                 />
-                <SourceSymbolTarget
-                  crossPlacement={ts007CrossPlacement}
-                  question={question}
-                  snapshot={sourceCanvasSnapshot}
-                />
-                {question.options[0]?.contentKind === "source-symbol-only"
-                && !ts007CrossPlacement ? (
-                  <p className="course-g04-l03-fq-002-source-symbol-note">
-                    Target and A–D symbols are projected from the legacy canvas.
-                  </p>
-                ) : null}
                 <BoundQuestionChoices
                   answerTransitionLocked={answerTransitionLocked}
                   controlsReady={controlsReady}
@@ -813,7 +805,7 @@ function StageSurface(props: SharedSurfaceProps) {
                   onAnswer={onAnswer}
                   paused={paused}
                   question={question}
-                  sourceCanvasSnapshot={sourceCanvasSnapshot}
+                  reading={props.reading}
                 />
               </>
             ) : null}
@@ -863,10 +855,10 @@ function MobileSurface({
   onStartReview,
   paused,
   placement,
+  reading,
   reducedMotion,
   resultsGradeLabel,
   reviewItem,
-  sourceCanvasSnapshot,
 }: MobileSurfaceProps) {
   const question = interaction.currentQuestion;
   const ts007CrossPlacement = isTs007CrossPlacementQuestion(
@@ -885,16 +877,16 @@ function MobileSurface({
     onReturnToResults,
     onStartReview,
     paused,
+    reading,
     reducedMotion,
     resultsGradeLabel,
     reviewItem,
-    sourceCanvasSnapshot,
-  };
+    };
 
   return (
     <section
       aria-busy={!controlsReady}
-      aria-label="Responsive current-JavaScript final quiz controls"
+      aria-label="Final quiz"
       className={
         "course-g04-l03-fq-002-mobile-controls "
         + `course-g04-l03-fq-002-mobile-controls--${placement}`
@@ -928,27 +920,18 @@ function MobileSurface({
       {interaction.phase === "question" && question ? (
         <>
           <p className="course-g04-l03-fq-002-eyebrow">
-            <span>Modern reconstruction</span>
+            <span>Final Quiz</span>
             <strong>
               Question {interaction.sequenceNumber} of {interaction.questionOrder.length}
             </strong>
           </p>
           <h2>{presentedQuestionText(question, ts007CrossPlacement)}</h2>
+          <ReadingToolbar reading={reading} questionId={question.id}
+            disabled={!controlsReady || answerTransitionLocked || paused} />
           <QuestionContext
             crossPlacement={ts007CrossPlacement}
             question={question}
           />
-          <SourceSymbolTarget
-            crossPlacement={ts007CrossPlacement}
-            question={question}
-            snapshot={sourceCanvasSnapshot}
-          />
-          {question.options[0]?.contentKind === "source-symbol-only"
-          && !ts007CrossPlacement ? (
-            <p className="course-g04-l03-fq-002-source-symbol-note">
-              Target and A–D symbols are projected from the legacy canvas.
-            </p>
-          ) : null}
           <BoundQuestionChoices
             answerTransitionLocked={answerTransitionLocked}
             controlsReady={controlsReady}
@@ -957,7 +940,7 @@ function MobileSurface({
             onAnswer={onAnswer}
             paused={paused}
             question={question}
-            sourceCanvasSnapshot={sourceCanvasSnapshot}
+            reading={reading}
           />
         </>
       ) : null}
@@ -982,7 +965,7 @@ function DisabledSourceIntegrations() {
       data-source-host-close-report-enabled="false"
       data-source-lms-enabled="false"
       data-source-spanish-enabled="false"
-      style={visuallyHiddenStyle}
+      hidden
     >
       {Object.entries(COURSE_G04_L03_FQ_002_DISABLED_INTEGRATIONS).map(
         ([integration]) => (
@@ -1030,6 +1013,15 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
   const visualHostRef = useRef<HTMLDivElement>(null);
   const lastFocusedControlRef = useRef<string | null>(null);
   const answerTransitionLockRef = useRef(false);
+  const [readingLanguage, setReadingLanguage] = useState<'en' | 'es'>(props.uiLanguage ?? 'en');
+  const readingHostRef = useRef(props.onLessonHostRequest);
+  readingHostRef.current = props.onLessonHostRequest;
+  const ownedReadingCueRef = useRef<string | null>(null);
+  const stopReading = () => {
+    const cueId = ownedReadingCueRef.current;
+    ownedReadingCueRef.current = null;
+    if (cueId) readingHostRef.current?.({type: 'stop-audio', cueId});
+  };
 
   const requestedFrameDomain = props.frameDomain ?? sourceDomain;
   const deterministicEvidenceCapture =
@@ -1092,6 +1084,35 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
     && canvasStatus === "ready"
     && sourceSymbolProjectionReady;
   const focusTarget = focusTargetForInteraction(interaction);
+  useEffect(() => {
+    stopReading();
+  }, [interaction.phase, sourceSymbolQuestion?.id, props.replay, props.seed, interactionEnabled]);
+  useEffect(() => () => {stopReading();}, []);
+  const reading: QuizReading = {
+    enabled: props.audioEnabled === true && Boolean(props.onLessonHostRequest) && interactionEnabled,
+    language: readingLanguage,
+    activeCueId: props.activeInteractiveAudioId ?? null,
+    setLanguage: language => {stopReading(); setReadingLanguage(language);},
+    cueId: (questionId, part) => getFinalQuizReadingAsset(questionId, part, readingLanguage)?.id ?? null,
+    read: (questionId, part) => {
+      if (!controlsReady || answerTransitionLockRef.current || props.paused
+        || props.audioEnabled !== true || questionId !== sourceSymbolQuestion?.id) return;
+      const asset = getFinalQuizReadingAsset(questionId, part, readingLanguage);
+      if (!asset) return;
+      if (props.activeInteractiveAudioId === asset.id) {stopReading(); return;}
+      stopReading();
+      const decision = props.onLessonHostRequest?.({type: 'play-audio', cueId: asset.id});
+      if (decision?.status === 'allowed') ownedReadingCueRef.current = asset.id;
+    },
+  };
+
+  useEffect(() => {
+    if (controlsReady && interaction.phase === "results"
+      && interaction.responses.length === interaction.questionOrder.length) {
+      props.onActivityComplete?.();
+    }
+  }, [controlsReady, interaction.phase, interaction.responses.length,
+    interaction.questionOrder.length, props.onActivityComplete]);
 
   const sourceCanvas = useMemo(
     () => (
@@ -1236,6 +1257,9 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
       const outsideFocusMustStay = activeElement instanceof HTMLElement
         && activeElement !== document.body
         && activeElement !== document.documentElement
+        // A second click on the disabled answer can fall back to the host's
+        // focusable main. Keep the next question keyboard-ready in that case.
+        && activeElement !== rendererRef.current?.closest("main")
         && !focusAlreadyOwned;
       if (outsideFocusMustStay) return;
       findVisibleFocusTarget(
@@ -1275,6 +1299,7 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
   }, [companionTarget, focusTarget]);
 
   const replay = () => {
+    stopReading();
     answerTransitionLockRef.current = false;
     setAnswerTransitionLocked(false);
     dispatch({type: "replay", seed: props.seed});
@@ -1283,6 +1308,7 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
     props.onReplay?.();
   };
   const sharedSurfaceProps: SharedSurfaceProps = {
+    reading,
     answerTransitionLocked,
     canvasStatus,
     controlsReady,
@@ -1296,6 +1322,7 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
       ) {
         return;
       }
+      stopReading();
       answerTransitionLockRef.current = true;
       setAnswerTransitionLocked(true);
       setCanvasStatus("loading");
@@ -1308,16 +1335,15 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
       });
     },
     onReplay: replay,
-    onReviewNext: () => dispatch({type: "review-next"}),
-    onReviewPrevious: () => dispatch({type: "review-previous"}),
-    onStartReview: () => dispatch({type: "start-review"}),
-    onReturnToResults: () => dispatch({type: "return-to-results"}),
+    onReviewNext: () => {stopReading(); dispatch({type: "review-next"});},
+    onReviewPrevious: () => {stopReading(); dispatch({type: "review-previous"});},
+    onStartReview: () => {stopReading(); dispatch({type: "start-review"});},
+    onReturnToResults: () => {stopReading(); dispatch({type: "return-to-results"});},
     paused: props.paused ?? false,
     reducedMotion: props.reducedMotion ?? false,
     resultsGradeLabel,
     reviewItem,
-    sourceCanvasSnapshot,
-  };
+    };
   const mobileSurface = (
     <MobileSurface
       {...sharedSurfaceProps}
@@ -1343,6 +1369,9 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
       data-current-js-functional-scope={functionalScope}
       data-final-quiz-animation-id={animationId}
       data-final-quiz-question-count={interaction.questionOrder.length}
+      data-fq-reading-enabled={reading.enabled ? 'true' : 'false'}
+      data-fq-reading-language={readingLanguage}
+      data-fq-reading-question-id={sourceSymbolQuestion?.id}
       data-current-js-overlay-count={interactionEnabled ? "1" : "0"}
       data-current-js-sequence-number={interaction.sequenceNumber ?? undefined}
       data-current-js-source-visual-frame={sourceVisualFrame}
@@ -1367,7 +1396,7 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
         interactionEnabled
           ? ts007CrossPlacement
             ? "owner-directed-current-javascript-ts007-visual"
-            : "exact-source-canvas-option-pixels"
+            : "source-bound-semantic-number-line-and-shapes"
           : undefined
       }
       data-source-results-visual-parity-established="false"
@@ -1395,12 +1424,21 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
       ref={rendererRef}
       style={{
         margin: "0 auto",
-        maxWidth: 800,
+        maxWidth: "100%",
         position: "relative",
         width: "100%",
       }}
     >
       <style>{`
+        /* The semantic quiz scales with the host width. It must not inherit
+           the vertical compensation for native-sized 800px source canvases. */
+        .lesson-shell2[data-host-presentation="modern-wide"]
+          .lesson-shell2__legacy-stage
+          .runtime-shell:has([data-final-quiz-animation-id][data-current-js-controls-enabled="true"]) {
+          max-width: none;
+          top: 0;
+        }
+
         .course-g04-l03-fq-002-mobile-fallback-slot,
         .course-g04-l03-fq-002-mobile-controls {
           display: none;
@@ -1449,20 +1487,20 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
           box-sizing: border-box;
           color: #10213b;
           display: grid;
-          gap: 9px;
+          gap: 7px;
           left: 50%;
-          max-height: 548px;
+          max-height: 394px;
           overflow: auto;
-          padding: 16px;
+          padding: 12px;
           pointer-events: auto;
           position: absolute;
-          top: 66px;
+          top: 121px;
           transform: translateX(-50%);
-          width: 564px;
+          width: 700px;
         }
 
         .course-g04-l03-fq-002-stage-panel--wide {
-          width: 564px;
+          width: 700px;
         }
 
         .course-g04-l03-fq-002-eyebrow {
@@ -1495,7 +1533,6 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
         }
 
         .course-g04-l03-fq-002-context-copy,
-        .course-g04-l03-fq-002-source-symbol-note,
         .course-g04-l03-fq-002-loading {
           font-family: system-ui, sans-serif;
           font-size: 14px;
@@ -1503,53 +1540,7 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
           margin: 0;
         }
 
-        .course-g04-l03-fq-002-source-symbol-note {
-          background: #e8f4ff;
-          border-left: 4px solid #2375c9;
-          padding: 6px 8px;
-        }
-
-        .course-g04-l03-fq-002-source-symbol-target {
-          align-items: center;
-          background: #e8f4ff;
-          border: 2px solid #2375c9;
-          border-radius: 10px;
-          display: flex;
-          font: 800 12px/1.2 system-ui, sans-serif;
-          gap: 10px;
-          justify-content: space-between;
-          padding: 5px 8px;
-        }
-
-        .course-g04-l03-fq-002-source-symbol-crop {
-          background: #b8d8f7;
-          border: 1px solid #6b86a9;
-          border-radius: 7px;
-          box-sizing: border-box;
-          display: block;
-          height: 44px;
-          image-rendering: auto;
-          object-fit: contain;
-          width: 50px;
-        }
-
-        .course-g04-l03-fq-002-source-symbol-target
-        .course-g04-l03-fq-002-source-symbol-crop {
-          flex: 0 0 58px;
-          height: 52px;
-          width: 58px;
-        }
-
-        .course-g04-l03-fq-002-number-line-labels {
-          align-items: center;
-          border-bottom: 3px solid #203b65;
-          display: flex;
-          font: 800 14px system-ui, sans-serif;
-          justify-content: space-between;
-          margin: 2px 4px 6px;
-          padding: 0 0 5px;
-        }
-
+        .course-g04-l03-fq-002-number-line,
         .course-g04-l03-fq-002-ts007-number-line {
           background: #eef7ff;
           border: 2px solid #6b86a9;
@@ -1578,9 +1569,10 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
 
         .course-g04-l03-fq-002-ts007-label {
           fill: #e53b55;
-          font: 800 16px/1 system-ui, sans-serif;
+          font: 800 22px/1 system-ui, sans-serif;
         }
 
+        .course-g04-l03-fq-002-choice-symbol,
         .course-g04-l03-fq-002-ts007-choice-symbol {
           display: block;
           grid-area: symbol;
@@ -1609,6 +1601,40 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
 
         .course-g04-l03-fq-002-context-table--compact {
           font-size: 12px;
+        }
+
+        .course-g04-l03-fq-002-reading-toolbar {
+          align-items: center; display: flex; flex-wrap: wrap; gap: 6px;
+          font: 600 12px/1.2 system-ui, sans-serif;
+        }
+        .course-g04-l03-fq-002-reading-toolbar label {display: flex; align-items: center; gap: 5px;}
+        .course-g04-l03-fq-002-reading-toolbar select,
+        .course-g04-l03-fq-002-reading-button {
+          border: 1px solid #406d97; border-radius: 7px; background: #edf7ff;
+          color: #174c70; font: 650 12px/1.2 system-ui, sans-serif;
+          min-height: 32px; padding: 5px 7px;
+        }
+        .course-g04-l03-fq-002-reading-button {display: inline-flex; align-items: center; justify-content: center; gap: 5px; cursor: pointer;}
+        .course-g04-l03-fq-002-reading-button[aria-pressed="true"] {background: #c8eaf4; border-color: #154f74;}
+        .course-g04-l03-fq-002-reading-button:focus-visible,
+        .course-g04-l03-fq-002-reading-toolbar select:focus-visible {outline: 3px solid #001c64; outline-offset: 2px;}
+        .course-g04-l03-fq-002-reading-toolbar :disabled {opacity: .55; cursor: default;}
+        .course-g04-l03-fq-002-choice-row {display: grid; grid-template-columns: minmax(0, 1fr); gap: 5px;}
+        .course-g04-l03-fq-002-choice-row:has(.course-g04-l03-fq-002-reading-button) {grid-template-columns: minmax(0, 1fr) 40px;}
+        .course-g04-l03-fq-002-choice-row > button:first-child {width: 100%; min-width: 0;}
+        .course-g04-l03-fq-002-choices .course-g04-l03-fq-002-reading-button {
+          background: #edf7ff; border: 1px solid #406d97; padding: 5px; border-radius: 9px; color: #174c70;
+        }
+        @media (max-width: 640px), (any-pointer: coarse) {
+          .course-g04-l03-fq-002-reading-toolbar select,
+          .course-g04-l03-fq-002-reading-toolbar button {min-height: 44px;}
+          .course-g04-l03-fq-002-choice-row:has(.course-g04-l03-fq-002-reading-button) {grid-template-columns: minmax(0, 1fr) 48px;}
+        }
+        @media (min-width: 641px) and (any-pointer: fine) {
+          .course-g04-l03-fq-002-stage-panel .course-g04-l03-fq-002-number-line,
+          .course-g04-l03-fq-002-stage-panel .course-g04-l03-fq-002-ts007-number-line {max-height: 122px;}
+          .course-g04-l03-fq-002-choices .course-g04-l03-fq-002-choice-symbol,
+          .course-g04-l03-fq-002-choices .course-g04-l03-fq-002-ts007-choice-symbol {height: 34px; width: 44px;}
         }
 
         .course-g04-l03-fq-002-choices {
@@ -1654,10 +1680,8 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
         .course-g04-l03-fq-002-choices
         button[data-source-content-kind="source-symbol-only"] {
           display: grid;
-          grid-template-areas:
-            "id symbol"
-            "label label";
-          grid-template-columns: 28px 50px;
+          grid-template-areas: "id symbol label";
+          grid-template-columns: 28px 50px auto;
           justify-content: center;
         }
 
@@ -1666,15 +1690,11 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
           grid-area: id;
         }
 
-        .course-g04-l03-fq-002-choices
-        button[data-source-content-kind="source-symbol-only"]
-        .course-g04-l03-fq-002-source-symbol-crop {
-          grid-area: symbol;
-        }
+
 
         .course-g04-l03-fq-002-choices
         button[data-source-content-kind="source-symbol-only"] span {
-          font: 800 11px/1.1 system-ui, sans-serif;
+          font: 800 14px/1.1 system-ui, sans-serif;
           grid-area: label;
         }
 
@@ -1753,6 +1773,14 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
         }
 
         @media ${RESPONSIVE_CONTROLS_MEDIA} {
+          /* The companion contains the complete question. Its source donor
+             stays mounted for readiness checks without an empty blue stage.
+             Host dialogs, including resume after a phone reload, stay visible. */
+          .lesson-shell2[data-host-presentation="modern-wide"]
+            .lesson-shell2__legacy-stage:has([data-final-quiz-animation-id][data-current-js-controls-enabled="true"]):not(:has([role="dialog"])) {
+            display: none;
+          }
+
           .course-g04-l03-fq-002-stage-surface {
             display: none;
           }
@@ -1935,7 +1963,7 @@ export const COURSE_G04_L03_FQ_002_SOURCE_CONTRACT = Object.freeze({
     "source-shape-atomic-answer-and-immediate-advance",
     "stale-and-double-answer-dispatch-rejected",
     "physical-double-click-answer-transition-lock",
-    "Q7-Q12-source-canvas-pixel-bound-target-and-choice-projection",
+    "Q7-Q12-source-bound-complete-number-lines-and-named-shape-choices",
     "source-score-bands-and-current-javascript-results",
     "current-javascript-text-review-previous-next-enhancement",
     "source-question-and-review-frame-donor-projection",
@@ -1957,8 +1985,11 @@ export const COURSE_G04_L03_FQ_002_SOURCE_CONTRACT = Object.freeze({
   sourceQuestionSelectionParityEstablished: false,
   sourceReviewVisualParityEstablished: false,
   sourceResultsVisualParityEstablished: false,
-  sourceAudioEnabled: false,
+  sourceAudioEnabled: true,
+  interactiveReading: "source-host-bound-en-es-user-activated",
+  humanAudioReviewAccepted: false,
   sourceSpanishEnabled: false,
+  sourceSpanishReadingEnabled: true,
   sourceLmsAndGetUrlEnabled: false,
   sourceHostCloseReportEnabled: false,
   behaviorParityEstablished: false,
@@ -1979,6 +2010,11 @@ export const buildCourseG04L03Fq002CaptureAttributes =
 
 export default Object.freeze({
   ...candidate.module,
+  lessonHost: Object.freeze({capabilities: Object.freeze(['audio'] as const),
+    legacyOperations: 'blocked' as const, auditStorage: 'memory-only' as const,
+    storesPersonalData: false as const}),
+  interactiveAudioAssets: G4_L3_FQ_AUDIO,
+  completionMode: "activity" as const,
   reducedMotionFrame: FUNCTIONAL_ENTRY_FRAME,
   Renderer: CourseG04L03Fq002Renderer,
 });

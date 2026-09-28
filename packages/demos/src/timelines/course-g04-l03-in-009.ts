@@ -1,3 +1,4 @@
+import type {CourseG04L03SourceGlossaryConfig} from "./course-g04-l03-source-glossary-interaction";
 import type {
   AnimationLanguage,
   AnimationRuntimeMetadata,
@@ -196,3 +197,41 @@ export function getCourseG04L03In009FrameState(
     sourceSwfSha256: COURSE_G04_L03_IN_009_SOURCE.swfSha256,
   });
 }
+
+// Source-locked glossary placements; geometry remains audit metadata.
+export const COURSE_G04_L03_IN_009_GLOSSARY_HOTSPOTS = Object.freeze([
+  Object.freeze({
+    id: "temperature",
+    characterId: 67,
+    keyAttribute: "Temperature",
+    firstFrame: 142,
+    lastFrame: 637,
+    depth: 181,
+    sourceBounds: Object.freeze({"left": 171.8590316772461, "right": 292.03076629638673, "top": 128.3990051269531, "bottom": 147.6009948730469}),
+    entryIds: Object.freeze({"en": "en-0684-c1f7ef269aea", "es": "es-0667-2e9db8406799"}),
+    labels: Object.freeze({"en": "Temperature", "es": "Temperatura"}),
+  }),
+  Object.freeze({
+    id: "measure",
+    characterId: 68,
+    keyAttribute: "Measure",
+    firstFrame: 142,
+    lastFrame: 637,
+    depth: 183,
+    sourceBounds: Object.freeze({"left": 352.3310287475586, "right": 434.9608688354492, "top": 130.3990051269531, "bottom": 149.6009948730469}),
+    entryIds: Object.freeze({"en": "en-0372-3dc76de7a102", "es": "es-0399-3292833288dd"}),
+    labels: Object.freeze({"en": "Measure", "es": "Medir"}),
+  }),
+] as const);
+
+export const COURSE_G04_L03_IN_009_GLOSSARY_CONFIG = Object.freeze({
+  animationId: "course-g04-l03-in-009",
+  frameDomain: "sprite-200",
+  terms: COURSE_G04_L03_IN_009_GLOSSARY_HOTSPOTS,
+  learnerPrompt: "Temperature measures how hot or cold something is. Anchorage, Alaska is −2°F, below zero on the Fahrenheit scale.",
+  playbackDisposition: "reversible-support-pause",
+  sourceAction: "DoHyperLinks",
+  sourceStopTarget: "_root.animation_mc.animation.stop()",
+  glossaryAuthority: "grade-wide-shell-keyterms-static-candidate",
+  glossarySourceDisposition: "unresolved-lesson-vs-grade-wide",
+} satisfies CourseG04L03SourceGlossaryConfig);

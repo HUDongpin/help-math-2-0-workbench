@@ -109,6 +109,7 @@ export const COURSE_G04_L03_VB_006_GLOSSARY_CONFIG = Object.freeze({
   animationId: "course-g04-l03-vb-006",
   frameDomain: "sprite-44",
   terms: COURSE_G04_L03_VB_006_GLOSSARY_HOTSPOTS,
+  learnerPrompt: "Zero is neither positive nor negative.",
   sourceAction: "DoHyperLinks",
   sourceStopTarget: "_root.animation_mc.animation.stop()",
   glossaryAuthority: "grade-wide-shell-keyterms-static-candidate",

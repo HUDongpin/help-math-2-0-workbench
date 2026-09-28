@@ -14,6 +14,7 @@ import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candida
 import {
   COURSE_G04_L03_IN_006_CURRENT_JS_TIMING,
   COURSE_G04_L03_IN_006_JUMP_MAGNITUDES,
+  COURSE_G04_L03_IN_006_NUMBER_LINE_GEOMETRY,
   createCourseG04L03In006NumberLineJumpState,
   reduceCourseG04L03In006NumberLineJumpInteraction,
 } from "../timelines/course-g04-l03-in-006-number-line-jump-interaction";
@@ -37,8 +38,9 @@ const RESPONSIVE_CONTROLS_MEDIA =
   "(max-width: 640px), (any-pointer: coarse)";
 const NUMBER_LINE_MIN = -15;
 const NUMBER_LINE_MAX = 15;
-const NUMBER_LINE_FIRST_TICK_X = 64;
-const NUMBER_LINE_TICK_SPACING = 22.5;
+const NUMBER_LINE_FIRST_TICK_X = COURSE_G04_L03_IN_006_NUMBER_LINE_GEOMETRY.firstTickX;
+const NUMBER_LINE_TICK_SPACING = COURSE_G04_L03_IN_006_NUMBER_LINE_GEOMETRY.tickSpacing;
+const NUMBER_LINE_Y = COURSE_G04_L03_IN_006_NUMBER_LINE_GEOMETRY.baselineY;
 
 type CanvasStatus = "idle" | "loading" | "ready" | "error" | "blocked";
 type InteractionState = ReturnType<
@@ -250,7 +252,7 @@ function MobileSurface({
         <JumpHistory interaction={interaction} />
         {currentOutOfRange ? (
           <strong>
-            {" "}The current position is outside the source number line.
+            {" "}The current position is outside the number line.
             Reverse the last jump before placing another.
           </strong>
         ) : null}
@@ -281,8 +283,8 @@ function MobileSurface({
       {!controlsReady ? (
         <p aria-live="polite" className="course-g04-l03-in-006-mobile-loading">
           {canvasStatus === "error" || canvasStatus === "blocked"
-            ? "The source visual is unavailable, so answer controls remain disabled."
-            : "Loading the source visual…"}
+            ? "The number line could not load. Please replay the page to try again."
+            : "Loading the number line…"}
         </p>
       ) : null}
       {interaction.outcome === "correct-feedback" ? (
@@ -310,10 +312,6 @@ function MobileSurface({
           <p id="course-g04-l03-in-006-mobile-wrong-copy">
             {interaction.feedback || "Try again."}
           </p>
-          <small>
-            This text is a modern accessible companion; the source used audio
-            for an invalid drop.
-          </small>
           <button
             aria-label="Close feedback and try the same jump again"
             data-in006-focus-control="close-wrong"
@@ -344,6 +342,7 @@ interface StageSurfaceProps {
   readonly onReverse: () => void;
   readonly onSelectMagnitude: (magnitude: JumpMagnitude) => void;
   readonly selectedMagnitude: JumpMagnitude | null;
+  readonly visualOnly: boolean;
 }
 
 function StageSurface({
@@ -361,6 +360,7 @@ function StageSurface({
   onReverse,
   onSelectMagnitude,
   selectedMagnitude,
+  visualOnly,
 }: StageSurfaceProps) {
   const controlsLocked = !controlsReady || interaction.locked;
   const dialogOpen = interaction.outcome === "wrong";
@@ -394,8 +394,9 @@ function StageSurface({
   };
 
   return (
-    <div
-      aria-label="Source-script-bound current JavaScript number-line jump controls"
+    <svg
+      aria-hidden={visualOnly ? true : undefined}
+      aria-label="Jump along the number line"
       className="course-g04-l03-in-006-stage-surface"
       data-audio-feedback="inventoried-unimplemented-unaccepted"
       data-behavior-parity-established="false"
@@ -406,329 +407,335 @@ function StageSurface({
       data-source-script-bound="true"
       role="group"
       style={{
+        height: "auto",
         inset: 0,
         pointerEvents: "none",
         position: "absolute",
+        width: "100%",
         zIndex: 3,
       }}
+      viewBox="0 0 800 600"
     >
-      <svg
-        aria-hidden="true"
-        height="100%"
-        style={{
-          inset: 0,
-          overflow: "hidden",
-          pointerEvents: "none",
-          position: "absolute",
-          width: "100%",
-        }}
-        viewBox="0 0 800 600"
-        width="100%"
-      >
-        <defs>
-          <marker
-            id={markerId}
-            markerHeight="7"
-            markerUnits="strokeWidth"
-            markerWidth="8"
-            orient="auto"
-            refX="7"
-            refY="3.5"
-            viewBox="0 0 8 7"
-          >
-            <path d="M0 0 L8 3.5 L0 7 Z" fill="#b90000" />
-          </marker>
-        </defs>
-        {interaction.jumps.map((jump, index) => {
-          const x1 = numberLineX(jump.start);
-          const x2 = numberLineX(jump.end);
-          const lift = 21 + jump.magnitude * 4 + (index % 3) * 7;
-          const midpoint = (x1 + x2) / 2;
-          return (
-            <g data-jump-id={jump.id} key={jump.id}>
-              <path
-                d={`M ${x1} 310 Q ${midpoint} ${310 - lift} ${x2} 310`}
-                fill="none"
-                markerEnd={`url(#${markerId})`}
-                stroke="#b90000"
-                strokeLinecap="round"
-                strokeWidth="2.4"
-              />
-              <circle cx={x1} cy="310" fill="#fff" r="5.5" stroke="#b90000" strokeWidth="2" />
-            </g>
-          );
-        })}
-      </svg>
-
-      {interaction.questionRevision > 0 ? (
-        <div
-          aria-hidden="true"
-          data-dynamic-question-overlay="true"
-          style={{
-            alignItems: "center",
-            background: SOURCE_PANEL_BACKGROUND,
-            color: "#111",
-            display: "flex",
-            fontFamily: SOURCE_FONT,
-            fontSize: 20,
-            height: 52.05,
-            justifyContent: "center",
-            left: 75.35,
-            lineHeight: 1,
-            pointerEvents: "none",
-            position: "absolute",
-            top: 198,
-            width: 194,
-          }}
-        >
-          {interaction.start} to {interaction.target}
-        </div>
-      ) : null}
-      {interaction.equation ? (
-        <div
-          aria-hidden="true"
-          data-dynamic-equation-overlay="true"
-          style={{
-            alignItems: "center",
-            background: SOURCE_PANEL_BACKGROUND,
-            color: "#111",
-            display: "flex",
-            fontFamily: SOURCE_FONT,
-            fontSize: 18,
-            height: 52.05,
-            justifyContent: "center",
-            left: 535.35,
-            lineHeight: 1,
-            pointerEvents: "none",
-            position: "absolute",
-            top: 198,
-            width: 194,
-          }}
-        >
-          {interaction.equation}
-        </div>
-      ) : null}
-
-      {COURSE_G04_L03_IN_006_JUMP_MAGNITUDES.map((magnitude) => {
-        const region = JUMP_SOURCE_HIT_REGIONS[magnitude];
-        const disabled = controlsLocked || dialogOpen;
-        return (
-          <button
-            aria-label={`Jump ${magnitude} to the right. Drag it to the number line or select it, then choose the number line.`}
-            aria-pressed={selectedMagnitude === magnitude}
-            data-in006-focus-control={`jump-${magnitude}`}
-            disabled={disabled}
-            draggable={!disabled}
-            key={magnitude}
-            onClick={() => onSelectMagnitude(magnitude)}
-            onDragEnd={finishDrag}
-            onDragStart={(event) => startDrag(event, magnitude)}
+      <foreignObject height="600" width="800" x="0" y="0">
+        <div style={{height: 600, pointerEvents: "none", position: "relative", width: 800}}>
+          <svg
+            aria-hidden="true"
+            height="100%"
             style={{
-              ...sourceHitRegionStyle,
-              borderColor:
-                selectedMagnitude === magnitude ? "#ffdd29" : "transparent",
-              height: region.height,
-              left: region.left,
-              outlineOffset: 2,
-              top: region.top,
-              width: region.width,
+              inset: 0,
+              overflow: "hidden",
+              pointerEvents: "none",
+              position: "absolute",
+              width: "100%",
             }}
-            type="button"
+            viewBox="0 0 800 600"
+            width="100%"
           >
-            Jump {magnitude}
-          </button>
-        );
-      })}
+            <defs>
+              <marker
+                id={markerId}
+                markerHeight="7"
+                markerUnits="strokeWidth"
+                markerWidth="8"
+                orient="auto"
+                refX="7"
+                refY="3.5"
+                viewBox="0 0 8 7"
+              >
+                <path d="M0 0 L8 3.5 L0 7 Z" fill="#b90000" />
+              </marker>
+            </defs>
+            {interaction.jumps.map((jump, index) => {
+              const x1 = numberLineX(jump.start);
+              const x2 = numberLineX(jump.end);
+              const lift = 21 + jump.magnitude * 4 + (index % 3) * 7;
+              const midpoint = (x1 + x2) / 2;
+              return (
+                <g data-jump-id={jump.id} key={jump.id}>
+                  <path
+                    d={`M ${x1} ${NUMBER_LINE_Y} Q ${midpoint} ${NUMBER_LINE_Y - lift} ${x2} ${NUMBER_LINE_Y}`}
+                    fill="none"
+                    markerEnd={`url(#${markerId})`}
+                    stroke="#b90000"
+                    strokeLinecap="round"
+                    strokeWidth="2.4"
+                  />
+                  <circle cx={x1} cy={NUMBER_LINE_Y} fill="#fff" r="5.5" stroke="#b90000" strokeWidth="2" />
+                </g>
+              );
+            })}
+          </svg>
 
-      <button
-        aria-label={
-          selectedMagnitude === null
-            ? "Number line drop target. Select a jump first."
-            : `Place selected jump ${selectedMagnitude} on the number line`
-        }
-        data-in006-focus-control="place"
-        disabled={
-          controlsLocked || dialogOpen || selectedMagnitude === null
-        }
-        onClick={() => onPlace()}
-        onDragOver={(event) => {
-          if (!controlsLocked && !dialogOpen) event.preventDefault();
-        }}
-        onDrop={acceptDrop}
-        style={{
-          ...sourceHitRegionStyle,
-          height: 91,
-          left: 51.625,
-          outlineOffset: -4,
-          top: 245,
-          width: 708.25,
-        }}
-        type="button"
-      >
-        Place selected jump on the number line
-      </button>
-      <button
-        aria-label="Reverse the most recently placed jump"
-        data-in006-focus-control="reverse"
-        disabled={
-          controlsLocked || dialogOpen || interaction.lastJumpId === null
-        }
-        onClick={onReverse}
-        style={{
-          ...sourceHitRegionStyle,
-          height: 52,
-          left: 363,
-          outlineOffset: 2,
-          top: 425,
-          width: 77,
-        }}
-        type="button"
-      >
-        Reverse last jump
-      </button>
-      <button
-        aria-label="New Number"
-        data-in006-focus-control="new-number"
-        disabled={
-          !controlsReady
-          || dialogOpen
-          || !interaction.newNumberEnabled
-        }
-        onClick={onNewNumber}
-        ref={newNumberRef}
-        style={{
-          ...sourceHitRegionStyle,
-          height: 48,
-          left: 165.225,
-          outlineOffset: 2,
-          top: 433,
-          width: 147.35,
-        }}
-        type="button"
-      >
-        New Number
-      </button>
-      <button
-        aria-label="Clear"
-        data-in006-focus-control="clear"
-        disabled={!controlsReady || dialogOpen}
-        onClick={onClear}
-        style={{
-          ...sourceHitRegionStyle,
-          height: 48,
-          left: 488,
-          outlineOffset: 2,
-          top: 433,
-          width: 81,
-        }}
-        type="button"
-      >
-        Clear
-      </button>
+          {interaction.questionRevision > 0 ? (
+            <div
+              aria-hidden="true"
+              data-dynamic-question-overlay="true"
+              style={{
+                alignItems: "center",
+                background: SOURCE_PANEL_BACKGROUND,
+                color: "#111",
+                display: "flex",
+                fontFamily: SOURCE_FONT,
+                fontSize: 20,
+                height: 52.05,
+                justifyContent: "center",
+                left: 75.35,
+                lineHeight: 1,
+                pointerEvents: "none",
+                position: "absolute",
+                top: 198,
+                width: 194,
+              }}
+            >
+              {interaction.start} to {interaction.target}
+            </div>
+          ) : null}
+          {interaction.equation ? (
+            <div
+              aria-hidden="true"
+              data-dynamic-equation-overlay="true"
+              style={{
+                alignItems: "center",
+                background: SOURCE_PANEL_BACKGROUND,
+                color: "#111",
+                display: "flex",
+                fontFamily: SOURCE_FONT,
+                fontSize: 18,
+                height: 52.05,
+                justifyContent: "center",
+                left: 535.35,
+                lineHeight: 1,
+                pointerEvents: "none",
+                position: "absolute",
+                top: 198,
+                width: 194,
+              }}
+            >
+              {interaction.equation}
+            </div>
+          ) : null}
 
-      <span aria-live="polite" role="status" style={visuallyHiddenStyle}>
-        Question {interaction.start} to {interaction.target}. Current position{" "}
-        {interaction.currentValue}. {interaction.equation}
-        {interaction.outcome === "complete"
-          ? " Correct. Choose New Number to continue."
-          : ""}
-      </span>
+          <div className="course-g04-l03-in-006-desktop-controls" inert={visualOnly ? true : undefined}>
+            {COURSE_G04_L03_IN_006_JUMP_MAGNITUDES.map((magnitude) => {
+              const region = JUMP_SOURCE_HIT_REGIONS[magnitude];
+              const disabled = controlsLocked || dialogOpen;
+              return (
+                <button
+                  aria-label={`Jump ${magnitude} to the right. Drag it to the number line or select it, then choose the number line.`}
+                  aria-pressed={selectedMagnitude === magnitude}
+                  data-in006-focus-control={`jump-${magnitude}`}
+                  disabled={disabled}
+                  draggable={!disabled}
+                  key={magnitude}
+                  onClick={() => onSelectMagnitude(magnitude)}
+                  onDragEnd={finishDrag}
+                  onDragStart={(event) => startDrag(event, magnitude)}
+                  style={{
+                    ...sourceHitRegionStyle,
+                    borderColor:
+                      selectedMagnitude === magnitude ? "#ffdd29" : "transparent",
+                    height: region.height,
+                    left: region.left,
+                    outlineOffset: 2,
+                    top: region.top,
+                    width: region.width,
+                  }}
+                  type="button"
+                >
+                  Jump {magnitude}
+                </button>
+              );
+            })}
 
-      {interaction.outcome === "correct-feedback" ? (
-        <div
-          aria-live="assertive"
-          data-source-correct-copy="true"
-          role="status"
-          style={{
-            alignItems: "center",
-            background: "#ffffc8",
-            border: "4px solid #7d178e",
-            borderRadius: 14,
-            boxShadow: "0 7px 20px rgb(0 0 0 / 20%)",
-            boxSizing: "border-box",
-            color: "#111",
-            display: "flex",
-            fontFamily: SOURCE_FONT,
-            fontSize: 36,
-            height: 130.5,
-            justifyContent: "center",
-            left: 244.725,
-            pointerEvents: "none",
-            position: "absolute",
-            top: 258.1,
-            width: 360.65,
-            zIndex: 5,
-          }}
-        >
-          Correct!!!
+            <button
+              aria-label={
+                selectedMagnitude === null
+                  ? "Number line drop target. Select a jump first."
+                  : `Place selected jump ${selectedMagnitude} on the number line`
+              }
+              data-in006-focus-control="place"
+              disabled={
+                controlsLocked || dialogOpen || selectedMagnitude === null
+              }
+              onClick={() => onPlace()}
+              onDragOver={(event) => {
+                if (!controlsLocked && !dialogOpen) event.preventDefault();
+              }}
+              onDrop={acceptDrop}
+              style={{
+                ...sourceHitRegionStyle,
+                height: 91,
+                left: 51.625,
+                outlineOffset: -4,
+                top: 245,
+                width: 708.25,
+              }}
+              type="button"
+            >
+              Place selected jump on the number line
+            </button>
+            <button
+              aria-label="Reverse the most recently placed jump"
+              data-in006-focus-control="reverse"
+              disabled={
+                controlsLocked || dialogOpen || interaction.lastJumpId === null
+              }
+              onClick={onReverse}
+              style={{
+                ...sourceHitRegionStyle,
+                height: 52,
+                left: 363,
+                outlineOffset: 2,
+                top: 425,
+                width: 77,
+              }}
+              type="button"
+            >
+              Reverse last jump
+            </button>
+            <button
+              aria-label="New Number"
+              data-in006-focus-control="new-number"
+              disabled={
+                !controlsReady
+                || dialogOpen
+                || !interaction.newNumberEnabled
+              }
+              onClick={onNewNumber}
+              ref={newNumberRef}
+              style={{
+                ...sourceHitRegionStyle,
+                height: 48,
+                left: 165.225,
+                outlineOffset: 2,
+                top: 433,
+                width: 147.35,
+              }}
+              type="button"
+            >
+              New Number
+            </button>
+            <button
+              aria-label="Clear"
+              data-in006-focus-control="clear"
+              disabled={!controlsReady || dialogOpen}
+              onClick={onClear}
+              style={{
+                ...sourceHitRegionStyle,
+                height: 48,
+                left: 488,
+                outlineOffset: 2,
+                top: 433,
+                width: 81,
+              }}
+              type="button"
+            >
+              Clear
+            </button>
+
+            <span aria-live="polite" role="status" style={visuallyHiddenStyle}>
+              Question {interaction.start} to {interaction.target}. Current position{" "}
+              {interaction.currentValue}. {interaction.equation}
+              {interaction.outcome === "complete"
+                ? " Correct. Choose New Number to continue."
+                : ""}
+            </span>
+
+            {interaction.outcome === "correct-feedback" ? (
+              <div
+                aria-live="assertive"
+                data-source-correct-copy="true"
+                role="status"
+                style={{
+                  alignItems: "center",
+                  background: "#ffffc8",
+                  border: "2px solid #7d178e",
+                  borderRadius: 14,
+                  boxShadow: "0 7px 20px rgb(0 0 0 / 20%)",
+                  boxSizing: "border-box",
+                  color: "#111",
+                  display: "flex",
+                  fontFamily: SOURCE_FONT,
+                  fontSize: 24,
+                  height: 44,
+                  justifyContent: "center",
+                  left: 300,
+                  pointerEvents: "none",
+                  position: "absolute",
+                  top: 202,
+                  width: 200,
+                  zIndex: 5,
+                }}
+              >
+                Correct!!!
+              </div>
+            ) : null}
+
+            {dialogOpen ? (
+              <div
+                aria-describedby="course-g04-l03-in-006-stage-wrong-copy"
+                aria-label="Invalid jump placement feedback"
+                role="alertdialog"
+                style={{
+                  alignContent: "center",
+                  background: "#ffffcc",
+                  border: "4px solid #224b8e",
+                  borderRadius: 12,
+                  boxShadow: "0 8px 24px rgb(0 0 0 / 28%)",
+                  boxSizing: "border-box",
+                  display: "grid",
+                  gap: 9,
+                  left: 244.725,
+                  minHeight: 130.5,
+                  padding: 16,
+                  pointerEvents: "auto",
+                  position: "absolute",
+                  textAlign: "center",
+                  top: 258.1,
+                  width: 360.65,
+                  zIndex: 6,
+                }}
+              >
+                <p
+                  id="course-g04-l03-in-006-stage-wrong-copy"
+                  style={{
+                    font: `700 18px/1.25 system-ui, sans-serif`,
+                    margin: 0,
+                  }}
+                >
+                  {interaction.feedback || "Try again."}
+                </p>
+                <button
+                  aria-label="Close feedback and try the same jump again"
+                  data-in006-focus-control="close-wrong"
+                  onClick={onCloseWrong}
+                  ref={closeWrongRef}
+                  style={{
+                    background: "#fff",
+                    border: "2px solid #224b8e",
+                    borderRadius: 8,
+                    color: "#111",
+                    font: `800 16px ${SOURCE_FONT}`,
+                    minHeight: 44,
+                  }}
+                  type="button"
+                >
+                  Close
+                </button>
+              </div>
+            ) : null}
+
+            {!controlsReady ? (
+              <span aria-live="polite" role="status" style={visuallyHiddenStyle}>
+                {canvasStatus === "error" || canvasStatus === "blocked"
+                  ? "The number line could not load. Answer controls are disabled."
+                  : "Loading the number line. Answer controls are disabled."}
+              </span>
+            ) : null}
+          </div>
         </div>
-      ) : null}
-
-      {dialogOpen ? (
-        <div
-          aria-describedby="course-g04-l03-in-006-stage-wrong-copy"
-          aria-label="Invalid jump placement feedback"
-          role="alertdialog"
-          style={{
-            alignContent: "center",
-            background: "#ffffcc",
-            border: "4px solid #224b8e",
-            borderRadius: 12,
-            boxShadow: "0 8px 24px rgb(0 0 0 / 28%)",
-            boxSizing: "border-box",
-            display: "grid",
-            gap: 9,
-            left: 244.725,
-            minHeight: 130.5,
-            padding: 16,
-            pointerEvents: "auto",
-            position: "absolute",
-            textAlign: "center",
-            top: 258.1,
-            width: 360.65,
-            zIndex: 6,
-          }}
-        >
-          <p
-            id="course-g04-l03-in-006-stage-wrong-copy"
-            style={{
-              font: `700 18px/1.25 system-ui, sans-serif`,
-              margin: 0,
-            }}
-          >
-            {interaction.feedback || "Try again."}
-          </p>
-          <small style={{font: "13px/1.25 system-ui, sans-serif"}}>
-            Modern accessible text companion; the source used audio.
-          </small>
-          <button
-            aria-label="Close feedback and try the same jump again"
-            data-in006-focus-control="close-wrong"
-            onClick={onCloseWrong}
-            ref={closeWrongRef}
-            style={{
-              background: "#fff",
-              border: "2px solid #224b8e",
-              borderRadius: 8,
-              color: "#111",
-              font: `800 16px ${SOURCE_FONT}`,
-              minHeight: 44,
-            }}
-            type="button"
-          >
-            Close
-          </button>
-        </div>
-      ) : null}
-
-      {!controlsReady ? (
-        <span aria-live="polite" role="status" style={visuallyHiddenStyle}>
-          {canvasStatus === "error" || canvasStatus === "blocked"
-            ? "The source visual is unavailable. Answer controls are disabled."
-            : "Loading the source visual. Answer controls are disabled."}
-        </span>
-      ) : null}
-    </div>
+      </foreignObject>
+    </svg>
   );
 }
 
@@ -743,6 +750,7 @@ export function CourseG04L03In006Renderer(props: AnimationRendererProps) {
     useState<HTMLElement | null>(null);
   const [selectedMagnitude, setSelectedMagnitude] =
     useState<JumpMagnitude | null>(null);
+  const [mobileControls, setMobileControls] = useState(false);
   const rendererRef = useRef<HTMLDivElement>(null);
   const visualHostRef = useRef<HTMLDivElement>(null);
   const dragAcceptedRef = useRef(false);
@@ -766,6 +774,9 @@ export function CourseG04L03In006Renderer(props: AnimationRendererProps) {
     && !deterministicEvidenceCapture;
   const controlsReady =
     interactionEnabled && canvasStatus === "ready";
+  useEffect(() => {
+    if (interactionEnabled && interaction.outcome === "complete") props.onActivityComplete?.();
+  }, [interactionEnabled, interaction.outcome, props.onActivityComplete]);
   const sourceCanvasRenderKey = [
     props.replay ?? 0,
     props.seed,
@@ -883,7 +894,9 @@ export function CourseG04L03In006Renderer(props: AnimationRendererProps) {
 
   useEffect(() => {
     const media = window.matchMedia(RESPONSIVE_CONTROLS_MEDIA);
+    setMobileControls(media.matches);
     const moveFocusToVisibleSurface = () => {
+      setMobileControls(media.matches);
       const root = rendererRef.current;
       if (!root) return;
       const active = document.activeElement;
@@ -1004,8 +1017,12 @@ export function CourseG04L03In006Renderer(props: AnimationRendererProps) {
           outline-offset: 2px;
         }
 
+        .course-g04-l03-in-006-desktop-controls {
+          display: contents;
+        }
+
         @media ${RESPONSIVE_CONTROLS_MEDIA} {
-          .course-g04-l03-in-006-stage-surface {
+          .course-g04-l03-in-006-desktop-controls {
             display: none;
           }
 
@@ -1232,6 +1249,7 @@ export function CourseG04L03In006Renderer(props: AnimationRendererProps) {
             onReverse={reverse}
             onSelectMagnitude={selectMagnitude}
             selectedMagnitude={selectedMagnitude}
+            visualOnly={mobileControls}
           />
           {companionTarget
             ? createPortal(mobileSurface, companionTarget)
@@ -1302,6 +1320,7 @@ export const buildCourseG04L03In006CaptureAttributes =
 
 export default Object.freeze({
   ...candidate.module,
+  completionMode: "activity" as const,
   reducedMotionFrame: SOURCE_QUIZ_FRAME,
   Renderer: CourseG04L03In006Renderer,
 });

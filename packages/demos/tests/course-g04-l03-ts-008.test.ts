@@ -136,7 +136,8 @@ test("TS008 normal functional entry exposes gate one over donor 328 and fails cl
     markup,
     /data-natural-composite-unsafe-frames="592,712,770"/,
   );
-  assert.match(markup, /Modern reconstruction/);
+  assert.doesNotMatch(markup, />Modern reconstruction</);
+  assert.match(markup, /Practice question controls/);
   assert.match(
     markup,
     /data-ts008-focus-control="walkthrough-step-1" disabled=""/,
@@ -146,7 +147,7 @@ test("TS008 normal functional entry exposes gate one over donor 328 and fails cl
   assert.match(markup, /inert=""/);
   assert.match(markup, /pointer-events:none|pointer-events:\s*none/i);
   assert.match(markup, /<canvas/);
-  assert.match(markup, /data-interaction-companion-surface="mobile"/);
+  assert.match(markup, /data-interaction-companion-surface="practice-question"/);
   assert.match(markup, /data-interaction-companion-placement="fallback"/);
 });
 
@@ -253,7 +254,7 @@ test("TS008 deterministic entry-state capture preserves the requested unsafe sou
     /aria-label="Current-JavaScript reconstructed four-step reasoning and practice controls"/,
   );
   assert.doesNotMatch(markup, /Modern reconstruction<\/strong>/);
-  assert.doesNotMatch(markup, /data-interaction-companion-surface="mobile"/);
+  assert.doesNotMatch(markup, /data-interaction-companion-surface="practice-question"/);
   assert.doesNotMatch(markup, /data-ts008-focus-control=/);
 });
 
@@ -275,7 +276,7 @@ test("TS008 enables no overlay outside the exact English sprite-350 frame-328 en
     assert.doesNotMatch(markup, /data-ts008-focus-control=/);
     assert.doesNotMatch(
       markup,
-      /data-interaction-companion-surface="mobile"/,
+      /data-interaction-companion-surface="practice-question"/,
     );
   }
 
@@ -377,7 +378,9 @@ test("TS008 pause, reduced-motion hold/Continue, remaining-time, and Replay cont
   assert.match(moduleSource, /performance\.now\(\)/);
   assert.match(moduleSource, /props\.paused/);
   assert.match(moduleSource, /props\.reducedMotion/);
-  assert.match(moduleSource, /Reduced motion: static feedback is held until Continue/);
+  assert.equal(courseTs008.completionMode, "activity");
+  assert.match(moduleSource, /controlsReady && interaction\.phase === TS008_BEHAVIOR\.completion\.phase/);
+  assert.match(moduleSource, /props\.onActivityComplete\?\.\(\)/);
   assert.match(
     moduleSource,
     /dispatch\(\{type: "replay", seed: props\.seed\}\)/,
@@ -385,7 +388,7 @@ test("TS008 pause, reduced-motion hold/Continue, remaining-time, and Replay cont
   assert.match(moduleSource, /props\.onReplay\?\.\(\)/);
 });
 
-test("TS008 desktop, mobile, and wide coarse-pointer contracts preserve exact answer hits, minimum targets, row seven, and focus migration", async () => {
+test("TS008 desktop, mobile, and wide coarse-pointer contracts preserve exact answer hits, minimum targets and focus migration", async () => {
   const moduleSource = await readFile(
     `${repositoryRoot}packages/demos/src/modules/course-g04-l03-ts-008.tsx`,
     "utf8",
@@ -464,7 +467,7 @@ test("TS008 desktop, mobile, and wide coarse-pointer contracts preserve exact an
   assert.match(markup, /course-g04-l03-ts-008-mobile-controls--fallback/);
   assert.match(markup, /min-height:\s*48px/);
   assert.match(markup, /min-width:\s*48px/);
-  assert.match(markup, /grid-row:\s*7/);
+  assert.match(markup, /Practice question controls/);
   assert.match(
     markup,
     /\(max-width: 640px\), \(any-pointer: coarse\)/,
@@ -476,7 +479,7 @@ test("TS008 desktop, mobile, and wide coarse-pointer contracts preserve exact an
   );
   assert.match(moduleSource, /findVisibleFocusTarget/);
   assert.match(moduleSource, /choice\.hitBounds/);
-  assert.match(moduleSource, /currentStep\.hitBounds/);
+  assert.match(moduleSource, /const \{hitBounds\} = step/);
   assert.match(moduleSource, /data-ts008-focus-control/);
   assert.match(
     moduleSource,
@@ -484,7 +487,7 @@ test("TS008 desktop, mobile, and wide coarse-pointer contracts preserve exact an
   );
 });
 
-test("TS008 safe-disables all glossary callbacks and keeps every acceptance authority false", () => {
+test("TS008 declares Help glossary callbacks and keeps every acceptance authority false", () => {
   const markup = render();
 
   for (const value of Object.values(
@@ -511,7 +514,7 @@ test("TS008 safe-disables all glossary callbacks and keeps every acceptance auth
   }
   assert.equal(
     COURSE_G04_L03_TS_008_SOURCE_CONTRACT.glossaryHostCallbacks,
-    "safe-disabled-unresolved",
+    "typed-modern-help-keyterms-original-host-parity-unestablished",
   );
   assert.deepEqual(
     COURSE_G04_L03_TS_008_GLOSSARY.map(
@@ -526,20 +529,20 @@ test("TS008 safe-disables all glossary callbacks and keeps every acceptance auth
       {
         term: "Positive number",
         sourceButtonObjectId: 166,
-        enabled: false,
-        mode: "safe-disabled-unresolved-host-callback",
+        enabled: true,
+        mode: "typed-modern-help-keyterm-adapter",
       },
       {
         term: "Owe",
         sourceButtonObjectId: 167,
-        enabled: false,
-        mode: "safe-disabled-unresolved-host-callback",
+        enabled: true,
+        mode: "typed-modern-help-keyterm-adapter",
       },
       {
         term: "Negative number",
         sourceButtonObjectId: 168,
-        enabled: false,
-        mode: "safe-disabled-unresolved-host-callback",
+        enabled: true,
+        mode: "typed-modern-help-keyterm-adapter",
       },
     ],
   );
@@ -548,6 +551,8 @@ test("TS008 safe-disables all glossary callbacks and keeps every acceptance auth
     "none",
   );
   assert.equal(courseTs008.maturity, "legacy-prototype");
+  assert.deepEqual(courseTs008.lessonHost?.capabilities, ["keyterm"]);
+  assert.equal(courseTs008.lessonHost?.legacyOperations, "blocked");
   assert.match(markup, /data-associated-audio-modeled="false"/);
   assert.match(markup, /data-authoritative-baseline-accepted="false"/);
   assert.match(markup, /data-feedback-random-parity-established="false"/);

@@ -104,3 +104,14 @@ List every unresolved mismatch, unavailable tool/source, accepted emulator diffe
 - Owner review status:
 - Owner decision, reviewer/date, or explicit not-required reason:
 - Strict validator result:
+
+
+## 2026-09-08 modern-product follow-up
+
+- Complexity and lane: behavior-heavy, bounded advanced-manual hybrid. Source extraction, maintained state/React/SVG integration, exact registry/My Lesson binding and independent acceptance gates remain part of the canonical workflow.
+- Five source term/target bindings and all 120 orderings remain intact. The modern zero definition now says it represents none and is neither negative nor positive; the original source definition is preserved as `sourceDefinition`. Generated source drawings and original FLA/SWF files are not edited.
+- The maintained visual overlay clarifies the zero row from the final source table layout at frame23 and throughout the quiz at frame238 (clean source drawing237). Reduced motion reaches the quiz. Current activity completion waits for the fifth successful feedback transition. Replay and paused feedback are verified separately.
+- Ten source glossary button definitions represent nine distinct KeyAttribute values. Per-frame source-instance extraction consolidates them to eight visible companion buttons while preserving 24 placement/visibility segments. Ordering has no separate entry and uses the modern inflection alias Order; original host callback resolution is not established.
+- The two exact G4 Zero glossary entries have clarified English/Spanish learner display in the shared browser, guarded by entry ID and exact old wording. Evidence mode and raw source JSON retain the original definition. Other entries are unchanged by the display rule.
+- Source sprite174 evidence rendering remains separately bound and noninteractive. Actual browser verification covers ordinary and reduced-motion modes, desktop/mobile matching, wrong feedback, focus recovery, all five picture concepts, and post-completion picture access.
+- Evidence: `work/g4-l3-modern-product-review/20260908-try-it-keyterms/REVIEW.md` and its receipt. This is current-JavaScript engineering verification; original-runtime, source timing/Replay fidelity, audio listening, human/Owner acceptance, strict completion, release and deployment are not promoted.

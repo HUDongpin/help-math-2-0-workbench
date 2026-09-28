@@ -1,4 +1,5 @@
 import type {SourceStaticCanvasCandidateConfig} from "../source-static-canvas-candidate";
+import type {CourseG04L03SourceGlossaryConfig} from "./course-g04-l03-source-glossary-interaction";
 
 export const COURSE_G04_L03_RW_004_SOURCE = Object.freeze({
   swf: "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/RW/L3RW04.swf",
@@ -19,6 +20,55 @@ export const COURSE_G04_L03_RW_004_SOURCE = Object.freeze({
   rootPlacementTwips: Object.freeze({x: 7_219, y: 5_460}),
   rootPlacementPixels: Object.freeze({x: 360.95, y: 273}),
 });
+
+// Same-frame source replacements keep these glossary controls continuously
+// present from their first placement through the final teaching frame.
+export const COURSE_G04_L03_RW_004_GLOSSARY_HOTSPOTS = Object.freeze([
+  Object.freeze({
+    id: "represent",
+    characterId: 114,
+    keyAttribute: "Represent",
+    firstFrame: 371,
+    lastFrame: 442,
+    depth: 127,
+    sourceBounds: Object.freeze({
+      left: 531.55,
+      right: 643.5490921020508,
+      top: 155.05,
+      bottom: 176.54234771728517,
+    }),
+    entryIds: Object.freeze({en: "en-0574-48a09f6ed01d", es: "es-0597-e551e48f4e02"}),
+    labels: Object.freeze({en: "Represent", es: "Representa"}),
+  }),
+  Object.freeze({
+    id: "negative-number",
+    characterId: 120,
+    keyAttribute: "Negative number",
+    firstFrame: 424,
+    lastFrame: 442,
+    depth: 133,
+    sourceBounds: Object.freeze({
+      left: 144.2,
+      right: 317.3976089477539,
+      top: 184.1,
+      bottom: 205.59234771728515,
+    }),
+    entryIds: Object.freeze({en: "en-0411-1954bd66c84d", es: "es-0456-9da6d6ebd619"}),
+    labels: Object.freeze({en: "Negative number", es: "Número negativo"}),
+  }),
+] as const);
+
+export const COURSE_G04_L03_RW_004_GLOSSARY_CONFIG = Object.freeze({
+  animationId: "course-g04-l03-rw-004",
+  frameDomain: "sprite-121",
+  terms: COURSE_G04_L03_RW_004_GLOSSARY_HOTSPOTS,
+  learnerPrompt: "What situations are represented by negative numbers?",
+  playbackDisposition: "reversible-support-pause",
+  sourceAction: "DoHyperLinks",
+  sourceStopTarget: "_root.animation_mc.animation.stop()",
+  glossaryAuthority: "grade-wide-shell-keyterms-static-candidate",
+  glossarySourceDisposition: "unresolved-lesson-vs-grade-wide",
+} satisfies CourseG04L03SourceGlossaryConfig);
 
 export const COURSE_G04_L03_RW_004_CONFIG = Object.freeze({
   animationId: "course-g04-l03-rw-004",

@@ -683,6 +683,61 @@ test('FQ2 and FQ3 expose only exact speakers and clean up play, end, stop, and p
   expect(local404s).toEqual([]);
 });
 
+for (const viewport of [
+  {width: 1280, height: 720},
+  {width: 390, height: 844},
+]) {
+  test(`FQ3 keyboard audio stays stopped after leaving and returning at ${viewport.width}px`, async ({page}) => {
+    test.setTimeout(60_000);
+    await page.setViewportSize(viewport);
+    await openLesson(page);
+    await selectPageFromMap(page, FQ3);
+    const runtime = page.locator(RUNTIME);
+    const speaker = page.locator(
+      '[data-current-javascript-question-controls="true"]:visible '
+      + 'button[data-interactive-audio-status="available"]',
+    ).first();
+    const assetId = await speaker.getAttribute('data-interactive-audio-asset-id');
+    const exactAsset = audioReport.finalQuiz.assets.find((asset) => asset.id === assetId);
+    expect(exactAsset).toBeDefined();
+    await speaker.focus();
+    await expect(speaker).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(runtime).toHaveAttribute('data-interactive-audio-playing', assetId!);
+    const sounding = (await audioHarnessSnapshot(page)).at(-1)!;
+    expect(sounding).toMatchObject({src: exactAsset!.publicPath, paused: false, playCount: 1});
+
+    await (await liveControl(page, 'previous')).click();
+    await expect(page.locator(PLAYER)).toHaveAttribute('data-current-animation-id', FQ2);
+    expect((await audioHarnessSnapshot(page)).find(({id}) => id === sounding.id))
+      .toMatchObject({paused: true, currentTime: 0, pauseCount: 1});
+    const beforeReturn = await audioHarnessSnapshot(page);
+    await (await liveControl(page, 'next')).click();
+    await expect(page.locator(PLAYER)).toHaveAttribute('data-current-animation-id', FQ3);
+    await expect(speaker).toBeEnabled();
+    await expect(speaker).toHaveAttribute('aria-pressed', 'false');
+    await expect(runtime).not.toHaveAttribute('data-interactive-audio-playing');
+    expect(await audioHarnessSnapshot(page)).toEqual(beforeReturn);
+
+    // A callback from the abandoned page must not start audio or press a button.
+    await endAudioById(page, sounding.id);
+    await expect(speaker).toHaveAttribute('aria-pressed', 'false');
+    await speaker.focus();
+    await page.keyboard.press('Space');
+    await expect(runtime).toHaveAttribute('data-interactive-audio-playing', assetId!);
+    const restarted = (await audioHarnessSnapshot(page)).at(-1)!;
+    expect(restarted.id).not.toBe(sounding.id);
+    expect(restarted).toMatchObject({src: exactAsset!.publicPath, paused: false, playCount: 1});
+
+    await (await liveControl(page, 'replay')).click();
+    await expect(speaker).toBeEnabled();
+    await expect(speaker).toHaveAttribute('aria-pressed', 'false');
+    await expect(runtime).not.toHaveAttribute('data-interactive-audio-playing');
+    expect((await audioHarnessSnapshot(page)).find(({id}) => id === restarted.id))
+      .toMatchObject({paused: true, currentTime: 0, pauseCount: 1});
+  });
+}
+
 test.describe('live timeline audio', () => {
   test('English RW002 starts its exact cue, honors shell Stop, and cleans up on page change', async ({
     baseURL,

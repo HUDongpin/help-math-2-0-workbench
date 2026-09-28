@@ -64,7 +64,7 @@ const completeInSourceOrder = (): CourseG04L03Ti002KeyTermDragState => {
   return state;
 };
 
-test("TI002 binds all five exact key-term definitions and suffix targets", () => {
+test("TI002 binds all five source targets with clarified learner wording for zero", () => {
   assert.deepEqual(
     COURSE_G04_L03_TI_002_CARDS.map((card) => ({
       id: card.id,
@@ -89,7 +89,7 @@ test("TI002 binds all five exact key-term definitions and suffix targets", () =>
         id: "Scr_2",
         term: "zero",
         definition:
-          "the number that has no value; zero is neither negative nor positive",
+          "a number that represents none; zero is neither negative nor positive",
         pictureKind: "zero",
         sourceText: "zero",
         accessibleLabel: "zero",
@@ -124,6 +124,8 @@ test("TI002 binds all five exact key-term definitions and suffix targets", () =>
       },
     ],
   );
+  assert.equal(COURSE_G04_L03_TI_002_CARDS.find((card) => card.term === "zero")?.sourceDefinition,
+    "the number that has no value; zero is neither negative nor positive");
   assert.equal(
     COURSE_G04_L03_TI_002_INSTRUCTION,
     "Match the key terms with the correct definitions and pictures. Click and drag the key terms to place them where they belong.",

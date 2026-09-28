@@ -21,6 +21,17 @@ An exact hash match proves byte identity only. It does not prove authoring linea
 - Never collapse placements solely because names or hashes match; instructional context, host behavior, language, or surrounding audio may differ.
 - Record unresolved conflicts instead of inventing a canonical placement.
 
+Only create a work package when the canonical placement has no workspace:
+
+```bash
+npm run scaffold:migration -- <animation-id> --fla <fla-path> --swf <swf-path>
+node skills/flash-to-js/scripts/validate_migration.mjs migrations/<animation-id> --allow-draft
+```
+
+For an existing workspace, use its canonical path and draft-validate it when
+changing its manifest, inventories, or evidence inputs. Do not rerun scaffolding
+for a renderer correction or a filename alias.
+
 ## Use Private Archives Safely
 
 The historical Office archive, HELP Math 1.0 SQL archive, and canonical `source-assets/` collection are separate evidence sources.

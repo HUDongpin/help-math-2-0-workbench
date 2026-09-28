@@ -48,7 +48,7 @@
     },
     "xmlParser": {
       "command": "python3",
-      "version": "Python 3.13.3",
+      "version": "Python 3.14.7",
       "success": true,
       "exitCode": 0,
       "error": "",
@@ -204,6 +204,32 @@
           "top": "0"
         }
       },
+      "spriteDefinitions": [
+        {
+          "frames": 5,
+          "objectID": 48
+        },
+        {
+          "frames": 1,
+          "objectID": 5
+        },
+        {
+          "frames": 1,
+          "objectID": 52
+        },
+        {
+          "frames": 55,
+          "objectID": 54
+        },
+        {
+          "frames": 20,
+          "objectID": 56
+        },
+        {
+          "frames": 217,
+          "objectID": 57
+        }
+      ],
       "tagCounts": {
         "BranchAlways": 1,
         "BranchIfTrue": 3,
@@ -321,6 +347,107 @@
       "swfmillFrameRateMatches": true,
       "swfmillFrameCountMatches": true,
       "allMatch": true
+    },
+    "frameDomainCandidates": {
+      "schemaVersion": 1,
+      "artifactType": "swf-frame-domain-candidates",
+      "animationId": "course-g04-l03-in-008",
+      "source": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/IN/L3IN08.swf",
+        "sha256": "5462ead920862a48ddbacf7be068f9cadf9e509e7032a2dbbb2659a28e08757f"
+      },
+      "extractionStatus": "swfmill-structural-definitions-extracted",
+      "root": {
+        "timelineId": "root",
+        "sourceTimelineId": "root",
+        "kind": "root",
+        "frameCount": 10,
+        "rootReachability": "root-by-definition",
+        "acceptanceDisposition": "declared-root-structural-domain"
+      },
+      "nestedDefinitions": [
+        {
+          "timelineId": "sprite-5",
+          "sourceTimelineId": "sprite-5",
+          "sourceObjectId": 5,
+          "kind": "nested-definition-candidate",
+          "frameCount": 1,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-48",
+          "sourceTimelineId": "sprite-48",
+          "sourceObjectId": 48,
+          "kind": "nested-definition-candidate",
+          "frameCount": 5,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-52",
+          "sourceTimelineId": "sprite-52",
+          "sourceObjectId": 52,
+          "kind": "nested-definition-candidate",
+          "frameCount": 1,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-54",
+          "sourceTimelineId": "sprite-54",
+          "sourceObjectId": 54,
+          "kind": "nested-definition-candidate",
+          "frameCount": 55,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-56",
+          "sourceTimelineId": "sprite-56",
+          "sourceObjectId": 56,
+          "kind": "nested-definition-candidate",
+          "frameCount": 20,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-57",
+          "sourceTimelineId": "sprite-57",
+          "sourceObjectId": 57,
+          "kind": "nested-definition-candidate",
+          "frameCount": 217,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        }
+      ],
+      "summary": {
+        "rootDomainCount": 1,
+        "nestedDefinitionCount": 6,
+        "nestedLongerThanRootCount": 3,
+        "completeRootReachableDomainInventory": false,
+        "unresolvedReachabilityCount": 6
+      },
+      "limitations": [
+        "DefineSprite records are structural definitions, not proof that the root or an authorized host reaches them.",
+        "Placement, entry state, interaction causality, language, audio, terminal behavior, Replay, and natural traces remain unresolved.",
+        "This machine inventory cannot create original-runtime authority, visual or audio acceptance, human or owner review, strict completion, or publication."
+      ],
+      "acceptanceEffects": {
+        "authoritativeOriginalRuntime": false,
+        "completeFrameDomainDisposition": false,
+        "audioAccepted": false,
+        "humanVisualAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false,
+        "published": false
+      }
     }
   },
   "outputs": [
@@ -353,10 +480,16 @@
       "uncompressedSha256": "5ba588fc27c5cf9103de7f4937a3b107de7bcee0065ec2a7bde4af42528f73e4"
     },
     {
+      "path": "audit/machine/swf-frame-domain-candidates.json",
+      "format": "text",
+      "bytes": 3468,
+      "sha256": "872693d8630fab2bb71c3e96662df55be69b4dedca9849e5ae6eb02c1c4f0295"
+    },
+    {
       "path": "audit/machine/swfmill-summary.json",
       "format": "text",
-      "bytes": 2800,
-      "sha256": "0d929e17de50a9672af69582a70b83a3682a386975c5721ea48d9413d6a8d5b1"
+      "bytes": 3150,
+      "sha256": "3c143910198e7cdc76d20f2833ddab312cccfccd63cdbe254ae7fffbac42ebc6"
     },
     {
       "path": "audit/machine/swfmill.xml.gz",

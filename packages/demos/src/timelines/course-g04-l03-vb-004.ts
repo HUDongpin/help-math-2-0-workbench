@@ -1,3 +1,4 @@
+import type {CourseG04L03SourceGlossaryConfig} from "./course-g04-l03-source-glossary-interaction";
 import type {SourceStaticCanvasCandidateConfig} from "../source-static-canvas-candidate";
 
 export const COURSE_G04_L03_VB_004_SOURCE = Object.freeze({
@@ -19,6 +20,55 @@ export const COURSE_G04_L03_VB_004_SOURCE = Object.freeze({
   rootPlacementTwips: Object.freeze({x: 8_026, y: 4_885}),
   rootPlacementPixels: Object.freeze({x: 401.3, y: 244.25}),
 });
+
+// Source-locked glossary placements; geometry remains audit metadata.
+export const COURSE_G04_L03_VB_004_GLOSSARY_HOTSPOTS = Object.freeze([
+  Object.freeze({
+    id: "positive-number",
+    characterId: 11,
+    keyAttribute: "Positive number",
+    firstFrame: 1,
+    lastFrame: 245,
+    depth: 5,
+    sourceBounds: Object.freeze({left: 78.73060302734375, right: 241.9341827392578, top: 119.41440429687499, bottom: 141.92681655883788}),
+    entryIds: Object.freeze({en: "en-0499-e54dca5d8b22", es: "es-0458-9770130a5961"}),
+    labels: Object.freeze({en: "Positive number", es: "Número positivo"}),
+  }),
+  Object.freeze({
+    id: "greater-than",
+    characterId: 12,
+    keyAttribute: "Greater than",
+    firstFrame: 1,
+    lastFrame: 245,
+    depth: 7,
+    sourceBounds: Object.freeze({left: 280.13825073242185, right: 400.9616470336914, top: 119.41440429687499, bottom: 141.92681655883788}),
+    entryIds: Object.freeze({en: "en-0258-b63a4f18372f", es: "es-0391-a2bbe065c7a3"}),
+    labels: Object.freeze({en: "Greater than", es: "Mayor que"}),
+  }),
+  Object.freeze({
+    id: "zero",
+    characterId: 13,
+    keyAttribute: "Zero",
+    firstFrame: 1,
+    lastFrame: 245,
+    depth: 9,
+    sourceBounds: Object.freeze({left: 405.4250549316406, right: 446.74071502685547, top: 119.41440429687499, bottom: 141.92681655883788}),
+    entryIds: Object.freeze({en: "en-0760-6575e63919df", es: "es-0057-e01a19219cce"}),
+    labels: Object.freeze({en: "Zero", es: "Cero"}),
+  }),
+] as const);
+
+export const COURSE_G04_L03_VB_004_GLOSSARY_CONFIG = Object.freeze({
+  animationId: "course-g04-l03-vb-004",
+  frameDomain: "sprite-53",
+  terms: COURSE_G04_L03_VB_004_GLOSSARY_HOTSPOTS,
+  learnerPrompt: "Positive numbers are greater than zero.",
+  playbackDisposition: "reversible-support-pause",
+  sourceAction: "DoHyperLinks",
+  sourceStopTarget: "_root.animation_mc.animation.stop()",
+  glossaryAuthority: "grade-wide-shell-keyterms-static-candidate",
+  glossarySourceDisposition: "unresolved-lesson-vs-grade-wide",
+} satisfies CourseG04L03SourceGlossaryConfig);
 
 export const COURSE_G04_L03_VB_004_CONFIG = Object.freeze({
   animationId: "course-g04-l03-vb-004",

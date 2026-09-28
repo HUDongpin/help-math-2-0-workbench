@@ -1,3 +1,9 @@
+import {
+  normalizePracticeQuestionSeed,
+  selectPracticeQuestionFeedback,
+  twoAttemptFeedbackDestination,
+} from "./practice-question-feedback";
+
 export type CourseG04L03Ts007ChoiceId = "A" | "B" | "C" | "D";
 
 export type CourseG04L03Ts007Phase =
@@ -170,12 +176,12 @@ export const COURSE_G04_L03_TS_007_GLOSSARY = Object.freeze([
   Object.freeze({
     term: "Symbol" as const,
     sourceButtonObjectId: 20,
-    mode: "safe-disabled-unresolved-host-callback" as const,
+    mode: "typed-modern-keyterm-adapter" as const,
   }),
   Object.freeze({
     term: "Number line" as const,
     sourceButtonObjectId: 21,
-    mode: "safe-disabled-unresolved-host-callback" as const,
+    mode: "typed-modern-keyterm-adapter" as const,
   }),
 ]);
 
@@ -214,9 +220,6 @@ export const COURSE_G04_L03_TS_007_INTERACTION_AUTHORITY = Object.freeze({
   strictAcceptanceEffect: "none",
 });
 
-const normalizeSeed = (seed: number): number =>
-  Number.isSafeInteger(seed) ? seed >>> 0 : 0;
-
 const focusForChoice = (
   choiceId: CourseG04L03Ts007ChoiceId,
 ): CourseG04L03Ts007FocusTarget => `choice-${choiceId}`;
@@ -238,7 +241,7 @@ export const createCourseG04L03Ts007InteractionState = (
   seed = 0,
 ): CourseG04L03Ts007InteractionState =>
   freezeState({
-    seed: normalizeSeed(seed),
+    seed: normalizePracticeQuestionSeed(seed),
     phase: "walkthrough",
     walkthroughGate: 0,
     frame: 235,
@@ -255,7 +258,7 @@ const completeFeedback = (
   const feedback = state.feedback;
   if (state.phase !== "feedback" || !feedback) return state;
 
-  if (feedback.kind === "right" || state.wrongTryCount === 1) {
+  if (twoAttemptFeedbackDestination(feedback.kind, state.wrongTryCount) === "terminal") {
     return freezeState({
       ...state,
       phase: "terminal",
@@ -312,17 +315,15 @@ export const reduceCourseG04L03Ts007Interaction = (
 
     case "choose": {
       if (state.phase !== "quiz") return state;
-      const choice = COURSE_G04_L03_TS_007_CHOICES.find(
-        ({id}) => id === action.choiceId,
+      const selection = selectPracticeQuestionFeedback(
+        COURSE_G04_L03_TS_007_CHOICES,
+        action.choiceId,
+        state.seed,
+        COURSE_G04_L03_TS_007_RIGHT_FEEDBACK_WINDOWS,
+        COURSE_G04_L03_TS_007_WRONG_FEEDBACK_WINDOWS,
       );
-      if (!choice) return state;
-
-      const windows = choice.correct
-        ? COURSE_G04_L03_TS_007_RIGHT_FEEDBACK_WINDOWS
-        : COURSE_G04_L03_TS_007_WRONG_FEEDBACK_WINDOWS;
-      const branch = (state.seed % windows.length) + 1;
-      const sourceWindow = windows[branch - 1];
-      if (!sourceWindow) return state;
+      if (!selection) return state;
+      const {choice, branch, sourceWindow} = selection;
 
       return freezeState({
         ...state,

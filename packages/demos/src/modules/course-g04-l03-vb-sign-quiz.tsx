@@ -309,13 +309,14 @@ function MobileQuizSurface({
 
 function InteractionOverlay({
   config,
+  onActivityComplete,
   pageInteractionCompanionTargetId,
   replay = 0,
   seed,
   visualHostRef,
 }: Pick<
   AnimationRendererProps,
-  "pageInteractionCompanionTargetId" | "replay" | "seed"
+  "onActivityComplete" | "pageInteractionCompanionTargetId" | "replay" | "seed"
 > & {
   config: CourseG04L03VbSignQuizConfig;
   visualHostRef: React.RefObject<HTMLDivElement | null>;
@@ -334,6 +335,9 @@ function InteractionOverlay({
   );
   const [companionTarget, setCompanionTarget] =
     useState<HTMLElement | null>(null);
+  useEffect(() => {
+    if (interaction.mode === "completed") onActivityComplete?.();
+  }, [interaction.mode, onActivityComplete]);
   const [controlsReady, setControlsReady] = useState(false);
   const stageWrongCloseRef = useRef<HTMLButtonElement>(null);
   const mobileWrongCloseRef = useRef<HTMLButtonElement>(null);
@@ -583,6 +587,7 @@ export function createCourseG04L03VbSignQuizCandidate(
         {interactionEnabled ? (
           <InteractionOverlay
             config={config}
+            onActivityComplete={props.onActivityComplete}
             pageInteractionCompanionTargetId={
               props.pageInteractionCompanionTargetId
             }
@@ -620,6 +625,7 @@ export function createCourseG04L03VbSignQuizCandidate(
 
   const module = Object.freeze({
     ...candidate.module,
+    completionMode: "activity" as const,
     reducedMotionFrame: config.activityFrame,
     Renderer,
   });

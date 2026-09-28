@@ -7,7 +7,7 @@ export const COURSE_G04_L03_FQ_003_SOURCE = Object.freeze({
   fla: "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/FQ/L3FQ03.fla",
   flaSha256: "a873da8016d59b001db1fc5be359063342861809a33af194fec9fec81082a2f4",
   sharedAudioGroupId: "course-g04-l03-fq-audio",
-  sharedAudioFileCount: 108,
+  sharedAudioFileCount: 250,
   spriteObjectId: 899,
   externalControlEvent: Object.freeze({
     path: "DefineButton2_12/BUTTONCONDACTION on(release).as",
@@ -39,7 +39,7 @@ export const COURSE_G04_L03_FQ_003_CONFIG = Object.freeze({
     firstFrame: 1,
     lastFrame: 68,
   })]),
-  sourceControlBehaviorLabel: "The getURL source call is confined to a disabled button event; 108 shared audio files, 259 edit-text definitions, scoring, pointer controls, and all ActionScript execution remain disabled",
+  sourceControlBehaviorLabel: "The getURL source call is confined to a disabled button event; 250 shared audio files, 259 edit-text definitions, scoring, pointer controls, and all ActionScript execution remain disabled",
 } satisfies SourceStaticCanvasCandidateConfig);
 
 export const COURSE_G04_L03_FQ_003_AUTHORITY = SOURCE_STATIC_CANDIDATE_AUTHORITY;

@@ -26,7 +26,17 @@ Keep tool roles explicit:
 - Use Playwright for deterministic candidate and product-host QA. Treat a callable renderer or smoke screenshot as runtime evidence for the candidate only, never as visual fidelity.
 - Use Ruffle only under the forensic restrictions in the canonical skill and existing evidence references.
 
+Before claiming a page or new family is automatically convertible, assess every
+required capability with [capability-support.md](capability-support.md). Keep
+extraction, current generation, maintained implementation and executed behavior
+checks separate; a complexity label is not a support declaration.
+
 Fix AVM1/AVM2 behavior in a generator, normalized IR, shared adapter, or source-evidenced product state machine. Do not hide unresolved random branches, scoring, drag/scroll behavior, host calls, nested timelines, or audio clocks behind successful Canvas rendering.
+
+For an existing admitted family, execute the bounded
+[product integration pipeline](product-integration-pipeline.md) to carry
+source checks through fresh My Lesson verification with content-bound receipts.
+Do not call intermediate generation or cached state tests product success.
 
 ## Map The Operational Funnel
 
@@ -130,6 +140,10 @@ Keep these layers identifiable and independently hashable:
 4. `generated candidate`: reproducible Canvas/assets/modules produced from the bound source, IR, toolchain, and generator.
 5. `maintained product integration`: reviewed shared wrappers, state machines, host adapters, registry entries, descriptors, tests, and product contracts.
 6. `evidence and receipts`: immutable run manifests, checksums, captures, comparisons, reviews, and ledgers governed by their existing references.
+
+For instructional events and state transitions, follow
+[teaching-behavior-ir.md](teaching-behavior-ir.md). Validate predicates against
+source handlers independently of the generated code and consumer expectations.
 
 Never replace preserved source or raw extraction with the compact IR. Keep large generated outputs on the filesystem rather than pasting them into model context; provide the model only the hash-bound IR, indexes, and smallest source-evidenced excerpts required for the task.
 

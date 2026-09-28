@@ -73,6 +73,19 @@ test('a page that is not really playing reports nothing', () => {
   );
 });
 
+test('an exercise completes only after its activity reports success', () => {
+  const exercise = {...PLAYING, frame: 43, completionMode: 'activity' as const};
+  assert.equal(playbackReachedEnd(exercise), false, 'the question stop is not an answer');
+  assert.equal(playbackReachedEnd({...exercise, reducedMotion: true}), false);
+  assert.equal(playbackReachedEnd({...exercise, fps: 0}), false);
+  assert.equal(playbackReachedEnd({...exercise, activityComplete: false}), false);
+  assert.equal(playbackReachedEnd({...exercise, activityComplete: true}), true);
+  assert.equal(playbackReachedEnd({...exercise, activityComplete: true, reducedMotion: true}), true);
+  assert.equal(playbackReachedEnd({...exercise, activityComplete: true, captureFrame: 43}), false);
+  assert.equal(playbackReachedEnd({...exercise, activityComplete: true, rendererDomainSupported: false}), false);
+  assert.equal(playbackReachedEnd({...exercise, activityComplete: true, reducedMotion: undefined}), false);
+});
+
 test('page animation progress uses the authored playback end rather than asset frame count', () => {
   const progressing = {
     capture: false,

@@ -190,6 +190,36 @@ test("collects the selected module, transitive shared/registry files, route styl
   assert.deepEqual(implementationArtifactClosureErrors(closure), []);
 });
 
+test("binds a production-profile server-audio asset referenced by a renderer module", async (t) => {
+  const input = await fixture();
+  t.after(() => rm(input.projectRoot, {recursive: true, force: true}));
+  const audio = "server audio bytes\n";
+  const audioPath = "courses/course-fixture/audio/embedded-main-timeline.mp3";
+  await write(input.projectRoot, "packages/demos/src/modules/course-fixture.tsx", [
+    "import {state} from '../timelines/course-fixture';",
+    "export const asset = '/flash-assets/courses/course-fixture/canvas-renderer.js';",
+    "export const audio = '/flash-assets/courses/course-fixture/audio/embedded-main-timeline.mp3';",
+    "export default state;",
+    "",
+  ].join("\n"));
+  await write(input.projectRoot, `apps/web/server-assets/flash-assets/${audioPath}`, audio);
+  await write(input.projectRoot, "apps/web/config/current-js-production-assets.v1.json", `${JSON.stringify({
+    schemaVersion: 1,
+    profileId: "current-js-production-assets-v1",
+    entries: [{
+      assetPath: audioPath,
+      bytes: Buffer.byteLength(audio),
+      sha256: digest(audio),
+      storageRoot: "server-audio",
+    }],
+  }, null, 2)}\n`);
+  const closure = await collect(input);
+  const paths = new Set(closure.artifacts.map((artifact) => artifact.path));
+  assert.equal(paths.has(`apps/web/server-assets/flash-assets/${audioPath}`), true);
+  assert.equal(paths.has("apps/web/config/current-js-production-assets.v1.json"), true);
+  assert.deepEqual(implementationArtifactClosureErrors(closure), []);
+});
+
 test("package command aliases do not stale captures while render runtime package fields do", async (t) => {
   const input = await fixture();
   t.after(() => rm(input.projectRoot, {recursive: true, force: true}));

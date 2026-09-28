@@ -5,6 +5,7 @@ import type {AnimationModule} from '@helpmath/demos/animation-registry';
 
 import {
   isExactInteractiveAudioAsset,
+  interactiveAudioMatchesLanguage,
   moduleDeclaresLessonHostRequest,
   moduleSupportsDirectRuntimeAudioHost,
 } from '../components/animation-runtime';
@@ -130,4 +131,18 @@ test('standalone runtime host is available only for an audio-only exact interact
   assert.equal(moduleSupportsDirectRuntimeAudioHost(mixedCapabilityModule, true, 1), false);
   assert.equal(moduleSupportsDirectRuntimeAudioHost(keytermModule, true, 1), false);
   assert.equal(moduleSupportsDirectRuntimeAudioHost(undefined, true, 1), false);
+});
+
+
+test('bilingual in-page audio requires explicit locale exposure and preserves its language', () => {
+  const spanish = {id: 'g4-l3-fq-es-q1-question', language: 'es' as const,
+    source: `/flash-assets/courses/course-g04-l03-fq-audio/SA/Q1.mp3?sha256=${'a'.repeat(64)}`,
+    sha256: 'a'.repeat(64)};
+  assert.equal(interactiveAudioMatchesLanguage(spanish, 'en'), false);
+  assert.equal(interactiveAudioMatchesLanguage(spanish, 'es'), true);
+  const bilingual = {...spanish, visibleWhen: ['en', 'es'] as const};
+  assert.equal(interactiveAudioMatchesLanguage(bilingual, 'en'), true);
+  assert.equal(bilingual.language, 'es');
+  assert.equal(isExactInteractiveAudioAsset(bilingual), true);
+  assert.equal(isExactInteractiveAudioAsset({...bilingual, source: 'https://example.com/audio.mp3'}), false);
 });

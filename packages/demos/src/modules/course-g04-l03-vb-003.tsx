@@ -3,6 +3,7 @@
 import React, {
   useCallback,
   useEffect,
+  useMemo,
   useReducer,
   useRef,
   useState,
@@ -37,6 +38,7 @@ const candidate = createSourceStaticCanvasCandidate(
 const SourceStaticRenderer = candidate.Renderer;
 
 const SOURCE_ACTIVITY_FRAME = 116;
+const SOURCE_CLEAN_QUESTION_FRAME = 115;
 const SOURCE_ACTIVITY_DOMAIN = "sprite-106";
 const SOURCE_ACTIVITY_SCENARIO = "source-static-frame";
 const SOURCE_STAGE_BACKGROUND = "#b8d8f7";
@@ -433,6 +435,7 @@ function WrongFeedbackCard({
 }
 
 function CourseG04L03Vb003InteractionOverlay({
+  onActivityComplete,
   pageInteractionCompanionTargetId,
   paused = false,
   reducedMotion = false,
@@ -440,6 +443,7 @@ function CourseG04L03Vb003InteractionOverlay({
   seed,
 }: Pick<
   AnimationRendererProps,
+  | "onActivityComplete"
   | "pageInteractionCompanionTargetId"
   | "paused"
   | "reducedMotion"
@@ -453,6 +457,9 @@ function CourseG04L03Vb003InteractionOverlay({
   );
   const [companionTarget, setCompanionTarget] =
     useState<HTMLElement | null>(null);
+  useEffect(() => {
+    if (interaction.mode === "completed") onActivityComplete?.();
+  }, [interaction.mode, onActivityComplete]);
   const wrongCloseRef = useRef<HTMLButtonElement>(null);
   const lastAttemptedItemRef = useRef<CourseG04L03Vb003ItemId | null>(null);
   const correctFeedbackRemainingMs = useRef(
@@ -772,6 +779,21 @@ export function CourseG04L03Vb003Renderer(props: AnimationRendererProps) {
     && props.scenario === SOURCE_ACTIVITY_SCENARIO
     && props.lang === "en"
     && !isDeterministicEvidenceCapture(props);
+  // The structural stop frame includes an inactive legacy feedback clip.
+  // Keep the authored question visible while the maintained activity owns feedback.
+  const cleanQuestionState = useMemo(() => candidate.getFrameState(
+    SOURCE_CLEAN_QUESTION_FRAME,
+    {
+      entryStateSha256: props.entryStateSha256,
+      frameDomain,
+      lang: props.lang,
+      requirementId: props.requirementId,
+      scenario: props.scenario,
+      seed: props.seed,
+      traceId: props.traceId,
+    },
+  ), [frameDomain, props.entryStateSha256, props.lang, props.requirementId,
+    props.scenario, props.seed, props.traceId]);
 
   return (
     <div
@@ -788,10 +810,15 @@ export function CourseG04L03Vb003Renderer(props: AnimationRendererProps) {
       }}
     >
       <div aria-hidden={interactionEnabled ? true : undefined}>
-        <SourceStaticRenderer {...props} />
+        <SourceStaticRenderer
+          {...props}
+          frame={interactionEnabled ? SOURCE_CLEAN_QUESTION_FRAME : props.frame}
+          state={interactionEnabled ? cleanQuestionState : props.state}
+        />
       </div>
       {interactionEnabled ? (
         <CourseG04L03Vb003InteractionOverlay
+          onActivityComplete={props.onActivityComplete}
           pageInteractionCompanionTargetId={
             props.pageInteractionCompanionTargetId
           }
@@ -838,6 +865,7 @@ export const buildCourseG04L03Vb003CaptureAttributes =
 
 export default Object.freeze({
   ...candidate.module,
+  completionMode: "activity" as const,
   reducedMotionFrame: SOURCE_ACTIVITY_FRAME,
   Renderer: CourseG04L03Vb003Renderer,
 });

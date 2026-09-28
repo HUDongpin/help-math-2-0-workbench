@@ -1,3 +1,4 @@
+import type {CourseG04L03SourceGlossaryConfig} from "./course-g04-l03-source-glossary-interaction";
 import type {
   AnimationLanguage,
   AnimationRuntimeMetadata,
@@ -43,6 +44,66 @@ export const COURSE_G04_L03_VB_009_SOURCE_CONTRACT = Object.freeze({
   ownerAccepted: false,
   strictAcceptanceEffect: "none",
 });
+
+// Source-locked glossary placements; geometry remains audit metadata.
+export const COURSE_G04_L03_VB_009_GLOSSARY_HOTSPOTS = Object.freeze([
+  Object.freeze({
+    id: "pattern",
+    characterId: 11,
+    keyAttribute: "Pattern",
+    firstFrame: 1,
+    lastFrame: 175,
+    depth: 5,
+    sourceBounds: Object.freeze({left: 94.40733032226562, right: 167.03249969482422, top: 120.41440429687499, bottom: 142.92681655883788}),
+    entryIds: Object.freeze({en: "en-0459-b510b9647e1c", es: "es-0481-73e819571a77"}),
+    labels: Object.freeze({en: "Pattern", es: "Patrón"}),
+  }),
+  Object.freeze({
+    id: "symbol",
+    characterId: 12,
+    keyAttribute: "Symbol",
+    firstFrame: 1,
+    lastFrame: 175,
+    depth: 7,
+    sourceBounds: Object.freeze({left: 429.34779052734376, right: 510.9845733642578, top: 120.41440429687499, bottom: 142.92681655883788}),
+    entryIds: Object.freeze({en: "en-0677-bff39ce92c9e", es: "es-0655-871afa316e73"}),
+    labels: Object.freeze({en: "Symbol", es: "Símbolo"}),
+  }),
+  Object.freeze({
+    id: "set",
+    characterId: 13,
+    keyAttribute: "Set",
+    firstFrame: 1,
+    lastFrame: 175,
+    depth: 9,
+    sourceBounds: Object.freeze({left: 206.647314453125, right: 242.02337646484375, top: 120.41440429687499, bottom: 142.92681655883788}),
+    entryIds: Object.freeze({en: "en-0612-bf9e68924be1", es: "es-0083-7cd0c12afef8"}),
+    labels: Object.freeze({en: "Set", es: "Conjunto"}),
+  }),
+  Object.freeze({
+    id: "rule",
+    characterId: 16,
+    keyAttribute: "Rule",
+    firstFrame: 73,
+    lastFrame: 175,
+    depth: 15,
+    sourceBounds: Object.freeze({left: 291.5784515380859, right: 328.990552520752, top: 147.014404296875, bottom: 169.5268165588379}),
+    entryIds: Object.freeze({en: "en-0594-2fc559859c42", es: "es-0581-1e43802cd308"}),
+    labels: Object.freeze({en: "Rule", es: "Regla"}),
+  }),
+] as const);
+
+export const COURSE_G04_L03_VB_009_GLOSSARY_CONFIG = Object.freeze({
+  animationId: "course-g04-l03-vb-009",
+  frameDomain: "sprite-24",
+  terms: COURSE_G04_L03_VB_009_GLOSSARY_HOTSPOTS,
+  learnerPrompt: "A pattern follows a rule.",
+  playbackDisposition: "reversible-support-pause",
+  sourceAction: "DoHyperLinks",
+  sourceStopTarget: "_root.animation_mc.animation.stop()",
+  glossaryAuthority: "grade-wide-shell-keyterms-static-candidate",
+  glossarySourceDisposition: "unresolved-lesson-vs-grade-wide",
+} satisfies CourseG04L03SourceGlossaryConfig);
 
 export const COURSE_G04_L03_VB_009_CANDIDATE_CONFIG = Object.freeze({
   animationId: "course-g04-l03-vb-009",

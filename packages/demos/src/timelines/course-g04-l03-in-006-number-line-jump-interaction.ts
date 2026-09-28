@@ -135,6 +135,13 @@ export const COURSE_G04_L03_IN_006_NUMBER_LINE_RANGE = Object.freeze({
   maximum: 15,
 });
 
+/** Root y=280.3 plus shape-16's horizontal stroke at 876/20 = 43.8. */
+export const COURSE_G04_L03_IN_006_NUMBER_LINE_GEOMETRY = Object.freeze({
+  firstTickX: 64,
+  tickSpacing: 22.5,
+  baselineY: 324.1,
+});
+
 export const COURSE_G04_L03_IN_006_INSTRUCTION =
   "Click and drag the jumps to the number line to jump from the first point to the target number using as few arrows as possible.";
 

@@ -1,3 +1,9 @@
+import {TS008_BEHAVIOR, isTS008CorrectChoice, ts008FeedbackDestination} from "./course-g04-l03-ts-008-behavior.generated";
+import {
+  normalizePracticeQuestionSeed,
+  selectPracticeQuestionFeedback,
+} from "./practice-question-feedback";
+
 export type CourseG04L03Ts008ChoiceId = "A" | "B" | "C" | "D";
 
 export type CourseG04L03Ts008WalkthroughGate = 0 | 1 | 2 | 3;
@@ -197,7 +203,7 @@ export const COURSE_G04_L03_TS_008_CHOICES:
       person: "Elvin",
       sourceStatement: "Elvin has $3.",
       signedValue: 3,
-      correct: false,
+      correct: isTS008CorrectChoice("A"),
       hitBounds: {x: 574.7, y: 203.9, width: 90.7, height: 40},
     }),
     freezeChoice({
@@ -207,7 +213,7 @@ export const COURSE_G04_L03_TS_008_CHOICES:
       person: "Ricky",
       sourceStatement: "Ricky owes $2.",
       signedValue: -2,
-      correct: false,
+      correct: isTS008CorrectChoice("B"),
       hitBounds: {x: 575, y: 269.5, width: 95.1, height: 40},
     }),
     freezeChoice({
@@ -217,7 +223,7 @@ export const COURSE_G04_L03_TS_008_CHOICES:
       person: "Susan",
       sourceStatement: "Susan owes $10.",
       signedValue: -10,
-      correct: false,
+      correct: isTS008CorrectChoice("C"),
       hitBounds: {x: 573.4, y: 327.4, width: 106.3, height: 38},
     }),
     freezeChoice({
@@ -227,7 +233,7 @@ export const COURSE_G04_L03_TS_008_CHOICES:
       person: "Toni",
       sourceStatement: "Toni has $7.",
       signedValue: 7,
-      correct: true,
+      correct: isTS008CorrectChoice("D"),
       hitBounds: {x: 574.7, y: 386.4, width: 89.3, height: 41},
     }),
   ]);
@@ -413,31 +419,31 @@ export const COURSE_G04_L03_TS_008_GLOSSARY = Object.freeze([
     term: "Positive number" as const,
     visibleText: "positive numbers",
     sourceButtonObjectId: 166,
-    sourceHitBoundsResolved: false,
+    sourceHitBoundsResolved: true,
     hostAction: "DoHyperLinks" as const,
     hostContentResolved: false,
-    enabled: false,
-    mode: "safe-disabled-unresolved-host-callback" as const,
+    enabled: true,
+    mode: "typed-modern-help-keyterm-adapter" as const,
   }),
   Object.freeze({
     term: "Owe" as const,
     visibleText: "Owing",
     sourceButtonObjectId: 167,
-    sourceHitBoundsResolved: false,
+    sourceHitBoundsResolved: true,
     hostAction: "DoHyperLinks" as const,
     hostContentResolved: false,
-    enabled: false,
-    mode: "safe-disabled-unresolved-host-callback" as const,
+    enabled: true,
+    mode: "typed-modern-help-keyterm-adapter" as const,
   }),
   Object.freeze({
     term: "Negative number" as const,
     visibleText: "negative numbers",
     sourceButtonObjectId: 168,
-    sourceHitBoundsResolved: false,
+    sourceHitBoundsResolved: true,
     hostAction: "DoHyperLinks" as const,
     hostContentResolved: false,
-    enabled: false,
-    mode: "safe-disabled-unresolved-host-callback" as const,
+    enabled: true,
+    mode: "typed-modern-help-keyterm-adapter" as const,
   }),
 ]);
 
@@ -569,9 +575,6 @@ export const COURSE_G04_L03_TS_008_INTERACTION_AUTHORITY = Object.freeze({
   strictAcceptanceEffect: "none",
 });
 
-const normalizeSeed = (seed: number): number =>
-  Number.isSafeInteger(seed) ? seed >>> 0 : 0;
-
 const focusForChoice = (
   choiceId: CourseG04L03Ts008ChoiceId,
 ): CourseG04L03Ts008FocusTarget => `choice-${choiceId}`;
@@ -593,17 +596,8 @@ export const createCourseG04L03Ts008InteractionState = (
   seed = 0,
 ): CourseG04L03Ts008InteractionState =>
   freezeState({
-    seed: normalizeSeed(seed),
-    phase: "walkthrough",
-    walkthroughGate: 0,
-    walkthroughBoxRevealed: false,
-    frame: 328,
-    wrongTryCount: 0,
-    selectedChoiceId: null,
-    feedback: null,
-    focusTarget: "walkthrough-step-1",
-    needMoreHelpReturnPhase: null,
-    needMoreHelpReturnFocus: null,
+    seed: normalizePracticeQuestionSeed(seed),
+    ...TS008_BEHAVIOR.replay.initialState,
   });
 
 const completeFeedback = (
@@ -612,13 +606,13 @@ const completeFeedback = (
   const feedback = state.feedback;
   if (state.phase !== "feedback" || !feedback) return state;
 
-  if (feedback.kind === "right" || state.wrongTryCount === 1) {
+  if (ts008FeedbackDestination(feedback.kind, state.wrongTryCount) === "terminal") {
     return freezeState({
       ...state,
       phase: "terminal",
       walkthroughGate: null,
       walkthroughBoxRevealed: false,
-      frame: 789,
+      frame: TS008_BEHAVIOR.completion.frame,
       wrongTryCount: 0,
       selectedChoiceId: feedback.choiceId,
       feedback: null,
@@ -739,22 +733,20 @@ export const reduceCourseG04L03Ts008Interaction = (
     }
 
     case "choose": {
-      if (state.phase !== "quiz") return state;
-      const choice = COURSE_G04_L03_TS_008_CHOICES.find(
-        ({id}) => id === action.choiceId,
+      if (state.phase !== TS008_BEHAVIOR.input.enabledPhase) return state;
+      const selection = selectPracticeQuestionFeedback(
+        COURSE_G04_L03_TS_008_CHOICES,
+        action.choiceId,
+        state.seed,
+        COURSE_G04_L03_TS_008_RIGHT_FEEDBACK_WINDOWS,
+        COURSE_G04_L03_TS_008_WRONG_FEEDBACK_WINDOWS,
       );
-      if (!choice) return state;
-
-      const windows = choice.correct
-        ? COURSE_G04_L03_TS_008_RIGHT_FEEDBACK_WINDOWS
-        : COURSE_G04_L03_TS_008_WRONG_FEEDBACK_WINDOWS;
-      const branch = (state.seed % windows.length) + 1;
-      const sourceWindow = windows[branch - 1];
-      if (!sourceWindow) return state;
+      if (!selection) return state;
+      const {choice, branch, sourceWindow} = selection;
 
       return freezeState({
         ...state,
-        phase: "feedback",
+        phase: TS008_BEHAVIOR.feedback.phase,
         selectedChoiceId: choice.id,
         feedback: {
           kind: choice.correct ? "right" : "wrong",

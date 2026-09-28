@@ -2,6 +2,8 @@ import {normalizeRequirementSelection} from "./trace-frame-selection.mjs";
 
 export const STRICT_FULL_DOMAIN_BOUNDARY =
   "partial-path requirements cannot enter strict acceptance, human/owner review, trace indexes, or original-runtime evidence";
+export const PLACEMENT_PATH_BOUNDARY =
+  "placement-path requirements cannot enter strict acceptance, human/owner review, trace indexes, or original-runtime evidence";
 
 const SHA256_PATTERN = /^[a-f0-9]{64}$/;
 const PARTIAL_STATUS_VALUES = new Set(["complete", "blocked", "pending"]);
@@ -38,8 +40,8 @@ export function validateSupplementalPartialRequirementBoundary(
   selection,
   label = "partial-path requirement",
 ) {
-  if (selection?.coverageRole !== "partial-path") {
-    throw new Error(`${label} is not a supplemental partial-path requirement`);
+  if (!new Set(["partial-path", "placement-path"]).has(selection?.coverageRole)) {
+    throw new Error(`${label} is not a supplemental path requirement`);
   }
   if (requirement.strictAcceptanceEffect !== "none") {
     throw new Error(`${label}.strictAcceptanceEffect must be exactly none`);
@@ -142,8 +144,11 @@ export function classifyStrictFullDomainRequirement(requirement, frameCount, lab
 export function assertStrictFullDomainRequirement(requirement, frameCount, label = "requirement") {
   const {eligible, selection} = classifyStrictFullDomainRequirement(requirement, frameCount, label);
   if (!eligible) {
+    const boundary = selection.coverageRole === "placement-path"
+      ? PLACEMENT_PATH_BOUNDARY
+      : STRICT_FULL_DOMAIN_BOUNDARY;
     throw new Error(
-      `${label}: ${STRICT_FULL_DOMAIN_BOUNDARY}; this requirement must itself select exactly 1..${frameCount}`,
+      `${label}: ${boundary}; this requirement must itself select exactly 1..${frameCount}`,
     );
   }
   return selection;

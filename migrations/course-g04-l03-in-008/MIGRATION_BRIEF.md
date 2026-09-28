@@ -104,3 +104,13 @@ List every unresolved mismatch, unavailable tool/source, accepted emulator diffe
 - Owner review status:
 - Owner decision, reviewer/date, or explicit not-required reason:
 - Strict validator result:
+
+## 2026-09-08 Patterns modern-product follow-up
+
+- Placement: G4 L3, Learn It 7/11, whole-lesson page 19/39, `course-g04-l03-in-008`. Existing workspace and Current-JS registration retained.
+- Complexity and production lane: **behavior-heavy / bounded advanced-manual state machine within the hybrid workflow**. The source has two input fields, exact-string checking, feedback, retry, five questions sampled without replacement, and independent coach timelines. The maintained reducer and responsive surface retain that known behavior; no new factory scale-out is implied.
+- Immutable source identity and placement geometry: see `work/g4-l3-modern-product-review/20260908-patterns/glossary-source-evidence.json`; freshly hashed SWF, compressed XML and ActionScript evidence. Source FLA/SWF, generated Canvas and audio assets are unchanged.
+- Maintained behavior: activity completion only after a correct pair, synchronized desktop/mobile question and answer preview, visible success feedback, same-question retry, Replay reset, and the source Pattern glossary entry.
+- Math basis: five source question/answer sequences freshly extracted and arithmetic checked in pattern-questions-source-evidence.json; AVM1 randomness remains unexecuted.
+- Product review evidence: `work/g4-l3-modern-product-review/20260908-patterns/REVIEW.md`, browser-verification.json, test logs, source/audio bindings and product-review-receipt.json.
+- Current-JS engineering verification remains separate from original-runtime observation, audio listening, human visual review, Owner approval, strict completion, whole-lesson acceptance, release and publication. No new downstream gate is closed here.

@@ -1,3 +1,4 @@
+import type {CourseG04L03SourceGlossaryConfig} from "./course-g04-l03-source-glossary-interaction";
 import type {SourceStaticCanvasCandidateConfig} from "../source-static-canvas-candidate";
 
 export const COURSE_G04_L03_TI_003_SOURCE = Object.freeze({
@@ -79,3 +80,141 @@ export const COURSE_G04_L03_TI_003_AUTHORITY = Object.freeze({
   strictMigrationComplete: false,
   strictAcceptanceEffect: "none",
 });
+
+// Source placements audited in TI003 Sprite 126.
+export const COURSE_G04_L03_TI_003_GLOSSARY_HOTSPOTS = Object.freeze([
+  Object.freeze({
+    id: "position-f4",
+    characterId: 21,
+    keyAttribute: "Position",
+    firstFrame: 4,
+    lastFrame: 6,
+    depth: 6,
+    sourceBounds: Object.freeze({"left": 486.2595360969193, "right": 560.1581880637444, "top": 101.38225708007812, "bottom": 126.3822509765625}),
+    entryIds: Object.freeze({"en": "en-0495-b62037868041", "es": "es-0515-dc08c9ff19c0"}),
+    labels: Object.freeze({"en": "Position", "es": "Posición"}),
+  }),
+  Object.freeze({
+    id: "position-f8",
+    characterId: 21,
+    keyAttribute: "Position",
+    firstFrame: 8,
+    lastFrame: 87,
+    depth: 6,
+    sourceBounds: Object.freeze({"left": 486.2595360969193, "right": 560.1581880637444, "top": 101.38225708007812, "bottom": 126.3822509765625}),
+    entryIds: Object.freeze({"en": "en-0495-b62037868041", "es": "es-0515-dc08c9ff19c0"}),
+    labels: Object.freeze({"en": "Position", "es": "Posición"}),
+  }),
+  Object.freeze({
+    id: "number-line-f85",
+    characterId: 51,
+    keyAttribute: "Number line",
+    firstFrame: 85,
+    lastFrame: 140,
+    depth: 12,
+    sourceBounds: Object.freeze({"left": 95.76480537659957, "right": 206.1616726681357, "top": 133.7322570800781, "bottom": 158.7322509765625}),
+    entryIds: Object.freeze({"en": "en-0424-79116d5cfb19", "es": "es-0571-2c68dc77903f"}),
+    labels: Object.freeze({"en": "Number line", "es": "Recta numérica"}),
+  }),
+  Object.freeze({
+    id: "position-f88",
+    characterId: 21,
+    keyAttribute: "Position",
+    firstFrame: 88,
+    lastFrame: 140,
+    depth: 5,
+    sourceBounds: Object.freeze({"left": 486.2595360969193, "right": 560.1581880637444, "top": 101.38225708007812, "bottom": 126.3822509765625}),
+    entryIds: Object.freeze({"en": "en-0495-b62037868041", "es": "es-0515-dc08c9ff19c0"}),
+    labels: Object.freeze({"en": "Position", "es": "Posición"}),
+  }),
+]);
+export const COURSE_G04_L03_TI_003_GLOSSARY_CONFIG = Object.freeze({
+  animationId: "course-g04-l03-ti-003",
+  frameDomain: "sprite-126",
+  terms: COURSE_G04_L03_TI_003_GLOSSARY_HOTSPOTS,
+  playbackDisposition: "reversible-support-pause",
+  sourceAction: "DoHyperLinks",
+  sourceStopTarget: "_root.animation_mc.animation.stop()",
+  glossaryAuthority: "grade-wide-shell-keyterms-static-candidate",
+  glossarySourceDisposition: "unresolved-lesson-vs-grade-wide",
+} satisfies CourseG04L03SourceGlossaryConfig);
+
+// Source placements audited in TI003 Sprite 125.
+export const COURSE_G04_L03_TI_003_HELP_GLOSSARY_HOTSPOTS = Object.freeze([
+  Object.freeze({
+    id: "help-number-line-f1",
+    characterId: 119,
+    keyAttribute: "Number line",
+    firstFrame: 139,
+    lastFrame: 139,
+    depth: 69,
+    sourceBounds: Object.freeze({"left": 132.0173072814941, "right": 243.73955764770508, "top": 140.49792861938477, "bottom": 163.10207138061523}),
+    entryIds: Object.freeze({"en": "en-0424-79116d5cfb19", "es": "es-0571-2c68dc77903f"}),
+    labels: Object.freeze({"en": "Number line", "es": "Recta numérica"}),
+  }),
+  Object.freeze({
+    id: "help-line-f1",
+    characterId: 120,
+    keyAttribute: "Line",
+    firstFrame: 139,
+    lastFrame: 139,
+    depth: 71,
+    sourceBounds: Object.freeze({"left": 285.3799194335937, "right": 319.77781982421874, "top": 140.49792861938477, "bottom": 163.10207138061523}),
+    entryIds: Object.freeze({"en": "en-0348-26540cbc2a59", "es": "es-0382-cd0a6592bc4a"}),
+    labels: Object.freeze({"en": "Line", "es": "Línea"}),
+  }),
+  Object.freeze({
+    id: "help-order-f1",
+    characterId: 121,
+    keyAttribute: "Order",
+    firstFrame: 139,
+    lastFrame: 139,
+    depth: 73,
+    sourceBounds: Object.freeze({"left": 355.05084762573244, "right": 437.6562705993652, "top": 142.09792861938476, "bottom": 164.70207138061522}),
+    entryIds: Object.freeze({"en": "en-0438-85eefb739783", "es": "es-0468-0de078d08617"}),
+    labels: Object.freeze({"en": "Order", "es": "Ordenar"}),
+  }),
+  Object.freeze({
+    id: "help-value-f1",
+    characterId: 122,
+    keyAttribute: "Value",
+    firstFrame: 139,
+    lastFrame: 139,
+    depth: 75,
+    sourceBounds: Object.freeze({"left": 602.2421669006347, "right": 654.9819709777832, "top": 142.09792861938476, "bottom": 164.70207138061522}),
+    entryIds: Object.freeze({"en": "en-0737-920ae135dd07", "es": "es-0714-a437c574a1bc"}),
+    labels: Object.freeze({"en": "Value", "es": "Valor"}),
+  }),
+  Object.freeze({
+    id: "help-negative-number-f1",
+    characterId: 123,
+    keyAttribute: "Negative number",
+    firstFrame: 139,
+    lastFrame: 139,
+    depth: 77,
+    sourceBounds: Object.freeze({"left": 163.93044509887693, "right": 339.88598403930666, "top": 204.49792861938477, "bottom": 227.10207138061523}),
+    entryIds: Object.freeze({"en": "en-0411-1954bd66c84d", "es": "es-0456-9da6d6ebd619"}),
+    labels: Object.freeze({"en": "Negative number", "es": "Número negativo"}),
+  }),
+  Object.freeze({
+    id: "help-positive-number-f1",
+    characterId: 124,
+    keyAttribute: "Positive number",
+    firstFrame: 139,
+    lastFrame: 139,
+    depth: 79,
+    sourceBounds: Object.freeze({"left": 448.73289642333987, "right": 613.7205001831055, "top": 204.49792861938477, "bottom": 227.10207138061523}),
+    entryIds: Object.freeze({"en": "en-0499-e54dca5d8b22", "es": "es-0458-9770130a5961"}),
+    labels: Object.freeze({"en": "Positive number", "es": "Número positivo"}),
+  }),
+]);
+export const COURSE_G04_L03_TI_003_HELP_GLOSSARY_CONFIG = Object.freeze({
+  animationId: "course-g04-l03-ti-003",
+  frameDomain: "sprite-126",
+  terms: COURSE_G04_L03_TI_003_HELP_GLOSSARY_HOTSPOTS,
+  playbackDisposition: "reversible-support-pause",
+  sourceAction: "DoHyperLinks",
+  sourceStopTarget: "_root.animation_mc.animation.stop()",
+  glossaryAuthority: "grade-wide-shell-keyterms-static-candidate",
+  glossarySourceDisposition: "unresolved-lesson-vs-grade-wide",
+} satisfies CourseG04L03SourceGlossaryConfig);

@@ -54,7 +54,7 @@ test("VB007 preserves the root, sprite-271, quiz, and domain facts", async () =>
   assert.equal(Object.keys(courseVb007.playbackEndFrameByDomain ?? {}).length, 17);
   assert.equal(courseVb007.playbackEndFrameByDomain?.root, 1);
   assert.equal(courseVb007.playbackEndFrameByDomain?.["sprite-271"], 31);
-  assert.equal(courseVb007.playbackEndFrameByDomain?.["sprite-45"], 1);
+  assert.equal(courseVb007.playbackEndFrameByDomain?.["sprite-45"], 28);
   for (const [path, expected] of [
     [COURSE_G04_L03_VB_007_SOURCE.swf, COURSE_G04_L03_VB_007_SOURCE.swfSha256],
     [COURSE_G04_L03_VB_007_SOURCE.fla, COURSE_G04_L03_VB_007_SOURCE.flaSha256],
@@ -141,7 +141,7 @@ test("VB007 remains prototype-only with every acceptance gate closed", async () 
   assert.equal(matchPrototype({sourcePath: "/unknown/L3VB07.swf"}), undefined);
   const registered = await loadAnimationModule("course-g04-l03-vb-007");
   assert.equal(registered?.maturity, "legacy-prototype");
-  assert.equal(registered?.audioCues.length, 1);
+  assert.equal(registered?.audioCues.length, 10);
   assert.equal(COURSE_G04_L03_VB_007_SOURCE_CONTRACT.ownerAccepted, false);
   for (const [name, value] of Object.entries(COURSE_G04_L03_VB_007_AUTHORITY)) {
     if (name === "registryIsPrototypeOnly" || name === "strictAcceptanceEffect") continue;

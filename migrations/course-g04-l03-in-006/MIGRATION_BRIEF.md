@@ -1,5 +1,13 @@
 # course-g04-l03-in-006 Migration Brief
 
+## 2026-09-08 现代数轴页面复核
+
+- Placement: `course-g04-l03-in-006`，G4 L3 Learn It。
+- 本轮复杂度：`behavior-heavy`；路线：有界 advanced-manual：维护跳跃状态机与源坐标配置。复用已有源审计、注册和现代 My Lesson 宿主，按已观察到的问题作有界修复，无批量生成。
+- 练习完成由到达目标触发。修复中等宽度下热区与图形缩放不一致，并从当前 SWF/XML/AS 推导数轴 y=324.1。手机端图形同步显示当前题目、算式与箭头；验证八组源题目、反向、越界恢复、Clear、New Number 与 Replay。
+- 当前源哈希、实现与浏览器证据见 [本轮结果](../../work/g4-l3-modern-product-review/20260908-learn-it-number-line/REVIEW.md) 和同目录 `product-review-receipt.json`。
+- 未修改原始 FLA/SWF 或生成的 Canvas 文件；本轮未新增原 Flash 实跑、听审、人审、Owner、严格完成或发布结论。
+
 Created: 2026-07-24
 
 ## Objective

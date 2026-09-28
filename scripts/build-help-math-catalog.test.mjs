@@ -209,10 +209,25 @@ test("loads only a hash-bound, real, single-link current-source profile", async 
     assert.equal(selectedByDefault.profile.schemaVersion, 1);
     assert.equal(selectedByDefault.profile.artifactType, "help-math-current-source-profile");
     assert.equal(selectedByDefault.filesystemIdentity.nlink, 1);
-    const selectedByImplicitBaseAuthority = await loadCurrentSourceProfile({ outputRoot });
-    assert.equal(selectedByImplicitBaseAuthority.sha256, sha256);
-    assert.equal(selectedByImplicitBaseAuthority.authority.type,
-      "checked-in-base-profile-sha256");
+    // A promoted profile is not authorized by its counts or mere existence.
+    await assert.rejects(loadCurrentSourceProfile({ outputRoot }), /SHA-256 mismatch/);
+    const receiptName = "g4-l3-fq-audio-2026-09-08-applied.json";
+    const receiptPath = path.join(outputRoot, "source-promotions", receiptName);
+    await mkdir(path.dirname(receiptPath));
+    const receiptBytes = await readFile(new URL(`../catalog/source-promotions/${receiptName}`, import.meta.url));
+    await writeFile(receiptPath, receiptBytes, {mode: 0o444});
+    const selectedByAdmission = await loadCurrentSourceProfile({ outputRoot });
+    assert.equal(selectedByAdmission.sha256, sha256);
+    assert.equal(selectedByAdmission.authority.type,
+      "immutable-final-quiz-audio-admission-receipt");
+    await chmod(receiptPath, 0o644);
+    await assert.rejects(loadCurrentSourceProfile({ outputRoot }), /receipt is unsafe/);
+    await writeFile(receiptPath, Buffer.concat([receiptBytes, Buffer.from(" ")]));
+    await chmod(receiptPath, 0o444);
+    await assert.rejects(loadCurrentSourceProfile({ outputRoot }), /exact applied binding/);
+    await chmod(receiptPath, 0o644);
+    await writeFile(receiptPath, receiptBytes);
+    await chmod(receiptPath, 0o444);
 
     const selectedExplicitly = await loadCurrentSourceProfile({
       outputRoot: path.join(temporaryRoot, "unused-output"),
@@ -627,15 +642,15 @@ test("the checked-in full-archive catalog records the evidence-grounded known to
     readFile(new URL("../catalog/current-source-profile.json", import.meta.url), "utf8").then(JSON.parse),
     readFile(new URL("../catalog/lesson-releases.json", import.meta.url)),
   ]);
-  assert.equal(summary.source.fileCount, 9_313);
-  assert.equal(summary.source.totalBytes, 3_308_484_004);
+  assert.equal(summary.source.fileCount, 9_455);
+  assert.equal(summary.source.totalBytes, 3_319_341_500);
   assert.equal(
     summary.source.checksumSetSha256,
-    "d2593c9e69cc7d24261bafdfade23427fef2e1eacb21ff5882cc1242438fcb0a",
+    "df67523ae0753cf0b1726b58e3037b7edbdd1b52d412f36b3fdb4b3fd36d28fa",
   );
   assert.equal(summary.source.extensions.swf, 2_135);
   assert.equal(summary.source.extensions.fla, 1_571);
-  assert.equal(summary.source.extensions.mp3, 5_545);
+  assert.equal(summary.source.extensions.mp3, 5_687);
   assert.equal(summary.swf.uniqueAssets, 2_112);
   assert.equal(summary.swf.duplicateGroups, 23);
   assert.equal(summary.swf.duplicatePlacements, 23);

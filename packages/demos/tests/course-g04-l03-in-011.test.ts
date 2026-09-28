@@ -131,3 +131,27 @@ test("IN011 remains prototype-only with every acceptance gate closed", async () 
   assert.match(spanishMarkup, /data-strict-migration-complete="false"/);
   assert.doesNotMatch(spanishMarkup, /<canvas/);
 });
+
+test("IN011 reduced motion exposes the complete explanation while exact capture stays noninteractive", () => {
+  assert.equal(courseIn011.reducedMotionFrame, 441);
+  assert.equal(courseIn011.playbackMode, "once");
+  const props = {
+    frame: 441,
+    frameDomain: "sprite-51",
+    scenario: "source-static-frame",
+    lang: "en" as const,
+    seed: 0,
+  };
+  const ordinary = renderToStaticMarkup(createElement(courseIn011.Renderer, props));
+  assert.match(ordinary, /data-source-host-action="DoHyperLinks"/);
+  assert.match(ordinary, /source-keyattribute-keyterms-host-adapter/);
+  const capture = renderToStaticMarkup(createElement(courseIn011.Renderer, {
+    ...props,
+    entryStateSha256: "a".repeat(64),
+    requirementId: "engineering-source-static-frame-441",
+    traceId: "engineering-source-static",
+  }));
+  assert.match(capture, /data-flash-frame="441"/);
+  assert.match(capture, /data-current-js-controls-enabled="false"/);
+  assert.doesNotMatch(capture, /<button/);
+});

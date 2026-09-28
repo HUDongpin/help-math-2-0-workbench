@@ -34,6 +34,7 @@ test("IN007 preserves the root and separate sprite-98 and sprite-5 timelines", a
     {id: "sprite-5", frameCount: 1, fps: 12, rootFrame: 6},
   ]);
   assert.equal(courseIn007.runtime, COURSE_G04_L03_IN_007_RUNTIME);
+  assert.equal(courseIn007.reducedMotionFrame, 555);
   assert.deepEqual(courseIn007.playbackEndFrameByDomain, {root: 1, "sprite-5": 1});
   assert.equal(COURSE_G04_L03_IN_007_SOURCE.fla, null);
   assert.equal(

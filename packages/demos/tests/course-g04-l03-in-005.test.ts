@@ -184,10 +184,11 @@ test("IN005 frame 144 exposes the fail-closed current-JS ordering surface over c
   assert.match(markup, /data-interaction-companion-surface="mobile"/);
   assert.match(markup, /data-interaction-companion-placement="fallback"/);
   assert.match(markup, /data-mobile-touch-target-min="48"/);
-  assert.match(markup, /data-host-glossary-actions="safe-disabled"/);
-  assert.equal(markup.match(/data-source-glossary-term="/g)?.length, 3);
+  assert.equal(courseIn005.completionMode, "activity");
+  assert.match(markup, /data-source-host-action="DoHyperLinks"/);
+  assert.equal(markup.match(/data-source-key-attribute="/g)?.length, 3);
   for (const term of ["Order", "Least", "Greatest"]) {
-    assert.match(markup, new RegExp(`data-source-glossary-term="${term}"`));
+    assert.match(markup, new RegExp(`data-source-key-attribute="${term}"`));
   }
   assert.doesNotMatch(markup, /aria-label="Open Need More Help"/);
   assert.doesNotMatch(markup, /aria-label="Clear"/);
@@ -299,7 +300,7 @@ test("IN005 frame 144 exposes the fail-closed current-JS ordering surface over c
   );
   assert.equal(
     COURSE_G04_L03_IN_005_SOURCE_CONTRACT.sourceGlossaryActionStatus,
-    "three-source-hits-safe-disabled",
+    "three-source-terms-modern-host-wired",
   );
   assert.ok(
     COURSE_G04_L03_IN_005_SOURCE_CONTRACT.currentJavascriptInteractionScope

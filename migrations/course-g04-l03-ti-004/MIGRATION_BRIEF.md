@@ -104,3 +104,20 @@ List every unresolved mismatch, unavailable tool/source, accepted emulator diffe
 - Owner review status:
 - Owner decision, reviewer/date, or explicit not-required reason:
 - Strict validator result:
+
+
+## 2026-09-08 Modern Product Follow-up — TI004
+
+This bounded advanced-manual follow-up reviews whole-lesson page 26, Try It Question 3. It preserves the original seven source cards and target mapping. The values sort as −11 < −10 < −4 < −1 < 0 < 4 < 6. Empty targets expose only their slot number, not the correct value. Root placement (412.4, 283.3), Sprite274 live frame124 and clean drawing122 remain bound to the existing source evidence. No source FLA/SWF, generated Canvas, audio or dictionary file was edited.
+
+The maintained modern renderer now declares activity completion and completes only after all seven cards and the last correct-feedback interval. The original 19/12-second current-JS feedback projection is retained and paused by host Pause. Replay resets the attempt. Mobile results now remove the original card and reveal it at its source target. Completed answers remain visible; the final notice sits below the image, and the short feedback badge sits below the remaining cards. The question header is shifted below the modern content crop.
+
+The read-only glossary audit finds nine button definitions, but only eight keys have main/help placement evidence: main Order/Least/Greatest and Help Value/Negative number/Decrease/Positive number/Increase. Value's two help instances use one companion button. The separate Decimal button is inside exported symbol toptxt (Sprite148), with no source display-list reference other than Export and no literal toptxt use in the extracted scripts. Its runtime reachability is not established, and no learner button is added solely because the definition exists. Help Sprite271 is placed as Mc_Popup at frame124 and starts hidden. Modern help terms are rendered only while that help state is open, English controls are enabled, and Canvas is ready. Typed Key Terms requests retain exact EN/ES IDs and reversible support pause; legacy scripts are not executed.
+
+Original help sentences remain in source metadata. The learner explanation clarifies the missing direction: 'Values decrease to the left.' and 'Values increase to the right.' A maintained SVG number line from −10 to +10 includes zero and 21 equal unit ticks, with five major labels on narrow screens. This is modern teaching clarification, not source pixel parity. Help and error dialogs support Escape and Tab containment with focus returned to the original control.
+
+The special Sprite273 frame1 diagnostic path, its custom getFrameState, default scenario, parent-composite frame124 and placement-audit hash are preserved. Deterministic main-frame evidence also keeps its requested drawing and disables modern controls. These are source-static diagnostic contracts, not original runtime or fidelity evidence.
+
+Evidence: `work/g4-l3-modern-product-review/20260908-try-it-ordering/REVIEW.md`. Targeted tests include all 5,040 answer orders, exact source geometry, wrong/locked/repeated input, Replay, help locking, unsupported contexts, original capture paths and glossary timing. Browser checks exercise desktop/mobile, real dragging, keyboard input, wrong retry, help/glossary return and completion. Source SWF/FLA/XML plus two Web audio byte bindings are freshly verified. An existing browser tab crashed after hot updates; the known local course was reopened in a new tab in the same browser, retaining page26. Its cause is not established. The source server was not restarted.
+
+Owner approval, original runtime, audio listening/synchronization, human visual acceptance, strict completion, the separate frozen16-page calibration batch, publication and deployment remain independent. Registration remains39 existing active pages; no new registration or Owner approval is recorded.

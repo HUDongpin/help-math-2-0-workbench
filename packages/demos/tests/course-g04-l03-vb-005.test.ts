@@ -141,6 +141,29 @@ test("VB005 capture attributes expose disabled source controls", () => {
   );
 });
 
+test("VB005 retains the signed negative example at live playback end without changing evidence frames", () => {
+  const context = {
+    frameDomain: "sprite-53",
+    scenario: "source-static-frame",
+    lang: "en" as const,
+    seed: 0,
+    requirementId: "runtime-source-static",
+    traceId: "runtime-default",
+  };
+  for (const frame of [176, 177, 180]) {
+    const state = getCourseG04L03Vb005FrameState(frame, context);
+    assert.equal(state.frame, frame, "source state must retain its exact requested frame");
+    const live = renderToStaticMarkup(createElement(courseVb005.Renderer, {
+      ...context, frame, state,
+    }));
+    assert.match(live, /data-flash-frame="176"/, "the final example must keep its minus glyph");
+    const capture = renderToStaticMarkup(createElement(courseVb005.Renderer, {
+      ...context, frame, entryStateSha256: "a".repeat(64),
+    }));
+    assert.match(capture, new RegExp(`data-flash-frame="${frame}"`));
+  }
+});
+
 test("VB005 remains prototype-only with every authority and acceptance gate closed", async () => {
   const manifest = matchPrototype({animationId: "course-g04-l03-vb-005"});
   assert.equal(manifest?.runtime.frameCount, 10);

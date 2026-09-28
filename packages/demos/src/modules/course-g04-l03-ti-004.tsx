@@ -2,6 +2,7 @@
 
 import React, {
   useEffect,
+  useMemo,
   useReducer,
   useRef,
   useState,
@@ -10,13 +11,14 @@ import type {Dispatch, DragEvent, RefObject} from "react";
 import {createPortal} from "react-dom";
 
 import type {AnimationRendererProps} from "../contract";
+import {createCourseG04L03SourceGlossaryCandidate} from "./course-g04-l03-source-glossary-candidate";
+import {createCourseG04L03SourceGlossaryOpenResult} from "../timelines/course-g04-l03-source-glossary-interaction";
 import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
 import {
   COURSE_G04_L03_TI_004_CARDS,
   COURSE_G04_L03_TI_004_COMPLETION_FEEDBACK,
   COURSE_G04_L03_TI_004_CORRECT_FEEDBACK,
   COURSE_G04_L03_TI_004_CURRENT_JS_TIMING,
-  COURSE_G04_L03_TI_004_INSTRUCTION,
   COURSE_G04_L03_TI_004_INTERACTION_AUTHORITY,
   COURSE_G04_L03_TI_004_SOURCE_GEOMETRY,
   COURSE_G04_L03_TI_004_WRONG_FEEDBACK,
@@ -30,7 +32,10 @@ import {
 } from "../timelines/course-g04-l03-ti-004-least-to-greatest-drag-interaction";
 import {
   COURSE_G04_L03_TI_004_CONFIG,
+  COURSE_G04_L03_TI_004_GLOSSARY_CONFIG,
+  COURSE_G04_L03_TI_004_HELP_GLOSSARY_CONFIG,
   COURSE_G04_L03_TI_004_SOURCE,
+  COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE,
 } from "../timelines/course-g04-l03-ti-004";
 
 const candidate = createSourceStaticCanvasCandidate(
@@ -42,20 +47,16 @@ const SOURCE_INTERACTION_FRAME = 124;
 const SOURCE_CLEAN_QUESTION_FRAME = 122;
 const SOURCE_INTERACTION_DOMAIN = "sprite-274";
 const SOURCE_INTERACTION_SCENARIO = "source-static-frame";
+const SOURCE_STATIC_REACHABLE_SCENARIO = "source-static-reachable-domain";
 const SOURCE_STAGE_BACKGROUND = "#b8d8f7";
 const SOURCE_FONT =
   '"Bauhaus Md BT", "Arial Rounded MT Bold", "Trebuchet MS", ui-rounded, sans-serif';
 const RESPONSIVE_CONTROLS_MEDIA =
   "(max-width: 640px), (any-pointer: coarse)";
-const HELP_NEGATIVE_BODY = "The value of negative numbers decreases.";
-const HELP_POSITIVE_BODY = "The value of positive numbers increases.";
-const SOURCE_GLOSSARY_TERMS = Object.freeze([
-  "Value",
-  "Negative number",
-  "Decrease",
-  "Positive number",
-  "Increase",
-]);
+const SOURCE_HELP_NEGATIVE_BODY = "The value of negative numbers decreases.";
+const SOURCE_HELP_POSITIVE_BODY = "The value of positive numbers increases.";
+const HELP_NEGATIVE_BODY = "Values decrease to the left.";
+const HELP_POSITIVE_BODY = "Values increase to the right.";
 
 type SourceCanvasStatus =
   | "idle"
@@ -96,6 +97,153 @@ function isDeterministicEvidenceCapture({
   entryStateSha256,
 }: AnimationRendererProps) {
   return Boolean(entryStateSha256);
+}
+
+function isSprite273EvidenceCapture({
+  entryStateSha256,
+  frame,
+  frameDomain,
+  lang,
+  requirementId,
+  scenario,
+  traceId,
+}: AnimationRendererProps) {
+  return frame === COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.localFrame
+    && frameDomain === COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.frameDomain
+    && scenario === COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.scenario
+    && lang === COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.language
+    && /^[a-f0-9]{64}$/.test(entryStateSha256 ?? "")
+    && Boolean(requirementId && traceId);
+}
+
+type Ti004FrameContext = Parameters<typeof candidate.getFrameState>[1];
+
+export function getCourseG04L03Ti004FrameState(
+  frame: number,
+  context: Ti004FrameContext,
+) {
+  const base = candidate.getFrameState(frame, context);
+  if (!isSprite273EvidenceCapture({
+    entryStateSha256: context.entryStateSha256,
+    frame,
+    frameDomain: context.frameDomain,
+    lang: context.lang,
+    requirementId: context.requirementId,
+    scenario: context.scenario,
+    seed: context.seed,
+    traceId: context.traceId,
+  })) return base;
+  return Object.freeze({
+    ...base,
+    blocker: null,
+    exportFrame: null,
+    frame: COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.localFrame,
+    frameDomain: COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.frameDomain,
+    language: COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.language,
+    rootFrame: COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.rootEntryFrame,
+    scenario: COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.scenario,
+    sourceStaticVisualReady: true,
+    status: "ready" as const,
+    visibleSourceMarkers: Object.freeze([
+      "sprite-273-source-parent-composite-frame-124",
+    ]),
+  });
+}
+
+function setExactAttribute(
+  element: HTMLElement,
+  name: string,
+  value: string,
+) {
+  if (element.getAttribute(name) !== value) element.setAttribute(name, value);
+}
+
+function Sprite273EvidenceRenderer(props: AnimationRendererProps) {
+  const hostRef = useRef<HTMLDivElement>(null);
+  const sourceState = useMemo(() => candidate.getFrameState(
+    COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.sourceParentCompositeFrame,
+    {
+      frameDomain: COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.sourceParentFrameDomain,
+      scenario: SOURCE_INTERACTION_SCENARIO,
+      lang: "en",
+      seed: props.seed,
+    },
+  ), [props.seed]);
+
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!host) return;
+    const stampReadyCanvas = () => {
+      const canvas = host.querySelector<HTMLElement>(
+        "canvas[data-render-visual=\"true\"]",
+      );
+      if (!canvas) return;
+      const attributes = {
+        "data-animation-id": COURSE_G04_L03_TI_004_CONFIG.animationId,
+        "data-capture-stage": "true",
+        "data-flash-entry-state-sha256": props.entryStateSha256 ?? "",
+        "data-flash-frame": String(props.frame),
+        "data-flash-frame-domain": props.frameDomain ?? "",
+        "data-flash-lang": props.lang,
+        "data-flash-requirement-id": props.requirementId ?? "",
+        "data-flash-root-frame": String(props.rootFrame ?? 6),
+        "data-flash-scenario": props.scenario,
+        "data-flash-seed": String(props.seed),
+        "data-flash-trace-id": props.traceId ?? "",
+        "data-render-state": "ready",
+        "data-render-visual": "true",
+        "data-runtime-language": props.lang,
+        "data-runtime-scenario": props.scenario,
+        "data-runtime-seed": String(props.seed),
+        "data-source-parent-composite-frame": String(
+          COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.sourceParentCompositeFrame,
+        ),
+        "data-source-static-companion-authority":
+          COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.authority,
+      } as const;
+      for (const [name, value] of Object.entries(attributes)) {
+        setExactAttribute(canvas, name, value);
+      }
+    };
+    const observer = new MutationObserver(stampReadyCanvas);
+    observer.observe(host, {
+      attributes: true,
+      childList: true,
+      subtree: true,
+    });
+    stampReadyCanvas();
+    return () => observer.disconnect();
+  }, [
+    props.entryStateSha256,
+    props.frame,
+    props.frameDomain,
+    props.lang,
+    props.requirementId,
+    props.rootFrame,
+    props.scenario,
+    props.seed,
+    props.traceId,
+  ]);
+
+  return (
+    <div
+      data-source-static-companion-capture="sprite-273-frame-1"
+      data-strict-acceptance-effect="none"
+      ref={hostRef}
+    >
+      <SourceStaticRenderer
+        {...props}
+        entryStateSha256=""
+        frame={COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.sourceParentCompositeFrame}
+        frameDomain={COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.sourceParentFrameDomain}
+        lang="en"
+        requirementId=""
+        scenario={SOURCE_INTERACTION_SCENARIO}
+        state={sourceState}
+        traceId=""
+      />
+    </div>
+  );
 }
 
 function isVisible(element: HTMLElement | null): element is HTMLElement {
@@ -144,88 +292,93 @@ interface SharedSurfaceProps {
   readonly onCloseHelp: () => void;
   readonly onCloseWrong: () => void;
   readonly onOpenHelp: () => void;
+  readonly onLessonHostRequest: AnimationRendererProps["onLessonHostRequest"];
   readonly wrongCloseRef: RefObject<HTMLButtonElement | null>;
 }
 
-function SourceGlossaryBoundary() {
+function handleDialogKeys(event: React.KeyboardEvent<HTMLDivElement>, close: () => void) {
+  if (event.key === "Escape") {
+    event.preventDefault();
+    event.stopPropagation();
+    close();
+    return;
+  }
+  if (event.key !== "Tab") return;
+  const controls = Array.from(event.currentTarget.querySelectorAll<HTMLButtonElement>("button:not(:disabled)"))
+    .filter((button) => button.getClientRects().length > 0);
+  const first = controls[0];
+  const last = controls.at(-1);
+  if (!first || !last) return;
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
+}
+
+function HelpKeyTerms({onLessonHostRequest, controlsReady}: {
+  readonly onLessonHostRequest: AnimationRendererProps["onLessonHostRequest"];
+  readonly controlsReady: boolean;
+}) {
+  const [blocked, setBlocked] = useState(false);
   return (
-    <div
-      aria-label="Source glossary links are unavailable in this current JavaScript candidate."
-      data-host-hyperlinks="safe-disabled"
-      style={visuallyHiddenStyle}
-    >
-      {SOURCE_GLOSSARY_TERMS.map((term, index) => (
-        <span
-          aria-disabled="true"
-          data-source-glossary-term={term}
-          key={`${term}-${index}`}
-          role="link"
-        >
-          {term}
-          {index < SOURCE_GLOSSARY_TERMS.length - 1 ? ", " : ""}
-        </span>
+    <div className="course-g04-l03-ti-004-help-keyterms" aria-label="Key Terms in Need More Help" role="group">
+      {COURSE_G04_L03_TI_004_HELP_GLOSSARY_CONFIG.terms.map((term) => (
+        <button key={term.id} type="button" data-source-key-attribute={term.keyAttribute}
+          disabled={!controlsReady || !onLessonHostRequest}
+          onClick={(event) => {
+            if (!controlsReady || !onLessonHostRequest) return;
+            const result = createCourseG04L03SourceGlossaryOpenResult({
+              config: COURSE_G04_L03_TI_004_HELP_GLOSSARY_CONFIG,
+              frame: SOURCE_INTERACTION_FRAME, lang: "en", termId: term.id,
+            });
+            if (!result) { setBlocked(true); return; }
+            const decision = onLessonHostRequest(result.request, {trigger: event.currentTarget});
+            setBlocked(Boolean(decision && decision.status === "blocked"));
+          }}>{term.labels.en}</button>
       ))}
+      {blocked ? <p role="alert">The Key Terms request could not open.</p> : null}
     </div>
   );
 }
 
 function HelpNumberLine() {
   return (
-    <div
-      aria-hidden="true"
-      style={{
-        display: "grid",
-        gap: 8,
-        margin: "16px 10px 0",
-        textAlign: "center",
-      }}
-    >
-      <div
-        style={{
-          alignItems: "end",
-          display: "grid",
-          fontFamily: "Arial, sans-serif",
-          fontSize: 14,
-          gridTemplateColumns: "repeat(21, minmax(0, 1fr))",
-          lineHeight: 1,
-          paddingTop: 8,
-          position: "relative",
-        }}
-      >
-        <span
-          style={{
-            background: "#111",
-            height: 2,
-            left: 0,
-            position: "absolute",
-            right: 0,
-            top: 0,
-          }}
-        />
+    <figure className="course-g04-l03-ti-004-help-number-line">
+      <svg viewBox="0 0 520 116" role="img"
+        aria-label="Number line from negative 10 to positive 10. Values decrease to the left and increase to the right.">
+        <text x="133" y="25" textAnchor="middle" fill="#a31d37" fontSize="20">Negative numbers</text>
+        <text x="387" y="25" textAnchor="middle" fill="#124ca1" fontSize="20">Positive numbers</text>
+        <path d="M8 66H512 M8 66l12 -8 M8 66l12 8 M512 66l-12 -8 M512 66l-12 8" stroke="#142f4c" strokeWidth="2" fill="none" />
         {Array.from({length: 21}, (_, index) => index - 10).map((value) => (
-          <span
-            key={value}
-            style={{
-              color: value < 0 ? "#ef101b" : value > 0 ? "#071cff" : "#111",
-              paddingTop: 4,
-              position: "relative",
-            }}
-          >
-            <span
-              style={{
-                background: "#111",
-                height: 6,
-                left: "50%",
-                position: "absolute",
-                top: -5,
-                width: 1,
-              }}
-            />
-            {value}
-          </span>
+          <g key={value} data-help-tick={value}>
+            <path d={`M${260 + value * 23} 57v18`} stroke={value < 0 ? "#a31d37" : value > 0 ? "#124ca1" : "#142f4c"} strokeWidth={value === 0 ? 3 : 2} />
+            {value % 5 === 0 ? <text x={260 + value * 23} y="105" textAnchor="middle" fontSize="27" fill="#142f4c">{value < 0 ? `−${Math.abs(value)}` : value}</text> : null}
+          </g>
         ))}
-      </div>
-    </div>
+      </svg>
+    </figure>
+  );
+}
+
+function MobileAnswerPreview({interaction}: {readonly interaction: CourseG04L03Ti004LeastToGreatestDragState}) {
+  return (
+    <svg aria-hidden="true" className="course-g04-l03-ti-004-mobile-answers"
+      data-ti004-preview-count={getCourseG04L03Ti004PlacementCount(interaction)}
+      style={{height: "auto", inset: 0, pointerEvents: "none", position: "absolute", width: "100%", zIndex: 2}}
+      viewBox="0 0 800 600">
+      {COURSE_G04_L03_TI_004_CARDS.filter((card) => interaction.placements[card.id] !== null).map((card) => (
+        <g key={card.id} data-ti004-placed-card={card.id}>
+          <rect x={card.sourceCenter.x - card.sourceSize.width / 2 - 4} y={card.sourceCenter.y - card.sourceSize.height / 2 - 4}
+            width={card.sourceSize.width + 8} height={card.sourceSize.height + 8} fill={SOURCE_STAGE_BACKGROUND} />
+          <rect x={card.targetCenter.x - card.targetSize.width / 2} y={card.targetCenter.y - card.targetSize.height / 2}
+            width={card.targetSize.width} height={card.targetSize.height} fill="#fff" stroke="#292929" />
+          <text x={card.targetCenter.x} y={card.targetCenter.y + 8} textAnchor="middle" fill="#111" fontFamily="Arial, sans-serif" fontSize="22">{card.valueText}</text>
+        </g>
+      ))}
+    </svg>
   );
 }
 
@@ -240,6 +393,7 @@ function StageSurface({
   onCloseHelp,
   onCloseWrong,
   onOpenHelp,
+  onLessonHostRequest,
   wrongCloseRef,
 }: SharedSurfaceProps) {
   const locked = !controlsReady || interaction.locked || helpOpen;
@@ -278,7 +432,7 @@ function StageSurface({
   return (
     <svg
       aria-busy={!controlsReady}
-      aria-label="Source-script-bound current JavaScript least-to-greatest card activity"
+      aria-label="Order seven numbers from least to greatest"
       className="course-g04-l03-ti-004-stage-surface"
       data-audio-feedback="inventoried-unimplemented-unaccepted"
       data-behavior-parity-established="false"
@@ -404,8 +558,8 @@ function StageSurface({
                 onDrop={(event) => dropOnTarget(event, targetCard.targetId)}
                 style={{
                   alignItems: "center",
-                  background: placedCard ? "#fff" : "transparent",
-                  border: placedCard ? "1px solid #292929" : 0,
+                  background: placedCard ? "#fff" : interaction.selectedCardId ? "rgb(255 221 41 / 24%)" : "transparent",
+                  border: placedCard ? "1px solid #292929" : interaction.selectedCardId ? "2px dashed #224b8e" : 0,
                   boxSizing: "border-box",
                   color: placedCard ? "#111" : "transparent",
                   cursor: targetLocked ? "default" : "pointer",
@@ -432,7 +586,7 @@ function StageSurface({
             aria-haspopup="dialog"
             aria-label="Open Need More Help"
             data-ti004-focus-control="help"
-            disabled={!controlsReady || interaction.locked || helpOpen}
+            disabled={!controlsReady || (interaction.locked && interaction.outcome !== "complete") || helpOpen}
             onClick={onOpenHelp}
             ref={helpButtonRef}
             style={{
@@ -462,7 +616,8 @@ function StageSurface({
               aria-describedby="course-g04-l03-ti-004-stage-help-negative course-g04-l03-ti-004-stage-help-positive"
               aria-label="Need More Help"
               aria-modal="true"
-              data-host-hyperlinks="safe-disabled"
+              onKeyDown={(event) => handleDialogKeys(event, onCloseHelp)}
+              data-host-hyperlinks="typed-keyterm-host-integrated"
               role="dialog"
               style={{
                 background: "#fff",
@@ -471,12 +626,12 @@ function StageSurface({
                 boxShadow: "0 3px 7px rgb(0 0 0 / 28%)",
                 boxSizing: "border-box",
                 color: "#111",
-                height: 225,
+                height: 340,
                 left: 60,
                 padding: "9px 20px 16px",
                 pointerEvents: "auto",
                 position: "absolute",
-                top: 191,
+                top: 140,
                 width: 682,
                 zIndex: 4,
               }}
@@ -525,7 +680,7 @@ function StageSurface({
                 {HELP_POSITIVE_BODY}
               </p>
               <HelpNumberLine />
-              <SourceGlossaryBoundary />
+              <HelpKeyTerms controlsReady={controlsReady} onLessonHostRequest={onLessonHostRequest} />
             </div>
           ) : null}
 
@@ -534,6 +689,7 @@ function StageSurface({
               aria-describedby="course-g04-l03-ti-004-stage-wrong-copy"
               aria-label="Incorrect placement feedback"
               aria-modal="true"
+              onKeyDown={(event) => handleDialogKeys(event, onCloseWrong)}
               data-source-copy="modern-assistive-not-source-exact"
               role="alertdialog"
               style={{
@@ -600,37 +756,11 @@ function StageSurface({
                 left: 276,
                 position: "absolute",
                 textShadow: "1px 1px 0 #fff1a0",
-                top: 286,
+                top: 382,
                 width: 248,
               }}
             >
               Correct.
-            </div>
-          ) : null}
-
-          {interaction.outcome === "complete" ? (
-            <div
-              aria-hidden="true"
-              style={{
-                alignItems: "center",
-                background: "linear-gradient(#bd00e9, #8e00c0)",
-                border: "5px solid #7b007c",
-                borderRadius: 22,
-                boxSizing: "border-box",
-                color: "#fff",
-                display: "flex",
-                fontSize: 46,
-                fontWeight: 900,
-                height: 132,
-                justifyContent: "center",
-                left: 244,
-                position: "absolute",
-                textShadow: "2px 2px 0 #73008e",
-                top: 235,
-                width: 320,
-              }}
-            >
-              {COURSE_G04_L03_TI_004_COMPLETION_FEEDBACK}
             </div>
           ) : null}
 
@@ -662,6 +792,7 @@ function MobileSurface({
   onCloseHelp,
   onCloseWrong,
   onOpenHelp,
+  onLessonHostRequest,
   placement,
   wrongCloseRef,
 }: MobileSurfaceProps) {
@@ -686,7 +817,7 @@ function MobileSurface({
       data-source-canvas-status={canvasStatus}
     >
       <p className="course-g04-l03-ti-004-mobile-instruction">
-        {COURSE_G04_L03_TI_004_INSTRUCTION}
+        Choose a number card, then choose its slot. Order all seven numbers from least to greatest.
       </p>
       {!controlsReady ? (
         <p
@@ -709,7 +840,7 @@ function MobileSurface({
         aria-haspopup="dialog"
         className="course-g04-l03-ti-004-mobile-help"
         data-ti004-focus-control="help"
-        disabled={!controlsReady || interaction.locked || helpOpen}
+        disabled={!controlsReady || (interaction.locked && interaction.outcome !== "complete") || helpOpen}
         onClick={onOpenHelp}
         ref={helpButtonRef}
         type="button"
@@ -779,8 +910,9 @@ function MobileSurface({
           aria-describedby="course-g04-l03-ti-004-mobile-help-negative course-g04-l03-ti-004-mobile-help-positive"
           aria-label="Need More Help"
           aria-modal="true"
+          onKeyDown={(event) => handleDialogKeys(event, onCloseHelp)}
           className="course-g04-l03-ti-004-mobile-dialog"
-          data-host-hyperlinks="safe-disabled"
+          data-host-hyperlinks="typed-keyterm-host-integrated"
           role="dialog"
         >
           <strong>Need More Help</strong>
@@ -790,10 +922,8 @@ function MobileSurface({
           <p id="course-g04-l03-ti-004-mobile-help-positive">
             {HELP_POSITIVE_BODY}
           </p>
-          <small>
-            Source glossary links are unavailable in this current JavaScript candidate.
-          </small>
-          <SourceGlossaryBoundary />
+          <HelpNumberLine />
+          <HelpKeyTerms controlsReady={controlsReady} onLessonHostRequest={onLessonHostRequest} />
           <button
             aria-label="Close Need More Help"
             data-ti004-focus-control="close-help"
@@ -810,6 +940,7 @@ function MobileSurface({
         <div
           aria-label="Incorrect placement feedback"
           aria-modal="true"
+          onKeyDown={(event) => handleDialogKeys(event, onCloseWrong)}
           className="course-g04-l03-ti-004-mobile-dialog"
           data-source-copy="modern-assistive-not-source-exact"
           role="alertdialog"
@@ -842,7 +973,7 @@ function MobileSurface({
   );
 }
 
-export function CourseG04L03Ti004Renderer(
+function CourseG04L03Ti004MainRenderer(
   props: AnimationRendererProps,
 ) {
   const [interaction, dispatch] = useReducer(
@@ -885,17 +1016,14 @@ export function CourseG04L03Ti004Renderer(
     props.seed,
     sourceVisualFrame,
   );
-  const sourceVisualState = interactionEnabled
-    ? candidate.getFrameState(sourceVisualFrame, {
-        entryStateSha256: props.entryStateSha256,
-        frameDomain,
-        lang: props.lang,
-        requirementId: props.requirementId,
-        scenario: props.scenario,
-        seed: props.seed,
-        traceId: props.traceId,
-      })
-    : props.state;
+  const cleanSourceVisualState = useMemo(() => candidate.getFrameState(
+    SOURCE_CLEAN_QUESTION_FRAME,
+    {entryStateSha256: props.entryStateSha256, frameDomain, lang: props.lang,
+      requirementId: props.requirementId, scenario: props.scenario, seed: props.seed,
+      traceId: props.traceId},
+  ), [frameDomain, props.entryStateSha256, props.lang, props.requirementId,
+    props.scenario, props.seed, props.traceId]);
+  const sourceVisualState = interactionEnabled ? cleanSourceVisualState : props.state;
   const controlsReady =
     interactionEnabled && canvasStatus === "ready";
 
@@ -921,6 +1049,10 @@ export function CourseG04L03Ti004Renderer(
     setHelpOpen(false);
     setCanvasStatus(interactionEnabled ? "loading" : "idle");
   }, [interactionEnabled, props.replay, props.seed]);
+
+  useEffect(() => {
+    if (interactionEnabled && interaction.outcome === "complete") props.onActivityComplete?.();
+  }, [interactionEnabled, interaction.outcome, props.onActivityComplete]);
 
   useEffect(() => {
     if (!props.pageInteractionCompanionTargetId) {
@@ -1052,6 +1184,15 @@ export function CourseG04L03Ti004Renderer(
     focusControl("help");
   };
 
+  const desktopNotice = (
+    <div className="course-g04-l03-ti-004-desktop-notice" role={interaction.outcome === "complete" ? "status" : undefined}
+      data-complete={interaction.outcome === "complete" ? "true" : "false"}>
+      {interaction.outcome === "complete"
+        ? "Correct!!! All 7 numbers ordered. Use Replay to practice again."
+        : "Drag a card into a slot, or select a card and then its highlighted slot."}
+    </div>
+  );
+
   const mobileSurface = (
     <MobileSurface
       canvasStatus={canvasStatus}
@@ -1064,6 +1205,7 @@ export function CourseG04L03Ti004Renderer(
       onCloseHelp={closeHelp}
       onCloseWrong={closeWrong}
       onOpenHelp={openHelp}
+      onLessonHostRequest={props.onLessonHostRequest}
       placement={companionTarget ? "portal" : "fallback"}
       wrongCloseRef={mobileWrongCloseRef}
     />
@@ -1109,6 +1251,7 @@ export function CourseG04L03Ti004Renderer(
       }}
     >
       <style>{`
+        .course-g04-l03-ti-004-mobile-answers,
         .course-g04-l03-ti-004-mobile-fallback-slot,
         .course-g04-l03-ti-004-mobile-controls {
           display: none;
@@ -1119,7 +1262,18 @@ export function CourseG04L03Ti004Renderer(
           outline-offset: 3px;
         }
 
+        .course-g04-l03-ti-004-help-number-line { margin: 12px 0; font-family: system-ui, sans-serif; }
+        .course-g04-l03-ti-004-help-number-line svg { width: 100%; display: block; }
+        .course-g04-l03-ti-004-help-number-line figcaption { font-size: 16px; line-height: 1.35; }
+        .course-g04-l03-ti-004-help-keyterms { display: grid; gap: 6px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .course-g04-l03-ti-004-help-keyterms button { background: #edf5ff; border: 1px solid #315e9d; border-radius: 8px; color: #174985; font: 700 16px/1.2 system-ui, sans-serif; min-height: 42px; padding: 6px; }
+        .course-g04-l03-ti-004-desktop-notice { font: 16px/1.4 system-ui, sans-serif; margin: 8px 0; color: #183d62; }
+        .course-g04-l03-ti-004-desktop-notice[data-complete="true"] { background: #e4f5df; border: 2px solid #28743b; border-radius: 12px; color: #17572a; padding: 12px; font-weight: 700; }
         @media ${RESPONSIVE_CONTROLS_MEDIA} {
+          .course-g04-l03-ti-004-mobile-answers { display: block; }
+          .course-g04-l03-ti-004-desktop-notice { display: none; }
+          .course-g04-l03-ti-004-help-keyterms { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
           .course-g04-l03-ti-004-stage-surface {
             display: none;
           }
@@ -1168,7 +1322,7 @@ export function CourseG04L03Ti004Renderer(
           .course-g04-l03-ti-004-mobile-loading,
           .course-g04-l03-ti-004-mobile-status {
             font-family: system-ui, sans-serif;
-            font-size: 15px;
+            font-size: 16px;
             line-height: 1.3;
             margin: 0;
           }
@@ -1254,8 +1408,8 @@ export function CourseG04L03Ti004Renderer(
           }
 
           .course-g04-l03-ti-004-mobile-complete {
-            background: #9900ff;
-            color: #fff;
+            background: #e4f5df;
+            color: #17572a;
           }
 
           .course-g04-l03-ti-004-mobile-complete strong {
@@ -1297,6 +1451,7 @@ export function CourseG04L03Ti004Renderer(
       </div>
       {interactionEnabled ? (
         <>
+          {controlsReady ? <MobileAnswerPreview interaction={interaction} /> : null}
           <StageSurface
             canvasStatus={canvasStatus}
             controlsReady={controlsReady}
@@ -1308,8 +1463,10 @@ export function CourseG04L03Ti004Renderer(
             onCloseHelp={closeHelp}
             onCloseWrong={closeWrong}
             onOpenHelp={openHelp}
+            onLessonHostRequest={props.onLessonHostRequest}
             wrongCloseRef={stageWrongCloseRef}
           />
+          {companionTarget ? createPortal(desktopNotice, companionTarget) : desktopNotice}
           {companionTarget
             ? createPortal(mobileSurface, companionTarget)
             : (
@@ -1323,11 +1480,18 @@ export function CourseG04L03Ti004Renderer(
   );
 }
 
+function CourseG04L03Ti004ActivityRenderer(
+  props: AnimationRendererProps,
+) {
+  return isSprite273EvidenceCapture(props)
+    ? <Sprite273EvidenceRenderer {...props} />
+    : <CourseG04L03Ti004MainRenderer {...props} />;
+}
+
 export {COURSE_G04_L03_TI_004_SOURCE};
 export const COURSE_G04_L03_TI_004_MOVIE = candidate.movie;
 export const COURSE_G04_L03_TI_004_RUNTIME = candidate.runtime;
-export const COURSE_G04_L03_TI_004_SOURCE_CONTRACT = Object.freeze({
-  ...candidate.sourceContract,
+const INTERACTION_SOURCE_CONTRACT = Object.freeze({
   currentJavascriptInteractionStatus:
     "source-script-bound-functional-candidate",
   currentJavascriptInteractionScope: Object.freeze([
@@ -1337,7 +1501,7 @@ export const COURSE_G04_L03_TI_004_SOURCE_CONTRACT = Object.freeze({
     "source-target-reveal-and-card-hide",
     "seven-card-correct-completion-feedback",
     "unfilled-slot-labels-do-not-disclose-source-answer-values",
-    "source-exact-help-copy-with-host-glossary-links-safe-disabled",
+    "direction-clarified-help-copy-with-state-bound-typed-keyterm-host-links",
     "help-card-locking-is-current-js-safety-behavior-not-source-runtime-trace",
     "host-pause-freezes-current-js-correct-feedback-delay",
     "reduced-motion-immediate-current-js-feedback-transition",
@@ -1345,18 +1509,28 @@ export const COURSE_G04_L03_TI_004_SOURCE_CONTRACT = Object.freeze({
     "responsive-mobile-and-coarse-pointer-touch-control-surface",
     "page-interaction-companion-portal-with-stage-fallback",
     "desktop-mobile-focus-migration",
+    "help-and-wrong-dialog-escape-close-and-tab-focus-containment",
     "interactive-canvas-aria-and-inert-isolation",
     "answer-controls-fail-closed-until-source-canvas-ready",
     "clean-frame-122-source-visual-under-frame-124-functional-overlay",
     "deterministic-evidence-capture-preserves-requested-frame-without-overlay",
+    "sprite-273-frame-1-source-static-parent-composite-frame-124-diagnostic",
   ]),
   currentJavascriptTiming: COURSE_G04_L03_TI_004_CURRENT_JS_TIMING,
   interactionAuthority: COURSE_G04_L03_TI_004_INTERACTION_AUTHORITY,
   wrongFeedbackTextStatus: "modern-assistive-not-source-exact",
-  helpTextStatus: "source-exact-copy-host-links-safe-disabled",
+  helpTextStatus: "modern-direction-clarified-copy-original-sentences-retained-in-source-metadata",
+  helpSourceCopy: Object.freeze({negative: SOURCE_HELP_NEGATIVE_BODY, positive: SOURCE_HELP_POSITIVE_BODY}),
   mainTimelineAudioStatus: "current-js-engineering-candidate-unaccepted",
   interactionFeedbackAudioStatus: "inventoried-unimplemented-unaccepted",
   associatedAudioStatus: "current-js-engineering-candidate-unaccepted",
+  sprite273CaptureStatus:
+    "source-static-parent-composite-frame-diagnostic-not-original-runtime-or-fidelity",
+  sprite273PlacementPathAudit: Object.freeze({
+    path: COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.placementPathAudit,
+    sha256:
+      COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.placementPathAuditSha256,
+  }),
   spanishInteractionStatus: "unimplemented-disabled",
   naturalTerminalContinuationEstablished: false,
   behaviorParityEstablished: false,
@@ -1366,13 +1540,40 @@ export const COURSE_G04_L03_TI_004_SOURCE_CONTRACT = Object.freeze({
   strictMigrationComplete: false,
   strictAcceptanceEffect: "none",
 });
-export const COURSE_G04_L03_TI_004_SCENARIOS = candidate.scenarios;
+export const COURSE_G04_L03_TI_004_SCENARIOS = Object.freeze([
+  ...candidate.scenarios,
+  Object.freeze({
+    id: SOURCE_STATIC_REACHABLE_SCENARIO,
+    label: "Source-static reachable companion diagnostic",
+    description:
+      "English-only source-parent composite inspection; not original runtime or fidelity acceptance.",
+  }),
+]);
 export const normalizeCourseG04L03Ti004Frame = candidate.normalizeFrame;
-export const getCourseG04L03Ti004FrameState = candidate.getFrameState;
 export const buildCourseG04L03Ti004CaptureAttributes = candidate.buildCaptureAttributes;
 
-export default Object.freeze({
+const activityModule = Object.freeze({
   ...candidate.module,
+  completionMode: "activity" as const,
+  defaultScenarioByFrameDomain: Object.freeze({
+    ...candidate.module.defaultScenarioByFrameDomain,
+    [COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.frameDomain]:
+      SOURCE_STATIC_REACHABLE_SCENARIO,
+  }),
+  scenarios: COURSE_G04_L03_TI_004_SCENARIOS,
+  getFrameState: getCourseG04L03Ti004FrameState,
   reducedMotionFrame: SOURCE_INTERACTION_FRAME,
-  Renderer: CourseG04L03Ti004Renderer,
+  Renderer: CourseG04L03Ti004ActivityRenderer,
 });
+
+const glossaryCandidate = createCourseG04L03SourceGlossaryCandidate(
+  {...candidate, Renderer: CourseG04L03Ti004ActivityRenderer, module: activityModule},
+  COURSE_G04_L03_TI_004_GLOSSARY_CONFIG,
+  {scenario: "source-static-frame", canvasCandidateStatus: "source-static-engineering-not-strict", surfacePlacement: "companion"},
+);
+export const CourseG04L03Ti004Renderer = glossaryCandidate.Renderer;
+export const COURSE_G04_L03_TI_004_SOURCE_CONTRACT = Object.freeze({
+  ...glossaryCandidate.sourceContract,
+  ...INTERACTION_SOURCE_CONTRACT,
+});
+export default glossaryCandidate.module;

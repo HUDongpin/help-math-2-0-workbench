@@ -1,0 +1,298 @@
+{
+  "schemaVersion": 1,
+  "scope": "Existing TS007/TS008 Current-JS product integration only; no new admission or publication",
+  "stages": [
+    {
+      "id": "ts007-source",
+      "pages": [
+        "course-g04-l03-ts-007"
+      ],
+      "requires": [],
+      "inputs": [
+        "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS07.swf",
+        "migrations/course-g04-l03-ts-007/audit/machine/ffdec-scripts.txt.gz",
+        "migrations/course-g04-l03-ts-007/audit/machine/swfmill.xml.gz",
+        "scripts/run-flash-product-pipeline.mjs",
+        "scripts/lib/flash-product-pipeline.mjs",
+        "package-lock.json",
+        "migrations/course-g04-l03-ts-007/audit/machine/report.json"
+      ],
+      "outputs": [],
+      "command": [
+        "node",
+        "scripts/check-flash-product-bindings.mjs",
+        "course-g04-l03-ts-007"
+      ],
+      "bindings": [
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS07.swf",
+          "sha256": "f29b6880fea6e2316d1916bec26dc58050a8dad78a4b082efc19c85720128daf"
+        },
+        {
+          "path": "migrations/course-g04-l03-ts-007/audit/machine/ffdec-scripts.txt.gz",
+          "sha256": "06960636f72d5492bb4ac7dc82fe08303e5ffa200a53a35d987ebe2e40fd01c2"
+        },
+        {
+          "path": "migrations/course-g04-l03-ts-007/audit/machine/swfmill.xml.gz",
+          "sha256": "7d8b3241424d0a00e6d0d10482831bbf1d1a50ff20a79393f6e12ea15749d8c8"
+        },
+        {
+          "path": "migrations/course-g04-l03-ts-007/audit/machine/report.json",
+          "sha256": "62f1d2c1cb5911ddb0f7c80ba1a4d81bd2c6b32624bf2ab215813a4d69237f50"
+        }
+      ],
+      "disposition": "reuse hash-locked extraction; missing/drifted extraction stops this admitted recipe"
+    },
+    {
+      "id": "ts007-behavior",
+      "pages": [
+        "course-g04-l03-ts-007"
+      ],
+      "requires": [
+        "ts007-source"
+      ],
+      "inputs": [
+        "packages/demos/src/timelines/course-g04-l03-ts-007-practice-question-interaction.ts",
+        "packages/demos/tests/course-g04-l03-ts-007-practice-question-interaction.test.ts",
+        "packages/demos/src/timelines/practice-question-feedback.ts",
+        "scripts/run-flash-product-pipeline.mjs",
+        "scripts/lib/flash-product-pipeline.mjs",
+        "package-lock.json"
+      ],
+      "outputs": [],
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "packages/demos/tests/course-g04-l03-ts-007-practice-question-interaction.test.ts"
+      ],
+      "disposition": "maintained-adapter validation; not automatic ActionScript translation"
+    },
+    {
+      "id": "ts008-source",
+      "pages": [
+        "course-g04-l03-ts-008"
+      ],
+      "requires": [],
+      "inputs": [
+        "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS08.swf",
+        "migrations/course-g04-l03-ts-008/audit/machine/ffdec-scripts.txt.gz",
+        "migrations/course-g04-l03-ts-008/audit/machine/swfmill.xml.gz",
+        "scripts/run-flash-product-pipeline.mjs",
+        "scripts/lib/flash-product-pipeline.mjs",
+        "package-lock.json",
+        "migrations/course-g04-l03-ts-008/audit/machine/report.json"
+      ],
+      "outputs": [],
+      "command": [
+        "node",
+        "scripts/check-flash-product-bindings.mjs",
+        "course-g04-l03-ts-008"
+      ],
+      "bindings": [
+        {
+          "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS08.swf",
+          "sha256": "9c7288f67f764e02f4320655b64dbb57d3d690a75951b549ee5113f385e6b885"
+        },
+        {
+          "path": "migrations/course-g04-l03-ts-008/audit/machine/ffdec-scripts.txt.gz",
+          "sha256": "271619937ef999980753232bc2dbcb9ea589dbebe7f5e83c7cf0c7e3fe7b29fb"
+        },
+        {
+          "path": "migrations/course-g04-l03-ts-008/audit/machine/swfmill.xml.gz",
+          "sha256": "d2cc427fe26b8b917f8821b7e7327d3f3592974930ffc3c009e2ad71d07aa06f"
+        },
+        {
+          "path": "migrations/course-g04-l03-ts-008/audit/machine/report.json",
+          "sha256": "2228ae736d6581daaea6ea11d9db32d0b254b30b71ea18f0d23df838a7ba53d5"
+        }
+      ],
+      "disposition": "reuse hash-locked extraction; missing/drifted extraction stops this admitted recipe"
+    },
+    {
+      "id": "ts008-generate",
+      "pages": [
+        "course-g04-l03-ts-008"
+      ],
+      "requires": [
+        "ts008-source"
+      ],
+      "inputs": [
+        "migrations/course-g04-l03-ts-008/audit/teaching-behavior-ir.json",
+        "scripts/build-ts008-teaching-behavior.py",
+        "packages/demos/src/timelines/practice-question-feedback.ts",
+        "scripts/run-flash-product-pipeline.mjs",
+        "scripts/lib/flash-product-pipeline.mjs",
+        "package-lock.json"
+      ],
+      "outputs": [
+        "packages/demos/src/timelines/course-g04-l03-ts-008-behavior.generated.ts"
+      ],
+      "command": [
+        "python3",
+        "scripts/build-ts008-teaching-behavior.py"
+      ],
+      "disposition": "admitted quiz-feedback/replay IR; remaining behavior uses maintained adapter"
+    },
+    {
+      "id": "ts008-behavior",
+      "pages": [
+        "course-g04-l03-ts-008"
+      ],
+      "requires": [
+        "ts008-generate"
+      ],
+      "inputs": [
+        "packages/demos/src/timelines/course-g04-l03-ts-008-practice-question-interaction.ts",
+        "packages/demos/tests/course-g04-l03-ts-008-practice-question-interaction.test.ts",
+        "packages/demos/src/timelines/practice-question-feedback.ts",
+        "scripts/run-flash-product-pipeline.mjs",
+        "scripts/lib/flash-product-pipeline.mjs",
+        "package-lock.json",
+        "packages/demos/src/timelines/course-g04-l03-ts-008-behavior.generated.ts"
+      ],
+      "outputs": [],
+      "command": [
+        "node",
+        "--import",
+        "tsx",
+        "--test",
+        "packages/demos/tests/course-g04-l03-ts-008-practice-question-interaction.test.ts"
+      ],
+      "disposition": "maintained-adapter validation; not automatic ActionScript translation"
+    },
+    {
+      "id": "registry",
+      "pages": [
+        "course-g04-l03-ts-007",
+        "course-g04-l03-ts-008"
+      ],
+      "requires": [
+        "ts007-behavior",
+        "ts008-behavior"
+      ],
+      "inputs": [
+        "scripts/run-flash-product-pipeline.mjs",
+        "scripts/lib/flash-product-pipeline.mjs",
+        "package-lock.json",
+        "packages/demos/scripts/generate-registry.mjs",
+        "packages/demos/prototype-registry.json",
+        "packages/demos/private-current-js-registry.json",
+        "catalog/completion-ledger.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v17.json",
+        "catalog/product-bridge-calibrations/g4-l11-migration-factory-v1.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v2.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v21.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v20.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v3.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v16.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v31.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v4.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v27.json",
+        "catalog/product-bridge-calibrations/g4-l5-page-only-current-js-53-v1.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v8.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v11.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v10.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v9.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v26.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v5.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v30.json",
+        "catalog/product-bridge-calibrations/g4-l5-ffdec-product-factory-v2.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v25.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v6.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v33.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v13.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v29.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v28.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v12.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v32.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v7.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v24.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v15.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v19.json",
+        "catalog/product-bridge-calibrations/g4-l10-page-only-current-js-46-v1.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v23.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v1.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v22.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v18.json",
+        "catalog/product-bridge-calibrations/g4-l11-page-only-current-js-43-v1.json",
+        "catalog/product-bridge-calibrations/g5-l5-page-only-current-js-56-v1.json",
+        "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v14.json"
+      ],
+      "outputs": [
+        "packages/demos/src/registry.generated.ts"
+      ],
+      "command": [
+        "node",
+        "packages/demos/scripts/generate-registry.mjs"
+      ],
+      "disposition": "rebuild official generated registry from existing reviewed membership; no invented admissions"
+    },
+    {
+      "id": "course-order",
+      "pages": [
+        "course-g04-l03-ts-007",
+        "course-g04-l03-ts-008"
+      ],
+      "requires": [
+        "registry"
+      ],
+      "inputs": [
+        "scripts/run-flash-product-pipeline.mjs",
+        "scripts/lib/flash-product-pipeline.mjs",
+        "package-lock.json",
+        "apps/web/lib/g4-l3-lesson-navigation.ts",
+        "apps/web/tests/g4-l3-lesson-navigation.test.ts",
+        "reports/g4-l3-lesson-product-navigation-contract.json",
+        "scripts/check-flash-product-bindings.mjs",
+        "packages/demos/src/modules/course-g04-l03-ts-007.tsx",
+        "packages/demos/src/modules/course-g04-l03-ts-008.tsx",
+        "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/index.xml"
+      ],
+      "outputs": [],
+      "command": [
+        "node",
+        "scripts/check-flash-product-bindings.mjs",
+        "course-order"
+      ]
+    },
+    {
+      "id": "my-lesson",
+      "pages": [
+        "course-g04-l03-ts-007",
+        "course-g04-l03-ts-008"
+      ],
+      "requires": [
+        "course-order"
+      ],
+      "inputs": [
+        "scripts/run-flash-product-pipeline.mjs",
+        "scripts/lib/flash-product-pipeline.mjs",
+        "package-lock.json",
+        "apps/web/e2e/flash-product-pipeline.spec.ts",
+        "apps/web/playwright.flash-product.config.ts",
+        "apps/web/playwright.config.ts"
+      ],
+      "outputs": [],
+      "cacheable": false,
+      "cwd": "apps/web",
+      "command": [
+        "npx",
+        "--no-install",
+        "playwright",
+        "test",
+        "--config",
+        "playwright.flash-product.config.ts"
+      ],
+      "env": {
+        "PLAYWRIGHT_PORT": "3228",
+        "MODERN_WIDE_SHELL_ENABLED": "true",
+        "CURRENT_JS_CANDIDATE_PROFILE_ENABLED": "true",
+        "CURRENT_JS_SHOWCASE_G4_L3_ENABLED": "true",
+        "NOVA_CLIENT_RENDER_MOCK_ENABLED": "false",
+        "FLASH_PRODUCT_BROWSER_OUTPUT": "{runDir}/browser"
+      }
+    }
+  ]
+}

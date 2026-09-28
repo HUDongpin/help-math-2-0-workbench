@@ -7,7 +7,7 @@ export const COURSE_G04_L03_FQ_002_SOURCE = Object.freeze({
   fla: "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/FQ/L3FQ02.fla",
   flaSha256: "146bbfa62ccb6cbd38d3a6f3f1bd4c5312a65821608bcdc0c081b43d3a6ebc77",
   sharedAudioGroupId: "course-g04-l03-fq-audio",
-  sharedAudioFileCount: 108,
+  sharedAudioFileCount: 250,
   spriteObjectId: 899,
   randomCall: Object.freeze({path: "DefineSprite_899/frame_1/DoAction.as",
     sha256: "818543cb14a259790afb733c553a6dd00b7a8b916c5d955efa0281e16dbf99f7"}),
@@ -46,7 +46,7 @@ export const COURSE_G04_L03_FQ_002_CONFIG = Object.freeze({
     firstFrame: 1,
     lastFrame: 68,
   })]),
-  sourceControlBehaviorLabel: "The source locally defines 25 paired question/review labels and randomly selects ten without replacement; frames 1–68 are inspectable only as a nonsequential static branch atlas with live playback capped at frame 1, while answer input, dynamic feedback, scoring, getURL behavior, 108 shared audio files, 259 edit-text definitions, and all ActionScript execution remain disabled",
+  sourceControlBehaviorLabel: "The source locally defines 25 paired question/review labels and randomly selects ten without replacement; frames 1–68 are inspectable only as a nonsequential static branch atlas with live playback capped at frame 1, while answer input, dynamic feedback, scoring, getURL behavior, 250 shared audio files, 259 edit-text definitions, and all ActionScript execution remain disabled",
 } satisfies SourceStaticCanvasCandidateConfig);
 
 export const COURSE_G04_L03_FQ_002_AUTHORITY = SOURCE_STATIC_CANDIDATE_AUTHORITY;

@@ -6,8 +6,8 @@ import {createPortal} from "react-dom";
 
 import type {AnimationRendererProps} from "../contract";
 import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
+import {createCourseG04L03SourceGlossaryCandidate} from "./course-g04-l03-source-glossary-candidate";
 import {
-  COURSE_G04_L03_IN_008_QUESTIONS,
   createCourseG04L03In008InteractionState,
   reduceCourseG04L03In008Interaction,
   type CourseG04L03In008InteractionAction,
@@ -15,6 +15,7 @@ import {
 } from "../timelines/course-g04-l03-in-008-interaction";
 import {
   COURSE_G04_L03_IN_008_CONFIG,
+  COURSE_G04_L03_IN_008_GLOSSARY_CONFIG,
   COURSE_G04_L03_IN_008_SOURCE,
 } from "../timelines/course-g04-l03-in-008";
 
@@ -173,7 +174,7 @@ function CourseG04L03In008MobileSurface({
         aria-live="polite"
         id={feedbackId}
         role="status"
-        style={visuallyHiddenStyle}
+        className="course-g04-l03-in-008-mobile-success"
       >
         {interaction.outcome === "correct" ? CORRECT_STATUS : ""}
       </span>
@@ -202,12 +203,13 @@ function CourseG04L03In008MobileSurface({
 }
 
 function CourseG04L03In008InteractionOverlay({
+  onActivityComplete,
   pageInteractionCompanionTargetId,
   replay = 0,
   seed,
 }: Pick<
   AnimationRendererProps,
-  "pageInteractionCompanionTargetId" | "replay" | "seed"
+  "onActivityComplete" | "pageInteractionCompanionTargetId" | "replay" | "seed"
 >) {
   const [interaction, dispatch] = useReducer(
     reduceCourseG04L03In008Interaction,
@@ -215,6 +217,7 @@ function CourseG04L03In008InteractionOverlay({
     createCourseG04L03In008InteractionState,
   );
   const [companionTarget, setCompanionTarget] = useState<HTMLElement | null>(null);
+  const [mobileControls, setMobileControls] = useState(false);
   const firstInputRef = useRef<HTMLInputElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const newProblemButtonRef = useRef<HTMLButtonElement>(null);
@@ -225,6 +228,18 @@ function CourseG04L03In008InteractionOverlay({
   useEffect(() => {
     dispatch({type: "replay"});
   }, [replay, seed]);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 640px)");
+    const update = () => setMobileControls(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    if (interaction.outcome === "correct") onActivityComplete?.();
+  }, [interaction.outcome, onActivityComplete]);
 
   useEffect(() => {
     if (!pageInteractionCompanionTargetId) {
@@ -244,10 +259,6 @@ function CourseG04L03In008InteractionOverlay({
     }
   }, [interaction.outcome]);
 
-  const sourceInitialQuestionIndex =
-    (seed >>> 0) % COURSE_G04_L03_IN_008_QUESTIONS.length;
-  const questionNeedsRedraw =
-    interaction.currentQuestion.index !== sourceInitialQuestionIndex;
   const focusFirstInput = () => {
     focusRenderedControl(mobileFirstInputRef, firstInputRef);
   };
@@ -285,8 +296,8 @@ function CourseG04L03In008InteractionOverlay({
       }
 
       @media (max-width: 640px) {
-        .course-g04-l03-in-008-stage-controls {
-          display: none;
+        .course-g04-l03-in-008-stage-controls :is(input, button) {
+          pointer-events: none !important;
         }
 
         .course-g04-l03-in-008-mobile-fallback-slot {
@@ -417,10 +428,20 @@ function CourseG04L03In008InteractionOverlay({
           line-height: 1.3;
           margin: 0;
         }
+
+        .course-g04-l03-in-008-mobile-success:not(:empty) {
+          background: #e8f5e9;
+          border-radius: 8px;
+          color: #14532d;
+          font: 600 16px/1.4 system-ui, sans-serif;
+          padding: 8px;
+          text-align: center;
+        }
       }
     `}</style>
     <svg
-      aria-label="Source-script-bound current JavaScript pattern quiz controls"
+      aria-hidden={mobileControls ? true : undefined}
+      aria-label="Complete the number pattern"
       className="course-g04-l03-in-008-stage-controls"
       data-audio-feedback="text-companion-audio-unvalidated"
       data-behavior-parity-established="false"
@@ -440,9 +461,28 @@ function CourseG04L03In008InteractionOverlay({
       }}
       viewBox="0 0 800 600"
     >
-      <foreignObject height="600" width="800" x="0" y="0">
+      {mobileControls ? (
+        <g aria-hidden="true" data-pattern-preview={interaction.currentQuestion.label}>
+          <rect x="153" y="260" width="440" height="74" fill={SOURCE_STAGE_BACKGROUND} />
+          <text x="397" y="303" textAnchor="end" fontFamily={SOURCE_FONT} fontSize="30" fill="#000">
+            {interaction.currentQuestion.label}
+          </text>
+          <rect x="402" y="274" width="64.6" height="40.4" fill="#fff" stroke="#111" />
+          <rect x="481" y="274" width="63.6" height="40" fill="#fff" stroke="#111" />
+          <text x="434" y="303" textAnchor="middle" fontFamily={SOURCE_FONT} fontSize="30" fill="#000">
+            {interaction.answerFirst}
+          </text>
+          <text x="513" y="303" textAnchor="middle" fontFamily={SOURCE_FONT} fontSize="30" fill="#000">
+            {interaction.answerSecond}
+          </text>
+          <text x="469" y="303" fontFamily={SOURCE_FONT} fontSize="30" fill="#000">,</text>
+          <text x="548" y="303" fontFamily={SOURCE_FONT} fontSize="30" fill="#000">, …</text>
+        </g>
+      ) : null}
+      <foreignObject height="600" width="800" x="0" y="0" style={{display: mobileControls ? "none" : undefined}}>
         <form
           aria-label="Complete the number pattern"
+          inert={mobileControls}
           onSubmit={submitAnswer}
           style={{
             height: 600,
@@ -452,9 +492,9 @@ function CourseG04L03In008InteractionOverlay({
             width: 800,
           }}
         >
-          {questionNeedsRedraw ? (
             <div
               aria-hidden="true"
+              data-pattern-question={interaction.currentQuestion.label}
               style={{
                 alignItems: "center",
                 background: SOURCE_STAGE_BACKGROUND,
@@ -477,7 +517,6 @@ function CourseG04L03In008InteractionOverlay({
             >
               {interaction.currentQuestion.label}
             </div>
-          ) : null}
 
           <label
             style={{
@@ -666,7 +705,12 @@ function CourseG04L03In008InteractionOverlay({
               aria-live="polite"
               id="course-g04-l03-in-008-stage-feedback"
               role="status"
-              style={visuallyHiddenStyle}
+              style={interaction.outcome === "correct" ? {
+                background: "#e8f5e9", borderRadius: 8, color: "#14532d",
+                font: "600 18px/1.4 system-ui, sans-serif", left: 180,
+                padding: "5px 10px", position: "absolute", textAlign: "center",
+                top: 331, width: 432,
+              } : visuallyHiddenStyle}
             >
               {interaction.outcome === "correct" ? CORRECT_STATUS : ""}
             </span>
@@ -683,7 +727,7 @@ function CourseG04L03In008InteractionOverlay({
   );
 }
 
-export function CourseG04L03In008Renderer(props: AnimationRendererProps) {
+function CourseG04L03In008ActivityRenderer(props: AnimationRendererProps) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const frameDomain = props.frameDomain ?? SOURCE_QUIZ_DOMAIN;
   const interactionEnabled =
@@ -719,6 +763,7 @@ export function CourseG04L03In008Renderer(props: AnimationRendererProps) {
       <SourceStaticRenderer {...props} />
       {interactionEnabled ? (
         <CourseG04L03In008InteractionOverlay
+          onActivityComplete={props.onActivityComplete}
           pageInteractionCompanionTargetId={
             props.pageInteractionCompanionTargetId
           }
@@ -733,7 +778,7 @@ export function CourseG04L03In008Renderer(props: AnimationRendererProps) {
 export {COURSE_G04_L03_IN_008_SOURCE};
 export const COURSE_G04_L03_IN_008_MOVIE = candidate.movie;
 export const COURSE_G04_L03_IN_008_RUNTIME = candidate.runtime;
-export const COURSE_G04_L03_IN_008_SOURCE_CONTRACT = Object.freeze({
+const interactionSourceContract = Object.freeze({
   ...candidate.sourceContract,
   currentJavascriptInteractionStatus:
     "source-script-bound-functional-candidate",
@@ -749,7 +794,7 @@ export const COURSE_G04_L03_IN_008_SOURCE_CONTRACT = Object.freeze({
     "interactive-canvas-accessibility-isolation",
   ]),
   legacyCoachAudioStatus: "inventoried-unaccepted-text-companion-only",
-  glossaryHostStatus: "source-bound-unimplemented",
+  glossaryHostStatus: "typed-keyterm-host-integrated",
   behaviorParityEstablished: false,
   strictAcceptanceEffect: "none",
 });
@@ -759,8 +804,20 @@ export const getCourseG04L03In008FrameState = candidate.getFrameState;
 export const buildCourseG04L03In008CaptureAttributes =
   candidate.buildCaptureAttributes;
 
-export default Object.freeze({
+const activityModule = Object.freeze({
   ...candidate.module,
+  completionMode: "activity" as const,
   reducedMotionFrame: SOURCE_QUIZ_FRAME,
-  Renderer: CourseG04L03In008Renderer,
+  Renderer: CourseG04L03In008ActivityRenderer,
 });
+
+const glossaryCandidate = createCourseG04L03SourceGlossaryCandidate(
+  {...candidate, Renderer: CourseG04L03In008ActivityRenderer, module: activityModule},
+  COURSE_G04_L03_IN_008_GLOSSARY_CONFIG,
+);
+export const COURSE_G04_L03_IN_008_SOURCE_CONTRACT = Object.freeze({
+  ...glossaryCandidate.sourceContract,
+  ...interactionSourceContract,
+});
+export const CourseG04L03In008Renderer = glossaryCandidate.Renderer;
+export default glossaryCandidate.module;

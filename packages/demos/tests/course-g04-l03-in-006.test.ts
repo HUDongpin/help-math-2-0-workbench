@@ -5,6 +5,7 @@ import {createElement} from "react";
 import {renderToStaticMarkup} from "react-dom/server";
 import test from "node:test";
 import {fileURLToPath} from "node:url";
+import {gunzipSync} from "node:zlib";
 
 import {loadAnimationModule} from "../src/animation-registry";
 import courseIn006, {
@@ -17,6 +18,7 @@ import courseIn006, {
 } from "../src/modules/course-g04-l03-in-006";
 import {matchPrototype} from "../src/prototype-manifest";
 import {COURSE_G04_L03_IN_006_AUTHORITY} from "../src/timelines/course-g04-l03-in-006";
+import {COURSE_G04_L03_IN_006_NUMBER_LINE_GEOMETRY} from "../src/timelines/course-g04-l03-in-006-number-line-jump-interaction";
 
 const repositoryRoot = fileURLToPath(new URL("../../../", import.meta.url));
 const sha256 = (bytes: Uint8Array) =>
@@ -27,6 +29,30 @@ const expectedCompanions = [
   ["sprite-135", 1], ["sprite-137", 1], ["sprite-142", 2],
   ["sprite-144", 55], ["sprite-146", 20], ["sprite-150", 25],
 ] as const;
+
+test("IN006 jump coordinates use the source horizontal line and one native SVG plane", async () => {
+  const audit = `${repositoryRoot}migrations/course-g04-l03-in-006/audit/machine/`;
+  const xml = gunzipSync(await readFile(`${audit}swfmill.xml.gz`)).toString();
+  const shape = xml.match(/<DefineShape objectID="16">[\s\S]*?<\/DefineShape>/)?.[0];
+  assert.ok(shape);
+  const localY = Number(shape.match(/<ShapeSetup x="-7045" y="(\d+)"/)?.[1]);
+  const root = xml.match(/<PlaceObject2[^>]*objectID="151"[^>]*>[\s\S]*?<Transform transX="(\d+)" transY="(\d+)"/);
+  assert.ok(root);
+  const geometry = COURSE_G04_L03_IN_006_NUMBER_LINE_GEOMETRY;
+  assert.equal(geometry.baselineY, (Number(root[2]) + localY) / 20);
+  const scripts = gunzipSync(await readFile(`${audit}ffdec-scripts.txt.gz`)).toString();
+  const action = scripts.split('===== DefineSprite_151/frame_1054/DoAction.as =====')[1]?.split('=====')[0];
+  assert.ok(action);
+  const vx = Number(action.match(/\nvx = (-?[\d.]+);/)?.[1]);
+  const spacing = Number(action.match(/\ndiff = ([\d.]+);/)?.[1]);
+  assert.equal(geometry.firstTickX, Number(root[1]) / 20 + vx + spacing);
+  assert.equal(geometry.tickSpacing, spacing);
+  const markup = renderToStaticMarkup(createElement(courseIn006.Renderer, {
+    frame: 1054, frameDomain: "sprite-151", scenario: "source-static-frame", lang: "en", seed: 0,
+  }));
+  assert.match(markup, /<svg[^>]+class="course-g04-l03-in-006-stage-surface"[^>]+viewBox="0 0 800 600"/);
+  assert.match(markup, /<foreignObject height="600" width="800" x="0" y="0">/);
+});
 
 test("IN006 preserves the 1057-frame source domain and random quiz facts", async () => {
   assert.deepEqual(COURSE_G04_L03_IN_006_MOVIE.stage, {width: 800, height: 600});

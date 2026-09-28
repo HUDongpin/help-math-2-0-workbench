@@ -2,6 +2,7 @@
 
 import React, {
   useEffect,
+  useMemo,
   useReducer,
   useRef,
   useState,
@@ -12,6 +13,10 @@ import {createPortal} from "react-dom";
 import type {AnimationRendererProps} from "../contract";
 import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
 import {
+  isSourceStaticParentCompositeCaptureRequest,
+  SourceStaticParentCompositeCapture,
+} from "../source-static-parent-composite-capture";
+import {
   COURSE_G04_L03_TI_005_STAGE_GEOMETRY,
   createCourseG04L03Ti005InteractionState,
   reduceCourseG04L03Ti005Interaction,
@@ -21,6 +26,7 @@ import {
 import {
   COURSE_G04_L03_TI_005_CONFIG,
   COURSE_G04_L03_TI_005_SOURCE,
+  COURSE_G04_L03_TI_005_SPRITE_179_CAPTURE,
 } from "../timelines/course-g04-l03-ti-005";
 
 const candidate = createSourceStaticCanvasCandidate(
@@ -31,9 +37,10 @@ const SourceStaticRenderer = candidate.Renderer;
 const SOURCE_QUIZ_FRAME = 209;
 const SOURCE_QUIZ_DOMAIN = "sprite-208";
 const SOURCE_QUIZ_SCENARIO = "source-static-frame";
+const SOURCE_STATIC_REACHABLE_SCENARIO = "source-static-reachable-domain";
 const SOURCE_FONT =
   '"Bauhaus Md BT", "Arial Rounded MT Bold", "Trebuchet MS", ui-rounded, sans-serif';
-const CORRECT_STATUS = "Correct. Choose New Problem to continue.";
+const CORRECT_STATUS = "Correct! Choose New Problem for more practice, or Next to continue.";
 const RESPONSIVE_CONTROLS_MEDIA =
   "(max-width: 640px), (any-pointer: coarse)";
 
@@ -79,6 +86,64 @@ function isDeterministicEvidenceCapture({
   return Boolean(entryStateSha256);
 }
 
+type Ti005FrameContext = Parameters<typeof candidate.getFrameState>[1];
+
+export function getCourseG04L03Ti005FrameState(
+  frame: number,
+  context: Ti005FrameContext,
+) {
+  const base = candidate.getFrameState(frame, context);
+  if (!isSourceStaticParentCompositeCaptureRequest({
+    entryStateSha256: context.entryStateSha256,
+    frame,
+    frameDomain: context.frameDomain,
+    lang: context.lang,
+    requirementId: context.requirementId,
+    scenario: context.scenario,
+    traceId: context.traceId,
+  }, COURSE_G04_L03_TI_005_SPRITE_179_CAPTURE)) return base;
+  return Object.freeze({
+    ...base,
+    blocker: null,
+    exportFrame: null,
+    frame,
+    frameDomain: COURSE_G04_L03_TI_005_SPRITE_179_CAPTURE.frameDomain,
+    language: COURSE_G04_L03_TI_005_SPRITE_179_CAPTURE.language,
+    rootFrame: COURSE_G04_L03_TI_005_SPRITE_179_CAPTURE.rootEntryFrame,
+    scenario: COURSE_G04_L03_TI_005_SPRITE_179_CAPTURE.scenario,
+    sourceStaticVisualReady: true,
+    status: "ready" as const,
+    visibleSourceMarkers: Object.freeze([
+      `sprite-179-source-parent-composite-frame-${
+        COURSE_G04_L03_TI_005_SPRITE_179_CAPTURE.sourceParentFirstFrame + frame - 1
+      }`,
+    ]),
+  });
+}
+
+function Sprite179EvidenceRenderer(props: AnimationRendererProps) {
+  const sourceParentFrame =
+    COURSE_G04_L03_TI_005_SPRITE_179_CAPTURE.sourceParentFirstFrame
+    + props.frame - 1;
+  const sourceState = useMemo(() => candidate.getFrameState(
+    sourceParentFrame,
+    {
+      frameDomain: COURSE_G04_L03_TI_005_SPRITE_179_CAPTURE.sourceParentFrameDomain,
+      scenario: SOURCE_QUIZ_SCENARIO,
+      lang: "en",
+      seed: props.seed,
+    },
+  ), [props.seed, sourceParentFrame]);
+  return (
+    <SourceStaticParentCompositeCapture
+      mapping={COURSE_G04_L03_TI_005_SPRITE_179_CAPTURE}
+      props={props}
+      sourceState={sourceState}
+      SourceRenderer={SourceStaticRenderer}
+    />
+  );
+}
+
 function focusRenderedControl(
   preferred: RefObject<HTMLElement | null>,
   fallback: RefObject<HTMLElement | null>,
@@ -100,6 +165,15 @@ function sourceCanvasStatusMessage(status: SourceCanvasStatus) {
     return "The source question is unavailable in this context.";
   }
   return "Loading the source question before answer controls are enabled…";
+}
+
+function handleFeedbackKeys(event: React.KeyboardEvent<HTMLDivElement>, close: () => void) {
+  if (event.key === "Escape") {
+    event.preventDefault(); event.stopPropagation(); close();
+  } else if (event.key === "Tab") {
+    const closeButton = event.currentTarget.querySelector<HTMLButtonElement>("button:not(:disabled)");
+    if (closeButton) { event.preventDefault(); closeButton.focus(); }
+  }
 }
 
 interface MobileSurfaceProps {
@@ -225,18 +299,17 @@ function MobileSurface({
           New Problem
         </button>
       </div>
-      <span
-        aria-live="polite"
-        id={feedbackId}
-        role="status"
-        style={visuallyHiddenStyle}
-      >
+      <p aria-live="polite" id={feedbackId} role="status"
+        className="course-g04-l03-ti-005-success"
+        style={interaction.outcome === "correct" ? undefined : visuallyHiddenStyle}>
         {interaction.outcome === "correct" ? CORRECT_STATUS : ""}
-      </span>
+      </p>
       {interaction.outcome === "wrong" ? (
         <div
           aria-describedby="course-g04-l03-ti-005-mobile-feedback-copy"
           aria-label="Incorrect answer feedback"
+          aria-modal="true"
+          onKeyDown={(event) => handleFeedbackKeys(event, onCloseFeedback)}
           className="course-g04-l03-ti-005-mobile-dialog"
           role="alertdialog"
         >
@@ -290,13 +363,14 @@ function StageSurface({
 
   return (
     <svg
-      aria-label="Source-script-bound current JavaScript pattern quiz controls"
+      aria-label="Complete the number pattern"
       className="course-g04-l03-ti-005-stage-controls"
       data-audio-feedback="inventoried-unimplemented-unaccepted"
       data-behavior-parity-established="false"
       data-current-js-controls-ready={controlsReady ? "true" : "false"}
       data-current-js-functional-candidate="true"
       data-current-question-index={interaction.currentQuestion.index}
+      data-pattern-question={interaction.currentQuestion.label}
       data-interaction-outcome={interaction.outcome}
       data-legacy-actionscript-executed="false"
       data-source-script-bound="true"
@@ -338,14 +412,25 @@ function StageSurface({
             </span>
           ) : null}
 
+          <span aria-hidden="true" style={{background: "#b8d8f7", height: 54,
+            left: 160, position: "absolute", top: 276, width: 440}} />
+          <span aria-hidden="true" data-visible-pattern={interaction.currentQuestion.label}
+            style={{alignItems: "center", display: "flex", fontSize: 24, height: 48,
+              justifyContent: "flex-end", left: 166, lineHeight: 1, position: "absolute",
+              top: 278.725, whiteSpace: "nowrap", width: 244}}>{interaction.currentQuestion.label}</span>
+          <span aria-hidden="true" style={{fontSize: 25, left: 474,
+            lineHeight: 1, position: "absolute", top: 292}}>,</span>
+          <span aria-hidden="true" style={{fontSize: 25, left: 535,
+            lineHeight: 1, position: "absolute", top: 292}}>, …</span>
+
           <label
             style={{
-              height: geometry.answerFirst.height,
-              left: geometry.answerFirst.left,
+              height: 48,
+              left: geometry.answerFirst.left + geometry.answerFirst.width / 2 - 14,
               pointerEvents: "auto",
               position: "absolute",
-              top: geometry.answerFirst.top,
-              width: geometry.answerFirst.width,
+              top: geometry.answerFirst.top + geometry.answerFirst.height / 2 - 24,
+              width: 48,
             }}
           >
             <span style={visuallyHiddenStyle}>First missing number</span>
@@ -366,9 +451,9 @@ function StageSurface({
               ref={firstInputRef}
               spellCheck={false}
               style={{
-                background: "transparent",
-                border: "1px solid transparent",
-                borderRadius: 0,
+                background: "#fff",
+                border: "2px solid #224b8e",
+                borderRadius: 6,
                 boxSizing: "border-box",
                 color: "#000",
                 fontFamily: SOURCE_FONT,
@@ -389,12 +474,12 @@ function StageSurface({
 
           <label
             style={{
-              height: geometry.answerSecond.height,
-              left: geometry.answerSecond.left,
+              height: 48,
+              left: geometry.answerSecond.left + geometry.answerSecond.width / 2 - 4,
               pointerEvents: "auto",
               position: "absolute",
-              top: geometry.answerSecond.top,
-              width: geometry.answerSecond.width,
+              top: geometry.answerSecond.top + geometry.answerSecond.height / 2 - 24,
+              width: 48,
             }}
           >
             <span style={visuallyHiddenStyle}>Second missing number</span>
@@ -414,9 +499,9 @@ function StageSurface({
               readOnly={interaction.inputsLocked}
               spellCheck={false}
               style={{
-                background: "transparent",
-                border: "1px solid transparent",
-                borderRadius: 0,
+                background: "#fff",
+                border: "2px solid #224b8e",
+                borderRadius: 6,
                 boxSizing: "border-box",
                 color: "#000",
                 fontFamily: SOURCE_FONT,
@@ -441,10 +526,13 @@ function StageSurface({
             disabled={!controlsReady || !interaction.checkEnabled}
             style={{
               ...transparentSourceButtonStyle,
-              height: geometry.checkAnswer.height,
-              left: geometry.checkAnswer.left,
-              top: geometry.checkAnswer.top,
-              width: geometry.checkAnswer.width,
+              background: "linear-gradient(#fff6bd, #ffe080)",
+              border: "2px solid #846518", borderRadius: 10,
+              color: "#153b6a", font: `700 19px ${SOURCE_FONT}`,
+              height: 48,
+              left: geometry.checkAnswer.left + geometry.checkAnswer.width / 2 - 85,
+              top: geometry.checkAnswer.top + geometry.checkAnswer.height / 2 - 24,
+              width: 170,
             }}
             type="submit"
           >
@@ -458,10 +546,13 @@ function StageSurface({
             ref={newProblemButtonRef}
             style={{
               ...transparentSourceButtonStyle,
-              height: geometry.newProblem.height,
-              left: geometry.newProblem.left,
-              top: geometry.newProblem.top,
-              width: geometry.newProblem.width,
+              background: "linear-gradient(#fff6bd, #ffe080)",
+              border: "2px solid #846518", borderRadius: 10,
+              color: "#153b6a", font: `700 19px ${SOURCE_FONT}`,
+              height: 48,
+              left: geometry.newProblem.left + geometry.newProblem.width / 2 - 85,
+              top: geometry.newProblem.top + geometry.newProblem.height / 2 - 24,
+              width: 170,
             }}
             type="button"
           >
@@ -469,98 +560,27 @@ function StageSurface({
           </button>
 
           <span
-            aria-live="polite"
             id={feedbackId}
-            role="status"
             style={visuallyHiddenStyle}
           >
             {interaction.outcome === "correct" ? CORRECT_STATUS : ""}
           </span>
 
           {interaction.feedbackVisible ? (
-            <div
-              aria-describedby="course-g04-l03-ti-005-stage-feedback-copy"
-              aria-label="Incorrect answer feedback"
-              role="alertdialog"
-              style={{
-                height:
-                  geometry.wrongFeedback.top +
-                  geometry.wrongFeedback.height -
-                  geometry.closeWrong.top,
-                left: geometry.wrongFeedback.left,
-                pointerEvents: "auto",
-                position: "absolute",
-                top: geometry.closeWrong.top,
-                width: geometry.wrongFeedback.width,
-              }}
-            >
-              <div
-                aria-hidden="true"
-                style={{
-                  background: "#ffffcc",
-                  border: "1px solid #6a6231",
-                  boxSizing: "border-box",
-                  height: geometry.wrongFeedback.height,
-                  left: 0,
-                  position: "absolute",
-                  top: geometry.wrongFeedback.top - geometry.closeWrong.top,
-                  width: geometry.wrongFeedback.width,
-                }}
-              />
-              <p
-                id="course-g04-l03-ti-005-stage-feedback-copy"
-                style={{
-                  alignItems: "center",
-                  color: "#000",
-                  display: "flex",
-                  fontFamily: SOURCE_FONT,
-                  fontSize: 20,
-                  height: geometry.wrongFeedbackText.height,
-                  left:
-                    geometry.wrongFeedbackText.left -
-                    geometry.wrongFeedback.left,
-                  lineHeight: 1.15,
-                  margin: 0,
-                  overflow: "hidden",
-                  padding: 0,
-                  pointerEvents: "none",
-                  position: "absolute",
-                  top:
-                    geometry.wrongFeedbackText.top -
-                    geometry.closeWrong.top,
-                  whiteSpace: "pre-wrap",
-                  width: geometry.wrongFeedbackText.width,
-                }}
-              >
-                {interaction.feedbackText}
-              </p>
-              <button
-                aria-label="Close feedback and try the same problem again"
-                data-ti005-focus-control="close-feedback"
-                onClick={onCloseFeedback}
-                ref={closeButtonRef}
-                style={{
-                  background: "#fff",
-                  border: "1px solid #929292",
-                  borderRadius: 2,
-                  color: "#000",
-                  cursor: "pointer",
-                  fontFamily: SOURCE_FONT,
-                  fontSize: 18,
-                  height: geometry.closeWrong.height,
-                  left: geometry.closeWrong.left - geometry.wrongFeedback.left,
-                  lineHeight: 1,
-                  margin: 0,
-                  padding: 0,
-                  pointerEvents: "auto",
-                  position: "absolute",
-                  top: 0,
-                  width: geometry.closeWrong.width,
-                }}
-                type="button"
-              >
-                Close
-              </button>
+            <div aria-describedby="course-g04-l03-ti-005-stage-feedback-copy"
+              aria-label="Incorrect answer feedback" aria-modal="true" role="alertdialog"
+              onKeyDown={(event) => handleFeedbackKeys(event, onCloseFeedback)}
+              style={{background: "#ffffcc", border: "2px solid #8a731d", borderRadius: 12,
+                boxSizing: "border-box", color: "#111", display: "grid", alignItems: "center",
+                gridTemplateColumns: "1fr 100px", gap: 12, padding: 12,
+                left: geometry.wrongFeedback.left, top: 160, width: geometry.wrongFeedback.width,
+                minHeight: 108, pointerEvents: "auto", position: "absolute"}}>
+              <p id="course-g04-l03-ti-005-stage-feedback-copy"
+                style={{font: `20px/1.3 ${SOURCE_FONT}`, margin: 0, whiteSpace: "pre-wrap"}}>{interaction.feedbackText}</p>
+              <button aria-label="Close feedback and try the same problem again" data-ti005-focus-control="close-feedback"
+                onClick={onCloseFeedback} ref={closeButtonRef} type="button"
+                style={{background: "#fff", border: "2px solid #224b8e", borderRadius: 8,
+                  color: "#153b6a", font: `700 18px ${SOURCE_FONT}`, height: 48}}>Close</button>
             </div>
           ) : null}
         </form>
@@ -569,7 +589,7 @@ function StageSurface({
   );
 }
 
-function Renderer(props: AnimationRendererProps) {
+function MainRenderer(props: AnimationRendererProps) {
   const [interaction, dispatch] = useReducer(
     reduceCourseG04L03Ti005Interaction,
     props.seed,
@@ -606,12 +626,29 @@ function Renderer(props: AnimationRendererProps) {
     interaction.drawCount,
     sourceVisualSeed,
   );
-  const controlsReady = canvasStatus === "ready";
+  const sourceVisualState = useMemo(() => interactionEnabled
+    ? candidate.getFrameState(SOURCE_QUIZ_FRAME, {
+        entryStateSha256: props.entryStateSha256,
+        frameDomain,
+        lang: props.lang,
+        requirementId: props.requirementId,
+        scenario: props.scenario,
+        seed: sourceVisualSeed,
+        traceId: props.traceId,
+      })
+    : props.state,
+  [interactionEnabled, frameDomain, props.entryStateSha256, props.lang,
+    props.requirementId, props.scenario, props.state, props.traceId, sourceVisualSeed]);
+  const controlsReady = interactionEnabled && canvasStatus === "ready";
 
   useEffect(() => {
     if (interactionEnabled) setCanvasStatus("loading");
     dispatch({type: "replay", seed: props.seed});
   }, [interactionEnabled, props.replay, props.seed]);
+
+  useEffect(() => {
+    if (interactionEnabled && interaction.outcome === "correct") props.onActivityComplete?.();
+  }, [interactionEnabled, interaction.outcome, props.onActivityComplete]);
 
   useEffect(() => {
     if (!props.pageInteractionCompanionTargetId) {
@@ -727,6 +764,9 @@ function Renderer(props: AnimationRendererProps) {
     setCanvasStatus("loading");
     dispatch({type: "new-problem"});
   };
+  const desktopSuccess = interaction.outcome === "correct" ? (
+    <p className="course-g04-l03-ti-005-success course-g04-l03-ti-005-desktop-success" role="status">{CORRECT_STATUS}</p>
+  ) : null;
   const mobileSurface = (
     <MobileSurface
       canvasStatus={canvasStatus}
@@ -775,6 +815,7 @@ function Renderer(props: AnimationRendererProps) {
       }}
     >
       <style>{`
+        .course-g04-l03-ti-005-mobile-answers,
         .course-g04-l03-ti-005-mobile-fallback-slot,
         .course-g04-l03-ti-005-mobile-controls {
           display: none;
@@ -786,7 +827,13 @@ function Renderer(props: AnimationRendererProps) {
           outline-offset: 3px;
         }
 
+        .course-g04-l03-ti-005-success {
+          background: #e4f5df; border: 2px solid #28743b; border-radius: 12px;
+          color: #17572a; font: 700 17px/1.4 system-ui, sans-serif; padding: 12px; margin: 10px 0;
+        }
         @media ${RESPONSIVE_CONTROLS_MEDIA} {
+          .course-g04-l03-ti-005-mobile-answers { display: block; }
+          .course-g04-l03-ti-005-desktop-success { display: none; }
           .course-g04-l03-ti-005-stage-controls {
             display: none;
           }
@@ -939,16 +986,31 @@ function Renderer(props: AnimationRendererProps) {
       `}</style>
       <div
         aria-hidden={interactionEnabled ? true : undefined}
+        inert={interactionEnabled ? true : undefined}
+        data-source-canvas-accessibility-isolated={interactionEnabled ? "true" : "false"}
+        style={{pointerEvents: interactionEnabled ? "none" : undefined}}
         ref={visualHostRef}
       >
         <SourceStaticRenderer
           key={sourceCanvasRenderKey}
           {...props}
           seed={sourceVisualSeed}
+          state={sourceVisualState}
         />
       </div>
       {interactionEnabled ? (
         <>
+          {controlsReady && interaction.outcome === "correct" ? (
+            <svg className="course-g04-l03-ti-005-mobile-answers" aria-hidden="true" viewBox="0 0 800 600"
+              data-ti005-answer-preview-index={interaction.currentQuestionIndex}
+              style={{height: "auto", inset: 0, pointerEvents: "none", position: "absolute", width: "100%", zIndex: 2}}>
+              {[{bounds: COURSE_G04_L03_TI_005_STAGE_GEOMETRY.answerFirst, value: interaction.answerFirst},
+                {bounds: COURSE_G04_L03_TI_005_STAGE_GEOMETRY.answerSecond, value: interaction.answerSecond}].map(({bounds, value}, index) => (
+                <text key={index} x={bounds.left + bounds.width - 3} y={bounds.top + 25}
+                  textAnchor="end" fontFamily={SOURCE_FONT} fontSize="24" fill="#111">{value}</text>
+              ))}
+            </svg>
+          ) : null}
           <StageSurface
             canvasStatus={canvasStatus}
             closeButtonRef={closeButtonRef}
@@ -960,6 +1022,7 @@ function Renderer(props: AnimationRendererProps) {
             onCloseFeedback={closeFeedback}
             onNewProblem={newProblem}
           />
+          {companionTarget ? createPortal(desktopSuccess, companionTarget) : desktopSuccess}
           {companionTarget
             ? createPortal(mobileSurface, companionTarget)
             : (
@@ -971,6 +1034,15 @@ function Renderer(props: AnimationRendererProps) {
       ) : null}
     </div>
   );
+}
+
+function Renderer(props: AnimationRendererProps) {
+  return isSourceStaticParentCompositeCaptureRequest(
+    props,
+    COURSE_G04_L03_TI_005_SPRITE_179_CAPTURE,
+  )
+    ? <Sprite179EvidenceRenderer {...props} />
+    : <MainRenderer {...props} />;
 }
 
 export {COURSE_G04_L03_TI_005_SOURCE};
@@ -986,12 +1058,17 @@ export const COURSE_G04_L03_TI_005_SOURCE_CONTRACT = Object.freeze({
     "wrong-feedback-and-close-retry",
     "new-problem-without-replacement",
     "source-drawing-question-redraw-by-current-js-question-index",
+    "source-frame-state-and-canvas-seed-match-current-question",
+    "activity-completes-after-one-correct-pair-optional-new-problem-preserves-page-progress",
+    "visible-correct-feedback-and-mobile-answer-preview",
+    "wrong-feedback-escape-close-and-tab-containment",
     "whole-renderer-replay-reset",
     "reduced-motion-interactive-stop",
     "responsive-mobile-and-coarse-pointer-touch-control-surface",
     "page-interaction-companion-portal-with-stage-fallback",
     "interactive-canvas-accessibility-isolation",
     "answer-controls-fail-closed-until-source-canvas-ready",
+    "sprite-179-frames-1-5-source-static-parent-composite-frames-75-79-diagnostic",
   ]),
   sourceQuestionOrderStatus:
     "seeded-current-js-without-replacement-not-avm1-random-trace",
@@ -999,6 +1076,14 @@ export const COURSE_G04_L03_TI_005_SOURCE_CONTRACT = Object.freeze({
     "stale-source-audit-binding-not-strict",
   legacyCoachAudioStatus: "inventoried-unimplemented-unaccepted",
   associatedAudioStatus: "inventoried-unimplemented-unaccepted",
+  sprite179CaptureStatus:
+    "source-static-parent-composite-frame-diagnostic-not-original-runtime-or-fidelity",
+  sprite179EmbeddedSoundStatus: "source-sound-stream-not-rendered-or-accepted",
+  sprite179PlacementPathAudit: Object.freeze({
+    path: COURSE_G04_L03_TI_005_SPRITE_179_CAPTURE.placementPathAudit,
+    sha256:
+      COURSE_G04_L03_TI_005_SPRITE_179_CAPTURE.placementPathAuditSha256,
+  }),
   sourceDeviceFontRuntimeStatus:
     "source-drawing-subsets-used-device-font-runtime-unestablished",
   sourceHostHyperlinkStatus: "unimplemented-safe-disabled",
@@ -1006,14 +1091,29 @@ export const COURSE_G04_L03_TI_005_SOURCE_CONTRACT = Object.freeze({
   replayParityEstablished: false,
   strictAcceptanceEffect: "none",
 });
-export const COURSE_G04_L03_TI_005_SCENARIOS = candidate.scenarios;
+export const COURSE_G04_L03_TI_005_SCENARIOS = Object.freeze([
+  ...candidate.scenarios,
+  Object.freeze({
+    id: SOURCE_STATIC_REACHABLE_SCENARIO,
+    label: "Source-static reachable companion diagnostic",
+    description:
+      "English-only source-parent composite inspection with source sound disabled; not original runtime or fidelity acceptance.",
+  }),
+]);
 export const normalizeCourseG04L03Ti005Frame = candidate.normalizeFrame;
-export const getCourseG04L03Ti005FrameState = candidate.getFrameState;
 export const buildCourseG04L03Ti005CaptureAttributes =
   candidate.buildCaptureAttributes;
 
 export default Object.freeze({
   ...candidate.module,
+  completionMode: "activity" as const,
+  defaultScenarioByFrameDomain: Object.freeze({
+    ...candidate.module.defaultScenarioByFrameDomain,
+    [COURSE_G04_L03_TI_005_SPRITE_179_CAPTURE.frameDomain]:
+      SOURCE_STATIC_REACHABLE_SCENARIO,
+  }),
+  scenarios: COURSE_G04_L03_TI_005_SCENARIOS,
+  getFrameState: getCourseG04L03Ti005FrameState,
   reducedMotionFrame: SOURCE_QUIZ_FRAME,
   Renderer,
 });

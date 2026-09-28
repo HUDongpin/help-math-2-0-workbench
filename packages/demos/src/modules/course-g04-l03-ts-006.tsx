@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import {FourStepPlanContent} from "./course-g04-l03-four-step-plan-content";
 
 import type {
   AnimationModule,
@@ -797,12 +798,15 @@ export function CourseG04L03Ts006Renderer(props: AnimationRendererProps) {
     COURSE_G04_L03_TS_006_DIAGNOSTIC_COMPOSITE_SCENARIO ? (
     <DiagnosticStage {...props} />
   ) : (
-    <SourceStaticRenderer {...props} />
+    <FourStepPlanContent animationId="course-g04-l03-ts-006" {...props}>
+      <SourceStaticRenderer {...props} />
+    </FourStepPlanContent>
   );
 }
 
-const module: AnimationModule<CourseG04L03Ts006FrameState> = Object.freeze({
+const animationModule: AnimationModule<CourseG04L03Ts006FrameState> = Object.freeze({
   ...sourceStaticCandidate.module,
+  reducedMotionFrame: 128,
   scenarios: COURSE_G04_L03_TS_006_SCENARIOS,
   audioTracks: Object.freeze([
     Object.freeze({
@@ -824,4 +828,4 @@ const module: AnimationModule<CourseG04L03Ts006FrameState> = Object.freeze({
   getFrameState: getCourseG04L03Ts006FrameState,
 });
 
-export default module;
+export default animationModule;

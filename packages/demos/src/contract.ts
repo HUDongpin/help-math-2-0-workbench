@@ -116,6 +116,12 @@ export interface AudioTrack {
  */
 export interface InteractiveAudioAsset {
   readonly id: string;
+  /** Optional locale exposure for source-supported in-page bilingual controls.
+   * The spoken/source language remains `language`; this does not change the
+   * visual runtime language or admit a track without its exact asset binding. */
+  readonly visibleWhen?: readonly AnimationLanguage[];
+  /** Automatic feedback does not expose a separate question speaker button. */
+  readonly activation?: 'interaction-feedback';
   /**
    * One exact source file may be available to both locale views while its
    * spoken language remains unestablished. This exposes byte identity only;
@@ -225,6 +231,8 @@ export interface AnimationRendererProps {
   /** Live product-runtime state for an exact typed interactive audio asset. */
   readonly activeInteractiveAudioId?: string | null;
   readonly onReplay?: () => void;
+  /** Report successful completion of a modern interactive activity to its host. */
+  readonly onActivityComplete?: () => void;
   /**
    * Typed modern host intent. The optional trigger stays outside the serializable
    * request so the product shell can restore focus after closing a support tool.
@@ -264,6 +272,8 @@ export interface AnimationModule<State = unknown> {
   readonly playbackMode?: AnimationPlaybackMode;
   /** Source-authored natural stop within the active/default frame domain. */
   readonly playbackEndFrame?: number;
+  /** Exercises report completion through their renderer; other pages finish on the timeline. */
+  readonly completionMode?: 'timeline' | 'activity';
   /**
    * Optional source-authored stop overrides for multi-domain movies. This
    * prevents a structural root domain from being autoplayed merely because a

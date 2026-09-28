@@ -12,15 +12,14 @@ import {createPortal} from "react-dom";
 
 import type {AnimationRendererProps} from "../contract";
 import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
+import {createCourseG04L03SourceGlossaryCandidate} from "./course-g04-l03-source-glossary-candidate";
 import {
   COURSE_G04_L03_IN_010_ASSISTIVE_CORRECT_FEEDBACK,
   COURSE_G04_L03_IN_010_CARDS,
   COURSE_G04_L03_IN_010_CURRENT_JS_TIMING,
   COURSE_G04_L03_IN_010_FINAL_CORRECT_FEEDBACK,
   COURSE_G04_L03_IN_010_INPUT_METHODS,
-  COURSE_G04_L03_IN_010_INSTRUCTION,
   COURSE_G04_L03_IN_010_INTERACTION_AUTHORITY,
-  COURSE_G04_L03_IN_010_SOURCE_GLOSSARY_TERMS,
   COURSE_G04_L03_IN_010_WRONG_FEEDBACK,
   createCourseG04L03In010TemperatureDragState,
   getCourseG04L03In010PlacementCount,
@@ -32,6 +31,7 @@ import {
 } from "../timelines/course-g04-l03-in-010-temperature-drag-interaction";
 import {
   COURSE_G04_L03_IN_010_CONFIG,
+  COURSE_G04_L03_IN_010_GLOSSARY_CONFIG,
   COURSE_G04_L03_IN_010_SOURCE,
 } from "../timelines/course-g04-l03-in-010";
 
@@ -166,37 +166,6 @@ interface SharedSurfaceProps {
   readonly wrongCloseRef: RefObject<HTMLButtonElement | null>;
 }
 
-function SourceGlossaryBoundary() {
-  return (
-    <div
-      aria-label="Two source glossary actions are unavailable in this current JavaScript candidate."
-      data-host-glossary-actions="safe-disabled"
-      data-host-glossary-function="DoHyperLinks-unresolved"
-      style={visuallyHiddenStyle}
-    >
-      {COURSE_G04_L03_IN_010_SOURCE_GLOSSARY_TERMS.map((term, index) => (
-        <span
-          aria-disabled="true"
-          data-source-glossary-height={term.bounds.height}
-          data-source-glossary-key={term.keyAttribute}
-          data-source-glossary-term={term.visibleText}
-          data-source-glossary-width={term.bounds.width}
-          data-source-glossary-x={term.bounds.x}
-          data-source-glossary-y={term.bounds.y}
-          key={term.id}
-          role="link"
-        >
-          {term.visibleText}
-          {index
-            < COURSE_G04_L03_IN_010_SOURCE_GLOSSARY_TERMS.length - 1
-            ? ", "
-            : ""}
-        </span>
-      ))}
-    </div>
-  );
-}
-
 function StageTargetCopy({
   text,
 }: {
@@ -270,7 +239,7 @@ function StageSurface({
   return (
     <svg
       aria-busy={!controlsReady}
-      aria-label="Source-script-bound current JavaScript temperature placement activity"
+      aria-label="Place cities on the thermometer"
       className="course-g04-l03-in-010-stage-surface"
       data-audio-feedback="inventoried-unimplemented-unaccepted"
       data-behavior-parity-established="false"
@@ -338,8 +307,8 @@ function StageSurface({
                 onClick={() => dispatch({type: "select-card", cardId: card.id})}
                 onDragStart={(event) => startDrag(event, card.id)}
                 style={{
-                  background: selected ? "rgb(255 221 41 / 24%)" : "transparent",
-                  border: selected ? "3px solid #082d86" : "1px solid transparent",
+                  background: placed ? "rgb(220 252 231 / 30%)" : selected ? "rgb(255 221 41 / 24%)" : "transparent",
+                  border: placed ? "2px solid #16803c" : selected ? "3px solid #082d86" : "1px solid transparent",
                   boxSizing: "border-box",
                   color: "transparent",
                   cursor: locked || placed ? "default" : "grab",
@@ -428,11 +397,13 @@ function StageSurface({
                 {placedCard ? (
                   <span
                     style={{
-                      height: targetCard.targetBounds.height,
+                      height: targetCard.temperature === 33 || targetCard.temperature === 34
+                        ? 12 : targetCard.targetBounds.height,
                       left: targetCard.targetBounds.left - hitBounds.x,
                       pointerEvents: "none",
                       position: "absolute",
-                      top: targetCard.targetBounds.top - hitBounds.y,
+                      top: (targetCard.temperature === 33 || targetCard.temperature === 34
+                        ? targetCard.targetCenter.y - 6 : targetCard.targetBounds.top) - hitBounds.y,
                       width: targetCard.targetBounds.width,
                     }}
                   >
@@ -540,21 +511,21 @@ function StageSurface({
               data-source-copy="source-authoring-text-without-original-runtime-causality"
               style={{
                 alignItems: "center",
-                background: "linear-gradient(#bd00e9, #8e00c0)",
-                border: "5px solid #7b007c",
-                borderRadius: 22,
+                background: "#e8f5e9",
+                border: "2px solid #16803c",
+                borderRadius: 10,
                 boxSizing: "border-box",
-                color: "#fff",
+                color: "#14532d",
                 display: "flex",
-                fontSize: 46,
+                fontSize: 24,
                 fontWeight: 900,
-                height: 131.4,
+                height: 52,
                 justifyContent: "center",
-                left: 258.6,
+                left: 278,
                 position: "absolute",
-                textShadow: "2px 2px 0 #73008e",
-                top: 213.55,
-                width: 309.6,
+                textShadow: "none",
+                top: 430,
+                width: 420,
               }}
             >
               {COURSE_G04_L03_IN_010_FINAL_CORRECT_FEEDBACK}
@@ -568,21 +539,21 @@ function StageSurface({
               data-original-runtime-terminal-parity="false"
               style={{
                 alignItems: "center",
-                background: "linear-gradient(#bd00e9, #8e00c0)",
-                border: "5px solid #7b007c",
-                borderRadius: 22,
+                background: "#e8f5e9",
+                border: "2px solid #16803c",
+                borderRadius: 10,
                 boxSizing: "border-box",
-                color: "#fff",
+                color: "#14532d",
                 display: "flex",
-                fontSize: 46,
+                fontSize: 24,
                 fontWeight: 900,
-                height: 131.4,
+                height: 52,
                 justifyContent: "center",
-                left: 258.6,
+                left: 278,
                 position: "absolute",
-                textShadow: "2px 2px 0 #73008e",
-                top: 213.55,
-                width: 309.6,
+                textShadow: "none",
+                top: 430,
+                width: 420,
               }}
             >
               {COURSE_G04_L03_IN_010_FINAL_CORRECT_FEEDBACK}
@@ -595,7 +566,7 @@ function StageSurface({
               : interaction.outcome === "final-correct-feedback"
                 ? COURSE_G04_L03_IN_010_FINAL_CORRECT_FEEDBACK
                 : interaction.outcome === "complete"
-                  ? `${COURSE_G04_L03_IN_010_FINAL_CORRECT_FEEDBACK} Current JavaScript terminal state.`
+                  ? `${COURSE_G04_L03_IN_010_FINAL_CORRECT_FEEDBACK} All 6 cities are placed.`
                   : interaction.feedback ?? ""}
           </span>
         </div>
@@ -606,6 +577,35 @@ function StageSurface({
 
 interface MobileSurfaceProps extends SharedSurfaceProps {
   readonly placement: "fallback" | "portal";
+}
+
+function MobileThermometerPreview({interaction}: {
+  readonly interaction: CourseG04L03In010TemperatureDragState;
+}) {
+  return (
+    <svg
+      aria-label="Thermometer positions numbered from warmest at the top to coldest at the bottom"
+      className="course-g04-l03-in-010-mobile-preview"
+      data-temperature-preview-count={getCourseG04L03In010PlacementCount(interaction)}
+      role="img"
+      viewBox="0 0 800 600"
+      style={{height: "auto", inset: 0, pointerEvents: "none", position: "absolute", width: "100%", zIndex: 3}}
+    >
+      {targetOrder.map((card, index) => {
+        const placed = interaction.placements[card.id] !== null;
+        const labelY = card.temperature === 34 ? 280 : card.temperature === 33 ? 307 : card.targetCenter.y;
+        return (
+          <g key={card.id} data-preview-position={index + 1} data-preview-placed={placed ? "true" : "false"}>
+            <path d={`M 76 ${labelY} L 80 ${labelY} L 85 ${card.targetCenter.y}`} fill="none" stroke="#17395f" strokeWidth="1.5" />
+            <rect x="4" y={labelY - 10} width="72" height="20" rx="5" fill={placed ? "#e8f5e9" : "#fff"} stroke={placed ? "#16803c" : "#17395f"} />
+            <text x="40" y={labelY + 4} textAnchor="middle" fontFamily={SOURCE_FONT} fontSize="12" fontWeight="700" fill="#17395f">
+              {placed ? `${index + 1}: ${card.temperature}°F` : index + 1}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  );
 }
 
 function MobileSurface({
@@ -639,7 +639,8 @@ function MobileSurface({
       data-source-canvas-status={canvasStatus}
     >
       <p className="course-g04-l03-in-010-mobile-instruction">
-        {COURSE_G04_L03_IN_010_INSTRUCTION}
+        Choose a city, then choose its numbered thermometer position.
+        Position 1 is the warmest; position 6 is the coldest.
       </p>
       {!controlsReady ? (
         <p
@@ -659,7 +660,7 @@ function MobileSurface({
           : interaction.outcome === "final-correct-feedback"
             ? COURSE_G04_L03_IN_010_FINAL_CORRECT_FEEDBACK
             : interaction.outcome === "complete"
-              ? `${COURSE_G04_L03_IN_010_FINAL_CORRECT_FEEDBACK} Current JavaScript terminal state.`
+              ? `${COURSE_G04_L03_IN_010_FINAL_CORRECT_FEEDBACK} All 6 cities are placed.`
               : selected
                 ? `${selected.accessibleLabel} selected. Choose its thermometer position.`
                 : `${placementCount} of 6 cities placed.`}
@@ -759,7 +760,7 @@ function MobileSurface({
           role="status"
         >
           <strong>{COURSE_G04_L03_IN_010_FINAL_CORRECT_FEEDBACK}</strong>
-          <p>Final current JavaScript feedback is playing.</p>
+          <p>All 6 cities are placed.</p>
         </div>
       ) : null}
 
@@ -773,7 +774,7 @@ function MobileSurface({
         >
           <strong>{COURSE_G04_L03_IN_010_FINAL_CORRECT_FEEDBACK}</strong>
           <p>
-            Current JavaScript terminal state. Use Replay to practice again.
+            Use Replay to practice again.
           </p>
         </div>
       ) : null}
@@ -781,7 +782,7 @@ function MobileSurface({
   );
 }
 
-export function CourseG04L03In010Renderer(
+function CourseG04L03In010ActivityRenderer(
   props: AnimationRendererProps,
 ) {
   const [interaction, dispatch] = useReducer(
@@ -1019,6 +1020,10 @@ export function CourseG04L03In010Renderer(
     if (wrongCardId) focusControl(`card-${wrongCardId}`);
   };
 
+  useEffect(() => {
+    if (interactionEnabled && interaction.outcome === "complete") props.onActivityComplete?.();
+  }, [interactionEnabled, interaction.outcome, props.onActivityComplete]);
+
   const mobileSurface = (
     <MobileSurface
       canvasStatus={canvasStatus}
@@ -1086,6 +1091,7 @@ export function CourseG04L03In010Renderer(
     >
       <style>{`
         .course-g04-l03-in-010-mobile-fallback-slot,
+        .course-g04-l03-in-010-mobile-preview,
         .course-g04-l03-in-010-mobile-controls {
           display: none;
         }
@@ -1096,6 +1102,9 @@ export function CourseG04L03In010Renderer(
         }
 
         @media ${RESPONSIVE_CONTROLS_MEDIA} {
+          .course-g04-l03-in-010-mobile-preview {
+            display: block;
+          }
           .course-g04-l03-in-010-stage-surface {
             display: none;
           }
@@ -1276,7 +1285,7 @@ export function CourseG04L03In010Renderer(
       </div>
       {interactionEnabled ? (
         <>
-          <SourceGlossaryBoundary />
+          <MobileThermometerPreview interaction={interaction} />
           <StageSurface
             canvasStatus={canvasStatus}
             controlsReady={controlsReady}
@@ -1301,7 +1310,7 @@ export function CourseG04L03In010Renderer(
 export {COURSE_G04_L03_IN_010_SOURCE};
 export const COURSE_G04_L03_IN_010_MOVIE = candidate.movie;
 export const COURSE_G04_L03_IN_010_RUNTIME = candidate.runtime;
-export const COURSE_G04_L03_IN_010_SOURCE_CONTRACT = Object.freeze({
+const interactionSourceContract = Object.freeze({
   ...candidate.sourceContract,
   currentJavascriptInteractionStatus:
     "source-script-bound-functional-candidate",
@@ -1315,7 +1324,7 @@ export const COURSE_G04_L03_IN_010_SOURCE_CONTRACT = Object.freeze({
     "per-card-1500ms-feedback-before-sixth-card-final-feedback",
     "sixth-card-two-stage-23-over-12-second-feedback-and-persistent-current-js-terminal",
     "unfilled-target-controls-disclose-position-only",
-    "two-source-glossary-callback-hits-safe-disabled",
+    "two-source-glossary-typed-host-requests",
     "host-pause-freezes-current-js-per-card-and-final-feedback-delays",
     "reduced-motion-immediate-current-js-feedback-transitions",
     "whole-renderer-replay-reset-and-source-canvas-remount",
@@ -1337,7 +1346,7 @@ export const COURSE_G04_L03_IN_010_SOURCE_CONTRACT = Object.freeze({
   correctFeedbackTextStatus: "modern-assistive-not-source-exact",
   finalCorrectFeedbackTextStatus:
     "source-authoring-text-without-original-runtime-causality",
-  sourceGlossaryActionStatus: "two-source-hits-safe-disabled",
+  sourceGlossaryActionStatus: "typed-keyterm-host-integrated",
   localControlStatus: "no-help-clear-or-new-controls",
   sourceVisualHideParityEstablished: false,
   postDropVisualParityEstablished: false,
@@ -1365,8 +1374,21 @@ export const getCourseG04L03In010FrameState = candidate.getFrameState;
 export const buildCourseG04L03In010CaptureAttributes =
   candidate.buildCaptureAttributes;
 
-export default Object.freeze({
+const activityModule = Object.freeze({
   ...candidate.module,
+  completionMode: "activity" as const,
   reducedMotionFrame: SOURCE_INTERACTION_FRAME,
-  Renderer: CourseG04L03In010Renderer,
+  Renderer: CourseG04L03In010ActivityRenderer,
 });
+
+const glossaryCandidate = createCourseG04L03SourceGlossaryCandidate(
+  {...candidate, Renderer: CourseG04L03In010ActivityRenderer, module: activityModule},
+  COURSE_G04_L03_IN_010_GLOSSARY_CONFIG,
+  Object.freeze({scenario: "source-static-frame", canvasCandidateStatus: "source-static-engineering-not-strict", surfacePlacement: "companion"}),
+);
+export const COURSE_G04_L03_IN_010_SOURCE_CONTRACT = Object.freeze({
+  ...glossaryCandidate.sourceContract,
+  ...interactionSourceContract,
+});
+export const CourseG04L03In010Renderer = glossaryCandidate.Renderer;
+export default glossaryCandidate.module;

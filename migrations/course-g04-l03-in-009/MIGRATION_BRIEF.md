@@ -187,3 +187,13 @@ kept fail-closed.
 - Strict validator result: pending/failing by design while the blockers above
   remain; migration status is not advanced by this brief or the static source
   contract
+
+## 2026-09-08 modern-product temperature follow-up
+
+- Exact placement: `course-g04-l03-in-009`, G4 L3, Learn It 8/11, whole-lesson page 20/39, Temperature explanation. Existing workspace and registration retained.
+- Complexity and lane: **interactive-understood / compiler-assisted source extraction with maintained glossary adapter**. The maintained product slice is bounded to this page and its existing support adapter, with no factory scale-out claim.
+- Source and implementation decision: The existing custom Canvas renderer is retained. Bind only its default sprite-200 scenario and engineering-not-strict readiness status. Use one product playback pass to frame 637, an explicit Replay, a full reduced-motion state, and Temperature/Measure glossary entries. The child terminal action is empty; the hash-bound same-lesson host contract records host-owned end monitoring. Product once-only playback does not establish original host event ordering or terminal parity. The displayed example is Anchorage, Alaska, -2 F.
+- Source evidence: `work/g4-l3-modern-product-review/20260908-temperature/glossary-source-evidence.json` and `temperature-source-contracts.json`, including current SWF/XML/ActionScript hashes, glossary windows and entries, and host or city facts.
+- Product integration: existing modern My Lesson route `/en/courses/4/3`; glossary controls use the external companion area so they do not cover mathematical labels.
+- Evidence: `work/g4-l3-modern-product-review/20260908-temperature/REVIEW.md`, browser verification, regression logs, current audio and registry bindings, and the review receipt.
+- Separate gates remain unchanged: authoritative original-runtime behavior, audio listening and synchronization, human visual/Owner acceptance, strict completion, whole-lesson acceptance, frozen calibration, release and publication. No new Owner approval is inferred.

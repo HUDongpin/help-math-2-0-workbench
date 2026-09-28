@@ -67,7 +67,28 @@
       }
     ],
     "catalogAnimation": "catalog/animations.json",
-    "catalogAudioGroups": null
+    "catalogAudioGroups": null,
+    "lessonReleaseMembership": {
+      "artifactId": "lesson-release-membership",
+      "catalog": {
+        "path": "catalog/lesson-releases.json",
+        "bytes": 168056,
+        "sha256": "26db29732898997f7db2fdf659e3e9cc1692d41cc1c16227e1a8c198cf7b6129"
+      },
+      "releaseId": "lesson-g04-l03-negative-numbers",
+      "publicationMode": "atomic",
+      "expectedMemberCount": 39,
+      "ordinal": 20,
+      "animationId": "course-g04-l03-in-009",
+      "assetId": "swf-766b6ab686bbaf8ab1dacc30a7ffb96f33735102a1dff7df6b7a97976e3ab25c",
+      "releaseRole": "active-xml-referenced-page",
+      "source": {
+        "path": "HELP_COURSES/ELMGR4/L3/IN/L3IN09.swf",
+        "bytes": 1967129,
+        "sha256": "766b6ab686bbaf8ab1dacc30a7ffb96f33735102a1dff7df6b7a97976e3ab25c"
+      },
+      "authorityBoundary": "Release membership authorizes this structural audio audit only; it does not establish audible language/content, original-runtime behavior, human review, owner acceptance, strict completion, or publication."
+    }
   },
   "externalAudio": {
     "exactAssociations": [
@@ -81,7 +102,11 @@
         "associationStatus": "exact-basename-association",
         "languageAssessment": {
           "language": "es",
+          "routingLanguage": "es",
+          "classificationScope": "legacy-host-routing-only",
           "confidence": "verified-structural",
+          "spokenLanguage": null,
+          "spokenLanguageEstablished": false,
           "evidence": "The legacy host maps language code SP and Spanish page audio to the SA directory."
         },
         "probe": {
@@ -195,11 +220,22 @@
       "Adobe/original-host listening must verify spoken language/content, user-trigger behavior, start timing, pause/resume, and completion for every exact external track.",
       "Adobe/original-runtime listening is required to classify embedded speech versus effects, confirm language, and verify synchronization/loop/stop behavior.",
       "Nested SoundStream local frames are known, but an authoritative traversal must map each sprite instance and interaction branch to its root/runtime cue time."
-    ]
+    ],
+    "releaseBoundary": {
+      "authoritativeOriginalRuntimeListeningComplete": false,
+      "authoritativeOriginalRuntimeTraversalComplete": false,
+      "spokenLanguageContentVerified": false,
+      "humanAudioReviewComplete": false,
+      "ownerAcceptanceComplete": false,
+      "strictMigrationComplete": false,
+      "publicationAuthorized": false,
+      "strictAcceptanceEffect": "none"
+    }
   },
   "limitations": [
     "Directory and host-script evidence can identify intended language routing but cannot prove the spoken content; listening remains mandatory.",
     "SoundStream frame numbers inside DefineSprite are local symbol frames, not unconditional root/runtime cue times.",
-    "No cue frame, branch reachability, URL resolution, language content, or synchronization was guessed."
+    "No cue frame, branch reachability, URL resolution, language content, or synchronization was guessed.",
+    "Lesson-release membership and this machine audit do not satisfy original-runtime listening, human review, owner acceptance, strict completion, or publication."
   ]
 }

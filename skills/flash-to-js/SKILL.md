@@ -1,6 +1,6 @@
 ---
 name: flash-to-js
-description: Audit and faithfully migrate Adobe Flash FLA/SWF educational content into maintainable HTML5 JavaScript for Next.js/React. Use for catalog-backed source intake, FLA/SWF/ActionScript/timeline/audio audits, compiler-assisted migration-factory calibration and scale-out, Current-JS registration and modern My Lesson integration, public-tool provenance and licensing boundaries, Ruffle forensic references, authorized original-runtime trace and full-frame evidence, SVG/Canvas/CreateJS/PixiJS renderer selection, deterministic frame-domain reconstruction, bilingual and audio validation, immutable human and owner review, strict completion ledgers, and atomic lesson release.
+description: Audit or migrate HELP Math FLA/SWF page animations. Use for source intake, JavaScript/My Lesson integration, factory calibration, runtime evidence, acceptance, and lesson release.
 ---
 
 # Flash To JavaScript
@@ -28,183 +28,84 @@ Ruffle is a versioned forensic reference and compatibility fallback. It is not a
 
 Legacy `baseline.route` or `baseline.renderer` manifest fields may identify a forensic playback surface; they do not establish strict authority. Coverage-v2 assigns original-runtime authority to each exact requirement and trace.
 
-## Default Production Strategy
+## Production And Source Boundaries
 
-Use this compiler-assisted hybrid workflow as the default production framework for HELP Math animation migration. Public tools accelerate source locking, structural extraction, classification, candidate generation, and deterministic QA; Codex implements or reviews maintainable interaction semantics, product state, and the modern My Lesson bridge.
+Use the compiler-assisted hybrid workflow by default: source-locked extraction,
+versioned IR/configuration, reproducible generation, maintained product code,
+exact registry/descriptor membership, and the modern My Lesson host.
 
-Retain direct Codex hand implementation as the advanced lane for `behavior-heavy` or exceptional pages. Select it only from source-bound complexity evidence, an unsuccessful representative product slice, or a documented product need for a more semantic, accessible, or maintainable React, SVG, Canvas, or equivalent implementation.
+- Route `low` pages through the calibrated factory; use extraction plus a
+  maintained adapter/state machine for `interactive-understood` pages.
+- Use bounded, source-evidenced advanced-manual implementation for
+  `behavior-heavy` or exceptional pages when a representative slice or a
+  documented accessibility/maintainability need justifies it. Every evidence
+  and acceptance gate still applies.
+- When resolving an exception, check existing consumers for reusable behavior.
+  Follow the reuse decision in [renderer-implementation.md](references/renderer-implementation.md#shared-behavior-reuse)
+  before copying a page-specific mechanism.
+- `NO-GO-scale-out` stops bulk generation. Preserve the failed slice, record
+  the lane-selection reason, and continue the smallest bounded implementation.
+  Recalibrate before expanding it. Never hand-edit generated output.
+- Preserve `source-assets/` and external archives byte-for-byte; source
+  promotion requires the reviewed, hash-bound, rollback-safe intake path.
+  Keep placement `animationId` separate from `assetId = swf-<full-sha256>`.
+- Reuse the canonical migration workspace; never scaffold a second workspace from a filename alias.
 
-Route work as follows:
+## Select The Current Task
 
-- `low`: calibrated factory generation by default.
-- `interactive-understood`: compiler-assisted extraction plus a maintained shared adapter or source-evidenced state machine.
-- `behavior-heavy` or exceptional: behavior-first evidence plus bounded direct Codex implementation when safe factory generation is not established.
+Follow applicable `AGENTS.md` instructions. Read only the references needed
+for the requested stage; later acceptance gates do not require loading their
+procedures during an unrelated edit. Read `PROJECT_MEMORY.md` and the historical
+session index when continuing inherited work, `README.md` for unfamiliar
+project layout, and `docs/TOOLING.md` for setup or tool problems.
 
-The advanced manual lane remains inside this Operating Contract. It does not waive source identity, ActionScript/timeline/audio/host analysis, deterministic state and Replay tests, exact registry and source-ordered descriptor membership, modern My Lesson integration, original-runtime and fidelity evidence, audio and human review, owner acceptance, strict completion, release, or publication rules.
+| Task | Reference to load |
+| --- | --- |
+| Resolve a source/placement, import, or create a workspace | [source-intake.md](references/source-intake.md) |
+| Inspect FLA/SWF/ActionScript or define the audit specification, including `audio-inventory.csv` | [swf-audit.md](references/swf-audit.md) |
+| Decide whether a page or behavior family can be automatically converted | [capability-support.md](references/capability-support.md) |
+| Design, calibrate, run, measure, or expand the factory | [factory-scaleout.md](references/factory-scaleout.md) |
+| Model events, predicates, feedback, audio ownership, Replay or completion in an IR | [teaching-behavior-ir.md](references/teaching-behavior-ir.md) |
+| Run an admitted generation-to-My-Lesson recipe with caching and resume | [product-integration-pipeline.md](references/product-integration-pipeline.md) |
+| Implement/change a renderer, assets, or My Lesson integration | [renderer-implementation.md](references/renderer-implementation.md) |
+| Prepare or conduct original-runtime work | [original-runtime-evidence.md](references/original-runtime-evidence.md), plus `docs/PILOT_ACCEPTANCE_RUNBOOK.md` and the requirement-specific protocol for pilot operations |
+| Capture Current-JS, define coverage/trace identities, compare fidelity, or validate product behavior | [fidelity-validation.md](references/fidelity-validation.md) |
+| Prepare audio, human visual review, or owner acceptance | [audio-and-review.md](references/audio-and-review.md) |
+| Close a migration or change product visibility/publication | [lesson-release.md](references/lesson-release.md) |
 
-Treat `NO-GO-scale-out` as a stop on bulk generation, not a ban on bounded advanced-manual implementation. Preserve the failed slice, record the lane-selection reason, implement the smallest source-evidenced product state, and recalibrate before reuse or expansion. Never hand-edit generated output; promote a reusable manual solution deliberately into the maintained IR, generator, adapter, or product state machine and regenerate.
+## Validation Scope
 
-Do not rewrite a source-faithful, maintainable existing Current-JS page solely to change its implementation origin. Bring it under the current product and evidence contracts. Report factory and advanced-manual throughput, cost, rework, and candidate-to-product yield separately.
+Choose checks for the changed surface and requested gate. Use `npm run doctor`
+for tool/environment changes, `npm run verify:workbench` for workbench/skill/
+template contracts, and `npm run verify:sources` when relying on preserved
+source inputs or changing source custody. Run the relevant behavior, Replay,
+registry, host, and browser checks for implementation changes. Prioritize
+student action outcomes using the [behavior validation matrix](references/fidelity-validation.md#student-action-outcomes);
+assert post-action state, resource cleanup, and navigation results. Establish a
+broader baseline for unknown failures or shared changes; complete required
+checks and repeat or expand them only when new changes or concerns justify it.
+An unrelated pre-existing failure is reported separately and does not prohibit
+independent work; any dependent acceptance gate remains blocked.
 
-## Initialize
-
-1. Read the project-root `AGENTS.md`, `PROJECT_MEMORY.md`, `documentation/session-memory-export-2026-07-25/INDEX.md`, `README.md`, and `docs/TOOLING.md`.
-2. Run `npm run doctor`, `npm run verify:workbench`, `npm run verify:sources`, and `npm test` before editing. Record unavailable tools and any pre-existing failure.
-3. Confirm the destination volume is writable and has safe free capacity before generating large full-frame evidence.
-4. Resolve the catalog identity and source placement before scaffolding. Read [source-intake.md](references/source-intake.md).
-5. Resolve whether `migrations/<animation-id>/` already exists. Reuse and draft-validate the canonical workspace when present; never scaffold a second workspace from a filename alias. Only create a work package when the canonical placement has no workspace:
-
-```bash
-npm run scaffold:migration -- <animation-id> --fla <fla-path> --swf <swf-path>
-node skills/flash-to-js/scripts/validate_migration.mjs migrations/<animation-id> --allow-draft
-```
-
-For an existing workspace, run only the draft validator command against its canonical path before continuing.
-
-Do not modify or overwrite preserved files under `source-assets/` or external legacy archives. Promote a reviewed new source only through the hash-bound, rollback-safe intake boundary in [source-intake.md](references/source-intake.md); never copy it ad hoc.
-
-## Select The Evidence Path
-
-- With FLA and shipped SWF, inspect both. Use the FLA for authoring structure and the SWF for shipped runtime behavior.
-- With SWF only, extract metadata, scripts, and assets with FFDec and/or swfmill. Mark inferred authoring names and structure as inferred.
-- With FLA only, treat it as authoring evidence. For legacy HELP FLA files, inspect a byte-identical read-only working copy and never save or publish a converted in-memory document. Without the preserved shipped SWF, keep strict fidelity blocked.
-- With screenshots or notes only, label the result an approximation and do not claim parity.
-- Keep a Ruffle route when useful for observation, but resolve disagreements from FLA/SWF structure and authorized original-runtime evidence.
-
-Read [swf-audit.md](references/swf-audit.md) before extraction or Animate inspection.
-
-## Calibrate A Migration Factory Before Scale-Out
-
-Treat FFDec, swfmill, FFmpeg, Playwright, and similar public tools as a compiler-assisted front end and evidence generator, not as a universal one-click converter to maintainable native JavaScript. Structural export, callable Canvas output, P-code classification, audio decode, and smoke captures remain state 1 or 2 until the product-registration contract is satisfied.
-
-Before lesson-wide or multi-lesson generation, complete a representative product vertical slice across every applicable complexity lane. Route each selected page through source-bound extraction, a compact versioned IR or configuration, a maintainable module or shared adapter, the official registry, the source-ordered lesson descriptor, the private modern My Lesson host, Replay/interaction/audio lifecycle, and desktop/mobile browser QA. Do not authorize engineering scale-out from structural throughput alone.
-
-Read [factory-scaleout.md](references/factory-scaleout.md) before designing, running, measuring, or expanding a compiler-assisted Flash-to-JavaScript factory. Keep the original-runtime, fidelity, audio, human, owner, strict-completion, and publication rules in their existing references fully in force.
-
-## Audit And Specify Before Rendering
-
-Complete `migration.json`, `asset-inventory.csv`, `audio-inventory.csv`, `keyframes.csv`, `evidence/full-frame-coverage.json`, and `MIGRATION_BRIEF.md` before implementing the renderer.
-
-Record at least:
-
-- Exact source paths, SHA-256 hashes, provenance, placement `animationId`, immutable `assetId = swf-<full-sha256>`, and alias/variant relationships.
-- SWF signature/version, native stage, background, FPS, root frame count, duration, and ActionScript generation.
-- Every reachable root and nested timeline, placement/entry state, script, label, stop, navigation action, button, keyboard path, score, branch, terminal state, and Replay behavior.
-- Symbols, instances, depth, transforms, masks, morphs, filters, blend modes, fonts, glyphs, exact strings, localization, bitmaps, audio, video, and external dependencies.
-- Each reachable scenario, language, deterministic seed, trace, and source-evidenced event schedule.
-- Every audio cue's source hash, language, duration, start/stop semantics, synchronization, host dependency, and Replay behavior.
-
-Enumerate every root-reachable timeline in `audit/frame-domain-disposition.json`. An unresolved disposition, missing source, font, script, runtime path, or dependency blocks strict acceptance; report it instead of inventing evidence.
-
-## Define Requirements And Trace Authority
-
-Keep `runtime.frameCount` equal to the SWF root timeline. Give each longer nested MovieClip its own frame domain and bind its source placement and entry-state SHA-256.
-
-For every coverage-v2 requirement, bind `frameDomain`, `requirementId`, `trace`, `entryStateSha256`, `scenario`, `lang`, `seed`, native stage, and exact one-indexed frame range.
-
-- A linear root-only visual requirement may use authorized original-runtime direct seek or Rewind plus sequential Step Forward.
-- A nested, interactive, branching, scoring, navigation, Replay, randomized, or source-driven requirement needs a source-evidenced natural trace and execution proof.
-- Frame positioning proves only the requested visual frame. It does not prove interaction causality, terminal behavior, Replay, or audio.
-- The JavaScript implementation, a Ruffle capture, a capture-kit template, a trace specification, or a prepared candidate package cannot serve as its own authoritative baseline.
-
-Read [original-runtime-evidence.md](references/original-runtime-evidence.md) before any original-runtime session. For project pilot operations, also follow `docs/PILOT_ACCEPTANCE_RUNBOOK.md` and any requirement-specific protocol.
-
-## Choose The Renderer
-
-- Use React + SVG for diagrams, formulas, labels, moderate object counts, editable vectors, and accessible controls.
-- Use Canvas/CreateJS for timeline-heavy content when its display-list model materially reduces risk.
-- Use Canvas with PixiJS for dense sprites, masks, filters, or performance-sensitive raster work.
-- Use CSS only for layout and small presentation transitions, not as the timeline source of truth.
-- Reject video for required interaction, localization, dynamic state, or accessible controls.
-- Keep Ruffle only as a forensic reference or an explicitly approved temporary compatibility fallback.
-
-Document the decision and rejected alternatives in `MIGRATION_BRIEF.md`.
-
-## Build The Timeline And Assets
-
-1. Define immutable native metadata and preserve the fixed Flash coordinate system.
-2. Keep root and nested playheads separate. Map elapsed time to one-indexed frames in the active domain.
-3. Return the complete visible and interactive state from a pure function for any declared frame, scenario, language, and seed.
-4. Encode transforms, alpha, depth, counters, formulas, labels, buttons, audio cues, branches, terminal state, and Replay from evidence.
-5. Make Replay reset the complete state vector, not only a frame counter.
-6. Add tests for metadata, every key beat and boundary, all languages and reachable scenarios, terminal state, and Replay.
-7. Expose deterministic capture parameters for every requirement identity field. The stage must report matching `data-flash-*` attributes.
-8. Run `npm run audit:renderer-frame-domains` for explicit domains; DOM identity cannot substitute for a matching pure renderer state.
-
-Prefer extracted original vectors, paths, bitmaps, and font glyphs when rights permit. Keep reusable objects editable and layered; do not flatten the lesson into screenshots. Record every extracted, converted, redrawn, or generated asset in `asset-inventory.csv` with source identity and transformation notes.
-
-Avoid chained `setTimeout` choreography and mutable states that cannot be queried at an exact frame.
-
-## Validate Current JavaScript And Fidelity
-
-Run unit tests and a production build. Then capture the deterministic JavaScript candidate:
-
-```bash
-npm run capture:coverage-v2 -- \
-  --id <animation-id> \
-  --base-url http://127.0.0.1:3000
-```
-
-This produces current-JS evidence only. It does not edit coverage, adoption, approval, review, status, or ledger files, and it does not create original-runtime authority or acceptance. Move candidate captures into reviewed evidence only through the applicable fail-closed adopter.
-
-Use `npm run capture:keyframes -- --help` for targeted debugging and teaching-beat review. Keyframes are spot checks, not strict full-domain coverage.
-
-Pair complete original-runtime and implementation manifests with full-frame comparison:
-
-```bash
-npm run compare:full-frames -- \
-  --id <animation-id> \
-  --baseline <authoritative-baseline-directory> \
-  --implementation <implementation-directory> \
-  --requirement-id <requirement-id> \
-  --frame-domain <domain-id> \
-  --trace <trace-id> \
-  --entry-state-sha256 <sha256> \
-  --baseline-authority <authority> \
-  --baseline-manifest <baseline-manifest.json> \
-  --implementation-manifest <implementation-manifest.json>
-```
-
-Inspect every diff, not only aggregate RMSE. Default review gates are `<= 0.05` for designated static frames and `<= 0.08` for transitions; a wrong formula, number, label, layer, or event fails regardless of the aggregate metric.
-
-Test native, desktop, tablet, and mobile layouts; mouse/Enter/Space; focus and accessible names; reduced motion; localization; text overflow; console errors; asset failures; and unexpected network calls.
-
-Read [fidelity-validation.md](references/fidelity-validation.md) for capture identity, complete-frame manifests, thresholds, and evidence naming.
-
-## Validate Audio And Human Decisions
-
-Structural audio extraction and machine audits cannot prove audible correctness. When audio is required, use hash-bound original-runtime listening sessions and the project system of record. When audio is not required, retain source-bound negative evidence.
-
-Automation, Codex, scripts, and CI may prepare evidence and unsigned templates, but must never invent a reviewer, sign, backdate, or overwrite an immutable decision. Human visual and owner review are separate decisions with separate records.
-
-Read [audio-and-review.md](references/audio-and-review.md) before preparing audio, human, or owner acceptance.
-
-## Package, Close, And Release
-
-- Keep the Next.js route, pure timeline source, deterministic capture contract, and complete evidence workspace.
-- Produce a standalone HTML + JavaScript package only when requested; keep it offline-capable unless a dependency is explicitly approved.
-- Complete `ACCEPTANCE_CHECKLIST.md` and run the strict validator:
-
-```bash
-node skills/flash-to-js/scripts/validate_migration.mjs migrations/<animation-id>
-```
-
-- Rebuild and check the completion and lesson-release ledgers. Never edit generated ledgers by hand.
-- Treat an eligible atomic lesson-release ledger entry as the technical witness
-  for that exact strict-complete page-placement set, not as publication
-  authority. Publish only through the externally anchored production-trust
-  path required by [lesson-release.md](references/lesson-release.md). Under the
-  2026-08-16 Owner decision in `AGENTS.md`, the
-  legacy Flash course-shell SWF remains source evidence but is not a migration
-  or release member; the modern My Lesson host is validated as product
-  integration rather than recreated as a Flash animation.
-
-Read [lesson-release.md](references/lesson-release.md) before changing product visibility or publication state.
+Confirm the destination volume is writable and has safe free capacity before
+large full-frame evidence generation. Keyframes are spot checks, not strict
+full-domain coverage. Candidate captures, metric reports, and generated
+templates never create original-runtime authority, human signatures, or
+publication permission. Never invent a reviewer, sign, backdate, or overwrite
+an immutable decision.
 
 ## Report The Result
 
-Report exact files changed, animation and asset IDs, source paths and hashes, stage/FPS/root and nested frame domains, implementation route, standalone package, test/build results, implementation and original-runtime capture status, full-frame metrics, audio status, accessibility checks, human and owner record status, ledger/release status, and every unresolved exception.
+Report changed files, animation/asset identity, the completed stage, relevant
+test/build results, and independent blockers. For evidence or acceptance
+handoff, include source hashes, stage/FPS/root and nested domains, route/package
+paths, implementation and original-runtime capture status, full-frame metrics,
+audio, accessibility, human/Owner records, and ledger/release status.
 
-For factory work, also report the operational funnel and measured candidate-to-product costs defined in [factory-scaleout.md](references/factory-scaleout.md). Never use structural compiler coverage or generated-candidate count as the registered Current-JS count.
+For factory work, report the operational funnel and candidate-to-product costs
+from [factory-scaleout.md](references/factory-scaleout.md), separately for
+factory and advanced-manual lanes. Structural output and candidate counts
+never substitute for registered Current-JS.
 
-Do not call a migration one-to-one, faithful, complete, accepted, or published unless the corresponding evidence state above is actually satisfied.
+Do not call a migration one-to-one, faithful, complete, accepted, or published
+unless its corresponding evidence state above is satisfied.

@@ -106,8 +106,9 @@ test("TS007 normal functional entry renders only current-JS gate zero and fails 
   assert.match(markup, /data-source-visual-parity-established="false"/);
   assert.match(markup, /data-natural-composite-established="false"/);
   assert.match(markup, /data-natural-composite-unresolved-frames="373,500,617,679"/);
-  assert.match(markup, /Modern reconstruction/);
-  assert.match(markup, /Checkpoint 1 of 4/);
+  assert.doesNotMatch(markup, />Modern reconstruction</);
+  assert.match(markup, /Four-step plan · Start/);
+  assert.match(markup, /Start by restating the question in your own words/);
   assert.match(
     markup,
     /data-ts007-focus-control="walkthrough-continue" disabled=""/,
@@ -117,7 +118,7 @@ test("TS007 normal functional entry renders only current-JS gate zero and fails 
   assert.match(markup, /inert=""/);
   assert.match(markup, /pointer-events:none|pointer-events:\s*none/i);
   assert.match(markup, /<canvas/);
-  assert.match(markup, /data-interaction-companion-surface="mobile"/);
+  assert.match(markup, /data-interaction-companion-surface="practice-question"/);
   assert.match(markup, /data-interaction-companion-placement="fallback"/);
 });
 
@@ -207,7 +208,7 @@ test("TS007 enables no overlay outside the exact English sprite-441 frame-235 en
     assert.doesNotMatch(markup, /data-ts007-focus-control=/);
     assert.doesNotMatch(
       markup,
-      /data-interaction-companion-surface="mobile"/,
+      /data-interaction-companion-surface="practice-question"/,
     );
   }
 
@@ -262,7 +263,10 @@ test("TS007 pause, reduced-motion, feedback remaining time, and Replay policies 
   assert.match(moduleSource, /props\.reducedMotion/);
   assert.match(moduleSource, /dispatch\(\{type: "replay", seed: props\.seed\}\)/);
   assert.match(moduleSource, /props\.onReplay\?\.\(\)/);
-  assert.match(moduleSource, /source feedback artwork is not/);
+  assert.equal(courseTs007.completionMode, "activity");
+  assert.match(moduleSource, /controlsReady && interaction\.phase === "terminal"/);
+  assert.match(moduleSource, /props\.onActivityComplete\?\.\(\)/);
+  assert.doesNotMatch(moduleSource, /the activity will continue to its terminal state/);
 });
 
 test("TS007 desktop, mobile, and wide coarse-pointer contracts preserve exact hits and focus migration", async () => {
@@ -309,7 +313,7 @@ test("TS007 desktop, mobile, and wide coarse-pointer contracts preserve exact hi
   assert.match(markup, /course-g04-l03-ts-007-stage-surface/);
   assert.match(markup, /course-g04-l03-ts-007-mobile-controls--fallback/);
   assert.match(markup, /min-height:\s*48px/);
-  assert.match(markup, /grid-row:\s*7/);
+  assert.match(markup, /Practice question controls/);
   assert.match(
     markup,
     /\(max-width: 640px\), \(any-pointer: coarse\)/,
@@ -321,7 +325,7 @@ test("TS007 desktop, mobile, and wide coarse-pointer contracts preserve exact hi
   assert.match(moduleSource, /inert=\{interactionEnabled \? true : undefined\}/);
 });
 
-test("TS007 safe-disables glossary callbacks and keeps every acceptance authority false", () => {
+test("TS007 declares the modern glossary host and keeps original acceptance authority false", () => {
   const markup = render();
   for (const value of Object.values(
     COURSE_G04_L03_TS_007_INTERACTION_AUTHORITY,
@@ -347,18 +351,18 @@ test("TS007 safe-disables glossary callbacks and keeps every acceptance authorit
   }
   assert.equal(
     COURSE_G04_L03_TS_007_SOURCE_CONTRACT.glossaryHostCallbacks,
-    "safe-disabled-unresolved",
+    "typed-modern-keyterm-adapter-original-host-parity-unestablished",
   );
   assert.deepEqual(
     COURSE_G04_L03_TS_007_GLOSSARY.map(({term, mode}) => ({term, mode})),
     [
       {
         term: "Symbol",
-        mode: "safe-disabled-unresolved-host-callback",
+        mode: "typed-modern-keyterm-adapter",
       },
       {
         term: "Number line",
-        mode: "safe-disabled-unresolved-host-callback",
+        mode: "typed-modern-keyterm-adapter",
       },
     ],
   );
@@ -367,6 +371,8 @@ test("TS007 safe-disables glossary callbacks and keeps every acceptance authorit
     "none",
   );
   assert.equal(courseTs007.maturity, "legacy-prototype");
+  assert.deepEqual(courseTs007.lessonHost?.capabilities, ["keyterm"]);
+  assert.equal(courseTs007.lessonHost?.legacyOperations, "blocked");
   assert.match(markup, /data-associated-audio-modeled="false"/);
   assert.match(markup, /data-authoritative-baseline-accepted="false"/);
   assert.match(markup, /data-feedback-random-parity-established="false"/);

@@ -15,7 +15,7 @@
   "tools": {
     "ffprobe": "ffprobe version 8.1.2 Copyright (c) 2007-2026 the FFmpeg developers",
     "ffdec": "JPEXS Free Flash Decompiler v.26.2.1",
-    "swfmillEvidence": "unavailable"
+    "swfmillEvidence": "swfmill 0.3.6"
   },
   "authority": {
     "hostScript": {
@@ -72,12 +72,12 @@
       "artifactId": "lesson-release-membership",
       "catalog": {
         "path": "catalog/lesson-releases.json",
-        "bytes": 87864,
-        "sha256": "f3caa2ae0e9bfd6c02dd846aa2d45de5c2f746cc57ba01a09e506d4d3c42d632"
+        "bytes": 168056,
+        "sha256": "26db29732898997f7db2fdf659e3e9cc1692d41cc1c16227e1a8c198cf7b6129"
       },
       "releaseId": "lesson-g05-l05-add-subtract-negative-numbers",
       "publicationMode": "atomic",
-      "expectedMemberCount": 57,
+      "expectedMemberCount": 56,
       "ordinal": 1,
       "animationId": "course-g05-l05-ir-001-664ab764",
       "assetId": "swf-03c0a8ef50c79c7c1e672471df3c2d294674ca28a9dd68e0bf1cbffda66bd613",
@@ -207,9 +207,7 @@
     "notApplicable": [],
     "strictAudioAcceptance": "pending",
     "strictAudioAcceptanceRationale": null,
-    "manifestFollowUp": [
-      "migration.audio.required is false, but the audit found 0 exact external track(s) and 2 timed embedded sound asset/stream(s); update only after runtime reachability/listening review."
-    ],
+    "manifestFollowUp": [],
     "requirements": [
       "Adobe/original-runtime listening is required to classify embedded speech versus effects, confirm language, and verify synchronization/loop/stop behavior.",
       "Nested SoundStream local frames are known, but an authoritative traversal must map each sprite instance and interaction branch to its root/runtime cue time."

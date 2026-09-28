@@ -48,7 +48,7 @@
     },
     "xmlParser": {
       "command": "python3",
-      "version": "Python 3.12.7",
+      "version": "Python 3.14.7",
       "success": true,
       "exitCode": 0,
       "error": "",
@@ -206,6 +206,28 @@
           "top": "0"
         }
       },
+      "spriteDefinitions": [
+        {
+          "frames": 17,
+          "objectID": 22
+        },
+        {
+          "frames": 3,
+          "objectID": 251
+        },
+        {
+          "frames": 3,
+          "objectID": 264
+        },
+        {
+          "frames": 1873,
+          "objectID": 334
+        },
+        {
+          "frames": 23,
+          "objectID": 93
+        }
+      ],
       "tagCounts": {
         "Button": 2,
         "CallMethod": 1,
@@ -306,6 +328,97 @@
       "swfmillFrameRateMatches": true,
       "swfmillFrameCountMatches": true,
       "allMatch": true
+    },
+    "frameDomainCandidates": {
+      "schemaVersion": 1,
+      "artifactType": "swf-frame-domain-candidates",
+      "animationId": "course-g05-l13-rw-002",
+      "source": {
+        "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR5/L13/RW/L13RW02.swf",
+        "sha256": "bf9ab1d12832fbe54c5bef08d0dd51307169eefbae1f75188efd9db94ed9e4e6"
+      },
+      "extractionStatus": "swfmill-structural-definitions-extracted",
+      "root": {
+        "timelineId": "root",
+        "sourceTimelineId": "root",
+        "kind": "root",
+        "frameCount": 10,
+        "rootReachability": "root-by-definition",
+        "acceptanceDisposition": "declared-root-structural-domain"
+      },
+      "nestedDefinitions": [
+        {
+          "timelineId": "sprite-22",
+          "sourceTimelineId": "sprite-22",
+          "sourceObjectId": 22,
+          "kind": "nested-definition-candidate",
+          "frameCount": 17,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-93",
+          "sourceTimelineId": "sprite-93",
+          "sourceObjectId": 93,
+          "kind": "nested-definition-candidate",
+          "frameCount": 23,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-251",
+          "sourceTimelineId": "sprite-251",
+          "sourceObjectId": 251,
+          "kind": "nested-definition-candidate",
+          "frameCount": 3,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-264",
+          "sourceTimelineId": "sprite-264",
+          "sourceObjectId": 264,
+          "kind": "nested-definition-candidate",
+          "frameCount": 3,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        },
+        {
+          "timelineId": "sprite-334",
+          "sourceTimelineId": "sprite-334",
+          "sourceObjectId": 334,
+          "kind": "nested-definition-candidate",
+          "frameCount": 1873,
+          "rootReachability": "unresolved",
+          "placementEntryState": "unresolved",
+          "acceptanceDisposition": "structural-candidate-only"
+        }
+      ],
+      "summary": {
+        "rootDomainCount": 1,
+        "nestedDefinitionCount": 5,
+        "nestedLongerThanRootCount": 3,
+        "completeRootReachableDomainInventory": false,
+        "unresolvedReachabilityCount": 5
+      },
+      "limitations": [
+        "DefineSprite records are structural definitions, not proof that the root or an authorized host reaches them.",
+        "Placement, entry state, interaction causality, language, audio, terminal behavior, Replay, and natural traces remain unresolved.",
+        "This machine inventory cannot create original-runtime authority, visual or audio acceptance, human or owner review, strict completion, or publication."
+      ],
+      "acceptanceEffects": {
+        "authoritativeOriginalRuntime": false,
+        "completeFrameDomainDisposition": false,
+        "audioAccepted": false,
+        "humanVisualAccepted": false,
+        "ownerAccepted": false,
+        "strictComplete": false,
+        "published": false
+      }
     }
   },
   "outputs": [
@@ -338,10 +451,16 @@
       "uncompressedSha256": "30cc87b1a40526b913585ec337e47e481d8fdcd7be774bd3cb9ecd2f2990bd74"
     },
     {
+      "path": "audit/machine/swf-frame-domain-candidates.json",
+      "format": "text",
+      "bytes": 3160,
+      "sha256": "83d5f5c2f03384a70a37fc7087505a6da0433d60d7d08c5eb277bb4fdf40733b"
+    },
+    {
       "path": "audit/machine/swfmill-summary.json",
       "format": "text",
-      "bytes": 2501,
-      "sha256": "bd5846b6cdcec2ab9c9a14a3372cfc79e282d0cc3832c38e412bb075d8a8c8e7"
+      "bytes": 2803,
+      "sha256": "ae7a1fbffea9dd67c8d6fdd77667cbdc4621c8d015f63516eb6e26d9fd2c2665"
     },
     {
       "path": "audit/machine/swfmill.xml.gz",

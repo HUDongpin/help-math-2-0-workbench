@@ -3,7 +3,11 @@ import {
   projectionSha256,
 } from "../evidence-projections.mjs";
 
-const COVERAGE_ROLES = new Set(["full-domain", "partial-path"]);
+const COVERAGE_ROLES = new Set([
+  "full-domain",
+  "partial-path",
+  "placement-path",
+]);
 const SHA256_PATTERN = /^[a-f0-9]{64}$/;
 const STABLE_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._:-]*$/;
 
@@ -189,10 +193,24 @@ function deriveSelection(
     }
   }
 
-  const expectedCoverageRole = frames.length === frameCount ? "full-domain" : "partial-path";
+  const defaultCoverageRole = frames.length === frameCount
+    ? "full-domain"
+    : "partial-path";
+  const expectedCoverageRole = requirementSchemaVersion === 2
+    && requirement.coverageRole === "placement-path"
+    ? "placement-path"
+    : defaultCoverageRole;
   if (requirementSchemaVersion === 2) {
     if (!COVERAGE_ROLES.has(requirement.coverageRole)) {
-      throw new Error("requirement.coverageRole must be full-domain or partial-path for schema v2");
+      throw new Error("requirement.coverageRole must be full-domain, partial-path, or placement-path for schema v2");
+    }
+    if (
+      requirement.coverageRole === "placement-path"
+      && frames.length !== frameCount
+    ) {
+      throw new Error(
+        "requirement.coverageRole placement-path must select the complete physical frame domain",
+      );
     }
     if (validateDeclaredSelectionHash) {
       assertStableId(requirement.coverageGroupId, "requirement.coverageGroupId");
@@ -305,9 +323,12 @@ function normalizedRequirementGroup(requirement, index, frameCountsByDomain) {
 /**
  * Validate supplemental coverage groups independently from evidence adoption.
  * Schema-v2 members in one group must bind the same runtime identity and must
- * select disjoint physical frames. Legacy schema-v1 requirements intentionally
- * remain one-member singleton groups so existing canonical full requirements
- * can coexist with separately identified supplemental evidence.
+ * select disjoint physical frames. A placement-path row uses its own exact
+ * entry-state identity/group and can select the full physical frame domain
+ * without becoming a canonical strict requirement. Legacy schema-v1
+ * requirements intentionally remain one-member singleton groups so existing
+ * canonical full requirements can coexist with separately identified
+ * supplemental evidence.
  */
 export function validateRequirementCoverageGroups(requirements, frameCountsByDomain) {
   if (!Array.isArray(requirements)) throw new Error("requirements must be an array");

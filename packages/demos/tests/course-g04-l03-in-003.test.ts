@@ -11,6 +11,7 @@ import courseIn003, {
   buildCourseG04L03In003CaptureAttributes,
 } from "../src/modules/course-g04-l03-in-003";
 import {matchPrototype} from "../src/prototype-manifest";
+import {frameAtElapsedMs} from "../src/runtime";
 import {
   COURSE_G04_L03_IN_003_MOVIE,
   COURSE_G04_L03_IN_003_RUNTIME,
@@ -36,7 +37,9 @@ test("IN003 preserves source identity and separates root from sprite-84", async 
     {id: "sprite-84", frameCount: 472, fps: 12, rootFrame: 6},
   ]);
   assert.equal(courseIn003.runtime, COURSE_G04_L03_IN_003_RUNTIME);
-  assert.equal(courseIn003.playbackMode, "loop");
+  assert.equal(courseIn003.playbackMode, "once");
+  assert.equal(courseIn003.reducedMotionFrame, 472, "reduced motion must show the complete comparison, not a blank opening frame");
+  assert.equal(frameAtElapsedMs(COURSE_G04_L03_IN_003_MOVIE.durationMs * 2, COURSE_G04_L03_IN_003_MOVIE, courseIn003.playbackMode), 472);
   assert.deepEqual(courseIn003.playbackEndFrameByDomain, {
     root: 1,
     "sprite-84": 472,

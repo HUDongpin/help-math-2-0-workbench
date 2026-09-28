@@ -79,6 +79,243 @@ export const COURSE_G04_L03_VB_007_CONFIG = Object.freeze({
     "Four source buttons, four release/input operations, forty-four timeline-navigation occurrences, nine replay/reset operation candidates, wrong/right feedback, glossary callbacks, eleven embedded streams, the associated catalog-audio path, and all ActionScript behavior are disabled",
 } satisfies SourceStaticCanvasCandidateConfig);
 
+export const COURSE_G04_L03_VB_007_PARENT_COMPOSITE_CAPTURES = Object.freeze([
+  Object.freeze({
+    animationId: "course-g04-l03-vb-007",
+    frameDomain: "sprite-142",
+    localFrameCount: 22,
+    rootEntryFrame: 6,
+    scenario: "source-static-reachable-domain",
+    language: "en" as const,
+    requirementId: "req:sprite-142:lesson-shell-natural-entry:en",
+    traceId: "trace:sprite-142:lesson-shell-natural-entry:en:seed-0",
+    entryStateSha256:
+      "54e0b0922ae3295d938527704caa21f7d954bf4c2de7e8805c2bab2d26da6830",
+    sourceFrame: 31,
+    sourceFrameDomain: "sprite-271",
+    sourceScenario: "source-static-frame",
+    behaviorCompositeContractId:
+      "g04-l03-vb-007-parent-composite-observability-v1",
+    behaviorCompositeStatePrefix: "sprite142-p02-target-frame-",
+    pathIndex: 2,
+    uniqueTargetVisualCount: 22,
+    authority:
+      "source-static-parent-composite-frame-override-not-original-runtime-or-fidelity",
+  }),
+  Object.freeze({
+    animationId: "course-g04-l03-vb-007",
+    frameDomain: "sprite-166",
+    localFrameCount: 19,
+    rootEntryFrame: 6,
+    scenario: "source-static-reachable-domain",
+    language: "en" as const,
+    requirementId: "req:sprite-166:lesson-shell-natural-entry:en",
+    traceId: "trace:sprite-166:lesson-shell-natural-entry:en:seed-0",
+    entryStateSha256:
+      "ee0cc4b279c5a53bd3ed409c46d18448b4f3a07645112299be08a07ac6052268",
+    sourceFrame: 31,
+    sourceFrameDomain: "sprite-271",
+    sourceScenario: "source-static-frame",
+    behaviorCompositeContractId:
+      "g04-l03-vb-007-parent-composite-observability-v1",
+    behaviorCompositeStatePrefix: "sprite166-p01-target-frame-",
+    pathIndex: 1,
+    uniqueTargetVisualCount: 19,
+    authority:
+      "source-static-parent-composite-frame-override-not-original-runtime-or-fidelity",
+  }),
+  Object.freeze({
+    animationId: "course-g04-l03-vb-007",
+    frameDomain: "sprite-166",
+    localFrameCount: 19,
+    rootEntryFrame: 6,
+    scenario: "source-static-reachable-domain",
+    language: "en" as const,
+    requirementId:
+      "req:sprite-166:lesson-shell-natural-entry-path-2:en",
+    traceId:
+      "trace:sprite-166:lesson-shell-natural-entry-path-2:en:seed-0",
+    entryStateSha256:
+      "c3968134acb22145f1bfb35bc54a286ce0009fc567d26e772bb50bdd38059485",
+    sourceFrame: 31,
+    sourceFrameDomain: "sprite-271",
+    sourceScenario: "source-static-frame",
+    behaviorCompositeContractId:
+      "g04-l03-vb-007-parent-composite-observability-v1",
+    behaviorCompositeStatePrefix: "sprite166-p02-target-frame-",
+    pathIndex: 2,
+    uniqueTargetVisualCount: 19,
+    authority:
+      "source-static-parent-composite-frame-override-not-original-runtime-or-fidelity",
+  }),
+]);
+
+export const COURSE_G04_L03_VB_007_PARENT_COMPOSITE_CONFIG = Object.freeze({
+  animationId: "course-g04-l03-vb-007-parent-composite",
+  title: "Positive Numbers Practice parent-composite diagnostics",
+  sourceSwfSha256: COURSE_G04_L03_VB_007_SOURCE.swfSha256,
+  assetSource:
+    "/flash-assets/courses/course-g04-l03-vb-007-parent-composite/canvas-renderer.js",
+  assetSha256:
+    "05aa87f28633bef5aadac6549df653720cf6bf6689544e837441652b59af3525",
+  stage: Object.freeze({width: 800, height: 600, backgroundColor: "#b8d8f7"}),
+  fps: 12,
+  rootFrameCount: 10,
+  rootBeginFrame: 6,
+  mainFrameDomain: "sprite-271",
+  mainFrameCount: 69,
+  playbackMode: "once",
+  sourceBehaviorCompositeContractId:
+    "g04-l03-vb-007-parent-composite-observability-v1",
+  showEngineeringDisclosure: false,
+  visualMarkers: Object.freeze([Object.freeze({
+    id: "source-static-parent-composite",
+    firstFrame: 31,
+    lastFrame: 31,
+  })]),
+  sourceControlBehaviorLabel:
+    "Exact source-static placement paths only; AVM1, audio, original runtime, fidelity, human review, and Owner acceptance remain disabled",
+} satisfies SourceStaticCanvasCandidateConfig);
+
+export const COURSE_G04_L03_VB_007_NATURAL_PARENT_COMPOSITE_CAPTURES =
+  Object.freeze([
+    Object.freeze({
+      animationId: "course-g04-l03-vb-007",
+      frameDomain: "sprite-136",
+      localFrameCount: 26,
+      rootEntryFrame: 6,
+      scenario: "source-static-reachable-domain",
+      language: "en" as const,
+      requirementId: "req:sprite-136:lesson-shell-natural-entry:en",
+      traceId: "trace:sprite-136:lesson-shell-natural-entry:en:seed-0",
+      entryStateSha256:
+        "415fdfe0f86e2846fbdff786a68ad6b0d4400b066022a98fc87de16c580b4f8f",
+      sourceFrame: 31,
+      sourceFrameDomain: "sprite-271",
+      sourceScenario: "source-static-frame",
+      behaviorCompositeContractId:
+        "g04-l03-vb-007-natural-parent-composite-v1",
+      behaviorCompositeStatePrefix: "sprite136-p01-target-frame-",
+      pathIndex: 1,
+      authority:
+        "source-static-natural-parent-frame-override-not-original-runtime-or-fidelity",
+    }),
+    Object.freeze({
+      animationId: "course-g04-l03-vb-007",
+      frameDomain: "sprite-176",
+      localFrameCount: 27,
+      rootEntryFrame: 6,
+      scenario: "source-static-reachable-domain",
+      language: "en" as const,
+      requirementId: "req:sprite-176:lesson-shell-natural-entry:en",
+      traceId: "trace:sprite-176:lesson-shell-natural-entry:en:seed-0",
+      entryStateSha256:
+        "df059bb5b3071b129dd7cf26d6759ff0d65a74c4febc922f1f6eacfbfe36c7b0",
+      sourceFrame: 31,
+      sourceFrameDomain: "sprite-271",
+      sourceScenario: "source-static-frame",
+      behaviorCompositeContractId:
+        "g04-l03-vb-007-natural-parent-composite-v1",
+      behaviorCompositeStatePrefix: "sprite176-p01-target-frame-",
+      pathIndex: 1,
+      authority:
+        "source-static-natural-parent-frame-override-not-original-runtime-or-fidelity",
+    }),
+  ]);
+
+export const COURSE_G04_L03_VB_007_NATURAL_PARENT_COMPOSITE_CONFIG =
+  Object.freeze({
+    animationId: "course-g04-l03-vb-007-natural-parent-composite",
+    title: "Positive Numbers Practice natural parent-composite diagnostics",
+    sourceSwfSha256: COURSE_G04_L03_VB_007_SOURCE.swfSha256,
+    assetSource:
+      "/flash-assets/courses/course-g04-l03-vb-007-natural-parent-composite/canvas-renderer.js",
+    assetSha256:
+      "dc7398f247294c9e80209c914447b515761808b6f291ae05edbb2e6108f435d9",
+    stage: Object.freeze({width: 800, height: 600, backgroundColor: "#b8d8f7"}),
+    fps: 12,
+    rootFrameCount: 10,
+    rootBeginFrame: 6,
+    mainFrameDomain: "sprite-271",
+    mainFrameCount: 69,
+    playbackMode: "once",
+    sourceBehaviorCompositeContractId:
+      "g04-l03-vb-007-natural-parent-composite-v1",
+    showEngineeringDisclosure: false,
+    visualMarkers: Object.freeze([Object.freeze({
+      id: "source-static-natural-parent-composite",
+      firstFrame: 31,
+      lastFrame: 31,
+    })]),
+    sourceControlBehaviorLabel:
+      "Exact source-static parent timeline frames at source placement only; AVM1, audio, original runtime, fidelity, human review, and Owner acceptance remain disabled",
+  } satisfies SourceStaticCanvasCandidateConfig);
+
+const VB_007_DIRECT_COMPANION_ASSET =
+  "course-g04-l03-vb-007-direct-companion-composite";
+
+export const COURSE_G04_L03_VB_007_DIRECT_COMPANION_COMPOSITE_CAPTURES =
+  Object.freeze([
+    ["sprite-45", 28, "f6b3032996d22b025c1a1c3b7265b2afd327cc9729456177532c40d01bf68259"],
+    ["sprite-63", 27, "279bfeceff681a4bccede0525917ab6ed4564314c3e0695293103e04287cd951"],
+    ["sprite-77", 31, "6d289ccfd21aef3cc29a679348745d19062a009c0f26f09d5cfa4546753ef4dd"],
+    ["sprite-105", 28, "94606c2d7326b99c69e7727a7d4a0aed0322208350de38c3c1f62ed6c6a70bc2"],
+    ["sprite-202", 31, "90608e41a1fc2b5b8470666ce8c5ba46d3394f4d74ca3f3907df83f35cfc3353"],
+    ["sprite-234", 25, "3905fde629172b1985c56f74a617d28802ee9578f2469940fa1850ea0a31dca0"],
+    ["sprite-267", 27, "e191e63fea38cc786654bc9af5161151dd27b610c226358bccf8e0a68194de21"],
+  ].map(([frameDomain, localFrameCount, entryStateSha256]) =>
+    Object.freeze({
+      animationId: "course-g04-l03-vb-007",
+      assetKey: VB_007_DIRECT_COMPANION_ASSET,
+      frameDomain: frameDomain as string,
+      localFrameCount: localFrameCount as number,
+      rootEntryFrame: 6,
+      scenario: "source-static-reachable-domain",
+      language: "en" as const,
+      requirementId: `req:${frameDomain}:lesson-shell-natural-entry:en`,
+      traceId: `trace:${frameDomain}:lesson-shell-natural-entry:en:seed-0`,
+      entryStateSha256: entryStateSha256 as string,
+      sourceFrame: 31,
+      sourceFrameDomain: "sprite-271",
+      sourceScenario: "source-static-frame",
+      behaviorCompositeContractId:
+        "g04-l03-vb-007-direct-companion-composite-v1",
+      behaviorCompositeStatePrefix:
+        `${String(frameDomain).replace("-", "")}-p01-target-frame-`,
+      pathIndex: 1,
+      authority:
+        "source-static-direct-companion-frame-override-not-original-runtime-or-fidelity",
+    })),
+  );
+
+export const COURSE_G04_L03_VB_007_DIRECT_COMPANION_COMPOSITE_CONFIGS =
+  Object.freeze([Object.freeze({
+    animationId: VB_007_DIRECT_COMPANION_ASSET,
+    title: "Positive Numbers Practice direct companion diagnostics",
+    sourceSwfSha256: COURSE_G04_L03_VB_007_SOURCE.swfSha256,
+    assetSource:
+      "/flash-assets/courses/course-g04-l03-vb-007-direct-companion-composite/canvas-renderer.js",
+    assetSha256:
+      "464e62aa3509c445696404761d5415124e3a535489a750a4791a49fae855ff71",
+    stage: Object.freeze({width: 800, height: 600, backgroundColor: "#b8d8f7"}),
+    fps: 12,
+    rootFrameCount: 10,
+    rootBeginFrame: 6,
+    mainFrameDomain: "sprite-271",
+    mainFrameCount: 69,
+    playbackMode: "once",
+    sourceBehaviorCompositeContractId:
+      "g04-l03-vb-007-direct-companion-composite-v1",
+    showEngineeringDisclosure: false,
+    visualMarkers: Object.freeze([Object.freeze({
+      id: "source-static-direct-companion-composite",
+      firstFrame: 31,
+      lastFrame: 31,
+    })]),
+    sourceControlBehaviorLabel:
+      "Exact source-static direct companion frames at source placement only; AVM1, audio, original runtime, fidelity, human review, and Owner acceptance remain disabled",
+  } satisfies SourceStaticCanvasCandidateConfig)]);
+
 export const COURSE_G04_L03_VB_007_AUTHORITY = Object.freeze({
   implementationAuthorized: false,
   registryIsPrototypeOnly: true,

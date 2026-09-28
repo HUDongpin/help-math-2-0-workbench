@@ -375,6 +375,33 @@ function isUnexpectedRequest(requestUrl, expectedOrigin) {
   return parsed.origin !== expectedOrigin;
 }
 
+/**
+ * Next.js may cancel an in-flight same-origin React Server Components
+ * navigation when the next exact-frame URL is loaded.  This is a navigation
+ * diagnostic, not a failed renderer asset, but it must remain visible in the
+ * capture manifest.  Only the exact same-origin `_rsc` + `net::ERR_ABORTED`
+ * combination is classified this way; all other failed requests remain
+ * fatal capture diagnostics.
+ */
+export function isExpectedRscAbort(requestUrl, errorText, expectedOrigin) {
+  if (errorText !== "net::ERR_ABORTED") return false;
+  try {
+    const parsed = new URL(requestUrl);
+    return parsed.origin === expectedOrigin && parsed.searchParams.has("_rsc");
+  } catch {
+    return false;
+  }
+}
+
+function normalizedRscAbort(requestUrl, errorText) {
+  try {
+    const parsed = new URL(requestUrl);
+    return `${parsed.pathname}?_rsc=true: ${errorText}`;
+  } catch {
+    return `invalid-url: ${errorText}`;
+  }
+}
+
 export async function captureKeyframes(options, {
   browserType = chromium,
   collectArtifactClosure = collectImplementationArtifactClosure,
@@ -422,6 +449,7 @@ export async function captureKeyframes(options, {
   const page = await context.newPage();
   const consoleErrors = [];
   const failedRequests = [];
+  const expectedRscAbortedRequests = [];
   const httpErrors = [];
   const unexpectedRequests = [];
   const expectedOrigin = new URL(options.url).origin;
@@ -431,7 +459,14 @@ export async function captureKeyframes(options, {
   page.on("request", (request) => {
     if (isUnexpectedRequest(request.url(), expectedOrigin)) unexpectedRequests.push(request.url());
   });
-  page.on("requestfailed", (request) => failedRequests.push(`${request.url()}: ${request.failure()?.errorText || "failed"}`));
+  page.on("requestfailed", (request) => {
+    const errorText = request.failure()?.errorText || "failed";
+    if (isExpectedRscAbort(request.url(), errorText, expectedOrigin)) {
+      expectedRscAbortedRequests.push(normalizedRscAbort(request.url(), errorText));
+    } else {
+      failedRequests.push(`${request.url()}: ${errorText}`);
+    }
+  });
   page.on("response", (response) => {
     if (response.status() >= 400) httpErrors.push(`${response.status()} ${response.url()}`);
   });
@@ -632,6 +667,7 @@ export async function captureKeyframes(options, {
     captured,
     consoleErrors,
     failedRequests,
+    expectedRscAbortedRequests: [...new Set(expectedRscAbortedRequests)],
     httpErrors,
     unexpectedRequests: [...new Set(unexpectedRequests)],
     error: captureError?.message || null,

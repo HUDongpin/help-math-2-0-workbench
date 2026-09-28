@@ -1,3 +1,4 @@
+import type {CourseG04L03SourceGlossaryConfig} from "./course-g04-l03-source-glossary-interaction";
 import type {SourceStaticCanvasCandidateConfig} from "../source-static-canvas-candidate";
 
 export const COURSE_G04_L03_IN_008_SOURCE = Object.freeze({
@@ -66,6 +67,33 @@ export const COURSE_G04_L03_IN_008_SOURCE = Object.freeze({
   rootPlacementTwips: Object.freeze({x: 8_268, y: 5_666}),
   rootPlacementPixels: Object.freeze({x: 413.4, y: 283.3}),
 });
+
+
+// Source-locked glossary placements; geometry remains audit metadata.
+export const COURSE_G04_L03_IN_008_GLOSSARY_HOTSPOTS = Object.freeze([
+  Object.freeze({
+    id: "pattern",
+    characterId: 19,
+    keyAttribute: "Pattern",
+    firstFrame: 18,
+    lastFrame: 217,
+    depth: 19,
+    sourceBounds: Object.freeze({"left": 194.2, "right": 260.790950012207, "top": 115.15, "bottom": 133.72767486572266}),
+    entryIds: Object.freeze({"en": "en-0459-b510b9647e1c", "es": "es-0481-73e819571a77"}),
+    labels: Object.freeze({"en": "Pattern", "es": "Patrón"}),
+  }),
+] as const);
+
+export const COURSE_G04_L03_IN_008_GLOSSARY_CONFIG = Object.freeze({
+  animationId: "course-g04-l03-in-008",
+  frameDomain: "sprite-57",
+  terms: COURSE_G04_L03_IN_008_GLOSSARY_HOTSPOTS,
+  playbackDisposition: "reversible-support-pause",
+  sourceAction: "DoHyperLinks",
+  sourceStopTarget: "_root.animation_mc.animation.stop()",
+  glossaryAuthority: "grade-wide-shell-keyterms-static-candidate",
+  glossarySourceDisposition: "unresolved-lesson-vs-grade-wide",
+} satisfies CourseG04L03SourceGlossaryConfig);
 
 export const COURSE_G04_L03_IN_008_CONFIG = Object.freeze({
   animationId: "course-g04-l03-in-008",

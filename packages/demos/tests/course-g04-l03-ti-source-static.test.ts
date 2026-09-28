@@ -49,9 +49,12 @@ import ti006, {
 } from "../src/modules/course-g04-l03-ti-006";
 import {matchPrototype} from "../src/prototype-manifest";
 import {COURSE_G04_L03_TI_002_AUTHORITY} from "../src/timelines/course-g04-l03-ti-002";
+import {COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE} from "../src/timelines/course-g04-l03-ti-002";
 import {COURSE_G04_L03_TI_003_AUTHORITY} from "../src/timelines/course-g04-l03-ti-003";
 import {COURSE_G04_L03_TI_004_AUTHORITY} from "../src/timelines/course-g04-l03-ti-004";
+import {COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE} from "../src/timelines/course-g04-l03-ti-004";
 import {COURSE_G04_L03_TI_005_AUTHORITY} from "../src/timelines/course-g04-l03-ti-005";
+import {COURSE_G04_L03_TI_005_SPRITE_179_CAPTURE} from "../src/timelines/course-g04-l03-ti-005";
 import {COURSE_G04_L03_TI_006_AUTHORITY} from "../src/timelines/course-g04-l03-ti-006";
 
 const repositoryRoot = fileURLToPath(new URL("../../../", import.meta.url));
@@ -117,6 +120,63 @@ test("TI002 through TI006 preserve source hashes, timelines, and inert seed stat
   }
 });
 
+test("TI004 exposes only the source-audited English sprite-273 diagnostic", async () => {
+  const captureContext = {
+    frameDomain: "sprite-273",
+    scenario: "source-static-reachable-domain",
+    lang: "en" as const,
+    seed: 0,
+    requirementId: "req:sprite-273:lesson-shell-natural-entry:en",
+    traceId: "trace:sprite-273:lesson-shell-natural-entry:en:seed-0",
+    entryStateSha256: "a".repeat(64),
+  };
+  const state = getCourseG04L03Ti004FrameState(1, captureContext);
+  assert.equal(state.status, "ready");
+  assert.equal(state.blocker, null);
+  assert.equal(state.frameDomain, "sprite-273");
+  assert.equal(state.frame, 1);
+  assert.equal(state.rootFrame, 6);
+  assert.deepEqual(state.visibleSourceMarkers,
+    ["sprite-273-source-parent-composite-frame-124"]);
+  assert.equal(ti004.defaultScenarioByFrameDomain?.["sprite-273"],
+    "source-static-reachable-domain");
+  assert.ok(ti004.scenarios.some(({id}) => id === "source-static-reachable-domain"));
+  assert.equal(
+    sha256(await readFile(`${repositoryRoot}${
+      COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.placementPathAudit}`)),
+    COURSE_G04_L03_TI_004_SPRITE_273_CAPTURE.placementPathAuditSha256,
+  );
+
+  const markup = renderToStaticMarkup(createElement(ti004.Renderer, {
+    ...captureContext,
+    frame: 1,
+    rootFrame: 6,
+    state,
+  }));
+  assert.match(markup, /data-source-static-companion-capture="sprite-273-frame-1"/);
+  assert.match(markup, /data-strict-acceptance-effect="none"/);
+  assert.match(markup, /<canvas/);
+  assert.doesNotMatch(markup, /data-capture-stage="true"/);
+
+  const noTrace = getCourseG04L03Ti004FrameState(1, {
+    frameDomain: "sprite-273",
+    scenario: "source-static-reachable-domain",
+    lang: "en",
+    seed: 0,
+  });
+  assert.equal(noTrace.status, "blocked");
+  const spanish = getCourseG04L03Ti004FrameState(1, {
+    ...captureContext,
+    lang: "es",
+    requirementId: "req:sprite-273:lesson-shell-natural-entry:es",
+    traceId: "trace:sprite-273:lesson-shell-natural-entry:es:seed-0",
+  });
+  assert.equal(spanish.status, "blocked");
+  assert.equal(COURSE_G04_L03_TI_004_SOURCE_CONTRACT.sprite273CaptureStatus,
+    "source-static-parent-composite-frame-diagnostic-not-original-runtime-or-fidelity");
+  assert.equal(COURSE_G04_L03_TI_004_SOURCE_CONTRACT.strictAcceptanceEffect, "none");
+});
+
 test("TI005 exposes its source-local initial quiz and post-stop inspection", async () => {
   for (const frame of [209, 210]) {
     const state = getCourseG04L03Ti005FrameState(frame, {frameDomain: "sprite-208",
@@ -139,9 +199,15 @@ test("TI005 exposes its source-local initial quiz and post-stop inspection", asy
   const markup = renderToStaticMarkup(createElement(ti005.Renderer, {
     frame: 209, frameDomain: "sprite-208", scenario: "source-static-frame",
     lang: "en", seed: 7,
+    // A question change keeps the host's original state; the live renderer
+    // must derive its drawing state from the currently selected question.
+    state: getCourseG04L03Ti005FrameState(209, {frameDomain: "sprite-208", scenario: "source-static-frame", lang: "en", seed: 0}),
   }));
   assert.doesNotMatch(markup, /data-fail-closed-reason/);
   assert.match(markup, /<canvas/);
+  assert.match(markup, /data-pattern-question="20, 10, 0, -10,"/);
+  assert.match(markup, /data-flash-seed="2"/);
+  assert.match(markup, /data-source-canvas-accessibility-isolated="true"/);
   assert.match(markup, /data-current-js-controls-enabled="true"/);
   assert.match(markup,
     /data-current-js-functional-scope="ti005-pattern-quiz-source-script-bound"/);
@@ -177,6 +243,7 @@ test("TI005 exposes its source-local initial quiz and post-stop inspection", asy
     getCourseG04L03Ti005SourceCanvasRenderKey(0, 5, 1, 0),
   );
   assert.equal(ti005.reducedMotionFrame, 209);
+  assert.equal(ti005.completionMode, "activity");
   assert.equal(
     COURSE_G04_L03_TI_005_SOURCE_CONTRACT.currentJavascriptInteractionStatus,
     "source-script-bound-functional-candidate",
@@ -203,8 +270,62 @@ test("TI005 exposes its source-local initial quiz and post-stop inspection", asy
   }));
   assert.match(captureMarkup, /data-current-js-controls-enabled="false"/);
   assert.doesNotMatch(captureMarkup, /First missing number/);
+  assert.match(captureMarkup, /data-flash-seed="7"/);
+  assert.doesNotMatch(captureMarkup, /data-ti005-answer-preview-index=/);
   assert.doesNotMatch(captureMarkup,
     /data-interaction-companion-surface="mobile"/);
+});
+
+test("TI005 exposes only the source-audited English sprite-179 visual diagnostic", async () => {
+  const context = {
+    frameDomain: "sprite-179",
+    scenario: "source-static-reachable-domain",
+    lang: "en" as const,
+    seed: 0,
+    requirementId: "req:sprite-179:lesson-shell-natural-entry:en",
+    traceId: "trace:sprite-179:lesson-shell-natural-entry:en:seed-0",
+    entryStateSha256: "b".repeat(64),
+  };
+  for (let frame = 1; frame <= 5; frame += 1) {
+    const state = getCourseG04L03Ti005FrameState(frame, context);
+    assert.equal(state.status, "ready");
+    assert.equal(state.blocker, null);
+    assert.equal(state.frameDomain, "sprite-179");
+    assert.equal(state.rootFrame, 6);
+    assert.deepEqual(state.visibleSourceMarkers,
+      [`sprite-179-source-parent-composite-frame-${74 + frame}`]);
+  }
+  assert.equal(ti005.defaultScenarioByFrameDomain?.["sprite-179"],
+    "source-static-reachable-domain");
+  assert.equal(
+    sha256(await readFile(`${repositoryRoot}${
+      COURSE_G04_L03_TI_005_SPRITE_179_CAPTURE.placementPathAudit}`)),
+    COURSE_G04_L03_TI_005_SPRITE_179_CAPTURE.placementPathAuditSha256,
+  );
+  const state = getCourseG04L03Ti005FrameState(3, context);
+  const markup = renderToStaticMarkup(createElement(ti005.Renderer, {
+    ...context,
+    frame: 3,
+    rootFrame: 6,
+    state,
+  }));
+  assert.match(markup,
+    /data-source-static-parent-composite-capture="sprite-179-frames-1-5"/);
+  assert.match(markup, /<canvas/);
+  assert.doesNotMatch(markup, /data-capture-stage="true"/);
+  assert.equal(getCourseG04L03Ti005FrameState(1, {
+    frameDomain: "sprite-179",
+    scenario: "source-static-reachable-domain",
+    lang: "en",
+    seed: 0,
+  }).status, "blocked");
+  assert.equal(getCourseG04L03Ti005FrameState(1, {
+    ...context,
+    lang: "es",
+  }).status, "blocked");
+  assert.equal(COURSE_G04_L03_TI_005_SOURCE_CONTRACT.sprite179EmbeddedSoundStatus,
+    "source-sound-stream-not-rendered-or-accepted");
+  assert.equal(COURSE_G04_L03_TI_005_SOURCE_CONTRACT.strictAcceptanceEffect, "none");
 });
 
 test("TI002 adds fail-closed key-term matching without changing capture evidence", () => {
@@ -254,6 +375,8 @@ test("TI002 adds fail-closed key-term matching without changing capture evidence
     getCourseG04L03Ti002SourceCanvasRenderKey(0, 0, 238),
   );
   assert.equal(ti002.reducedMotionFrame, 238);
+  assert.equal(ti002.completionMode, "activity");
+  assert.doesNotMatch(markup, /data-modern-zero-definition="quantity-none"/);
   assert.equal(
     COURSE_G04_L03_TI_002_SOURCE_CONTRACT
       .currentJavascriptInteractionStatus,
@@ -265,7 +388,7 @@ test("TI002 adds fail-closed key-term matching without changing capture evidence
   );
   assert.equal(
     COURSE_G04_L03_TI_002_SOURCE_CONTRACT.sourceGlossaryActionStatus,
-    "safe-disabled",
+    "typed-keyterm-host-integrated",
   );
   assert.ok(
     COURSE_G04_L03_TI_002_SOURCE_CONTRACT.currentJavascriptInteractionScope
@@ -273,7 +396,7 @@ test("TI002 adds fail-closed key-term matching without changing capture evidence
   );
   assert.ok(
     COURSE_G04_L03_TI_002_SOURCE_CONTRACT.currentJavascriptInteractionScope
-      .includes("source-geturl-glossary-actions-safe-disabled"),
+      .includes("source-keyattribute-typed-keyterm-host-requests"),
   );
   assert.ok(
     COURSE_G04_L03_TI_002_SOURCE_CONTRACT.currentJavascriptInteractionScope
@@ -323,6 +446,66 @@ test("TI002 adds fail-closed key-term matching without changing capture evidence
     /data-interaction-companion-surface="mobile"/);
 });
 
+test("TI002 exposes only the generated English sprite-174 behavior composite", async () => {
+  const context = {
+    frameDomain: "sprite-174",
+    scenario: "source-static-reachable-domain",
+    lang: "en" as const,
+    seed: 0,
+    requirementId: "req:sprite-174:lesson-shell-natural-entry:en",
+    traceId: "trace:sprite-174:lesson-shell-natural-entry:en:seed-0",
+    entryStateSha256: "c".repeat(64),
+  };
+  for (let frame = 1; frame <= 10; frame += 1) {
+    const state = getCourseG04L03Ti002FrameState(frame, context);
+    assert.equal(state.status, "ready");
+    assert.equal(state.blocker, null);
+    assert.equal(state.frameDomain, "sprite-174");
+    assert.equal(state.rootFrame, 6);
+    assert.deepEqual(state.visibleSourceMarkers,
+      [`sprite-174-source-behavior-composite-frame-${frame}`]);
+  }
+  assert.equal(ti002.defaultScenarioByFrameDomain?.["sprite-174"],
+    "source-static-reachable-domain");
+  assert.equal(
+    sha256(await readFile(`${repositoryRoot}public/flash-assets/courses/course-g04-l03-ti-002-sprite-174-composite/canvas-renderer.js`)),
+    COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE.assetSha256,
+  );
+  assert.equal(
+    sha256(await readFile(`${repositoryRoot}${
+      COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE.assetManifest}`)),
+    COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE.assetManifestSha256,
+  );
+  assert.equal(
+    sha256(await readFile(`${repositoryRoot}${
+      COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE.assetReport}`)),
+    COURSE_G04_L03_TI_002_SPRITE_174_CAPTURE.assetReportSha256,
+  );
+  const state = getCourseG04L03Ti002FrameState(4, context);
+  const markup = renderToStaticMarkup(createElement(ti002.Renderer, {
+    ...context,
+    frame: 4,
+    rootFrame: 6,
+    state,
+  }));
+  assert.match(markup,
+    /data-source-static-behavior-composite-capture="sprite-174-frames-1-10"/);
+  assert.match(markup, /<canvas/);
+  assert.doesNotMatch(markup, /data-capture-stage="true"/);
+  assert.equal(getCourseG04L03Ti002FrameState(1, {
+    frameDomain: "sprite-174",
+    scenario: "source-static-reachable-domain",
+    lang: "en",
+    seed: 0,
+  }).status, "blocked");
+  assert.equal(getCourseG04L03Ti002FrameState(1, {
+    ...context,
+    lang: "es",
+  }).status, "blocked");
+  assert.equal(COURSE_G04_L03_TI_002_SOURCE_CONTRACT.sprite174UniqueTargetVisualCount, 4);
+  assert.equal(COURSE_G04_L03_TI_002_SOURCE_CONTRACT.strictAcceptanceEffect, "none");
+});
+
 test("TI003 adds a fail-closed functional overlay without changing capture evidence", () => {
   const wholeLessonHostState = getCourseG04L03Ti003FrameState(139, {
     frameDomain: "sprite-126",
@@ -366,6 +549,12 @@ test("TI003 adds a fail-closed functional overlay without changing capture evide
     getCourseG04L03Ti003SourceCanvasRenderKey(0, 0, 139),
   );
   assert.equal(ti003.reducedMotionFrame, 139);
+  assert.equal(ti003.completionMode, "activity");
+  assert.equal(ti003.audioCues?.[0]?.sha256, "b7912a56f852d5d8c61dfbaa3fb5e875d9495622c2388e07e5cb5e1d2de6573f");
+  assert.equal(ti003.audioTracks?.[0]?.sha256, "063887f58c7ab3b45bd62320cbb4bd95a90db93214e987ffbc001e9c4cb80799");
+  assert.doesNotMatch(markup, /aria-label="Key Terms in Need More Help"/);
+  assert.doesNotMatch(markup, /data-help-tick=/);
+
   assert.equal(
     COURSE_G04_L03_TI_003_SOURCE_CONTRACT
       .currentJavascriptInteractionStatus,
@@ -399,9 +588,10 @@ test("TI003 adds a fail-closed functional overlay without changing capture evide
   assert.match(captureMarkup, /data-current-js-source-visual-frame="139"/);
   assert.match(captureMarkup, /data-flash-frame="139"/);
   assert.doesNotMatch(captureMarkup,
-    /aria-label="Source-script-bound current JavaScript number-line card activity"/);
-  assert.doesNotMatch(captureMarkup,
-    /data-interaction-companion-surface="mobile"/);
+    /aria-label="Place number cards on the number line"/);
+  assert.doesNotMatch(captureMarkup, /data-interaction-companion-surface="mobile"/);
+  assert.doesNotMatch(captureMarkup, /data-source-key-attribute=/);
+  assert.doesNotMatch(captureMarkup, /data-ti003-preview-count=/);
 });
 
 test("TI004 adds a fail-closed least-to-greatest overlay without changing capture evidence", () => {
@@ -447,6 +637,14 @@ test("TI004 adds a fail-closed least-to-greatest overlay without changing captur
     getCourseG04L03Ti004SourceCanvasRenderKey(0, 0, 124),
   );
   assert.equal(ti004.reducedMotionFrame, 124);
+  assert.equal(ti004.completionMode, "activity");
+  assert.deepEqual(COURSE_G04_L03_TI_004_SOURCE_CONTRACT.helpSourceCopy, {
+    negative: "The value of negative numbers decreases.",
+    positive: "The value of positive numbers increases.",
+  });
+  assert.doesNotMatch(markup, /aria-label="Key Terms in Need More Help"/);
+  assert.doesNotMatch(markup, /data-help-tick=/);
+
   assert.equal(
     COURSE_G04_L03_TI_004_SOURCE_CONTRACT
       .currentJavascriptInteractionStatus,
@@ -480,9 +678,10 @@ test("TI004 adds a fail-closed least-to-greatest overlay without changing captur
   assert.match(captureMarkup, /data-current-js-source-visual-frame="124"/);
   assert.match(captureMarkup, /data-flash-frame="124"/);
   assert.doesNotMatch(captureMarkup,
-    /aria-label="Source-script-bound current JavaScript least-to-greatest card activity"/);
-  assert.doesNotMatch(captureMarkup,
-    /data-interaction-companion-surface="mobile"/);
+    /aria-label="Order seven numbers from least to greatest"/);
+  assert.doesNotMatch(captureMarkup, /data-interaction-companion-surface="mobile"/);
+  assert.doesNotMatch(captureMarkup, /data-source-key-attribute=/);
+  assert.doesNotMatch(captureMarkup, /data-ti004-preview-count=/);
 });
 
 test("TI006 adds a fail-closed functional overlay without changing capture evidence", () => {
@@ -528,6 +727,12 @@ test("TI006 adds a fail-closed functional overlay without changing capture evide
     getCourseG04L03Ti006SourceCanvasRenderKey(0, 0, 166),
   );
   assert.equal(ti006.reducedMotionFrame, 166);
+  assert.equal(ti006.completionMode, "activity");
+  assert.deepEqual(COURSE_G04_L03_TI_006_SOURCE_CONTRACT.helpSourceCopy, [
+    "Owing money means negative numbers", "Having money means positive numbers",
+  ]);
+  assert.doesNotMatch(markup, /aria-label="Key Terms in Need More Help"/);
+  assert.doesNotMatch(markup, /data-help-tick=/);
   assert.equal(
     COURSE_G04_L03_TI_006_SOURCE_CONTRACT
       .currentJavascriptInteractionStatus,
@@ -561,9 +766,10 @@ test("TI006 adds a fail-closed functional overlay without changing capture evide
   assert.match(captureMarkup, /data-current-js-source-visual-frame="166"/);
   assert.match(captureMarkup, /data-flash-frame="166"/);
   assert.doesNotMatch(captureMarkup,
-    /aria-label="Source-script-bound current JavaScript number-line card activity"/);
-  assert.doesNotMatch(captureMarkup,
-    /data-interaction-companion-surface="mobile"/);
+    /aria-label="Place money cards on the number line"/);
+  assert.doesNotMatch(captureMarkup, /data-interaction-companion-surface="mobile"/);
+  assert.doesNotMatch(captureMarkup, /data-source-key-attribute=/);
+  assert.doesNotMatch(captureMarkup, /data-ti006-preview-count=/);
 });
 
 test("TI002 through TI006 reject unsupported contexts and remain prototype-only", async () => {

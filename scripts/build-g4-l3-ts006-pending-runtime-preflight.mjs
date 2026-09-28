@@ -6,6 +6,7 @@ import {lstat, mkdir, readFile, rename, statfs, writeFile} from "node:fs/promise
 import path from "node:path";
 import {promisify} from "node:util";
 import {fileURLToPath} from "node:url";
+import {readTs006CaptureDestination} from "./g4-l3-ts006-capture-destination.mjs";
 
 const execFileAsync = promisify(execFile);
 const SCRIPT_PATH = fileURLToPath(import.meta.url);
@@ -158,10 +159,17 @@ export async function buildPendingRuntimePreflight() {
     "ScreenCaptureKit permission/filter probe failed");
   invariant(runningPlayer.exitCode !== 0 && runningPlayer.stdout.trim() === "", "a Flash Player process is already running");
 
-  const storage = await statfs("/Volumes/WestWorld", {bigint: true});
+  const captureDestination = await readTs006CaptureDestination();
+  const storagePath = captureDestination?.captureRoot ?? "/Volumes/WestWorld";
+  const storage = await statfs(storagePath, {bigint: true});
   const availableBytes = storage.bavail * storage.bsize;
   const minimumSafeFreeBytes = BigInt(capacity.capacityModel.minimumSafeFreeBytes);
-  invariant(availableBytes >= minimumSafeFreeBytes, "live WestWorld capacity is below the full-lesson safety threshold");
+  invariant(availableBytes >= minimumSafeFreeBytes, "live capture destination capacity is below the full-lesson safety threshold");
+  if (captureDestination) {
+    const profileStorage = await statfs(ROOT, {bigint: true});
+    invariant(profileStorage.bavail * profileStorage.bsize >= 1024n ** 3n,
+      "profile and audit-log storage has less than 1 GiB free");
+  }
   const sourceBindings = Object.fromEntries(Object.entries(inputs).map(([key, value]) => [key, publicBinding(value)]));
   const controls = [
     {controlId: "CR-01", technicalStatus: "passed", mechanism: "per-process sandbox deny network*; filtered ScreenCaptureKit permission probe; live PID audit required during capture"},
@@ -170,7 +178,7 @@ export async function buildPendingRuntimePreflight() {
     {controlId: "CR-04", technicalStatus: "passed", mechanism: "one fresh empty Projector process per language; no process is running; operator must use File > Open File"},
     {controlId: "CR-05", technicalStatus: "passed", mechanism: "hash-bound lsof and nettop tools available for PID-scoped live and postflight request audit"},
     {controlId: "CR-06", technicalStatus: "passed", mechanism: "sandbox denies network, Apple Events, LaunchServices host opens, non-Projector exec, and broad writes"},
-    {controlId: "CR-07", technicalStatus: "passed", mechanism: "live WestWorld free space exceeds 1.20 remaining-evidence multiplier plus 100 GiB reserve"},
+    {controlId: "CR-07", technicalStatus: "passed", mechanism: "live bound capture destination free space exceeds 1.20 remaining-evidence multiplier plus 100 GiB reserve"},
     {controlId: "CR-08", technicalStatus: "user-intent-bound-external-signature-missing", mechanism: "Dr. Peter Hu is user-designated Owner/operator for pending capture; external signatures and distinct reviewer/trust subjects remain absent"},
   ];
   const reportWithoutFingerprint = {
@@ -180,6 +188,7 @@ export async function buildPendingRuntimePreflight() {
     generator: publicBinding(generator),
     sourceBindings,
     toolBindings: {projector, sandboxExec, lsof, nettop, captureTool: publicBinding(captureTool)},
+    ...(captureDestination ? {captureDestination} : {}),
     scope: {
       animationId: "course-g04-l03-ts-006",
       languages: ["en", "es"],
@@ -194,6 +203,7 @@ export async function buildPendingRuntimePreflight() {
       screenCaptureKitFilteredEnumerationPassed: true,
       screenPixelsCaptured: false,
       availableBytes: availableBytes.toString(),
+      storagePath,
       minimumSafeFreeBytes: minimumSafeFreeBytes.toString(),
       capacityPassed: true,
       processBoundaryNoEgressCapabilityPassed: true,

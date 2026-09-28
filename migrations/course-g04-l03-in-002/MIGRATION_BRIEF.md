@@ -1,5 +1,13 @@
 # course-g04-l03-in-002 Migration Brief
 
+## 2026-09-08 现代数轴页面复核
+
+- Placement: `course-g04-l03-in-002`，G4 L3 Learn It。
+- 本轮复杂度：`interactive-understood`；路线：编译器辅助源提取 + 维护的共享查词适配器。复用已有源审计、注册和现代 My Lesson 宿主，按已观察到的问题作有界修复，无批量生成。
+- 修复现代窗口裁掉顶部说明的问题，接通六个源词条，保留第 3/93/237 帧的可见边界。检查从 −10 到 10 的数轴与手机端说明。
+- 当前源哈希、实现与浏览器证据见 [本轮结果](../../work/g4-l3-modern-product-review/20260908-learn-it-number-line/REVIEW.md) 和同目录 `product-review-receipt.json`。
+- 未修改原始 FLA/SWF 或生成的 Canvas 文件；本轮未新增原 Flash 实跑、听审、人审、Owner、严格完成或发布结论。
+
 Created: 2026-07-24
 
 ## Objective

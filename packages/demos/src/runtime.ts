@@ -273,6 +273,8 @@ export function resolveAudioCueTransition(
     lang: AnimationLanguage;
     scenario: string;
     seed: number;
+    /** Native media-ended events retained for the current playback identity. */
+    endedCueIds?: ReadonlySet<string>;
   }>
 ): Readonly<{
   start: readonly Readonly<{cue: AudioCue; offsetSeconds: number}>[];
@@ -287,9 +289,13 @@ export function resolveAudioCueTransition(
     .map((cue) => cue.id);
   const fps = Number.isFinite(options.fps) && options.fps > 0 ? options.fps : 1;
   const start = matching
+    .filter((cue) => !options.endedCueIds?.has(cue.id))
     .filter((cue) => Number.isSafeInteger(cue.frame) && cue.frame > previousFrame && cue.frame <= frame)
     .filter((cue) => cue.endFrame === undefined || frame < cue.endFrame)
-    .map((cue) => Object.freeze({cue, offsetSeconds: Math.max(0, (frame - cue.frame) / fps)}));
+    .map((cue) => Object.freeze({cue, offsetSeconds: Math.max(0, (frame - cue.frame) / fps)}))
+    // Resuming a paused page re-enters the cue at the held frame. A known
+    // duration may end before the visual timeline; do not restart that audio.
+    .filter(({cue, offsetSeconds}) => cue.durationMs === undefined || offsetSeconds * 1000 < cue.durationMs);
   return Object.freeze({start: Object.freeze(start), stopIds: Object.freeze(stopIds)});
 }
 

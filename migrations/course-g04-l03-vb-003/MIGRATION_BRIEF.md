@@ -1,5 +1,13 @@
 # course-g04-l03-vb-003 Migration Brief
 
+## 2026-09-08 现代产品复核
+
+- Placement: `course-g04-l03-vb-003`，G4 L3 Important Words。
+- 本次工作复杂度：`behavior-heavy`；路线：有界 advanced-manual：维护现有 React 状态机。选择原因是复用已注册页面及源审计，修复已确认的教学/交互问题，无批量生成。
+- 修复未作答便完成的宿主记录问题，五项全对才报告完成；互动题面使用无旧反馈面板的源第 115 帧，保持源捕获行为。实测未作答、答错、4/5、5/5 和 Replay。
+- 源身份、实际浏览器证据和当前代码哈希见 [本轮结果](../../work/g4-l3-modern-product-review/20260908-important-words/REVIEW.md) 与同目录 `product-review-receipt.json`。
+- 本轮是 Current-JS 工程检查；未新增人审、听审或 Owner 批准，不改变严格完成、发布及冻结 16 页校准结果。
+
 Created: 2026-07-24
 
 ## Objective

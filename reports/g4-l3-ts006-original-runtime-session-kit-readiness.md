@@ -6,8 +6,8 @@ The user supplied an authorization statement and then explicitly requested use o
 
 | Language | Manifest | SHA-256 | State |
 |---|---|---|---|
-| en | `work/g4-l3-ts006-original-runtime-session-kits/en/kit-manifest.json` | `c29c954a88b6c807eb67bda7a37891b8c13cc14ad87f08cc5adabdb3fa647f2b` | empty / immutable / not executed |
-| es | `work/g4-l3-ts006-original-runtime-session-kits/es/kit-manifest.json` | `ca4d62b1dd8e116bf95d219b4415394a78ba32181e95c7a0e22ae1dae7b9826a` | empty / immutable / not executed |
+| en | `work/g4-l3-ts006-original-runtime-session-kits/en/kit-manifest.json` | `5e72b185c93d620b059b4a4282965ef36ad8e47ee32ef5cf2c67489b893b6312` | empty / immutable / not executed |
+| es | `work/g4-l3-ts006-original-runtime-session-kits/es/kit-manifest.json` | `d52a985be516b58c3ad4f4e7d932043ca23bcdce28464573afdd56732738dd55` | empty / immutable / not executed |
 
 Both kits bind the four TS006 natural-trace requirements, the 657-file read-only host tree, Adobe Flash Player Projector 32.0.0.414, the P00–P09 protocol, eight containment mechanism candidates, and blank authorization/preflight/launch/observation/attestation templates. They contain no launch command and launch nothing.
 

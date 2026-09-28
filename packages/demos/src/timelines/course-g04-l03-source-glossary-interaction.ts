@@ -27,6 +27,8 @@ export interface CourseG04L03SourceGlossaryConfig {
   readonly animationId: string;
   readonly frameDomain: string;
   readonly terms: readonly CourseG04L03SourceGlossaryTerm[];
+  /** Readable modern teaching copy shown below the stage on narrow screens. */
+  readonly learnerPrompt?: string;
   readonly playbackDisposition?: KeytermPlaybackDisposition;
   readonly sourceAction: "DoHyperLinks";
   readonly sourceStopTarget: "_root.animation_mc.animation.stop()";

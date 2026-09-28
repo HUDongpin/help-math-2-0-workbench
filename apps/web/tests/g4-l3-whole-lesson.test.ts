@@ -1144,12 +1144,12 @@ test('responsive lesson shell preserves the authored stage and separates modern 
   // the learner has answered it.
   assert.match(
     runtimeSource,
-    /const narration: AnimationRuntimeNarrationStatus = !audioAvailable\s*\?\s*'unavailable'\s*:\s*narrationSounding\s*\?\s*'playing'\s*:\s*currentAutoplayBlockedCue && !narrationGestureGiven\s*\?\s*'blocked'\s*:\s*narrationTracks\.length > 0\s*\?\s*'idle'\s*:\s*interactiveAudioAssets\.length > 0\s*\?\s*'interactive'\s*:\s*'waiting';/,
+    /const narration: AnimationRuntimeNarrationStatus = !audioAvailable\s*\?\s*'unavailable'\s*:\s*narrationSounding\s*\?\s*'playing'\s*:\s*currentAutoplayBlockedCue && !narrationGestureGiven\s*\?\s*'blocked'\s*:\s*narrationTracks\.length > 0\s*\?\s*'idle'\s*:\s*interactiveAudioAssets\.some\(\(asset\) => asset\.activation !== 'interaction-feedback'\)\s*\?\s*'interactive'\s*:\s*'waiting';/,
   );
   assert.match(
     runtimeSource,
-    /const narrationSounding =\s*timelineAudioSounding \|\|\s*playingNarrationTrackId !== null \|\|\s*playingInteractiveAudioId !== null;/,
-    'a timeline cue, narration track, or source-exact interactive clip all count as audio sounding',
+    /const narrationSounding =\s*timelineAudioSounding \|\|\s*playingNarrationTrackId !== null \|\|\s*\(!paused && playingInteractiveAudioId !== null\);/,
+    'an active timeline cue, narration track, or unpaused interactive clip counts as audio sounding',
   );
 
   // The reusable control reads one status and keeps one command path.

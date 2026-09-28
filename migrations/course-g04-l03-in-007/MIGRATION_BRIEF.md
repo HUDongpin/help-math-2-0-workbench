@@ -104,3 +104,13 @@ List every unresolved mismatch, unavailable tool/source, accepted emulator diffe
 - Owner review status:
 - Owner decision, reviewer/date, or explicit not-required reason:
 - Strict validator result:
+
+## 2026-09-08 Patterns modern-product follow-up
+
+- Placement: G4 L3, Learn It 6/11, whole-lesson page 18/39, `course-g04-l03-in-007`. Existing workspace and Current-JS registration retained.
+- Complexity and production lane: **interactive-understood / compiler-assisted extraction with maintained glossary adapter**. The source has a narrated number-pattern timeline and four understood DoHyperLinks releases. The existing generated Canvas is retained; the maintained adapter binds exact frame windows and typed glossary entries.
+- Immutable source identity and placement geometry: see `work/g4-l3-modern-product-review/20260908-patterns/glossary-source-evidence.json`; freshly hashed SWF, compressed XML and ActionScript evidence. Source FLA/SWF, generated Canvas and audio assets are unchanged.
+- Maintained behavior: once-only 555-frame playback, complete reduced-motion state, four glossary terms with reversible support pause, uncropped definition and mobile 16px rule explanation.
+- Math basis: 12, 9, 6, 3, 0, -3, -6, -9; decrease by 3 each time.
+- Product review evidence: `work/g4-l3-modern-product-review/20260908-patterns/REVIEW.md`, browser-verification.json, test logs, source/audio bindings and product-review-receipt.json.
+- Current-JS engineering verification remains separate from original-runtime observation, audio listening, human visual review, Owner approval, strict completion, whole-lesson acceptance, release and publication. No new downstream gate is closed here.

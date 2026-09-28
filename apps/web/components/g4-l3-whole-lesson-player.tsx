@@ -273,7 +273,9 @@ export function G4L3WholeLessonPlayer({
       releaseId: G4_L3_WHOLE_LESSON_PLAYER_DESCRIPTOR.releaseId,
       releaseMemberIds: G4_L3_RELEASE_MEMBER_IDS,
       currentAnimationId: animationId,
-      enabledCapabilities: ['keyterm'],
+      enabledCapabilities: ['course-g04-l03-in-004', 'course-g04-l03-fq-002',
+        'course-g04-l03-fq-003'].includes(animationId)
+        ? ['keyterm', 'audio'] : ['keyterm'],
       initialLanguage: language,
       mode: 'audit',
       releasePublished: false,
@@ -622,6 +624,17 @@ export function G4L3WholeLessonPlayer({
   // learner who clicks past a page keeps an honest progress strip.
   const advanceToNextPage = () => {
     if (!nextPage && lessonFinished) return;
+    if (!nextPage) {
+      setLessonFinished(true);
+      if (completedCount === G4_L3_LESSON.activePageCount) {
+        recordLearningEvent({
+          type: 'lesson.completed',
+          progress: currentLearningProgress,
+        });
+      }
+      // Ending the journey keeps the final quiz score and answer review.
+      return;
+    }
     if (nextPage) {
       lessonNavigationHistoryRef.current = appendLegacyLessonHistory(
         lessonNavigationHistoryRef.current,
@@ -638,15 +651,6 @@ export function G4L3WholeLessonPlayer({
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
     setNarrationRequest(null);
-    if (!nextPage) {
-      setLessonFinished(true);
-      if (completedCount === G4_L3_LESSON.activePageCount) {
-        recordLearningEvent({
-          type: 'lesson.completed',
-          progress: currentLearningProgress,
-        });
-      }
-    }
   };
 
   const replayCurrentPage = () => {
@@ -821,16 +825,20 @@ export function G4L3WholeLessonPlayer({
   </div>;
 
   const vocabularyPages = pagesBySection.VB ?? [];
+  const showKeyTermEvidence = reviewerMode || hostPresentation !== 'modern-wide';
   const keyTermsPanel = <div className="lesson-shell2__key-terms">
     <LegacyKeyTermsBrowser key={progress.language} locale={progress.language}
+      showEvidenceNotes={showKeyTermEvidence}
       selectionRequest={keyTermSelectionRequest} />
     <details className="lesson-shell2__lesson-vocabulary-links">
-      <summary>{spanish
+      <summary>{!showKeyTermEvidence
+        ? (spanish ? 'Vocabulario de la lección' : 'Lesson vocabulary')
+        : spanish
         ? 'Páginas de vocabulario verificadas de esta lección'
         : 'Verified lesson vocabulary pages'}</summary>
-      <p>{spanish
+      {showKeyTermEvidence ? <p>{spanish
         ? 'Estas páginas de Palabras importantes sí conservan el orden exacto del XML del curso y permanecen separadas del glosario general candidato.'
-        : 'These Important Words pages preserve exact course-XML order and remain separate from the grade-wide glossary candidate.'}</p>
+        : 'These Important Words pages preserve exact course-XML order and remain separate from the grade-wide glossary candidate.'}</p> : null}
       <ol>
         {vocabularyPages.map((page) => {
           const label = getG4L3PageLabel(page, progress.language);
@@ -916,7 +924,12 @@ export function G4L3WholeLessonPlayer({
     pageInteractionStageTargetId={G4_L3_PAGE_INTERACTION_STAGE_TARGET_ID}
     paused={paused || resumeDecision !== 'resolved'}
     presentation="legacy-shell"
-    query={{lang: progress.language, seed: '0'}}
+    // The quiz source is English. Its optional original Spanish recordings are
+    // selected independently, keeping source trace identity and product locale explicit.
+    audioLanguage={progress.language}
+    uiLanguage={progress.language}
+    query={{lang: ['course-g04-l03-fq-002', 'course-g04-l03-fq-003']
+      .includes(currentPage.animationId) ? 'en' : progress.language, seed: '0'}}
     seekRequest={seekRequest}
     volume={volume}
   />;

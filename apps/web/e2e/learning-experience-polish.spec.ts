@@ -285,7 +285,7 @@ test('Starting at Page 1 keeps completed and replay history and restores lesson 
   expect(stored.replayCounts['course-g04-l03-rw-003']).toBe(2);
 });
 
-test('VB005 keeps its three Source Terms inside the animation bottom edge', async ({page}) => {
+test('VB005 keeps three usable Source Terms at the stage bottom or in the narrow companion', async ({page}) => {
   test.skip(!modernWideShellEnabled, 'Requires the modern-wide lesson shell.');
   test.setTimeout(60_000);
   await page.emulateMedia({reducedMotion: 'no-preference'});
@@ -298,9 +298,7 @@ test('VB005 keeps its three Source Terms inside the animation bottom edge', asyn
 
   const learning = page.locator('.lesson-shell2__learning-column');
   const stage = page.locator('.lesson-shell2__legacy-stage');
-  const sourceTerms = stage.locator(
-    '[data-source-glossary-placement="visible-stage-content-bottom"]',
-  );
+  const sourceTerms = page.getByRole('region', {name: 'Key Terms linked from this page'});
   const sourceTermBar = sourceTerms.locator('> div[role="group"]');
   const canvas = page.locator(
     'canvas[data-course-canvas="course-g04-l03-vb-005"]',
@@ -320,7 +318,7 @@ test('VB005 keeps its three Source Terms inside the animation bottom edge', asyn
     '.lesson-shell2__page-interaction-companion [data-page-interaction-companion-surface="source-glossary"]',
   )).toHaveCount(0);
 
-  const expectSourceTermsInsideBottomEdge = async () => {
+  const expectSourceTermsPlacement = async () => {
     const [learningBox, stageBox, canvasBox, sourceTermBarBox] = await Promise.all([
       learning.boundingBox(),
       stage.boundingBox(),
@@ -334,32 +332,38 @@ test('VB005 keeps its three Source Terms inside the animation bottom edge', asyn
     const learningCenter = learningBox!.x + learningBox!.width / 2;
     const canvasCenter = canvasBox!.x + canvasBox!.width / 2;
     expect(Math.abs(learningCenter - canvasCenter)).toBeLessThanOrEqual(2);
-    expect(sourceTermBarBox!.x).toBeGreaterThanOrEqual(stageBox!.x - 1);
-    expect(sourceTermBarBox!.x + sourceTermBarBox!.width).toBeLessThanOrEqual(
-      stageBox!.x + stageBox!.width + 1,
-    );
-    // At 320px the required 44px touch targets occupy more than 30% of the
-    // visible stage height. The bottom-edge contract below is stable across
-    // all three viewports; a centre-line percentage would incorrectly move
-    // upward as the fixed-size touch targets consume more of the short stage.
-    expect(sourceTermBarBox!.y + sourceTermBarBox!.height)
-      .toBeGreaterThanOrEqual(
-        stageBox!.y + stageBox!.height * .9,
+    const narrow = page.viewportSize()!.width <= 520;
+    if (narrow) {
+      // Fixed-size touch targets move below the small stage so the term
+      // buttons cannot cover the number-line example.
+      await expect(page.locator(
+        '[data-page-interaction-companion-host="true"] '
+        + '[data-page-interaction-companion-surface="source-glossary"]',
+      )).toBeVisible();
+      expect(sourceTermBarBox!.x).toBeGreaterThanOrEqual(learningBox!.x - 1);
+      expect(sourceTermBarBox!.x + sourceTermBarBox!.width)
+        .toBeLessThanOrEqual(learningBox!.x + learningBox!.width + 1);
+      expect(sourceTermBarBox!.y).toBeGreaterThanOrEqual(stageBox!.y + stageBox!.height - 1);
+    } else {
+      expect(sourceTermBarBox!.x).toBeGreaterThanOrEqual(stageBox!.x - 1);
+      expect(sourceTermBarBox!.x + sourceTermBarBox!.width).toBeLessThanOrEqual(
+        stageBox!.x + stageBox!.width + 1,
       );
-    expect(sourceTermBarBox!.y + sourceTermBarBox!.height).toBeLessThanOrEqual(
-      stageBox!.y + stageBox!.height + 1,
-    );
-    expect(
-      stageBox!.y + stageBox!.height
-        - (sourceTermBarBox!.y + sourceTermBarBox!.height),
-    ).toBeLessThanOrEqual(Math.max(16, stageBox!.height * .04));
+      expect(sourceTermBarBox!.y + sourceTermBarBox!.height)
+        .toBeGreaterThanOrEqual(stageBox!.y + stageBox!.height * .9);
+      expect(sourceTermBarBox!.y + sourceTermBarBox!.height).toBeLessThanOrEqual(
+        stageBox!.y + stageBox!.height + 1,
+      );
+      expect(stageBox!.y + stageBox!.height - (sourceTermBarBox!.y + sourceTermBarBox!.height))
+        .toBeLessThanOrEqual(Math.max(16, stageBox!.height * .04));
+    }
     await expect.poll(() => page.evaluate(() =>
       document.documentElement.scrollWidth <=
         document.documentElement.clientWidth
     )).toBe(true);
   };
 
-  await expectSourceTermsInsideBottomEdge();
+  await expectSourceTermsPlacement();
 
   const lessThanTerm = sourceTerms.getByRole('button', {
     name: 'Less than',
@@ -394,7 +398,7 @@ test('VB005 keeps its three Source Terms inside the animation bottom edge', asyn
   ]) {
     await page.setViewportSize(viewport);
     await expect(sourceTerms).toBeVisible();
-    await expectSourceTermsInsideBottomEdge();
+    await expectSourceTermsPlacement();
     const compactButtons = sourceTerms.getByRole('button');
     await expect(compactButtons).toHaveCount(3);
     const compactGeometry = await sourceTerms.evaluate((surface) => {

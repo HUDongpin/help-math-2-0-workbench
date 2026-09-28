@@ -6,13 +6,13 @@
   "authority": "Deterministic current JavaScript output only. This record does not establish original-runtime baseline authority, visual parity, audio or behavior fidelity, human/owner acceptance, or strict completion.",
   "generatedBy": {
     "script": "scripts/adopt-course-implementation-captures.mjs",
-    "sha256": "3529a196d35e384f37fa4ac8f188072d18f34f9b0c835c9909811c41091036f0"
+    "sha256": "b99d5947271f07ba510ef1419942489570fa61e384b9f7dcd3691a2ecfdca998"
   },
   "migrationTechnicalContract": {
     "path": "migration.json",
     "hashMode": "canonical-json-v1",
     "projection": "help-math-technical-manifest-v1",
-    "sha256": "63429d593116ace910ae57ad8b0a1d7a3bc7c7ce1cdddb7b77f5aa0baacce6cc",
+    "sha256": "b16dba9e02c1ea020d8cb687a1ecd29868754d703d4b5e6758ea45e16a47013c",
     "excludedPaths": [
       "status",
       "created",
@@ -45,7 +45,7 @@
     "path": "evidence/full-frame-coverage.json",
     "hashMode": "canonical-json-v1",
     "projection": "help-math-trace-coverage-identity-v1",
-    "sha256": "6e31826cdac93a1876c2a0b4031ab045944f19aa21f03a7e0fcab4c04e1942de",
+    "sha256": "cdfad03e52c5518dec3c4ea1ceb1a8da7bc7ac1f179031ce3635a795ca20d95d",
     "includedPaths": [
       "requirementId",
       "scenario",
@@ -75,6 +75,22 @@
   },
   "requirements": [
     {
+      "requirementId": "req:sprite-179:lesson-shell-natural-entry:en",
+      "frameDomainId": "sprite-179",
+      "traceId": "trace:sprite-179:lesson-shell-natural-entry:en:seed-0",
+      "entryStateSha256": "e5bf1a9c67cd0ff84eafbd7484034423882aae6ecb9c3473b3215070d3655f07",
+      "scenario": "source-static-reachable-domain",
+      "language": "en",
+      "seed": "0",
+      "captureManifest": {
+        "path": "output/playwright/coverage-v2/course-g04-l03-ti-005-main-plus-companion-en-r2/req-sprite-179-lesson-shell-natural-entry-en/capture-manifest.json",
+        "sha256": "9d24201c00f67ef9dc38bbc3f9d3937c10d8c38608c895eb5f30ed54c6393ae7"
+      },
+      "capturedFrameCount": 5,
+      "frameSetSha256": "81b737a10088e7526ffd36d18d1266f72229b086bbe595286f8916e238478d36",
+      "result": "validated-current-javascript-output-only"
+    },
+    {
       "requirementId": "req:sprite-208:lesson-shell-natural-entry:en",
       "frameDomainId": "sprite-208",
       "traceId": "trace:sprite-208:lesson-shell-natural-entry:en:seed-0",
@@ -83,25 +99,32 @@
       "language": "en",
       "seed": "0",
       "captureManifest": {
-        "path": "output/playwright/g4-l3-current-js-v2/course-g04-l03-ti-005-en-current/req-sprite-208-lesson-shell-natural-entry-en/capture-manifest.json",
-        "sha256": "96979a54b52b7703886924f9e6853dcc2859bf3909db6c903dae4c4ad7ef3784"
+        "path": "output/playwright/coverage-v2/course-g04-l03-ti-005-main-plus-companion-en-r2/req-sprite-208-lesson-shell-natural-entry-en/capture-manifest.json",
+        "sha256": "5be8848b4f6d3484715d365217c467c79a650d56f3939dd7743fd49a835b5600"
       },
       "capturedFrameCount": 210,
-      "frameSetSha256": "c83e2c10fb119ada1b6c599b390664ab0f7382b4e9575a752257d0f74214bc32",
+      "frameSetSha256": "52eef1fcd50c474e7416b9d1f4c9437ce36d28f79f64672806ce2d4e1f07d18a",
       "result": "validated-current-javascript-output-only"
     }
   ],
   "summary": {
-    "declaredRequirementCount": 4,
-    "requirementCount": 1,
-    "capturedFrameCount": 210,
-    "missingRequirementCount": 3,
+    "declaredRequirementCount": 12,
+    "requirementCount": 2,
+    "capturedFrameCount": 215,
+    "missingRequirementCount": 10,
     "missingRequirementIds": [
       "req:root:lesson-shell-natural-entry:en",
       "req:root:lesson-shell-natural-entry:es",
+      "req:sprite-179:lesson-shell-natural-entry:es",
+      "req:sprite-203:lesson-shell-natural-entry:en",
+      "req:sprite-203:lesson-shell-natural-entry:es",
+      "req:sprite-205:lesson-shell-natural-entry:en",
+      "req:sprite-205:lesson-shell-natural-entry:es",
+      "req:sprite-207:lesson-shell-natural-entry:en",
+      "req:sprite-207:lesson-shell-natural-entry:es",
       "req:sprite-208:lesson-shell-natural-entry:es"
     ],
-    "missingFrameCount": 230,
+    "missingFrameCount": 387,
     "validationErrors": 0
   },
   "strictAcceptanceEffect": "none"

@@ -1,77 +1,54 @@
 # course-g04-l03-ts-006 Migration Brief
 
-Created: 2026-07-24
+Updated: 2026-09-08. Bounded modern-product engineering review.
 
-## Objective
+## Identity and scope
 
-Rebuild G4 L3 TS006 (4 Step Plan) as an 800×600 bilingual-capable HTML5 lesson page while preserving the original Flash timeline domains and failing closed wherever authoritative behavior is not yet established. The current implementation is an engineering candidate, not a faithful or accepted migration.
+- Placement: Grade 4, Lesson 3, Practice Test / 4 - Step Plan, active source-ordered page 34 of 39.
+- Source teaching content: Four-step plan
+- Complexity/lane: low source-linear recap; existing generated drawing plus the maintained reading adapter.
+- Existing renderer and modern My Lesson route `/en/courses/4/3` are retained. No new registration, legacy shell implementation, factory scale-out or publication is claimed.
 
-## Identity And Classification
+## Source binding
 
-- Animation: `course-g04-l03-ts-006`; immutable asset: `swf-fa8962a6ca72c0bb213605a9836b62600992cb5c1cf955f7c871e857e90ddf47`.
-- Course placement: Grade 4, Lesson 3, TS page 6; release sequence 34/40.
-- Knowledge point: 4 Step Plan / Plan de 4 Pasos.
-- Confidence: low until original-runtime, bilingual, audio, visual, and behavior evidence closes.
+SWF: `source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.swf`, 55154 bytes, SHA-256 `fa8962a6ca72c0bb213605a9836b62600992cb5c1cf955f7c871e857e90ddf47`.
 
-## Source Evidence
+FLA: `source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.fla`, SHA-256 `3f500c60b73b735eb001993b31ff101bf1615384c86b6a28987a84feef5b70dd`
 
-- FLA: `source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.fla` (SHA-256 `3f500c60b73b735eb001993b31ff101bf1615384c86b6a28987a84feef5b70dd`).
-- SWF: `source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/TS/L3TS06.swf` (SHA-256 `fa8962a6ca72c0bb213605a9836b62600992cb5c1cf955f7c871e857e90ddf47`).
-- Work-only Animate audit: `run-tkpM0N`, MAC 21,0,7,42652; this is authoring structure only.
-- Sources remain owner-provided and byte-preserved.
+The read-only source audit rechecks swfmill geometry, FFDec scripts, glyph-map text and the root placement. The 800×600, 12-fps source root has 10 frames and enters at frame 6. Main domain `sprite-23` contains 128 frames and stops at its last frame. The root preloader and companion remain independent from the current-JS main-domain playback; source ActionScript is not executed.
 
-## Runtime Audit
+## Current product behavior
 
-- SWF v6 CWS; 800×600; 12 FPS; root 1–10; background #b8d8f7.
-- ActionScript: AS1/2; 3 exported frame scripts; no static external API candidates.
-- Frame domains: root 1–10; sprite-23 1–128 at root frame 6; sprite-3 is a one-frame scriptless composite child for independent-playhead disposition only.
-- Audio: sprite-23 contains one embedded stream. The exact associated L3TS06.mp3 is staged only as a same-origin, user-activated Spanish host-audio engineering candidate. Embedded audio, source-media matching, spoken content/language, original-host semantics, synchronization, listening, Replay reset, and acceptance remain unresolved.
+Ordinary playback runs once to frame 128. Reduced-motion presentation now selects that same complete ending, instead of frame 1. Linear completion remains tied to the current-JS narrative ending; these pages have no new quiz-answer requirement.
 
-## Baseline
+The modern host applies the bounded 32-pixel/4cqw content offset to keep the teaching heading inside its crop. Source drawing bytes are unchanged. At the completed main frame, a readable HTML explanation appears on narrow screens and remains available to assistive technology on wider screens. It is absent for unsupported languages/domains/scenarios, earlier frames, missing canvas readiness and deterministic evidence captures. Source table progression and page-specific wording are preserved.
 
-- Ruffle route: `/reference/course-g04-l03-ts-006` for forensic reference only.
-- Authoritative original-runtime baseline: not captured; natural Lesson Shell trace: not executed.
-- Native capture viewport: 800×600 at device scale 1.
+Maintained learner lines:
 
-## Rendering Decision
+- 1. Restate the question.
+- 2. Organize the information.
+- 3. Solve the problem.
+- 4. Check your answer.
 
-A source-static Canvas adapter is retained because the FFDec drawing bundle can be executed without legacy ActionScript, timers, network, storage, or embedded audio. The product host exposes the exact Spanish MP3 only after a user action and only from the same origin. This is current-JavaScript product behavior, not authorization or audio acceptance; root, Spanish visuals, embedded audio, companion rendering, original-host semantics, Replay parity, and fidelity remain blocked.
+## Glossary and focus
 
-## Timeline Specification
+The compiled source contains 0 glossary button definitions. The modern control configuration has 0 exact source frame/geometry intervals. Distinct exposed lookup targets: None in the compiled SWF.
 
-- `root`: 10 frames, current renderer scenario `root-unavailable`; every EN/ES frame remains a pending natural-trace requirement.
-- `sprite-23`: 128 frames, scenario `source-static-frame`; EN is renderer-addressable, ES remains blocked.
-- `sprite-3`: composite-child-with-parent for the independent local-playhead question; all visual and behavioral obligations remain pending.
-- Flash frames remain one-indexed.
+Source key spelling and case remain recorded. Case-insensitive title matching and the explicit `strategies` → `Strategy` inflection are modern lookup decisions, not proof of original host resolution. Repeated targets are consolidated without widening their frame windows. The shared control uses the language-specific entry ID as its React key, preserving focus when a source interval changes while its lookup target stays the same. All 28 current G4 L3 glossary configurations were checked for simultaneous target collisions; none were found.
 
-## Asset Strategy
+The Question entry's English example asks for a mean while its archived Spanish text says median. The exact two G4 learner entries now display `media` and resolve the related link to the actual Mean entry in the same index; the distinct Mean/Average entries share the Spanish title Media. Original definitions and sublinks remain unchanged in evidence mode and generated files.
 
-The generated Canvas runtime and its safety manifest are hash-bound in `asset-inventory.csv`. They are derived engineering assets and do not substitute for the preserved FLA/SWF or an authoritative runtime baseline.
+## Preserved diagnostic path
 
-## Implementation Map
+A local `const module` collided with Webpack's injected `module.hot.data` access and made this page unavailable in the live development preview. Renaming it to `animationModule` restores module loading. The diagnostic renderer implementation and the entire diagnostic timeline file remain byte-identical to the pre-change snapshot; no original-runtime color, shell, control, frame mapping, trace or acceptance flag is promoted. The ordinary source-static branch alone receives the readable companion. Its source recap says “Check your answer”; the diagnostic projection's wording remains separate.
 
-- Route: `/animations/course-g04-l03-ts-006`.
-- React module: `packages/demos/src/modules/course-g04-l03-ts-006.tsx`.
-- Pure timeline/config: `packages/demos/src/timelines/course-g04-l03-ts-006.ts`.
-- Implementation test: `packages/demos/tests/course-g04-l03-ts-006.test.ts`.
-- Acceptance-neutral host-audio product QA: `migrations/course-g04-l03-ts-006/evidence/spanish-host-audio-current-js-product-qa.json`.
-- Deterministic identity binds frameDomain, requirementId, trace, entryStateSha256, frame, scenario, lang, and seed.
+## Audio and validation
 
-## Verification Evidence
+- en: `apps/web/public/flash-assets/courses/course-g04-l03-ts-006/audio/embedded-stream-0001.mp3`, SHA-256 `4d50cee1ee64bec0919933132ec250212474f236c699cd007a40f9ff2dce3122`, 10582 ms. Existing bytes and host metadata are retained.
+- es: `apps/web/public/flash-assets/courses/course-g04-l03-ts-006/audio/spanish-host-narration.mp3`, SHA-256 `c0ea9f1cede741945c763707ed89c5be76f651f761209880157bf0c45ded8688`, 7632 ms. Existing bytes and host metadata are retained.
 
-- Candidate browser execution: 128/128 sprite-23 EN frames encoded; 1 unique visual hash.
-- The host-audio product QA observed user activation, exact same-origin MP3 routing, pause-while-playing state, and capture-mode withholding only.
-- Original-runtime baseline used: no; source-media match: no; authoritative listening: no; RMSE computed: no; visual/behavior/audio parity claimed: no.
-- Current candidate report: `reports/g4-l3-ts006-current-javascript-candidate.json`.
-- Renderer frame-domain support audit is required at `audit/renderer-frame-domain-support.json`.
+The bounded tests cover source identity, one-indexed frame domains, capture exclusion, unsupported contexts, glossary windows, reduced-motion endpoints and TS006 diagnostic preservation. The final combined demos suite has 66 passing tests; 12 Web tests cover learner-copy/related-link behavior and completion. Demos type/registry checks pass; the full Web typecheck retains six existing mixed-Playwright installation conflicts. Earlier temporary constructor/audio-binding failures were corrected and their logs retained.
 
-## Exceptions And Decisions
+Actual desktop/mobile, pause/resume, lookup and Replay observations are collected in `work/g4-l3-modern-product-review/20260908-four-step-plan/REVIEW.md`, its browser records and final receipt. The local preview's 15 page canvas/audio assets have no candidate override and match production-manifest bytes; this is not deployment evidence.
 
-Root composition and InternalPreloader behavior, natural entry, Spanish visuals, embedded audio, source-media matching, spoken Spanish/content, original-host audio semantics, synchronization, listening, interaction, terminal/Replay state, full-frame baseline/diffs/RMSE, accessibility, independent human review, Owner acceptance, and release admission remain unresolved. No UI enablement, waiver, authorization, or acceptance is created by this brief.
-
-## Completion
-
-- Engineering review: pending.
-- Human visual review: pending.
-- Owner review: pending.
-- Strict validator: expected to fail closed until all listed obligations are complete.
+Engineering reviewer: Codex. Actual human audio/visual reviewer and Owner decision: pending. Original runtime, fidelity, audio listening/synchronization, human/Owner review, strict completion, the frozen calibration batch, release and publication remain separate gates. Prior IN004 approval retains its original snapshot binding; this review adds no Owner approvals. Existing registration remains 39/39, with zero new registrations. Model cost, factory efficiency and human-review effort were not measured.

@@ -3481,6 +3481,103 @@ body:has(.lesson-shell2) {
   width: 100%;
 }
 
+/* Learner-facing notes must stay hidden at every viewport width. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-reviewer-mode='false']
+  .lesson-shell2__stage p:is([data-source-replay-parity='unvalidated'], [data-source-interaction-parity='unvalidated']) {
+  display: none;
+}
+
+/* This is a fixed crop. Focusing an overlaid control must not scroll the
+   artwork inside it or carry a shifted crop into the next lesson page. */
+.lesson-shell2[data-host-presentation='modern-wide'] .lesson-shell2__legacy-stage,
+.lesson-shell2[data-host-presentation='modern-wide'] .lesson-shell2__stage {
+  overflow: clip;
+}
+
+/* RW003's Positive label starts at native y=100, just above the shared
+   y=109 content crop. Keep that teaching label inside the modern viewport. */
+.lesson-shell2[data-host-presentation='modern-wide']
+  .lesson-shell2__legacy-stage:has(canvas[data-course-canvas='course-g04-l03-rw-003'])
+  .runtime-shell {
+  translate: 0 min(12px, 1.5cqw);
+}
+
+/* Keep these teaching headings and questions below the shared y=109 crop. */
+.lesson-shell2[data-host-presentation='modern-wide']
+  .lesson-shell2__legacy-stage:has(canvas:is(
+    [data-course-canvas='course-g04-l03-in-002'],
+    [data-course-canvas='course-g04-l03-in-008'],
+    [data-course-canvas='course-g04-l03-in-010'],
+    [data-course-canvas='course-g04-l03-in-012'],
+    [data-course-canvas='course-g04-l03-ti-002'],
+    [data-course-canvas='course-g04-l03-ti-003'],
+    [data-course-canvas='course-g04-l03-ti-004'],
+    [data-course-canvas='course-g04-l03-ti-005'],
+    [data-course-canvas='course-g04-l03-ti-006'],
+    [data-course-canvas='course-g04-l03-ts-002'],
+    [data-course-canvas='course-g04-l03-ts-003'],
+    [data-course-canvas='course-g04-l03-ts-004'],
+    [data-course-canvas='course-g04-l03-ts-005'],
+    [data-course-canvas='course-g04-l03-ts-006'],
+    [data-course-canvas='course-g04-l03-ts-007']
+  ))
+  .runtime-shell {
+  translate: 0 min(32px, 4cqw);
+}
+
+/* TS008's prompt begins at native y=90. The crop scales with the host, while
+   its canvas stops growing at 800px; retain 13px above the complete prompt. */
+.lesson-shell2[data-host-presentation='modern-wide']
+  .lesson-shell2__legacy-stage:has(canvas[data-course-canvas='course-g04-l03-ts-008'])
+  .runtime-shell {
+  translate: 0 max(4cqw, calc(13.625cqw - 77px));
+}
+
+/* IN007's definition starts near native y=91. Keep the complete rule visible. */
+.lesson-shell2[data-host-presentation='modern-wide']
+  .lesson-shell2__legacy-stage:has(canvas[data-course-canvas='course-g04-l03-in-007'])
+  .runtime-shell {
+  translate: 0 min(24px, 3cqw);
+}
+
+/* These instructions begin above the shared crop near native y=97. */
+.lesson-shell2[data-host-presentation='modern-wide']
+  .lesson-shell2__legacy-stage:has(canvas:is(
+    [data-course-canvas='course-g04-l03-in-005'],
+    [data-course-canvas='course-g04-l03-in-006']
+  ))
+  .runtime-shell {
+  translate: 0 min(16px, 2cqw);
+}
+
+/* A single glossary entry fits beside the IN008 answer buttons. */
+@media (min-width: 641px) {
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__stage:has(canvas[data-course-canvas='course-g04-l03-in-008'])
+    .course-g04-l03-source-glossary-stage-surface > div[role='group'] {
+    justify-self: end;
+    width: min(17.5cqw, 140px);
+  }
+}
+
+/* Announce the preference without placing a notice over the mathematics. */
+.lesson-shell2[data-host-presentation='modern-wide']
+  .lesson-shell2__stage .reduced-motion-note {
+  border: 0;
+  clip-path: inset(50%);
+  height: 1px;
+  left: 0;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  transform: none;
+  white-space: nowrap;
+  width: 1px;
+}
+
 .lesson-shell2__stage .runtime-stage,
 .lesson-shell2__stage .runtime-stage > div,
 .lesson-shell2__stage .faithful-conversion,
@@ -9211,7 +9308,7 @@ body:has(.lesson-shell2[data-support-modal-open='true']) {
     grid-column: 1;
     grid-row: 2;
     justify-self: center;
-    overflow: hidden;
+    overflow: clip;
   }
 
   .lesson-shell2[data-host-presentation='modern-wide']
@@ -9232,11 +9329,6 @@ body:has(.lesson-shell2[data-support-modal-open='true']) {
     .runtime-shell {
     margin-inline: auto;
     top: max(0px, calc(39.5625cqw - 316.5px));
-  }
-
-  .lesson-shell2[data-host-presentation='modern-wide'][data-reviewer-mode='false']
-    .lesson-shell2__stage [data-source-replay-parity='unvalidated'] {
-    display: none;
   }
 
   /* Reduced motion remains active; its engineering-style explanation is not
@@ -11463,4 +11555,14 @@ body:has(
   .lesson-shell2[data-host-presentation='modern-wide'][data-theme='dark']
 ) {
   background: #211e38;
+}
+
+/* TI002 has eight distinct visible glossary keys; keep their labels readable. */
+@media (min-width: 521px) {
+  .lesson-shell2:has(canvas[data-course-canvas='course-g04-l03-ti-002'])
+    [data-page-interaction-companion-host='true']
+    .course-g04-l03-source-glossary-stage-surface > div[role='group'] {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }

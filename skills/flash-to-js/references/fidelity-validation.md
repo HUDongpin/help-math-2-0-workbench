@@ -9,6 +9,7 @@ Use native-size deterministic captures and pair quantitative comparison with vis
 - Requirement authority and trace proof
 - Full-domain capture and comparison
 - Pixel thresholds and visual review
+- Student action outcomes
 - Interaction, responsive, and evidence records
 
 ## Capture Protocol
@@ -102,8 +103,11 @@ npm run capture:keyframes -- \
   --entry-state-sha256 <canonical-entry-state-sha256> \
   --scenario default --lang en --seed 0 \
   --frames 1,5,10,19,25,35,49,55,68,75,88,100,109 \
-  --output migrations/Conversion_1_2/evidence/implementation
+  --output "output/playwright/formula-elementary-conversion-01-02-keyframes-<unique-run-id>"
 ```
+
+Replace `<unique-run-id>` with a fresh run identifier; never overwrite an earlier
+capture. This is candidate output, not adopted canonical evidence.
 
 For complete current-JavaScript requirement capture, run:
 
@@ -188,11 +192,46 @@ Inspect every diff for:
 
 Record accepted antialiasing differences separately from behavioral or layout discrepancies.
 
+## Student Action Outcomes
+
+Prioritize the result of a student action alongside visual comparison. For each
+applicable journey, record the starting state, action, expected result from
+source evidence or an explicit modern product contract, and observed result.
+A click, successful render, HTTP 200, screenshot, or source-code string match
+alone does not prove that the action worked.
+
+| Journey | Assertions after the action |
+| --- | --- |
+| Correct, incorrect, retry | Expected feedback, score/counter, enabled choices, focus and branch destination; repeated or out-of-phase input must not advance twice. |
+| Replay | Restore the declared initial visual/playhead and complete variable/button state; stop old audio and apply the page's restart policy. Do not assume every page starts its interactive entry at frame 1. |
+| Leave a sounding page | Old audio is paused/stopped and released as the contract requires; late ended/play-promise callbacks cannot change the new page. |
+| Return to a page | Assert the documented reset/resume policy, retained lesson progress and replay counts, and whether audio needs a new student action. Do not invent persistence semantics. |
+| English/Spanish | Check actual displayed content and exact allowed resource binding separately for UI, visual content, and audio. A Spanish route or label does not establish translated animation content. |
+| Mobile/keyboard/course navigation | Perform actions on the actual My Lesson surface at relevant viewports; verify focus, enabled controls and the destination page, not just control presence or size. |
+
+Use pure state-machine tests for answer/branch/reset boundaries, then browser
+journeys for real host wiring, navigation, focus, and audio lifecycle. A mocked
+Audio object can prove application cleanup and request selection, but cannot
+prove browser decoding, audible output, spoken-language correctness, timing
+synchronization, or listening acceptance. Label that evidence explicitly.
+
+Reuse maintained checks before adding duplicates. Current entry points include
+`packages/demos/tests/course-g04-l03-ts-007-practice-question-interaction.test.ts`,
+its TS008 counterpart, `apps/web/tests/whole-lesson-session.test.ts`,
+`apps/web/e2e/g5-l4-audio.spec.ts`, and the course navigation scenarios in
+`apps/web/e2e/prototype-acceptance.spec.ts`. They cover specific contracts and
+pages, not the whole catalog by implication.
+
+Report technical behavior results, visual comparison, original-runtime
+fidelity, audio listening, and human/Owner acceptance independently. Mark an
+unexecuted journey as not run and an unsupported language/resource as a gap;
+never turn either into a passing result.
+
 ## Interaction And Responsive Review
 
 Verify:
 
-- Replay restarts at frame 1 with mouse, Enter, and Space.
+- Replay restores the declared initial entry state with mouse, Enter, and Space.
 - Focus order and accessible control names are meaningful.
 - `prefers-reduced-motion` has an intentional behavior.
 - Native stage, wide desktop, tablet, and narrow mobile layouts do not crop or overlap.

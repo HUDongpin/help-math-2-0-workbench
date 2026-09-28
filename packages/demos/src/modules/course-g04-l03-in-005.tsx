@@ -12,6 +12,7 @@ import {createPortal} from "react-dom";
 
 import type {AnimationRendererProps} from "../contract";
 import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
+import {createCourseG04L03SourceGlossaryCandidate} from "./course-g04-l03-source-glossary-candidate";
 import {
   COURSE_G04_L03_IN_005_ORDERING_CARDS,
   COURSE_G04_L03_IN_005_ORDERING_COMPLETION_FEEDBACK,
@@ -32,6 +33,7 @@ import {
 } from "../timelines/course-g04-l03-in-005-ordering-interaction";
 import {
   COURSE_G04_L03_IN_005_CONFIG,
+  COURSE_G04_L03_IN_005_GLOSSARY_CONFIG,
   COURSE_G04_L03_IN_005_SOURCE,
 } from "../timelines/course-g04-l03-in-005";
 
@@ -49,11 +51,6 @@ const SOURCE_FONT =
   '"Bauhaus Md BT", "Arial Rounded MT Bold", "Trebuchet MS", ui-rounded, sans-serif';
 const RESPONSIVE_CONTROLS_MEDIA =
   "(max-width: 640px), (any-pointer: coarse)";
-const SOURCE_GLOSSARY_HITS = Object.freeze([
-  Object.freeze({buttonObjectId: 20, term: "Order"}),
-  Object.freeze({buttonObjectId: 21, term: "Least"}),
-  Object.freeze({buttonObjectId: 22, term: "Greatest"}),
-]);
 
 type SourceCanvasStatus =
   | "idle"
@@ -146,29 +143,6 @@ interface SharedSurfaceProps {
   readonly wrongCloseRef: RefObject<HTMLButtonElement | null>;
 }
 
-function SourceGlossaryBoundary() {
-  return (
-    <div
-      aria-label="Three source glossary actions are unavailable in this current JavaScript candidate."
-      data-host-glossary-actions="safe-disabled"
-      style={visuallyHiddenStyle}
-    >
-      {SOURCE_GLOSSARY_HITS.map(({buttonObjectId, term}, index) => (
-        <span
-          aria-disabled="true"
-          data-source-button-object-id={buttonObjectId}
-          data-source-glossary-term={term}
-          key={term}
-          role="link"
-        >
-          {term}
-          {index < SOURCE_GLOSSARY_HITS.length - 1 ? ", " : ""}
-        </span>
-      ))}
-    </div>
-  );
-}
-
 function StageSurface({
   canvasStatus,
   controlsReady,
@@ -213,7 +187,7 @@ function StageSurface({
   return (
     <svg
       aria-busy={!controlsReady}
-      aria-label="Source-script-bound current JavaScript least-to-greatest ordering activity"
+      aria-label="Order numbers from least to greatest"
       className="course-g04-l03-in-005-stage-surface"
       data-audio-feedback="inventoried-unimplemented-unaccepted"
       data-behavior-parity-established="false"
@@ -454,20 +428,19 @@ function StageSurface({
               data-original-runtime-terminal-parity="false"
               style={{
                 alignItems: "center",
-                background: "linear-gradient(#bd00e9, #8e00c0)",
-                border: "5px solid #7b007c",
-                borderRadius: 22,
+                background: "#e6f6ee",
+                border: "2px solid #237b57",
+                borderRadius: 12,
                 boxSizing: "border-box",
-                color: "#fff",
+                color: "#174734",
                 display: "flex",
-                fontSize: 46,
-                fontWeight: 900,
-                height: 132,
+                fontSize: 30,
+                fontWeight: 700,
+                height: 64,
                 justifyContent: "center",
                 left: 244,
                 position: "absolute",
-                textShadow: "2px 2px 0 #73008e",
-                top: 235,
+                top: 286,
                 width: 320,
               }}
             >
@@ -479,7 +452,7 @@ function StageSurface({
             {interaction.outcome === "correct-feedback"
               ? `${COURSE_G04_L03_IN_005_ORDERING_CORRECT_FEEDBACK} ${placementCount} of 7 cards placed.`
               : interaction.outcome === "complete"
-                ? `${COURSE_G04_L03_IN_005_ORDERING_COMPLETION_FEEDBACK} Current JavaScript terminal state.`
+                ? "All seven numbers are in order."
                 : interaction.feedback ?? ""}
           </span>
         </div>
@@ -638,7 +611,7 @@ function MobileSurface({
             {COURSE_G04_L03_IN_005_ORDERING_COMPLETION_FEEDBACK}
           </strong>
           <p>
-            Current JavaScript terminal state. Use Replay to practice again.
+            All seven numbers are in order. Use Replay to practice again.
           </p>
         </div>
       ) : null}
@@ -646,7 +619,7 @@ function MobileSurface({
   );
 }
 
-export function CourseG04L03In005Renderer(
+function CourseG04L03In005ActivityRenderer(
   props: AnimationRendererProps,
 ) {
   const [interaction, dispatch] = useReducer(
@@ -710,6 +683,9 @@ export function CourseG04L03In005Renderer(
     : props.state;
   const controlsReady =
     interactionEnabled && canvasStatus === "ready";
+  useEffect(() => {
+    if (interactionEnabled && interaction.outcome === "complete") props.onActivityComplete?.();
+  }, [interactionEnabled, interaction.outcome, props.onActivityComplete]);
 
   const focusControl = (focusControlKey: string) => {
     window.requestAnimationFrame(() => {
@@ -919,6 +895,12 @@ export function CourseG04L03In005Renderer(
             display: none;
           }
 
+          /* The completed stage is a read-only picture of the learner's result.
+             Every answer button is already disabled by the completed state. */
+          .course-g04-l03-in-005-stage-surface[data-interaction-outcome='complete'] {
+            display: block;
+          }
+
           .course-g04-l03-in-005-mobile-fallback-slot {
             aspect-ratio: 4 / 3;
             display: block;
@@ -1087,7 +1069,6 @@ export function CourseG04L03In005Renderer(
       </div>
       {interactionEnabled ? (
         <>
-          <SourceGlossaryBoundary />
           <StageSurface
             canvasStatus={canvasStatus}
             controlsReady={controlsReady}
@@ -1112,7 +1093,7 @@ export function CourseG04L03In005Renderer(
 export {COURSE_G04_L03_IN_005_SOURCE};
 export const COURSE_G04_L03_IN_005_MOVIE = candidate.movie;
 export const COURSE_G04_L03_IN_005_RUNTIME = candidate.runtime;
-export const COURSE_G04_L03_IN_005_SOURCE_CONTRACT = Object.freeze({
+const interactionSourceContract = Object.freeze({
   ...candidate.sourceContract,
   currentJavascriptInteractionStatus:
     "source-script-bound-functional-candidate",
@@ -1123,7 +1104,7 @@ export const COURSE_G04_L03_IN_005_SOURCE_CONTRACT = Object.freeze({
     "source-target-reveal-and-card-hide",
     "per-card-correct-feedback-and-seven-card-persistent-current-js-terminal",
     "unfilled-slot-labels-do-not-disclose-source-answer-values",
-    "three-source-glossary-callback-hits-safe-disabled",
+    "three-source-glossary-terms-through-typed-modern-host",
     "host-pause-freezes-current-js-correct-feedback-delay",
     "reduced-motion-immediate-current-js-feedback-transition",
     "whole-renderer-replay-reset-and-source-canvas-remount",
@@ -1146,7 +1127,7 @@ export const COURSE_G04_L03_IN_005_SOURCE_CONTRACT = Object.freeze({
   correctFeedbackTextStatus: "modern-assistive-not-source-exact",
   completionFeedbackTextStatus:
     "source-authored-exact-modern-persistent",
-  sourceGlossaryActionStatus: "three-source-hits-safe-disabled",
+  sourceGlossaryActionStatus: "three-source-terms-modern-host-wired",
   localControlStatus: "no-help-clear-or-new-number-controls",
   mainTimelineAudioStatus: "current-js-engineering-candidate-unaccepted",
   interactionFeedbackAudioStatus:
@@ -1167,8 +1148,21 @@ export const getCourseG04L03In005FrameState = candidate.getFrameState;
 export const buildCourseG04L03In005CaptureAttributes =
   candidate.buildCaptureAttributes;
 
-export default Object.freeze({
+const activityModule = Object.freeze({
   ...candidate.module,
+  completionMode: "activity" as const,
   reducedMotionFrame: SOURCE_INTERACTION_FRAME,
-  Renderer: CourseG04L03In005Renderer,
+  Renderer: CourseG04L03In005ActivityRenderer,
 });
+const glossaryCandidate = createCourseG04L03SourceGlossaryCandidate({
+  ...candidate,
+  Renderer: CourseG04L03In005ActivityRenderer,
+  sourceContract: candidate.sourceContract,
+  module: activityModule,
+}, COURSE_G04_L03_IN_005_GLOSSARY_CONFIG);
+export const COURSE_G04_L03_IN_005_SOURCE_CONTRACT = Object.freeze({
+  ...glossaryCandidate.sourceContract,
+  ...interactionSourceContract,
+});
+export const CourseG04L03In005Renderer = glossaryCandidate.Renderer;
+export default glossaryCandidate.module;

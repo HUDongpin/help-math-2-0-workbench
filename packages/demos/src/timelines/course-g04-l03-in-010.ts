@@ -1,3 +1,4 @@
+import type {CourseG04L03SourceGlossaryConfig} from "./course-g04-l03-source-glossary-interaction";
 import type {SourceStaticCanvasCandidateConfig} from "../source-static-canvas-candidate";
 
 export const COURSE_G04_L03_IN_010_SOURCE = Object.freeze({
@@ -93,3 +94,40 @@ export const COURSE_G04_L03_IN_010_AUTHORITY = Object.freeze({
   strictMigrationComplete: false,
   strictAcceptanceEffect: "none",
 });
+
+// Source-locked glossary placements; geometry remains audit metadata.
+export const COURSE_G04_L03_IN_010_GLOSSARY_HOTSPOTS = Object.freeze([
+  Object.freeze({
+    id: "temperature",
+    characterId: 39,
+    keyAttribute: "Temperature",
+    firstFrame: 85,
+    lastFrame: 264,
+    depth: 45,
+    sourceBounds: Object.freeze({"left": 286.4842346232501, "right": 381.0116523843491, "top": 90.39234039401636, "bottom": 106.0846602709964}),
+    entryIds: Object.freeze({"en": "en-0684-c1f7ef269aea", "es": "es-0667-2e9db8406799"}),
+    labels: Object.freeze({"en": "Temperature", "es": "Temperatura"}),
+  }),
+  Object.freeze({
+    id: "thermometer",
+    characterId: 40,
+    keyAttribute: "Thermometer",
+    firstFrame: 85,
+    lastFrame: 264,
+    depth: 47,
+    sourceBounds: Object.freeze({"left": 606.0360192486667, "right": 705.4910809061722, "top": 90.39234039401636, "bottom": 106.0846602709964}),
+    entryIds: Object.freeze({"en": "en-0694-ee23f1e354bc", "es": "es-0673-a0d2a8001ef9"}),
+    labels: Object.freeze({"en": "Thermometer", "es": "Termómetro"}),
+  }),
+] as const);
+
+export const COURSE_G04_L03_IN_010_GLOSSARY_CONFIG = Object.freeze({
+  animationId: "course-g04-l03-in-010",
+  frameDomain: "sprite-90",
+  terms: COURSE_G04_L03_IN_010_GLOSSARY_HOTSPOTS,
+  playbackDisposition: "reversible-support-pause",
+  sourceAction: "DoHyperLinks",
+  sourceStopTarget: "_root.animation_mc.animation.stop()",
+  glossaryAuthority: "grade-wide-shell-keyterms-static-candidate",
+  glossarySourceDisposition: "unresolved-lesson-vs-grade-wide",
+} satisfies CourseG04L03SourceGlossaryConfig);

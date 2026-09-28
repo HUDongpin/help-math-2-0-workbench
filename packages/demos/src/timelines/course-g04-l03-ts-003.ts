@@ -63,3 +63,43 @@ export const COURSE_G04_L03_TS_003_AUTHORITY = Object.freeze({
   strictMigrationComplete: false,
   strictAcceptanceEffect: "none",
 });
+
+import type {CourseG04L03SourceGlossaryConfig} from "./course-g04-l03-source-glossary-interaction";
+
+// Source placement intervals and bounds are retained; modern controls consolidate identical targets.
+// Title case is normalized; strategies uses the explicit modern Strategy inflection alias.
+// These mappings do not establish original host lookup parity.
+export const COURSE_G04_L03_TS_003_GLOSSARY_HOTSPOTS = Object.freeze([
+  Object.freeze({
+    id: "organize-f24",
+    characterId: 17,
+    keyAttribute: "Organize",
+    firstFrame: 24,
+    lastFrame: 241,
+    depth: 16,
+    sourceBounds: Object.freeze({"left": 231.82905349731445, "right": 323.8285308837891, "top": 78.25002441406251, "bottom": 103.6499755859375}),
+    entryIds: Object.freeze({"en": "en-0442-5722e95ef2b8", "es": "es-0471-571517014d23"}),
+    labels: Object.freeze({"en": "Organize", "es": "Organizar"}),
+  }),
+  Object.freeze({
+    id: "information-f24",
+    characterId: 18,
+    keyAttribute: "Information",
+    firstFrame: 24,
+    lastFrame: 241,
+    depth: 18,
+    sourceBounds: Object.freeze({"left": 363.9, "right": 472.35, "top": 80.25, "bottom": 102.65}),
+    entryIds: Object.freeze({"en": "en-0301-ce7f6e5c58b3", "es": "es-0342-21dc5fcdcc72"}),
+    labels: Object.freeze({"en": "Information", "es": "Información"}),
+  }),
+]);
+export const COURSE_G04_L03_TS_003_GLOSSARY_CONFIG = Object.freeze({
+  animationId: "course-g04-l03-ts-003",
+  frameDomain: "sprite-25",
+  terms: COURSE_G04_L03_TS_003_GLOSSARY_HOTSPOTS,
+  playbackDisposition: "reversible-support-pause",
+  sourceAction: "DoHyperLinks",
+  sourceStopTarget: "_root.animation_mc.animation.stop()",
+  glossaryAuthority: "grade-wide-shell-keyterms-static-candidate",
+  glossarySourceDisposition: "unresolved-lesson-vs-grade-wide",
+} satisfies CourseG04L03SourceGlossaryConfig);

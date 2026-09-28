@@ -582,7 +582,7 @@ test("TS008 Need More Help opens only after a source-evidenced reveal or at quiz
   );
 });
 
-test("TS008 locks the NMH geometry and keeps all three source glossary callbacks safe-disabled", () => {
+test("TS008 locks the NMH geometry and preserves three exact Help glossary mappings", () => {
   assert.deepEqual(COURSE_G04_L03_TS_008_NEED_MORE_HELP.buttonBounds, {
     x: 601.4,
     y: 130.8,
@@ -622,31 +622,31 @@ test("TS008 locks the NMH geometry and keeps all three source glossary callbacks
         term: "Positive number",
         visibleText: "positive numbers",
         sourceButtonObjectId: 166,
-        sourceHitBoundsResolved: false,
+        sourceHitBoundsResolved: true,
         hostAction: "DoHyperLinks",
         hostContentResolved: false,
-        enabled: false,
-        mode: "safe-disabled-unresolved-host-callback",
+        enabled: true,
+        mode: "typed-modern-help-keyterm-adapter",
       },
       {
         term: "Owe",
         visibleText: "Owing",
         sourceButtonObjectId: 167,
-        sourceHitBoundsResolved: false,
+        sourceHitBoundsResolved: true,
         hostAction: "DoHyperLinks",
         hostContentResolved: false,
-        enabled: false,
-        mode: "safe-disabled-unresolved-host-callback",
+        enabled: true,
+        mode: "typed-modern-help-keyterm-adapter",
       },
       {
         term: "Negative number",
         visibleText: "negative numbers",
         sourceButtonObjectId: 168,
-        sourceHitBoundsResolved: false,
+        sourceHitBoundsResolved: true,
         hostAction: "DoHyperLinks",
         hostContentResolved: false,
-        enabled: false,
-        mode: "safe-disabled-unresolved-host-callback",
+        enabled: true,
+        mode: "typed-modern-help-keyterm-adapter",
       },
     ],
   );

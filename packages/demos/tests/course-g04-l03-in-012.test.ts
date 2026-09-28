@@ -200,26 +200,10 @@ test("IN012 frame 174 exposes fail-closed owing controls over clean frame 173", 
   assert.match(markup, /\(any-pointer: coarse\)/);
   assert.match(markup, /grid-row: 7/);
   assert.match(markup, /min-height: 48px/);
-  assert.match(markup, /data-host-glossary-actions="safe-disabled"/);
-  assert.match(
-    markup,
-    /data-host-glossary-function="DoHyperLinks-unresolved"/,
-  );
-  assert.equal(markup.match(/data-source-glossary-term="/g)?.length, 3);
-  for (const [visibleText, keyAttribute] of [
-    ["position", "Position"],
-    ["number line", "Number line"],
-    ["owes", "Owe"],
-  ]) {
-    assert.match(
-      markup,
-      new RegExp(`data-source-glossary-term="${visibleText}"`),
-    );
-    assert.match(
-      markup,
-      new RegExp(`data-source-glossary-key="${keyAttribute}"`),
-    );
-  }
+  assert.match(markup, /data-current-js-functional-scope="source-keyattribute-keyterms-host-adapter"/);
+  assert.match(markup, /data-owing-preview-count="0"/);
+  assert.equal(courseIn012.completionMode, "activity");
+  assert.doesNotMatch(markup, /Current JavaScript terminal state/);
   assert.doesNotMatch(markup, /aria-label="Open Need More Help"/);
   assert.doesNotMatch(markup, /aria-label="Clear"/);
   assert.doesNotMatch(markup, /aria-label="New Number"/);
@@ -265,7 +249,7 @@ test("IN012 frame 174 exposes fail-closed owing controls over clean frame 173", 
   );
   assert.equal(
     COURSE_G04_L03_IN_012_SOURCE_CONTRACT.sourceGlossaryActionStatus,
-    "three-source-hits-safe-disabled",
+    "typed-keyterm-host-integrated",
   );
   for (const scope of [
     "html-drag-and-drop-and-select-then-target-keyboard-alternative",
@@ -382,7 +366,7 @@ test("IN012 remains prototype-only with every acceptance gate closed", async () 
   assert.equal(matchPrototype({sourcePath: "/unknown/L3IN12.swf"}), undefined);
   const registered = await loadAnimationModule("course-g04-l03-in-012");
   assert.equal(registered?.maturity, "legacy-prototype");
-  assert.equal(registered?.audioCues.length, 1);
+  assert.equal(registered?.audioCues.length, 7);
   assert.equal(COURSE_G04_L03_IN_012_SOURCE_CONTRACT.ownerAccepted, false);
   for (const [name, value] of Object.entries(COURSE_G04_L03_IN_012_AUTHORITY)) {
     if (name === "registryIsPrototypeOnly" || name === "strictAcceptanceEffect") continue;

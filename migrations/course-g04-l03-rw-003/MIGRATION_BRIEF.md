@@ -2,6 +2,27 @@
 
 Created: 2026-07-24
 
+## Modern Product Update — 2026-09-08
+
+G4 L3 Your World page 2 retains its existing Canvas renderer, source frames,
+and audio. The `interactive-understood` lane uses the maintained glossary
+adapter for Positive and Negative. Their source handlers and glossary entries
+are unchanged; the modern panel now uses a reversible support-tool pause.
+Closing it resumes only when the learner had been playing, with focus returned
+to the initiating control. No Flash UI replication is required.
+
+The source SWF remains SHA-256
+`783b74b036a7af4031f17ce9e1aab7536665c84a73400b3a980cfa3e89a9a335`.
+Modern narrow screens display a readable summary after both terms appear.
+The product viewport prevents focus-induced internal scrolling and gives the
+native y=100 Positive label enough top clearance; the source Canvas bytes and
+internal coordinates are preserved.
+
+Current browser checks and code bindings are held under
+`work/g4-l3-modern-product-review/20260908-rw003-rw004/`.
+Product repair is separate from human approval, original-runtime fidelity,
+strict audio acceptance, and deployment. The scaffold below is historical.
+
 ## Objective
 
 Describe the instructional purpose, target users, required languages, interactions, and exact stakeholder request.
