@@ -91,7 +91,8 @@ async function validatePayload(values) {
     payload,
     checkoutSha: checkoutSha(),
     eventOrigin: {
-      installationId: requiredEnv("HELP_MATH_VERCEL_INSTALLATION_ID"),
+      installationId: process.env.HELP_MATH_VERCEL_EVENT_INSTALLATION_ID || null,
+      senderId: requiredEnv("HELP_MATH_VERCEL_SENDER_ID"),
       senderLogin: requiredEnv("HELP_MATH_VERCEL_SENDER_LOGIN"),
       senderType: requiredEnv("HELP_MATH_VERCEL_SENDER_TYPE"),
     },
@@ -105,6 +106,8 @@ async function validatePayload(values) {
     git_ref: identity.gitRef,
     git_sha: identity.gitSha,
     installation_id: identity.githubAppInstallationId,
+    event_installation_id: identity.eventInstallationId ?? "",
+    sender_id: identity.githubAppSenderId,
     project_id: identity.projectId,
     sender_login: identity.githubAppSenderLogin,
   });
@@ -123,6 +126,7 @@ async function requestOidc(values) {
   if (requiredEnv("HELP_MATH_VERCEL_SENDER_TYPE") !== policy.github.vercelApp.senderType) {
     fail("OIDC request sender type drifted");
   }
+  if (requiredEnv("HELP_MATH_VERCEL_SENDER_ID") !== policy.github.vercelApp.senderId) fail("OIDC request sender id drifted");
   validateWorkflowContext(workflowContext(), policy, "candidate");
   const token = await requestGithubOidcToken({
     requestUrl: requiredEnv("ACTIONS_ID_TOKEN_REQUEST_URL"),
@@ -152,6 +156,8 @@ async function smoke(values) {
     deploymentId: requiredEnv("HELP_MATH_DEPLOYMENT_ID"),
     deploymentUrl: requiredEnv("HELP_MATH_DEPLOYMENT_URL"),
     githubAppInstallationId: requiredEnv("HELP_MATH_VERCEL_INSTALLATION_ID"),
+    eventInstallationId: process.env.HELP_MATH_VERCEL_EVENT_INSTALLATION_ID || null,
+    githubAppSenderId: requiredEnv("HELP_MATH_VERCEL_SENDER_ID"),
     gitSha: requiredEnv("HELP_MATH_GIT_SHA"),
   };
   const receipt = await runSmoke({

@@ -43,10 +43,11 @@ jobs:
         id: payload
         env:
           HELP_MATH_VERCEL_EVENT_ACTION: ${{ github.event.action }}
-          HELP_MATH_VERCEL_INSTALLATION_ID: ${{ github.event.installation.id }}
+          HELP_MATH_VERCEL_EVENT_INSTALLATION_ID: ${{ github.event.installation.id }}
           HELP_MATH_VERCEL_PAYLOAD_JSON: ${{ toJSON(github.event.client_payload) }}
           HELP_MATH_VERCEL_SENDER_LOGIN: ${{ github.event.sender.login }}
           HELP_MATH_VERCEL_SENDER_TYPE: ${{ github.event.sender.type }}
+          HELP_MATH_VERCEL_SENDER_ID: ${{ github.event.sender.id }}
           HELP_MATH_GITHUB_EVENT_NAME: ${{ github.event_name }}
           HELP_MATH_GITHUB_REF: ${{ github.ref }}
           HELP_MATH_GITHUB_REPOSITORY_ID: ${{ github.repository_id }}
@@ -66,6 +67,8 @@ jobs:
 
       - name: Verify the public production domain
         env:
+          HELP_MATH_VERCEL_EVENT_INSTALLATION_ID: ${{ steps.payload.outputs.event_installation_id }}
+          HELP_MATH_VERCEL_SENDER_ID: ${{ steps.payload.outputs.sender_id }}
           HELP_MATH_DEPLOYMENT_ID: ${{ steps.payload.outputs.deployment_id }}
           HELP_MATH_DEPLOYMENT_URL: ${{ steps.payload.outputs.deployment_url }}
           HELP_MATH_GIT_SHA: ${{ steps.payload.outputs.git_sha }}
