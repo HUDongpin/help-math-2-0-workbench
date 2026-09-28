@@ -11,10 +11,17 @@ import {
   validatePolicy,
 } from "./lib/helpmath-vercel-ci.mjs";
 
-const policy = validatePolicy(JSON.parse(await readFile(
+const checkedInPolicy = validatePolicy(JSON.parse(await readFile(
   new URL("../.github/helpmath-vercel-production-policy.json", import.meta.url),
   "utf8",
 )));
+const preparedFixture = structuredClone(checkedInPolicy);
+preparedFixture.status = "prepared-not-activated";
+preparedFixture.github.vercelApp.installationId = null;
+preparedFixture.trustedSource.claims.repository_id = null;
+preparedFixture.trustedSource.claims.repository_owner_id = null;
+const policy = validatePolicy(preparedFixture);
+
 const nextConfigSource = await readFile(
   new URL("../apps/web/next.config.ts", import.meta.url),
   "utf8",
@@ -570,4 +577,12 @@ test("proposed build provenance executes with valid and invalid provider fields"
   }
   assert.equal(execute({...valid, VERCEL_PROJECT_ID: "prj_other"})[0].value, "unavailable");
   assert.equal(execute({...valid, VERCEL_GIT_COMMIT_SHA: "invalid"})[2].value, "unavailable");
+});
+
+
+test("checked-in activation binds observed installation and immutable repository IDs", () => {
+  assert.equal(checkedInPolicy.status, "active");
+  assert.equal(checkedInPolicy.github.vercelApp.installationId, "145587056");
+  assert.equal(checkedInPolicy.trustedSource.claims.repository_id, "1325197994");
+  assert.equal(checkedInPolicy.trustedSource.claims.repository_owner_id, "47708816");
 });

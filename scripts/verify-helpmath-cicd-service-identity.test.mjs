@@ -29,7 +29,7 @@ async function checkedInDocuments() {
 
 test("checked-in service identity package is secretless and activation-gated", async () => {
   const result = await verifyHelpmathCicdServiceIdentity(projectRoot);
-  assert.equal(result.policy.status, "prepared-not-activated");
+  assert.equal(result.policy.status, "active");
   assert.equal(result.summary.storedProviderSecrets, 0);
   assert.equal(result.summary.vercelControlPlaneTokens, 0);
   assert.equal(result.summary.trustedOidcHeader, true);
