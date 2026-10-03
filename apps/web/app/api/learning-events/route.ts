@@ -1,6 +1,6 @@
 import {NextResponse} from 'next/server';
 
-import {resolveAnonymousLearningActor} from '@/lib/anonymous-learning-actor.server';
+import {issueLearningIdentityBinding, resolveAnonymousLearningActor, verifyLearningIdentityBinding} from '@/lib/anonymous-learning-actor.server';
 import {
   MAX_LEARNING_EVENT_REQUEST_BYTES,
   findProhibitedLearningEventField,
@@ -11,6 +11,8 @@ import {loadLrsConfig} from '@/lib/lrs-config.server';
 import {consumeRequestBudget} from '@/lib/request-budget.server';
 import {isSameOriginLearningEventRequest} from '@/lib/learning-event-route-support.server';
 import {buildXapiStatement} from '@/lib/xapi-statement';
+
+import {LEARNING_IDENTITY_HEADER} from '@/lib/learning-event-identity';
 
 export const dynamic = 'force-dynamic';
 const DELIVERY_CONCURRENCY = 4;
@@ -108,19 +110,34 @@ export async function POST(request: Request) {
     return jsonResponse({ok: false, error: {code: 'LRS_NOT_CONFIGURED'}}, 503);
   }
 
-  const requestOrigin = new URL(request.headers.get('origin') as string);
-  const identity = resolveAnonymousLearningActor({
-    cookieHeader: request.headers.get('cookie'),
-    hmacSecret: loadedConfig.config.actorHmacSecret,
-    secureCookie: requestOrigin.protocol === 'https:',
-  });
+  const token = request.headers.get(LEARNING_IDENTITY_HEADER);
+  if (!token) {
+    const identity = resolveAnonymousLearningActor({
+      cookieHeader: request.headers.get('cookie'),
+      hmacSecret: loadedConfig.config.actorHmacSecret,
+      secureCookie: new URL(request.headers.get('origin')!).protocol === 'https:',
+    });
+    // Never write an event before the browser has durably selected a binding.
+    // Lost or concurrent bootstrap responses therefore cannot commit actors.
+    return jsonResponse({ok: false, identity: issueLearningIdentityBinding(
+      identity.actor, loadedConfig.config.actorHmacSecret,
+    )}, 202, identity.setCookieHeader);
+  }
+  const actor = verifyLearningIdentityBinding(
+    token, loadedConfig.config.actorHmacSecret,
+    parsed.data.events.map(event => event.occurredAt),
+  );
+  if (!actor) {
+    // Keep pending events intact rather than silently rebinding their actor.
+    return jsonResponse({ok: false, error: {code: 'IDENTITY_INVALID'}}, 503);
+  }
 
   const results = await mapWithConcurrency(
     parsed.data.events,
     DELIVERY_CONCURRENCY,
     async (event) => deliverXapiStatement(
       loadedConfig.config,
-      buildXapiStatement(event, identity.actor),
+      buildXapiStatement(event, actor),
     ),
   );
   const publicResults = results.map((result) => ({
@@ -137,6 +154,5 @@ export async function POST(request: Request) {
   return jsonResponse(
     {ok: allStored, results: publicResults},
     status,
-    identity.setCookieHeader,
   );
 }

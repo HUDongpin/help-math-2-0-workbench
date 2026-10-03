@@ -282,12 +282,25 @@ export function strictCaptureIdentityFailure(
     : 'state-capture-identity-mismatch';
 }
 
+/** Keep completion progress before wrapping the displayed frame of a loop. */
+export function animationPlaybackFrames(
+  elapsedMs: number,
+  movie: AnimationModule['movie'],
+  mode: AnimationModule['playbackMode'],
+  endFrame: number,
+) {
+  return {
+    frame: frameAtElapsedMs(elapsedMs, movie, mode, endFrame),
+    completionFrame: frameAtElapsedMs(elapsedMs, movie, 'once', endFrame),
+  };
+}
+
 function useFrame(movie: AnimationModule['movie'] | undefined, playbackMode: AnimationModule['playbackMode'], playbackEndFrame: AnimationModule['playbackEndFrame'], running: boolean, replay: number, playbackIdentity: string) {
   const mode = playbackMode ?? 'once';
   const endFrame = movie ? resolvePlaybackEndFrame(movie, playbackEndFrame) : 1;
   const fps = movie?.fps ?? 0, frameCount = movie?.frameCount ?? 0;
   const signature = `${playbackIdentity}:${fps}:${frameCount}:${endFrame}:${mode}:${replay}`;
-  const [clock, setClock] = useState({signature, frame: 1});
+  const [clock, setClock] = useState({signature, frame: 1, completionFrame: 1});
   const [seekRevision, setSeekRevision] = useState(0);
   const elapsed = useRef({signature, milliseconds: 0});
   const activeLoop = useRef<{
@@ -305,17 +318,17 @@ function useFrame(movie: AnimationModule['movie'] | undefined, playbackMode: Ani
     cancelAnimationFrame(loop.request);
     const milliseconds = loop.priorElapsed + Math.max(0, performance.now() - loop.startedAt);
     elapsed.current = {signature: loop.signature, milliseconds};
-    const frozenFrame = frameAtElapsedMs(milliseconds, loop.movie!, loop.mode, loop.endFrame);
-    setClock((value) => value.signature === loop.signature && value.frame === frozenFrame
+    const frames = animationPlaybackFrames(milliseconds, loop.movie, loop.mode, loop.endFrame);
+    setClock((value) => value.signature === loop.signature && value.frame === frames.frame && value.completionFrame === frames.completionFrame
       ? value
-      : {signature: loop.signature, frame: frozenFrame});
+      : {signature: loop.signature, ...frames});
     activeLoop.current = null;
   }, []);
   useEffect(() => {
     stopActiveLoop();
     if (elapsed.current.signature !== signature) {
       elapsed.current = {signature, milliseconds: 0};
-      setClock({signature, frame: 1});
+      setClock({signature, frame: 1, completionFrame: 1});
     }
     if (!fps || !frameCount || !running) return;
     const playbackMovie = {stage: {width: 1, height: 1}, fps, frameCount, durationMs: (frameCount * 1000) / fps};
@@ -333,9 +346,9 @@ function useFrame(movie: AnimationModule['movie'] | undefined, playbackMode: Ani
       if (activeLoop.current !== loop) return;
       const elapsedMilliseconds = loop.priorElapsed + Math.max(0, now - loop.startedAt);
       elapsed.current = {signature, milliseconds: elapsedMilliseconds};
-      const next = frameAtElapsedMs(elapsedMilliseconds, playbackMovie, mode, endFrame);
-      setClock((value) => value.signature === signature && value.frame === next ? value : {signature, frame: next});
-      if (mode === 'loop' || next < endFrame) {
+      const frames = animationPlaybackFrames(elapsedMilliseconds, playbackMovie, mode, endFrame);
+      setClock((value) => value.signature === signature && value.frame === frames.frame && value.completionFrame === frames.completionFrame ? value : {signature, ...frames});
+      if (mode === 'loop' || frames.frame < endFrame) {
         loop.request = requestAnimationFrame(tick);
       } else {
         activeLoop.current = null;
@@ -358,11 +371,12 @@ function useFrame(movie: AnimationModule['movie'] | undefined, playbackMode: Ani
       signature,
       milliseconds: frameToElapsedMs(normalizedFrame, playbackMovie),
     };
-    setClock({signature, frame: normalizedFrame});
+    setClock({signature, frame: normalizedFrame, completionFrame: normalizedFrame});
     setSeekRevision((value) => value + 1);
   }, [fps, frameCount, signature, stopActiveLoop]);
   return {
     frame: clock.signature === signature ? clock.frame : 1,
+    completionFrame: clock.signature === signature ? clock.completionFrame : 1,
     pauseNow: useCallback(() => stopActiveLoop(signature), [signature, stopActiveLoop]),
     seekRevision,
     seekToFrame,
@@ -800,6 +814,7 @@ export function AnimationRuntime({
   ]);
   const {
     frame: liveFrame,
+    completionFrame,
     pauseNow: pauseTimelineNow,
     seekRevision,
     seekToFrame,
@@ -1123,7 +1138,7 @@ export function AnimationRuntime({
       playbackReachedEnd({
         captureFrame: context?.captureFrame,
         fps: activeMovie.fps,
-        frame: liveFrame,
+        frame: completionFrame,
         playbackEndFrame: resolvePlaybackEndFrame(
           activeMovie,
           playbackEndFrame,

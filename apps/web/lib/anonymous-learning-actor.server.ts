@@ -1,4 +1,5 @@
-import {createHmac, randomBytes} from 'node:crypto';
+import {LEARNING_IDENTITY_LIFETIME_MS, LEARNING_IDENTITY_RETRY_RETENTION_MS, type LearningIdentityBinding} from './learning-event-identity';
+import {createHmac, randomBytes, timingSafeEqual} from 'node:crypto';
 
 export const ANONYMOUS_LEARNING_ACTOR_COOKIE = 'hm_lrs_anon_v1';
 export const ANONYMOUS_LEARNING_ACTOR_HOME_PAGE = 'https://www.helpmath.ai';
@@ -87,4 +88,37 @@ export function resolveAnonymousLearningActor(options: {
     actor: buildAnonymousLearningActor(seed, options.hmacSecret),
     setCookieHeader,
   };
+}
+
+
+/** A signed pseudonym authorizes delivery without exposing the HttpOnly seed. */
+export function issueLearningIdentityBinding(
+  actor: AnonymousLearningActor,
+  secret: string,
+  nowMs = Date.now(),
+): LearningIdentityBinding {
+  const expiresAt = nowMs + LEARNING_IDENTITY_LIFETIME_MS;
+  const digest = actor.account.name.replace(/^anonymous-/, '');
+  if (!SEED_PATTERN.test(digest) || Buffer.byteLength(secret, 'utf8') < 32) throw new Error('Invalid learning identity');
+  const payload = `v1.${digest}.${expiresAt}`;
+  const signature = createHmac('sha256', secret).update(`help-math-delivery-identity-v1\0${payload}`).digest('base64url');
+  return {token: `${payload}.${signature}`, expiresAt};
+}
+
+export function verifyLearningIdentityBinding(
+  token: string,
+  secret: string,
+  occurredAt: readonly string[],
+  nowMs = Date.now(),
+): AnonymousLearningActor | null {
+  const match = /^v1\.([A-Za-z0-9_-]{43})\.(\d{13,16})\.([A-Za-z0-9_-]{43})$/.exec(token);
+  if (!match || Buffer.byteLength(secret, 'utf8') < 32) return null;
+  const expiresAt = Number(match[2]);
+  if (!Number.isSafeInteger(expiresAt) || expiresAt > nowMs + LEARNING_IDENTITY_LIFETIME_MS ||
+      nowMs > expiresAt + LEARNING_IDENTITY_RETRY_RETENTION_MS ||
+      occurredAt.some(value => !Number.isFinite(Date.parse(value)) || Date.parse(value) > expiresAt)) return null;
+  const payload = token.slice(0, token.lastIndexOf('.'));
+  const expected = createHmac('sha256', secret).update(`help-math-delivery-identity-v1\0${payload}`).digest('base64url');
+  if (!timingSafeEqual(Buffer.from(expected), Buffer.from(match[3]!))) return null;
+  return {objectType: 'Agent', account: {homePage: ANONYMOUS_LEARNING_ACTOR_HOME_PAGE, name: `anonymous-${match[1]}`}};
 }

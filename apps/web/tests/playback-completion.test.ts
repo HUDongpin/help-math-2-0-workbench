@@ -3,6 +3,7 @@ import {readFile} from 'node:fs/promises';
 import test from 'node:test';
 
 import {
+  animationPlaybackFrames,
   playbackReachedEnd,
   resolveAnimationPlaybackProgress,
 } from '@/components/animation-runtime';
@@ -147,4 +148,29 @@ test('the runtime reports completion once per page and per replay', async () => 
     /if \(reportedCompletionRef\.current === completionIdentity\) return;\s*reportedCompletionRef\.current = completionIdentity;\s*onPlaybackComplete\?\.\(\);/,
   );
   assert.match(source, /data-runtime-playback-complete=\{playbackComplete/);
+});
+
+
+test('loop completion survives a delayed callback across the final frame', () => {
+  const movie = {stage: {width: 800, height: 600}, fps: 12, frameCount: 953, durationMs: 953 * 1000 / 12};
+  const before = animationPlaybackFrames(79_150, movie, 'loop', 953);
+  const after = animationPlaybackFrames(79_500, movie, 'loop', 953);
+  assert.equal(before.frame, 950);
+  assert.equal(after.frame, 2, 'drawing still wraps to the source frame');
+  assert.equal(playbackReachedEnd({...PLAYING, frame: before.completionFrame, playbackEndFrame: 953}), false);
+  assert.equal(playbackReachedEnd({...PLAYING, frame: after.completionFrame, playbackEndFrame: 953}), true);
+});
+
+test('whole-cycle background gaps complete even when the displayed frame is unchanged', () => {
+  const movie = {stage: {width: 1, height: 1}, fps: 12, frameCount: 24, durationMs: 2000};
+  const initial = animationPlaybackFrames(0, movie, 'loop', 24);
+  const resumed = animationPlaybackFrames(10_000, movie, 'loop', 24);
+  assert.equal(initial.frame, resumed.frame);
+  assert.equal(initial.completionFrame, 1);
+  assert.equal(resumed.completionFrame, 24);
+  assert.equal(playbackReachedEnd({...PLAYING, frame: resumed.completionFrame, playbackEndFrame: 24}), true);
+  assert.deepEqual(animationPlaybackFrames(0, movie, 'loop', 24), initial, 'Replay starts a new incomplete clock');
+  const paused = animationPlaybackFrames(500, movie, 'loop', 24);
+  assert.equal(paused.completionFrame, 7, 'paused wall time is not added to the accumulated playback time');
+  assert.deepEqual(animationPlaybackFrames(500, movie, 'once', 24), paused);
 });

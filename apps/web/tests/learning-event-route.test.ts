@@ -1,7 +1,12 @@
 import assert from 'node:assert/strict';
 import test, {afterEach} from 'node:test';
 
+import {buildAnonymousLearningActor, issueLearningIdentityBinding} from '../lib/anonymous-learning-actor.server';
+import {LEARNING_IDENTITY_HEADER} from '../lib/learning-event-identity';
 import {POST} from '../app/api/learning-events/route';
+import {learningEventDeliveryOutcomes} from '../hooks/use-learning-event-recorder';
+import {applyLearningEventDeliveryOutcomes, enqueueLearningEvent} from '../lib/learning-event-outbox';
+import {learningEventSchema} from '../lib/learning-event-schema';
 import {isSameOriginLearningEventRequest} from '../lib/learning-event-route-support.server';
 import {resetRequestBudgetsForTests} from '../lib/request-budget.server';
 
@@ -70,6 +75,10 @@ function learningEventRequest(
       'content-type': 'application/json',
       origin: 'https://www.helpmath.ai',
       'sec-fetch-site': 'same-origin',
+      [LEARNING_IDENTITY_HEADER]: issueLearningIdentityBinding(
+        buildAnonymousLearningActor('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', 'test-only-hmac-secret-that-is-at-least-32-bytes'),
+        'test-only-hmac-secret-that-is-at-least-32-bytes',
+      ).token,
       ...headers,
     },
     body: JSON.stringify(validBatch()),
@@ -165,4 +174,54 @@ test('learning-event POST enforces its IP budget before another LRS delivery', a
   assert.equal(body.error.code, 'RATE_LIMITED');
   assert.match(limited.headers.get('retry-after') ?? '', /^\d+$/u);
   assert.equal(deliveryCalls, 1);
+});
+
+
+test('a lost bootstrap response cannot commit an actor; lost delivery acknowledgements retry idempotently', async () => {
+  configureLrs();
+  const stored = new Map<string, unknown>();
+  let puts = 0;
+  globalThis.fetch = async (_url, init) => {
+    if (init?.method === 'GET') return Response.json(stored.get(validBatch().events[0]!.eventId));
+    puts++;
+    const statement = JSON.parse(String(init?.body));
+    if (stored.has(statement.id)) return new Response(null, {status: 409});
+    stored.set(statement.id, statement);
+    return new Response(null, {status: 204});
+  };
+  const first = await POST(learningEventRequest({[LEARNING_IDENTITY_HEADER]: ''}));
+  assert.equal(first.status, 202);
+  assert.equal(puts, 0, 'lost initial response must leave the LRS untouched');
+  const second = await POST(learningEventRequest({[LEARNING_IDENTITY_HEADER]: ''}));
+  const {identity} = await second.json();
+  assert.equal(puts, 0);
+  const delivery = await POST(learningEventRequest({[LEARNING_IDENTITY_HEADER]: identity.token}));
+  assert.equal(delivery.status, 200);
+  // Simulate both a lost acknowledgement and a late different bootstrap cookie.
+  const retry = await POST(learningEventRequest({
+    [LEARNING_IDENTITY_HEADER]: identity.token,
+    cookie: first.headers.get('set-cookie')!.split(';')[0]!,
+  }));
+  assert.equal(retry.status, 200);
+  const value = await retry.json();
+  assert.equal(value.results[0].status, 'already-stored');
+  const event = learningEventSchema.parse(validBatch().events[0]);
+  assert.equal(applyLearningEventDeliveryOutcomes(
+    enqueueLearningEvent([], event, Date.now()),
+    learningEventDeliveryOutcomes([event.eventId], retry.status, value), Date.now(),
+  ).length, 0);
+  assert.equal(stored.size, 1);
+});
+
+test('forged actor bindings never reach the LRS or permanently discard queued events', async () => {
+  configureLrs();
+  let calls = 0;
+  globalThis.fetch = async () => { calls++; throw new Error('must not call upstream'); };
+  const response = await POST(learningEventRequest({[LEARNING_IDENTITY_HEADER]: 'v1.forged'}));
+  assert.equal(response.status, 503);
+  assert.equal(calls, 0);
+  const event = learningEventSchema.parse(validBatch().events[0]);
+  const outcomes = learningEventDeliveryOutcomes([event.eventId], response.status, await response.json());
+  assert.equal(outcomes[0]!.status, 'retryable');
+  assert.equal(applyLearningEventDeliveryOutcomes(enqueueLearningEvent([], event, Date.now()), outcomes, Date.now()).length, 1);
 });

@@ -1,5 +1,7 @@
 'use client';
 
+import {postLearningEventsWithIdentity} from '../lib/learning-event-identity';
+
 import {useCallback, useEffect, useRef, useState} from 'react';
 
 import {
@@ -228,23 +230,15 @@ export function useLearningEventRecorder({
           return;
         }
 
-        const eventIds = ready.map((record) => record.event.eventId);
+        let eventIds = ready.map((record) => record.event.eventId);
         let outcomes: readonly LearningEventDeliveryOutcome[];
         try {
-          const response = await fetch('/api/learning-events', {
-            method: 'POST',
-            headers: {
-              accept: 'application/json',
-              'content-type': 'application/json',
-            },
-            body: JSON.stringify({
-              schemaVersion: 1,
-              events: ready.map((record) => record.event),
-            }),
-            cache: 'no-store',
-            credentials: 'same-origin',
-            keepalive: options.keepalive === true,
-          });
+          const delivery = await postLearningEventsWithIdentity(
+            ready.map(record => record.event),
+            {keepalive: options.keepalive === true},
+          );
+          const response = delivery.response;
+          eventIds = [...delivery.eventIds];
           let value: unknown = null;
           try {
             value = await response.json() as unknown;
