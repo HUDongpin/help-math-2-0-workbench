@@ -87,7 +87,7 @@ function validateAsset(asset: LoadedSwfHostAsset) {
   return asset;
 }
 
-function loadAsset(asset: LoadedSwfHostAsset) {
+export function loadLoadedSwfHostCanvasAsset(asset: LoadedSwfHostAsset) {
   const validated = validateAsset(asset);
   const integrity = sha256HexToIntegrity(validated.assetSha256);
   const separator = validated.assetSource.includes('?') ? '&' : '?';
@@ -114,27 +114,54 @@ function loadAsset(asset: LoadedSwfHostAsset) {
       exactExisting,
       'loaded-SWF host registry entry lacks its exact script binding',
     );
-    return Promise.resolve(registered);
   }
 
   const promiseKey =
     `${validated.registryKey}:${validated.assetSha256}:${validated.assetSource}`;
   const existingPromise = assetPromises.get(promiseKey);
   if (existingPromise) return existingPromise;
+  const script = existing ?? document.createElement('script');
+  let preparingAsset: LoadedSwfCanvasAsset | undefined;
   const promise = new Promise<LoadedSwfCanvasAsset>((resolve, reject) => {
-    const script = existing ?? document.createElement('script');
-    const finish = () => {
-      const next = canvasAssetRegistry()?.[validated.registryKey];
-      if (next) resolve(next);
-      else reject(new Error(
-        'loaded-SWF host asset did not register its exact key',
-      ));
+    let settled = false;
+    const cleanup = () => {
+      clearTimeout(timeout);
+      script.removeEventListener('load', finish);
+      script.removeEventListener('error', failLoad);
     };
-    script.onload = finish;
-    script.onerror = () => reject(new Error(
-      'local loaded-SWF host asset could not load',
-    ));
-    if (!existing) {
+    const fail = (error: unknown) => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      script.remove();
+      const registry = canvasAssetRegistry();
+      if (preparingAsset && registry?.[validated.registryKey] === preparingAsset) {
+        delete registry[validated.registryKey];
+      }
+      reject(error);
+    };
+    const failLoad = () => fail(new Error('local loaded-SWF host asset could not load'));
+    const finish = () => {
+      if (settled || preparingAsset) return;
+      const next = canvasAssetRegistry()?.[validated.registryKey];
+      if (!next) {
+        fail(new Error('loaded-SWF host asset did not register its exact key'));
+        return;
+      }
+      preparingAsset = next;
+      Promise.resolve().then(() => next.ready()).then(() => {
+        if (settled) return;
+        settled = true;
+        cleanup();
+        resolve(next);
+      }, fail);
+    };
+    const timeout = setTimeout(() => fail(new Error('local loaded-SWF host asset preparation timed out')), 60_000);
+    script.addEventListener('load', finish);
+    script.addEventListener('error', failLoad);
+    if (registered) {
+      finish();
+    } else if (!existing) {
       script.async = true;
       script.dataset.helpMathLoadedSwfHost = validated.registryKey;
       script.dataset.helpMathCanvasSha256 = validated.assetSha256;
@@ -144,7 +171,7 @@ function loadAsset(asset: LoadedSwfHostAsset) {
       document.head.appendChild(script);
     }
   }).catch((error) => {
-    assetPromises.delete(promiseKey);
+    if (assetPromises.get(promiseKey) === promise) assetPromises.delete(promiseKey);
     throw error;
   });
   assetPromises.set(promiseKey, promise);
@@ -180,6 +207,7 @@ export function LoadedSwfHostCanvas({
   scenario,
   seed,
   traceId,
+  uiLanguage = lang,
   width,
 }: {
   animationId: string;
@@ -194,6 +222,7 @@ export function LoadedSwfHostCanvas({
   scenario: string;
   seed: number;
   traceId: string;
+  uiLanguage?: 'en' | 'es';
   width: number;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -208,9 +237,8 @@ export function LoadedSwfHostCanvas({
     if (!canvas) return;
     let cancelled = false;
     setStatus('loading');
-    loadAsset(asset)
-      .then(async (loadedAsset) => {
-        await loadedAsset.ready();
+    loadLoadedSwfHostCanvasAsset(asset)
+      .then((loadedAsset) => {
         if (cancelled) return;
         const declared = loadedAsset.metadata?.renderScale;
         const scale =
@@ -309,12 +337,14 @@ export function LoadedSwfHostCanvas({
     />
     {status === 'loading'
       ? <span aria-live="polite" className="sr-only" role="status">
-          Loading source-bound host composite…
+          {uiLanguage === 'es' ? 'Cargando animación…' : 'Loading animation…'}
         </span>
       : null}
     {status === 'error'
       ? <p aria-live="assertive" role="alert">
-          The local loaded-SWF host drawing failed safely.
+          {uiLanguage === 'es'
+            ? 'No se pudo cargar la animación. Selecciona Repetir para intentarlo de nuevo.'
+            : 'The animation could not load. Select Replay to try again.'}
         </p>
       : null}
   </section>;

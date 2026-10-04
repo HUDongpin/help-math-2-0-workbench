@@ -671,8 +671,8 @@ function isCanvasRuntimeState(value: unknown): value is CanvasRuntimeState {
   );
 }
 
-function loadCanvasAsset(
-  config: ResolvedSourceStaticCanvasCandidateConfig,
+export function loadCanvasAsset(
+  config: Pick<SourceStaticCanvasCandidateConfig, "animationId" | "assetSource" | "assetSha256">,
 ): Promise<BehaviorAwareCanvasAsset> {
   const request = buildCanvasAssetRequest(config);
   const selector = config.assetSha256
@@ -691,22 +691,52 @@ function loadCanvasAsset(
       new Error("Existing Canvas asset script has a mismatched integrity binding"),
     );
   }
-  const registered = window.HELP_MATH_CANVAS_ASSETS?.[config.animationId];
-  if (registered && (!config.assetSha256 || exactExisting)) {
-    return Promise.resolve(registered as BehaviorAwareCanvasAsset);
-  }
   const existingPromise = assetPromises.get(request.key);
   if (existingPromise) return existingPromise;
+  const registered = window.HELP_MATH_CANVAS_ASSETS?.[config.animationId];
+  const script = existing ?? document.createElement("script");
+  let preparingAsset: BehaviorAwareCanvasAsset | undefined;
   const promise = new Promise<BehaviorAwareCanvasAsset>((resolve, reject) => {
-    const script = existing ?? document.createElement("script");
-    const finish = () => {
-      const asset = window.HELP_MATH_CANVAS_ASSETS?.[config.animationId];
-      if (asset) resolve(asset as BehaviorAwareCanvasAsset);
-      else reject(new Error("Canvas asset did not register the expected animation"));
+    let settled = false;
+    const cleanup = () => {
+      clearTimeout(timeout);
+      script.removeEventListener("load", finish);
+      script.removeEventListener("error", failLoad);
     };
-    script.onload = finish;
-    script.onerror = () => reject(new Error("Local Canvas asset could not load"));
-    if (!existing) {
+    const fail = (error: unknown) => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      // A failed script never emits another load event when the page is
+      // revisited. Remove only this attempt and its own failed registration.
+      script.remove();
+      if (preparingAsset && window.HELP_MATH_CANVAS_ASSETS?.[config.animationId] === preparingAsset) {
+        delete window.HELP_MATH_CANVAS_ASSETS[config.animationId];
+      }
+      reject(error);
+    };
+    const failLoad = () => fail(new Error("Local Canvas asset could not load"));
+    const finish = () => {
+      if (settled || preparingAsset) return;
+      const asset = window.HELP_MATH_CANVAS_ASSETS?.[config.animationId];
+      if (!asset) {
+        fail(new Error("Canvas asset did not register the expected animation"));
+        return;
+      }
+      preparingAsset = asset as BehaviorAwareCanvasAsset;
+      Promise.resolve().then(() => asset.ready()).then(() => {
+        if (settled) return;
+        settled = true;
+        cleanup();
+        resolve(asset as BehaviorAwareCanvasAsset);
+      }, fail);
+    };
+    const timeout = setTimeout(() => fail(new Error("Local Canvas asset preparation timed out")), 60_000);
+    script.addEventListener("load", finish);
+    script.addEventListener("error", failLoad);
+    if (registered && (!config.assetSha256 || exactExisting)) {
+      finish();
+    } else if (!existing) {
       script.async = true;
       script.dataset.helpMathCanvasAsset = config.animationId;
       if (config.assetSha256) {
@@ -716,9 +746,9 @@ function loadCanvasAsset(
       if (request.crossOrigin) script.crossOrigin = request.crossOrigin;
       script.src = request.src;
       document.head.appendChild(script);
-    } else if (window.HELP_MATH_CANVAS_ASSETS?.[config.animationId]) finish();
+    }
   }).catch((error) => {
-    assetPromises.delete(request.key);
+    if (assetPromises.get(request.key) === promise) assetPromises.delete(request.key);
     throw error;
   });
   assetPromises.set(request.key, promise);
@@ -1046,6 +1076,7 @@ export function createSourceStaticCanvasCandidate(
     seed,
     state,
     traceId = "",
+    uiLanguage = lang,
   }: AnimationRendererProps) {
     const suppliedState =
       state &&
@@ -1224,7 +1255,6 @@ export function createSourceStaticCanvasCandidate(
       const run = renderCoordinator.run(
         async () => {
           const asset = await loadCanvasAsset(config);
-          await asset.ready();
           return asset;
         },
         (request, asset) => {
@@ -1403,13 +1433,14 @@ export function createSourceStaticCanvasCandidate(
               {reportedCanvasStatus === "loading" ||
               reportedCanvasStatus === "idle" ? (
                 <span aria-live="polite" role="status">
-                  Loading source-static drawing…
+                  {uiLanguage === "es" ? "Cargando animación…" : "Loading animation…"}
                 </span>
               ) : null}
               {reportedCanvasStatus === "error" ? (
                 <p aria-live="assertive" role="alert">
-                  The local drawing asset failed safely. No legacy or remote
-                  fallback was executed.
+                  {uiLanguage === "es"
+                    ? "No se pudo cargar la animación. Selecciona Repetir para intentarlo de nuevo."
+                    : "The animation could not load. Select Replay to try again."}
                 </p>
               ) : null}
             </>

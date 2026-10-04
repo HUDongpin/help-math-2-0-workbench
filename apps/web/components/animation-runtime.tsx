@@ -370,6 +370,53 @@ function useFrame(movie: AnimationModule['movie'] | undefined, playbackMode: Ani
   };
 }
 
+/** Wait for the current renderer's first drawing, then leave its clock alone. */
+export function observeAnimationFirstPaint(
+  stage: HTMLElement,
+  onReady: () => void,
+): () => void {
+  let finished = false;
+  const observer = new MutationObserver(check);
+  const stop = () => {
+    finished = true;
+    observer.disconnect();
+  };
+  function check() {
+    if (finished) return;
+    const surfaces = stage.querySelectorAll('[data-canvas-status], [data-render-state]');
+    for (const surface of surfaces) {
+      for (const attribute of ['data-canvas-status', 'data-render-state']) {
+        const status = surface.getAttribute(attribute);
+        if (status === null || status === 'ready' || status === 'updating') continue;
+        // Root timelines can use a synchronous source drawing instead of a
+        // Canvas. Its disposition is not an asynchronous loading status, but
+        // it still needs its own ready drawing, never an unrelated sibling.
+        if (attribute === 'data-canvas-status' && [
+          'root-source-structural',
+          'root-authoritative-frame',
+          'root-ffdec-structural-frame',
+        ].includes(status)) {
+          const renderState = surface.getAttribute('data-render-state');
+          if (renderState === 'ready' || (renderState === null &&
+            surface.querySelector('[data-render-state="ready"]'))) continue;
+        }
+        return;
+      }
+    }
+    // Synchronous React/SVG renderers have no asynchronous readiness markers.
+    stop();
+    onReady();
+  }
+  observer.observe(stage, {
+    attributes: true,
+    attributeFilter: ['data-canvas-status', 'data-render-state'],
+    childList: true,
+    subtree: true,
+  });
+  check();
+  return stop;
+}
+
 function useAudio(module: AnimationModule | undefined, frame: number, fps: number, frameDomain: string, lang: 'en' | 'es', enabled: boolean, replay: number, scenario: string, seed: number, volume: number, onAutoplayBlocked: (cue: RuntimeAudioCue | null) => void, onSounding: (sounding: boolean) => void = ignoreAudioActivity) {
   const active = useRef<Map<string, HTMLAudioElement>>(new Map()), previous = useRef(0);
   const explicitlyStopped = useRef(false);
@@ -766,6 +813,8 @@ export function AnimationRuntime({
   const [hostAudioPaused, setHostAudioPaused] = useState(false);
   const [autoplayBlockedCue, setAutoplayBlockedCue] = useState<RuntimeAudioCue | null>(null);
   const [timelineAudioSounding, setTimelineAudioSounding] = useState(false);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const [paintedIdentity, setPaintedIdentity] = useState<string | null>(null);
   const animationModule = loaded.key === moduleKey ? loaded.module : undefined;
   // Keep visual/runtime identity intact while stripping every audio declaration
   // from the executable path when the server course-audio gate is closed.
@@ -788,7 +837,7 @@ export function AnimationRuntime({
   const playbackEndFrame = frameDomain
     ? animationModule?.playbackEndFrameByDomain?.[frameDomain.id] ?? animationModule?.playbackEndFrame
     : animationModule?.playbackEndFrame;
-  const capture = query.capture === '1', running = Boolean(animationModule && context?.captureFrame === undefined && reduced === false && !hostAudioPaused && !paused);
+  const capture = query.capture === '1';
   const playbackIdentity = JSON.stringify([
     animationModule?.key ?? moduleKey,
     context?.frameDomain ?? '',
@@ -799,6 +848,29 @@ export function AnimationRuntime({
     context?.requirementId ?? '',
     context?.entryStateSha256 ?? ''
   ]);
+  const compatibleLoadedSwfHostAsset =
+    loadedSwfHostAsset?.sourceProvenLanguage === context?.lang
+      ? loadedSwfHostAsset
+      : undefined;
+  const firstPaintIdentity = JSON.stringify([
+    animationId,
+    playbackIdentity,
+    replay,
+    presentation === 'legacy-shell' ? compatibleLoadedSwfHostAsset?.assetSource : '',
+    presentation === 'legacy-shell' ? compatibleLoadedSwfHostAsset?.assetSha256 : '',
+  ]);
+  const firstPaintReady = paintedIdentity === firstPaintIdentity;
+  const running = Boolean(animationModule && firstPaintReady && context?.captureFrame === undefined && reduced === false && !hostAudioPaused && !paused);
+  useEffect(() => {
+    const stage = stageRef.current;
+    if (!stage || !animationModule) return;
+    const stop = observeAnimationFirstPaint(stage, () => setPaintedIdentity(firstPaintIdentity));
+    return () => {
+      stop();
+      // A quick return to a previous page still needs that new renderer to paint.
+      setPaintedIdentity(null);
+    };
+  }, [animationModule, firstPaintIdentity]);
   const {
     frame: liveFrame,
     pauseNow: pauseTimelineNow,
@@ -886,14 +958,14 @@ export function AnimationRuntime({
   const resolvedPlaybackEndFrame = activeMovie
     ? resolvePlaybackEndFrame(activeMovie, playbackEndFrame)
     : 1;
-  const playbackProgress = resolveAnimationPlaybackProgress({
+  const playbackProgress = firstPaintReady ? resolveAnimationPlaybackProgress({
     capture: capture || context?.captureFrame !== undefined,
     fps: activeMovie?.fps ?? 0,
     frame,
     playbackEndFrame: resolvedPlaybackEndFrame,
     reducedMotion: reduced,
     rendererDomainSupported,
-  });
+  }) : null;
   const captureIdentityFailure = playbackContext
     ? strictCaptureIdentityFailure(
         query,
@@ -1136,6 +1208,7 @@ export function AnimationRuntime({
   const playbackComplete = Boolean(
     animationModule &&
       activeMovie &&
+      firstPaintReady &&
       !captureIdentityFailure &&
       playbackReachedEnd({
         captureFrame: context?.captureFrame,
@@ -1189,10 +1262,6 @@ export function AnimationRuntime({
     </p>;
   }
   const rendererKey = `${replay}:${seekRevision}:${playbackContext.frameDomain}:${playbackContext.lang}:${playbackContext.scenario}:${playbackContext.seed}:${playbackContext.requirementId}:${playbackContext.traceId}:${playbackContext.entryStateSha256}`;
-  const compatibleLoadedSwfHostAsset =
-    loadedSwfHostAsset?.sourceProvenLanguage === playbackContext.lang
-      ? loadedSwfHostAsset
-      : undefined;
   return <div className={`runtime-shell${capture ? ' runtime-shell--capture' : ''}`} data-audio-available={audioAvailable ? 'true' : 'false'} data-host-audio-timeline-paused={hostAudioPaused ? 'true' : 'false'} data-interactive-audio-playing={playingInteractiveAudioId ?? undefined} data-product-audio-enabled={audioEnabled ? 'true' : 'false'} data-runtime-audio-language={resolvedAudioLanguage} data-runtime-playback-complete={playbackComplete ? 'true' : 'false'} data-runtime-paused={paused ? 'true' : 'false'} data-runtime-presentation={presentation} data-runtime-replay={replay} data-runtime-transport={transportEnabledForDomain ? 'visual-frame-inspector' : 'none'} data-runtime-volume={Math.max(0, Math.min(1, volume))} data-source-transport-parity="not-established" style={{'--flash-stage-width': `${runtimeMetadata.stage.width}px`, '--flash-stage-height': `${runtimeMetadata.stage.height}px`, '--flash-stage-aspect': `${runtimeMetadata.stage.width} / ${runtimeMetadata.stage.height}`} as CSSProperties}>
     {/* The lesson shell owns narration: it renders a permanent, designed
         control in its top bar and drives these same tracks through
@@ -1201,7 +1270,7 @@ export function AnimationRuntime({
       ? null
       : <div className="runtime-toolbar">{presentation === 'workbench' ? <div><span className="prototype-badge">{labels.prototype}</span><span>{runtimeMetadata.stage.width} × {runtimeMetadata.stage.height}</span><span>{runtimeMetadata.fps} FPS</span><span>{runtimeMetadata.frameCount} root frames</span>{playbackContext.frameDomain !== 'root' ? <span>{playbackContext.frameDomain}: {activeMovie.frameCount} frames</span> : null}</div> : <div><span className="prototype-badge">{labels.prototype}</span></div>}<div className="runtime-toolbar__actions"><HostAudioControlsView disabled={narrationDisabled} lang={resolvedAudioLanguage} playing={playingNarrationTrackId} toggle={toggleNarrationTrack} tracks={narrationTracks} /><button data-replay-keyboard="enter-space" disabled={context.captureFrame !== undefined} onClick={onReplay} onKeyDown={(event) => {if (event.key === ' ' || event.code === 'Space') event.preventDefault();}} onKeyUp={(event) => {if (event.key === ' ' || event.code === 'Space') {event.preventDefault(); onReplay();}}} type="button">{labels.replay}</button></div></div>}
     {reduced === true && context.captureFrame === undefined ? <p className="reduced-motion-note" role="status">{labels.reduced}</p> : null}
-    <div className="runtime-stage" data-animation-id={animationId} data-animation-module={animationModule.key} data-capture-identity-status={capture ? 'verified' : undefined} data-flash-entry-state-sha256={playbackContext.entryStateSha256 || undefined} data-flash-frame={playbackContext.frame} data-flash-frame-domain={playbackContext.frameDomain} data-flash-lang={playbackContext.lang} data-flash-requirement-id={playbackContext.requirementId} data-flash-root-frame={playbackContext.rootFrame} data-flash-scenario={playbackContext.scenario} data-flash-seed={playbackContext.seed} data-flash-trace-id={playbackContext.traceId} data-loaded-swf-host-composite={compatibleLoadedSwfHostAsset && presentation === 'legacy-shell' ? 'true' : 'false'} data-runtime-language={playbackContext.lang} data-runtime-scenario={playbackContext.scenario} data-runtime-seed={playbackContext.seed}>
+    <div className="runtime-stage" ref={stageRef} data-runtime-first-paint={firstPaintReady ? 'ready' : 'waiting'} data-animation-id={animationId} data-animation-module={animationModule.key} data-capture-identity-status={capture ? 'verified' : undefined} data-flash-entry-state-sha256={playbackContext.entryStateSha256 || undefined} data-flash-frame={playbackContext.frame} data-flash-frame-domain={playbackContext.frameDomain} data-flash-lang={playbackContext.lang} data-flash-requirement-id={playbackContext.requirementId} data-flash-root-frame={playbackContext.rootFrame} data-flash-scenario={playbackContext.scenario} data-flash-seed={playbackContext.seed} data-flash-trace-id={playbackContext.traceId} data-loaded-swf-host-composite={compatibleLoadedSwfHostAsset && presentation === 'legacy-shell' ? 'true' : 'false'} data-runtime-language={playbackContext.lang} data-runtime-scenario={playbackContext.scenario} data-runtime-seed={playbackContext.seed}>
       {compatibleLoadedSwfHostAsset && presentation === 'legacy-shell'
         ? <LoadedSwfHostCanvas
             animationId={animationId}
@@ -1217,6 +1286,7 @@ export function AnimationRuntime({
             scenario={playbackContext.scenario}
             seed={playbackContext.seed}
             traceId={playbackContext.traceId}
+            uiLanguage={uiLanguage ?? playbackContext.lang}
             width={runtimeMetadata.stage.width}
           />
         : <Renderer activeInteractiveAudioId={playingInteractiveAudioId} audioEnabled={audioEnabled} entryStateSha256={playbackContext.entryStateSha256} frame={playbackContext.frame} frameDomain={playbackContext.frameDomain} key={rendererKey} lang={playbackContext.lang} onLessonHostRequest={rendererLessonHostRequest} onReplay={onReplay} pageInteractionCompanionTargetId={pageInteractionCompanionTargetId} pageInteractionStageTargetId={pageInteractionStageTargetId} paused={paused || hostAudioPaused} reducedMotion={reduced === true} replay={playbackContext.replay} requirementId={playbackContext.requirementId} rootFrame={playbackContext.rootFrame} scenario={playbackContext.scenario} seed={playbackContext.seed} state={state} traceId={playbackContext.traceId} uiLanguage={uiLanguage ?? playbackContext.lang} />}
