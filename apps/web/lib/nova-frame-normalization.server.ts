@@ -4,6 +4,18 @@ import sharp, {type Metadata} from 'sharp';
 
 import {NOVA_REQUEST_LIMITS} from './nova-request-schema';
 
+/**
+ * libvips chooses a decoder from the bytes, not the data-URL label. Keep the
+ * HEIF/AVIF loader blocked so a mislabeled payload cannot reach libheif.
+ */
+sharp.block({operation: ['VipsForeignLoadHeif']});
+
+const PNG_SIGNATURE = Buffer.from([
+  0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a,
+]);
+
+type DeclaredNovaFrameMimeType = 'image/png' | 'image/jpeg';
+
 export interface NovaFrameForNormalization {
   readonly releaseId: string;
   readonly globalPageOrdinal: number;
@@ -29,6 +41,42 @@ function invalidFrame(): never {
   throw new NovaFrameNormalizationError();
 }
 
+function isDeclaredNovaFrameMimeType(
+  value: string,
+): value is DeclaredNovaFrameMimeType {
+  switch (value) {
+    case 'image/png':
+    case 'image/jpeg':
+      return true;
+    default:
+      return false;
+  }
+}
+
+function signatureMatchesDeclaredType(
+  bytes: Buffer,
+  declaredMimeType: DeclaredNovaFrameMimeType,
+): boolean {
+  switch (declaredMimeType) {
+    case 'image/png':
+      return (
+        bytes.byteLength >= PNG_SIGNATURE.byteLength &&
+        bytes.subarray(0, PNG_SIGNATURE.byteLength).equals(PNG_SIGNATURE)
+      );
+    case 'image/jpeg':
+      return (
+        bytes.byteLength >= 3 &&
+        bytes[0] === 0xff &&
+        bytes[1] === 0xd8 &&
+        bytes[2] === 0xff
+      );
+    default: {
+      const unexpected: never = declaredMimeType;
+      return unexpected;
+    }
+  }
+}
+
 function decodeFrameDataUrl(dataUrl: string) {
   const match = /^data:(image\/(?:png|jpeg));base64,([A-Za-z0-9+/]+={0,2})$/.exec(
     dataUrl,
@@ -48,7 +96,11 @@ function decodeFrameDataUrl(dataUrl: string) {
   ) {
     return invalidFrame();
   }
-  return Object.freeze({bytes, declaredMimeType: match[1]});
+  const declaredMimeType = match[1];
+  if (!declaredMimeType || !isDeclaredNovaFrameMimeType(declaredMimeType)) {
+    return invalidFrame();
+  }
+  return Object.freeze({bytes, declaredMimeType});
 }
 
 function pngContainsAnimationControl(bytes: Buffer) {
@@ -74,6 +126,9 @@ export async function normalizeNovaTutorFrame(
   frame: NovaFrameForNormalization,
 ): Promise<NormalizedNovaTutorFrame> {
   const {bytes, declaredMimeType} = decodeFrameDataUrl(frame.dataUrl);
+  if (!signatureMatchesDeclaredType(bytes, declaredMimeType)) {
+    return invalidFrame();
+  }
   if (
     declaredMimeType === 'image/png' &&
     pngContainsAnimationControl(bytes)
