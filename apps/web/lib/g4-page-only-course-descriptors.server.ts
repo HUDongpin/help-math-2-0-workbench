@@ -190,7 +190,10 @@ const l5Pages = withPlacementIdentity(
         moduleKey: page.candidate.moduleKey,
         runtimeQuery: Object.freeze({
           frameDomain: page.candidate.frameDomain,
-          language: 'route-locale' as const,
+          // Factory drawings are English-only; audio/UI retain the route locale.
+          language: l5PreservedProductPages.has(page.animationId)
+            ? 'route-locale' as const
+            : 'fixed-en' as const,
           scenario: l5PreservedProductPages.has(page.animationId)
             ? 'product-candidate'
             : 'source-static-frame',

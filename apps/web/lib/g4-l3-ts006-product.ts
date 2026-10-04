@@ -1,4 +1,5 @@
 import {COURSE_G04_L03_TS_006_SOURCE} from '../../../packages/demos/src/timelines/course-g04-l03-ts-006';
+import {findG4L3Page} from './g4-l3-lesson-navigation';
 
 // Exact wording from the hash-bound TS006 SWF, cross-checked in Animate and
 // after natural host entry in Ruffle. The Spanish host control changes audio,
@@ -16,13 +17,11 @@ export const G4_L3_TS006_PRODUCT = Object.freeze({
 });
 
 export function g4L3ProductLanguages(animationId: string, locale: 'en' | 'es') {
-  // The source quiz keeps its English question artwork while the host routes
-  // EN/EA and SP/SA speaker controls to separate recordings. Reuse that same
-  // visual page for Spanish audio instead of requesting an absent ES renderer.
-  const sourceEnglishVisual = animationId === G4_L3_TS006_PRODUCT.animationId
-    || animationId === 'course-g04-l03-fq-001'
-    || animationId === 'course-g04-l03-fq-002'
-    || animationId === 'course-g04-l03-fq-003';
+  // The 38 source-static pages reject Spanish visual requests. Keep their
+  // original English drawing while the host independently selects Spanish
+  // controls and recordings. IN009 has a supported Spanish visual branch.
+  const sourceEnglishVisual = findG4L3Page(animationId) !== undefined
+    && animationId !== 'course-g04-l03-in-009';
   return {
     visualLanguage: sourceEnglishVisual
       ? G4_L3_TS006_PRODUCT.visualLanguage
