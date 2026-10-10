@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HFR Sample Viewer</title>
+<style>
+  :root {
+    --bg: #f6f6f4; --panel: #ffffff; --ink: #1a1a19; --ink2: #52514e; --muted: #8a8984; --line: #e3e2de;
+    --accent: #1d5fb4; --accent-soft: #eaf2fc; --ok: #1a7f4b; --ok-soft: #e6f6ee; --warn: #9a5b00; --code-bg: #fbfbfa;
+    --kw: #8a3ffc; --str: #1a7f4b; --com: #8a8984; --num: #b4530f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #141413; --panel: #1d1d1c; --ink: #f2f1ec; --ink2: #c3c2b7; --muted: #8f8e88; --line: #2f2f2d; --accent: #6aa5ff; --accent-soft: #1b2a40; --ok: #4fca8a; --ok-soft: #143225; --warn: #e3a54a; --code-bg: #181817; --kw: #c4a2ff; --str: #79d8a5; --com: #8f8e88; --num: #f0a868; }
+  }
+  :root[data-theme="dark"] { --bg: #141413; --panel: #1d1d1c; --ink: #f2f1ec; --ink2: #c3c2b7; --muted: #8f8e88; --line: #2f2f2d; --accent: #6aa5ff; --accent-soft: #1b2a40; --ok: #4fca8a; --ok-soft: #143225; --warn: #e3a54a; --code-bg: #181817; --kw: #c4a2ff; --str: #79d8a5; --com: #8f8e88; --num: #f0a868; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header { display: flex; align-items: center; gap: 16px; padding: 10px 16px; border-bottom: 1px solid var(--line); background: var(--panel); }
+  header h1 { font-size: 15px; margin: 0; font-weight: 650; }
+  header .tag { font-size: 12px; color: var(--ink2); }
+  header select { margin-left: auto; font: inherit; padding: 4px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); color: var(--ink); max-width: 46vw; }
+  main { display: grid; grid-template-columns: 260px minmax(0, 1fr) minmax(0, 520px); height: calc(100% - 49px); }
+  nav { overflow: auto; border-right: 1px solid var(--line); background: var(--panel); padding: 8px 0; }
+  nav h2 { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 14px 14px 4px; }
+  nav button { display: flex; width: 100%; align-items: center; gap: 8px; text-align: left; border: 0; background: none; color: var(--ink); padding: 5px 14px; font: inherit; cursor: pointer; }
+  nav button:hover { background: var(--accent-soft); }
+  nav button[aria-current="true"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+  nav .ord { color: var(--muted); font-variant-numeric: tabular-nums; width: 26px; flex: none; font-size: 12px; }
+  nav .t { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  nav .ok { color: var(--ok); font-size: 12px; flex: none; }
+  .stage-col { display: flex; flex-direction: column; min-width: 0; padding: 12px; gap: 10px; overflow: auto; }
+  .titlebar { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .titlebar h2 { margin: 0; font-size: 16px; }
+  .titlebar .sub { color: var(--ink2); font-size: 13px; }
+  .stage-wrap { position: relative; width: 100%; aspect-ratio: 4 / 3; background: #000; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); }
+  canvas { width: 100%; height: 100%; display: block; outline: none; touch-action: none; }
+  .start { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.45); }
+  .start button { font: inherit; font-size: 16px; font-weight: 600; padding: 12px 22px; border-radius: 999px; border: 0; background: #fff; color: #111; cursor: pointer; }
+  .controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .controls button { font: inherit; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--line); background: var(--panel); color: var(--ink); cursor: pointer; }
+  .controls button:hover:not(:disabled) { border-color: var(--accent); }
+  .controls button:disabled { opacity: .45; cursor: default; }
+  .controls .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .controls .seg button { border: 0; border-radius: 0; }
+  .controls .seg button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+  .note { font-size: 12px; color: var(--muted); }
+  aside { display: flex; flex-direction: column; min-width: 0; border-left: 1px solid var(--line); background: var(--panel); }
+  .tabs { display: flex; border-bottom: 1px solid var(--line); }
+  .tabs button { flex: 1; border: 0; background: none; padding: 10px 8px; font: inherit; color: var(--ink2); cursor: pointer; border-bottom: 2px solid transparent; }
+  .tabs button[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+  .tab { flex: 1; overflow: auto; display: none; }
+  .tab.on { display: block; }
+  pre.code { margin: 0; padding: 12px 14px; font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--code-bg); white-space: pre; tab-size: 2; }
+  .code .k { color: var(--kw); } .code .s { color: var(--str); } .code .c { color: var(--com); font-style: italic; } .code .n { color: var(--num); }
+  .log { font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; padding: 8px 14px; }
+  .log div { padding: 2px 0; border-bottom: 1px dashed var(--line); }
+  .log .tick { color: var(--muted); display: inline-block; width: 56px; }
+  .log .kind { color: var(--accent); }
+  .info { padding: 12px 14px; }
+  .info table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  .info td { padding: 5px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .info td:first-child { color: var(--ink2); width: 42%; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; background: var(--ok-soft); color: var(--ok); font-weight: 600; }
+  @media (max-width: 1100px) { main { grid-template-columns: 220px minmax(0, 1fr); } aside { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--line); min-height: 420px; } main { height: auto; } }
+  @media (max-width: 720px) { main { grid-template-columns: 1fr; } nav { max-height: 240px; border-right: 0; border-bottom: 1px solid var(--line); } header { flex-wrap: wrap; } header select { margin-left: 0; max-width: 100%; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>HELP Math 2.0 · HFR sample output</h1>
+  <span class="tag">Engineering sample: generated TypeScript pages from the original SWF files</span>
+  <select id="lessonSel" aria-label="Sample"></select>
+</header>
+<main>
+  <nav id="outline" aria-label="Lesson pages"></nav>
+  <section class="stage-col">
+    <div class="titlebar"><h2 id="pageTitle">Loading…</h2><span class="sub" id="pageSub"></span></div>
+    <div class="stage-wrap">
+      <canvas id="stage" width="1600" height="1200" tabindex="0" aria-label="Lesson page"></canvas>
+      <div class="start" id="startOverlay"><button id="startBtn">▶ Start (enables audio)</button></div>
+    </div>
+    <div class="controls">
+      <button id="prevBtn">◀ Previous</button>
+      <button id="playBtn">❚❚ Pause</button>
+      <button id="replayBtn">↺ Replay</button>
+      <button id="nextBtn">Next ▶</button>
+      <span class="seg" role="group" aria-label="Narration language"><button id="enBtn" aria-pressed="true">EN</button><button id="esBtn" aria-pressed="false">ES</button></span>
+      <span class="note" id="esNote"></span>
+    </div>
+    <p class="note">This viewer stands in for the My Lesson host. Its Previous/Next/Replay/EN–ES controls are host features; everything inside the stage is the converted page running on the HFR TypeScript runtime.</p>
+  </section>
+  <aside>
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="ts">Generated TypeScript</button>
+      <button role="tab" aria-selected="false" data-tab="log">Host events</button>
+      <button role="tab" aria-selected="false" data-tab="info">Page info</button>
+    </div>
+    <div class="tab on" id="tab-ts"><pre class="code" id="tsCode"></pre></div>
+    <div class="tab" id="tab-log"><div class="log" id="log"></div></div>
+    <div class="tab" id="tab-info"><div class="info" id="info"></div></div>
+  </aside>
+</main>
+<script type="module" src="../dist/viewer.js"></script>
+</body>
+</html>
