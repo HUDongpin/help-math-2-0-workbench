@@ -8,7 +8,7 @@ export type {
   AnimationModuleRegistrationScope,
   AnimationRegistryScope,
 } from './registry.generated';
-export type {AnimationModule, AnimationRendererProps} from './contract';
+export type {AnimationModule, AnimationRendererProps, RendererPlaybackReport} from './contract';
 
 export {
   animationModuleRegistration,

@@ -149,6 +149,27 @@ export interface AnimationTransportCapability {
   readonly strictAcceptanceEffect: 'none';
 }
 
+/**
+ * What a renderer-clocked module reports back to its host after each tick in
+ * which something changed. The host turns it into the shell's playback state;
+ * it never grants completion, fidelity or publication authority by itself.
+ */
+export interface RendererPlaybackReport {
+  /** One-indexed frame in the progress domain. */
+  readonly frame: number;
+  readonly frameCount: number;
+  /** `root`, or `stream:<timeline id>` for the clip owning the longest narration. */
+  readonly frameDomain: string;
+  readonly fps: number;
+  /** Every non-looping timeline has stopped. */
+  readonly settled: boolean;
+  /** The page completion rule for this module is met. */
+  readonly complete: boolean;
+  /** The page asked the host to finish the lesson (1.0 `doCloseApp`). */
+  readonly lessonFinished: boolean;
+  readonly narration: 'unavailable' | 'idle' | 'playing' | 'blocked';
+}
+
 export interface AnimationRendererProps {
   /** Product publication gate; false/absent means no audio may be advertised or requested. */
   readonly audioEnabled?: boolean;
@@ -201,10 +222,23 @@ export interface AnimationRendererProps {
    * animation rectangle; it is separate from the below-stage companion host.
    */
   readonly pageInteractionStageTargetId?: string;
+  /** Renderer-clocked modules only: host volume from 0 to 1. */
+  readonly volume?: number;
+  /** Renderer-clocked modules only: the shell narration button. */
+  readonly narrationRequest?: Readonly<{action: 'play' | 'stop'; requestId: number}> | null;
+  /** Renderer-clocked modules only: playback state for the shell. */
+  readonly onRendererPlayback?: (report: RendererPlaybackReport) => void;
 }
 
 export interface AnimationModule<State = unknown> {
   readonly key: string;
+  /**
+   * Who owns the timeline. `host` (the default) means the runtime counts
+   * frames and the renderer draws `frame`. `renderer` means the module runs
+   * its own clock (for example translated ActionScript) and reports progress
+   * through `onRendererPlayback`; `getFrameState` is then not used for playback.
+   */
+  readonly clock?: 'host' | 'renderer';
   /**
    * Legacy playback metadata. New multi-domain modules should also declare
    * `runtime`, whose frameCount remains the source root SWF frame count.

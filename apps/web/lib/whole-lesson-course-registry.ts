@@ -59,7 +59,7 @@ export interface WholeLessonCourseRegistrationInput {
   readonly player: WholeLessonCoursePlayer;
 }
 
-function descriptorPagesAreRunnable(
+export function descriptorPagesAreRunnable(
   descriptor: DescriptorDrivenLessonPlayerDescriptor,
 ): boolean {
   const pageIds = descriptor.pages.map((page) => page.animationId);
