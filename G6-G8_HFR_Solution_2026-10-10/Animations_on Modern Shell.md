@@ -1,6 +1,6 @@
 # Animations on Modern Shell: playing HFR TypeScript pages inside the My Lesson shell
 
-**Date:** 11 October 2026 · **Author:** Claude (Claude Code) for Dr. Peter Hu · **Status:** method proposal. The Owner approved decisions 1 (contract extension) and 2 (branch strategy) in §8 on 11 October. Decisions 3–6 are open; Claude's recommendations for them are in §8. Nothing in the workbench has been changed.
+**Date:** 11 October 2026 · **Author:** Claude (Claude Code) for Dr. Peter Hu · **Status:** method proposal. The Owner approved all six decisions in §8 on 11 October 2026. Implementation (M0, M1) has started on a fresh branch from `main`. Nothing in the workbench has been changed.
 
 ## 1. Answer: has this been achieved?
 
@@ -262,12 +262,12 @@ Later, deterministic seek: because HFR is deterministic (seeded RNG, virtual clo
 
 1. ~~Approve the renderer-clocked contract extension (seams A and B). It touches the shared runtime but leaves the frame-clocked path unchanged.~~ **Approved by the Owner on 11 October 2026.**
 2. ~~Approve the branch strategy in §5: a new branch from `main` with a minimal G6–G8 route port.~~ **Approved by the Owner on 11 October 2026.**
-3. Reduced-motion policy for HFR pages.
-4. What the pages' own Help and Exit calls do.
-5. Where to host the media (about 4.4 GB, M3).
-6. Whether G3–G5 should later move to HFR.
+3. ~~Reduced-motion policy for HFR pages.~~ **Approved by the Owner on 11 October 2026, as recommended below.**
+4. ~~What the pages' own Help and Exit calls do.~~ **Approved by the Owner on 11 October 2026, as recommended below.**
+5. ~~Where to host the media (about 4.4 GB, M3).~~ **Approved by the Owner on 11 October 2026, as recommended below.**
+6. ~~Whether G3–G5 should later move to HFR.~~ **Approved by the Owner on 11 October 2026, as recommended below.**
 
-### Claude's recommendations for decisions 3–6 (11 October; pending the Owner)
+### Decisions 3–6 (recommended by Claude and approved by the Owner, 11 October)
 
 **3. Reduced motion: "wait for me", not "freeze".**
 
