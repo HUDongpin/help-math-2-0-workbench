@@ -3,7 +3,10 @@
 import sourceHostIntroContracts from '../../../packages/demos/src/source-host-intro-contracts.generated.json';
 import sourceFeedbackContracts from '../../../packages/demos/src/source-feedback-contracts.generated.json';
 import sourceQuizContracts from '../../../packages/demos/src/source-quiz-contracts.generated.json';
-import {loadAnimationModule} from '@helpmath/demos/animation-registry';
+import {
+  animationModuleRegistration,
+  loadAnimationModule,
+} from '@helpmath/demos/animation-registry';
 import {
   createMemoryOnlyLessonHost,
   type LessonHostDecision,
@@ -110,6 +113,18 @@ function calculatorEvidence(
   });
 }
 
+function usePrefersReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const media = matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setReduced(media.matches);
+    update();
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
+  return reduced;
+}
+
 export function DescriptorDrivenWholeLessonPlayer({
   audioEnabled = false,
   authStatus = 'disabled',
@@ -162,6 +177,10 @@ export function DescriptorDrivenWholeLessonPlayer({
   const [runtimeEpoch, setRuntimeEpoch] = useState(0);
   const [navigationFocusEpoch, setNavigationFocusEpoch] = useState(0);
   const [tourFinished, setTourFinished] = useState(false);
+  const hostNavigationRef = useRef<(animationId: string) => void>(() => undefined);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [reducedMotionReleasedFor, setReducedMotionReleasedFor] =
+    useState<string | null>(null);
   const initialPageFocusSkippedRef = useRef(false);
   const pendingScrubberFocusRef = useRef<
     'section-scrubber' | null
@@ -228,6 +247,12 @@ export function DescriptorDrivenWholeLessonPlayer({
     if (decision.status === 'allowed') {
       if (request.type === 'open-glossary') setPaused(true);
       if (request.type === 'close-glossary') setPaused(false);
+      // A page jump (HFR `doNeedMoreHelp`, `doPlayNextMovie`) moves the
+      // lesson like the shell's own navigation; the host already admitted
+      // the target as an exact member of this release.
+      if (request.type === 'navigate') {
+        hostNavigationRef.current(request.targetAnimationId);
+      }
     }
     return decision;
   }, [lessonHost]);
@@ -389,6 +414,27 @@ export function DescriptorDrivenWholeLessonPlayer({
   };
   const selectPage = (pageId: string) => {
     navigateToPage(pageId, true);
+  };
+  useEffect(() => {
+    hostNavigationRef.current = (animationId: string) => {
+      const target = descriptor.pages.find((page) => page.animationId === animationId);
+      if (target && pageSessionId(target) !== currentPageSessionId) {
+        selectPage(pageSessionId(target));
+      }
+    };
+  });
+  // Reduced motion on a page that runs its own clock: each page entry waits
+  // for the learner's Play instead of freezing one frame (Owner decision,
+  // 11 October 2026). The hold is derived, so the shell's Play releases it.
+  const rendererClockedPage = currentRenderer.kind === 'registered' &&
+    animationModuleRegistration(currentRenderer.moduleKey)?.clock === 'renderer';
+  const motionHoldKey = `${currentPageSessionId}:${runtimeEpoch}`;
+  const reducedMotionHold = prefersReducedMotion && rendererClockedPage &&
+    reducedMotionReleasedFor !== motionHoldKey;
+  const effectivePaused = paused || reducedMotionHold;
+  const changePaused = (next: boolean) => {
+    if (!next) setReducedMotionReleasedFor(motionHoldKey);
+    setPaused(next);
   };
   const selectSectionPageOrdinal = (sectionPageOrdinal: number) => {
     const destination = currentSectionPages[sectionPageOrdinal - 1];
@@ -711,6 +757,7 @@ export function DescriptorDrivenWholeLessonPlayer({
           : undefined}
         moduleKey={currentRenderer.moduleKey}
         narrationRequest={narrationRequest}
+        onLessonFinished={() => setTourFinished(true)}
         onLessonHostRequest={handleLessonHostRequest}
         onPlaybackComplete={reviewCurrentPage}
         onPlaybackStateChange={setPlaybackState}
@@ -721,7 +768,7 @@ export function DescriptorDrivenWholeLessonPlayer({
             currentPageSessionId,
           )
         )}
-        paused={paused}
+        paused={effectivePaused}
         privateVb036Behavior={currentVb036Behavior}
         pageInteractionCompanionTargetId={pageInteractionCompanionTargetId}
         pageInteractionStageTargetId={pageInteractionStageTargetId}
@@ -918,9 +965,14 @@ export function DescriptorDrivenWholeLessonPlayer({
             </div>
           </section>
         : undefined}
-      gradeLessonLabel={spanish
-        ? `Grado ${descriptor.course.grade} · Lección ${descriptor.course.lesson}`
-        : `Grade ${descriptor.course.grade} · Lesson ${descriptor.course.lesson}`}
+      gradeLessonLabel={descriptor.schemaVersion === 2 &&
+          descriptor.course.gradeScope === 'G6-G8-shared'
+        ? spanish
+          ? `Grados 6–8 · ${descriptor.course.moduleCode ?? ''} · Lección ${descriptor.course.lesson}`
+          : `Grades 6–8 · ${descriptor.course.moduleCode ?? ''} · Lesson ${descriptor.course.lesson}`
+        : spanish
+          ? `Grado ${descriptor.course.grade} · Lección ${descriptor.course.lesson}`
+          : `Grade ${descriptor.course.grade} · Lesson ${descriptor.course.lesson}`}
       helpPanel={helpPanel}
       idPrefix={descriptor.course.domIdPrefix}
       keyTermsPanel={keyTermsPanel}
@@ -954,7 +1006,7 @@ export function DescriptorDrivenWholeLessonPlayer({
       onHeaderBack={returnToPreviousLocation}
       onExit={exitToLearningHome}
       onNext={advance}
-      onPausedChange={setPaused}
+      onPausedChange={changePaused}
       onPlaybackResumeFromInspection={resumeFromInspectedFrame}
       onPlaybackSeek={inspectFrame}
       onPrevious={() =>
@@ -969,7 +1021,7 @@ export function DescriptorDrivenWholeLessonPlayer({
       pageInteractionCompanionTargetId={pageInteractionCompanionTargetId}
       pageInteractionStageTargetId={pageInteractionStageTargetId}
       pageHeading={pageHeading}
-      paused={paused}
+      paused={effectivePaused}
       playbackFrame={playbackState.frame}
       playbackFrameCount={playbackState.frameCount}
       playbackFrameDomain={playbackState.frameDomain}
@@ -1012,7 +1064,11 @@ export function DescriptorDrivenWholeLessonPlayer({
             ? <p data-page-runtime-evidence-boundary={
                 runtimeEvidenceBoundary.runtimeKind
               }>
-                {runtimeEvidenceBoundary.runtimeKind ===
+                {runtimeEvidenceBoundary.runtimeKind === 'hfr-translated-actionscript'
+                  ? spanish
+                    ? 'Esta página ejecuta su propio ActionScript, traducido automáticamente a TypeScript (HFR). La traducción se comporta igual que el bytecode original en el mismo runtime; la paridad con Flash Player, el audio, la revisión humana y la aprobación del propietario no están establecidos.'
+                    : 'This page runs its own ActionScript, translated automatically into TypeScript (HFR). The translation behaves like the original bytecode on the same runtime; parity with Flash Player, audio, human review, and Owner approval are not established.'
+                  : runtimeEvidenceBoundary.runtimeKind ===
                     'source-script-bound-product-behavior-current-js-candidate'
                   ? runtimeEvidenceBoundary.productVisualBehaviorComposite ===
                       'source-script-assignment-composite-generated-original-runtime-unvalidated'

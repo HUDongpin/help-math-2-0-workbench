@@ -1,5 +1,6 @@
 'use client';
 import {
+  animationModuleRegistration,
   loadAnimationModule,
   type AnimationModule,
   type AnimationRendererProps,
@@ -28,6 +29,7 @@ import {
   LoadedSwfHostCanvas,
   type LoadedSwfHostAsset,
 } from './loaded-swf-host-canvas';
+import {RendererClockedRuntime} from './renderer-clocked-runtime';
 export type AnimationRuntimeQuery = {frame?: string; frameDomain?: string; scenario?: string; lang?: string; seed?: string; requirementId?: string; trace?: string; entryStateSha256?: string; capture?: string; duplicateCaptureIdentity?: boolean};
 /**
  * Narration is the lesson for a language learner, so the host renders a
@@ -761,7 +763,7 @@ export function HostAudioControls(options: HostAudioTracksOptions & {module: Ani
   />;
 }
 
-export function AnimationRuntime({
+function FrameClockedAnimationRuntime({
   audioEnabled = true,
   audioLanguage,
   animationId,
@@ -1292,4 +1294,23 @@ export function AnimationRuntime({
         : <Renderer activeInteractiveAudioId={playingInteractiveAudioId} audioEnabled={audioEnabled} entryStateSha256={playbackContext.entryStateSha256} frame={playbackContext.frame} frameDomain={playbackContext.frameDomain} key={rendererKey} lang={playbackContext.lang} onLessonHostRequest={rendererLessonHostRequest} onReplay={onReplay} pageInteractionCompanionTargetId={pageInteractionCompanionTargetId} pageInteractionStageTargetId={pageInteractionStageTargetId} paused={paused || hostAudioPaused} reducedMotion={reduced === true} replay={playbackContext.replay} requirementId={playbackContext.requirementId} rootFrame={playbackContext.rootFrame} scenario={playbackContext.scenario} seed={playbackContext.seed} state={state} traceId={playbackContext.traceId} uiLanguage={uiLanguage ?? playbackContext.lang} />}
     </div>
   </div>;
+}
+
+export type AnimationRuntimeProps =
+  Parameters<typeof FrameClockedAnimationRuntime>[0] & {
+    /** Renderer-clocked pages only: the page finished the lesson (1.0 `doCloseApp`). */
+    onLessonFinished?: () => void;
+  };
+
+/**
+ * Chooses who owns the timeline from the synchronous registry record, before
+ * the module loads. Frame-clocked modules (all source-static and current-JS
+ * pages) keep the runtime above unchanged; renderer-clocked modules (HFR
+ * pages translated from ActionScript) run their own clock and report back.
+ */
+export function AnimationRuntime({onLessonFinished, ...props}: AnimationRuntimeProps) {
+  if (animationModuleRegistration(props.moduleKey)?.clock === 'renderer') {
+    return <RendererClockedRuntime {...props} onLessonFinished={onLessonFinished} />;
+  }
+  return <FrameClockedAnimationRuntime {...props} />;
 }

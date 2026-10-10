@@ -11,6 +11,7 @@ import {
   controlledPreviewSupplementRecord,
   isControlledCurrentJsPreview,
 } from './lib/controlled-current-js-preview';
+import {HFR_SHARED_COURSE_PATH, isHfrLessonPreviewEnabled} from './lib/hfr-preview-policy';
 import {currentJsCandidateAssetRecordForSegments} from './lib/current-js-asset-profile';
 import {
   isG4L3ShowcaseAssetAuthorized,
@@ -118,6 +119,7 @@ function isArchivePath(pathname: string, request: NextRequest) {
     ).enabled;
   }
   if (process.env.NODE_ENV === 'production') return false;
+  if (HFR_SHARED_COURSE_PATH.test(pathname)) return isHfrLessonPreviewEnabled();
   if (pathname === '/library') return true;
   if (/^\/courses\/[3-5]\/\d{1,2}$/u.test(pathname)) return true;
   if (/^\/animations\/[a-z0-9-]+$/u.test(pathname)) return true;

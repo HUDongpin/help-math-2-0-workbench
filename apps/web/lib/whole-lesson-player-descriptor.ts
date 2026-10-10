@@ -95,13 +95,26 @@ export interface WholeLessonPlayerPage {
   readonly runtimeEvidenceBoundary?: Readonly<{
     runtimeKind:
       | 'source-static-current-js-candidate'
-      | 'source-script-bound-product-behavior-current-js-candidate';
-    actionScriptExecution: 'not-executed';
-    naturalTraceValidation: 'not-established';
+      | 'source-script-bound-product-behavior-current-js-candidate'
+      | 'hfr-translated-actionscript';
+    /**
+     * `translated-typescript`: the page's own ActionScript runs as generated
+     * TypeScript on the HFR runtime. That is not Flash Player.
+     */
+    actionScriptExecution: 'not-executed' | 'translated-typescript';
+    /**
+     * `hfr-t0b-equivalent-to-source-bytecode`: the generated module behaves
+     * like the original bytecode on the same runtime (T0b). Equivalence to the
+     * original Flash runtime (T1) is not established.
+     */
+    naturalTraceValidation:
+      | 'not-established'
+      | 'hfr-t0b-equivalent-to-source-bytecode';
     audioAcceptance: 'not-established';
     replaySemantics:
       | 'renderer-restart-only-source-behavior-not-established'
-      | 'product-complete-state-reset-original-runtime-parity-not-established';
+      | 'product-complete-state-reset-original-runtime-parity-not-established'
+      | 'page-reload-fresh-state-original-runtime-parity-not-established';
     productBehavior?:
       'maintained-javascript-state-machine-implemented';
     productVisualBehaviorComposite?:
@@ -487,6 +500,16 @@ export interface PageOnlyLessonPlayerDescriptor {
     courseShellCount: 0;
     expectedReleaseMemberCount: number;
     labels: Readonly<Record<WholeLessonPlayerLocale, SourceBoundLabel>>;
+    /** Shared middle-school module (for example `NMS002`); absent for G3–G5. */
+    moduleCode?: string;
+    /** Module-aware course identity, for example `shared-nms002-l07`. */
+    courseKey?: string;
+    /**
+     * Present while the lesson's grade mapping is pending: the shell labels
+     * the lesson by scope instead of claiming a grade. `grade` then holds the
+     * lowest grade of the scope only for type compatibility.
+     */
+    gradeScope?: 'G6-G8-shared';
   }>;
   readonly source: Readonly<{
     navigationContractPath: string;
@@ -509,6 +532,7 @@ export interface PageOnlyLessonPlayerDescriptor {
     lessonHostCapabilities: readonly (
       | 'audio'
       | 'glossary'
+      | 'navigation'
       | 'practice-feedback'
     )[];
   }>;
