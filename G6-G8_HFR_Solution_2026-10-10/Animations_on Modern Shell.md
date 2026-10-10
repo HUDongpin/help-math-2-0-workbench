@@ -2,6 +2,43 @@
 
 **Date:** 11 October 2026 · **Author:** Claude (Claude Code) for Dr. Peter Hu · **Status:** method proposal. The Owner approved all six decisions in §8 on 11 October 2026. Implementation (M0, M1) has started on a fresh branch from `main`. Nothing in the workbench has been changed.
 
+## Implementation status (11 October 2026, evening)
+
+**M0 and M1 are done locally.** NMS002 Lesson 7 (all 52 pages) plays inside the modern lesson shell. Details:
+
+- **Where:** branch `claude/hfr-shell-integration` (from `main` at `f3f58b87`), commit `e76e8c4a5`, worktree `/Volumes/WestWorld/HELP MATH 2.0-hfr-shell`. It is open for review as HUDongpin/help-math-2-0-workbench#28.
+- **How to run:** start the `hfr-shell` entry in `.claude/launch.json`, or run `HFR_LESSON_PREVIEW_ENABLED=true npm run dev` in the worktree's `apps/web`. Then open `http://localhost:3217/courses/shared/nms002/7`.
+
+Checked in the browser:
+
+- all 52 pages reach `ready` in the shell, with no console or server errors;
+- Next, the section spine and Pause work (canvas pixels freeze while paused);
+- Game 1's Start opens Game 2 with the chosen level carried over, and a correct match shows "Excellent!" with score 10;
+- ES plays the page's own Spanish narration at the shell volume;
+- the 390 px phone layout works.
+
+Automated checks:
+
+- strict `tsc` (package and web app) and `eslint` on the changed files are clean;
+- the demos tests pass, 383/383, including 6 new host-bridge tests;
+- web unit tests pass 85/87. Both failures are missing generated asset folders in a fresh worktree (`ENOENT`), not this change.
+
+Where the build differs from the plan above:
+
+1. **Grade-neutral route.** The G6–G8 grade mapping for NMS L7 is `pending`, and `catalog/g678-grade-mapping.v1.json` says not to infer grade from module, path, title or filename. So the URL is `/courses/shared/nms002/7` and the shell label reads "Grades 6–8 · NMS002 · Lesson 7", instead of `/courses/6/nms002/7`. Switch to a grade path once the mapping is approved.
+2. **No proxy rewrite.** The route is a nested page, `app/[locale]/courses/[grade]/[lesson]/[unit]/page.tsx`, where `[grade]` is the literal `shared`. The proxy only admits it when the local preview gate is open, and never in production. `main`'s lesson page is unchanged.
+3. **Hidden tab.** When the tab becomes visible again, the page continues unless the shell is paused. This matches how every other page behaves today.
+
+Still open (M2):
+
+- glossary: `DoHyperLinks` plus the middle-school key-term XML;
+- final-quiz scoring and final-quiz audio routing;
+- the accessibility mirror;
+- a Playwright suite;
+- the ALG L8 course;
+- browser verification of the reduced-motion hold (needs a reduced-motion device setting);
+- a lesson-sequence T0b run.
+
 ## 1. Answer: has this been achieved?
 
 **No.** The converted TypeScript pages play only in the standalone HFR sample viewer (`hfr-sample/viewer/`, `http://127.0.0.1:8765/viewer/index.html`). They do not play in the modern lesson shell shown at `https://www.helpmath.ai/courses/3/1?mode=focus`. The facts behind this answer, checked on 11 October:
