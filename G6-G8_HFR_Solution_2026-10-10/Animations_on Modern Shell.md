@@ -1,6 +1,6 @@
 # Animations on Modern Shell: playing HFR TypeScript pages inside the My Lesson shell
 
-**Date:** 11 October 2026 · **Author:** Claude (Claude Code) for Dr. Peter Hu · **Status:** method proposal. The Owner approved decisions 1 (contract extension) and 2 (branch strategy) in §8 on 11 October; decisions 3–6 are open. Nothing in the workbench has been changed.
+**Date:** 11 October 2026 · **Author:** Claude (Claude Code) for Dr. Peter Hu · **Status:** method proposal. The Owner approved decisions 1 (contract extension) and 2 (branch strategy) in §8 on 11 October. Decisions 3–6 are open; Claude's recommendations for them are in §8. Nothing in the workbench has been changed.
 
 ## 1. Answer: has this been achieved?
 
@@ -155,8 +155,9 @@ This is the only HFR-specific React code. Its work:
 | Final-quiz answer (`quizSection`, `quizTryCount` + feedback) | `record-fq-score {questionId, correct, pointsAwarded, pointsPossible}` | `fq-scoring` |
 | `doPlayFQQuestionAudio()` / `doPlayFQAnswerAudio()` / `doPlaySpanishAudio()` | Played inside HFR from the page's own media, only when `audioEnabled` | `audio` |
 | `enableQuizButton()`, `next_mc.gotoAndStop("active")` | Completion hint (§4.4); no request | none |
-| `getURL`, `loadVariables`, `LoadVars`, `XML`, report clips, `setBookMark` | `legacy {operation}`: blocked and logged; nothing is sent over the network | none |
-| `doCloseApp()`, `doNeedMoreHelp()` | Logged only in v1 (the shell has its own Exit and Help). Owner decision §8 | none |
+| `getURL`, `loadVariables`, `LoadVars`, `XML`, report clips | `legacy {operation}`: blocked and logged; nothing is sent over the network | none |
+| `doNeedMoreHelp("<SWF stem>", section, frame?)` (15 G6–G8 files, 19 calls) | **A page jump, not help.** Example: Game 1's Start button (P041) calls `doNeedMoreHelp("L7GS03", 1)` to open Game 2 (P042, file `L7GS03`). Map it to `navigate` to the active page in this lesson with that source file. Fail closed if there is no such page (for example, the course XML comments out `L7GS01`). Lesson-session globals (§4.7) carry the chosen game level across | `navigation` |
+| `doCloseApp()` and `setBookMark()` (52 files; the finish button on each lesson's last final-quiz page) | `_root.Report_URL` is always `""`, so the page takes its no-report branch and never builds the 1.0 report URL with `Student_ID` and `Class_ID`. `setBookMark` does nothing, because the shell already stores progress on the device. `doCloseApp` marks the lesson finished and shows the shell's existing "Lesson complete" notice. It does **not** navigate away: the score screen stays, and the learner leaves through the shell's own Exit or Learning home (§8, decision 4) | `navigation` (completion only) |
 | Any unknown shell call, opcode or built-in | Fail closed: `unsupported`, page shown as unavailable in reviewer mode | none |
 
 Two small additions are needed in `DescriptorDrivenWholeLessonPlayer.handleLessonHostRequest`: when an allowed `navigate` comes back, call `selectPage(target)`, the same path the Next button uses. A generated descriptor must also enable `navigation`, `glossary`, `practice-feedback`, `fq-scoring` and `audio` in `support.lessonHostCapabilities`. The G3 L1 page-only descriptor enables only `audio`.
@@ -190,6 +191,19 @@ The descriptor is the same schema-2 `PageOnlyLessonPlayerDescriptor` as `g3-l1-p
 - `glossary[]` built from the lesson's key-term XML. The middle-school files are in the archive inventory: for example `HelpProgramStagingv4/HELP_KEYTERMS/KT/XML/L1KTE01.xml` (345,838 bytes, content-addressed object `14d454f4…`) with the matching `KTS` Spanish files. The archive manifest lists them as unclassified. Bind each entry by `sourceKeyAttribute`;
 - `support.lessonHostCapabilities` as in §4.2.
 
+### 4.7 Lesson-session globals
+
+In 1.0, the course shell stayed loaded for the whole lesson, so `_global` values set by one page were still there when the next page loaded. Some pages rely on this. Example: P041 sets `_global.gameLevel1`/`gameLevel2`, then jumps to P042, whose Start button reads them.
+
+The adapter therefore keeps a **memory-only, lesson-scoped snapshot of `_global`** and hands it to the next `HfrPlayer` on every page change within the lesson:
+
+- only plain values (numbers, strings, booleans, arrays and plain objects); never display objects or functions;
+- kept across Replay, as in 1.0;
+- cleared when the learner leaves the lesson or reloads the page;
+- never written to storage and never sent anywhere.
+
+Measured in NMS L7, the only cross-page reader is the P041 → P042 game level; the final-quiz arrays and counters are set and read within P052. M3 should add a lesson-sequence run to the T0b verifier (pages in course order with carried globals), so every lesson's cross-page reads are listed.
+
 ## 5. Where to build it
 
 **Start a new branch from `origin/main`,** because the screenshot shell is `main`. Port only the G6–G8 route pieces from `codex/g678-current-js-calibration`:
@@ -207,7 +221,7 @@ Do **not** merge the G6–G8 branch. It carries 74 commits of per-page calibrati
 | --- | --- | --- | --- |
 | **M0** | HFR sample fixes: (a) type the `fn` helper in `runtime/types.ts`, so nested closures get their parameter types (strict `tsc` currently reports **960 TS7006** errors in the generated NMS L7 pages; the runtime itself is already strict-clean, measured 11 Oct); (b) `HfrPlayer.load(data, module, baseUrl)` without `import(url)`; (c) expose `progress()`, `settled`, completion and narration state; (d) move resize/DPR and Spanish routing from the viewer into the player; (e) make `destroy()` idempotent | NMS L7 and P040/P050 regenerate, T0b stays at 54/54, and strict `tsc` is clean | 0.5 day |
 | **M1** | Seams A, B and C, `HfrRenderer`, the §5 route port, and a generated NMS L7 descriptor | `npm run dev` with the flag: `/courses/6/nms002/7` plays all 52 pages **in the shell** (spine, Next/Prev, Pause, Replay, volume, EN/ES), with zero console errors | 2 days |
-| **M2** | Full §4.2 bridge (glossary, navigation, feedback, FQ score, FQ audio), the §4.4 completion rule, the accessibility mirror, and the ALG L8 course (P040 game, P050 quiz) | The Playwright suite in §7 passes at 1360 px and 390 px | 3 days |
+| **M2** | Full §4.2 bridge (glossary, navigation and page jumps, feedback, FQ score, FQ audio, lesson completion), lesson-session globals (§4.7), the §4.4 completion rule, the accessibility mirror, and the ALG L8 course (P040 game, P050 quiz) | The Playwright suite in §7 passes at 1360 px and 390 px | 3 days |
 | **M3** | Scale: compile all 44 G6–G8 lessons (2,282 placements; about 2.5 s per lesson); T0 and T0b gates in CI; descriptors for all 44; asset hosting decision (§7) | Every placement is either registered or listed as a T0/T0b failure with a reason | 3–4 days |
 | **M4** (optional) | G3–G5 on HFR (same AVM1 profile): generate HFR modules for one lesson, e.g. G3 L1, behind a local flag and compare them with today's static-frame pages **in the same `/courses/3/1` shell** | The Owner decides lesson by lesson | 1 day for the first lesson |
 
@@ -248,10 +262,45 @@ Later, deterministic seek: because HFR is deterministic (seeded RNG, virtual clo
 
 1. ~~Approve the renderer-clocked contract extension (seams A and B). It touches the shared runtime but leaves the frame-clocked path unchanged.~~ **Approved by the Owner on 11 October 2026.**
 2. ~~Approve the branch strategy in §5: a new branch from `main` with a minimal G6–G8 route port.~~ **Approved by the Owner on 11 October 2026.**
-3. Reduced-motion policy for HFR pages. Recommended: start paused on the page's `begin` frame with narration available, instead of the static-frame fallback used today, because the motion carries the lesson.
-4. Mapping of `doNeedMoreHelp` and `doCloseApp`: log only (recommended for v1), or open the shell's Help panel and Exit.
-5. Asset hosting for about 4.4 GB (M3).
-6. Whether G3–G5 should later move to HFR (M4, A/B in `/courses/3/1`).
+3. Reduced-motion policy for HFR pages.
+4. What the pages' own Help and Exit calls do.
+5. Where to host the media (about 4.4 GB, M3).
+6. Whether G3–G5 should later move to HFR.
+
+### Claude's recommendations for decisions 3–6 (11 October; pending the Owner)
+
+**3. Reduced motion: "wait for me", not "freeze".**
+
+- When the device asks for reduced motion, each HFR page loads **paused** on its `begin` frame. The shell's Play button and narration are ready, and the page plays normally once the learner presses Play.
+- After the page settles, stop decorative loops: looping timelines with no sound, no frame scripts and no interactive children.
+- Never auto-advance, and never mark a page complete that the learner has not played.
+
+Do not use today's static-frame fallback for HFR pages. Here the motion *is* the lesson (moving counters, number-line jumps, games), and a frozen frame would remove the narration and the interactions and still mark the page done. The shell's Pause control already meets WCAG 2.2.2 (Pause, Stop, Hide). Reduced motion asks for less non-essential motion and more control, and this rule gives both.
+
+**4. Help and Exit: follow what the calls really do, and keep the shell in charge.**
+
+- `doNeedMoreHelp` is a page jump inside the lesson (§4.2), so it maps to `navigate`, with lesson-session globals (§4.7). Logging it only would break Game 1's Start button.
+- `doCloseApp` ends the final quiz. It shows the shell's "Lesson complete" notice and keeps the score screen; it never leaves the page by itself.
+- `Report_URL` stays empty, so no report URL with student or class IDs is ever built, and `setBookMark` does nothing.
+- The shell's own Help and Exit stay the only general Help and Exit, so learners see one consistent set of controls.
+
+**5. Media hosting: content-addressed object storage, out of Git.**
+
+- Upload each compiled bundle once under `hfr/<bundle-sha>/<placement>/…`. Store page data pre-compressed, and serve with `Cache-Control: public, max-age=31536000, immutable`.
+- **Vercel Blob is the first choice:** the same vendor as hosting, with no new DNS or vendor decisions, which fits the 30 October timeline.
+- Keep the base URL in one setting (`HFR_ASSET_BASE`), so a later move to Cloudflare R2 (which has no egress fees, useful at district scale) is a re-upload and a config change.
+- Add the asset origin to the CSP `connect-src`, `img-src` and `media-src` directives. Local development reads the same paths from a git-ignored `apps/web/public/hfr/`.
+
+Why not Git: the G3–G5 bundle already keeps 1.74 GB of content-addressed blobs in `deployment/current-js-controlled-preview-v2/blobs` in this **public** repository. Adding about 4.4 GB of G6–G8 courseware would roughly triple the repository, slow every clone and deployment, and publish courseware whose rights chain (Boulder Learning ↔ DDI ↔ PedaNova) is still pending. The existing content-addressed layout carries over; only the storage moves.
+
+**6. G3–G5 on HFR: yes, lesson by lesson, after G6–G8 milestone M2.**
+
+- G3–G5 use the same Flash format. The headless prototype ran **2,071 of 2,074** G3–G5 SWFs cleanly, with no missing shell functions.
+- Today's G3–G5 pages are static frames, so Try It and Play It are still pictures of controls: issue #74 was closed only by a disclosure, and PR #17 covers three lessons as ungraded practice because no answer keys were recovered. HFR runs each page's own checking logic, so the answers are checked the way 1.0 checked them. In the prototype run, 243 of the 305 TI and GS SWFs have working controls.
+- One runtime for G3–G8 also means one pipeline to maintain.
+- **How:** convert one lesson first, preferably one from PR #17 (G3 L2, G4 L3 or G5 L5). Compare it with today's pages in the same `/courses/3/…` shell behind a local flag, then switch lessons one at a time, with Owner acceptance per lesson.
+- Because the clock choice is per module, any page that fails T0 or T0b, or whose SWF is missing from the archive, keeps its current module.
+- The G3–G5 lessons are live, so each switch is a release decision and goes through the existing gates. No fidelity claim is made until the Ruffle oracle (T1) exists.
 
 These sit alongside, and do not replace, the pending HFR decisions D1–D7 in `Owner_Decision_Brief_2026-10-10.md`.
 
@@ -261,5 +310,5 @@ These sit alongside, and do not replace, the pending HFR decisions D1–D7 in `O
 | --- | --- |
 | HFR sample (M0) | `hfr-sample/runtime/types.ts`, `player.ts`, `compiler/compile-page.mjs` (import path, meta.json, progress domain, completion mode) |
 | Demos package | `src/contract.ts`, `scripts/generate-registry.mjs` (`clock` in metadata), new `src/hfr/` (runtime, `module.ts`, `renderer.tsx`, `host-bridge.ts`), generated `src/hfr-pages/*`, `src/modules/shared-*.ts`, `private-current-js-registry.json` |
-| Web app | `components/animation-runtime.tsx` (switch), new `components/renderer-clocked-runtime.tsx`, `components/descriptor-driven-whole-lesson-player.tsx` (allowed `navigate` calls `selectPage`), `lib/whole-lesson-player-descriptor.ts` and `lib/whole-lesson-course-registry.ts` (`moduleCode`, `courseKey`, HFR registration), generated `lib/*-hfr-course-descriptor.generated.ts`, `proxy.ts` and `app/[locale]/courses/[grade]/[lesson]/page.tsx` (shared route), `public/hfr/**` (generated assets) |
+| Web app | `components/animation-runtime.tsx` (switch), new `components/renderer-clocked-runtime.tsx`, `components/descriptor-driven-whole-lesson-player.tsx` (allowed `navigate` calls `selectPage`; `doCloseApp` shows the existing "Lesson complete" notice), `lib/whole-lesson-player-descriptor.ts` and `lib/whole-lesson-course-registry.ts` (`moduleCode`, `courseKey`, HFR registration), generated `lib/*-hfr-course-descriptor.generated.ts`, `proxy.ts` and `app/[locale]/courses/[grade]/[lesson]/page.tsx` (shared route), `public/hfr/**` (generated assets) |
 | Unchanged | `LegacyResponsiveLessonShell`, the frame-clocked runtime path, all 1,760 existing modules, release ledgers, launch gates |
