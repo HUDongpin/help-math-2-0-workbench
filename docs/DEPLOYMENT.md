@@ -30,6 +30,8 @@ Use these project settings:
 | Build Command | `npm run build` in `apps/web` |
 | Output Directory | Next.js default; do not override |
 
+Automatic Git deployments are disabled for bot branches matching `claude/**`, `dependabot/**`, `cursor/**`, and `backup/**` (`git.deploymentEnabled`). The same `git` block lives in the repository-root `vercel.json` and in `apps/web/vercel.json`, because Vercel reads `vercel.json` only from the configured Root Directory. This table records that directory as `apps/web`, and the live dashboard value is outside the repository, so both files carry the setting. Keep the two `git` blocks in sync. `apps/web/vercel.json` contains only `$schema` and that `git` block, so a Root Directory of `apps/web` leaves the Framework, Build Command, and Output Directory in this table unchanged.
+
 The public application is an npm-workspace consumer of the generated dynamic
 registry in `packages/demos/` and the reviewed publication ledger/catalog in
 `catalog/`. Vercel therefore must include source files outside `apps/web`; the
