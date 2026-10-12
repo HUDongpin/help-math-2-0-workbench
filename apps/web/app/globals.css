@@ -5721,6 +5721,42 @@ body:has(.lesson-shell2) {
   width: 100%;
 }
 
+/* Keep this learner action in the visible viewport, outside the cropped
+   authored page plane. The first authored frame can be entirely blank. */
+.lesson-shell2__motion-prompt {
+  background: #fff;
+  border: 1px solid #cbd8e7;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgb(24 55 91 / 16%);
+  box-sizing: border-box;
+  color: #173456;
+  left: 50%;
+  max-width: calc(100% - 2rem);
+  padding: 1rem;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 26rem;
+  z-index: 5;
+}
+
+.lesson-shell2__motion-prompt p {
+  margin: 0 0 .75rem;
+}
+
+.lesson-shell2__motion-prompt button {
+  background: #0754b8;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  min-height: 44px;
+  padding: .6rem 1rem;
+}
+
 .lesson-shell2__resume-prompt {
   align-items: center;
   backdrop-filter: blur(7px);

@@ -188,6 +188,7 @@ export function G4L3WholeLessonPlayer({
   const [sourceStopHold, setSourceStopHold] =
     useState<SourceStopHold | null>(null);
   const [paused, setPaused] = useState(false);
+  const [motionRequested, setMotionRequested] = useState(false);
   const [tutorEngaged, setTutorEngaged] = useState(false);
   const [volume, setVolume] = useState(.8);
   const [playbackState, setPlaybackState] =
@@ -592,6 +593,7 @@ export function G4L3WholeLessonPlayer({
     resetPageInteractionHost();
     setActiveTool(null);
     setPaused(false);
+    setMotionRequested(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
     setNarrationRequest(null);
@@ -638,6 +640,7 @@ export function G4L3WholeLessonPlayer({
     resetPageInteractionHost();
     setActiveTool(null);
     setPaused(false);
+    setMotionRequested(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
     setNarrationRequest(null);
@@ -658,9 +661,15 @@ export function G4L3WholeLessonPlayer({
     resetPageInteractionHost();
     setActiveTool(null);
     setPaused(false);
+    setMotionRequested(true);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
     setNarrationRequest(null);
+  };
+
+  const playCurrentPage = () => {
+    setMotionRequested(true);
+    handlePausedChange(false);
   };
 
   const inspectFrame = (frame: number) => {
@@ -711,6 +720,7 @@ export function G4L3WholeLessonPlayer({
     resetPageInteractionHost();
     setActiveTool(null);
     setPaused(false);
+    setMotionRequested(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
     setNarrationRequest(null);
@@ -769,6 +779,7 @@ export function G4L3WholeLessonPlayer({
     resetPageInteractionHost();
     setActiveTool(null);
     setPaused(false);
+    setMotionRequested(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
     setNarrationRequest(null);
@@ -896,6 +907,7 @@ export function G4L3WholeLessonPlayer({
 
   const productLanguages = g4L3ProductLanguages(currentPage.animationId, progress.language);
   const stage = <AnimationRuntime
+    motionRequested={motionRequested}
     animationId={currentPage.animationId}
     audioLanguage={productLanguages.audioLanguage}
     key={`${currentPage.animationId}:${runtimeEpoch}`}
@@ -1147,6 +1159,7 @@ export function G4L3WholeLessonPlayer({
       onNarrationToggle={toggleNarration}
       onNext={advanceToNextPage}
       onPausedChange={handlePausedChange}
+      onPlay={playCurrentPage}
       onPlaybackResumeFromInspection={resumeFromInspectedFrame}
       onPlaybackSeek={inspectFrame}
       onPrevious={() => previousPage && selectPage(previousPage.animationId)}
@@ -1160,7 +1173,8 @@ export function G4L3WholeLessonPlayer({
       }
       pageInteractionStageTargetId={G4_L3_PAGE_INTERACTION_STAGE_TARGET_ID}
       pageHeading={pageHeading}
-      paused={paused || resumeDecision !== 'resolved'}
+      paused={paused || resumeDecision !== 'resolved' || Boolean(playbackState.motionPaused)}
+      motionPaused={playbackState.motionPaused}
       playbackFrame={playbackState.frame}
       playbackFrameCount={playbackState.frameCount}
       playbackFrameDomain={playbackState.frameDomain}

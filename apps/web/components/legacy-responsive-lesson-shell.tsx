@@ -646,6 +646,7 @@ export function LegacyResponsiveLessonShell({
   locale,
   mapOpen,
   mapPanel,
+  motionPaused = false,
   narrationStatus,
   novaCapabilities = EMPTY_NOVA_CLIENT_CAPABILITIES,
   novaTutorMode: requestedNovaTutorMode = 'focus',
@@ -658,6 +659,7 @@ export function LegacyResponsiveLessonShell({
   onExit,
   onNext,
   onPausedChange,
+  onPlay,
   onPlaybackResumeFromInspection,
   onPlaybackSeek,
   onPrevious,
@@ -715,6 +717,7 @@ export function LegacyResponsiveLessonShell({
   locale: 'en' | 'es';
   mapOpen: boolean;
   mapPanel: ReactNode;
+  motionPaused?: boolean;
   narrationStatus: AnimationRuntimeNarrationStatus;
   novaCapabilities?: NovaClientCapabilities;
   novaTutorMode?: NovaTutorMode;
@@ -727,6 +730,8 @@ export function LegacyResponsiveLessonShell({
   onExit: () => void;
   onNext: () => void;
   onPausedChange: (paused: boolean) => void;
+  /** Explicit transport intent, distinct from automatic support-tool pauses. */
+  onPlay?: () => void;
   onPlaybackResumeFromInspection: () => void;
   onPlaybackSeek: (frame: number) => void;
   onPrevious: () => void;
@@ -2184,6 +2189,7 @@ export function LegacyResponsiveLessonShell({
       onClick={() => {
         resolveStageOverlayForControl();
         if (frameInspectionActive) onPlaybackResumeFromInspection();
+        else if (paused && onPlay) onPlay();
         else onPausedChange(!paused);
       }}
       type="button"
@@ -2711,6 +2717,19 @@ export function LegacyResponsiveLessonShell({
               : null}
           </div>
 
+          {motionPaused && runtimeAvailable && onPlay && !stageOverlayOpen
+            ? <div className="lesson-shell2__motion-prompt">
+                <p role="status">{spanish
+                  ? 'La página está en pausa para respetar la preferencia de movimiento de tu dispositivo.'
+                  : 'This page is paused to respect your device’s motion preference.'}</p>
+                <button
+                  disabled={supportOpen}
+                  onClick={onPlay}
+                  type="button"
+                >{spanish ? 'Reproducir esta página' : 'Play this page'}</button>
+              </div>
+            : null}
+
           {modernWide ? null : <div
             aria-hidden="true"
             className="lesson-shell2__source-chrome"
@@ -3009,7 +3028,9 @@ export function LegacyResponsiveLessonShell({
               }
               onClick={() => frameInspectionActive
                 ? onPlaybackResumeFromInspection()
-                : onPausedChange(!paused)}
+                : paused && onPlay
+                  ? onPlay()
+                  : onPausedChange(!paused)}
               type="button"
             >
               {paused
