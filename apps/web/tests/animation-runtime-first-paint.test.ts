@@ -155,18 +155,57 @@ test('page navigation or Replay cleanup cannot release a stale first-paint wait'
   stopNext();
 });
 
-test('first-paint gating preserves reduced-motion and deterministic capture decisions', () => {
-  const playback = {
-    captureFrame: undefined,
-    fps: 12,
-    frame: 1,
-    playbackEndFrame: 240,
-    reducedMotion: true,
-    rendererDomainSupported: true,
-  };
-  assert.equal(playbackReachedEnd(playback), true);
-  assert.equal(playbackReachedEnd({...playback, reducedMotion: false}), false);
-  assert.equal(playbackReachedEnd({...playback, captureFrame: 72}), false);
-  assert.equal(resolveAnimationPlaybackProgress({...playback, capture: false}), 1);
-  assert.equal(resolveAnimationPlaybackProgress({...playback, capture: true}), null);
+const playback = {
+  captureFrame: undefined,
+  fps: 12,
+  frame: 1,
+  playbackEndFrame: 241,
+  reducedMotion: false,
+  rendererDomainSupported: true,
+};
+
+test('a reduced-motion still frame does not count an unplayed lesson as complete', () => {
+  for (const frame of [1, playback.playbackEndFrame]) {
+    const waitingForPlay = {...playback, frame, reducedMotion: true};
+    assert.equal(playbackReachedEnd(waitingForPlay), false);
+    assert.equal(resolveAnimationPlaybackProgress({...waitingForPlay, capture: false}), 0);
+  }
+});
+
+test('ordinary playback reports actual timeline progress and completes at the end', () => {
+  for (const [frame, expectedProgress, expectedComplete] of [
+    [1, 0, false],
+    [121, .5, false],
+    [241, 1, true],
+  ] as const) {
+    const current = {...playback, frame};
+    assert.equal(playbackReachedEnd(current), expectedComplete);
+    assert.equal(resolveAnimationPlaybackProgress({...current, capture: false}), expectedProgress);
+  }
+});
+
+test('a static no-fps drawing retains completion after motion preference resolves', () => {
+  const staticDrawing = {...playback, fps: 0, playbackEndFrame: 1};
+  assert.equal(playbackReachedEnd(staticDrawing), true);
+  assert.equal(resolveAnimationPlaybackProgress({...staticDrawing, capture: false}), 1);
+  assert.equal(playbackReachedEnd({...staticDrawing, reducedMotion: true}), false);
+  assert.equal(resolveAnimationPlaybackProgress({...staticDrawing, reducedMotion: true, capture: false}), 0);
+});
+
+test('unresolved motion preference and unsupported renderers cannot report progress', () => {
+  for (const unavailable of [
+    {...playback, reducedMotion: undefined},
+    {...playback, frame: playback.playbackEndFrame, rendererDomainSupported: false},
+  ]) {
+    assert.equal(playbackReachedEnd(unavailable), false);
+    assert.equal(resolveAnimationPlaybackProgress({...unavailable, capture: false}), null);
+  }
+});
+
+test('deterministic capture never counts as played even at the final frame', () => {
+  for (const reducedMotion of [false, true]) {
+    const capture = {...playback, frame: playback.playbackEndFrame, reducedMotion};
+    assert.equal(playbackReachedEnd({...capture, captureFrame: capture.frame}), false);
+    assert.equal(resolveAnimationPlaybackProgress({...capture, capture: true}), null);
+  }
 });

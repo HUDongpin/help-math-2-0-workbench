@@ -23,7 +23,7 @@ import {
   type LessonHostCapability,
   type LessonHostRequest,
 } from '@helpmath/demos/runtime';
-import {useCallback, useEffect, useMemo, useRef, useState, type CSSProperties} from 'react';
+import {useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type CSSProperties} from 'react';
 import {
   LoadedSwfHostCanvas,
   type LoadedSwfHostAsset,
@@ -54,6 +54,8 @@ export interface AnimationRuntimePlaybackState {
   readonly frameDomain: string;
   readonly fps: number;
   readonly narration: AnimationRuntimeNarrationStatus;
+  /** The device preference is holding autoplay until an explicit Play/Replay. */
+  readonly motionPaused?: boolean;
   /**
    * Current playhead within the authored playback span, from 0 to 1.
    * This is intentionally separate from lesson/page completion. `null` keeps
@@ -178,9 +180,8 @@ export function moduleSupportsDirectRuntimeAudioHost(
  * frame. That is the last frame of the first pass, so a looping page reports
  * completion once instead of never.
  *
- * Two cases have nothing to play and are finished the moment they render: a
- * reduced-motion device, which holds a single authored frame, and a movie with
- * no live frame rate. Neither should cost a learner their progress.
+ * A reduced-motion still frame has not played the lesson. Only a movie with
+ * no live frame rate is finished the moment it renders.
  *
  * A page that has not rendered, cannot render its requested domain, or is
  * frozen at a deterministic capture frame reports nothing.
@@ -203,7 +204,7 @@ export function playbackReachedEnd({
   if (!rendererDomainSupported) return false;
   if (captureFrame !== undefined) return false;
   if (reducedMotion === undefined) return false;
-  if (reducedMotion) return true;
+  if (reducedMotion) return false;
   return !fps || frame >= playbackEndFrame;
 }
 
@@ -225,7 +226,8 @@ export function resolveAnimationPlaybackProgress({
   if (capture || !rendererDomainSupported || reducedMotion === undefined) {
     return null;
   }
-  if (reducedMotion || !fps || playbackEndFrame <= 1) return 1;
+  if (reducedMotion) return 0;
+  if (!fps || playbackEndFrame <= 1) return 1;
   const clampedFrame = Math.min(
     playbackEndFrame,
     Math.max(1, Math.trunc(frame)),
@@ -769,6 +771,7 @@ export function AnimationRuntime({
   query,
   labels,
   loadedSwfHostAsset,
+  motionRequested = false,
   narrationRequest,
   onLessonHostRequest,
   onPlaybackComplete,
@@ -795,6 +798,8 @@ export function AnimationRuntime({
     loading: string;
   };
   loadedSwfHostAsset?: LoadedSwfHostAsset;
+  /** Explicit learner Play/Replay, never an automatic support-tool resume. */
+  motionRequested?: boolean;
   narrationRequest?: AnimationRuntimeNarrationRequest | null;
   onLessonHostRequest?: AnimationRendererProps['onLessonHostRequest'];
   onPlaybackComplete?: () => void;
@@ -809,7 +814,8 @@ export function AnimationRuntime({
   volume?: number;
 }) {
   const [loaded, setLoaded] = useState<{key: string; module?: AnimationModule; failed?: boolean}>({key: moduleKey});
-  const [replay, setReplay] = useState(0), [reduced, setReduced] = useState<boolean | undefined>();
+  const [replay, setReplay] = useState(0), [prefersReducedMotion, setPrefersReducedMotion] = useState<boolean | undefined>();
+  const [motionRequestedIdentity, setMotionRequestedIdentity] = useState<string | null>(null);
   const [hostAudioPaused, setHostAudioPaused] = useState(false);
   const [autoplayBlockedCue, setAutoplayBlockedCue] = useState<RuntimeAudioCue | null>(null);
   const [timelineAudioSounding, setTimelineAudioSounding] = useState(false);
@@ -821,7 +827,7 @@ export function AnimationRuntime({
   const audioModule = audioEnabled ? animationModule : undefined;
   const prototype = matchPrototype({animationId: moduleKey});
   useEffect(() => {let cancelled = false; loadAnimationModule(moduleKey).then((value) => {if (!cancelled) setLoaded({key: moduleKey, module: value, failed: !value});}).catch(() => {if (!cancelled) setLoaded({key: moduleKey, failed: true});}); return () => {cancelled = true;};}, [moduleKey]);
-  useEffect(() => {const media = matchMedia('(prefers-reduced-motion: reduce)'), update = () => setReduced(media.matches); update(); media.addEventListener('change', update); return () => media.removeEventListener('change', update);}, []);
+  useEffect(() => {const media = matchMedia('(prefers-reduced-motion: reduce)'), update = () => setPrefersReducedMotion(media.matches); update(); media.addEventListener('change', update); return () => media.removeEventListener('change', update);}, []);
   const runtimeMetadata = prototype?.runtime ?? animationModule?.runtime ?? animationModule?.movie;
   const context = animationModule && runtimeMetadata
     ? createRuntimeContext(
@@ -852,6 +858,13 @@ export function AnimationRuntime({
     loadedSwfHostAsset?.sourceProvenLanguage === context?.lang
       ? loadedSwfHostAsset
       : undefined;
+  // Reduced motion prevents autoplay; it must not veto a learner's explicit
+  // request to watch the instructional timeline. Renderer feedback and CSS
+  // continue to receive the actual device preference.
+  const reduced = prefersReducedMotion === undefined
+    ? undefined
+    : prefersReducedMotion && !motionRequested && motionRequestedIdentity !== playbackIdentity;
+  const motionPaused = reduced === true && context?.captureFrame === undefined;
   const firstPaintIdentity = JSON.stringify([
     animationId,
     playbackIdentity,
@@ -1009,6 +1022,14 @@ export function AnimationRuntime({
     onTimelinePauseChange: onHostAudioTimelinePauseChange,
     volume,
   });
+  const wasMotionPaused = useRef(false);
+  useLayoutEffect(() => {
+    // The learner may have listened while the visual was held. Retire that
+    // independent recording before the timeline's passive audio effect starts
+    // its own cue; otherwise Play would speak the same narration twice.
+    if (wasMotionPaused.current && !motionPaused) stopNarrationTrack();
+    wasMotionPaused.current = motionPaused;
+  }, [motionPaused, stopNarrationTrack]);
   // Pausing still stops current narration; a later explicit Play audio action
   // may read the recording while the learner keeps the animation paused.
   useEffect(() => {
@@ -1115,6 +1136,7 @@ export function AnimationRuntime({
       frameDomain: frameDomain?.id ?? 'root',
       fps: activeMovie?.fps ?? 0,
       narration,
+      motionPaused,
       playbackProgress,
       seekAvailable,
       stepFrames: transport?.stepFrames ?? 0,
@@ -1129,6 +1151,7 @@ export function AnimationRuntime({
     frame,
     frameDomain?.id,
     narration,
+    motionPaused,
     onPlaybackStateChange,
     playbackProgress,
     reportedFrameCount,
@@ -1237,6 +1260,7 @@ export function AnimationRuntime({
     stopNarrationTrack();
     stopInteractiveAudio();
     stopTimelineAudioNow();
+    setMotionRequestedIdentity(playbackIdentity);
     setReplay((value) => value + 1);
     onReplayCallback?.();
   };
@@ -1289,7 +1313,7 @@ export function AnimationRuntime({
             uiLanguage={uiLanguage ?? playbackContext.lang}
             width={runtimeMetadata.stage.width}
           />
-        : <Renderer activeInteractiveAudioId={playingInteractiveAudioId} audioEnabled={audioEnabled} entryStateSha256={playbackContext.entryStateSha256} frame={playbackContext.frame} frameDomain={playbackContext.frameDomain} key={rendererKey} lang={playbackContext.lang} onLessonHostRequest={rendererLessonHostRequest} onReplay={onReplay} pageInteractionCompanionTargetId={pageInteractionCompanionTargetId} pageInteractionStageTargetId={pageInteractionStageTargetId} paused={paused || hostAudioPaused} reducedMotion={reduced === true} replay={playbackContext.replay} requirementId={playbackContext.requirementId} rootFrame={playbackContext.rootFrame} scenario={playbackContext.scenario} seed={playbackContext.seed} state={state} traceId={playbackContext.traceId} uiLanguage={uiLanguage ?? playbackContext.lang} />}
+        : <Renderer activeInteractiveAudioId={playingInteractiveAudioId} audioEnabled={audioEnabled} entryStateSha256={playbackContext.entryStateSha256} frame={playbackContext.frame} frameDomain={playbackContext.frameDomain} key={rendererKey} lang={playbackContext.lang} onLessonHostRequest={rendererLessonHostRequest} onReplay={onReplay} pageInteractionCompanionTargetId={pageInteractionCompanionTargetId} pageInteractionStageTargetId={pageInteractionStageTargetId} paused={paused || hostAudioPaused} reducedMotion={prefersReducedMotion === true} replay={playbackContext.replay} requirementId={playbackContext.requirementId} rootFrame={playbackContext.rootFrame} scenario={playbackContext.scenario} seed={playbackContext.seed} state={state} traceId={playbackContext.traceId} uiLanguage={uiLanguage ?? playbackContext.lang} />}
     </div>
   </div>;
 }
