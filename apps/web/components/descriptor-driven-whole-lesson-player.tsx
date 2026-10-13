@@ -146,6 +146,7 @@ export function DescriptorDrivenWholeLessonPlayer({
   const [mapOpen, setMapOpen] = useState(false);
   const [activeTool, setActiveTool] = useState<LessonShellTool>(null);
   const [paused, setPaused] = useState(false);
+  const [motionRequested, setMotionRequested] = useState(false);
   const [volume, setVolume] = useState(.8);
   const [playbackState, setPlaybackState] =
     useState<AnimationRuntimePlaybackState>(
@@ -383,6 +384,7 @@ export function DescriptorDrivenWholeLessonPlayer({
     setMapOpen(false);
     setActiveTool(null);
     setPaused(false);
+    setMotionRequested(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
     setNarrationRequest(null);
@@ -425,6 +427,7 @@ export function DescriptorDrivenWholeLessonPlayer({
     setMapOpen(false);
     setActiveTool(null);
     setPaused(false);
+    setMotionRequested(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
     setNarrationRequest(null);
@@ -438,9 +441,15 @@ export function DescriptorDrivenWholeLessonPlayer({
     );
     setRuntimeEpoch((value) => value + 1);
     setPaused(false);
+    setMotionRequested(true);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
     setNarrationRequest(null);
+  };
+
+  const playCurrentPage = () => {
+    setMotionRequested(true);
+    setPaused(false);
   };
 
   const inspectFrame = (frame: number) => {
@@ -499,6 +508,7 @@ export function DescriptorDrivenWholeLessonPlayer({
     setMapOpen(false);
     setActiveTool(null);
     setPaused(false);
+    setMotionRequested(false);
     setPlaybackState(INITIAL_ANIMATION_RUNTIME_PLAYBACK_STATE);
     setSeekRequest(null);
     setNarrationRequest(null);
@@ -710,6 +720,7 @@ export function DescriptorDrivenWholeLessonPlayer({
           ? descriptor.visualSkin.backgroundCompanion?.loadedSwfHostAsset
           : undefined}
         moduleKey={currentRenderer.moduleKey}
+        motionRequested={motionRequested}
         narrationRequest={narrationRequest}
         onLessonHostRequest={handleLessonHostRequest}
         onPlaybackComplete={reviewCurrentPage}
@@ -955,6 +966,7 @@ export function DescriptorDrivenWholeLessonPlayer({
       onExit={exitToLearningHome}
       onNext={advance}
       onPausedChange={setPaused}
+      onPlay={playCurrentPage}
       onPlaybackResumeFromInspection={resumeFromInspectedFrame}
       onPlaybackSeek={inspectFrame}
       onPrevious={() =>
@@ -969,7 +981,8 @@ export function DescriptorDrivenWholeLessonPlayer({
       pageInteractionCompanionTargetId={pageInteractionCompanionTargetId}
       pageInteractionStageTargetId={pageInteractionStageTargetId}
       pageHeading={pageHeading}
-      paused={paused}
+      paused={paused || Boolean(playbackState.motionPaused)}
+      motionPaused={playbackState.motionPaused}
       playbackFrame={playbackState.frame}
       playbackFrameCount={playbackState.frameCount}
       playbackFrameDomain={playbackState.frameDomain}
