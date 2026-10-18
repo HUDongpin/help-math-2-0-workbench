@@ -1,11 +1,26 @@
 import type {MetadataRoute} from 'next';
+import {headers} from 'next/headers';
 
 import {availableLearningLessons} from '@/lib/learning-lesson-availability.server';
 import {resolvePublicCourseDiscovery} from '@/lib/public-course-discovery';
 import {getSiteUrl} from '@/lib/site';
 import {isControlledCurrentJsPreview} from '@/lib/controlled-current-js-preview';
+import {
+  PRODUCTION_ROBOTS_DISALLOW,
+  productionSearchIndexingEnabled,
+  searchIndexingAllowedForHost,
+} from '@/lib/search-indexing';
 
-export default function robots(): MetadataRoute.Robots {
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  if (productionSearchIndexingEnabled()) {
+    const host = (await headers()).get('host');
+    if (!searchIndexingAllowedForHost(host)) return {rules: {userAgent: '*', disallow: '/'}};
+    const siteUrl = getSiteUrl();
+    return {
+      rules: {userAgent: '*', allow: '/', disallow: [...PRODUCTION_ROBOTS_DISALLOW]},
+      sitemap: new URL('/sitemap.xml', siteUrl).toString(),
+    };
+  }
   if (isControlledCurrentJsPreview()) return {rules: {userAgent: '*', disallow: '/'}};
   const siteUrl = getSiteUrl();
   const {robotDisallow} = resolvePublicCourseDiscovery({

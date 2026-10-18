@@ -19,6 +19,7 @@ import {
 } from './lib/controlled-current-js-preview';
 
 import {CURRENT_JS_1751_PUBLIC_PRODUCTION, public1751BuildRequested, public1751EnvironmentAllowed} from './lib/current-js-1751-public-production';
+import {NOINDEX_HEADER_VALUE, NON_INDEXABLE_HOST_CONDITION} from './lib/search-indexing';
 
 const webDirectory = path.dirname(fileURLToPath(import.meta.url));
 const controlledPreviewBuild = controlledCurrentJsPreviewBuildRequested()
@@ -31,6 +32,8 @@ if (public1751BuildRequested() && (!public1751Build || controlledCurrentJsPrevie
   throw new Error('Public 1751-page production requires the exact production project or explicit local verification, without the Preview build flag.');
 }
 const controlledCourseBuild = controlledPreviewBuild || public1751Build;
+// Only the Vercel production deployment of the public build may be indexed, and only on www.helpmath.ai.
+const productionIndexingBuild = public1751Build && process.env.VERCEL_ENV === 'production';
 if (process.env.NODE_ENV === 'production' && !controlledCourseBuild && existsSync(
   path.resolve(webDirectory, '../../deployment/current-js-controlled-preview-v2/manifest.json'),
 )) {
@@ -353,10 +356,11 @@ const nextConfig: NextConfig = {
       },
       ...(controlledCourseBuild ? [{
         source: '/:path*',
-        headers: [
-          {key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive, noimageindex'},
-          {key: 'Cache-Control', value: 'private, no-store, max-age=0'},
-        ],
+        headers: [{key: 'Cache-Control', value: 'private, no-store, max-age=0'}],
+      }, {
+        source: '/:path*',
+        ...(productionIndexingBuild ? {missing: [...NON_INDEXABLE_HOST_CONDITION]} : {}),
+        headers: [{key: 'X-Robots-Tag', value: NOINDEX_HEADER_VALUE}],
       }] : []),
       {
         source: controlledCourseBuild
