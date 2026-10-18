@@ -1,3 +1,7 @@
+import {
+  CSP_REPORTING_ENDPOINTS_HEADER,
+  EMBEDDED_COURSE_ADAPTER_REPORT_ONLY_CSP,
+} from './lib/csp-report-only';
 import type {NextConfig} from 'next';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -214,6 +218,7 @@ const securityHeaders = [
       "worker-src 'self' blob:"
     ].join('; ')
   },
+  {key: 'Reporting-Endpoints', value: CSP_REPORTING_ENDPOINTS_HEADER},
   {key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups'},
   // Nova voice input uses the browser's speech-recognition control. HELP Math
   // never receives the audio stream; only the learner-approved transcript is
@@ -256,6 +261,8 @@ const embeddedCourseAdapterHeaders = [
       "style-src 'self' 'unsafe-inline'"
     ].join('; ')
   },
+  {key: 'Content-Security-Policy-Report-Only', value: EMBEDDED_COURSE_ADAPTER_REPORT_ONLY_CSP},
+  {key: 'Reporting-Endpoints', value: CSP_REPORTING_ENDPOINTS_HEADER},
   {key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups'},
   {key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()'},
   {key: 'Referrer-Policy', value: 'no-referrer'},

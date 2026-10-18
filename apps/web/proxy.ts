@@ -4,6 +4,7 @@ import {NextResponse} from 'next/server';
 
 import {routing} from './i18n/routing';
 import {brandedNotFoundDocument, notFoundLocaleForPath} from './lib/not-found-copy';
+import {createCspNonce, pageReportOnlyCsp} from './lib/csp-report-only';
 import {
   CONTROLLED_CURRENT_JS_PREVIEW,
   controlledPreviewCoursePathAvailable,
@@ -284,13 +285,28 @@ export async function proxyForRequest(request: NextRequest) {
     || originalPath.startsWith('/en/')
     || originalPath === '/es'
     || originalPath.startsWith('/es/');
+  // Issue #35 step 1: document requests get a per-request nonce and a
+  // Report-Only policy. Next.js reads the nonce from this request header and
+  // stamps it on its own scripts. The enforced CSP in next.config.ts is
+  // unchanged; this header only produces violation reports.
+  const reportOnlyCsp = localeFreeAsset || localeFreeAuthApi || isReferencePath(normalizedLocaleFree)
+    ? null
+    : pageReportOnlyCsp(createCspNonce());
+  const forwarded = reportOnlyCsp
+    ? (() => {
+        const headers = new Headers(request.headers);
+        headers.set('content-security-policy-report-only', reportOnlyCsp);
+        return {request: {headers}};
+      })()
+    : undefined;
   const response = localePrefixed || localeFreeAsset || localeFreeAuthApi
-    ? NextResponse.next()
+    ? NextResponse.next(forwarded)
     : (() => {
         const rewritten = request.nextUrl.clone();
         rewritten.pathname = `/${routing.defaultLocale}${originalPath === '/' ? '' : originalPath}`;
-        return NextResponse.rewrite(rewritten);
+        return NextResponse.rewrite(rewritten, forwarded);
       })();
+  if (reportOnlyCsp) response.headers.set('Content-Security-Policy-Report-Only', reportOnlyCsp);
 
   if (isReferencePath(normalizedLocaleFree)) {
     return protectLocalReferenceDiagnosticResponse(response);
