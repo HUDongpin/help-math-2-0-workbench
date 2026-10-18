@@ -6,7 +6,7 @@
 node scripts/perf/lighthouse-mobile.mjs --base https://www.helpmath.ai --runs 3 --out docs/perf/<name>.json
 ```
 
-It needs Chrome (`CHROME_PATH` if not on the default path). Set `LIGHTHOUSE_BIN` to use a local Lighthouse install instead of `npx`.
+It needs Chrome (`CHROME_PATH` if not on the default path). Set `LIGHTHOUSE_BIN` to use a local Lighthouse install instead of `npx`; the JSON records the version each run actually used. For a protected Vercel preview, set `VERCEL_AUTOMATION_BYPASS_SECRET` and the script sends it as `x-vercel-protection-bypass`. A run with a missing metric fails the script rather than shrinking the sample.
 
 ## Baseline: production `cff09fae`, 2026-10-18, median of 3 runs
 
