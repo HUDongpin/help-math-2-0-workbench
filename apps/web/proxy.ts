@@ -1,4 +1,4 @@
-import type {NextRequest} from 'next/server';
+import {NextRequest} from 'next/server';
 import type {NextFetchEvent} from 'next/server';
 import {NextResponse} from 'next/server';
 
@@ -57,6 +57,8 @@ import {
   isG5L4ShowcaseAssetAuthorized,
   isG5L4ShowcaseAssetSegments,
 } from './lib/g5-l4-preview-asset-policy';
+import lessonBackgroundAssets from './config/lesson-background-assets.v1.json';
+import {hashedLessonBackgroundPath} from './lib/lesson-background-path.mjs';
 
 const loopbackHosts = new Set(['127.0.0.1', 'localhost', '[::1]']);
 
@@ -249,6 +251,25 @@ function protectLocalReferenceDiagnosticResponse(response: NextResponse) {
   return response;
 }
 
+const lessonBackgroundPrefix = '/lesson-backgrounds/';
+const lessonBackgroundSources = new Map(lessonBackgroundAssets.entries.map(
+  ({assetPath, sha256}) => [hashedLessonBackgroundPath(assetPath, sha256), {assetPath, sha256}],
+));
+
+/**
+ * A hashed lesson background is served only when its original
+ * /flash-assets path, with the exact digest, would be allowed for this
+ * request, so publication and preview-host gates apply unchanged.
+ */
+function lessonBackgroundAllowed(request: NextRequest, pathname: string) {
+  const source = lessonBackgroundSources.get(pathname);
+  if (!source) return false;
+  const legacyUrl = request.nextUrl.clone();
+  legacyUrl.pathname = `/flash-assets/${source.assetPath}`;
+  legacyUrl.search = `?sha256=${source.sha256}`;
+  return isAllowed(legacyUrl.pathname, new NextRequest(legacyUrl, {headers: request.headers}));
+}
+
 export async function proxyForRequest(request: NextRequest) {
   const originalPath = normalizePath(request.nextUrl.pathname);
   const normalizedLocaleFree = normalizePath(localeFreePath(originalPath));
@@ -263,6 +284,11 @@ export async function proxyForRequest(request: NextRequest) {
     response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive, noimageindex');
     response.headers.set('Cache-Control', 'private, no-store, max-age=0');
     return response;
+  }
+  if (originalPath.startsWith(lessonBackgroundPrefix)) {
+    return lessonBackgroundAllowed(request, originalPath)
+      ? NextResponse.next()
+      : notFoundResponse();
   }
   if (!isAllowed(normalizedLocaleFree, request)) return brandedNotFoundResponse(originalPath);
   if (previewArtifact && originalPath.startsWith('/flash-assets/')) {
@@ -424,6 +450,7 @@ export const config = {
     '/((?!api|_next|_vercel|.*\\..*).*)',
     '/flash-assets/:path*',
     '/current-js-preview-assets/:path*',
+    '/lesson-backgrounds/:path*',
     '/api/auth/session',
   ],
 };
