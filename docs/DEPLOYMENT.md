@@ -72,6 +72,8 @@ Every pull request must receive a protected Vercel Preview. Verify the exact com
 - No serious axe findings, console errors, mixed content, broken internal links, or unexpected network destinations.
 - Preview responses remain non-indexable and the protected URL is not publicly accessible without authorized Vercel access.
 
+Accepted cache exception: content-hashed lesson backgrounds under `/lesson-backgrounds/` are served `public, max-age=31536000, immutable`. They are public, decorative bytes whose URL changes with their SHA-256, so a browser may keep a cached copy after a lesson is unpublished; the lesson page itself stays gated and no-store.
+
 For the initial controlled-release period, keep `main` as the Production Branch but disable **Production → Branch Tracking → Auto-assign Custom Production Domains**. A merge then creates a staged production deployment with Production environment variables without moving `www.helpmath.ai`. After acceptance, select that exact deployment and **Promote** it. This is Vercel's documented [staged production deployment](https://vercel.com/docs/deployments/promoting-a-deployment#staging-and-promoting-a-production-deployment) flow.
 
 When the owner decides automatic releases are mature, re-enable domain auto-assignment. Do not change that policy silently; record the date and approver in the launch log.
