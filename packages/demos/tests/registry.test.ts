@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFile} from 'node:fs/promises';
 
-import {animationModuleRegistration, hasAnimationModule, loadAnimationModule, privateRegisteredAnimationKeys, registeredAnimationKeys} from '../src/animation-registry';
+import {loadAnimationModule} from '../src/animation-registry';
+import {animationModuleRegistration, hasAnimationModule, privateRegisteredAnimationKeys, registeredAnimationKeys} from '../src/animation-registry-metadata';
 
 test('generated registry preserves the declared prototype and private memberships without granting strict acceptance', async () => {
   const prototypes = JSON.parse(await readFile(new URL('../prototype-registry.json', import.meta.url), 'utf8'));
