@@ -1,6 +1,6 @@
 import {isPublic1751Production, public1751RequestAllowed} from './current-js-1751-public-production';
 import program from '../config/current-js-controlled-preview.v1.json';
-import supplement from '../config/current-js-controlled-preview-supplement.v1.json';
+import supplementIndex from '../config/current-js-controlled-preview-supplement-index.v1.json';
 
 export const CONTROLLED_CURRENT_JS_PREVIEW = 'current-js-1751-controlled-preview-v1';
 export const CONTROLLED_PREVIEW_PROJECT_ID = 'prj_q3v5Ue0zCL1T9rzTFD21KpNc5tzu';
@@ -56,7 +56,22 @@ export function controlledPreviewRequestAllowed(url: URL, hostHeader: string | n
 
 export const CONTROLLED_PREVIEW_COURSES = Object.freeze(program.courses);
 
-export function controlledPreviewSupplementRecord(segments: readonly string[]) {
+const supplementReleaseByAssetPath = new Map<string, string>();
+for (const [releaseId, directories] of Object.entries(supplementIndex.releases as Record<string, Record<string, string[]>>)) {
+  for (const [directory, files] of Object.entries(directories)) {
+    for (const file of files) supplementReleaseByAssetPath.set(`${directory}/${file}`, releaseId);
+  }
+}
+if (supplementIndex.schemaVersion !== 1 || supplementReleaseByAssetPath.size !== supplementIndex.entryCount) {
+  throw new Error('Controlled Current-JS preview supplement index is invalid');
+}
+
+export type ControlledPreviewSupplementRecord = Readonly<{assetPath: string; releaseId: string}>;
+
+export function controlledPreviewSupplementRecord(
+  segments: readonly string[],
+): ControlledPreviewSupplementRecord | undefined {
   const assetPath = segments.join('/');
-  return supplement.entries.find((record) => record.assetPath === assetPath);
+  const releaseId = supplementReleaseByAssetPath.get(assetPath);
+  return releaseId === undefined ? undefined : {assetPath, releaseId};
 }
