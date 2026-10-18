@@ -7,6 +7,7 @@ import {
   NON_INDEXABLE_HOST_CONDITION,
   PRODUCTION_ROBOTS_DISALLOW,
   productionSearchIndexingEnabled,
+  routeIndexable,
   searchIndexingAllowedForHost,
 } from '../lib/search-indexing';
 
@@ -58,4 +59,9 @@ test('production robots keep private, auth, admin-like and API paths disallowed'
     assert.ok(PRODUCTION_ROBOTS_DISALLOW.includes(path), path);
   }
   assert.ok(!PRODUCTION_ROBOTS_DISALLOW.includes('/'));
+});
+
+test('draft legal pages stay out of the index until approved', () => {
+  for (const route of ['/privacy', '/terms']) assert.equal(routeIndexable(route), false, route);
+  for (const route of ['/', '/courses/4/3']) assert.equal(routeIndexable(route), true, route);
 });

@@ -38,3 +38,14 @@ export function searchIndexingAllowedForHost(hostHeader: string | null | undefin
 export const NON_INDEXABLE_HOST_CONDITION = Object.freeze([
   {type: 'host' as const, value: '^www\\.helpmath\\.ai$'},
 ]);
+
+/**
+ * Legal pages still titled "Draft" pending owner/legal approval. They stay
+ * noindex and out of the sitemap until Dongpin approves the final text; remove
+ * an entry here once its page is approved.
+ */
+export const LEGAL_PAGES_PENDING_APPROVAL: readonly string[] = Object.freeze(['/privacy', '/terms']);
+
+export function routeIndexable(route: string) {
+  return !LEGAL_PAGES_PENDING_APPROVAL.includes(route);
+}
