@@ -46,7 +46,9 @@ const serverDescriptors = files.filter((file) =>
   serverDescriptorPattern.test(file));
 const privateServerTests = files.filter((file) =>
   /(?:^|\/)g4-l12-(?:private-audio-calibration-(?:access|asset-route)|vb035-private-pcm|vb036-private-(?:behavior|pcm))\.test\.ts$/u.test(file));
-const serverTests = [...serverDescriptors, ...privateServerTests];
+// *.server.test.ts files import server-only modules and need the react-server condition.
+const reactServerTests = files.filter((file) => /\.server\.test\.tsx?$/u.test(file));
+const serverTests = [...serverDescriptors, ...privateServerTests, ...reactServerTests];
 const defaultTests = files.filter((file) => !serverTests.includes(file));
 if (serverDescriptors.length !== 21) {
   throw new Error(
