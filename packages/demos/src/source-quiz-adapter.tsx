@@ -4,18 +4,20 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {createPortal} from 'react-dom';
 import type {AnimationModule, AnimationRendererProps} from './contract';
 import {createSourceStaticCanvasCandidate, type SourceStaticCanvasCandidateConfig} from './source-static-canvas-candidate';
-import contracts from './source-quiz-contracts.generated.json';
+import {assertSourceLessonDataFor, type SourceLessonData} from './source-lesson-data';
 import {sourceQuizOrder} from './source-quiz-sequence';
 import {SourceQuestionAudioControls} from './source-question-audio-controls';
 
 type Question = {number: number; frame: number; correct: number; audioRoles: (string | null)[]};
 type Contract = {canvasConfig: SourceStaticCanvasCandidateConfig; frameDomain: string; sourceSwfSha256: string; selection: string; presentedCount: number; questions: Question[]};
-const pages = contracts as unknown as Record<string, Contract>;
 const buttonStyle = {minHeight:44,minWidth:44,padding:'8px 14px',border:'2px solid #0758ba',borderRadius:8,background:'#fff',color:'#073b75',font:'600 16px system-ui'};
 /** Only independently source-bound entries in the generated allowlist are interactive. */
-export function withSourceQuiz(module: AnimationModule): AnimationModule {
-  const contract = pages[module.key];
-  if (!contract) return module;
+export function withSourceQuiz(module: AnimationModule, lessonData: SourceLessonData | undefined): AnimationModule {
+  if (!lessonData) return module;
+  const found = assertSourceLessonDataFor(lessonData, module.key).quiz[module.key] as Contract | undefined;
+  if (!found) return module;
+  const contract: Contract = found;
+  const lesson: SourceLessonData = lessonData;
   const visual = createSourceStaticCanvasCandidate(contract.canvasConfig);
   const Base = visual.Renderer;
   function Session(props: AnimationRendererProps) {
@@ -44,8 +46,8 @@ export function withSourceQuiz(module: AnimationModule): AnimationModule {
             aria-pressed={selected===option} onClick={()=>{stop();setResponses([...responses,option]);}}>
             {spanish ? 'Respuesta' : 'Answer'} {'ABCD'[option-1]}</button>)}
         </div>
-        <SourceQuestionAudioControls animationId={module.key} questionNumber={question.number} enabled runtime={{...props,paused:false}} />
-        {question.audioRoles.some(role=>role!==null&&!sourceQuestionAudioAssets(module.key,question.number,spanish?'es':'en').some(asset=>asset.option===role)) && <p style={{fontSize:13}}>{spanish ? 'Las opciones sin botón de audio no tienen una grabación disponible.' : 'Options without an audio button have no recording available.'}</p>}
+        <SourceQuestionAudioControls lessonData={lesson} animationId={module.key} questionNumber={question.number} enabled runtime={{...props,paused:false}} />
+        {question.audioRoles.some(role=>role!==null&&!sourceQuestionAudioAssets(lesson,module.key,question.number,spanish?'es':'en').some(asset=>asset.option===role)) && <p style={{fontSize:13}}>{spanish ? 'Las opciones sin botón de audio no tienen una grabación disponible.' : 'Options without an audio button have no recording available.'}</p>}
         {selected !== undefined && <div role="status"><p>{selected===question.correct ? (spanish?'Correcto':'Correct') : (spanish?'Incorrecto':'Incorrect')} — {spanish?'Respuesta correcta':'Correct answer'}: {'ABCD'[question.correct-1]}</p>
           <button type="button" style={buttonStyle} onClick={()=>{stop();setCursor(cursor+1);}}>{spanish?'Siguiente pregunta':'Next question'}</button></div>}
       </>}

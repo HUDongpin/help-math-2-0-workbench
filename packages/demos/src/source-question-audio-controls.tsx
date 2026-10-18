@@ -3,16 +3,18 @@
 import {useEffect, useMemo} from 'react';
 import type {AnimationRendererProps} from './contract';
 import {sourceQuestionAudioAssets} from './source-lesson-audio';
+import type {SourceLessonData} from './source-lesson-data';
 
-export function SourceQuestionAudioControls({animationId, enabled, questionNumber, runtime}: {
+export function SourceQuestionAudioControls({animationId, enabled, lessonData, questionNumber, runtime}: {
   animationId: string;
+  lessonData: SourceLessonData;
   enabled: boolean;
   questionNumber: number | null;
   runtime: AnimationRendererProps;
 }) {
   const language = runtime.uiLanguage ?? runtime.lang;
-  const assets = useMemo(() => sourceQuestionAudioAssets(animationId, questionNumber, language),
-    [animationId, questionNumber, language]);
+  const assets = useMemo(() => sourceQuestionAudioAssets(lessonData, animationId, questionNumber, language),
+    [lessonData, animationId, questionNumber, language]);
   useEffect(() => {
     const activeId = runtime.activeInteractiveAudioId;
     if (activeId && !assets.some(asset => asset.id === activeId))

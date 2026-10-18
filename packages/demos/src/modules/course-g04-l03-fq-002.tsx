@@ -1,5 +1,7 @@
 "use client";
 
+import g04L03SourceData from "../source-lesson-data/g04-l03.json";
+import type {SourceLessonData} from "../source-lesson-data";
 import React, {
   useEffect,
   useMemo,
@@ -171,6 +173,7 @@ function Ts007CrossPlacementNumberLine() {
 
 export interface FinalQuizFunctionalRendererConfig {
   readonly animationId: string;
+  readonly sourceLessonData: SourceLessonData;
   readonly createInteractionState: (
     seed?: number,
   ) => CourseG04L03Fq002InteractionState;
@@ -1000,6 +1003,7 @@ function DisabledSourceIntegrations({audioEnabled}: {audioEnabled: boolean}) {
 
 export function createCourseG04L03FinalQuizFunctionalRenderer({
   animationId,
+  sourceLessonData,
   createInteractionState,
   functionalEntryFrame,
   functionalHostFrameEnd,
@@ -1326,7 +1330,7 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
       {...sharedSurfaceProps}
       placement={companionTarget ? "portal" : "fallback"}
     />
-    <SourceQuestionAudioControls animationId={animationId} enabled={controlsReady}
+    <SourceQuestionAudioControls lessonData={sourceLessonData} animationId={animationId} enabled={controlsReady}
       questionNumber={sourceSymbolQuestion?.id ?? null} runtime={props} /></>
   );
 
@@ -1907,6 +1911,7 @@ export function createCourseG04L03FinalQuizFunctionalRenderer({
 export const CourseG04L03Fq002Renderer =
   createCourseG04L03FinalQuizFunctionalRenderer({
     animationId: "course-g04-l03-fq-002",
+    sourceLessonData: g04L03SourceData as unknown as SourceLessonData,
     createInteractionState: createCourseG04L03Fq002InteractionState,
     functionalEntryFrame: FUNCTIONAL_ENTRY_FRAME,
     functionalHostFrameEnd: FUNCTIONAL_ENTRY_FRAME,

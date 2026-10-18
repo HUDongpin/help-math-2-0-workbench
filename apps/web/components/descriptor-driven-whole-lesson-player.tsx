@@ -1,8 +1,7 @@
 'use client';
 
 import sourceHostIntroContracts from '../../../packages/demos/src/source-host-intro-contracts.generated.json';
-import sourceFeedbackContracts from '../../../packages/demos/src/source-feedback-contracts.generated.json';
-import sourceQuizContracts from '../../../packages/demos/src/source-quiz-contracts.generated.json';
+import sourceInteractiveKeyList from '../../../packages/demos/src/source-interactive-keys.json';
 import {loadAnimationModule} from '@helpmath/demos/animation-registry';
 import {
   createMemoryOnlyLessonHost,
@@ -56,6 +55,8 @@ import {
   reviewWholeLessonPage,
   visitWholeLessonPage,
 } from '@/lib/whole-lesson-session';
+
+const sourceInteractiveKeys: ReadonlySet<string> = new Set(sourceInteractiveKeyList);
 
 function pageSessionId(
   page: DescriptorDrivenLessonPlayerDescriptor['pages'][number],
@@ -212,7 +213,7 @@ export function DescriptorDrivenWholeLessonPlayer({
     enabledCapabilities: descriptor.schemaVersion === 2
       ? [...new Set([
           ...descriptor.support.lessonHostCapabilities,
-          ...(pageAudioEnabled && (Object.hasOwn(sourceQuizContracts, currentPage.animationId) || Object.hasOwn(sourceFeedbackContracts, currentPage.animationId)) ? ['audio' as const] : []),
+          ...(pageAudioEnabled && sourceInteractiveKeys.has(currentPage.animationId) ? ['audio' as const] : []),
         ])].filter((capability) => capability !== 'audio' || pageAudioEnabled)
       : pageAudioEnabled ? ['audio'] : [],
     initialLanguage: progress.locale,
@@ -686,7 +687,7 @@ export function DescriptorDrivenWholeLessonPlayer({
   const pageInteractionCompanionTargetId =
     currentCalibrationAssets.length > 0
       ? `${descriptor.course.domIdPrefix}-private-audio-calibration-controls`
-      : (Object.hasOwn(sourceQuizContracts, currentPage.animationId) || Object.hasOwn(sourceFeedbackContracts, currentPage.animationId))
+      : sourceInteractiveKeys.has(currentPage.animationId)
       ? `${descriptor.course.domIdPrefix}-source-quiz-controls`
       : currentPage.presentation?.pageInteractionCompanionTargetIdSuffix
       ? `${descriptor.course.domIdPrefix}-${currentPage.presentation.pageInteractionCompanionTargetIdSuffix}`

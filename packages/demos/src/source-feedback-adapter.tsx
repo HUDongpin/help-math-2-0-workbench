@@ -2,11 +2,10 @@
 import React,{useEffect,useRef,useState} from 'react';import {createPortal} from 'react-dom';
 import type {AnimationModule,AnimationRendererProps} from './contract';
 import {createSourceStaticCanvasCandidate,type SourceStaticCanvasCandidateConfig} from './source-static-canvas-candidate';
-import contracts from './source-feedback-contracts.generated.json';
+import {assertSourceLessonDataFor,type SourceLessonData} from './source-lesson-data';
 type Card={sourceName:string;sourceCharacter:string;pair:number;side:number;text:string};
 type Feedback={domain:string;startFrame:number};
 type Config={canvasConfig:SourceStaticCanvasCandidateConfig;levels:{label:string;sourceFrame:number;cards:Card[];feedback:{correct:Feedback;incorrect:Feedback}}[]};
-const pages=contracts as unknown as Record<string,Config>;
 type GameAsset={ready:()=>Promise<void>;renderSourceCard:(canvas:HTMLCanvasElement,id:string)=>void};
 const buttonStyle={minHeight:44,border:'2px solid #0758ba',borderRadius:8,background:'#fff',color:'#123',padding:8};
 function SourceCardButton({animationId,card,index,selected,matched,onChoose,spanish}:{animationId:string;card:Card;index:number;selected:boolean;matched:boolean;onChoose:()=>void;spanish:boolean}){
@@ -19,8 +18,10 @@ function SourceCardButton({animationId,card,index,selected,matched,onChoose,span
   <span>{spanish?'Tarjeta':'Card'} {index+1}{matched?' ✓':''}</span><canvas ref={canvas} width={260} height={130} style={{display:'block',width:'100%',height:'auto'}}/>
  </button>;
 }
-export function withSourceFeedback(module:AnimationModule):AnimationModule{
- const config=pages[module.key];if(!config)return module;
+export function withSourceFeedback(module:AnimationModule,lessonData:SourceLessonData|undefined):AnimationModule{
+ if(!lessonData)return module;
+ const found=assertSourceLessonDataFor(lessonData,module.key).feedback[module.key] as Config|undefined;if(!found)return module;
+ const config:Config=found;
  const visual=createSourceStaticCanvasCandidate(config.canvasConfig),Base=visual.Renderer;
  function Session(props:AnimationRendererProps){
   const [level,setLevel]=useState(0),[selected,setSelected]=useState<string|null>(null),[matched,setMatched]=useState<number[]>([]),[score,setScore]=useState(0),[feedback,setFeedback]=useState<'correct'|'incorrect'|null>(null),[target,setTarget]=useState<HTMLElement|null>(null);
