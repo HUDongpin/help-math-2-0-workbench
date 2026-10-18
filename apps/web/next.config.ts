@@ -372,10 +372,10 @@ const nextConfig: NextConfig = {
       // Issue #35 step 2: public 1751 documents may enter the browser's
       // back/forward cache. `private, no-cache` still forbids shared caches
       // and revalidates every normal navigation. APIs, assets and Next.js
-      // internals keep `no-store`; controlled-preview builds are unchanged.
+      // internals and any dotted static file keep their own policies; controlled-preview builds are unchanged.
       // The proxy sets the same value on document responses.
       ...(public1751Build && !controlledPreviewBuild ? [{
-        source: '/((?!api/|_next/|_vercel/|flash-assets/|current-js-preview-assets/|lesson-backgrounds/).*)',
+        source: '/((?!api/|_next/|_vercel/|flash-assets/|current-js-preview-assets/|lesson-backgrounds/)[^.]*)',
         headers: [{key: 'Cache-Control', value: 'private, no-cache'}],
       }] : []),
       {
