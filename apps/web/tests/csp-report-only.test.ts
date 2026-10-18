@@ -107,6 +107,20 @@ test('report route logs redacted lines and rejects bad input', async () => {
     assert.equal((await POST(new Request('https://x/api/csp-report', {method: 'POST', headers: {'content-type': 'text/plain'}, body: '{}'}))).status, 415);
     assert.equal((await POST(new Request('https://x/api/csp-report', {method: 'POST', headers: {'content-type': 'application/json'}, body: '{'}))).status, 400);
     assert.equal((await POST(new Request('https://x/api/csp-report', {method: 'POST', headers: {'content-type': 'application/json'}, body: 'x'.repeat(17_000)}))).status, 413);
+    assert.equal((await POST(new Request('https://x/api/csp-report', {method: 'POST', headers: {'content-type': 'application/json'}, body: '{}'}))).status, 400);
+    assert.equal((await POST(new Request('https://x/api/csp-report', {method: 'POST', headers: {'content-type': 'application/reports+json'}, body: '[{"type":"deprecation","body":{}}]'}))).status, 400);
+    // A chunked body with no Content-Length is still capped while streaming.
+    let pulled = 0;
+    const stream = new ReadableStream<Uint8Array>({
+      pull(controller) {
+        pulled += 1;
+        if (pulled > 100) return controller.close();
+        controller.enqueue(new Uint8Array(1024).fill(32));
+      },
+    });
+    const chunked = await POST(new Request('https://x/api/csp-report', {method: 'POST', headers: {'content-type': 'application/json'}, body: stream, duplex: 'half'} as RequestInit));
+    assert.equal(chunked.status, 413);
+    assert.ok(pulled < 30, `read ${pulled} chunks`);
   } finally {
     console.info = original;
   }
