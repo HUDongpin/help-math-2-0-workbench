@@ -90,7 +90,9 @@ function brandedNotFoundResponse(request: NextRequest, originalPath: string) {
   const locale = originalPath === '/es' || originalPath.startsWith('/es/') ? 'es' : 'en';
   target.pathname = `/${locale}/not-found`;
   target.search = '';
-  const response = NextResponse.rewrite(target, {status: 404});
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set('x-help-math-not-found-locale', locale);
+  const response = NextResponse.rewrite(target, {status: 404, request: {headers: requestHeaders}});
   response.headers.set('X-Robots-Tag', 'noindex, nofollow');
   return response;
 }
