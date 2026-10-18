@@ -311,7 +311,34 @@ export async function proxyForRequest(request: NextRequest) {
   if (isReferencePath(normalizedLocaleFree)) {
     return protectLocalReferenceDiagnosticResponse(response);
   }
+  if (documentMayUseBackForwardCache({previewArtifact, localeFreeAsset, localeFreeAuthApi})) {
+    // Issue #35 step 2: Next.js marks dynamic pages `no-store`, which keeps
+    // them out of the browser's back/forward cache. `private, no-cache` still
+    // forbids shared caches and forces revalidation on every normal
+    // navigation, but lets Back/Forward restore the page instantly. Next.js
+    // only writes its own Cache-Control when none is set, so this wins.
+    response.headers.set('Cache-Control', BACK_FORWARD_CACHEABLE_DOCUMENT);
+  }
   return response;
+}
+
+export const BACK_FORWARD_CACHEABLE_DOCUMENT = 'private, no-cache';
+
+/**
+ * Public documents only. Controlled-preview artifacts keep their deliberate
+ * `private, no-store`, and signed-in (local auth) sessions stay no-store so a
+ * page is never restored after sign-out. Assets keep their own policies.
+ */
+export function documentMayUseBackForwardCache({
+  previewArtifact,
+  localeFreeAsset,
+  localeFreeAuthApi,
+}: {
+  previewArtifact: boolean;
+  localeFreeAsset: boolean;
+  localeFreeAuthApi: boolean;
+}) {
+  return !previewArtifact && !localeFreeAsset && !localeFreeAuthApi && !isLocalAuthEnabled();
 }
 
 export function normalizeLocalClerkMiddlewareResponse(
