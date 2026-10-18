@@ -84,6 +84,17 @@ function notFoundResponse() {
   });
 }
 
+function brandedNotFoundResponse(request: NextRequest, originalPath: string) {
+  if (originalPath.startsWith('/flash-assets/')) return notFoundResponse();
+  const target = request.nextUrl.clone();
+  const locale = originalPath === '/es' || originalPath.startsWith('/es/') ? 'es' : 'en';
+  target.pathname = `/${locale}/not-found`;
+  target.search = '';
+  const response = NextResponse.rewrite(target, {status: 404});
+  response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+  return response;
+}
+
 function isReferencePath(pathname: string) {
   return /^\/reference\/[a-z0-9-]+$/u.test(pathname);
 }
@@ -249,7 +260,7 @@ export async function proxyForRequest(request: NextRequest) {
     response.headers.set('Cache-Control', 'private, no-store, max-age=0');
     return response;
   }
-  if (!isAllowed(normalizedLocaleFree, request)) return notFoundResponse();
+  if (!isAllowed(normalizedLocaleFree, request)) return brandedNotFoundResponse(request, originalPath);
   if (previewArtifact && originalPath.startsWith('/flash-assets/')) {
     const segments = originalPath.slice('/flash-assets/'.length).split('/');
     if (controlledPreviewSupplementRecord(segments) ?? currentJsCandidateAssetRecordForSegments(segments)) {
