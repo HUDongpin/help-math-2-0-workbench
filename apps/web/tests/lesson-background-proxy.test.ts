@@ -34,3 +34,19 @@ test('unknown hashed lesson background names are not served', async () => {
   assert.equal(await status('https://www.helpmath.ai/lesson-backgrounds/lesson-shell-mc-back-text.0000000000000000.svg', true), 404);
   assert.equal(await status('https://www.helpmath.ai/lesson-backgrounds/other.svg', true), 404);
 });
+
+test('the public 1751 production profile serves the hashed background', async () => {
+  const profile = 'current-js-1751-public-production-v1';
+  const keys = ['HELP_MATH_1751_PUBLIC_PRODUCTION_BUILD', 'HELP_MATH_1751_PUBLIC_PRODUCTION', 'HELP_MATH_1751_PUBLIC_PRODUCTION_LOCAL', 'VERCEL_ENV'] as const;
+  const previous = Object.fromEntries(keys.map((name) => [name, env[name]]));
+  for (const name of keys.slice(0, 3)) env[name] = profile;
+  delete env.VERCEL_ENV;
+  try {
+    assert.equal(await status('http://127.0.0.1:3211/lesson-backgrounds/lesson-shell-mc-back-text.102f0ddeec5ede88.svg', false), 200);
+  } finally {
+    for (const name of keys) {
+      if (previous[name] === undefined) delete env[name];
+      else env[name] = previous[name];
+    }
+  }
+});
