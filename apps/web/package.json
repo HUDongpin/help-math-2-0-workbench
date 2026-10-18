@@ -23,7 +23,7 @@
     "test:asset-profile:candidate": "CURRENT_JS_CANDIDATE_PROFILE_ENABLED=true tsx --test tests/current-js-asset-profiles.test.ts tests/page-only-current-js-showcase-asset-policy.test.ts",
     "verify:asset-profiles": "node ../../scripts/manage-current-js-asset-profiles.mjs --check && npm run test:asset-profile:production",
     "verify:asset-profiles:deployment": "node ../../scripts/manage-current-js-asset-profiles.mjs --check-production && npm run test:asset-profile:deployment",
-    "prebuild": "node ../../scripts/controlled-current-js-assets.mjs --materialize"
+    "prebuild": "node ../../scripts/controlled-current-js-assets.mjs --materialize && node scripts/emit-hashed-lesson-backgrounds.mjs"
   },
   "dependencies": {
     "@clerk/localizations": "^4.15.2",

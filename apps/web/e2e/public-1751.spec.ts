@@ -1,3 +1,5 @@
+import {createHash} from 'node:crypto';
+
 import AxeBuilder from '@axe-core/playwright';
 import {expect, test} from '@playwright/test';
 import program from '../config/current-js-controlled-preview.v1.json' with {type: 'json'};
@@ -249,4 +251,38 @@ test.describe('lesson playback waits for rendering and recovers failed assets', 
       await expect.poll(async () => Number(await stage.getAttribute('data-flash-frame'))).toBeGreaterThan(frame);
     });
   }
+});
+
+test.describe('source-bound lesson background is server-rendered from its hashed path', () => {
+  const hashedPath = '/lesson-backgrounds/lesson-shell-mc-back-text.102f0ddeec5ede88.svg';
+  const sha256 = '102f0ddeec5ede8843149c3c5621fb5a6632a5edc191b768823fbce691740355';
+  const legacyPath = `/flash-assets/courses/shell-course-g04-l03-index-local/host-composite-assets/lesson-shell-mc-back-text.svg?sha256=${sha256}`;
+  const digest = async (body: Buffer) => createHash('sha256').update(body).digest('hex');
+
+  for (const prefix of ['', '/es']) {
+    test(`${prefix || '/'} initial HTML contains the background img with explicit size`, async ({request}) => {
+      const response = await request.get(`${prefix}/courses/4/3?mode=focus`);
+      expect(response.status()).toBe(200);
+      const img = /<img[^>]*class="lesson-shell2__source-background-text-image"[^>]*>/u.exec(await response.text())?.[0];
+      expect(img).toBeDefined();
+      expect(img).toContain(`src="${hashedPath}"`);
+      expect(img).toMatch(/ width="\d+"/u);
+      expect(img).toMatch(/ height="\d+"/u);
+    });
+  }
+
+  test('hashed path serves the verified bytes as immutable', async ({request}) => {
+    const response = await request.get(hashedPath);
+    expect(response.status()).toBe(200);
+    expect(response.headers()['content-type']).toContain('image/svg+xml');
+    expect(response.headers()['cache-control']).toBe('public, max-age=31536000, immutable');
+    expect(await digest(await response.body())).toBe(sha256);
+  });
+
+  test('legacy digest path still serves the same bytes uncached', async ({request}) => {
+    const response = await request.get(legacyPath);
+    expect(response.status()).toBe(200);
+    expect(response.headers()['cache-control']).toContain('no-store');
+    expect(await digest(await response.body())).toBe(sha256);
+  });
 });

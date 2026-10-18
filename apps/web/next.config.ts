@@ -399,6 +399,15 @@ const nextConfig: NextConfig = {
             value: 'noindex, nofollow, noarchive, noimageindex',
           },
         ],
+      },
+      {
+        // Content-hashed lesson backgrounds, verified at build time by
+        // scripts/emit-hashed-lesson-backgrounds.mjs. Listed last so it
+        // overrides the controlled build's site-wide no-store.
+        source: '/lesson-backgrounds/:file*',
+        headers: [
+          {key: 'Cache-Control', value: 'public, max-age=31536000, immutable'},
+        ],
       }
     ];
   },

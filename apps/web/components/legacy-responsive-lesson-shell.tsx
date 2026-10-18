@@ -27,10 +27,7 @@ import {
 } from '@/components/lesson-nova-tutor';
 import {Link} from '@/i18n/navigation';
 import type {PublicAuthStatus} from '@/lib/auth-session';
-import {
-  LessonBackgroundError,
-  loadVerifiedLessonBackground,
-} from '@/lib/verified-lesson-background';
+import {hashedLessonBackgroundPath} from '@/lib/lesson-background-path.mjs';
 import {
   rememberLegacyAudibleVolume,
   toggleLegacyMute,
@@ -880,15 +877,20 @@ export function LegacyResponsiveLessonShell({
     setBackgroundCompanionLoadStatus,
   ] = useState<Readonly<{
     assetKey: string;
-    status: 'loading' | 'ready' | 'error';
-    source?: string;
-    failure?: 'load' | 'integrity';
+    status: 'ready' | 'error';
   }> | null>(null);
   const [backgroundRetry, setBackgroundRetry] = useState(0);
-  const backgroundAsset = backgroundCompanion?.asset;
-  const backgroundSha256 = backgroundCompanion?.assetSha256;
-  const backgroundCompanionAssetKey = backgroundAsset && backgroundSha256
-    ? `${backgroundAsset}:${backgroundSha256}:${backgroundRetry}`
+  // Bytes are verified against the recovered SVG digest at build time
+  // (scripts/emit-hashed-lesson-backgrounds.mjs), so the server can render the
+  // immutable hashed URL directly and the image is discoverable in the HTML.
+  const backgroundSource = backgroundCompanion
+    ? hashedLessonBackgroundPath(
+        backgroundCompanion.asset.replace(/^\/flash-assets\//u, ''),
+        backgroundCompanion.assetSha256,
+      )
+    : undefined;
+  const backgroundCompanionAssetKey = backgroundSource
+    ? `${backgroundSource}:${backgroundRetry}`
     : '';
   const activeBackgroundLoad =
     backgroundCompanionLoad?.assetKey === backgroundCompanionAssetKey
@@ -897,38 +899,6 @@ export function LegacyResponsiveLessonShell({
   const backgroundCompanionStatus = backgroundCompanion
     ? activeBackgroundLoad?.status ?? 'loading'
     : 'not-required';
-  useEffect(() => {
-    if (!backgroundAsset || !backgroundSha256) return;
-    const controller = new AbortController();
-    let objectUrl: string | undefined;
-    void loadVerifiedLessonBackground(
-      `${backgroundAsset}?sha256=${backgroundSha256}`,
-      backgroundSha256,
-      controller.signal,
-    ).then((blob) => {
-      if (controller.signal.aborted) return;
-      objectUrl = URL.createObjectURL(blob);
-      setBackgroundCompanionLoadStatus({
-        assetKey: backgroundCompanionAssetKey,
-        source: objectUrl,
-        status: 'loading',
-      });
-    }).catch((error: unknown) => {
-      if (controller.signal.aborted) return;
-      setBackgroundCompanionLoadStatus({
-        assetKey: backgroundCompanionAssetKey,
-        status: 'error',
-        failure: error instanceof LessonBackgroundError ? error.kind : 'load',
-      });
-    });
-    return () => {
-      controller.abort();
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
-      // Returning to a page must not reuse a Blob revoked when we left it.
-      setBackgroundCompanionLoadStatus((current) =>
-        current?.assetKey === backgroundCompanionAssetKey ? null : current);
-    };
-  }, [backgroundAsset, backgroundSha256, backgroundCompanionAssetKey]);
   // The widescreen presentation renders only the band the source chrome leaves
   // between its header and footer. Cropping is lossless because that chrome is
   // fully opaque, so nothing drawn beneath it is visible in the legacy
@@ -2678,7 +2648,8 @@ export function LegacyResponsiveLessonShell({
           role="region"
           style={stageStyle}
         >
-          {backgroundCompanion && activeBackgroundLoad?.source
+          {backgroundCompanion && backgroundSource
+            && backgroundCompanionStatus !== 'error'
             ? <div
                 aria-hidden="true"
                 className="lesson-shell2__source-background-text"
@@ -2691,22 +2662,21 @@ export function LegacyResponsiveLessonShell({
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  key={activeBackgroundLoad.source}
+                  key={backgroundCompanionAssetKey}
                   alt=""
                   className="lesson-shell2__source-background-text-image"
                   draggable={false}
                   height={visualSkin.authoredStage.height}
-                  onError={() => setBackgroundCompanionLoadStatus((current) =>
-                    current?.assetKey === backgroundCompanionAssetKey
-                      && current.source === activeBackgroundLoad.source
-                      ? {...current, status: 'error', failure: 'load'}
-                      : current)}
-                  onLoad={() => setBackgroundCompanionLoadStatus((current) =>
-                    current?.assetKey === backgroundCompanionAssetKey
-                      && current.source === activeBackgroundLoad.source
-                      ? {...current, status: 'ready'}
-                      : current)}
-                  src={activeBackgroundLoad.source}
+                  fetchPriority="high"
+                  onError={() => setBackgroundCompanionLoadStatus({
+                    assetKey: backgroundCompanionAssetKey,
+                    status: 'error',
+                  })}
+                  onLoad={() => setBackgroundCompanionLoadStatus({
+                    assetKey: backgroundCompanionAssetKey,
+                    status: 'ready',
+                  })}
+                  src={backgroundSource}
                   width={visualSkin.authoredStage.width}
                 />
               </div>
@@ -2720,13 +2690,9 @@ export function LegacyResponsiveLessonShell({
                 inert={stageOverlayOpen ? true : undefined}
                 role="alert"
               >
-                {activeBackgroundLoad?.failure === 'integrity'
-                  ? spanish
-                    ? 'No se pudo verificar el fondo de la lección.'
-                    : 'The lesson background could not be verified.'
-                  : spanish
-                    ? 'No se pudo cargar el fondo de la lección.'
-                    : 'The lesson background could not load.'}
+                {spanish
+                  ? 'No se pudo cargar el fondo de la lección.'
+                  : 'The lesson background could not load.'}
                 {' '}
                 <button
                   onClick={() => setBackgroundRetry((attempt) => attempt + 1)}
