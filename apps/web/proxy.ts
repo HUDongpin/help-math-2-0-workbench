@@ -90,6 +90,8 @@ function brandedNotFoundResponse(originalPath: string) {
   return new NextResponse(brandedNotFoundDocument(notFoundLocaleForPath(originalPath)), {
     status: 404,
     headers: {
+      // Denials depend on build/env gates; never let a shared cache pin one.
+      'Cache-Control': 'private, no-store, max-age=0',
       'Content-Type': 'text/html; charset=utf-8',
       'X-Robots-Tag': 'noindex, nofollow',
     },
