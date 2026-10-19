@@ -4,6 +4,7 @@ import type {NextFetchEvent} from 'next/server';
 import {NextResponse} from 'next/server';
 
 import {routing} from './i18n/routing';
+import {brandedNotFoundDocument, notFoundLocaleForPath} from './lib/not-found-copy';
 import {
   CONTROLLED_CURRENT_JS_PREVIEW,
   controlledPreviewCoursePathAvailable,
@@ -84,17 +85,15 @@ function notFoundResponse() {
   });
 }
 
-function brandedNotFoundResponse(request: NextRequest, originalPath: string) {
+function brandedNotFoundResponse(originalPath: string) {
   if (originalPath.startsWith('/flash-assets/')) return notFoundResponse();
-  const target = request.nextUrl.clone();
-  const locale = originalPath === '/es' || originalPath.startsWith('/es/') ? 'es' : 'en';
-  target.pathname = `/${locale}/not-found`;
-  target.search = '';
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set('x-help-math-not-found-locale', locale);
-  const response = NextResponse.rewrite(target, {status: 404, request: {headers: requestHeaders}});
-  response.headers.set('X-Robots-Tag', 'noindex, nofollow');
-  return response;
+  return new NextResponse(brandedNotFoundDocument(notFoundLocaleForPath(originalPath)), {
+    status: 404,
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+      'X-Robots-Tag': 'noindex, nofollow',
+    },
+  });
 }
 
 function isReferencePath(pathname: string) {
@@ -262,7 +261,7 @@ export async function proxyForRequest(request: NextRequest) {
     response.headers.set('Cache-Control', 'private, no-store, max-age=0');
     return response;
   }
-  if (!isAllowed(normalizedLocaleFree, request)) return brandedNotFoundResponse(request, originalPath);
+  if (!isAllowed(normalizedLocaleFree, request)) return brandedNotFoundResponse(originalPath);
   if (previewArtifact && originalPath.startsWith('/flash-assets/')) {
     const segments = originalPath.slice('/flash-assets/'.length).split('/');
     if (controlledPreviewSupplementRecord(segments) ?? currentJsCandidateAssetRecordForSegments(segments)) {
