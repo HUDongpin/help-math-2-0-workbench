@@ -52,6 +52,83 @@ for (const locale of ['en', 'es'] as const) {
     });
   }
 
+  test(`${locale} 390px phone keeps learning-home nav and lesson section labels unclipped (port of #19)`, async ({page}) => {
+    await page.setViewportSize({width: 390, height: 844});
+    expect((await page.goto(prefix || '/'))?.status()).toBe(200);
+    const scroller = page.locator('[data-learning-platform-home] [class*="navScroller"]');
+    await expect(scroller).toBeVisible();
+    const navFit = await scroller.evaluate((element) => {
+      const scrollerBox = element.getBoundingClientRect();
+      const topbar = element.closest('[data-learning-platform-home]')?.querySelector<HTMLElement>('[class*="topbar"]');
+      const topbarBox = topbar?.getBoundingClientRect() ?? null;
+      const viewportWidth = window.innerWidth;
+      const labels = [...element.querySelectorAll<HTMLElement>('[class*="navItem"]')].map((item) => {
+        const box = item.getBoundingClientRect();
+        const label = [...item.children].find((child): child is HTMLElement =>
+          child instanceof HTMLElement && child.tagName === 'SPAN' && !String(child.className).includes('navIcon'));
+        const style = label ? getComputedStyle(label) : null;
+        return {
+          text: label?.textContent?.trim() ?? '',
+          clipped: Boolean(label && style?.textOverflow === 'ellipsis' && label.scrollWidth > label.clientWidth + 1),
+          insideScroller: box.left >= scrollerBox.left - 1 && box.right <= scrollerBox.right + 1,
+          insideViewport: box.width > 0 && box.left >= -1 && box.right <= viewportWidth + 1,
+        };
+      });
+      return {
+        labels,
+        scrollable: element.scrollWidth > element.clientWidth + 1,
+        topbarClearsNav: topbarBox === null || topbarBox.top + 1 >= scrollerBox.bottom,
+      };
+    });
+    expect(navFit.scrollable).toBe(false);
+    expect(navFit.topbarClearsNav).toBe(true);
+    expect(navFit.labels.map((label) => label.text)).toEqual(expect.arrayContaining(
+      locale === 'es' ? ['Hoy', 'Practicar', 'Mis palabras', 'Todas las lecciones'] : ['Today', 'Practice', 'My words', 'All lessons'],
+    ));
+    for (const label of navFit.labels) {
+      expect(label.clipped, label.text).toBe(false);
+      expect(label.insideScroller, label.text).toBe(true);
+      expect(label.insideViewport, label.text).toBe(true);
+    }
+
+    expect((await page.goto(`${prefix}/courses/4/3?mode=focus`))?.status()).toBe(200);
+    await expect(page.locator('.lesson-shell2')).toHaveAttribute('data-runtime-available', 'true');
+    const layout = await page.evaluate(() => {
+      const host = document.querySelector<HTMLElement>('.lesson-shell2')!;
+      const list = document.querySelector<HTMLElement>('.lesson-shell2__spine ol');
+      const viewportWidth = document.documentElement.clientWidth;
+      const labels = [...(list?.querySelectorAll<HTMLElement>('.lesson-shell2__spine-name') ?? [])]
+        .filter((name) => name.getClientRects().length > 0 && getComputedStyle(name).visibility !== 'hidden')
+        .map((name) => {
+          const box = name.getBoundingClientRect();
+          return {
+            text: name.textContent ?? '',
+            clipped: getComputedStyle(name).textOverflow === 'ellipsis' && name.scrollWidth > name.clientWidth + 1,
+            insideViewport: box.left >= -1 && box.right <= viewportWidth + 1,
+          };
+        });
+      return {
+        documentWidth: document.documentElement.scrollWidth,
+        labels,
+        modernWide: host.dataset.hostPresentation === 'modern-wide',
+        listWrap: list ? getComputedStyle(list).flexWrap : null,
+        listOverflow: list ? getComputedStyle(list).overflowX : null,
+        listScrolls: list ? list.scrollWidth > list.clientWidth + 1 : false,
+        viewportWidth,
+      };
+    });
+    expect(layout.documentWidth).toBeLessThanOrEqual(layout.viewportWidth + 1);
+    if (layout.modernWide) {
+      expect(layout.listWrap).toBe('wrap');
+      expect(layout.listOverflow).toBe('visible');
+      expect(layout.listScrolls).toBe(false);
+    }
+    for (const label of layout.labels) {
+      expect(label.clipped, label.text).toBe(false);
+      expect(label.insideViewport, label.text).toBe(true);
+    }
+  });
+
   for (const route of ['', '/courses/4/3?mode=focus']) {
     test(`${locale} ${route || 'home'} has no serious or critical accessibility violations`, async ({page}) => {
       expect((await page.goto(`${prefix}${route}` || '/'))?.status()).toBe(200);
