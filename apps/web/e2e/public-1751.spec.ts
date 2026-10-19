@@ -159,3 +159,91 @@ test.describe('lesson playback waits for rendering and recovers failed assets', 
     });
   }
 });
+
+// Ported from #19: at phone width every lesson section and home navigation
+// label must be fully readable, with no hidden horizontal scroll strip.
+test.describe('390px phone width keeps navigation labels readable', () => {
+  test.use({viewport: {width: 390, height: 844}});
+
+  for (const locale of ['en', 'es'] as const) {
+    const prefix = locale === 'es' ? '/es' : '';
+
+    test(`${locale} lesson section strip wraps instead of scrolling`, async ({page}) => {
+      expect((await page.goto(`${prefix}/courses/4/3`))?.status()).toBe(200);
+      await expect(page.locator('.lesson-shell2')).toHaveAttribute('data-runtime-available', 'true');
+      await expect(page.locator('.lesson-shell2__spine-name').first()).toBeVisible();
+      const layout = await page.evaluate(() => {
+        const list = document.querySelector<HTMLElement>('.lesson-shell2__spine ol')!;
+        const spine = document.querySelector<HTMLElement>('.lesson-shell2__spine')!.getBoundingClientRect();
+        const toolbar = document.querySelector<HTMLElement>('.lesson-shell2__modern-toolbar')?.getBoundingClientRect() ?? null;
+        const viewportWidth = document.documentElement.clientWidth;
+        const labels = [...list.querySelectorAll<HTMLElement>('.lesson-shell2__spine-name')].map((name) => {
+          const box = name.getBoundingClientRect();
+          return {
+            text: name.textContent?.trim() ?? '',
+            clipped: name.scrollWidth > name.clientWidth + 1,
+            insideViewport: box.width > 0 && box.left >= -1 && box.right <= viewportWidth + 1,
+          };
+        });
+        return {
+          documentWidth: document.documentElement.scrollWidth,
+          labels,
+          listScrolls: list.scrollWidth > list.clientWidth + 1,
+          listWrap: getComputedStyle(list).flexWrap,
+          toolbarClearsSpine: toolbar === null || toolbar.top + 1 >= spine.bottom,
+          viewportWidth,
+        };
+      });
+      expect(layout.listWrap).toBe('wrap');
+      expect(layout.listScrolls).toBe(false);
+      expect(layout.toolbarClearsSpine).toBe(true);
+      expect(layout.documentWidth).toBeLessThanOrEqual(layout.viewportWidth + 1);
+      expect(layout.labels).toHaveLength(8);
+      expect(layout.labels.map((label) => label.text)).toEqual(expect.arrayContaining(
+        locale === 'es' ? ['Palabras importantes', 'Plan de los cuatro pasos', 'Examen Final'] : ['Important Words', 'Practice Test', 'Final Quiz'],
+      ));
+      for (const label of layout.labels) {
+        expect(label.clipped, label.text).toBe(false);
+        expect(label.insideViewport, label.text).toBe(true);
+      }
+    });
+
+    test(`${locale} learning home navigation wraps instead of scrolling`, async ({page}) => {
+      expect((await page.goto(prefix || '/'))?.status()).toBe(200);
+      const scroller = page.locator('[data-learning-platform-home] [class*="navScroller"]').first();
+      await expect(scroller).toBeVisible();
+      const fit = await scroller.evaluate((element) => {
+        const box = element.getBoundingClientRect();
+        const topbar = element.closest('[data-learning-platform-home]')?.querySelector<HTMLElement>('[class*="topbar"]');
+        const topbarBox = topbar?.getBoundingClientRect() ?? null;
+        const viewportWidth = document.documentElement.clientWidth;
+        const labels = [...element.querySelectorAll<HTMLElement>('[class*="navItem"]')].map((item) => {
+          const itemBox = item.getBoundingClientRect();
+          const label = [...item.children].find((child): child is HTMLElement =>
+            child instanceof HTMLElement && child.tagName === 'SPAN' && !String(child.className).includes('navIcon'));
+          return {
+            text: label?.textContent?.trim() ?? '',
+            clipped: Boolean(label && label.scrollWidth > label.clientWidth + 1),
+            insideScroller: itemBox.left >= box.left - 1 && itemBox.right <= box.right + 1,
+            insideViewport: itemBox.width > 0 && itemBox.left >= -1 && itemBox.right <= viewportWidth + 1,
+          };
+        });
+        return {
+          labels,
+          scrollable: element.scrollWidth > element.clientWidth + 1,
+          topbarClearsNav: topbarBox === null || topbarBox.top + 1 >= box.bottom,
+        };
+      });
+      expect(fit.scrollable).toBe(false);
+      expect(fit.topbarClearsNav).toBe(true);
+      expect(fit.labels.map((label) => label.text)).toEqual(expect.arrayContaining(
+        locale === 'es' ? ['Hoy', 'Practicar', 'Mis palabras', 'Todas las lecciones'] : ['Today', 'Practice', 'My words', 'All lessons'],
+      ));
+      for (const label of fit.labels) {
+        expect(label.clipped, label.text).toBe(false);
+        expect(label.insideScroller, label.text).toBe(true);
+        expect(label.insideViewport, label.text).toBe(true);
+      }
+    });
+  }
+});
