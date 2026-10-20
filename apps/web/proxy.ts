@@ -5,6 +5,7 @@ import {NextResponse} from 'next/server';
 import {routing} from './i18n/routing';
 import {brandedNotFoundDocument, notFoundLocaleForPath} from './lib/not-found-copy';
 import {createCspNonce, pageReportOnlyCsp} from './lib/csp-report-only';
+import {isPublic1751Production} from './lib/current-js-1751-public-production';
 import {
   CONTROLLED_CURRENT_JS_PREVIEW,
   controlledPreviewCoursePathAvailable,
@@ -311,7 +312,43 @@ export async function proxyForRequest(request: NextRequest) {
   if (isReferencePath(normalizedLocaleFree)) {
     return protectLocalReferenceDiagnosticResponse(response);
   }
+  if (documentMayUseBackForwardCache({
+    previewArtifact,
+    public1751: isPublic1751Production(),
+    localeFreeAsset,
+    localeFreeAuthApi,
+  })) {
+    // Issue #35 step 2: Next.js marks dynamic pages `no-store`, which keeps
+    // them out of the browser's back/forward cache. `private, no-cache` still
+    // forbids shared caches and forces revalidation on every normal
+    // navigation, but lets Back/Forward restore the page instantly. Next.js
+    // only writes its own Cache-Control when none is set, so this wins.
+    response.headers.set('Cache-Control', BACK_FORWARD_CACHEABLE_DOCUMENT);
+  }
   return response;
+}
+
+export const BACK_FORWARD_CACHEABLE_DOCUMENT = 'private, no-cache';
+
+/**
+ * Public documents only (including the public 1751 build, which also
+ * carries the preview-build marker). Controlled-preview artifacts keep their deliberate
+ * `private, no-store`, and signed-in (local auth) sessions stay no-store so a
+ * page is never restored after sign-out. Assets keep their own policies.
+ */
+export function documentMayUseBackForwardCache({
+  previewArtifact,
+  public1751,
+  localeFreeAsset,
+  localeFreeAuthApi,
+}: {
+  previewArtifact: boolean;
+  /** The public 1751 build also carries the preview-build marker. */
+  public1751: boolean;
+  localeFreeAsset: boolean;
+  localeFreeAuthApi: boolean;
+}) {
+  return (!previewArtifact || public1751) && !localeFreeAsset && !localeFreeAuthApi && !isLocalAuthEnabled();
 }
 
 export function normalizeLocalClerkMiddlewareResponse(
