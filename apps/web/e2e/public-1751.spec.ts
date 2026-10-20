@@ -70,6 +70,20 @@ for (const route of ['/courses/6/1', '/courses/3/999', '/es/courses/6/1', '/refe
   });
 }
 
+test('branded 404 answers HEAD and non-GET requests and keeps the request locale', async ({request}) => {
+  const head = await request.head('/login', {maxRedirects: 0});
+  expect(head.status()).toBe(404);
+  expect(head.headers()['x-robots-tag']).toContain('noindex');
+  const post = await request.post('/contact', {maxRedirects: 0, data: {}});
+  expect(post.status()).toBe(404);
+  for (const [route, lang] of [['/library', 'en'], ['/es/courses/6/1', 'es']] as const) {
+    const response = await request.get(route, {maxRedirects: 0});
+    expect(response.status()).toBe(404);
+    expect(response.headers()['cache-control']).toContain('no-store');
+    expect(await response.text()).toContain(`<html lang="${lang}">`);
+  }
+});
+
 test.describe('lesson playback waits for rendering and recovers failed assets', () => {
   test.use({contextOptions: {reducedMotion: 'no-preference'}, viewport: {width: 1440, height: 1000}});
 

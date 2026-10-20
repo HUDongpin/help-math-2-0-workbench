@@ -39,3 +39,7 @@ export function Link({href, locale, ...props}: LocalizedLinkProps) {
 export function usePathname(): string {
   return stripLocalePrefix(useNextPathname());
 }
+
+export function useLocale(): AppLocale {
+  return useContext(LocaleContext);
+}
