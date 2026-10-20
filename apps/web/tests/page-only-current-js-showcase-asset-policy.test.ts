@@ -82,6 +82,12 @@ async function withEnvironment<T>(
   }
 }
 
+async function directoryNames(directory: string) {
+  return (await readdir(directory, {withFileTypes: true}))
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => entry.name);
+}
+
 interface ShowcaseScope {
   readonly directoryPrefix: string;
   readonly environmentKey: string;
@@ -311,13 +317,38 @@ test('page-only showcase policy binds exact registered runtime directories and t
     webRoot,
     'public/flash-assets/courses',
   );
-  const candidateCourseAssetsRoot = path.join(
+  const controlledPreviewStorage =
+    (controlledCurrentJsPreviewBuildRequested() && controlledCurrentJsPreviewEnvironmentAllowed()) ||
+    (public1751BuildRequested() && public1751EnvironmentAllowed());
+  const candidateManifest = JSON.parse(
+    await readFile(path.join(webRoot, 'config/current-js-candidate-assets.v1.json'), 'utf8'),
+  ) as {version: string; entries: readonly {relativePath: string}[]};
+  const candidateManifestDirectories = [
+    ...new Set(candidateManifest.entries.map((entry) => entry.relativePath.split('/')[0])),
+  ].sort();
+  const materializedCandidateRoot = path.join(
     webRoot,
-    ((controlledCurrentJsPreviewBuildRequested() && controlledCurrentJsPreviewEnvironmentAllowed()) ||
-      (public1751BuildRequested() && public1751EnvironmentAllowed()))
-      ? 'public/current-js-preview-assets/courses'
-      : 'candidate-assets/flash-assets/2026-08-22-page-only-candidates-v1/courses',
+    'candidate-assets/flash-assets',
+    candidateManifest.version,
+    'courses',
   );
+  // Vercel checkouts never run prepare-site-ci-assets.mjs, so candidate bytes
+  // are absent there; the committed manifest is what that script materializes.
+  const materializedCandidateDirectories = await directoryNames(materializedCandidateRoot)
+    .catch((error: NodeJS.ErrnoException) => {
+      if (error.code === 'ENOENT') return null;
+      throw error;
+    });
+  if (materializedCandidateDirectories) {
+    assert.deepEqual(
+      materializedCandidateDirectories.filter((directory) => directory.startsWith('course-')).sort(),
+      candidateManifestDirectories,
+      'materialized candidate assets match the committed candidate manifest',
+    );
+  }
+  const candidateDirectories = controlledPreviewStorage
+    ? await directoryNames(path.join(webRoot, 'public/current-js-preview-assets/courses'))
+    : candidateManifestDirectories;
   const allPolicyDirectories = Object.values(
     PAGE_ONLY_CURRENT_JS_SHOWCASE_ASSET_DIRECTORIES_BY_RELEASE,
   ).flat();
@@ -325,16 +356,9 @@ test('page-only showcase policy binds exact registered runtime directories and t
   assert.equal(new Set(allPolicyDirectories).size, 1653);
 
   for (const scope of scopes) {
-    const diskDirectories = (await readdir(
-      scope.storageRoot === 'candidate'
-        ? candidateCourseAssetsRoot
-        : productionCourseAssetsRoot,
-      {
-      withFileTypes: true,
-      },
-    ))
-      .filter((entry) => entry.isDirectory())
-      .map((entry) => entry.name);
+    const diskDirectories = scope.storageRoot === 'candidate'
+      ? candidateDirectories
+      : await directoryNames(productionCourseAssetsRoot);
     const policyDirectories = [
       ...PAGE_ONLY_CURRENT_JS_SHOWCASE_ASSET_DIRECTORIES_BY_RELEASE[
         scope.releaseId
