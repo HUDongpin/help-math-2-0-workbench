@@ -11,6 +11,7 @@ import {LocaleProvider} from '@/i18n/navigation';
 import {routing} from '@/i18n/routing';
 import {getSiteUrl, SITE_DESCRIPTION, SITE_NAME} from '@/lib/site';
 import {isControlledCurrentJsPreview} from '@/lib/controlled-current-js-preview';
+import {productionSearchIndexingEnabled} from '@/lib/search-indexing';
 
 import 'katex/dist/katex.min.css';
 import '../globals.css';
@@ -23,8 +24,15 @@ export const metadata: Metadata = {
   category: 'education',
   creator: SITE_NAME,
   publisher: SITE_NAME,
-  robots: {index: !isControlledCurrentJsPreview(), follow: !isControlledCurrentJsPreview()}
+  robots: searchRobotsMetadata()
 };
+
+// Production opens indexing; X-Robots-Tag (next.config) still forces noindex on
+// every host except www.helpmath.ai, and previews stay noindex.
+function searchRobotsMetadata() {
+  const indexable = productionSearchIndexingEnabled() || !isControlledCurrentJsPreview();
+  return {index: indexable, follow: indexable};
+}
 
 export const viewport: Viewport = {
   colorScheme: 'light dark',

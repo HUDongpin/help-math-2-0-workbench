@@ -1,15 +1,5 @@
-export const PUBLIC_CURRENT_JS_LESSON_ROUTES = Object.freeze([
-  '/courses/3/2',
-  '/courses/4/3',
-  '/courses/4/5',
-  '/courses/4/10',
-  '/courses/4/11',
-  '/courses/5/3',
-  '/courses/5/4',
-  '/courses/5/5',
-] as const);
-
 export interface PublicCourseDiscoveryInput {
+  /** Lesson routes from availableLearningLessons(), the same gate the home page uses. */
   readonly availableLessonRoutes: readonly string[];
 }
 
@@ -18,26 +8,22 @@ export interface PublicCourseDiscovery {
   readonly robotDisallow: readonly string[];
 }
 
+const LESSON_ROUTE = /^\/courses\/[3-5]\/\d{1,2}$/u;
+
 /**
- * Keeps crawl discovery aligned with the same exact lesson routes that passed
+ * Crawl discovery is derived from the exact lesson routes that passed
  * registration, descriptor/navigation cross-binding, and publication gates.
+ * There is deliberately no hardcoded allowlist that can drift from home.
  */
 export function resolvePublicCourseDiscovery({
   availableLessonRoutes,
 }: PublicCourseDiscoveryInput): PublicCourseDiscovery {
-  const available = new Set(availableLessonRoutes);
-  const lessonRoutes = PUBLIC_CURRENT_JS_LESSON_ROUTES.filter((route) =>
-    available.has(route)
-  );
-  const unavailableRoutes = PUBLIC_CURRENT_JS_LESSON_ROUTES.filter((route) =>
-    !available.has(route)
-  );
+  const lessonRoutes = [...new Set(
+    availableLessonRoutes.map((route) => route.split('?')[0]!),
+  )].filter((route) => LESSON_ROUTE.test(route));
 
   return Object.freeze({
     lessonRoutes: Object.freeze(lessonRoutes),
-    robotDisallow: Object.freeze(unavailableRoutes.flatMap((route) => [
-      route,
-      `/es${route}`,
-    ])),
+    robotDisallow: Object.freeze([]),
   });
 }

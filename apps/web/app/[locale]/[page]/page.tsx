@@ -15,6 +15,7 @@ import {
 } from '@/components/content-pages';
 import {getSiteContent} from '@/content';
 import {createPageMetadata} from '@/lib/metadata';
+import {routeIndexable} from '@/lib/search-indexing';
 
 const supported = [
   'about',
@@ -38,7 +39,8 @@ function isSupported(value: string): value is SupportedPage {
 export async function generateMetadata({params}: {params: Promise<{locale: 'en' | 'es'; page: string}>}): Promise<Metadata> {
   const {locale, page} = await params;
   if (!isSupported(page)) return {};
-  return createPageMetadata(locale, getSiteContent(locale).pages[page].metadata, `/${page}`);
+  const metadata = createPageMetadata(locale, getSiteContent(locale).pages[page].metadata, `/${page}`);
+  return routeIndexable(`/${page}`) ? metadata : {...metadata, robots: {index: false, follow: true}};
 }
 
 export default async function ContentPage({params}: {params: Promise<{locale: 'en' | 'es'; page: string}>}) {

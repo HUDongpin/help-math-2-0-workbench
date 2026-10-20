@@ -3283,8 +3283,8 @@ export function LegacyResponsiveLessonShell({
           </button>
           <Link
             aria-label={spanish
-              ? 'Cambiar el idioma de la lección a inglés'
-              : 'Switch lesson language to Spanish'}
+              ? 'EN, cambiar el idioma de la lección a inglés'
+              : 'ES, switch lesson language to Spanish'}
             data-modern-language-switch="true"
             data-responsive-focus-key={spanish ? 'language-en' : 'language-es'}
             href={activeModeHref}
