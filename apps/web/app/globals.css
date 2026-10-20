@@ -1,4 +1,17 @@
 @import "tailwindcss";
+/*
+ * Build-memory guard: Tailwind v4 auto-detects class candidates from every
+ * non-gitignored file under apps/web. The hash-bound course asset packs that
+ * CI and deploy builds restore here (candidate-assets/, public/flash-assets/
+ * courses/, server-assets/ ~5.4G of generated JS/PNG/MP3) are not app source,
+ * and scanning them cost ~3G native RSS per stylesheet compile. The three
+ * utilities those packs used to contribute are kept via inline() so the
+ * generated CSS stays byte-identical.
+ */
+@source not "../candidate-assets";
+@source not "../public";
+@source not "../server-assets";
+@source inline("rounded shadow invert");
 
 :root {
   --ink: #14213d;
