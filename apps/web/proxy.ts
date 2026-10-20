@@ -3,6 +3,7 @@ import type {NextFetchEvent} from 'next/server';
 import {NextResponse} from 'next/server';
 
 import {routing} from './i18n/routing';
+import {brandedNotFoundDocument, notFoundLocaleForPath} from './lib/not-found-copy';
 import {
   CONTROLLED_CURRENT_JS_PREVIEW,
   controlledPreviewCoursePathAvailable,
@@ -78,6 +79,19 @@ function notFoundResponse() {
     status: 404,
     headers: {
       'Content-Type': 'text/plain; charset=utf-8',
+      'X-Robots-Tag': 'noindex, nofollow',
+    },
+  });
+}
+
+function brandedNotFoundResponse(originalPath: string) {
+  if (originalPath.startsWith('/flash-assets/')) return notFoundResponse();
+  return new NextResponse(brandedNotFoundDocument(notFoundLocaleForPath(originalPath)), {
+    status: 404,
+    headers: {
+      // Denials depend on build/env gates; never let a shared cache pin one.
+      'Cache-Control': 'private, no-store, max-age=0',
+      'Content-Type': 'text/html; charset=utf-8',
       'X-Robots-Tag': 'noindex, nofollow',
     },
   });
@@ -248,7 +262,7 @@ export async function proxyForRequest(request: NextRequest) {
     response.headers.set('Cache-Control', 'private, no-store, max-age=0');
     return response;
   }
-  if (!isAllowed(normalizedLocaleFree, request)) return notFoundResponse();
+  if (!isAllowed(normalizedLocaleFree, request)) return brandedNotFoundResponse(originalPath);
   if (previewArtifact && originalPath.startsWith('/flash-assets/')) {
     const segments = originalPath.slice('/flash-assets/'.length).split('/');
     if (controlledPreviewSupplementRecord(segments) ?? currentJsCandidateAssetRecordForSegments(segments)) {
