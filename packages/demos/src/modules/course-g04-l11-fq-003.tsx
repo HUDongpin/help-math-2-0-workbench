@@ -1,5 +1,7 @@
 "use client";
 
+import g04L11SourceData from "../source-lesson-data/g04-l11.json";
+import type {SourceLessonData} from "../source-lesson-data";
 import {createCourseG04L03FinalQuizFunctionalRenderer} from "./course-g04-l03-fq-002";
 import {
   COURSE_G04_L11_FQ_003_SOURCE_STATIC_CANDIDATE,
@@ -22,6 +24,7 @@ const SOURCE_SCENARIO = "source-static-frame";
 export const CourseG04L11Fq003Renderer =
   createCourseG04L03FinalQuizFunctionalRenderer({
     animationId: "course-g04-l11-fq-003",
+    sourceLessonData: g04L11SourceData as unknown as SourceLessonData,
     createInteractionState: createCourseG04L11Fq003InteractionState,
     functionalEntryFrame: FUNCTIONAL_ENTRY_FRAME,
     functionalHostFrameEnd: 72,

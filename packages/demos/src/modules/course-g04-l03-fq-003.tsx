@@ -1,5 +1,7 @@
 "use client";
 
+import g04L03SourceData from "../source-lesson-data/g04-l03.json";
+import type {SourceLessonData} from "../source-lesson-data";
 import {
   COURSE_G04_L03_FQ_TS007_CROSS_PLACEMENT,
   createCourseG04L03FinalQuizFunctionalRenderer,
@@ -28,6 +30,7 @@ const SOURCE_SCENARIO = "source-static-frame";
 export const CourseG04L03Fq003Renderer =
   createCourseG04L03FinalQuizFunctionalRenderer({
     animationId: "course-g04-l03-fq-003",
+    sourceLessonData: g04L03SourceData as unknown as SourceLessonData,
     createInteractionState: createCourseG04L03Fq003InteractionState,
     functionalEntryFrame: FUNCTIONAL_ENTRY_FRAME,
     functionalHostFrameEnd: 43,

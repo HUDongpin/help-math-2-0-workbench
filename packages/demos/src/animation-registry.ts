@@ -1,6 +1,7 @@
 import type {AnimationModule} from './contract';
 import {animationModuleLoaders} from './registry.generated';
 import {withSourceLessonAudio} from './source-lesson-audio';
+import {loadSourceLessonData} from './source-lesson-data';
 
 export type {
   AnimationModuleLoader,
@@ -19,6 +20,8 @@ export {
 } from './animation-registry-metadata';
 
 export async function loadAnimationModule(key: string): Promise<AnimationModule | undefined> {
-  const module = await animationModuleLoaders[key]?.();
-  return module ? withSourceLessonAudio(module) : undefined;
+  const loader = animationModuleLoaders[key];
+  if (!loader) return undefined;
+  const [module, lessonData] = await Promise.all([loader(), loadSourceLessonData(key)]);
+  return withSourceLessonAudio(module, lessonData);
 }

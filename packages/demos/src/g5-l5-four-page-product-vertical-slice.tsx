@@ -1,5 +1,9 @@
 "use client";
 import {SourceQuestionAudioControls} from "./source-question-audio-controls";
+import g05L05SourceData from "./source-lesson-data/g05-l05.json";
+import type {SourceLessonData} from "./source-lesson-data";
+
+const G5_L5_SOURCE_LESSON_DATA = g05L05SourceData as unknown as SourceLessonData;
 
 import React, {useEffect, useMemo, useReducer, useRef, useState} from "react";
 import {createPortal} from "react-dom";
@@ -705,7 +709,7 @@ function FinalQuizRenderer({
                 type="button"
               >{copy.review}</button>
             </div>}
-      <SourceQuestionAudioControls animationId="course-g05-l05-fq-003" questionNumber={state.mode === "question" ? state.questionIndex + 1 : null} enabled runtime={{...props,paused:false}} />
+      <SourceQuestionAudioControls lessonData={G5_L5_SOURCE_LESSON_DATA} animationId="course-g05-l05-fq-003" questionNumber={state.mode === "question" ? state.questionIndex + 1 : null} enabled runtime={{...props,paused:false}} />
     </section>
   </Companion>;
 
@@ -1204,7 +1208,7 @@ function Fq002CalibrationRenderer({
                 type="button"
               >{copy.review}</button>
             </div>}
-      <SourceQuestionAudioControls animationId="course-g05-l05-fq-002" questionNumber={state.mode === "question" ? currentQuestion : null} enabled runtime={{...props,paused:false}} />
+      <SourceQuestionAudioControls lessonData={G5_L5_SOURCE_LESSON_DATA} animationId="course-g05-l05-fq-002" questionNumber={state.mode === "question" ? currentQuestion : null} enabled runtime={{...props,paused:false}} />
     </section>
   </Companion>;
 
