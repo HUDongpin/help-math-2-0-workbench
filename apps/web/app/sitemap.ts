@@ -3,6 +3,7 @@ import type {MetadataRoute} from 'next';
 import {availableLearningLessons} from '@/lib/learning-lesson-availability.server';
 import {resolvePublicCourseDiscovery} from '@/lib/public-course-discovery';
 import {getSiteUrl, localizedPath} from '@/lib/site';
+import {routeIndexable} from '@/lib/search-indexing';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
@@ -12,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       href.split('?')[0]!
     ),
   });
-  const routes = ['/', ...lessonRoutes, '/privacy', '/terms'] as const;
+  const routes = ['/', ...lessonRoutes, '/privacy', '/terms'].filter(routeIndexable);
 
   return routes.flatMap((route) =>
     (['en', 'es'] as const).map((locale) => ({
