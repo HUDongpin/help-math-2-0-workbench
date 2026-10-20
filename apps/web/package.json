@@ -8,7 +8,7 @@
     "auth:provider-preflight": "tsx scripts/check-clerk-synthetic-provider-preflight.ts",
     "auth:test:synthetic": "tsx scripts/run-clerk-synthetic-registration.ts",
     "dev": "next dev",
-    "build": "npm run verify:asset-profiles:deployment && next build --webpack",
+    "build": "node scripts/controlled-preview-supplement-index.mjs --check && npm run verify:asset-profiles:deployment && next build --webpack",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
