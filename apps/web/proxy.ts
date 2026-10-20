@@ -1,4 +1,3 @@
-import {clerkMiddleware} from '@clerk/nextjs/server';
 import type {NextRequest} from 'next/server';
 import type {NextFetchEvent} from 'next/server';
 import {NextResponse} from 'next/server';
@@ -285,10 +284,6 @@ export async function proxyForRequest(request: NextRequest) {
   return response;
 }
 
-const clerkAwareProxy = clerkMiddleware(
-  (_auth, request) => proxyForRequest(request),
-);
-
 export function normalizeLocalClerkMiddlewareResponse(
   response: Response,
   requestUrl: URL,
@@ -313,19 +308,49 @@ export function normalizeLocalClerkMiddlewareResponse(
   return response;
 }
 
-export default async function proxy(
+type ClerkAwareProxy = (
   request: NextRequest,
-  event?: NextFetchEvent,
+  event: NextFetchEvent,
+) => Promise<Response | null | undefined | void>;
+
+export type ClerkAwareProxyLoader = () => Promise<ClerkAwareProxy>;
+
+// Clerk's server entry only loads through the Next bundler. Importing it
+// statically breaks tsx-run tests that import proxyForRequest, so it is
+// loaded on the Clerk path only.
+const loadClerkAwareProxy: ClerkAwareProxyLoader = async () =>
+  (await import('./lib/clerk-proxy')).createClerkAwareProxy(proxyForRequest);
+
+async function runClerkAwareProxy(
+  request: NextRequest,
+  event: NextFetchEvent,
+  loadProxy: ClerkAwareProxyLoader,
 ): Promise<Response> {
-  if (isLocalAuthSessionApiPath(request.nextUrl.pathname)) {
-    if (!isLocalAuthEnabled() || !event) return NextResponse.next();
-    const response = await clerkAwareProxy(request, event) ?? NextResponse.next();
-    return normalizeLocalClerkMiddlewareResponse(response, request.nextUrl);
+  let clerkAwareProxy: ClerkAwareProxy;
+  try {
+    clerkAwareProxy = await loadProxy();
+  } catch {
+    return notFoundResponse();
   }
-  if (!isLocalAuthEnabled() || !event) return proxyForRequest(request);
   const response = await clerkAwareProxy(request, event) ?? NextResponse.next();
   return normalizeLocalClerkMiddlewareResponse(response, request.nextUrl);
 }
+
+export function createProxy(loadProxy: ClerkAwareProxyLoader) {
+  return async function proxy(
+    request: NextRequest,
+    event?: NextFetchEvent,
+  ): Promise<Response> {
+    if (isLocalAuthSessionApiPath(request.nextUrl.pathname)) {
+      if (!isLocalAuthEnabled() || !event) return NextResponse.next();
+      return runClerkAwareProxy(request, event, loadProxy);
+    }
+    if (!isLocalAuthEnabled() || !event) return proxyForRequest(request);
+    return runClerkAwareProxy(request, event, loadProxy);
+  };
+}
+
+export default createProxy(loadClerkAwareProxy);
 
 export const config = {
   matcher: [
