@@ -1,3 +1,7 @@
+import {
+  CSP_REPORTING_ENDPOINTS_HEADER,
+  EMBEDDED_COURSE_ADAPTER_REPORT_ONLY_CSP,
+} from './lib/csp-report-only';
 import type {NextConfig} from 'next';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -19,6 +23,7 @@ import {
 } from './lib/controlled-current-js-preview';
 
 import {CURRENT_JS_1751_PUBLIC_PRODUCTION, public1751BuildRequested, public1751EnvironmentAllowed} from './lib/current-js-1751-public-production';
+import {NOINDEX_HEADER_VALUE, NON_INDEXABLE_HOST_CONDITION} from './lib/search-indexing';
 
 const webDirectory = path.dirname(fileURLToPath(import.meta.url));
 const controlledPreviewBuild = controlledCurrentJsPreviewBuildRequested()
@@ -31,6 +36,8 @@ if (public1751BuildRequested() && (!public1751Build || controlledCurrentJsPrevie
   throw new Error('Public 1751-page production requires the exact production project or explicit local verification, without the Preview build flag.');
 }
 const controlledCourseBuild = controlledPreviewBuild || public1751Build;
+// Only the Vercel production deployment of the public build may be indexed, and only on www.helpmath.ai.
+const productionIndexingBuild = public1751Build && process.env.VERCEL_ENV === 'production';
 if (process.env.NODE_ENV === 'production' && !controlledCourseBuild && existsSync(
   path.resolve(webDirectory, '../../deployment/current-js-controlled-preview-v2/manifest.json'),
 )) {
@@ -211,6 +218,7 @@ const securityHeaders = [
       "worker-src 'self' blob:"
     ].join('; ')
   },
+  {key: 'Reporting-Endpoints', value: CSP_REPORTING_ENDPOINTS_HEADER},
   {key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups'},
   // Nova voice input uses the browser's speech-recognition control. HELP Math
   // never receives the audio stream; only the learner-approved transcript is
@@ -253,6 +261,8 @@ const embeddedCourseAdapterHeaders = [
       "style-src 'self' 'unsafe-inline'"
     ].join('; ')
   },
+  {key: 'Content-Security-Policy-Report-Only', value: EMBEDDED_COURSE_ADAPTER_REPORT_ONLY_CSP},
+  {key: 'Reporting-Endpoints', value: CSP_REPORTING_ENDPOINTS_HEADER},
   {key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups'},
   {key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()'},
   {key: 'Referrer-Policy', value: 'no-referrer'},
@@ -353,10 +363,20 @@ const nextConfig: NextConfig = {
       },
       ...(controlledCourseBuild ? [{
         source: '/:path*',
-        headers: [
-          {key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive, noimageindex'},
-          {key: 'Cache-Control', value: 'private, no-store, max-age=0'},
-        ],
+        headers: [{key: 'Cache-Control', value: 'private, no-store, max-age=0'}],
+      }, {
+        source: '/:path*',
+        ...(productionIndexingBuild ? {missing: [...NON_INDEXABLE_HOST_CONDITION]} : {}),
+        headers: [{key: 'X-Robots-Tag', value: NOINDEX_HEADER_VALUE}],
+      }] : []),
+      // Issue #35 step 2: public 1751 documents may enter the browser's
+      // back/forward cache. `private, no-cache` still forbids shared caches
+      // and revalidates every normal navigation. APIs, assets and Next.js
+      // internals and any dotted static file keep their own policies; controlled-preview builds are unchanged.
+      // The proxy sets the same value on document responses.
+      ...(public1751Build && !controlledPreviewBuild ? [{
+        source: '/((?!api/|_next/|_vercel/|flash-assets/|current-js-preview-assets/|lesson-backgrounds/)[^.]*)',
+        headers: [{key: 'Cache-Control', value: 'private, no-cache'}],
       }] : []),
       {
         source: controlledCourseBuild

@@ -1,38 +1,23 @@
-import type {AnimationModule, AudioCue, AudioTrack, InteractiveAudioAsset} from './contract';
+import type {AnimationModule, AudioCue, AudioTrack} from './contract';
 import {withSourceFeedback} from './source-feedback-adapter';
 import {withSourceQuiz} from './source-quiz-adapter';
-import recoveredAudio from './source-lesson-audio.generated.json';
+import {
+  assertSourceLessonDataFor,
+  type SourceLessonData,
+  type SourceQuestionAudioAsset,
+} from './source-lesson-data';
 
-interface RecoveredPageAudio {
-  readonly cues: readonly AudioCue[];
-  readonly tracks: readonly AudioTrack[];
-  readonly spanishSourceHashes: readonly string[];
-  readonly sharedMusicSourceHashes?: readonly string[];
-  readonly interactive?: readonly (SourceQuestionAudioAsset | SourceFeedbackAudioAsset)[];
-  readonly alignExistingCueFrames?: boolean;
-}
+export type {SourceQuestionAudioAsset} from './source-lesson-data';
 
-export interface SourceQuestionAudioAsset extends InteractiveAudioAsset {
-  readonly questionNumber: number;
-  readonly option: string | null;
-}
-
-interface SourceFeedbackAudioAsset extends InteractiveAudioAsset {
-  readonly coverageDisposition: 'interaction-only';
-  readonly trigger: string;
-}
-
-const pages = recoveredAudio as Readonly<Record<string, RecoveredPageAudio>>;
-
-export function sourceQuestionAudioAssets(key: string, questionNumber: number | null, language: 'en' | 'es') {
-  return (pages[key]?.interactive ?? []).filter((asset): asset is SourceQuestionAudioAsset =>
+export function sourceQuestionAudioAssets(lessonData: SourceLessonData, key: string, questionNumber: number | null, language: 'en' | 'es') {
+  return (assertSourceLessonDataFor(lessonData, key).audio[key]?.interactive ?? []).filter((asset): asset is SourceQuestionAudioAsset =>
     'questionNumber' in asset && asset.questionNumber === questionNumber && asset.language === language);
 }
 
 /** Add exact source audio without replacing authored interaction/cue rules. */
-export function withSourceLessonAudio(module: AnimationModule): AnimationModule {
-  const recovered = pages[module.key];
-  if (!recovered) return withSourceFeedback(withSourceQuiz(module));
+export function withSourceLessonAudio(module: AnimationModule, lessonData: SourceLessonData | undefined): AnimationModule {
+  const recovered = lessonData && assertSourceLessonDataFor(lessonData, module.key).audio[module.key];
+  if (!lessonData || !recovered) return withSourceFeedback(withSourceQuiz(module, lessonData), lessonData);
   const originalCues = module.audioCues.map((cue): AudioCue => {
     // Source intro music is language-neutral. Restrict reclassification to
     // explicitly reviewed hashes, preserving authored scenario/seed rules.
@@ -66,5 +51,5 @@ export function withSourceLessonAudio(module: AnimationModule): AnimationModule 
       lessonHost: {...(module.lessonHost ?? {legacyOperations: 'blocked', auditStorage: 'memory-only', storesPersonalData: false} as const),
         capabilities: [...new Set([...(module.lessonHost?.capabilities ?? []), 'audio' as const])]},
     } : {}),
-  })));
+  }), lessonData), lessonData);
 }

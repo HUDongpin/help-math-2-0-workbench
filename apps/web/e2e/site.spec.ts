@@ -189,7 +189,8 @@ test('unknown routes return a non-indexable 404 response', async ({page}) => {
 
   expect(response?.status()).toBe(404);
   expect(response?.headers()['x-robots-tag']).toBe('noindex, nofollow');
-  await expect(page.locator('body')).toHaveText('Not Found');
+  await expect(page.getByRole('heading', {level: 1})).toHaveText('Page not found');
+  await expect(page.getByRole('banner')).toBeVisible();
 });
 
 test('public archive fails closed until strict completion ledger entries exist', async ({page}) => {

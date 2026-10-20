@@ -1,9 +1,11 @@
-import {clerkMiddleware} from '@clerk/nextjs/server';
 import type {NextRequest} from 'next/server';
 import type {NextFetchEvent} from 'next/server';
 import {NextResponse} from 'next/server';
 
 import {routing} from './i18n/routing';
+import {brandedNotFoundDocument, notFoundLocaleForPath} from './lib/not-found-copy';
+import {createCspNonce, pageReportOnlyCsp} from './lib/csp-report-only';
+import {isPublic1751Production} from './lib/current-js-1751-public-production';
 import {
   CONTROLLED_CURRENT_JS_PREVIEW,
   controlledPreviewCoursePathAvailable,
@@ -79,6 +81,19 @@ function notFoundResponse() {
     status: 404,
     headers: {
       'Content-Type': 'text/plain; charset=utf-8',
+      'X-Robots-Tag': 'noindex, nofollow',
+    },
+  });
+}
+
+function brandedNotFoundResponse(originalPath: string) {
+  if (originalPath.startsWith('/flash-assets/')) return notFoundResponse();
+  return new NextResponse(brandedNotFoundDocument(notFoundLocaleForPath(originalPath)), {
+    status: 404,
+    headers: {
+      // Denials depend on build/env gates; never let a shared cache pin one.
+      'Cache-Control': 'private, no-store, max-age=0',
+      'Content-Type': 'text/html; charset=utf-8',
       'X-Robots-Tag': 'noindex, nofollow',
     },
   });
@@ -249,7 +264,7 @@ export async function proxyForRequest(request: NextRequest) {
     response.headers.set('Cache-Control', 'private, no-store, max-age=0');
     return response;
   }
-  if (!isAllowed(normalizedLocaleFree, request)) return notFoundResponse();
+  if (!isAllowed(normalizedLocaleFree, request)) return brandedNotFoundResponse(originalPath);
   if (previewArtifact && originalPath.startsWith('/flash-assets/')) {
     const segments = originalPath.slice('/flash-assets/'.length).split('/');
     if (controlledPreviewSupplementRecord(segments) ?? currentJsCandidateAssetRecordForSegments(segments)) {
@@ -271,23 +286,70 @@ export async function proxyForRequest(request: NextRequest) {
     || originalPath.startsWith('/en/')
     || originalPath === '/es'
     || originalPath.startsWith('/es/');
+  // Issue #35 step 1: document requests get a per-request nonce and a
+  // Report-Only policy. Next.js reads the nonce from this request header and
+  // stamps it on its own scripts. The enforced CSP in next.config.ts is
+  // unchanged; this header only produces violation reports.
+  const reportOnlyCsp = localeFreeAsset || localeFreeAuthApi || isReferencePath(normalizedLocaleFree)
+    ? null
+    : pageReportOnlyCsp(createCspNonce());
+  const forwarded = reportOnlyCsp
+    ? (() => {
+        const headers = new Headers(request.headers);
+        headers.set('content-security-policy-report-only', reportOnlyCsp);
+        return {request: {headers}};
+      })()
+    : undefined;
   const response = localePrefixed || localeFreeAsset || localeFreeAuthApi
-    ? NextResponse.next()
+    ? NextResponse.next(forwarded)
     : (() => {
         const rewritten = request.nextUrl.clone();
         rewritten.pathname = `/${routing.defaultLocale}${originalPath === '/' ? '' : originalPath}`;
-        return NextResponse.rewrite(rewritten);
+        return NextResponse.rewrite(rewritten, forwarded);
       })();
+  if (reportOnlyCsp) response.headers.set('Content-Security-Policy-Report-Only', reportOnlyCsp);
 
   if (isReferencePath(normalizedLocaleFree)) {
     return protectLocalReferenceDiagnosticResponse(response);
   }
+  if (documentMayUseBackForwardCache({
+    previewArtifact,
+    public1751: isPublic1751Production(),
+    localeFreeAsset,
+    localeFreeAuthApi,
+  })) {
+    // Issue #35 step 2: Next.js marks dynamic pages `no-store`, which keeps
+    // them out of the browser's back/forward cache. `private, no-cache` still
+    // forbids shared caches and forces revalidation on every normal
+    // navigation, but lets Back/Forward restore the page instantly. Next.js
+    // only writes its own Cache-Control when none is set, so this wins.
+    response.headers.set('Cache-Control', BACK_FORWARD_CACHEABLE_DOCUMENT);
+  }
   return response;
 }
 
-const clerkAwareProxy = clerkMiddleware(
-  (_auth, request) => proxyForRequest(request),
-);
+export const BACK_FORWARD_CACHEABLE_DOCUMENT = 'private, no-cache';
+
+/**
+ * Public documents only (including the public 1751 build, which also
+ * carries the preview-build marker). Controlled-preview artifacts keep their deliberate
+ * `private, no-store`, and signed-in (local auth) sessions stay no-store so a
+ * page is never restored after sign-out. Assets keep their own policies.
+ */
+export function documentMayUseBackForwardCache({
+  previewArtifact,
+  public1751,
+  localeFreeAsset,
+  localeFreeAuthApi,
+}: {
+  previewArtifact: boolean;
+  /** The public 1751 build also carries the preview-build marker. */
+  public1751: boolean;
+  localeFreeAsset: boolean;
+  localeFreeAuthApi: boolean;
+}) {
+  return (!previewArtifact || public1751) && !localeFreeAsset && !localeFreeAuthApi && !isLocalAuthEnabled();
+}
 
 export function normalizeLocalClerkMiddlewareResponse(
   response: Response,
@@ -313,19 +375,49 @@ export function normalizeLocalClerkMiddlewareResponse(
   return response;
 }
 
-export default async function proxy(
+type ClerkAwareProxy = (
   request: NextRequest,
-  event?: NextFetchEvent,
+  event: NextFetchEvent,
+) => Promise<Response | null | undefined | void>;
+
+export type ClerkAwareProxyLoader = () => Promise<ClerkAwareProxy>;
+
+// Clerk's server entry only loads through the Next bundler. Importing it
+// statically breaks tsx-run tests that import proxyForRequest, so it is
+// loaded on the Clerk path only.
+const loadClerkAwareProxy: ClerkAwareProxyLoader = async () =>
+  (await import('./lib/clerk-proxy')).createClerkAwareProxy(proxyForRequest);
+
+async function runClerkAwareProxy(
+  request: NextRequest,
+  event: NextFetchEvent,
+  loadProxy: ClerkAwareProxyLoader,
 ): Promise<Response> {
-  if (isLocalAuthSessionApiPath(request.nextUrl.pathname)) {
-    if (!isLocalAuthEnabled() || !event) return NextResponse.next();
-    const response = await clerkAwareProxy(request, event) ?? NextResponse.next();
-    return normalizeLocalClerkMiddlewareResponse(response, request.nextUrl);
+  let clerkAwareProxy: ClerkAwareProxy;
+  try {
+    clerkAwareProxy = await loadProxy();
+  } catch {
+    return notFoundResponse();
   }
-  if (!isLocalAuthEnabled() || !event) return proxyForRequest(request);
   const response = await clerkAwareProxy(request, event) ?? NextResponse.next();
   return normalizeLocalClerkMiddlewareResponse(response, request.nextUrl);
 }
+
+export function createProxy(loadProxy: ClerkAwareProxyLoader) {
+  return async function proxy(
+    request: NextRequest,
+    event?: NextFetchEvent,
+  ): Promise<Response> {
+    if (isLocalAuthSessionApiPath(request.nextUrl.pathname)) {
+      if (!isLocalAuthEnabled() || !event) return NextResponse.next();
+      return runClerkAwareProxy(request, event, loadProxy);
+    }
+    if (!isLocalAuthEnabled() || !event) return proxyForRequest(request);
+    return runClerkAwareProxy(request, event, loadProxy);
+  };
+}
+
+export default createProxy(loadClerkAwareProxy);
 
 export const config = {
   matcher: [

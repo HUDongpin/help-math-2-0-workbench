@@ -36,6 +36,10 @@ import {
 } from "./timelines/course-g05-l04-fq23-question-sequence";
 
 import {sourceQuestionAudioAssets} from "./source-lesson-audio";
+import g05L04SourceData from "./source-lesson-data/g05-l04.json";
+import type {SourceLessonData} from "./source-lesson-data";
+
+const G5_L4_SOURCE_LESSON_DATA = g05L04SourceData as unknown as SourceLessonData;
 
 /** Prefer a source-reviewed page binding, retaining the original recording fallback. */
 function getReviewedQuestionAudio(
@@ -44,7 +48,7 @@ function getReviewedQuestionAudio(
   questionNumber: number,
   option: G5L4Fq23AnswerOption | null,
 ): G5L4FqInteractiveAudioAsset | undefined {
-  const reviewed = sourceQuestionAudioAssets(animationId, questionNumber, language)
+  const reviewed = sourceQuestionAudioAssets(G5_L4_SOURCE_LESSON_DATA, animationId, questionNumber, language)
     .find((asset) => asset.option === option);
   return reviewed
     ? {...reviewed, option, kind: option === null ? "question" : "answer"}
@@ -1113,7 +1117,7 @@ export function createG5L4Fq23QuestionAtlasCandidate(
     audioCues: Object.freeze([]),
     interactiveAudioAssets: G5_L4_FQ_INTERACTIVE_AUDIO_ASSETS.filter((asset) =>
       asset.language === "shared" || !sourceQuestionAudioAssets(
-        config.animationId, asset.questionNumber, asset.language,
+        G5_L4_SOURCE_LESSON_DATA, config.animationId, asset.questionNumber, asset.language,
       ).some((reviewed) => reviewed.option === asset.option)),
     lessonHost: Object.freeze({
       capabilities: Object.freeze(["audio"] as const),
