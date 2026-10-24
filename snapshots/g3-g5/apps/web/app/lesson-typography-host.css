@@ -1,0 +1,338 @@
+/* The existing My Lesson host remains. Only an explicitly opted-in page gets
+   a document-flow content plane instead of the cropped authored Flash plane. */
+[data-lesson-key-terms-presentation='source-lesson'] {
+  color: #14213d;
+  font: 400 1.125rem/1.6 var(--lesson-font-body, system-ui, sans-serif);
+  overflow-wrap: anywhere;
+}
+[data-lesson-key-terms-presentation='source-lesson'] :is(p, label, input, button, h4) {
+  font: inherit;
+  color: inherit;
+}
+[data-lesson-key-terms-presentation='source-lesson'] :is(button, input) {
+  min-width: 44px;
+  min-height: 44px;
+}
+[data-lesson-key-terms-presentation='source-lesson'] h3 {
+  font: 600 1.5rem/1.3 var(--lesson-font-display, system-ui, sans-serif);
+}
+[data-lesson-key-terms-presentation='source-lesson'] .lesson-shell2__key-term-bilingual {
+  grid-template-columns: minmax(0, 1fr);
+}
+[data-lesson-key-terms-presentation='source-lesson'] .lesson-shell2__key-term-bilingual h4 {
+  font: 600 1.375rem/1.3 var(--lesson-font-display, system-ui, sans-serif);
+}
+
+/* Enlarged glossary text needs reading width, not three nested rem gutters.
+   Keep the existing text sizes and let controls reflow within the panel. */
+[data-lesson-key-terms-presentation='source-lesson'],
+[data-lesson-key-terms-presentation='source-lesson'] .lesson-shell2__key-term-definition {
+  grid-template-columns: minmax(0, 1fr);
+  min-inline-size: 0;
+}
+[data-lesson-key-terms-presentation='source-lesson'],
+[data-lesson-key-terms-presentation='source-lesson'] .lesson-shell2__key-term-bilingual section {
+  padding-inline: min(.65rem, 2vw);
+}
+.lesson-shell2__tool-content:has([data-lesson-key-terms-presentation='source-lesson']) {
+  padding-inline: min(.7rem, 2vw);
+}
+[data-lesson-key-terms-presentation='source-lesson'] :is(
+    .lesson-shell2__key-terms-toolbar,
+    .lesson-shell2__key-terms-toolbar > div,
+    .lesson-shell2__key-term-definition-actions) {
+  flex-wrap: wrap;
+  gap: .35rem;
+  min-inline-size: 0;
+}
+[data-lesson-key-terms-presentation='source-lesson'] :is(button, input) {
+  max-inline-size: 100%;
+}
+[data-lesson-key-terms-presentation='source-lesson'] .lesson-shell2__key-terms-alphabet {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 2.75rem), 1fr));
+}
+.lesson-shell2__key-terms [data-lesson-key-terms-presentation='source-lesson'] .lesson-shell2__key-terms-list {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+}
+.lesson-shell2__side-panel--tool:has([data-lesson-key-terms-presentation='source-lesson']) > header {
+  align-items: start;
+  display: grid;
+  gap: .25rem;
+  grid-template-columns: minmax(0, 1fr) 44px;
+  padding-inline: min(.8rem, 2vw);
+}
+.lesson-shell2__side-panel--tool:has([data-lesson-key-terms-presentation='source-lesson']) > header > div {
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+}
+.lesson-shell2[data-tool-presentation='overlay'][data-active-tool='key-terms']:has(
+    [data-lesson-key-terms-presentation='source-lesson']) .lesson-shell2__side-panel--tool {
+  right: min(1rem, 3vw);
+  width: min(720px, calc(100vw - min(2rem, 6vw)));
+}
+.lesson-shell2:has(.runtime-shell[data-lesson-presentation='modern-text-v1']) .lesson-shell2__page-heading h1 {
+  font-family: var(--lesson-font-display);
+  font-size: clamp(1.75rem, 2.3vw, 2.25rem);
+  line-height: 1.25;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.lesson-shell2:has(.runtime-shell[data-lesson-presentation='modern-text-v1']) .lesson-shell2__page-heading p {
+  font-family: var(--lesson-font-body);
+  font-size: 1.125rem;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: normal;
+  overflow: visible;
+  max-inline-size: 70ch;
+}
+.lesson-text-language-note {
+  font: 400 1.125rem/1.6 var(--lesson-font-body);
+  color: #34475e;
+  max-inline-size: 70ch;
+  margin: 0 0 1rem;
+}
+.lesson-shell2 .lesson-shell2__legacy-stage:has(
+    .runtime-shell[data-lesson-presentation='modern-text-v1']) {
+  aspect-ratio: auto;
+  height: auto;
+  max-height: none;
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+  background: #fffdf7;
+  box-shadow: none;
+  border: 1px solid #c8d6e7;
+  border-radius: 1rem;
+}
+
+.lesson-shell2 .lesson-shell2__legacy-stage:has(
+    .runtime-shell[data-lesson-presentation='modern-text-v1'])
+    > .lesson-shell2__stage {
+  position: relative;
+  inset: auto;
+  height: auto;
+  min-height: 0;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: auto;
+  transform: none;
+  overflow: visible;
+  box-shadow: none;
+  padding: clamp(1rem, 2.5vw, 2rem);
+  background: transparent;
+}
+
+.lesson-shell2 .lesson-shell2__legacy-stage:has(
+    .runtime-shell[data-lesson-presentation='modern-text-v1'])
+    > .lesson-shell2__source-background-text {
+  display: none;
+}
+
+.lesson-shell2 .lesson-shell2__stage
+    .runtime-shell[data-lesson-presentation='modern-text-v1'],
+.runtime-shell[data-lesson-presentation='modern-text-v1'] > .runtime-stage {
+  position: relative;
+  top: auto;
+  left: auto;
+  inset: auto;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  aspect-ratio: auto;
+  border: 0;
+  transform: none;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+/* Keep one primary explanation. The old Page 36 reading aid is superseded only
+   when the actual modern page is mounted, never merely because a flag is set. */
+.lesson-shell2__learning-column:has(
+    .runtime-shell[data-lesson-presentation='modern-text-v1'])
+    .g4-l3-readable-view {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .lesson-shell2 .lesson-shell2__legacy-stage:has(
+      .runtime-shell[data-lesson-presentation='modern-text-v1'])
+      > .lesson-shell2__stage {
+    padding: 1rem 0.25rem;
+  }
+}
+
+/* A status message must participate in the native lesson's reading flow.
+   The legacy absolute stage position otherwise covers help and feedback text. */
+.runtime-shell[data-lesson-presentation='modern-text-v1'] > .reduced-motion-note {
+  position: static;
+  inset: auto;
+  transform: none;
+  z-index: auto;
+  max-width: 70ch;
+  margin: 0 0 1rem;
+  font: 400 1.125rem/1.6 var(--lesson-font-body, system-ui, sans-serif);
+}
+
+/* At 200% text zoom the classic host's three auto-sized session columns can
+   exceed a phone. Reflow the actual controls into rows without shrinking text. */
+@media (max-width: 480px) {
+  .lesson-shell2:has(.runtime-shell[data-lesson-presentation='modern-text-v1']) .lesson-shell2__session-bar {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .lesson-shell2:has(.runtime-shell[data-lesson-presentation='modern-text-v1']) .lesson-shell2__session-bar > div:first-child {
+    grid-column: 1;
+    grid-row: 1;
+    min-inline-size: 0;
+  }
+  .lesson-shell2:has(.runtime-shell[data-lesson-presentation='modern-text-v1']) .lesson-shell2__session-page {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: start;
+    max-inline-size: 100%;
+    overflow-wrap: anywhere;
+  }
+  .lesson-shell2:has(.runtime-shell[data-lesson-presentation='modern-text-v1']) .lesson-shell2__session-bar progress {
+    grid-row: 3;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+  .lesson-shell2:has(.runtime-shell[data-lesson-presentation='modern-text-v1']) .lesson-shell2__narration-slot {
+    grid-row: 4;
+  }
+  .lesson-shell2:has(.runtime-shell[data-lesson-presentation='modern-text-v1']) .lesson-shell2__language {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+/* Size native-host control columns in rem so enlarged labels get another row. */
+.lesson-shell2:has(.runtime-shell[data-lesson-presentation='modern-text-v1']) .lesson-shell2__modern-toolbar {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 8rem), 1fr));
+}
+.lesson-shell2:has(.runtime-shell[data-lesson-presentation='modern-text-v1']) .lesson-shell2__learning-actions {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+}
+.lesson-shell2:has(.runtime-shell[data-lesson-presentation='modern-text-v1'])
+  :is(.lesson-shell2__modern-toolbar, .lesson-shell2__learning-actions)
+  :is(button, a, label) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* A retained paused narration session needs a readable Stop action and pause
+   description. The compact icon treatment remains for the other states. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has(.runtime-shell[data-lesson-presentation='modern-text-v1'])
+  .lesson-shell2__modern-toolbar:has(> .lesson-shell2__narration[data-narration-status='paused']) {
+  flex-wrap: wrap;
+}
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has(.runtime-shell[data-lesson-presentation='modern-text-v1'])
+  .lesson-shell2__modern-toolbar > .lesson-shell2__narration[data-narration-status='paused'] {
+  border-radius: .5rem;
+  flex: 0 1 auto;
+  font-size: 1rem;
+  grid-column: 1 / -1;
+  height: auto;
+  max-width: 100%;
+  min-height: 44px;
+  min-width: 44px;
+  padding: .5rem .75rem;
+  text-align: left;
+  width: auto;
+}
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has(.runtime-shell[data-lesson-presentation='modern-text-v1'])
+  .lesson-shell2__modern-toolbar > .lesson-shell2__narration[data-narration-status='paused']::before {
+  display: none;
+}
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has(.runtime-shell[data-lesson-presentation='modern-text-v1'])
+  .lesson-shell2__modern-toolbar > .lesson-shell2__narration[data-narration-status='paused'] > .lesson-shell2__narration-copy {
+  display: grid;
+  gap: .2rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has(.runtime-shell[data-lesson-presentation='modern-text-v1'])
+  .lesson-shell2__modern-toolbar > .lesson-shell2__narration[data-narration-status='paused'] .lesson-shell2__narration-action {
+  display: block;
+  font-size: 1.125rem;
+  line-height: 1.3;
+}
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has(.runtime-shell[data-lesson-presentation='modern-text-v1'])
+  .lesson-shell2__modern-toolbar > .lesson-shell2__narration[data-narration-status='paused'] .lesson-shell2__narration-hint {
+  display: block;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+/* Native focus scrolling must clear the measured fixed My Lesson header. */
+.lesson-shell2 .lesson-shell2__page-heading h1 {
+  scroll-margin-block-start: calc(var(--lesson-platform-header-offset, var(--lesson-platform-header-height, 128px)) + 16px);
+}
+
+/* Keep source-language disclosure readable in the compact modern host header. */
+.lesson-shell2[data-host-presentation='modern-wide'] .lesson-shell2__page-heading p.lesson-source-language-note {
+  position: static; clip: auto; clip-path: none; height: auto; width: auto;
+  max-width: 100%; white-space: normal; overflow-wrap: anywhere; overflow: visible;
+  font: 400 .875rem/1.5 var(--font-body, system-ui, sans-serif);
+  letter-spacing: normal; text-transform: none; margin: .25rem 0 0;
+  flex-basis: 100%; order: 2;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'] .lesson-shell2__page-heading > div:first-child:has(> .lesson-source-language-note) {
+  flex-wrap: wrap; max-width: 100%; row-gap: 0;
+}
+
+/* Only the ordinary IR001 host consolidates its two English-source notices. */
+.lesson-shell2 .lesson-shell2__page-heading .ir001-host-language-disclosure {
+  color: #34475e;
+  font: 400 1.125rem/1.5 var(--lesson-font-body);
+  margin-block: 0.5rem;
+  flex-basis: 100%;
+  order: 2;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}
+.lesson-shell2 .lesson-shell2__page-heading .ir001-host-language-disclosure > summary {
+  cursor: pointer;
+  font: inherit;
+  min-inline-size: 44px;
+  min-block-size: 44px;
+  padding-block: 0.25rem;
+}
+.lesson-shell2 .lesson-shell2__page-heading .ir001-host-language-disclosure > summary:focus-visible {
+  outline: 3px solid #14213d;
+  outline-offset: 3px;
+}
+
+.lesson-shell2[data-host-presentation='modern-wide'] .lesson-shell2__page-heading > div:first-child:has(> .ir001-host-language-disclosure) {
+  flex-wrap: wrap;
+  max-inline-size: 100%;
+  row-gap: 0;
+}
+/* Heading paragraphs are otherwise visually hidden at narrow breakpoints. */
+.lesson-shell2 .lesson-shell2__page-heading details.ir001-host-language-disclosure[lang='es'] > p {
+  position: static;
+  clip: auto;
+  clip-path: none;
+  block-size: auto;
+  inline-size: auto;
+  height: auto;
+  width: auto;
+  max-inline-size: 100%;
+  margin-block: 0.5rem;
+  font: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  overflow: visible;
+}
