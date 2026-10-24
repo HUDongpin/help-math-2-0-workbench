@@ -1,0 +1,1129 @@
+{
+  "schemaVersion": 1,
+  "calibrationId": "g678-alg-l12-p006-current-js-v2",
+  "scope": "private-engineering",
+  "sourceRoot": "/Volumes/WestWorld/HELP MATH Related Files/AWS Grade-Classified Courseware",
+  "deploymentScope": "local-only",
+  "supersedes": {
+    "calibrationId": "g678-alg-l12-p006-current-js-v1",
+    "freeze": {
+      "path": "catalog/product-bridge-calibrations/g678-alg-l12-p006-current-js-v1.json",
+      "bytes": 37932,
+      "sha256": "46847b41be87fc22e2f9b1bcf566252180fc2b04a73ca94bd11978e9e42dd0c7"
+    },
+    "fragment": {
+      "path": "catalog/product-bridge-calibrations/g678-alg-l12-p006-current-js-v1.fragment.json",
+      "bytes": 1267,
+      "sha256": "aa11119dd474a310ceeec314592a2fe69cb0e48fb7c4a4a3e3ed7532da4d44d3"
+    }
+  },
+  "preparationState": {
+    "status": "admission-reviewed",
+    "typographyImplementation": "source-bound-implemented",
+    "activationPermitted": true,
+    "requiredBindingPath": "catalog/typography-v1/g678-page-bindings/shared-alg001-l12-p006.json",
+    "requiredCheckPath": "catalog/typography-v1/g678-checks/shared-alg001-l12-p006.json",
+    "requiredDevelopmentCheck": "npm run check:typography --workspace @helpmath/demos",
+    "technicalEvidencePolicy": "Unchanged source/native runtime and controller proof plus explicitly reviewed host-disclosure, proxy-resolver and retained-v1-producer successors are verified before freeze. Current v2 admission wiring is frozen separately. The explicit admission candidate collects new browser evidence; formal host admission requires a new technical receipt, refreshed pair and full current implementation closure.",
+    "postRegistrationTypographyCheckRequired": true,
+    "finalizationOrder": "freeze -> registry -> generated dispatch -> explicit admission candidate browser -> new technical receipt -> typography refresh -> strict formal host and development-check postflight",
+    "reason": "Bounded Current-JS technical admission only. Source-native teaching text is implemented; independent acceptance gates remain pending."
+  },
+  "nativeTypography": {
+    "runtime": {
+      "path": "migrations/shared-alg001-l12-p006/typography-v1/canvas-renderer.js",
+      "bytes": 11529506,
+      "sha256": "5b4b15ea0d75f77025ddbadacbc679e3355f9bf87aeedae2531ec87763e8714e"
+    },
+    "runtimeMetadata": {
+      "path": "migrations/shared-alg001-l12-p006/typography-v1/runtime-meta.json",
+      "bytes": 250,
+      "sha256": "6cd0c416e768a650b50d787d2642be43b4324b8bd96eca4e3baf0d90f2c8aee4"
+    },
+    "exactSuppressionManifest": {
+      "path": "migrations/shared-alg001-l12-p006/typography-v1/adapter-manifest.json",
+      "bytes": 7813,
+      "sha256": "e34958a5c64a5e81ba8504bdc4847d5a7c76981b4fd895c10d4217dd56c9c8cd"
+    },
+    "sourceDisposition": {
+      "path": "migrations/shared-alg001-l12-p006/evidence/TYPOGRAPHY_SOURCE_2026-09-27.md",
+      "bytes": 28931,
+      "sha256": "2a2485b939b4c2fcf853afca4143c611bc30624471ab268111e0fd34387dd89b"
+    },
+    "sourceCatalogContentSha256": "ade09b22c6df92ebbef45c15154abe20e60ffff2f8328dd9e1b877b734611996",
+    "languagePolicy": {
+      "en": "source",
+      "es": "source-fallback"
+    },
+    "criticalFiles": [
+      {
+        "path": "apps/web/app/[locale]/layout.tsx",
+        "bytes": 2926,
+        "sha256": "1f74e3c6478fba95eaef92c9b4c2a460458afa6be956689f5cdfa0e53b8c5095"
+      },
+      {
+        "path": "apps/web/app/lesson-fonts.css",
+        "bytes": 952,
+        "sha256": "03dd49cce36180d3ab64ab14bbb3e45442234856c456998c00a642763d8fd538"
+      },
+      {
+        "path": "apps/web/app/lesson-typography-host.css",
+        "bytes": 3431,
+        "sha256": "f7d7164239fbbbc61c265d198a76138a32b0e5eebadf8b32e58751da3537ede8"
+      },
+      {
+        "path": "apps/web/app/lesson-typography.css",
+        "bytes": 5752,
+        "sha256": "8062a331a72437d8d204a716173ef92b37cc9a05f3e2b5574560dc5110a1bd64"
+      },
+      {
+        "path": "apps/web/components/animation-runtime.tsx",
+        "bytes": 57458,
+        "sha256": "c21101c76c36cc8d062f832b2392491434c8e5c1ca0dc77edd24e233e0b74829"
+      },
+      {
+        "path": "apps/web/lib/g678-lesson-typography-presentation.ts",
+        "bytes": 1635,
+        "sha256": "2fb9de912c82967337f9e88d848fe45745ac5d6b89287f07c73163ae96c3ec8a"
+      },
+      {
+        "path": "apps/web/lib/lesson-typography-policy.ts",
+        "bytes": 1313,
+        "sha256": "6503d9c0aac0542801ba6454fd332a4735881a5cda7d0d4a2df1f506f4984301"
+      },
+      {
+        "path": "apps/web/public/fonts/lesson-v1/fredoka-OFL.txt",
+        "bytes": 4388,
+        "sha256": "5c9e7eee5c6b25f4b05b8d53b2e470ea4962f9ced742d044a98f7d95d1375bab"
+      },
+      {
+        "path": "apps/web/public/fonts/lesson-v1/fredoka-variable.ttf",
+        "bytes": 159184,
+        "sha256": "2ba02e68b152868aef9ba28e24b3648c7d457fe6f25c761f2c2c53fb61a73fc8"
+      },
+      {
+        "path": "apps/web/public/fonts/lesson-v1/nunito-sans-variable.ttf",
+        "bytes": 571240,
+        "sha256": "f934d7142fb4784bf828da485b7dcbd90c0c80d514e9d49a5da0ed3a1ae2491d"
+      },
+      {
+        "path": "apps/web/public/fonts/lesson-v1/nunitosans-OFL.txt",
+        "bytes": 4393,
+        "sha256": "efbb0c9e864cef973982d9a17567e6be5c3d1759695574586f3f18c7ecca064b"
+      },
+      {
+        "path": "catalog/typography-v1/fonts.json",
+        "bytes": 1829,
+        "sha256": "1cd7ad71bb21b9002b365323fe4f03c2e785b0637741f8965d199cf466f14fa5"
+      },
+      {
+        "path": "docs/LESSON_TYPOGRAPHY_DEVELOPMENT.md",
+        "bytes": 17773,
+        "sha256": "086ac047c61b569822e4e7bd8988457a4fd0c74baf87156463a4a39b06b97bf1"
+      },
+      {
+        "path": "migrations/shared-alg001-l12-p006/evidence/TYPOGRAPHY_SOURCE_2026-09-27.md",
+        "bytes": 28931,
+        "sha256": "2a2485b939b4c2fcf853afca4143c611bc30624471ab268111e0fd34387dd89b"
+      },
+      {
+        "path": "migrations/shared-alg001-l12-p006/typography-v1/adapter-manifest.json",
+        "bytes": 7813,
+        "sha256": "e34958a5c64a5e81ba8504bdc4847d5a7c76981b4fd895c10d4217dd56c9c8cd"
+      },
+      {
+        "path": "migrations/shared-alg001-l12-p006/typography-v1/canvas-renderer.js",
+        "bytes": 11529506,
+        "sha256": "5b4b15ea0d75f77025ddbadacbc679e3355f9bf87aeedae2531ec87763e8714e"
+      },
+      {
+        "path": "migrations/shared-alg001-l12-p006/typography-v1/runtime-meta.json",
+        "bytes": 250,
+        "sha256": "6cd0c416e768a650b50d787d2642be43b4324b8bd96eca4e3baf0d90f2c8aee4"
+      },
+      {
+        "path": "packages/demos/package.json",
+        "bytes": 1746,
+        "sha256": "584a636a515b5ca90530d667fe1c59a7e3c5e43946dc1337410a41f2134c9e65"
+      },
+      {
+        "path": "packages/demos/src/alg-l12-p006-typography-asset.ts",
+        "bytes": 2688,
+        "sha256": "1ce1743613ab93021bb978ca6142581c4457905899ea83cbeec284e623039f49"
+      },
+      {
+        "path": "packages/demos/src/alg-l12-p006-typography-renderer.tsx",
+        "bytes": 5240,
+        "sha256": "0598eb8597beeb811d448fb8dab1b16177da9dc9f9a0b272369b9a83cca9bf19"
+      },
+      {
+        "path": "packages/demos/src/alg-l12-p006-typography.css",
+        "bytes": 1187,
+        "sha256": "c50501f4dc5a0908827efdce28a8d2316c6537aadfcc022a3ce044351b983fbf"
+      },
+      {
+        "path": "packages/demos/src/alg-l12-p006-typography.ts",
+        "bytes": 4610,
+        "sha256": "32268f7794cc2425a6289202411fc720f2b9cdd7f33418ee2c844d75fc00e1b4"
+      },
+      {
+        "path": "packages/demos/src/contract.ts",
+        "bytes": 17646,
+        "sha256": "56e5fc3c1dbde872646ebbc519f8c7d8a9d6dd0d55e37e1c44f4ad1a47798180"
+      },
+      {
+        "path": "packages/demos/src/lesson-canvas-plane.tsx",
+        "bytes": 9584,
+        "sha256": "5c99bad8143f3f8502dc632dc404b081e638ebdc50375dd62ade2b3d7178b903"
+      },
+      {
+        "path": "packages/demos/src/lesson-canvas-resolution.ts",
+        "bytes": 7154,
+        "sha256": "d5901fb121136b52f34fa5af8c999087207df41de6ba741f2899624f1bbdda78"
+      },
+      {
+        "path": "packages/demos/src/lesson-text-contract.ts",
+        "bytes": 6749,
+        "sha256": "e796b04501425b29200d6bf527aae71deac86769894e2f642efa1e36502a56d9"
+      },
+      {
+        "path": "packages/demos/src/lesson-text-presentation.tsx",
+        "bytes": 10213,
+        "sha256": "892bf80f52f964612b7139a5b78334600ba1f9e77c376cb2e9ef938b8916048f"
+      },
+      {
+        "path": "packages/demos/src/lesson-text-snapshot.ts",
+        "bytes": 5999,
+        "sha256": "0fcb076645392914fc2ad3df9f2062037c8ed5d31730903342ecd5e98bd2e95f"
+      },
+      {
+        "path": "packages/demos/src/lesson-text.ts",
+        "bytes": 513,
+        "sha256": "f856988b0d5ae8b980ab8a56b824ef50426ee8bb6d729446d0024278d74c66e6"
+      },
+      {
+        "path": "packages/demos/src/modules/shared-alg001-l12-p006.tsx",
+        "bytes": 1203,
+        "sha256": "78a4bf7c9c34cb86c644568f17a621c9bee0c4fe75825f2fdf563f2d6d72d19d"
+      },
+      {
+        "path": "packages/demos/src/use-lesson-canvas-resolution.ts",
+        "bytes": 3383,
+        "sha256": "98324a52de61f1469c16bed71a1df38d2ef44af84cd959141e2b9e9e7a67963f"
+      },
+      {
+        "path": "scripts/build-g678-alg-l12-p006-typography.mjs",
+        "bytes": 18730,
+        "sha256": "82c5eb5535098fccd58b232c568aefc751d1c6a311362b5b741e58a73c859dd5"
+      },
+      {
+        "path": "scripts/build-lesson-canvas-resolution-adapter-v1.mjs",
+        "bytes": 13157,
+        "sha256": "dcd6ed9fb2ab159461af7e0b129412d3992b56daf8dd87c3ed6ef75be0f2b251"
+      },
+      {
+        "path": "scripts/build-lesson-text-canvas-adapter-v1.mjs",
+        "bytes": 24525,
+        "sha256": "36d247a0998afbad5c2c39c519e9220eab0291f9aec137f9a433007ebbf60690"
+      },
+      {
+        "path": "scripts/build-lesson-text-source-catalog-v1.mjs",
+        "bytes": 9365,
+        "sha256": "b62681621beed053ba886219e3e26a969c28d17e37eda1764e59c720124cb2b4"
+      },
+      {
+        "path": "scripts/check-g678-lesson-typography-v1.mjs",
+        "bytes": 9774,
+        "sha256": "4810a44f3d40b36c92abf813c82f837e84b53f56ecdf47e3c96b97fb5ed59256"
+      },
+      {
+        "path": "scripts/lib/lesson-text-canvas-runtime-v1.mjs",
+        "bytes": 8297,
+        "sha256": "0829b7c5a17e8c659f6f6ab8b541ba269bff466827b8f67de542b3d74c6da3cc"
+      },
+      {
+        "path": "scripts/lib/swf-text-source-catalog.mjs",
+        "bytes": 22928,
+        "sha256": "5a65075738bcdd62a9fb79cca0aaf7fe7ab59857bd3852fdf5063d6c1fe8a3dc"
+      }
+    ]
+  },
+  "predecessor": {
+    "calibrationId": "g678-alg-l12-p003-current-js-v1",
+    "freezeManifestSha256": "13d8872bcbfbcf98fe7a23e5cf38782321c39f6ecd6a412827d28f87bc76fff5",
+    "registeredAnimationCount": 19
+  },
+  "selectedPages": [
+    {
+      "animationId": "shared-alg001-l12-p006",
+      "placementId": "shared-alg001-l12-p006",
+      "assetId": "swf-933f1f6db59435e882c1bf6e9392259fc1d28c0974a0a4c6cebc9bcc7a5d46b6",
+      "stableLessonKey": "shared-alg001-l12",
+      "sourceSha256": "933f1f6db59435e882c1bf6e9392259fc1d28c0974a0a4c6cebc9bcc7a5d46b6",
+      "moduleCode": "ALG001",
+      "lessonNumber": 12,
+      "globalPageOrdinal": 6,
+      "sectionCode": "RW",
+      "sectionPageOrdinal": 5,
+      "complexityLane": "behavior-heavy",
+      "implementationLane": "compiler-assisted-hybrid",
+      "laneReason": "Source-locked composed Canvas with native source-bound title/question, exact instance suppression, maintained glossary hit/lifecycle and continuous-stream-v2 audio. Optional SA is an explicit separate host operation; original-runtime and listening acceptance remain pending.",
+      "runtime": {
+        "stage": {
+          "width": 800,
+          "height": 600
+        },
+        "rootFrameCount": 10,
+        "rootBeginFrame": 6,
+        "frameDomain": "sprite-53",
+        "frameCount": 342,
+        "livePlaybackEndFrame": 342,
+        "language": "fixed-en",
+        "scenario": "source-static-frame",
+        "seed": "0",
+        "audioPlaybackEnabled": true,
+        "canvasRenderer": {
+          "path": "work/g678-shared-page-factory/g678-alg-l12-p006-current-js-v2/members/shared-alg001-l12-p006/canvas-renderer.js",
+          "bytes": 11507597,
+          "sha256": "b2fd1788ce5bab5efab167bf303608da66621ead66f6d276979fb09558b39ddc",
+          "url": "/flash-assets/g678-local/shared-alg001-l12-p006/canvas-renderer.js"
+        }
+      },
+      "runtimeEvidenceBoundary": {
+        "runtimeKind": "source-static-current-js-candidate",
+        "actionScriptExecution": "not-executed",
+        "naturalTraceValidation": "not-established",
+        "audioAcceptance": "not-established",
+        "replaySemantics": "renderer-restart-only-source-behavior-not-established",
+        "productVisualBehaviorComposite": "not-established"
+      }
+    }
+  ],
+  "glossaryHostBoundary": {
+    "sourceButtonCount": 4,
+    "existingLessonEntryIds": [
+      "coordinate",
+      "graph",
+      "equation"
+    ],
+    "supplementalEntryIds": [
+      "inequality"
+    ],
+    "pageClosePolicy": "stay-paused; original-host-parity-pending",
+    "allSourceButtonsMappedToEntries": true,
+    "originalHostLookupVerified": false
+  },
+  "source": {
+    "path": "G6-G8-shared/ALG001/L12/RW/L12RW06.swf",
+    "bytes": 708053,
+    "sha256": "933f1f6db59435e882c1bf6e9392259fc1d28c0974a0a4c6cebc9bcc7a5d46b6"
+  },
+  "sourceXml": {
+    "path": "G6-G8-shared/ALG001/L12/index.xml",
+    "bytes": 11927,
+    "sha256": "0755afb5645d3179fb1105641b0d1f1b06d8c803c02484bfbdc703ba5bb6f325"
+  },
+  "sourceCatalog": {
+    "path": "catalog/g678-shared-catalog.v1.json",
+    "bytes": 12534064,
+    "sha256": "a1692c2a86c6771dcb104f59195b5bfdd2b5281cceff0aaeb63a3aabcf4a5657"
+  },
+  "sourceAudit": {
+    "path": "migrations/shared-alg001-l12-p006/MIGRATION_BRIEF.md",
+    "bytes": 7175,
+    "sha256": "1cc5a81f5f93609a03b96f21076b6fb5a792f135e84b3a04054e17895e909217"
+  },
+  "candidateManifest": {
+    "path": "migrations/shared-alg001-l12-p006/candidate-v2/mask-manifest.json",
+    "bytes": 1442,
+    "sha256": "156be6c831a71a02ab4f808f9b6965fa3d5d7bdb31045210e29394a1e461170c"
+  },
+  "sourceGlossary": {
+    "path": "migrations/shared-alg001-l12-p006/audit/glossary-disposition-v1.json",
+    "bytes": 26891,
+    "sha256": "7c0dcbfa455ad06a1a72c4d9550d6aabd4131c4c3e498ecad50193f1d5395bab"
+  },
+  "glossaryCatalog": {
+    "path": "catalog/g678-vb02-l1-family-audit-v1.json",
+    "bytes": 230498,
+    "sha256": "e5ff597b123c3097f2784d497b5f9ba1be0a750ffbd36b36e8038ea6bcd36763"
+  },
+  "hostAdapter": {
+    "path": "apps/web/components/g678-alg-l12-p006-host-lesson.tsx",
+    "bytes": 21457,
+    "sha256": "f29fbccee91ad080d659bb1bb22654ba64430f696a8bbecfb9a016cd6f21989f"
+  },
+  "embeddedAudio": {
+    "sourceMp3": {
+      "path": "migrations/shared-alg001-l12-p006/audio-source-v1/sprite-53-source-stream.mp3",
+      "bytes": 140920,
+      "sha256": "801d34dc684341a2644a7fcc3373bea98cbc14bdf91f4364db0e37c30e7c1803"
+    },
+    "receipt": {
+      "path": "migrations/shared-alg001-l12-p006/audio-source-v1/stream-source-receipt.json",
+      "bytes": 142839,
+      "sha256": "c3f1c26102fb9b7e0cb41a60a0de764b8cc68da559a7d20be7ccb42f557f4f78"
+    },
+    "scheduleVersion": "continuous-stream-v2",
+    "sourceSha256": "801d34dc684341a2644a7fcc3373bea98cbc14bdf91f4364db0e37c30e7c1803",
+    "sourceSampleRange": [
+      1673,
+      624384
+    ],
+    "timelineStartSample": 3675,
+    "timelineEndSample": 626386,
+    "visualTerminalSample": 626587.5
+  },
+  "optionalSpanishAudio": {
+    "source": {
+      "path": "G6-G8-shared/ALG001/L12/SA/L12RW06.mp3",
+      "bytes": 214704,
+      "sha256": "86fdbdeb0fec8cd6b9682d75ec436e4db370d56ba23e48efc47cf00c374c64bf"
+    },
+    "intendedRole": "explicit-spanish-audio-control",
+    "spokenLanguageVerified": false,
+    "automaticLocalePlayback": false,
+    "pauseRestartPolicy": "restart-at-zero",
+    "returnPolicy": "retained-main-frame; nonterminal-only"
+  },
+  "entry": {
+    "key": "shared-alg001-l12-p006",
+    "module": "./modules/shared-alg001-l12-p006",
+    "maturity": "private-current-js",
+    "complexityLane": "behavior-heavy",
+    "artifacts": {
+      "module": {
+        "path": "packages/demos/src/modules/shared-alg001-l12-p006.tsx",
+        "bytes": 1203,
+        "sha256": "78a4bf7c9c34cb86c644568f17a621c9bee0c4fe75825f2fdf563f2d6d72d19d"
+      },
+      "timeline": {
+        "path": "packages/demos/src/timelines/shared-alg001-l12-p006.ts",
+        "bytes": 1837,
+        "sha256": "0cee797f6402966cdaf20ec0fb3b5d5ac5dd4fb915c480869fdf5264dd95970f"
+      },
+      "runtime": {
+        "path": "work/g678-shared-page-factory/g678-alg-l12-p006-current-js-v2/members/shared-alg001-l12-p006/canvas-renderer.js",
+        "bytes": 11507597,
+        "sha256": "b2fd1788ce5bab5efab167bf303608da66621ead66f6d276979fb09558b39ddc"
+      }
+    }
+  },
+  "integrity": {
+    "scope": "critical-page-and-shared-renderer-playback-dependencies",
+    "completeTransitiveClosure": false,
+    "excludedMutableOutputs": [
+      "packages/demos/private-current-js-registry.json",
+      "packages/demos/src/registry.generated.ts",
+      "packages/demos/src/registry.local-only.generated.ts",
+      "packages/demos/src/registry.local-only.metadata.generated.ts",
+      "catalog/typography-v1/g678-page-bindings/shared-alg001-l12-p006.json",
+      "catalog/typography-v1/g678-checks/shared-alg001-l12-p006.json"
+    ],
+    "files": [
+      {
+        "path": "apps/web/app/[locale]/layout.tsx",
+        "bytes": 2926,
+        "sha256": "1f74e3c6478fba95eaef92c9b4c2a460458afa6be956689f5cdfa0e53b8c5095"
+      },
+      {
+        "path": "apps/web/app/[locale]/migration-status/g678-calibration/[placementId]/page.tsx",
+        "bytes": 1767,
+        "sha256": "242a1976c25e8ef638bda7a8a5e35819606a5f0b5bc08b9a976d6b223b62da30"
+      },
+      {
+        "path": "apps/web/app/[locale]/migration-status/g678-calibration/shared-alg001-l12-p006-admission/page.tsx",
+        "bytes": 2362,
+        "sha256": "0eda61cf4b80a48627185457e59d50ea6efe4704552c8962c133494df8df27ea"
+      },
+      {
+        "path": "apps/web/app/[locale]/migration-status/g678-calibration/shared-alg001-l12-p006/page.tsx",
+        "bytes": 2699,
+        "sha256": "ec6a3eaf3739a07d2aee702aa7da0bb3a5f6753cee503fe96127e5c1b0361610"
+      },
+      {
+        "path": "apps/web/app/[locale]/migration-status/g678-calibration/shared-alg001-l12-p006/probe.module.css",
+        "bytes": 769,
+        "sha256": "b8f7fa904ffacf396f8533f9c79aaacb5cda908a491c19a0a60a26da1732f789"
+      },
+      {
+        "path": "apps/web/app/[locale]/migration-status/g678-calibration/shared-alg001-l12-p007/page.tsx",
+        "bytes": 2040,
+        "sha256": "75b2d4a9b686794d2adc3dfed74d14beccb3e34b88ed39f7f84ecfe8910ca080"
+      },
+      {
+        "path": "apps/web/app/flash-assets/g678-local/shared-alg001-l12-p006/canvas-renderer.js/route.ts",
+        "bytes": 1461,
+        "sha256": "f755d1df06f63889d43d56d64ba4830dbb200526287a463db290e08783619bfa"
+      },
+      {
+        "path": "apps/web/app/flash-assets/g678-local/shared-alg001-l12-p006/source-audio/route.ts",
+        "bytes": 2790,
+        "sha256": "a267374378dad46b6175ff8714b80f7ee26acf93b8cfe3bb8723ce92a4b5086b"
+      },
+      {
+        "path": "apps/web/app/flash-assets/g678-local/shared-alg001-l12-p006/spanish-audio/route.ts",
+        "bytes": 2655,
+        "sha256": "56ef44975bfa905e0050747009cf8736ce13ef4aef643b7b035b1ab56a502d18"
+      },
+      {
+        "path": "apps/web/app/flash-assets/g678-local/shared-alg001-l12-p006/typography-renderer.js/route.ts",
+        "bytes": 1442,
+        "sha256": "ae3bed61217c56ee4ef304ad10098934756d372387c1eab65e368840cc2797dd"
+      },
+      {
+        "path": "apps/web/app/lesson-fonts.css",
+        "bytes": 952,
+        "sha256": "03dd49cce36180d3ab64ab14bbb3e45442234856c456998c00a642763d8fd538"
+      },
+      {
+        "path": "apps/web/app/lesson-typography-host.css",
+        "bytes": 3431,
+        "sha256": "f7d7164239fbbbc61c265d198a76138a32b0e5eebadf8b32e58751da3537ede8"
+      },
+      {
+        "path": "apps/web/app/lesson-typography.css",
+        "bytes": 5752,
+        "sha256": "8062a331a72437d8d204a716173ef92b37cc9a05f3e2b5574560dc5110a1bd64"
+      },
+      {
+        "path": "apps/web/components/animation-runtime.tsx",
+        "bytes": 57458,
+        "sha256": "c21101c76c36cc8d062f832b2392491434c8e5c1ca0dc77edd24e233e0b74829"
+      },
+      {
+        "path": "apps/web/components/descriptor-driven-whole-lesson-player.tsx",
+        "bytes": 52078,
+        "sha256": "494cadc14b5b42dbde7e61733a8245dc05209b69d0a47db6dcec568a4eec4f78"
+      },
+      {
+        "path": "apps/web/components/g678-alg-l12-p006-host-lesson.tsx",
+        "bytes": 21457,
+        "sha256": "f29fbccee91ad080d659bb1bb22654ba64430f696a8bbecfb9a016cd6f21989f"
+      },
+      {
+        "path": "apps/web/components/g678-multi-page-lesson-player-v5.generated.tsx",
+        "bytes": 53986,
+        "sha256": "8667bc039fed49a01ab949768a32648070fd58ba2ad664133aeb4a73862c0525"
+      },
+      {
+        "path": "apps/web/components/private-audio-glossary-portal.tsx",
+        "bytes": 490,
+        "sha256": "83e57cd4fbca1332deafefd87b41600f49ba9dee0b78ce2e418060be881def85"
+      },
+      {
+        "path": "apps/web/lib/descriptor-driven-glossary-pause.ts",
+        "bytes": 1876,
+        "sha256": "d97ad79c6e98d3ce960bd51d2103ee76761e363ca328295723d21dd7f9836aa4"
+      },
+      {
+        "path": "apps/web/lib/g678-alg-l12-p006-admission-access.ts",
+        "bytes": 789,
+        "sha256": "99780050d6811c45519b9890eba03e6558a51bb3b05907f3d3c01cabbf5f0675"
+      },
+      {
+        "path": "apps/web/lib/g678-alg-l12-p006-audio.server.ts",
+        "bytes": 2541,
+        "sha256": "b0f80ee64afafabd9e37f2ca2a91d47faa08dca44508607523da2a67c6292674"
+      },
+      {
+        "path": "apps/web/lib/g678-alg-l12-p006-current-js.server.ts",
+        "bytes": 41459,
+        "sha256": "424b1b702729c0d571a98d5562ed02bdfe8800f1ea7f5895ebaeb4dfacff4724"
+      },
+      {
+        "path": "apps/web/lib/g678-alg-l12-p006-spanish-audio.server.ts",
+        "bytes": 2127,
+        "sha256": "ea168b050f8ef5cd0fe41d2631c20065f65f7d9d41c71764dec9238e78885f80"
+      },
+      {
+        "path": "apps/web/lib/g678-alg-l12-p006-typography.server.ts",
+        "bytes": 1482,
+        "sha256": "cb21634958165118c10e8a297ea950bf0a262226c891640f2789f6bc1e628d9f"
+      },
+      {
+        "path": "apps/web/lib/g678-alg-l12-p006.server.ts",
+        "bytes": 2138,
+        "sha256": "f93abc58884a3186f8bc1b246bf0fdd97e0887edfb48368ce1d22f6405bc0127"
+      },
+      {
+        "path": "apps/web/lib/g678-current-js-extensions.server.ts",
+        "bytes": 4593,
+        "sha256": "d402c3172914600d0ce1453ce4691e6149658587e45ffa4619cc4082009231f6"
+      },
+      {
+        "path": "apps/web/lib/g678-lesson-typography-presentation.ts",
+        "bytes": 1635,
+        "sha256": "2fb9de912c82967337f9e88d848fe45745ac5d6b89287f07c73163ae96c3ec8a"
+      },
+      {
+        "path": "apps/web/lib/g678-p047-proxy-host-successor.server.ts",
+        "bytes": 12113,
+        "sha256": "26c7eeb9e0f95c4e193dbd1974da678ce51969d47658dc427d06cdab6a5ee954"
+      },
+      {
+        "path": "apps/web/lib/g678-preview-entry-v1.ts",
+        "bytes": 571,
+        "sha256": "95a6a67cc685cfb8c140b46f1d8ff16897c46d52e2d4a0fd71eaf7c35309d0b5"
+      },
+      {
+        "path": "apps/web/lib/g678-preview-policy.ts",
+        "bytes": 4140,
+        "sha256": "1165d689a83ddb4e06dee768abe02a31211d8ab69954a26acf00714562300cc8"
+      },
+      {
+        "path": "apps/web/lib/g678-private-glossary-pause-v1.ts",
+        "bytes": 1237,
+        "sha256": "3697c41c2f48d657d15657db6671a8c5d25a57c779989194d6d8434facebc11d"
+      },
+      {
+        "path": "apps/web/lib/g678-private-playback-decision-v1.ts",
+        "bytes": 322,
+        "sha256": "1fb8d8daef7bb0ef53ef60b4899c6cea920ba608ef0cec80b7c4d16610f389a0"
+      },
+      {
+        "path": "apps/web/lib/g678-private-runtime-adapters-v1.ts",
+        "bytes": 743,
+        "sha256": "10d8cd1dac993688f789603bf3b34782971474836fbc136d5e16581cbe15a100"
+      },
+      {
+        "path": "apps/web/lib/lesson-runtime-adapter.ts",
+        "bytes": 759,
+        "sha256": "19447d12fb0e1deea862b1e27217d4c476a358f89175544de081f5bd10731239"
+      },
+      {
+        "path": "apps/web/lib/lesson-typography-policy.ts",
+        "bytes": 1313,
+        "sha256": "6503d9c0aac0542801ba6454fd332a4735881a5cda7d0d4a2df1f506f4984301"
+      },
+      {
+        "path": "apps/web/lib/load-animation-module.client.ts",
+        "bytes": 776,
+        "sha256": "b82bd86aab89e1d0be656db1d4888824ba42ba289e4382d3e78183f7c60d729d"
+      },
+      {
+        "path": "apps/web/lib/whole-lesson-player-descriptor.ts",
+        "bytes": 27784,
+        "sha256": "1b8349b3284e7e509b147a04223703c8589d92ece7978389e17ef159be3492dd"
+      },
+      {
+        "path": "apps/web/lib/whole-lesson-session.ts",
+        "bytes": 11148,
+        "sha256": "9917ae854eea957eb13eaabe36991cfa0fbd8e970d169382e7eedcadbaec14b6"
+      },
+      {
+        "path": "apps/web/package.json",
+        "bytes": 4318,
+        "sha256": "16c646d1c45ba28d52065217a08f60076a099ae047405390ae3638848bfe7463"
+      },
+      {
+        "path": "apps/web/proxy.ts",
+        "bytes": 14057,
+        "sha256": "74f44ae3b2d7298ff3201709f12dd64a4eacb2352abb6e7a7b241f750b62dbd2"
+      },
+      {
+        "path": "apps/web/public/fonts/lesson-v1/fredoka-OFL.txt",
+        "bytes": 4388,
+        "sha256": "5c9e7eee5c6b25f4b05b8d53b2e470ea4962f9ced742d044a98f7d95d1375bab"
+      },
+      {
+        "path": "apps/web/public/fonts/lesson-v1/fredoka-variable.ttf",
+        "bytes": 159184,
+        "sha256": "2ba02e68b152868aef9ba28e24b3648c7d457fe6f25c761f2c2c53fb61a73fc8"
+      },
+      {
+        "path": "apps/web/public/fonts/lesson-v1/nunito-sans-variable.ttf",
+        "bytes": 571240,
+        "sha256": "f934d7142fb4784bf828da485b7dcbd90c0c80d514e9d49a5da0ed3a1ae2491d"
+      },
+      {
+        "path": "apps/web/public/fonts/lesson-v1/nunitosans-OFL.txt",
+        "bytes": 4393,
+        "sha256": "efbb0c9e864cef973982d9a17567e6be5c3d1759695574586f3f18c7ecca064b"
+      },
+      {
+        "path": "apps/web/tests/g678-alg-l12-p006-current-js.server-test.ts",
+        "bytes": 25879,
+        "sha256": "1b2f46a21d2b99baf90a4779f129d143e1772811e20df419d6445f065d19efb3"
+      },
+      {
+        "path": "apps/web/tsconfig.json",
+        "bytes": 3202,
+        "sha256": "738d6e2ec305b75ab64d144ab333a0539ca026a30e575ccbd0185365f041cf50"
+      },
+      {
+        "path": "catalog/g678-admission-v1/shared-alg001-l12-p006-proxy-successor-v2.json",
+        "bytes": 195030,
+        "sha256": "982c6e7a36ef1cc560b9daf936d0e5add607a6dfa3223253091d3d3dd7592284"
+      },
+      {
+        "path": "catalog/g678-shared-catalog.v1.json",
+        "bytes": 12534064,
+        "sha256": "a1692c2a86c6771dcb104f59195b5bfdd2b5281cceff0aaeb63a3aabcf4a5657"
+      },
+      {
+        "path": "catalog/g678-vb02-l1-family-audit-v1.json",
+        "bytes": 230498,
+        "sha256": "e5ff597b123c3097f2784d497b5f9ba1be0a750ffbd36b36e8038ea6bcd36763"
+      },
+      {
+        "path": "catalog/product-bridge-calibrations/g678-alg-l12-p003-current-js-v1.json",
+        "bytes": 5521,
+        "sha256": "13d8872bcbfbcf98fe7a23e5cf38782321c39f6ecd6a412827d28f87bc76fff5"
+      },
+      {
+        "path": "catalog/product-bridge-calibrations/g678-alg-l12-p006-admission-proxy-composed-successor-v1.json",
+        "bytes": 1689,
+        "sha256": "f36ac4388a07988457a6d96326e9cda35b41bf541c81c1c3be8595ab1c0f95da"
+      },
+      {
+        "path": "catalog/product-bridge-calibrations/g678-alg-l12-p006-current-js-v2.json",
+        "bytes": 39396,
+        "sha256": "cee20258a4af1811c3142359a35fdc76d202537da088d9c15c3556547f6a3b33"
+      },
+      {
+        "path": "catalog/typography-v1/fonts.json",
+        "bytes": 1829,
+        "sha256": "1cd7ad71bb21b9002b365323fe4f03c2e785b0637741f8965d199cf466f14fa5"
+      },
+      {
+        "path": "catalog/typography-v1/g678-integration.json",
+        "bytes": 157712,
+        "sha256": "6b860e475e10873e707d7fbe8814fe85b152c33b4d90a16535ceccfccd83b9d9"
+      },
+      {
+        "path": "docs/LESSON_TYPOGRAPHY_DEVELOPMENT.md",
+        "bytes": 17773,
+        "sha256": "086ac047c61b569822e4e7bd8988457a4fd0c74baf87156463a4a39b06b97bf1"
+      },
+      {
+        "path": "migrations/shared-alg001-l12-p006/audio-source-v1/sprite-53-source-stream.mp3",
+        "bytes": 140920,
+        "sha256": "801d34dc684341a2644a7fcc3373bea98cbc14bdf91f4364db0e37c30e7c1803"
+      },
+      {
+        "path": "migrations/shared-alg001-l12-p006/audio-source-v1/stream-source-receipt.json",
+        "bytes": 142839,
+        "sha256": "c3f1c26102fb9b7e0cb41a60a0de764b8cc68da559a7d20be7ccb42f557f4f78"
+      },
+      {
+        "path": "migrations/shared-alg001-l12-p006/audit/glossary-disposition-v1.json",
+        "bytes": 26891,
+        "sha256": "7c0dcbfa455ad06a1a72c4d9550d6aabd4131c4c3e498ecad50193f1d5395bab"
+      },
+      {
+        "path": "migrations/shared-alg001-l12-p006/candidate-v2/canvas-renderer.js",
+        "bytes": 11507597,
+        "sha256": "b2fd1788ce5bab5efab167bf303608da66621ead66f6d276979fb09558b39ddc"
+      },
+      {
+        "path": "migrations/shared-alg001-l12-p006/candidate-v2/mask-manifest.json",
+        "bytes": 1442,
+        "sha256": "156be6c831a71a02ab4f808f9b6965fa3d5d7bdb31045210e29394a1e461170c"
+      },
+      {
+        "path": "migrations/shared-alg001-l12-p006/evidence/AUDIO_CONTINUOUS_CORRECTION_2026-09-27.md",
+        "bytes": 6732,
+        "sha256": "782cda2f40239e392903d4ac9a2ad1aa8ad9c79af979d49abe45f0b6092ad8b1"
+      },
+      {
+        "path": "migrations/shared-alg001-l12-p006/evidence/SA_HOST_DISPOSITION_2026-09-27.md",
+        "bytes": 14326,
+        "sha256": "80c5b89c21716234a6baee90245f721e8d90fb0ecd19cadb74d00895e6939e7f"
+      },
+      {
+        "path": "migrations/shared-alg001-l12-p006/evidence/TYPOGRAPHY_SOURCE_2026-09-27.md",
+        "bytes": 28931,
+        "sha256": "2a2485b939b4c2fcf853afca4143c611bc30624471ab268111e0fd34387dd89b"
+      },
+      {
+        "path": "migrations/shared-alg001-l12-p006/MIGRATION_BRIEF.md",
+        "bytes": 7175,
+        "sha256": "1cc5a81f5f93609a03b96f21076b6fb5a792f135e84b3a04054e17895e909217"
+      },
+      {
+        "path": "migrations/shared-alg001-l12-p006/typography-v1/adapter-manifest.json",
+        "bytes": 7813,
+        "sha256": "e34958a5c64a5e81ba8504bdc4847d5a7c76981b4fd895c10d4217dd56c9c8cd"
+      },
+      {
+        "path": "migrations/shared-alg001-l12-p006/typography-v1/canvas-renderer.js",
+        "bytes": 11529506,
+        "sha256": "5b4b15ea0d75f77025ddbadacbc679e3355f9bf87aeedae2531ec87763e8714e"
+      },
+      {
+        "path": "migrations/shared-alg001-l12-p006/typography-v1/runtime-meta.json",
+        "bytes": 250,
+        "sha256": "6cd0c416e768a650b50d787d2642be43b4324b8bd96eca4e3baf0d90f2c8aee4"
+      },
+      {
+        "path": "output/g678-course-playback-20261023-close-gaps/retained24-successor-v3/producer.mjs",
+        "bytes": 22241,
+        "sha256": "b452daac3c105e4367ae5ca339b5642627cc23bf7d0592d9c66ee2230132f725"
+      },
+      {
+        "path": "output/g678-course-playback-20261023-close-gaps/retained24-successor-v3/reviewed-transitions.json",
+        "bytes": 61986,
+        "sha256": "cd0f256f9deb2102d45a9830e1bee58ebd1c3bf05ab85748f8b3f4764a146ed2"
+      },
+      {
+        "path": "output/g678-course-playback-20261023-close-gaps/retained24/CHANGE-APPLICABILITY.v2.json",
+        "bytes": 30975,
+        "sha256": "920b14c6ade95954bbe3a14ff16b9a52b93761c3015c490f1647c3662136cbda"
+      },
+      {
+        "path": "output/g678-course-playback-20261023-close-gaps/retained24/current-helper-validation.json",
+        "bytes": 6622,
+        "sha256": "e530857e9f12c39d051976b6de78c45e4b34f7b45a03317b8f71784bd1ad00f2"
+      },
+      {
+        "path": "output/g678-course-playback-20261023-close-gaps/retained24/existing-contract-tests.exit.txt",
+        "bytes": 2,
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+      },
+      {
+        "path": "output/g678-course-playback-20261023-close-gaps/retained24/existing-contract-tests.tap",
+        "bytes": 3659,
+        "sha256": "bb2c731b845cebafc6646456a9da893a0b705aafb100e785c1aa302defe0de91"
+      },
+      {
+        "path": "output/g678-course-playback-20261023-close-gaps/retained24/preimages/apps/web/lib/g678-alg-l12-p006.server.ts",
+        "bytes": 1925,
+        "sha256": "9f03a4bdb5fb131dacbf161a575436944d8ea0c6e6e13b1841eb61e3e5aa8038"
+      },
+      {
+        "path": "package-lock.json",
+        "bytes": 330256,
+        "sha256": "7d82ce396c8813b7b45f3e991007283ef7b71ed453a54551a558936742ac196d"
+      },
+      {
+        "path": "package.json",
+        "bytes": 85841,
+        "sha256": "0e5fdc3aa2bbe7ee73be5302e127997b0c842299b9d301027d4439d7e7cce432"
+      },
+      {
+        "path": "packages/demos/package.json",
+        "bytes": 1746,
+        "sha256": "584a636a515b5ca90530d667fe1c59a7e3c5e43946dc1337410a41f2134c9e65"
+      },
+      {
+        "path": "packages/demos/src/alg-l12-p006-audio-decode.ts",
+        "bytes": 1222,
+        "sha256": "39d4058774b7c436b3855e6e2dbbfe22e2c095a5373a59b589ff8873b2f8ca02"
+      },
+      {
+        "path": "packages/demos/src/alg-l12-p006-audio-schedule.ts",
+        "bytes": 2642,
+        "sha256": "2ac06a5fde0873b2b4e3e22eab65457f5bdb0bf26f9defafb3aa8f2710596add"
+      },
+      {
+        "path": "packages/demos/src/alg-l12-p006-audio-transport.ts",
+        "bytes": 5832,
+        "sha256": "692be07b5b98cb0bcc72c8f4371b040e616da0300002e5aa6e720042cc76d88a"
+      },
+      {
+        "path": "packages/demos/src/alg-l12-p006-glossary-hit.ts",
+        "bytes": 1098,
+        "sha256": "41664b84f91df5123b9aaee41ed121aadf35d6b04b342f9ac86c49fc0eb360b2"
+      },
+      {
+        "path": "packages/demos/src/alg-l12-p006-glossary-state.ts",
+        "bytes": 3830,
+        "sha256": "5600d84f86d5566f2aa8865bd2a297e7ea2ee356159b429c3e7c1bfe4f144058"
+      },
+      {
+        "path": "packages/demos/src/alg-l12-p006-host-policy.ts",
+        "bytes": 677,
+        "sha256": "f7048222c849e623c67d54a991bf0f81dc3348f504d27a87573e5a9123990331"
+      },
+      {
+        "path": "packages/demos/src/alg-l12-p006-spanish-audio.ts",
+        "bytes": 7711,
+        "sha256": "07f28e9ee9746c53d350960d7207a12fc3de028376e6aba2e2cec73409750b0e"
+      },
+      {
+        "path": "packages/demos/src/alg-l12-p006-typography-asset.ts",
+        "bytes": 2688,
+        "sha256": "1ce1743613ab93021bb978ca6142581c4457905899ea83cbeec284e623039f49"
+      },
+      {
+        "path": "packages/demos/src/alg-l12-p006-typography-renderer.tsx",
+        "bytes": 5240,
+        "sha256": "0598eb8597beeb811d448fb8dab1b16177da9dc9f9a0b272369b9a83cca9bf19"
+      },
+      {
+        "path": "packages/demos/src/alg-l12-p006-typography.css",
+        "bytes": 1187,
+        "sha256": "c50501f4dc5a0908827efdce28a8d2316c6537aadfcc022a3ce044351b983fbf"
+      },
+      {
+        "path": "packages/demos/src/alg-l12-p006-typography.ts",
+        "bytes": 4610,
+        "sha256": "32268f7794cc2425a6289202411fc720f2b9cdd7f33418ee2c844d75fc00e1b4"
+      },
+      {
+        "path": "packages/demos/src/alg-l12-p006-visual-clock.ts",
+        "bytes": 1072,
+        "sha256": "48092e0ae55bbaced01049558c7c1e0d6e68ba0fbd9181481d040aa8a95ae70d"
+      },
+      {
+        "path": "packages/demos/src/contract.ts",
+        "bytes": 17646,
+        "sha256": "56e5fc3c1dbde872646ebbc519f8c7d8a9d6dd0d55e37e1c44f4ad1a47798180"
+      },
+      {
+        "path": "packages/demos/src/g4-l3-main-timeline-audio.generated.ts",
+        "bytes": 33223,
+        "sha256": "11be1bad01221721fec0342e6eae9d552b2c50ca62daeb466533ac0f7701f461"
+      },
+      {
+        "path": "packages/demos/src/g5-l4-audio.generated.ts",
+        "bytes": 100821,
+        "sha256": "3005a0cf25ddbfca942f84c64fee6566fae191d3f7588608fd53a9b9c822ce36"
+      },
+      {
+        "path": "packages/demos/src/generated/alg-l12-p006-hit-spec.ts",
+        "bytes": 12885,
+        "sha256": "526c36067ef5bd04b663eece8ce535ce95d5257f69f76ba8e06ea50b2fef32e2"
+      },
+      {
+        "path": "packages/demos/src/lesson-canvas-plane.tsx",
+        "bytes": 9584,
+        "sha256": "5c99bad8143f3f8502dc632dc404b081e638ebdc50375dd62ade2b3d7178b903"
+      },
+      {
+        "path": "packages/demos/src/lesson-canvas-resolution.ts",
+        "bytes": 7154,
+        "sha256": "d5901fb121136b52f34fa5af8c999087207df41de6ba741f2899624f1bbdda78"
+      },
+      {
+        "path": "packages/demos/src/lesson-host-contract.ts",
+        "bytes": 17528,
+        "sha256": "183fc9ec36c99797147ba1fb8a5132cde60254b40279ca5fc76302806098200b"
+      },
+      {
+        "path": "packages/demos/src/lesson-text-contract.ts",
+        "bytes": 6749,
+        "sha256": "e796b04501425b29200d6bf527aae71deac86769894e2f642efa1e36502a56d9"
+      },
+      {
+        "path": "packages/demos/src/lesson-text-presentation.tsx",
+        "bytes": 10213,
+        "sha256": "892bf80f52f964612b7139a5b78334600ba1f9e77c376cb2e9ef938b8916048f"
+      },
+      {
+        "path": "packages/demos/src/lesson-text-snapshot.ts",
+        "bytes": 5999,
+        "sha256": "0fcb076645392914fc2ad3df9f2062037c8ed5d31730903342ecd5e98bd2e95f"
+      },
+      {
+        "path": "packages/demos/src/lesson-text.ts",
+        "bytes": 513,
+        "sha256": "f856988b0d5ae8b980ab8a56b824ef50426ee8bb6d729446d0024278d74c66e6"
+      },
+      {
+        "path": "packages/demos/src/modules/shared-alg001-l12-p006.tsx",
+        "bytes": 1203,
+        "sha256": "78a4bf7c9c34cb86c644568f17a621c9bee0c4fe75825f2fdf563f2d6d72d19d"
+      },
+      {
+        "path": "packages/demos/src/runtime.ts",
+        "bytes": 19347,
+        "sha256": "a2eb449b23af715abaf6dbd2297513c9b3895cfdb376bbf1865a7a8f51ccc103"
+      },
+      {
+        "path": "packages/demos/src/source-static-canvas-candidate.tsx",
+        "bytes": 56583,
+        "sha256": "68e4ba0254de7c48dc048146b32c3beb15f287efa9dbd59c23b698720cd5eb72"
+      },
+      {
+        "path": "packages/demos/src/timelines/shared-alg001-l12-p006.ts",
+        "bytes": 1837,
+        "sha256": "0cee797f6402966cdaf20ec0fb3b5d5ac5dd4fb915c480869fdf5264dd95970f"
+      },
+      {
+        "path": "packages/demos/src/use-lesson-canvas-resolution.ts",
+        "bytes": 3383,
+        "sha256": "98324a52de61f1469c16bed71a1df38d2ef44af84cd959141e2b9e9e7a67963f"
+      },
+      {
+        "path": "packages/demos/tsconfig.json",
+        "bytes": 424,
+        "sha256": "79fe5766da2f291c53e360bf1f6261332ce4f964a8697fabe14586faf30e1ad6"
+      },
+      {
+        "path": "scripts/build-g678-alg-l12-p006-typography.mjs",
+        "bytes": 18730,
+        "sha256": "82c5eb5535098fccd58b232c568aefc751d1c6a311362b5b741e58a73c859dd5"
+      },
+      {
+        "path": "scripts/build-g678-alg-l12-p006-typography.test.mjs",
+        "bytes": 16701,
+        "sha256": "32c88f98ae076a26a1019120ef249970eab389ff8bbe8ae473ba60fb743d8b85"
+      },
+      {
+        "path": "scripts/build-g678-multi-page-lesson-player-v5.mjs",
+        "bytes": 3544,
+        "sha256": "c0d631ad876bfc78e384a6fcdf484523d63154556eb32d60e07a844e5fe910d1"
+      },
+      {
+        "path": "scripts/build-lesson-canvas-resolution-adapter-v1.mjs",
+        "bytes": 13157,
+        "sha256": "dcd6ed9fb2ab159461af7e0b129412d3992b56daf8dd87c3ed6ef75be0f2b251"
+      },
+      {
+        "path": "scripts/build-lesson-text-canvas-adapter-v1.mjs",
+        "bytes": 24525,
+        "sha256": "36d247a0998afbad5c2c39c519e9220eab0291f9aec137f9a433007ebbf60690"
+      },
+      {
+        "path": "scripts/build-lesson-text-source-catalog-v1.mjs",
+        "bytes": 9365,
+        "sha256": "b62681621beed053ba886219e3e26a969c28d17e37eda1764e59c720124cb2b4"
+      },
+      {
+        "path": "scripts/check-g678-lesson-typography-v1.mjs",
+        "bytes": 9774,
+        "sha256": "4810a44f3d40b36c92abf813c82f837e84b53f56ecdf47e3c96b97fb5ed59256"
+      },
+      {
+        "path": "scripts/lib/lesson-text-canvas-runtime-v1.mjs",
+        "bytes": 8297,
+        "sha256": "0829b7c5a17e8c659f6f6ab8b541ba269bff466827b8f67de542b3d74c6da3cc"
+      },
+      {
+        "path": "scripts/lib/swf-text-source-catalog.mjs",
+        "bytes": 22928,
+        "sha256": "5a65075738bcdd62a9fb79cca0aaf7fe7ab59857bd3852fdf5063d6c1fe8a3dc"
+      },
+      {
+        "path": "scripts/prepare-g678-alg-l12-p006-current-js-v2.mjs",
+        "bytes": 45133,
+        "sha256": "fad6b39721ffc71f860872d1478fe84ecd0d828ca63a29d13cced4063a557aad"
+      },
+      {
+        "path": "scripts/prepare-g678-alg-l12-p006-current-js-v2.test.mjs",
+        "bytes": 22559,
+        "sha256": "f459ee48aaf85b5cec7c713f8d03c26176b8ba4b9c5ca4ad24734262c3a72ea0"
+      },
+      {
+        "path": "scripts/prepare-g678-alg-l12-p006-typography-binding.mts",
+        "bytes": 54990,
+        "sha256": "9ff1f33ab543fc7aa656de43584d6d8011a32f9469c8d2bbe1c0e3acc24f1fed"
+      },
+      {
+        "path": "scripts/prepare-g678-alg-l12-p006-typography-binding.test.mts",
+        "bytes": 13954,
+        "sha256": "46d3e45ec33d1aacb49588987544e10d4d836cd82ebab0c229703ad63810041f"
+      }
+    ]
+  },
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "behaviorAccepted": false,
+    "fidelityAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "releaseEligible": false,
+    "released": false,
+    "published": false
+  },
+  "productCalibrationPassed": false,
+  "scaleOutAuthorized": false,
+  "browserEvidence": {
+    "status": "historical-not-renewed-for-current-inputs",
+    "predecessorFreeze": {
+      "path": "catalog/product-bridge-calibrations/g678-alg-l12-p006-current-js-v2.json",
+      "bytes": 39396,
+      "sha256": "cee20258a4af1811c3142359a35fdc76d202537da088d9c15c3556547f6a3b33"
+    }
+  },
+  "currentInputSuccessor": {
+    "kind": "g678-retained-proof-current-input-successor-v1",
+    "animationId": "shared-alg001-l12-p006",
+    "predecessorProof": {
+      "path": "catalog/g678-admission-v1/shared-alg001-l12-p006-proxy-successor-v2.json",
+      "bytes": 195030,
+      "sha256": "982c6e7a36ef1cc560b9daf936d0e5add607a6dfa3223253091d3d3dd7592284"
+    },
+    "predecessorFreeze": {
+      "path": "catalog/product-bridge-calibrations/g678-alg-l12-p006-current-js-v2.json",
+      "bytes": 39396,
+      "sha256": "cee20258a4af1811c3142359a35fdc76d202537da088d9c15c3556547f6a3b33"
+    },
+    "review": {
+      "path": "output/g678-course-playback-20261023-close-gaps/retained24-successor-v3/reviewed-transitions.json",
+      "bytes": 61986,
+      "sha256": "cd0f256f9deb2102d45a9830e1bee58ebd1c3bf05ab85748f8b3f4764a146ed2"
+    },
+    "producer": {
+      "path": "output/g678-course-playback-20261023-close-gaps/retained24-successor-v3/producer.mjs",
+      "bytes": 22241,
+      "sha256": "b452daac3c105e4367ae5ca339b5642627cc23bf7d0592d9c66ee2230132f725"
+    },
+    "semanticHostTransition": null,
+    "transitions": [
+      {
+        "original": {
+          "path": "apps/web/lib/g678-alg-l12-p006.server.ts",
+          "bytes": 1925,
+          "sha256": "9f03a4bdb5fb131dacbf161a575436944d8ea0c6e6e13b1841eb61e3e5aa8038"
+        },
+        "current": {
+          "path": "apps/web/lib/g678-alg-l12-p006.server.ts",
+          "bytes": 2138,
+          "sha256": "f93abc58884a3186f8bc1b246bf0fdd97e0887edfb48368ce1d22f6405bc0127"
+        },
+        "snapshot": {
+          "path": "output/g678-course-playback-20261023-close-gaps/retained24/preimages/apps/web/lib/g678-alg-l12-p006.server.ts",
+          "bytes": 1925,
+          "sha256": "9f03a4bdb5fb131dacbf161a575436944d8ea0c6e6e13b1841eb61e3e5aa8038"
+        },
+        "historicalSourcePath": "/Volumes/WestWorld/HELP MATH 2.0-g678-implementation/apps/web/lib/g678-alg-l12-p006.server.ts",
+        "consumers": [
+          "shared-alg001-l08-p033",
+          "shared-alg001-l08-p034",
+          "shared-alg001-l08-p035",
+          "shared-alg001-l08-p036",
+          "shared-alg001-l08-p037",
+          "shared-alg001-l12-p006"
+        ],
+        "diff": "--- output/g678-course-playback-20261023-close-gaps/retained24/preimages/apps/web/lib/g678-alg-l12-p006.server.ts\t2026-10-23 19:01:00\n+++ apps/web/lib/g678-alg-l12-p006.server.ts\t2026-10-22 22:27:51\n@@ -1,3 +1,4 @@\n+import {resolveG678PhysicalPath} from '../../../lib/g678-life-root-binding-v1.mjs';\n import 'server-only';\n import {createHash} from 'node:crypto';\n import {lstatSync, readFileSync, realpathSync} from 'node:fs';\n@@ -25,11 +26,13 @@\n \n /** Local engineering bytes only. No registration, publication, or audio claim. */\n export function algL12P006Canvas() {\n+  const sourceRoot = process.env.HELP_MATH_G678_SOURCE_ROOT === SOURCE_ROOT\n+    ? SOURCE_ROOT : resolveG678PhysicalPath(SOURCE_ROOT);\n   if (process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV ||\n-      process.env.HELP_MATH_G678_SOURCE_ROOT !== SOURCE_ROOT ||\n-      realpathSync(SOURCE_ROOT) !== SOURCE_ROOT ||\n-      !lstatSync(SOURCE_ROOT).isDirectory()) throw Error('P006 local source required');\n-  readPinned(path.join(SOURCE_ROOT, 'G6-G8-shared/ALG001/L12/RW/L12RW06.swf'),\n+      process.env.HELP_MATH_G678_SOURCE_ROOT !== sourceRoot ||\n+      realpathSync(sourceRoot) !== sourceRoot ||\n+      !lstatSync(sourceRoot).isDirectory()) throw Error('P006 local source required');\n+  readPinned(path.join(sourceRoot, 'G6-G8-shared/ALG001/L12/RW/L12RW06.swf'),\n     708053, '933f1f6db59435e882c1bf6e9392259fc1d28c0974a0a4c6cebc9bcc7a5d46b6');\n   const bytes = readPinned(path.join(getWorkspaceRoot(),\n     'migrations/shared-alg001-l12-p006/candidate-v2/canvas-renderer.js'),\n"
+      }
+    ],
+    "productSourceEdited": false,
+    "ownArtifactsChanged": false,
+    "historicalBrowserEvidenceRenewed": false,
+    "registrationDelta": 0,
+    "changeApplicability": {
+      "path": "output/g678-course-playback-20261023-close-gaps/retained24/CHANGE-APPLICABILITY.v2.json",
+      "bytes": 30975,
+      "sha256": "920b14c6ade95954bbe3a14ff16b9a52b93761c3015c490f1647c3662136cbda"
+    },
+    "currentLifeHelperValidation": {
+      "path": "output/g678-course-playback-20261023-close-gaps/retained24/current-helper-validation.json",
+      "bytes": 6622,
+      "sha256": "e530857e9f12c39d051976b6de78c45e4b34f7b45a03317b8f71784bd1ad00f2"
+    },
+    "currentProductContractTests": {
+      "status": "failed-preserved-not-repaired",
+      "evidence": [
+        {
+          "path": "output/g678-course-playback-20261023-close-gaps/retained24/existing-contract-tests.tap",
+          "bytes": 3659,
+          "sha256": "bb2c731b845cebafc6646456a9da893a0b705aafb100e785c1aa302defe0de91"
+        },
+        {
+          "path": "output/g678-course-playback-20261023-close-gaps/retained24/existing-contract-tests.exit.txt",
+          "bytes": 2,
+          "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+        }
+      ],
+      "limitation": "Two existing ALG6 P001 contract cases and one P052 trace case failed. These current foreign dependency behaviors are retained; no old test/browser pass is renewed."
+    },
+    "claim": "Current byte/source binding only. Retained browser, build, human, Owner, fidelity, audio, strict and publication claims remain historical; this is not a new playback or acceptance pass."
+  }
+}

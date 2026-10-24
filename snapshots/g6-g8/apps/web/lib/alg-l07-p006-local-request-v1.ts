@@ -1,0 +1,11 @@
+import{isG678LocalPreviewRequestHeaders,isG678LocalPreviewRequestUrl,type G678PreviewEnvironment}from'./g678-preview-policy';
+import{P006_ASSET_ROOT,P006_LOCAL_ORIGIN,p006DocumentReferer,p006LocalDevelopment}from'./alg-l07-p006-preview-policy-v1';
+export const P006_STREAM_PIN=Object.freeze({sourceBytes:1219712,sourceSha256:'eca77ae751726a8b10efb9ef5a33359a810ae089d658346a3253a92ced424b2a'});
+export const P006_RESOURCE_PINS=Object.freeze({
+ 'source-stream':Object.freeze({originalPath:`${P006_ASSET_ROOT}/source-stream`,path:'migrations/shared-alg001-l07-p006/source-v1/source-stream-223.mp3',bytes:1219712,sha256:P006_STREAM_PIN.sourceSha256,contentType:'audio/mpeg',destination:'empty',mode:'cors'}),
+ 'canvas-renderer.js':Object.freeze({originalPath:`${P006_ASSET_ROOT}/canvas-renderer.js`,path:'migrations/shared-alg001-l07-p006/native-v1/canvas-renderer-v2.js',bytes:16721307,sha256:'bacd876b5cfb20fbe2bf5690df603c29b3e7b1bdd5c0d14ec8a2baf6c6bbbc25',contentType:'application/javascript',destination:'script',mode:'no-cors'}),
+});export type P006Resource=keyof typeof P006_RESOURCE_PINS;
+export function p006ResourceForRequest(request:{method:string;url:URL;headers:Pick<Headers,'get'>},mode:'candidate'|'registered',env:G678PreviewEnvironment=process.env):P006Resource|null{
+ const{method,url,headers}=request;if(!p006LocalDevelopment(env)||!isG678LocalPreviewRequestUrl(url,env)||!isG678LocalPreviewRequestHeaders(headers,env)||url.protocol!=='http:'||url.port!=='3331'||url.username||url.password||url.hash||headers.get('host')!=='127.0.0.1:3331'||![null,'127.0.0.1:3331'].includes(headers.get('x-forwarded-host'))||![null,'http'].includes(headers.get('x-forwarded-proto'))||headers.get('range')!==null||headers.get('sec-fetch-site')!=='same-origin'||![null,P006_LOCAL_ORIGIN].includes(headers.get('origin'))||!p006DocumentReferer(headers.get('referer'),mode)||!['GET','HEAD'].includes(method))return null;
+ for(const[token,row]of Object.entries(P006_RESOURCE_PINS))if([row.originalPath,`${P006_ASSET_ROOT}-${mode}/${token}`].includes(url.pathname)&&url.search===`?sha256=${row.sha256}`&&headers.get('sec-fetch-dest')===row.destination&&headers.get('sec-fetch-mode')===row.mode)return token as P006Resource;return null;
+}

@@ -1,0 +1,407 @@
+import {isP008ResourceRequest,P008_RESOURCE_PINS,type P008Resource} from './lib/alg-l06-p008-local-request-v1';
+import {isP008PredecessorRequest} from './lib/alg-l06-p008-predecessor-request-v1';
+import {isP003OptionalSpanishRequest,P003_OPTIONAL_SPANISH_PATH} from './lib/alg-l06-p003-optional-spanish-access-v1';
+import {isP004ResourceRequest,P004_RESOURCE_PINS,type P004Resource} from './lib/alg-l06-p004-local-request-v1';
+import {isP004PredecessorRequest} from './lib/alg-l06-p004-predecessor-request-v1';
+import {isP003ContinuousHostSearch} from './lib/alg-l06-p003-local-audio-request-v1';
+import {isP003ContinuousSourceRequest} from './lib/alg-l06-p003-continuous-source-access-v2';
+import {isP047AudioRequest,P047_AUDIO_PREFIX} from './lib/nms-l01-p047-audio-access';
+import {isAlgL12P006AdmissionPath,isAlgL12P006AdmissionRequest} from './lib/g678-alg-l12-p006-admission-access';
+import {isDatL05SourceAudioRequest,DAT_L05_SOURCE_AUDIO_ID} from './lib/dat-l05-source-audio-access';
+import {isDatL02P002SourceAudioRequest, DAT_L02_P002_AUDIO_PATH} from
+  './lib/dat-l02-p002-source-audio-access';
+import {isDatL02P002SymbolRequest, DAT_L02_P002_SYMBOL_PREFIX} from
+  './lib/dat-l02-p002-symbol-access';
+import {clerkMiddleware} from '@clerk/nextjs/server';
+import type {NextRequest} from 'next/server';
+import type {NextFetchEvent} from 'next/server';
+import {NextResponse} from 'next/server';
+
+import {routing} from './i18n/routing';
+import {isContinuousSourceAudioPath,isContinuousSourceAudioRequest} from './lib/continuous-source-audio-access';
+import {isNmsL11SourceAudioRequest,NMS_L11_SOURCE_AUDIO_ID} from './lib/nms-l11-source-audio-access';
+import {
+  isG4L3ShowcaseAssetAuthorized,
+  isG4L3ShowcaseAssetPath,
+} from './lib/g4-l3-showcase-asset-policy';
+import {
+  currentJsShowcasePublication,
+  G3_L2_SHOWCASE_RELEASE_ID,
+  G4_L5_PAGE_ONLY_RELEASE_ID,
+  G4_L10_PAGE_ONLY_RELEASE_ID,
+  G4_L11_PAGE_ONLY_RELEASE_ID,
+  G5_L3_SHOWCASE_RELEASE_ID,
+  G5_L4_SHOWCASE_RELEASE_ID,
+  G5_L5_SHOWCASE_RELEASE_ID,
+} from './lib/current-js-showcase-publication';
+import {
+  classifyG4L3HostCompositeAsset,
+  hasExactG4L3HostCompositeDigest,
+} from './lib/g4-l3-host-composite-asset-policy';
+import {
+  isLocalReferenceDiagnosticRequestAllowed,
+  LOCAL_REFERENCE_DIAGNOSTIC_CONTENT_SECURITY_POLICY,
+} from './lib/local-reference-diagnostic-access';
+import {
+  isMigrationStatusAvailable,
+  isMigrationStatusDesignerViewRequested,
+} from './lib/migration-status-access';
+import {
+  isLocalAuthEnabled,
+  isLocalAuthPath,
+  isLocalAuthSessionApiPath,
+} from './lib/local-auth-access';
+import {
+  isG678CalibrationAssetPath,
+  isG678CalibrationProductPath,
+  isG678LocalPreviewRequestUrl,
+  isG678SameOriginCanvasAssetRequest,
+  isG678ModuleCode,
+  isG678ModuleCoursePath,
+} from './lib/g678-preview-policy';
+import {
+  isPageOnlyCurrentJsShowcaseAssetAuthorized,
+  isPageOnlyCurrentJsShowcaseAssetSegments,
+} from './lib/page-only-current-js-showcase-asset-policy';
+import {
+  classifyG5L4PreviewAsset,
+  hasExactG5L4AudioDigest,
+  hasExactG5L4RuntimeDigest,
+  isG5L4ShowcaseAudioAuthorized,
+  isG5L4ShowcaseAssetAuthorized,
+  isG5L4ShowcaseAssetSegments,
+} from './lib/g5-l4-preview-asset-policy';
+
+const loopbackHosts = new Set(['127.0.0.1', 'localhost', '[::1]']);
+
+const publicPaths = new Set([
+  '/',
+  '/privacy',
+  '/terms',
+]);
+
+const showcaseReleaseIdByCoursePath = Object.freeze({
+  '/courses/3/2': G3_L2_SHOWCASE_RELEASE_ID,
+  '/courses/4/5': G4_L5_PAGE_ONLY_RELEASE_ID,
+  '/courses/4/10': G4_L10_PAGE_ONLY_RELEASE_ID,
+  '/courses/4/11': G4_L11_PAGE_ONLY_RELEASE_ID,
+  '/courses/5/3': G5_L3_SHOWCASE_RELEASE_ID,
+  '/courses/5/4': G5_L4_SHOWCASE_RELEASE_ID,
+  '/courses/5/5': G5_L5_SHOWCASE_RELEASE_ID,
+} as const);
+
+function notFoundResponse() {
+  return new NextResponse('Not Found', {
+    status: 404,
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'X-Robots-Tag': 'noindex, nofollow',
+    },
+  });
+}
+
+function isReferencePath(pathname: string) {
+  return /^\/reference\/[a-z0-9-]+$/u.test(pathname);
+}
+
+function isArchivePath(pathname: string, request: NextRequest) {
+  if ((pathname === '/migration-status/g678-calibration/shared-alg001-l06-p008/candidate-v1' || pathname === '/migration-status/g678-calibration/shared-alg001-l06-p004/candidate-v1' || pathname === '/migration-status/g678-calibration/shared-alg001-l06-p004/continuous-v1'))
+    return process.env.NODE_ENV === 'development' && !process.env.VERCEL && !process.env.VERCEL_ENV &&
+      ['GET','HEAD'].includes(request.method) && isG678LocalPreviewRequestUrl(request.nextUrl) &&
+      [...request.nextUrl.searchParams].every(([key,value])=>key==='_rsc'&&/^[A-Za-z0-9_-]{1,128}$/.test(value)) &&
+      request.nextUrl.searchParams.getAll('_rsc').length<=1;
+  if (pathname === '/migration-status/g678-calibration/shared-alg001-l06-p003/continuous-v2')
+    return ['GET', 'HEAD'].includes(request.method) && isP003ContinuousHostSearch(request.nextUrl.searchParams, true) && isG678LocalPreviewRequestUrl(request.nextUrl);
+  if (isAlgL12P006AdmissionPath(pathname)) {
+    return isAlgL12P006AdmissionRequest({pathname, method: request.method, url: request.nextUrl});
+  }
+  if (isG678CalibrationProductPath(pathname)) {
+    return isG678LocalPreviewRequestUrl(request.nextUrl);
+  }
+  if (
+    pathname === '/migration-status/g4-l5-product-bridge' ||
+    pathname === '/migration-status/g4-l10-product-bridge' ||
+    pathname === '/migration-status/g4-l11-migration-factory'
+  ) {
+    return process.env.NODE_ENV !== 'production';
+  }
+  if (pathname === '/migration-status') {
+    return isMigrationStatusAvailable()
+      && isMigrationStatusDesignerViewRequested(
+        request.nextUrl.searchParams.getAll('view'),
+      );
+  }
+  if (pathname === '/courses/4/3') return true;
+  const showcaseReleaseId = showcaseReleaseIdByCoursePath[pathname as
+    | '/courses/3/2'
+    | '/courses/4/5'
+    | '/courses/4/10'
+    | '/courses/4/11'
+    | '/courses/5/3'
+    | '/courses/5/4'
+    | '/courses/5/5'];
+  if (showcaseReleaseId) {
+    return process.env.NODE_ENV !== 'production' || currentJsShowcasePublication(
+      showcaseReleaseId,
+    ).enabled;
+  }
+  if (process.env.NODE_ENV === 'production') return false;
+  if (pathname === '/library') return true;
+  if (isG678ModuleCoursePath(pathname)) {
+    return isG678LocalPreviewRequestUrl(request.nextUrl);
+  }
+  if (/^\/courses\/[3-5]\/\d{1,2}$/u.test(pathname)) return true;
+  if (/^\/animations\/[a-z0-9-]+$/u.test(pathname)) return true;
+  return false;
+}
+
+function normalizePath(pathname: string) {
+  return pathname.length > 1 ? pathname.replace(/\/$/u, '') : pathname;
+}
+
+function localeFreePath(pathname: string) {
+  if (
+    pathname === '/en'
+    || pathname.startsWith('/en/')
+    || pathname === '/es'
+    || pathname.startsWith('/es/')
+  ) {
+    return pathname.slice(3) || '/';
+  }
+  return pathname;
+}
+
+function sharedCourseRouteParts(pathname: string) {
+  const match = pathname.match(
+    /^\/courses\/([6-8])\/([a-z]{3}\d{3})\/(\d{1,2})$/iu,
+  );
+  if (!match || !isG678ModuleCode(match[2]!)) return undefined;
+  return Object.freeze({
+    grade: match[1]!,
+    moduleCode: match[2]!.toUpperCase(),
+    lesson: match[3]!,
+  });
+}
+
+function isAllowed(pathname: string, request: NextRequest) {
+  if(isP008PredecessorRequest({method:request.method,url:request.nextUrl,headers:request.headers}))return true;
+  for (const resource of Object.keys(P008_RESOURCE_PINS) as P008Resource[])
+    if (pathname===P008_RESOURCE_PINS[resource].path) return isP008ResourceRequest({method:request.method,url:request.nextUrl,headers:request.headers},resource);
+  if(isP004PredecessorRequest({method:request.method,url:request.nextUrl,headers:request.headers}))return true;
+  for (const resource of Object.keys(P004_RESOURCE_PINS) as P004Resource[])
+    if (pathname===P004_RESOURCE_PINS[resource].path) return isP004ResourceRequest({method:request.method,url:request.nextUrl,headers:request.headers},resource);
+  if(pathname===P003_OPTIONAL_SPANISH_PATH)return isP003OptionalSpanishRequest({method:request.method,url:request.nextUrl,headers:request.headers});
+  if (pathname === '/flash-assets/g678-local/shared-alg001-l06-p003/continuous-source-v2')
+    return isP003ContinuousSourceRequest({method: request.method, url: request.nextUrl, headers: request.headers});
+  if (
+    isLocalAuthEnabled()
+    && (isLocalAuthPath(pathname) || isLocalAuthSessionApiPath(pathname))
+  ) return true;
+  if (isReferencePath(pathname)) {
+    return isLocalReferenceDiagnosticRequestAllowed({
+      headers: request.headers,
+      url: request.nextUrl,
+    });
+  }
+  if(pathname.startsWith(P047_AUDIO_PREFIX))return isP047AudioRequest({method:request.method,url:request.nextUrl,headers:request.headers});
+  if (pathname.startsWith(DAT_L02_P002_AUDIO_PATH)) {
+    return isDatL02P002SourceAudioRequest({
+      method: request.method, url: request.nextUrl, headers: request.headers,
+    });
+  }
+  if (pathname.startsWith(DAT_L02_P002_SYMBOL_PREFIX)) {
+    return isDatL02P002SymbolRequest({
+      method: request.method, url: request.nextUrl, headers: request.headers,
+    });
+  }
+  if(pathname.startsWith('/flash-assets/g678-local/'+DAT_L05_SOURCE_AUDIO_ID+'/interactive-audio/'))return isDatL05SourceAudioRequest({method:request.method,url:request.nextUrl,headers:request.headers});
+  if(pathname.startsWith('/flash-assets/g678-local/'+NMS_L11_SOURCE_AUDIO_ID+'/interactive-audio/'))return isNmsL11SourceAudioRequest({method:request.method,url:request.nextUrl,headers:request.headers});
+  if(isContinuousSourceAudioPath(pathname))return isContinuousSourceAudioRequest({url:request.nextUrl,headers:request.headers});
+  if (isG678CalibrationAssetPath(pathname)) {
+    return isG678LocalPreviewRequestUrl(request.nextUrl) &&
+      isG678SameOriginCanvasAssetRequest(request.headers, request.nextUrl);
+  }
+  const localAuditPath =
+    pathname.startsWith('/flash-assets/')
+    || pathname === '/demos/conversion-1-2'
+    || pathname === '/demos/conversion-1-4';
+  const assetSegments = pathname.startsWith('/flash-assets/')
+    ? pathname.slice('/flash-assets/'.length).split('/')
+    : [];
+  const g4HostCompositePolicy =
+    classifyG4L3HostCompositeAsset(assetSegments);
+  const g5L4ShowcasePolicy = classifyG5L4PreviewAsset(assetSegments);
+  // Generated audio is independently gated even in local development. This
+  // check must run before the local-audit fallback below, or a showcase-only
+  // deployment would advertise audio whose route is not publication-safe.
+  if (
+    g5L4ShowcasePolicy.kind === 'audio'
+    && !isG5L4ShowcaseAudioAuthorized()
+  ) {
+    return false;
+  }
+  if (
+    g4HostCompositePolicy.controlled
+    && !hasExactG4L3HostCompositeDigest(
+      request.nextUrl,
+      g4HostCompositePolicy.expectedSha256 as string,
+    )
+  ) {
+    return false;
+  }
+  if (
+    g5L4ShowcasePolicy.controlled
+    && (
+      (
+        g5L4ShowcasePolicy.kind === 'runtime'
+        && !hasExactG5L4RuntimeDigest(
+          request.nextUrl,
+          g5L4ShowcasePolicy.expectedSha256 as string,
+        )
+      )
+      || (
+        g5L4ShowcasePolicy.kind === 'audio'
+        && !hasExactG5L4AudioDigest(
+          request.nextUrl,
+          g5L4ShowcasePolicy.expectedSha256 as string,
+        )
+      )
+    )
+  ) {
+    return false;
+  }
+  const publicShowcaseAsset = isG4L3ShowcaseAssetPath(pathname)
+    && isG4L3ShowcaseAssetAuthorized();
+  const publicG5L4ShowcaseAsset = isG5L4ShowcaseAssetSegments(assetSegments)
+    && (
+      g5L4ShowcasePolicy.kind === 'audio'
+        ? isG5L4ShowcaseAudioAuthorized()
+        : isG5L4ShowcaseAssetAuthorized()
+    );
+  const publicPageOnlyCurrentJsShowcaseAsset =
+    isPageOnlyCurrentJsShowcaseAssetSegments(assetSegments)
+    && isPageOnlyCurrentJsShowcaseAssetAuthorized(assetSegments);
+  return publicPaths.has(pathname)
+    || isArchivePath(pathname, request)
+    || publicShowcaseAsset
+    || publicG5L4ShowcaseAsset
+    || publicPageOnlyCurrentJsShowcaseAsset
+    || (process.env.NODE_ENV !== 'production' && localAuditPath);
+}
+
+function protectLocalReferenceDiagnosticResponse(response: NextResponse) {
+  response.headers.set(
+    'Content-Security-Policy',
+    LOCAL_REFERENCE_DIAGNOSTIC_CONTENT_SECURITY_POLICY,
+  );
+  response.headers.set(
+    'X-Robots-Tag',
+    'noindex, nofollow, noarchive, noimageindex',
+  );
+  response.headers.set('Cache-Control', 'private, no-store, max-age=0');
+  response.headers.set('X-Helpmath-Local-Reference-Diagnostic', 'forensic-only');
+  return response;
+}
+
+export async function proxyForRequest(request: NextRequest) {
+  const originalPath = normalizePath(request.nextUrl.pathname);
+  const normalizedLocaleFree = normalizePath(localeFreePath(originalPath));
+  if (!isAllowed(normalizedLocaleFree, request)) return notFoundResponse();
+  // The flash-asset route is intentionally locale-free. Rewriting it through
+  // the default locale turns `/flash-assets/<x>` into `/en/flash-assets/<x>`,
+  // where no route exists, so source-bound images and Canvas runtimes fail as
+  // 404s before their own integrity policy can evaluate them.
+  const localeFreeAsset = originalPath.startsWith('/flash-assets/');
+  const localeFreeAuthApi = isLocalAuthSessionApiPath(originalPath);
+  const localePrefixed = originalPath === '/en'
+    || originalPath.startsWith('/en/')
+    || originalPath === '/es'
+    || originalPath.startsWith('/es/');
+  const sharedRoute = sharedCourseRouteParts(normalizedLocaleFree);
+  const g678CalibrationRoute = normalizedLocaleFree === '/migration-status/g678-calibration/shared-alg001-l06-p008/candidate-v1' || normalizedLocaleFree === '/migration-status/g678-calibration/shared-alg001-l06-p004/candidate-v1' || normalizedLocaleFree === '/migration-status/g678-calibration/shared-alg001-l06-p004/continuous-v1' || normalizedLocaleFree === '/migration-status/g678-calibration/shared-alg001-l06-p003/continuous-v2' || isAlgL12P006AdmissionPath(normalizedLocaleFree) || isG678CalibrationProductPath(
+    normalizedLocaleFree,
+  );
+  let response: NextResponse;
+  if (sharedRoute) {
+    // Next.js cannot register `[lesson]` and `[moduleCode]` as sibling dynamic
+    // segments.  Keep the stable legacy route as the implementation target,
+    // and carry the module identity through a server-only query parameter.
+    const rewritten = request.nextUrl.clone();
+    const localePrefix = originalPath === '/es' || originalPath.startsWith('/es/')
+      ? '/es'
+      : originalPath === '/en' || originalPath.startsWith('/en/')
+        ? '/en'
+        : `/${routing.defaultLocale}`;
+    rewritten.pathname = `${localePrefix}/courses/${sharedRoute.grade}/${sharedRoute.lesson}`;
+    rewritten.searchParams.set('moduleCode', sharedRoute.moduleCode);
+    response = NextResponse.rewrite(rewritten);
+  } else {
+    response = localePrefixed || localeFreeAsset || localeFreeAuthApi
+      ? NextResponse.next()
+      : (() => {
+          const rewritten = request.nextUrl.clone();
+          rewritten.pathname = `/${routing.defaultLocale}${originalPath === '/' ? '' : originalPath}`;
+          return NextResponse.rewrite(rewritten);
+        })();
+  }
+
+  if (sharedRoute || g678CalibrationRoute) {
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive');
+    response.headers.set('Cache-Control', 'private, no-store, max-age=0');
+  }
+
+  if (isReferencePath(normalizedLocaleFree)) {
+    return protectLocalReferenceDiagnosticResponse(response);
+  }
+  return response;
+}
+
+const clerkAwareProxy = clerkMiddleware(
+  (_auth, request) => proxyForRequest(request),
+);
+
+export function normalizeLocalClerkMiddlewareResponse(
+  response: Response,
+  requestUrl: URL,
+) {
+  const rewrite = response.headers.get('x-middleware-rewrite');
+  if (!rewrite) return response;
+  try {
+    const rewriteUrl = new URL(rewrite, requestUrl);
+    const sameLoopbackContinuation = requestUrl.protocol === 'http:'
+      && rewriteUrl.protocol === 'http:'
+      && loopbackHosts.has(requestUrl.hostname)
+      && loopbackHosts.has(rewriteUrl.hostname)
+      && requestUrl.port === rewriteUrl.port
+      && requestUrl.pathname === rewriteUrl.pathname
+      && requestUrl.search === rewriteUrl.search;
+    if (!sameLoopbackContinuation) return response;
+    response.headers.delete('x-middleware-rewrite');
+    response.headers.set('x-middleware-next', '1');
+  } catch {
+    return response;
+  }
+  return response;
+}
+
+export default async function proxy(
+  request: NextRequest,
+  event?: NextFetchEvent,
+): Promise<Response> {
+  if (isLocalAuthSessionApiPath(request.nextUrl.pathname)) {
+    if (!isLocalAuthEnabled() || !event) return NextResponse.next();
+    const response = await clerkAwareProxy(request, event) ?? NextResponse.next();
+    return normalizeLocalClerkMiddlewareResponse(response, request.nextUrl);
+  }
+  if (!isLocalAuthEnabled() || !event) return proxyForRequest(request);
+  const response = await clerkAwareProxy(request, event) ?? NextResponse.next();
+  return normalizeLocalClerkMiddlewareResponse(response, request.nextUrl);
+}
+
+export const config = {
+  matcher: [
+    '/((?!api|_next|_vercel|.*\\..*).*)',
+    '/flash-assets/:path*',
+    '/api/auth/session',
+  ],
+};

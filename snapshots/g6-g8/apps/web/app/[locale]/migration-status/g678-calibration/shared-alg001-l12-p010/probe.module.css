@@ -1,0 +1,21 @@
+/* Only the 320px-class local reviewer probe changes the shared host layout. */
+@media (max-width: 360px) {
+  .probe :global(.lesson-shell2[data-host-presentation='modern-wide']) {
+    /* The fixed header otherwise overlays the audit disclosure. */
+    padding-top: 0;
+  }
+
+  .probe :global(.lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__learning-nav[data-lesson-platform-header='true'][data-mode-switch-available='false']) {
+    position: static;
+  }
+
+  .probe :global(.lesson-shell2[data-host-presentation='modern-wide'][data-reviewer-mode='true']
+    .lesson-shell2__modern-toolbar > button:is(
+      [data-responsive-focus-key='rewind'],
+      [data-responsive-focus-key='forward']
+    )) {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}

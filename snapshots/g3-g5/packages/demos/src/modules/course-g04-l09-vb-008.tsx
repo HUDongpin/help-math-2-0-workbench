@@ -1,0 +1,20 @@
+"use client";
+import {G4_L9_SOLUTION_INVERSE_HOST_AUDIO} from "../modern-lessons/g4-l9-solution-inverse/host-audio.generated";
+
+import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
+import {COURSE_G04_L09_VB_008_CONFIG, COURSE_G04_L09_VB_008_SOURCE} from "../timelines/course-g04-l09-vb-008";
+
+const candidate = createSourceStaticCanvasCandidate(COURSE_G04_L09_VB_008_CONFIG);
+const hostAudio = G4_L9_SOLUTION_INVERSE_HOST_AUDIO["course-g04-l09-vb-008"];
+const module = Object.freeze({...candidate.module, audioCues: hostAudio.audioCues, audioTracks: hostAudio.audioTracks, maturity: "private-current-js" as const});
+
+export {COURSE_G04_L09_VB_008_SOURCE};
+export const COURSE_G04_L09_VB_008_MOVIE = candidate.movie;
+export const COURSE_G04_L09_VB_008_RUNTIME = candidate.runtime;
+export const COURSE_G04_L09_VB_008_SOURCE_CONTRACT = candidate.sourceContract;
+export const COURSE_G04_L09_VB_008_SCENARIOS = candidate.scenarios;
+export const normalizeCourseG04L09Vb008Frame = candidate.normalizeFrame;
+export const getCourseG04L09Vb008FrameState = candidate.getFrameState;
+export const buildCourseG04L09Vb008CaptureAttributes = candidate.buildCaptureAttributes;
+export const CourseG04L09Vb008Renderer = candidate.Renderer;
+export default module;

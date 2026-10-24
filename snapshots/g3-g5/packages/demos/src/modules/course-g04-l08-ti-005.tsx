@@ -1,0 +1,19 @@
+"use client";
+
+import {G4_L8_TI005_HOST_AUDIO} from "../modern-lessons/g4-l8-ti005/host-audio.generated";
+import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
+import {COURSE_G04_L08_TI_005_CONFIG, COURSE_G04_L08_TI_005_SOURCE} from "../timelines/course-g04-l08-ti-005";
+
+const candidate = createSourceStaticCanvasCandidate(COURSE_G04_L08_TI_005_CONFIG, G4_L8_TI005_HOST_AUDIO);
+const module = Object.freeze({...candidate.module, maturity: "private-current-js" as const});
+
+export {COURSE_G04_L08_TI_005_SOURCE};
+export const COURSE_G04_L08_TI_005_MOVIE = candidate.movie;
+export const COURSE_G04_L08_TI_005_RUNTIME = candidate.runtime;
+export const COURSE_G04_L08_TI_005_SOURCE_CONTRACT = candidate.sourceContract;
+export const COURSE_G04_L08_TI_005_SCENARIOS = candidate.scenarios;
+export const normalizeCourseG04L08Ti005Frame = candidate.normalizeFrame;
+export const getCourseG04L08Ti005FrameState = candidate.getFrameState;
+export const buildCourseG04L08Ti005CaptureAttributes = candidate.buildCaptureAttributes;
+export const CourseG04L08Ti005Renderer = candidate.Renderer;
+export default module;

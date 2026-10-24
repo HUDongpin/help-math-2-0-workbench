@@ -1,0 +1,23 @@
+'use client';import{useCallback,useEffect,useRef,useState}from'react';import type{LessonRuntimeAdapterProps}from'@/lib/lesson-runtime-adapter';import{loadBoundLessonAudio,useSourceLessonHostBridge}from'./source-lesson-host-bridge-v1';import{AlgL07P006Player,type AlgL07P006Controls}from'../../../packages/demos/src/alg-l07-p006-player-v1';import type{P006TermKey}from'../../../packages/demos/src/alg-l07-p006-session-v1';import type{P006CanvasAsset}from'../../../packages/demos/src/alg-l07-p006-presentation-v1';import{P006_RESOURCE_PINS,P006_STREAM_PIN}from'@/lib/alg-l07-p006-local-request-v1';
+const ID='shared-alg001-l07-p006',SWF='72c7f3e0d0fd0a5251214c3511262bf164d983837a5c52e9f1e56d4de96df155';
+const BINDING={frameCount:1845,frameDomain:'sprite-223',fps:12,companionIdSuffix:'-p006-source-readable',glossaryEntries:{'Linear function':'linear-function','Nonlinear function':'nonlinear-function'}}as const;
+interface Asset extends P006CanvasAsset{metadata:{animationId:string;sourceSwfSha256:string;deterministicContentTimeline:{timelineId:string;frameCount:number};stage:{width:number;height:number};fps:number};}
+let pending:Promise<Asset>|undefined;
+const current=()=>((globalThis as unknown as{HELP_MATH_CANVAS_ASSETS?:Record<string,Asset>}).HELP_MATH_CANVAS_ASSETS?.[ID]);
+function exact(){const a=current();if(a?.metadata.animationId!==ID||a.metadata.sourceSwfSha256!==SWF||a.metadata.deterministicContentTimeline.timelineId!=='sprite-223'||a.metadata.deterministicContentTimeline.frameCount!==1845||a.metadata.stage.width!==800||a.metadata.stage.height!==600||a.metadata.fps!==12||typeof a.renderNative!=='function')throw Error('p006-canvas-identity-mismatch');return a;}
+function load(){if(current()){try{return Promise.resolve(exact());}catch(e){return Promise.reject(e);}}if(!pending)pending=new Promise<Asset>((resolve,reject)=>{const script=document.createElement('script'),pin=P006_RESOURCE_PINS['canvas-renderer.js'];script.src=`${pin.originalPath}?sha256=${pin.sha256}`;script.async=true;script.onload=()=>{try{resolve(exact());}catch(e){script.remove();pending=undefined;reject(e);}};script.onerror=()=>{script.remove();pending=undefined;reject(Error('p006-canvas-request-failed'));};document.head.append(script);});return pending;}
+const readAudio=(signal:AbortSignal)=>loadBoundLessonAudio({animationId:ID,assetId:'source-stream',pin:P006_STREAM_PIN,origin:window.location.origin,signal,errorPrefix:'ALG_L07_P006_SOURCE_STREAM'});
+export function G678AlgL07P006RuntimeV1(props:LessonRuntimeAdapterProps){const bridge=useSourceLessonHostBridge(props,BINDING),[asset,setAsset]=useState<Asset|null>(null),[error,setError]=useState<string|null>(null);
+ const glossaryTrigger=useRef<HTMLButtonElement|null>(null);
+ // The host dialog owns dismissal; the page adapter owns its source trigger.
+ const connectControls=useCallback((controls:AlgL07P006Controls)=>bridge.connectControls({
+  ...controls,closeGlossary(){
+   controls.closeGlossary();
+   const target=glossaryTrigger.current;glossaryTrigger.current=null;
+   if(target?.isConnected)target.focus({preventScroll:true});
+  },
+ }),[bridge.connectControls]);
+ const openGlossary=useCallback((key:P006TermKey,trigger:HTMLButtonElement)=>{
+  glossaryTrigger.current=trigger;bridge.openGlossary(key,trigger);
+ },[bridge.openGlossary]);
+ const scoped=process.env.NODE_ENV!=='production'&&props.animationId===ID&&props.moduleKey===ID&&props.audioEnabled===true&&props.query.frameDomain==='sprite-223'&&props.query.scenario==='source-real-world'&&props.query.lang==='en'&&String(props.query.seed)==='0'&&props.query.capture!=='1'&&['en','es'].includes(props.uiLanguage??'');useEffect(()=>{if(!scoped)return;let active=true;void load().then(v=>{if(active)setAsset(v);},e=>{if(active)setError(String(e));});return()=>{active=false;};},[scoped]);return <div ref={bridge.source} className="runtime-shell" data-l07-p006-host-probe={ID} data-l07-p006-host-ready={Boolean(asset)&&scoped} data-l07-p006-host-error={!scoped?'scope':error??'none'} data-lesson-presentation="modern-text-v1">{!scoped||error?<p role="alert">{props.labels.unavailable}</p>:asset?<AlgL07P006Player seed={0} uiLanguage={props.uiLanguage==='es'?'es':'en'} asset={asset} paused={props.paused} volume={props.volume??1} reducedMotion={bridge.reducedMotion} readAudio={readAudio} connectControls={connectControls} onPaused={props.onRuntimePausedChange} onReplay={props.onReplay} onGlossary={openGlossary} onState={s=>bridge.onSnapshot({frame:s.frame,phase:s.phase==='loading'?'start-pending':s.phase,selectedAudio:'main',audio:{phase:s.audioPhase},spanish:{phase:'idle'}})}/>:<p role="status">{props.labels.loading}</p>}</div>;}

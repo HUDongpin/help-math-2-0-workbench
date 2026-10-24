@@ -1,0 +1,63 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import React from 'react';
+import {renderToStaticMarkup} from 'react-dom/server';
+import type {RuntimeContext} from '../contract';
+import {validateLessonTextActivities,validateLessonTextFrameControl} from '../lesson-text-frame-control';
+import {beginSourceClockActivities,beginSourceClockActivity,advanceSourceActivities,sourceActivitiesAtParentFrame,type SourceClockActivity} from '../lesson-source-clock';
+import {TI005_SOURCE as S,TI005_MODULE,TI005_ACTIVITIES as A,TI005_BINDING,createTi005Practice,synchronizeTi005,reduceTi005,ti005CurrentQuestion,ti005Controls,ti005Visual,ti005Intro,ti005Snapshot,type Ti005Practice} from './g3-l6-ti005-state';
+import {G3_L6_TI005_TEXT_PRESENTATION as CAP,G3L6Ti005ModernRenderer,Ti005AmountFields,Ti005MoneyTray} from './g3-l6-ti005';
+const ctx=(frame=255,seed=7,replay=0):RuntimeContext=>({frame,frameDomain:'sprite-120',rootFrame:6,scenario:'source-static-frame',lang:'en',seed,replay});
+const ready=(seed=7)=>synchronizeTi005(createTi005Practice(seed),ctx(255,seed));
+const edit=(s:Ti005Practice,values:readonly string[])=>values.reduce((s,text,i)=>reduceTi005(s,255,{type:'edit',index:i as 0|1|2,text}).state,s);
+const def=(id:string)=>A.find(a=>a.id===id)!;
+const done=(s:Ti005Practice,floor=9)=>reduceTi005(s,255,{type:'submit',revisionFloor:floor});
+const completed=(id='ti005-right-audio',revision=10)=>({id,sourceInstanceId:def(id).sourceInstanceId,frameDomain:def(id).frameDomain,frame:def(id).endFrame,revision,status:'completed' as const});
+const correct=(s:Ti005Practice)=>{s=edit(s,ti005CurrentQuestion(s)!.fields);const r=done(s);return reduceTi005(r.state,255,{type:'correct-complete',epoch:s.epoch,activity:completed()});};
+const wrong=(s:Ti005Practice)=>done(edit(s,['','','']));
+test('TI005 exact native money tokens reconcile all three source string answers and the bitmap78 teaching word',()=>{
+ assert.deepEqual(S.questions.map(q=>q.fields),[['1','2','7'],['3','5','8'],['11','9','0']]);
+ for(const g of S.moneyGroups){const cents=g.items.reduce((n,x)=>n+x.cents,0);assert.equal(cents,g.cents);if(g.fields)assert.equal(Number(g.fields[0])*100+Number(g.fields[1])*10+Number(g.fields[2]),cents);const html=renderToStaticMarkup(<Ti005MoneyTray group={g}/>);assert(!/<(?:img|canvas|image)\b/.test(html));assert.equal((html.match(/data-cents=/g)??[]).length,g.items.length);}
+ const q3=S.moneyGroups.find(g=>g.id==='Q3')!;assert.deepEqual(q3.items.map(i=>i.cents).sort((a,b)=>a-b),[5,5,5,5,10,10,25,25,100,1000]);const ten=q3.items.find(i=>i.bitmapId===78)!;assert.equal(ten.label,'TEN DOLLARS');assert.equal(ten.shapeId,79);assert.equal(ten.sourceBitmapText,true);const block=TI005_BINDING.blocks.find(b=>b.id===ten.id)!;assert.deepEqual(block.sourceTextIds,[]);assert.deepEqual(block.sourceShapeIds,[79]);
+ assert.equal(S.moneyGroups.find(g=>g.id==='help')!.cents,346);assert.equal(S.moneyGroups.find(g=>g.id==='intro')!.cents,525);
+});
+test('TI005 keeps string11 and leading zeros, permits empty submission and full deletion without maxlength',()=>{
+ const s=ready();assert.equal(done(s).state.phase,'wrong-open');for(const bad of ['-1','1e2','1.2','１２','1 2'])assert.equal(reduceTi005(s,255,{type:'edit',index:0,text:bad}).state,s);
+ let q3=ready();while(q3.current!=='Q3'){q3=reduceTi005(correct(q3).state,255,{type:'new'}).state;}assert.equal(q3.current,'Q3');
+ q3=edit(q3,['11','9','0']);assert.deepEqual(q3.fields,['11','9','0']);assert.equal(done(q3).state.phase,'correct-pending');const leading=edit(q3,['011','9','0']);assert.equal(done(leading).state.phase,'wrong-open');assert.deepEqual(edit(q3,['','','']).fields,['','','']);assert.deepEqual(edit(q3,['11','09','00']).fields,['11','09','00']);assert.equal(done(edit(q3,['11','09','00'])).state.phase,'wrong-open');
+ const html=renderToStaticMarkup(<Ti005AmountFields values={['11','09','00']} editable onEdit={()=>{}}/>);assert.equal((html.match(/type="text"/g)??[]).length,3);assert.equal((html.match(/inputMode="numeric"/g)??[]).length,3);assert(!/maxLength=|maxlength=|type="number"|required=/.test(html));assert.match(html,/value="11"/);assert.match(html,/value="09"/);assert.match(html,/value="00"/);const locked=renderToStaticMarkup(<Ti005AmountFields values={['11','9','0']} editable={false} onEdit={()=>{}}/>);assert.equal((locked.match(/readOnly=""/g)??[]).length,3);assert.equal((locked.match(/disabled=""/g)??[]).length,3);
+});
+test('TI005 finite bag never refills and Replay restores the same deterministic initial source session',()=>{
+ let s=ready(17);const first=s,seen=[];for(let i=0;i<3;i++){seen.push(s.current);assert.equal(s.bag.length,2-i);const end=correct(s);if(i<2){assert.equal(end.state.phase,'ready-for-new');s=reduceTi005(end.state,255,{type:'new'}).state;}else{assert.equal(end.state.phase,'outro');assert.deepEqual(end.frameRequest,{fromFrame:255,toFrame:256,stopFrame:276});s=end.state;}}
+ assert.equal(new Set(seen).size,3);assert.equal(s.draws,3);assert.equal(s.bag.length,0);assert.equal(reduceTi005(s,255,{type:'new'}).state,s);const ended=synchronizeTi005(s,ctx(276,17));assert.equal(ended.phase,'ended');assert.equal(reduceTi005(ended,276,{type:'new'}).state,ended);
+ const replay=synchronizeTi005(ended,ctx(255,17,1));assert.equal(replay.epoch,1);assert.equal(replay.current,first.current);assert.deepEqual(replay.bag,first.bag);assert.equal(replay.quizTryCount,0);assert.deepEqual(replay.fields,['','','']);assert.equal(replay.draws,1);assert.equal(replay.visualRevisionFloor,-1);
+});
+test('wrong1 Close clears all strings while attempts carry through correct and New to the next question',()=>{
+ let s=ready(7),r=wrong(s);assert.equal(r.state.quizTryCount,1);assert.equal(r.state.phase,'wrong-open');s=reduceTi005(r.state,255,{type:'wrong-close'}).state;assert.deepEqual(s.fields,['','','']);assert.equal(s.quizTryCount,1);assert.equal(s.phase,'answering');assert.equal(s.wrongId,r.state.wrongId);
+ s=correct(s).state;assert.equal(s.quizTryCount,1);assert.equal(s.phase,'ready-for-new');const previous=s.current;s=reduceTi005(s,255,{type:'new'}).state;assert.notEqual(s.current,previous);assert.equal(s.quizTryCount,1);r=wrong(s);assert.equal(r.state.quizTryCount,2);assert.deepEqual(r.state.fields,ti005CurrentQuestion(r.state)!.fields);assert.equal(ti005Controls(r.state,255).edit,false);s=reduceTi005(r.state,255,{type:'wrong-close'}).state;assert.equal(s.quizTryCount,0);assert.equal(s.phase,'ready-for-new');assert.deepEqual(s.fields,ti005CurrentQuestion(s)!.fields);
+});
+test('last cumulative second wrong Close preserves attempts and waits for parent276 before ended',()=>{
+ let s=ready();for(let i=0;i<2;i++)s=reduceTi005(correct(s).state,255,{type:'new'}).state;assert.equal(s.bag.length,0);
+ s=reduceTi005(wrong(s).state,255,{type:'wrong-close'}).state;assert.equal(s.quizTryCount,1);const second=wrong(s);assert.equal(second.state.quizTryCount,2);const close=reduceTi005(second.state,255,{type:'wrong-close'});assert.equal(close.state.phase,'outro');assert.equal(close.state.quizTryCount,2);assert.deepEqual(close.frameRequest,{fromFrame:255,toFrame:256,stopFrame:276});assert.equal(synchronizeTi005(close.state,ctx(275)).phase,'outro');assert.equal(synchronizeTi005(close.state,ctx(276)).phase,'ended');
+});
+test('correct20 requires fresh exact source identity and epoch; visual25 is independent of New',()=>{
+ let s=done(edit(ready(),ti005CurrentQuestion(ready())!.fields)).state,a=completed();for(const bad of [{...a,revision:9},{...a,frame:19},{...a,frame:25},{...a,status:'playing' as const},{...a,sourceInstanceId:'sprite-120/depth-55-generation-1'},{...a,frameDomain:'sprite-66'},{...a,id:'ti005-right-visual'}])assert.equal(reduceTi005(s,255,{type:'correct-complete',epoch:0,activity:bad}).state,s);
+ assert.equal(reduceTi005(s,255,{type:'correct-complete',epoch:1,activity:a}).state,s);s=reduceTi005(s,255,{type:'correct-complete',epoch:0,activity:a}).state;assert.equal(s.phase,'ready-for-new');const visual={...completed('ti005-right-visual',11),frame:20,status:'playing' as const};assert.equal(ti005Visual(s,[visual]).visible,true);const next=reduceTi005(s,255,{type:'new'});assert.deepEqual(next.activities,[]);assert.equal(ti005Visual(next.state,[{...visual,frame:24}]).visible,true);assert.equal(ti005Visual(next.state,[{...visual,frame:25,status:'completed'}]).visible,false);
+});
+test('real shared source clock preserves early-closed wrong voice concurrently with right audio and visual, and replaces only the wrong instance',()=>{
+ validateLessonTextActivities(A,276,12);validateLessonTextFrameControl(CAP.frameControl!,276);assert.deepEqual(A.filter(a=>/^ti005-wrong-[1-4]$/.test(a.id)).map(a=>[a.startFrame,a.endFrame]),[[3,16],[28,37],[53,58],[73,87]]);
+ let s=wrong(ready()).state,clock=beginSourceClockActivity([],def(s.wrongId!),10)!;clock=advanceSourceActivities(clock,100);const closed=reduceTi005(s,255,{type:'wrong-close'});assert.deepEqual(closed.activities,[]);s=edit(closed.state,ti005CurrentQuestion(closed.state)!.fields);const yes=done(s,10);clock=beginSourceClockActivities(clock,yes.activities.map(def),11)!;assert.equal(clock.length,3);assert(clock.some(a=>a.id===closed.state.wrongId));assert.equal(new Set(clock.map(a=>a.sourceInstanceId)).size,3);
+ clock=beginSourceClockActivity(clock,def('ti005-wrong-4'),20)!;assert.equal(clock.length,3);assert.equal(clock.filter(a=>a.frameDomain==='sprite-89').length,1);assert(clock.some(a=>a.id==='ti005-right-visual'));assert.equal(sourceActivitiesAtParentFrame(clock,276).filter(a=>a.id==='ti005-right-visual').length,1);assert.equal(sourceActivitiesAtParentFrame(clock,276).filter(a=>a.definition.audio).length,0);
+});
+test('native Help isolates current controls and restores exact prior strings, count and Done/New state without aliases',()=>{
+ let s=reduceTi005(wrong(ready()).state,255,{type:'wrong-close'}).state;s=edit(s,['001','02','']);const before=s,opened=reduceTi005(s,255,{type:'help-open'});assert(opened.state.helpOpen);assert.equal(ti005Controls(opened.state,255).edit,false);assert.equal(ti005Controls(opened.state,255).done,false);assert.equal(reduceTi005(opened.state,255,{type:'edit',index:0,text:'2'}).state,opened.state);assert.deepEqual(reduceTi005(opened.state,255,{type:'help-close'}).state,before);
+ s=correct(edit(before,ti005CurrentQuestion(before)!.fields)).state;assert(ti005Controls(s,255).newProblem);const help=reduceTi005(s,255,{type:'help-open'}).state;assert.equal(ti005Controls(help,255).newProblem,false);const after=reduceTi005(help,255,{type:'help-close'}).state;assert.deepEqual(after,s);assert.equal(ti005Controls(after,255).done,false);assert.equal(after.quizTryCount,1);
+});
+test('main demo exposes digits only at authored placements and uses actual down-state button children',()=>{
+ assert.equal(ti005Intro(7)!.moneyOpacity,0);assert.equal(ti005Intro(8)!.moneyOpacity>0,true);assert.deepEqual(ti005Intro(68)!.fields,['','','']);assert.deepEqual(ti005Intro(69)!.fields,['5','','']);assert.deepEqual(ti005Intro(95)!.fields,['5','2','']);assert.deepEqual(ti005Intro(105)!.fields,['5','2','5']);assert.equal(ti005Intro(255),undefined);assert.equal(ti005Intro(116)!.donePressed,true);assert.equal(ti005Intro(161)!.newPressed,true);
+ assert.equal(S.buttons.length,5);assert.equal(S.buttons.find(b=>b.id==='ti005-done-press')!.sourceInstanceId,'sprite-120/depth-41-generation-1/button-81/record-6');assert.equal(S.buttons.find(b=>b.id==='ti005-wrong-close-press')!.sourceInstanceId,'sprite-120/depth-109-generation-1/depth-1-generation-1/button-115/record-10');assert.deepEqual(S.demoPresses.map(p=>p.parentLifetime),[{firstFrame:116,lastFrameExclusive:118},{firstFrame:161,lastFrameExclusive:163}]);
+});
+test('snapshot and native renderer fail closed on wrong source identity and expose denomination text without raster teaching content',()=>{
+ const context=ctx(),state=TI005_MODULE.getFrameState(255,context),s=ready(),snapshot=ti005Snapshot(state,context,s);assert.equal(snapshot.status,'ready');assert.equal(snapshot.blocks.find(b=>b.id==='field-0')!.text,'');const html=renderToStaticMarkup(<G3L6Ti005ModernRenderer {...context}/>);assert(!/<(?:img|canvas|image)\b/.test(html));assert.match(html,/data-ti005-phase="answering"/);assert.equal((html.match(/data-ti005-field=/g)??[]).length,3);assert(!html.includes('TEN DOLLARS')||s.current==='Q3');
+ for(const bad of [{...context,lang:'es' as const},{...context,seed:9},{...context,rootFrame:7},{...context,frame:254},{...context,scenario:'other'}])assert.equal(ti005Snapshot(state,bad,s).status,'blocked');assert.equal(ti005Snapshot({...state,sourceSwfSha256:'0'.repeat(64)},context,s).status,'blocked');
+});

@@ -1,0 +1,25 @@
+/* Versioned, same-origin assets. Source commits, licenses and hashes are in
+ * catalog/typography-v1/fonts.json; no client or build-time font provider call. */
+@font-face {
+  font-family: 'HELP Math Nunito Sans';
+  src: url('/fonts/lesson-v1/nunito-sans-variable.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 200 1000;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'HELP Math Fredoka';
+  src: url('/fonts/lesson-v1/fredoka-variable.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+.lesson-text-presentation,
+.lesson-figure-text-layer,
+.lesson-shell2:has(.runtime-shell[data-lesson-presentation='modern-text-v1']),
+[data-lesson-presentation='modern-text-v1'] {
+  --lesson-font-body: 'HELP Math Nunito Sans', 'Avenir Next', Avenir, 'Segoe UI', system-ui, sans-serif;
+  --lesson-font-display: 'HELP Math Fredoka', 'Arial Rounded MT Bold', 'Trebuchet MS', var(--lesson-font-body);
+}

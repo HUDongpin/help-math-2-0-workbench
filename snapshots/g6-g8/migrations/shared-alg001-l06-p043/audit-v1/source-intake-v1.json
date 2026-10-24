@@ -1,0 +1,118 @@
+{
+  "kind": "g678-alg001-l06-p043-physical-source-intake-v1",
+  "date": "2026-10-02",
+  "status": "source-audited-output-only-unregistered",
+  "sourceRoot": "/Volumes/WestWorld/HELP MATH Related Files/AWS Grade-Classified Courseware/G6-G8-shared/ALG001/L6",
+  "identity": {
+    "animationId": "shared-alg001-l06-p043",
+    "globalOrdinal": 43,
+    "sectionPageOrdinal": 2,
+    "coursePageXmlLine": 127,
+    "coursePageXml": "<Page Title=\"Question 2\" RandomAudio=\"\" BGText=\"\">TI/L6TI03.swf</Page>",
+    "flaStatus": "no-same-placement-FLA-found"
+  },
+  "physicalFiles": [
+    {"relativePath": "index.xml", "bytes": 13926, "sha256": "9f3753a17e5e271d7bc63a1bdf8cd5237f19770bae3f5c7364cabcb62c84ce2c", "role": "source-ordered-course-page"},
+    {"relativePath": "TI/L6TI03.swf", "bytes": 855977, "sha256": "8bec405895d09cc8f7dd9f0da197f67726cb45cab6cc8dec3d15b103bc04a97b", "role": "physical-Flash-source"},
+    {"relativePath": "SA/L6TI03.mp3", "bytes": 151200, "sha256": "dfd986d3c9d1615b2456c5a9b5ebc2d24ab3b5d22f1b1d6f20df9aa886fcadf1", "role": "separate-Spanish-Audio-candidate-index-only"}
+  ],
+  "swf": {
+    "signature": "CWS",
+    "version": 6,
+    "decompressedBytes": 988972,
+    "stagePixels": [800, 600],
+    "framesPerSecond": 12,
+    "rootFrames": 10,
+    "rootFrame1": "_level0.InternalPreloader.gotoAndPlay(\"jump_check\"); stop();",
+    "rootFrame6": "stop();",
+    "mainSpriteId": 342,
+    "mainSpriteFrames": 241,
+    "mainPlacementName": "animation",
+    "quizHoldFrame": 62,
+    "postQuizFrame": 63,
+    "endHoldFrame": 241
+  },
+  "sourceActions": {
+    "quizHold": {
+      "script": "audit/ffdec-export/scripts/DefineSprite_342/frame_62/DoAction.as",
+      "effect": "stop; quizSection=true; quizTryCount=0; hide Mc_Popup and CloseBtn"
+    },
+    "answers": [
+      {"label": "A", "answerButton": "AnsBtn1", "buttonCharacterId": 165, "textCharacterId": 158, "sourceText": "$137.75", "result": "wrong4"},
+      {"label": "B", "answerButton": "AnsBtn2", "buttonCharacterId": 166, "textCharacterId": 160, "sourceText": "$160.52", "result": "right4"},
+      {"label": "C", "answerButton": "AnsBtn3", "buttonCharacterId": 165, "textCharacterId": 162, "sourceText": "$185.52", "result": "wrong4"},
+      {"label": "D", "answerButton": "AnsBtn4", "buttonCharacterId": 165, "textCharacterId": 164, "sourceText": "$580.52", "result": "wrong4"}
+    ],
+    "answerButtonEvidence": "audit/ffdec-tags.txt lines 2953-2983 and DefineButton2_165/166 release scripts",
+    "wrong4": {
+      "spriteId": 307,
+      "instanceName": "Mc_Wrong_Feed4",
+      "startFrame": 2,
+      "popupSpriteId": 304,
+      "popupCloseButtonCharacterId": 301,
+      "popupCloseAction": "_parent.gotoAndPlay(24); reset AnsBtn1-4",
+      "popupHoldFrame": 23,
+      "terminalFrame": 29,
+      "terminalAction": "enable quiz; reset feedback; increment quizTryCount; on second wrong reset count, clear quizSection, resume parent",
+      "firstWrongText": "Substitute 23 for C in the equation. Try again.",
+      "laterWrongText": "Substitute 23 for C in the equation.",
+      "textOrderBasis": "button165 tests quizTryCount==1 before feedback terminal increments the count",
+      "scripts": ["audit/ffdec-export/scripts/DefineButton2_165/BUTTONCONDACTION on(release).as", "audit/ffdec-export/scripts/DefineButton2_301/BUTTONCONDACTION on(release).as", "audit/ffdec-export/scripts/DefineSprite_307/frame_23/DoAction.as", "audit/ffdec-export/scripts/DefineSprite_307/frame_29/DoAction.as"]
+    },
+    "right4": {
+      "spriteId": 202,
+      "instanceName": "Mc_Right_Feed4",
+      "startFrame": 2,
+      "terminalFrame": 31,
+      "terminalAction": "disable quiz; clear quizSection; resume parent; reset feedback",
+      "scripts": ["audit/ffdec-export/scripts/DefineButton2_166/BUTTONCONDACTION on(release).as", "audit/ffdec-export/scripts/DefineSprite_202/frame_31/DoAction.as"]
+    },
+    "nmh": {
+      "buttonCharacterId": 147,
+      "closeButtonCharacterId": 176,
+      "openAction": "disable quiz and NMH; reveal Mc_Popup and CloseBtn",
+      "closeAction": "enable quiz and NMH; hide Mc_Popup and CloseBtn"
+    },
+    "glossaryHost": {
+      "sampleButtonCharacterId": 136,
+      "sampleAttribute": "Input",
+      "action": "set _global.KeyAttribute; call _root.DoHyperLinks(); stop main animation",
+      "otherObservedAttributes": ["Substitute", "Equation", "Simplify", "Expression", "Calculate", "Output", "Function", "Estimate"]
+    }
+  },
+  "embeddedAudio": {
+    "type": "SoundStreamHead and SoundStreamBlock in SWF sprites; not standalone DefineSound",
+    "soundStreamHeadCount": 9,
+    "soundStreamBlockCount": 451,
+    "domains": [
+      {"spriteId": 342, "role": "main", "blocks": 230},
+      {"spriteId": 202, "role": "right4-reachable", "blocks": 30},
+      {"spriteId": 235, "role": "right2", "blocks": 27},
+      {"spriteId": 247, "role": "right1", "blocks": 26},
+      {"spriteId": 275, "role": "right3", "blocks": 27},
+      {"spriteId": 292, "role": "wrong1", "blocks": 29},
+      {"spriteId": 307, "role": "wrong4-reachable", "blocks": 28},
+      {"spriteId": 321, "role": "wrong3", "blocks": 26},
+      {"spriteId": 335, "role": "wrong2", "blocks": 28}
+    ],
+    "spanishCandidate": "separate SA/L6TI03.mp3; user-triggered only; never embedded-stream splice or locale autoplay"
+  },
+  "auditArtifacts": {
+    "ffdecHeaderSha256": "1277b5cbe3865f949badd11891dc98bf580af06ffe6d8bbba99d32aa824a8758",
+    "ffdecTagsSha256": "77da2eae6dc3c683794432b8156d5641af9fd604571f6c4444943510c132f93d",
+    "ffdecExportLogSha256": "e84e3c0a140d6500ca904ab642ec9dffd17223eac45b20ca68cde1b1e1a018a5",
+    "ffdecScriptFiles": 70,
+    "ffdecTextFiles": 103,
+    "swfmillXmlSha256": "b4a018ccd7c0b5a9b3ef89a623210a6e3da89c59e69da69c7bd353d4cc8f6597",
+    "swfmillStatus": "warnings-for-UnknownTag-and-EOF; diagnostic-only; no conclusions drawn from it"
+  },
+  "uncertainties": [
+    "No same-placement FLA is available; ActionScript is FFDec decompilation of the physical SWF.",
+    "The actual original runtime and host-owned preloader, glossary, Replay, audio synchronization, and visual presentation are not yet observed.",
+    "Embedded SoundStream domains have not yet been extracted, decoded, listened to, or sample-aligned to frames.",
+    "The SA candidate is source-bound by path and hash only; Spanish voice content and acceptance are unverified.",
+    "Text-to-answer mapping follows the ordered source text/placement and button instances; browser rendering remains to be checked."
+  ],
+  "recommendedNextSlice": "behavior-heavy maintained state machine for main frame62 quiz, B right4, A/C/D wrong4 with popup Close and second-wrong continuation, NMH popup, source-evidenced glossary callback, Replay and stale callback cleanup; recover audio domains and source-frame timing separately",
+  "gate": "source-intake-only; no Current-JS registry, fidelity, audio listening, human or Owner acceptance, strict completion, release, or publication claim"
+}

@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';import React from 'react';import{renderToStaticMarkup}from'react-dom/server';import{readFile}from'node:fs/promises';import{gunzipSync}from'node:zlib';import{In007Renderer,IN007_PRESENTATION}from'./index';import{getCourseG04L03In007FrameState as getState}from'../../modules/course-g04-l03-in-007';import SOURCE from'./source.generated.json';import{getNativeState}from'./state.mjs';
+const frames=JSON.parse(gunzipSync(await readFile(new URL('../../../../../scripts/inputs/typography-v1/g4-l3-in007/frames.json.gz',import.meta.url))).toString());let active=0;
+for(let frame=1;frame<=555;frame++){
+ const ctx={frame,frameDomain:'sprite-98',rootFrame:6,scenario:'source-static-frame',lang:'en' as const,seed:0,replay:0},raw=frames[frame-1].displayList.filter((p:any)=>[19,20,21,22].includes(p.characterId));assert(raw.length<=1);
+ const native=getNativeState(SOURCE,frame),html=renderToStaticMarkup(<In007Renderer {...ctx}/>),prefix=html.match(/<span data-lesson-text-block="pattern-prefix">([\s\S]*?)<\/span><\/div>/)?.[1];
+ const tokens=[...html.matchAll(/class="in007-modern__prefix-token" data-source-prefix-index="(\d)" data-emphasized="(true|false)"([^>]*)><span class="in007-modern__prefix-value">(\d+)<\/span>,<\/span>/g)];
+ assert.equal(tokens.length,frame>=110?5:0);if(frame>=110)assert.deepEqual(tokens.map(m=>Number(m[4])),[12,9,6,3,0]);
+ const emphasized=tokens.filter(m=>m[2]==='true');assert.equal(emphasized.length,raw.length);
+ if(raw.length){active++;const p=raw[0],rotation=p.matrix.slice(0,4).join(',')==='-1,0,0,-1',value=p.characterId===19?12:p.characterId===20?(rotation?6:9):p.characterId===21?3:0,index=[12,9,6,3,0].indexOf(value);assert.equal(Number(emphasized[0][1]),index);assert.equal(Number(emphasized[0][4]),value);assert.equal(native.prefixEmphasis.value,value);assert.equal(native.prefixEmphasis.prefixIndex,index);assert.deepEqual(native.prefixEmphasis.matrix,p.matrix);assert.equal(native.prefixEmphasis.sourceTextId,`character-${p.characterId}/run-0`);assert(!frames[frame-1].masks.some((m:any)=>m.depth<p.depth&&p.depth<=m.clipDepth));}
+ else assert.equal(native.prefixEmphasis,null);
+ const snapshot=IN007_PRESENTATION.getSnapshot(getState(frame,ctx),ctx);assert.equal(snapshot.blocks.find(b=>b.id==='pattern-prefix')?.text,frame>=110?'12, 9, 6, 3, 0,':'');
+}
+assert.equal(active,20);assert([19,20,21,22].every(id=>IN007_PRESENTATION.binding.blocks.find(b=>b.id==='pattern-prefix')?.sourceTextIds.includes(`character-${id}/run-0`)));
+const renderer=await readFile(new URL('./renderer.tsx',import.meta.url),'utf8'),declarations=renderer.match(/prefix-token\[data-emphasized=true\] \.in007-modern__prefix-value\{([^}]+)\}/)?.[1];assert(declarations);assert.equal(declarations,'color:#a300a3;text-decoration:underline;text-underline-offset:.15em');assert(!/font|padding|margin|width|height|transform/.test(declarations));
+console.log('PASS555source-frame/SSR comparisons;20prefix flashes;rotated9=>6;inactive5tokens retained;no layout-changing emphasis CSS');

@@ -1,0 +1,751 @@
+{
+  "kind": "p048-source-native-bindings-v1",
+  "animationId": "shared-alg001-l06-p048",
+  "sourceSha256": "03a8334e6349a9e80b47bdea4d2c5ada40f635570be5d63f70e8706a03761780",
+  "sourceModelSha256": "adc0ba402c265deb7fa3fb9c06ce1d68454ea8ef5eaa15fa2842b12989ffda5b",
+  "runtime": {
+    "stage": [
+      800,
+      600
+    ],
+    "fps": 12,
+    "rootFrames": 10,
+    "rootEntryFrame": 6,
+    "mainSpriteId": 348,
+    "mainFrames": 327,
+    "quizFrame": 224,
+    "resumeFrame": 225,
+    "terminalFrame": 327
+  },
+  "behavior": {
+    "wrong4": {
+      "spriteId": 304,
+      "startFrame": 2,
+      "popupFirstFrame": 16,
+      "popupSpriteId": 300,
+      "textId": 299,
+      "holdFrame": 22,
+      "closeButtonId": 297,
+      "closeJump": 23,
+      "terminalFrame": 31,
+      "firstText": "Study the graph carefully.Try again.",
+      "secondText": "Study the graph carefully.",
+      "attemptIncrement": "terminal31 after explicit Close and tail; second resets counter and resumes parent"
+    },
+    "right4": {
+      "spriteId": 217,
+      "startFrame": 2,
+      "terminalFrame": 25,
+      "preservesPriorWrongCount": true
+    },
+    "help": {
+      "openButtonId": 140,
+      "popupSpriteId": 139,
+      "closeButtonId": 185,
+      "static": true
+    },
+    "randomFeedbackCalled": false,
+    "pageDefinesEnableButton": false,
+    "legacyHostScope": "disableQuizButton/enableQuizButton and DoHyperLinks; original runtime host binding unverified"
+  },
+  "question": {
+    "textId": 144,
+    "text": "The graph shows the efficiency of a machine as a function of the amount of time the machine has been running. Time is measured in hours. Choose the statement that best describes the efficiency of the machine after 1 hour?",
+    "firstFrame": 2,
+    "lastFrame": 327
+  },
+  "helpText": [
+    {
+      "textId": 133,
+      "text": "Separate the graph into sections."
+    },
+    {
+      "textId": 134,
+      "text": "Identify the lowest point. Then identify the highest point."
+    },
+    {
+      "textId": 138,
+      "text": "Between the highest and lowest point, the efficiency is rising."
+    },
+    {
+      "textId": 135,
+      "text": "After the highest point, the efficiency is falling."
+    }
+  ],
+  "options": {
+    "A": {
+      "letter": "A",
+      "instance": "AnsBtn2",
+      "buttonId": 175,
+      "branch": "right4",
+      "letterTextId": 52,
+      "textId": 167,
+      "text": "The efficiency is at its highest.  ",
+      "hitBoxPx": [
+        92.95,
+        234.85,
+        417.2251,
+        266.4961
+      ],
+      "textOverlap": 0.927401,
+      "visibleRanges": [
+        [
+          215,
+          327
+        ]
+      ]
+    },
+    "B": {
+      "letter": "B",
+      "instance": "AnsBtn1",
+      "buttonId": 174,
+      "branch": "wrong4",
+      "letterTextId": 37,
+      "textId": 169,
+      "text": "The efficiency is at its lowest.",
+      "hitBoxPx": [
+        90.0,
+        279.6,
+        418.031,
+        312.4122
+      ],
+      "textOverlap": 0.985667,
+      "visibleRanges": [
+        [
+          216,
+          259
+        ]
+      ]
+    },
+    "C": {
+      "letter": "C",
+      "instance": "AnsBtn3",
+      "buttonId": 174,
+      "branch": "wrong4",
+      "letterTextId": 60,
+      "textId": 171,
+      "text": "The efficiency is falling.",
+      "hitBoxPx": [
+        92.0,
+        321.8098,
+        351.3636,
+        358.5056
+      ],
+      "textOverlap": 0.947615,
+      "visibleRanges": [
+        [
+          217,
+          259
+        ]
+      ]
+    },
+    "D": {
+      "letter": "D",
+      "instance": "AnsBtn4",
+      "buttonId": 174,
+      "branch": "wrong4",
+      "letterTextId": 49,
+      "textId": 173,
+      "text": "The efficiency is rising.",
+      "hitBoxPx": [
+        92.95,
+        369.5,
+        350.9086,
+        402.4732
+      ],
+      "textOverlap": 0.975833,
+      "visibleRanges": [
+        [
+          218,
+          259
+        ]
+      ]
+    }
+  },
+  "glossary": [
+    {
+      "buttonId": 137,
+      "term": "Graph",
+      "ownerSpriteId": 139,
+      "firstFrame": 1,
+      "lastFrame": 1,
+      "scriptPath": "scripts/DefineButton2_137/BUTTONCONDACTION on(release).as"
+    },
+    {
+      "buttonId": 158,
+      "term": "Efficiency",
+      "ownerSpriteId": 348,
+      "firstFrame": 2,
+      "lastFrame": 327,
+      "scriptPath": "scripts/DefineButton2_158/BUTTONCONDACTION on(release).as"
+    },
+    {
+      "buttonId": 159,
+      "term": "Graph",
+      "ownerSpriteId": 348,
+      "firstFrame": 2,
+      "lastFrame": 327,
+      "scriptPath": "scripts/DefineButton2_159/BUTTONCONDACTION on(release).as"
+    },
+    {
+      "buttonId": 160,
+      "term": "Function",
+      "ownerSpriteId": 348,
+      "firstFrame": 2,
+      "lastFrame": 327,
+      "scriptPath": "scripts/DefineButton2_160/BUTTONCONDACTION on(release).as"
+    },
+    {
+      "buttonId": 161,
+      "term": "Time",
+      "ownerSpriteId": 348,
+      "firstFrame": 2,
+      "lastFrame": 327,
+      "scriptPath": "scripts/DefineButton2_161/BUTTONCONDACTION on(release).as"
+    }
+  ],
+  "graph": {
+    "sourcePins": [
+      {
+        "path": "migrations/shared-alg001-l06-p048/audit-v1/graph-export/145.svg",
+        "bytes": 4740,
+        "sha256": "e64d8679cc7e2dbabdcf1427c664aa3008b74e56d987061f98180da6e570ed6e"
+      },
+      {
+        "path": "migrations/shared-alg001-l06-p048/audit-v1/graph-export/157.svg",
+        "bytes": 1589,
+        "sha256": "e1ffa289794a30dcfe9e4efe4f02bd6230089b0076766c8ddec48716be9f4684"
+      },
+      {
+        "path": "migrations/shared-alg001-l06-p048/audit-v1/graph-export/347.svg",
+        "bytes": 456,
+        "sha256": "f425f4d0b82274632b291cbf2e3891fdd600173c8806abc4117d728bb4b634f9"
+      }
+    ],
+    "viewBox": [
+      400,
+      260,
+      320,
+      190
+    ],
+    "paths": [
+      {
+        "shapeId": 145,
+        "pathIndex": 0,
+        "d": "M663.55 411.3 L463.9 411.3 463.9 328.1 647.1 328.1 647.1 410.8 663.55 410.8 663.55 411.3",
+        "fill": "#ffc1c1",
+        "fill-rule": "evenodd",
+        "stroke": "none"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 1,
+        "d": "M463.9 328.05 L647.1 328.05",
+        "fill": "none",
+        "stroke": "#ff3300",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 2,
+        "d": "M463.9 361.35 L646.6 361.35",
+        "fill": "none",
+        "stroke": "#ff3300",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 3,
+        "d": "M463.9 378.5 L647.1 378.5",
+        "fill": "none",
+        "stroke": "#ff3300",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 4,
+        "d": "M463.9 394.1 L647.1 394.1",
+        "fill": "none",
+        "stroke": "#ff3300",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 5,
+        "d": "M647.45 328.05 L647.45 411.25",
+        "fill": "none",
+        "stroke": "#ff3300",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 6,
+        "d": "M629.8 328.05 L629.8 411.25",
+        "fill": "none",
+        "stroke": "#ff3300",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 7,
+        "d": "M613.15 328.05 L613.15 411.25",
+        "fill": "none",
+        "stroke": "#ff3300",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 8,
+        "d": "M597.0 328.05 L597.0 411.25",
+        "fill": "none",
+        "stroke": "#ff3300",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 9,
+        "d": "M580.4 328.05 L580.4 411.25",
+        "fill": "none",
+        "stroke": "#ff3300",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 10,
+        "d": "M563.75 328.05 L563.75 411.25",
+        "fill": "none",
+        "stroke": "#ff3300",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 11,
+        "d": "M547.6 328.05 L547.6 411.25",
+        "fill": "none",
+        "stroke": "#ff3300",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 12,
+        "d": "M530.5 328.1 L530.5 411.3",
+        "fill": "none",
+        "stroke": "#ff3300",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 13,
+        "d": "M513.8 328.05 L513.8 411.25",
+        "fill": "none",
+        "stroke": "#ff3300",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 14,
+        "d": "M497.7 328.05 L497.7 411.25",
+        "fill": "none",
+        "stroke": "#ff3300",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 15,
+        "d": "M481.05 328.05 L481.05 411.25",
+        "fill": "none",
+        "stroke": "#ff3300",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 16,
+        "d": "M463.9 344.2 L647.1 344.2",
+        "fill": "none",
+        "stroke": "#ff3300",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 17,
+        "d": "M667.45 411.3 L670.05 413.35 667.45 411.3 663.0 407.65 676.5 411.3 670.05 413.35 663.5 415.45 667.45 411.3",
+        "fill": "#000000",
+        "fill-rule": "evenodd",
+        "stroke": "none"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 18,
+        "d": "M670.05 413.35 L667.45 411.3 663.5 415.45 670.05 413.35 676.5 411.3 663.0 407.65 667.45 411.3",
+        "fill": "none",
+        "stroke": "#000000",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 19,
+        "d": "M463.9 303.85 L463.9 411.3 665.6 411.3",
+        "fill": "none",
+        "stroke": "#000000",
+        "stroke-width": "2.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 20,
+        "d": "M463.85 294.8 L465.95 301.25 463.85 303.85 465.95 301.25 468.0 307.8 463.85 303.85 463.85 303.8 463.85 294.8 463.85 303.8 462.8 305.1 460.2 308.35 463.85 294.8",
+        "fill": "#000000",
+        "fill-rule": "evenodd",
+        "stroke": "none"
+      },
+      {
+        "shapeId": 145,
+        "pathIndex": 21,
+        "d": "M465.95 301.25 L463.85 294.8 463.85 303.8 463.85 303.85 465.95 301.25 468.0 307.8 463.85 303.85 462.8 305.1 460.2 308.35 463.85 294.8",
+        "fill": "none",
+        "stroke": "#000000",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 157,
+        "pathIndex": 0,
+        "d": "M464.5 394.05 Q465.2 365.15 467.2 351.7 469.6 335.4 475.15 330.95 480.15 326.95 489.95 331.1 L491.35 331.75 Q494.8 333.35 500.9 338.45 507.0 343.5 518.3 349.55",
+        "fill": "none",
+        "stroke": "#000000",
+        "stroke-width": "2.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 157,
+        "pathIndex": 1,
+        "d": "M518.3 349.55 Q541.95 362.15 641.1 360.95",
+        "fill": "none",
+        "stroke": "#000000",
+        "stroke-width": "2.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 157,
+        "pathIndex": 2,
+        "d": "M641.7 362.55 L639.1 360.5 641.7 362.55 635.15 364.65 639.1 360.5 634.65 356.85 648.15 360.5 641.7 362.55",
+        "fill": "#000000",
+        "fill-rule": "evenodd",
+        "stroke": "none"
+      },
+      {
+        "shapeId": 157,
+        "pathIndex": 3,
+        "d": "M639.1 360.5 L641.7 362.55 648.15 360.5 634.65 356.85 639.1 360.5 635.15 364.65 641.7 362.55",
+        "fill": "none",
+        "stroke": "#000000",
+        "stroke-width": "1.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      },
+      {
+        "shapeId": 347,
+        "pathIndex": 0,
+        "d": "M97.75 76.8 L97.75 -1.75",
+        "fill": "none",
+        "stroke": "#ffffff",
+        "stroke-width": "4.0",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round"
+      }
+    ],
+    "labels": [
+      {
+        "textId": 146,
+        "text": "E",
+        "boxPx": [
+          460.13,
+          273.045,
+          484.1151,
+          293.7151
+        ]
+      },
+      {
+        "textId": 147,
+        "text": "t",
+        "boxPx": [
+          682.835,
+          398.895,
+          701.815,
+          419.5651
+        ]
+      },
+      {
+        "textId": 148,
+        "text": "100 %",
+        "boxPx": [
+          415.43,
+          323.475,
+          468.6651,
+          338.49
+        ]
+      },
+      {
+        "textId": 149,
+        "text": "60 %",
+        "boxPx": [
+          421.085,
+          357.675,
+          466.6501,
+          372.69
+        ]
+      },
+      {
+        "textId": 150,
+        "text": "20 %",
+        "boxPx": [
+          421.15,
+          390.975,
+          466.6501,
+          405.99
+        ]
+      },
+      {
+        "textId": 151,
+        "text": "0",
+        "boxPx": [
+          461.385,
+          420.625,
+          479.26,
+          435.64
+        ]
+      },
+      {
+        "textId": 152,
+        "text": "2",
+        "boxPx": [
+          494.7,
+          420.625,
+          512.51,
+          435.64
+        ]
+      },
+      {
+        "textId": 153,
+        "text": "4",
+        "boxPx": [
+          526.29,
+          420.625,
+          544.36,
+          435.64
+        ]
+      },
+      {
+        "textId": 154,
+        "text": "6",
+        "boxPx": [
+          558.985,
+          420.755,
+          576.86,
+          435.64
+        ]
+      },
+      {
+        "textId": 155,
+        "text": "8",
+        "boxPx": [
+          590.435,
+          420.625,
+          608.31,
+          435.64
+        ]
+      },
+      {
+        "textId": 156,
+        "text": "10",
+        "boxPx": [
+          624.33,
+          420.625,
+          649.8751,
+          435.64
+        ]
+      }
+    ],
+    "highlightPlacements": [
+      {
+        "instanceId": "sprite-348/depth-88/generation-2",
+        "spriteId": 348,
+        "depth": 88,
+        "generation": 2,
+        "objectId": 347,
+        "firstFrame": 281,
+        "lastFrame": 327,
+        "runs": [
+          {
+            "firstFrame": 281,
+            "lastFrame": 327,
+            "matrixTwips": {
+              "scaleX": 1.0,
+              "scaleY": 1.0,
+              "skewX": 0.0,
+              "skewY": 0.0,
+              "transX": 0.0,
+              "transY": 0.0
+            },
+            "color": {
+              "factor": {
+                "Red": 256,
+                "Green": 256,
+                "Blue": 256,
+                "Alpha": 256
+              },
+              "offset": {
+                "Red": 0,
+                "Green": 0,
+                "Blue": 0,
+                "Alpha": 0
+              }
+            },
+            "ratio": null,
+            "name": null,
+            "clipDepth": null
+          }
+        ]
+      }
+    ],
+    "plotPlacementMatrixTwips": {
+      "scaleX": 1.0,
+      "scaleY": 1.0,
+      "skewX": 0.0,
+      "skewY": 0.0,
+      "transX": -7661.0,
+      "transY": -6652.0
+    },
+    "description": "Machine efficiency versus time in hours. The source curve rises steeply to its highest point near one hour, then falls and levels off."
+  },
+  "streams": [
+    {
+      "spriteId": 217,
+      "role": "right4",
+      "activeAnswerPath": true,
+      "frameCount": 25,
+      "blockCount": 24,
+      "payloadBytes": 9880,
+      "payloadSha256": "105da94835aa6ae9fa8c8f149fdb28167ba1a2de31e842c7997e1a8557dc981d",
+      "assetPath": "migrations/shared-alg001-l06-p048/assets/source-stream-217-right4.mp3"
+    },
+    {
+      "spriteId": 251,
+      "role": "right1",
+      "activeAnswerPath": false,
+      "frameCount": 27,
+      "blockCount": 27,
+      "payloadBytes": 11050,
+      "payloadSha256": "b08449fd7fb0c0288fc90f56473e10d3f10494c1a9747e20481ec7dd50bdfe19",
+      "assetPath": "migrations/shared-alg001-l06-p048/assets/source-stream-251-right1.mp3"
+    },
+    {
+      "spriteId": 259,
+      "role": "right2",
+      "activeAnswerPath": false,
+      "frameCount": 27,
+      "blockCount": 26,
+      "payloadBytes": 10660,
+      "payloadSha256": "18e52976f77c535c485dccc2c41a17b63a651044748593990b355cee29b01aec",
+      "assetPath": "migrations/shared-alg001-l06-p048/assets/source-stream-259-right2.mp3"
+    },
+    {
+      "spriteId": 287,
+      "role": "right3",
+      "activeAnswerPath": false,
+      "frameCount": 28,
+      "blockCount": 27,
+      "payloadBytes": 11050,
+      "payloadSha256": "529ef71f4768ba9c0f830a67547066e4b8b20091bc8e3cd0782e1fbdfbb64085",
+      "assetPath": "migrations/shared-alg001-l06-p048/assets/source-stream-287-right3.mp3"
+    },
+    {
+      "spriteId": 304,
+      "role": "wrong4",
+      "activeAnswerPath": true,
+      "frameCount": 31,
+      "blockCount": 29,
+      "payloadBytes": 11960,
+      "payloadSha256": "2f88e5ee5c496df615af35c8a53582961becbb4978948a48662cfb4a56485e77",
+      "assetPath": "migrations/shared-alg001-l06-p048/assets/source-stream-304-wrong4.mp3"
+    },
+    {
+      "spriteId": 318,
+      "role": "wrong2",
+      "activeAnswerPath": false,
+      "frameCount": 29,
+      "blockCount": 28,
+      "payloadBytes": 11570,
+      "payloadSha256": "5bfd44f657eb1ee276cbae924e79bf448bfb0e6d7bef7515164118f295726f4d",
+      "assetPath": "migrations/shared-alg001-l06-p048/assets/source-stream-318-wrong2.mp3"
+    },
+    {
+      "spriteId": 332,
+      "role": "wrong3",
+      "activeAnswerPath": false,
+      "frameCount": 28,
+      "blockCount": 26,
+      "payloadBytes": 10270,
+      "payloadSha256": "1421b1c2ed818b79f66f9d94530176299e8ebfaff946ccbb0e851cec9d72234e",
+      "assetPath": "migrations/shared-alg001-l06-p048/assets/source-stream-332-wrong3.mp3"
+    },
+    {
+      "spriteId": 346,
+      "role": "wrong1",
+      "activeAnswerPath": false,
+      "frameCount": 29,
+      "blockCount": 28,
+      "payloadBytes": 11570,
+      "payloadSha256": "770ce8a109fb78c238d218e479047529e8cb39f006f8c70747be376556e2a541",
+      "assetPath": "migrations/shared-alg001-l06-p048/assets/source-stream-346-wrong1.mp3"
+    },
+    {
+      "spriteId": 348,
+      "role": "main",
+      "activeAnswerPath": true,
+      "frameCount": 327,
+      "blockCount": 316,
+      "payloadBytes": 130910,
+      "payloadSha256": "e4d9a1110c982abaeb68c18203d0ea58a855a5260273a7ca896b1bb447f53429",
+      "assetPath": "migrations/shared-alg001-l06-p048/assets/source-stream-348-main.mp3"
+    }
+  ]
+}

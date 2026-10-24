@@ -1,0 +1,12 @@
+.readable { box-sizing: border-box; inline-size: 100%; scroll-margin-block-start: 6rem; }
+.sourceText { font-size: 1.125rem; line-height: 1.6; overflow-wrap: anywhere; }
+.optionalAudioButton {
+  min-block-size: 44px; min-inline-size: 44px; max-inline-size: 100%; padding: 8px 12px;
+  border: 2px solid #075cbb; border-radius: 8px; color: #134580; background: #fff;
+  font: inherit; font-weight: 700; cursor: pointer; overflow-wrap: anywhere;
+}
+.optionalAudioButton:focus-visible,.sourceHotspot:focus-visible { outline: 3px solid #075cbb; outline-offset: 3px; }
+.optionalAudioButton:disabled { opacity: .6; cursor: default; }
+.vocabulary { display: flex; flex-wrap: wrap; gap: 8px; margin-block: 12px; }
+.sourceHotspot { position: absolute; padding: 0; border: 0; background: transparent; cursor: pointer; }
+.sourceHotspot:focus-visible { background: #ffffffa8; }

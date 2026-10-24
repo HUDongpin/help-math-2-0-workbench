@@ -1,0 +1,3 @@
+// Source-pinned explicit Spanish host track.
+import type {AudioCue,AudioTrack} from "../../contract";
+export const HOST_AUDIO={"audioCues":[],"audioTracks":[{"id":"course-g04-l05-rw-004-spanish-host-narration","label":"Spanish Audio","language":"es","source":"/lesson-typography-v1/audio/course-g04-l05-rw-004/spanish-host-narration.mp3","sha256":"5fcb99943942a4e54ef7381003fb536e3cab0f827f9c52d388af9aee7b4947b7","durationMs":17256,"activation":"user","visibleWhen":["es"],"frameDomains":["sprite-177"],"timelineBehavior":"pause-while-playing"}]} as const satisfies {readonly audioCues:readonly AudioCue[];readonly audioTracks:readonly AudioTrack[]};

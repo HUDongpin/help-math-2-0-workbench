@@ -1,0 +1,10 @@
+'use client';
+import React from 'react';
+import {createVocabularyChoicePresentation,type VocabularyChoiceConfig} from './g4-l4-vocabulary-choice';
+import {CourseG04L09Vb003Renderer,getCourseG04L09Vb003FrameState} from '../modules/course-g04-l09-vb-003';
+import data from './g4-l9-vb003/source.generated.json';
+const base=createVocabularyChoicePresentation(data as unknown as VocabularyChoiceConfig,getCourseG04L09Vb003FrameState,CourseG04L09Vb003Renderer);
+const BaseRenderer=base.Renderer!;
+const Renderer=(props:React.ComponentProps<typeof BaseRenderer>)=><><style>{'[data-modern-text-page="course-g04-l09-vb-003"] .g4l4-vchoice__equation{grid-template-columns:repeat(3,10rem);gap:2rem}'}</style><BaseRenderer {...props}/></>;
+export const G4_L9_VB003_TEXT_PRESENTATION={...base,Renderer};
+export const G4_L9_VB003_TEXT_BINDING=G4_L9_VB003_TEXT_PRESENTATION.binding;

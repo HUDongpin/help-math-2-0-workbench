@@ -1,0 +1,499 @@
+{
+  "kind": "p049-source-native-bindings-v1",
+  "animationId": "shared-alg001-l06-p049",
+  "sourceSha256": "33f90f5897fa60939fb7015f60c8789d98aad3dca65ad39cb04dac4fededb3a6",
+  "sourceModelSha256": "8faf55033928e8449c96fe3a9c1a7504b7f119119f2f90a4f81d8caf309b11ff",
+  "runtime": {
+    "stage": [
+      800,
+      600
+    ],
+    "fps": 12,
+    "rootFrames": 10,
+    "rootEntryFrame": 6,
+    "mainSpriteId": 327,
+    "mainFrames": 401,
+    "quizFrame": 159,
+    "resumeFrame": 160,
+    "terminalFrame": 401
+  },
+  "behavior": {
+    "wrong4": {
+      "spriteId": 302,
+      "startFrame": 2,
+      "popupFirstFrame": 15,
+      "popupSpriteId": 293,
+      "textId": 292,
+      "holdFrame": 22,
+      "closeButtonId": 290,
+      "closeJump": 23,
+      "terminalFrame": 28,
+      "firstText": "Use the values in one of the rows of the table to test your answer.Try again.",
+      "secondText": "Use the values in one of the rows of the table to test your answer.",
+      "attemptIncrement": "terminal28 after explicit Close; second resets counter and resumes parent"
+    },
+    "right4": {
+      "spriteId": 192,
+      "startFrame": 2,
+      "terminalFrame": 25,
+      "preservesPriorWrongCount": true
+    },
+    "help": {
+      "openButtonId": 139,
+      "popupSpriteId": 138,
+      "closeButtonId": 180,
+      "static": true
+    },
+    "randomFeedbackCalled": false,
+    "pageDefinesEnableButton": false,
+    "legacyHostScope": "disableQuizButton/enableQuizButton, DoHyperLinks; original host binding unverified"
+  },
+  "question": {
+    "textId": 143,
+    "text": "Use the data in the function table to determine the function for converting miles to yards.  Which function shows how to convert miles to yards?",
+    "visibleRanges": [
+      [
+        3,
+        401
+      ]
+    ]
+  },
+  "helpText": [
+    {
+      "textId": 134,
+      "text": "Unit conversion often requires multiplication or division."
+    },
+    {
+      "textId": 135,
+      "text": "Divide the yards in each row by the miles. The answer is what you should multiply miles by to get yards."
+    }
+  ],
+  "options": {
+    "A": {
+      "letter": "A",
+      "instance": "AnsBtn1",
+      "buttonId": 168,
+      "branch": "wrong4",
+      "letterTextId": 52,
+      "textId": 161,
+      "text": "Y = M ÷ 1,760",
+      "hitBoxPx": [
+        89.3,
+        234.95,
+        283.5127,
+        267.7622
+      ],
+      "textOverlap": 0.935213,
+      "visibleRanges": [
+        [
+          150,
+          198
+        ]
+      ]
+    },
+    "B": {
+      "letter": "B",
+      "instance": "AnsBtn2",
+      "buttonId": 170,
+      "branch": "right4",
+      "letterTextId": 37,
+      "textId": 163,
+      "text": "Y = 1,760 ∙ M",
+      "hitBoxPx": [
+        91.0,
+        279.75,
+        283.504,
+        311.3961
+      ],
+      "textOverlap": 1.0,
+      "visibleRanges": [
+        [
+          151,
+          401
+        ]
+      ]
+    },
+    "C": {
+      "letter": "C",
+      "instance": "AnsBtn3",
+      "buttonId": 169,
+      "branch": "wrong4",
+      "letterTextId": 60,
+      "textId": 165,
+      "text": "Y = M ÷ 36",
+      "hitBoxPx": [
+        91.6,
+        321.8098,
+        260.9485,
+        358.5056
+      ],
+      "textOverlap": 0.977333,
+      "visibleRanges": [
+        [
+          152,
+          198
+        ]
+      ]
+    },
+    "D": {
+      "letter": "D",
+      "instance": "AnsBtn4",
+      "buttonId": 169,
+      "branch": "wrong4",
+      "letterTextId": 49,
+      "textId": 167,
+      "text": "Y = 36 ∙ M",
+      "hitBoxPx": [
+        92.95,
+        369.5,
+        260.0073,
+        402.4732
+      ],
+      "textOverlap": 1.0,
+      "visibleRanges": [
+        [
+          153,
+          198
+        ]
+      ]
+    }
+  },
+  "glossary": [
+    {
+      "buttonId": 137,
+      "term": "Convert",
+      "ownerSpriteId": 138,
+      "firstFrame": 1,
+      "lastFrame": 1,
+      "scriptPath": "scripts/DefineButton2_137/BUTTONCONDACTION on(release).as"
+    },
+    {
+      "buttonId": 154,
+      "term": "Function table",
+      "ownerSpriteId": 327,
+      "firstFrame": 2,
+      "lastFrame": 401,
+      "scriptPath": "scripts/DefineButton2_154/BUTTONCONDACTION on(release).as"
+    },
+    {
+      "buttonId": 155,
+      "term": "Data",
+      "ownerSpriteId": 327,
+      "firstFrame": 2,
+      "lastFrame": 401,
+      "scriptPath": "scripts/DefineButton2_155/BUTTONCONDACTION on(release).as"
+    },
+    {
+      "buttonId": 156,
+      "term": "Function",
+      "ownerSpriteId": 327,
+      "firstFrame": 2,
+      "lastFrame": 401,
+      "scriptPath": "scripts/DefineButton2_156/BUTTONCONDACTION on(release).as"
+    }
+  ],
+  "table": {
+    "headers": [
+      {
+        "textId": 145,
+        "text": "Miles",
+        "visibleRanges": [
+          [
+            3,
+            401
+          ]
+        ]
+      },
+      {
+        "textId": 146,
+        "text": "Yards",
+        "visibleRanges": [
+          [
+            3,
+            401
+          ]
+        ]
+      }
+    ],
+    "rows": [
+      [
+        {
+          "textId": 147,
+          "text": "5",
+          "visibleRanges": [
+            [
+              3,
+              401
+            ]
+          ]
+        },
+        {
+          "textId": 148,
+          "text": "8,800",
+          "visibleRanges": [
+            [
+              3,
+              401
+            ]
+          ]
+        }
+      ],
+      [
+        {
+          "textId": 149,
+          "text": "10",
+          "visibleRanges": [
+            [
+              3,
+              401
+            ]
+          ]
+        },
+        {
+          "textId": 150,
+          "text": "17,600",
+          "visibleRanges": [
+            [
+              3,
+              401
+            ]
+          ]
+        }
+      ],
+      [
+        {
+          "textId": 151,
+          "text": "15",
+          "visibleRanges": [
+            [
+              3,
+              401
+            ]
+          ]
+        },
+        {
+          "textId": 152,
+          "text": "26,400",
+          "visibleRanges": [
+            [
+              3,
+              401
+            ]
+          ]
+        }
+      ]
+    ],
+    "description": "Source function table: 5 miles gives 8,800 yards; 10 miles gives 17,600 yards; 15 miles gives 26,400 yards."
+  },
+  "explanation": [
+    {
+      "textId": 324,
+      "text": "Y = 1,760 ∙ 5",
+      "visibleRanges": [
+        [
+          276,
+          401
+        ]
+      ]
+    },
+    {
+      "textId": 325,
+      "text": "Y = 8,800",
+      "visibleRanges": [
+        [
+          331,
+          401
+        ]
+      ]
+    }
+  ],
+  "pairedValueEmphasis": [
+    {
+      "sourceTextId": 326,
+      "targetTextId": 148,
+      "value": "8,800",
+      "visibleRanges": [
+        [
+          374,
+          374
+        ],
+        [
+          376,
+          376
+        ],
+        [
+          378,
+          378
+        ],
+        [
+          380,
+          380
+        ],
+        [
+          382,
+          382
+        ]
+      ],
+      "sourceGeometry": {
+        "depth": 65,
+        "boxPx": [
+          547.2,
+          282.9,
+          612.35,
+          302.45
+        ],
+        "targetBoxPx": [
+          547.2,
+          282.85,
+          612.35,
+          302.4
+        ],
+        "overlap": 0.997442
+      }
+    },
+    {
+      "sourceTextId": 326,
+      "targetTextId": 325,
+      "value": "8,800",
+      "visibleRanges": [
+        [
+          374,
+          374
+        ],
+        [
+          376,
+          376
+        ],
+        [
+          378,
+          378
+        ],
+        [
+          380,
+          380
+        ],
+        [
+          382,
+          382
+        ]
+      ],
+      "sourceGeometry": {
+        "depth": 64,
+        "boxPx": [
+          180.7,
+          325.65,
+          245.85,
+          345.2
+        ],
+        "targetBoxPx": [
+          138.8,
+          325.65,
+          245.85,
+          345.2
+        ],
+        "overlap": 1.0
+      }
+    }
+  ],
+  "streams": [
+    {
+      "spriteId": 192,
+      "role": "right4",
+      "codec": "swf-adpcm",
+      "activeAnswerPath": true,
+      "frameCount": 25,
+      "blockCount": 13,
+      "payloadBytes": 3770,
+      "payloadSha256": "e5c99e029d9df7717bc7755b5f4660841ad3f453d10bb8dbc8010d69b5a653b6",
+      "assetPath": "migrations/shared-alg001-l06-p049/assets/source-stream-192-right4.swf-adpcm-blocks.bin"
+    },
+    {
+      "spriteId": 206,
+      "role": "right1",
+      "codec": "mp3",
+      "activeAnswerPath": false,
+      "frameCount": 32,
+      "blockCount": 30,
+      "payloadBytes": 12350,
+      "payloadSha256": "7e9810de5390cdc982dac2795e046343157a6ad9fe4a2ab13e1020b401b2ad11",
+      "assetPath": "migrations/shared-alg001-l06-p049/assets/source-stream-206-right1.mp3"
+    },
+    {
+      "spriteId": 227,
+      "role": "right3",
+      "codec": "mp3",
+      "activeAnswerPath": false,
+      "frameCount": 33,
+      "blockCount": 31,
+      "payloadBytes": 12740,
+      "payloadSha256": "c9502f3d979684587046242dc9022b8aa89e89c72688dfa4bc027858badd9e6e",
+      "assetPath": "migrations/shared-alg001-l06-p049/assets/source-stream-227-right3.mp3"
+    },
+    {
+      "spriteId": 239,
+      "role": "right2",
+      "codec": "mp3",
+      "activeAnswerPath": false,
+      "frameCount": 28,
+      "blockCount": 28,
+      "payloadBytes": 11570,
+      "payloadSha256": "ede0affb88cb9c7d0378514ff027a74e843f5f1cbac3f751820392dd9420d9e8",
+      "assetPath": "migrations/shared-alg001-l06-p049/assets/source-stream-239-right2.mp3"
+    },
+    {
+      "spriteId": 255,
+      "role": "wrong1",
+      "codec": "mp3",
+      "activeAnswerPath": false,
+      "frameCount": 29,
+      "blockCount": 28,
+      "payloadBytes": 11570,
+      "payloadSha256": "770ce8a109fb78c238d218e479047529e8cb39f006f8c70747be376556e2a541",
+      "assetPath": "migrations/shared-alg001-l06-p049/assets/source-stream-255-wrong1.mp3"
+    },
+    {
+      "spriteId": 270,
+      "role": "wrong3",
+      "codec": "mp3",
+      "activeAnswerPath": false,
+      "frameCount": 28,
+      "blockCount": 27,
+      "payloadBytes": 11050,
+      "payloadSha256": "3506fcffbe07e726fd4cf1c750cd2641d2aa06f4ca14379b4407ea5843e4f0f0",
+      "assetPath": "migrations/shared-alg001-l06-p049/assets/source-stream-270-wrong3.mp3"
+    },
+    {
+      "spriteId": 302,
+      "role": "wrong4",
+      "codec": "mp3",
+      "activeAnswerPath": true,
+      "frameCount": 28,
+      "blockCount": 27,
+      "payloadBytes": 11050,
+      "payloadSha256": "f87ec03bf9163390a117b6ad1ea7c47dab7ea7e729219acff0e0617f6100a9f1",
+      "assetPath": "migrations/shared-alg001-l06-p049/assets/source-stream-302-wrong4.mp3"
+    },
+    {
+      "spriteId": 323,
+      "role": "wrong2",
+      "codec": "mp3",
+      "activeAnswerPath": false,
+      "frameCount": 28,
+      "blockCount": 27,
+      "payloadBytes": 11050,
+      "payloadSha256": "1c3e481dcaa018b19c5b24eaa05b11d88e7cb75a640acd8a06133ccf3ff0c7e5",
+      "assetPath": "migrations/shared-alg001-l06-p049/assets/source-stream-323-wrong2.mp3"
+    },
+    {
+      "spriteId": 327,
+      "role": "main",
+      "codec": "mp3",
+      "activeAnswerPath": true,
+      "frameCount": 401,
+      "blockCount": 390,
+      "payloadBytes": 161590,
+      "payloadSha256": "3641957aaae5efe149e318409f35c8de196dea06124a15df2abdb42fb5424b55",
+      "assetPath": "migrations/shared-alg001-l06-p049/assets/source-stream-327-main.mp3"
+    }
+  ]
+}

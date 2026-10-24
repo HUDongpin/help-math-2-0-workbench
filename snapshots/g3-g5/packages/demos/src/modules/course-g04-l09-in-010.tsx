@@ -1,0 +1,19 @@
+"use client";
+
+import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
+import {G4_L9_IN010_HOST_AUDIO} from "../modern-lessons/g4-l9-in010/host-audio.generated";
+import {COURSE_G04_L09_IN_010_CONFIG, COURSE_G04_L09_IN_010_SOURCE} from "../timelines/course-g04-l09-in-010";
+
+const candidate = createSourceStaticCanvasCandidate(COURSE_G04_L09_IN_010_CONFIG);
+const module = Object.freeze({...candidate.module, ...G4_L9_IN010_HOST_AUDIO, maturity: "private-current-js" as const});
+
+export {COURSE_G04_L09_IN_010_SOURCE};
+export const COURSE_G04_L09_IN_010_MOVIE = candidate.movie;
+export const COURSE_G04_L09_IN_010_RUNTIME = candidate.runtime;
+export const COURSE_G04_L09_IN_010_SOURCE_CONTRACT = candidate.sourceContract;
+export const COURSE_G04_L09_IN_010_SCENARIOS = candidate.scenarios;
+export const normalizeCourseG04L09In010Frame = candidate.normalizeFrame;
+export const getCourseG04L09In010FrameState = candidate.getFrameState;
+export const buildCourseG04L09In010CaptureAttributes = candidate.buildCaptureAttributes;
+export const CourseG04L09In010Renderer = candidate.Renderer;
+export default module;

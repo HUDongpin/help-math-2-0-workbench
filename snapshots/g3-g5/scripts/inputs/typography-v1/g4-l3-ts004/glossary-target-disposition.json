@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "kind": "g4-l3-ts004-source-button-target-disposition-v1",
+  "placementId": "g04-l03-placement-032",
+  "animationId": "course-g04-l03-ts-004",
+  "sourceSwfSha256": "ec56922f78cb0096feb504be6b35a0957e5d178b703e0b586d0ed949f620ab76",
+  "sourceCatalogContentSha256": "cdc2811355cb506af1572e628abb9b686b5ca286194db48f2ebfd0d73d8bf436",
+  "buttons": [
+    {"buttonId": 19, "sourceKey": "Solve", "nativeTarget": "active-step/solve", "sourceWindows": [[22, 84], [111, 336]]},
+    {"buttonId": 20, "sourceKey": "Problem", "nativeTarget": "active-step/problem", "sourceWindows": [[22, 84], [111, 336]]},
+    {"buttonId": 26, "sourceKey": "strategy", "nativeTarget": "strategies-heading/strategies", "sourceWindows": [[85, 110]]},
+    {"buttonId": 27, "sourceKey": "Data tables", "nativeTarget": "active-step/solve", "sourceKeyLookup": true, "sourceWindows": [[85, 110]], "sourceIssue": "The original Solve hit region requests Data tables. Preserve the visible source word and exact requested key; resolve against the verified source index without correcting the source mismatch."},
+    {"buttonId": 28, "sourceKey": "strategies", "nativeTarget": "active-step/problem", "sourceKeyLookup": true, "sourceWindows": [[85, 110]], "sourceIssue": "The original problem hit region requests strategies, absent from the verified source index. Perform the exact lookup and report a modern unavailable state; do not borrow the singular Strategy entry."},
+    {"buttonId": 63, "sourceKey": "Strategy", "nativeTarget": "strategies-heading/strategies", "sourceWindows": [[111, 336]]},
+    {"buttonId": 64, "sourceKey": "Equation", "nativeTarget": "left/write-equation/equation", "sourceWindows": [[111, 336]]},
+    {"buttonId": 65, "sourceKey": "Pattern", "nativeTarget": "left/look-pattern/pattern", "sourceWindows": [[111, 336]]},
+    {"buttonId": 66, "sourceKey": "Table", "nativeTarget": "right/make-table/table", "sourceWindows": [[111, 336]]},
+    {"buttonId": 67, "sourceKey": "Simple / Simpler / Simplest", "nativeTarget": "right/work-simpler-problem/simpler", "sourceWindows": [[111, 336]]}
+  ],
+  "sourceHostEvidence": {"path": "migrations/shell-course-g04-l03-index-local/audit/machine/ffdec-scripts.txt.gz", "sha256": "c837d68c69d82cf025b9775a66f26ebb4f5a76dfb7e4d06eee43aaffce4d04f7", "contentSha256": "e8f4de5ccebb54384def950ed3686d70dc3e0d3e1a9388842d2f50f2083d2018", "scope": "DoHyperLinks opens and pauses before doCreateSKTSubLink clears prior content and performs case-folded exact lookup. The missing-key AVM1 terminal state is not established."},
+  "claimBoundary": "Source keys, hit words and frame windows are retained. The exact lookup and explicit unavailable state are maintained modern host behavior requiring current verification; they do not establish original-runtime failure behavior, fidelity, listening, human/Owner acceptance or publication."
+}

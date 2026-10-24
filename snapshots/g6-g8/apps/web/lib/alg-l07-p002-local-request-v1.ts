@@ -1,0 +1,13 @@
+import{isG678LocalPreviewRequestHeaders,isG678LocalPreviewRequestUrl,type G678PreviewEnvironment}from'./g678-preview-policy';
+import{P002_ASSET_ROOT,P002_LOCAL_ORIGIN,p002DocumentReferer,p002LocalDevelopment}from'./alg-l07-p002-preview-policy-v1';
+export const P002_STREAM_PIN=Object.freeze({sourceBytes:486980,sourceSha256:'e016378323f1bec789386fccb3ddd723ddd857394249752a12114d7b15434b97'});
+export const P002_SPANISH_PIN=Object.freeze({sourceBytes:342384,sourceSha256:'1bbe047ac9df1f924560264c03525304c80248dee73a29776aa5f43c73e9f667'});
+export const P002_RESOURCE_PINS=Object.freeze({
+ 'source-stream':Object.freeze({originalPath:`${P002_ASSET_ROOT}/source-stream`,path:'migrations/shared-alg001-l07-p002/source-v1/source-stream-452.mp3',bytes:486980,sha256:P002_STREAM_PIN.sourceSha256,contentType:'audio/mpeg',destination:'empty',mode:'cors'}),
+ 'native-canvas-renderer.js':Object.freeze({originalPath:`${P002_ASSET_ROOT}/native-canvas-renderer.js`,path:'migrations/shared-alg001-l07-p002/canvas-v1/native-canvas-renderer-v2.js',bytes:14208476,sha256:'d02d235aadd0e0a258adc2de7e4526d8b329908f8db302c70ab14c031e2c7a2e',contentType:'application/javascript',destination:'script',mode:'cors'}),
+ 'optional-spanish-audio':Object.freeze({originalPath:`${P002_ASSET_ROOT}/optional-spanish-audio`,path:'G6-G8-shared/ALG001/L7/SA/L7RW02.mp3',bytes:342384,sha256:P002_SPANISH_PIN.sourceSha256,contentType:'audio/mpeg',destination:'empty',mode:'cors'}),
+});export type P002Resource=keyof typeof P002_RESOURCE_PINS;
+export function p002ResourceForRequest(request:{method:string;url:URL;headers:Pick<Headers,'get'>},mode:'candidate'|'registered',env:G678PreviewEnvironment=process.env):P002Resource|null{
+ const{method,url,headers}=request;if(!p002LocalDevelopment(env)||!isG678LocalPreviewRequestUrl(url,env)||!isG678LocalPreviewRequestHeaders(headers,env)||url.protocol!=='http:'||url.port!=='3331'||url.username||url.password||url.hash||headers.get('host')!=='127.0.0.1:3331'||![null,'127.0.0.1:3331'].includes(headers.get('x-forwarded-host'))||![null,'http'].includes(headers.get('x-forwarded-proto'))||headers.get('range')!==null||headers.get('sec-fetch-site')!=='same-origin'||![null,P002_LOCAL_ORIGIN].includes(headers.get('origin'))||!p002DocumentReferer(headers.get('referer'),mode)||!['GET','HEAD'].includes(method))return null;
+ for(const[token,row]of Object.entries(P002_RESOURCE_PINS))if([row.originalPath,`${P002_ASSET_ROOT}-${mode}/${token}`].includes(url.pathname)&&url.search===`?sha256=${row.sha256}`&&headers.get('sec-fetch-dest')===row.destination&&headers.get('sec-fetch-mode')===row.mode)return token as P002Resource;return null;
+}

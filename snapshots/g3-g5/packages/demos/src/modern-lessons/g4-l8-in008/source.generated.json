@@ -1,0 +1,2406 @@
+{
+  "schemaVersion": 1,
+  "sourceDifferences": [
+    {
+      "id": "clear-stale-answer-at-new-expression",
+      "sourceCharacter": 97,
+      "sourceText": "20",
+      "sourceLifetime": [
+        96,
+        244
+      ],
+      "newExpressionFrame": 159,
+      "newExpression": "x + 6",
+      "newCondition": "if   x = 3",
+      "nativeLifetime": [
+        96,
+        159
+      ],
+      "nativeAfterBoundary": "",
+      "reason": "Prevent the previous answer20 from appearing as the value of x+6 with x=3. Preserve the source new-expression boundary and pointer/button timing; do not reveal9.",
+      "authorization": "Root decision under the active Owner full-goal requirement to fix substantive mathematical errors before implementation credit.",
+      "claimBoundary": "Explicit modern teaching correction; source assets untouched, original source timing retained in evidence, no fidelity claim."
+    },
+    {
+      "id": "ignore-retired-feedback-ui-completion",
+      "sourceButton": 123,
+      "sourcePanelDomain": "sprite-126",
+      "sourcePanelTerminalFrame": 47,
+      "sourceFact": "Button123 hides the panel and resets answer controls but does not stop WrongFeed126. Its frame47 can still clear answer/enable controls. The original runtime race is unmeasured.",
+      "modernPolicy": "After Early Close, discard the old panel UI completion ticket. Reject late UI callbacks for the old panel after new typing, a new submission, a new question or Replay. Independently placed Coach128 and its audio continue on the existing host clock and may finish naturally; Early Close does not cancel coach/audio.",
+      "reason": "Avoid an old feedback panel clearing or corrupting a newer answer while keeping independent source coach playback.",
+      "authorization": "Root decision under the active Owner full-goal requirement to fix substantive modern interaction errors before credit.",
+      "claimBoundary": "Disclosed modern isolation policy; not original-runtime or behavior-fidelity equivalence. Source scripts/FLA/SWF remain unchanged."
+    }
+  ],
+  "nativeAnswerRetirementFrame": 159,
+  "animationId": "course-g04-l08-in-008",
+  "placementId": "g04-l08-placement-021",
+  "sourceSwfSha256": "e50183ad2235c2a8c6b54172c25c9e8088587884d62497586adbe224cc9f8087",
+  "domain": "sprite-131",
+  "rootFrame": 6,
+  "fps": 12,
+  "frameCount": 245,
+  "quizFrame": 244,
+  "sourceRefs": {
+    "source": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L8/IN/L8IN08.swf",
+      "bytes": 147583,
+      "sha256": "e50183ad2235c2a8c6b54172c25c9e8088587884d62497586adbe224cc9f8087"
+    },
+    "fla": {
+      "path": "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L8/IN/L8IN08.fla",
+      "bytes": 1264640,
+      "sha256": "41bc0efa172fa5d1b0300c547e5fed55b2e4001e7e5c3b427c0332959a1ad5c0"
+    },
+    "asset": {
+      "path": "catalog/typography-v1/source-catalog/assets/e50183ad2235c2a8c6b54172c25c9e8088587884d62497586adbe224cc9f8087.json.gz",
+      "bytes": 39422,
+      "sha256": "412285052ce814f634c40dcac451fc1fa85d44654569715ac9f4b3ae333fe7cd"
+    },
+    "xml": {
+      "path": "migrations/course-g04-l08-in-008/audit/machine/swfmill.xml.gz",
+      "bytes": 179279,
+      "sha256": "f05ae89626c74ce00b69c8b1044b129836a6e34f98e56e235943263c68c161b4"
+    },
+    "sourceScripts": {
+      "path": "migrations/course-g04-l08-in-008/audit/machine/ffdec-scripts.txt.gz",
+      "bytes": 1351,
+      "sha256": "f53200a48f08f10ee4bc26aa623fd378de54f301d7f864083383915ef522ef80"
+    },
+    "audioAudit": {
+      "path": "migrations/course-g04-l08-in-008/audit/audio-runtime-evidence.json",
+      "bytes": 15915,
+      "sha256": "0dbb5e5bbb2ea6469e3abc008828dcb18dfbfce47aad1a1597025faffe5c2828"
+    }
+  },
+  "questions": [
+    {
+      "id": "Q01",
+      "expression": "x + 12",
+      "condition": "if x = 8",
+      "answer": "20",
+      "feedback": "Substitute 8 for x, and then add. Try again!",
+      "sourceTextIds": [
+        "character-114",
+        "character-115",
+        "character-116",
+        "character-125"
+      ],
+      "sourceAction": "DefineSprite_131/frame_244/DoAction.as",
+      "sourceLiteral": "x + 12~if x = 8~20~Substitute 8 for x, and then add. Try again!"
+    },
+    {
+      "id": "Q02",
+      "expression": "x + 6",
+      "condition": "if x = 3",
+      "answer": "9",
+      "feedback": "Substitute 3 for x, and then add. Try again!",
+      "sourceTextIds": [
+        "character-114",
+        "character-115",
+        "character-116",
+        "character-125"
+      ],
+      "sourceAction": "DefineSprite_131/frame_244/DoAction.as",
+      "sourceLiteral": "x + 6~if x = 3~9~Substitute 3 for x, and then add. Try again!"
+    },
+    {
+      "id": "Q03",
+      "expression": "17 + x",
+      "condition": "if x = 4",
+      "answer": "21",
+      "feedback": "Substitute 4 for x, and then add. Try again!",
+      "sourceTextIds": [
+        "character-114",
+        "character-115",
+        "character-116",
+        "character-125"
+      ],
+      "sourceAction": "DefineSprite_131/frame_244/DoAction.as",
+      "sourceLiteral": "17 + x~if x = 4~21~Substitute 4 for x, and then add. Try again!"
+    },
+    {
+      "id": "Q04",
+      "expression": "5 – x",
+      "condition": "if x = 1",
+      "answer": "4",
+      "feedback": "Substitute 1 for x, and then subtract. Try again!",
+      "sourceTextIds": [
+        "character-114",
+        "character-115",
+        "character-116",
+        "character-125"
+      ],
+      "sourceAction": "DefineSprite_131/frame_244/DoAction.as",
+      "sourceLiteral": "5 – x~if x = 1~4~Substitute 1 for x, and then subtract. Try again!"
+    },
+    {
+      "id": "Q05",
+      "expression": "23 – x",
+      "condition": "if x = 6",
+      "answer": "17",
+      "feedback": "Substitute 6 for x, and then subtract. Try again!",
+      "sourceTextIds": [
+        "character-114",
+        "character-115",
+        "character-116",
+        "character-125"
+      ],
+      "sourceAction": "DefineSprite_131/frame_244/DoAction.as",
+      "sourceLiteral": "23 – x~if x = 6~17~Substitute 6 for x, and then subtract. Try again!"
+    },
+    {
+      "id": "Q06",
+      "expression": "x – 3",
+      "condition": "if x = 9",
+      "answer": "6",
+      "feedback": "Substitute 9 for x, and then subtract. Try again!",
+      "sourceTextIds": [
+        "character-114",
+        "character-115",
+        "character-116",
+        "character-125"
+      ],
+      "sourceAction": "DefineSprite_131/frame_244/DoAction.as",
+      "sourceLiteral": "x – 3~if x = 9~6~Substitute 9 for x, and then subtract. Try again!"
+    },
+    {
+      "id": "Q07",
+      "expression": "x × 8",
+      "condition": "if x = 2",
+      "answer": "16",
+      "feedback": "Substitute 2 for x, and then multiply. Try again!",
+      "sourceTextIds": [
+        "character-114",
+        "character-115",
+        "character-116",
+        "character-125"
+      ],
+      "sourceAction": "DefineSprite_131/frame_244/DoAction.as",
+      "sourceLiteral": "x × 8~if x = 2~16~Substitute 2 for x, and then multiply. Try again!"
+    },
+    {
+      "id": "Q08",
+      "expression": "x × 12",
+      "condition": "if x = 5",
+      "answer": "60",
+      "feedback": "Substitute 5 for x, and then multiply. Try again!",
+      "sourceTextIds": [
+        "character-114",
+        "character-115",
+        "character-116",
+        "character-125"
+      ],
+      "sourceAction": "DefineSprite_131/frame_244/DoAction.as",
+      "sourceLiteral": "x × 12~if x = 5~60~Substitute 5 for x, and then multiply. Try again!"
+    },
+    {
+      "id": "Q09",
+      "expression": "7 × x",
+      "condition": "if x = 7",
+      "answer": "49",
+      "feedback": "Substitute 7 for x, and then multiply. Try again!",
+      "sourceTextIds": [
+        "character-114",
+        "character-115",
+        "character-116",
+        "character-125"
+      ],
+      "sourceAction": "DefineSprite_131/frame_244/DoAction.as",
+      "sourceLiteral": "7 × x~if x = 7~49~Substitute 7 for x, and then multiply. Try again!"
+    },
+    {
+      "id": "Q10",
+      "expression": "42 ÷ x",
+      "condition": "if x = 6",
+      "answer": "7",
+      "feedback": "Substitute 6 for x, and then divide. Try again!",
+      "sourceTextIds": [
+        "character-114",
+        "character-115",
+        "character-116",
+        "character-125"
+      ],
+      "sourceAction": "DefineSprite_131/frame_244/DoAction.as",
+      "sourceLiteral": "42 ÷ x~if x = 6~7~Substitute 6 for x, and then divide. Try again!"
+    },
+    {
+      "id": "Q11",
+      "expression": "24 ÷ x",
+      "condition": "if x = 8",
+      "answer": "3",
+      "feedback": "Substitute 8 for x, and then divide. Try again!",
+      "sourceTextIds": [
+        "character-114",
+        "character-115",
+        "character-116",
+        "character-125"
+      ],
+      "sourceAction": "DefineSprite_131/frame_244/DoAction.as",
+      "sourceLiteral": "24 ÷ x~if x = 8~3~Substitute 8 for x, and then divide. Try again!"
+    },
+    {
+      "id": "Q12",
+      "expression": "x ÷ 3",
+      "condition": "if x = 9",
+      "answer": "3",
+      "feedback": "Substitute 9 for x, and then divide. Try again!",
+      "sourceTextIds": [
+        "character-114",
+        "character-115",
+        "character-116",
+        "character-125"
+      ],
+      "sourceAction": "DefineSprite_131/frame_244/DoAction.as",
+      "sourceLiteral": "x ÷ 3~if x = 9~3~Substitute 9 for x, and then divide. Try again!"
+    }
+  ],
+  "staticDefinitions": [
+    {
+      "characterId": 4,
+      "sourceTextId": "character-4",
+      "sourceTagSha256": "800bc6680bb5bda580e7cd895043204cd02de77ffdb075f104381e8788cabf0c",
+      "text": "Need More Help",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 5,
+      "sourceTextId": "character-5",
+      "sourceTagSha256": "e5c3909c8e08eaf0c5d21229b7bc8bb559fb37868f5e558624e540a9e1948ab0",
+      "text": "Need More Help",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 12,
+      "sourceTextId": "character-12",
+      "sourceTagSha256": "b9a4c01c8903bdcbd499def515e2b8bc20209f5f4d8ce6a4db10996d09980fa4",
+      "text": "Close",
+      "reachable": true,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 21,
+      "sourceTextId": "character-21",
+      "sourceTagSha256": "48caead4e12ae9ab9cf7e346f3dc213317259b05b9f7f1f634f4dc42cfc91d88",
+      "text": "Arrays for 32:",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 22,
+      "sourceTextId": "character-22",
+      "sourceTagSha256": "9ccc69a64fd6003f2ca53f10d9702374b360da1b706c7a7af583aafff8d8c2e9",
+      "text": "1 × 32",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 23,
+      "sourceTextId": "character-23",
+      "sourceTagSha256": "ece9b8e9082b79643dfa751f09c4cf7615297b26d54da986a48e72c06fcc7bf1",
+      "text": "Factors of 32: 1, 2, 4, 8, 16, 32",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 25,
+      "sourceTextId": "character-25",
+      "sourceTagSha256": "6a333eeacda53fc66eec7b32d418837234e2b174281aed5a14fb02cd39d92f70",
+      "text": "2 × 16",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 26,
+      "sourceTextId": "character-26",
+      "sourceTagSha256": "b378f7f8d186a4acf235ab3497de1556f16c577e65c45f6eb96cea73b5df5277",
+      "text": "4 × 8",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 31,
+      "sourceTextId": "character-31",
+      "sourceTagSha256": "8f0549ad25e1db162ad24da200b242caac1f45af879e26ad7de5a586abe8565e",
+      "text": "C",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 44,
+      "sourceTextId": "character-44",
+      "sourceTagSha256": "c1630c0fa8b15a758fc538bbe9e952a234726a2694f3ed5f205a189430aaf483",
+      "text": "2000",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 45,
+      "sourceTextId": "character-45",
+      "sourceTagSha256": "5adaaa7e3f4fb88bd74c44368f789195f23d1415c1113b5d75ea3b0f054dcc08",
+      "text": "1991-",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 46,
+      "sourceTextId": "character-46",
+      "sourceTagSha256": "61e5fcb353588b35992c148bd89966f97a54c07096907a302defaa9b51d5a6cd",
+      "text": "1990",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 47,
+      "sourceTextId": "character-47",
+      "sourceTagSha256": "77c2d219cb6c87daa17a1aa5d9eab923511f95ff4e732c90e85ff53593300bd9",
+      "text": "1981-",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 48,
+      "sourceTextId": "character-48",
+      "sourceTagSha256": "282196e57cb3690e49c4a92782766b13e5cd65809998ce67e3748472801da92b",
+      "text": "1980",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 49,
+      "sourceTextId": "character-49",
+      "sourceTagSha256": "694676b791bcfdc78751b5d733114dfdd38cd61a4d07df815c1cf71a1424ac18",
+      "text": "1971-",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 50,
+      "sourceTextId": "character-50",
+      "sourceTagSha256": "c0f87c3a5564a653f2dab6a4753c017a6a83225b6f45cc1f869bf07602250cde",
+      "text": "1970",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 51,
+      "sourceTextId": "character-51",
+      "sourceTagSha256": "4b10e0329a73b176adb97b28d5a0a591c8d37f01be2ef05213f7b13a6803861b",
+      "text": "1961-",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 52,
+      "sourceTextId": "character-52",
+      "sourceTagSha256": "235fd68b188a120a642c6653736d14a03bf70cc0109b5e59f2bc57b3daefeb5d",
+      "text": "1960",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 53,
+      "sourceTextId": "character-53",
+      "sourceTagSha256": "75e93d5ccc5f7f937166ac820fb54feaabf7d4c10ce02a583b8cc6dde5de9b89",
+      "text": "2",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 54,
+      "sourceTextId": "character-54",
+      "sourceTagSha256": "9a52242ea705edfb67e4234b52f289e83e79ced935741c9ce2b64aee21638ff7",
+      "text": "4",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 55,
+      "sourceTextId": "character-55",
+      "sourceTagSha256": "3adebd3d0aa45b50fa7ba2d47297b2916edcd26e8909893cdc5bca1d7616f783",
+      "text": "6",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 56,
+      "sourceTextId": "character-56",
+      "sourceTagSha256": "b01f94856da3058c254b4bbe06848bf23fd0b46deedcd1422b950b853e4e1063",
+      "text": "1951-",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 57,
+      "sourceTextId": "character-57",
+      "sourceTagSha256": "603e5bb28871c5b6d5b1467116a2e6c7332f466bafb290cd24767298e6e1b911",
+      "text": "0",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 58,
+      "sourceTextId": "character-58",
+      "sourceTagSha256": "5bdf31250b1d75fc1952f60eb8f3af26b2ecfa76226e3b4745a7bbb7ef551314",
+      "text": "8",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 59,
+      "sourceTextId": "character-59",
+      "sourceTagSha256": "8edaea86800b85931c7e4b007e2d82b542df126c865ac8288e822531330e0acf",
+      "text": "10",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 60,
+      "sourceTextId": "character-60",
+      "sourceTagSha256": "091bb1ac7baa71a54c17c3aeb56ebdfb8e7ed8c21680dd307a07ccec7723c55c",
+      "text": "12",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 61,
+      "sourceTextId": "character-61",
+      "sourceTagSha256": "dc6c4610043d0e296f44a52fd80d5cdcf9a05f1eb1037383692b30cb85f9f5e8",
+      "text": "14",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 62,
+      "sourceTextId": "character-62",
+      "sourceTagSha256": "1bb5dfdca77ef23109ab72002e2b6b1fa36c35ba22d1740317135fce8879927d",
+      "text": "16",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 63,
+      "sourceTextId": "character-63",
+      "sourceTagSha256": "28ec935eed464c19d68be062559211c5d5fbc80b15e3ade87c112b442449d59f",
+      "text": "18",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 64,
+      "sourceTextId": "character-64",
+      "sourceTagSha256": "a186dcb62fb7d5cf89eaa03c25d743cdfe67ea619bf14b5d7d4d630e0c9c0000",
+      "text": "20",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 66,
+      "sourceTextId": "character-66",
+      "sourceTagSha256": "3510e8f3f607b94061efd4f6ec6c819b63ce0dd9f841a18590c40ec6b8c1335b",
+      "text": "Hurricanes",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 67,
+      "sourceTextId": "character-67",
+      "sourceTagSha256": "82eb0c3c971359afd3f43b6dc598dd02f2ee2a2f76fa851335ab5d69d9a2a58b",
+      "text": "U.S. Hurricane Strikes by Decade",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 68,
+      "sourceTextId": "character-68",
+      "sourceTagSha256": "e9ee790433d0fb2a84dae957f022a94a85d5b2e58e6466fe8928756e7404f4c8",
+      "text": "Decade",
+      "reachable": false,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 73,
+      "sourceTextId": "character-73",
+      "sourceTagSha256": "0b17f6ad03b2b0efd780d30d31b25641f7a39fd9ba812eadf10c8603ff9ccafd",
+      "text": "Mathematical Expressions: Learn It",
+      "reachable": true,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 76,
+      "sourceTextId": "character-76",
+      "sourceTagSha256": "4e22025571a1690c89970d8c11c224c5de18929eeeb111bc3783a92a00473290",
+      "text": "x + 12",
+      "reachable": true,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 78,
+      "sourceTextId": "character-78",
+      "sourceTagSha256": "955de087c5de13a16adb91d29a3d42892ea152fff90bdaf0f9cb2cb8cc7d1a0a",
+      "text": "if   x = 8",
+      "reachable": true,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 81,
+      "sourceTextId": "character-81",
+      "sourceTagSha256": "bbaf1f3776d7db97012961488d85b4fdba92413bdf450eb74029db3a2f158325",
+      "text": "New Expression",
+      "reachable": true,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 84,
+      "sourceTextId": "character-84",
+      "sourceTagSha256": "587e118f1409f184d59a620adeef6e35afb031867daced603c64c1b67b669f2d",
+      "text": "Done",
+      "reachable": true,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 88,
+      "sourceTextId": "character-88",
+      "sourceTagSha256": "93926882c08a010d0bf2ba88acd3d5c6c22180241d28cc2bc98ee8e3ed8c03f0",
+      "text": "Click the box and type the value of the expression. Then",
+      "reachable": true,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 96,
+      "sourceTextId": "character-96",
+      "sourceTagSha256": "4957bd2200ca1f416aeae74f6ff862d7aec416a831bb1204251e8b04c0dd8597",
+      "text": "2",
+      "reachable": true,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 97,
+      "sourceTextId": "character-97",
+      "sourceTagSha256": "a32703a43c5ef6bbe861ae400c925571676ec74836d6348320b14ee54ac47eea",
+      "text": "20",
+      "reachable": true,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 99,
+      "sourceTextId": "character-99",
+      "sourceTagSha256": "cb4728753e8e26011b538b7b01535733ba11cf8939325583c36002309837d607",
+      "text": "click Done to check your answer. Click New Expression to ",
+      "reachable": true,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 104,
+      "sourceTextId": "character-104",
+      "sourceTagSha256": "44643d5f838baf36606e08dbb4b2e6a7f395b30f064b7821aabff0b8292b5a87",
+      "text": "if   x = 3",
+      "reachable": true,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 105,
+      "sourceTextId": "character-105",
+      "sourceTagSha256": "6e97fbd95c3ddf77e2ad0e9ec4511ce3c8a9a93f2de1eacb4ade9fddb4c7f25a",
+      "text": "x + 6",
+      "reachable": true,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 110,
+      "sourceTextId": "character-110",
+      "sourceTagSha256": "85a007dc63afb3e3eb099546ee70ab5566c0cd89fe64194de2945ceabc7a8fee",
+      "text": "find the value of different expressions.",
+      "reachable": true,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 114,
+      "sourceTextId": "character-114",
+      "sourceTagSha256": "fe100b9e59483038e9abba7193b8d082473c7c0e9130a483764dd3a9bf3725f6",
+      "text": "",
+      "reachable": true,
+      "kind": "dynamic-field",
+      "initialText": null
+    },
+    {
+      "characterId": 115,
+      "sourceTextId": "character-115",
+      "sourceTagSha256": "14d4300d394df3d137784ed5fdb2a128156d2415ab8bc2118f97d2f9900edef2",
+      "text": "",
+      "reachable": true,
+      "kind": "dynamic-field",
+      "initialText": null
+    },
+    {
+      "characterId": 116,
+      "sourceTextId": "character-116",
+      "sourceTagSha256": "97c0b1340ebe9f15ac8ea4d74ea31c478952ebba42e778e6825ee5f0a0919c68",
+      "text": "",
+      "reachable": true,
+      "kind": "dynamic-field",
+      "initialText": {
+        "text": "15",
+        "decodeStatus": "exact-ascii",
+        "rawSha256": "e629fa6598d732768f7c726b4b621285f9c3b85303900aa912017db7617d8bdb",
+        "rawHex": null
+      }
+    },
+    {
+      "characterId": 121,
+      "sourceTextId": "character-121",
+      "sourceTagSha256": "57889776eb7e53e0f78287f6e8b32889e31f1e99d8c9942a1a2779663fc26fea",
+      "text": "Correct!!!",
+      "reachable": true,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 125,
+      "sourceTextId": "character-125",
+      "sourceTagSha256": "ce9b3c5a527f7608d3c426f61d3f1b24f9028126c735d0bde8ce8937707dbfbb",
+      "text": "",
+      "reachable": true,
+      "kind": "dynamic-field",
+      "initialText": null
+    },
+    {
+      "characterId": 127,
+      "sourceTextId": "character-127",
+      "sourceTagSha256": "2adcb4315e92496b08a0123f9705567888b6a8d4ce2ff3752a0f5aaf575a77d4",
+      "text": "Coach_audio_1",
+      "reachable": true,
+      "kind": "static-text",
+      "initialText": null
+    },
+    {
+      "characterId": 129,
+      "sourceTextId": "character-129",
+      "sourceTagSha256": "9f5bae2301f0be480184bbed1637ce67cf55d3c23b526219029cd12b750d2d87",
+      "text": "Coach_audio_2",
+      "reachable": true,
+      "kind": "static-text",
+      "initialText": null
+    }
+  ],
+  "introBlocks": [
+    {
+      "id": "sprite-131/depth-14/generation-1/character-76",
+      "characterId": 76,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-14/generation-1",
+        "timelineId": "sprite-131",
+        "depth": 14,
+        "generation": 1,
+        "characterId": 76,
+        "firstFrame": 1,
+        "lastFrameExclusive": 125,
+        "createdByEventId": "sprite-131/tag-75901",
+        "updates": [
+          "sprite-131/tag-75901"
+        ],
+        "replacedByEventId": "sprite-131/tag-128762"
+      },
+      "text": "x + 12",
+      "tokens": [
+        {
+          "text": "x ",
+          "sourceTextIds": [
+            "character-76/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              1,
+              125
+            ]
+          ]
+        },
+        {
+          "text": "+ ",
+          "sourceTextIds": [
+            "character-76/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              1,
+              125
+            ]
+          ]
+        },
+        {
+          "text": "12",
+          "sourceTextIds": [
+            "character-76/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              1,
+              125
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-16/generation-1/character-78",
+      "characterId": 78,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-16/generation-1",
+        "timelineId": "sprite-131",
+        "depth": 16,
+        "generation": 1,
+        "characterId": 78,
+        "firstFrame": 1,
+        "lastFrameExclusive": 125,
+        "createdByEventId": "sprite-131/tag-75921",
+        "updates": [
+          "sprite-131/tag-75921"
+        ],
+        "removedByEventId": "sprite-131/tag-128736"
+      },
+      "text": "if   x = 8",
+      "tokens": [
+        {
+          "text": "if   ",
+          "sourceTextIds": [
+            "character-78/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              1,
+              125
+            ]
+          ]
+        },
+        {
+          "text": "x ",
+          "sourceTextIds": [
+            "character-78/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              1,
+              125
+            ]
+          ]
+        },
+        {
+          "text": "= ",
+          "sourceTextIds": [
+            "character-78/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              1,
+              125
+            ]
+          ]
+        },
+        {
+          "text": "8",
+          "sourceTextIds": [
+            "character-78/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              1,
+              125
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-19/generation-1/character-81",
+      "characterId": 81,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-19/generation-1",
+        "timelineId": "sprite-131",
+        "depth": 19,
+        "generation": 1,
+        "characterId": 81,
+        "firstFrame": 1,
+        "lastFrameExclusive": 173,
+        "createdByEventId": "sprite-131/tag-75964",
+        "updates": [
+          "sprite-131/tag-75964"
+        ],
+        "removedByEventId": "sprite-131/tag-150023"
+      },
+      "text": "New Expression",
+      "tokens": [
+        {
+          "text": "New ",
+          "sourceTextIds": [
+            "character-81/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              1,
+              173
+            ]
+          ]
+        },
+        {
+          "text": "Expression",
+          "sourceTextIds": [
+            "character-81/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              1,
+              173
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-22/generation-1/character-84",
+      "characterId": 84,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-22/generation-1",
+        "timelineId": "sprite-131",
+        "depth": 22,
+        "generation": 1,
+        "characterId": 84,
+        "firstFrame": 1,
+        "lastFrameExclusive": 131,
+        "createdByEventId": "sprite-131/tag-76012",
+        "updates": [
+          "sprite-131/tag-76012",
+          "sprite-131/tag-130619"
+        ],
+        "removedByEventId": "sprite-131/tag-131456"
+      },
+      "text": "Done",
+      "tokens": [
+        {
+          "text": "Done",
+          "sourceTextIds": [
+            "character-84/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              1,
+              131
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-3/generation-1/character-88",
+      "characterId": 88,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-3/generation-1",
+        "timelineId": "sprite-131",
+        "depth": 3,
+        "generation": 1,
+        "characterId": 88,
+        "firstFrame": 67,
+        "lastFrameExclusive": 246,
+        "createdByEventId": "sprite-131/tag-102855",
+        "updates": [
+          "sprite-131/tag-102855"
+        ]
+      },
+      "text": "Click the box and type the value of the expression. Then",
+      "tokens": [
+        {
+          "text": "Click ",
+          "sourceTextIds": [
+            "character-88/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              70,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "the ",
+          "sourceTextIds": [
+            "character-88/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              73,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "box ",
+          "sourceTextIds": [
+            "character-88/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              83,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "and ",
+          "sourceTextIds": [
+            "character-88/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              85,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "type ",
+          "sourceTextIds": [
+            "character-88/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              89,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "the ",
+          "sourceTextIds": [
+            "character-88/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              91,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "value ",
+          "sourceTextIds": [
+            "character-88/run-1"
+          ],
+          "completeInkRanges": [
+            [
+              95,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "of ",
+          "sourceTextIds": [
+            "character-88/run-2"
+          ],
+          "completeInkRanges": [
+            [
+              97,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "the ",
+          "sourceTextIds": [
+            "character-88/run-2"
+          ],
+          "completeInkRanges": [
+            [
+              100,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "expression. ",
+          "sourceTextIds": [
+            "character-88/run-3",
+            "character-88/run-4"
+          ],
+          "completeInkRanges": [
+            [
+              107,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "Then",
+          "sourceTextIds": [
+            "character-88/run-4"
+          ],
+          "completeInkRanges": [
+            [
+              115,
+              246
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-23/generation-7/character-96",
+      "characterId": 96,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-23/generation-7",
+        "timelineId": "sprite-131",
+        "depth": 23,
+        "generation": 7,
+        "characterId": 96,
+        "firstFrame": 92,
+        "lastFrameExclusive": 96,
+        "createdByEventId": "sprite-131/tag-114080",
+        "updates": [
+          "sprite-131/tag-114080"
+        ],
+        "removedByEventId": "sprite-131/tag-115875"
+      },
+      "text": "2",
+      "tokens": [
+        {
+          "text": "2",
+          "sourceTextIds": [
+            "character-96/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              92,
+              96
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-27/generation-1/character-97",
+      "characterId": 97,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-27/generation-1",
+        "timelineId": "sprite-131",
+        "depth": 27,
+        "generation": 1,
+        "characterId": 97,
+        "firstFrame": 96,
+        "lastFrameExclusive": 244,
+        "createdByEventId": "sprite-131/tag-115894",
+        "updates": [
+          "sprite-131/tag-115894"
+        ],
+        "removedByEventId": "sprite-131/tag-181254"
+      },
+      "text": "20",
+      "tokens": [
+        {
+          "text": "20",
+          "sourceTextIds": [
+            "character-97/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              96,
+              244
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-10/generation-1/character-99",
+      "characterId": 99,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-10/generation-1",
+        "timelineId": "sprite-131",
+        "depth": 10,
+        "generation": 1,
+        "characterId": 99,
+        "firstFrame": 117,
+        "lastFrameExclusive": 246,
+        "createdByEventId": "sprite-131/tag-125189",
+        "updates": [
+          "sprite-131/tag-125189"
+        ]
+      },
+      "text": "click Done to check your answer. Click New Expression to ",
+      "tokens": [
+        {
+          "text": "click ",
+          "sourceTextIds": [
+            "character-99/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              120,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "Done ",
+          "sourceTextIds": [
+            "character-99/run-1",
+            "character-99/run-2"
+          ],
+          "completeInkRanges": [
+            [
+              124,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "to ",
+          "sourceTextIds": [
+            "character-99/run-2"
+          ],
+          "completeInkRanges": [
+            [
+              126,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "check ",
+          "sourceTextIds": [
+            "character-99/run-2"
+          ],
+          "completeInkRanges": [
+            [
+              130,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "your ",
+          "sourceTextIds": [
+            "character-99/run-2"
+          ],
+          "completeInkRanges": [
+            [
+              133,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "answer. ",
+          "sourceTextIds": [
+            "character-99/run-2"
+          ],
+          "completeInkRanges": [
+            [
+              145,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "Click ",
+          "sourceTextIds": [
+            "character-99/run-2"
+          ],
+          "completeInkRanges": [
+            [
+              148,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "New ",
+          "sourceTextIds": [
+            "character-99/run-3"
+          ],
+          "completeInkRanges": [
+            [
+              151,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "Expression ",
+          "sourceTextIds": [
+            "character-99/run-3",
+            "character-99/run-4"
+          ],
+          "completeInkRanges": [
+            [
+              158,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "to ",
+          "sourceTextIds": [
+            "character-99/run-4"
+          ],
+          "completeInkRanges": [
+            [
+              187,
+              246
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-14/generation-2/character-78",
+      "characterId": 78,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-14/generation-2",
+        "timelineId": "sprite-131",
+        "depth": 14,
+        "generation": 2,
+        "characterId": 78,
+        "firstFrame": 125,
+        "lastFrameExclusive": 159,
+        "createdByEventId": "sprite-131/tag-128762",
+        "updates": [
+          "sprite-131/tag-128762"
+        ],
+        "replacedByEventId": "sprite-131/tag-143986"
+      },
+      "text": "if   x = 8",
+      "tokens": [
+        {
+          "text": "if   ",
+          "sourceTextIds": [
+            "character-78/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              125,
+              159
+            ]
+          ]
+        },
+        {
+          "text": "x ",
+          "sourceTextIds": [
+            "character-78/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              125,
+              159
+            ]
+          ]
+        },
+        {
+          "text": "= ",
+          "sourceTextIds": [
+            "character-78/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              125,
+              159
+            ]
+          ]
+        },
+        {
+          "text": "8",
+          "sourceTextIds": [
+            "character-78/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              125,
+              159
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-24/generation-1/character-76",
+      "characterId": 76,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-24/generation-1",
+        "timelineId": "sprite-131",
+        "depth": 24,
+        "generation": 1,
+        "characterId": 76,
+        "firstFrame": 125,
+        "lastFrameExclusive": 131,
+        "createdByEventId": "sprite-131/tag-128788",
+        "updates": [
+          "sprite-131/tag-128788"
+        ],
+        "removedByEventId": "sprite-131/tag-131464"
+      },
+      "text": "x + 12",
+      "tokens": [
+        {
+          "text": "x ",
+          "sourceTextIds": [
+            "character-76/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              125,
+              131
+            ]
+          ]
+        },
+        {
+          "text": "+ ",
+          "sourceTextIds": [
+            "character-76/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              125,
+              131
+            ]
+          ]
+        },
+        {
+          "text": "12",
+          "sourceTextIds": [
+            "character-76/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              125,
+              131
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-23/generation-9/character-84",
+      "characterId": 84,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-23/generation-9",
+        "timelineId": "sprite-131",
+        "depth": 23,
+        "generation": 9,
+        "characterId": 84,
+        "firstFrame": 131,
+        "lastFrameExclusive": 244,
+        "createdByEventId": "sprite-131/tag-131515",
+        "updates": [
+          "sprite-131/tag-131515"
+        ],
+        "removedByEventId": "sprite-131/tag-181242"
+      },
+      "text": "Done",
+      "tokens": [
+        {
+          "text": "Done",
+          "sourceTextIds": [
+            "character-84/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              131,
+              244
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-25/generation-1/character-76",
+      "characterId": 76,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-25/generation-1",
+        "timelineId": "sprite-131",
+        "depth": 25,
+        "generation": 1,
+        "characterId": 76,
+        "firstFrame": 131,
+        "lastFrameExclusive": 159,
+        "createdByEventId": "sprite-131/tag-131539",
+        "updates": [
+          "sprite-131/tag-131539"
+        ],
+        "replacedByEventId": "sprite-131/tag-144009"
+      },
+      "text": "x + 12",
+      "tokens": [
+        {
+          "text": "x ",
+          "sourceTextIds": [
+            "character-76/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              131,
+              159
+            ]
+          ]
+        },
+        {
+          "text": "+ ",
+          "sourceTextIds": [
+            "character-76/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              131,
+              159
+            ]
+          ]
+        },
+        {
+          "text": "12",
+          "sourceTextIds": [
+            "character-76/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              131,
+              159
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-14/generation-3/character-104",
+      "characterId": 104,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-14/generation-3",
+        "timelineId": "sprite-131",
+        "depth": 14,
+        "generation": 3,
+        "characterId": 104,
+        "firstFrame": 159,
+        "lastFrameExclusive": 165,
+        "createdByEventId": "sprite-131/tag-143986",
+        "updates": [
+          "sprite-131/tag-143986"
+        ],
+        "removedByEventId": "sprite-131/tag-146602"
+      },
+      "text": "if   x = 3",
+      "tokens": [
+        {
+          "text": "if   ",
+          "sourceTextIds": [
+            "character-104/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              159,
+              165
+            ]
+          ]
+        },
+        {
+          "text": "x ",
+          "sourceTextIds": [
+            "character-104/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              159,
+              165
+            ]
+          ]
+        },
+        {
+          "text": "= ",
+          "sourceTextIds": [
+            "character-104/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              159,
+              165
+            ]
+          ]
+        },
+        {
+          "text": "3",
+          "sourceTextIds": [
+            "character-104/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              159,
+              165
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-25/generation-2/character-105",
+      "characterId": 105,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-25/generation-2",
+        "timelineId": "sprite-131",
+        "depth": 25,
+        "generation": 2,
+        "characterId": 105,
+        "firstFrame": 159,
+        "lastFrameExclusive": 165,
+        "createdByEventId": "sprite-131/tag-144009",
+        "updates": [
+          "sprite-131/tag-144009"
+        ],
+        "removedByEventId": "sprite-131/tag-146614"
+      },
+      "text": "x + 6",
+      "tokens": [
+        {
+          "text": "x ",
+          "sourceTextIds": [
+            "character-105/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              159,
+              165
+            ]
+          ]
+        },
+        {
+          "text": "+ ",
+          "sourceTextIds": [
+            "character-105/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              159,
+              165
+            ]
+          ]
+        },
+        {
+          "text": "6",
+          "sourceTextIds": [
+            "character-105/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              159,
+              165
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-15/generation-2/character-104",
+      "characterId": 104,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-15/generation-2",
+        "timelineId": "sprite-131",
+        "depth": 15,
+        "generation": 2,
+        "characterId": 104,
+        "firstFrame": 165,
+        "lastFrameExclusive": 173,
+        "createdByEventId": "sprite-131/tag-146626",
+        "updates": [
+          "sprite-131/tag-146626"
+        ],
+        "removedByEventId": "sprite-131/tag-150015"
+      },
+      "text": "if   x = 3",
+      "tokens": [
+        {
+          "text": "if   ",
+          "sourceTextIds": [
+            "character-104/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              165,
+              173
+            ]
+          ]
+        },
+        {
+          "text": "x ",
+          "sourceTextIds": [
+            "character-104/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              165,
+              173
+            ]
+          ]
+        },
+        {
+          "text": "= ",
+          "sourceTextIds": [
+            "character-104/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              165,
+              173
+            ]
+          ]
+        },
+        {
+          "text": "3",
+          "sourceTextIds": [
+            "character-104/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              165,
+              173
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-24/generation-3/character-105",
+      "characterId": 105,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-24/generation-3",
+        "timelineId": "sprite-131",
+        "depth": 24,
+        "generation": 3,
+        "characterId": 105,
+        "firstFrame": 165,
+        "lastFrameExclusive": 173,
+        "createdByEventId": "sprite-131/tag-146653",
+        "updates": [
+          "sprite-131/tag-146653"
+        ],
+        "removedByEventId": "sprite-131/tag-150027"
+      },
+      "text": "x + 6",
+      "tokens": [
+        {
+          "text": "x ",
+          "sourceTextIds": [
+            "character-105/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              165,
+              173
+            ]
+          ]
+        },
+        {
+          "text": "+ ",
+          "sourceTextIds": [
+            "character-105/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              165,
+              173
+            ]
+          ]
+        },
+        {
+          "text": "6",
+          "sourceTextIds": [
+            "character-105/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              165,
+              173
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-14/generation-5/character-104",
+      "characterId": 104,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-14/generation-5",
+        "timelineId": "sprite-131",
+        "depth": 14,
+        "generation": 5,
+        "characterId": 104,
+        "firstFrame": 173,
+        "lastFrameExclusive": 185,
+        "createdByEventId": "sprite-131/tag-150039",
+        "updates": [
+          "sprite-131/tag-150039"
+        ],
+        "removedByEventId": "sprite-131/tag-155347"
+      },
+      "text": "if   x = 3",
+      "tokens": [
+        {
+          "text": "if   ",
+          "sourceTextIds": [
+            "character-104/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              173,
+              185
+            ]
+          ]
+        },
+        {
+          "text": "x ",
+          "sourceTextIds": [
+            "character-104/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              173,
+              185
+            ]
+          ]
+        },
+        {
+          "text": "= ",
+          "sourceTextIds": [
+            "character-104/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              173,
+              185
+            ]
+          ]
+        },
+        {
+          "text": "3",
+          "sourceTextIds": [
+            "character-104/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              173,
+              185
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-17/generation-2/character-81",
+      "characterId": 81,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-17/generation-2",
+        "timelineId": "sprite-131",
+        "depth": 17,
+        "generation": 2,
+        "characterId": 81,
+        "firstFrame": 173,
+        "lastFrameExclusive": 175,
+        "createdByEventId": "sprite-131/tag-150057",
+        "updates": [
+          "sprite-131/tag-150057"
+        ],
+        "removedByEventId": "sprite-131/tag-151031"
+      },
+      "text": "New Expression",
+      "tokens": [
+        {
+          "text": "New ",
+          "sourceTextIds": [
+            "character-81/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              173,
+              175
+            ]
+          ]
+        },
+        {
+          "text": "Expression",
+          "sourceTextIds": [
+            "character-81/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              173,
+              175
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-25/generation-3/character-105",
+      "characterId": 105,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-25/generation-3",
+        "timelineId": "sprite-131",
+        "depth": 25,
+        "generation": 3,
+        "characterId": 105,
+        "firstFrame": 173,
+        "lastFrameExclusive": 244,
+        "createdByEventId": "sprite-131/tag-150081",
+        "updates": [
+          "sprite-131/tag-150081"
+        ],
+        "removedByEventId": "sprite-131/tag-181250"
+      },
+      "text": "x + 6",
+      "tokens": [
+        {
+          "text": "x ",
+          "sourceTextIds": [
+            "character-105/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              173,
+              244
+            ]
+          ]
+        },
+        {
+          "text": "+ ",
+          "sourceTextIds": [
+            "character-105/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              173,
+              244
+            ]
+          ]
+        },
+        {
+          "text": "6",
+          "sourceTextIds": [
+            "character-105/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              173,
+              244
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-20/generation-4/character-81",
+      "characterId": 81,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-20/generation-4",
+        "timelineId": "sprite-131",
+        "depth": 20,
+        "generation": 4,
+        "characterId": 81,
+        "firstFrame": 175,
+        "lastFrameExclusive": 244,
+        "createdByEventId": "sprite-131/tag-151067",
+        "updates": [
+          "sprite-131/tag-151067"
+        ],
+        "removedByEventId": "sprite-131/tag-181230"
+      },
+      "text": "New Expression",
+      "tokens": [
+        {
+          "text": "New ",
+          "sourceTextIds": [
+            "character-81/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              175,
+              244
+            ]
+          ]
+        },
+        {
+          "text": "Expression",
+          "sourceTextIds": [
+            "character-81/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              175,
+              244
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-17/generation-3/character-104",
+      "characterId": 104,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-17/generation-3",
+        "timelineId": "sprite-131",
+        "depth": 17,
+        "generation": 3,
+        "characterId": 104,
+        "firstFrame": 185,
+        "lastFrameExclusive": 244,
+        "createdByEventId": "sprite-131/tag-155363",
+        "updates": [
+          "sprite-131/tag-155363"
+        ],
+        "removedByEventId": "sprite-131/tag-181218"
+      },
+      "text": "if   x = 3",
+      "tokens": [
+        {
+          "text": "if   ",
+          "sourceTextIds": [
+            "character-104/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              185,
+              244
+            ]
+          ]
+        },
+        {
+          "text": "x ",
+          "sourceTextIds": [
+            "character-104/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              185,
+              244
+            ]
+          ]
+        },
+        {
+          "text": "= ",
+          "sourceTextIds": [
+            "character-104/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              185,
+              244
+            ]
+          ]
+        },
+        {
+          "text": "3",
+          "sourceTextIds": [
+            "character-104/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              185,
+              244
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sprite-131/depth-13/generation-4/character-110",
+      "characterId": 110,
+      "sourceInstance": {
+        "instanceId": "sprite-131/depth-13/generation-4",
+        "timelineId": "sprite-131",
+        "depth": 13,
+        "generation": 4,
+        "characterId": 110,
+        "firstFrame": 187,
+        "lastFrameExclusive": 246,
+        "createdByEventId": "sprite-131/tag-156405",
+        "updates": [
+          "sprite-131/tag-156405"
+        ]
+      },
+      "text": "find the value of different expressions.",
+      "tokens": [
+        {
+          "text": "find ",
+          "sourceTextIds": [
+            "character-110/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              190,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "the ",
+          "sourceTextIds": [
+            "character-110/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              192,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "value ",
+          "sourceTextIds": [
+            "character-110/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              196,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "of ",
+          "sourceTextIds": [
+            "character-110/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              198,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "different ",
+          "sourceTextIds": [
+            "character-110/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              204,
+              246
+            ]
+          ]
+        },
+        {
+          "text": "expressions.",
+          "sourceTextIds": [
+            "character-110/run-0"
+          ],
+          "completeInkRanges": [
+            [
+              213,
+              246
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "instances": [
+    {
+      "name": "BtnNewProblem",
+      "sourceInstanceId": "sprite-131/depth-16/generation-5",
+      "characterId": 112,
+      "frameDomain": null,
+      "parentLifetime": {
+        "firstFrame": 244,
+        "lastFrameExclusive": 246
+      },
+      "matrix": [
+        0.8045806884765625,
+        0,
+        0,
+        -0.8045806884765625,
+        2059,
+        971
+      ]
+    },
+    {
+      "name": "BtnDone",
+      "sourceInstanceId": "sprite-131/depth-20/generation-5",
+      "characterId": 113,
+      "frameDomain": null,
+      "parentLifetime": {
+        "firstFrame": 244,
+        "lastFrameExclusive": 246
+      },
+      "matrix": [
+        0.8045806884765625,
+        0,
+        0,
+        -0.8045806884765625,
+        3066,
+        2393
+      ]
+    },
+    {
+      "name": "txtExpress",
+      "sourceInstanceId": "sprite-131/depth-24/generation-5",
+      "characterId": 114,
+      "frameDomain": null,
+      "parentLifetime": {
+        "firstFrame": 244,
+        "lastFrameExclusive": 246
+      },
+      "matrix": [
+        1,
+        0,
+        0,
+        1,
+        -3468,
+        -1120
+      ]
+    },
+    {
+      "name": "txtValue",
+      "sourceInstanceId": "sprite-131/depth-25/generation-4",
+      "characterId": 115,
+      "frameDomain": null,
+      "parentLifetime": {
+        "firstFrame": 244,
+        "lastFrameExclusive": 246
+      },
+      "matrix": [
+        1,
+        0,
+        0,
+        1,
+        -703,
+        -1237
+      ]
+    },
+    {
+      "name": "txtAnswer",
+      "sourceInstanceId": "sprite-131/depth-26/generation-2",
+      "characterId": 116,
+      "frameDomain": null,
+      "parentLifetime": {
+        "firstFrame": 244,
+        "lastFrameExclusive": 246
+      },
+      "matrix": [
+        1,
+        0,
+        0,
+        1,
+        -3152,
+        1584
+      ]
+    },
+    {
+      "name": "McFlash",
+      "sourceInstanceId": "sprite-131/depth-27/generation-2",
+      "characterId": 118,
+      "frameDomain": "sprite-118",
+      "parentLifetime": {
+        "firstFrame": 244,
+        "lastFrameExclusive": 246
+      },
+      "matrix": [
+        1,
+        0,
+        0,
+        1,
+        -2546,
+        1849
+      ]
+    },
+    {
+      "name": "RightFeed",
+      "sourceInstanceId": "sprite-131/depth-29/generation-1",
+      "characterId": 122,
+      "frameDomain": "sprite-122",
+      "parentLifetime": {
+        "firstFrame": 244,
+        "lastFrameExclusive": 245
+      },
+      "matrix": [
+        1,
+        0,
+        0,
+        1,
+        -176,
+        382
+      ]
+    },
+    {
+      "name": "WrongFeed",
+      "sourceInstanceId": "sprite-131/depth-32/generation-1",
+      "characterId": 126,
+      "frameDomain": "sprite-126",
+      "parentLifetime": {
+        "firstFrame": 244,
+        "lastFrameExclusive": 246
+      },
+      "matrix": [
+        1,
+        0,
+        0,
+        1,
+        -2594,
+        577
+      ]
+    },
+    {
+      "name": "Coach_audio_1",
+      "sourceInstanceId": "sprite-131/depth-43/generation-1",
+      "characterId": 128,
+      "frameDomain": "sprite-128",
+      "parentLifetime": {
+        "firstFrame": 244,
+        "lastFrameExclusive": 246
+      },
+      "matrix": [
+        1,
+        0,
+        0,
+        1,
+        -11909,
+        -194
+      ]
+    },
+    {
+      "name": "Coach_audio_2",
+      "sourceInstanceId": "sprite-131/depth-45/generation-1",
+      "characterId": 130,
+      "frameDomain": "sprite-130",
+      "parentLifetime": {
+        "firstFrame": 244,
+        "lastFrameExclusive": 246
+      },
+      "matrix": [
+        1,
+        0,
+        0,
+        1,
+        -11943,
+        486
+      ]
+    }
+  ],
+  "terms": [
+    {
+      "sourceButtonId": 89,
+      "sourceKey": "Value",
+      "entryId": "en-0737-920ae135dd07"
+    },
+    {
+      "sourceButtonId": 90,
+      "sourceKey": "Expression",
+      "entryId": "en-0217-33cf8ae1dd9a"
+    }
+  ],
+  "coachSegments": [
+    {
+      "id": "in008-wrong-s1",
+      "startFrame": 3,
+      "endFrame": 16
+    },
+    {
+      "id": "in008-wrong-s2",
+      "startFrame": 18,
+      "endFrame": 27
+    },
+    {
+      "id": "in008-wrong-s3",
+      "startFrame": 31,
+      "endFrame": 36
+    },
+    {
+      "id": "in008-wrong-s4",
+      "startFrame": 40,
+      "endFrame": 54
+    }
+  ],
+  "claimBoundary": {
+    "sourceOnly": true,
+    "installed": false,
+    "browserValidated": false,
+    "implementationCredit": 0
+  },
+  "nativeButtonFontPolicy": {
+    "kind": "IN008-own-native-button-font-recipe",
+    "scope": "intro SVG source text characters 81 and 84 only, including their already-retired outlined aliases in pressed states",
+    "characters": [
+      {
+        "characterId": 81,
+        "sourceFontSizeTwips": 700,
+        "nativeFontSizeTwips": 500,
+        "outlinedAliases": [
+          80,
+          108
+        ]
+      },
+      {
+        "characterId": 84,
+        "sourceFontSizeTwips": 700,
+        "nativeFontSizeTwips": 500,
+        "outlinedAliases": [
+          83,
+          103
+        ]
+      }
+    ],
+    "unchanged": [
+      "diagram viewBox",
+      "diagram inline size",
+      "source transforms",
+      "pointer",
+      "caret",
+      "button hit geometry",
+      "source frame windows",
+      "all other native text sizes"
+    ],
+    "reason": "Retain readable native whole words in the exact narrow/enlarged introduction viewport without scaling the stage or relaxing validation.",
+    "rootDecision": "Keep 500 after confirming the own CSS static scrollport width268 is greater than the measured Expression262.3654. Actual browser still required.",
+    "browser": false
+  }
+}

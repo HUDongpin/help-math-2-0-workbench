@@ -1,0 +1,10 @@
+'use client';
+import React from 'react';
+import {CourseG04L09Vb002Renderer,getCourseG04L09Vb002FrameState}from'../modules/course-g04-l09-vb-002';
+import{createDivisionVocabularyPresentation,type DivisionConfig}from'./g4-l6-vocabulary/presentation';
+import data from'./g4-l9-vocabulary/source.generated.json';
+const base=createDivisionVocabularyPresentation(data.pages[0] as unknown as DivisionConfig,getCourseG04L09Vb002FrameState,CourseG04L09Vb002Renderer);
+const BaseRenderer=base.Renderer!;
+const Renderer=(props:React.ComponentProps<typeof BaseRenderer>)=><><style>{'[data-modern-text-page="course-g04-l09-vb-002"] .g4l6-vocabulary__source-stroke{color:rgb(0,0,0)!important;paint-order:stroke fill}@media(max-width:480px){[data-modern-text-page="course-g04-l09-vb-002"].g4l6-vocabulary{padding-inline:.5rem}}'}</style><BaseRenderer {...props}/></>;
+export const G4_L9_VB002_TEXT_PRESENTATION={...base,Renderer};
+export const G4_L9_VB002_TEXT_BINDING=G4_L9_VB002_TEXT_PRESENTATION.binding;

@@ -1,0 +1,61 @@
+import {isG678LocalPreviewRequestHeaders,isG678LocalPreviewRequestUrl,
+  type G678PreviewEnvironment} from './g678-preview-policy';
+import {P021_RESOURCE_PINS} from './alg-l06-p021-local-request-v1';
+import {P022_ASSET_ROOT as ROOT,P022_LOCAL_ORIGIN as ORIGIN,
+  p022CandidateReferer,p022LocalDevelopment} from './alg-l06-p022-preview-policy-v1';
+
+type ResourcePin=Readonly<{originalPath:string;bridgePath:string;path:string;
+  root:'workspace'|'source';bytes:number;sha256:string;contentType:string}>;
+const pin=(originalPath:string,token:string,path:string,root:ResourcePin['root'],
+  bytes:number,sha256:string,contentType:string):ResourcePin=>Object.freeze({
+    originalPath,bridgePath:`${ROOT}/${token}`,path,root,bytes,sha256,contentType});
+const ownPreviousTokens=new Set(['canvas-renderer.js','main-1','feedback-right-1','feedback-right-2','feedback-right-3','feedback-right-4','feedback-wrong-1','feedback-wrong-2','feedback-wrong-3','optional-spanish-audio-v1']);
+const inherited=Object.fromEntries(Object.entries(P021_RESOURCE_PINS).map(([token,row])=>{
+ const newToken=ownPreviousTokens.has(token)?`p021-${token}`:token;
+ return [newToken,pin(row.originalPath,newToken,row.path,row.root,row.bytes,row.sha256,row.contentType)];
+}));
+
+/** Four exact P022 resources and the unchanged registered predecessor assets. */
+export const P022_RESOURCE_PINS=Object.freeze({
+ "canvas-renderer.js":pin(`${ROOT}/canvas-renderer.js`,"canvas-renderer.js","output/alg-l06-p022-canvas-v1/canvas-renderer.js",'workspace',2326326,"3c23c8416e7c4d331fe3039b72278a094e79715a61b81357702ae149b4bf9568","text/javascript; charset=utf-8"),
+ "main-1":pin(`${ROOT}/main-1`,"main-1","output/alg-l06-p022-audio-v1/sprite-67-range-1-source-v1.mp3",'workspace',53820,"a53bde941fbf8e15e8c3b7a416e8ee02d329b31fb4994f477c4cc76d5d9644d9","audio/mpeg"),
+ "main-2":pin(`${ROOT}/main-2`,"main-2","output/alg-l06-p022-audio-v1/sprite-67-range-2-source-v1.mp3",'workspace',113230,"9c9164f80ca329a12bfacd97feed7175547e8805dbf0d40d63becf8e79d20821","audio/mpeg"),
+ "optional-spanish-audio-v1":pin(`${ROOT}/optional-spanish-audio-v1`,"optional-spanish-audio-v1","output/alg-l06-p022-audio-v1/separate-sa-source-v1.mp3",'workspace',252000,"2ced2d44148da73af856808834d32083d61d61d8073acdfe48650c1e9809a7bb","audio/mpeg"),
+ ...inherited,
+}) as Readonly<Record<string,ResourcePin>>;
+export type P022Resource=keyof typeof P022_RESOURCE_PINS;
+export const P022_PREDECESSOR_ORIGINAL_PATHS=Object.freeze(Object.values(P022_RESOURCE_PINS)
+  .filter(row=>row.originalPath!==row.bridgePath).map(row=>row.originalPath));
+export const p022ResourceUrl=(resource:P022Resource)=>{
+  const row=P022_RESOURCE_PINS[resource];
+  if(!row)throw Error('P022_RESOURCE_UNKNOWN');
+  return `${row.originalPath}?sha256=${row.sha256}`;
+};
+type SourceRequest={readonly method:string;readonly url:URL;readonly headers:Pick<Headers,'get'>};
+/** Both original URLs and internal rewrite paths require the same exact pin. */
+export function p022ResourceForRequest(request:SourceRequest,
+  env:G678PreviewEnvironment=process.env):P022Resource|null{
+  const {method,url,headers}=request;
+  if(!p022LocalDevelopment(env)||
+    !isG678LocalPreviewRequestUrl(url,env)||!isG678LocalPreviewRequestHeaders(headers,env)||
+    url.protocol!=='http:'||url.port!=='3331'||url.username||url.password||url.hash||
+    headers.get('host')!=='127.0.0.1:3331'||
+    (headers.get('x-forwarded-host')!==null&&headers.get('x-forwarded-host')!=='127.0.0.1:3331')||
+    (headers.get('x-forwarded-proto')!==null&&headers.get('x-forwarded-proto')!=='http')||
+    headers.get('range')!==null||headers.get('sec-fetch-site')!=='same-origin')return null;
+  const origin=headers.get('origin');
+  if(origin!==null&&origin!==ORIGIN)return null;
+  if(!p022CandidateReferer(headers.get('referer')))return null;
+  for(const [token,row] of Object.entries(P022_RESOURCE_PINS)){
+    if(url.pathname!==row.originalPath&&url.pathname!==row.bridgePath)continue;
+    if(url.search!==`?sha256=${row.sha256}`)return null;
+    const script=row.contentType.startsWith('text/javascript');
+    if(script?(method!=='GET'||headers.get('sec-fetch-dest')!=='script'||
+      !['cors','no-cors'].includes(headers.get('sec-fetch-mode')??'')||
+      (headers.get('sec-fetch-mode')==='cors'&&origin!==ORIGIN)):
+      (!['GET','HEAD'].includes(method)||headers.get('sec-fetch-dest')!=='empty'||
+      headers.get('sec-fetch-mode')!=='cors'))return null;
+    return token;
+  }
+  return null;
+}

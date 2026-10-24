@@ -1,0 +1,3128 @@
+{
+  "schemaVersion": 1,
+  "kind": "g678-lesson-typography-integration-v1",
+  "installedAt": "2026-09-10T08:33:30.126861+00:00",
+  "sourceWorktree": "/Volumes/American Dream/hudongpin/HELP MATH 2.0-animation-typography-v1-20260910",
+  "sourceMarker": "HELP_MATH_G678_TYPOGRAPHY_DEVELOPMENT_V1_2026_09_10",
+  "activePlacements": 2282,
+  "lessons": 44,
+  "inputs": [
+    {
+      "path": "packages/demos/private-current-js-registry.json",
+      "sha256": "284a18dcb7accf4d729778a1aed77b99dbc1b66e20d5b873b2d02deb7568c9ac"
+    },
+    {
+      "path": "catalog/g678-page-only-release-manifest.v1.json",
+      "sha256": "3695649f3fb9d508b4d4a3c519597395c41107e978e40a903cbbcea68c8eea2f"
+    }
+  ],
+  "sharedFiles": [
+    {
+      "path": "apps/web/app/[locale]/layout.tsx",
+      "sha256": "1f74e3c6478fba95eaef92c9b4c2a460458afa6be956689f5cdfa0e53b8c5095",
+      "bytes": 2926
+    },
+    {
+      "path": "apps/web/app/lesson-fonts.css",
+      "sha256": "03dd49cce36180d3ab64ab14bbb3e45442234856c456998c00a642763d8fd538",
+      "bytes": 952
+    },
+    {
+      "path": "apps/web/app/lesson-typography-host.css",
+      "sha256": "f7d7164239fbbbc61c265d198a76138a32b0e5eebadf8b32e58751da3537ede8",
+      "bytes": 3431
+    },
+    {
+      "path": "apps/web/app/lesson-typography.css",
+      "sha256": "8062a331a72437d8d204a716173ef92b37cc9a05f3e2b5574560dc5110a1bd64",
+      "bytes": 5752
+    },
+    {
+      "path": "apps/web/components/animation-runtime.tsx",
+      "sha256": "c21101c76c36cc8d062f832b2392491434c8e5c1ca0dc77edd24e233e0b74829",
+      "bytes": 57458
+    },
+    {
+      "path": "apps/web/lib/g678-lesson-typography-presentation.ts",
+      "sha256": "2fb9de912c82967337f9e88d848fe45745ac5d6b89287f07c73163ae96c3ec8a",
+      "bytes": 1635
+    },
+    {
+      "path": "apps/web/lib/lesson-typography-policy.ts",
+      "sha256": "6503d9c0aac0542801ba6454fd332a4735881a5cda7d0d4a2df1f506f4984301",
+      "bytes": 1313
+    },
+    {
+      "path": "apps/web/public/fonts/lesson-v1/fredoka-OFL.txt",
+      "sha256": "5c9e7eee5c6b25f4b05b8d53b2e470ea4962f9ced742d044a98f7d95d1375bab",
+      "bytes": 4388
+    },
+    {
+      "path": "apps/web/public/fonts/lesson-v1/fredoka-variable.ttf",
+      "sha256": "2ba02e68b152868aef9ba28e24b3648c7d457fe6f25c761f2c2c53fb61a73fc8",
+      "bytes": 159184
+    },
+    {
+      "path": "apps/web/public/fonts/lesson-v1/nunito-sans-variable.ttf",
+      "sha256": "f934d7142fb4784bf828da485b7dcbd90c0c80d514e9d49a5da0ed3a1ae2491d",
+      "bytes": 571240
+    },
+    {
+      "path": "apps/web/public/fonts/lesson-v1/nunitosans-OFL.txt",
+      "sha256": "efbb0c9e864cef973982d9a17567e6be5c3d1759695574586f3f18c7ecca064b",
+      "bytes": 4393
+    },
+    {
+      "path": "catalog/typography-v1/fonts.json",
+      "sha256": "1cd7ad71bb21b9002b365323fe4f03c2e785b0637741f8965d199cf466f14fa5",
+      "bytes": 1829
+    },
+    {
+      "path": "docs/LESSON_TYPOGRAPHY_DEVELOPMENT.md",
+      "sha256": "086ac047c61b569822e4e7bd8988457a4fd0c74baf87156463a4a39b06b97bf1",
+      "bytes": 17773
+    },
+    {
+      "path": "packages/demos/package.json",
+      "sha256": "584a636a515b5ca90530d667fe1c59a7e3c5e43946dc1337410a41f2134c9e65",
+      "bytes": 1746
+    },
+    {
+      "path": "packages/demos/src/contract.ts",
+      "sha256": "56e5fc3c1dbde872646ebbc519f8c7d8a9d6dd0d55e37e1c44f4ad1a47798180",
+      "bytes": 17646
+    },
+    {
+      "path": "packages/demos/src/lesson-canvas-plane.tsx",
+      "sha256": "5c99bad8143f3f8502dc632dc404b081e638ebdc50375dd62ade2b3d7178b903",
+      "bytes": 9584
+    },
+    {
+      "path": "packages/demos/src/lesson-canvas-resolution.ts",
+      "sha256": "d5901fb121136b52f34fa5af8c999087207df41de6ba741f2899624f1bbdda78",
+      "bytes": 7154
+    },
+    {
+      "path": "packages/demos/src/lesson-text-contract.ts",
+      "sha256": "e796b04501425b29200d6bf527aae71deac86769894e2f642efa1e36502a56d9",
+      "bytes": 6749
+    },
+    {
+      "path": "packages/demos/src/lesson-text-presentation.tsx",
+      "sha256": "892bf80f52f964612b7139a5b78334600ba1f9e77c376cb2e9ef938b8916048f",
+      "bytes": 10213
+    },
+    {
+      "path": "packages/demos/src/lesson-text-snapshot.ts",
+      "sha256": "0fcb076645392914fc2ad3df9f2062037c8ed5d31730903342ecd5e98bd2e95f",
+      "bytes": 5999
+    },
+    {
+      "path": "packages/demos/src/lesson-text.ts",
+      "sha256": "f856988b0d5ae8b980ab8a56b824ef50426ee8bb6d729446d0024278d74c66e6",
+      "bytes": 513
+    },
+    {
+      "path": "packages/demos/src/use-lesson-canvas-resolution.ts",
+      "sha256": "98324a52de61f1469c16bed71a1df38d2ef44af84cd959141e2b9e9e7a67963f",
+      "bytes": 3383
+    },
+    {
+      "path": "scripts/build-lesson-canvas-resolution-adapter-v1.mjs",
+      "sha256": "dcd6ed9fb2ab159461af7e0b129412d3992b56daf8dd87c3ed6ef75be0f2b251",
+      "bytes": 13157
+    },
+    {
+      "path": "scripts/build-lesson-text-canvas-adapter-v1.mjs",
+      "sha256": "36d247a0998afbad5c2c39c519e9220eab0291f9aec137f9a433007ebbf60690",
+      "bytes": 24525
+    },
+    {
+      "path": "scripts/build-lesson-text-source-catalog-v1.mjs",
+      "sha256": "b62681621beed053ba886219e3e26a969c28d17e37eda1764e59c720124cb2b4",
+      "bytes": 9365
+    },
+    {
+      "path": "scripts/check-g678-lesson-typography-v1.mjs",
+      "sha256": "4810a44f3d40b36c92abf813c82f837e84b53f56ecdf47e3c96b97fb5ed59256",
+      "bytes": 9774
+    },
+    {
+      "path": "scripts/lib/lesson-text-canvas-runtime-v1.mjs",
+      "sha256": "0829b7c5a17e8c659f6f6ab8b541ba269bff466827b8f67de542b3d74c6da3cc",
+      "bytes": 8297
+    },
+    {
+      "path": "scripts/lib/swf-text-source-catalog.mjs",
+      "sha256": "5a65075738bcdd62a9fb79cca0aaf7fe7ab59857bd3852fdf5063d6c1fe8a3dc",
+      "bytes": 22928
+    }
+  ],
+  "baselineEntries": [
+    {
+      "key": "shared-alg001-l01-p001",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/frozen16-four-audio-shared-alg001-l01-p001.tsx",
+      "moduleSha256": "79fc23d277467d60c38bf23b8cf961d9de1c25a7954cb340d35729bcb582a497",
+      "registeredModuleSha256": "79fc23d277467d60c38bf23b8cf961d9de1c25a7954cb340d35729bcb582a497"
+    },
+    {
+      "key": "shared-alg001-l01-p005",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l01-p005.tsx",
+      "moduleSha256": "c33db7cc2fc4feb1ab87ebbf793e316fbd06ba93fecf61188b074a61a3eaae8a",
+      "registeredModuleSha256": "c33db7cc2fc4feb1ab87ebbf793e316fbd06ba93fecf61188b074a61a3eaae8a"
+    },
+    {
+      "key": "shared-alg001-l01-p006",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l01-p006-v3.tsx",
+      "moduleSha256": "2b91501d663bc9c20a68638bcaefe162af37299d3104f0630429454340c79d75",
+      "registeredModuleSha256": "2b91501d663bc9c20a68638bcaefe162af37299d3104f0630429454340c79d75"
+    },
+    {
+      "key": "shared-alg001-l01-p007",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l01-p007.tsx",
+      "moduleSha256": "2ac22d8dcd0bb823ae3b2e4494fd2822b9f57a1b058d3836b182aceb913b55a1",
+      "registeredModuleSha256": "2ac22d8dcd0bb823ae3b2e4494fd2822b9f57a1b058d3836b182aceb913b55a1"
+    },
+    {
+      "key": "shared-alg001-l01-p008",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l01-p008.tsx",
+      "moduleSha256": "641ae00f0a988fb7bb12ed5882d17235e21e1ef9d79f0330dd17599cdd5f4df3",
+      "registeredModuleSha256": "641ae00f0a988fb7bb12ed5882d17235e21e1ef9d79f0330dd17599cdd5f4df3"
+    },
+    {
+      "key": "shared-alg001-l01-p021",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l01-p021.tsx",
+      "moduleSha256": "3247b63931271ef4add49bb346329b206338d247f3ecaa7daf2bdb4c529e5cca",
+      "registeredModuleSha256": "3247b63931271ef4add49bb346329b206338d247f3ecaa7daf2bdb4c529e5cca"
+    },
+    {
+      "key": "shared-alg001-l01-p047",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l01-p047.tsx",
+      "moduleSha256": "f0e64e63edc7863eaeb0161354d158a209533eac64c3844c72fb7c6b8bd1ffbe",
+      "registeredModuleSha256": "f0e64e63edc7863eaeb0161354d158a209533eac64c3844c72fb7c6b8bd1ffbe"
+    },
+    {
+      "key": "shared-alg001-l01-p048",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l01-p048.tsx",
+      "moduleSha256": "0b3cef5c3e0737a8ce52fbc4c481e74d20abe0b3ad54c26b83e618bb104e2ba5",
+      "registeredModuleSha256": "0b3cef5c3e0737a8ce52fbc4c481e74d20abe0b3ad54c26b83e618bb104e2ba5"
+    },
+    {
+      "key": "shared-alg001-l01-p049",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l01-p049.tsx",
+      "moduleSha256": "837450baf6654f285c195d0b4dccd98a513f60662ddd353dbb95d5fcc75647c8",
+      "registeredModuleSha256": "837450baf6654f285c195d0b4dccd98a513f60662ddd353dbb95d5fcc75647c8"
+    },
+    {
+      "key": "shared-alg001-l01-p050",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l01-p050.tsx",
+      "moduleSha256": "2a4af775025dead2f9edf3cd65cd800e16d200cdad07ba8205ab854bc3eab48d",
+      "registeredModuleSha256": "2a4af775025dead2f9edf3cd65cd800e16d200cdad07ba8205ab854bc3eab48d"
+    },
+    {
+      "key": "shared-alg001-l01-p051",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l01-p051.tsx",
+      "moduleSha256": "9f7f819743833ae57148359f2f33e3476bdaff210780adfb630e0c16ea492a53",
+      "registeredModuleSha256": "9f7f819743833ae57148359f2f33e3476bdaff210780adfb630e0c16ea492a53"
+    },
+    {
+      "key": "shared-alg001-l01-p055",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l01-p055.tsx",
+      "moduleSha256": "dee4a1e5fd3e8e2cab8f58a1f49a9ca60fdd77bc983dbee7c8de3c06d755607a",
+      "registeredModuleSha256": "dee4a1e5fd3e8e2cab8f58a1f49a9ca60fdd77bc983dbee7c8de3c06d755607a"
+    },
+    {
+      "key": "shared-alg001-l02-p005",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l02-p005.tsx",
+      "moduleSha256": "165ee837dad75656dc31808e1e82de4cc08ef9e5f04c1064aaa3ca3c442ef2f5",
+      "registeredModuleSha256": "165ee837dad75656dc31808e1e82de4cc08ef9e5f04c1064aaa3ca3c442ef2f5"
+    },
+    {
+      "key": "shared-alg001-l02-p008",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l02-p008.tsx",
+      "moduleSha256": "72700fa3077d9bc4044ef8d13fdbe6e500529538e4f046fdc03c57fce6fc0033",
+      "registeredModuleSha256": "72700fa3077d9bc4044ef8d13fdbe6e500529538e4f046fdc03c57fce6fc0033"
+    },
+    {
+      "key": "shared-alg001-l02-p009",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l02-p009.tsx",
+      "moduleSha256": "117513a79536f22ce66c7172d3bcca536d2bd06cc34e3b3e87d9d7d9b0294d3d",
+      "registeredModuleSha256": "117513a79536f22ce66c7172d3bcca536d2bd06cc34e3b3e87d9d7d9b0294d3d"
+    },
+    {
+      "key": "shared-alg001-l02-p023",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l02-p023.tsx",
+      "moduleSha256": "65e1a8569f16a36e26fbf49efeae050309c475914785c15f699034803fc70617",
+      "registeredModuleSha256": "65e1a8569f16a36e26fbf49efeae050309c475914785c15f699034803fc70617"
+    },
+    {
+      "key": "shared-alg001-l02-p049",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l02-p049.tsx",
+      "moduleSha256": "4ad17e5113403ee2e2937cf5aa24b46bc7e8e3dc1c576d998e2c876fa00dd3b6",
+      "registeredModuleSha256": "4ad17e5113403ee2e2937cf5aa24b46bc7e8e3dc1c576d998e2c876fa00dd3b6"
+    },
+    {
+      "key": "shared-alg001-l02-p050",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l02-p050.tsx",
+      "moduleSha256": "8220291b279bbe154664b7ae44b41380f1935d81da6cb3698be21c2c3bb95c6d",
+      "registeredModuleSha256": "8220291b279bbe154664b7ae44b41380f1935d81da6cb3698be21c2c3bb95c6d"
+    },
+    {
+      "key": "shared-alg001-l02-p051",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l02-p051.tsx",
+      "moduleSha256": "896485e6c798f994a74117e560d8ae1a83ce374c50c6967dba6ee1ccaab4ab55",
+      "registeredModuleSha256": "896485e6c798f994a74117e560d8ae1a83ce374c50c6967dba6ee1ccaab4ab55"
+    },
+    {
+      "key": "shared-alg001-l02-p052",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l02-p052.tsx",
+      "moduleSha256": "925ae2bac5c5a0d7c291ec620582ce07316484358ee932502cfe8bda9282240e",
+      "registeredModuleSha256": "925ae2bac5c5a0d7c291ec620582ce07316484358ee932502cfe8bda9282240e"
+    },
+    {
+      "key": "shared-alg001-l02-p053",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l02-p053.tsx",
+      "moduleSha256": "9b4ae3f01931dea09d5508007a0ca4c0dc0640c192946ff1d3bc3b338f67934e",
+      "registeredModuleSha256": "9b4ae3f01931dea09d5508007a0ca4c0dc0640c192946ff1d3bc3b338f67934e"
+    },
+    {
+      "key": "shared-alg001-l02-p057",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l02-p057.tsx",
+      "moduleSha256": "df1f562397e8b2b55d2a4e63cb0fef8574775716632a51480b39bc9db506da8e",
+      "registeredModuleSha256": "df1f562397e8b2b55d2a4e63cb0fef8574775716632a51480b39bc9db506da8e"
+    },
+    {
+      "key": "shared-alg001-l03-p001",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l03-p001.tsx",
+      "moduleSha256": "9a8287f640b2ecb7f177470394169f91dbf40b369c615c8ba23dcfdf3771071f",
+      "registeredModuleSha256": "9a8287f640b2ecb7f177470394169f91dbf40b369c615c8ba23dcfdf3771071f"
+    },
+    {
+      "key": "shared-alg001-l03-p006",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l03-p006.tsx",
+      "moduleSha256": "b3af7c633ca1dd9bf39b204cc68dd516b9b1bc3f8a317d4ac9040fc527b35432",
+      "registeredModuleSha256": "b3af7c633ca1dd9bf39b204cc68dd516b9b1bc3f8a317d4ac9040fc527b35432"
+    },
+    {
+      "key": "shared-alg001-l03-p007",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l03-p007.tsx",
+      "moduleSha256": "61908e3dec52308614cbe2c3c2ebf144062e650369ed6eee91fb4c6edb23f4bc",
+      "registeredModuleSha256": "61908e3dec52308614cbe2c3c2ebf144062e650369ed6eee91fb4c6edb23f4bc"
+    },
+    {
+      "key": "shared-alg001-l03-p016",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l03-p016.tsx",
+      "moduleSha256": "f33637c19c5a0009b7c32ae6c2d26a6238e34be0fd6cae4b98e145268c39f1f2",
+      "registeredModuleSha256": "f33637c19c5a0009b7c32ae6c2d26a6238e34be0fd6cae4b98e145268c39f1f2"
+    },
+    {
+      "key": "shared-alg001-l03-p029",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l03-p029.tsx",
+      "moduleSha256": "c3919c922de85b4f972885474c1d9cf9823d3ae52e70d1e4e8736cdc2b080c1f",
+      "registeredModuleSha256": "c3919c922de85b4f972885474c1d9cf9823d3ae52e70d1e4e8736cdc2b080c1f"
+    },
+    {
+      "key": "shared-alg001-l03-p031",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l03-p031.tsx",
+      "moduleSha256": "4619c10860113a0c3b9c456168b304fa584eb536e103ee442c042c2cfae0e3f1",
+      "registeredModuleSha256": "4619c10860113a0c3b9c456168b304fa584eb536e103ee442c042c2cfae0e3f1"
+    },
+    {
+      "key": "shared-alg001-l03-p033",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l03-p033.tsx",
+      "moduleSha256": "e9ea42e250eb5ec6a4d42183bd3cddd58ded55996e5f2f1450aa90801910998c",
+      "registeredModuleSha256": "e9ea42e250eb5ec6a4d42183bd3cddd58ded55996e5f2f1450aa90801910998c"
+    },
+    {
+      "key": "shared-alg001-l03-p035",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l03-p035.tsx",
+      "moduleSha256": "2a89e6525179f44c42c5b4c6ae3ef06b1f2b9c7639efe018681605b6e993c0d5",
+      "registeredModuleSha256": "2a89e6525179f44c42c5b4c6ae3ef06b1f2b9c7639efe018681605b6e993c0d5"
+    },
+    {
+      "key": "shared-alg001-l03-p047",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l03-p047.tsx",
+      "moduleSha256": "510e1197d8bb740239220af8002dea341a64343db1fefc2295a0eb5cb01a7ac9",
+      "registeredModuleSha256": "510e1197d8bb740239220af8002dea341a64343db1fefc2295a0eb5cb01a7ac9"
+    },
+    {
+      "key": "shared-alg001-l03-p048",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l03-p048.tsx",
+      "moduleSha256": "fb2290a752c30bf666620d6e2a50c7e29abe8cac724256a147922c914e6cdc82",
+      "registeredModuleSha256": "fb2290a752c30bf666620d6e2a50c7e29abe8cac724256a147922c914e6cdc82"
+    },
+    {
+      "key": "shared-alg001-l03-p049",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l03-p049.tsx",
+      "moduleSha256": "2476f57b2adfe744d0008e20fddcf135781baabfa82d14f0ea194f2fa4948a21",
+      "registeredModuleSha256": "2476f57b2adfe744d0008e20fddcf135781baabfa82d14f0ea194f2fa4948a21"
+    },
+    {
+      "key": "shared-alg001-l03-p050",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l03-p050.tsx",
+      "moduleSha256": "eb02191dc9d7a1ef99885c04de3134d86d65147c113fdb666430275e6d3b0e0d",
+      "registeredModuleSha256": "eb02191dc9d7a1ef99885c04de3134d86d65147c113fdb666430275e6d3b0e0d"
+    },
+    {
+      "key": "shared-alg001-l03-p051",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l03-p051.tsx",
+      "moduleSha256": "b98c37776c4a08a723094723c66eb195732d3b0c26ca6df09619e98478d0fc7c",
+      "registeredModuleSha256": "b98c37776c4a08a723094723c66eb195732d3b0c26ca6df09619e98478d0fc7c"
+    },
+    {
+      "key": "shared-alg001-l03-p055",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l03-p055.tsx",
+      "moduleSha256": "74aa2afb398589a7d63842b1470c8ab72edf362145253ac86db4821b6eb5f52b",
+      "registeredModuleSha256": "74aa2afb398589a7d63842b1470c8ab72edf362145253ac86db4821b6eb5f52b"
+    },
+    {
+      "key": "shared-alg001-l04-p004",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l04-p004.tsx",
+      "moduleSha256": "9b9c39d39dd488fd63a925ae1b8d960e64556236a8a054ea1fcc49e2154bd3a6",
+      "registeredModuleSha256": "9b9c39d39dd488fd63a925ae1b8d960e64556236a8a054ea1fcc49e2154bd3a6"
+    },
+    {
+      "key": "shared-alg001-l04-p006",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l04-p006.tsx",
+      "moduleSha256": "dd88e52791e7773d0a37d77275627e880bb102753648ed1517c3ec87d3ea8d1b",
+      "registeredModuleSha256": "dd88e52791e7773d0a37d77275627e880bb102753648ed1517c3ec87d3ea8d1b"
+    },
+    {
+      "key": "shared-alg001-l04-p016",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l04-p016.tsx",
+      "moduleSha256": "bbb6849916f89ced56bce6eb21c2afefba7ce39e60449d9896c173fbcaefab05",
+      "registeredModuleSha256": "bbb6849916f89ced56bce6eb21c2afefba7ce39e60449d9896c173fbcaefab05"
+    },
+    {
+      "key": "shared-alg001-l04-p018",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l04-p018.tsx",
+      "moduleSha256": "95d0299d92b273dea7c73812e7d1147d204704b6f88add5555a0644ea048e804",
+      "registeredModuleSha256": "95d0299d92b273dea7c73812e7d1147d204704b6f88add5555a0644ea048e804"
+    },
+    {
+      "key": "shared-alg001-l04-p020",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l04-p020.tsx",
+      "moduleSha256": "65384a441bd198085012ee67cce464262c7d414d2a2ced35df2702cf6394b563",
+      "registeredModuleSha256": "65384a441bd198085012ee67cce464262c7d414d2a2ced35df2702cf6394b563"
+    },
+    {
+      "key": "shared-alg001-l04-p024",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l04-p024.tsx",
+      "moduleSha256": "f78c33b186c3f7e45c6c76ec9721ad614596d1aa014ad1e5327605601c52ea1f",
+      "registeredModuleSha256": "f78c33b186c3f7e45c6c76ec9721ad614596d1aa014ad1e5327605601c52ea1f"
+    },
+    {
+      "key": "shared-alg001-l04-p032",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l04-p032.tsx",
+      "moduleSha256": "ca18564d91cc934ec7c2d6f733e1a2202b3ef1081e46ab22a51fd0368335eaf9",
+      "registeredModuleSha256": "ca18564d91cc934ec7c2d6f733e1a2202b3ef1081e46ab22a51fd0368335eaf9"
+    },
+    {
+      "key": "shared-alg001-l04-p044",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l04-p044.tsx",
+      "moduleSha256": "1ebd42209c0f34b800d6cc78a1a8bb7e229bdb6a46296034b358aba69ac1a14d",
+      "registeredModuleSha256": "1ebd42209c0f34b800d6cc78a1a8bb7e229bdb6a46296034b358aba69ac1a14d"
+    },
+    {
+      "key": "shared-alg001-l04-p045",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l04-p045.tsx",
+      "moduleSha256": "429be3f36d73587270ab13b73416bb1f89d13be17fda654203cd20f87b8a8c96",
+      "registeredModuleSha256": "429be3f36d73587270ab13b73416bb1f89d13be17fda654203cd20f87b8a8c96"
+    },
+    {
+      "key": "shared-alg001-l04-p046",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l04-p046.tsx",
+      "moduleSha256": "622353982af58f2e36027fbe67e97019932d37b1d4ec5bf80228c761a05f3f2c",
+      "registeredModuleSha256": "622353982af58f2e36027fbe67e97019932d37b1d4ec5bf80228c761a05f3f2c"
+    },
+    {
+      "key": "shared-alg001-l04-p047",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l04-p047.tsx",
+      "moduleSha256": "3aff7b2a8f5889a2494dd53bab38624cfac5929ec001a66b3418ec25b20176b4",
+      "registeredModuleSha256": "3aff7b2a8f5889a2494dd53bab38624cfac5929ec001a66b3418ec25b20176b4"
+    },
+    {
+      "key": "shared-alg001-l04-p048",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l04-p048.tsx",
+      "moduleSha256": "09879067a64c7f14fa4ca912f977baef2f133e1caf2537558337596eeb09ae64",
+      "registeredModuleSha256": "09879067a64c7f14fa4ca912f977baef2f133e1caf2537558337596eeb09ae64"
+    },
+    {
+      "key": "shared-alg001-l04-p052",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l04-p052.tsx",
+      "moduleSha256": "c488af40b7b2fb6dbdd5d1563676ddfb856fd183f1eeca85b33fe21fdfdee95d",
+      "registeredModuleSha256": "c488af40b7b2fb6dbdd5d1563676ddfb856fd183f1eeca85b33fe21fdfdee95d"
+    },
+    {
+      "key": "shared-alg001-l05-p003",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l05-p003.tsx",
+      "moduleSha256": "69b7451b9a519cffcefbb4d6033a0e98b7ccc8df9a4a7d436ed0e650855b045e",
+      "registeredModuleSha256": "69b7451b9a519cffcefbb4d6033a0e98b7ccc8df9a4a7d436ed0e650855b045e"
+    },
+    {
+      "key": "shared-alg001-l05-p005",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l05-p005.tsx",
+      "moduleSha256": "ca6dcc05523aee20298ab2d1805449b20d8389bb4d2985febd025d8d8864d791",
+      "registeredModuleSha256": "ca6dcc05523aee20298ab2d1805449b20d8389bb4d2985febd025d8d8864d791"
+    },
+    {
+      "key": "shared-alg001-l05-p006",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l05-p006.tsx",
+      "moduleSha256": "fd69412a48bbac4c730118bdadfce33be8edc1a3924b0e7b1502a920ee42dcd0",
+      "registeredModuleSha256": "fd69412a48bbac4c730118bdadfce33be8edc1a3924b0e7b1502a920ee42dcd0"
+    },
+    {
+      "key": "shared-alg001-l05-p014",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l05-p014.tsx",
+      "moduleSha256": "7ad817e08a4473222feea20115e36939ecf4c1ace76471a6afcd94c4e3f11c8a",
+      "registeredModuleSha256": "7ad817e08a4473222feea20115e36939ecf4c1ace76471a6afcd94c4e3f11c8a"
+    },
+    {
+      "key": "shared-alg001-l05-p015",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l05-p015.tsx",
+      "moduleSha256": "982f5e3a6ba1174d745c8b10c74542a1e48b546629b8fb06fadf90a75021a87c",
+      "registeredModuleSha256": "982f5e3a6ba1174d745c8b10c74542a1e48b546629b8fb06fadf90a75021a87c"
+    },
+    {
+      "key": "shared-alg001-l05-p026",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l05-p026.tsx",
+      "moduleSha256": "2d2f33efbfe27d108aca46c520bbdbb10fd3540115d94b28c2e4d0aef7026ba9",
+      "registeredModuleSha256": "2d2f33efbfe27d108aca46c520bbdbb10fd3540115d94b28c2e4d0aef7026ba9"
+    },
+    {
+      "key": "shared-alg001-l05-p027",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l05-p027.tsx",
+      "moduleSha256": "7cf5327de40c8957be4fa11b914f388e3db3d92dc056bf1e92e1fdcaf7132e68",
+      "registeredModuleSha256": "7cf5327de40c8957be4fa11b914f388e3db3d92dc056bf1e92e1fdcaf7132e68"
+    },
+    {
+      "key": "shared-alg001-l05-p030",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/frozen16-prepared-glossary-shared-alg001-l05-p030.tsx",
+      "moduleSha256": "1bc82d4273605adba91b37beeac9f0cf461f2f90f0b3f3fd3bc03e76a1acd5e4",
+      "registeredModuleSha256": "1bc82d4273605adba91b37beeac9f0cf461f2f90f0b3f3fd3bc03e76a1acd5e4"
+    },
+    {
+      "key": "shared-alg001-l05-p054",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l05-p054.tsx",
+      "moduleSha256": "89c7e9b463c598130e9c701131eb711f3922686e3d34d5ff8c71e04b77d9c08d",
+      "registeredModuleSha256": "89c7e9b463c598130e9c701131eb711f3922686e3d34d5ff8c71e04b77d9c08d"
+    },
+    {
+      "key": "shared-alg001-l05-p055",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l05-p055.tsx",
+      "moduleSha256": "e64ae5f46d22f01ab6d3a71ffd2d01a577e89aa685ce189f6cbd498c19f2fed1",
+      "registeredModuleSha256": "e64ae5f46d22f01ab6d3a71ffd2d01a577e89aa685ce189f6cbd498c19f2fed1"
+    },
+    {
+      "key": "shared-alg001-l05-p056",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l05-p056.tsx",
+      "moduleSha256": "11971c00608462933a29c15adf41ac5b8f25fb5e654536ba0794e95835c4a679",
+      "registeredModuleSha256": "11971c00608462933a29c15adf41ac5b8f25fb5e654536ba0794e95835c4a679"
+    },
+    {
+      "key": "shared-alg001-l05-p057",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l05-p057.tsx",
+      "moduleSha256": "19757218f1c54c2d720f992b1e099b9a912097ddbe14fe8eeb47958ac36fe34d",
+      "registeredModuleSha256": "19757218f1c54c2d720f992b1e099b9a912097ddbe14fe8eeb47958ac36fe34d"
+    },
+    {
+      "key": "shared-alg001-l05-p058",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l05-p058.tsx",
+      "moduleSha256": "0666455f8ff6f84c35c40e681be12b5d39bd055f65a3f5400978b18ec9fd7653",
+      "registeredModuleSha256": "0666455f8ff6f84c35c40e681be12b5d39bd055f65a3f5400978b18ec9fd7653"
+    },
+    {
+      "key": "shared-alg001-l05-p062",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l05-p062.tsx",
+      "moduleSha256": "4e4a6e5cb1f3533e3cfcca56d7937279612a9ac89254fab6b7388f255c37905d",
+      "registeredModuleSha256": "4e4a6e5cb1f3533e3cfcca56d7937279612a9ac89254fab6b7388f255c37905d"
+    },
+    {
+      "key": "shared-alg001-l06-p002",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l06-p002-v2.tsx",
+      "moduleSha256": "7cf247e915f5a54612345fd8f6d3d343448181eaf366fb292335abb88814e537",
+      "registeredModuleSha256": "7cf247e915f5a54612345fd8f6d3d343448181eaf366fb292335abb88814e537"
+    },
+    {
+      "key": "shared-alg001-l06-p005",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l06-p005.tsx",
+      "moduleSha256": "e2144483782bfabc084af083ffe95365732230c38927ef363cff11d5e607f094",
+      "registeredModuleSha256": "e2144483782bfabc084af083ffe95365732230c38927ef363cff11d5e607f094"
+    },
+    {
+      "key": "shared-alg001-l06-p006",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l06-p006.tsx",
+      "moduleSha256": "e032341cfdbc9f26003bd25101cb8100b38f6cd07e82f22737a94046df5b6ada",
+      "registeredModuleSha256": "e032341cfdbc9f26003bd25101cb8100b38f6cd07e82f22737a94046df5b6ada"
+    },
+    {
+      "key": "shared-alg001-l06-p007",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l06-p007.tsx",
+      "moduleSha256": "d15a17306db3a77ae360dbf8feaf3a9cd216bfeb0ee4acc719f3370830de7e47",
+      "registeredModuleSha256": "d15a17306db3a77ae360dbf8feaf3a9cd216bfeb0ee4acc719f3370830de7e47"
+    },
+    {
+      "key": "shared-alg001-l06-p009",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l06-p009.tsx",
+      "moduleSha256": "f2e2bd7c2be884522c62c0b4bf28eb059ac8b5b0a507c4090dd93f4e1613df7a",
+      "registeredModuleSha256": "f2e2bd7c2be884522c62c0b4bf28eb059ac8b5b0a507c4090dd93f4e1613df7a"
+    },
+    {
+      "key": "shared-alg001-l06-p011",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l06-p011.tsx",
+      "moduleSha256": "b674b5dc0271832c8e582464606f2f10e29855d7335b08c737b3f8accdd01457",
+      "registeredModuleSha256": "b674b5dc0271832c8e582464606f2f10e29855d7335b08c737b3f8accdd01457"
+    },
+    {
+      "key": "shared-alg001-l06-p012",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l06-p012.tsx",
+      "moduleSha256": "b0cd526079c77f11c08c4bcc8b6cc168351ae5636b6d9f7ed7ef53b75d6bb563",
+      "registeredModuleSha256": "b0cd526079c77f11c08c4bcc8b6cc168351ae5636b6d9f7ed7ef53b75d6bb563"
+    },
+    {
+      "key": "shared-alg001-l06-p030",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l06-p030.tsx",
+      "moduleSha256": "8377fe81008da41945223cf38d15c746a9487472e20379f4c58db333f8a82c81",
+      "registeredModuleSha256": "8377fe81008da41945223cf38d15c746a9487472e20379f4c58db333f8a82c81"
+    },
+    {
+      "key": "shared-alg001-l06-p036",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l06-p036.tsx",
+      "moduleSha256": "a4548f2ca4f1f7798dca4d77387d3f34bd9e97ffcf8106b327d76875608390dc",
+      "registeredModuleSha256": "a4548f2ca4f1f7798dca4d77387d3f34bd9e97ffcf8106b327d76875608390dc"
+    },
+    {
+      "key": "shared-alg001-l06-p037",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l06-p037.tsx",
+      "moduleSha256": "dce66eaec75b02691ac764b7d3ae3812ba33231bc619e18c3766f86f5b789e8c",
+      "registeredModuleSha256": "dce66eaec75b02691ac764b7d3ae3812ba33231bc619e18c3766f86f5b789e8c"
+    },
+    {
+      "key": "shared-alg001-l06-p039",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l06-p039.tsx",
+      "moduleSha256": "834124163829730c203802ee71a64212003a1aed8cb66ed6fefed3577de6c394",
+      "registeredModuleSha256": "834124163829730c203802ee71a64212003a1aed8cb66ed6fefed3577de6c394"
+    },
+    {
+      "key": "shared-alg001-l06-p040",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/frozen16-four-audio-shared-alg001-l06-p040.tsx",
+      "moduleSha256": "03848cf27c60aa512557543a7c78e03746a1c984037fe706063f65b01204e745",
+      "registeredModuleSha256": "03848cf27c60aa512557543a7c78e03746a1c984037fe706063f65b01204e745"
+    },
+    {
+      "key": "shared-alg001-l06-p051",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l06-p051.tsx",
+      "moduleSha256": "97cff263ed1b72c792d91da134ce59bae38747ccba37990cf44545de331e930c",
+      "registeredModuleSha256": "97cff263ed1b72c792d91da134ce59bae38747ccba37990cf44545de331e930c"
+    },
+    {
+      "key": "shared-alg001-l06-p052",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l06-p052.tsx",
+      "moduleSha256": "7685a639b3817d344660fc82ac1d76f2d4516005a8cf9c5c030459f2b4b58ce1",
+      "registeredModuleSha256": "7685a639b3817d344660fc82ac1d76f2d4516005a8cf9c5c030459f2b4b58ce1"
+    },
+    {
+      "key": "shared-alg001-l06-p053",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l06-p053.tsx",
+      "moduleSha256": "d807d812df267cf912a8235eba76650e464c824af717fe8520f39cbb6869b6d4",
+      "registeredModuleSha256": "d807d812df267cf912a8235eba76650e464c824af717fe8520f39cbb6869b6d4"
+    },
+    {
+      "key": "shared-alg001-l06-p054",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l06-p054.tsx",
+      "moduleSha256": "3373f1d7d7ed336a11f86913257a13257b66e6285de362ec0e42ea07de14ff9a",
+      "registeredModuleSha256": "3373f1d7d7ed336a11f86913257a13257b66e6285de362ec0e42ea07de14ff9a"
+    },
+    {
+      "key": "shared-alg001-l06-p055",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l06-p055.tsx",
+      "moduleSha256": "9ef969d2c4c5b126d3410a444bccdd45a73e04a1800e30ffcbaa42da7a3c6ac3",
+      "registeredModuleSha256": "9ef969d2c4c5b126d3410a444bccdd45a73e04a1800e30ffcbaa42da7a3c6ac3"
+    },
+    {
+      "key": "shared-alg001-l06-p059",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l06-p059.tsx",
+      "moduleSha256": "7e61799b6e15e6245f8d6d0115b0117c8894fc4944d4e641391367cdf1794717",
+      "registeredModuleSha256": "7e61799b6e15e6245f8d6d0115b0117c8894fc4944d4e641391367cdf1794717"
+    },
+    {
+      "key": "shared-alg001-l07-p004",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l07-p004.tsx",
+      "moduleSha256": "6de2291d8801293e5b6b4e0751d48b788bcdb5585ba5f6a62e329ad736066cdf",
+      "registeredModuleSha256": "6de2291d8801293e5b6b4e0751d48b788bcdb5585ba5f6a62e329ad736066cdf"
+    },
+    {
+      "key": "shared-alg001-l07-p005",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l07-p005.tsx",
+      "moduleSha256": "272b841dc8e5d08d6c3125c366d7873a39356e8de161ab5e5e406ce154bbfd7c",
+      "registeredModuleSha256": "272b841dc8e5d08d6c3125c366d7873a39356e8de161ab5e5e406ce154bbfd7c"
+    },
+    {
+      "key": "shared-alg001-l07-p008",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l07-p008.tsx",
+      "moduleSha256": "0b05d98a70a7c4a71b2bc841624aa782f37197ff49693e9dac83b0e388e7cc87",
+      "registeredModuleSha256": "0b05d98a70a7c4a71b2bc841624aa782f37197ff49693e9dac83b0e388e7cc87"
+    },
+    {
+      "key": "shared-alg001-l07-p024",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l07-p024.tsx",
+      "moduleSha256": "9e5e2235a95894ea86f4a4bbccc222e2ba5e913d51681e796ee94d513c418150",
+      "registeredModuleSha256": "9e5e2235a95894ea86f4a4bbccc222e2ba5e913d51681e796ee94d513c418150"
+    },
+    {
+      "key": "shared-alg001-l07-p028",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l07-p028.tsx",
+      "moduleSha256": "9460d59bbcde6225c2ebf881b3b2251b50331e107cf18664dadffebe8a841ffb",
+      "registeredModuleSha256": "9460d59bbcde6225c2ebf881b3b2251b50331e107cf18664dadffebe8a841ffb"
+    },
+    {
+      "key": "shared-alg001-l07-p029",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l07-p029.tsx",
+      "moduleSha256": "e43e0a00c8c9d3eda2074f7fe968fd6fb103e67f44d428c212c51526381c3dcc",
+      "registeredModuleSha256": "e43e0a00c8c9d3eda2074f7fe968fd6fb103e67f44d428c212c51526381c3dcc"
+    },
+    {
+      "key": "shared-alg001-l07-p035",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l07-p035.tsx",
+      "moduleSha256": "7e62b967cad4cb0c9f527b1067f954e566f0588a10fc3c78c792b0e51349215b",
+      "registeredModuleSha256": "7e62b967cad4cb0c9f527b1067f954e566f0588a10fc3c78c792b0e51349215b"
+    },
+    {
+      "key": "shared-alg001-l07-p053",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l07-p053.tsx",
+      "moduleSha256": "4d241e40231fe1c5a687f3dbd43142054156c2483f35a0aeeae1fd6a68e076f4",
+      "registeredModuleSha256": "4d241e40231fe1c5a687f3dbd43142054156c2483f35a0aeeae1fd6a68e076f4"
+    },
+    {
+      "key": "shared-alg001-l07-p054",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l07-p054.tsx",
+      "moduleSha256": "8f3ed44575fe25578b3f1dba642293841f1a293c5e0edf8abec67135c32b5ab3",
+      "registeredModuleSha256": "8f3ed44575fe25578b3f1dba642293841f1a293c5e0edf8abec67135c32b5ab3"
+    },
+    {
+      "key": "shared-alg001-l07-p055",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l07-p055.tsx",
+      "moduleSha256": "cde84b4714c1a98db4a5747deb160601999742a1bc6a533bf1d83e40fba12a7d",
+      "registeredModuleSha256": "cde84b4714c1a98db4a5747deb160601999742a1bc6a533bf1d83e40fba12a7d"
+    },
+    {
+      "key": "shared-alg001-l07-p056",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l07-p056.tsx",
+      "moduleSha256": "2c029ad4c850b6a4130b3e883c746030325daff6232bc16456f49956c89dcfb1",
+      "registeredModuleSha256": "2c029ad4c850b6a4130b3e883c746030325daff6232bc16456f49956c89dcfb1"
+    },
+    {
+      "key": "shared-alg001-l07-p057",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l07-p057.tsx",
+      "moduleSha256": "e54278a21f8b04c4753e7c85eb134b7f1a3e13e946f66d3501ce3708824a0fae",
+      "registeredModuleSha256": "e54278a21f8b04c4753e7c85eb134b7f1a3e13e946f66d3501ce3708824a0fae"
+    },
+    {
+      "key": "shared-alg001-l07-p061",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l07-p061.tsx",
+      "moduleSha256": "eb25954a4fd30c72fd5e4ca53b7f602f0fc8756579b17df447d81d226b540273",
+      "registeredModuleSha256": "eb25954a4fd30c72fd5e4ca53b7f602f0fc8756579b17df447d81d226b540273"
+    },
+    {
+      "key": "shared-alg001-l08-p002",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l08-p002.tsx",
+      "moduleSha256": "c8a506aa33d919abf937b2f72af11b061deb12c0d25cc528cec783abec1fce22",
+      "registeredModuleSha256": "c8a506aa33d919abf937b2f72af11b061deb12c0d25cc528cec783abec1fce22"
+    },
+    {
+      "key": "shared-alg001-l08-p003",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l08-p003.tsx",
+      "moduleSha256": "dde46fb952f45be8778d718ff24e5c4ffc3f0188bfd6d3276b7d82f066bb4397",
+      "registeredModuleSha256": "dde46fb952f45be8778d718ff24e5c4ffc3f0188bfd6d3276b7d82f066bb4397"
+    },
+    {
+      "key": "shared-alg001-l08-p004",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l08-p004.tsx",
+      "moduleSha256": "9f322811474fdb24c99ba44d0d9f190ed171d328357ac004144b3030e12153e3",
+      "registeredModuleSha256": "9f322811474fdb24c99ba44d0d9f190ed171d328357ac004144b3030e12153e3"
+    },
+    {
+      "key": "shared-alg001-l08-p008",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l08-p008.tsx",
+      "moduleSha256": "999be3cacda6a83b50d49f51156593ebbddb97526a863dc72ae5a65ddfaae16e",
+      "registeredModuleSha256": "999be3cacda6a83b50d49f51156593ebbddb97526a863dc72ae5a65ddfaae16e"
+    },
+    {
+      "key": "shared-alg001-l08-p017",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l08-p017.tsx",
+      "moduleSha256": "f28e9d307a57063953f26f87d98c45126745a4f59b536439696bb9fbff099b9d",
+      "registeredModuleSha256": "f28e9d307a57063953f26f87d98c45126745a4f59b536439696bb9fbff099b9d"
+    },
+    {
+      "key": "shared-alg001-l08-p025",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/frozen16-prepared-glossary-shared-alg001-l08-p025.tsx",
+      "moduleSha256": "e620d676134a8be9c2d170d7a4b223a62ef10726dd9d611c6e903f24846417b6",
+      "registeredModuleSha256": "e620d676134a8be9c2d170d7a4b223a62ef10726dd9d611c6e903f24846417b6"
+    },
+    {
+      "key": "shared-alg001-l08-p041",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l08-p041.tsx",
+      "moduleSha256": "a048b12bd81ee03474d1a0b82745f612c6df08e8ba98d9bc1ffe7590d280844e",
+      "registeredModuleSha256": "a048b12bd81ee03474d1a0b82745f612c6df08e8ba98d9bc1ffe7590d280844e"
+    },
+    {
+      "key": "shared-alg001-l08-p042",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l08-p042.tsx",
+      "moduleSha256": "a231d9bb810a56d1b4dc87f496e23b8024166e97c22c2bfdbef300fd594b899b",
+      "registeredModuleSha256": "a231d9bb810a56d1b4dc87f496e23b8024166e97c22c2bfdbef300fd594b899b"
+    },
+    {
+      "key": "shared-alg001-l08-p043",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l08-p043.tsx",
+      "moduleSha256": "a8cf2b54fd1c3b4a46f9bf4748214e5511d2074086987e6d75c8e7459513933e",
+      "registeredModuleSha256": "a8cf2b54fd1c3b4a46f9bf4748214e5511d2074086987e6d75c8e7459513933e"
+    },
+    {
+      "key": "shared-alg001-l08-p044",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l08-p044.tsx",
+      "moduleSha256": "06a7273706bf3a8f9a5ee03de63b60299b433f2f3a104ea3eb34c95d675b82e4",
+      "registeredModuleSha256": "06a7273706bf3a8f9a5ee03de63b60299b433f2f3a104ea3eb34c95d675b82e4"
+    },
+    {
+      "key": "shared-alg001-l08-p045",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l08-p045.tsx",
+      "moduleSha256": "a2c83a67fdc400dc7fa9981f59127ac48d95fb5eaa6a25efff7e26461b5f9d75",
+      "registeredModuleSha256": "a2c83a67fdc400dc7fa9981f59127ac48d95fb5eaa6a25efff7e26461b5f9d75"
+    },
+    {
+      "key": "shared-alg001-l08-p049",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l08-p049.tsx",
+      "moduleSha256": "82fcd1ea52ad86af3a7643887900b886776d2fcc777cd238082704e4e22904ca",
+      "registeredModuleSha256": "82fcd1ea52ad86af3a7643887900b886776d2fcc777cd238082704e4e22904ca"
+    },
+    {
+      "key": "shared-alg001-l09-p001",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p001.tsx",
+      "moduleSha256": "b3cd685adb9fe77174fe08b040fcd7dd6716c33b75ff05585ffb50ff1e8ad1e1",
+      "registeredModuleSha256": "b3cd685adb9fe77174fe08b040fcd7dd6716c33b75ff05585ffb50ff1e8ad1e1"
+    },
+    {
+      "key": "shared-alg001-l09-p002",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p002.tsx",
+      "moduleSha256": "ceb318df41ee465ee1077f077e0c57b413676d2178877c4900cc5c03a2e8f816",
+      "registeredModuleSha256": "ceb318df41ee465ee1077f077e0c57b413676d2178877c4900cc5c03a2e8f816"
+    },
+    {
+      "key": "shared-alg001-l09-p003",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p003.tsx",
+      "moduleSha256": "b8d2e1ddde7050832fbee317c95310cf2dbc2d8b989c9cf66146b221bd039f60",
+      "registeredModuleSha256": "b8d2e1ddde7050832fbee317c95310cf2dbc2d8b989c9cf66146b221bd039f60"
+    },
+    {
+      "key": "shared-alg001-l09-p004",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p004.tsx",
+      "moduleSha256": "cf5b0c7e69e90ad870620d6a4cd18fad21128562faf0972496d288a5a805e222",
+      "registeredModuleSha256": "cf5b0c7e69e90ad870620d6a4cd18fad21128562faf0972496d288a5a805e222"
+    },
+    {
+      "key": "shared-alg001-l09-p005",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p005.tsx",
+      "moduleSha256": "21e743dde92b056d2938c7d66da7cfd7c69a0057441d1ceda8587fc0c4d4f0ba",
+      "registeredModuleSha256": "21e743dde92b056d2938c7d66da7cfd7c69a0057441d1ceda8587fc0c4d4f0ba"
+    },
+    {
+      "key": "shared-alg001-l09-p006",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p006.tsx",
+      "moduleSha256": "47752d6f22fa439b3bcb92f93c1ebd1874e4f7df7687b0f595047f520ccd9dd8",
+      "registeredModuleSha256": "47752d6f22fa439b3bcb92f93c1ebd1874e4f7df7687b0f595047f520ccd9dd8"
+    },
+    {
+      "key": "shared-alg001-l09-p007",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p007.tsx",
+      "moduleSha256": "9b5cbb93ff758aee98e151e93cd08f942b0baff630cdc314ab607d481db2fb46",
+      "registeredModuleSha256": "9b5cbb93ff758aee98e151e93cd08f942b0baff630cdc314ab607d481db2fb46"
+    },
+    {
+      "key": "shared-alg001-l09-p008",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p008.tsx",
+      "moduleSha256": "ab4be5c4beb7173c6c59b2ac97dcb123e59317b8fb1bf77d7fbd0986c788694a",
+      "registeredModuleSha256": "ab4be5c4beb7173c6c59b2ac97dcb123e59317b8fb1bf77d7fbd0986c788694a"
+    },
+    {
+      "key": "shared-alg001-l09-p009",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p009.tsx",
+      "moduleSha256": "4e49671e822a6d123c26c0e7c0248d6b121097fe42757121a187714b32d32aed",
+      "registeredModuleSha256": "4e49671e822a6d123c26c0e7c0248d6b121097fe42757121a187714b32d32aed"
+    },
+    {
+      "key": "shared-alg001-l09-p010",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p010.tsx",
+      "moduleSha256": "42597bea11adeb21aed05ce015089434756ec81bb4ac22627d45b749bbb33f1d",
+      "registeredModuleSha256": "42597bea11adeb21aed05ce015089434756ec81bb4ac22627d45b749bbb33f1d"
+    },
+    {
+      "key": "shared-alg001-l09-p011",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p011.tsx",
+      "moduleSha256": "caad96779a8b8afcb1a7eb941e50e54a859f23123665651ecd6091f08987d151",
+      "registeredModuleSha256": "caad96779a8b8afcb1a7eb941e50e54a859f23123665651ecd6091f08987d151"
+    },
+    {
+      "key": "shared-alg001-l09-p012",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p012.tsx",
+      "moduleSha256": "c517ecebfce9b839e0bb2b086e79294e7f1c3d72274d27e0136b21062a1187ac",
+      "registeredModuleSha256": "c517ecebfce9b839e0bb2b086e79294e7f1c3d72274d27e0136b21062a1187ac"
+    },
+    {
+      "key": "shared-alg001-l09-p013",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p013.tsx",
+      "moduleSha256": "db761082900cf8eba3ec7a2be0847f72350aa649fac96598d6f7dfd6dbc163af",
+      "registeredModuleSha256": "db761082900cf8eba3ec7a2be0847f72350aa649fac96598d6f7dfd6dbc163af"
+    },
+    {
+      "key": "shared-alg001-l09-p014",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p014.tsx",
+      "moduleSha256": "4af8f1db2ddb4c3252e7340343a6f0a4849f8682f1e9c0936ea8124af06c7a4a",
+      "registeredModuleSha256": "4af8f1db2ddb4c3252e7340343a6f0a4849f8682f1e9c0936ea8124af06c7a4a"
+    },
+    {
+      "key": "shared-alg001-l09-p015",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p015.tsx",
+      "moduleSha256": "8530f42630dadad5795ac4ca9d53380898450012b51e81943e172aaafb4d06c3",
+      "registeredModuleSha256": "8530f42630dadad5795ac4ca9d53380898450012b51e81943e172aaafb4d06c3"
+    },
+    {
+      "key": "shared-alg001-l09-p016",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p016.tsx",
+      "moduleSha256": "ed13ffc32d6ee6850211f24db6691704257b7bcd176ff224a53957043155593f",
+      "registeredModuleSha256": "ed13ffc32d6ee6850211f24db6691704257b7bcd176ff224a53957043155593f"
+    },
+    {
+      "key": "shared-alg001-l09-p017",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p017.tsx",
+      "moduleSha256": "649b74c2ca855ca3c692c53838ae37fdc88118f0c1f97bdafa973526f9038ecc",
+      "registeredModuleSha256": "649b74c2ca855ca3c692c53838ae37fdc88118f0c1f97bdafa973526f9038ecc"
+    },
+    {
+      "key": "shared-alg001-l09-p018",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p018.tsx",
+      "moduleSha256": "17cf742d4b458f1cc132d8e219d8fea40d68db6773c1298d523e999bf474e87a",
+      "registeredModuleSha256": "17cf742d4b458f1cc132d8e219d8fea40d68db6773c1298d523e999bf474e87a"
+    },
+    {
+      "key": "shared-alg001-l09-p019",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p019.tsx",
+      "moduleSha256": "56e0377334f2d493d04a094f90595e482b217f8ac17be3676d7163384503ce49",
+      "registeredModuleSha256": "56e0377334f2d493d04a094f90595e482b217f8ac17be3676d7163384503ce49"
+    },
+    {
+      "key": "shared-alg001-l09-p020",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p020.tsx",
+      "moduleSha256": "62eddfc7d8a72559eb5c11d7590dba49f5431a4cc5a4dc7d879d301b563962f5",
+      "registeredModuleSha256": "62eddfc7d8a72559eb5c11d7590dba49f5431a4cc5a4dc7d879d301b563962f5"
+    },
+    {
+      "key": "shared-alg001-l09-p021",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p021.tsx",
+      "moduleSha256": "d7be6e553d6d2072fc9fb4b223bf748d1d7f25206a817b11be1dc5e94f5794ff",
+      "registeredModuleSha256": "d7be6e553d6d2072fc9fb4b223bf748d1d7f25206a817b11be1dc5e94f5794ff"
+    },
+    {
+      "key": "shared-alg001-l09-p022",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p022.tsx",
+      "moduleSha256": "af718d2f2eab536adc4cb759e305f2b3e01b104cb95c6ecfe3fc9595d6f23f8e",
+      "registeredModuleSha256": "af718d2f2eab536adc4cb759e305f2b3e01b104cb95c6ecfe3fc9595d6f23f8e"
+    },
+    {
+      "key": "shared-alg001-l09-p023",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p023.tsx",
+      "moduleSha256": "30f884d440d453dd268708ccf844b295574c6c6f1afadae6cc06887cc361b74b",
+      "registeredModuleSha256": "30f884d440d453dd268708ccf844b295574c6c6f1afadae6cc06887cc361b74b"
+    },
+    {
+      "key": "shared-alg001-l09-p024",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p024.tsx",
+      "moduleSha256": "474ab0fa1ecad5d1de637a79b1dedc0a7da6ed2847714733b678daf9caa14e29",
+      "registeredModuleSha256": "474ab0fa1ecad5d1de637a79b1dedc0a7da6ed2847714733b678daf9caa14e29"
+    },
+    {
+      "key": "shared-alg001-l09-p025",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p025.tsx",
+      "moduleSha256": "41dff343a21a06211dd3bf21576ee3eaf3a8faf701b1b1da874aaf25743a01b7",
+      "registeredModuleSha256": "41dff343a21a06211dd3bf21576ee3eaf3a8faf701b1b1da874aaf25743a01b7"
+    },
+    {
+      "key": "shared-alg001-l09-p026",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p026.tsx",
+      "moduleSha256": "2bb11f1d92bd2dd0456fc638eb63c44fd87cfc8f8873f49db0b8c1a5bef882b0",
+      "registeredModuleSha256": "2bb11f1d92bd2dd0456fc638eb63c44fd87cfc8f8873f49db0b8c1a5bef882b0"
+    },
+    {
+      "key": "shared-alg001-l09-p027",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p027.tsx",
+      "moduleSha256": "9946a19d52dfec3c1d965dce698ba6bd09057c0fbf3235e095579a5e47a52209",
+      "registeredModuleSha256": "9946a19d52dfec3c1d965dce698ba6bd09057c0fbf3235e095579a5e47a52209"
+    },
+    {
+      "key": "shared-alg001-l09-p028",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p028.tsx",
+      "moduleSha256": "345967517bc30b80547207730250021854547e7010c34d3fbb2f0736b6835e8b",
+      "registeredModuleSha256": "345967517bc30b80547207730250021854547e7010c34d3fbb2f0736b6835e8b"
+    },
+    {
+      "key": "shared-alg001-l09-p029",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p029.tsx",
+      "moduleSha256": "d45db208e0c4212dd0111c4ec1ceb8e47a5493f95098b69a764654d196bbdb9d",
+      "registeredModuleSha256": "d45db208e0c4212dd0111c4ec1ceb8e47a5493f95098b69a764654d196bbdb9d"
+    },
+    {
+      "key": "shared-alg001-l09-p030",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p030.tsx",
+      "moduleSha256": "640e53b666be41af65efb281eeb24a0d6a3b3ce27fabd33bd413024d684d8350",
+      "registeredModuleSha256": "640e53b666be41af65efb281eeb24a0d6a3b3ce27fabd33bd413024d684d8350"
+    },
+    {
+      "key": "shared-alg001-l09-p031",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p031.tsx",
+      "moduleSha256": "366f2db5a1970d6f898f35e55d4efc4902b8c22a194b62d0821f2ef5392f71da",
+      "registeredModuleSha256": "366f2db5a1970d6f898f35e55d4efc4902b8c22a194b62d0821f2ef5392f71da"
+    },
+    {
+      "key": "shared-alg001-l09-p032",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p032.tsx",
+      "moduleSha256": "2e3e0cea81bbbe5019bca697398abd23533ea3f66d8a08de88bc5e37106a3d0c",
+      "registeredModuleSha256": "2e3e0cea81bbbe5019bca697398abd23533ea3f66d8a08de88bc5e37106a3d0c"
+    },
+    {
+      "key": "shared-alg001-l09-p033",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p033.tsx",
+      "moduleSha256": "85056f599857d2cd63e86f47f98e5dda374ea43dce7a5a26ebaeab3ec7399e83",
+      "registeredModuleSha256": "85056f599857d2cd63e86f47f98e5dda374ea43dce7a5a26ebaeab3ec7399e83"
+    },
+    {
+      "key": "shared-alg001-l09-p034",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p034.tsx",
+      "moduleSha256": "7cca236ebf635c1c78add51bc5c09a2d821b03134418b4bc24e4ba59ce486966",
+      "registeredModuleSha256": "7cca236ebf635c1c78add51bc5c09a2d821b03134418b4bc24e4ba59ce486966"
+    },
+    {
+      "key": "shared-alg001-l09-p035",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p035.tsx",
+      "moduleSha256": "c43b687e50292b5e3f077cd03c293ae7acbb1de159f2b0fc60847c8c8524be92",
+      "registeredModuleSha256": "c43b687e50292b5e3f077cd03c293ae7acbb1de159f2b0fc60847c8c8524be92"
+    },
+    {
+      "key": "shared-alg001-l09-p036",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p036.tsx",
+      "moduleSha256": "cf18479f1061081c791878b40c5546936089ece13c85e8a5e9ad1a9380fb973c",
+      "registeredModuleSha256": "cf18479f1061081c791878b40c5546936089ece13c85e8a5e9ad1a9380fb973c"
+    },
+    {
+      "key": "shared-alg001-l09-p037",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p037.tsx",
+      "moduleSha256": "b19d2ed30e2c818d0712e0a95f62a24c5dc654b05bc867f6f52746cc3edefaf6",
+      "registeredModuleSha256": "b19d2ed30e2c818d0712e0a95f62a24c5dc654b05bc867f6f52746cc3edefaf6"
+    },
+    {
+      "key": "shared-alg001-l09-p038",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p038.tsx",
+      "moduleSha256": "d88a37346d854e9fc51b04fdc2bd50f21a035515e58a4dd572b050c5bf0619ee",
+      "registeredModuleSha256": "d88a37346d854e9fc51b04fdc2bd50f21a035515e58a4dd572b050c5bf0619ee"
+    },
+    {
+      "key": "shared-alg001-l09-p039",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p039.tsx",
+      "moduleSha256": "e58db9c78ca6c3a3520ad7b9b8c2e89b05512d010a317de91f719a3472ae4ad4",
+      "registeredModuleSha256": "e58db9c78ca6c3a3520ad7b9b8c2e89b05512d010a317de91f719a3472ae4ad4"
+    },
+    {
+      "key": "shared-alg001-l09-p040",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p040.tsx",
+      "moduleSha256": "85df2c0a00374076997f37d0011396e7c54d9bb8f558d0a56492b9d2fae5c034",
+      "registeredModuleSha256": "85df2c0a00374076997f37d0011396e7c54d9bb8f558d0a56492b9d2fae5c034"
+    },
+    {
+      "key": "shared-alg001-l09-p041",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l09-p041.tsx",
+      "moduleSha256": "9d0966f58a2a35f3b9d9e74951cb10eebbff0ed7f34f4386cd5109725bda6327",
+      "registeredModuleSha256": "9d0966f58a2a35f3b9d9e74951cb10eebbff0ed7f34f4386cd5109725bda6327"
+    },
+    {
+      "key": "shared-alg001-l10-p005",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l10-p005.tsx",
+      "moduleSha256": "cb7f3662b54becf7c48c2e535c0b0f78812c28ece45a7a091397117bae8d4a83",
+      "registeredModuleSha256": "cb7f3662b54becf7c48c2e535c0b0f78812c28ece45a7a091397117bae8d4a83"
+    },
+    {
+      "key": "shared-alg001-l10-p006",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l10-p006.tsx",
+      "moduleSha256": "ca22aeb9082cd33d79f6f1157567f4b3dcaaef84826f37aeac0dcbaea59201d9",
+      "registeredModuleSha256": "ca22aeb9082cd33d79f6f1157567f4b3dcaaef84826f37aeac0dcbaea59201d9"
+    },
+    {
+      "key": "shared-alg001-l10-p007",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l10-p007.tsx",
+      "moduleSha256": "8f3aadeae07e68461a26c37cd89d08d1573adb03e367883e72429a8a48741201",
+      "registeredModuleSha256": "8f3aadeae07e68461a26c37cd89d08d1573adb03e367883e72429a8a48741201"
+    },
+    {
+      "key": "shared-alg001-l10-p008",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l10-p008.tsx",
+      "moduleSha256": "67a34112852537c2e917bf2378c9f0b72f6e0cd4f7721615cd7732f519854f36",
+      "registeredModuleSha256": "67a34112852537c2e917bf2378c9f0b72f6e0cd4f7721615cd7732f519854f36"
+    },
+    {
+      "key": "shared-alg001-l10-p017",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l10-p017.tsx",
+      "moduleSha256": "9b44f80cba479efe897a813c96fc98a9638eac2533bfe54704e66b982e1ba489",
+      "registeredModuleSha256": "9b44f80cba479efe897a813c96fc98a9638eac2533bfe54704e66b982e1ba489"
+    },
+    {
+      "key": "shared-alg001-l10-p043",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l10-p043.tsx",
+      "moduleSha256": "748b9b55bddfc8030dca15f9dde3799f7f12acdfc39d66d14a8dd2d5619ddff0",
+      "registeredModuleSha256": "748b9b55bddfc8030dca15f9dde3799f7f12acdfc39d66d14a8dd2d5619ddff0"
+    },
+    {
+      "key": "shared-alg001-l10-p044",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l10-p044.tsx",
+      "moduleSha256": "c4c2c792a1062995d6d079bd7bc652026baef6153a83a99c289522d1bad04e87",
+      "registeredModuleSha256": "c4c2c792a1062995d6d079bd7bc652026baef6153a83a99c289522d1bad04e87"
+    },
+    {
+      "key": "shared-alg001-l10-p045",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l10-p045.tsx",
+      "moduleSha256": "24314f3815eaaa0ef0c75819f4b653c1c30081ca0aed17d53dbdd534e7156054",
+      "registeredModuleSha256": "24314f3815eaaa0ef0c75819f4b653c1c30081ca0aed17d53dbdd534e7156054"
+    },
+    {
+      "key": "shared-alg001-l10-p046",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l10-p046.tsx",
+      "moduleSha256": "a8112af3fea0f7963740031d6f6ace67bd1493f69a2e265e888586f68ba1ed32",
+      "registeredModuleSha256": "a8112af3fea0f7963740031d6f6ace67bd1493f69a2e265e888586f68ba1ed32"
+    },
+    {
+      "key": "shared-alg001-l10-p047",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l10-p047.tsx",
+      "moduleSha256": "f5616ab37fcb1b0e3dcc2bb96ec3b24e989246a819c13e4a13319f9fdfc077e5",
+      "registeredModuleSha256": "f5616ab37fcb1b0e3dcc2bb96ec3b24e989246a819c13e4a13319f9fdfc077e5"
+    },
+    {
+      "key": "shared-alg001-l10-p051",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l10-p051.tsx",
+      "moduleSha256": "6bb5925dcc2c9bcaf12bd82156923b3c0119e51913189e5c7185b924118f4d47",
+      "registeredModuleSha256": "6bb5925dcc2c9bcaf12bd82156923b3c0119e51913189e5c7185b924118f4d47"
+    },
+    {
+      "key": "shared-alg001-l11-p001",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p001.tsx",
+      "moduleSha256": "437bce0f041717e1616bb0c27d77446f4ae811f726e37c4edf8ba22599bc8d1a",
+      "registeredModuleSha256": "437bce0f041717e1616bb0c27d77446f4ae811f726e37c4edf8ba22599bc8d1a"
+    },
+    {
+      "key": "shared-alg001-l11-p002",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p002.tsx",
+      "moduleSha256": "91b60e6a77416ddd293d469e00f93a6d257447bb823bee0173aa32a246f1fb2d",
+      "registeredModuleSha256": "91b60e6a77416ddd293d469e00f93a6d257447bb823bee0173aa32a246f1fb2d"
+    },
+    {
+      "key": "shared-alg001-l11-p003",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p003.tsx",
+      "moduleSha256": "049f53fbbe8f6cd3095240872d9dbf1069772cf1f9fa8261a7952401eec3e45b",
+      "registeredModuleSha256": "049f53fbbe8f6cd3095240872d9dbf1069772cf1f9fa8261a7952401eec3e45b"
+    },
+    {
+      "key": "shared-alg001-l11-p004",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p004.tsx",
+      "moduleSha256": "a0d3b5c3b1b9904d3c1a3f9f60bc5a51bfd59c6222788120a724fc6303c85cc5",
+      "registeredModuleSha256": "a0d3b5c3b1b9904d3c1a3f9f60bc5a51bfd59c6222788120a724fc6303c85cc5"
+    },
+    {
+      "key": "shared-alg001-l11-p005",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p005.tsx",
+      "moduleSha256": "5d1089f0e1e00fd7eb60f8084e0a09579586feaa4589cc7df05bff7909215588",
+      "registeredModuleSha256": "5d1089f0e1e00fd7eb60f8084e0a09579586feaa4589cc7df05bff7909215588"
+    },
+    {
+      "key": "shared-alg001-l11-p006",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p006.tsx",
+      "moduleSha256": "cc28df0172b4d9186798d6c2cbd5e22ccba8bd80e8860b6dad60c6bb400a30fc",
+      "registeredModuleSha256": "cc28df0172b4d9186798d6c2cbd5e22ccba8bd80e8860b6dad60c6bb400a30fc"
+    },
+    {
+      "key": "shared-alg001-l11-p007",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p007.tsx",
+      "moduleSha256": "79ff29e42cb66c78dab365c80e847cdf09b741991099bf329025af6a9a8f35ee",
+      "registeredModuleSha256": "79ff29e42cb66c78dab365c80e847cdf09b741991099bf329025af6a9a8f35ee"
+    },
+    {
+      "key": "shared-alg001-l11-p008",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p008.tsx",
+      "moduleSha256": "f66980f46c39755764dcdc1f6c53c65282172c51c043892b22c63466a8ee6a94",
+      "registeredModuleSha256": "f66980f46c39755764dcdc1f6c53c65282172c51c043892b22c63466a8ee6a94"
+    },
+    {
+      "key": "shared-alg001-l11-p009",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p009.tsx",
+      "moduleSha256": "65916d5d4b029aa6854e30ecbddb29996289e92b2d230b19981159d29d8f3db2",
+      "registeredModuleSha256": "65916d5d4b029aa6854e30ecbddb29996289e92b2d230b19981159d29d8f3db2"
+    },
+    {
+      "key": "shared-alg001-l11-p010",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p010.tsx",
+      "moduleSha256": "aa83b509309e095d7c11c0f67c6342aa5ff6133b3bcac855ea2436c7972d3737",
+      "registeredModuleSha256": "aa83b509309e095d7c11c0f67c6342aa5ff6133b3bcac855ea2436c7972d3737"
+    },
+    {
+      "key": "shared-alg001-l11-p011",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p011.tsx",
+      "moduleSha256": "0be2348c110b6ed250e3f338c75d295f565ef2cd5dfc4a9e6f1e366e5176b212",
+      "registeredModuleSha256": "0be2348c110b6ed250e3f338c75d295f565ef2cd5dfc4a9e6f1e366e5176b212"
+    },
+    {
+      "key": "shared-alg001-l11-p012",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p012.tsx",
+      "moduleSha256": "af5411af3bd590493a98d60e42ab713a9d426ab60c40bc7ad07dec7d5fddce03",
+      "registeredModuleSha256": "af5411af3bd590493a98d60e42ab713a9d426ab60c40bc7ad07dec7d5fddce03"
+    },
+    {
+      "key": "shared-alg001-l11-p013",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p013.tsx",
+      "moduleSha256": "f372c9b1cbca3355553982b371f219d6853972d0943bd453b35b0013c1f76e40",
+      "registeredModuleSha256": "f372c9b1cbca3355553982b371f219d6853972d0943bd453b35b0013c1f76e40"
+    },
+    {
+      "key": "shared-alg001-l11-p014",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p014.tsx",
+      "moduleSha256": "0747ebd6725f1cdac62944706c14a144d3f469d9d9501f4ed171234925dedc22",
+      "registeredModuleSha256": "0747ebd6725f1cdac62944706c14a144d3f469d9d9501f4ed171234925dedc22"
+    },
+    {
+      "key": "shared-alg001-l11-p015",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p015.tsx",
+      "moduleSha256": "64daf481b17f90ca1e86bf25701530ba17d884fdb43ebfdeae4de88d71f618e9",
+      "registeredModuleSha256": "64daf481b17f90ca1e86bf25701530ba17d884fdb43ebfdeae4de88d71f618e9"
+    },
+    {
+      "key": "shared-alg001-l11-p016",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p016.tsx",
+      "moduleSha256": "26077a7e8682f550528d79b27712e69d58e2a34bc1db59df37cd188ad4ad70f5",
+      "registeredModuleSha256": "26077a7e8682f550528d79b27712e69d58e2a34bc1db59df37cd188ad4ad70f5"
+    },
+    {
+      "key": "shared-alg001-l11-p017",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p017.tsx",
+      "moduleSha256": "399082f3c70b3002d6562a08e3c7097056668252d9439b182cf3c95fbb6f9f10",
+      "registeredModuleSha256": "399082f3c70b3002d6562a08e3c7097056668252d9439b182cf3c95fbb6f9f10"
+    },
+    {
+      "key": "shared-alg001-l11-p018",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p018.tsx",
+      "moduleSha256": "db3012563a6332c1bd17fedae9019e94d425fb9775f40671ef5d4975e7ca92dd",
+      "registeredModuleSha256": "db3012563a6332c1bd17fedae9019e94d425fb9775f40671ef5d4975e7ca92dd"
+    },
+    {
+      "key": "shared-alg001-l11-p019",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p019.tsx",
+      "moduleSha256": "bffab44291bee013dace294db5357ec8e25cc188ce8446ec652d35b6e642bf8c",
+      "registeredModuleSha256": "bffab44291bee013dace294db5357ec8e25cc188ce8446ec652d35b6e642bf8c"
+    },
+    {
+      "key": "shared-alg001-l11-p020",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p020.tsx",
+      "moduleSha256": "3529ad9ae9a715d1a34007f021d2fd66ddee5eb011d0a4eb001281177e438f97",
+      "registeredModuleSha256": "3529ad9ae9a715d1a34007f021d2fd66ddee5eb011d0a4eb001281177e438f97"
+    },
+    {
+      "key": "shared-alg001-l11-p021",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p021.tsx",
+      "moduleSha256": "354c0aa6f912bd2c5abe81a2a25bb435c92bddedbb6ea49f2149411e4eea94c3",
+      "registeredModuleSha256": "354c0aa6f912bd2c5abe81a2a25bb435c92bddedbb6ea49f2149411e4eea94c3"
+    },
+    {
+      "key": "shared-alg001-l11-p022",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p022.tsx",
+      "moduleSha256": "d2a43d32e9a8354981224c8972faa0be4811b57326ae7bf2915bb90a3ffff037",
+      "registeredModuleSha256": "d2a43d32e9a8354981224c8972faa0be4811b57326ae7bf2915bb90a3ffff037"
+    },
+    {
+      "key": "shared-alg001-l11-p023",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p023.tsx",
+      "moduleSha256": "f2092ba090dd370cd383437e572cf77933914b6ec9811d8997ecefb472c9a2b2",
+      "registeredModuleSha256": "f2092ba090dd370cd383437e572cf77933914b6ec9811d8997ecefb472c9a2b2"
+    },
+    {
+      "key": "shared-alg001-l11-p024",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p024.tsx",
+      "moduleSha256": "4d7f1ab0567ba31934ab3862a3dc51a2eaf0be2c5591c870eb9b556efd85ed20",
+      "registeredModuleSha256": "4d7f1ab0567ba31934ab3862a3dc51a2eaf0be2c5591c870eb9b556efd85ed20"
+    },
+    {
+      "key": "shared-alg001-l11-p025",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p025.tsx",
+      "moduleSha256": "e7032057aed80acb652a7cda0bafca0e047b4af09368e829ea6db09c41283773",
+      "registeredModuleSha256": "e7032057aed80acb652a7cda0bafca0e047b4af09368e829ea6db09c41283773"
+    },
+    {
+      "key": "shared-alg001-l11-p026",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p026.tsx",
+      "moduleSha256": "c3baad7805fcacd63183c71badd235bbfb4e7af2e6ac4cddb44e14b9be86f232",
+      "registeredModuleSha256": "c3baad7805fcacd63183c71badd235bbfb4e7af2e6ac4cddb44e14b9be86f232"
+    },
+    {
+      "key": "shared-alg001-l11-p027",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p027.tsx",
+      "moduleSha256": "c6947b07f8f16b62df6a99bf6fb72a3c42a684e510d5e4dd09f6e956b5c9a19e",
+      "registeredModuleSha256": "c6947b07f8f16b62df6a99bf6fb72a3c42a684e510d5e4dd09f6e956b5c9a19e"
+    },
+    {
+      "key": "shared-alg001-l11-p028",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p028.tsx",
+      "moduleSha256": "cadddf278536ffee5ddfab92967d4271d2ca1b2f4b8fd41b240238ef389b47d6",
+      "registeredModuleSha256": "cadddf278536ffee5ddfab92967d4271d2ca1b2f4b8fd41b240238ef389b47d6"
+    },
+    {
+      "key": "shared-alg001-l11-p029",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p029.tsx",
+      "moduleSha256": "253f94318f0285be49d252a44f1e44fa4973aa437315cff26977fc8bc0da04f9",
+      "registeredModuleSha256": "253f94318f0285be49d252a44f1e44fa4973aa437315cff26977fc8bc0da04f9"
+    },
+    {
+      "key": "shared-alg001-l11-p030",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p030.tsx",
+      "moduleSha256": "c2b8a15a02f6cc7b53338a9c6ab86c4c6b4a84158cfa0dbbea58c4881b889c8f",
+      "registeredModuleSha256": "c2b8a15a02f6cc7b53338a9c6ab86c4c6b4a84158cfa0dbbea58c4881b889c8f"
+    },
+    {
+      "key": "shared-alg001-l11-p031",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p031.tsx",
+      "moduleSha256": "bd0eab8f6eeeaf6dd7f712f874d84b744dfc9105842e58be4017c87da551d158",
+      "registeredModuleSha256": "bd0eab8f6eeeaf6dd7f712f874d84b744dfc9105842e58be4017c87da551d158"
+    },
+    {
+      "key": "shared-alg001-l11-p032",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p032.tsx",
+      "moduleSha256": "83851ce42a57796d60add61423280d28bddaeee79f063be4bdf67639247260ec",
+      "registeredModuleSha256": "83851ce42a57796d60add61423280d28bddaeee79f063be4bdf67639247260ec"
+    },
+    {
+      "key": "shared-alg001-l11-p033",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p033.tsx",
+      "moduleSha256": "49924b86db2af4cdb92d92bcd437db984604b78163d117142e2a3ca8dbd417dd",
+      "registeredModuleSha256": "49924b86db2af4cdb92d92bcd437db984604b78163d117142e2a3ca8dbd417dd"
+    },
+    {
+      "key": "shared-alg001-l11-p034",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-two-page-companion-successor-p034.tsx",
+      "moduleSha256": "c6d440c9b1b53e367f7f5b889928ef38ad02ab1fb9b3e9dcaaa1bef5977396b3",
+      "registeredModuleSha256": "c6d440c9b1b53e367f7f5b889928ef38ad02ab1fb9b3e9dcaaa1bef5977396b3"
+    },
+    {
+      "key": "shared-alg001-l11-p035",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p035.tsx",
+      "moduleSha256": "fc9e93185b97d2465eca02e9ac14396f7360d4aff2c7621661f8d2a061399196",
+      "registeredModuleSha256": "fc9e93185b97d2465eca02e9ac14396f7360d4aff2c7621661f8d2a061399196"
+    },
+    {
+      "key": "shared-alg001-l11-p036",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p036.tsx",
+      "moduleSha256": "5cc2d7b9fce487bb46d3b47a1970eeb93c0d5fab013b69451dd184ee4fd8b8f1",
+      "registeredModuleSha256": "5cc2d7b9fce487bb46d3b47a1970eeb93c0d5fab013b69451dd184ee4fd8b8f1"
+    },
+    {
+      "key": "shared-alg001-l11-p037",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p037.tsx",
+      "moduleSha256": "2f9811e154518e6a0e66df65c164e8bae2d8a7d79861fee01a303eb2d07d65cd",
+      "registeredModuleSha256": "2f9811e154518e6a0e66df65c164e8bae2d8a7d79861fee01a303eb2d07d65cd"
+    },
+    {
+      "key": "shared-alg001-l11-p038",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p038.tsx",
+      "moduleSha256": "483384901eb8466967d001ac16d6423707db2040c8744a76d8777914130bc0bd",
+      "registeredModuleSha256": "483384901eb8466967d001ac16d6423707db2040c8744a76d8777914130bc0bd"
+    },
+    {
+      "key": "shared-alg001-l11-p039",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p039.tsx",
+      "moduleSha256": "e156d6f12ada48d99d9dede7025be7f6c669ee99bd0347f71aa1ab2d07f01679",
+      "registeredModuleSha256": "e156d6f12ada48d99d9dede7025be7f6c669ee99bd0347f71aa1ab2d07f01679"
+    },
+    {
+      "key": "shared-alg001-l11-p040",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p040.tsx",
+      "moduleSha256": "654830131a3d3badc5004eb023ba7d13216d70db8c9d4023f9bd8da923bced67",
+      "registeredModuleSha256": "654830131a3d3badc5004eb023ba7d13216d70db8c9d4023f9bd8da923bced67"
+    },
+    {
+      "key": "shared-alg001-l11-p041",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p041.tsx",
+      "moduleSha256": "52dfde2a6a599f86e60c89351dc4e1cc0bd5493fa6385c942c2a61282c584da9",
+      "registeredModuleSha256": "52dfde2a6a599f86e60c89351dc4e1cc0bd5493fa6385c942c2a61282c584da9"
+    },
+    {
+      "key": "shared-alg001-l11-p042",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-instructional-successor-p042.tsx",
+      "moduleSha256": "9ab913ea4d477ea283ebdd85830e451cb3d8211a71bbd719542909470545d78a",
+      "registeredModuleSha256": "9ab913ea4d477ea283ebdd85830e451cb3d8211a71bbd719542909470545d78a"
+    },
+    {
+      "key": "shared-alg001-l11-p043",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l11-p043.tsx",
+      "moduleSha256": "2e4dfad97ac3285bdd4dca9e42bad492bbba8286c4dc39af2fda419bc243be3f",
+      "registeredModuleSha256": "2e4dfad97ac3285bdd4dca9e42bad492bbba8286c4dc39af2fda419bc243be3f"
+    },
+    {
+      "key": "shared-alg001-l11-p044",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-alg-l11-two-page-companion-successor-p044.tsx",
+      "moduleSha256": "385e71c477333756382a51c38f4a55163c4fde67f4ea8b6fd609555f01c5a74f",
+      "registeredModuleSha256": "385e71c477333756382a51c38f4a55163c4fde67f4ea8b6fd609555f01c5a74f"
+    },
+    {
+      "key": "shared-alg001-l12-p007",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l12-p007.tsx",
+      "moduleSha256": "e73166b08d07cf40944328b5623f9955f05e81f91b7ed66cc10c0ee01daa4132",
+      "registeredModuleSha256": "e73166b08d07cf40944328b5623f9955f05e81f91b7ed66cc10c0ee01daa4132"
+    },
+    {
+      "key": "shared-alg001-l12-p008",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l12-p008.tsx",
+      "moduleSha256": "1a88734bf4cb0b1a59c36b970f8acff47195e793859720717824b296b0c1461b",
+      "registeredModuleSha256": "1a88734bf4cb0b1a59c36b970f8acff47195e793859720717824b296b0c1461b"
+    },
+    {
+      "key": "shared-alg001-l12-p016",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l12-p016.tsx",
+      "moduleSha256": "e5685e1e97c620599e67a255c639b921f8371c0106234393a9357c8ef47ce7fc",
+      "registeredModuleSha256": "e5685e1e97c620599e67a255c639b921f8371c0106234393a9357c8ef47ce7fc"
+    },
+    {
+      "key": "shared-alg001-l12-p017",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l12-p017.tsx",
+      "moduleSha256": "af5cf7ef0f2ff895532d7af3e1168ef836da729dd30037181ae97d7d7868703f",
+      "registeredModuleSha256": "af5cf7ef0f2ff895532d7af3e1168ef836da729dd30037181ae97d7d7868703f"
+    },
+    {
+      "key": "shared-alg001-l12-p026",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l12-p026.tsx",
+      "moduleSha256": "5ff835a504728bbd9e776d4040d69bbb682228fd3cf5bf3ccd0c216427d1b3ae",
+      "registeredModuleSha256": "5ff835a504728bbd9e776d4040d69bbb682228fd3cf5bf3ccd0c216427d1b3ae"
+    },
+    {
+      "key": "shared-alg001-l12-p029",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l12-p029.tsx",
+      "moduleSha256": "9fe1a87776fbff76555835e18a2a98d13f8dd6d24f8bea2a729e12f75141fb1f",
+      "registeredModuleSha256": "9fe1a87776fbff76555835e18a2a98d13f8dd6d24f8bea2a729e12f75141fb1f"
+    },
+    {
+      "key": "shared-alg001-l12-p031",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l12-p031.tsx",
+      "moduleSha256": "443f979de776d4dac5223dee2058d4320b486fbb30ebe2ec7dfa22833f61377b",
+      "registeredModuleSha256": "443f979de776d4dac5223dee2058d4320b486fbb30ebe2ec7dfa22833f61377b"
+    },
+    {
+      "key": "shared-alg001-l12-p032",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l12-p032.tsx",
+      "moduleSha256": "a48f46e275677c3de18320fc72be62f6b512742bb21eb2de09d2b4f6c062994f",
+      "registeredModuleSha256": "a48f46e275677c3de18320fc72be62f6b512742bb21eb2de09d2b4f6c062994f"
+    },
+    {
+      "key": "shared-alg001-l12-p043",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l12-p043.tsx",
+      "moduleSha256": "f3e65e69db556e04a311e454c1f17655feb0a2fbbaf333adb93d30d1e02d0c5d",
+      "registeredModuleSha256": "f3e65e69db556e04a311e454c1f17655feb0a2fbbaf333adb93d30d1e02d0c5d"
+    },
+    {
+      "key": "shared-alg001-l12-p044",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l12-p044.tsx",
+      "moduleSha256": "d595360d2dd869996c5ac03f2f617631d45ed2c2c0fa5e57942bda858d00115a",
+      "registeredModuleSha256": "d595360d2dd869996c5ac03f2f617631d45ed2c2c0fa5e57942bda858d00115a"
+    },
+    {
+      "key": "shared-alg001-l12-p045",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l12-p045.tsx",
+      "moduleSha256": "359bf75628e064f93113c9a2c4768419ef34c5a2bd44a830b5ab4b88955ee53f",
+      "registeredModuleSha256": "359bf75628e064f93113c9a2c4768419ef34c5a2bd44a830b5ab4b88955ee53f"
+    },
+    {
+      "key": "shared-alg001-l12-p046",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l12-p046.tsx",
+      "moduleSha256": "3b7913b972c0a4669dbf07a3d082be17098eba0ec0e4280f962801ab592e14d1",
+      "registeredModuleSha256": "3b7913b972c0a4669dbf07a3d082be17098eba0ec0e4280f962801ab592e14d1"
+    },
+    {
+      "key": "shared-alg001-l12-p047",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l12-p047.tsx",
+      "moduleSha256": "604d165226c14cd17d98dc2048f7d93a15e820601d122faa1d1ec6c35ee30b27",
+      "registeredModuleSha256": "604d165226c14cd17d98dc2048f7d93a15e820601d122faa1d1ec6c35ee30b27"
+    },
+    {
+      "key": "shared-alg001-l12-p051",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-alg001-l12-p051.tsx",
+      "moduleSha256": "2d3c1db4752dedb4c38428972f64b79094a525a8bbbe02e1bf423c202d7e5794",
+      "registeredModuleSha256": "2d3c1db4752dedb4c38428972f64b79094a525a8bbbe02e1bf423c202d7e5794"
+    },
+    {
+      "key": "shared-dat001-l01-p001",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/frozen16-four-audio-shared-dat001-l01-p001.tsx",
+      "moduleSha256": "87e00014f8ece3f1cbd0320982c7f5dd3b3415de92ebf43773ad117c2d421213",
+      "registeredModuleSha256": "87e00014f8ece3f1cbd0320982c7f5dd3b3415de92ebf43773ad117c2d421213"
+    },
+    {
+      "key": "shared-dat001-l01-p005",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l01-p005.tsx",
+      "moduleSha256": "faa8be4c1f8b7db0eca77c252b35e2afc2fdb048cfb29f06e6e4467676c0981e",
+      "registeredModuleSha256": "faa8be4c1f8b7db0eca77c252b35e2afc2fdb048cfb29f06e6e4467676c0981e"
+    },
+    {
+      "key": "shared-dat001-l01-p006",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l01-p006.tsx",
+      "moduleSha256": "82578c4fec5f5756c172c781c3061894dc8eafc5b384d8386ba6b1f844903b24",
+      "registeredModuleSha256": "82578c4fec5f5756c172c781c3061894dc8eafc5b384d8386ba6b1f844903b24"
+    },
+    {
+      "key": "shared-dat001-l01-p008",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l01-p008.tsx",
+      "moduleSha256": "a8c6464df42626dfe0df5d183b99c8a8c7a885156e6131c96fb4ed7f6679fe99",
+      "registeredModuleSha256": "a8c6464df42626dfe0df5d183b99c8a8c7a885156e6131c96fb4ed7f6679fe99"
+    },
+    {
+      "key": "shared-dat001-l01-p018",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l01-p018.tsx",
+      "moduleSha256": "3b10ec441f89d4adf5f44267614d9b1c873f095b664a7e5857ada89cf3f17cdd",
+      "registeredModuleSha256": "3b10ec441f89d4adf5f44267614d9b1c873f095b664a7e5857ada89cf3f17cdd"
+    },
+    {
+      "key": "shared-dat001-l01-p047",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l01-p047.tsx",
+      "moduleSha256": "6f8a1a51330568c215b7e6a8489d7517d5b3ee8c78e3f970b061fa3a0afa43a2",
+      "registeredModuleSha256": "6f8a1a51330568c215b7e6a8489d7517d5b3ee8c78e3f970b061fa3a0afa43a2"
+    },
+    {
+      "key": "shared-dat001-l01-p048",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l01-p048.tsx",
+      "moduleSha256": "6a41cdfa97fef03907467e80971115e95e2a22fd1ce4d09b0fb0f5c9c26c8d61",
+      "registeredModuleSha256": "6a41cdfa97fef03907467e80971115e95e2a22fd1ce4d09b0fb0f5c9c26c8d61"
+    },
+    {
+      "key": "shared-dat001-l01-p049",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l01-p049.tsx",
+      "moduleSha256": "b6a5fd68b6d8f7aefed467a1a0e9c6fe9cc5cecd34e7a12b739a0cd9d4e38e87",
+      "registeredModuleSha256": "b6a5fd68b6d8f7aefed467a1a0e9c6fe9cc5cecd34e7a12b739a0cd9d4e38e87"
+    },
+    {
+      "key": "shared-dat001-l01-p050",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l01-p050.tsx",
+      "moduleSha256": "05e828e855817f01512fd30039b977ecee7fa918241591cbcf765108f0be1e43",
+      "registeredModuleSha256": "05e828e855817f01512fd30039b977ecee7fa918241591cbcf765108f0be1e43"
+    },
+    {
+      "key": "shared-dat001-l01-p051",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l01-p051.tsx",
+      "moduleSha256": "8a3d0d1b2618851dead10bbaa9f347768571c38580220577cba3b78df744dc23",
+      "registeredModuleSha256": "8a3d0d1b2618851dead10bbaa9f347768571c38580220577cba3b78df744dc23"
+    },
+    {
+      "key": "shared-dat001-l01-p055",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l01-p055.tsx",
+      "moduleSha256": "1bf86cba034d2c2a4cbf0504f436b442ac69aaa5ad2712429a92529483e357d6",
+      "registeredModuleSha256": "1bf86cba034d2c2a4cbf0504f436b442ac69aaa5ad2712429a92529483e357d6"
+    },
+    {
+      "key": "shared-dat001-l02-p048",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l02-p048.tsx",
+      "moduleSha256": "e7bf4d429a0f07b3ea85292393794cba2963322038af6ddc06af5546d4267564",
+      "registeredModuleSha256": "e7bf4d429a0f07b3ea85292393794cba2963322038af6ddc06af5546d4267564"
+    },
+    {
+      "key": "shared-dat001-l02-p052",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l02-p052.tsx",
+      "moduleSha256": "d5a634d626721529b99124593703e895e04cb07dd9182236547bbcfdf777b8ff",
+      "registeredModuleSha256": "d5a634d626721529b99124593703e895e04cb07dd9182236547bbcfdf777b8ff"
+    },
+    {
+      "key": "shared-dat001-l03-p030",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/frozen16-five-audio-shared-dat001-l03-p030.tsx",
+      "moduleSha256": "0683715609ce3e13cdfd221b044cd0c7f92f5ca30121908984a7a29824d89735",
+      "registeredModuleSha256": "0683715609ce3e13cdfd221b044cd0c7f92f5ca30121908984a7a29824d89735"
+    },
+    {
+      "key": "shared-dat001-l03-p058",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l03-p058.tsx",
+      "moduleSha256": "4e89900edd32569f669bf7784a616bfd770b59f7c2eddfb7595c7aa677069fbe",
+      "registeredModuleSha256": "4e89900edd32569f669bf7784a616bfd770b59f7c2eddfb7595c7aa677069fbe"
+    },
+    {
+      "key": "shared-dat001-l03-p062",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l03-p062.tsx",
+      "moduleSha256": "66f0d07f8db73ef8139148cd9c20199096772d90d29fd96dac77f4ee096e7835",
+      "registeredModuleSha256": "66f0d07f8db73ef8139148cd9c20199096772d90d29fd96dac77f4ee096e7835"
+    },
+    {
+      "key": "shared-dat001-l04-p020",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l04-p020.tsx",
+      "moduleSha256": "9e4c51500ed7cb83002c5047c98f9be5e8fac881c66f604a3a1cf219fc9f5a93",
+      "registeredModuleSha256": "9e4c51500ed7cb83002c5047c98f9be5e8fac881c66f604a3a1cf219fc9f5a93"
+    },
+    {
+      "key": "shared-dat001-l04-p034",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l04-p034.tsx",
+      "moduleSha256": "6bf53738db1c55938090cbf4ada9b7fe188a4e00afd3aa6a0dcac665b1cd39a3",
+      "registeredModuleSha256": "6bf53738db1c55938090cbf4ada9b7fe188a4e00afd3aa6a0dcac665b1cd39a3"
+    },
+    {
+      "key": "shared-dat001-l04-p038",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l04-p038.tsx",
+      "moduleSha256": "b36a6c8411a3258c806645e4a19077ad9f097765e3b7428333ead4d3bceeafe4",
+      "registeredModuleSha256": "b36a6c8411a3258c806645e4a19077ad9f097765e3b7428333ead4d3bceeafe4"
+    },
+    {
+      "key": "shared-dat001-l05-p029",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l05-p029.tsx",
+      "moduleSha256": "264f470594feda44018383a48ccd3c41dccd914ca15ad0add05afdaa4be25d95",
+      "registeredModuleSha256": "264f470594feda44018383a48ccd3c41dccd914ca15ad0add05afdaa4be25d95"
+    },
+    {
+      "key": "shared-dat001-l05-p040",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/frozen16-dat-l05-drag-audio.tsx",
+      "moduleSha256": "da22ad0d40f49ad2cbeeacd037e0ff83f9c0afd210b87dff0892118bd408cc3d",
+      "registeredModuleSha256": "da22ad0d40f49ad2cbeeacd037e0ff83f9c0afd210b87dff0892118bd408cc3d"
+    },
+    {
+      "key": "shared-dat001-l05-p056",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l05-p056.tsx",
+      "moduleSha256": "36451988d616fbbc1ffc044defbed4b217c3e4bf6459a2b50d42214d69ed9737",
+      "registeredModuleSha256": "36451988d616fbbc1ffc044defbed4b217c3e4bf6459a2b50d42214d69ed9737"
+    },
+    {
+      "key": "shared-dat001-l05-p060",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l05-p060.tsx",
+      "moduleSha256": "db0cfc91e4cde1c784079006d63ff0da58a1c36f97b5e9515bf81ebded9f793a",
+      "registeredModuleSha256": "db0cfc91e4cde1c784079006d63ff0da58a1c36f97b5e9515bf81ebded9f793a"
+    },
+    {
+      "key": "shared-dat001-l06-p005",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l06-p005.tsx",
+      "moduleSha256": "1b4fec988aea94c9ffd278c5bd71f0570c3da458757aa62f57e6af53e14ed2f2",
+      "registeredModuleSha256": "1b4fec988aea94c9ffd278c5bd71f0570c3da458757aa62f57e6af53e14ed2f2"
+    },
+    {
+      "key": "shared-dat001-l06-p041",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l06-p041.tsx",
+      "moduleSha256": "b2978d25cab62d194820a9df681fb3df36652c301e9cb43b49c223a2af801c05",
+      "registeredModuleSha256": "b2978d25cab62d194820a9df681fb3df36652c301e9cb43b49c223a2af801c05"
+    },
+    {
+      "key": "shared-dat001-l06-p045",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l06-p045.tsx",
+      "moduleSha256": "fb88bb29c98bcaaa5b30a918eea4ae78aa80c545d3749dfa6c8b619711fc64da",
+      "registeredModuleSha256": "fb88bb29c98bcaaa5b30a918eea4ae78aa80c545d3749dfa6c8b619711fc64da"
+    },
+    {
+      "key": "shared-dat001-l07-p025",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/frozen16-nine-audio-shared-dat001-l07-p025.tsx",
+      "moduleSha256": "e86161337cceccf95f9f3e0f5733426f419ad0bb616ae285cbff5576cfe234bc",
+      "registeredModuleSha256": "e86161337cceccf95f9f3e0f5733426f419ad0bb616ae285cbff5576cfe234bc"
+    },
+    {
+      "key": "shared-dat001-l07-p045",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l07-p045.tsx",
+      "moduleSha256": "9be6ea99b8351a614d6224ffd758fef4d136a7e1a9c01dd632c37b1d733ea803",
+      "registeredModuleSha256": "9be6ea99b8351a614d6224ffd758fef4d136a7e1a9c01dd632c37b1d733ea803"
+    },
+    {
+      "key": "shared-dat001-l07-p049",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l07-p049.tsx",
+      "moduleSha256": "3abdf723f6fe467541295e0b941a38797d7edec92afc4c018da7b4bc4a8cbe52",
+      "registeredModuleSha256": "3abdf723f6fe467541295e0b941a38797d7edec92afc4c018da7b4bc4a8cbe52"
+    },
+    {
+      "key": "shared-dat001-l08-p002",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l08-p002.tsx",
+      "moduleSha256": "89757d287afcdc7e86c965708904464d0a930c2bb62f7c4017d8b0fe5eeb33cd",
+      "registeredModuleSha256": "89757d287afcdc7e86c965708904464d0a930c2bb62f7c4017d8b0fe5eeb33cd"
+    },
+    {
+      "key": "shared-dat001-l08-p029",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l08-p029.tsx",
+      "moduleSha256": "086bb635f3ac9dae700c09d02a87b08fc97a862e3490789a57decd2fb3652fe4",
+      "registeredModuleSha256": "086bb635f3ac9dae700c09d02a87b08fc97a862e3490789a57decd2fb3652fe4"
+    },
+    {
+      "key": "shared-dat001-l08-p033",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-dat001-l08-p033.tsx",
+      "moduleSha256": "d4ee62c5f637fb08cb7d34018b61f10e3944561b6fa3bac5bce2b8b633e0899e",
+      "registeredModuleSha256": "d4ee62c5f637fb08cb7d34018b61f10e3944561b6fa3bac5bce2b8b633e0899e"
+    },
+    {
+      "key": "shared-geo001-l01-p001",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/frozen16-geo-intro-v2-shared-geo001-l01-p001.tsx",
+      "moduleSha256": "114cb42bf297849ffc72fe783738e34a730511cbb4b5acf2bdfb654dd435ae4d",
+      "registeredModuleSha256": "114cb42bf297849ffc72fe783738e34a730511cbb4b5acf2bdfb654dd435ae4d"
+    },
+    {
+      "key": "shared-geo001-l01-p002",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l01-p002.tsx",
+      "moduleSha256": "270293b5ee1b2c651f7723d4254c2c186ea32156a224faedc34c6781f2ae7731",
+      "registeredModuleSha256": "270293b5ee1b2c651f7723d4254c2c186ea32156a224faedc34c6781f2ae7731"
+    },
+    {
+      "key": "shared-geo001-l01-p004",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l01-p004.tsx",
+      "moduleSha256": "fc6f7a7dee2f5097e156538f7f49d037b516123ca664947c599939ac16443a56",
+      "registeredModuleSha256": "fc6f7a7dee2f5097e156538f7f49d037b516123ca664947c599939ac16443a56"
+    },
+    {
+      "key": "shared-geo001-l01-p008",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l01-p008.tsx",
+      "moduleSha256": "3b8a547af78cf457d9b16db936d19f2d9fa46e6a2e8c2568958d91da590d3abc",
+      "registeredModuleSha256": "3b8a547af78cf457d9b16db936d19f2d9fa46e6a2e8c2568958d91da590d3abc"
+    },
+    {
+      "key": "shared-geo001-l01-p009",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l01-p009.tsx",
+      "moduleSha256": "19866aafbbd12a21d027db75999cfb73fbf3351137be20fa801c674a13bbb1ad",
+      "registeredModuleSha256": "19866aafbbd12a21d027db75999cfb73fbf3351137be20fa801c674a13bbb1ad"
+    },
+    {
+      "key": "shared-geo001-l01-p031",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l01-p031.tsx",
+      "moduleSha256": "f5f2487acd20c5c1fb44f5c83f5bd5cef0a2d79c450819694e26c894a90c5320",
+      "registeredModuleSha256": "f5f2487acd20c5c1fb44f5c83f5bd5cef0a2d79c450819694e26c894a90c5320"
+    },
+    {
+      "key": "shared-geo001-l01-p032",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l01-p032.tsx",
+      "moduleSha256": "07b2cbb65d1d5717a587391c3922680309c9aec85c9329651fb95a252a11475e",
+      "registeredModuleSha256": "07b2cbb65d1d5717a587391c3922680309c9aec85c9329651fb95a252a11475e"
+    },
+    {
+      "key": "shared-geo001-l01-p050",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l01-p050.tsx",
+      "moduleSha256": "7d60c2fe7a7210b7b339b936463ccfef3bf7cfc66da60410c4d1e274bc162cdf",
+      "registeredModuleSha256": "7d60c2fe7a7210b7b339b936463ccfef3bf7cfc66da60410c4d1e274bc162cdf"
+    },
+    {
+      "key": "shared-geo001-l01-p051",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l01-p051.tsx",
+      "moduleSha256": "cf680ccd63ce17d3690cb3dbaeef413943f7acc575f2cf81f6283af79719d245",
+      "registeredModuleSha256": "cf680ccd63ce17d3690cb3dbaeef413943f7acc575f2cf81f6283af79719d245"
+    },
+    {
+      "key": "shared-geo001-l01-p052",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l01-p052.tsx",
+      "moduleSha256": "9e58c684df407652ce7e037798ba148c9168881c2d0c5495730f7cb1f7206bc4",
+      "registeredModuleSha256": "9e58c684df407652ce7e037798ba148c9168881c2d0c5495730f7cb1f7206bc4"
+    },
+    {
+      "key": "shared-geo001-l01-p053",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l01-p053.tsx",
+      "moduleSha256": "25a134dd281d78dc343932348447392fbde244262f370db6c36f169fbba49cb5",
+      "registeredModuleSha256": "25a134dd281d78dc343932348447392fbde244262f370db6c36f169fbba49cb5"
+    },
+    {
+      "key": "shared-geo001-l01-p054",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l01-p054.tsx",
+      "moduleSha256": "55014deb2cb951db128013ed6c477ad0495f24f2f71bb94164b1468a6b7ed660",
+      "registeredModuleSha256": "55014deb2cb951db128013ed6c477ad0495f24f2f71bb94164b1468a6b7ed660"
+    },
+    {
+      "key": "shared-geo001-l01-p058",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l01-p058.tsx",
+      "moduleSha256": "cd1539e078bfe16d992c11f6ca24936cc02b8eaea87b0ac94c7e406d3184b35a",
+      "registeredModuleSha256": "cd1539e078bfe16d992c11f6ca24936cc02b8eaea87b0ac94c7e406d3184b35a"
+    },
+    {
+      "key": "shared-geo001-l02-p002",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l02-p002.tsx",
+      "moduleSha256": "1308da8c38c0efa07bfc86f64f54ad406d1c70c3b0fd61012751606ddede108b",
+      "registeredModuleSha256": "1308da8c38c0efa07bfc86f64f54ad406d1c70c3b0fd61012751606ddede108b"
+    },
+    {
+      "key": "shared-geo001-l02-p003",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l02-p003.tsx",
+      "moduleSha256": "d84abecee0125b15ff909575f09e2f20950f801631c6fd18471adcc30ed685b2",
+      "registeredModuleSha256": "d84abecee0125b15ff909575f09e2f20950f801631c6fd18471adcc30ed685b2"
+    },
+    {
+      "key": "shared-geo001-l02-p004",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l02-p004.tsx",
+      "moduleSha256": "b9d1710a27947fbabf3fb097fb79d4d1c53f7a75a4719b381322d13005bcd470",
+      "registeredModuleSha256": "b9d1710a27947fbabf3fb097fb79d4d1c53f7a75a4719b381322d13005bcd470"
+    },
+    {
+      "key": "shared-geo001-l02-p005",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l02-p005.tsx",
+      "moduleSha256": "d8cbadd0777977dd8361f92266487c2af37799e5137ff799e29dec3d710f5e55",
+      "registeredModuleSha256": "d8cbadd0777977dd8361f92266487c2af37799e5137ff799e29dec3d710f5e55"
+    },
+    {
+      "key": "shared-geo001-l02-p006",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l02-p006.tsx",
+      "moduleSha256": "7b1dbc292f5feac47737fc0fb89b60bb4478b282372fc54a47b17af8a8470704",
+      "registeredModuleSha256": "7b1dbc292f5feac47737fc0fb89b60bb4478b282372fc54a47b17af8a8470704"
+    },
+    {
+      "key": "shared-geo001-l02-p020",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/frozen16-nine-audio-shared-geo001-l02-p020.tsx",
+      "moduleSha256": "ac35cc4eb1628ae55aa5b2c1f99a23300137482e8994bc88bd438aceeed6e5ab",
+      "registeredModuleSha256": "ac35cc4eb1628ae55aa5b2c1f99a23300137482e8994bc88bd438aceeed6e5ab"
+    },
+    {
+      "key": "shared-geo001-l02-p046",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l02-p046.tsx",
+      "moduleSha256": "b30ad9064f0af0b14704b3461b0fc4ac07c6650a453304af23ada8bc66ebc264",
+      "registeredModuleSha256": "b30ad9064f0af0b14704b3461b0fc4ac07c6650a453304af23ada8bc66ebc264"
+    },
+    {
+      "key": "shared-geo001-l02-p050",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l02-p050.tsx",
+      "moduleSha256": "0a9ad2f4dc86c242ff52ce2bc5ec7d02931003cb45d3afe4d009488cdf9889e7",
+      "registeredModuleSha256": "0a9ad2f4dc86c242ff52ce2bc5ec7d02931003cb45d3afe4d009488cdf9889e7"
+    },
+    {
+      "key": "shared-geo001-l03-p002",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l03-p002.tsx",
+      "moduleSha256": "12dca1681e11428b05ad7b9be9a77c9d6b9b59729c3183319dc0fb6d351ec966",
+      "registeredModuleSha256": "12dca1681e11428b05ad7b9be9a77c9d6b9b59729c3183319dc0fb6d351ec966"
+    },
+    {
+      "key": "shared-geo001-l03-p003",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l03-p003.tsx",
+      "moduleSha256": "1851b8042475e0c001fbf3c3cacbd027c4bad811890ea98de7d02970df20c314",
+      "registeredModuleSha256": "1851b8042475e0c001fbf3c3cacbd027c4bad811890ea98de7d02970df20c314"
+    },
+    {
+      "key": "shared-geo001-l03-p004",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l03-p004.tsx",
+      "moduleSha256": "2e677083a2c95add2b970289ced52f0eae08d0671a1da8de92f6044115ebbe6a",
+      "registeredModuleSha256": "2e677083a2c95add2b970289ced52f0eae08d0671a1da8de92f6044115ebbe6a"
+    },
+    {
+      "key": "shared-geo001-l03-p005",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l03-p005.tsx",
+      "moduleSha256": "aeb0ab56d987da06f9015e5a5baef22ab11df0cead3c7ee8b7f82ad086e16b56",
+      "registeredModuleSha256": "aeb0ab56d987da06f9015e5a5baef22ab11df0cead3c7ee8b7f82ad086e16b56"
+    },
+    {
+      "key": "shared-geo001-l03-p006",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l03-p006.tsx",
+      "moduleSha256": "3185468b5ffbd277db61797fc812eca7a04efb36cd267d287343b919bb00fc1e",
+      "registeredModuleSha256": "3185468b5ffbd277db61797fc812eca7a04efb36cd267d287343b919bb00fc1e"
+    },
+    {
+      "key": "shared-geo001-l03-p031",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l03-p031.tsx",
+      "moduleSha256": "fb2ab63d6d025eea1b7d3bb64f87ea2e8404a495ea7b9c02615c51786355ee03",
+      "registeredModuleSha256": "fb2ab63d6d025eea1b7d3bb64f87ea2e8404a495ea7b9c02615c51786355ee03"
+    },
+    {
+      "key": "shared-geo001-l03-p044",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l03-p044.tsx",
+      "moduleSha256": "12bb0a47335a3fe139ae1c012a2d5620a56e66d0afccda77113778927bc7a8c0",
+      "registeredModuleSha256": "12bb0a47335a3fe139ae1c012a2d5620a56e66d0afccda77113778927bc7a8c0"
+    },
+    {
+      "key": "shared-geo001-l03-p048",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l03-p048.tsx",
+      "moduleSha256": "d208096222497233909c7696491c45af79916a24e52df330b475a9f829fed971",
+      "registeredModuleSha256": "d208096222497233909c7696491c45af79916a24e52df330b475a9f829fed971"
+    },
+    {
+      "key": "shared-geo001-l04-p002",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l04-p002.tsx",
+      "moduleSha256": "430015c14d779377e32b6c5d2819a3ebb6fa900bb1743c784dbe963c43b2f0bd",
+      "registeredModuleSha256": "430015c14d779377e32b6c5d2819a3ebb6fa900bb1743c784dbe963c43b2f0bd"
+    },
+    {
+      "key": "shared-geo001-l04-p003",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l04-p003.tsx",
+      "moduleSha256": "4de76137214fb12177df8599044c048018b79e4c46142ab55f44bc4136173e35",
+      "registeredModuleSha256": "4de76137214fb12177df8599044c048018b79e4c46142ab55f44bc4136173e35"
+    },
+    {
+      "key": "shared-geo001-l04-p004",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l04-p004.tsx",
+      "moduleSha256": "d7b9f9b8277a2325fd34cbb1be83cf32df295a9286a7a76b9763a4ef10702f3a",
+      "registeredModuleSha256": "d7b9f9b8277a2325fd34cbb1be83cf32df295a9286a7a76b9763a4ef10702f3a"
+    },
+    {
+      "key": "shared-geo001-l04-p039",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l04-p039.tsx",
+      "moduleSha256": "a36587ea75e4728b8c25861c27c34919dc634c219feeacb756005e81bdbf5087",
+      "registeredModuleSha256": "a36587ea75e4728b8c25861c27c34919dc634c219feeacb756005e81bdbf5087"
+    },
+    {
+      "key": "shared-geo001-l04-p043",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l04-p043.tsx",
+      "moduleSha256": "2c768587ccb7c0e125ccc9a4933c4cd298a8407a449483cf5d1d2f1001a592b5",
+      "registeredModuleSha256": "2c768587ccb7c0e125ccc9a4933c4cd298a8407a449483cf5d1d2f1001a592b5"
+    },
+    {
+      "key": "shared-geo001-l05-p002",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l05-p002.tsx",
+      "moduleSha256": "02e51a5e64f14d1948dd84fb7899ce320b772b4305e449ca1205106673fadd5e",
+      "registeredModuleSha256": "02e51a5e64f14d1948dd84fb7899ce320b772b4305e449ca1205106673fadd5e"
+    },
+    {
+      "key": "shared-geo001-l05-p005",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l05-p005.tsx",
+      "moduleSha256": "74ae7a66481e42b2adf193cff73023f2380ca6843f32c3282bcb7e6239d76983",
+      "registeredModuleSha256": "74ae7a66481e42b2adf193cff73023f2380ca6843f32c3282bcb7e6239d76983"
+    },
+    {
+      "key": "shared-geo001-l05-p006",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l05-p006.tsx",
+      "moduleSha256": "bae4ff4f87f54efde37f371a11eff45ef1701add4d9ad185b11a8ba108c730fd",
+      "registeredModuleSha256": "bae4ff4f87f54efde37f371a11eff45ef1701add4d9ad185b11a8ba108c730fd"
+    },
+    {
+      "key": "shared-geo001-l05-p020",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l05-p020.tsx",
+      "moduleSha256": "8f41e7863b39924772aad5fc8bf24a880247f53c76acbcaf4f7d9f74278580db",
+      "registeredModuleSha256": "8f41e7863b39924772aad5fc8bf24a880247f53c76acbcaf4f7d9f74278580db"
+    },
+    {
+      "key": "shared-geo001-l05-p025",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l05-p025.tsx",
+      "moduleSha256": "5ecc294647c3f4e7d7c278c771c0f56ba7f1d192ea879e07cd1bf5b02ceb95cb",
+      "registeredModuleSha256": "5ecc294647c3f4e7d7c278c771c0f56ba7f1d192ea879e07cd1bf5b02ceb95cb"
+    },
+    {
+      "key": "shared-geo001-l05-p027",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l05-p027.tsx",
+      "moduleSha256": "f4041dc9a9b88e5669bde18a1dc46857fbd53a9f59868d31862805ae4991ada9",
+      "registeredModuleSha256": "f4041dc9a9b88e5669bde18a1dc46857fbd53a9f59868d31862805ae4991ada9"
+    },
+    {
+      "key": "shared-geo001-l05-p029",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l05-p029.tsx",
+      "moduleSha256": "b7df631c00f562ca3ad72d48cdbf341633b9f3e17c5db922467d37f6dd880055",
+      "registeredModuleSha256": "b7df631c00f562ca3ad72d48cdbf341633b9f3e17c5db922467d37f6dd880055"
+    },
+    {
+      "key": "shared-geo001-l05-p030",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l05-p030.tsx",
+      "moduleSha256": "c3a3fc8090d831fccfb5dbdea55510ed6205db156d4afb7303c1be6b63ca393a",
+      "registeredModuleSha256": "c3a3fc8090d831fccfb5dbdea55510ed6205db156d4afb7303c1be6b63ca393a"
+    },
+    {
+      "key": "shared-geo001-l05-p032",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l05-p032.tsx",
+      "moduleSha256": "eedb4ba648095680b8bd347f56faa42fd593ace60e0fa5d73cef9d615bcb41fe",
+      "registeredModuleSha256": "eedb4ba648095680b8bd347f56faa42fd593ace60e0fa5d73cef9d615bcb41fe"
+    },
+    {
+      "key": "shared-geo001-l05-p046",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l05-p046.tsx",
+      "moduleSha256": "32355573e7310f61b09037487e2e4f7071d3e2412d4fb6d7ccd4427b4e971278",
+      "registeredModuleSha256": "32355573e7310f61b09037487e2e4f7071d3e2412d4fb6d7ccd4427b4e971278"
+    },
+    {
+      "key": "shared-geo001-l05-p050",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l05-p050.tsx",
+      "moduleSha256": "f7dcb006b0af92614b5edba2e519022c4d7c28519f4884cca61803c8da646841",
+      "registeredModuleSha256": "f7dcb006b0af92614b5edba2e519022c4d7c28519f4884cca61803c8da646841"
+    },
+    {
+      "key": "shared-geo001-l06-p004",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l06-p004.tsx",
+      "moduleSha256": "9f4a525a7298c1806ae688669ad6b5e589fa22369c4f9895b68a5a94554c9d65",
+      "registeredModuleSha256": "9f4a525a7298c1806ae688669ad6b5e589fa22369c4f9895b68a5a94554c9d65"
+    },
+    {
+      "key": "shared-geo001-l06-p005",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l06-p005.tsx",
+      "moduleSha256": "51d5cf8d327786f32aa4cb86d109cb8470c9f44ffeda2507999e44bbf47ad48f",
+      "registeredModuleSha256": "51d5cf8d327786f32aa4cb86d109cb8470c9f44ffeda2507999e44bbf47ad48f"
+    },
+    {
+      "key": "shared-geo001-l06-p022",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l06-p022.tsx",
+      "moduleSha256": "a3319d4e6f611e6fa622332297e5f9dbb8c05ae52b108a8304fd0edf857411a0",
+      "registeredModuleSha256": "a3319d4e6f611e6fa622332297e5f9dbb8c05ae52b108a8304fd0edf857411a0"
+    },
+    {
+      "key": "shared-geo001-l06-p027",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l06-p027.tsx",
+      "moduleSha256": "df9350bab7de4ea07315cec19c7da13a727918855f027c9432873c6f1088cb81",
+      "registeredModuleSha256": "df9350bab7de4ea07315cec19c7da13a727918855f027c9432873c6f1088cb81"
+    },
+    {
+      "key": "shared-geo001-l06-p033",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l06-p033.tsx",
+      "moduleSha256": "c7b1eb44c80dfe471a1b09c66ff2d95e168f8c07a80d6cc3b409f9c59d3faf83",
+      "registeredModuleSha256": "c7b1eb44c80dfe471a1b09c66ff2d95e168f8c07a80d6cc3b409f9c59d3faf83"
+    },
+    {
+      "key": "shared-geo001-l06-p049",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l06-p049.tsx",
+      "moduleSha256": "e402b6612ba4e367f34bba5e2e00f4d07eb08c5d04511af6f42b87ab76560e76",
+      "registeredModuleSha256": "e402b6612ba4e367f34bba5e2e00f4d07eb08c5d04511af6f42b87ab76560e76"
+    },
+    {
+      "key": "shared-geo001-l06-p053",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l06-p053.tsx",
+      "moduleSha256": "0c60dc9980e88fd35848c3f9c90b430c54b088f17620bff9e5d1e26d171e73dc",
+      "registeredModuleSha256": "0c60dc9980e88fd35848c3f9c90b430c54b088f17620bff9e5d1e26d171e73dc"
+    },
+    {
+      "key": "shared-geo001-l07-p002",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l07-p002.tsx",
+      "moduleSha256": "ed187e1cf7e82a04f25dd1d9df8472bce144000254f07eac791590efd55f7d08",
+      "registeredModuleSha256": "ed187e1cf7e82a04f25dd1d9df8472bce144000254f07eac791590efd55f7d08"
+    },
+    {
+      "key": "shared-geo001-l07-p040",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/frozen16-nine-audio-shared-geo001-l07-p040.tsx",
+      "moduleSha256": "6881e60310b3cff6630d694066f3ceb4162fb909b78d61adb8f975e410ab1d90",
+      "registeredModuleSha256": "6881e60310b3cff6630d694066f3ceb4162fb909b78d61adb8f975e410ab1d90"
+    },
+    {
+      "key": "shared-geo001-l07-p058",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l07-p058.tsx",
+      "moduleSha256": "b9f6bdcd16a12848018aff0bd8a9a97daac4d9187461c3afdc986a60103cf5dc",
+      "registeredModuleSha256": "b9f6bdcd16a12848018aff0bd8a9a97daac4d9187461c3afdc986a60103cf5dc"
+    },
+    {
+      "key": "shared-geo001-l07-p062",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l07-p062.tsx",
+      "moduleSha256": "fe7d19718a759047472aadf0a112fb1727fa33e9260c547e695b69bc719527e4",
+      "registeredModuleSha256": "fe7d19718a759047472aadf0a112fb1727fa33e9260c547e695b69bc719527e4"
+    },
+    {
+      "key": "shared-geo001-l08-p002",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l08-p002.tsx",
+      "moduleSha256": "4cb99b158dc0cc355ad5d416f362470eeae91496c567d09ad04fa8e8875d792a",
+      "registeredModuleSha256": "4cb99b158dc0cc355ad5d416f362470eeae91496c567d09ad04fa8e8875d792a"
+    },
+    {
+      "key": "shared-geo001-l08-p042",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l08-p042.tsx",
+      "moduleSha256": "c256bbcc9e2a47e6c31e15eea83521f1ef37345f1c8f6d649a545bc9a389a619",
+      "registeredModuleSha256": "c256bbcc9e2a47e6c31e15eea83521f1ef37345f1c8f6d649a545bc9a389a619"
+    },
+    {
+      "key": "shared-geo001-l08-p046",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l08-p046.tsx",
+      "moduleSha256": "8b4879dd8ffdb29ca947a639e53eb05b5c3a5d85ffa7df316c7ed830693b3c56",
+      "registeredModuleSha256": "8b4879dd8ffdb29ca947a639e53eb05b5c3a5d85ffa7df316c7ed830693b3c56"
+    },
+    {
+      "key": "shared-geo001-l09-p039",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l09-p039.tsx",
+      "moduleSha256": "a6437f470c05e3622ee4ee20f7b48541f91641d59aa025bf00ba0a4a5f6f4114",
+      "registeredModuleSha256": "a6437f470c05e3622ee4ee20f7b48541f91641d59aa025bf00ba0a4a5f6f4114"
+    },
+    {
+      "key": "shared-geo001-l09-p043",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l09-p043.tsx",
+      "moduleSha256": "f0435b6aaf6296ead8044fb04963a6737a28287caa82253c26e0bfed32947ae4",
+      "registeredModuleSha256": "f0435b6aaf6296ead8044fb04963a6737a28287caa82253c26e0bfed32947ae4"
+    },
+    {
+      "key": "shared-geo001-l10-p002",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l10-p002.tsx",
+      "moduleSha256": "7d7a2a79023378ef79695f7b31080df22c88e0114cbb71dbf838258dbd93fac1",
+      "registeredModuleSha256": "7d7a2a79023378ef79695f7b31080df22c88e0114cbb71dbf838258dbd93fac1"
+    },
+    {
+      "key": "shared-geo001-l10-p004",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l10-p004.tsx",
+      "moduleSha256": "afc91ddb3f1370992f1e27af7da146b070a3baa5c4ef04baaf1cc745bf0200ef",
+      "registeredModuleSha256": "afc91ddb3f1370992f1e27af7da146b070a3baa5c4ef04baaf1cc745bf0200ef"
+    },
+    {
+      "key": "shared-geo001-l10-p017",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l10-p017.tsx",
+      "moduleSha256": "60a697de3cf34e339373996f5697c53de58fad8d20524c83044833711f5f913d",
+      "registeredModuleSha256": "60a697de3cf34e339373996f5697c53de58fad8d20524c83044833711f5f913d"
+    },
+    {
+      "key": "shared-geo001-l10-p024",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l10-p024.tsx",
+      "moduleSha256": "6a6cb324041614e7318dfc48993f87fb41485d1ec98f95bb7284d64ef11273fa",
+      "registeredModuleSha256": "6a6cb324041614e7318dfc48993f87fb41485d1ec98f95bb7284d64ef11273fa"
+    },
+    {
+      "key": "shared-geo001-l10-p025",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l10-p025.tsx",
+      "moduleSha256": "4c2b02ea68774dcc8614cfffa9547eb2e3246bcb9f5771d09e7db1d5b3030638",
+      "registeredModuleSha256": "4c2b02ea68774dcc8614cfffa9547eb2e3246bcb9f5771d09e7db1d5b3030638"
+    },
+    {
+      "key": "shared-geo001-l10-p026",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l10-p026.tsx",
+      "moduleSha256": "ba4437b29d3685d91786492d0f8bb708c967ae2ff587a7e498076b69038394d8",
+      "registeredModuleSha256": "ba4437b29d3685d91786492d0f8bb708c967ae2ff587a7e498076b69038394d8"
+    },
+    {
+      "key": "shared-geo001-l10-p037",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l10-p037.tsx",
+      "moduleSha256": "d192b9615ec92a14ce3ef9507e79f3cf9b627ad021d9b12405b611aec4bd702b",
+      "registeredModuleSha256": "d192b9615ec92a14ce3ef9507e79f3cf9b627ad021d9b12405b611aec4bd702b"
+    },
+    {
+      "key": "shared-geo001-l10-p041",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l10-p041.tsx",
+      "moduleSha256": "204dae023b6469872a7a010c9e4ba0e468bd2130e2369ad3d81c6be90e99a2cf",
+      "registeredModuleSha256": "204dae023b6469872a7a010c9e4ba0e468bd2130e2369ad3d81c6be90e99a2cf"
+    },
+    {
+      "key": "shared-geo001-l11-p002",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l11-p002.tsx",
+      "moduleSha256": "7feef94fa01545d26a41a496185580779c8f3c0a2098320c94455f92eb65d3de",
+      "registeredModuleSha256": "7feef94fa01545d26a41a496185580779c8f3c0a2098320c94455f92eb65d3de"
+    },
+    {
+      "key": "shared-geo001-l11-p003",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l11-p003.tsx",
+      "moduleSha256": "74d602db6f5043dc729e6e57ccd7a3e9dcfb15a8be6085a60f73a8a70c8791aa",
+      "registeredModuleSha256": "74d602db6f5043dc729e6e57ccd7a3e9dcfb15a8be6085a60f73a8a70c8791aa"
+    },
+    {
+      "key": "shared-geo001-l11-p004",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l11-p004.tsx",
+      "moduleSha256": "eb5faac74038c478d27288e36a746fb60ed13ca9384df6ab53cbd8a19ebf5b8a",
+      "registeredModuleSha256": "eb5faac74038c478d27288e36a746fb60ed13ca9384df6ab53cbd8a19ebf5b8a"
+    },
+    {
+      "key": "shared-geo001-l11-p030",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/frozen16-prepared-glossary-shared-geo001-l11-p030.tsx",
+      "moduleSha256": "067045c42f62fc7766b503691cc883e4077385c106d3f7e771b5dd06ae15e189",
+      "registeredModuleSha256": "067045c42f62fc7766b503691cc883e4077385c106d3f7e771b5dd06ae15e189"
+    },
+    {
+      "key": "shared-geo001-l11-p047",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l11-p047.tsx",
+      "moduleSha256": "0e2b5ea8ac2b0446035ea8aa93a4818c8768c891b46c96cd69c6a1327f8a6acc",
+      "registeredModuleSha256": "0e2b5ea8ac2b0446035ea8aa93a4818c8768c891b46c96cd69c6a1327f8a6acc"
+    },
+    {
+      "key": "shared-geo001-l11-p051",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l11-p051.tsx",
+      "moduleSha256": "d0fec8fd7f9b82fd813034bc6d4cf757a2c5e92e02613429b9704005c666716a",
+      "registeredModuleSha256": "d0fec8fd7f9b82fd813034bc6d4cf757a2c5e92e02613429b9704005c666716a"
+    },
+    {
+      "key": "shared-geo001-l12-p002",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l12-p002.tsx",
+      "moduleSha256": "51b2b927c13650669059c2648bc9bede4ea0a5700e8304006cbf8c27e1216c57",
+      "registeredModuleSha256": "51b2b927c13650669059c2648bc9bede4ea0a5700e8304006cbf8c27e1216c57"
+    },
+    {
+      "key": "shared-geo001-l12-p003",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l12-p003.tsx",
+      "moduleSha256": "f4a4290ce65ad76126e29948a940f4f35a63783e855abf1b4d833d8d7d70dbe6",
+      "registeredModuleSha256": "f4a4290ce65ad76126e29948a940f4f35a63783e855abf1b4d833d8d7d70dbe6"
+    },
+    {
+      "key": "shared-geo001-l12-p016",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l12-p016.tsx",
+      "moduleSha256": "c4e01e2797cfc4db2d8e24f258ae7e7d51d116d00c210c5fba08d94b3c39cbb6",
+      "registeredModuleSha256": "c4e01e2797cfc4db2d8e24f258ae7e7d51d116d00c210c5fba08d94b3c39cbb6"
+    },
+    {
+      "key": "shared-geo001-l12-p019",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l12-p019.tsx",
+      "moduleSha256": "fe037b4fd2743c4102f50d02ea4990327096ef5c33b1678b3190f2c1ecf7d8de",
+      "registeredModuleSha256": "fe037b4fd2743c4102f50d02ea4990327096ef5c33b1678b3190f2c1ecf7d8de"
+    },
+    {
+      "key": "shared-geo001-l12-p034",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l12-p034.tsx",
+      "moduleSha256": "db98e1b5ae10eacf5403f9a86189e588ab99fef75ac45b8cd2fb59f5fe0cc2f7",
+      "registeredModuleSha256": "db98e1b5ae10eacf5403f9a86189e588ab99fef75ac45b8cd2fb59f5fe0cc2f7"
+    },
+    {
+      "key": "shared-geo001-l12-p038",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-geo001-l12-p038.tsx",
+      "moduleSha256": "6fb56c61b3b389567ba2bfb67ce97ab4c6daff15987e5389500c894c4de831b6",
+      "registeredModuleSha256": "6fb56c61b3b389567ba2bfb67ce97ab4c6daff15987e5389500c894c4de831b6"
+    },
+    {
+      "key": "shared-nms002-l01-p001",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/frozen16-four-audio-shared-nms002-l01-p001.tsx",
+      "moduleSha256": "f552e1d66c7e4fa29118af6c5f20ec50fbc365c1f71c98104628858313f75e48",
+      "registeredModuleSha256": "f552e1d66c7e4fa29118af6c5f20ec50fbc365c1f71c98104628858313f75e48"
+    },
+    {
+      "key": "shared-nms002-l01-p002",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p002.tsx",
+      "moduleSha256": "4c4432812c6c28731bbca44d94dad0ab589b313ff73bfec7fbec4b124c3f4f71",
+      "registeredModuleSha256": "4c4432812c6c28731bbca44d94dad0ab589b313ff73bfec7fbec4b124c3f4f71"
+    },
+    {
+      "key": "shared-nms002-l01-p003",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p003-v3.tsx",
+      "moduleSha256": "30ffd57afba66c56788e3c1f05913d0dde8a68a123b5773f3d79a083c892278e",
+      "registeredModuleSha256": "30ffd57afba66c56788e3c1f05913d0dde8a68a123b5773f3d79a083c892278e"
+    },
+    {
+      "key": "shared-nms002-l01-p004",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p004.tsx",
+      "moduleSha256": "e5833ff06c20ccb62a0e8176b9081d1f12cddf79c69d15f86b7c6f65047534ba",
+      "registeredModuleSha256": "e5833ff06c20ccb62a0e8176b9081d1f12cddf79c69d15f86b7c6f65047534ba"
+    },
+    {
+      "key": "shared-nms002-l01-p005",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p005.tsx",
+      "moduleSha256": "21799e89c4edd55512366a7cd4c170eb8aa4f483d5b4fe208e825cb420a26594",
+      "registeredModuleSha256": "21799e89c4edd55512366a7cd4c170eb8aa4f483d5b4fe208e825cb420a26594"
+    },
+    {
+      "key": "shared-nms002-l01-p006",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l01-p006.tsx",
+      "moduleSha256": "27ab8cf1ab7f6650403d330fbc3cb22cb57d200f4c73e5cf30b2cf6e7a825af9",
+      "registeredModuleSha256": "27ab8cf1ab7f6650403d330fbc3cb22cb57d200f4c73e5cf30b2cf6e7a825af9"
+    },
+    {
+      "key": "shared-nms002-l01-p007",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p007.tsx",
+      "moduleSha256": "d6117dc494c1f7f40940b6bb952229b07832ef71106cb32ea04d34ff24c9ba09",
+      "registeredModuleSha256": "d6117dc494c1f7f40940b6bb952229b07832ef71106cb32ea04d34ff24c9ba09"
+    },
+    {
+      "key": "shared-nms002-l01-p008",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p008-host-terminal-v1.tsx",
+      "moduleSha256": "8a2c359bff6a7896686da29bac00ec06fc39db89046c65c393ca058446e31682",
+      "registeredModuleSha256": "8a2c359bff6a7896686da29bac00ec06fc39db89046c65c393ca058446e31682"
+    },
+    {
+      "key": "shared-nms002-l01-p009",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p009.tsx",
+      "moduleSha256": "bc1e5913439270689e7507a1e596b1bd07ca8c4730e9911de1f6ad3765e05be5",
+      "registeredModuleSha256": "bc1e5913439270689e7507a1e596b1bd07ca8c4730e9911de1f6ad3765e05be5"
+    },
+    {
+      "key": "shared-nms002-l01-p010",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p010.tsx",
+      "moduleSha256": "f8990975655b935de0688a13837d5a33627a8ed39b78c5989e974f87c13c056f",
+      "registeredModuleSha256": "f8990975655b935de0688a13837d5a33627a8ed39b78c5989e974f87c13c056f"
+    },
+    {
+      "key": "shared-nms002-l01-p011",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p011.tsx",
+      "moduleSha256": "9fe7a9f06be9266bed9647a35f4e2ead7b31e332959635b93a457a2d40b331ce",
+      "registeredModuleSha256": "9fe7a9f06be9266bed9647a35f4e2ead7b31e332959635b93a457a2d40b331ce"
+    },
+    {
+      "key": "shared-nms002-l01-p012",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l01-p012.tsx",
+      "moduleSha256": "c5212d570dae69d3c71d8061a65d7671a283ee298f513c3c58da2d395c86deae",
+      "registeredModuleSha256": "c5212d570dae69d3c71d8061a65d7671a283ee298f513c3c58da2d395c86deae"
+    },
+    {
+      "key": "shared-nms002-l01-p013",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p013.tsx",
+      "moduleSha256": "bc39d16e03e390c262a85a5347407cbc59841929ebdc599fa637cc0c4556921d",
+      "registeredModuleSha256": "bc39d16e03e390c262a85a5347407cbc59841929ebdc599fa637cc0c4556921d"
+    },
+    {
+      "key": "shared-nms002-l01-p014",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l01-p014.tsx",
+      "moduleSha256": "1fe642227fa3f9648dd3bebe672530e4c2a113f3ba444c452d0c2e29b520bfba",
+      "registeredModuleSha256": "1fe642227fa3f9648dd3bebe672530e4c2a113f3ba444c452d0c2e29b520bfba"
+    },
+    {
+      "key": "shared-nms002-l01-p015",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p015.tsx",
+      "moduleSha256": "ec09cf6f8a5ff13219c932ec0cb3708e8f4f5868cbfbc35e67f615fa6c5ca2a3",
+      "registeredModuleSha256": "ec09cf6f8a5ff13219c932ec0cb3708e8f4f5868cbfbc35e67f615fa6c5ca2a3"
+    },
+    {
+      "key": "shared-nms002-l01-p016",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p016.tsx",
+      "moduleSha256": "fb0de50da4b9eed45fad842092172334166c5ffb36774ebb3e0a5a23fb69e368",
+      "registeredModuleSha256": "fb0de50da4b9eed45fad842092172334166c5ffb36774ebb3e0a5a23fb69e368"
+    },
+    {
+      "key": "shared-nms002-l01-p017",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p017-v3.tsx",
+      "moduleSha256": "2548f3a1af0146a2f30b08671434b47f119f3640cac0fb38c6cbfc3633246870",
+      "registeredModuleSha256": "2548f3a1af0146a2f30b08671434b47f119f3640cac0fb38c6cbfc3633246870"
+    },
+    {
+      "key": "shared-nms002-l01-p018",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p018.tsx",
+      "moduleSha256": "fd46bd1770961aa9ac77b16b7ac5cbb78f025f6209970c34bf4637741009cb2e",
+      "registeredModuleSha256": "fd46bd1770961aa9ac77b16b7ac5cbb78f025f6209970c34bf4637741009cb2e"
+    },
+    {
+      "key": "shared-nms002-l01-p019",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p019-v2.tsx",
+      "moduleSha256": "6ea7db550943a10fdf49437807d56af319af40b783c680658cfd77f886cc3362",
+      "registeredModuleSha256": "6ea7db550943a10fdf49437807d56af319af40b783c680658cfd77f886cc3362"
+    },
+    {
+      "key": "shared-nms002-l01-p020",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p020.tsx",
+      "moduleSha256": "df43129e5d392c25d4d8f907047672d3315385f3c9de9751ee673d126ef53674",
+      "registeredModuleSha256": "df43129e5d392c25d4d8f907047672d3315385f3c9de9751ee673d126ef53674"
+    },
+    {
+      "key": "shared-nms002-l01-p021",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p021-v2.tsx",
+      "moduleSha256": "00b82a7675338650e832f874edb9904913cf08ff5dcd21649c1bff2d1d53ce47",
+      "registeredModuleSha256": "00b82a7675338650e832f874edb9904913cf08ff5dcd21649c1bff2d1d53ce47"
+    },
+    {
+      "key": "shared-nms002-l01-p022",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p022.tsx",
+      "moduleSha256": "449b1feefe8a597a0e8a7c221115cc679cb7de9a34b7ced64b67c1990a4c184f",
+      "registeredModuleSha256": "449b1feefe8a597a0e8a7c221115cc679cb7de9a34b7ced64b67c1990a4c184f"
+    },
+    {
+      "key": "shared-nms002-l01-p023",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p023.tsx",
+      "moduleSha256": "99d892fd5190a450b7503d83b67406dfafba94dd952c1476e321dcdd86f07af0",
+      "registeredModuleSha256": "99d892fd5190a450b7503d83b67406dfafba94dd952c1476e321dcdd86f07af0"
+    },
+    {
+      "key": "shared-nms002-l01-p024",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p024.tsx",
+      "moduleSha256": "0741162c764ccb82be14570cc990bf8afbae04d51f28b5229c568ed3bde48305",
+      "registeredModuleSha256": "0741162c764ccb82be14570cc990bf8afbae04d51f28b5229c568ed3bde48305"
+    },
+    {
+      "key": "shared-nms002-l01-p025",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p025.tsx",
+      "moduleSha256": "7537cad49407b772d12e6a6ac992202d4988994808dcf804c9d28de02ed90502",
+      "registeredModuleSha256": "7537cad49407b772d12e6a6ac992202d4988994808dcf804c9d28de02ed90502"
+    },
+    {
+      "key": "shared-nms002-l01-p026",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p026.tsx",
+      "moduleSha256": "af0ffef3b6bef428be0bb7caf5e0d534fb6f05e24bd3af8e069e8d56d37bff60",
+      "registeredModuleSha256": "af0ffef3b6bef428be0bb7caf5e0d534fb6f05e24bd3af8e069e8d56d37bff60"
+    },
+    {
+      "key": "shared-nms002-l01-p027",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p027.tsx",
+      "moduleSha256": "1dd1c57c7fab6c7aa2debcd2d04eaa557b776964e728192b735261f84989cae3",
+      "registeredModuleSha256": "1dd1c57c7fab6c7aa2debcd2d04eaa557b776964e728192b735261f84989cae3"
+    },
+    {
+      "key": "shared-nms002-l01-p028",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p028.tsx",
+      "moduleSha256": "66763993d48cf82e31e5de0547dab82d2749c561b14daab4d898dddcf9857485",
+      "registeredModuleSha256": "66763993d48cf82e31e5de0547dab82d2749c561b14daab4d898dddcf9857485"
+    },
+    {
+      "key": "shared-nms002-l01-p029",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p029.tsx",
+      "moduleSha256": "5b2d59fa5eabff4f08c960a1e94344280d796e79066bf1e23d909e12b2efff23",
+      "registeredModuleSha256": "5b2d59fa5eabff4f08c960a1e94344280d796e79066bf1e23d909e12b2efff23"
+    },
+    {
+      "key": "shared-nms002-l01-p030",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p030.tsx",
+      "moduleSha256": "c7c8c23276eaf3694b1324b5363a4a0cbc3572b19b8aab07a0d49d5a77113fe5",
+      "registeredModuleSha256": "c7c8c23276eaf3694b1324b5363a4a0cbc3572b19b8aab07a0d49d5a77113fe5"
+    },
+    {
+      "key": "shared-nms002-l01-p031",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p031.tsx",
+      "moduleSha256": "bd9fdf624d8f1c6ae7d3ec92e0c0ae5b7abada5681903d8bf1404e8771121715",
+      "registeredModuleSha256": "bd9fdf624d8f1c6ae7d3ec92e0c0ae5b7abada5681903d8bf1404e8771121715"
+    },
+    {
+      "key": "shared-nms002-l01-p032",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p032.tsx",
+      "moduleSha256": "ecb7018cd3d45da48d938c58516a040a9e934d377ff4f3ca7dbdc01f2a24881a",
+      "registeredModuleSha256": "ecb7018cd3d45da48d938c58516a040a9e934d377ff4f3ca7dbdc01f2a24881a"
+    },
+    {
+      "key": "shared-nms002-l01-p033",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p033.tsx",
+      "moduleSha256": "92cdb120ad42f0772c4eb031f1d269f6176bb4a737d7c73d5ed87a9183561a00",
+      "registeredModuleSha256": "92cdb120ad42f0772c4eb031f1d269f6176bb4a737d7c73d5ed87a9183561a00"
+    },
+    {
+      "key": "shared-nms002-l01-p034",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p034.tsx",
+      "moduleSha256": "ae12a2ca43f012cdcbb47bb0731f1dc850f5d5b237a922b95ae03ef8cfb6261c",
+      "registeredModuleSha256": "ae12a2ca43f012cdcbb47bb0731f1dc850f5d5b237a922b95ae03ef8cfb6261c"
+    },
+    {
+      "key": "shared-nms002-l01-p035",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p035.tsx",
+      "moduleSha256": "f3a4205d1fc5a41c1c9eccf9c315a8063a41d9e9b9b94a0a8a8b57d98e685e22",
+      "registeredModuleSha256": "f3a4205d1fc5a41c1c9eccf9c315a8063a41d9e9b9b94a0a8a8b57d98e685e22"
+    },
+    {
+      "key": "shared-nms002-l01-p036",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p036.tsx",
+      "moduleSha256": "81b71c66d89d85e426b76a9e1bff20ccdf1ee581d69f205a306d067ec11de86d",
+      "registeredModuleSha256": "81b71c66d89d85e426b76a9e1bff20ccdf1ee581d69f205a306d067ec11de86d"
+    },
+    {
+      "key": "shared-nms002-l01-p037",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p037.tsx",
+      "moduleSha256": "aa55fdbebbed0533af5bde824a738daaa28b11d65a12b1728bedbee897882aed",
+      "registeredModuleSha256": "aa55fdbebbed0533af5bde824a738daaa28b11d65a12b1728bedbee897882aed"
+    },
+    {
+      "key": "shared-nms002-l01-p038",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l01-p038.tsx",
+      "moduleSha256": "a13bcce8bd3cdbf8ed7a2806a4b79830138557039620acde8cc86526a977713e",
+      "registeredModuleSha256": "a13bcce8bd3cdbf8ed7a2806a4b79830138557039620acde8cc86526a977713e"
+    },
+    {
+      "key": "shared-nms002-l01-p039",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l01-p039.tsx",
+      "moduleSha256": "675d3130a8d6105422a01dd1a3d1c45c6a66b6dfc1bdbc399169d95071eaa551",
+      "registeredModuleSha256": "675d3130a8d6105422a01dd1a3d1c45c6a66b6dfc1bdbc399169d95071eaa551"
+    },
+    {
+      "key": "shared-nms002-l01-p040",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l01-p040.tsx",
+      "moduleSha256": "c633a0c799b15b2de34aa3cfd09886c9a5b733a8d9b18fba94cb6d6033cc4193",
+      "registeredModuleSha256": "c633a0c799b15b2de34aa3cfd09886c9a5b733a8d9b18fba94cb6d6033cc4193"
+    },
+    {
+      "key": "shared-nms002-l01-p041",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l01-p041.tsx",
+      "moduleSha256": "c41bfb136b023e56d413b254bbde569f7eca787aeb18b55204e498c3bbd38bc7",
+      "registeredModuleSha256": "c41bfb136b023e56d413b254bbde569f7eca787aeb18b55204e498c3bbd38bc7"
+    },
+    {
+      "key": "shared-nms002-l01-p042",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-readable-current-js-p042.tsx",
+      "moduleSha256": "4b75190d09205591f9567e95b886f7d2a8244a0062822de8d3558ac318194e15",
+      "registeredModuleSha256": "4b75190d09205591f9567e95b886f7d2a8244a0062822de8d3558ac318194e15"
+    },
+    {
+      "key": "shared-nms002-l01-p043",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l01-p043.tsx",
+      "moduleSha256": "2af5875a163b9189b808254617dceec4433f14d76203318ac638d901809f4bbf",
+      "registeredModuleSha256": "2af5875a163b9189b808254617dceec4433f14d76203318ac638d901809f4bbf"
+    },
+    {
+      "key": "shared-nms002-l01-p044",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-live-clock-current-js-p044.tsx",
+      "moduleSha256": "6e526eb47e0048346e7ad8d7e63588a67761bcd1cf07e15723da9cd6394f6908",
+      "registeredModuleSha256": "6e526eb47e0048346e7ad8d7e63588a67761bcd1cf07e15723da9cd6394f6908"
+    },
+    {
+      "key": "shared-nms002-l01-p045",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l01-p045.tsx",
+      "moduleSha256": "e080c0f0fb4cede1611b72e1aec4ae5d3160ccf59e2270cc1fcc1089afed236c",
+      "registeredModuleSha256": "e080c0f0fb4cede1611b72e1aec4ae5d3160ccf59e2270cc1fcc1089afed236c"
+    },
+    {
+      "key": "shared-nms002-l01-p046",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l01-p046.tsx",
+      "moduleSha256": "1a6dd9cc8bb0741c15d5e482c37e48c8a2865197c7f682d49058511a7973dc20",
+      "registeredModuleSha256": "1a6dd9cc8bb0741c15d5e482c37e48c8a2865197c7f682d49058511a7973dc20"
+    },
+    {
+      "key": "shared-nms002-l02-p005",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l02-p005.tsx",
+      "moduleSha256": "4d02b1382578897fc3a1459a53cfcc91996555395661fdb106f243c4afdb6f15",
+      "registeredModuleSha256": "4d02b1382578897fc3a1459a53cfcc91996555395661fdb106f243c4afdb6f15"
+    },
+    {
+      "key": "shared-nms002-l02-p019",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l02-p019.tsx",
+      "moduleSha256": "57676b2b487f8bc8753ccc792b2ec5cee08b57240aae10b83c1c05d7408847f8",
+      "registeredModuleSha256": "57676b2b487f8bc8753ccc792b2ec5cee08b57240aae10b83c1c05d7408847f8"
+    },
+    {
+      "key": "shared-nms002-l02-p020",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/nms-l02-hover-audio.tsx",
+      "moduleSha256": "faadbdb92fab74d4d1e084e6be166b92f5a7ed483ca486367de4be90861beed1",
+      "registeredModuleSha256": "faadbdb92fab74d4d1e084e6be166b92f5a7ed483ca486367de4be90861beed1"
+    },
+    {
+      "key": "shared-nms002-l02-p041",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l02-p041.tsx",
+      "moduleSha256": "e239e64715cc9ccb96918e2390c6e8681ceb0d5b1c63e9f8eee1cda081a57c61",
+      "registeredModuleSha256": "e239e64715cc9ccb96918e2390c6e8681ceb0d5b1c63e9f8eee1cda081a57c61"
+    },
+    {
+      "key": "shared-nms002-l02-p059",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l02-p059.tsx",
+      "moduleSha256": "0b949817633363f10b4e5302f27de25d82a23cf3ec815735d908d2dab0fdd473",
+      "registeredModuleSha256": "0b949817633363f10b4e5302f27de25d82a23cf3ec815735d908d2dab0fdd473"
+    },
+    {
+      "key": "shared-nms002-l02-p063",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l02-p063.tsx",
+      "moduleSha256": "13a9f73fa17ddf3e5747a3a0b886e4cd93fb72b8665a78de448a59577c73f9af",
+      "registeredModuleSha256": "13a9f73fa17ddf3e5747a3a0b886e4cd93fb72b8665a78de448a59577c73f9af"
+    },
+    {
+      "key": "shared-nms002-l03-p002",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l03-p002-v2.tsx",
+      "moduleSha256": "87dd7581de0ecf9c6c3a8c5eaa1357a09802ee8435af72fd9046645663d23737",
+      "registeredModuleSha256": "87dd7581de0ecf9c6c3a8c5eaa1357a09802ee8435af72fd9046645663d23737"
+    },
+    {
+      "key": "shared-nms002-l03-p025",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l03-p025.tsx",
+      "moduleSha256": "82f65feb5ec06b378870c0078d5d7a44ccfabd7f8c62e80545c07db495f78e51",
+      "registeredModuleSha256": "82f65feb5ec06b378870c0078d5d7a44ccfabd7f8c62e80545c07db495f78e51"
+    },
+    {
+      "key": "shared-nms002-l03-p051",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l03-p051.tsx",
+      "moduleSha256": "c013ae2324c736763bafed44fbf51e412601b448385112530f6d81b60bf687d1",
+      "registeredModuleSha256": "c013ae2324c736763bafed44fbf51e412601b448385112530f6d81b60bf687d1"
+    },
+    {
+      "key": "shared-nms002-l03-p055",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l03-p055.tsx",
+      "moduleSha256": "1b790006396c96bb6e2b66fd8584a2bebb38207fd676550e0ccd0d56593f3f6b",
+      "registeredModuleSha256": "1b790006396c96bb6e2b66fd8584a2bebb38207fd676550e0ccd0d56593f3f6b"
+    },
+    {
+      "key": "shared-nms002-l04-p002",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l04-p002.tsx",
+      "moduleSha256": "d9bbd919516989ec9a1392f3a0bbb854cf05c5c5c119940545f15ae4d0c281ec",
+      "registeredModuleSha256": "d9bbd919516989ec9a1392f3a0bbb854cf05c5c5c119940545f15ae4d0c281ec"
+    },
+    {
+      "key": "shared-nms002-l04-p017",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l04-p017.tsx",
+      "moduleSha256": "5a4454be1796f60a0cfa4e6928c550e1b33618684c582f5c8473ad300c699809",
+      "registeredModuleSha256": "5a4454be1796f60a0cfa4e6928c550e1b33618684c582f5c8473ad300c699809"
+    },
+    {
+      "key": "shared-nms002-l04-p040",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l04-p040.tsx",
+      "moduleSha256": "cc3a667832f044120493592954463f967ce169f373c5e7f3fcc5216e1754e011",
+      "registeredModuleSha256": "cc3a667832f044120493592954463f967ce169f373c5e7f3fcc5216e1754e011"
+    },
+    {
+      "key": "shared-nms002-l04-p044",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l04-p044.tsx",
+      "moduleSha256": "4ade81f700be37468626375a2ee1195915a2c62b900874ad2600f3b9894ab821",
+      "registeredModuleSha256": "4ade81f700be37468626375a2ee1195915a2c62b900874ad2600f3b9894ab821"
+    },
+    {
+      "key": "shared-nms002-l05-p040",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/frozen16-nine-audio-shared-nms002-l05-p040.tsx",
+      "moduleSha256": "14d71c26d962a960004f52a51fb849fd1a1048bc5326023682b18fd4b637db9e",
+      "registeredModuleSha256": "14d71c26d962a960004f52a51fb849fd1a1048bc5326023682b18fd4b637db9e"
+    },
+    {
+      "key": "shared-nms002-l05-p044",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l05-p044.tsx",
+      "moduleSha256": "657334d3fa235b35c848c2c76b41ea617e4546c3d6d8af718ebd89e9243abe90",
+      "registeredModuleSha256": "657334d3fa235b35c848c2c76b41ea617e4546c3d6d8af718ebd89e9243abe90"
+    },
+    {
+      "key": "shared-nms002-l05-p048",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l05-p048.tsx",
+      "moduleSha256": "9b585a16a06262b43a363f0e37920d66e3af23f82483072580116678ff05eb61",
+      "registeredModuleSha256": "9b585a16a06262b43a363f0e37920d66e3af23f82483072580116678ff05eb61"
+    },
+    {
+      "key": "shared-nms002-l06-p003",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l06-p003.tsx",
+      "moduleSha256": "fc81676591e16442dcd43ee014f6655b31405455f3750fadaf2d904396545adc",
+      "registeredModuleSha256": "fc81676591e16442dcd43ee014f6655b31405455f3750fadaf2d904396545adc"
+    },
+    {
+      "key": "shared-nms002-l06-p004",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l06-p004.tsx",
+      "moduleSha256": "522509974c3a12365a6338e95d14f0b05f08ee2719d2d08e5ce30a774765b010",
+      "registeredModuleSha256": "522509974c3a12365a6338e95d14f0b05f08ee2719d2d08e5ce30a774765b010"
+    },
+    {
+      "key": "shared-nms002-l06-p021",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l06-p021.tsx",
+      "moduleSha256": "a60e0d3572e5a1701ac3028aff3fdf065b49d83719cb26bde2ed68649ce067f8",
+      "registeredModuleSha256": "a60e0d3572e5a1701ac3028aff3fdf065b49d83719cb26bde2ed68649ce067f8"
+    },
+    {
+      "key": "shared-nms002-l06-p046",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l06-p046.tsx",
+      "moduleSha256": "6387733d0f8cbbaeea93ed9a8c07da15c6448f297345bb87da613cece6346570",
+      "registeredModuleSha256": "6387733d0f8cbbaeea93ed9a8c07da15c6448f297345bb87da613cece6346570"
+    },
+    {
+      "key": "shared-nms002-l06-p050",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l06-p050.tsx",
+      "moduleSha256": "ce249470f81a91e53bbe5ffb936249065a54820b56bdb47477f89c5285b6a967",
+      "registeredModuleSha256": "ce249470f81a91e53bbe5ffb936249065a54820b56bdb47477f89c5285b6a967"
+    },
+    {
+      "key": "shared-nms002-l07-p004",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l07-p004.tsx",
+      "moduleSha256": "c47c67b1106494cda43c26cd344a4d5f4e09a9cbf317169402a4d30b6114b9ac",
+      "registeredModuleSha256": "c47c67b1106494cda43c26cd344a4d5f4e09a9cbf317169402a4d30b6114b9ac"
+    },
+    {
+      "key": "shared-nms002-l07-p047",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l07-p047.tsx",
+      "moduleSha256": "6f3aa483a0c4125fd5279407383f5815964a4ec97befcc2181b91a4dc4e54a8b",
+      "registeredModuleSha256": "6f3aa483a0c4125fd5279407383f5815964a4ec97befcc2181b91a4dc4e54a8b"
+    },
+    {
+      "key": "shared-nms002-l07-p051",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l07-p051.tsx",
+      "moduleSha256": "8a46a5030bd028e061d0c3737d7b95c66c70e325f42a53179735bcd35d47fd08",
+      "registeredModuleSha256": "8a46a5030bd028e061d0c3737d7b95c66c70e325f42a53179735bcd35d47fd08"
+    },
+    {
+      "key": "shared-nms002-l08-p004",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/g678-nms-l08-p004.tsx",
+      "moduleSha256": "ac6e14d8c67245cdf92d9ae8f91604e0448eeaf2000a4fa64d4b2c961a812338",
+      "registeredModuleSha256": "ac6e14d8c67245cdf92d9ae8f91604e0448eeaf2000a4fa64d4b2c961a812338"
+    },
+    {
+      "key": "shared-nms002-l08-p018",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l08-p018.tsx",
+      "moduleSha256": "8e620a9d54a73dc612a2d3f685211e41e818b0275fe7c003c0479a97ef0c22f1",
+      "registeredModuleSha256": "8e620a9d54a73dc612a2d3f685211e41e818b0275fe7c003c0479a97ef0c22f1"
+    },
+    {
+      "key": "shared-nms002-l08-p020",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l08-p020.tsx",
+      "moduleSha256": "60a03c63c29ef67ab9fb33fa267206d78153316e6d1bf3c1d3affe6829a7e87b",
+      "registeredModuleSha256": "60a03c63c29ef67ab9fb33fa267206d78153316e6d1bf3c1d3affe6829a7e87b"
+    },
+    {
+      "key": "shared-nms002-l08-p055",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l08-p055.tsx",
+      "moduleSha256": "7f88e1da61ff35693229d836067fab160852eff92907f14542c7bd0e4617b0e8",
+      "registeredModuleSha256": "7f88e1da61ff35693229d836067fab160852eff92907f14542c7bd0e4617b0e8"
+    },
+    {
+      "key": "shared-nms002-l08-p059",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l08-p059.tsx",
+      "moduleSha256": "2bd246b46ffaaa2453a05796ecb3eae2bab8037d9a3c4f0327499b9bbfc1ceca",
+      "registeredModuleSha256": "2bd246b46ffaaa2453a05796ecb3eae2bab8037d9a3c4f0327499b9bbfc1ceca"
+    },
+    {
+      "key": "shared-nms002-l09-p006",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l09-p006.tsx",
+      "moduleSha256": "ad1b992bf11773700caa329d175798277110a4fa36add8743d54e3d0e34d8c11",
+      "registeredModuleSha256": "ad1b992bf11773700caa329d175798277110a4fa36add8743d54e3d0e34d8c11"
+    },
+    {
+      "key": "shared-nms002-l09-p007",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l09-p007.tsx",
+      "moduleSha256": "5a2117956bfe291b8d886c0174395b47b3f1e869d9afcbb4ea04f436de3e3218",
+      "registeredModuleSha256": "5a2117956bfe291b8d886c0174395b47b3f1e869d9afcbb4ea04f436de3e3218"
+    },
+    {
+      "key": "shared-nms002-l09-p020",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l09-p020.tsx",
+      "moduleSha256": "e33b902ec09544481c9bee7c2f523cf055822f2a7b8617c99b4c1e9441c09ebe",
+      "registeredModuleSha256": "e33b902ec09544481c9bee7c2f523cf055822f2a7b8617c99b4c1e9441c09ebe"
+    },
+    {
+      "key": "shared-nms002-l09-p048",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l09-p048.tsx",
+      "moduleSha256": "b0e265a257906131d82d3603053f934a0fb73487d4ed7288f9b522fa66bbc059",
+      "registeredModuleSha256": "b0e265a257906131d82d3603053f934a0fb73487d4ed7288f9b522fa66bbc059"
+    },
+    {
+      "key": "shared-nms002-l09-p052",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l09-p052.tsx",
+      "moduleSha256": "a549d419ee31d9947b4143a98eec2916da7a995cb6ae9541586476c8b2314bf2",
+      "registeredModuleSha256": "a549d419ee31d9947b4143a98eec2916da7a995cb6ae9541586476c8b2314bf2"
+    },
+    {
+      "key": "shared-nms002-l10-p044",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l10-p044.tsx",
+      "moduleSha256": "74ba146d0231e181f97d734a44121e9db1b26ae0686576821cd639c6e4694b2e",
+      "registeredModuleSha256": "74ba146d0231e181f97d734a44121e9db1b26ae0686576821cd639c6e4694b2e"
+    },
+    {
+      "key": "shared-nms002-l10-p048",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l10-p048.tsx",
+      "moduleSha256": "7b2d34c888238c6990594c9f4f6b28fddb77193e4b3962c10ea83fe2d95b9e60",
+      "registeredModuleSha256": "7b2d34c888238c6990594c9f4f6b28fddb77193e4b3962c10ea83fe2d95b9e60"
+    },
+    {
+      "key": "shared-nms002-l11-p016",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l11-p016.tsx",
+      "moduleSha256": "dbefc3b538e6ee69776cd1d3f5cd5528ab7eb8361cdddbf7a6aeede1020fec84",
+      "registeredModuleSha256": "dbefc3b538e6ee69776cd1d3f5cd5528ab7eb8361cdddbf7a6aeede1020fec84"
+    },
+    {
+      "key": "shared-nms002-l11-p021",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l11-p021.tsx",
+      "moduleSha256": "3d65fee32404433c169a3d4221ce7d487d4ced750bf6bc37df54183b79a8421c",
+      "registeredModuleSha256": "3d65fee32404433c169a3d4221ce7d487d4ced750bf6bc37df54183b79a8421c"
+    },
+    {
+      "key": "shared-nms002-l11-p025",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l11-p025.tsx",
+      "moduleSha256": "103ccd67f2e9272c80e590c082f664e37e72c9bbad6f2dc23a1b23889e5cb471",
+      "registeredModuleSha256": "103ccd67f2e9272c80e590c082f664e37e72c9bbad6f2dc23a1b23889e5cb471"
+    },
+    {
+      "key": "shared-nms002-l11-p030",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/frozen16-nms-l11-choice-audio.tsx",
+      "moduleSha256": "cfef6f74f0233df8c0b018b1d09cbc12efff47059f2c2d795eeba8505bd32fc6",
+      "registeredModuleSha256": "cfef6f74f0233df8c0b018b1d09cbc12efff47059f2c2d795eeba8505bd32fc6"
+    },
+    {
+      "key": "shared-nms002-l11-p042",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l11-p042.tsx",
+      "moduleSha256": "95c711ca01147b21c2834c15c48df28a1592ee656b6061123012e60a2148310c",
+      "registeredModuleSha256": "95c711ca01147b21c2834c15c48df28a1592ee656b6061123012e60a2148310c"
+    },
+    {
+      "key": "shared-nms002-l11-p046",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l11-p046.tsx",
+      "moduleSha256": "9e6c446f405f1fb36d81ae8c44994c254df5663e2814fb4b82c702a761fa7518",
+      "registeredModuleSha256": "9e6c446f405f1fb36d81ae8c44994c254df5663e2814fb4b82c702a761fa7518"
+    },
+    {
+      "key": "shared-nms002-l12-p021",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l12-p021.tsx",
+      "moduleSha256": "45e3e85f826577146713bb2bf5cb8eef9560e705afda983aa90d4557e1514ac0",
+      "registeredModuleSha256": "45e3e85f826577146713bb2bf5cb8eef9560e705afda983aa90d4557e1514ac0"
+    },
+    {
+      "key": "shared-nms002-l12-p022",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l12-p022.tsx",
+      "moduleSha256": "ba275d9a2dd91e943aab6615d1aff7bc40550f2f2036286731fdbef244f82f4d",
+      "registeredModuleSha256": "ba275d9a2dd91e943aab6615d1aff7bc40550f2f2036286731fdbef244f82f4d"
+    },
+    {
+      "key": "shared-nms002-l12-p060",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l12-p060.tsx",
+      "moduleSha256": "fd5cbb14a0c50f55dde1c9b544aa1d51f763ae6aabdf4b553d69326ee8ad784c",
+      "registeredModuleSha256": "fd5cbb14a0c50f55dde1c9b544aa1d51f763ae6aabdf4b553d69326ee8ad784c"
+    },
+    {
+      "key": "shared-nms002-l12-p064",
+      "maturity": "private-current-js",
+      "modulePath": "packages/demos/src/modules/shared-nms002-l12-p064.tsx",
+      "moduleSha256": "1fdc8d606ddd9287f2fc76a7ef67f1303a7677b27c1736e68c8ea10c535df49b",
+      "registeredModuleSha256": "1fdc8d606ddd9287f2fc76a7ef67f1303a7677b27c1736e68c8ea10c535df49b"
+    }
+  ],
+  "typographyImplemented": 0,
+  "humanReviewPassed": 0,
+  "claimBoundary": {
+    "sourceAssetsModified": false,
+    "registeredPagesPromoted": false,
+    "existingDirtyChangesPreserved": true,
+    "g3HostExtensionsPorted": false,
+    "existingG678HostContractsPreserved": true,
+    "strictCompletion": false,
+    "publication": false
+  }
+}

@@ -1,0 +1,101 @@
+import type {SourceStaticCanvasCandidateConfig} from "../source-static-canvas-candidate";
+
+export const COURSE_G04_L03_VB_008_SOURCE = Object.freeze({
+  swf: "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB08.swf",
+  swfSha256:
+    "3c61fd04bbaf6b316438691fd59222623bbb1d11a36c731ae7ed9fb862245bcf",
+  fla: "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/VB/L3VB08.fla",
+  flaSha256:
+    "25b7f4acc1128d4b8a06df89d52b9f372b4af00b77d2053fbccfaa24dba53922",
+  associatedAudio:
+    "source-assets/flash/HELP MATH_ORIGINAL FILES/HELP_COURSES/ELMGR4/L3/SA/L3VB08.mp3",
+  associatedAudioSha256:
+    "6bb1c07967965ec131dcd57617c84f709c772b0e46c5ca27dec91c74b9f7ef90",
+  embeddedAudioStreamSha256: Object.freeze([
+    "ad4a86a727b8d4b5379655258cdffc62f85f89cb460a96565fad27d975a2aa38",
+    "f87ec03bf9163390a117b6ad1ea7c47dab7ea7e729219acff0e0617f6100a9f1",
+    "d7a98a5d899d27fb01a48d98e1a3957f03edfe8c7f68dddfb40fe552e311c0d0",
+    "187a32ba065a2534843eaef91e70bd2491595f9f00b9598ea15be9a843a24d3d",
+    "c374d3f9cf0f5fd1adfbd46c74abd7d3bd2d0b1d41bf15b3758a87386a6ca7d1",
+    "18e52976f77c535c485dccc2c41a17b63a651044748593990b355cee29b01aec",
+    "529ef71f4768ba9c0f830a67547066e4b8b20091bc8e3cd0782e1fbdfbb64085",
+    "1b7f35c62c832068bd2e0e54246c591df18f08e9ff8c77527e6f3ba03650246f",
+    "3dda8c412ae366891bd7ce7f1603c70f4ec8438806191c75a25328963fdb8ee7",
+    "e5c99e029d9df7717bc7755b5f4660841ad3f453d10bb8dbc8010d69b5a653b6",
+    "b88d731b8b00fb731c9e2a546e593c08217ea40c506b3c189f0bb9639b7392a9",
+  ]),
+  spriteObjectId: 195,
+  staticallyUnreachableSpriteObjectId: 52,
+  buttonObjectIds: Object.freeze([10, 21, 22, 53]),
+  quizStopFrame: 29,
+  interactionOperationCount: 4,
+  timelineNavigationOccurrenceCount: 44,
+  maskCandidateCount: 2,
+  morphDefinitionCount: 52,
+  embeddedRasterDefinitionCount: 13,
+  rootBeginFrame: 6,
+  rootPlacementTwips: Object.freeze({x: 8_248, y: 5_666}),
+  rootPlacementPixels: Object.freeze({x: 412.4, y: 283.3}),
+});
+
+export const COURSE_G04_L03_VB_008_CONFIG = Object.freeze({
+  animationId: "course-g04-l03-vb-008",
+  title: "Negative Numbers Practice — English source-static engineering candidate",
+  sourceSwfSha256: COURSE_G04_L03_VB_008_SOURCE.swfSha256,
+  assetSource:
+    "/flash-assets/courses/course-g04-l03-vb-008/canvas-renderer.js",
+  stage: Object.freeze({width: 800, height: 600, backgroundColor: "#b8d8f7"}),
+  fps: 12,
+  rootFrameCount: 10,
+  rootBeginFrame: 6,
+  mainFrameDomain: "sprite-195",
+  mainFrameCount: 62,
+  livePlaybackEndFrame: 29,
+  playbackMode: "once",
+  companionDomains: Object.freeze([
+    Object.freeze({id: "sprite-5", frameCount: 1, label: "One-frame structural companion"}),
+    Object.freeze({id: "sprite-54", frameCount: 1, label: "Wrong-feedback text companion"}),
+    Object.freeze({id: "sprite-63", frameCount: 28, label: "Nested timed practice companion"}),
+    Object.freeze({id: "sprite-74", frameCount: 28, label: "Nested timed practice companion"}),
+    Object.freeze({id: "sprite-86", frameCount: 29, label: "Nested timed practice companion"}),
+    Object.freeze({id: "sprite-98", frameCount: 31, label: "Nested timed practice companion"}),
+    Object.freeze({id: "sprite-110", frameCount: 27, label: "Nested timed feedback companion"}),
+    Object.freeze({id: "sprite-138", frameCount: 28, label: "Nested timed feedback companion"}),
+    Object.freeze({id: "sprite-163", frameCount: 27, label: "Nested timed feedback companion"}),
+    Object.freeze({id: "sprite-169", frameCount: 1, label: "One-frame nested structural companion"}),
+    Object.freeze({id: "sprite-176", frameCount: 1, label: "One-frame nested structural companion"}),
+    Object.freeze({id: "sprite-179", frameCount: 28, label: "Nested timed feedback companion"}),
+    Object.freeze({id: "sprite-191", frameCount: 25, label: "Nested timed feedback companion"}),
+  ]),
+  visualMarkers: Object.freeze([
+    Object.freeze({id: "negative-numbers-practice", firstFrame: 1, lastFrame: 62}),
+    Object.freeze({id: "four-answer-quiz-stop-static-drawing", firstFrame: 29, lastFrame: 29}),
+    Object.freeze({id: "post-quiz-static-drawing", firstFrame: 30, lastFrame: 62}),
+  ]),
+  sourceControlBehaviorLabel:
+    "Four source buttons, four release/input operations, forty-four timeline-navigation occurrences, wrong/right feedback, glossary callbacks, eleven embedded streams, the associated catalog-audio path, and all ActionScript behavior are disabled",
+} satisfies SourceStaticCanvasCandidateConfig);
+
+export const COURSE_G04_L03_VB_008_AUTHORITY = Object.freeze({
+  implementationAuthorized: false,
+  registryIsPrototypeOnly: true,
+  productRouteMayBeAdded: false,
+  strictLedgerMayBeChanged: false,
+  publicStrictLibraryAdmission: false,
+  legacyActionScriptExecuted: false,
+  sourcePointerEventsEnabled: false,
+  embeddedAudioRendered: false,
+  associatedAudioRendered: false,
+  spanishVisualRuntimeEstablished: false,
+  rootCompositionEstablished: false,
+  companionCompositionEstablished: false,
+  nestedTimelineClockEstablished: false,
+  naturalRuntimeReachabilityEstablished: false,
+  replayParityEstablished: false,
+  behaviorParityEstablished: false,
+  fullFrameRmseEstablished: false,
+  humanVisualReviewAccepted: false,
+  ownerAccepted: false,
+  strictMigrationComplete: false,
+  strictAcceptanceEffect: "none",
+});

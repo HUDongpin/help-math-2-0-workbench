@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "calibrationId": "g4-l10-candidate-to-product-v11",
+  "frozenAt": "2026-08-21T04:10:08+08:00",
+  "frozenGitHead": "71485baa601fe600e8f63c88fb0139492a4ad31e",
+  "status": "registry-shape-successor",
+  "predecessor": {
+    "path": "catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v10.json",
+    "bytes": 15360,
+    "sha256": "e9b31177a73b98359e9ac686cb9ccfcc304ebff2220606ba0335ac1fde2563fd",
+    "preservedConclusions": [
+      "V10 remains the immutable implementation-before-freeze for the single RW004 interactive-understood attempt.",
+      "Only RW004 is newly authorized; the other sixteen candidates remain unregistered and are not relabeled low.",
+      "All RW004 source, candidate, handler, glossary, audio-input, and host-contract facts remain exactly V10-bound.",
+      "V11 only exposes the cumulative eight-page selection shape required by the private registry generator."
+    ]
+  },
+  "scope": {
+    "releaseId": "lesson-g04-l10-perimeter-area",
+    "activePageCount": 46,
+    "courseShellCount": 0,
+    "auditedSourceStaticCandidateCount": 24,
+    "privateRegistrationCountBeforeBatch": 7,
+    "privateRegistrationCountAfterBatch": 8,
+    "newWorkspaceCount": 0
+  },
+  "selectedPages": [
+    {"animationId":"course-g04-l10-ir-001","globalPageOrdinal":1,"sectionCode":"IR","sectionPageOrdinal":1,"complexityLane":"behavior-heavy","selectionStatus":"inherited-from-v10-predecessor-chain"},
+    {
+      "animationId": "course-g04-l10-rw-004",
+      "assetId": "swf-8f0fe3a78ad9757b4388e0fd1f79e5e275914e5377d5e7be184ffa1779b63f95",
+      "globalPageOrdinal": 4,
+      "sectionCode": "RW",
+      "sectionPageOrdinal": 3,
+      "placementPath": "RW/L10RW04.swf",
+      "workspace": "migrations/course-g04-l10-rw-004",
+      "complexityLane": "interactive-understood",
+      "selectionStatus": "v10-frozen-new-batch-attempt",
+      "v10SourceFreeze": {"path":"catalog/product-bridge-calibrations/g4-l10-candidate-to-product-v10.json","sha256":"e9b31177a73b98359e9ac686cb9ccfcc304ebff2220606ba0335ac1fde2563fd"},
+      "source": {"swfSha256":"8f0fe3a78ad9757b4388e0fd1f79e5e275914e5377d5e7be184ffa1779b63f95","flaSha256":"08f5890a1175c72db509ce697d6aa0ec8e2e93e1ab8814cc3d021134aa64db14"},
+      "candidate": {"manifestSha256":"068055fc3bd62e40d20d82463a0b3f5a46107df3038f15a9f1a1ff5a5950917f","canvasRendererSha256":"8022a71bbeb80e8f3d6c6d53321e9943ed0dd69179a2fd54f4c4677463d27bee","maintainedModuleSha256":"cf56b4f1e33742e0b3b5aaa0f73c234b1faa2ae458d4b58984815b935b759b3a","timelineContractSha256":"e29705fed18f9234cb6ec5fbe825a944384834986a0fec3ee65934b3dc9a6031","frameDomain":"sprite-109","frameCount":1325,"rootBeginFrame":6},
+      "hostContract": {"capability":"glossary","typedRequestCount":3,"legacyOperations":"blocked","auditStorage":"memory-only","storesPersonalData":false},
+      "audio": {"materializerSha256":"d09b5b0c68e2c554c85a2c221bdfa51cf52a32990c5ee70f805b8697cdf9ff0b","receiptSha256":"63d59b580831a9e7a56f53e4a7b035cf9b3e227d735e0449acebd6c07c886dca","manifestSha256":"62b08aa7e81b024d14b1a4fe451b4b1053426a3cc966ac92938e330f12cb0c47","embeddedEngineeringCueSha256":"92a83e94c3947bcaf30fcc1e1bc2c70625bed4eefd59d5757604073e3f9919d2","spanishHostTrackSha256":"1b50f6e77e0db24fd34821b330b1838c0b91d392d6a0bbacd733a8494073f535","spokenLanguageAccepted":false,"audioAccepted":false}
+    },
+    {"animationId":"course-g04-l10-vb-003","globalPageOrdinal":7,"sectionCode":"VB","sectionPageOrdinal":2,"complexityLane":"interactive-understood","selectionStatus":"inherited-from-v10-predecessor-chain"},
+    {"animationId":"course-g04-l10-vb-004","globalPageOrdinal":8,"sectionCode":"VB","sectionPageOrdinal":3,"complexityLane":"interactive-understood","selectionStatus":"inherited-from-v10-predecessor-chain"},
+    {"animationId":"course-g04-l10-vb-011","globalPageOrdinal":15,"sectionCode":"VB","sectionPageOrdinal":10,"complexityLane":"interactive-understood","selectionStatus":"inherited-from-v10-predecessor-chain"},
+    {"animationId":"course-g04-l10-ts-002","globalPageOrdinal":37,"sectionCode":"TS","sectionPageOrdinal":1,"complexityLane":"interactive-understood","selectionStatus":"inherited-from-v10-predecessor-chain"},
+    {"animationId":"course-g04-l10-ts-006","globalPageOrdinal":41,"sectionCode":"TS","sectionPageOrdinal":5,"complexityLane":"low","selectionStatus":"inherited-from-v10-predecessor-chain"},
+    {"animationId":"course-g04-l10-fq-001","globalPageOrdinal":44,"sectionCode":"FQ","sectionPageOrdinal":1,"complexityLane":"low","selectionStatus":"inherited-from-v10-predecessor-chain"}
+  ],
+  "remainingCandidateGate": {
+    "unregisteredCandidateCount": 16,
+    "honestLowLaneCount": 0,
+    "automaticRegistrationAuthorized": false,
+    "lowRelabelAuthorized": false,
+    "behaviorHeavyGate": "Random branches, audio routing, timeline reachability, and Replay engineering behavior must each close before registration."
+  },
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "behaviorParityAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "releaseEligible": false,
+    "published": false
+  }
+}

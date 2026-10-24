@@ -1,0 +1,18 @@
+"use client";
+
+import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
+import {COURSE_G03_L05_VB_007_CONFIG, COURSE_G03_L05_VB_007_SOURCE} from "../timelines/course-g03-l05-vb-007";
+
+const candidate = createSourceStaticCanvasCandidate(COURSE_G03_L05_VB_007_CONFIG);
+const module = Object.freeze({...candidate.module, maturity: "private-current-js" as const});
+
+export {COURSE_G03_L05_VB_007_SOURCE};
+export const COURSE_G03_L05_VB_007_MOVIE = candidate.movie;
+export const COURSE_G03_L05_VB_007_RUNTIME = candidate.runtime;
+export const COURSE_G03_L05_VB_007_SOURCE_CONTRACT = candidate.sourceContract;
+export const COURSE_G03_L05_VB_007_SCENARIOS = candidate.scenarios;
+export const normalizeCourseG03L05Vb007Frame = candidate.normalizeFrame;
+export const getCourseG03L05Vb007FrameState = candidate.getFrameState;
+export const buildCourseG03L05Vb007CaptureAttributes = candidate.buildCaptureAttributes;
+export const CourseG03L05Vb007Renderer = candidate.Renderer;
+export default module;

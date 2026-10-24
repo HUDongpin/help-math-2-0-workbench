@@ -1,0 +1,13 @@
+.in010-quiz{container-type:inline-size;display:grid;gap:1rem;min-inline-size:0;font-family:var(--lesson-font-body,"Nunito Sans",system-ui,sans-serif);color:#16364a;--in010-body:1.125rem}
+.in010-quiz__body,.in010-quiz__status{margin:0;font-size:max(18px,var(--in010-body));line-height:1.6;overflow-wrap:anywhere}
+.in010-quiz button{font:inherit;font-size:max(18px,1.125rem);line-height:1.6;min-block-size:48px;min-inline-size:48px;padding:.4rem .6rem;color:#16364a;background:#fff;border:1px solid #426b85;border-radius:.4rem;touch-action:manipulation}
+.in010-quiz button:focus-visible{outline:3px solid #1757a4;outline-offset:3px}.in010-quiz button[aria-pressed=true]{background:#e4f0ff;border:2px solid #1757a4}.in010-quiz button:disabled{color:#526575;background:#edf1f5}.in010-quiz__keyword{display:inline;text-decoration:underline;text-underline-offset:.2em}
+.in010-quiz__number{display:inline-block;white-space:nowrap;overflow-wrap:normal;word-break:normal;font-variant-numeric:tabular-nums;font-weight:700}.in010-quiz__figure{min-inline-size:0;max-inline-size:100%}.in010-quiz fieldset{min-inline-size:0;margin:0;padding:.75rem;border:1px solid #728c9c}.in010-quiz legend{font-size:max(18px,1.125rem);line-height:1.6}.in010-quiz__controls{display:grid;gap:1rem}.in010-quiz__cards,.in010-quiz__targets{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:.75rem}.in010-quiz__feedback{border:2px solid #426b85;padding:1rem;display:grid;gap:.75rem;background:#fff}
+@container(min-width:768px){.in010-quiz__body,.in010-quiz__status{--in010-body:1.25rem}}
+
+.in010-quiz__non-dialog{display:grid;gap:1rem;min-inline-size:0}
+
+.in010-surface{container-type:inline-size;min-width:0;padding:1rem;padding-inline:min(1rem,4vw);font-family:var(--lesson-font-body,"Nunito Sans",system-ui,sans-serif)}
+.in010-surface h2{color:#16364a;font-family:var(--lesson-font-display,"Fredoka",system-ui,sans-serif);font-weight:600;font-size:1.5rem;line-height:1.3;margin:0 0 1rem;overflow-wrap:anywhere}
+
+.in010-quiz button[data-placed-target=true]:disabled{opacity:1;color:#16364a;background:#fff;border-color:#426b85}

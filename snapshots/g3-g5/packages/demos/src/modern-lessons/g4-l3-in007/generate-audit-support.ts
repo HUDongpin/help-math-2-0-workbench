@@ -1,0 +1,27 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {gunzipSync} from 'node:zlib';
+import assert from 'node:assert/strict';
+import {BINDING} from './binding';
+import {REQUIRED_TYPOGRAPHY_CHECKS,REQUIRED_IMPLEMENTATION_CHECKS} from '../../../../../scripts/build-lesson-typography-progress-v1.mjs';
+const digest=(bytes:Uint8Array)=>createHash('sha256').update(bytes).digest('hex');
+const inputBase=new URL('../../../../../scripts/inputs/typography-v1/g4-l3-in007/',import.meta.url);
+const manifestBytes=await readFile(new URL('input-manifest.json',inputBase));
+assert.equal(digest(manifestBytes),'a6df2282ebce1324ef547fbaf7aa909609c4df2357c47b7ea41ab7ccbbcc5d09','Pinned input manifest drift');
+const manifest=JSON.parse(manifestBytes.toString());
+assert.equal(manifest.sourceSha256,BINDING.sourceSwfSha256);
+const catalogRef=manifest.files.find((entry:{path:string})=>entry.path==='scripts/inputs/typography-v1/g4-l3-in007/source-catalog.json.gz');
+assert(catalogRef,'Pinned source catalog entry missing');
+const catalogBytes=await readFile(new URL('source-catalog.json.gz',inputBase));
+assert.equal(catalogBytes.length,catalogRef.bytes,'Source catalog length drift');
+assert.equal(digest(catalogBytes),catalogRef.sha256,'Source catalog gzip bytes drift');
+const source=JSON.parse(gunzipSync(catalogBytes).toString());
+assert.equal(source.sourceSha256,BINDING.sourceSwfSha256);
+const pairs=new Map<string,{shape:number;role:string;blocks:string[]}>();
+for(const block of BINDING.blocks)for(const shape of block.sourceShapeIds??[]){const key=shape+':'+block.role;const row=pairs.get(key)??{shape,role:block.role,blocks:[]};row.blocks.push(block.id);pairs.set(key,row);}
+const sourceRoleDecisions=Array.from(pairs.values()).map(({shape,role,blocks})=>({kind:'outlined-text',sourceShapeIds:[shape],sourceShapeHashes:[{characterId:shape,sourceTagSha256:source.shapeDefinitions.find((s:any)=>s.characterId===shape).sourceTagSha256}],semanticValue:'−',role,blockIds:blocks,reason:'Exact source rectangle is the mathematical minus sign. This role-specific decision covers these precise answer or label blocks; pair with the digit and retain source alpha/readability admission.'}));
+for(const block of BINDING.blocks)for(const id of block.sourceShapeIds??[])assert(sourceRoleDecisions.some(d=>d.role===block.role&&d.sourceShapeIds.includes(id)));
+const data={kind:'in007-work-only-audit-binding-support',binding:BINDING,sourceRoleDecisions,pendingTechnicalChecks:REQUIRED_TYPOGRAPHY_CHECKS.filter(c=>!REQUIRED_IMPLEMENTATION_CHECKS.includes(c)),stage:'proposal-not-product-integrated',acceptanceEffects:{implemented:false,technicalPassed:false,originalRuntime:false,fidelity:false,human:false,owner:false,strict:false,publication:false}};
+assert(data.pendingTechnicalChecks.every(c=>REQUIRED_TYPOGRAPHY_CHECKS.includes(c)&&!REQUIRED_IMPLEMENTATION_CHECKS.includes(c)));
+await writeFile(new URL('./audit-binding-support.json',import.meta.url),JSON.stringify(data,null,2)+'\n');
+console.log('PASS exact shape-role per block and canonical pending-check vocabulary; work-only audit support generated');

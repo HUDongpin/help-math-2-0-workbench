@@ -1,0 +1,43 @@
+import {p040DocumentReferer} from './alg-l08-p040-preview-policy-v1';
+import {p050DocumentReferer} from './alg-l08-p050-preview-policy-v1';
+import {p038DocumentReferer} from './alg-l08-p038-preview-policy-v1';
+import {p039DocumentReferer} from './alg-l08-p039-preview-policy-v1';
+import {p046DocumentReferer} from './alg-l08-p046-preview-policy-v1';
+import {p047DocumentReferer} from './alg-l08-p047-preview-policy-v1';
+import {p048DocumentReferer} from './alg-l08-p048-preview-policy-v1';
+import {p037DocumentReferer} from './alg-l08-p037-preview-policy-v1';
+import {p036DocumentReferer} from './alg-l08-p036-preview-policy-v1';
+import {p035DocumentReferer} from './alg-l08-p035-preview-policy-v1';
+import {p034DocumentReferer} from './alg-l08-p034-preview-policy-v1';
+import {p033DocumentReferer} from './alg-l08-p033-preview-policy-v1';
+import {p032DocumentReferer} from './alg-l08-p032-preview-policy-v1';
+import {p031DocumentReferer} from './alg-l08-p031-preview-policy-v1';
+import {p030DocumentReferer} from './alg-l08-p030-preview-policy-v1';
+import {p029DocumentReferer} from './alg-l08-p029-preview-policy-v1';
+import {p028DocumentReferer} from './alg-l08-p028-preview-policy-v1';
+import {p027DocumentReferer} from './alg-l08-p027-preview-policy-v1';
+import {p026DocumentReferer} from './alg-l08-p026-preview-policy-v1';
+import {p024DocumentReferer} from './alg-l08-p024-preview-policy-v1';
+import {p023DocumentReferer} from './alg-l08-p023-preview-policy-v1';
+import {p022DocumentReferer} from './alg-l08-p022-preview-policy-v1';
+import {p021DocumentReferer} from './alg-l08-p021-preview-policy-v1';
+import {p020DocumentReferer} from './alg-l08-p020-preview-policy-v1';
+import {p019DocumentReferer} from './alg-l08-p019-preview-policy-v1';
+import {p018DocumentReferer} from './alg-l08-p018-preview-policy-v1';
+import {p016DocumentReferer} from './alg-l08-p016-preview-policy-v1';
+import {p015DocumentReferer} from './alg-l08-p015-preview-policy-v1';
+import {p014DocumentReferer} from './alg-l08-p014-preview-policy-v1';
+import {p013DocumentReferer} from './alg-l08-p013-preview-policy-v1';
+import {p012DocumentReferer} from './alg-l08-p012-preview-policy-v1';
+import {p011DocumentReferer} from './alg-l08-p011-preview-policy-v1';
+import {p010DocumentReferer} from './alg-l08-p010-preview-policy-v1';
+import {p009DocumentReferer} from './alg-l08-p009-preview-policy-v1';
+import {p007DocumentReferer} from './alg-l08-p007-preview-policy-v1';
+import {p006DocumentReferer} from './alg-l08-p006-preview-policy-v1';
+import {p001DocumentReferer,p001LocalDevelopment,P001_LOCAL_ORIGIN} from './alg-l08-p001-preview-policy-v1';
+import {p005DocumentReferer} from './alg-l08-p005-preview-policy-v1';
+export {p001LocalDevelopment as l8LocalDevelopment,P001_LOCAL_ORIGIN as L8_LOCAL_ORIGIN};
+/** Exact admitted local document family; query and origin checks stay page-scoped. */
+export function l8CurrentDocumentReferer(value:string|null,mode:'candidate'|'registered'){
+ return p040DocumentReferer(value,mode)||p050DocumentReferer(value,mode)||p038DocumentReferer(value,mode)||p039DocumentReferer(value,mode)||p046DocumentReferer(value,mode)||p047DocumentReferer(value,mode)||p048DocumentReferer(value,mode)||p001DocumentReferer(value,mode)||p005DocumentReferer(value,mode)||p006DocumentReferer(value,mode)||p007DocumentReferer(value,mode)||p009DocumentReferer(value,mode)||p010DocumentReferer(value,mode)||p011DocumentReferer(value,mode)||p012DocumentReferer(value,mode)||p013DocumentReferer(value,mode)||p014DocumentReferer(value,mode)||p015DocumentReferer(value,mode)||p016DocumentReferer(value,mode)||p018DocumentReferer(value,mode)||p019DocumentReferer(value,mode)||p020DocumentReferer(value,mode)||p021DocumentReferer(value,mode)||p022DocumentReferer(value,mode)||p023DocumentReferer(value,mode)||p024DocumentReferer(value,mode)||p026DocumentReferer(value,mode)||p027DocumentReferer(value,mode)||p028DocumentReferer(value,mode)||p029DocumentReferer(value,mode)||p030DocumentReferer(value,mode)||p031DocumentReferer(value,mode)||p032DocumentReferer(value,mode)||p033DocumentReferer(value,mode)||p034DocumentReferer(value,mode)||p035DocumentReferer(value,mode)||p036DocumentReferer(value,mode)||p037DocumentReferer(value,mode);
+}
