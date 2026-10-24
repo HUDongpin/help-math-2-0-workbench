@@ -1,0 +1,24 @@
+'use client';
+import './alg-l07-p062-presentation-v1.css';
+import {GameGraph,GameTable,scrollGameContent} from './alg-l07-game-math-v1';
+import type {CSSProperties} from 'react';
+import type {GameGraphV1} from './alg-l07-game-math-v1';
+import type {P062MathPart,P062Question,P062AudioTarget} from './alg-l07-p062-content-v1';
+import type {P062Option} from './alg-l07-p062-state-v1';
+export function p062MathLabel(parts:readonly P062MathPart[]){return parts.map(p=>p.kind==='text'?p.text:p.kind==='fraction'?` ${p.numerator} over ${p.denominator} `:p.kind==='power'?`${p.base} to the power ${p.exponent}`:`square root of ${p.radicand}`).join('');}
+export function P062Math({parts}:{parts:readonly P062MathPart[]}){return <span className="alg-l07-p062__math" role="math" aria-label={p062MathLabel(parts)}><span aria-hidden="true">{parts.map((p,i)=>p.kind==='text'?<span key={i}>{p.text}</span>:p.kind==='power'?<span key={i}>{p.base}<sup>{p.exponent}</sup></span>:p.kind==='radical'?<span key={i} className="alg-l07-p062__radical"><span>√</span><span>{p.radicand}</span></span>:<span key={i} className="alg-l07-p062__fraction"><span>{p.numerator}</span><span>{p.denominator}</span></span>)}</span></span>;}
+export function P062Graph({graph,label,focusable=false}:{graph:GameGraphV1;label:string;focusable?:boolean}){const minimum=Math.min(...graph.labels.filter(t=>t.text.trim()).map(t=>t.fontSize));const width=Number.isFinite(minimum)?Math.max(19,graph.viewBox[2]!/minimum):19;return <span className="alg-l07-p062__graph-sizing" style={{'--p062-graph-min':`${width}rem`}as CSSProperties}><GameGraph graph={graph} label={label} focusable={focusable}/></span>;}
+function Prompt({parts}:{parts:readonly P062MathPart[]}){return <>{parts.map((p,i)=>p.kind==='text'?<span key={i}>{p.text}</span>:<P062Math key={i} parts={[p]}/>)}</>;}
+export function P062QuestionView({question:q,ordinal,uiLanguage='en',disabled=false,onAnswer,onAudio,activeAudio}: {question:P062Question;ordinal:number;uiLanguage?:'en'|'es';disabled?:boolean;onAnswer?:(questionId:number,option:P062Option)=>void;onAudio?:(target:P062AudioTarget)=>void;activeAudio?:P062AudioTarget|null}){
+ const es=uiLanguage==='es',graphChoices=q.options[0]?.kind==='graph';
+ function audioButtons(option:P062Option|null){return onAudio&&<span className="alg-l07-p062__audio" lang={uiLanguage} role="group" aria-label={option?(es?`Audio de la opción ${'ABCD'[option-1]}`:`Answer ${'ABCD'[option-1]} audio`):(es?'Audio de la pregunta':'Question audio')}>{(['en','es'] as const).map(language=>{const selected=activeAudio?.language===language&&activeAudio.questionId===q.id&&activeAudio.option===option;const label=language==='en'?(es?'Audio en inglés':'English Audio'):(es?'Audio en español':'Spanish Audio');return <button key={language} type="button" disabled={disabled} data-p062-audio={`${language}-${q.id}-${option??'question'}`} aria-pressed={selected} onClick={()=>onAudio({language,questionId:q.id,option})}>{selected?(es?'Detener ':'Stop '):''}{label}</button>;})}</span>;}
+ return <section className="alg-l07-p062__question" data-p062-question={q.id} data-p062-frame={q.frame} aria-label={es?`Pregunta ${ordinal} de 10`:`Question ${ordinal} of 10`}>
+  <p className="alg-l07-p062__progress" lang={uiLanguage}>{es?'Pregunta':'Question'} {ordinal} / 10</p>
+  <h3 className="alg-l07-p062__prompt" tabIndex={-1} data-p062-question-focus lang="en" data-source-text-id={q.prompt.sourceTextId} data-lesson-text-block="quiz-prompt"><Prompt parts={q.prompt.parts}/></h3>
+  {audioButtons(null)}
+  <div className="alg-l07-p062__body" data-stimulus={q.stimulus?.kind??'none'}>
+   {q.stimulus&&<figure className="alg-l07-p062__stimulus" lang="en">{q.stimulus.kind==='table'?<GameTable {...q.stimulus} focusable label="Function table"/>:<P062Graph graph={q.stimulus.graph} label="Graph provided with the question" focusable/>}</figure>}
+   <ol className="alg-l07-p062__options" data-graph-choices={graphChoices} lang="en">{q.options.map(o=><li key={o.option} data-p062-option={o.option}><button className="alg-l07-p062__answer" type="button" disabled={disabled} data-p062-choice={o.option} data-source-instance={o.instance} data-source-character={o.characterId} onKeyDown={scrollGameContent} onClick={()=>onAnswer?.(q.id,o.option)} aria-label={o.kind==='graph'?`${'ABCD'[o.option-1]}. Graph`:undefined}><span className="alg-l07-p062__letter">{'ABCD'[o.option-1]}</span><span className="alg-l07-p062__answer-content">{o.kind==='graph'?<P062Graph graph={o.graph} label={`Answer ${'ABCD'[o.option-1]} graph`}/>:<span className="alg-l07-game__equation" data-source-text-id={o.sourceTextIds.join(' ')} data-lesson-text-block="quiz-answer"><P062Math parts={o.parts}/></span>}</span></button>{q.answerAudio&&audioButtons(o.option)}</li>)}</ol>
+  </div>
+ </section>;
+}

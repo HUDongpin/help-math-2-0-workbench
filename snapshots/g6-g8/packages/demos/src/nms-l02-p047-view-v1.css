@@ -1,0 +1,50 @@
+.p047-number-line {color:#17324d;line-height:1.5;min-width:0;}
+.p047-number-line button {font:inherit;color:inherit;background:#fff;border:2px solid #52687c;border-radius:.5rem;min-height:44px;min-width:44px;padding:.5rem .75rem;cursor:pointer;}
+.p047-number-line button:focus-visible {outline:3px solid #005fcc;outline-offset:3px;}
+.p047-number-line button:disabled {cursor:default;opacity:.6;}
+.p047-number-line button[aria-pressed="true"] {background:#def1ff;border-color:#005fcc;}
+.p047-fraction {display:inline-grid;grid-template-rows:auto auto;text-align:center;line-height:1.2;vertical-align:middle;min-width:1.1em;}
+.p047-fraction>span:first-child {border-bottom:2px solid currentColor;padding:0 .1em .1em;}
+.p047-fraction>span:last-child {padding-top:.1em;}
+.p047-line-grid {display:grid;grid-template-columns:repeat(9,minmax(0,1fr));position:relative;padding:.5rem 0;margin:1rem 0;}
+.p047-line-grid::before {content:"";position:absolute;left:5.5556%;right:5.5556%;top:calc(.5rem + 3.5em + 9px);height:2px;background:currentColor;}
+.p047-line-mark {display:flex;flex-direction:column;align-items:center;min-width:0;}
+.p047-line-value {height:3.5em;display:flex;align-items:center;justify-content:center;}
+.p047-tick {height:20px;border-left:2px solid currentColor;}
+.p047-cards,.p047-targets {display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0;}
+.p047-cards button {touch-action:none;user-select:none;}
+.p047-cards button[hidden] {display:none;}
+.p047-drag-preview {position:fixed;transform:translate(-50%,-100%);pointer-events:none;z-index:20;background:#fff;border:2px solid #005fcc;border-radius:.5rem;padding:.5rem;}
+.p047-activity {font-size:1rem;line-height:1.5;color:#17324d;min-width:0;}
+.p047-activity>button,.p047-activity dialog button {font:inherit;min-width:44px;min-height:44px;padding:.5rem .75rem;border:2px solid #52687c;border-radius:.5rem;background:#fff;color:inherit;}
+.p047-activity button:focus-visible {outline:3px solid #005fcc;outline-offset:3px;}
+.p047-activity dialog {box-sizing:border-box;max-width:min(42rem,calc(100vw - 2rem));max-height:calc(100dvh - 2rem);overflow:auto;border:2px solid #52687c;border-radius:.75rem;padding:1rem;color:inherit;}
+.p047-activity dialog::backdrop {background:#10263c99;}
+.p047-activity figure {margin:1rem 0;}
+.p047-intro-board {position:relative;height:12em;min-width:0;}
+.p047-intro-line {position:absolute;inset:4em 0 auto;margin:0;padding:0;}
+.p047-intro-line::before {top:9px;}
+.p047-intro-fraction {position:absolute;transform:translateX(-50%);}
+.p047-intro-pointer {position:absolute;width:0;height:0;border-left:.35em solid transparent;border-right:.35em solid transparent;border-bottom:.7em solid #17324d;transform:translateX(-50%);}
+.p047-term-cue {min-height:1.5em;font-weight:bold;text-decoration:underline;}
+/* Alternate label rows keep adjacent fractions distinct under enlarged text. */
+@container p047-activity (max-width:480px) {
+ .p047-number-line .p047-line-value {height:6.5em;align-items:flex-end;padding-bottom:.5em;box-sizing:border-box;}
+ .p047-number-line .p047-line-mark:nth-child(even) .p047-line-value .p047-fraction {transform:translateY(-2.75em);}
+ .p047-number-line .p047-line-grid::before {top:calc(.5rem + 6.5em + 9px);}
+}
+.p047-activity .p047-term-link {font:inherit;display:inline;color:#00559b;background:transparent;border:0;border-radius:.15rem;padding:.1em;min-width:0;min-height:44px;text-decoration:underline;text-underline-offset:.12em;cursor:pointer;}
+.p047-activity .p047-term-link:disabled {color:inherit;cursor:default;}
+.p047-help-steps {position:absolute;left:5.5556%;right:5.5556%;top:calc(.5rem + 3.5em - 8px);display:grid;grid-template-columns:repeat(8,minmax(0,1fr));}
+.p047-help-steps>span {position:relative;border-top:2px solid #b00020;margin-right:3px;}
+.p047-help-steps>span::after {content:"";position:absolute;right:0;top:-4px;width:5px;height:5px;border-top:2px solid #b00020;border-right:2px solid #b00020;transform:rotate(45deg);}
+/* Keep moving fraction glyphs legible while crossing the number-line stroke. */
+.p047-intro-fraction {z-index:2;background:#fff;}
+.p047-intro-pointer {z-index:1;}
+@container p047-activity (max-width:480px) {
+ .p047-intro-board {height:16em;}
+ .p047-intro-fraction[data-p047-stationary][data-p047-slot="1"],
+ .p047-intro-fraction[data-p047-stationary][data-p047-slot="3"] {margin-top:3em;}
+}
+
+.p047-activity {container-type:inline-size;container-name:p047-activity;}

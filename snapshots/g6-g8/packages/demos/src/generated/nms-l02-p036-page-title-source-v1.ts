@@ -1,0 +1,2 @@
+// Exact course XML Page.Title, separate from SWF text characters.
+export const P036_XML_PAGE_TITLE={"animationId":"shared-nms002-l02-p036","sourceXml":{"path":"G6-G8-shared/NMS002/L2/index.xml","bytes":12845,"sha256":"550aee4286e8a701caf3dc58360f709a606561db8b766057ac36720833d7ff61"},"globalPageOrdinal":36,"sourcePageReference":"IN/L2IN21.swf","title":"Finding Equivalent Decimals with a Calculator","spanishSubtitle":"Encontrar decimales equivalentes con una calculadora"} as const;

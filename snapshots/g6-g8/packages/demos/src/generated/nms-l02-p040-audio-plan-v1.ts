@@ -1,0 +1,2 @@
+// Generated from source block/seek metadata; do not edit.
+export const P040_AUDIO_SOURCE = {"sourceSha256":"93af0f4c375356d5a10f5e2a420222bdb91ff3fa3b8e8440af1e0c02eea2d020","sourceBytes":180700,"sampleRate":22050,"channels":1,"decodedSamples":800640,"latencySamples":1673,"totalSamples":808500,"segments":[{"frame":5,"sourceStart":1673,"sourceEnd":3510,"outputStart":7350,"outputEnd":9187},{"frame":7,"sourceStart":3510,"sourceEnd":800640,"outputStart":11025,"outputEnd":808155}]} as const;

@@ -1,0 +1,13 @@
+'use client';
+import type{AnimationModule}from'../contract';
+import{P040_SOURCE}from'../generated/nms-l02-p040-presentation-v1';
+import{P040_AUDIO_SOURCE}from'../generated/nms-l02-p040-audio-plan-v1';
+import{P040_SCENARIOS,p040ModuleFrame,type P040FrameState}from'../nms-l02-p040-frame-v1';
+import{P040_TEXT_BINDING,p040TextSnapshot}from'../nms-l02-p040-text-v1';
+import{NmsL2P040Renderer}from'../nms-l02-p040-renderer-v1';
+import{prepareP040Fonts}from'../nms-l02-p040-fonts-v1';
+const movie=Object.freeze({stage:Object.freeze({width:800,height:600}),fps:12,frameCount:10,durationMs:10000/12});
+const domains=Object.freeze([Object.freeze({id:'root',frameCount:10}),Object.freeze({id:'sprite-43',frameCount:440,rootFrame:6})]);
+const source=Object.freeze({version:1 as const,sourceSwfSha256:P040_SOURCE.sourceSha256,audio:P040_AUDIO_SOURCE});
+const animationModule:AnimationModule<P040FrameState>&{privateP040EquivalentPercents:typeof source}=Object.freeze({key:'shared-nms002-l02-p040',movie,maturity:'private-current-js',runtime:Object.freeze({...movie,defaultFrameDomain:'sprite-43',frameDomains:domains}),playbackMode:'once',scenarios:P040_SCENARIOS,defaultScenarioByFrameDomain:Object.freeze({root:'source-explanation','sprite-43':'source-explanation'}),audioCues:Object.freeze([]),Renderer:NmsL2P040Renderer,getFrameState:p040ModuleFrame,textPresentation:Object.freeze({schemaVersion:1,binding:P040_TEXT_BINDING,Renderer:NmsL2P040Renderer,getSnapshot:p040TextSnapshot,prepare:prepareP040Fonts}),privateP040EquivalentPercents:source});
+export default animationModule;

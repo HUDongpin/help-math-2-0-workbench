@@ -1,0 +1,22 @@
+.alg-l07-p032{width:100%;box-sizing:border-box;min-width:0;padding:clamp(.6rem,2vw,1.2rem);background:#fff;color:#14243a;font-family:var(--font-lesson-sans,"Atkinson Hyperlegible Next"),Arial,sans-serif;font-size:1.15rem;line-height:1.6}.alg-l07-p032__definition{margin-block:1rem;display:grid;gap:1rem;padding:clamp(.65rem,2vw,1.3rem);border:1px solid #7caba7;border-radius:.65rem;background:linear-gradient(110deg,#e5f0ad,#fffef4)}.alg-l07-p032__definition p{margin:0;overflow-wrap:anywhere}.alg-l07-p032__terms,.alg-l07-p032-player__controls{display:flex;flex-wrap:wrap;gap:.5rem;margin-block:.8rem}.alg-l07-p032 button,.alg-l07-p032-player__controls button,.alg-l07-p032__dialog button{font:inherit;min-height:2.75rem;padding:.5rem .8rem;border:1px solid #486e98;border-radius:.45rem;background:#fff;color:#153a68;white-space:normal;overflow-wrap:anywhere;cursor:pointer}.alg-l07-p032 button:focus-visible,.alg-l07-p032-player__controls button:focus-visible,.alg-l07-p032__dialog button:focus-visible{outline:3px solid #006edc;outline-offset:3px}.alg-l07-p032 button:disabled{opacity:.6;cursor:default}.alg-l07-p032__dialog{max-width:min(36rem,calc(100vw - 2rem));max-height:calc(100dvh - 2rem);overflow:auto;padding:1.1rem;border:2px solid #345c8a;border-radius:.75rem;font:inherit;line-height:1.6;box-sizing:border-box}.alg-l07-p032__dialog h2{font-size:1.3em}.alg-l07-p032__dialog::backdrop{background:#14243a88}
+/* Native prose needs the available narrow-screen width when the reader
+   enlarges text. The host already supplies the outer gutter; nested decorative
+   insets should follow the viewport instead of multiplying the root font. */
+@media (max-width: 680px) {
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__learning-column:has(.alg-l07-p032) {
+    padding-inline: min(.5rem, 2vw);
+  }
+
+  .lesson-shell2[data-host-presentation='modern-wide']
+    .lesson-shell2__legacy-stage:has(.alg-l07-p032[data-animation-id='shared-alg001-l07-p032'])
+    > .lesson-shell2__stage {
+    padding-inline: 0;
+  }
+
+  .alg-l07-p032,
+  .alg-l07-p032__definition,
+  .alg-l07-p032 .lesson-animation-title-v1 {
+    padding-inline: min(.6rem, 2vw);
+  }
+}

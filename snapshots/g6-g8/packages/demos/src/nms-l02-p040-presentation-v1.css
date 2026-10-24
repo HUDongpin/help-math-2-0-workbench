@@ -1,0 +1,24 @@
+.p040-presentation{box-sizing:border-box;inline-size:100%;min-inline-size:0;padding:1rem;color:#14283d;background:#fffdf7;font-family:var(--lesson-text-font-body,"HELP Math Nunito Sans"),sans-serif;font-size:1.25rem;line-height:1.6}
+.p040-presentation *{box-sizing:border-box}.p040-presentation p,.p040-presentation h2{overflow-wrap:anywhere}
+.p040-presentation__course{font-family:var(--lesson-text-font-heading,"HELP Math Fredoka"),sans-serif;font-size:1.25rem;font-weight:500;margin:0 0 .75rem}
+.p040-presentation__title{font-size:1.5rem;line-height:1.35;font-weight:600;margin:.75rem 0}
+.p040-presentation__language{font-size:1rem}
+.p040-presentation__layout{display:flex;flex-wrap:wrap;gap:1rem;align-items:center}
+.p040-presentation__grid{margin:0;flex:1 1 16rem;max-inline-size:24rem;min-inline-size:0}
+.p040-presentation__equation{flex:1 1 28rem;min-inline-size:0}
+.p040-presentation :focus-visible{outline:3px solid #075ac1;outline-offset:3px}
+@media(max-width:500px){.p040-presentation{padding:.25rem}.p040-presentation__title{font-size:1.25rem}.p040-presentation__course{font-size:1.125rem}}
+
+/* This page's native lesson controls follow the learner's text size. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p040']) .lesson-shell2__modern-toolbar > :is(button,label,a),
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p040']) .lesson-shell2__modern-toolbar label > span{max-inline-size:100%;overflow-wrap:anywhere;white-space:normal}
+@media(max-width:680px),(orientation:landscape) and (max-height:500px) and (max-width:1279px){
+ .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p040']) .lesson-shell2__modern-toolbar{grid-template-columns:repeat(auto-fit,minmax(min(100%,7rem),1fr))}
+}
+
+
+
+/* Keep this page's source-language notice within the modern heading width. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p040']) .lesson-shell2__page-heading > div:first-child{flex-wrap:wrap;min-inline-size:0}
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p040']) .lesson-shell2__page-heading > div:first-child > :is(h1,p){min-inline-size:0;max-inline-size:100%;overflow-wrap:anywhere;white-space:normal}
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p040']) .lesson-shell2__page-heading > div:first-child > h1 ~ p{flex-basis:100%}

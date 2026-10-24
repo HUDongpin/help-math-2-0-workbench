@@ -1,0 +1,77 @@
+'use client';
+
+import {createHfrAnimationModule} from '../hfr/module';
+import type {HfrPageMeta} from '../hfr/types';
+import page from '../hfr-pages/shared-geo001-l03-p016';
+
+const meta: HfrPageMeta = {
+  "key": "shared-geo001-l03-p016",
+  "lessonKey": "shared-geo001-l03",
+  "dataUrl": "/flash-assets/g678-local/shared-geo001-l03-p016/hfr/shared-geo001-l03-p016.data.json",
+  "sourceSha256": "3c1e37927d21ce83611c424fddff18fb1f06cfbbb559042fe8dc59a61926b350",
+  "compiler": "hfr-compile 0.1.3-candidate",
+  "sourceRootFrameCount": 10,
+  "stage": {
+    "width": 800,
+    "height": 600,
+    "fps": 12
+  },
+  "progressTimeline": 192,
+  "progressFrameCount": 170,
+  "completionMode": "timeline",
+  "lessonPagesByFile": {
+    "L3IR01": "shared-geo001-l03-p001",
+    "L3RW02": "shared-geo001-l03-p002",
+    "L3RW03": "shared-geo001-l03-p003",
+    "L3RW04": "shared-geo001-l03-p004",
+    "L3RW05": "shared-geo001-l03-p005",
+    "L3RW06": "shared-geo001-l03-p006",
+    "L3RW07": "shared-geo001-l03-p007",
+    "L3VB02": "shared-geo001-l03-p008",
+    "L3VB03": "shared-geo001-l03-p009",
+    "L3VB04": "shared-geo001-l03-p010",
+    "L3VB05": "shared-geo001-l03-p011",
+    "L3VB06": "shared-geo001-l03-p012",
+    "L3VB07": "shared-geo001-l03-p013",
+    "L3VB08": "shared-geo001-l03-p014",
+    "L3VB09": "shared-geo001-l03-p015",
+    "L3VB10": "shared-geo001-l03-p016",
+    "L3VB11": "shared-geo001-l03-p017",
+    "L3VB12": "shared-geo001-l03-p018",
+    "L3VB13": "shared-geo001-l03-p019",
+    "L3VB14": "shared-geo001-l03-p020",
+    "L3IN02": "shared-geo001-l03-p021",
+    "L3IN03": "shared-geo001-l03-p022",
+    "L3IN04": "shared-geo001-l03-p023",
+    "L3IN05": "shared-geo001-l03-p024",
+    "L3IN06": "shared-geo001-l03-p025",
+    "L3IN07": "shared-geo001-l03-p026",
+    "L3IN08": "shared-geo001-l03-p027",
+    "L3IN09": "shared-geo001-l03-p028",
+    "L3IN10": "shared-geo001-l03-p029",
+    "L3IN11": "shared-geo001-l03-p030",
+    "L3IN12": "shared-geo001-l03-p031",
+    "L3TI02": "shared-geo001-l03-p032",
+    "L3TI03": "shared-geo001-l03-p033",
+    "L3TI04": "shared-geo001-l03-p034",
+    "L3TI05": "shared-geo001-l03-p035",
+    "L3TI06": "shared-geo001-l03-p036",
+    "L3GS02": "shared-geo001-l03-p037",
+    "L3GS03": "shared-geo001-l03-p038",
+    "L3GS04": "shared-geo001-l03-p039",
+    "L3TS02": "shared-geo001-l03-p040",
+    "L3TS03": "shared-geo001-l03-p041",
+    "L3TS04": "shared-geo001-l03-p042",
+    "L3TS05": "shared-geo001-l03-p043",
+    "L3TS06": "shared-geo001-l03-p044",
+    "L3TS07": "shared-geo001-l03-p045",
+    "L3TS08": "shared-geo001-l03-p046",
+    "L3TS09": "shared-geo001-l03-p047",
+    "L3FQ01": "shared-geo001-l03-p048",
+    "L3FQ02": "shared-geo001-l03-p049"
+  },
+  "previousKey": "shared-geo001-l03-p015",
+  "nextKey": "shared-geo001-l03-p017",
+  "hasSpanishNarration": true
+};
+export default createHfrAnimationModule(meta, page);

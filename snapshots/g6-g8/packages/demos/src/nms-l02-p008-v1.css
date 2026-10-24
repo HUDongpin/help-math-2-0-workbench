@@ -1,0 +1,48 @@
+.nms-l02-p008{--lesson-text-font-size:1.125rem;box-sizing:border-box;width:100%;min-width:0;padding:clamp(.5rem,3vw,2rem);color:#14283d;background:#f1f7fb;font-family:var(--lesson-text-font-body,"HELP Math Nunito Sans"),sans-serif;container-type:inline-size;overflow-wrap:normal}
+.nms-l02-p008 *{box-sizing:border-box}
+.nms-l02-p008__header p{font-size:calc(1rem * var(--lesson-text-scale,1));line-height:1.4;margin:0 0 .4em;color:#41556d}
+.nms-l02-p008__header h2{font-family:var(--lesson-text-font-heading,"HELP Math Fredoka"),sans-serif;font-size:calc(1.6rem * var(--lesson-text-scale,1));line-height:1.25;margin:0 0 .7em}
+.nms-l02-p008__fallback{font-size:calc(.875rem * var(--lesson-text-scale,1));line-height:1.4;margin:0 0 .5rem;color:#4b5362}
+.nms-l02-p008__definition{font-size:calc(1.25rem * var(--lesson-text-scale,1));line-height:1.65;margin:0 0 1rem;padding:clamp(.4rem,2cqi,1rem);background:white;border-radius:.65rem;min-width:0}
+.nms-l02-p008__term{font:inherit;line-height:inherit;color:#075ac1;text-decoration:underline;text-underline-offset:.16em;display:inline-flex;align-items:center;min-height:44px;min-width:44px;padding:0;border:0;background:transparent;cursor:pointer;white-space:nowrap}
+.nms-l02-p008__term:focus-visible{outline:3px solid #075ac1;outline-offset:3px;border-radius:2px}
+.nms-l02-p008__examples{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;min-height:12rem}
+.nms-l02-p008__example{display:flex;align-items:center;gap:.45rem;min-width:0;margin:0;padding:.5rem;background:#fff;border:1px solid #d5e1ed;border-radius:.75rem}
+.nms-l02-p008__scene{display:block;min-width:0;width:100%;height:auto;flex:1 1 0}
+.nms-l02-p008__example figcaption{flex:0 0 auto;min-width:calc(1.1rem * var(--lesson-text-scale,1));font-size:calc(1.5rem * var(--lesson-text-scale,1));line-height:1.4}
+.nms-l02-p008 math{font-family:var(--lesson-text-font-math,'STIX Two Math'),serif}
+@container(max-width:36rem){.nms-l02-p008__examples{grid-template-columns:minmax(0,1fr)}}
+
+.nms-l02-p008__dialog{box-sizing:border-box;inline-size:calc(100% - 2rem);max-inline-size:34rem;max-block-size:calc(100dvh - 2rem);margin:auto;padding:1.25rem;border:1px solid #b5cbe1;border-radius:1rem;background:var(--lesson-text-paper,#fffdf7);color:var(--lesson-text-ink,#14213d);overflow:auto;font-family:var(--lesson-text-font-body,"HELP Math Nunito Sans",sans-serif);font-size:1.125rem;line-height:1.6}
+.nms-l02-p008__dialog::backdrop{background:rgba(20,33,61,.5)}
+.nms-l02-p008__dialog h2{margin:0;font-family:var(--lesson-text-font-heading,"HELP Math Fredoka",sans-serif);font-size:1.75rem;overflow-wrap:anywhere}
+.nms-l02-p008__dialog p{overflow-wrap:anywhere}
+.nms-l02-p008__dialog math{font-size:1.25rem}
+.nms-l02-p008__dialog button{min-block-size:44px;min-inline-size:80px;padding:.5rem 1rem;border:0;border-radius:.5rem;background:#174e8b;color:white;font:inherit;cursor:pointer}
+.nms-l02-p008__dialog button:focus-visible{outline:3px solid #174e8b;outline-offset:3px}
+.nms-l02-p008__resume-hint{font-size:1rem}
+
+
+/* This page's native lesson controls follow the learner's text size. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p008']) .lesson-shell2__modern-toolbar > :is(button,label,a),
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p008']) .lesson-shell2__modern-toolbar label > span{max-inline-size:100%;overflow-wrap:anywhere;white-space:normal}
+@media(max-width:680px),(orientation:landscape) and (max-height:500px) and (max-width:1279px){
+ .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p008']) .lesson-shell2__modern-toolbar{grid-template-columns:repeat(auto-fit,minmax(min(100%,7rem),1fr))}
+}
+
+/* Native text continues to scale with the learner setting inside narrow hosts. */
+@container(max-width:24rem){.nms-l02-p008__header h2,.nms-l02-p008__definition{font-size:calc(1.125rem * var(--lesson-text-scale,1))}}
+
+.nms-l02-p008__definition p{margin:0}
+.nms-l02-p008__definition p+p{margin-top:.65em}
+.nms-l02-p008__example{display:block}
+.nms-l02-p008__example figcaption{display:flex;justify-content:space-between;align-items:baseline;gap:.4rem;min-width:0;font-size:calc(1.125rem * var(--lesson-text-scale,1))}
+.nms-l02-p008__example figcaption [data-lesson-text-block$="value"]{font-size:calc(1.4rem * var(--lesson-text-scale,1))}
+@container(max-width:24rem){.nms-l02-p008__example figcaption{flex-wrap:wrap}}
+
+/* Multiword source terms wrap at spaces within the actual narrow My Lesson host.
+ * Label text still doubles with the learner's font setting. */
+@container(max-width:24rem){
+ .nms-l02-p008__term{white-space:normal;max-inline-size:100%;text-align:start}
+ .nms-l02-p008__example figcaption{font-size:calc(1rem * var(--lesson-text-scale,1))}
+}

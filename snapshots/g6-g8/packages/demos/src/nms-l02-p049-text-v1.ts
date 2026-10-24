@@ -1,0 +1,40 @@
+import {buildLessonTextSnapshot} from './lesson-text-snapshot';
+import {P049_TEXT_BINDING} from './nms-l02-p049-text-binding-v1';
+import {p049ModuleFrame} from './nms-l02-p049-frame-v1';
+import {p049Intro} from './nms-l02-p049-intro-v1';
+import {p049DisplayedDigits} from './nms-l02-p049-practice-v1';
+import {P049_COPY} from './nms-l02-p049-copy-v1';
+import {P049_GLOSSARY} from './generated/nms-l02-p049-glossary-v1';
+export {P049_TEXT_BINDING};
+export function p049TextSnapshot(s:ReturnType<typeof p049ModuleFrame>,options:{glossary?:typeof P049_GLOSSARY[number]['id']|null}={}){
+ const lang=s.language,es=lang==='es',visible=s.mainFrame!==null,intro=s.state.phase==='intro',practice=visible&&!intro,help=practice&&s.state.helpOpen,hint=practice&&s.state.hintOpen,glossary=options.glossary??null;
+ const demo=p049Intro(Math.min(326,s.mainFrame??1)),alpha=(id:number)=>demo.objects.find(o=>o.characterId===id)?.alpha??0;
+ const allowed=help?['decimal','place-value','tenth','hundredth']:hint?['decimal','fraction','power','whole','equivalent']:[];
+ if(glossary!==null&&!allowed.includes(glossary))throw Error('P049_TEXT_GLOSSARY_STATE');
+ const values:Record<string,{text:string;visible:boolean}>={};const add=(id:string,text:string,show:boolean)=>{values[id]={text,visible:show};};
+ const board=visible&&(practice||(demo.objects.find(o=>o.depth===6)?.alpha??0)>0),digits=p049DisplayedDigits(s.state,s.mainFrame??1);
+ const grid=(parts:number,total:number)=>es?`${parts} de ${total} partes iguales coloreadas`:`${parts} of ${total} equal parts shaded`;
+ add('course-title',P049_COPY[lang].title,visible);add('question',es?'Pregunta 7':'Question 7',visible&&(practice||alpha(28)>0));
+ add('instruction',es?'Nombra el decimal que se muestra. Haz clic en cada casilla y escribe el valor correcto. Después, haz clic en Comprobar respuesta.':'Name the decimal shown. Click each box and type the correct value. Then click Check Answer.',visible&&(practice||alpha(25)>0));
+ add('count',demo.countLabel===null?'':String(demo.countLabel),visible&&intro&&demo.countLabel!==null);
+ add('demo-tenths',demo.digits[0]??'',board&&intro&&demo.digits[0]!==null);add('demo-hundredths',demo.digits[1]??'',board&&intro&&demo.digits[1]!==null);
+ add('ones','0',board);add('decimal-point','.',board);add('tenths-label',es?'Décimas':'Tenths',board);add('hundredths-label',es?'Centésimas':'Hundredths',board);
+ add('tenths-value',digits[0],practice&&digits[0]!=='');add('hundredths-value',digits[1],practice&&digits[1]!=='');
+ add('grid-description',intro?grid(demo.redTenths??0,10):grid([8,37,98][s.state.question]!,s.state.question===0?10:100),board);
+ add('check',es?'Comprobar respuesta':'Check Answer',visible&&(practice||demo.objects.some(o=>[31,34].includes(o.characterId))));
+ const feedback=s.state.phase==='correct-feedback'?(es?'¡Correcto!':'Correct!'):s.state.phase==='complete'?(es?'Has terminado las tres preguntas.':'All three questions are finished.'):'';
+ add('feedback',feedback,practice&&feedback!=='');add('help-trigger',es?'Más ayuda':'More Help',practice);
+ add('help-heading',es?'Usa el Valor posicional para nombrar un Decimal:':'Use Place Value to name a Decimal:',help);
+ add('help-whole-group',es?'Posiciones enteras':'Whole-number places',help);add('help-decimal-group',es?'Posiciones decimales':'Decimal places',help);
+ add('help-point',`${es?'Punto decimal':'Decimal point'}: 0 . 2 3`,help);add('help-grid',grid(23,100),help);
+ add('help-tenths',es?'Cuenta las décimas = 2':'Count the tenths = 2',help);add('help-hundredths',es?'Cuenta las centésimas = 3':'Count the hundredths = 3',help);add('help-close',es?'Cerrar':'Close',help);
+ add('hint-heading',es?'Ayuda con decimales':'Decimal help',hint);
+ add('hint-definition',es?'Un Decimal es una Fracción especial que tiene 10 o una Potencia de 10 partes iguales en el Todo.':'A Decimal is a special Fraction that has either 10 or a Power of 10 equal parts in the Whole.',hint);
+ add('hint-decimal',es?'0.14 o':'0.14 or',hint);add('hint-fraction',es?'catorce centésimos':'fourteen hundredths',hint);add('hint-grid',grid(14,100),hint);add('hint-equivalent',es?'Equivalente':'Equivalent',hint);add('hint-close',es?'Cerrar':'Close',hint);
+ add('glossary-close',es?'Cerrar':'Close',glossary!==null);add('glossary-notation','En esta actividad usamos el punto decimal: 0.23.',es&&(glossary==='decimal'||glossary==='tenth'));
+ const labels=es?['Centenas','Decenas','Unidades','Décimas','Centésimas','Milésimas']:['Hundreds','Tens','Ones','Tenths','Hundredths','Thousandths'];
+ ['hundreds','tens','ones','tenths','hundredths','thousandths'].forEach((id,i)=>add('place-'+id,labels[i]!,help));
+ add('help-digit-ones','0',help);add('help-digit-tenths','2',help);add('help-digit-hundredths','3',help);
+ for(const entry of P049_GLOSSARY){add(`glossary-${entry.id}-title`,entry.labels[lang],glossary===entry.id);add(`glossary-${entry.id}-definition`,entry.definitions[lang],glossary===entry.id);}
+ return buildLessonTextSnapshot({...P049_TEXT_BINDING,blocks:P049_TEXT_BINDING.blocks.map(b=>({...b,language:lang}))},{frame:s.frame,frameDomain:s.frameDomain,rootFrame:s.rootFrame,scenario:s.scenario,lang,seed:s.seed,replay:s.replay},values);
+}

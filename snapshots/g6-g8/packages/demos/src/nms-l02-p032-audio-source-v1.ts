@@ -1,0 +1,2 @@
+/** Full source MP3 decoded once; one continuous frame9..451stream with a single latency trim. */
+export const P032_AUDIO_SOURCE=Object.freeze({"sourceSha256":"20dfd0c798ce6673d5971796b9cba386c8c3dcfc1543b82adc42747296739e56","sourceBytes":183560,"sampleRate":22050,"channels":1,"decodedSamples":813312,"latencySamples":1673,"stopSamples":828713,"stopSeconds":37.583333333333336,"firstBlockFrame":9,"frames":451,"fps":12,"language":"und","segments":[{"sourceStartSample":1673,"sourceEndSample":813312,"outputStartSample":14700,"outputEndSample":826339}]} as const);

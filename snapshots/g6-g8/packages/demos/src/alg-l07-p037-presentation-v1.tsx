@@ -1,0 +1,28 @@
+'use client';
+import {useId} from 'react';
+import type {AnimationRendererProps} from './contract';
+import {LessonAnimationTitleV1} from './lesson-animation-title-v1';
+import {ALG_L07_P037_SOURCE as S,p037CanInput,type P037Field,type P037Term} from './alg-l07-p037-state-v1';
+import {algL07P037Frame,type P037View} from './alg-l07-p037-frame-v1';
+import './alg-l07-p037-v1.css';
+function MathText({text}:{text:string}){
+ const parts=text.split(/((?:x|\([−–-]?\d+\))³|\([−–-]?\d+\)|[−–-]?\d+)/);
+ return <>{parts.map((p,i)=>i%2?<span key={i} className="alg-l07-p037__math-term">{p.endsWith('³')?<>{p.slice(0,-1)}<sup>3</sup></>:p}</span>:<span key={i}>{p}</span>)}</>;
+}
+export function AlgL07P037Presentation({view,enabled=true,onInput,onSubmit,onClose,onTerm}:{view:P037View;enabled?:boolean;onInput?:(field:P037Field,value:string)=>void;onSubmit?:()=>void;onClose?:()=>void;onTerm?:(term:P037Term,trigger:HTMLButtonElement)=>void}){
+ const id=useId(),canInput=enabled&&p037CanInput(view.state),atQuiz=view.mainFrame===215,visibleSteps=view.visual.steps.filter(s=>s.alpha>0);
+ if(!view.ready)return <section data-animation-id={S.animationId} data-flash-frame={view.frame} data-flash-frame-domain={view.frameDomain} aria-busy="true"/>;
+ return <section tabIndex={-1} className="alg-l07-p037 lesson-text-presentation" data-animation-id={S.animationId} data-flash-animation-id={S.animationId} data-flash-frame={view.frame} data-flash-frame-domain={view.frameDomain} data-flash-root-frame={view.rootFrame} data-flash-scenario={view.scenario} data-flash-language={view.language} data-flash-seed={view.seed} data-flash-replay={view.replay} data-flash-trace-id={view.traceId} data-flash-requirement-id={view.requirementId} data-flash-entry-state-sha256={view.entryStateSha256} data-source-text-ids={view.sourceTextIds.join(',')} data-source-swf-sha256={S.sourceSha256} data-main-content-language="en" data-source-english-fallback={view.language==='es'} lang="en">
+ <LessonAnimationTitleV1 courseTitle="Linear and Nonlinear Functions:" activityTitle="Instruction" language="en"/>
+ {view.visual.paragraphs.some(Boolean)&&<p className="alg-l07-p037__instruction">{view.visual.paragraphs.map((p,i)=><span key={i} data-lesson-text-block={`instruction-${i}`}>{i>0?' ':''}{p}</span>)}</p>}
+ {onTerm&&<nav className="alg-l07-p037__terms" aria-label={view.language==='es'?'Términos clave':'Key terms'} lang={view.language}>{view.visual.terms.map(term=><button type="button" key={term} data-p037-term={term} onClick={e=>onTerm(term,e.currentTarget)}>{S.terms.find(t=>t.sourceKeyAttribute===term)!.labels[view.language]}</button>)}</nav>}
+ {view.state.popup&&<section className="alg-l07-p037__feedback" role="region" aria-label="Feedback" tabIndex={-1} data-p037-popup={view.state.popup} aria-live="polite" aria-atomic="true"><p data-lesson-text-block="popup">{view.state.message}</p><button type="button" data-lesson-text-block="close" data-p037-close="true" disabled={!enabled||Boolean(view.state.glossary)} onClick={onClose}>Close</button></section>}
+ <div className="alg-l07-p037__body">
+ {view.visual.formulaAlpha>0&&<p className="alg-l07-p037__formula" data-lesson-text-block="formula" data-p037-formula-emphasis={view.visual.formulaEmphasis} style={{opacity:view.visual.formulaAlpha}} role="math" aria-label="y equals x cubed"><span aria-hidden="true"><MathText text="y = x³"/></span></p>}
+ {view.visual.tableAlpha>0&&<table className="alg-l07-p037__table" aria-label="Table of values for y equals x cubed" style={{opacity:view.visual.tableAlpha}}><thead><tr>{[0,1].map(i=><th key={i} scope="col"><span className="alg-l07-p037__headers"><span data-lesson-text-block={`header-${16+i}`} style={{opacity:view.visual.headerWordAlpha,visibility:view.visual.headerWordAlpha?'visible':'hidden'}}>{i?'Output':'Input'}</span><span data-lesson-text-block={`header-${58+i}`} style={{opacity:view.visual.headerVariableAlpha,visibility:view.visual.headerVariableAlpha?'visible':'hidden'}}>{i?'y':'x'}</span></span></th>)}</tr></thead><tbody>{S.rows.map((r,i)=><tr key={i}><th scope="row" data-lesson-text-block={`input-${i}`} data-p037-input-emphasis={i>0&&view.visual.inputEmphasis.includes([0,65,72,76,80][i])}>{i>0&&view.visual.inputEmphasis.includes([0,65,72,76,80][i])?<span data-lesson-text-block={`emphasis-${[0,65,72,76,80][i]}`}>{r.input}</span>:r.input}</th><td>{atQuiz&&r.inputIndex!==null?<><label className="alg-l07-p037__sr" htmlFor={`${id}-${r.inputIndex}`}>Output for input {r.input}</label><input id={`${id}-${r.inputIndex}`} data-p037-input={r.inputIndex} data-lesson-text-block={`output-${i}`} type="text" autoComplete="off" autoCapitalize="off" spellCheck={false} value={view.state.values[r.inputIndex]} disabled={!canInput||!onInput} onChange={e=>onInput?.(r.inputIndex!,e.currentTarget.value)}/></>:<span data-lesson-text-block={`output-${i}`} data-p037-output={i}>{view.outputs[i]}</span>}</td></tr>)}</tbody></table>}
+ {atQuiz&&<button className="alg-l07-p037__done" type="button" data-lesson-text-block="done" data-p037-done="true" disabled={!canInput||!onSubmit} onClick={onSubmit}>Done</button>}
+ </div>
+ {view.visual.panelAlpha>0&&<section className="alg-l07-p037__worked" aria-label="Evaluate the function" style={{opacity:view.visual.panelAlpha}}>{visibleSteps.map(p=><p key={p.sourceTextId} data-p037-step={p.sourceTextId} data-lesson-text-block={`step-${p.sourceTextId}`} style={{opacity:p.alpha}} role="math" aria-label={p.text.replaceAll('³',' cubed')}><span aria-hidden="true"><MathText text={p.text}/></span></p>)}</section>}
+ </section>;
+}
+export function AlgL07P037Renderer(props:AnimationRendererProps){return <AlgL07P037Presentation view={algL07P037Frame(props.frame,{...props,frame:props.frame})}/>;}

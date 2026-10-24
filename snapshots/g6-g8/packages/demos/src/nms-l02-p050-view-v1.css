@@ -1,0 +1,35 @@
+.p050-practice{color:#142b45;font-size:1rem;line-height:1.5;min-width:0}
+.p050-practice button{font:inherit;color:inherit;background:#fff;border:2px solid #335f8b;border-radius:.5rem;min-height:2.75rem;padding:.35rem .65rem;cursor:pointer}
+.p050-practice button:disabled{cursor:default}
+.p050-practice button:focus-visible,.p050-line-scroll:focus-visible{outline:3px solid #b24f00;outline-offset:3px}
+.p050-items{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;margin-block:1rem}
+.p050-items button{touch-action:none;user-select:none;min-width:3.5rem}
+.p050-items button[aria-pressed=true]{background:#dcefff;border-color:#174576;box-shadow:0 0 0 2px #174576}
+.p050-line-scroll{max-width:100%;overflow-x:auto;padding-block:1rem}
+.p050-line{position:relative;min-width:40rem;height:9rem;margin-inline:.5rem}
+.p050-line svg{position:absolute;top:2.5rem;width:100%;height:5rem;overflow:visible}
+.p050-whole{position:absolute;top:6rem;transform:translateX(-50%);font-weight:700}
+.p050-practice .p050-target{position:absolute;top:.5rem;transform:translateX(-50%);min-width:2.75rem;border-color:transparent;border-bottom-color:#ad3225;background:transparent}
+.p050-practice .p050-target:disabled{opacity:1}
+.p050-example{position:absolute;top:.5rem;transform:translateX(-50%);font-weight:700;color:#ad3225}
+.p050-drag-ghost{position:fixed;transform:translate(-50%,-130%);pointer-events:none;background:#dcefff;border:2px solid #174576;border-radius:.5rem;padding:.4rem .7rem;z-index:1000}
+.p050-feedback dialog{font:inherit;color:inherit;max-width:min(42rem,calc(100vw - 2rem));max-height:85vh;overflow:auto;box-sizing:border-box;border:2px solid #335f8b;border-radius:.8rem;padding:1rem}
+.p050-feedback dialog::backdrop{background:rgb(15 30 45 / .45)}
+.p050-intro .p050-line{height:13rem}
+.p050-line-scroll[aria-hidden=true] svg,.p050-line-scroll[aria-hidden=true] .p050-whole{visibility:hidden}
+.p050-demo-value,.p050-demo-pointer{position:absolute;transform:translateX(-50%);font-weight:700;z-index:1}
+.p050-demo-value{background:#fff;padding:.2rem .35rem;border-radius:.35rem;color:#ad3225}
+.p050-demo-pointer{font-size:1.5rem;pointer-events:none}
+.p050-demo-items span{min-width:3.5rem;text-align:center;padding:.35rem .65rem}
+.p050-glossary-terms{min-width:0;margin-block:1rem}
+.p050-glossary-terms h4{margin:0 0 .5rem;font:inherit;font-weight:700;overflow-wrap:anywhere}
+.p050-glossary-terms [role=group]{display:flex;flex-wrap:wrap;gap:.5rem}
+.p050-feedback .p050-term{display:inline-flex;align-items:center;justify-content:center;min-width:2.75rem;min-height:2.75rem;max-width:100%;white-space:normal;overflow-wrap:anywhere;text-align:center;color:#174576;background:#fff;text-decoration:underline;text-underline-offset:.15em}
+.p050-feedback .p050-term:focus-visible{outline:3px solid #b24f00;outline-offset:3px}
+.p050-glossary{box-sizing:border-box;width:min(38rem,calc(100vw - 1rem));max-width:calc(100vw - 1rem);max-height:min(85vh,calc(100dvh - 2rem));margin:auto;overflow:auto;padding:.75rem;color:#142b45;background:#fff;border:2px solid #335f8b;border-radius:.8rem;font:1rem/1.5 inherit;text-align:start}
+.p050-glossary h3,.p050-glossary p{overflow-wrap:anywhere}
+.p050-glossary::backdrop{background:rgb(15 30 45 / .55)}
+.p050-glossary button{min-width:2.75rem;min-height:2.75rem;max-width:100%;white-space:normal;padding:.5rem 1rem;font:inherit;color:#142b45;background:#fff;border:2px solid #335f8b;border-radius:.5rem}
+.p050-glossary :focus-visible{outline:3px solid #b24f00;outline-offset:3px}
+.p050-main-terms{display:flex;flex-wrap:wrap;gap:.5rem;margin-block:.75rem}
+.p050-main-terms button{text-decoration:underline;text-underline-offset:.15em}

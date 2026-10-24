@@ -1,0 +1,15 @@
+"use client";
+
+import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
+import {SHARED_GEO001_L05_P032_CONFIG, SHARED_GEO001_L05_P032_SOURCE} from "../timelines/shared-geo001-l05-p032";
+
+const candidate = createSourceStaticCanvasCandidate(SHARED_GEO001_L05_P032_CONFIG);
+const animationModule = Object.freeze({...candidate.module, maturity: "private-current-js" as const});
+
+export {SHARED_GEO001_L05_P032_SOURCE};
+export const SHARED_GEO001_L05_P032_MOVIE = candidate.movie;
+export const SHARED_GEO001_L05_P032_RUNTIME = candidate.runtime;
+export const SHARED_GEO001_L05_P032_SOURCE_CONTRACT = candidate.sourceContract;
+export const SHARED_GEO001_L05_P032_SCENARIOS = candidate.scenarios;
+export const SHARED_GEO001_L05_P032_RENDERER = candidate.Renderer;
+export default animationModule;

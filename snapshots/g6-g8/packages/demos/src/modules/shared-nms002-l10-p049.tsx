@@ -1,0 +1,77 @@
+'use client';
+
+import {createHfrAnimationModule} from '../hfr/module';
+import type {HfrPageMeta} from '../hfr/types';
+import page from '../hfr-pages/shared-nms002-l10-p049';
+
+const meta: HfrPageMeta = {
+  "key": "shared-nms002-l10-p049",
+  "lessonKey": "shared-nms002-l10",
+  "dataUrl": "/flash-assets/g678-local/shared-nms002-l10-p049/hfr/shared-nms002-l10-p049.data.json",
+  "sourceSha256": "039258fd77e5b353038c33ba077417423d52229f5b60bd4fb8fca1dfa9e025bc",
+  "compiler": "hfr-compile 0.1.3-candidate",
+  "sourceRootFrameCount": 10,
+  "stage": {
+    "width": 800,
+    "height": 600,
+    "fps": 12
+  },
+  "progressTimeline": 0,
+  "progressFrameCount": 10,
+  "completionMode": "timeline",
+  "lessonPagesByFile": {
+    "L10IR01": "shared-nms002-l10-p001",
+    "L10RW02": "shared-nms002-l10-p002",
+    "L10RW03": "shared-nms002-l10-p003",
+    "L10RW04": "shared-nms002-l10-p004",
+    "L10RW05": "shared-nms002-l10-p005",
+    "L10VB02": "shared-nms002-l10-p006",
+    "L10VB03": "shared-nms002-l10-p007",
+    "L10VB04": "shared-nms002-l10-p008",
+    "L10VB05": "shared-nms002-l10-p009",
+    "L10VB06": "shared-nms002-l10-p010",
+    "L10VB07": "shared-nms002-l10-p011",
+    "L10VB08": "shared-nms002-l10-p012",
+    "L10VB09": "shared-nms002-l10-p013",
+    "L10VB10": "shared-nms002-l10-p014",
+    "L10IN02": "shared-nms002-l10-p015",
+    "L10IN03": "shared-nms002-l10-p016",
+    "L10IN04": "shared-nms002-l10-p017",
+    "L10IN05": "shared-nms002-l10-p018",
+    "L10IN06": "shared-nms002-l10-p019",
+    "L10IN07": "shared-nms002-l10-p020",
+    "L10IN08": "shared-nms002-l10-p021",
+    "L10IN09": "shared-nms002-l10-p022",
+    "L10IN10": "shared-nms002-l10-p023",
+    "L10IN11": "shared-nms002-l10-p024",
+    "L10IN12": "shared-nms002-l10-p025",
+    "L10IN13": "shared-nms002-l10-p026",
+    "L10IN14": "shared-nms002-l10-p027",
+    "L10IN15": "shared-nms002-l10-p028",
+    "L10TI02": "shared-nms002-l10-p029",
+    "L10TI03": "shared-nms002-l10-p030",
+    "L10TI04": "shared-nms002-l10-p031",
+    "L10TI05": "shared-nms002-l10-p032",
+    "L10TI06": "shared-nms002-l10-p033",
+    "L10TI07": "shared-nms002-l10-p034",
+    "L10TI08": "shared-nms002-l10-p035",
+    "L10TI09": "shared-nms002-l10-p036",
+    "L10TI10": "shared-nms002-l10-p037",
+    "L10TI11": "shared-nms002-l10-p038",
+    "L10GS02": "shared-nms002-l10-p039",
+    "L10TS02": "shared-nms002-l10-p040",
+    "L10TS03": "shared-nms002-l10-p041",
+    "L10TS04": "shared-nms002-l10-p042",
+    "L10TS05": "shared-nms002-l10-p043",
+    "L10TS06": "shared-nms002-l10-p044",
+    "L10TS07": "shared-nms002-l10-p045",
+    "L10TS08": "shared-nms002-l10-p046",
+    "L10TS09": "shared-nms002-l10-p047",
+    "L10FQ01": "shared-nms002-l10-p048",
+    "L10FQ02": "shared-nms002-l10-p049"
+  },
+  "previousKey": "shared-nms002-l10-p048",
+  "nextKey": null,
+  "hasSpanishNarration": false
+};
+export default createHfrAnimationModule(meta, page);

@@ -1,0 +1,13 @@
+'use client';
+import type {AnimationModule} from '../contract';
+import {P039_INTRO_SOURCE as SOURCE} from '../generated/nms-l02-p039-intro-source-v1';
+import {P039_AUDIO_SOURCE} from '../generated/nms-l02-p039-audio-source-v1';
+import {P039_FRAME_DOMAINS,P039_SCENARIOS,p039ModuleFrame,type P039FrameState} from '../nms-l02-p039-frame-v1';
+import {P039_TEXT_BINDING,p039TextSnapshot} from '../nms-l02-p039-text-v1';
+import {NmsL2P039Renderer} from '../nms-l02-p039-renderer-v1';
+import {prepareP039Fonts} from '../nms-l02-p039-fonts-v1';
+const movie=Object.freeze({stage:Object.freeze({width:800,height:600}),fps:12,frameCount:10,durationMs:10000/12});
+const frameDomains=Object.freeze(Object.entries(P039_FRAME_DOMAINS).map(([id,frameCount])=>Object.freeze({id,frameCount,...(id==='root'?{}:{rootFrame:6})})));
+const source=Object.freeze({version:1 as const,sourceSwfSha256:SOURCE.sourceSha256,audio:P039_AUDIO_SOURCE,offstageAudioDomain:Object.freeze({id:'sprite-230',frameCount:55}),dormantDomain:Object.freeze({id:'sprite-236',frameCount:20})});
+const animationModule:AnimationModule<P039FrameState>&{privateP039PercentPractice:typeof source}=Object.freeze({key:SOURCE.animationId,movie,maturity:'private-current-js',runtime:Object.freeze({...movie,defaultFrameDomain:'sprite-237',frameDomains}),playbackMode:'once',scenarios:P039_SCENARIOS,defaultScenarioByFrameDomain:Object.freeze(Object.fromEntries(Object.keys(P039_FRAME_DOMAINS).map(id=>[id,'source-practice']))),audioCues:Object.freeze([]),Renderer:NmsL2P039Renderer,getFrameState:p039ModuleFrame,textPresentation:Object.freeze({schemaVersion:1,binding:P039_TEXT_BINDING,Renderer:NmsL2P039Renderer,getSnapshot:p039TextSnapshot,prepare:prepareP039Fonts}),privateP039PercentPractice:source});
+export default animationModule;

@@ -1,0 +1,30 @@
+:is(.alg-l07-p048-player,.alg-l07-p049-player){max-width:100%}
+:is(.alg-l07-p048-player__controls,.alg-l07-p049-player__controls){display:flex;flex-wrap:wrap;gap:.6rem;margin:.75rem 0;font-size:1.125rem;line-height:1.5}
+:is(.alg-l07-p048-player,.alg-l07-p049-player,.alg-l07-p048__dialog,.alg-l07-p049__dialog) button{font:inherit;min-height:2.75rem;padding:.45rem min(.8rem,3vw);box-sizing:border-box;max-width:100%;border:1px solid #234f86;border-radius:.35rem;color:#143f70;background:#fff;cursor:pointer;white-space:normal}
+:is(.alg-l07-p048-player,.alg-l07-p049-player,.alg-l07-p048__dialog,.alg-l07-p049__dialog) button:focus-visible{outline:3px solid #ffb900;outline-offset:3px}
+:is(.alg-l07-p048__dialog,.alg-l07-p049__dialog){margin:auto;font-family:var(--lesson-font-body,Arial,sans-serif);font-size:1.125rem;line-height:1.5;max-width:min(35rem,calc(100vw - 2rem));max-height:80vh;overflow:auto;border:2px solid #315b91;border-radius:.6rem;padding:min(1.25rem,3vw);color:#142b4a}
+:is(.alg-l07-p048__dialog,.alg-l07-p049__dialog)::backdrop{background:#09294f88}
+.alg-l07-p048__number{white-space:nowrap}.alg-l07-p048 [data-source-emphasis=true]{color:#9b007e;background:#fff0b2;box-shadow:0 0 0 .1em #fff0b2;border-radius:.1em}
+.alg-l07-p049 .fixed-exit-help__answers{max-width:none;grid-template-columns:repeat(2,minmax(0,1fr))}.alg-l07-p049 .fixed-exit-help__answers[data-p049-compact=true]{grid-template-columns:minmax(0,1fr);max-width:32rem}.alg-l07-p049 .fixed-exit-help__equation{font-size:1em}
+.alg-l07-p049__scroll{box-sizing:border-box;width:100%;max-width:100%;overflow-x:auto;overflow-y:hidden;padding:.6rem 0;scrollbar-gutter:stable;border-radius:.25rem}.alg-l07-p049__scroll:focus-visible{outline:3px solid #ffb900;outline-offset:2px}.alg-l07-p049__plot{position:relative;min-width:27rem;width:100%;background:#fff}.alg-l07-p049__plot>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}.alg-l07-p049__axis{position:absolute;transform:translate(-50%,-50%);font-size:1rem;line-height:1.1;white-space:nowrap;color:#142b4a;font-weight:600;pointer-events:none}
+@media(max-width:900px){.alg-l07-p049 .fixed-exit-help__answers{grid-template-columns:minmax(0,1fr)}}
+
+/* Source P049 shape 239 marks answer B during frames 117–128. Keep the cue on the answer letter, clear of axis labels. */
+.alg-l07-p049 [data-source-white-halo=true]{text-shadow:none}.alg-l07-p049 .fixed-exit-help__answer:has([data-source-white-halo=true]) .fixed-exit-help__letter{background:#fff;outline:3px solid #ffb900;outline-offset:2px}
+
+/* Native labels remain legible where source grid strokes pass behind their larger glyphs. */
+.alg-l07-p049__axis{background:#fff;padding-inline:.1em}
+
+/* Source C disappears before B moves. Keep every graph in its source slot until the source keeps B alone. */
+.alg-l07-p049 .fixed-exit-help__answers:not([data-p049-compact=true]){grid-template-rows:repeat(2,minmax(0,1fr))}
+.alg-l07-p049 .fixed-exit-help__answers:not([data-p049-compact=true])>[data-p049-answer-row=A]{grid-row:1;grid-column:1}
+.alg-l07-p049 .fixed-exit-help__answers:not([data-p049-compact=true])>[data-p049-answer-row=C]{grid-row:1;grid-column:2}
+.alg-l07-p049 .fixed-exit-help__answers:not([data-p049-compact=true])>[data-p049-answer-row=B]{grid-row:2;grid-column:1}
+.alg-l07-p049 .fixed-exit-help__answers:not([data-p049-compact=true])>[data-p049-answer-row=D]{grid-row:2;grid-column:2}
+@media(max-width:900px){
+ .alg-l07-p049 .fixed-exit-help__answers:not([data-p049-compact=true]){grid-template-rows:repeat(4,minmax(0,1fr))}
+ .alg-l07-p049 .fixed-exit-help__answers:not([data-p049-compact=true])>[data-p049-answer-row]{grid-column:1}
+ .alg-l07-p049 .fixed-exit-help__answers:not([data-p049-compact=true])>[data-p049-answer-row=C]{grid-row:2}
+ .alg-l07-p049 .fixed-exit-help__answers:not([data-p049-compact=true])>[data-p049-answer-row=B]{grid-row:3}
+ .alg-l07-p049 .fixed-exit-help__answers:not([data-p049-compact=true])>[data-p049-answer-row=D]{grid-row:4}
+}

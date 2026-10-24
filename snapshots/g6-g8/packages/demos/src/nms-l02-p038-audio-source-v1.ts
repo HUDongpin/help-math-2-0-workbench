@@ -1,0 +1,3 @@
+// Source-bound complete PCM segments from verified audio plan.
+export const P038_AUDIO_SOURCES={"99":{"sourceSha256":"6214caad349510e4e8887344aab584c69074ccb826c0880a9645332fdc892683","sourceBytes":176150,"sampleRate":22050,"channels":1,"decodedSamples":780480,"latencySamples":1673,"totalSamples":858113,"segments":[{"frame":4,"sourceStart":1673,"sourceEnd":483186,"outputStart":5513,"outputEnd":487026},{"frame":306,"sourceStart":483186,"sourceEnd":780480,"outputStart":560438,"outputEnd":857732}]}} as const;
+for(const s of P038_AUDIO_SOURCES["99"].segments)Object.freeze(s);Object.freeze(P038_AUDIO_SOURCES["99"].segments);Object.freeze(P038_AUDIO_SOURCES["99"]);Object.freeze(P038_AUDIO_SOURCES);

@@ -1,0 +1,51 @@
+.nms-l02-p032{box-sizing:border-box;min-inline-size:0;inline-size:100%;padding:clamp(.5rem,2vw,1.5rem);background:#f1f7fb;color:#14283d;font-family:var(--lesson-text-font-body,"HELP Math Nunito Sans"),sans-serif;container-type:inline-size}
+.nms-l02-p032 *{box-sizing:border-box}
+.nms-l02-p032__fallback{font-size:calc(.875rem * var(--lesson-text-scale,1));line-height:1.5}
+.nms-l02-p032__figures{display:grid;grid-template-columns:minmax(12rem,1fr) minmax(0,2fr);align-items:center;gap:1.5rem}
+.nms-l02-p032__model{margin:0;min-width:0;padding:1rem;background:white;border-radius:.75rem}
+.nms-l02-p032__model svg{display:block;width:100%;height:auto;max-width:24rem;margin:auto}
+.nms-l02-p032__chart{min-width:0}
+.nms-l02-p032__place-value{font-size:calc(1.375rem * var(--lesson-text-scale,1));line-height:1.5;text-align:center;margin:0 0 .75rem}
+.nms-l02-p032__table-scroll{max-width:100%;overflow-x:auto;border-radius:.5rem;border:1px solid #63758b;background:white;overscroll-behavior-inline:contain}
+.nms-l02-p032__table-scroll:focus-visible{outline:3px solid #075ac1;outline-offset:3px}
+.nms-l02-p032__table{border-collapse:collapse;table-layout:fixed;width:100%;min-width:calc(52.5rem * var(--lesson-text-scale,1));font-size:calc(1.125rem * var(--lesson-text-scale,1));line-height:1.4;text-align:center}
+.nms-l02-p032__table th,.nms-l02-p032__table td{padding:.65rem .35rem;border:1px solid #63758b;font-weight:500;overflow-wrap:normal;vertical-align:middle}
+.nms-l02-p032__table th{hyphens:manual}
+.nms-l02-p032__table td{font-size:calc(1.5rem * var(--lesson-text-scale,1));height:2.5em}
+.nms-l02-p032 .ones-group{background:#edd6fa}
+.nms-l02-p032 .decimals-group{background:#dcf6ca}
+.nms-l02-p032__term{font:inherit;color:#075ac1;background:transparent;border:0;padding:.1rem .2rem;min-height:44px;min-width:44px;line-height:inherit;text-decoration:underline;text-underline-offset:.16em;cursor:pointer;white-space:normal}
+.nms-l02-p032__term:focus-visible{outline:3px solid #075ac1;outline-offset:2px}
+.nms-l02-p032__source-term{color:#075ac1;text-decoration:underline;text-underline-offset:.16em}
+.nms-l02-p032 .is-emphasized{background:#fff1a8;color:#8b1b00;box-shadow:inset 0 0 0 2px #8b1b00;font-weight:700}
+.nms-l02-p032__place-value.is-emphasized{background:transparent;box-shadow:none}
+.nms-l02-p032__place-value.is-emphasized :is(button,span){color:#a000a0}
+@container(max-width:80rem){.nms-l02-p032__figures{grid-template-columns:minmax(0,1fr)}.nms-l02-p032__model{width:min(100%,26rem);justify-self:center}}
+
+.nms-l02-p032__dialog{box-sizing:border-box;inline-size:calc(100% - 2rem);max-inline-size:34rem;max-block-size:calc(100dvh - 2rem);margin:auto;padding:1.25rem;border:1px solid #b5cbe1;border-radius:1rem;background:var(--lesson-text-paper,#fffdf7);color:var(--lesson-text-ink,#14213d);overflow:auto;font-family:var(--lesson-text-font-body,"HELP Math Nunito Sans",sans-serif);font-size:1.125rem;line-height:1.6}
+.nms-l02-p032__dialog::backdrop{background:rgba(20,33,61,.5)}
+.nms-l02-p032__dialog h2{margin:0;font-family:var(--lesson-text-font-heading,"HELP Math Fredoka",sans-serif);font-size:1.75rem;overflow-wrap:anywhere}
+.nms-l02-p032__dialog p{overflow-wrap:anywhere}
+.nms-l02-p032__dialog math{font-size:1.25rem}
+.nms-l02-p032__dialog button{min-block-size:44px;min-inline-size:80px;padding:.5rem 1rem;border:0;border-radius:.5rem;background:#174e8b;color:white;font:inherit;cursor:pointer}
+.nms-l02-p032__dialog button:focus-visible{outline:3px solid #174e8b;outline-offset:3px}
+.nms-l02-p032__resume-hint{font-size:1rem}
+
+
+
+
+/* This page's native lesson controls follow the learner's text size. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p032']) .lesson-shell2__modern-toolbar > :is(button,label,a),
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p032']) .lesson-shell2__modern-toolbar label > span{max-inline-size:100%;overflow-wrap:anywhere;white-space:normal}
+@media(max-width:680px),(orientation:landscape) and (max-height:500px) and (max-width:1279px){
+ .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p032']) .lesson-shell2__modern-toolbar{grid-template-columns:repeat(auto-fit,minmax(min(100%,7rem),1fr))}
+}
+
+
+.nms-l02-p032__expression{min-height:4em;display:flex;justify-content:center;align-items:center;gap:.6em;font-size:calc(1.5rem * var(--lesson-text-scale,1));line-height:1.5;flex-wrap:wrap}
+.nms-l02-p032__fraction-group{display:inline-flex;align-items:center;gap:.6em}
+.nms-l02-p032__expression math{font-size:1.2em}
+
+.nms-l02-p032__example + .nms-l02-p032__example{margin-block-start:2rem;border-block-start:1px solid #b5cbe1;padding-block-start:1.5rem}
+.nms-l02-p032__target{font-size:calc(1rem * var(--lesson-text-scale,1));line-height:1.5;padding:.5rem;background:#fff1a8;border-radius:.5rem;overflow-wrap:anywhere}
+.nms-l02-p032__chart-title{font-size:calc(1.375rem * var(--lesson-text-scale,1));line-height:1.5;text-align:center;margin:0 0 .75rem}

@@ -1,0 +1,125 @@
+.nms-l09-p003-candidate {
+  container: nms-p003 / inline-size;
+  inline-size: 100%;
+  min-inline-size: 0;
+  color: #193a55;
+  font-family: var(--lesson-font-body, "Nunito Sans"), system-ui, sans-serif;
+}
+.nms-l09-p003-candidate__fallback {
+  margin: 0 0 .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.nms-l09-p003-candidate__stage {
+  position: relative;
+  inline-size: 100%;
+  aspect-ratio: 4 / 3;
+  isolation: isolate;
+}
+.nms-l09-p003-candidate__canvas {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+.nms-l09-p003__title {
+  position: absolute;
+  z-index: 1;
+  inset-block-start: 4.5%;
+  inset-inline: 8%;
+  margin: 0;
+  color: #1e4166;
+  font-family: var(--lesson-font-display, Fredoka), system-ui, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.25;
+  text-align: center;
+  text-wrap: balance;
+}
+.nms-l09-p003__schedule {
+  position: absolute;
+  z-index: 1;
+  inset-block-start: 17.5%;
+  inset-inline-start: 11%;
+  inline-size: 44.5%;
+  min-inline-size: 0;
+}
+.nms-l09-p003__schedule-heading {
+  margin: 0 0 .75rem;
+  color: #fff9d2;
+  font-family: var(--lesson-font-display, Fredoka), system-ui, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+}
+.nms-l09-p003__rows {
+  display: grid;
+  gap: .4rem;
+  padding: 1.4rem .8rem .2rem;
+}
+.nms-l09-p003__row {
+  margin: 0;
+  border-radius: .35rem;
+  font-size: .95rem;
+  line-height: 1.28;
+  overflow-wrap: anywhere;
+}
+.nms-l09-p003__row[data-emphasis="true"] {
+  color: #183eaf;
+  font-weight: 750;
+  text-decoration: underline;
+  text-decoration-thickness: .12em;
+}
+.nms-l09-p003__expression {
+  margin: .3rem 0 0;
+  color: #163f59;
+  font-family: var(--lesson-font-display, Fredoka), system-ui, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+}
+@container nms-p003 (max-width: 47rem) {
+  .nms-l09-p003-candidate__stage {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    aspect-ratio: auto;
+  }
+  .nms-l09-p003__title,
+  .nms-l09-p003__schedule {
+    position: static;
+    inline-size: auto;
+  }
+  .nms-l09-p003__title {
+    font-size: clamp(1.5rem, 1.2rem + 1cqi, 2rem);
+    text-align: start;
+  }
+  .nms-l09-p003__schedule {
+    border: 1px solid #b3c9da;
+    border-radius: .75rem;
+    background: #f3f9ff;
+    padding: .75rem;
+  }
+  .nms-l09-p003__schedule-heading {
+    color: #193a55;
+    text-align: start;
+  }
+  .nms-l09-p003__rows {
+    padding: 0;
+    gap: .35rem;
+  }
+  .nms-l09-p003__row {
+    font-size: 1.125rem;
+    line-height: 1.5;
+  }
+  .nms-l09-p003__expression {
+    margin-block-start: .75rem;
+    text-align: start;
+    font-size: 1.25rem;
+  }
+  .nms-l09-p003-candidate__canvas {
+    block-size: auto;
+    aspect-ratio: 4 / 3;
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "kind": "g678-bounded-source-ir-run-v1",
+  "runId": "g678-geo-l07-p001-native-current-js-v1",
+  "checkedAt": "2026-09-24T18:59:21.902Z",
+  "deploymentScope": "local-only",
+  "source": {
+    "path": "G6-G8-shared/GEO001/L7/IR/L7IR01.swf",
+    "sha256": "9aafb8a470b5e67f4254b671696940c6fd53be258f517dd6b97abfa511e76430",
+    "physicalRoot": "/Volumes/WestWorld/HELP MATH Related Files/AWS Grade-Classified Courseware"
+  },
+  "toolchain": {
+    "ffdec": "26.2.1",
+    "swfmill": "0.3.6",
+    "python": "3.14.7"
+  },
+  "inputs": [
+    {
+      "path": "migrations/shared-geo001-l07-p001/audit/movie.xml",
+      "sha256": "f1b22b10f00957bdb0ab04c61a956af7998961ac0a83c8e2b1d6456725e0ab69"
+    },
+    {
+      "path": "migrations/shared-geo001-l07-p001/audit/ffdec-26.2.1/texts/140.txt",
+      "sha256": "abec03391b80173b1dbe65f7d991449d71332033d9dec9042f8a4d3b40e98c26"
+    },
+    {
+      "path": "migrations/shared-geo001-l07-p001/audit/ffdec-26.2.1/texts/141.txt",
+      "sha256": "abec03391b80173b1dbe65f7d991449d71332033d9dec9042f8a4d3b40e98c26"
+    },
+    {
+      "path": "scripts/build-g678-geo-l07-p001-ir.py",
+      "sha256": "e1eaea61c82b703d8a8f0c915b920d36ebc3ed5990f905cb292460345c112cd3"
+    }
+  ],
+  "output": {
+    "path": "packages/demos/src/generated/geo001-l07-p001-source-ir-v1.json",
+    "sha256": "80554deb7799c2d647c3093855f8b899d7f00d1999eb15b5b449c486c441f9f5"
+  },
+  "checks": {
+    "sourceIrRebuild": "passed",
+    "exclusiveWriteRace": "passed",
+    "pureFrameState": "passed",
+    "scopedTypeScript": "passed",
+    "modernHostBrowser": "not-run",
+    "fullTypography": "not-run",
+    "originalRuntime": "not-run"
+  },
+  "productCalibrationPassed": false,
+  "scaleOutAuthorized": false,
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "released": false,
+    "published": false
+  }
+}

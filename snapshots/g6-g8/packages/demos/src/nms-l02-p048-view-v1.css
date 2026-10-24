@@ -1,0 +1,55 @@
+.p048-input { container-type:inline-size; min-width:0; line-height:1.5; }
+.p048-input h3 { font-size:1.25em; overflow-wrap:anywhere; }
+.p048-grid { display:grid; grid-template-columns:repeat(10,minmax(0,1fr)); width:min(100%,20rem); aspect-ratio:1; border:1px solid #374151; background:white; box-sizing:border-box; }
+.p048-grid span { min-width:0; border:1px solid #4b5563; box-sizing:border-box; }
+.p048-grid-blue [data-filled="true"] { background:#0033cc; }
+.p048-grid-red [data-filled="true"] { background:#ff0000; }
+.p048-decimal { display:flex; flex-wrap:wrap; align-items:baseline; gap:1rem; margin-block:1rem; }
+.p048-decimal output { font-size:2em; font-variant-numeric:tabular-nums; }
+.p048-input label { display:block; }
+.p048-input input[type="range"] { display:block; width:100%; min-height:44px; margin:0; accent-color:#b45309; }
+.p048-range-ends { display:flex; justify-content:space-between; font-variant-numeric:tabular-nums; }
+.p048-input-actions { display:flex; flex-wrap:wrap; gap:.75rem; margin-block:1rem; }
+.p048-input button { min-width:44px; min-height:44px; padding:.5em 1em; font:inherit; white-space:normal; border:1px solid #475569; border-radius:.4rem; color:#0f172a; background:#f8fafc; }
+.p048-input :focus-visible { outline:3px solid #1d4ed8; outline-offset:3px; }
+.p048-input button:disabled { opacity:.6; }
+.p048-practice { min-width:0; line-height:1.5; }
+.p048-practice > button,.p048-practice dialog button { min-width:44px; min-height:44px; padding:.5em 1em; font:inherit; }
+.p048-practice dialog { width:min(38rem,calc(100vw - 2rem)); max-height:calc(100dvh - 2rem); box-sizing:border-box; overflow:auto; padding:1rem; color:#0f172a; background:white; border:2px solid #475569; border-radius:.75rem; }
+.p048-practice dialog::backdrop { background:rgb(15 23 42 / .5); }
+.p048-practice dialog h3 { overflow-wrap:anywhere; }
+.p048-practice :focus-visible { outline:3px solid #1d4ed8; outline-offset:3px; }
+.p048-place-values { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.25rem; margin-block:1rem; }
+.p048-place-values > div { display:flex; flex-direction:column; border:1px solid #475569; text-align:center; min-width:0; padding:.3rem; }
+.p048-place-values strong { font-size:.85em; overflow-wrap:anywhere; }
+.p048-place-values span { font-size:1.4em; }
+.p048-whole-column { background:#cffafe; }
+.p048-decimal-column { background:#ffedd5; }
+.p048-practice dialog { width:min(38rem,calc(100vw - 1rem)); max-width:calc(100vw - 1rem); container-type:inline-size; padding:.75rem; }
+.p048-practice dialog h3 { overflow-wrap:normal; hyphens:auto; }
+@container (max-width:480px) {
+ .p048-place-values { grid-template-columns:1fr; }
+ .p048-place-values > div { flex-direction:row; justify-content:space-between; align-items:baseline; gap:.5rem; text-align:start; }
+ .p048-place-values strong { overflow-wrap:normal; hyphens:auto; }
+}
+.p048-intro { min-width:0; line-height:1.5; }
+.p048-intro h2,.p048-intro h3,.p048-intro p { overflow-wrap:anywhere; }
+.p048-demo-value { font-size:2em; font-variant-numeric:tabular-nums; margin-block:.5em; }
+.p048-demo-track { position:relative; height:44px; margin-inline:12px; background:linear-gradient(transparent 20px,#475569 20px,#475569 24px,transparent 24px); }
+.p048-demo-track span { position:absolute; top:10px; width:24px; height:24px; transform:translateX(-50%); background:#ea580c; border:2px solid #7c2d12; }
+.p048-input-actions > button { min-width:44px; min-height:44px; padding:.5em 1em; font:inherit; white-space:normal; border:1px solid #475569; border-radius:.4rem; color:#0f172a; background:#f8fafc; }
+.p048-input-actions > button:focus-visible { outline:3px solid #1d4ed8; outline-offset:3px; }
+.p048-practice .p048-term,.p048-term { display:inline; color:#1d4ed8; background:transparent; border:0; padding:0; min-width:0; min-height:0; font:inherit; text-decoration:underline; text-underline-offset:.15em; cursor:pointer; }
+.p048-glossary { text-align:start; font-size:1rem; font-weight:normal; }
+.p048-glossary p { line-height:1.5; }
+.p048-glossary { width:min(38rem,calc(100vw - 1rem)); max-width:calc(100vw - 1rem); max-height:calc(100dvh - 2rem); overflow:auto; padding:.75rem; box-sizing:border-box; color:#0f172a; background:white; border:2px solid #475569; border-radius:.75rem; }
+.p048-glossary::backdrop { background:rgb(15 23 42 / .5); }
+.p048-glossary button { min-width:44px; min-height:44px; padding:.5em 1em; font:inherit; }
+.p048-glossary :focus-visible { outline:3px solid #1d4ed8; outline-offset:3px; }
+.p048-cue-active { background:#fef08a; color:#111827; text-decoration:underline; text-decoration-thickness:.12em; }
+.p048-intro { position:relative; }
+.p048-pointer { position:absolute; width:24px; height:30px; transform:translateX(-50%); pointer-events:none; z-index:2; }
+/* Reserve room below the demonstration track for its source-timed pointer. */
+.p048-demo-track { margin-bottom:2rem; }
+.p048-course-title { font-size:1.125em; font-weight:700; line-height:1.5; overflow-wrap:anywhere; }
+.p048-practice-instruction { line-height:1.5; overflow-wrap:anywhere; }

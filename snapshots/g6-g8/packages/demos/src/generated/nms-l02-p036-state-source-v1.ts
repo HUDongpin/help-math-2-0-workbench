@@ -1,0 +1,2 @@
+// Generated from pinned P036 SWF-derived IR and source specification. Do not edit.
+export const P036_STATE_SOURCE={"animationId":"shared-nms002-l02-p036","sourceSha256":"6054dc77874ffb4bf976fdf9452bc2a289e17e3777a3ab76edec85e3a2d8c401","fps":12,"mainFrames":853,"termFrames":{"simple-simpler-simplest":166,"decimal-equivalent":185,"fraction":192},"sourceMainStop":null,"qualifiedNativeTerminalHold":true} as const;

@@ -1,0 +1,10 @@
+'use client';
+import type{ComponentProps}from'react';
+import{createFixedExitHelpPlayerV1,type FixedExitHelpControlsV1}from'./source-fixed-exit-help-player-v1';
+import{P044Session}from'./alg-l07-p044-session-v1';
+import{ALG_L07_P044_SOURCE as S,p044InitialState,type P044Term}from'./alg-l07-p044-state-v1';
+import{p044View,type P044View}from'./alg-l07-p044-frame-v1';
+import{AlgL07P044Presentation}from'./alg-l07-p044-presentation-v1';
+export const AlgL07P044Player=createFixedExitHelpPlayerV1<P044Term,328|409,417,P044View>({scope:'p044',mainSpriteId:417,terms:S.terms,Session:P044Session,initialState:p044InitialState,view:p044View,Presentation:AlgL07P044Presentation});
+export type AlgL07P044PlayerProps=ComponentProps<typeof AlgL07P044Player>;
+export type AlgL07P044Controls=FixedExitHelpControlsV1;

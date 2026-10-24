@@ -1,0 +1,2 @@
+// Complete main89 source stream, full853 frame intervals.
+export const P036_AUDIO_SOURCES={"89":{"sourceSha256":"88bf4ccac63d54603b156a74a8920c9a5fec98098f1255785f01a73fd4ca47e2","sourceBytes":352300,"sampleRate":22050,"channels":1,"decodedSamples":1560960,"latencySamples":1673,"outputStartSample":5513,"outputEndSample":1564800,"totalSamples":1567388,"firstSourceFrame":4,"frameCount":853}} as const;

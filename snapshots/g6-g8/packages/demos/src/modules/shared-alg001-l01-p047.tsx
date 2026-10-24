@@ -1,0 +1,52 @@
+"use client";
+
+import {createPrivateSourceStaticGlossaryCandidate} from "../private-source-static-glossary-candidate";
+import {SHARED_ALG001_L01_P047_CONFIG, SHARED_ALG001_L01_P047_SOURCE} from "../timelines/shared-alg001-l01-p047";
+
+export const SHARED_ALG001_L01_P047_GLOSSARY_TERMS = Object.freeze([
+  {
+    "id": "restate",
+    "sourceKeyAttribute": "Restate",
+    "sourceCharacterId": 15,
+    "firstFrame": 113,
+    "labels": {
+      "en": "Restate",
+      "es": "Replantear"
+    }
+  },
+  {
+    "id": "question",
+    "sourceKeyAttribute": "question",
+    "sourceCharacterId": 16,
+    "firstFrame": 113,
+    "labels": {
+      "en": "Question",
+      "es": "Pregunta"
+    }
+  },
+  {
+    "id": "problem",
+    "sourceKeyAttribute": "problem",
+    "sourceCharacterId": 23,
+    "firstFrame": 158,
+    "labels": {
+      "en": "Problem",
+      "es": "Problema"
+    }
+  }
+] as const);
+
+const candidate = createPrivateSourceStaticGlossaryCandidate(SHARED_ALG001_L01_P047_CONFIG, Object.freeze({
+  calibrationId: "g678-ts02-l1-product-calibration-v1",
+  companionSurfaceId: "shared-alg001-l01-p047-glossary",
+  glossaryTerms: SHARED_ALG001_L01_P047_GLOSSARY_TERMS,
+}));
+const animationModule = Object.freeze({...candidate.module, maturity: "private-current-js" as const});
+
+export {SHARED_ALG001_L01_P047_SOURCE};
+export const SHARED_ALG001_L01_P047_MOVIE = candidate.movie;
+export const SHARED_ALG001_L01_P047_RUNTIME = candidate.runtime;
+export const SHARED_ALG001_L01_P047_SOURCE_CONTRACT = candidate.sourceContract;
+export const SHARED_ALG001_L01_P047_SCENARIOS = candidate.scenarios;
+export const SHARED_ALG001_L01_P047_RENDERER = candidate.Renderer;
+export default animationModule;

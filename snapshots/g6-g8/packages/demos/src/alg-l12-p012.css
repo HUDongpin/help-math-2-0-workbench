@@ -1,0 +1,11 @@
+.p012-controls { font-family: system-ui, sans-serif; font-size: 1rem; line-height: 1.5; }
+.p012-coordinate { display: block; font-size: 1.5rem; font-weight: 650; font-variant-numeric: tabular-nums; margin-block: .5rem; }
+.p012-direction-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; max-width: 32rem; }
+.p012-controls button { font: inherit; min-height: 2.75rem; padding: .5rem 1rem; border: 2px solid #355c7d; border-radius: .4rem; color: #17364f; background: #fff; cursor: pointer; touch-action: manipulation; }
+.p012-controls button:disabled { cursor: default; opacity: .6; }
+.p012-controls button:focus-visible { outline: 3px solid #b64c00; outline-offset: 3px; }
+.p012-feedback { padding: 1rem; margin-block: 1rem; border: 2px solid #8a4900; border-radius: .4rem; background: #fff8ee; color: #492600; }
+.p012-feedback p { margin-top: 0; }
+.p012-source-figure { position: relative; margin: 0; max-width: 50rem; }
+.p012-source-figure canvas { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; }
+.p012-coordinate-overlay { position: absolute; inset: 0; width: 100%; height: auto; pointer-events: none; }

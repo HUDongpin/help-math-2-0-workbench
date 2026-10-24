@@ -1,0 +1,13 @@
+'use client';
+import type {AnimationModule} from '../contract';
+import {P038_TEACHING_SOURCE as SOURCE} from '../generated/nms-l02-p038-teaching-source-v1';
+import {P038_AUDIO_SOURCES} from '../nms-l02-p038-audio-source-v1';
+import {p038ModuleFrame,P038_SCENARIOS,type P038FrameState} from '../nms-l02-p038-frame-v1';
+import {P038_TEXT_BINDING,p038TextSnapshot} from '../nms-l02-p038-text-v1';
+import {NmsL2P038Renderer} from '../nms-l02-p038-renderer-v1';
+import {prepareP038Fonts} from '../nms-l02-p038-fonts-v1';
+const movie=Object.freeze({stage:Object.freeze({width:800,height:600}),fps:12,frameCount:10,durationMs:10000/12});
+const domains=Object.freeze([Object.freeze({id:'root',frameCount:10}),Object.freeze({id:'sprite-99',frameCount:467,rootFrame:6})]);
+const source=Object.freeze({version:1 as const,sourceSwfSha256:SOURCE.sourceSha256,audio:P038_AUDIO_SOURCES});
+const animationModule:AnimationModule<P038FrameState>&{privateP038Percent:typeof source}=Object.freeze({key:SOURCE.animationId,movie,maturity:'private-current-js',runtime:Object.freeze({...movie,defaultFrameDomain:'sprite-99',frameDomains:domains}),playbackMode:'once',scenarios:P038_SCENARIOS,defaultScenarioByFrameDomain:Object.freeze({root:'source-explanation','sprite-99':'source-explanation'}),audioCues:Object.freeze([]),Renderer:NmsL2P038Renderer,getFrameState:p038ModuleFrame,textPresentation:Object.freeze({schemaVersion:1,binding:P038_TEXT_BINDING,Renderer:NmsL2P038Renderer,getSnapshot:p038TextSnapshot,prepare:prepareP038Fonts}),privateP038Percent:source});
+export default animationModule;

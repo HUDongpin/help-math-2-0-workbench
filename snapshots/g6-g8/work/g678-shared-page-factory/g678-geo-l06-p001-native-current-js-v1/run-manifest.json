@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "kind": "g678-bounded-source-ir-run-v1",
+  "runId": "g678-geo-l06-p001-native-current-js-v1",
+  "checkedAt": "2026-09-24T08:48:50Z",
+  "deploymentScope": "local-only",
+  "source": {
+    "path": "G6-G8-shared/GEO001/L6/IR/L6IR01.swf",
+    "sha256": "8997176bb8c1f3e68a8011ee98f132ece217c881b2407b90b42ea4067de49c58",
+    "physicalRoot": "/Volumes/WestWorld/HELP MATH Related Files/AWS Grade-Classified Courseware"
+  },
+  "toolchain": {"ffdec": "26.2.1", "swfmill": "0.3.6", "python": "3.14.7"},
+  "inputs": [
+    {"path": "migrations/shared-geo001-l06-p001/audit/movie.xml", "sha256": "c08e2bb68aec6d90fcd89d6217d7fc87bd1fbb7ecd07411faf0f5badee8c694c"},
+    {"path": "migrations/shared-geo001-l06-p001/audit/ffdec-26.2.1/texts/140.txt", "sha256": "8f22aa91bb9c19b7f2577cbbd74c0fe3e4e6ecb0fe47497ddd0a6607803de4fc"},
+    {"path": "migrations/shared-geo001-l06-p001/audit/ffdec-26.2.1/texts/141.txt", "sha256": "8f22aa91bb9c19b7f2577cbbd74c0fe3e4e6ecb0fe47497ddd0a6607803de4fc"},
+    {"path": "scripts/build-g678-geo-l06-p001-ir.py", "sha256": "ae6a17d7a3c6fc9feb9fa7be2669234589dcc45c411f759f844634121027ef7b"}
+  ],
+  "output": {"path": "packages/demos/src/generated/geo001-l06-p001-source-ir-v1.json", "sha256": "3746a6bd350b804069337502b45b96fcb71bb18fb3ceb974ac2b6cc649b5e9a3"},
+  "checks": {
+    "sourceIrRebuild": "passed",
+    "exclusiveWriteRace": "passed",
+    "pureFrameState": "passed",
+    "scopedTypeScript": "passed",
+    "modernHostBrowser": "not-run",
+    "fullTypography": "not-run",
+    "originalRuntime": "not-run"
+  },
+  "productCalibrationPassed": false,
+  "scaleOutAuthorized": false,
+  "acceptanceEffects": {
+    "authoritativeOriginalRuntime": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "released": false,
+    "published": false
+  }
+}

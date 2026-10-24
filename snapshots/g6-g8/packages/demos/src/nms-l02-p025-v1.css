@@ -1,0 +1,39 @@
+.nms-l02-p025{box-sizing:border-box;min-width:0;width:100%;padding:clamp(.75rem,3vw,2rem);background:#f7fbff;color:#233649;border-radius:1rem;font-family:var(--lesson-text-font-body,'HELP Math Nunito Sans'),sans-serif;container-type:inline-size;line-height:1.5}
+.nms-l02-p025 *{box-sizing:border-box}
+.nms-l02-p025__header p{font-size:calc(1rem * var(--lesson-text-scale,1));color:#425b75;margin:0 0 .4em}
+.nms-l02-p025__header h2{font-family:var(--lesson-text-font-heading,'HELP Math Fredoka'),sans-serif;font-size:calc(1.6rem * var(--lesson-text-scale,1));line-height:1.25;margin:0 0 .7em;overflow-wrap:anywhere}
+.nms-l02-p025__fallback{font-size:calc(.9rem * var(--lesson-text-scale,1));overflow-wrap:anywhere}
+.nms-l02-p025__definition{min-height:4.5em;font-size:calc(1.25rem * var(--lesson-text-scale,1));line-height:1.7;margin:0 0 1rem;white-space:pre-wrap;overflow-wrap:anywhere}
+.nms-l02-p025__term{font:inherit;color:#125ca1;text-decoration:underline;text-underline-offset:.16em;display:inline;border:0;background:transparent;padding:0;cursor:pointer;white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
+.nms-l02-p025__term:focus-visible{outline:3px solid #1269b0;outline-offset:3px}
+.nms-l02-p025__term-pending{color:#125ca1}
+.nms-l02-p025__comparison{--bar-height:15rem;--cell-step:20%;--origin:10%;--bar-width:clamp(1rem,6cqi,3.2rem);--label-height:calc(4rem * var(--lesson-text-scale,1));--row-step:calc(var(--bar-height) + var(--label-height) + 2rem);position:relative;min-width:0;margin:0;height:calc(var(--bar-height) + var(--label-height) + 2rem);background:white;border:1px solid #bfd0df;border-radius:.75rem}
+.nms-l02-p025__bar{position:absolute;top:1rem;left:calc(var(--origin) + var(--col) * var(--progress) * var(--cell-step));transform:translateX(-50%);height:var(--bar-height);width:var(--bar-width)}
+.nms-l02-p025__bar svg{display:block;width:100%;height:100%}
+.nms-l02-p025__fraction{position:absolute;top:calc(var(--bar-height) + 1.4rem);left:calc(var(--origin) + var(--col) * var(--cell-step));transform:translateX(-50%);font-size:calc(1.3rem * var(--lesson-text-scale,1));line-height:1.1}
+.nms-l02-p025__equation{position:absolute;top:calc(var(--bar-height) + 1.4rem);left:2%;display:flex;align-items:center;gap:.25em;font-size:calc(1.3rem * var(--lesson-text-scale,1));line-height:1.1;max-width:96%}
+.nms-l02-p025 math{font-family:var(--lesson-text-font-math,'Cambria Math'),serif;font-size:1em}
+@container(max-width:32rem){
+ .nms-l02-p025__comparison{--cell-step:50%;--origin:25%;--bar-width:clamp(1.5rem,12cqi,3.2rem);height:calc(var(--row-step) * 3)}
+ .nms-l02-p025__bar{left:calc(var(--origin) + var(--small-col) * var(--progress) * var(--cell-step));top:calc(1rem + var(--small-row) * var(--progress) * var(--row-step))}
+ .nms-l02-p025__fraction{left:calc(var(--origin) + var(--small-col) * var(--cell-step));top:calc(var(--bar-height) + 1.4rem + var(--small-row) * var(--row-step))}
+}
+
+.nms-l02-p025__dialog{box-sizing:border-box;position:fixed;inset:0;width:min(38rem,calc(100vw - 2rem));max-height:calc(100dvh - 2rem);margin:auto;padding:clamp(.8rem,3vw,1.5rem);border:1px solid #9eb1c2;border-radius:1rem;color:#233649;background:#fff;font-family:var(--lesson-text-font-body,'HELP Math Nunito Sans'),sans-serif;font-size:calc(1.125rem * var(--lesson-text-scale,1));line-height:1.6;overflow:auto}
+.nms-l02-p025__dialog::backdrop{background:rgb(19 38 58/.55)}
+.nms-l02-p025__dialog h2{margin:0;font-family:var(--lesson-text-font-heading,'HELP Math Fredoka'),sans-serif;font-size:calc(1.5rem * var(--lesson-text-scale,1));overflow-wrap:anywhere}
+.nms-l02-p025__dialog p{overflow-wrap:anywhere}
+.nms-l02-p025__dialog math{font-size:1.1em}
+.nms-l02-p025__dialog button{max-width:100%;min-height:44px;min-width:80px;padding:.5rem 1rem;border:0;border-radius:.5rem;background:#174e8b;color:#fff;font:inherit;cursor:pointer;overflow-wrap:anywhere}
+.nms-l02-p025__dialog button:focus-visible{outline:3px solid #1269b0;outline-offset:3px}
+.nms-l02-p025__resume-hint{font-size:.9em}
+
+.nms-l02-p025__term{text-align:inherit}
+
+/* This page's native lesson controls follow the learner's text size. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p025']) .lesson-shell2__modern-toolbar > :is(button,label,a),
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p025']) .lesson-shell2__modern-toolbar label > span{max-inline-size:100%;overflow-wrap:anywhere;white-space:normal}
+@media(max-width:680px),(orientation:landscape) and (max-height:500px) and (max-width:1279px){
+ .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p025']) .lesson-shell2__modern-toolbar{grid-template-columns:repeat(auto-fit,minmax(min(100%,7rem),1fr))}
+}
+

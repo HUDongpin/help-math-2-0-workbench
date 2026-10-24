@@ -1,0 +1,2 @@
+/** Embedded source stream starts at main frame13; full decode, exact latency. */
+export const P006_AUDIO_SOURCE=Object.freeze({sourceSha256:'304bb247f277f8de9ff8a33145dd0c283986572f81640353b8b6f1b756c6a486',sourceBytes:58370,sampleRate:22050,channels:1,decodedSamples:258624,latencySamples:1673,stopSamples:279300,stopSeconds:152/12,firstBlockFrame:13,frames:153,fps:12,language:'und',segments:[{sourceStartSample:1673,sourceEndSample:258624,outputStartSample:22050,outputEndSample:279001}]}as const);

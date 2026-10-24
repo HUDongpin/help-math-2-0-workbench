@@ -1,0 +1,36 @@
+.p042-presentation{box-sizing:border-box;width:100%;max-width:64rem;margin:auto;padding:clamp(.75rem,2vw,1.5rem);color:#172c43;font-family:Arial,sans-serif;line-height:1.5}
+.p042-presentation *{box-sizing:border-box}
+.p042-presentation h2{font-size:1.5rem;line-height:1.3;overflow-wrap:anywhere;margin:0 0 .75rem}
+.p042-presentation__chart{display:grid;justify-items:center;gap:.5rem;margin:1rem 0}
+.p042-presentation__pie{width:min(12rem,70vw);aspect-ratio:1;border-radius:50%;border:2px solid #172c43}
+.p042-presentation__rows{display:grid;gap:.75rem}
+.p042-presentation__row{display:grid;grid-template-columns:minmax(6rem,1fr) minmax(8rem,1.5fr) minmax(16rem,3fr);align-items:center;gap:.75rem;background:#edfafb;border:1px solid #91b6be;border-radius:.5rem;padding:.75rem;min-width:0}
+.p042-presentation__row h3{font-size:1rem;margin:0;display:flex;align-items:center;gap:.5rem;overflow-wrap:anywhere}
+.p042-presentation__swatch{width:1rem;height:1rem;border:1px solid #172c43;flex-shrink:0}
+.p042-presentation__control{display:grid;gap:.35rem;min-width:0;font-size:.875rem}
+.p042-presentation__control input{width:100%;min-width:0;margin:0;min-height:2.75rem;accent-color:#174ea6;cursor:pointer}
+.p042-presentation__control input:focus-visible{outline:3px solid #174ea6;outline-offset:3px}
+.p042-presentation__control input:disabled{cursor:default}
+.p042-presentation__row dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,8rem),1fr));gap:.5rem;margin:0}
+.p042-presentation__row dt{font-size:.875rem;overflow-wrap:anywhere}
+.p042-presentation__row dd{margin:0;font-size:1.2rem;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.p042-presentation__linked{font-size:.875rem;margin:0}
+.p042-presentation__total{font-weight:bold;text-align:center}
+.p042-presentation [data-emphasis="true"]{outline:3px solid #9a6400;outline-offset:2px;background-color:#fff1b8;border-radius:.2rem}
+@media(max-width:48rem){.p042-presentation__row{grid-template-columns:minmax(0,1fr)}.p042-presentation__row dl{gap:.75rem}}
+@media(prefers-reduced-motion:reduce){.p042-presentation *{scroll-behavior:auto}}
+
+/* Keep this page's source-language notice within the modern heading width. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p042']) .lesson-shell2__page-heading > div:first-child{flex-wrap:wrap;min-inline-size:0}
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p042']) .lesson-shell2__page-heading > div:first-child > :is(h1,p){min-inline-size:0;max-inline-size:100%;overflow-wrap:anywhere;white-space:normal}
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p042']) .lesson-shell2__page-heading > div:first-child > h1 ~ p{flex-basis:100%}
+
+/* This page's native lesson controls follow the learner's text size. */
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p042']) .lesson-shell2__modern-toolbar > :is(button,label,a),
+.lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p042']) .lesson-shell2__modern-toolbar label > span{max-inline-size:100%;overflow-wrap:anywhere;white-space:normal}
+@media(max-width:680px),(orientation:landscape) and (max-height:500px) and (max-width:1279px){
+ .lesson-shell2[data-host-presentation='modern-wide'][data-modern-control-presentation='true']:has([data-source-real-world-runtime='shared-nms002-l02-p042']) .lesson-shell2__modern-toolbar{grid-template-columns:repeat(auto-fit,minmax(min(100%,7rem),1fr))}
+}
+
+
+

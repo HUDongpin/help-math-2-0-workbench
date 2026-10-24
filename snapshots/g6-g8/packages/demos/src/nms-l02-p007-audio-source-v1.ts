@@ -1,0 +1,2 @@
+/** Hash-locked embedded MP3: main35 frames3..312; source cycle312@12fps. */
+export const P007_AUDIO_SOURCE=Object.freeze({sourceSha256:'c18d9e82abbb6a741678299fa610fa9635390c91d20fdcd7e88be7ba4ff7a9b2',sourceBytes:128440,sampleRate:22050,channels:1,decodedSamples:569088,latencySamples:1673,stopSamples:573300,stopSeconds:26,firstBlockFrame:3,frames:312,fps:12,language:'und',segments:[{sourceStartSample:1673,sourceEndSample:569088,outputStartSample:3675,outputEndSample:571090}]}as const);

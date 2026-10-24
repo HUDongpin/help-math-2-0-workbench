@@ -1,0 +1,20 @@
+'use client';
+import{useEffect,useRef,type ComponentProps}from'react';
+import type{AnimationRendererProps}from'./contract';
+import{FixedExitHelpPresentationV1}from'./source-fixed-exit-help-presentation-v1';
+import{ALG_L07_P044_SOURCE as S,type P044SourceTerm,type P044Visual}from'./alg-l07-p044-source-v1';
+import{algL07P044Frame}from'./alg-l07-p044-frame-v1';
+import './alg-l07-p044-v1.css';
+type Props=Omit<ComponentProps<typeof FixedExitHelpPresentationV1<P044SourceTerm,328|409,P044Visual>>,'page'|'source'|'question'|'beforeAnswers'|'afterAnswers'|'compact'|'move'>;
+function Graph({view}:{view:Props['view']}){
+ const ref=useRef<HTMLDivElement>(null),g=S.graphs[0],b=g.viewBox,matrix=(m:readonly number[])=>`matrix(${m[0]*20} ${m[1]*20} ${m[2]*20} ${m[3]*20} ${m[4]} ${m[5]})`;
+ useEffect(()=>{const e=ref.current;if(!e)return;const center=()=>{if(e.clientWidth)e.scrollLeft=Math.max(0,(e.scrollWidth-e.clientWidth)/2);};center();const frame=requestAnimationFrame(center);return()=>cancelAnimationFrame(frame);},[]);
+ const pieces=view.visual.coordinate.filter(c=>c.alpha!>0),anchor=view.visual.coordinate.find(c=>c.characterId===412),label=pieces.map(c=>c.characterId===413?'−':c.text).join(' ');
+ return <div ref={ref} className="alg-l07-p044__scroll" role="region" tabIndex={0} aria-label={view.language==='es'?'Gráfico. Desplaza para ver todos los valores.':'Graph. Scroll to view all values.'} data-p044-graph-scroll="question"><div className="alg-l07-p044__plot" data-p044-plot="question" style={{opacity:view.visual.graphAlpha,aspectRatio:`${b[2]} / ${b[3]}`}}>
+  <svg viewBox={b.join(' ')} aria-hidden="true">{g.paths.map(p=><g key={p.sourceShapeId} transform={matrix(p.matrix)} data-source-shape={p.sourceShapeId}>{p.paths.map((path,i)=><path key={i} d={path.d} fill={path.fill} stroke={path.stroke} strokeWidth={path['stroke-width']} fillOpacity={path['fill-opacity']} strokeOpacity={path['stroke-opacity']} fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round"/>)}</g>)}{view.visual.graphOverlays.map(p=><g key={p.depth} transform={matrix(p.matrix)} opacity={p.alpha} data-source-shape={p.sourceShapeId}>{S.graphOverlaySources.find(s=>s.sourceShapeId===p.sourceShapeId)!.paths.map((path,i)=><path key={i} d={path.d} fill={path.fill} stroke={path.stroke} strokeWidth={path['stroke-width']} fillOpacity={path['fill-opacity']} strokeOpacity={path['stroke-opacity']} fillRule="evenodd"/>)}</g>)}</svg>
+  {g.labels.map((l,i)=><span key={i} className="alg-l07-p044__axis" data-lesson-text-block={`axis-question-${i}`} data-source-text-id={l.sourceTextId} style={{left:`${(l.x-b[0])*100/b[2]}%`,top:`${(l.y-b[1])*100/b[3]}%`}}>{l.text}</span>)}
+  {pieces.length>0&&anchor&&<span className="alg-l07-p044__coordinate" data-p044-coordinate="true" role="math" aria-label={label} style={{left:`${(anchor.x-b[0])*100/b[2]}%`,top:`${(anchor.y-b[1])*100/b[3]}%`}}>{view.visual.coordinate.map(c=><span key={c.characterId} aria-hidden="true" data-lesson-text-block={`coordinate-${c.characterId}`} data-source-text-id={c.sourceTextId} data-source-white-halo={c.characterId!==412&&view.visual.whiteHaloTargets.includes('coordinate-y')} style={{opacity:c.alpha}}>{c.alpha!>0?(c.characterId===413?'−':c.text):''}</span>)}</span>}
+ </div></div>;
+}
+export function AlgL07P044Presentation(props:Props){const v=props.view.visual;return <FixedExitHelpPresentationV1 {...props} page="p044" source={S} compact={v.answerAlpha.B>0&&v.answerAlpha.A===0&&v.answerAlpha.C===0&&v.answerAlpha.D===0} move={v.bMove} question={<>6 What is the <span data-source-term-flash={v.termFlash.includes('y-intercept')}>y-intercept</span> of the <span data-source-term-flash={v.termFlash.includes('Linear function')}>linear function</span> whose <span data-source-term-flash={v.termFlash.includes('Graph')}>graph</span> in shown?</>} beforeAnswers={v.graphAlpha>0&&<Graph view={props.view}/>}/>;}
+export function AlgL07P044Renderer(props:AnimationRendererProps){return <AlgL07P044Presentation view={algL07P044Frame(props.frame,{...props,frame:props.frame})}/>;}

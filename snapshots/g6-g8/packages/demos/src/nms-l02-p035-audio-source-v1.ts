@@ -1,0 +1,2 @@
+// Complete main46 source stream, full1036 frame intervals.
+export const P035_AUDIO_SOURCES={"46":{"sourceSha256":"b21ca497758b47d362fca34457a83a85bab6d3998e9a5e3073dcfc66cc6e7e70","sourceBytes":428610,"sampleRate":22050,"channels":1,"decodedSamples":1899072,"latencySamples":1673,"outputStartSample":3675,"outputEndSample":1901074,"totalSamples":1903650,"firstSourceFrame":3,"frameCount":1036}} as const;

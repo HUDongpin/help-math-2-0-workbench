@@ -1,0 +1,46 @@
+.alg-l07-p062{color:#14283e;font-family:Arial,sans-serif;font-size:1rem;line-height:1.5;max-width:100%;min-width:0;}
+.alg-l07-p062 *{box-sizing:border-box;}
+.alg-l07-p062 button{font:inherit;cursor:pointer;}
+.alg-l07-p062 button:disabled{cursor:default;}
+.alg-l07-p062 :focus-visible{outline:3px solid #155e75;outline-offset:3px;}
+.alg-l07-p062__question{padding:1.1rem;min-width:0;}
+.alg-l07-p062__progress{font-size:1rem;font-weight:700;margin:0 0 .6rem;}
+.alg-l07-p062__prompt{font-size:1.3rem;line-height:1.5;font-weight:500;margin:0 0 .8rem;overflow-wrap:anywhere;}
+.alg-l07-p062__prompt:focus:not(:focus-visible){outline:none;}
+.alg-l07-p062__body{display:grid;grid-template-columns:minmax(0,1fr);gap:1rem;min-width:0;margin-top:1rem;}
+.alg-l07-p062__stimulus{margin:0;min-width:0;justify-self:center;max-width:100%;width:29rem;}
+.alg-l07-p062__options{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:.8rem;min-width:0;}
+.alg-l07-p062__options>li{min-width:0;display:flex;flex-direction:column;gap:.35rem;}
+.alg-l07-p062__answer{display:flex;align-items:center;gap:.65rem;width:100%;height:100%;min-width:0;min-height:3rem;padding:.75rem;background:white;color:inherit;border:2px solid #abbcc9;border-radius:.5rem;text-align:left;}
+.alg-l07-p062__answer:not(:disabled):hover{background:#edf5f8;border-color:#155e75;}
+.alg-l07-p062__letter{flex:0 0 auto;display:grid;place-items:center;width:1.8em;height:1.8em;border-radius:50%;background:#ffec9d;color:#2f300a;font-weight:700;}
+.alg-l07-p062__answer-content{display:block;min-width:0;max-width:100%;flex:1;}
+.alg-l07-p062__audio{display:flex;flex-wrap:wrap;gap:.4rem;}
+.alg-l07-p062__audio button,.alg-l07-p062__actions button,.alg-l07-p062__finish button{min-height:2.75rem;padding:.45rem .75rem;border:1px solid #7893a5;border-radius:.4rem;background:#f5f9fc;color:inherit;overflow-wrap:anywhere;}
+.alg-l07-p062__audio button[aria-pressed=true]{background:#174b65;color:white;}
+.alg-l07-p062 .alg-l07-game__equation{display:block;overflow-x:auto;overflow-y:hidden;max-width:100%;padding:.15rem 0 .25rem;white-space:nowrap;font-size:1.2rem;}
+.alg-l07-p062__math{font-family:Arial,sans-serif;font-size:inherit;white-space:nowrap;}
+.alg-l07-p062__math>span{display:inline;}
+.alg-l07-p062__math sup{font-size:.75em;vertical-align:super;line-height:0;}
+.alg-l07-p062__fraction{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.15;margin:0 .12em;}
+.alg-l07-p062__fraction>span{padding:.05em .12em;}
+.alg-l07-p062__fraction>span+span{border-top:1px solid currentColor;}
+.alg-l07-p062__radical{display:inline-flex;align-items:baseline;}
+.alg-l07-p062__radical>span+span{border-top:1px solid currentColor;padding:0 .1em;}
+.alg-l07-p062 .alg-l07-game__graph-scroll{display:block;max-width:100%;overflow-x:auto;overflow-y:hidden;padding:.35rem;}
+.alg-l07-p062 .alg-l07-game__graph{display:block;width:100%;min-width:var(--p062-graph-min,19rem);height:auto;max-height:none;aspect-ratio:1/1;}
+.alg-l07-p062 .alg-l07-game__graph text{font-family:Arial,sans-serif;fill:#111;}
+.alg-l07-p062 .alg-l07-game__table-scroll{display:block;max-width:100%;overflow:auto;}
+.alg-l07-p062 .alg-l07-game__table{display:table;margin:auto;border-collapse:collapse;min-width:13rem;font-size:1.15rem;}
+.alg-l07-p062 .alg-l07-game__table>[role=row]{display:table-row;}
+.alg-l07-p062 .alg-l07-game__table>[role=row]>span{display:table-cell;text-align:center;border:1px solid #29455b;padding:.3rem .65rem;}
+.alg-l07-p062__finish{padding:min(1.25rem,5%);margin:min(1rem,4%);border:2px solid #c14f4b;border-radius:.6rem;background:white;overflow-wrap:anywhere;}
+.alg-l07-p062__finish h3{font-size:1.3rem;font-weight:600;}
+.alg-l07-p062__actions{display:flex;flex-wrap:wrap;gap:.5rem;padding:1rem;}
+@container(min-width:42rem){.alg-l07-p062__options[data-graph-choices=true]{grid-template-columns:repeat(2,minmax(0,1fr));}.alg-l07-p062__body[data-stimulus=graph]{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);align-items:start;}}
+.alg-l07-p062{container-type:inline-size;}
+
+.alg-l07-p062__graph-sizing{display:block;min-width:0;max-width:100%;}
+
+.alg-l07-p062__source-scene{overflow:auto;max-width:100%;}
+.alg-l07-p062__source-scene svg{display:block;min-width:50rem;width:100%;height:auto;font-family:Arial,sans-serif;}

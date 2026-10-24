@@ -1,0 +1,5 @@
+'use client';
+import type {AnimationRendererProps} from './contract';
+import {p024ModuleFrame} from './nms-l02-p024-frame-v1';
+import {NmsL2P024Presentation,P024SourceArt,P024WrongBody} from './nms-l02-p024-presentation-v1';
+export function NmsL2P024Renderer(p:AnimationRendererProps){const s=p024ModuleFrame(p.frame,{...p,frame:p.frame});return <div data-animation-id={s.animationId} data-flash-frame={s.frame} data-flash-frame-domain={s.frameDomain} data-flash-root-frame={s.rootFrame} data-flash-scenario={s.scenario} data-flash-language={s.language} data-flash-replay={s.replay} data-flash-seed={s.seed} data-source-alignment="candidate-not-accepted">{s.component?(s.assetShape?<div style={{width:150,height:220}}><P024SourceArt shape={s.assetShape}/></div>:s.domain==='93'?<div className="nms-l02-p024__feedback lesson-text-presentation"><P024WrongBody/></div>:s.domain==='77'&&s.frame>=2?<p className="nms-l02-p024__correct lesson-text-presentation">Correct!!!</p>:null):<NmsL2P024Presentation state={s.session} language={p.uiLanguage??s.language} capture onDrop={()=>{}} onCloseFeedback={()=>{}} onTerm={()=>{}}/>}</div>;}

@@ -1,0 +1,2 @@
+// Generated exact XML page title, separate from SWFshape2.
+export const P038_XML_PAGE_TITLE={"sourceXml":{"path":"G6-G8-shared/NMS002/L2/index.xml","bytes":12845,"sha256":"550aee4286e8a701caf3dc58360f709a606561db8b766057ac36720833d7ff61"},"globalPageOrdinal":38,"sourcePageReference":"IN/L2IN23.swf","title":"Percent","sourceSubtitleAttributes":{"EngSubTitleName":"12. Percent","SpanSubTitleName":"Por ciento / Porcentaje","SubTitleButtonName":"L2IN23"},"spanishTitle":"Por ciento / Porcentaje"} as const;

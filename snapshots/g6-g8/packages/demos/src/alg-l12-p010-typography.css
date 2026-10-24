@@ -1,0 +1,50 @@
+.p010-source-native {
+  color: #152a3b;
+  background: #fff;
+  padding: clamp(.75rem, 2vw, 1.5rem);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.p010-native-title {font-size: 1.5rem; line-height: 1.3; margin: 0 0 1rem;}
+.p010-native-prose {margin: 1rem 0; min-height: 1.8em;}
+.p010-native-term {
+  font: inherit;
+  line-height: inherit;
+  display: inline;
+  color: #154fa8;
+  background: transparent;
+  border: 0;
+  border-radius: .2rem;
+  padding: .25rem .1rem;
+  margin: 0;
+  text-decoration: underline;
+  text-underline-offset: .15em;
+  cursor: pointer;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.p010-native-term:focus-visible, .p010-graph-scroll:focus-visible {outline: 3px solid #145aa8; outline-offset: 3px;}
+.p010-native-term:disabled {color: #385c88; cursor: default;}
+.p010-native-figure {margin: 1rem 0; min-width: 0;}
+.p010-graph-scroll {overflow: auto; max-width: 100%; border: 1px solid #d3dfeb; border-radius: .5rem;}
+/* Enlarge source geometry by 1.25 at a 17px root so native 1rem labels
+   fit the authored coordinate boxes. Local figure scrolling preserves layout. */
+.p010-graph-window {position: relative; width: calc(720rem / 13.6); height: calc(310rem / 13.6); overflow: hidden; margin: 0 auto; background: #b8d8f7;}
+.p010-graph-window canvas {position: absolute; left: calc(-40rem / 13.6); top: calc(-185rem / 13.6); width: calc(800rem / 13.6); height: calc(600rem / 13.6); max-width: none;}
+.p010-graph-label {
+  position: absolute;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  line-height: 1;
+  color: #111;
+  transform: translateY(-.8em);
+  white-space: pre;
+  overflow-wrap: normal;
+  user-select: text;
+  pointer-events: none;
+}
+
+.p010-graph-label[data-callout="true"] {font-size:1.25rem;}

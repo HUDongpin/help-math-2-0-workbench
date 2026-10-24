@@ -1,0 +1,78 @@
+'use client';
+
+import {createHfrAnimationModule} from '../hfr/module';
+import type {HfrPageMeta} from '../hfr/types';
+import page from '../hfr-pages/shared-dat001-l07-p031';
+
+const meta: HfrPageMeta = {
+  "key": "shared-dat001-l07-p031",
+  "lessonKey": "shared-dat001-l07",
+  "dataUrl": "/flash-assets/g678-local/shared-dat001-l07-p031/hfr/shared-dat001-l07-p031.data.json",
+  "sourceSha256": "de6b6b3f118009aa81d457997bceb3fd5566b8c2dfeb7e72bc69dbc0fad5d594",
+  "compiler": "hfr-compile 0.1.3-candidate",
+  "sourceRootFrameCount": 10,
+  "stage": {
+    "width": 800,
+    "height": 600,
+    "fps": 12
+  },
+  "progressTimeline": 218,
+  "progressFrameCount": 373,
+  "completionMode": "timeline",
+  "lessonPagesByFile": {
+    "L7IR01": "shared-dat001-l07-p001",
+    "L7RW02": "shared-dat001-l07-p002",
+    "L7RW03": "shared-dat001-l07-p003",
+    "L7RW04": "shared-dat001-l07-p004",
+    "L7RW05": "shared-dat001-l07-p005",
+    "L7VB02": "shared-dat001-l07-p006",
+    "L7VB03": "shared-dat001-l07-p007",
+    "L7VB04": "shared-dat001-l07-p008",
+    "L7VB05": "shared-dat001-l07-p009",
+    "L7VB06": "shared-dat001-l07-p010",
+    "L7VB07": "shared-dat001-l07-p011",
+    "L7IN02": "shared-dat001-l07-p012",
+    "L7IN03": "shared-dat001-l07-p013",
+    "L7IN04": "shared-dat001-l07-p014",
+    "L7IN05": "shared-dat001-l07-p015",
+    "L7IN06": "shared-dat001-l07-p016",
+    "L7IN07": "shared-dat001-l07-p017",
+    "L7IN08": "shared-dat001-l07-p018",
+    "L7IN09": "shared-dat001-l07-p019",
+    "L7IN10": "shared-dat001-l07-p020",
+    "L7IN11": "shared-dat001-l07-p021",
+    "L7IN12": "shared-dat001-l07-p022",
+    "L7IN13": "shared-dat001-l07-p023",
+    "L7IN14": "shared-dat001-l07-p024",
+    "L7IN15": "shared-dat001-l07-p025",
+    "L7IN16": "shared-dat001-l07-p026",
+    "L7IN17": "shared-dat001-l07-p027",
+    "L7TI02": "shared-dat001-l07-p028",
+    "L7TI03": "shared-dat001-l07-p029",
+    "L7TI04": "shared-dat001-l07-p030",
+    "L7TI05": "shared-dat001-l07-p031",
+    "L7TI06": "shared-dat001-l07-p032",
+    "L7TI07": "shared-dat001-l07-p033",
+    "L7TI08": "shared-dat001-l07-p034",
+    "L7TI09": "shared-dat001-l07-p035",
+    "L7TI10": "shared-dat001-l07-p036",
+    "L7TI11": "shared-dat001-l07-p037",
+    "L7TI12": "shared-dat001-l07-p038",
+    "L7GS01": "shared-dat001-l07-p039",
+    "L7GS02": "shared-dat001-l07-p040",
+    "L7TS02": "shared-dat001-l07-p041",
+    "L7TS03": "shared-dat001-l07-p042",
+    "L7TS04": "shared-dat001-l07-p043",
+    "L7TS05": "shared-dat001-l07-p044",
+    "L7TS06": "shared-dat001-l07-p045",
+    "L7TS07": "shared-dat001-l07-p046",
+    "L7TS08": "shared-dat001-l07-p047",
+    "L7TS09": "shared-dat001-l07-p048",
+    "L7FQ01": "shared-dat001-l07-p049",
+    "L7FQ02": "shared-dat001-l07-p050"
+  },
+  "previousKey": "shared-dat001-l07-p030",
+  "nextKey": "shared-dat001-l07-p032",
+  "hasSpanishNarration": true
+};
+export default createHfrAnimationModule(meta, page);

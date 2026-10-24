@@ -1,0 +1,1 @@
+import{createFunctionQuestionFrames}from'../alg-l07-function-question-frame-v1';import{ALG_L07_P059_SOURCE as S}from'../alg-l07-p059-source-v1';export const getFrameState=createFunctionQuestionFrames(S).frame;

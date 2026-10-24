@@ -1,0 +1,22 @@
+import type{RuntimeContext}from'./contract';import type{LessonTextBinding}from'./lesson-text-contract';import{buildLessonTextSnapshot}from'./lesson-text-snapshot';
+import{ALG_L08_P014_SOURCE as S,p014InitialState,p014Visual,type P014State}from'./alg-l08-p014-state-v1';
+export const P014_DOMAINS=Object.freeze([{id:'root',frameCount:10},{id:'sprite-69',frameCount:334,rootFrame:6}]);
+export const P014_MOVIE=Object.freeze({stage:Object.freeze({width:800,height:600}),fps:12,frameCount:10,durationMs:10000/12});
+export const P014_DEFAULTS=Object.freeze({'root':'source-intercept','sprite-69':'source-intercept'});
+export const P014_TEXT_BINDING:LessonTextBinding=Object.freeze({schemaVersion:1,version:'alg-l08-p014-native-source-v1',animationId:S.animationId,placementId:S.animationId,sourceSwfSha256:S.sourceSha256,template:'complex-figure',blocks:Object.freeze([
+ {id:'course-title',sourceTextIds:[],sourceShapeIds:[1],role:'heading',language:'en',readingOrder:0,valueSource:'source-static'},
+ {id:'activity-title',sourceTextIds:[],sourceShapeIds:[1],role:'title',language:'en',readingOrder:1,valueSource:'source-static'},
+ ...[5,45].map((id,i)=>({id:`paragraph-${i}`,sourceTextIds:[`character-${id}`],role:'body' as const,language:'en' as const,readingOrder:i+2,valueSource:'maintained-page-state' as const})),
+ ...[[55,60,61],[58,62,64]].map((ids,i)=>({id:`callout-${i}`,sourceTextIds:ids.map(id=>`character-${id}`),role:'label' as const,language:'en' as const,readingOrder:i+4,valueSource:'maintained-page-state' as const})),
+ ...S.graph.labels.map((l,i)=>({id:`axis-${i}`,sourceTextIds:l.sourceCharacterId===43?['character-43','character-52','character-53']:l.sourceCharacterId===39?['character-39','character-50']:[l.sourceTextId],role:'label' as const,language:'en' as const,readingOrder:i+6,valueSource:'maintained-page-state' as const})),
+ ...[[12],[15],[13],[16,68]].map((ids,i)=>({id:`equation-${i}`,sourceTextIds:ids.map(id=>`character-${id}`),role:'label' as const,language:'en' as const,readingOrder:i+49,valueSource:'maintained-page-state' as const}))]as const)});
+export function p014View(state:P014State,context:RuntimeContext,ready=true){const visual=p014Visual(state.mainFrame),values:Record<string,{text:string;visible:boolean}>={};const set=(id:string,text:string,visible=true)=>values[id]={text,visible:ready&&visible&&Boolean(text.trim())};
+ set('course-title','Graphing Linear Equations:');set('activity-title','Vocabulary');visual.paragraphs.forEach((text,i)=>set(`paragraph-${i}`,text));
+ for(let i=0;i<2;i++){const callout=visual.callouts[i];set(`callout-${i}`,callout?.text??'',Boolean(callout?.alpha));}
+ S.graph.labels.forEach((l,i)=>{const source=l.sourceCharacterId===43?visual.origin:l.sourceCharacterId===39?visual.yAxis:l;set(`axis-${i}`,source?.text??'',Boolean(source)&&visual.labelStyles[i].alpha>0&&visual.graphAlpha>0);});
+ [visual.equation.prefix,visual.equation.slope,visual.equation.middle,visual.equation.intercept].forEach((text,i)=>set(`equation-${i}`,text,visual.equation.alpha>0));
+ const frameDomain=context.frameDomain??'sprite-69',rootFrame=frameDomain==='root'?context.frame:6;
+ return Object.freeze({animationId:S.animationId,state,ready,visual,values,frame:context.frame,frameDomain,rootFrame,scenario:context.scenario,language:context.lang,seed:context.seed,replay:context.replay??0,traceId:context.traceId??'',requirementId:context.requirementId??'',entryStateSha256:context.entryStateSha256??'',sourceTextIds:Object.freeze([...new Set(P014_TEXT_BINDING.blocks.filter(b=>values[b.id].visible).flatMap(b=>b.sourceTextIds))]),textSnapshot:buildLessonTextSnapshot(P014_TEXT_BINDING,{...context,frameDomain,rootFrame},values)});
+}
+export function algL08P014Frame(frame:number,context:RuntimeContext={frame,frameDomain:'sprite-69',scenario:'source-intercept',lang:'en',seed:0}){const domain=context.frameDomain??'sprite-69',spec=P014_DOMAINS.find(d=>d.id===domain);if(!spec||!Number.isSafeInteger(frame)||frame<1||frame>spec.frameCount||context.scenario!=='source-intercept'||!['en','es'].includes(context.lang)||!Number.isSafeInteger(context.seed)||context.seed<0||context.seed>4294967295||!Number.isSafeInteger(context.replay??0)||(context.replay??0)<0)throw Error('invalid-p014-frame-identity');return p014View({...p014InitialState(),mainFrame:domain==='sprite-69'?frame:1,replay:context.replay??0},{...context,frame,frameDomain:domain},domain!=='root'||frame>=6);}
+export type P014View=ReturnType<typeof p014View>;
