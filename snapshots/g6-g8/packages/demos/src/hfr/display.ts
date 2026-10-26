@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AVM1, ASObject, ASFunction, ASArray, NOTFOUND, PROPS, type Ctx } from "./avm";
 import type { PageData, PageScripts, HostCall } from "./types";
+import {sourceObjectFacts,sourceActionTrace,recordSourceAction,sourcePointerOutcome,type SourceActionTrace,type SourcePointerOutcome} from "./source-observation";
 
 export const DYNAMIC_DEPTH = 16384;
 export type Matrix = { a: number; b: number; c: number; d: number; tx: number; ty: number };
@@ -521,7 +522,7 @@ export class Runtime extends AVM1 {
     if (o instanceof MovieClip) return (o.clipActions || []).some((ca: any) => ca.flags & (CLIP_EVENTS.press | CLIP_EVENTS.release | CLIP_EVENTS.rollOver)) || ["onRelease", "onPress", "onRollOver"].some((h) => o.get(h) instanceof ASFunction);
     return false;
   }
-  buttonConds(o: any, bits: number): void { if (!(o instanceof ButtonObj)) return; for (const c of o.def.conds || []) if (c.b0 & bits) this.safe(() => this.runScript(o.parentClip, c.script)); }
+  buttonConds(o: any, bits: number, observed?:SourceActionTrace): void { if (!(o instanceof ButtonObj)) return; for (const c of o.def.conds || []) if (c.b0 & bits) {recordSourceAction(observed,c.script);this.safe(() => this.runScript(o.parentClip, c.script));} }
   buttonSound(o: any, idx: number): void { const s = o?.def?.sounds?.[idx]; if (s) this.startSound(s.id, s.info, o); }
   pointerMove(x: number, y: number): void {
     this.mouse.x = x; this.mouse.y = y;
@@ -538,25 +539,29 @@ export class Runtime extends AVM1 {
     }
     this.runQueue();
   }
-  pointerDown(): void {
+  pointerDown(observe=false): SourcePointerOutcome|undefined {
+    const tickBefore=this.tickCount,errorsBefore=this.errors.length,trace=observe?sourceActionTrace():undefined;let eventHandlerAttempted=false;
     this.mouse.down = true;
     for (const c of this.allObjects()) if (c.isClip) this.fireClipActions(c, "mouseDown");
     this.broadcast(this.mouseListeners, "onMouseDown");
-    const o = this.topClickableAt(this.mouse.x, this.mouse.y); this.pressed = o;
-    if (o) { this.buttonConds(o, 0x04); this.fireEvent(o, "press"); if (o instanceof ButtonObj) o.setState("down"); this.buttonSound(o, 2); this.focus = o; }
+    const o = this.topClickableAt(this.mouse.x, this.mouse.y); this.pressed = o;const target=observe?sourceObjectFacts(o):null,point=[this.mouse.x,this.mouse.y],hitTestPerformed=Boolean(o&&this.hitTestFn);
+    if (o) { this.buttonConds(o, 0x04, trace); eventHandlerAttempted=this.fireEvent(o, "press"); if (o instanceof ButtonObj) o.setState("down"); this.buttonSound(o, 2); this.focus = o; }
     this.runQueue();
+    return observe?sourcePointerOutcome(this,'press',target,tickBefore,errorsBefore,null,trace!,eventHandlerAttempted,point,hitTestPerformed):undefined;
   }
-  pointerUp(): void {
+  pointerUp(observe=false): SourcePointerOutcome|undefined {
+    const tickBefore=this.tickCount,errorsBefore=this.errors.length,trace=observe?sourceActionTrace():undefined;let eventHandlerAttempted=false,inside:boolean|null=null,hitTestPerformed=false;
     this.mouse.down = false;
     for (const c of this.allObjects()) if (c.isClip) this.fireClipActions(c, "mouseUp");
     this.broadcast(this.mouseListeners, "onMouseUp");
-    const o = this.pressed; this.pressed = null;
+    const o = this.pressed; this.pressed = null;const target=observe?sourceObjectFacts(o):null,point=[this.mouse.x,this.mouse.y];
     if (o && !o.removed) {
-      const inside = this.hitTestFn ? this.hitTestFn(o, this.mouse.x, this.mouse.y) : true;
-      if (inside) { this.buttonConds(o, 0x08); this.fireEvent(o, "release"); if (o instanceof ButtonObj) o.setState("over"); this.buttonSound(o, 3); }
-      else { this.buttonConds(o, 0x40); this.fireEvent(o, "releaseOutside"); if (o instanceof ButtonObj) o.setState("up"); }
+      hitTestPerformed=Boolean(this.hitTestFn);inside = this.hitTestFn ? this.hitTestFn(o, this.mouse.x, this.mouse.y) : true;
+      if (inside) { this.buttonConds(o, 0x08, trace); eventHandlerAttempted=this.fireEvent(o, "release"); if (o instanceof ButtonObj) o.setState("over"); this.buttonSound(o, 3); }
+      else { this.buttonConds(o, 0x40, trace); eventHandlerAttempted=this.fireEvent(o, "releaseOutside"); if (o instanceof ButtonObj) o.setState("up"); }
     }
     this.runQueue();
+    return observe?sourcePointerOutcome(this,'release',target,tickBefore,errorsBefore,inside,trace!,eventHandlerAttempted,point,hitTestPerformed):undefined;
   }
   keyDown(code: number, ascii: number): void { this.keysDown.add(code); this.lastKey = { code, ascii }; for (const c of this.allObjects()) if (c.isClip) this.fireClipActions(c, "keyDown"); this.broadcast(this.keyListeners, "onKeyDown"); this.runQueue(); }
   keyUp(code: number): void { this.keysDown.delete(code); for (const c of this.allObjects()) if (c.isClip) this.fireClipActions(c, "keyUp"); this.broadcast(this.keyListeners, "onKeyUp"); this.runQueue(); }

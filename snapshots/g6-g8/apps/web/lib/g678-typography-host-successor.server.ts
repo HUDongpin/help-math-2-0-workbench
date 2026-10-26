@@ -4,6 +4,7 @@ import {existsSync,lstatSync,readFileSync,realpathSync} from 'node:fs';
 import path from 'node:path';
 import {isDeepStrictEqual as exact} from 'node:util';
 import {currentFrozen16LocalAuthorityScope} from './g678-frozen16-default-scope.server';
+import {isG678CompiledLocalQaEnabled} from './g678-preview-policy';
 
 export type HostPin=Readonly<{path:string;bytes:number;sha256:string}>;
 export const TYPOGRAPHY_HOST_SUCCESSOR=Object.freeze({"path": "catalog/product-bridge-calibrations/g678-typography-shared-host-successor-v3.json", "bytes": 9211, "sha256": "eb5fb37a2defc57db45fa9ec421e09533fc2a2d398263321fb0c9446803fe16e"});
@@ -22,7 +23,7 @@ function readExactPin(root:string,pin:HostPin):Buffer{
  return bytes;
 }
 function readManifest(root:string):CheckedPackage|null{
- if(process.env.NODE_ENV==='production'||!currentFrozen16LocalAuthorityScope())return null;
+ if((process.env.NODE_ENV==='production'&&!isG678CompiledLocalQaEnabled())||!currentFrozen16LocalAuthorityScope())return null;
  const file=path.resolve(root,TYPOGRAPHY_HOST_SUCCESSOR.path);if(!existsSync(file))return null;
  const a=lstatSync(file,{bigint:true});demand(a.isFile()&&!a.isSymbolicLink()&&a.nlink===1n&&realpathSync(file)===file,'ordinary manifest');
  const bytes=readFileSync(file),b=lstatSync(file,{bigint:true});demand(['dev','ino','size','mtimeNs','ctimeNs','mode','nlink'].every(k=>a[k as keyof typeof a]===b[k as keyof typeof b])&&bytes.length===TYPOGRAPHY_HOST_SUCCESSOR.bytes&&createHash('sha256').update(bytes).digest('hex')===TYPOGRAPHY_HOST_SUCCESSOR.sha256,'manifest bytes');

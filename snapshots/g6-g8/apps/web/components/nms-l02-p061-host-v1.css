@@ -1,0 +1,10 @@
+.nms-p061-runtime { width:100%; min-width:0; overflow-wrap:anywhere; }
+.nms-p061-controls { display:flex; flex-wrap:wrap; gap:.5rem; padding:.6rem; }
+.nms-p061-runtime button { min-height:44px; min-width:44px; border:1px solid #3a617a; border-radius:8px; padding:.55rem .85rem; background:#fff; color:#153d59; font:inherit; line-height:1.4; cursor:pointer; }
+.nms-p061-runtime button:hover:not(:disabled) { background:#e5f3fb; }
+.nms-p061-runtime button:focus-visible { outline:3px solid #156fbc; outline-offset:3px; }
+.nms-p061-runtime button:disabled { cursor:default; opacity:.5; }
+.nms-p061-answers { display:grid; gap:.6rem; }
+.nms-p061-hint { max-width:min(36rem,calc(100vw - 2rem)); max-height:calc(100dvh - 2rem); overflow:auto; border:2px solid #395878; border-radius:12px; padding:1rem; }
+.nms-p061-hint::backdrop { background:rgb(14 31 47 / .4); }
+@media (prefers-reduced-motion:reduce) { .nms-p061-runtime * { scroll-behavior:auto; } }

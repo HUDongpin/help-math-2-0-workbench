@@ -1,0 +1,1 @@
+import{validateFixedExitSlopeAdmission}from'./alg-l07-fixed-exit-slope-admission-v1.mjs';export const P043_ID='shared-alg001-l07-p043',P043_CALIBRATION='g678-alg-l07-p043-current-js-20261005-v1';export function validateP043Admission(root,packet,registration){return validateFixedExitSlopeAdmission(root,packet,registration,43,P043_CALIBRATION);}

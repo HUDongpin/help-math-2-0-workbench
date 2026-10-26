@@ -1,0 +1,15 @@
+"use client";
+
+import {createSourceStaticCanvasCandidate} from "../source-static-canvas-candidate";
+import {SHARED_DAT001_L03_P030_CONFIG, SHARED_DAT001_L03_P030_SOURCE} from "../timelines/shared-dat001-l03-p030";
+
+const candidate = createSourceStaticCanvasCandidate(SHARED_DAT001_L03_P030_CONFIG);
+const animationModule = Object.freeze({...candidate.module, maturity: "private-current-js" as const});
+
+export {SHARED_DAT001_L03_P030_SOURCE};
+export const SHARED_DAT001_L03_P030_MOVIE = candidate.movie;
+export const SHARED_DAT001_L03_P030_RUNTIME = candidate.runtime;
+export const SHARED_DAT001_L03_P030_SOURCE_CONTRACT = candidate.sourceContract;
+export const SHARED_DAT001_L03_P030_SCENARIOS = candidate.scenarios;
+export const SHARED_DAT001_L03_P030_RENDERER = candidate.Renderer;
+export default animationModule;

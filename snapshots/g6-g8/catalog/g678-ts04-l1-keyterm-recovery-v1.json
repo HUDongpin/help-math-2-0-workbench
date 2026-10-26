@@ -1,0 +1,872 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "g678-ts04-l1-keyterm-recovery-v1",
+  "recoveryId": "g678-ts04-l1-keyterm-recovery-v1",
+  "status": "private-custody-recovery-verified-local-only-product-calibration-pending",
+  "inputs": {
+    "catalog": {
+      "path": "catalog/g678-shared-catalog.v1.json",
+      "bytes": 12534064,
+      "sha256": "a1692c2a86c6771dcb104f59195b5bfdd2b5281cceff0aaeb63a3aabcf4a5657"
+    },
+    "ts04Audit": {
+      "path": "catalog/g678-ts04-family-audit-v1.json",
+      "bytes": 464032,
+      "sha256": "b870f9738cdc1089b72c7506116204871c38f52906b1f0126b9f5f4761a75821"
+    },
+    "builder": {
+      "path": "scripts/audit-g678-ts04-l1-keyterms.mjs",
+      "bytes": 17132,
+      "sha256": "5c04962db305ee0f56aab3d6c6af7b64f48b874bb743d73d0068eeb8338f56cc"
+    },
+    "appliedCustodyReceipt": {
+      "path": "receipts/aws-newhelpprogram-canonical-reconciliation-applied-v1.json",
+      "bytes": 3621,
+      "sha256": "ac7395de456a771bf52ad2bcbd2eac95714fce46f745826fdd65c9e1c3fc3aa3"
+    },
+    "acquisitionReceipt": {
+      "path": "receipts/s3-object-acquisition-v1.json",
+      "bytes": 5176,
+      "sha256": "55e2b16b979d251c7b6d179913f72a88a10b845d8b832f27f3d035b96142c755"
+    },
+    "memberManifest": {
+      "path": "manifests/private/zip64-member-manifest-copy1.jsonl",
+      "bytes": 130765530,
+      "sha256": "13339a31d4f978d70d267591133e5f4b83c6abe59d5d5e3c4898ef931d03f79d"
+    }
+  },
+  "recoveryRoot": {
+    "environmentVariable": "PRIVATE_RECOVERY_CONTAINERS",
+    "realPathSha256": "19aee0979467e46965ef9088e1b47a288f83342d6afda99cc54c3716e631de38",
+    "device": "16777244",
+    "inode": "19482375",
+    "mode": 448,
+    "accessBoundary": "owner-private-custody-root",
+    "sourceMutationPerformed": false
+  },
+  "custodyBoundary": {
+    "status": "AWS_CANONICAL_RECONCILIATION_APPLIED_CUSTODY_ONLY",
+    "boundary": "CUSTODY_ONLY_NO_PROMOTION",
+    "canonicalSourcePromotionAuthorized": false,
+    "localOnlyDerivedProductCalibrationAuthorized": false
+  },
+  "selectedSources": [
+    {
+      "localeRole": "en",
+      "reference": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+      "containerMember": {
+        "path": "NewHelpProgram/HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+        "ordinal": 79794,
+        "bytes": 345838,
+        "sha256": "14d454f4c1c1a6f0939fb80b454fd3e22890eabb4a730c6bfa7efa1d9a2e5e5b"
+      },
+      "casObject": {
+        "path": "objects/sha256/14/14d454f4c1c1a6f0939fb80b454fd3e22890eabb4a730c6bfa7efa1d9a2e5e5b",
+        "bytes": 345838,
+        "sha256": "14d454f4c1c1a6f0939fb80b454fd3e22890eabb4a730c6bfa7efa1d9a2e5e5b"
+      }
+    },
+    {
+      "localeRole": "es",
+      "reference": "HELP_KEYTERMS/KT/XML/L1KTS01.xml",
+      "containerMember": {
+        "path": "NewHelpProgram/HELP_KEYTERMS/KT/XML/L1KTS01.xml",
+        "ordinal": 79803,
+        "bytes": 344456,
+        "sha256": "3b437b42e75536fa8b4f110325e366c27fbe10a871439d4797650cda4238b407"
+      },
+      "casObject": {
+        "path": "objects/sha256/3b/3b437b42e75536fa8b4f110325e366c27fbe10a871439d4797650cda4238b407",
+        "bytes": 344456,
+        "sha256": "3b437b42e75536fa8b4f110325e366c27fbe10a871439d4797650cda4238b407"
+      }
+    }
+  ],
+  "terms": [
+    {
+      "id": "solve",
+      "sourceKeyAttribute": "Solve",
+      "labels": {
+        "en": "Solve",
+        "es": "Resolver"
+      },
+      "definitions": {
+        "en": "To solve the problem is another way of finding the answer. To find out what 2 + 3 is, you have to add. Adding is how you solve the problem.",
+        "es": "Resolver el problema es otra manera de encontrar la respuesta. Para saber cuánto es 2 + 3, usted tiene que sumar. Sumar es la forma de resolver el problema."
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "problem,Problem"
+        ],
+        "subLinksEs": [
+          "problema,Problema",
+          "forma,Forma"
+        ],
+        "exampleSwf": "Solve.swf"
+      },
+      "exactEntrySha256": "da7a09446fc407610029ed79d09f69ce3a2659573063b1ab1a8c8cf639cf0616",
+      "sourceEntrySha256": {
+        "en": "da7a09446fc407610029ed79d09f69ce3a2659573063b1ab1a8c8cf639cf0616",
+        "es": "8e2edca32a3914565998fb3a4ada78200b74b031fb7b1d873a0e42bc016a10f7"
+      }
+    },
+    {
+      "id": "problem",
+      "sourceKeyAttribute": "Problem",
+      "labels": {
+        "en": "Problem",
+        "es": "Problema"
+      },
+      "definitions": {
+        "en": "A question to solve or answer. For example: Evaluate the equation y = 2x + 3",
+        "es": "Una pregunta para resolver o contestar. Por ejemplo: Evalúe la ecuación y = 2x + 3"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "question,Question",
+          "solve,Solve",
+          "Evaluate,Evaluate",
+          "equation,Equation"
+        ],
+        "subLinksEs": [
+          "pregunta,pregunta",
+          "resolver,Resolver",
+          "Evalúe,Evaluar",
+          "ecuación,Ecuaciòn"
+        ],
+        "exampleSwf": "Problem.swf"
+      },
+      "exactEntrySha256": "e762abae15c4bef0d77c49d87f7633f76b439dd6d6ef95a7eb458dc903c97364",
+      "sourceEntrySha256": {
+        "en": "e762abae15c4bef0d77c49d87f7633f76b439dd6d6ef95a7eb458dc903c97364",
+        "es": "bded28ca43433e9ab3aa5f40f63efdd81f3d18e8bfe3a30857abc2e5f7d7016a"
+      }
+    },
+    {
+      "id": "strategies",
+      "sourceKeyAttribute": "Strategies",
+      "labels": {
+        "en": "Strategies",
+        "es": "Estrategias"
+      },
+      "definitions": {
+        "en": "A plan of action. For example: Juanita plans to use a calculator to solve her math problem.",
+        "es": "Un plan de acción. Por ejemplo: Juanita planea usar la calculadora para resolver el problema de matemática."
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "solve,Solve",
+          "problem,Problem"
+        ],
+        "subLinksEs": [
+          "resolver,Resolver",
+          "problema,Problema"
+        ],
+        "exampleSwf": "Strategies.swf"
+      },
+      "exactEntrySha256": "2eeb876b3af170411d89a7f83c7e8139a16652f4a83791974da500e643a545f2",
+      "sourceEntrySha256": {
+        "en": "2eeb876b3af170411d89a7f83c7e8139a16652f4a83791974da500e643a545f2",
+        "es": "4118a33cd4f25303cfdca8a055f6df09664a62c9fcedf4a6880cc2e917ae8a6b"
+      }
+    },
+    {
+      "id": "data-tables",
+      "sourceKeyAttribute": "Data Tables",
+      "labels": {
+        "en": "Data Tables",
+        "es": "Tablas de datos"
+      },
+      "definitions": {
+        "en": "Data tables are organized by columns and rows created to easily view information.",
+        "es": "Las tablas de datos están organizadas en columnas y filas creadas para visualizar la información más fácilmente."
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "organized,Organize",
+          "columns,Column",
+          "rows,Row",
+          "created,Create",
+          "information,Information"
+        ],
+        "subLinksEs": [
+          "organizadas,Organizar",
+          "columnas,Columna",
+          "filas,Fila",
+          "información,Información"
+        ],
+        "exampleSwf": "Data_tables.swf"
+      },
+      "exactEntrySha256": "f7f27438aefa9e1d6b0864e5a8ded45ecbd27fb36b4b541a3b85f01d4c28f2e4",
+      "sourceEntrySha256": {
+        "en": "f7f27438aefa9e1d6b0864e5a8ded45ecbd27fb36b4b541a3b85f01d4c28f2e4",
+        "es": "73722030a36f642d8d35ad39cc5bcf26dff2ccafdeca0f2c13cbe63619ff5a60"
+      }
+    },
+    {
+      "id": "equation",
+      "sourceKeyAttribute": "Equation",
+      "labels": {
+        "en": "Equation",
+        "es": "Ecuación"
+      },
+      "definitions": {
+        "en": "A mathematical sentence where both sides of the equal sign (=) have the same value (are equal). For example: 9 + 9 = 3 x 6.",
+        "es": "Enunciado de una igualdad en la cual ambos lados del signo igual (=) tienen el mismo valor (son iguales). Por ejemplo: 9 + 9 = 3 x 6."
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "sentence,Sentence",
+          "side,Side",
+          "equal,Equivalent",
+          "sign,Sign",
+          "value,Value"
+        ],
+        "subLinksEs": [
+          "Enunciado,Enunciado",
+          "lados,Lado",
+          "signo,Signo",
+          "valor,Valor",
+          "iguales,Equivalente"
+        ],
+        "exampleSwf": "Equation.swf"
+      },
+      "exactEntrySha256": "1953b79992cc007771895437c529494dafbcf2d83ff55f53047f4cca6408a2d7",
+      "sourceEntrySha256": {
+        "en": "1953b79992cc007771895437c529494dafbcf2d83ff55f53047f4cca6408a2d7",
+        "es": "04ca990e99821c237052b0e5d4bc9fcf7df46d5b45e2fa4f02d600027134779e"
+      }
+    },
+    {
+      "id": "pattern",
+      "sourceKeyAttribute": "Pattern",
+      "labels": {
+        "en": "Pattern",
+        "es": "Patrón"
+      },
+      "definitions": {
+        "en": "A repeated set or sequence of numbers, shapes or designs arranged according to a rule. For example: the pattern 10, 20, 30, 40, etc. is a set of numbers following the rule “count by 10’s starting at 10”.",
+        "es": "Una secuencia o conjunto de números que se repiten, las formas o diseños ordenados de acuerdo a alguna regla. Por ejemplo: el patrón 10, 20, 30, 40, etc es un conjunto de números que siguen la regla de \"contar de diez en diez empezando con el 10\"."
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "set,Set",
+          "shape,Shape",
+          "arranged,Arrange"
+        ],
+        "subLinksEs": [
+          "conjunto,Conjunto",
+          "formas,Forma",
+          "ordenados,Ordenar"
+        ],
+        "exampleSwf": "Pattern.swf"
+      },
+      "exactEntrySha256": "b6b849f98ce793df4c7ad6712b1d68558d732ca50fd2858d3d17078f3d9e2ade",
+      "sourceEntrySha256": {
+        "en": "b6b849f98ce793df4c7ad6712b1d68558d732ca50fd2858d3d17078f3d9e2ade",
+        "es": "71ef32d6cf83b3b93b4438f5043f9852518e8ff2eab2491ab1df108e4c7f8c22"
+      }
+    },
+    {
+      "id": "table",
+      "sourceKeyAttribute": "Table",
+      "labels": {
+        "en": "Table",
+        "es": "Cuadro"
+      },
+      "definitions": {
+        "en": "A diagram, graph or table showing information in an ordered way.",
+        "es": "Un diagrama, gráfica o tabla que presenta información en una manera ordenada."
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "digaram,Diagram",
+          "graph,Graph",
+          "information,Information"
+        ],
+        "subLinksEs": [
+          "diagrama,Diagrama",
+          "gráfica,Gráfica",
+          "información,Información"
+        ],
+        "exampleSwf": "Table.swf"
+      },
+      "exactEntrySha256": "081a2c4ea0b894ae00461629f8b7a18eaaaf574555a7632dc6a728dc08785ec2",
+      "sourceEntrySha256": {
+        "en": "081a2c4ea0b894ae00461629f8b7a18eaaaf574555a7632dc6a728dc08785ec2",
+        "es": "2ff6d22407847ff5cae3f47d8f1bec7976a80ccd685e56fc8be35ff5706ff7ea"
+      }
+    },
+    {
+      "id": "simple-simpler-simplest",
+      "sourceKeyAttribute": "Simple / Simpler / Simplest",
+      "labels": {
+        "en": "Simple / Simpler / Simplest",
+        "es": "Simple / Más Simple / El Más simple"
+      },
+      "definitions": {
+        "en": "To put something in its easiest form to understand. For example: the simplest form of the fraction 8/32 is 1/4, that is 4/16 = 2/8 = 1/4.",
+        "es": "Es poner algo en su forma más fácil de entender. Por ejemplo: la forma más simple de la fracción 8/32 es 1/4, a la que se llega por la simplificación 4/16 = 2/8 = 1/4."
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "form,Form",
+          "fraction,Fraction"
+        ],
+        "subLinksEs": [
+          "forma,Forma",
+          "fracción,Fraction"
+        ],
+        "exampleSwf": "Simple_simpler_simplest.swf"
+      },
+      "exactEntrySha256": "10f429503dd7d1f069f733a4646a89fb3c450ccef9362c9bcd086a92293b0938",
+      "sourceEntrySha256": {
+        "en": "10f429503dd7d1f069f733a4646a89fb3c450ccef9362c9bcd086a92293b0938",
+        "es": "8fed854a46809c25f6d2df47db1d58e40eccdb447d2e906e7c230e4c5a7ce5a5"
+      }
+    }
+  ],
+  "eligibility": {
+    "eligiblePlacementCount": 15,
+    "blockedPlacementCount": 29,
+    "eligiblePlacementSetSha256": "418e024455e2f45c6eef70d273625385e45b19d70223ed2c12eb59dd3ef74155",
+    "eligible": [
+      {
+        "animationId": "shared-alg001-l01-p049",
+        "stableLessonKey": "shared-alg001-l01",
+        "moduleCode": "ALG001",
+        "lessonNumber": 1,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        }
+      },
+      {
+        "animationId": "shared-alg001-l02-p051",
+        "stableLessonKey": "shared-alg001-l02",
+        "moduleCode": "ALG001",
+        "lessonNumber": 2,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        }
+      },
+      {
+        "animationId": "shared-alg001-l03-p049",
+        "stableLessonKey": "shared-alg001-l03",
+        "moduleCode": "ALG001",
+        "lessonNumber": 3,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        }
+      },
+      {
+        "animationId": "shared-alg001-l04-p046",
+        "stableLessonKey": "shared-alg001-l04",
+        "moduleCode": "ALG001",
+        "lessonNumber": 4,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        }
+      },
+      {
+        "animationId": "shared-alg001-l05-p056",
+        "stableLessonKey": "shared-alg001-l05",
+        "moduleCode": "ALG001",
+        "lessonNumber": 5,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        }
+      },
+      {
+        "animationId": "shared-alg001-l06-p053",
+        "stableLessonKey": "shared-alg001-l06",
+        "moduleCode": "ALG001",
+        "lessonNumber": 6,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        }
+      },
+      {
+        "animationId": "shared-alg001-l07-p055",
+        "stableLessonKey": "shared-alg001-l07",
+        "moduleCode": "ALG001",
+        "lessonNumber": 7,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        }
+      },
+      {
+        "animationId": "shared-alg001-l08-p043",
+        "stableLessonKey": "shared-alg001-l08",
+        "moduleCode": "ALG001",
+        "lessonNumber": 8,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        }
+      },
+      {
+        "animationId": "shared-alg001-l09-p034",
+        "stableLessonKey": "shared-alg001-l09",
+        "moduleCode": "ALG001",
+        "lessonNumber": 9,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        }
+      },
+      {
+        "animationId": "shared-alg001-l10-p045",
+        "stableLessonKey": "shared-alg001-l10",
+        "moduleCode": "ALG001",
+        "lessonNumber": 10,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        }
+      },
+      {
+        "animationId": "shared-alg001-l11-p037",
+        "stableLessonKey": "shared-alg001-l11",
+        "moduleCode": "ALG001",
+        "lessonNumber": 11,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        }
+      },
+      {
+        "animationId": "shared-alg001-l12-p045",
+        "stableLessonKey": "shared-alg001-l12",
+        "moduleCode": "ALG001",
+        "lessonNumber": 12,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        }
+      },
+      {
+        "animationId": "shared-dat001-l01-p049",
+        "stableLessonKey": "shared-dat001-l01",
+        "moduleCode": "DAT001",
+        "lessonNumber": 1,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        }
+      },
+      {
+        "animationId": "shared-geo001-l01-p052",
+        "stableLessonKey": "shared-geo001-l01",
+        "moduleCode": "GEO001",
+        "lessonNumber": 1,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        }
+      },
+      {
+        "animationId": "shared-nms002-l01-p040",
+        "stableLessonKey": "shared-nms002-l01",
+        "moduleCode": "NMS002",
+        "lessonNumber": 1,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        }
+      }
+    ],
+    "blocked": [
+      {
+        "animationId": "shared-dat001-l02-p046",
+        "stableLessonKey": "shared-dat001-l02",
+        "moduleCode": "DAT001",
+        "lessonNumber": 2,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L2KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L2KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-dat001-l03-p056",
+        "stableLessonKey": "shared-dat001-l03",
+        "moduleCode": "DAT001",
+        "lessonNumber": 3,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L3KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L3KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-dat001-l04-p032",
+        "stableLessonKey": "shared-dat001-l04",
+        "moduleCode": "DAT001",
+        "lessonNumber": 4,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L4KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L4KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-dat001-l05-p054",
+        "stableLessonKey": "shared-dat001-l05",
+        "moduleCode": "DAT001",
+        "lessonNumber": 5,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L5KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L5KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-dat001-l06-p039",
+        "stableLessonKey": "shared-dat001-l06",
+        "moduleCode": "DAT001",
+        "lessonNumber": 6,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L6KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L6KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-dat001-l07-p043",
+        "stableLessonKey": "shared-dat001-l07",
+        "moduleCode": "DAT001",
+        "lessonNumber": 7,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L7KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L7KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-dat001-l08-p027",
+        "stableLessonKey": "shared-dat001-l08",
+        "moduleCode": "DAT001",
+        "lessonNumber": 8,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L8KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L8KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l02-p044",
+        "stableLessonKey": "shared-geo001-l02",
+        "moduleCode": "GEO001",
+        "lessonNumber": 2,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L2KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L2KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l03-p042",
+        "stableLessonKey": "shared-geo001-l03",
+        "moduleCode": "GEO001",
+        "lessonNumber": 3,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L3KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L3KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l04-p037",
+        "stableLessonKey": "shared-geo001-l04",
+        "moduleCode": "GEO001",
+        "lessonNumber": 4,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L4KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L4KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l05-p044",
+        "stableLessonKey": "shared-geo001-l05",
+        "moduleCode": "GEO001",
+        "lessonNumber": 5,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L5KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L5KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l06-p047",
+        "stableLessonKey": "shared-geo001-l06",
+        "moduleCode": "GEO001",
+        "lessonNumber": 6,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L6KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L6KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l07-p056",
+        "stableLessonKey": "shared-geo001-l07",
+        "moduleCode": "GEO001",
+        "lessonNumber": 7,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L7KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L7KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l08-p040",
+        "stableLessonKey": "shared-geo001-l08",
+        "moduleCode": "GEO001",
+        "lessonNumber": 8,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L8KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L8KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l09-p037",
+        "stableLessonKey": "shared-geo001-l09",
+        "moduleCode": "GEO001",
+        "lessonNumber": 9,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L9KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L9KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l10-p035",
+        "stableLessonKey": "shared-geo001-l10",
+        "moduleCode": "GEO001",
+        "lessonNumber": 10,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L10KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L10KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l11-p045",
+        "stableLessonKey": "shared-geo001-l11",
+        "moduleCode": "GEO001",
+        "lessonNumber": 11,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L11KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L11KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l12-p032",
+        "stableLessonKey": "shared-geo001-l12",
+        "moduleCode": "GEO001",
+        "lessonNumber": 12,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L12KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L12KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l02-p057",
+        "stableLessonKey": "shared-nms002-l02",
+        "moduleCode": "NMS002",
+        "lessonNumber": 2,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L2KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L2KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l03-p049",
+        "stableLessonKey": "shared-nms002-l03",
+        "moduleCode": "NMS002",
+        "lessonNumber": 3,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L3KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L3KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l04-p038",
+        "stableLessonKey": "shared-nms002-l04",
+        "moduleCode": "NMS002",
+        "lessonNumber": 4,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L4KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L4KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l05-p042",
+        "stableLessonKey": "shared-nms002-l05",
+        "moduleCode": "NMS002",
+        "lessonNumber": 5,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L5KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L5KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l06-p044",
+        "stableLessonKey": "shared-nms002-l06",
+        "moduleCode": "NMS002",
+        "lessonNumber": 6,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L6KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L6KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l07-p045",
+        "stableLessonKey": "shared-nms002-l07",
+        "moduleCode": "NMS002",
+        "lessonNumber": 7,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L7KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L7KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l08-p053",
+        "stableLessonKey": "shared-nms002-l08",
+        "moduleCode": "NMS002",
+        "lessonNumber": 8,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L8KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L8KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l09-p046",
+        "stableLessonKey": "shared-nms002-l09",
+        "moduleCode": "NMS002",
+        "lessonNumber": 9,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L9KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L9KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l10-p042",
+        "stableLessonKey": "shared-nms002-l10",
+        "moduleCode": "NMS002",
+        "lessonNumber": 10,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L10KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L10KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l11-p040",
+        "stableLessonKey": "shared-nms002-l11",
+        "moduleCode": "NMS002",
+        "lessonNumber": 11,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L11KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L11KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l12-p058",
+        "stableLessonKey": "shared-nms002-l12",
+        "moduleCode": "NMS002",
+        "lessonNumber": 12,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L12KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L12KTS01.xml"
+        },
+        "blocker": "lesson-referenced-key-term-XML-not-recovered"
+      }
+    ]
+  },
+  "productCalibrationPassed": false,
+  "scaleOutAuthorized": false,
+  "registrationCandidatePlacementCount": 0,
+  "acceptanceEffects": {
+    "canonicalSourcePromoted": false,
+    "currentJavaScriptRegistered": false,
+    "behaviorAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "released": false,
+    "published": false
+  },
+  "limitations": [
+    "The two XML objects are private custody evidence and are not promoted into the canonical source tree.",
+    "Only 15 TS04 placements reference the recovered L1 English and Spanish XML pair; the other 29 remain blocked.",
+    "Legacy sublinks and example SWFs are recorded but are not yet implemented or accepted.",
+    "This recovery does not establish runtime, audio, visual, human, Owner, strict, release, or publication acceptance."
+  ]
+}

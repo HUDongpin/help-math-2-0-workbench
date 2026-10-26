@@ -1,0 +1,26 @@
+import assert from 'node:assert/strict';
+import {mkdir,readFile,writeFile} from 'node:fs/promises';
+import path from 'node:path';
+import {chromium} from 'playwright';
+import {ROOT,pin,encode} from './lib/g678-nms-l01-p023-generator-v1.mjs';
+const TASK='/Volumes/American Dream/hudongpin/helpmath-g678-completion-20260909-01a08222',B=TASK+'/nms-l01-p023-behavior-source-v1',OUT=TASK+'/nms-l01-p023-canvas-v1',ID='shared-nms002-l01-p023';
+const runtime=path.join(ROOT,'work/g678-shared-page-factory/g678-nms-l01-p023-current-js-v1/members',ID,'canvas-renderer.js'),specPath=TASK+'/nms-l01-p023-source-spec-v1.json',rawPath=B+'/source/canvas/sprites/DefineSprite_59/frames.html',helperPath=B+'/source/canvas/sprites/DefineSprite_59/canvas.js';
+const paths=[runtime,specPath,rawPath,helperPath,'scripts/qa-g678-nms-l01-p023-canvas.mjs'].map(p=>path.resolve(ROOT,p)),bind=()=>Promise.all(paths.map(async p=>pin(p,await readFile(p)))),inputs=await bind();
+const html=(await readFile(rawPath,'utf8')).replace(/\r\n?/gu,'\n');let definitions=html.slice(html.indexOf('var scalingGrids = {};'),html.indexOf('\nvar frame = -1;'));const header=definitions.match(/function sprite59\(ctx,ctrans,frame,ratio,time\)\{\s*ctx.save\(\);\s*ctx.transform\(1,0,0,1,([-0-9.]+),([-0-9.]+)\);/u);assert(header);const offset=[401.3-Number(header[1]),244.25-Number(header[2])];for(const oid of [5,46,54]){const a=definitions.indexOf('function shape'+oid+'('),z=definitions.indexOf('\n}',a)+2,mask=definitions.slice(a,z),fill=mask.match(/ctx.fillStyle=[^\n]+/u)[0];assert.equal((mask.match(/ctx.fillStyle=/gu)||[]).length,1);definitions=definitions.slice(0,a)+mask.replace(fill,'ctx.fillStyle="rgba(0,0,0,1)";')+definitions.slice(z);}
+
+await mkdir(OUT);const receipt={schemaVersion:1,animationId:ID,status:'running',scope:'Every generated source frame compared with independently placed static FFDec drawing; source exclusive-mask alpha semantics normalized in each. No original ActionScript or Flash runtime executed.',inputs,mainFrames:0,pixelComparisons:[],screenshots:[],errors:[],registered:false,registrationScope:"unregistered engineering candidate at comparison time",originalRuntimeAccepted:false,audioAccepted:false};
+const browser=await chromium.launch({headless:true});try{
+ const page=await browser.newPage({viewport:{width:800,height:600}});await page.route('**/*',r=>{receipt.errors.push('unexpected:'+r.request().url());return r.abort();});page.on('pageerror',e=>receipt.errors.push(e.message));page.on('console',m=>{if(['error','warning'].includes(m.type()))receipt.errors.push(m.text());});
+ await page.setContent('<body style="margin:0"><canvas id="source" width="800" height="600"></canvas><canvas id="myCanvas" width="800" height="600" style="display:none"></canvas></body>');
+ await page.addScriptTag({path:helperPath});await page.addScriptTag({content:'var canvas=document.getElementById("myCanvas"),ctx=canvas.getContext("2d",{willReadFrequently:true});enhanceContext(ctx);var ctrans=new cxform(0,0,0,0,255,255,255,255);'+definitions});await page.addScriptTag({path:runtime});await page.evaluate(id=>window.HELP_MATH_CANVAS_ASSETS[id].ready(),ID);
+ const snapshots=[1, 6, 102, 110, 118, 123, 166, 172, 233, 245, 305, 318, 338, 345, 349, 350, 355, 360, 364, 365, 493, 768, 784, 785, 891, 936, 960, 972, 1004, 1026, 1027, 1030];
+ for(let frame=1;frame<=1030;frame++){
+  const row=await page.evaluate(({ID,frame,offset})=>{
+   const target=document.getElementById('source'),asset=window.HELP_MATH_CANVAS_ASSETS[ID],state=asset.render(target,{frame,scenario:'source-static-frame',lang:'en',seed:0});ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle='#b8d8f7';ctx.fillRect(0,0,800,600);ctx.save();ctx.transform(1,0,0,1,...offset);sprite59(ctx,ctrans,frame-1,0,0);ctx.restore();
+   const compare=document.createElement('canvas');compare.width=800;compare.height=600;const cc=compare.getContext('2d',{willReadFrequently:true});cc.drawImage(target,0,0);const expected=ctx.getImageData(0,0,800,600).data,actual=cc.getImageData(0,0,800,600).data;let differentChannels=0;for(let i=0;i<actual.length;i++)if(actual[i]!==expected[i])differentChannels++;
+   return {frame,domain:state.frameDomain,localFrame:state.localFrame,domFrame:target.dataset.flashFrame,differentChannels};
+  },{ID,frame,offset});assert.equal(row.domain,'sprite-59');assert.equal(row.localFrame,frame);assert.equal(row.domFrame,String(frame));assert.equal(row.differentChannels,0,`frame${frame}`);receipt.mainFrames++;receipt.pixelComparisons.push(row);
+  if(snapshots.includes(frame)){const p=path.join(OUT,`frame-${frame}.png`);await page.locator('#source').screenshot({path:p});receipt.screenshots.push(pin(p,await readFile(p)));}
+ }
+ assert.deepEqual(receipt.errors,[]);receipt.status='passed';
+}catch(error){receipt.status='failed';receipt.failure=error.stack;process.exitCode=1;}finally{await browser.close();receipt.inputsUnchanged=JSON.stringify(await bind())===JSON.stringify(inputs);if(!receipt.inputsUnchanged){receipt.status='failed';process.exitCode=1;}await writeFile(OUT+'/receipt.json',encode(receipt),{flag:'wx'});console.log(encode({out:OUT,status:receipt.status,frames:receipt.mainFrames,screenshots:receipt.screenshots.length,failure:receipt.failure}));}

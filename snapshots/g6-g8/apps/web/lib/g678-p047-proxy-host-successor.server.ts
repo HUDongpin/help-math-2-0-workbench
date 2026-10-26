@@ -4,6 +4,7 @@ import {createHash} from 'node:crypto';
 import path from 'node:path';
 import {isDeepStrictEqual as exact} from 'node:util';
 import {currentFrozen16LocalAuthorityScope} from './g678-frozen16-default-scope.server';
+import {isG678CompiledLocalQaEnabled} from './g678-preview-policy';
 type Pin=Readonly<{path:string;bytes:number;sha256:string}>;
 export const P047_PROXY_SUCCESSOR=Object.freeze({path:'catalog/product-bridge-calibrations/g678-p047-proxy-host-successor-v4.json',bytes:1807,sha256:'989dafe0c17624be3818d70e23d332aa1a7e5390984dcb212b1d35154d7be379'});
 export const P047_DAT_L02_COMPOSED_SUCCESSOR=Object.freeze({path:'catalog/product-bridge-calibrations/g678-p047-dat-l02-p002-proxy-composed-successor-v1.json',bytes:1216,sha256:'999537d438007cb49c9ed9076fecca3a8c8d3764c07bd15c13459ee268cefec3'});
@@ -55,7 +56,7 @@ export function composeP006AdmissionProxy(predecessor:string):string{
  * and the exact new proxy/route closure. The old physical reader still hashes
  * each returned file. No new bytes are ever returned under the old digest. */
 export function resolveP047ProxyHostPins(root:string,pins:readonly Pin[]):readonly Pin[]{
- if(process.env.NODE_ENV==='production'||!currentFrozen16LocalAuthorityScope()||!existsSync(path.join(root,P047_PROXY_SUCCESSOR.path)))return pins;
+ if((process.env.NODE_ENV==='production'&&!isG678CompiledLocalQaEnabled())||!currentFrozen16LocalAuthorityScope()||!existsSync(path.join(root,P047_PROXY_SUCCESSOR.path)))return pins;
  const manifest=JSON.parse(read(root,P047_PROXY_SUCCESSOR).toString()) as {schemaVersion:number;kind:string;phase:string;scope:string;original:Pin;witness:Pin;currentFiles:Pin[];acceptanceEffects:Record<string,boolean>};
  demand(manifest.schemaVersion===1&&manifest.kind==='p047-quiz-proxy-host-successor-v1'&&manifest.phase===PHASE&&manifest.scope==='local-only-p047-audio-route'&&exact(manifest.original,ORIGINAL),'exact successor scope');
  demand(manifest.witness.path==='work/g678-shared-host-successors/p047-quiz-proxy-v1/predecessor/apps/web/proxy.ts'&&manifest.witness.bytes===ORIGINAL.bytes&&manifest.witness.sha256===ORIGINAL.sha256,'historical witness binding');

@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {p040PrepareSourcePcm} from '../src/nms-l02-p040-audio-pcm-v1';
+test('source samples preserved exactlyonce across explicit frame6gap',()=>{const samples=Float32Array.from({length:800640},(_,i)=>i+1);const out=p040PrepareSourcePcm(samples);assert.equal(out.length,808500);assert(out.subarray(0,7350).every(x=>x===0));assert.deepEqual(out.subarray(7350,9187),samples.subarray(1673,3510));assert(out.subarray(9187,11025).every(x=>x===0));assert.deepEqual(out.subarray(11025,808155),samples.subarray(3510));assert(out.subarray(808155).every(x=>x===0));});
+test('bad and silent decodes failclosed',()=>{assert.throws(()=>p040PrepareSourcePcm(new Float32Array(10)),/DECODE/);assert.throws(()=>p040PrepareSourcePcm(new Float32Array(800640)),/SILENT/);const data=new Float32Array(800640);data[0]=NaN;assert.throws(()=>p040PrepareSourcePcm(data),/NONFINITE/);});

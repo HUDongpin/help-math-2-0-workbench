@@ -1,0 +1,550 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "g678-alg-l11-behavior10-tranche-b-source-divergence-v1",
+  "decisionId": "g678-alg-l11-behavior10-tranche-b-source-divergence-v1",
+  "status": "exact-3-maintained-candidate-stale-overlay-suppression-authorized-all-downstream-gates-closed",
+  "inputs": {
+    "reviewedSourceAudit": {
+      "path": "catalog/g678-alg-l11-behavior10-tranche-b-audit-v1.json",
+      "bytes": 139507,
+      "sha256": "2b45cee5d1503d9e98521b5ca0518500a29f8bc43a0b1c84145016dccc5289b8"
+    },
+    "sourceAuditBuilder": {
+      "path": "scripts/audit-g678-alg-l11-behavior10-tranche-b.mjs",
+      "bytes": 54426,
+      "sha256": "5e6ccbec8fc5e8b92d3547484a2e1596967517aab61b8fac282a9294a29b515b"
+    },
+    "diagnosticRun": {
+      "path": "work/g678-shared-page-factory/g678-alg-l11-behavior10-tranche-b-audit-v1/run-manifest.json",
+      "bytes": 138379,
+      "sha256": "832624ad441120ed1986b7dffd6f7ac0e2688e7ad8cf69c33f28c305ae5ab106"
+    },
+    "evidenceInventory": {
+      "path": "work/g678-shared-page-factory/g678-alg-l11-behavior10-tranche-b-audit-v1/evidence-inventory.json",
+      "bytes": 274118,
+      "sha256": "df7b3b3962f0d046b7bef9c42b5d16222841d25f24982f8b8f1ab06803d402b6",
+      "fileCountBeforeInventoryAndManifest": 1451
+    }
+  },
+  "scope": {
+    "behavior10PlacementCount": 10,
+    "exactDivergencePlacementCount": 3,
+    "exactDivergencePlacementIds": [
+      "shared-alg001-l11-p040",
+      "shared-alg001-l11-p041",
+      "shared-alg001-l11-p042"
+    ],
+    "noDivergencePlacementCount": 7,
+    "noDivergencePlacementIds": [
+      "shared-alg001-l11-p026",
+      "shared-alg001-l11-p027",
+      "shared-alg001-l11-p028",
+      "shared-alg001-l11-p029",
+      "shared-alg001-l11-p030",
+      "shared-alg001-l11-p031",
+      "shared-alg001-l11-p032"
+    ]
+  },
+  "maintainedCandidateSuppressionAuthorizedPlacementCount": 3,
+  "sourceDivergenceDecisionEstablishedCount": 3,
+  "originalRuntimeDispositionEstablishedCount": 0,
+  "entries": [
+    {
+      "animationId": "shared-alg001-l11-p040",
+      "familyId": "l11-guided-tutorial-choice",
+      "source": {
+        "path": "G6-G8-shared/ALG001/L11/TS/L11TS07.swf",
+        "bytes": 543508,
+        "sha256": "d6f115a52d6778b04891bb4b9f991a60718f17553a947536eb813ed10d0375b5"
+      },
+      "sourceEvidence": {
+        "finalQuizFrame": 812,
+        "correctHelp": {
+          "role": "source-controlled-help-popup",
+          "instanceName": "Mc_Popup",
+          "characterId": 335,
+          "sprite": {
+            "characterId": 335,
+            "frameCount": 1,
+            "openingTagBytes": 100,
+            "openingTagSha256": "4e906de645a42e258fb01b8a0f2bff9cc816f622c7dda830038679883e934e29"
+          },
+          "finalQuizPlacement": {
+            "instanceName": "Mc_Popup",
+            "characterId": 335,
+            "depth": 549,
+            "ratio": 811,
+            "translateX": 7388,
+            "translateY": -1086,
+            "bytes": 507,
+            "sha256": "06ca548458a2dec03e139a06137cf628fcf32248ae5432321ca2086bb11e0d0d"
+          },
+          "frameSvg": {
+            "path": "shared-alg001-l11-p040/help-popup-svg/DefineSprite_335/1.svg",
+            "bytes": 79698,
+            "sha256": "19fecfb08ff8a8b52deeadf280b4e183599a2d080d3d4cf5fbdc9de1c578b377"
+          },
+          "exactActionScriptReferenceCount": 2,
+          "actionScriptReferences": [
+            {
+              "path": "shared-alg001-l11-p040/ffdec-export/scripts/DefineButton2_13/BUTTONCONDACTION on(release).as",
+              "bytes": 106,
+              "sha256": "b0087663b7df3fef95b307be9dcc1c24066dc45634f0febf94fd0f3411706dd8",
+              "matchCount": 1,
+              "visibilityAssignment": "Mc_Popup._visible = true;"
+            },
+            {
+              "path": "shared-alg001-l11-p040/ffdec-export/scripts/DefineSprite_351/frame_812/DoAction.as",
+              "bytes": 93,
+              "sha256": "64fb7604de9127107fff9630ff3a550a6bccd0b48c2743097e637c68555d4629",
+              "matchCount": 1,
+              "visibilityAssignment": "Mc_Popup._visible = false;"
+            }
+          ],
+          "closeLifecycleScript": {
+            "path": "shared-alg001-l11-p040/ffdec-export/scripts/DefineButton2_303/BUTTONCONDACTION on(release).as",
+            "bytes": 109,
+            "sha256": "11bcd7e208cd1ffaf805db93a144ed2f16db3de3b13b202bbcc550291c201ad2",
+            "closesCurrentHelpSurface": true
+          }
+        },
+        "staleAngleOverlay": {
+          "role": "case-sensitive-stale-angle-overlay",
+          "instanceName": "Mc_PopUp",
+          "characterId": 350,
+          "sprite": {
+            "characterId": 350,
+            "frameCount": 70,
+            "openingTagBytes": 101,
+            "openingTagSha256": "ef171277bdc13e54a891c0055bf21214ef3216c249c08c5eb2a103f5d4347b3e"
+          },
+          "finalQuizPlacement": {
+            "instanceName": "Mc_PopUp",
+            "characterId": 350,
+            "depth": 617,
+            "ratio": 811,
+            "translateX": 7992,
+            "translateY": -2842,
+            "bytes": 507,
+            "sha256": "50529a590d203d8306847ad53ef74eb44ce172429d2c47d409fbbf44bcfc2b4d"
+          },
+          "frameSvg": {
+            "path": "shared-alg001-l11-p040/stale-angle-overlay-svg/DefineSprite_350/1.svg",
+            "bytes": 4939,
+            "sha256": "e154a8d2d388fcc5d2a2e349424af50945dac76e603739c36d163fc324d3e5c0"
+          },
+          "exactActionScriptReferenceCount": 0,
+          "controlledByExtractedActionScript": false,
+          "sourceStaticVisibility": "present-without-local-hide-script",
+          "originalRuntimeDispositionEstablished": false
+        }
+      },
+      "sourceEvidenceSha256": "77e6e82c0fb566927663effa805cb3681334385bc16ecd2dd8f96adc7549f590",
+      "decision": {
+        "divergenceKind": "case-sensitive-stale-angle-overlay-authoring-residue-suppression",
+        "sourceAuditBlocker": "case-sensitive-stale-angle-overlay-original-runtime-disposition-unresolved",
+        "sourceDivergenceDecisionEstablished": true,
+        "maintainedCandidateMaySuppressStaleAngleOverlay": true,
+        "originalRuntimeDispositionEstablished": false,
+        "reason": "Mc_Popup is the exact case-sensitive help instance controlled by two extracted ActionScript references and a close lifecycle; the distinct final-quiz Mc_PopUp 70-frame angle overlay has zero extracted ActionScript references and is unrelated to the retained help lifecycle.",
+        "allowedDomBehavior": {
+          "caseSensitiveSourceIdentityRequired": true,
+          "correctHelpSelector": "[data-source-instance-name=\"Mc_Popup\"][data-source-character-id=\"335\"]",
+          "staleOverlaySelector": "[data-source-instance-name=\"Mc_PopUp\"][data-source-character-id=\"350\"]",
+          "staleOverlayMayRender": false,
+          "correctHelpMustRemainImplemented": true,
+          "correctHelpVisibleCountBeforeOpen": 0,
+          "correctHelpVisibleCountAfterOpen": 1,
+          "correctHelpVisibleCountAfterClose": 0,
+          "correctHelpVisibleCountAfterReplayReset": 0,
+          "staleOverlayDomCountInEveryState": 0
+        }
+      }
+    },
+    {
+      "animationId": "shared-alg001-l11-p041",
+      "familyId": "l11-guided-tutorial-choice",
+      "source": {
+        "path": "G6-G8-shared/ALG001/L11/TS/L11TS08.swf",
+        "bytes": 566092,
+        "sha256": "3bfac12aec4982064c1041ce296c185299f7fc0247b46144f1144a10ab812e6c"
+      },
+      "sourceEvidence": {
+        "finalQuizFrame": 884,
+        "correctHelp": {
+          "role": "source-controlled-help-popup",
+          "instanceName": "Mc_Popup",
+          "characterId": 322,
+          "sprite": {
+            "characterId": 322,
+            "frameCount": 1,
+            "openingTagBytes": 100,
+            "openingTagSha256": "60caae5d450cc257dee5818aa289f44ff8f26cb28e9fb1aa78652e24ab53adf0"
+          },
+          "finalQuizPlacement": {
+            "instanceName": "Mc_Popup",
+            "characterId": 322,
+            "depth": 239,
+            "ratio": 883,
+            "translateX": 7388,
+            "translateY": -1086,
+            "bytes": 507,
+            "sha256": "b71c6a34f423097f8fb68dc1bc2e2a6c80550ea9771ac625e56c9e562fb74ee5"
+          },
+          "frameSvg": {
+            "path": "shared-alg001-l11-p041/help-popup-svg/DefineSprite_322/1.svg",
+            "bytes": 113410,
+            "sha256": "60f23be2dc8af25f2c7bbe1114f8eefccea24554209ef22e4f4bb7a144327a2c"
+          },
+          "exactActionScriptReferenceCount": 2,
+          "actionScriptReferences": [
+            {
+              "path": "shared-alg001-l11-p041/ffdec-export/scripts/DefineButton2_13/BUTTONCONDACTION on(release).as",
+              "bytes": 106,
+              "sha256": "b0087663b7df3fef95b307be9dcc1c24066dc45634f0febf94fd0f3411706dd8",
+              "matchCount": 1,
+              "visibilityAssignment": "Mc_Popup._visible = true;"
+            },
+            {
+              "path": "shared-alg001-l11-p041/ffdec-export/scripts/DefineSprite_338/frame_884/DoAction.as",
+              "bytes": 93,
+              "sha256": "64fb7604de9127107fff9630ff3a550a6bccd0b48c2743097e637c68555d4629",
+              "matchCount": 1,
+              "visibilityAssignment": "Mc_Popup._visible = false;"
+            }
+          ],
+          "closeLifecycleScript": {
+            "path": "shared-alg001-l11-p041/ffdec-export/scripts/DefineButton2_301/BUTTONCONDACTION on(release).as",
+            "bytes": 109,
+            "sha256": "11bcd7e208cd1ffaf805db93a144ed2f16db3de3b13b202bbcc550291c201ad2",
+            "closesCurrentHelpSurface": true
+          }
+        },
+        "staleAngleOverlay": {
+          "role": "case-sensitive-stale-angle-overlay",
+          "instanceName": "Mc_PopUp",
+          "characterId": 337,
+          "sprite": {
+            "characterId": 337,
+            "frameCount": 70,
+            "openingTagBytes": 101,
+            "openingTagSha256": "653e310848d269c15a201ed7070e81879f8e8c17b54fcdcd211ee34274d9f086"
+          },
+          "finalQuizPlacement": {
+            "instanceName": "Mc_PopUp",
+            "characterId": 337,
+            "depth": 286,
+            "ratio": 883,
+            "translateX": 7992,
+            "translateY": -2842,
+            "bytes": 507,
+            "sha256": "08a495044ff1cd942bca21f1232abb26ee8fe5ce0327a9b8bf43526854536565"
+          },
+          "frameSvg": {
+            "path": "shared-alg001-l11-p041/stale-angle-overlay-svg/DefineSprite_337/1.svg",
+            "bytes": 4939,
+            "sha256": "db4bcfbdd951290a0693b390f0b5267def4cc1940be56214121a90b42b0ab8f4"
+          },
+          "exactActionScriptReferenceCount": 0,
+          "controlledByExtractedActionScript": false,
+          "sourceStaticVisibility": "present-without-local-hide-script",
+          "originalRuntimeDispositionEstablished": false
+        }
+      },
+      "sourceEvidenceSha256": "5ab95f9083f9fa4082d4ec7e463894b9a9b38c8b80c1bf10c2e47ca3ce2c39d9",
+      "decision": {
+        "divergenceKind": "case-sensitive-stale-angle-overlay-authoring-residue-suppression",
+        "sourceAuditBlocker": "case-sensitive-stale-angle-overlay-original-runtime-disposition-unresolved",
+        "sourceDivergenceDecisionEstablished": true,
+        "maintainedCandidateMaySuppressStaleAngleOverlay": true,
+        "originalRuntimeDispositionEstablished": false,
+        "reason": "Mc_Popup is the exact case-sensitive help instance controlled by two extracted ActionScript references and a close lifecycle; the distinct final-quiz Mc_PopUp 70-frame angle overlay has zero extracted ActionScript references and is unrelated to the retained help lifecycle.",
+        "allowedDomBehavior": {
+          "caseSensitiveSourceIdentityRequired": true,
+          "correctHelpSelector": "[data-source-instance-name=\"Mc_Popup\"][data-source-character-id=\"322\"]",
+          "staleOverlaySelector": "[data-source-instance-name=\"Mc_PopUp\"][data-source-character-id=\"337\"]",
+          "staleOverlayMayRender": false,
+          "correctHelpMustRemainImplemented": true,
+          "correctHelpVisibleCountBeforeOpen": 0,
+          "correctHelpVisibleCountAfterOpen": 1,
+          "correctHelpVisibleCountAfterClose": 0,
+          "correctHelpVisibleCountAfterReplayReset": 0,
+          "staleOverlayDomCountInEveryState": 0
+        }
+      }
+    },
+    {
+      "animationId": "shared-alg001-l11-p042",
+      "familyId": "l11-guided-tutorial-choice",
+      "source": {
+        "path": "G6-G8-shared/ALG001/L11/TS/L11TS09.swf",
+        "bytes": 605797,
+        "sha256": "58b8366ea544632a77d1903b7f5a654ddf91311ef9a8dfcca9a7ca8528f6669e"
+      },
+      "sourceEvidence": {
+        "finalQuizFrame": 982,
+        "correctHelp": {
+          "role": "source-controlled-help-popup",
+          "instanceName": "Mc_Popup",
+          "characterId": 287,
+          "sprite": {
+            "characterId": 287,
+            "frameCount": 1,
+            "openingTagBytes": 100,
+            "openingTagSha256": "98767a65cfeac8665360a16ef4877cebff3be932b4c6ac83fb061865eecba13d"
+          },
+          "finalQuizPlacement": {
+            "instanceName": "Mc_Popup",
+            "characterId": 287,
+            "depth": 209,
+            "ratio": 981,
+            "translateX": 7328,
+            "translateY": -1040,
+            "bytes": 507,
+            "sha256": "7fd64499f34b189e6c441eb1744764811e14d0d70540995f47b0eeaab33666ae"
+          },
+          "frameSvg": {
+            "path": "shared-alg001-l11-p042/help-popup-svg/DefineSprite_287/1.svg",
+            "bytes": 52701,
+            "sha256": "ccd776ec6f583425899512debde0f6168b0786bb4be5c99ff6d8974c81cd8781"
+          },
+          "exactActionScriptReferenceCount": 2,
+          "actionScriptReferences": [
+            {
+              "path": "shared-alg001-l11-p042/ffdec-export/scripts/DefineButton2_13/BUTTONCONDACTION on(release).as",
+              "bytes": 106,
+              "sha256": "b0087663b7df3fef95b307be9dcc1c24066dc45634f0febf94fd0f3411706dd8",
+              "matchCount": 1,
+              "visibilityAssignment": "Mc_Popup._visible = true;"
+            },
+            {
+              "path": "shared-alg001-l11-p042/ffdec-export/scripts/DefineSprite_303/frame_982/DoAction.as",
+              "bytes": 93,
+              "sha256": "64fb7604de9127107fff9630ff3a550a6bccd0b48c2743097e637c68555d4629",
+              "matchCount": 1,
+              "visibilityAssignment": "Mc_Popup._visible = false;"
+            }
+          ],
+          "closeLifecycleScript": {
+            "path": "shared-alg001-l11-p042/ffdec-export/scripts/DefineButton2_274/BUTTONCONDACTION on(release).as",
+            "bytes": 109,
+            "sha256": "11bcd7e208cd1ffaf805db93a144ed2f16db3de3b13b202bbcc550291c201ad2",
+            "closesCurrentHelpSurface": true
+          }
+        },
+        "staleAngleOverlay": {
+          "role": "case-sensitive-stale-angle-overlay",
+          "instanceName": "Mc_PopUp",
+          "characterId": 302,
+          "sprite": {
+            "characterId": 302,
+            "frameCount": 70,
+            "openingTagBytes": 101,
+            "openingTagSha256": "71b90d0248effb241416c5ba94c98b1e727bd43e338bbcbd4d51ea23c6ac7f59"
+          },
+          "finalQuizPlacement": {
+            "instanceName": "Mc_PopUp",
+            "characterId": 302,
+            "depth": 234,
+            "ratio": 981,
+            "translateX": 7992,
+            "translateY": -2842,
+            "bytes": 507,
+            "sha256": "e0cbebb29443a308e21fc8980b6e90fd2563e7ce934b587d4a3e54a96260e93c"
+          },
+          "frameSvg": {
+            "path": "shared-alg001-l11-p042/stale-angle-overlay-svg/DefineSprite_302/1.svg",
+            "bytes": 4939,
+            "sha256": "fe3332ad4e06f14265cd752d45ff90e3ad2422e70b83e59caac1ca06b21ed26e"
+          },
+          "exactActionScriptReferenceCount": 0,
+          "controlledByExtractedActionScript": false,
+          "sourceStaticVisibility": "present-without-local-hide-script",
+          "originalRuntimeDispositionEstablished": false
+        }
+      },
+      "sourceEvidenceSha256": "108a938a09b322d4d55c23e03a0aac6cb5b308d0d39955b0b1e8c7a74bf321f5",
+      "decision": {
+        "divergenceKind": "case-sensitive-stale-angle-overlay-authoring-residue-suppression",
+        "sourceAuditBlocker": "case-sensitive-stale-angle-overlay-original-runtime-disposition-unresolved",
+        "sourceDivergenceDecisionEstablished": true,
+        "maintainedCandidateMaySuppressStaleAngleOverlay": true,
+        "originalRuntimeDispositionEstablished": false,
+        "reason": "Mc_Popup is the exact case-sensitive help instance controlled by two extracted ActionScript references and a close lifecycle; the distinct final-quiz Mc_PopUp 70-frame angle overlay has zero extracted ActionScript references and is unrelated to the retained help lifecycle.",
+        "allowedDomBehavior": {
+          "caseSensitiveSourceIdentityRequired": true,
+          "correctHelpSelector": "[data-source-instance-name=\"Mc_Popup\"][data-source-character-id=\"287\"]",
+          "staleOverlaySelector": "[data-source-instance-name=\"Mc_PopUp\"][data-source-character-id=\"302\"]",
+          "staleOverlayMayRender": false,
+          "correctHelpMustRemainImplemented": true,
+          "correctHelpVisibleCountBeforeOpen": 0,
+          "correctHelpVisibleCountAfterOpen": 1,
+          "correctHelpVisibleCountAfterClose": 0,
+          "correctHelpVisibleCountAfterReplayReset": 0,
+          "staleOverlayDomCountInEveryState": 0
+        }
+      }
+    }
+  ],
+  "sourceEvidenceSetSha256": "42f0ce0c95909f45ebef0bd838b30cd4fe3a2c71ff0aaa50dd88d07a4bfef291",
+  "noDivergencePlacements": [
+    {
+      "animationId": "shared-alg001-l11-p026",
+      "sourceDivergenceAuthorizedByThisDecision": false,
+      "requiredBehavior": "retain exact audited source behavior"
+    },
+    {
+      "animationId": "shared-alg001-l11-p027",
+      "sourceDivergenceAuthorizedByThisDecision": false,
+      "requiredBehavior": "retain exact audited source behavior"
+    },
+    {
+      "animationId": "shared-alg001-l11-p028",
+      "sourceDivergenceAuthorizedByThisDecision": false,
+      "requiredBehavior": "retain exact audited source behavior"
+    },
+    {
+      "animationId": "shared-alg001-l11-p029",
+      "sourceDivergenceAuthorizedByThisDecision": false,
+      "requiredBehavior": "retain exact audited source behavior"
+    },
+    {
+      "animationId": "shared-alg001-l11-p030",
+      "sourceDivergenceAuthorizedByThisDecision": false,
+      "requiredBehavior": "retain exact audited source behavior"
+    },
+    {
+      "animationId": "shared-alg001-l11-p031",
+      "sourceDivergenceAuthorizedByThisDecision": false,
+      "requiredBehavior": "retain exact audited source behavior"
+    },
+    {
+      "animationId": "shared-alg001-l11-p032",
+      "sourceDivergenceAuthorizedByThisDecision": false,
+      "requiredBehavior": "retain exact audited source behavior"
+    }
+  ],
+  "laterBrowserContract": {
+    "requiredBeforeProductCalibration": true,
+    "browserCalibrationPassed": false,
+    "exactPlacementIds": [
+      "shared-alg001-l11-p040",
+      "shared-alg001-l11-p041",
+      "shared-alg001-l11-p042"
+    ],
+    "perPlacementRequiredStates": [
+      {
+        "animationId": "shared-alg001-l11-p040",
+        "correctHelpSelector": "[data-source-instance-name=\"Mc_Popup\"][data-source-character-id=\"335\"]",
+        "staleOverlaySelector": "[data-source-instance-name=\"Mc_PopUp\"][data-source-character-id=\"350\"]",
+        "states": [
+          {
+            "state": "final-quiz-before-help",
+            "correctHelpVisibleCount": 0,
+            "staleOverlayDomCount": 0
+          },
+          {
+            "state": "after-help-open",
+            "correctHelpVisibleCount": 1,
+            "staleOverlayDomCount": 0,
+            "exactSourceHelpSvgRequired": true
+          },
+          {
+            "state": "after-help-close",
+            "correctHelpVisibleCount": 0,
+            "staleOverlayDomCount": 0
+          },
+          {
+            "state": "after-replay-reset",
+            "correctHelpVisibleCount": 0,
+            "staleOverlayDomCount": 0
+          }
+        ]
+      },
+      {
+        "animationId": "shared-alg001-l11-p041",
+        "correctHelpSelector": "[data-source-instance-name=\"Mc_Popup\"][data-source-character-id=\"322\"]",
+        "staleOverlaySelector": "[data-source-instance-name=\"Mc_PopUp\"][data-source-character-id=\"337\"]",
+        "states": [
+          {
+            "state": "final-quiz-before-help",
+            "correctHelpVisibleCount": 0,
+            "staleOverlayDomCount": 0
+          },
+          {
+            "state": "after-help-open",
+            "correctHelpVisibleCount": 1,
+            "staleOverlayDomCount": 0,
+            "exactSourceHelpSvgRequired": true
+          },
+          {
+            "state": "after-help-close",
+            "correctHelpVisibleCount": 0,
+            "staleOverlayDomCount": 0
+          },
+          {
+            "state": "after-replay-reset",
+            "correctHelpVisibleCount": 0,
+            "staleOverlayDomCount": 0
+          }
+        ]
+      },
+      {
+        "animationId": "shared-alg001-l11-p042",
+        "correctHelpSelector": "[data-source-instance-name=\"Mc_Popup\"][data-source-character-id=\"287\"]",
+        "staleOverlaySelector": "[data-source-instance-name=\"Mc_PopUp\"][data-source-character-id=\"302\"]",
+        "states": [
+          {
+            "state": "final-quiz-before-help",
+            "correctHelpVisibleCount": 0,
+            "staleOverlayDomCount": 0
+          },
+          {
+            "state": "after-help-open",
+            "correctHelpVisibleCount": 1,
+            "staleOverlayDomCount": 0,
+            "exactSourceHelpSvgRequired": true
+          },
+          {
+            "state": "after-help-close",
+            "correctHelpVisibleCount": 0,
+            "staleOverlayDomCount": 0
+          },
+          {
+            "state": "after-replay-reset",
+            "correctHelpVisibleCount": 0,
+            "staleOverlayDomCount": 0
+          }
+        ]
+      }
+    ]
+  },
+  "independentReviewPassed": false,
+  "registrationCandidatePlacementCount": 0,
+  "currentJavaScriptRegisteredPlacementCount": 0,
+  "productCalibrationPassed": false,
+  "browserProductCalibrationPassed": false,
+  "wholeLessonEngineeringPreviewReady": false,
+  "scaleOutAuthorized": false,
+  "releaseAuthorized": false,
+  "published": false,
+  "limitations": [
+    "This static source-divergence decision does not determine how an authorized original Flash runtime displayed either case-sensitive instance.",
+    "Only exact p040-p042 maintained candidates may suppress Mc_PopUp; p026-p032 receive no source-divergence authorization.",
+    "The source-controlled Mc_Popup help content and its open, close, and reset lifecycle must remain implemented and source-bound.",
+    "Browser evidence must later prove stale Mc_PopUp absence and the correct Mc_Popup lifecycle before product calibration.",
+    "This decision does not establish fidelity, audio, human, Owner, registration, scale-out, release, or publication acceptance."
+  ],
+  "acceptanceEffects": {
+    "currentJavaScriptRegistered": false,
+    "behaviorAccepted": false,
+    "authoritativeOriginalRuntime": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "released": false,
+    "published": false
+  }
+}

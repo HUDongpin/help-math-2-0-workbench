@@ -1,0 +1,1 @@
+export const P002_STREAM_PIN=Object.freeze({sourceBytes:0,sourceSha256:''});export const P002_SPANISH_PIN=Object.freeze({sourceBytes:0,sourceSha256:''});export const P002_RESOURCE_PINS=Object.freeze({});export function p002ResourceForRequest(){return null;}

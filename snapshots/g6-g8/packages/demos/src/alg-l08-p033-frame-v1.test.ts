@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import {L8P033_MACHINE as machine,algL08P033Frame as frame,L8P033_DOMAINS as domains,L8P033_DEFAULTS as defaults} from './alg-l08-p033-frame-v1';
+import {ALG_L08_P033_SOURCE as S} from './alg-l08-p033-source-v1';
+import type {L8P033State,L8P033Event} from './alg-l08-p033-state-v1';
+const event=(s:L8P033State,e:Omit<L8P033Event,'epoch'>)=>machine.reduce(s,{...e,epoch:s.epoch} as L8P033Event);
+const quiz=()=>machine.reduce(event(machine.initialState(),{type:'play'}),{type:'advance-main',epoch:0,frame:106});
+test('P033 supported source domains expose742 bilingual states',()=>{let n=0;for(const d of domains)for(const scenario of defaults[d.id]==='wrong-first'?['wrong-first','wrong-second']:[defaults[d.id]])for(const lang of['en','es']as const)for(let f=1;f<=d.frameCount;f++){const v=frame(f,{frame:f,frameDomain:d.id,scenario,lang,seed:0});assert.equal(v.rootFrame,d.id==='root'?f:6);n++;}assert.equal(n,742);assert.throws(()=>frame(274));});
+test('visual fractions have source answer order2,4,3,1 and fixed feedback116/204',()=>{assert.deepEqual(S.answers.map(a=>[a.answer,a.letter,a.equation]),[[2,'A','−2/3'],[4,'B','−1/2'],[3,'C','1/2'],[1,'D','2/3']]);for(const answer of[1,2,3,4]as const){const s=quiz();assert.equal(machine.reduce(s,{type:'choose',epoch:s.epoch,answer,seed:0}).feedback?.spriteId,answer===2?116:204);}});
+test('two wrong source attempts resume only after31 and273 is terminal without lesson completion',()=>{let s=quiz();for(let i=0;i<2;i++){s=machine.reduce(s,{type:'choose',epoch:s.epoch,answer:1,seed:0});s=machine.reduce(s,{type:'advance-feedback',epoch:s.epoch,frame:22});assert(!s.playing);s=event(s,{type:'close-feedback'});assert.equal(s.feedback?.frame,23);s=machine.reduce(s,{type:'advance-feedback',epoch:s.epoch,frame:31});assert.equal(s.phase,i?'postquiz':'quiz-held');}s=machine.reduce(s,{type:'advance-main',epoch:s.epoch,frame:273});assert.equal(s.phase,'ended');assert.equal(s.cycle,0);assert(!s.lessonCompleted);assert.strictEqual(event(s,{type:'play'}),s);});

@@ -1,0 +1,23 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import {pinFile} from '../lib/g678-admission-proof.mjs';
+import {preservedHostTransitions} from './refresh-g678-admission-host.mjs';
+test('shared host successor retains original bytes and updates only current target',t=>{
+ const root=fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(),'g678-host-transition-')));
+ t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
+ fs.writeFileSync(path.join(root,'host.js'),'original');
+ const original=pinFile(root,'host.js');
+ fs.copyFileSync(path.join(root,'host.js'),path.join(root,'before.js'));
+ fs.writeFileSync(path.join(root,'host.js'),'successor');
+ const transition=preservedHostTransitions(root,{files:[original]},['host.js'],[{path:'host.js',snapshot:'before.js'}]);
+ assert.deepEqual(transition,[{original,current:pinFile(root,'host.js'),snapshot:pinFile(root,'before.js')}]);
+ fs.writeFileSync(path.join(root,'host.js'),'next');
+ const next=preservedHostTransitions(root,{files:[transition[0].current],legacyInputTransitions:transition},['host.js']);
+ assert.deepEqual(next[0].original,original);assert.deepEqual(next[0].snapshot,transition[0].snapshot);
+ assert.deepEqual(next[0].current,pinFile(root,'host.js'));
+ fs.writeFileSync(path.join(root,'before.js'),'wrong snapshot');
+ assert.throws(()=>preservedHostTransitions(root,{files:[original]},['host.js'],[{path:'host.js',snapshot:'before.js'}]),/exact predecessor bytes/);
+});

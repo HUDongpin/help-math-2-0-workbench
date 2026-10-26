@@ -1,0 +1,14 @@
+'use client';
+import {createSourceStaticCanvasCandidate} from '../source-static-canvas-candidate';
+import {ALG_L06_P003_CONTINUOUS_AUDIO} from '../alg-l06-p003-continuous-audio-schedule-v2';
+import {ALG_L06_P003_DRAWING} from '../timelines/shared-alg001-l06-p003';
+if (ALG_L06_P003_CONTINUOUS_AUDIO.animationId !== ALG_L06_P003_DRAWING.animationId ||
+    ALG_L06_P003_CONTINUOUS_AUDIO.sourceSwfSha256 !== ALG_L06_P003_DRAWING.sourceSwfSha256 ||
+    ALG_L06_P003_CONTINUOUS_AUDIO.frameDomain !== ALG_L06_P003_DRAWING.mainFrameDomain ||
+    ALG_L06_P003_CONTINUOUS_AUDIO.lastFrame !== ALG_L06_P003_DRAWING.mainFrameCount)
+  throw Error('P003 continuous drawing and audio identity mismatch');
+const candidate = createSourceStaticCanvasCandidate(ALG_L06_P003_DRAWING);
+export default Object.freeze({...candidate.module,
+  privateAlgL06P003: Object.freeze({version: 2 as const, drawing: ALG_L06_P003_DRAWING,
+    sourceAudio: ALG_L06_P003_CONTINUOUS_AUDIO}),
+});

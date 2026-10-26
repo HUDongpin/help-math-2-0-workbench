@@ -1,0 +1,7 @@
+import test from'node:test';import assert from'node:assert/strict';import{p031ModuleFrame,p031LiveFrame,P031_SCENARIOS}from'../src/nms-l02-p031-frame-v1';import{p031TextSnapshot}from'../src/nms-l02-p031-text-v1';import{P031_FEEDBACK_IR as IR}from'../src/generated/nms-l02-p031-feedback-ir-v1';import{p031Initial,p031Advance,p031OpenHelp}from'../src/nms-l02-p031-state-v1';
+test('all authored domains produce ready native snapshots under each supported scenario',()=>{let count=0;for(const[d,info]of Object.entries(IR.domains))for(let frame=1;frame<=info.frameCount;frame++)for(const lang of['en','es']as const)for(const scenario of P031_SCENARIOS){const s=p031ModuleFrame(frame,{frame,frameDomain:d==='root'?'root':'sprite-'+d,lang,scenario:scenario.id,seed:0});assert.equal(p031TextSnapshot(s).status,'ready');count++;}assert.equal(count,4840);});
+test('native text does not reveal future question/chart and help number is explicitly corrected',()=>{
+ const snapshot=(frame:number)=>p031TextSnapshot(p031LiveFrame(p031Advance(p031Initial(),frame-1),'en'));
+ assert.equal(snapshot(29).blocks.find(b=>b.id==='question')?.visible,false);assert.equal(snapshot(49).blocks.find(b=>b.id==='question')?.text,'What is the name of this decimal?');assert.equal(snapshot(147).blocks.find(b=>b.id==='chart-number')?.visible,false);
+ const help=p031TextSnapshot(p031LiveFrame(p031OpenHelp(p031Advance(p031Initial(),146)),'es'));assert.equal(help.blocks.find(b=>b.id==='chart-number')?.text,'0.23');assert.equal(help.blocks.find(b=>b.id==='help-example')?.visible,true);
+});

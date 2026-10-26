@@ -1,0 +1,3 @@
+// Generated layered SVG artwork; no source font glyph outlines or rasterized teaching text.
+import type {P009ArtworkIR} from '../nms-l02-p009-source-contract-v1';
+export const NMS_L02_P009_ART: P009ArtworkIR = {"art":{},"images":[],"maskGeometry":{"5":[{"d":"M87.5 15.0 L-87.5 15.0 -87.5 -15.0 87.5 -15.0 87.5 15.0","fillRule":"evenodd","morph":[]}],"25":[{"d":"M-117.35 -119.5 L-117.35 -114.5 157.55 -114.5 157.55 -119.5 -117.35 -119.5","fillRule":"evenodd","morph":[{"attribute":"d","start":"M-117.35 -119.5 L-117.35 -114.5 157.55 -114.5 157.55 -119.5 -117.35 -119.5","end":"M-117.35 -117.5 L-117.35 120.5 157.55 120.5 157.55 -117.5 -117.35 -117.5"}]}],"36":[{"d":"M-117.4 -117.5 L157.55 -117.5 157.55 120.5 -117.4 120.5 -117.4 -117.5","fillRule":"evenodd","morph":[]}]}};

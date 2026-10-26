@@ -1,0 +1,5151 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "g678-ts07-l1-keyterm-recovery-v1",
+  "recoveryId": "g678-ts07-l1-keyterm-recovery-v1",
+  "status": "private-custody-recovery-verified-13-of-15-source-complete-product-calibration-pending",
+  "inputs": {
+    "catalog": {
+      "path": "catalog/g678-shared-catalog.v1.json",
+      "bytes": 12534064,
+      "sha256": "a1692c2a86c6771dcb104f59195b5bfdd2b5281cceff0aaeb63a3aabcf4a5657"
+    },
+    "ts07Audit": {
+      "path": "catalog/g678-ts07-family-audit-v1.json",
+      "bytes": 1973603,
+      "sha256": "a683423f753a65b5243eefff942ed0541223ea8a0b46f0d34c3b18c8b0d18123"
+    },
+    "builder": {
+      "path": "scripts/audit-g678-ts07-l1-keyterms.mjs",
+      "bytes": 23217,
+      "sha256": "136c23bc708444a23bf417761427ba0a6d942aa665bc141fef4d862756091772"
+    },
+    "appliedCustodyReceipt": {
+      "path": "receipts/aws-newhelpprogram-canonical-reconciliation-applied-v1.json",
+      "bytes": 3621,
+      "sha256": "ac7395de456a771bf52ad2bcbd2eac95714fce46f745826fdd65c9e1c3fc3aa3"
+    },
+    "acquisitionReceipt": {
+      "path": "receipts/s3-object-acquisition-v1.json",
+      "bytes": 5176,
+      "sha256": "55e2b16b979d251c7b6d179913f72a88a10b845d8b832f27f3d035b96142c755"
+    },
+    "memberManifest": {
+      "path": "manifests/private/zip64-member-manifest-copy1.jsonl",
+      "bytes": 130765530,
+      "sha256": "13339a31d4f978d70d267591133e5f4b83c6abe59d5d5e3c4898ef931d03f79d"
+    }
+  },
+  "recoveryRoot": {
+    "environmentVariable": "PRIVATE_RECOVERY_CONTAINERS",
+    "realPathSha256": "19aee0979467e46965ef9088e1b47a288f83342d6afda99cc54c3716e631de38",
+    "device": "16777244",
+    "inode": "19482375",
+    "mode": 448,
+    "accessBoundary": "owner-private-custody-root",
+    "sourceMutationPerformed": false
+  },
+  "custodyBoundary": {
+    "status": "AWS_CANONICAL_RECONCILIATION_APPLIED_CUSTODY_ONLY",
+    "boundary": "CUSTODY_ONLY_NO_PROMOTION",
+    "canonicalSourcePromotionAuthorized": false,
+    "localOnlyDerivedProductCalibrationAuthorized": false
+  },
+  "selectedSources": [
+    {
+      "localeRole": "en",
+      "reference": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+      "containerMember": {
+        "path": "NewHelpProgram/HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+        "ordinal": 79794,
+        "bytes": 345838,
+        "sha256": "14d454f4c1c1a6f0939fb80b454fd3e22890eabb4a730c6bfa7efa1d9a2e5e5b"
+      },
+      "casObject": {
+        "path": "objects/sha256/14/14d454f4c1c1a6f0939fb80b454fd3e22890eabb4a730c6bfa7efa1d9a2e5e5b",
+        "bytes": 345838,
+        "sha256": "14d454f4c1c1a6f0939fb80b454fd3e22890eabb4a730c6bfa7efa1d9a2e5e5b"
+      }
+    },
+    {
+      "localeRole": "es",
+      "reference": "HELP_KEYTERMS/KT/XML/L1KTS01.xml",
+      "containerMember": {
+        "path": "NewHelpProgram/HELP_KEYTERMS/KT/XML/L1KTS01.xml",
+        "ordinal": 79803,
+        "bytes": 344456,
+        "sha256": "3b437b42e75536fa8b4f110325e366c27fbe10a871439d4797650cda4238b407"
+      },
+      "casObject": {
+        "path": "objects/sha256/3b/3b437b42e75536fa8b4f110325e366c27fbe10a871439d4797650cda4238b407",
+        "bytes": 344456,
+        "sha256": "3b437b42e75536fa8b4f110325e366c27fbe10a871439d4797650cda4238b407"
+      }
+    }
+  ],
+  "requestedNormalizedKeySetSha256": "75f79f4b27dbf94b34d662f611d6326af76fa4b37355a12788502e37ca666534",
+  "recoveredNormalizedKeySetSha256": "dd67a83fd9241adf4a9d3219da957ae97b8484cd8524acaab7f66f57e93bed7a",
+  "definitionConflictNormalizedKeys": [
+    "acute angle",
+    "degree",
+    "exponent",
+    "greater",
+    "represent",
+    "set"
+  ],
+  "terms": [
+    {
+      "id": "acute-angle",
+      "sourceKeyAttribute": "Acute angle",
+      "labels": {
+        "en": "Acute angle",
+        "es": "Ángulo agudo"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "angle,Angle",
+          "right angle,Right angle",
+          "measures,Measure",
+          "degrees,Degree"
+        ],
+        "subLinksEs": [
+          "ángulo,Àngulo",
+          "ángulo recto,Ángulo recto",
+          "grados,Grado"
+        ],
+        "exampleSwf": "Acute_angle.swf"
+      },
+      "normalizedKey": "acute angle",
+      "sourceKeyVariants": [
+        "Acute angle"
+      ],
+      "definitionParity": false,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "An angle that is less than a right angle; it measures between 0 and 90 degrees.",
+          "es": "Un ángulo que mide menos que un ángulo recto: mide más de 0 y menos de 90 grados."
+        },
+        "spanishXml": {
+          "en": "An angle that is less than a right angle; it measures between 0 and 90 degrees.",
+          "es": "Un ángulo que mide menos que un ángulo recto; mide de más de 0 y menos de 90 grados."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "0497a1bbcff79bded7f7be754fbf0a7ecae5795d76b7f08c5dfd62c2c33f32fb",
+        "es": "73229bb35a350dea16d6b6a44b57b60a5459ec24f4bb41cd1d276f0efa21558b"
+      }
+    },
+    {
+      "id": "angle",
+      "sourceKeyAttribute": "Angle",
+      "labels": {
+        "en": "Angle",
+        "es": "Ángulo"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "lines,Line",
+          "rays,Ray",
+          "endpoint,Endpoint",
+          "measured,Measure",
+          "degrees,Degree",
+          "sign,Sign"
+        ],
+        "subLinksEs": [
+          "líneas,Línea",
+          "rayos,Rayo",
+          "miden,Medir",
+          "grados,Grado",
+          "signos,Signo"
+        ],
+        "exampleSwf": "Angle.swf"
+      },
+      "normalizedKey": "angle",
+      "sourceKeyVariants": [
+        "Angle"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "An angle is formed when two lines, rays, or line segments meet at a common endpoint. Angles are often measured in degrees.",
+          "es": "Un ángulo se forma cuando dos líneas, rayos o segmentos de línea se juntan en un punto común. Los ángulos por lo general se miden en grados."
+        },
+        "spanishXml": {
+          "en": "An angle is formed when two lines, rays, or line segments meet at a common endpoint. Angles are often measured in degrees.",
+          "es": "Un ángulo se forma cuando dos líneas, rayos o segmentos de línea se juntan en un punto común. Los ángulos por lo general se miden en grados."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "b52f6f7795234fa894ffc41806a1b05da61f51db47cc42b28133979c5952d833",
+        "es": "b52f6f7795234fa894ffc41806a1b05da61f51db47cc42b28133979c5952d833"
+      }
+    },
+    {
+      "id": "arrange",
+      "sourceKeyAttribute": "Arrange",
+      "labels": {
+        "en": "Arrange",
+        "es": "Ordenar"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "order,Order",
+          "set,Set",
+          "least,Least",
+          "gratest,Greatest",
+          "rearranged,Rearrange"
+        ],
+        "subLinksEs": [
+          "orden,Orden",
+          "conjunto,Conjunto",
+          "menor,Menor",
+          "mayor,Mayor que",
+          "reordenado,Reordenar"
+        ],
+        "exampleSwf": "Arrange.swf"
+      },
+      "normalizedKey": "arrange",
+      "sourceKeyVariants": [
+        "Arrange"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "Arrange means to put in a specific order. For example, arrange the set of numbers {5, -3, 8, 10, 0, -5} in order from least to greatest. The new rearranged set of numbers from least to greatest: {-5, -3, 0, 5, 8, 10}",
+          "es": "Ordenar significa colocar en un orden específico. Por ejemplo, ordene el conjunto de números {5, -3, 8, 10, 0, -5} en orden de menor a mayor. El nuevo conjunto reordenado es: {-5, -3, 0, 5, 8, 10}"
+        },
+        "spanishXml": {
+          "en": "Arrange means to put in a specific order. For example, arrange the set of numbers {5, -3, 8, 10, 0, -5} in order from least to greatest. The new rearranged set of numbers from least to greatest: {-5, -3, 0, 5, 8, 10}",
+          "es": "Ordenar significa colocar en un orden específico. Por ejemplo, ordene el conjunto de números {5, -3, 8, 10, 0, -5} en orden de menor a mayor. El nuevo conjunto reordenado es: {-5, -3, 0, 5, 8, 10}"
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "0ad173dd7bbfb65cbf4a0789c1513ea6e30efae55e448807824a794d5b9bfab0",
+        "es": "9c9e4f84666a5491c0e61e8688f94efb9d3955ea1c0fa58917d78c7d4436bd21"
+      }
+    },
+    {
+      "id": "bar-graph",
+      "sourceKeyAttribute": "Bar graph",
+      "labels": {
+        "en": "Bar graph",
+        "es": "Gráfico de barras"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "graph,Graph",
+          "show,Show",
+          "relationships,Relationship",
+          "values,Value",
+          "represented,Represent",
+          "rectangular,Rectangular"
+        ],
+        "subLinksEs": [
+          "gráfico,Gráfico",
+          "mostrar,Mostrar",
+          "relaciónes,Relación",
+          "valores,Valor",
+          "rectangulares,Rectangular"
+        ],
+        "exampleSwf": "Bar_graph.swf"
+      },
+      "normalizedKey": "bar graph",
+      "sourceKeyVariants": [
+        "Bar graph"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A bar graph is used to show relationships between values. The values in a bar graph are represented by rectangular bars.",
+          "es": "Un gráfico de barras se usa para mostrar relaciones entre valores. Los valores en una gráfica de barras están representados por barras rectangulares."
+        },
+        "spanishXml": {
+          "en": "A bar graph is used to show relationships between values. The values in a bar graph are represented by rectangular bars.",
+          "es": "Un gráfico de barras se usa para mostrar relaciones entre valores. Los valores en una gráfica de barras están representados por barras rectangulares."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "4a2ce8458c4ea5334a79822925e1ffbd1da6aee2d6e447a844b620d20e0c0786",
+        "es": "b45817101c69c45ea5bb0a4ca8190af2cc95f5e68a1d6c07fa350b9f85d6bce2"
+      }
+    },
+    {
+      "id": "baseball",
+      "sourceKeyAttribute": "Baseball",
+      "labels": {
+        "en": "Baseball",
+        "es": "Béisbol"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [],
+        "subLinksEs": [],
+        "exampleSwf": "Baseball.swf"
+      },
+      "normalizedKey": "baseball",
+      "sourceKeyVariants": [
+        "Baseball"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A sport common in North America in which the object is to strike a ball so that one of a nine-person team can run counter-clockwise among four bases, causing a run.",
+          "es": "Deporte común en los Estados Unidos en el que el objetivo es golpear una pelota de manera tal que un jugador del equipo, compuesto por 9 jugadores, pueda correr en sentido contrario a las agujas del reloj alrededor de cuatro bases y anotar una carrera."
+        },
+        "spanishXml": {
+          "en": "A sport common in North America in which the object is to strike a ball so that one of a nine-person team can run counter-clockwise among four bases, causing a run.",
+          "es": "Deporte común en los Estados Unidos en el que el objetivo es golpear una pelota de manera tal que un jugador del equipo, compuesto por 9 jugadores, pueda correr en sentido contrario a las agujas del reloj alrededor de cuatro bases y anotar una carrera."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "dd49c00ad758b4e38a4ec09e3745eb3495befea3e49e528e3e5674eb3f3eeb91",
+        "es": "8a651828389e1c8fd01537cda94453855be2bc8bbf146f1397954df3bd878349"
+      }
+    },
+    {
+      "id": "calculate",
+      "sourceKeyAttribute": "Calculate",
+      "labels": {
+        "en": "Calculate",
+        "es": "Calcular"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "approximate value,Approximate value",
+          "estimate,Estimate",
+          "sum,Sum",
+          "evaluate,Evaluate"
+        ],
+        "subLinksEs": [
+          "valor aproximado,Valor Aproximado",
+          "suma,Suma"
+        ],
+        "exampleSwf": "Calculate.swf"
+      },
+      "normalizedKey": "calculate",
+      "sourceKeyVariants": [
+        "Calculate"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "To find an approximate value. For example: you can estimate the sum of 123 + 789 as about 900. To calculate also means to evaluate. For example, 2 + 4 + 6 evaluates to 12.",
+          "es": "Encontrar un valor aproximado. Por ejemplo: usted puede calcular la suma de 123 + 789 como más o menos 900. Calcular también significa evaluar. Por ejemplo, evaluamos 2 + 4 + 6 como igual a 12."
+        },
+        "spanishXml": {
+          "en": "To find an approximate value. For example: you can estimate the sum of 123 + 789 as about 900. To calculate also means to evaluate. For example, 2 + 4 + 6 evaluates to 12.",
+          "es": "Encontrar un valor aproximado. Por ejemplo: usted puede calcular la suma de 123 + 789 como más o menos 900. Calcular también significa evaluar. Por ejemplo, evaluamos 2 + 4 + 6 como igual a 12."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "1c0eab295ff719dc34c54441a6ce24321de7d356d6b920ca18d0e5cf58b33228",
+        "es": "aeaa9a5ccd4ca6a1d80fb84db3455abc33428dc4bdcac807bfd0d9754a21e5d4"
+      }
+    },
+    {
+      "id": "coefficient",
+      "sourceKeyAttribute": "Coefficient",
+      "labels": {
+        "en": "Coefficient",
+        "es": "Coeficiente"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "variable,Variable",
+          "expression,Expression"
+        ],
+        "subLinksEs": [
+          "variable,Variable",
+          "expresión,Expresión"
+        ],
+        "exampleSwf": "Coefficient.swf"
+      },
+      "normalizedKey": "coefficient",
+      "sourceKeyVariants": [
+        "Coefficient"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A number that is placed before and multiplies a variable or algebraic expression. For example: 4 is the coefficient in 4y.",
+          "es": "El número que se coloca delante y multiplica una variable o expresión algebraica. Por ejemplo: 4 es el coeficiente en la expresión 4y."
+        },
+        "spanishXml": {
+          "en": "A number that is placed before and multiplies a variable or algebraic expression. For example: 4 is the coefficient in 4y.",
+          "es": "El número que se coloca delante y multiplica una variable o expresión algebraica. Por ejemplo: 4 es el coeficiente en la expresión 4y."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "816bdaa7feff40fc6eafc680226d86d26dc165cafd2bd1ff1bf184a341d762ee",
+        "es": "67c3c4b35bdefd7297c734d31ef920a34759593230f3063ca24adb53b870b68c"
+      }
+    },
+    {
+      "id": "combine",
+      "sourceKeyAttribute": "Combine",
+      "labels": {
+        "en": "Combine",
+        "es": "Combinar"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "together,Together",
+          "group,Group",
+          "set,Set"
+        ],
+        "subLinksEs": [
+          "juntos,Junto",
+          "grupo,Grupo",
+          "conjunto,Conjunto"
+        ],
+        "exampleSwf": "Combine.swf"
+      },
+      "normalizedKey": "combine",
+      "sourceKeyVariants": [
+        "Combine"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "Join or put together into a group, set or mixture. For example: when you combine hydrogen and oxygen you get water.",
+          "es": "Unir o poner juntos en un grupo, conjunto o mezcla. Por ejemplo: cuando usted combina hidrógeno y oxígeno, usted obtiene agua."
+        },
+        "spanishXml": {
+          "en": "Join or put together into a group, set or mixture. For example: when you combine hydrogen and oxygen you get water.",
+          "es": "Unir o poner juntos en un grupo, conjunto o mezcla. Por ejemplo: cuando usted combina hidrógeno y oxígeno, usted obtiene agua."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "aa8afb114973c021177c237a3c3630c8525aa801da9fbb143e4bfce661e73f0a",
+        "es": "8625832917d05fa9b661ca7dd1a1a320f794417812f07af8c02cc0dcad19c659"
+      }
+    },
+    {
+      "id": "comparison",
+      "sourceKeyAttribute": "Comparison",
+      "labels": {
+        "en": "Comparison",
+        "es": "Comparación"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "differences,Difference"
+        ],
+        "subLinksEs": [
+          "diferencias,Diferencia"
+        ],
+        "exampleSwf": "Comparison.swf"
+      },
+      "normalizedKey": "comparison",
+      "sourceKeyVariants": [
+        "Comparison"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "To examine two or more items to find the similarities and differences between them.",
+          "es": "Examinar dos o más objetos para encontrar las similitudes y diferencias entre ellos."
+        },
+        "spanishXml": {
+          "en": "To examine two or more items to find the similarities and differences between them.",
+          "es": "Examinar dos o más objetos para encontrar las similitudes y diferencias entre ellos."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "76e9ad16b529fb31ebf992eff9ec8e01d73d39ed087786424d564198dd5da2ac",
+        "es": "f25775153a0ed84d25df7936645e690cef89eba2040386e848d35af7c3470946"
+      }
+    },
+    {
+      "id": "constant",
+      "sourceKeyAttribute": "Constant",
+      "labels": {
+        "en": "Constant",
+        "es": "Constante"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "value,Value",
+          "change,Change"
+        ],
+        "subLinksEs": [
+          "valor,Valor",
+          "cambia,Cambiar"
+        ],
+        "exampleSwf": "Constant.swf"
+      },
+      "normalizedKey": "constant",
+      "sourceKeyVariants": [
+        "Constant"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A number whose value does not change.",
+          "es": "Un número cuyo valor no cambia."
+        },
+        "spanishXml": {
+          "en": "A number whose value does not change.",
+          "es": "Un número cuyo valor no cambia."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "4253a544d939acd4eaf345ec41ccf12b66dbce0c6422784744c511bf475b8e8e",
+        "es": "26f85b83fb773c6049e02b5f47e1d068d27df1b4e14072f5fa2d4902c54761ed"
+      }
+    },
+    {
+      "id": "convert",
+      "sourceKeyAttribute": "Convert",
+      "labels": {
+        "en": "Convert",
+        "es": "Convertir"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "change,Change",
+          "form,Form",
+          "fraction,Fraction",
+          "decimal,Decimal"
+        ],
+        "subLinksEs": [
+          "Cambiar,Cambiar",
+          "forma,Forma",
+          "fracción,Fraction",
+          "decimal,Decimal"
+        ],
+        "exampleSwf": "Convert.swf"
+      },
+      "normalizedKey": "convert",
+      "sourceKeyVariants": [
+        "Convert"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "To change from one form to another. For example: When you convert the fraction 1/4 to a decimal, you get 0.25.",
+          "es": "Cambiar de una forma o uso a otra. Por ejemplo: Cuando usted convierte la fracción 1/4 a decimal, usted obtiene 0,25."
+        },
+        "spanishXml": {
+          "en": "To change from one form to another. For example: When you convert the fraction 1/4 to a decimal, you get 0.25.",
+          "es": "Cambiar de una forma o uso a otra. Por ejemplo: Cuando usted convierte la fracción 1/4 a decimal, usted obtiene 0,25."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "88ce683afb34c36b73368f13e96fcc00a6c6e74a2b314aaae28b5b96c4ce1d68",
+        "es": "a974d6451c1c9f2277aad5176264b93025263412646717a1eba9c51990771dd5"
+      }
+    },
+    {
+      "id": "coordinate",
+      "sourceKeyAttribute": "Coordinate",
+      "labels": {
+        "en": "Coordinate",
+        "es": "Coordenada"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "ordered pair,Ordered pair",
+          "correspond,Correspond",
+          "point,Point",
+          "graph,Graph"
+        ],
+        "subLinksEs": [
+          "par ordenado,Par ordenado",
+          "punto,Punto",
+          "gráfico,Gráfico"
+        ],
+        "exampleSwf": "Coordinate.swf"
+      },
+      "normalizedKey": "coordinate",
+      "sourceKeyVariants": [
+        "Coordinate"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A coordinate is the ordered pair of numbers that correspond to a point on a graph.",
+          "es": "Una coordenada es un par ordenado de números que corresponden a un punto en un gráfico."
+        },
+        "spanishXml": {
+          "en": "A coordinate is the ordered pair of numbers that correspond to a point on a graph.",
+          "es": "Una coordenada es un par ordenado de números que corresponden a un punto en un gráfico."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "ec86d22f4bda8e741bb6c84c510a1b4b58673256ba1d13e8137355012df19628",
+        "es": "49bdc41b6702578c87ff06a824eb1478a4a208e79137fafcddd3893bcbceaba5"
+      }
+    },
+    {
+      "id": "coordinate-plane-cartesian-plane",
+      "sourceKeyAttribute": "Coordinate plane/Cartesian Plane",
+      "labels": {
+        "en": "Coordinate plane/Cartesian Plane",
+        "es": "Plano de coordenadas"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "grid,Grid",
+          "point,Point",
+          "ordered pair,Ordered pair",
+          "coordinates,Coordinates",
+          "represented,Represent",
+          "lines,Line",
+          "horizontal,Horizontal",
+          "x-axis,X-axis",
+          "vertical,Vertical",
+          "y-axis,y-axis"
+        ],
+        "subLinksEs": [
+          "plano de coordenadas,Plano de coordenadas",
+          "cuadrícula,Cuadrícula",
+          "punto,Punto",
+          "par ordenado,Par ordenado",
+          "representa,Representa"
+        ],
+        "exampleSwf": "Coordinate_cartesian_plane.swf"
+      },
+      "normalizedKey": "coordinate plane/cartesian plane",
+      "sourceKeyVariants": [
+        "Coordinate plane/Cartesian Plane"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A coordinate plane is a grid on which any point can be identified by an ordered pair of numbers or coordinates. The coordinate plane is represented by two perpendicular number lines: the horizontal x-axis and the vertical y-axis; also called the Cartesian plane or the Cartesian coordinate system.",
+          "es": "Un plano de coordenadas es una cuadrícula en la que cada punto puede ser identificado por un par ordenado de números o coordenadas. El plano de coordenadas se representa por dos rectas graduadas y perpendiculares: el eje horizontal x y el eje vertical y; también llamado plano cartesiano o sistema cartesiano."
+        },
+        "spanishXml": {
+          "en": "A coordinate plane is a grid on which any point can be identified by an ordered pair of numbers or coordinates. The coordinate plane is represented by two perpendicular number lines: the horizontal x-axis and the vertical y-axis; also called the Cartesian plane or the Cartesian coordinate system.",
+          "es": "Un plano de coordenadas es una cuadrícula en la que cada punto puede ser identificado por un par ordenado de números o coordenadas. El plano de coordenadas se representa por dos rectas graduadas y perpendiculares: el eje horizontal x y el eje vertical y; también llamado plano cartesiano o sistema cartesiano."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "c98c35eda3c3b60e3e94ea444e307f44c7ae5464cfbd4858e08c473f144be8cc",
+        "es": "060f68673836e214df233c402de2cc3c2b5752657a03b67c555ba5ebe54379e5"
+      }
+    },
+    {
+      "id": "correspond",
+      "sourceKeyAttribute": "Correspond",
+      "labels": {
+        "en": "Correspond",
+        "es": "Corresponder"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "equivalent,Equivalent",
+          "Corresponding angles,Corresponding angles"
+        ],
+        "subLinksEs": [
+          "equivalente,Equivalente",
+          "Ángulos correspondientes,Ángulos correspondientes"
+        ],
+        "exampleSwf": "Correspond.swf"
+      },
+      "normalizedKey": "correspond",
+      "sourceKeyVariants": [
+        "Correspond"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "Things that correspond are similar or equivalent. See Corresponding angles.",
+          "es": "Similar o equivalente. Ver Ángulos correspondientes."
+        },
+        "spanishXml": {
+          "en": "Things that correspond are similar or equivalent. See Corresponding angles.",
+          "es": "Similar o equivalente. Ver Ángulos correspondientes."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "4f661ed2f2c9f002432efda62dff70e61e47c484342aa9150b0542121f59dd44",
+        "es": "3e6af5fc765bdbc447f232d513de88e92a99018fe2b7dfb575e353dc51800160"
+      }
+    },
+    {
+      "id": "data",
+      "sourceKeyAttribute": "Data",
+      "labels": {
+        "en": "Data",
+        "es": "Datos"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "set,Set",
+          "information,Information",
+          "values,Value"
+        ],
+        "subLinksEs": [
+          "conjunto,Conjunto",
+          "información,Información",
+          "valores,Valor"
+        ],
+        "exampleSwf": "Data.swf"
+      },
+      "normalizedKey": "data",
+      "sourceKeyVariants": [
+        "Data"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "Data is a set of information, a set of values, or a set of numbers.",
+          "es": "Los datos son un conjunto de información, de valores o un conjunto de números."
+        },
+        "spanishXml": {
+          "en": "Data is a set of information, a set of values, or a set of numbers.",
+          "es": "Los datos son un conjunto de información, de valores o un conjunto de números."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "68ff6c6aa3593253abf171f2d3156e99965a7bebf5067a3d6e520312fe46846c",
+        "es": "f3551dd8ab3b16bbdaf96cd4616600ed9e80dacdb403b9fba74cb8181dc2f8c8"
+      }
+    },
+    {
+      "id": "degree",
+      "sourceKeyAttribute": "Degree",
+      "labels": {
+        "en": "Degree",
+        "es": "Grado"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "symbol,Symbol",
+          "unit,Unit",
+          "measuring,Measure",
+          "angles,Angle",
+          "right angle,Right angle",
+          "temperature,Temperature"
+        ],
+        "subLinksEs": [
+          "símbolo,Símbolo",
+          "unidad,unidad",
+          "medir,Medir",
+          "ángulo rectángulo,Ángulo recto,temperatura,Temperatura"
+        ],
+        "exampleSwf": "Degree.swf"
+      },
+      "normalizedKey": "degree",
+      "sourceKeyVariants": [
+        "Degree"
+      ],
+      "definitionParity": false,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "The symbol for degree is &#x00B0; (1) A unit for measuring the size of angles. For example: a right angle is 90 degrees. (2) Degree is also a unit for measuring the temperature. For example: the temperature is 72 degrees or 72&#x00B0; F.",
+          "es": "El símbolo de grado es ° (1) Una unidad para medir el tamaño de los ángulos. Por ejemplo: un ángulo recto mide 90 grados. (2) Grado es también una unidad para medir la temperatura. Por ejemplo: la temperatura es 72 grados o 72° F."
+        },
+        "spanishXml": {
+          "en": "The symbol for degree is ° (1) A unit for measuring the size of angles. For example: a right angle is 90 degrees. (2) Degree is also a unit for measuring the temperature. For example: the temperature is 72 degrees or 72° F.",
+          "es": "El símbolo de grado es ° (1) Una unidad para medir el tamaño de los ángulos. Por ejemplo: un ángulo recto mide 90 grados. (2) Grado es también una unidad para medir la temperatura. Por ejemplo: la temperatura es 72 grados o 72° F."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "0625ffc18e372ea280a543d444f856c7dc9aefdf576ea7c772041275a427e996",
+        "es": "7bf668d6607271e28989a20733e830a0c612591b28d8c5edf26acb8578a72e9e"
+      }
+    },
+    {
+      "id": "difference",
+      "sourceKeyAttribute": "Difference",
+      "labels": {
+        "en": "Difference",
+        "es": "Diferencia"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "problem,Problem"
+        ],
+        "subLinksEs": [
+          "problema,Problema"
+        ],
+        "exampleSwf": "Difference.swf"
+      },
+      "normalizedKey": "difference",
+      "sourceKeyVariants": [
+        "Difference"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "The answer to a subtraction problem. For example: 5 – 3 = 2; 2 is the difference.",
+          "es": "Es lo que obtenemos en una resta o problema de substracción. En el ejemplo: 5 – 3 = 2, el 2 es la diferencia."
+        },
+        "spanishXml": {
+          "en": "The answer to a subtraction problem. For example: 5 – 3 = 2; 2 is the difference.",
+          "es": "Es lo que obtenemos en una resta o problema de substracción. En el ejemplo: 5 – 3 = 2, el 2 es la diferencia."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "a75215197819bb71f9ce242ec909e2eb0fe462c68cf3f0df7cc093d1bf9a8ee1",
+        "es": "00781b1581a22edbf191484c8a0a4caf3abc63278f958c4e2a95e69a5c10ed07"
+      }
+    },
+    {
+      "id": "e-mail",
+      "sourceKeyAttribute": "E-mail",
+      "labels": {
+        "en": "E-mail",
+        "es": "Correo electrónico"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [],
+        "subLinksEs": [],
+        "exampleSwf": "E-mail.swf"
+      },
+      "normalizedKey": "e-mail",
+      "sourceKeyVariants": [
+        "E-mail"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A message sent or received electronically over a computer network, also spelled email.",
+          "es": "Un mensaje enviado o recibido electrónicamente a través de una red de computadoras."
+        },
+        "spanishXml": {
+          "en": "A message sent or received electronically over a computer network, also spelled email.",
+          "es": "Un mensaje enviado o recibido electrónicamente a través de una red de computadoras."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "acd8cbd42574fc6e55dce64d9d2d74bf5f99071683797dc9e5cb67e104880db5",
+        "es": "d7c4372169083f33753033dd711263850864684d959a355200dfe188e051f38c"
+      }
+    },
+    {
+      "id": "equation",
+      "sourceKeyAttribute": "Equation",
+      "labels": {
+        "en": "Equation",
+        "es": "Ecuación"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "sentence,Sentence",
+          "side,Side",
+          "equal,Equivalent",
+          "sign,Sign",
+          "value,Value"
+        ],
+        "subLinksEs": [
+          "Enunciado,Enunciado",
+          "lados,Lado",
+          "signo,Signo",
+          "valor,Valor",
+          "iguales,Equivalente"
+        ],
+        "exampleSwf": "Equation.swf"
+      },
+      "normalizedKey": "equation",
+      "sourceKeyVariants": [
+        "Equation"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A mathematical sentence where both sides of the equal sign (=) have the same value (are equal). For example: 9 + 9 = 3 x 6.",
+          "es": "Enunciado de una igualdad en la cual ambos lados del signo igual (=) tienen el mismo valor (son iguales). Por ejemplo: 9 + 9 = 3 x 6."
+        },
+        "spanishXml": {
+          "en": "A mathematical sentence where both sides of the equal sign (=) have the same value (are equal). For example: 9 + 9 = 3 x 6.",
+          "es": "Enunciado de una igualdad en la cual ambos lados del signo igual (=) tienen el mismo valor (son iguales). Por ejemplo: 9 + 9 = 3 x 6."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "1953b79992cc007771895437c529494dafbcf2d83ff55f53047f4cca6408a2d7",
+        "es": "04ca990e99821c237052b0e5d4bc9fcf7df46d5b45e2fa4f02d600027134779e"
+      }
+    },
+    {
+      "id": "evaluate",
+      "sourceKeyAttribute": "Evaluate",
+      "labels": {
+        "en": "Evaluate",
+        "es": "Evaluar"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "perform,Perform",
+          "problem,Problem"
+        ],
+        "subLinksEs": [
+          "suma,Suma",
+          "problema,Problema"
+        ],
+        "exampleSwf": "Evaluate.swf"
+      },
+      "normalizedKey": "evaluate",
+      "sourceKeyVariants": [
+        "Evaluate"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "To perform operations to get an answer. For example: if you add 3 + 3 and get 6, you have evaluated the problem through the operation of addition.",
+          "es": "Es realizar operaciones para encontrar una respuesta. Así por ejemplo: si usted suma 3 + 3 y obtiene 6, usted ha evaluado el problema por medio de una suma."
+        },
+        "spanishXml": {
+          "en": "To perform operations to get an answer. For example: if you add 3 + 3 and get 6, you have evaluated the problem through the operation of addition.",
+          "es": "Es realizar operaciones para encontrar una respuesta. Así por ejemplo: si usted suma 3 + 3 y obtiene 6, usted ha evaluado el problema por medio de una suma."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "a9b611e2e10a5c51ca848c9ee6fd9b8befaebcf01f991b38b4a1a1486f793d85",
+        "es": "4dab54a812db256c6e45fa074f623b92e9df55ced8bd5c8aa904d2e91ddb96b9"
+      }
+    },
+    {
+      "id": "exponent",
+      "sourceKeyAttribute": "Exponent",
+      "labels": {
+        "en": "Exponent",
+        "es": "Exponente"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "show,Show",
+          "power,Power"
+        ],
+        "subLinksEs": [
+          "cantidad,Cantidad",
+          "potencia,Potencia"
+        ],
+        "exampleSwf": "Exponent.swf"
+      },
+      "normalizedKey": "exponent",
+      "sourceKeyVariants": [
+        "Exponent"
+      ],
+      "definitionParity": false,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "The small number above and to the right of a base number which shows the number of times the base number is multiplied by itself. For example: 4&#x00B3;, 3 is the exponent and means 4 x 4 x 4. An exponent is also called a power.",
+          "es": "Es el número, pequeñito, que escribimos en la parte de arriba y a la derecha de otro número, llamado número base, que muestra la cantidad de veces en que el número base tiene que multiplicarse por sí mismo. Por ejemplo: en 4³, 3 es el exponente y significa que el cuatro se multiplica a si mismo: 4 x 4 x 4. Un exponente también es llamado \"potencia\"."
+        },
+        "spanishXml": {
+          "en": "The small number above and to the right of a base number which shows the number of times the base number is multiplied by itself. For example: 4³, 3 is the exponent and means 4 x 4 x 4. An exponent is also called a power.",
+          "es": "Es el número, pequeñito, que escribimos en la parte de arriba y a la derecha de otro número, llamado número base, que muestra la cantidad de veces en que el número base tiene que multiplicarse por sí mismo. Por ejemplo: en 4³, 3 es el exponente y significa que el cuatro se multiplica a si mismo: 4 x 4 x 4. Un exponente también es llamado \"potencia\"."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "d33ab7fc8db94c0f54c9c3e4329034913d456021630b12d7638c7b9622f9977b",
+        "es": "839ab785f9795cfe457519a7d721db28dce1f96c49070bd558c7ff065ae815f1"
+      }
+    },
+    {
+      "id": "expression",
+      "sourceKeyAttribute": "Expression",
+      "labels": {
+        "en": "Expression",
+        "es": "Expresión"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "statement,Statement",
+          "numbers,Number",
+          "variables,Variable",
+          "operations,Operation",
+          "equal sign,Equal sign"
+        ],
+        "subLinksEs": [
+          "enunciado,Statement",
+          "números,Number",
+          "variables,Variable",
+          "operaciones,Operation",
+          "signo de igual,Equal sign"
+        ],
+        "exampleSwf": "Expression.swf"
+      },
+      "normalizedKey": "expression",
+      "sourceKeyVariants": [
+        "Expression"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A mathematical statement that can have numbers, variables, and/or operations but no equal sign.",
+          "es": "Un enunciado matemático que puede tener números, variables, y/u operaciones pero no contiene el signo de igual."
+        },
+        "spanishXml": {
+          "en": "A mathematical statement that can have numbers, variables, and/or operations but no equal sign.",
+          "es": "Un enunciado matemático que puede tener números, variables, y/u operaciones pero no contiene el signo de igual."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "37c0ceaad5f0e8456cc569507015cb015253b4141f0af8d4f9e0d6699af67a22",
+        "es": "1c9da900705a8a2342e5ce3b447a4b9dc2b1bc6ab2464147ce38ed83e396e4b6"
+      }
+    },
+    {
+      "id": "frequency",
+      "sourceKeyAttribute": "Frequency",
+      "labels": {
+        "en": "Frequency",
+        "es": "Frecuencia"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [],
+        "subLinksEs": [],
+        "exampleSwf": "Frequency.swf"
+      },
+      "normalizedKey": "frequency",
+      "sourceKeyVariants": [
+        "Frequency"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "Frequency is the number of times something happens.",
+          "es": "Es la cantidad de veces que algo sucede."
+        },
+        "spanishXml": {
+          "en": "Frequency is the number of times something happens.",
+          "es": "Es la cantidad de veces que algo sucede."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "358649c5f8080559379f23bfd67040ea6fbc6f436e0e16d3e61f79fbb5d7a955",
+        "es": "2cfcf2c2ca52ed652e1150b51364fcdf423cc37786ad1e8e9b33f6eccf010c93"
+      }
+    },
+    {
+      "id": "function",
+      "sourceKeyAttribute": "Function",
+      "labels": {
+        "en": "Function",
+        "es": "Función"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "relation,Relationship",
+          "value,Value"
+        ],
+        "subLinksEs": [
+          "Relación,Relación",
+          "valor,Valor"
+        ],
+        "exampleSwf": "Function.swf"
+      },
+      "normalizedKey": "function",
+      "sourceKeyVariants": [
+        "Function"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A special relation in which every value of x has one, and only one, value of y.",
+          "es": "Relación especial en la cual a cada valor x le corresponde solamente un valor y."
+        },
+        "spanishXml": {
+          "en": "A special relation in which every value of x has one, and only one, value of y.",
+          "es": "Relación especial en la cual a cada valor x le corresponde solamente un valor y."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "bc0f40b8bdcc75633dd2ce1de92ea861198a5343564a757ea5f466681dcb9249",
+        "es": "47b6db9a18b6e7372ce870bb9f8f1b4862c92a023ef8a0d8abbe7148796448cc"
+      }
+    },
+    {
+      "id": "graph",
+      "sourceKeyAttribute": "Graph",
+      "labels": {
+        "en": "Graph",
+        "es": "Gráfico"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "data,Data",
+          "relationship,Relationship"
+        ],
+        "subLinksEs": [
+          "datos,Datos",
+          "relación,Relación"
+        ],
+        "exampleSwf": "Graph.swf"
+      },
+      "normalizedKey": "graph",
+      "sourceKeyVariants": [
+        "Graph"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A visual representation of data or a relationship between two or more items.",
+          "es": "Representación visual de información (datos) o de una relación entre dos o más variables."
+        },
+        "spanishXml": {
+          "en": "A visual representation of data or a relationship between two or more items.",
+          "es": "Representación visual de información (datos) o de una relación entre dos o más variables."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "e757607b16e2d83e075abe79755dbfdec1f070e9209c106a771752b1c62e0b7a",
+        "es": "a7ddfcc41d3768ab638836d8582467e65ad26e6c8647711378c5a9f73eaf0cde"
+      }
+    },
+    {
+      "id": "greater",
+      "sourceKeyAttribute": "Greater",
+      "labels": {
+        "en": "Greater",
+        "es": "Mayor que"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "symbol,Symbol",
+          "show,Show"
+        ],
+        "subLinksEs": [
+          "símbolo,Símbolo",
+          "mostrar,Mostrar"
+        ],
+        "exampleSwf": "Greater.swf"
+      },
+      "normalizedKey": "greater",
+      "sourceKeyVariants": [
+        "Greater"
+      ],
+      "definitionParity": false,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "Bigger or larger. For example: 10 is greater than 5. The symbol for greater is >. So we can show that 10 is greater than 5 by writing 10 > 5.",
+          "es": "Algo que es más grande o largo que otro objeto. Por ejemplo: 10 es mayor que 5. El símbolo que se usa para mayor que es >. De manera que podemos mostrar que 10 es mayor que 5 escribiendo 10 > 5."
+        },
+        "spanishXml": {
+          "en": "Bigger or larger. For example: 10 is greater than 5. The symbol for greater is &gt;. So we can show that 10 is greater than 5 by writing 10 &gt; 5.",
+          "es": "Algo que es más grande o largo que otro objeto. Por ejemplo: 10 es mayor que 5. El símbolo que se usa para mayor que es &gt;. De manera que podemos mostrar que 10 es mayor que 5 escribiendo 10 &gt; 5."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "7160ca12592252114c1990a08ef3ee6369918acdd7a697a18cae523d86e5be0b",
+        "es": "025471a21df37edabf0344b7e05f61d1b5748c96a0caa31f48f2923524740520"
+      }
+    },
+    {
+      "id": "histogram",
+      "sourceKeyAttribute": "Histogram",
+      "labels": {
+        "en": "Histogram",
+        "es": "Histograma"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "bar graph,Bar graph",
+          "frequency,Frequency",
+          "data,Data",
+          "intervals,Interval"
+        ],
+        "subLinksEs": [
+          "gráfico de barras,Gráfico de barras",
+          "frecuencia,Frecuencia",
+          "información,Información",
+          "intérvalos,Intérvalo"
+        ],
+        "exampleSwf": "Histogram.swf"
+      },
+      "normalizedKey": "histogram",
+      "sourceKeyVariants": [
+        "Histogram"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A histogram is a bar graph that shows the frequency of data displayed in intervals.",
+          "es": "Un histograma es un gráfico de barras que muestra la frecuencia de la información presentada en intervalos."
+        },
+        "spanishXml": {
+          "en": "A histogram is a bar graph that shows the frequency of data displayed in intervals.",
+          "es": "Un histograma es un gráfico de barras que muestra la frecuencia de la información presentada en intervalos."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "03927fc2ff0c77b41ab6004a82ca757ab46b94a07e05293d55233b7fbb1d3821",
+        "es": "75047cba0e2c96618e4225e1ae4116e5df65b65bf95a05ee3cd140b6dbf8c385"
+      }
+    },
+    {
+      "id": "inequality",
+      "sourceKeyAttribute": "Inequality",
+      "labels": {
+        "en": "Inequality",
+        "es": "Desigualdad"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [],
+        "subLinksEs": [],
+        "exampleSwf": "Inequality.swf"
+      },
+      "normalizedKey": "inequality",
+      "sourceKeyVariants": [
+        "Inequality"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A mathematical sentence that has the symbols > (greater than), &#x003C; (less than), &#x2265; (greater than or equal to), &#x2264; (less than or equal to), or &#x2260;(not equal).",
+          "es": "Una expresión matemática que contiene los símbolos > (mayor que), &#x003C; (menor que), &#x2265; (mayor o igual que), &#x2264; (menor o igual que), o &#x2260; (no es igual que)."
+        },
+        "spanishXml": {
+          "en": "A mathematical sentence that has the symbols > (greater than), &#x003C; (less than), &#x2265; (greater than or equal to), &#x2264; (less than or equal to), or &#x2260;(not equal).",
+          "es": "Una expresión matemática que contiene los símbolos > (mayor que), &#x003C; (menor que), &#x2265; (mayor o igual que), &#x2264; (menor o igual que), o &#x2260; (no es igual que)."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "cd68e849e7ffb05d8f358b83ad51c22e8aebf5b8a26f868a37a53a62571d36dc",
+        "es": "cd68e849e7ffb05d8f358b83ad51c22e8aebf5b8a26f868a37a53a62571d36dc"
+      }
+    },
+    {
+      "id": "input",
+      "sourceKeyAttribute": "Input",
+      "labels": {
+        "en": "Input",
+        "es": "Entrada"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [],
+        "subLinksEs": [],
+        "exampleSwf": "Input.swf"
+      },
+      "normalizedKey": "input",
+      "sourceKeyVariants": [
+        "Input"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "In mathematics, input refers to putting data into something.",
+          "es": "En matemáticas, entrada (ingreso) se refiere al acto de poner datos en en algo."
+        },
+        "spanishXml": {
+          "en": "In mathematics, input refers to putting data into something.",
+          "es": "En matemáticas, entrada (ingreso) se refiere al acto de poner datos en en algo."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "a2102c8ba96055a47476940db14fb3cf8d8d3749e6e4b5929ecad1a592682aa4",
+        "es": "45f23c8f3f7c3d9167378c0463666dc1692ce9f847888e4fe36590bfc8fdb603"
+      }
+    },
+    {
+      "id": "input-variable",
+      "sourceKeyAttribute": "Input variable",
+      "labels": {
+        "en": "Input variable",
+        "es": "Variable de entrada"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "independent variable,Independent variable"
+        ],
+        "subLinksEs": [
+          "variable independiente,Variable independiente"
+        ],
+        "exampleSwf": "Input_variable.swf"
+      },
+      "normalizedKey": "input variable",
+      "sourceKeyVariants": [
+        "Input variable"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "The input variable is the independent variable of a function.",
+          "es": "La variable de entrada es la variable independiente de una función."
+        },
+        "spanishXml": {
+          "en": "The input variable is the independent variable of a function.",
+          "es": "La variable de entrada es la variable independiente de una función."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "0a9c8b2c86698253d57298f8b7711b3cd0707041701baff43b5a587b61be679f",
+        "es": "fc4b99c05ec11145fd4564ee30be0a87ce84b9b112e5f13f7ab254f92cd92e10"
+      }
+    },
+    {
+      "id": "interval",
+      "sourceKeyAttribute": "Interval",
+      "labels": {
+        "en": "Interval",
+        "es": "Intervalo"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "distance,Distance",
+          "algebra,Algebra",
+          "real number,Real numbers"
+        ],
+        "subLinksEs": [
+          "distancia,Distancia",
+          "álgebra,Algebra",
+          "número real,Números reales"
+        ],
+        "exampleSwf": "Interval.swf"
+      },
+      "normalizedKey": "interval",
+      "sourceKeyVariants": [
+        "Interval"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "An interval is the distance between two values. In algebra, an interval is a set that contains every real number between two numbers.",
+          "es": "Un intervalo es la distancia entre dos valores. En álgebra, un intervalo es un conjunto que contiene cada número real entre dos números."
+        },
+        "spanishXml": {
+          "en": "An interval is the distance between two values. In algebra, an interval is a set that contains every real number between two numbers.",
+          "es": "Un intervalo es la distancia entre dos valores. En álgebra, un intervalo es un conjunto que contiene cada número real entre dos números."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "54a7bf89058f808d0c626784b8668d4d62963d0d45d606246ef651bb21de9774",
+        "es": "e2b67ca233be96b405ce4a4b372bbdb85ee6ced79646e30b97ca81e79250baf6"
+      }
+    },
+    {
+      "id": "like-terms",
+      "sourceKeyAttribute": "Like terms",
+      "labels": {
+        "en": "Like terms",
+        "es": "Términos semejantes"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "terms,Term",
+          "variables,Variable",
+          "exponents,Exponent"
+        ],
+        "subLinksEs": [
+          "términos,Término",
+          "variables,Variable",
+          "exponentes,Exponente"
+        ],
+        "exampleSwf": "Like_terms.swf"
+      },
+      "normalizedKey": "like terms",
+      "sourceKeyVariants": [
+        "Like terms"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "Terms that have the same variables. If the variables have exponents, the exponents must also be the same.",
+          "es": "Son términos que tienen las mismas variables. Si las variables tienen exponentes, los mismos deben ser iguales."
+        },
+        "spanishXml": {
+          "en": "Terms that have the same variables. If the variables have exponents, the exponents must also be the same.",
+          "es": "Son términos que tienen las mismas variables. Si las variables tienen exponentes, los mismos deben ser iguales."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "dcab61b22e374a87a99a2065a3bda71c9f79a05cda58291b9715139ceb9c71da",
+        "es": "ad75da0b85a4ae4c65510a3d037833de39a61362e4528c32dcbd7560b242864d"
+      }
+    },
+    {
+      "id": "line",
+      "sourceKeyAttribute": "Line",
+      "labels": {
+        "en": "Line",
+        "es": "Línea"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "set,Set",
+          "points,Point",
+          "stretching,Stretch",
+          "opposite,Opposite",
+          "directions,Direction"
+        ],
+        "subLinksEs": [
+          "conjunto,Conjunto",
+          "puntos,Punto",
+          "extienden,Estirar",
+          "direcciones,Dirección",
+          "opuestas,Opuesto"
+        ],
+        "exampleSwf": "Line.swf"
+      },
+      "normalizedKey": "line",
+      "sourceKeyVariants": [
+        "Line"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A line is a straight set of points stretching in opposite directions without end.",
+          "es": "Una línea es un conjunto continuo de puntos que se extienden en direcciones opuestas sin final."
+        },
+        "spanishXml": {
+          "en": "A line is a straight set of points stretching in opposite directions without end.",
+          "es": "Una línea es un conjunto continuo de puntos que se extienden en direcciones opuestas sin final."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "a7a7b7d77163feca4c96504d52eb8f1a30b530656cdf788c51c1b0fe10bebb77",
+        "es": "3b9ad4a9c9e0f8f1f2a898c71b1d53f76631a4ea4738db157fc8d84d11c68606"
+      }
+    },
+    {
+      "id": "linear-equation",
+      "sourceKeyAttribute": "Linear equation",
+      "labels": {
+        "en": "Linear equation",
+        "es": "Ecuación lineal"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "equation,Equation",
+          "graph,Graph",
+          "line.,Line"
+        ],
+        "subLinksEs": [
+          "ecuación,Ecuaciòn",
+          "gráfica,Gráfica",
+          "línea ,Línea"
+        ],
+        "exampleSwf": "Linear_equation.swf"
+      },
+      "normalizedKey": "linear equation",
+      "sourceKeyVariants": [
+        "Linear equation"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A linear equation is an equation whose graph is a straight line.",
+          "es": "Una ecuación lineal es una ecuación cuya gráfica es una línea recta."
+        },
+        "spanishXml": {
+          "en": "A linear equation is an equation whose graph is a straight line.",
+          "es": "Una ecuación lineal es una ecuación cuya gráfica es una línea recta."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "f1a62fde5914d4e5af521a318d905538635f4c2f356620a40948a22e6aec0bc5",
+        "es": "88335361f0fc3a79bee019ef7ebf9a667f1321945cfecd0858f0ab447e4bd16b"
+      }
+    },
+    {
+      "id": "locate",
+      "sourceKeyAttribute": "Locate",
+      "labels": {
+        "en": "Locate",
+        "es": "Localizar"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [],
+        "subLinksEs": [],
+        "exampleSwf": "Locate.swf"
+      },
+      "normalizedKey": "locate",
+      "sourceKeyVariants": [
+        "Locate"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "To find or discover the place where a thing is. For example: you may be asked to locate California on a map.",
+          "es": "Encontrar o descubrir el lugar donde algo se encuentra. Por ejemplo: a usted se le puede pedir que localice el estado de California en un mapa."
+        },
+        "spanishXml": {
+          "en": "To find or discover the place where a thing is. For example: you may be asked to locate California on a map.",
+          "es": "Encontrar o descubrir el lugar donde algo se encuentra. Por ejemplo: a usted se le puede pedir que localice el estado de California en un mapa."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "2ca6182452ae5ee9b7527dcb2168c8ed52dfb9ff38a1620fb813b35af3290f32",
+        "es": "2cfdecfe889f951f9d2ac2a36e65575ab092b5f7e3d4a878a1dcc773397cb734"
+      }
+    },
+    {
+      "id": "location",
+      "sourceKeyAttribute": "Location",
+      "labels": {
+        "en": "Location",
+        "es": "Ubicación"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [],
+        "subLinksEs": [],
+        "exampleSwf": "Location.swf"
+      },
+      "normalizedKey": "location",
+      "sourceKeyVariants": [
+        "Location"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "The place where something is situated. For example: you may be asked to find the location of California on a map.",
+          "es": "El lugar donde algo se encuentra. Por ejemplo: a usted se le puede pedir que ubique donde se encuentra California en un mapa."
+        },
+        "spanishXml": {
+          "en": "The place where something is situated. For example: you may be asked to find the location of California on a map.",
+          "es": "El lugar donde algo se encuentra. Por ejemplo: a usted se le puede pedir que ubique donde se encuentra California en un mapa."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "6f9b74f26ac455db5f4bcb8b44e7e1c0dc67df69b244e810b3d8aeb6d7c701ba",
+        "es": "e92e1400c0eec6135fdbf7f8d1c3f070274ec7445c2f3be987e29a0a231a089d"
+      }
+    },
+    {
+      "id": "measure",
+      "sourceKeyAttribute": "Measure",
+      "labels": {
+        "en": "Measure",
+        "es": "Medir"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "quantity,Quantity",
+          "units,Unit",
+          "measurement,Measurement",
+          "length,Length"
+        ],
+        "subLinksEs": [
+          "cantidad,Cantidad",
+          "unidades,Unidad",
+          "medición,Medición",
+          "longitud,Longitud"
+        ],
+        "exampleSwf": "Measure.swf"
+      },
+      "normalizedKey": "measure",
+      "sourceKeyVariants": [
+        "Measure"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "To find the size and quantity of something using standard units. For example: you can measure time using the “standard units of measurement”: hours, minutes, seconds; you can measure length using the “standard units of measurement”: meters, centimeters, kilometers, inches, feet and yards, etc.",
+          "es": "Encontrar el tamaño y la cantidad de algo usando unidades estándares. Por ejemplo: usted puede medir el tiempo usando “unidades estándares de medición”: como horas, minutos, segundos; usted puede medir la longitud usando metros, centímetros, pulgadas, pies, yardas, etc."
+        },
+        "spanishXml": {
+          "en": "To find the size and quantity of something using standard units. For example: you can measure time using the “standard units of measurement”: hours, minutes, seconds; you can measure length using the “standard units of measurement”: meters, centimeters, kilometers, inches, feet and yards, etc.",
+          "es": "Encontrar el tamaño y la cantidad de algo usando unidades estándares. Por ejemplo: usted puede medir el tiempo usando “unidades estándares de medición”: como horas, minutos, segundos; usted puede medir la longitud usando metros, centímetros, pulgadas, pies, yardas, etc."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "2f245f92f94e2a6fc371519a8db80fce0929f30ba17545e03bac0a29bddb9410",
+        "es": "a578c4c8ac53228780f1d1df8b8349664c6ba0adcbef0a16d44a252688e1a026"
+      }
+    },
+    {
+      "id": "median",
+      "sourceKeyAttribute": "Median",
+      "labels": {
+        "en": "Median",
+        "es": "Mediana"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "middle,Middle",
+          "set,Set",
+          "data,Data",
+          "arranged,Arrange",
+          "numerical order,Numerical order",
+          "mean,Mean"
+        ],
+        "subLinksEs": [
+          "medio,Medio",
+          "conjunto,Conjunto",
+          "datos,Datos",
+          "orden numérico,Orden numérico",
+          "media ,Media"
+        ],
+        "exampleSwf": "Median.swf"
+      },
+      "normalizedKey": "median",
+      "sourceKeyVariants": [
+        "Median"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "The median is the middle number in a set of data when the data are arranged in numerical order. If there is no single middle number, the median is the mean of the two middle numbers.",
+          "es": "La mediana es el número del medio de un conjunto de datos cuando los datos se ordenan en orden numérico. Si no hay un número medio, la mediana es la media de los dos números centrales."
+        },
+        "spanishXml": {
+          "en": "The median is the middle number in a set of data when the data are arranged in numerical order. If there is no single middle number, the median is the mean of the two middle numbers.",
+          "es": "La mediana es el número del medio de un conjunto de datos cuando los datos se ordenan en orden numérico. Si no hay un número medio, la mediana es la media de los dos números centrales."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "3b7543e6765b95a23e54ddafa4f8d8e851dd684fcd682e3a52573e47126a4e8a",
+        "es": "f5c7729bf5f137a60c7c2a5087ff29333048b036cca514b10dd944557e70da13"
+      }
+    },
+    {
+      "id": "middle",
+      "sourceKeyAttribute": "Middle",
+      "labels": {
+        "en": "Middle",
+        "es": "Medio"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "set,Set",
+          "data,Data",
+          "values,Value",
+          "greater,Greater",
+          "less,Lesser"
+        ],
+        "subLinksEs": [
+          "conjunto,Conjunto",
+          "datos,Datos",
+          "cantidad,Cantidad",
+          "valores,Valor",
+          "mayores,El mayor",
+          "menores,Menor"
+        ],
+        "exampleSwf": "Middle.swf"
+      },
+      "normalizedKey": "middle",
+      "sourceKeyVariants": [
+        "Middle"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "For the middle number in a data set, there are as many numbers with values greater than the middle number as there are numbers with values less than the middle number. For example in the ordered data set {0, 1, 2, 5, 6, 9, 17 }, the middle number is 5.",
+          "es": "Para el número del medio en un conjunto de datos, existe igual cantidad de valores mayores que él como, valores menores que él. Por ejemplo, en el conjunto ordenado {0, 1, 2, 5, 6, 9, 17}, el número del medio es el 5."
+        },
+        "spanishXml": {
+          "en": "For the middle number in a data set, there are as many numbers with values greater than the middle number as there are numbers with values less than the middle number. For example in the ordered data set {0, 1, 2, 5, 6, 9, 17 }, the middle number is 5.",
+          "es": "Para el número del medio en un conjunto de datos, existe igual cantidad de valores mayores que él como, valores menores que él. Por ejemplo, en el conjunto ordenado {0, 1, 2, 5, 6, 9, 17}, el número del medio es el 5."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "fe4c3ba14c0d76f53b432ea175c63595e13bdac561d3f965c64a319ab6c4159c",
+        "es": "f664d2304dcb33bc5a4173db48736a90016111faa3c3c4a21da968765ee57746"
+      }
+    },
+    {
+      "id": "numerical-order",
+      "sourceKeyAttribute": "Numerical order",
+      "labels": {
+        "en": "Numerical order",
+        "es": "Orden numérico"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "rearrange,Rearrange",
+          "least,Least",
+          "greatest,Greatest"
+        ],
+        "subLinksEs": [
+          "Ordenar,Ordenar",
+          "menor,Menor",
+          "mayor,Mayor que"
+        ],
+        "exampleSwf": "Numerical_order.swf"
+      },
+      "normalizedKey": "numerical order",
+      "sourceKeyVariants": [
+        "Numerical order"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "To rearrange numbers in numerical order means to put numbers in order from least to greatest or from greatest to least.",
+          "es": "Ordenar números en orden numérico significa colocar los números de menor a mayor o de mayor a menor."
+        },
+        "spanishXml": {
+          "en": "To rearrange numbers in numerical order means to put numbers in order from least to greatest or from greatest to least.",
+          "es": "Ordenar números en orden numérico significa colocar los números de menor a mayor o de mayor a menor."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "91a22b174008c077e7153b8a90624746424cc0ca8fbca6039f4b3a045cff2c7a",
+        "es": "48a5cdb71835614c5ed2067ba67f07a5c618a01d10cb8643b81b358defe7d954"
+      }
+    },
+    {
+      "id": "obtuse-angle",
+      "sourceKeyAttribute": "Obtuse angle",
+      "labels": {
+        "en": "Obtuse angle",
+        "es": "Ángulo obtuso"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "angle,Angle",
+          "right angle,Right angle",
+          "degrees,Degree"
+        ],
+        "subLinksEs": [
+          "ángulo,Àngulo",
+          "ángulo recto,Ángulo recto",
+          "grados,Grado"
+        ],
+        "exampleSwf": "Obtuse_angle.swf"
+      },
+      "normalizedKey": "obtuse angle",
+      "sourceKeyVariants": [
+        "Obtuse angle"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "An angle that is greater than a right angle; it measures between 90 and 180 degrees.",
+          "es": "Un ángulo que es mayor que un ángulo recto; mide más de 90 y menos de 180 grados."
+        },
+        "spanishXml": {
+          "en": "An angle that is greater than a right angle; it measures between 90 and 180 degrees.",
+          "es": "Un ángulo que es mayor que un ángulo recto; mide más de 90 y menos de 180 grados."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "aedc3f3a131ef18d6a22a69f4771ac444f335d69448b0aef40b9d527ed2a4d62",
+        "es": "663f26a64493a903254bccbeec396b5ad57b4c2d93de607c08703ac709387275"
+      }
+    },
+    {
+      "id": "order",
+      "sourceKeyAttribute": "Order",
+      "labels": {
+        "en": "Order",
+        "es": "Orden"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "value,Value"
+        ],
+        "subLinksEs": [
+          "cantidad,Cantidad",
+          "valor,Valor"
+        ],
+        "exampleSwf": "Order.swf"
+      },
+      "normalizedKey": "order",
+      "sourceKeyVariants": [
+        "Order"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "This is a sequence of objects or numbers according to size, time, amount, or value. For example: the numbers 2, 3, 4, 5 are in order from smallest to greatest.",
+          "es": "Es una secuencia de objetos o números de acuerdo a algún criterio específico: tamaño, tiempo, cantidad o valor. Por ejemplo: los números 2, 3, 4, 5 están ordenados de menor a mayor."
+        },
+        "spanishXml": {
+          "en": "This is a sequence of objects or numbers according to size, time, amount, or value. For example: the numbers 2, 3, 4, 5 are in order from smallest to greatest.",
+          "es": "Es una secuencia de objetos o números de acuerdo a algún criterio específico: tamaño, tiempo, cantidad o valor. Por ejemplo: los números 2, 3, 4, 5 están ordenados de menor a mayor."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "0eef326b7e790d0a9379bf6d1b9210d3ba4b70e65ea5bca670519cb4ee56e097",
+        "es": "2c8d063e5c86388c641fea343a474f08a8cd8321b9a079112b08f0bdb9ea27b4"
+      }
+    },
+    {
+      "id": "ordered-pair",
+      "sourceKeyAttribute": "Ordered pair",
+      "labels": {
+        "en": "Ordered pair",
+        "es": "Par ordenado"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "plot,Plot",
+          "graph,Graph",
+          "value,Value"
+        ],
+        "subLinksEs": [
+          "ordenado,Ordenado",
+          "puntos,Punto",
+          "valor,Valor"
+        ],
+        "exampleSwf": "Ordered_pair.swf"
+      },
+      "normalizedKey": "ordered pair",
+      "sourceKeyVariants": [
+        "Ordered pair",
+        "ordered pair"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "An ordered pair of numbers in math is two numbers presented in a specific order, often used to plot points on a graph. For example, (1, 2) is an ordered pair of numbers with an x-value of 1 and a y-value of 2. (2,1) refers to a different point.",
+          "es": "Un par ordenado de números en matemáticas son dos números presentados en un orden específico, por lo general, utilizado para representar puntos en una gráfica. Por ejemplo: (1, 2) es un par ordenado de números con un valor x de 1 y un valor y de 2. El par ordenado (2,1) se refiere a un punto diferente."
+        },
+        "spanishXml": {
+          "en": "An ordered pair of numbers in math is two numbers presented in a specific order, often used to plot points on a graph. For example, (1, 2) is an ordered pair of numbers with an x-value of 1 and a y-value of 2. (2,1) refers to a different point.",
+          "es": "Un par ordenado de números en matemáticas son dos números presentados en un orden específico, por lo general, utilizado para representar puntos en una gráfica. Por ejemplo: (1, 2) es un par ordenado de números con un valor x de 1 y un valor y de 2. El par ordenado (2,1) se refiere a un punto diferente."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "19c90b0f29d16cf964c615445c7e90d436c3ae3854b555e35d9335a41b7113f8",
+        "es": "59a64b8dbe33fd825ea4301a23c640ea72f29262c172016d33f3b7f35b20ba23"
+      }
+    },
+    {
+      "id": "origin",
+      "sourceKeyAttribute": "Origin",
+      "labels": {
+        "en": "Origin",
+        "es": "Origen"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "coordinate plane,Coordinate plane",
+          "x-axis,X-axis",
+          "y-axis,Y-axis"
+        ],
+        "subLinksEs": [
+          "plano de coordenadas,Plano de coordenadas",
+          "eje x,Eje x",
+          "eje y,Eje y"
+        ],
+        "exampleSwf": "Origin.swf"
+      },
+      "normalizedKey": "origin",
+      "sourceKeyVariants": [
+        "Origin"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "The point (0, 0) on a coordinate plane where the x-axis and y-axis intersect.",
+          "es": "El punto (0, 0) en un plano de coordenadas donde se intersecan el eje x con el eje y."
+        },
+        "spanishXml": {
+          "en": "The point (0, 0) on a coordinate plane where the x-axis and y-axis intersect.",
+          "es": "El punto (0, 0) en un plano de coordenadas donde se intersecan el eje x con el eje y."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "2db18fee9b207a14f9dabf8a486561026f14cdfd76cdef8b8f892aa3c8fa8be6",
+        "es": "a862660d4a23cd0bf78b48184747d6730cd3924fddae67f17cd3ef97ce7d435c"
+      }
+    },
+    {
+      "id": "output",
+      "sourceKeyAttribute": "Output",
+      "labels": {
+        "en": "Output",
+        "es": "Salida"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [],
+        "subLinksEs": [],
+        "exampleSwf": "Output.swf"
+      },
+      "normalizedKey": "output",
+      "sourceKeyVariants": [
+        "Output"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "In mathematics, output refers to the result of the action of input, putting data in.",
+          "es": "En matemáticas, salida se refiere al acto obtener datos como resultado de ejecutar ciertas operaciones en una función."
+        },
+        "spanishXml": {
+          "en": "In mathematics, output refers to the result of the action of input, putting data in.",
+          "es": "En matemáticas, salida se refiere al acto obtener datos como resultado de ejecutar ciertas operaciones en una función."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "8f7858771155ed23e2b4f3b59818fc27ae1fc9af16220c74e328b7c11ef17810",
+        "es": "b974656b89708199a3eea9da9b4dcc2f5095ec28a67a558fee2ada1812de93d9"
+      }
+    },
+    {
+      "id": "output-variable",
+      "sourceKeyAttribute": "Output variable",
+      "labels": {
+        "en": "Output variable",
+        "es": "Variable de salida"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "dependent variable,Dependent variable"
+        ],
+        "subLinksEs": [
+          "variable dependiente,Variable dependiente"
+        ],
+        "exampleSwf": "Output_variable.swf"
+      },
+      "normalizedKey": "output variable",
+      "sourceKeyVariants": [
+        "Output variable"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "The output variable is the dependent variable of a function.",
+          "es": "La variable de salida es la variable dependiente de una función."
+        },
+        "spanishXml": {
+          "en": "The output variable is the dependent variable of a function.",
+          "es": "La variable de salida es la variable dependiente de una función."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "cdcb1af6ec92d4ca8e1ae2ad131b4245fea3760a355379fe9f31e451385f45be",
+        "es": "c635184fb59ca81238eb9e134e8572ea2b8d35eed5cf6d5f8ff66398c7af4d08"
+      }
+    },
+    {
+      "id": "pattern",
+      "sourceKeyAttribute": "Pattern",
+      "labels": {
+        "en": "Pattern",
+        "es": "Patrón"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "set,Set",
+          "shape,Shape",
+          "arranged,Arrange"
+        ],
+        "subLinksEs": [
+          "conjunto,Conjunto",
+          "formas,Forma",
+          "ordenados,Ordenar"
+        ],
+        "exampleSwf": "Pattern.swf"
+      },
+      "normalizedKey": "pattern",
+      "sourceKeyVariants": [
+        "Pattern"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A repeated set or sequence of numbers, shapes or designs arranged according to a rule. For example: the pattern 10, 20, 30, 40, etc. is a set of numbers following the rule “count by 10’s starting at 10”.",
+          "es": "Una secuencia o conjunto de números que se repiten, las formas o diseños ordenados de acuerdo a alguna regla. Por ejemplo: el patrón 10, 20, 30, 40, etc es un conjunto de números que siguen la regla de \"contar de diez en diez empezando con el 10\"."
+        },
+        "spanishXml": {
+          "en": "A repeated set or sequence of numbers, shapes or designs arranged according to a rule. For example: the pattern 10, 20, 30, 40, etc. is a set of numbers following the rule “count by 10’s starting at 10”.",
+          "es": "Una secuencia o conjunto de números que se repiten, las formas o diseños ordenados de acuerdo a alguna regla. Por ejemplo: el patrón 10, 20, 30, 40, etc es un conjunto de números que siguen la regla de \"contar de diez en diez empezando con el 10\"."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "b6b849f98ce793df4c7ad6712b1d68558d732ca50fd2858d3d17078f3d9e2ade",
+        "es": "71ef32d6cf83b3b93b4438f5043f9852518e8ff2eab2491ab1df108e4c7f8c22"
+      }
+    },
+    {
+      "id": "point",
+      "sourceKeyAttribute": "Point",
+      "labels": {
+        "en": "Point",
+        "es": "Punto"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "figure,Figure",
+          "position,Position",
+          "length,Length",
+          "width,Width",
+          "height,Height"
+        ],
+        "subLinksEs": [
+          "figura,Figura",
+          "posición,Posición",
+          "longitud,Longitud",
+          "altura,Altura"
+        ],
+        "exampleSwf": "Point.swf"
+      },
+      "normalizedKey": "point",
+      "sourceKeyVariants": [
+        "Point",
+        "point"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A point is a geometric figure that has position, but no length, width, or height.",
+          "es": "Un punto es una figura geométrica que tiene una posición, pero no tiene dimensiones: longitud, anchura o altura."
+        },
+        "spanishXml": {
+          "en": "A point is a geometric figure that has position, but no length, width, or height.",
+          "es": "Un punto es una figura geométrica que tiene una posición, pero no tiene dimensiones: longitud, anchura o altura."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "71c95387f87dda3730ff3030e67de71447e9438f153a74b5230bfaeb35b20d8c",
+        "es": "8a63260086eecfbd2e08ceeacbdb22094e90ae79a8d7eca5e7f25b9b12989098"
+      }
+    },
+    {
+      "id": "pushup",
+      "sourceKeyAttribute": "Pushup",
+      "labels": {
+        "en": "Pushup",
+        "es": "Flexiones de codo (lagartijas)"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [],
+        "subLinksEs": [],
+        "exampleSwf": "Pushup.swf"
+      },
+      "normalizedKey": "pushup",
+      "sourceKeyVariants": [
+        "Pushup",
+        "pushup"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "An arm exercise performed while lying face to the floor and pushing the body up and down with the arms.",
+          "es": "Ejercicio para los brazos que se ejecuta boca abajo flexionando el cuerpo hacia arriba y hacia abajo con los brazos."
+        },
+        "spanishXml": {
+          "en": "An arm exercise performed while lying face to the floor and pushing the body up and down with the arms.",
+          "es": "Ejercicio para los brazos que se ejecuta boca abajo flexionando el cuerpo hacia arriba y hacia abajo con los brazos."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "5c33419ff42320a97481f5724a01ebfcfb324beb520cbda45a16eacf6e766513",
+        "es": "487f05235327809cac71bea96e0f5f49c156bfe36dee244bc7b685d85e5a0361"
+      }
+    },
+    {
+      "id": "quantity",
+      "sourceKeyAttribute": "Quantity",
+      "labels": {
+        "en": "Quantity",
+        "es": "Cantidad"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "measure,Measure"
+        ],
+        "subLinksEs": [
+          "expresión,Expresión"
+        ],
+        "exampleSwf": "Quantity.swf"
+      },
+      "normalizedKey": "quantity",
+      "sourceKeyVariants": [
+        "Quantity"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A measure or number of something. For example: there are three flowers in the picture. We could say that “the quantity of flowers is three.”",
+          "es": "La medida o expresión numèrica de algo. Por ejemplo: hay tres flores en el dibujo. Podríamos decir: “la cantidad de flores es tres”."
+        },
+        "spanishXml": {
+          "en": "A measure or number of something. For example: there are three flowers in the picture. We could say that “the quantity of flowers is three.”",
+          "es": "La medida o expresión numèrica de algo. Por ejemplo: hay tres flores en el dibujo. Podríamos decir: “la cantidad de flores es tres”."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "acbf0bc67aa49dc85c732e831e67998aefaa4bcc2b2025024c2504203a13c2ac",
+        "es": "e9ec3ac1231c37cfda2999c23fc6ed7dc03b66a5002d07a10a68aefa37eb9bfb"
+      }
+    },
+    {
+      "id": "rate",
+      "sourceKeyAttribute": "Rate",
+      "labels": {
+        "en": "Rate",
+        "es": "Índice"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "ratio,Ratio",
+          "compares,Compare",
+          "quantities,Quantity",
+          "units,Unit"
+        ],
+        "subLinksEs": [
+          "ratio,Razón",
+          "proporción,Proporción",
+          "cantidades,Cantidad"
+        ],
+        "exampleSwf": "Rate.swf"
+      },
+      "normalizedKey": "rate",
+      "sourceKeyVariants": [
+        "Rate"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A ratio that compares two different quantities measured in different units.",
+          "es": "Un índice es una razón que compara dos cantidades medidas en unidades diferentes."
+        },
+        "spanishXml": {
+          "en": "A ratio that compares two different quantities measured in different units.",
+          "es": "Un índice es una razón que compara dos cantidades medidas en unidades diferentes."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "37179c3e4c501fabb532703f23be6fc5048bffdfa594b49558f94aed9d5c7f64",
+        "es": "37179c3e4c501fabb532703f23be6fc5048bffdfa594b49558f94aed9d5c7f64"
+      }
+    },
+    {
+      "id": "ratio",
+      "sourceKeyAttribute": "Ratio",
+      "labels": {
+        "en": "Ratio",
+        "es": "Razón"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "quantity,Quantity",
+          "measure,Measure",
+          "fraction,Fraction",
+          "colon,Colon",
+          "show,Show"
+        ],
+        "subLinksEs": [
+          "cantidad,Cantidad",
+          "medida,Medir",
+          "fracción,Fraction",
+          "dos puntos,Dos puntos",
+          "proporción,Proporción",
+          "relación,Relación"
+        ],
+        "exampleSwf": "Ratio.swf"
+      },
+      "normalizedKey": "ratio",
+      "sourceKeyVariants": [
+        "Ratio"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A ratio is a comparison of the quantity or measure of two different things. A ratio can be written as a fraction, with a colon, or with the word “to”. For example: ¾ is a ratio which shows how many yellow blocks there are to blue blocks, which can also be shown as 3:4 or 3 to 4.",
+          "es": "Es la comparación de la cantidad y medida de objetos diferentes. Una razón se puede escribir como una fracción, con dos puntos, o con la palabra “a”. Por ejemplo: 3/4 es una proporción en la que se muestra cuantos bloques amarillos hay con respecto a bloques azules, lo que también se puede mostrar como 3 : 4 o \"tres a cuatro\"."
+        },
+        "spanishXml": {
+          "en": "A ratio is a comparison of the quantity or measure of two different things. A ratio can be written as a fraction, with a colon, or with the word “to”. For example: ¾ is a ratio which shows how many yellow blocks there are to blue blocks, which can also be shown as 3:4 or 3 to 4.",
+          "es": "Es la comparación de la cantidad y medida de objetos diferentes. Una razón se puede escribir como una fracción, con dos puntos, o con la palabra “a”. Por ejemplo: 3/4 es una proporción en la que se muestra cuantos bloques amarillos hay con respecto a bloques azules, lo que también se puede mostrar como 3 : 4 o \"tres a cuatro\"."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "c262dbf548a4176235550a428cb672f913c5c24acb96c81c82a01523670d3db5",
+        "es": "2bcc224f99c629c08e31b8ebc9709fe3b5307cd3d0e8ae60ad9318b73a070a9e"
+      }
+    },
+    {
+      "id": "relation",
+      "sourceKeyAttribute": "Relation",
+      "labels": {
+        "en": "Relation",
+        "es": "Relación"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "set,Set",
+          "ordered pairs,Ordered pair",
+          "tables,Table",
+          "equation,Equation"
+        ],
+        "subLinksEs": [],
+        "exampleSwf": "Relation.swf"
+      },
+      "normalizedKey": "relation",
+      "sourceKeyVariants": [
+        "Relation"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A set of ordered pairs. Relations can be expressed using words, tables, lists of ordered pairs, graphs, or an algebraic rule or equation.",
+          "es": "Un conjunto de pares ordenados. Las relaciones pueden ser expresadas por medio de palabras, tablas, listas de pares ordenados, gráficos, una regla algebraica o una ecuación."
+        },
+        "spanishXml": {
+          "en": "A set of ordered pairs. Relations can be expressed using words, tables, lists of ordered pairs, graphs, or an algebraic rule or equation.",
+          "es": "Un conjunto de pares ordenados. Las relaciones pueden ser expresadas por medio de palabras, tablas, listas de pares ordenados, gráficos, una regla algebraica o una ecuación."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "a2b45dd0d6b3c75dd137a0a36f18376ce7040739ec910e3025853eef126bea5e",
+        "es": "8bac9eeaa9ca475821d1f0538b0e3ddfdf5f99f788d380fdb90960effe7e0697"
+      }
+    },
+    {
+      "id": "represent",
+      "sourceKeyAttribute": "Represent",
+      "labels": {
+        "en": "Represent",
+        "es": "Representar"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [],
+        "subLinksEs": [
+          "valor,Valor"
+        ],
+        "exampleSwf": "Represent.swf"
+      },
+      "normalizedKey": "represent",
+      "sourceKeyVariants": [
+        "Represent"
+      ],
+      "definitionParity": false,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "This is where one thing stands for another. For example: x + 10 = 12; \"x\" represents 2.",
+          "es": "Es cuando una letra se encuentra tomando el lugar de un número, expresando su valor. Por ejemplo: x + 10 = 12; \"x\" representa 2."
+        },
+        "spanishXml": {
+          "en": "This is where one thing stands for another. For example: x + 10 = 12; &quot;x&quot; represents 2.",
+          "es": "Es cuando una letra se encuentra tomando el lugar de un número, expresando su valor. Por ejemplo: x + 10 = 12; \"x\" representa 2."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "cfab4ccf434bc6f87e3b880f6161260222eee6f08c749e80dcd9f3b3794c16d1",
+        "es": "b931656cc6fecb8cb982c8929b2388238cd844963313a00e6081c69c7fe56572"
+      }
+    },
+    {
+      "id": "right-angle",
+      "sourceKeyAttribute": "Right Angle",
+      "labels": {
+        "en": "Right Angle",
+        "es": "Ángulo recto"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "forms,Form",
+          "square corner,Square corner",
+          "measures,Measure",
+          "exactly,Exact",
+          "degrees,Degree"
+        ],
+        "subLinksEs": [
+          "forma,Forma",
+          "esquina cuadrada,Esquina cuadrada",
+          "exactamente,Exacto",
+          "grados,Grado"
+        ],
+        "exampleSwf": "Right_angle.swf"
+      },
+      "normalizedKey": "right angle",
+      "sourceKeyVariants": [
+        "Right angle"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A right angle is an angle that forms a square corner and measures exactly 90 degrees.",
+          "es": "Un ángulo recto es un ángulo que forma una esquina cuadrada y mide exactamente 90 grados."
+        },
+        "spanishXml": {
+          "en": "A right angle is an angle that forms a square corner and measures exactly 90 degrees.",
+          "es": "Un ángulo recto es un ángulo que forma una esquina cuadrada y mide exactamente 90 grados."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "0d8b95b6e2ab9bef66926b4796de29c46b72c256c8202b8db6a8c7515784864e",
+        "es": "acdd48eab55b01c762b81e2f0be61084732f89b0b6acfa8a9392da00b8ffc345"
+      }
+    },
+    {
+      "id": "roller-coaster",
+      "sourceKeyAttribute": "Roller coaster",
+      "labels": {
+        "en": "Roller coaster",
+        "es": "Montaña rusa"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "curves,Curved"
+        ],
+        "subLinksEs": [],
+        "exampleSwf": "Roller_coaster.swf"
+      },
+      "normalizedKey": "roller coaster",
+      "sourceKeyVariants": [
+        "Roller coaster"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "An elevated railway ride in an amusement park with many curves.",
+          "es": "Juego mecánico,en un parque de diversiones, con muchas curvas."
+        },
+        "spanishXml": {
+          "en": "An elevated railway ride in an amusement park with many curves.",
+          "es": "Juego mecánico,en un parque de diversiones, con muchas curvas."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "42059468a8f0216069150248ab6e8729e64e87fec8341cad47ce3644a5603997",
+        "es": "8e105ab0508ac066cb22f82b4b5d63f9c7601381c65a744dff6e3ec90f98146a"
+      }
+    },
+    {
+      "id": "rule",
+      "sourceKeyAttribute": "Rule",
+      "labels": {
+        "en": "Rule",
+        "es": "Regla"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "expression,Expression",
+          "set,Set"
+        ],
+        "subLinksEs": [
+          "expresión,Expresión",
+          "conjunto,Conjunto"
+        ],
+        "exampleSwf": "Rule.swf"
+      },
+      "normalizedKey": "rule",
+      "sourceKeyVariants": [
+        "Rule"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "An expression of how elements in a set are related.",
+          "es": "Una expresión de cómo los elementos en un conjunto están relacionados."
+        },
+        "spanishXml": {
+          "en": "An expression of how elements in a set are related.",
+          "es": "Una expresión de cómo los elementos en un conjunto están relacionados."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "000929fe11bebbbfdeffda82a4c096bd13ab79bfd5cb9cab629aa87171216934",
+        "es": "a63000f6ceadf83321978eb6f481440221abc9f8900b1029a1a64a9480c89bd3"
+      }
+    },
+    {
+      "id": "sentence",
+      "sourceKeyAttribute": "Sentence",
+      "labels": {
+        "en": "Sentence",
+        "es": "Expresión"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "expressed,Express",
+          "equation,Equation"
+        ],
+        "subLinksEs": [
+          "expresión,Expresión",
+          "ecuación,Ecuaciòn"
+        ],
+        "exampleSwf": "Sentence.swf"
+      },
+      "normalizedKey": "sentence",
+      "sourceKeyVariants": [
+        "Sentence"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A mathematical sentence is one in which a fact or complete idea is expressed. For example: an equation like 2x + 7 = 45 is a mathematical sentence.",
+          "es": "Es una expresión en la que un hecho o idea completa es establecida. Por ejemplo: Una ecuación como 2x + 7= 45 es una expresión matemática."
+        },
+        "spanishXml": {
+          "en": "A mathematical sentence is one in which a fact or complete idea is expressed. For example: an equation like 2x + 7 = 45 is a mathematical sentence.",
+          "es": "Es una expresión en la que un hecho o idea completa es establecida. Por ejemplo: Una ecuación como 2x + 7= 45 es una expresión matemática."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "7aa645e64fc07a7229194aaff69c5c900841a72c15b212153afafe8c6263163a",
+        "es": "608d6a114f2ac37740494cc7fcef9fb41fba42b3237ee5fd952b77be584908f1"
+      }
+    },
+    {
+      "id": "sequence",
+      "sourceKeyAttribute": "Sequence",
+      "labels": {
+        "en": "Sequence",
+        "es": "Secuencia"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "set,Set",
+          "order,Orden",
+          "pattern,Pattern"
+        ],
+        "subLinksEs": [
+          "conjunto,Conjunto",
+          "orden,Orden"
+        ],
+        "exampleSwf": "Sequence.swf"
+      },
+      "normalizedKey": "sequence",
+      "sourceKeyVariants": [
+        "Sequence"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A set of numbers arranged in a special order or pattern.",
+          "es": "Conjunto de números agrupados según cierto orden, modelo o patrón."
+        },
+        "spanishXml": {
+          "en": "A set of numbers arranged in a special order or pattern.",
+          "es": "Conjunto de números agrupados según cierto orden, modelo o patrón."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "a3e42b9994d5141508ab7efe414cf862cfcdba9565589e4b5fcc71c4a68f5d8f",
+        "es": "c693cc3420ee201c4d4f7638c50c301bc529de1ce8afc7cd66783cb561d36139"
+      }
+    },
+    {
+      "id": "set",
+      "sourceKeyAttribute": "Set",
+      "labels": {
+        "en": "Set",
+        "es": "Conjunto"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "group,Group"
+        ],
+        "subLinksEs": [
+          "grupo,Grupo"
+        ],
+        "exampleSwf": "Set.swf"
+      },
+      "normalizedKey": "set",
+      "sourceKeyVariants": [
+        "Set"
+      ],
+      "definitionParity": false,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A group or collection of things or numbers. For example red, green, blue, and purple is a set of four colors. The word \"seven\" would not fit in this set because it is not a color.",
+          "es": "Grupo o colección de cosas, objetos o números. Por ejemplo rojo, verde, azul y morado, es un conjunto de cuatro colores. La palabra \"siete\" no sería parte de este conjunto porque no es un color."
+        },
+        "spanishXml": {
+          "en": "A group or collection of things or numbers. For example red, green, blue, and purple is a set of four colors. The word &quot;seven&quot; would not fit in this set because it is not a color.",
+          "es": "Grupo o colección de cosas, objetos o números. Por ejemplo rojo, verde, azul y morado, es un conjunto de cuatro colores. La palabra \"siete\" no sería parte de este conjunto porque no es un color."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "efa4f1742ed47a8ada39e32fec358523a4acc2819d624732918897f5a4284433",
+        "es": "24f7bf185e3eab0297be84e47c22adc8c58d00222247672ffe8e3a6ed3897dfe"
+      }
+    },
+    {
+      "id": "show",
+      "sourceKeyAttribute": "Show",
+      "labels": {
+        "en": "Show",
+        "es": "Mostrar"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "displayed,Display"
+        ],
+        "subLinksEs": [],
+        "exampleSwf": "Show.swf"
+      },
+      "normalizedKey": "show",
+      "sourceKeyVariants": [
+        "Show"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "To show means to be visible or to be displayed or seen.",
+          "es": "Mostrar significa enseñar o ser visto."
+        },
+        "spanishXml": {
+          "en": "To show means to be visible or to be displayed or seen.",
+          "es": "Mostrar significa enseñar o ser visto."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "3a4c7ec62088505464799a5dcb47e6b26ca57c4adbae506afb3bb0b978f95722",
+        "es": "4d4d46c9c82d7e89c5bc421804439e8c82b01483dce5d01af14696d155f5eb25"
+      }
+    },
+    {
+      "id": "simplest-form",
+      "sourceKeyAttribute": "Simplest Form",
+      "labels": {
+        "en": "Simplest Form",
+        "es": "Forma más simple"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "show,Show",
+          "form,Form",
+          "fraction,Fraction"
+        ],
+        "subLinksEs": [
+          "forma,Forma",
+          "simple,Simple / Más Simple / El Más Simple",
+          "fracción,Fraction"
+        ],
+        "exampleSwf": "Simplest_form.swf"
+      },
+      "normalizedKey": "simplest form",
+      "sourceKeyVariants": [
+        "Simplest form"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "To show something in its easiest form to understand. For example: the simplest form of the fraction 8/32 is 1/4, that is 4/16 = 2/8 = 1/4.",
+          "es": "Es poner algo en su forma más fácil de entender. Por ejemplo: la forma más simple de la fracción 8/32 es 1/4, a la que se llega por la simplificación 4/16 = 2/8 = 1/4."
+        },
+        "spanishXml": {
+          "en": "To show something in its easiest form to understand. For example: the simplest form of the fraction 8/32 is 1/4, that is 4/16 = 2/8 = 1/4.",
+          "es": "Es poner algo en su forma más fácil de entender. Por ejemplo: la forma más simple de la fracción 8/32 es 1/4, a la que se llega por la simplificación 4/16 = 2/8 = 1/4."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "0ddd96ed6b1f17c36ae5ec1d1b1d1ce775a10b37787de7c54e4a52b7edd9bc2a",
+        "es": "a90c7043a52e8bac7d3da4f5400d83de3896b33a008e66984789141af014e386"
+      }
+    },
+    {
+      "id": "slope-intercept-form",
+      "sourceKeyAttribute": "Slope-intercept form",
+      "labels": {
+        "en": "Slope-intercept form",
+        "es": "Ecuación lineal"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "slope,Slope",
+          "measure,Measure",
+          "steep,Steep",
+          "ratio,Ratio",
+          "vertical,Vertical",
+          "horizontal,Horizontal",
+          "rise,Rise",
+          "run,Run"
+        ],
+        "subLinksEs": [
+          "pendiente,Slope",
+          "razón,Ratio",
+          "vertical,Vertical",
+          "horizontal,Horizontal",
+          "elevación,Rise",
+          "distancia,Run"
+        ],
+        "exampleSwf": "Slope-intercept_form.swf"
+      },
+      "normalizedKey": "slope-intercept form",
+      "sourceKeyVariants": [
+        "Slope-intercept form"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "The slope of a line is a measure of how steep the line is. The slope of a line is also described as the ratio of the vertical change to the horizontal change or the amount of rise to the amount of run.",
+          "es": "La pendiente de una línea es la medida de inclinación de una línea. La pendiente de una recta se describe también como la razón del cambio vertical con respecto al cambio horizontal o la elevación entre el cambio en la distancia horizontal."
+        },
+        "spanishXml": {
+          "en": "The slope of a line is a measure of how steep the line is. The slope of a line is also described as the ratio of the vertical change to the horizontal change or the amount of rise to the amount of run.",
+          "es": "La pendiente de una línea es la medida de inclinación de una línea. La pendiente de una recta se describe también como la razón del cambio vertical con respecto al cambio horizontal o la elevación entre el cambio en la distancia horizontal."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "01ba8e32cff2095e07cd2f826d6381749d1b5bc746467fd7f3655ee20804bf9b",
+        "es": "75600691b250c5c63af2d203e62b32f1c0416af76dd5e8b1340b9330f75900c7"
+      }
+    },
+    {
+      "id": "solve",
+      "sourceKeyAttribute": "Solve",
+      "labels": {
+        "en": "Solve",
+        "es": "Resolver"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "problem,Problem"
+        ],
+        "subLinksEs": [
+          "problema,Problema",
+          "forma,Forma"
+        ],
+        "exampleSwf": "Solve.swf"
+      },
+      "normalizedKey": "solve",
+      "sourceKeyVariants": [
+        "Solve"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "To solve the problem is another way of finding the answer. To find out what 2 + 3 is, you have to add. Adding is how you solve the problem.",
+          "es": "Resolver el problema es otra manera de encontrar la respuesta. Para saber cuánto es 2 + 3, usted tiene que sumar. Sumar es la forma de resolver el problema."
+        },
+        "spanishXml": {
+          "en": "To solve the problem is another way of finding the answer. To find out what 2 + 3 is, you have to add. Adding is how you solve the problem.",
+          "es": "Resolver el problema es otra manera de encontrar la respuesta. Para saber cuánto es 2 + 3, usted tiene que sumar. Sumar es la forma de resolver el problema."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "da7a09446fc407610029ed79d09f69ce3a2659573063b1ab1a8c8cf639cf0616",
+        "es": "8e2edca32a3914565998fb3a4ada78200b74b031fb7b1d873a0e42bc016a10f7"
+      }
+    },
+    {
+      "id": "spam",
+      "sourceKeyAttribute": "Spam",
+      "labels": {
+        "en": "Spam",
+        "es": "Correo basura"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "email,E-mail"
+        ],
+        "subLinksEs": [],
+        "exampleSwf": "Spam.swf"
+      },
+      "normalizedKey": "spam",
+      "sourceKeyVariants": [
+        "Spam"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "Spam e-mail is email you don’t want or didn’t ask for.",
+          "es": "El correo basura es correo que usted no quiere o que no ha solicitado."
+        },
+        "spanishXml": {
+          "en": "Spam e-mail is email you don’t want or didn’t ask for.",
+          "es": "El correo basura es correo que usted no quiere o que no ha solicitado."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "5f96ef13792bb3f94cc7201783308188ae59168a1714f795217b669f34f60121",
+        "es": "a61389e76e0396cb9adef048c918274ba8665c2dd56a55587994fa41284a4131"
+      }
+    },
+    {
+      "id": "square-corner",
+      "sourceKeyAttribute": "Square corner",
+      "labels": {
+        "en": "Square corner",
+        "es": "Esquina"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "corners,Corner",
+          "square,Square"
+        ],
+        "subLinksEs": [
+          "cuadrado,Cuadrado",
+          "vértice,Vértice"
+        ],
+        "exampleSwf": "Square_corner.swf"
+      },
+      "normalizedKey": "square corner",
+      "sourceKeyVariants": [
+        "Square corner"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "Each of the corners of a square are called square corners.",
+          "es": "Cada una de las esquinas del cuadrado se llama vértice."
+        },
+        "spanishXml": {
+          "en": "Each of the corners of a square are called square corners.",
+          "es": "Cada una de las esquinas del cuadrado se llama vértice."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "61801a53e688b83b433f2cda85efe8411472406ab1f908988d743c1ebcfadf63",
+        "es": "7961cd4f56698881c67ee8dc0a91028d0eee8687cfe63c9c8c69766f8a07af72"
+      }
+    },
+    {
+      "id": "straight-angle",
+      "sourceKeyAttribute": "Straight angle",
+      "labels": {
+        "en": "Straight angle",
+        "es": "Ángulo extendido"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "angle,Angle",
+          "measures,Measure",
+          "degrees,Degree",
+          "line,Line"
+        ],
+        "subLinksEs": [
+          "ángulo,Àngulo",
+          "grados,Grado",
+          "línea,Línea"
+        ],
+        "exampleSwf": "Straight_angle.swf"
+      },
+      "normalizedKey": "straight angle",
+      "sourceKeyVariants": [
+        "Straight angle"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "An angle that measures 180 degrees and so is the same as a straight line.",
+          "es": "Un ángulo que mide 180 grados y por lo tanto es lo mismo que una línea recta."
+        },
+        "spanishXml": {
+          "en": "An angle that measures 180 degrees and so is the same as a straight line.",
+          "es": "Un ángulo que mide 180 grados y por lo tanto es lo mismo que una línea recta."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "e9bb05a1a6629ffc4b67d9def20598f8bb40c6dcd3e6790ff739b7e7153a44c2",
+        "es": "0fd6d2b1a14dbf429bb5df9242fd24d833ddb58299b64a252c6867b9c2dfaa8d"
+      }
+    },
+    {
+      "id": "substitute",
+      "sourceKeyAttribute": "Substitute",
+      "labels": {
+        "en": "Substitute",
+        "es": "Sustituir"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [],
+        "subLinksEs": [],
+        "exampleSwf": "Substitute.swf"
+      },
+      "normalizedKey": "substitute",
+      "sourceKeyVariants": [
+        "Substitute"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "To use one thing or person in place of another. For example: when your teacher is absent, you have a substitute teacher.",
+          "es": "Usar una cosa o persona en lugar de otra. Por ejemplo: cuando su maestro está ausente, usted tiene un profesor sustituto."
+        },
+        "spanishXml": {
+          "en": "To use one thing or person in place of another. For example: when your teacher is absent, you have a substitute teacher.",
+          "es": "Usar una cosa o persona en lugar de otra. Por ejemplo: cuando su maestro está ausente, usted tiene un profesor sustituto."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "9cf2159300fccbb5975fe40fc40befd643eb86f9ca9016fe52b47633d3bd5bc4",
+        "es": "5a6c4db8e0295341a1d129ef808d9733e5f638213657ae888ee9629d277f1a7b"
+      }
+    },
+    {
+      "id": "table",
+      "sourceKeyAttribute": "Table",
+      "labels": {
+        "en": "Table",
+        "es": "Cuadro"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "digaram,Diagram",
+          "graph,Graph",
+          "information,Information"
+        ],
+        "subLinksEs": [
+          "diagrama,Diagrama",
+          "gráfica,Gráfica",
+          "información,Información"
+        ],
+        "exampleSwf": "Table.swf"
+      },
+      "normalizedKey": "table",
+      "sourceKeyVariants": [
+        "Table"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A diagram, graph or table showing information in an ordered way.",
+          "es": "Un diagrama, gráfica o tabla que presenta información en una manera ordenada."
+        },
+        "spanishXml": {
+          "en": "A diagram, graph or table showing information in an ordered way.",
+          "es": "Un diagrama, gráfica o tabla que presenta información en una manera ordenada."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "081a2c4ea0b894ae00461629f8b7a18eaaaf574555a7632dc6a728dc08785ec2",
+        "es": "2ff6d22407847ff5cae3f47d8f1bec7976a80ccd685e56fc8be35ff5706ff7ea"
+      }
+    },
+    {
+      "id": "term",
+      "sourceKeyAttribute": "Term",
+      "labels": {
+        "en": "Term",
+        "es": "Término"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "equation,Equation",
+          "Pattern,Pattern",
+          "variable,Variable",
+          "quotient,Quotient"
+        ],
+        "subLinksEs": [],
+        "exampleSwf": "Term.swf"
+      },
+      "normalizedKey": "term",
+      "sourceKeyVariants": [
+        "Term"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "Each number or object in an equation, pattern or sequence is called a term. A term can be a number, a variable, or a product or quotient of numbers and variables.",
+          "es": "Cada número u objeto en una ecuación, modelo o secuencia se denomina término. Un término puede ser un número, una variable, un producto o un cociente de números y variables."
+        },
+        "spanishXml": {
+          "en": "Each number or object in an equation, pattern or sequence is called a term. A term can be a number, a variable, or a product or quotient of numbers and variables.",
+          "es": "Cada número u objeto en una ecuación, modelo o secuencia se denomina término. Un término puede ser un número, una variable, un producto o un cociente de números y variables."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "0ea9683ac40c5ca5d9a9ffd4edaf93434d189913ed584e3276974ab4eaeb101e",
+        "es": "bbef55f0daaa16ae7687b972d2609798289c3bb8719abd480a00c6fbfdfeba06"
+      }
+    },
+    {
+      "id": "translate",
+      "sourceKeyAttribute": "Translate",
+      "labels": {
+        "en": "Translate",
+        "es": "Traducir"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "form,Form"
+        ],
+        "subLinksEs": [
+          "forma,Forma"
+        ],
+        "exampleSwf": "Translate.swf"
+      },
+      "normalizedKey": "translate",
+      "sourceKeyVariants": [
+        "Translate"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "To change from one form into another. Translate sentences into an algebraic form.",
+          "es": "Cambiar de una forma a otra. Traducir enunciados a formas algebraicas."
+        },
+        "spanishXml": {
+          "en": "To change from one form into another. Translate sentences into an algebraic form.",
+          "es": "Cambiar de una forma a otra. Traducir enunciados a formas algebraicas."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "52bce54459083c206ba7c8161633f2933adf20ed24812555e7b4d346b1551a70",
+        "es": "54e320455f3125a0edfbc3df5c1f0f178eca283ba9b5f2098d4d4a104ce6bc52"
+      }
+    },
+    {
+      "id": "value",
+      "sourceKeyAttribute": "Value",
+      "labels": {
+        "en": "Value",
+        "es": "Valor"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "refers,Refer / Reference",
+          "units,Unit"
+        ],
+        "subLinksEs": [
+          "unidades,Unidad",
+          "Valor Posicional,Valor posicional"
+        ],
+        "exampleSwf": "Value.swf"
+      },
+      "normalizedKey": "value",
+      "sourceKeyVariants": [
+        "Value"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "This is what something is worth in terms of something else. In math, value refers to the size expressed by a number. For example: the value of 4 is four units, four things or objects.",
+          "es": "En matemáticas, se refiere a la magnitud expresada en un número. Así por ejemplo; el valor de 4 es cuatro unidades, cuatro cosas o objetos. Ver Valor posicional."
+        },
+        "spanishXml": {
+          "en": "This is what something is worth in terms of something else. In math, value refers to the size expressed by a number. For example: the value of 4 is four units, four things or objects.",
+          "es": "En matemáticas, se refiere a la magnitud expresada en un número. Así por ejemplo; el valor de 4 es cuatro unidades, cuatro cosas o objetos. Ver Valor posicional."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "91e5f96a96504f7a3072faa4a19b361fd05c50d44d6b619615b8c7017236a048",
+        "es": "8c41bce5fc69528a5037e8a506df5c9d66cbc281ed34f824a6260d8076351013"
+      }
+    },
+    {
+      "id": "variable",
+      "sourceKeyAttribute": "Variable",
+      "labels": {
+        "en": "Variable",
+        "es": "Variable"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "symbol,Symbol"
+        ],
+        "subLinksEs": [
+          "símbolo,Símbolo",
+          "valor,Valor"
+        ],
+        "exampleSwf": "Variable.swf"
+      },
+      "normalizedKey": "variable",
+      "sourceKeyVariants": [
+        "Variable"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "A letter or symbol that stands for one or more numbers. For example: x is the variable in 2x.",
+          "es": "Una letra o símbolo que está tomando el valor de uno o más números. Por ejemplo: x es la variable en la expresión 2x."
+        },
+        "spanishXml": {
+          "en": "A letter or symbol that stands for one or more numbers. For example: x is the variable in 2x.",
+          "es": "Una letra o símbolo que está tomando el valor de uno o más números. Por ejemplo: x es la variable en la expresión 2x."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "12235e57350acdfb7139b8c73c95201627bb5968e6e21c00790c8ad70a0a2754",
+        "es": "d75f7b30bdd044da023b462acfee13e5fd995d2ae623f2809c2649e8bd4f7802"
+      }
+    },
+    {
+      "id": "x-axis",
+      "sourceKeyAttribute": "X-axis",
+      "labels": {
+        "en": "X-axis",
+        "es": "Eje x"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "horizontal,Horizontal",
+          "coordinate plane,Coordinate plane"
+        ],
+        "subLinksEs": [
+          "horizontal,Horizontal",
+          "plano de coordenadas,Plano de coordenadas"
+        ],
+        "exampleSwf": "X_axis.swf"
+      },
+      "normalizedKey": "x-axis",
+      "sourceKeyVariants": [
+        "X-axis"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "The horizontal number line of a coordinate plane.",
+          "es": "La recta graduada horizontal de un plano de coordenadas."
+        },
+        "spanishXml": {
+          "en": "The horizontal number line of a coordinate plane.",
+          "es": "La recta graduada horizontal de un plano de coordenadas."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "9279b640165f3b173396f8fbb1bf70f1725c558e1a47d89d56b5aa2db919d14a",
+        "es": "cd00316c4d48cdb0ad61bd71277f95cc4565c51f6cf2acbc4b6b72d66c1d1291"
+      }
+    },
+    {
+      "id": "x-coordinate",
+      "sourceKeyAttribute": "X-coordinate",
+      "labels": {
+        "en": "X-coordinate",
+        "es": "Coordenada x"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "ordered pair,Ordered pair",
+          "set,Set",
+          "location,Location",
+          "origin,Origin"
+        ],
+        "subLinksEs": [
+          "par ordenado,Par ordenado",
+          "conjunto,Conjunto",
+          "ubicación,Localización",
+          "origen,Origen"
+        ],
+        "exampleSwf": "X_coordinate.swf"
+      },
+      "normalizedKey": "x-coordinate",
+      "sourceKeyVariants": [
+        "X-coordinate"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "The first number in an ordered pair or set of coordinates; gives the horizontal location of the point; if the value is positive, the location will be to the right of the origin; if the value is negative, the location will be to the left of the origin.",
+          "es": "El primer número de un par ordenado o conjunto de coordenadas; indica la ubicación horizontal de el punto; si el valor es positivo, la ubicación será a la derecha del origen, si el valor es negativo, el punto se ubicará a la izquierda del origen."
+        },
+        "spanishXml": {
+          "en": "The first number in an ordered pair or set of coordinates; gives the horizontal location of the point; if the value is positive, the location will be to the right of the origin; if the value is negative, the location will be to the left of the origin.",
+          "es": "El primer número de un par ordenado o conjunto de coordenadas; indica la ubicación horizontal de el punto; si el valor es positivo, la ubicación será a la derecha del origen, si el valor es negativo, el punto se ubicará a la izquierda del origen."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "51ce66169263c668e08646f78c365e641bd4c0ecc99044699a8408879988a13d",
+        "es": "25ef9da07c2ee3459c3cefd82096a87bbd7fcd1f46df1b052145caf8d86a50e5"
+      }
+    },
+    {
+      "id": "y-axis",
+      "sourceKeyAttribute": "Y-axis",
+      "labels": {
+        "en": "Y-axis",
+        "es": "Eje y"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "vertical,vertical",
+          "coordintate plane,Coordinate plane"
+        ],
+        "subLinksEs": [
+          "vertical,Vertical",
+          "plano de coordenadas,Plano de coordenadas"
+        ],
+        "exampleSwf": "Y_axis.swf"
+      },
+      "normalizedKey": "y-axis",
+      "sourceKeyVariants": [
+        "Y-axis"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "The vertical number line of a coordinate plane.",
+          "es": "La recta graduada vertical de un plano de coordenadas."
+        },
+        "spanishXml": {
+          "en": "The vertical number line of a coordinate plane.",
+          "es": "La recta graduada vertical de un plano de coordenadas."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "f6642cbbea29939d34516a9fbc9e6741403f9bafdf0416fe7b65f6f55b198eee",
+        "es": "2493ba4a0b71e2ed2d43b42359b35f18a5a626edc74880933dd71c96453034be"
+      }
+    },
+    {
+      "id": "y-coordinate",
+      "sourceKeyAttribute": "Y-coordinate",
+      "labels": {
+        "en": "Y-coordinate",
+        "es": "Coordenada y"
+      },
+      "legacyCompanionReferences": {
+        "subLinksEn": [
+          "ordered pair,Ordered pair",
+          "set,Set",
+          "location,Location",
+          "origin,Origin"
+        ],
+        "subLinksEs": [
+          "par ordenado,Par ordenado",
+          "conjunto,Conjunto",
+          "ubicación,Localización",
+          "origen,Origen"
+        ],
+        "exampleSwf": "Y_coordinate.swf"
+      },
+      "normalizedKey": "y-coordinate",
+      "sourceKeyVariants": [
+        "Y-coordinate"
+      ],
+      "definitionParity": true,
+      "definitionVariants": {
+        "englishXml": {
+          "en": "The second number in an ordered pair or set of coordinates; gives the vertical location of the point; if the value is positive, the location will be above the origin; if the value is negative, the location will be below the origin.",
+          "es": "El segundo número de un par ordenado o conjunto de coordenadas; indica la ubicación vertical del punto; si el valor es positivo, el punto se encontrará por encima del origen, si el valor es negativo, el punto se ubicará debajo del origen."
+        },
+        "spanishXml": {
+          "en": "The second number in an ordered pair or set of coordinates; gives the vertical location of the point; if the value is positive, the location will be above the origin; if the value is negative, the location will be below the origin.",
+          "es": "El segundo número de un par ordenado o conjunto de coordenadas; indica la ubicación vertical del punto; si el valor es positivo, el punto se encontrará por encima del origen, si el valor es negativo, el punto se ubicará debajo del origen."
+        }
+      },
+      "sourceEntrySha256": {
+        "en": "c2105c28c786a985f33425bbad263e19a02f5448eab475b34e0ae6f9aad624ed",
+        "es": "6525d8072e8fd4a9b988aabff54ff10849a2bce7c0b39f7ea4dc6a875a813faf"
+      }
+    }
+  ],
+  "eligibility": {
+    "recoveredL1ReferencePlacementCount": 15,
+    "exactEntryPresentPlacementCount": 13,
+    "unresolvedSourceKeyPlacementCount": 2,
+    "otherKeyTermXmlPlacementCount": 29,
+    "productEligiblePlacementCount": 0,
+    "eligiblePlacementSetSha256": "95d4b9527502c012b66f50c856ab8cafd33bcdd4c1cb5ddb494214e572dcd3c0",
+    "exactEntryPresent": [
+      {
+        "animationId": "shared-alg001-l01-p052",
+        "stableLessonKey": "shared-alg001-l01",
+        "moduleCode": "ALG001",
+        "lessonNumber": 1,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        },
+        "sourceKeys": [
+          "Arrange",
+          "Data",
+          "Graph",
+          "Median",
+          "Middle",
+          "Numerical order",
+          "Set"
+        ],
+        "normalizedSourceKeys": [
+          "arrange",
+          "data",
+          "graph",
+          "median",
+          "middle",
+          "numerical order",
+          "set"
+        ],
+        "usesRecoveredL1Pair": true
+      },
+      {
+        "animationId": "shared-alg001-l02-p054",
+        "stableLessonKey": "shared-alg001-l02",
+        "moduleCode": "ALG001",
+        "lessonNumber": 2,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Degree",
+          "Equation",
+          "Greater",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Right angle",
+          "Square corner",
+          "Straight angle",
+          "Substitute",
+          "Value"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "degree",
+          "equation",
+          "greater",
+          "line",
+          "measure",
+          "obtuse angle",
+          "right angle",
+          "square corner",
+          "straight angle",
+          "substitute",
+          "value"
+        ],
+        "usesRecoveredL1Pair": true
+      },
+      {
+        "animationId": "shared-alg001-l03-p052",
+        "stableLessonKey": "shared-alg001-l03",
+        "moduleCode": "ALG001",
+        "lessonNumber": 3,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Arrange",
+          "Combine",
+          "Degree",
+          "Greater",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Order",
+          "Pattern",
+          "Right angle",
+          "Rule",
+          "Sequence",
+          "Square corner",
+          "Straight angle",
+          "Term"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "arrange",
+          "combine",
+          "degree",
+          "greater",
+          "line",
+          "measure",
+          "obtuse angle",
+          "order",
+          "pattern",
+          "right angle",
+          "rule",
+          "sequence",
+          "square corner",
+          "straight angle",
+          "term"
+        ],
+        "usesRecoveredL1Pair": true
+      },
+      {
+        "animationId": "shared-alg001-l05-p059",
+        "stableLessonKey": "shared-alg001-l05",
+        "moduleCode": "ALG001",
+        "lessonNumber": 5,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Degree",
+          "Exponent",
+          "Expression",
+          "Greater",
+          "Like terms",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Right angle",
+          "Square corner",
+          "Straight angle",
+          "Term",
+          "Variable"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "degree",
+          "exponent",
+          "expression",
+          "greater",
+          "like terms",
+          "line",
+          "measure",
+          "obtuse angle",
+          "right angle",
+          "square corner",
+          "straight angle",
+          "term",
+          "variable"
+        ],
+        "usesRecoveredL1Pair": true
+      },
+      {
+        "animationId": "shared-alg001-l06-p056",
+        "stableLessonKey": "shared-alg001-l06",
+        "moduleCode": "ALG001",
+        "lessonNumber": 6,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Degree",
+          "Equation",
+          "Evaluate",
+          "Function",
+          "Greater",
+          "Input",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Output",
+          "Pattern",
+          "Relation",
+          "Right angle",
+          "Solve",
+          "Square corner",
+          "Straight angle",
+          "Substitute",
+          "Table",
+          "Value"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "degree",
+          "equation",
+          "evaluate",
+          "function",
+          "greater",
+          "input",
+          "line",
+          "measure",
+          "obtuse angle",
+          "output",
+          "pattern",
+          "relation",
+          "right angle",
+          "solve",
+          "square corner",
+          "straight angle",
+          "substitute",
+          "table",
+          "value"
+        ],
+        "usesRecoveredL1Pair": true
+      },
+      {
+        "animationId": "shared-alg001-l07-p058",
+        "stableLessonKey": "shared-alg001-l07",
+        "moduleCode": "ALG001",
+        "lessonNumber": 7,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Baseball",
+          "Calculate",
+          "Coefficient",
+          "Degree",
+          "Equation",
+          "Expression",
+          "Function",
+          "Greater",
+          "Input variable",
+          "Line",
+          "Linear equation",
+          "Measure",
+          "Obtuse angle",
+          "Output variable",
+          "Pushup",
+          "Rate",
+          "Right angle",
+          "Sentence",
+          "Square corner",
+          "Straight angle",
+          "Variable",
+          "pushup"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "baseball",
+          "calculate",
+          "coefficient",
+          "degree",
+          "equation",
+          "expression",
+          "function",
+          "greater",
+          "input variable",
+          "line",
+          "linear equation",
+          "measure",
+          "obtuse angle",
+          "output variable",
+          "pushup",
+          "rate",
+          "right angle",
+          "sentence",
+          "square corner",
+          "straight angle",
+          "variable"
+        ],
+        "usesRecoveredL1Pair": true
+      },
+      {
+        "animationId": "shared-alg001-l09-p037",
+        "stableLessonKey": "shared-alg001-l09",
+        "moduleCode": "ALG001",
+        "lessonNumber": 9,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Comparison",
+          "Degree",
+          "E-mail",
+          "Greater",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Quantity",
+          "Ratio",
+          "Right angle",
+          "Simplest form",
+          "Spam",
+          "Square corner",
+          "Straight angle"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "comparison",
+          "degree",
+          "e-mail",
+          "greater",
+          "line",
+          "measure",
+          "obtuse angle",
+          "quantity",
+          "ratio",
+          "right angle",
+          "simplest form",
+          "spam",
+          "square corner",
+          "straight angle"
+        ],
+        "usesRecoveredL1Pair": true
+      },
+      {
+        "animationId": "shared-alg001-l10-p048",
+        "stableLessonKey": "shared-alg001-l10",
+        "moduleCode": "ALG001",
+        "lessonNumber": 10,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Degree",
+          "Evaluate",
+          "Expression",
+          "Greater",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Right angle",
+          "Square corner",
+          "Straight angle"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "degree",
+          "evaluate",
+          "expression",
+          "greater",
+          "line",
+          "measure",
+          "obtuse angle",
+          "right angle",
+          "square corner",
+          "straight angle"
+        ],
+        "usesRecoveredL1Pair": true
+      },
+      {
+        "animationId": "shared-alg001-l11-p040",
+        "stableLessonKey": "shared-alg001-l11",
+        "moduleCode": "ALG001",
+        "lessonNumber": 11,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Degree",
+          "Graph",
+          "Greater",
+          "Inequality",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Represent",
+          "Right angle",
+          "Roller coaster",
+          "Sentence",
+          "Square corner",
+          "Straight angle",
+          "Translate"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "degree",
+          "graph",
+          "greater",
+          "inequality",
+          "line",
+          "measure",
+          "obtuse angle",
+          "represent",
+          "right angle",
+          "roller coaster",
+          "sentence",
+          "square corner",
+          "straight angle",
+          "translate"
+        ],
+        "usesRecoveredL1Pair": true
+      },
+      {
+        "animationId": "shared-alg001-l12-p048",
+        "stableLessonKey": "shared-alg001-l12",
+        "moduleCode": "ALG001",
+        "lessonNumber": 12,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Coordinate",
+          "Coordinate plane/Cartesian Plane",
+          "Correspond",
+          "Degree",
+          "Greater",
+          "Line",
+          "Location",
+          "Measure",
+          "Obtuse angle",
+          "Ordered pair",
+          "Origin",
+          "Point",
+          "Right angle",
+          "Square corner",
+          "Straight angle",
+          "X-axis",
+          "X-coordinate",
+          "Y-axis",
+          "Y-coordinate",
+          "ordered pair",
+          "point"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "coordinate",
+          "coordinate plane/cartesian plane",
+          "correspond",
+          "degree",
+          "greater",
+          "line",
+          "location",
+          "measure",
+          "obtuse angle",
+          "ordered pair",
+          "origin",
+          "point",
+          "right angle",
+          "square corner",
+          "straight angle",
+          "x-axis",
+          "x-coordinate",
+          "y-axis",
+          "y-coordinate"
+        ],
+        "usesRecoveredL1Pair": true
+      },
+      {
+        "animationId": "shared-dat001-l01-p052",
+        "stableLessonKey": "shared-dat001-l01",
+        "moduleCode": "DAT001",
+        "lessonNumber": 1,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Bar graph",
+          "Data",
+          "Degree",
+          "Frequency",
+          "Greater",
+          "Histogram",
+          "Interval",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Represent",
+          "Right angle",
+          "Square corner",
+          "Straight angle",
+          "Table"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "bar graph",
+          "data",
+          "degree",
+          "frequency",
+          "greater",
+          "histogram",
+          "interval",
+          "line",
+          "measure",
+          "obtuse angle",
+          "represent",
+          "right angle",
+          "square corner",
+          "straight angle",
+          "table"
+        ],
+        "usesRecoveredL1Pair": true
+      },
+      {
+        "animationId": "shared-geo001-l01-p055",
+        "stableLessonKey": "shared-geo001-l01",
+        "moduleCode": "GEO001",
+        "lessonNumber": 1,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Angle",
+          "Degree",
+          "Greater",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Right angle",
+          "Square corner",
+          "Straight angle"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "angle",
+          "degree",
+          "greater",
+          "line",
+          "measure",
+          "obtuse angle",
+          "right angle",
+          "square corner",
+          "straight angle"
+        ],
+        "usesRecoveredL1Pair": true
+      },
+      {
+        "animationId": "shared-nms002-l01-p043",
+        "stableLessonKey": "shared-nms002-l01",
+        "moduleCode": "NMS002",
+        "lessonNumber": 1,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        },
+        "sourceKeys": [
+          "Difference",
+          "Show",
+          "Table"
+        ],
+        "normalizedSourceKeys": [
+          "difference",
+          "show",
+          "table"
+        ],
+        "usesRecoveredL1Pair": true
+      }
+    ],
+    "blocked": [
+      {
+        "animationId": "shared-alg001-l04-p049",
+        "stableLessonKey": "shared-alg001-l04",
+        "moduleCode": "ALG001",
+        "lessonNumber": 4,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Convert",
+          "Degree",
+          "Equation",
+          "Greater",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Represented",
+          "Right angle",
+          "Square corner",
+          "Straight angle"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "convert",
+          "degree",
+          "equation",
+          "greater",
+          "line",
+          "measure",
+          "obtuse angle",
+          "represented",
+          "right angle",
+          "square corner",
+          "straight angle"
+        ],
+        "usesRecoveredL1Pair": true,
+        "unresolvedSourceKeys": [
+          {
+            "animationId": "shared-alg001-l04-p049",
+            "normalizedKey": "represented",
+            "sourceKeyAttribute": "Represented"
+          }
+        ],
+        "blocker": "source-key-not-found-in-recovered-l1-xml"
+      },
+      {
+        "animationId": "shared-alg001-l08-p046",
+        "stableLessonKey": "shared-alg001-l08",
+        "moduleCode": "ALG001",
+        "lessonNumber": 8,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L1KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L1KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Calculate",
+          "Constant",
+          "Degree",
+          "Equation",
+          "Graph",
+          "Greater",
+          "Line",
+          "Linear equation",
+          "Locate",
+          "Measure",
+          "Obtuse angle",
+          "Point",
+          "Right angle",
+          "Slope-intercept form",
+          "Square corner",
+          "Straight angle",
+          "Term",
+          "Y-axis",
+          "Y-coordinate",
+          "Y-intercept"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "calculate",
+          "constant",
+          "degree",
+          "equation",
+          "graph",
+          "greater",
+          "line",
+          "linear equation",
+          "locate",
+          "measure",
+          "obtuse angle",
+          "point",
+          "right angle",
+          "slope-intercept form",
+          "square corner",
+          "straight angle",
+          "term",
+          "y-axis",
+          "y-coordinate",
+          "y-intercept"
+        ],
+        "usesRecoveredL1Pair": true,
+        "unresolvedSourceKeys": [
+          {
+            "animationId": "shared-alg001-l08-p046",
+            "normalizedKey": "y-intercept",
+            "sourceKeyAttribute": "Y-intercept"
+          }
+        ],
+        "blocker": "source-key-not-found-in-recovered-l1-xml"
+      },
+      {
+        "animationId": "shared-dat001-l02-p049",
+        "stableLessonKey": "shared-dat001-l02",
+        "moduleCode": "DAT001",
+        "lessonNumber": 2,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L2KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L2KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Data",
+          "Degree",
+          "Difference",
+          "Greater",
+          "Greatest",
+          "Least",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Range",
+          "Right angle",
+          "Set",
+          "Square corner",
+          "Straight angle"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "data",
+          "degree",
+          "difference",
+          "greater",
+          "greatest",
+          "least",
+          "line",
+          "measure",
+          "obtuse angle",
+          "range",
+          "right angle",
+          "set",
+          "square corner",
+          "straight angle"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-dat001-l03-p059",
+        "stableLessonKey": "shared-dat001-l03",
+        "moduleCode": "DAT001",
+        "lessonNumber": 3,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L3KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L3KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Arrange",
+          "Data",
+          "Degree",
+          "Greater",
+          "Line",
+          "Mean",
+          "Measure",
+          "Median",
+          "Middle",
+          "Numerical order",
+          "Obtuse angle",
+          "Right angle",
+          "Set",
+          "Square corner",
+          "Straight angle",
+          "Value"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "arrange",
+          "data",
+          "degree",
+          "greater",
+          "line",
+          "mean",
+          "measure",
+          "median",
+          "middle",
+          "numerical order",
+          "obtuse angle",
+          "right angle",
+          "set",
+          "square corner",
+          "straight angle",
+          "value"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-dat001-l04-p035",
+        "stableLessonKey": "shared-dat001-l04",
+        "moduleCode": "DAT001",
+        "lessonNumber": 4,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L4KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L4KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Data",
+          "Degree",
+          "Graph",
+          "Greater",
+          "Information",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Represent",
+          "Right angle",
+          "Square corner",
+          "Statement",
+          "Straight angle",
+          "Valid"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "data",
+          "degree",
+          "graph",
+          "greater",
+          "information",
+          "line",
+          "measure",
+          "obtuse angle",
+          "represent",
+          "right angle",
+          "square corner",
+          "statement",
+          "straight angle",
+          "valid"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-dat001-l05-p057",
+        "stableLessonKey": "shared-dat001-l05",
+        "moduleCode": "DAT001",
+        "lessonNumber": 5,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L5KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L5KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Degree",
+          "Greater",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Probability",
+          "Random",
+          "Right angle",
+          "Square corner",
+          "Straight angle"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "degree",
+          "greater",
+          "line",
+          "measure",
+          "obtuse angle",
+          "probability",
+          "random",
+          "right angle",
+          "square corner",
+          "straight angle"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-dat001-l06-p042",
+        "stableLessonKey": "shared-dat001-l06",
+        "moduleCode": "DAT001",
+        "lessonNumber": 6,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L6KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L6KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Cluster",
+          "Data",
+          "Degree",
+          "Event",
+          "Graph",
+          "Greater",
+          "Greatest",
+          "Least",
+          "Line",
+          "Line of best fit",
+          "Linear trend",
+          "Measure",
+          "Obtuse angle",
+          "Outcome",
+          "Pattern",
+          "Predict",
+          "Probability",
+          "Range",
+          "Right angle",
+          "Square corner",
+          "Straight angle",
+          "Trend"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "cluster",
+          "data",
+          "degree",
+          "event",
+          "graph",
+          "greater",
+          "greatest",
+          "least",
+          "line",
+          "line of best fit",
+          "linear trend",
+          "measure",
+          "obtuse angle",
+          "outcome",
+          "pattern",
+          "predict",
+          "probability",
+          "range",
+          "right angle",
+          "square corner",
+          "straight angle",
+          "trend"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-dat001-l07-p046",
+        "stableLessonKey": "shared-dat001-l07",
+        "moduleCode": "DAT001",
+        "lessonNumber": 7,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L7KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L7KTS01.xml"
+        },
+        "sourceKeys": [
+          "Event",
+          "Mutually exclusive events",
+          "Outcome",
+          "Predict",
+          "Probability",
+          "Random"
+        ],
+        "normalizedSourceKeys": [
+          "event",
+          "mutually exclusive events",
+          "outcome",
+          "predict",
+          "probability",
+          "random"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-dat001-l08-p030",
+        "stableLessonKey": "shared-dat001-l08",
+        "moduleCode": "DAT001",
+        "lessonNumber": 8,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L8KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L8KTS01.xml"
+        },
+        "sourceKeys": [
+          "Mathematical probability (theoretical probability)",
+          "Outcome",
+          "Predict"
+        ],
+        "normalizedSourceKeys": [
+          "mathematical probability (theoretical probability)",
+          "outcome",
+          "predict"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l02-p047",
+        "stableLessonKey": "shared-geo001-l02",
+        "moduleCode": "GEO001",
+        "lessonNumber": 2,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L2KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L2KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Angle",
+          "Decagon",
+          "Degree",
+          "Greater",
+          "Hexagon",
+          "Line",
+          "Measure",
+          "Nonagon",
+          "Obtuse angle",
+          "Octagon",
+          "Polygon",
+          "Right angle",
+          "Square corner",
+          "Straight angle"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "angle",
+          "decagon",
+          "degree",
+          "greater",
+          "hexagon",
+          "line",
+          "measure",
+          "nonagon",
+          "obtuse angle",
+          "octagon",
+          "polygon",
+          "right angle",
+          "square corner",
+          "straight angle"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l03-p045",
+        "stableLessonKey": "shared-geo001-l03",
+        "moduleCode": "GEO001",
+        "lessonNumber": 3,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L3KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L3KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Angle",
+          "Degree",
+          "Equilateral triangle",
+          "Greater",
+          "Isosceles right triangle",
+          "Isosceles triangle",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Right Angle",
+          "Right angle",
+          "Scalene triangle",
+          "Square corner",
+          "Straight angle",
+          "Triangle"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "angle",
+          "degree",
+          "equilateral triangle",
+          "greater",
+          "isosceles right triangle",
+          "isosceles triangle",
+          "line",
+          "measure",
+          "obtuse angle",
+          "right angle",
+          "scalene triangle",
+          "square corner",
+          "straight angle",
+          "triangle"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l04-p040",
+        "stableLessonKey": "shared-geo001-l04",
+        "moduleCode": "GEO001",
+        "lessonNumber": 4,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L4KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L4KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Degree",
+          "Face",
+          "Greater",
+          "Line",
+          "Measure",
+          "Net",
+          "Obtuse angle",
+          "Pentagonal pyramid",
+          "Polygon",
+          "Right angle",
+          "Square corner",
+          "Straight angle",
+          "Triangle"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "degree",
+          "face",
+          "greater",
+          "line",
+          "measure",
+          "net",
+          "obtuse angle",
+          "pentagonal pyramid",
+          "polygon",
+          "right angle",
+          "square corner",
+          "straight angle",
+          "triangle"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l05-p047",
+        "stableLessonKey": "shared-geo001-l05",
+        "moduleCode": "GEO001",
+        "lessonNumber": 5,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L5KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L5KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Degree",
+          "Greater",
+          "Hexagon",
+          "Length",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Perimeter",
+          "Polygon",
+          "Regular polygons",
+          "Right angle",
+          "Square corner",
+          "Straight angle",
+          "Sum"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "degree",
+          "greater",
+          "hexagon",
+          "length",
+          "line",
+          "measure",
+          "obtuse angle",
+          "perimeter",
+          "polygon",
+          "regular polygons",
+          "right angle",
+          "square corner",
+          "straight angle",
+          "sum"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l06-p050",
+        "stableLessonKey": "shared-geo001-l06",
+        "moduleCode": "GEO001",
+        "lessonNumber": 6,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L6KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L6KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Circle",
+          "Circumference",
+          "Degree",
+          "Diameter",
+          "Distance",
+          "Formula",
+          "Greater",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Right angle",
+          "Square corner",
+          "Straight angle"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "circle",
+          "circumference",
+          "degree",
+          "diameter",
+          "distance",
+          "formula",
+          "greater",
+          "line",
+          "measure",
+          "obtuse angle",
+          "right angle",
+          "square corner",
+          "straight angle"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l07-p059",
+        "stableLessonKey": "shared-geo001-l07",
+        "moduleCode": "GEO001",
+        "lessonNumber": 7,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L7KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L7KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Cube",
+          "Cubic unit",
+          "Degree",
+          "Figure",
+          "Greater",
+          "Height",
+          "Length",
+          "Line",
+          "Measure",
+          "Measurement",
+          "Obtuse angle",
+          "Right angle",
+          "Square corner",
+          "Straight angle",
+          "Three dimensional",
+          "Unit",
+          "Volume",
+          "Width"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "cube",
+          "cubic unit",
+          "degree",
+          "figure",
+          "greater",
+          "height",
+          "length",
+          "line",
+          "measure",
+          "measurement",
+          "obtuse angle",
+          "right angle",
+          "square corner",
+          "straight angle",
+          "three dimensional",
+          "unit",
+          "volume",
+          "width"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l08-p043",
+        "stableLessonKey": "shared-geo001-l08",
+        "moduleCode": "GEO001",
+        "lessonNumber": 8,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L8KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L8KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Degree",
+          "Figure",
+          "Greater",
+          "Line",
+          "Line of symmetry",
+          "Line symmetry",
+          "Measure",
+          "Mirror image",
+          "Obtuse angle",
+          "Right angle",
+          "Square corner",
+          "Straight angle"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "degree",
+          "figure",
+          "greater",
+          "line",
+          "line of symmetry",
+          "line symmetry",
+          "measure",
+          "mirror image",
+          "obtuse angle",
+          "right angle",
+          "square corner",
+          "straight angle"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l09-p040",
+        "stableLessonKey": "shared-geo001-l09",
+        "moduleCode": "GEO001",
+        "lessonNumber": 9,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L9KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L9KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Correspond",
+          "Corresponding sides",
+          "Degree",
+          "Greater",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Proportional",
+          "Right angle",
+          "Similar figures",
+          "Square corner",
+          "Straight angle",
+          "Triangle",
+          "similar figures"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "correspond",
+          "corresponding sides",
+          "degree",
+          "greater",
+          "line",
+          "measure",
+          "obtuse angle",
+          "proportional",
+          "right angle",
+          "similar figures",
+          "square corner",
+          "straight angle",
+          "triangle"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l10-p038",
+        "stableLessonKey": "shared-geo001-l10",
+        "moduleCode": "GEO001",
+        "lessonNumber": 10,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L10KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L10KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Coordinate",
+          "Coordinate plane/Cartesian Plane",
+          "Correspond",
+          "Degree",
+          "Greater",
+          "Line",
+          "Location",
+          "Measure",
+          "Obtuse angle",
+          "Ordered pair",
+          "Origin",
+          "Point",
+          "Right angle",
+          "Square corner",
+          "Straight angle",
+          "X-axis",
+          "X-coordinate",
+          "Y-axis",
+          "Y-coordinate",
+          "ordered pair",
+          "point"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "coordinate",
+          "coordinate plane/cartesian plane",
+          "correspond",
+          "degree",
+          "greater",
+          "line",
+          "location",
+          "measure",
+          "obtuse angle",
+          "ordered pair",
+          "origin",
+          "point",
+          "right angle",
+          "square corner",
+          "straight angle",
+          "x-axis",
+          "x-coordinate",
+          "y-axis",
+          "y-coordinate"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l11-p048",
+        "stableLessonKey": "shared-geo001-l11",
+        "moduleCode": "GEO001",
+        "lessonNumber": 11,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L11KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L11KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Degree",
+          "Dilation",
+          "Figure",
+          "Flip",
+          "Greater",
+          "Image of the transformation",
+          "Line",
+          "Measure",
+          "Mirror image",
+          "Obtuse angle",
+          "Point",
+          "Position",
+          "Pre-image",
+          "Reflection",
+          "Right angle",
+          "Rotation",
+          "Scale factor",
+          "Square corner",
+          "Straight angle",
+          "Transformation",
+          "Translation",
+          "slide"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "degree",
+          "dilation",
+          "figure",
+          "flip",
+          "greater",
+          "image of the transformation",
+          "line",
+          "measure",
+          "mirror image",
+          "obtuse angle",
+          "point",
+          "position",
+          "pre-image",
+          "reflection",
+          "right angle",
+          "rotation",
+          "scale factor",
+          "slide",
+          "square corner",
+          "straight angle",
+          "transformation",
+          "translation"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-geo001-l12-p035",
+        "stableLessonKey": "shared-geo001-l12",
+        "moduleCode": "GEO001",
+        "lessonNumber": 12,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L12KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L12KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Angle",
+          "Degree",
+          "Greater",
+          "Hypotenuse",
+          "Leg",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Opposite",
+          "Right angle",
+          "Right triangle",
+          "Side",
+          "Square corner",
+          "Straight angle",
+          "Triangle"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "angle",
+          "degree",
+          "greater",
+          "hypotenuse",
+          "leg",
+          "line",
+          "measure",
+          "obtuse angle",
+          "opposite",
+          "right angle",
+          "right triangle",
+          "side",
+          "square corner",
+          "straight angle",
+          "triangle"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l02-p060",
+        "stableLessonKey": "shared-nms002-l02",
+        "moduleCode": "NMS002",
+        "lessonNumber": 2,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L2KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L2KTS01.xml"
+        },
+        "sourceKeys": [
+          "Decimal",
+          "Decimal fraction",
+          "Equivalent",
+          "Fraction",
+          "Grid",
+          "Part",
+          "Represent",
+          "Value"
+        ],
+        "normalizedSourceKeys": [
+          "decimal",
+          "decimal fraction",
+          "equivalent",
+          "fraction",
+          "grid",
+          "part",
+          "represent",
+          "value"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l03-p052",
+        "stableLessonKey": "shared-nms002-l03",
+        "moduleCode": "NMS002",
+        "lessonNumber": 3,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L3KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L3KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Degree",
+          "Equivalent fraction",
+          "Greater",
+          "Least common denominator",
+          "Line",
+          "Measure",
+          "Numerator",
+          "Obtuse angle",
+          "Right angle",
+          "Simplest form",
+          "Square corner",
+          "Straight angle",
+          "Sum"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "degree",
+          "equivalent fraction",
+          "greater",
+          "least common denominator",
+          "line",
+          "measure",
+          "numerator",
+          "obtuse angle",
+          "right angle",
+          "simplest form",
+          "square corner",
+          "straight angle",
+          "sum"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l04-p041",
+        "stableLessonKey": "shared-nms002-l04",
+        "moduleCode": "NMS002",
+        "lessonNumber": 4,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L4KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L4KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Cancel Out",
+          "Common factor",
+          "Degree",
+          "Denominator",
+          "Greater",
+          "Line",
+          "Measure",
+          "Numerator",
+          "Obtuse angle",
+          "Product",
+          "Right angle",
+          "Simplest form",
+          "Square corner",
+          "Straight angle"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "cancel out",
+          "common factor",
+          "degree",
+          "denominator",
+          "greater",
+          "line",
+          "measure",
+          "numerator",
+          "obtuse angle",
+          "product",
+          "right angle",
+          "simplest form",
+          "square corner",
+          "straight angle"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l05-p045",
+        "stableLessonKey": "shared-nms002-l05",
+        "moduleCode": "NMS002",
+        "lessonNumber": 5,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L5KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L5KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Degree",
+          "Dividend",
+          "Divisor",
+          "Fraction",
+          "Greater",
+          "Inverse property of multiplication",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Reciprocal",
+          "Right angle",
+          "Simplest form",
+          "Square corner",
+          "Straight angle"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "degree",
+          "dividend",
+          "divisor",
+          "fraction",
+          "greater",
+          "inverse property of multiplication",
+          "line",
+          "measure",
+          "obtuse angle",
+          "reciprocal",
+          "right angle",
+          "simplest form",
+          "square corner",
+          "straight angle"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l06-p047",
+        "stableLessonKey": "shared-nms002-l06",
+        "moduleCode": "NMS002",
+        "lessonNumber": 6,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L6KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L6KTS01.xml"
+        },
+        "sourceKeys": [
+          "Column",
+          "Decimal",
+          "Decimal point",
+          "Difference",
+          "Integers",
+          "Row",
+          "Show",
+          "Table"
+        ],
+        "normalizedSourceKeys": [
+          "column",
+          "decimal",
+          "decimal point",
+          "difference",
+          "integers",
+          "row",
+          "show",
+          "table"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l07-p048",
+        "stableLessonKey": "shared-nms002-l07",
+        "moduleCode": "NMS002",
+        "lessonNumber": 7,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L7KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L7KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Comparison",
+          "Degree",
+          "E-mail",
+          "Greater",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Quantity",
+          "Ratio",
+          "Right angle",
+          "Simplest form",
+          "Simplify",
+          "Solution",
+          "Spam",
+          "Square corner",
+          "Straight angle",
+          "Substitute"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "comparison",
+          "degree",
+          "e-mail",
+          "greater",
+          "line",
+          "measure",
+          "obtuse angle",
+          "quantity",
+          "ratio",
+          "right angle",
+          "simplest form",
+          "simplify",
+          "solution",
+          "spam",
+          "square corner",
+          "straight angle",
+          "substitute"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l08-p056",
+        "stableLessonKey": "shared-nms002-l08",
+        "moduleCode": "NMS002",
+        "lessonNumber": 8,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L8KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L8KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Degree",
+          "Evaluate",
+          "Exponent",
+          "Expression",
+          "Greater",
+          "Line",
+          "Measure",
+          "Negative exponents",
+          "Obtuse angle",
+          "Reciprocal",
+          "Right angle",
+          "Square corner",
+          "Straight angle"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "degree",
+          "evaluate",
+          "exponent",
+          "expression",
+          "greater",
+          "line",
+          "measure",
+          "negative exponents",
+          "obtuse angle",
+          "reciprocal",
+          "right angle",
+          "square corner",
+          "straight angle"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l09-p049",
+        "stableLessonKey": "shared-nms002-l09",
+        "moduleCode": "NMS002",
+        "lessonNumber": 9,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L9KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L9KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Degree",
+          "Expression",
+          "Greater",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Order of Operations",
+          "Right angle",
+          "Simplify",
+          "Square corner",
+          "Straight angle",
+          "Value"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "degree",
+          "expression",
+          "greater",
+          "line",
+          "measure",
+          "obtuse angle",
+          "order of operations",
+          "right angle",
+          "simplify",
+          "square corner",
+          "straight angle",
+          "value"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l10-p045",
+        "stableLessonKey": "shared-nms002-l10",
+        "moduleCode": "NMS002",
+        "lessonNumber": 10,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L10KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L10KTS01.xml"
+        },
+        "sourceKeys": [
+          "Approximate / Approximately / Approximation",
+          "Approximate Value",
+          "Average",
+          "Chart",
+          "Data",
+          "Data tables",
+          "Difference",
+          "Estimate",
+          "Number",
+          "Place value",
+          "Represent",
+          "Round / Rounding",
+          "Show",
+          "Table",
+          "Whole"
+        ],
+        "normalizedSourceKeys": [
+          "approximate / approximately / approximation",
+          "approximate value",
+          "average",
+          "chart",
+          "data",
+          "data tables",
+          "difference",
+          "estimate",
+          "number",
+          "place value",
+          "represent",
+          "round / rounding",
+          "show",
+          "table",
+          "whole"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l11-p043",
+        "stableLessonKey": "shared-nms002-l11",
+        "moduleCode": "NMS002",
+        "lessonNumber": 11,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L11KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L11KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Decimal",
+          "Degree",
+          "Equivalent decimal",
+          "Express",
+          "Fraction",
+          "Greater",
+          "Integers",
+          "Line",
+          "Measure",
+          "Number",
+          "Obtuse angle",
+          "Ratio",
+          "Rational numbers",
+          "Right angle",
+          "Square corner",
+          "Straight angle"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "decimal",
+          "degree",
+          "equivalent decimal",
+          "express",
+          "fraction",
+          "greater",
+          "integers",
+          "line",
+          "measure",
+          "number",
+          "obtuse angle",
+          "ratio",
+          "rational numbers",
+          "right angle",
+          "square corner",
+          "straight angle"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      },
+      {
+        "animationId": "shared-nms002-l12-p061",
+        "stableLessonKey": "shared-nms002-l12",
+        "moduleCode": "NMS002",
+        "lessonNumber": 12,
+        "keyTerms": {
+          "diagramDirectory": "HELP_KEYTERMS/KT/DIG",
+          "english": "HELP_KEYTERMS/KT/XML/L12KTE01.xml",
+          "spanish": "HELP_KEYTERMS/KT/XML/L12KTS01.xml"
+        },
+        "sourceKeys": [
+          "Acute angle",
+          "Circle",
+          "Circumference",
+          "Degree",
+          "Diagram",
+          "Distance",
+          "Estimate",
+          "Greater",
+          "Length",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Perimeter",
+          "Right angle",
+          "Round / Rounding",
+          "Show",
+          "Square corner",
+          "Straight angle"
+        ],
+        "normalizedSourceKeys": [
+          "acute angle",
+          "circle",
+          "circumference",
+          "degree",
+          "diagram",
+          "distance",
+          "estimate",
+          "greater",
+          "length",
+          "line",
+          "measure",
+          "obtuse angle",
+          "perimeter",
+          "right angle",
+          "round / rounding",
+          "show",
+          "square corner",
+          "straight angle"
+        ],
+        "usesRecoveredL1Pair": false,
+        "blocker": "lesson-referenced-key-term-xml-not-recovered"
+      }
+    ]
+  },
+  "productCalibrationPassed": false,
+  "scaleOutAuthorized": false,
+  "registrationCandidatePlacementCount": 0,
+  "acceptanceEffects": {
+    "canonicalSourcePromoted": false,
+    "currentJavaScriptRegistered": false,
+    "behaviorAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "released": false,
+    "published": false
+  },
+  "limitations": [
+    "The two XML objects remain private custody evidence and are not promoted into the canonical source tree.",
+    "Thirteen TS07 placements have every requested glossary key in the recovered L1 bilingual XML pair; they still require the typed assessment state machine and browser product calibration.",
+    "Six recovered terms have different definition text between the English and Spanish XML files; both variants and hashes are retained, and no product authority is selected here.",
+    "ALG L4 requests Represented and ALG L8 requests Y-intercept, neither of which has an exact ScreenkeyTerm entry in the recovered L1 XML; no alias is invented.",
+    "The other 29 TS07 placements reference different lesson key-term XML pairs that remain unrecovered.",
+    "This recovery does not establish runtime, audio, visual, human, Owner, strict, release, or publication acceptance."
+  ]
+}

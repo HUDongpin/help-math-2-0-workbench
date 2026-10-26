@@ -6,24 +6,43 @@ import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const contractPath='catalog/g678-nms-l07-canvas-glossary-v1.json';
-const outputPath='packages/demos/src/hfr/nms-l07-canvas-glossary-source-binding.ts';
+const families = {
+  'nms-l07': {keys:['shared-nms002-l07-p006','shared-nms002-l07-p007','shared-nms002-l07-p010','shared-nms002-l07-p016','shared-nms002-l07-p017','shared-nms002-l07-p019','shared-nms002-l07-p021'],lessonKey:'shared-nms002-l07',prefix:'NMS_L07'},
+  'dat-l03': {keys:['shared-dat001-l03-p029','shared-dat001-l03-p034','shared-dat001-l03-p037','shared-dat001-l03-p044'],lessonKey:'shared-dat001-l03',prefix:'DAT_L03'},
+};
+const contractPath = family => `catalog/g678-${family}-canvas-glossary-v1.json`;
+const outputPath = family => `packages/demos/src/hfr/${family}-canvas-glossary-source-binding.ts`;
 export function renderCanvasGlossaryBindings(contract) {
   assert.equal(contract.schemaVersion,1);
-  assert.deepEqual(contract.pages.map(page=>page.binding.animationId),['shared-nms002-l07-p006','shared-nms002-l07-p007']);
+  const family=contract.family ?? 'nms-l07',spec=families[family];
+  assert(spec,'exact reviewed Canvas family');
+  assert.deepEqual(contract.pages.map(page=>page.binding.animationId),spec.keys);
   const bindings={},metadata={},descriptors={};
   for(const page of contract.pages) {
     const b=page.binding,m=page.meta;
     assert.equal(b.animationId,m.key);assert.equal(b.sourceSwfSha256,m.sourceSha256);
-    assert.equal(m.lessonKey,'shared-nms002-l07');assert.equal(m.compiler,'hfr-compile 0.1.3-candidate');
+    assert.equal(m.lessonKey,spec.lessonKey);assert.equal(m.compiler,'hfr-compile 0.1.3-candidate');
     assert.deepEqual(m.stage,{width:800,height:600,fps:12});assert.equal(m.sourceRootFrameCount,10);
     assert.equal(m.progressTimeline,b.characterId);assert.equal(m.progressFrameCount,b.frames);
     assert.equal(m.completionMode,'timeline');assert.equal(b.sourceGlossary.pageKey,m.key);
     assert.equal(b.sourceGlossary.sourceSha256,m.sourceSha256);
-    assert.deepEqual(page.descriptorEntries.map(e=>e.id).sort(),b.sourceGlossary.terms.map(t=>t.dictionaryEntryId).sort());
-    assert.equal(new Set(b.controls.map(c=>c.sourceButtonCharacterId)).size,b.controls.length);
+    assert.deepEqual(page.descriptorEntries.map(e=>e.id).sort(),[...new Set(b.sourceGlossary.terms.map(t=>t.dictionaryEntryId))].sort());
+    assert.equal(new Set(b.sourceGlossary.terms.map(c=>c.sourceButtonCharacterId)).size,b.sourceGlossary.terms.length);
     for(const c of b.controls) {
-      assert(c.firstFrame>=2&&c.lastFrameExclusive===b.frames+1);
+      if(family==='nms-l07') assert(c.firstFrame >= (m.key==='shared-nms002-l07-p017' ? 1 : 2) && c.lastFrameExclusive===b.frames+1);
+      else {
+        assert(c.placementId && Array.isArray(c.ancestors) && c.ancestors.length<=2);
+        for(const placement of [...c.ancestors,c]) {
+          assert(placement.firstFrame>=1 && placement.lastFrameExclusive>placement.firstFrame);
+          assert(placement.states?.length && placement.states[0].firstFrame===placement.firstFrame);
+          let previous=placement.firstFrame;
+          for(const state of placement.states) {
+            assert.equal(state.firstFrame,previous);assert(state.lastFrameExclusive>state.firstFrame);
+            assert.equal(state.matrix.length,6);assert.equal(state.cx.length,8);previous=state.lastFrameExclusive;
+          }
+          assert.equal(previous,placement.lastFrameExclusive);
+        }
+      }
       assert(/^[a-f0-9]{64}$/u.test(c.sourceActionSha256)&&/^[a-f0-9]{64}$/u.test(c.sourceButtonTagSha256));
       assert.equal(c.hitRecord.states,8);
     }
@@ -31,15 +50,18 @@ export function renderCanvasGlossaryBindings(contract) {
     metadata[m.key]=Object.fromEntries(['key','lessonKey','sourceSha256','compiler','sourceRootFrameCount','stage','progressTimeline','progressFrameCount','completionMode','hasSpanishNarration'].map(k=>[k,m[k]]));
     descriptors[m.key]=page.descriptorEntries;
   }
-  const type=`import type {HfrPageMeta,HfrSourceGlossaryTerm} from './types';\nexport interface HfrCanvasGlossarySourceBinding {\n  readonly animationId:string; readonly sourceSwfSha256:string; readonly dataSha256:string;\n  readonly rootFrame:number; readonly rootFrameCount:number; readonly characterId:number; readonly depth:number;\n  readonly frames:number; readonly primaryMatrix:readonly number[];\n  readonly sourceGlossary:Readonly<{pageKey:string;sourceSha256:string;terms:readonly HfrSourceGlossaryTerm[]}>;\n  readonly controls:readonly (HfrSourceGlossaryTerm & Readonly<{depth:number;firstFrame:number;lastFrameExclusive:number;matrix:readonly number[];ratio:number;handler:string;hitCharacterId:number;hitBounds:Readonly<{xmin:number;xmax:number;ymin:number;ymax:number}>;hitRecord:Readonly<{states:number;charId:number;depth:number;m:readonly number[];cx:readonly number[]}>}>)[];\n}\n`;
-  return '// Generated by scripts/generate-hfr-canvas-glossary-bindings.mjs from '+contractPath+'.\n'+type+
-    'export const NMS_L07_CANVAS_GLOSSARY_SOURCE_BINDINGS:Readonly<Record<string,HfrCanvasGlossarySourceBinding>> = '+JSON.stringify(bindings,null,2)+';\n'+
-    'export const NMS_L07_CANVAS_GLOSSARY_METADATA:Readonly<Record<string,Partial<HfrPageMeta>>> = '+JSON.stringify(metadata,null,2)+';\n'+
-    'export const NMS_L07_CANVAS_GLOSSARY_ENTRIES = '+JSON.stringify(descriptors,null,2)+' as const;\n';
+  const type="import type {HfrPageMeta} from './types';\nimport type {HfrCanvasGlossarySourceBinding} from './source-canvas-glossary';\n";
+  return '// Generated by scripts/generate-hfr-canvas-glossary-bindings.mjs from '+contractPath(family)+'.\n'+type+
+    `export const ${spec.prefix}_CANVAS_GLOSSARY_SOURCE_BINDINGS:Readonly<Record<string,HfrCanvasGlossarySourceBinding>> = `+JSON.stringify(bindings,null,2)+';\n'+
+    `export const ${spec.prefix}_CANVAS_GLOSSARY_METADATA:Readonly<Record<string,Partial<HfrPageMeta>>> = `+JSON.stringify(metadata,null,2)+';\n'+
+    `export const ${spec.prefix}_CANVAS_GLOSSARY_ENTRIES = `+JSON.stringify(descriptors,null,2)+' as const;\n';
 }
 
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)) {
-  const contract=JSON.parse(fs.readFileSync(path.join(root,contractPath),'utf8'));
+  const args=process.argv.slice(2),family=args[0]==='--family'?args.splice(0,2)[1]:'nms-l07';
+  assert(families[family],'exact reviewed Canvas family');
+  const contract=JSON.parse(fs.readFileSync(path.join(root,contractPath(family)),'utf8'));
+  assert.equal(contract.family ?? 'nms-l07',family);
   for(const pin of contract.inputs) {
     const target=path.resolve(root,pin.path),before=fs.lstatSync(target,{bigint:true});
     assert(before.isFile()&&!before.isSymbolicLink()&&before.nlink===1n,'ordinary source input');
@@ -48,7 +70,7 @@ if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.ur
     assert.equal(bytes.length,pin.bytes);assert.equal(createHash('sha256').update(bytes).digest('hex'),pin.sha256,pin.path);
   }
   const output=renderCanvasGlossaryBindings(contract);
-  if(process.argv[2]==='--check') assert.equal(fs.readFileSync(path.join(root,outputPath),'utf8'),output,'generated configuration differs');
-  else {assert(process.argv[2]==='--out'&&process.argv[3],'--check or --out <new-file>');fs.writeFileSync(process.argv[3],output,{flag:'wx'});}
+  if(args[0]==='--check') assert.equal(fs.readFileSync(path.join(root,outputPath(family)),'utf8'),output,'generated configuration differs');
+  else {assert(args[0]==='--out'&&args[1],'[--family nms-l07|dat-l03] --check or --out <new-file>');fs.writeFileSync(args[1],output,{flag:'wx'});}
   console.log(JSON.stringify({pages:contract.pages.length,inputs:contract.inputs.length,status:'source-config-verified'}));
 }

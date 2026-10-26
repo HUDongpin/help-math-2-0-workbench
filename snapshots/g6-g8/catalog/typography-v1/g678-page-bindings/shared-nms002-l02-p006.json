@@ -1,0 +1,359 @@
+{
+  "schemaVersion": 1,
+  "version": "nms-l02-p006-native-source-v1",
+  "animationId": "shared-nms002-l02-p006",
+  "placementId": "shared-nms002-l02-p006",
+  "sourceSwfSha256": "b6afc05a82304d3e0721933c2b4c3f1d8740fc46699125b1ff5149e096601b4e",
+  "template": "complex-figure",
+  "blocks": [
+    {
+      "id": "course-title",
+      "sourceTextIds": [],
+      "sourceShapeIds": [
+        56
+      ],
+      "role": "heading",
+      "language": "en",
+      "readingOrder": 0,
+      "valueSource": "source-static"
+    },
+    {
+      "id": "activity-title",
+      "sourceTextIds": [
+        "character-55/run-1"
+      ],
+      "sourceShapeIds": [
+        56
+      ],
+      "role": "title",
+      "language": "en",
+      "readingOrder": 1,
+      "valueSource": "source-static"
+    },
+    {
+      "id": "essential-heading",
+      "sourceTextIds": [
+        "character-44/run-0"
+      ],
+      "role": "heading",
+      "language": "en",
+      "readingOrder": 2,
+      "valueSource": "maintained-page-state"
+    },
+    {
+      "id": "essential-question",
+      "sourceTextIds": [
+        "character-44/run-2",
+        "character-44/run-3",
+        "character-51"
+      ],
+      "sourceShapeIds": [
+        42,
+        50
+      ],
+      "role": "body",
+      "language": "en",
+      "readingOrder": 3,
+      "valueSource": "maintained-page-state"
+    }
+  ],
+  "sourceRelativePath": "G6-G8-shared/NMS002/L2/RW/L2RW06.swf",
+  "sourceCatalogContentSha256": "bbe08566ae170822bea3fd3a1cfc6b3e6e7d936cf947f5a6ee30edd77659eaca",
+  "sourceRoleDecisions": [
+    {
+      "kind": "outlined-text",
+      "role": "heading",
+      "semanticValue": "Fractions, Decimals and Percents Concepts:",
+      "sourceShapeHashes": [
+        {
+          "characterId": 56,
+          "sourceTagSha256": "302473f3d16a11eaacb4de20e5def70905280fc9d725d5317793a2395372b4e8"
+        }
+      ],
+      "evidencePath": "/Volumes/WestWorld/HELP MATH 2.0-g678-implementation/migrations/shared-nms002-l02-p006/audit/source-semantic-qualification-v1.json"
+    },
+    {
+      "kind": "outlined-text",
+      "role": "title",
+      "semanticValue": "Real World Activity",
+      "sourceShapeHashes": [
+        {
+          "characterId": 56,
+          "sourceTagSha256": "302473f3d16a11eaacb4de20e5def70905280fc9d725d5317793a2395372b4e8"
+        }
+      ],
+      "evidencePath": "/Volumes/WestWorld/HELP MATH 2.0-g678-implementation/migrations/shared-nms002-l02-p006/audit/source-semantic-qualification-v1.json"
+    },
+    {
+      "kind": "outlined-text",
+      "role": "body",
+      "semanticValue": "convert fractions underlines",
+      "sourceShapeHashes": [
+        {
+          "characterId": 42,
+          "sourceTagSha256": "9220e09f730cdfd8f12332ca2ceb4422a9e2ce4b0da94f59394ec705b66971fb"
+        }
+      ],
+      "evidencePath": "/Volumes/WestWorld/HELP MATH 2.0-g678-implementation/migrations/shared-nms002-l02-p006/audit/source-semantic-qualification-v1.json"
+    },
+    {
+      "kind": "outlined-text",
+      "role": "body",
+      "semanticValue": "decimals and percents underlines",
+      "sourceShapeHashes": [
+        {
+          "characterId": 50,
+          "sourceTagSha256": "956b2917832fe80b418e8ba6dc261409fdc8a9bf342f8ed45ccbf9738b30f82f"
+        }
+      ],
+      "evidencePath": "/Volumes/WestWorld/HELP MATH 2.0-g678-implementation/migrations/shared-nms002-l02-p006/audit/source-semantic-qualification-v1.json"
+    }
+  ],
+  "sourceDispositions": [
+    {
+      "sourceTextId": "character-55/run-0",
+      "kind": "offstage-library-title",
+      "reason": "Editable title says singular Percent; visible outlined56 says Percents."
+    }
+  ],
+  "implementation": {
+    "files": [
+      {
+        "path": "apps/web/app/[locale]/migration-status/g678-calibration/shared-nms002-l02-p006/page.tsx",
+        "sha256": "69e3c47df1eb23a2640c0684e476c4243f56d013c12c6c2b405fb853f6170009"
+      },
+      {
+        "path": "apps/web/app/flash-assets/g678-local/shared-nms002-l02-p006/source-audio/route.ts",
+        "sha256": "a2b9b7f741cf4e38ea1c0f8abd57018053016c26747a8c1387f96188e898197a"
+      },
+      {
+        "path": "apps/web/components/g678-nms-l02-p006-lesson.tsx",
+        "sha256": "690e393abcaafc0e8c41ee41898747a305c12565a68bb138a4af4098ef1e65fe"
+      },
+      {
+        "path": "apps/web/components/nms-l02-p006-source-runtime-v1.tsx",
+        "sha256": "d7ac608295e1a3c3ffc57a36b1ffd2e9e7ab9ecd3f46aa67d7e1e4b246ec21dc"
+      },
+      {
+        "path": "apps/web/lib/g678-nms-l02-p006.server.ts",
+        "sha256": "49eafaf9e9b519021ef7c6ef4c9aaf7957aabafe8f650c3066825f122b763a77"
+      },
+      {
+        "path": "apps/web/lib/nms-l02-p006-audio-access.ts",
+        "sha256": "b48c84375e6e34ad9a2c4f8c7790d648a73472aa2e1fcbc86cff390f6baf6dbc"
+      },
+      {
+        "path": "apps/web/lib/nms-l02-p006-binding.server.ts",
+        "sha256": "f7eaa64ff15a90165f83e1000dc119c479797801ed27dc1bb3cfdd904b66527e"
+      },
+      {
+        "path": "apps/web/tests/nms-l02-p006-audio-access.test.ts",
+        "sha256": "5eada4bbd8de2588cd6725900aeeb7e1b40f9e7059e08dc1aa886efa4f3edd22"
+      },
+      {
+        "path": "packages/demos/src/generated/nms-l02-p006-art-ir-v1.ts",
+        "sha256": "fdfcf53471324ee035dad3b55c92b11a60eee1f5c2a23853f4a0a7c23706c4a6"
+      },
+      {
+        "path": "packages/demos/src/generated/nms-l02-p006-source-ir-v1.ts",
+        "sha256": "bc3f37bc281705ee7ec5d3240e73ce899150dba8b12decdaa04fdb4dfce3b033"
+      },
+      {
+        "path": "packages/demos/src/generated/nms-l02-p006-terms-v1.ts",
+        "sha256": "26d7f1d6b8b58f16f17e18a658d4b57123839047135f13dddc49b4bf809e0e1b"
+      },
+      {
+        "path": "packages/demos/src/modules/g678-nms-l02-native-real-world-p006.tsx",
+        "sha256": "6ceb5e0d4807bb87aa6fad42cc00a4695a3a25e81080a9f90a4e54aa7272a2d9"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p006-artwork-v1.tsx",
+        "sha256": "cc9d1231ee91e34082dfcb271ce8d4a2bd46d2d18f06e0329142b57cfcb1730f"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p006-audio-loader-v1.ts",
+        "sha256": "29631fe15a4ac96855a3f2af034a0ae76f399b63f2921f6e2bcc621b0377e320"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p006-audio-source-v1.ts",
+        "sha256": "90585302aec3f269ff1b7bd66d5a458d5196c86c5c119a1ea1a6b21ca61d5b5e"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p006-audio-v1.ts",
+        "sha256": "e3e4027ef18b38a4ae4651f8d8b0ddcc553b66be5ba71e902eaa84ce14286b87"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p006-integrated-player-v1.tsx",
+        "sha256": "f1fc98007d21b467ef4b57c4dcd3c967ce638a927d2a70075e48e4528aebe305"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p006-player-v1.tsx",
+        "sha256": "5e473a65c20def8b59eeaad3577c9c9853679110647b97988a80951046e004a9"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p006-presentation-v1.tsx",
+        "sha256": "7f2e5130f7601cf051849c56a1368e97d780c102a17a4c5401c11e175a49d273"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p006-renderer-v1.tsx",
+        "sha256": "857cd998b4caede983e9654caed1747c80a3d71043f09e21b2da3dd255d66593"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p006-source-contract-v1.ts",
+        "sha256": "30beeff081e2de4c361a310935fec3c2822f8996f9755907120d58e97f03b24d"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p006-term-dialog-v1.tsx",
+        "sha256": "842d9ee00f546c5118f429e0807c0c7880ea075fd5a43bc3de5287e4d09b0c13"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p006-term-host-v1.ts",
+        "sha256": "02e4a2ac629dd0088ebc83878a0c055b8cd3ff525af7646bb01ac375cedb8552"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p006-text-v1.ts",
+        "sha256": "663e109d3de023b759934497c2b03a0f73ed2fd6dbe2109e751e30c58e080ca3"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p006-timeline-v1.ts",
+        "sha256": "267b7b45f1810ab0b0a89993d61a8a8e9a091126ffbf2a584210b4fee65f6d8a"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p006-v1.css",
+        "sha256": "ec365c40382543fcdbc00e9794c419cb13ee1cd83717ebd89795c59ed1dafce2"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p006-v1.css.d.ts",
+        "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      {
+        "path": "packages/demos/src/timelines/g678-nms-l02-native-real-world-p006.ts",
+        "sha256": "cdb2876bbfcc71fe9dab46e81af5f29c8a992fdd63b947a6cf2f79faa88e44c2"
+      },
+      {
+        "path": "apps/web/app/[locale]/layout.tsx",
+        "sha256": "1f74e3c6478fba95eaef92c9b4c2a460458afa6be956689f5cdfa0e53b8c5095"
+      },
+      {
+        "path": "apps/web/app/lesson-fonts.css",
+        "sha256": "03dd49cce36180d3ab64ab14bbb3e45442234856c456998c00a642763d8fd538"
+      },
+      {
+        "path": "apps/web/app/lesson-typography-host.css",
+        "sha256": "f7d7164239fbbbc61c265d198a76138a32b0e5eebadf8b32e58751da3537ede8"
+      },
+      {
+        "path": "apps/web/app/lesson-typography.css",
+        "sha256": "8062a331a72437d8d204a716173ef92b37cc9a05f3e2b5574560dc5110a1bd64"
+      },
+      {
+        "path": "apps/web/components/animation-runtime.tsx",
+        "sha256": "c21101c76c36cc8d062f832b2392491434c8e5c1ca0dc77edd24e233e0b74829"
+      },
+      {
+        "path": "apps/web/lib/g678-lesson-typography-presentation.ts",
+        "sha256": "2fb9de912c82967337f9e88d848fe45745ac5d6b89287f07c73163ae96c3ec8a"
+      },
+      {
+        "path": "apps/web/lib/lesson-typography-policy.ts",
+        "sha256": "6503d9c0aac0542801ba6454fd332a4735881a5cda7d0d4a2df1f506f4984301"
+      },
+      {
+        "path": "apps/web/public/fonts/lesson-v1/fredoka-OFL.txt",
+        "sha256": "5c9e7eee5c6b25f4b05b8d53b2e470ea4962f9ced742d044a98f7d95d1375bab"
+      },
+      {
+        "path": "apps/web/public/fonts/lesson-v1/fredoka-variable.ttf",
+        "sha256": "2ba02e68b152868aef9ba28e24b3648c7d457fe6f25c761f2c2c53fb61a73fc8"
+      },
+      {
+        "path": "apps/web/public/fonts/lesson-v1/nunito-sans-variable.ttf",
+        "sha256": "f934d7142fb4784bf828da485b7dcbd90c0c80d514e9d49a5da0ed3a1ae2491d"
+      },
+      {
+        "path": "apps/web/public/fonts/lesson-v1/nunitosans-OFL.txt",
+        "sha256": "efbb0c9e864cef973982d9a17567e6be5c3d1759695574586f3f18c7ecca064b"
+      },
+      {
+        "path": "catalog/typography-v1/fonts.json",
+        "sha256": "1cd7ad71bb21b9002b365323fe4f03c2e785b0637741f8965d199cf466f14fa5"
+      },
+      {
+        "path": "docs/LESSON_TYPOGRAPHY_DEVELOPMENT.md",
+        "sha256": "086ac047c61b569822e4e7bd8988457a4fd0c74baf87156463a4a39b06b97bf1"
+      },
+      {
+        "path": "packages/demos/package.json",
+        "sha256": "584a636a515b5ca90530d667fe1c59a7e3c5e43946dc1337410a41f2134c9e65"
+      },
+      {
+        "path": "packages/demos/src/contract.ts",
+        "sha256": "56e5fc3c1dbde872646ebbc519f8c7d8a9d6dd0d55e37e1c44f4ad1a47798180"
+      },
+      {
+        "path": "packages/demos/src/lesson-canvas-plane.tsx",
+        "sha256": "5c99bad8143f3f8502dc632dc404b081e638ebdc50375dd62ade2b3d7178b903"
+      },
+      {
+        "path": "packages/demos/src/lesson-canvas-resolution.ts",
+        "sha256": "d5901fb121136b52f34fa5af8c999087207df41de6ba741f2899624f1bbdda78"
+      },
+      {
+        "path": "packages/demos/src/lesson-text-contract.ts",
+        "sha256": "e796b04501425b29200d6bf527aae71deac86769894e2f642efa1e36502a56d9"
+      },
+      {
+        "path": "packages/demos/src/lesson-text-presentation.tsx",
+        "sha256": "892bf80f52f964612b7139a5b78334600ba1f9e77c376cb2e9ef938b8916048f"
+      },
+      {
+        "path": "packages/demos/src/lesson-text-snapshot.ts",
+        "sha256": "0fcb076645392914fc2ad3df9f2062037c8ed5d31730903342ecd5e98bd2e95f"
+      },
+      {
+        "path": "packages/demos/src/lesson-text.ts",
+        "sha256": "f856988b0d5ae8b980ab8a56b824ef50426ee8bb6d729446d0024278d74c66e6"
+      },
+      {
+        "path": "packages/demos/src/use-lesson-canvas-resolution.ts",
+        "sha256": "98324a52de61f1469c16bed71a1df38d2ef44af84cd959141e2b9e9e7a67963f"
+      },
+      {
+        "path": "scripts/build-lesson-canvas-resolution-adapter-v1.mjs",
+        "sha256": "dcd6ed9fb2ab159461af7e0b129412d3992b56daf8dd87c3ed6ef75be0f2b251"
+      },
+      {
+        "path": "scripts/build-lesson-text-canvas-adapter-v1.mjs",
+        "sha256": "36d247a0998afbad5c2c39c519e9220eab0291f9aec137f9a433007ebbf60690"
+      },
+      {
+        "path": "scripts/build-lesson-text-source-catalog-v1.mjs",
+        "sha256": "b62681621beed053ba886219e3e26a969c28d17e37eda1764e59c720124cb2b4"
+      },
+      {
+        "path": "scripts/check-g678-lesson-typography-v1.mjs",
+        "sha256": "4810a44f3d40b36c92abf813c82f837e84b53f56ecdf47e3c96b97fb5ed59256"
+      },
+      {
+        "path": "scripts/lib/lesson-text-canvas-runtime-v1.mjs",
+        "sha256": "0829b7c5a17e8c659f6f6ab8b541ba269bff466827b8f67de542b3d74c6da3cc"
+      },
+      {
+        "path": "scripts/lib/swf-text-source-catalog.mjs",
+        "sha256": "5a65075738bcdd62a9fb79cca0aaf7fe7ab59857bd3852fdf5063d6c1fe8a3dc"
+      },
+      {
+        "path": "apps/web/lib/g678-nms-l02-p006-freeze-v1.ts",
+        "sha256": "c2c6c6d1ba04bc62c297e2cfd73f635293c4d378ad3ed1d8cd1a5c6c2571df4d"
+      }
+    ]
+  },
+  "unresolved": [],
+  "independentPending": [
+    "Original runtime and fidelity",
+    "Human listening and visual review",
+    "Owner and strict completion",
+    "Release and publication",
+    "English page text fallback on Spanish UI; glossary is source Spanish"
+  ]
+}

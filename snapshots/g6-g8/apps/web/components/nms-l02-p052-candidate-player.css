@@ -1,0 +1,8 @@
+/* The local candidate must fit the available viewport even with a classic scrollbar. */
+body:has(.p052-candidate){min-width:0}
+.p052-candidate{max-width:72rem;margin:1rem auto;padding:1rem;font-family:var(--lesson-font-body);font-size:1.125rem;line-height:1.5;color:#18354b;box-sizing:border-box}
+.p052-candidate button,.p052-candidate input{font:inherit}
+.p052-candidate .p052-page-title{font-family:var(--lesson-font-display)}
+.p052-candidate button{min-height:44px;padding:.5rem .8rem}
+.p052-candidate :focus-visible{outline:3px solid #174ca1;outline-offset:3px}
+@media(max-width:600px){.p052-candidate{margin:0;padding:.5rem}}

@@ -1,0 +1,5 @@
+/* The global 320px body minimum exceeds a 320px viewport once its scrollbar
+ * occupies 15px. Scope the correction to this loopback-only candidate page. */
+body:has(main[data-p001-local-preview]) {
+  min-width: 0;
+}

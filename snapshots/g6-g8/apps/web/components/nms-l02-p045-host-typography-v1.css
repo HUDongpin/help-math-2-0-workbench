@@ -1,0 +1,36 @@
+/* Bounded P045 host correction: textual audit tools must accommodate enlarged text. */
+[data-p045-lesson-host] .lesson-shell2[data-modern-control-presentation="true"] .lesson-shell2__modern-toolbar > button:is([data-responsive-focus-key="key-terms"],[data-responsive-focus-key="rewind"],[data-responsive-focus-key="forward"]) {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  min-width: 0;
+  height: auto;
+  min-height: 44px;
+  flex: 0 1 auto;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+  padding: .5rem .75rem;
+}
+[data-p045-lesson-host] .lesson-shell2[data-modern-control-presentation="true"] .lesson-shell2__modern-timeline {
+  min-width: 0;
+  max-width: 100%;
+  height: auto;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+[data-p045-lesson-host] .lesson-shell2[data-modern-control-presentation="true"] .lesson-shell2__modern-timeline > span {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+
+@media (max-width: 680px) {
+  [data-p045-lesson-host] .lesson-shell2[data-modern-control-presentation="true"] .lesson-shell2__modern-toolbar > button:is([data-responsive-focus-key="key-terms"],[data-responsive-focus-key="rewind"],[data-responsive-focus-key="forward"]) {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}

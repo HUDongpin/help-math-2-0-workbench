@@ -1,0 +1,3 @@
+import {buildP037} from './lib/g678-nms-l01-p037-generator-v1.mjs';
+const args=new Set(process.argv.slice(2));if([...args].some(x=>!['--check','--prepare'].includes(x)))throw Error('INVALID_BUILD_FLAG');
+console.log(JSON.stringify(await buildP037({"ID": "shared-nms002-l01-p037", "CALIBRATION": "g678-nms-l01-p037-current-js-v1", "SPEC": {"path": "/Volumes/American Dream/hudongpin/helpmath-g678-completion-20260909-01a08222/nms-l01-p037-source-spec-v1.json", "bytes": 144957, "sha256": "ce05058cb2ea2379149fb97d780ee8163982dec9c575dd8df2bb7639a048d4f1"}, "SOURCE": {"path": "G6-G8-shared/NMS002/L1/GS/L1GS02.swf", "bytes": 1721909, "sha256": "6090cf99eed95c383c7f04d55f9e4dc697b02202aab168d1698cbef26752e2ce"}},{check:args.has('--check'),prepare:args.has('--prepare')}),null,2));

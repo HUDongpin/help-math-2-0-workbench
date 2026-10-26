@@ -1,0 +1,6 @@
+// Frozen pending source-only binding. Native decoded samples and PCM are absent.
+import type {SourceStreamRunsClockPlan} from './source-stream-runs-clock-v1';
+import type {DecodedSourceStreamBinding} from './decoded-source-stream-transport';
+export interface AlgL10P004Playback {readonly animationId:'shared-alg001-l10-p004';readonly mainPlan:SourceStreamRunsClockPlan;readonly spanish:DecodedSourceStreamBinding;readonly nativeReceipt:{readonly path:string;readonly bytes:number;readonly sha256:string};}
+export const ALG_L10_P004_PLAYBACK:AlgL10P004Playback|null=null;
+export const ALG_L10_P004_AUDIO_SOURCE={"animationId":"shared-alg001-l10-p004","sourceSwfSha256":"5ac9be9459e12bdc6552d53a66b67ceb645633d2fe57522639a043d28180f5b2","frameDomain":"sprite-60","firstFrame":1,"lastFrame":609,"fps":12,"englishSource":{"sourceSha256":"7b758330f9ed87a2583d728657792362eadbb175ee0206078c3cf798de2da0fd","sourceBytes":225940},"spanishSource":{"sourceSha256":"7c52cff0fddc1c54979bd7f9ff039766dac50da92192580e1154a937ecc6134c","sourceBytes":436800},"segments":[{"firstFrame":11,"firstDecodedSample":1673,"endDecodedSample":745344},{"firstFrame":471,"firstDecodedSample":745784,"endDecodedSample":1001088}],"emptyNegativeBlocks":[{"frame":417,"samples":0,"seek":-2150,"mp3Bytes":0}]} as const;

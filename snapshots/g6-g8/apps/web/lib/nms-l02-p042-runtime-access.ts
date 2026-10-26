@@ -1,0 +1,8 @@
+import{P042_AUDIO_SOURCE}from'../../../packages/demos/src/generated/nms-l02-p042-audio-plan-v1';
+export const P042_RUNTIME_ID='shared-nms002-l02-p042';
+export function isP042RuntimeScope(props:{audioEnabled?:boolean;animationId:string;moduleKey?:string;query:Readonly<Record<string,unknown>>},env:Readonly<Record<string,string|undefined>>=process.env){return env.NODE_ENV!=='production'&&!env.VERCEL_ENV&&props.audioEnabled===true&&props.animationId===P042_RUNTIME_ID&&props.moduleKey===P042_RUNTIME_ID&&props.query.capture!=='1'&&props.query.frameDomain==='sprite-261'&&props.query.scenario==='source-explanation'&&props.query.lang==='en';}
+export function isP042RuntimeModule(value:unknown):boolean{
+ try{const m=value as {key?:string;maturity?:string;runtime?:{defaultFrameDomain?:string;frameCount?:number;fps?:number;frameDomains?:Array<{id:string;frameCount:number;rootFrame?:number}>};textPresentation?:{Renderer?:unknown};privateP042EquivalentPractice?:{version:number;sourceSwfSha256:string;audio:unknown}};const a=m?.privateP042EquivalentPractice,d=m?.runtime?.frameDomains;
+ return m?.key===P042_RUNTIME_ID&&m.maturity==='private-current-js'&&typeof m.textPresentation?.Renderer==='function'&&m.runtime?.defaultFrameDomain==='sprite-261'&&m.runtime.frameCount===10&&m.runtime.fps===12&&Array.isArray(d)&&d.length===2&&d.filter(x=>x.id==='root'&&x.frameCount===10).length===1&&d.filter(x=>x.id==='sprite-261'&&x.frameCount===626&&x.rootFrame===6).length===1&&a?.version===1&&a.sourceSwfSha256==='6dce91764e5744cf72cbdb2a2d1a10990a1c3eb1f42f5aace4cb3be33a67fad0'&&JSON.stringify(a.audio)===JSON.stringify(P042_AUDIO_SOURCE);
+ }catch{return false;}
+}

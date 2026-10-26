@@ -7,6 +7,7 @@ import {GEO_L03_P007_LOOP_SENTENCE} from "./geo-l03-p007-loop-source-binding";
 import {NMS_L06_P005_JOINED_QUESTION} from "./nms-l06-p005-joined-source-binding";
 import {HFR_VOCABULARY_SOURCE_BINDINGS} from './vocabulary-source-bindings';
 import {NMS_L07_CANVAS_GLOSSARY_SOURCE_BINDINGS} from './nms-l07-canvas-glossary-source-binding';
+import {DAT_L03_CANVAS_GLOSSARY_SOURCE_BINDINGS} from './dat-l03-canvas-glossary-source-binding';
 import type { LessonHostRequest } from "../lesson-host-contract";
 import type { HfrPageMeta, HostCall, HfrSourceGlossaryTerm } from "./types";
 
@@ -125,6 +126,7 @@ export function bridgeHostCall(meta: HfrPageMeta, call: HostCall, release?: HfrG
 interface HfrReviewedLoop {
   readonly animationId: string; readonly sourceSwfSha256: string; readonly rootFrame: number;
   readonly characterId: number; readonly depth: number; readonly frames: number; readonly primaryMatrix: readonly number[];
+  readonly hasEarlierSourceActions?: true;
 }
 const spriteId = (domain: string): number => Number(/^sprite-(\d+)$/u.exec(domain)?.[1] ?? NaN);
 /** Registered before the shared rule while holding their loop end; they keep
@@ -136,6 +138,11 @@ function hfrReviewedLoop(animationId: string): HfrReviewedLoop | null {
   if (HFR_LOOP_END_HELD_REGISTERED.has(animationId)) return null;
   const canvas = NMS_L07_CANVAS_GLOSSARY_SOURCE_BINDINGS[animationId];
   if (canvas?.animationId === animationId) return canvas;
+  const dat = DAT_L03_CANVAS_GLOSSARY_SOURCE_BINDINGS[animationId];
+  // These exact DAT sources hold at the question, then naturally loop after
+  // their action-free final frame. The captured pre-release playing flag is
+  // still required; an authored question hold never gains permission to play.
+  if (dat?.animationId === animationId) return {...dat, hasEarlierSourceActions: true};
   const geo = GEO_L03_P007_LOOP_SENTENCE, l6 = NMS_L06_P005_JOINED_QUESTION;
   if (animationId === geo.animationId) return {animationId, sourceSwfSha256: geo.sourceSwfSha256, rootFrame: geo.rootFrame,
     characterId: spriteId(geo.sourceFrameDomain), depth: Number(/^root:(\d+):/u.exec(geo.sourceTextInstanceId)?.[1] ?? NaN),
@@ -149,7 +156,9 @@ function hfrReviewedLoop(animationId: string): HfrReviewedLoop | null {
  * Resume only the exact source clip stopped by this page's glossary release.
  * Authored terminal stops remain held. A reviewed primary loop may resume from
  * its final frame only when it is still exactly the clip its binding names, on
- * the stopped begin frame, with no authored frame action anywhere in the loop.
+ * the stopped begin frame. Reviewed DAT sources have earlier question actions;
+ * their final frame must remain action-free. Other reviewed loops retain the
+ * stricter no-action-anywhere rule.
  * A seek, replacement or successor stays held. */
 export function resumeHfrGlossarySource(runtime: Runtime, held: Readonly<{runtime: Runtime; clip: MovieClip; frame: number; resumeSource: boolean}>): boolean {
   if (runtime !== held.runtime || held.clip.rt !== runtime || held.clip.removed ||
@@ -163,7 +172,8 @@ export function resumeHfrGlossarySource(runtime: Runtime, held: Readonly<{runtim
     clip.visible && !clip.scriptMoved && (clip.ratio ?? 0) === 5 && held.frame === loop.frames && clip.totalFrames === loop.frames &&
     [clip.m.a, clip.m.b, clip.m.c, clip.m.d, clip.m.tx, clip.m.ty].every((value, i) => value === loop.primaryMatrix[i]) &&
     Array.isArray(clip.def.frames) && clip.def.frames.length === loop.frames &&
-    clip.def.frames.every((frame: readonly {op: string}[]) => frame.every(tag => tag.op !== "action"));
+    (loop.hasEarlierSourceActions ? clip.def.frames.slice(-1) : clip.def.frames)
+      .every((frame: readonly {op: string}[]) => frame.every(tag => tag.op !== "action" && tag.op !== "init"));
   if (held.resumeSource && (held.frame < clip.totalFrames || reviewedLoopEnd)) clip.playing = true;
   return true;
 }

@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+import assert from 'node:assert/strict';import {readFile,writeFile} from 'node:fs/promises';import path from 'node:path';import {fileURLToPath} from 'node:url';
+import {ROOT,IDS,CALIBRATION,FREEZE,FRAGMENT,RUN,build,readBound,pin,encode} from './build-g678-alg-l10-pair-v3.mjs';
+import {upsertPrivateCurrentJsCalibration} from './private-current-js-registry.mjs';import {guardedReplacement} from './activate-g678-frozen16-glossary-registration.mjs';
+import {GENERATED_OUTPUTS,expectedScopedRegistryOutputs} from './activate-g678-alg-l11-feedback-host-score-registration.mjs';import {buildRegistrySources} from '../packages/demos/scripts/generate-registry.mjs';
+const REGISTRY='packages/demos/private-current-js-registry.json',PRIOR_SHA='caa454958db514fc02b65d3a07fafaf193abb2cb3392241734cb4f0d647d49d8',OLD='g678-alg-l10-p005-p006-current-js-v2';
+export const RECEIPT=FREEZE.replace(/\.json$/u,'.activation.json');const TARGETS=[REGISTRY,GENERATED_OUTPUTS.localOnly,GENERATED_OUTPUTS.localOnlyMetadata];
+export async function activate({check=false,planOnly=false}={}){
+ await build({check:true});const fragmentFile=await readBound(FRAGMENT),freezeFile=await readBound(FREEZE),fragment=JSON.parse(fragmentFile.bytes);
+ const current=await readBound(REGISTRY),registry=JSON.parse(current.bytes),outputs=Object.fromEntries(await Promise.all(Object.entries(GENERATED_OUTPUTS).map(async([key,file])=>[key,(await readBound(file)).bytes])));
+ assert.equal(registry.calibrations.flatMap(c=>c.entries).filter(e=>e.key.startsWith('shared-')).length,388);
+ if(check){const receipt=JSON.parse(await readFile(path.join(ROOT,RECEIPT)));assert.equal(receipt.beforeRegistry.sha256,PRIOR_SHA);assert.deepEqual(receipt.replacedIds,IDS);assert(!registry.calibrations.some(c=>c.calibrationId===OLD));assert.deepEqual(registry.calibrations.find(c=>c.calibrationId===CALIBRATION),fragment.calibration);for(const p of receipt.after)await readBound(p.path,p);const expected=await buildRegistrySources();for(const [key,bytes] of Object.entries(outputs))assert.equal(bytes.toString(),expected[key]);return {checked:true,registered:388,sourcePayloadChanged:false,publicFilesWritten:0};}
+ assert.equal(current.binding.sha256,PRIOR_SHA,'exact v2 registration');const prior=registry.calibrations.find(c=>c.calibrationId===OLD);assert(prior);assert.deepEqual(prior.entries,fragment.calibration.entries,'source modules and payloads remain exact');
+ assert.deepEqual(outputs,expectedScopedRegistryOutputs(registry,outputs));const retained=registry.calibrations.filter(c=>c.calibrationId!==OLD);const next=upsertPrivateCurrentJsCalibration({...registry,calibrations:retained},fragment.calibration);assert.deepEqual(next.calibrations.filter(c=>c.calibrationId!==CALIBRATION),retained);
+ const nextOutputs=expectedScopedRegistryOutputs(next,outputs),before=new Map([[REGISTRY,current.bytes],...Object.entries(GENERATED_OUTPUTS).map(([key,file])=>[file,outputs[key]])]),after=new Map([[REGISTRY,Buffer.from(encode(next))],...Object.entries(GENERATED_OUTPUTS).map(([key,file])=>[file,nextOutputs[key]])]);
+ const summary={beforeRegistry:current.binding,after:[...after].map(([file,bytes])=>pin(file,bytes)),replacedIds:IDS,preservedOtherG678Placements:386,registered:388,sourcePayloadChanged:false,publicFilesWritten:0};if(planOnly)return {...summary,planOnly:true,writes:0};
+ const verify=async()=>{await readBound(FRAGMENT,fragmentFile.binding);await readBound(FREEZE,freezeFile.binding);await build({check:true});};
+ const postflight=async()=>{const generated=await buildRegistrySources();for(const [key,bytes] of Object.entries(nextOutputs))assert.equal(bytes.toString(),generated[key]);};
+ const transaction=await guardedReplacement({root:ROOT,before,after,targets:TARGETS,recovery:`${RUN}-activation`,verify,postflight});
+ await writeFile(path.join(ROOT,RECEIPT),encode({schemaVersion:1,createdAt:new Date().toISOString(),status:'local-registered-paired-tab-restoration-repair-qa-pending',...summary,transaction,freeze:freezeFile.binding,priorCalibration:OLD,priorQa:'Retained failed v1 and v2 receipts; no source or original-runtime acceptance inferred.',productCalibrationPassed:false,scaleOutAuthorized:false}),{flag:'wx'});
+ return {registered:388,replacedIds:IDS,sourcePayloadChanged:false,publicFilesWritten:0,receipt:RECEIPT};
+}
+if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){assert(process.argv.length===3&&['--plan','--write','--check'].includes(process.argv[2]));console.log(encode(await activate({check:process.argv[2]==='--check',planOnly:process.argv[2]==='--plan'})));}

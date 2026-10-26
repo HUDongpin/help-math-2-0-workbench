@@ -1,0 +1,1 @@
+import{validateFunctionQuestionCandidate}from'../scripts/lib/g678-alg-l07-function-question-candidate-v1.mjs';export const P059_ID='shared-alg001-l07-p059',P059_CALIBRATION='g678-alg-l07-p059-current-js-20261006-v1';export function validateP059Admission(root,packet,registration){return validateFunctionQuestionCandidate(root,59,packet,registration,P059_CALIBRATION);}

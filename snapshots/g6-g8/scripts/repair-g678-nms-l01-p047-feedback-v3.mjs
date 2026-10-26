@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import {readFile,writeFile} from 'node:fs/promises';
+import path from 'node:path';
+import {ROOT,encode,pin,readBound} from './lib/g678-nms-l01-p005-generator-v1.mjs';
+import {buildP047,FREEZE,CALIBRATION,ID,RUN} from './build-g678-nms-l01-p047-native-v3.mjs';
+import {upsertPrivateCurrentJsCalibration} from './private-current-js-registry.mjs';
+import {guardedReplacement} from './activate-g678-frozen16-glossary-registration.mjs';
+import {GENERATED_OUTPUTS,expectedScopedRegistryOutputs} from './activate-g678-alg-l11-feedback-host-score-registration.mjs';
+import {buildRegistrySources} from '../packages/demos/scripts/generate-registry.mjs';
+await buildP047({check:true});
+assert(process.argv.length===3&&['--plan','--write'].includes(process.argv[2]));
+const current=await readBound('packages/demos/private-current-js-registry.json'),registry=JSON.parse(current.bytes);
+const prior=registry.calibrations.find(c=>c.calibrationId===CALIBRATION);
+assert.equal(prior.freezeManifestSha256,'7458e92d378a6e4125d2aff60c17d213892cf6d81e59729aff0937749e8fc8c6');
+assert.equal(prior.entries.length,1);assert.equal(prior.entries[0].key,ID);
+const nextFragment=JSON.parse((await readBound(FREEZE.replace('.json','.fragment.json'))).bytes),next=upsertPrivateCurrentJsCalibration(registry,nextFragment.calibration);
+assert.deepEqual(next.calibrations.filter(c=>c.calibrationId!==CALIBRATION),registry.calibrations.filter(c=>c.calibrationId!==CALIBRATION));
+const oldCode=await readFile(path.join(ROOT,prior.entries[0].artifacts.module.path),'utf8'),newCode=await readFile(path.join(ROOT,nextFragment.calibration.entries[0].artifacts.module.path),'utf8');
+assert.equal(newCode,oldCode.replace('nms-l01-p047-native-renderer-v1','nms-l01-p047-native-renderer-v2').replace('nms-l01-p047-text-v1','nms-l01-p047-text-v2'));
+const outputs=Object.fromEntries(await Promise.all(Object.entries(GENERATED_OUTPUTS).map(async([k,f])=>[k,(await readBound(f)).bytes])));
+assert.deepEqual(outputs,expectedScopedRegistryOutputs(registry,outputs));
+const nextOutputs=expectedScopedRegistryOutputs(next,outputs),before=new Map([[current.binding.path,current.bytes],...Object.entries(GENERATED_OUTPUTS).map(([k,f])=>[f,outputs[k]])]),after=new Map([[current.binding.path,Buffer.from(encode(next))],...Object.entries(GENERATED_OUTPUTS).map(([k,f])=>[f,nextOutputs[k]])]);
+const summary={beforeRegistry:current.binding,after:[...after].map(([f,b])=>pin(f,b)),registeredCount:423,registrationDelta:0,repairedId:ID,reason:'Bind all108 source Correct/Incorrect feedback fields to the native snapshot; preserve question, scoring, audio and navigation behavior.'};
+if(process.argv[2]==='--write'){
+ const verify=async()=>{await buildP047({check:true});};
+ const postflight=async()=>{const generated=await buildRegistrySources();for(const[k,b]of Object.entries(nextOutputs))assert.equal(b.toString(),generated[k]);};
+ const transaction=await guardedReplacement({root:ROOT,before,after,targets:[current.binding.path,GENERATED_OUTPUTS.localOnly,GENERATED_OUTPUTS.localOnlyMetadata],recovery:RUN+'-activation-v1',verify,postflight});
+ await writeFile(path.join(ROOT,FREEZE.replace('.json','.activation.json')),encode({schemaVersion:1,...summary,transaction,status:'registered-module-repair-product-qa-pending',published:false}),{flag:'wx'});
+}
+console.log(encode(summary));

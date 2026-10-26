@@ -11,6 +11,7 @@ import { Renderer } from "./render";
 import { AudioEngine } from "./audio";
 import type { HostCall, PageData, PageFactory } from "./types";
 import {initializeHfrReducedMotion, type HfrReducedMotionState} from "./reduced-motion";
+import {HFR_SOURCE_POINTER_LIMIT,sourceObservationRequested,snapshotHfrSource,ownSourcePointer,sourceObjectFacts,sourceActionTrace,sourcePointerOutcome,type OwnedSourcePointer,type SourcePointerOutcome} from "./source-observation";
 
 export interface HfrPlayerOptions {
   /** A configured page may redraw static source input mutations without ticking. */
@@ -69,6 +70,8 @@ export class HfrPlayer {
   private loadGeneration = 0;
   private playbackGeneration = 0;
   private observedReplay = 0;
+  private sourcePointerRows:OwnedSourcePointer[]=[];
+  private sourcePointerOverflow=0;
   private mediaIntent = 0;
   lastError: unknown = null;
   get rt(): Runtime | null {
@@ -110,6 +113,7 @@ export class HfrPlayer {
     this.teardown();
     const generation = ++this.loadGeneration;
     this.htmlMediaAudit = {rows: new Map(), overflow: 0};
+    this.sourcePointerRows=[];this.sourcePointerOverflow=0;
     this.destroyed = false;
     this.lastError = null;
     this.session = options.session; this.observedReplay = options.replay ?? 0;
@@ -206,9 +210,15 @@ export class HfrPlayer {
   redraw(): void {
     if (!this.rt) return;
     this.opts.onBeforeRender?.();
-    this.renderer.render(this.rt);
-    const owner=this.observationOwner(),rt=this.rt;if(owner&&rt){this.observeLifecycle(owner);if(this.audio)bindTechnicalOwner(this.audio.ctx,owner);const progress=this.progress();publishTechnicalCommit(this.canvas,owner,'generated-typescript-hfr-v1',{frame:progress.frame,frameDomain:progress.domain,tick:rt.tickCount,errors:[...rt.errors],missing:Object.entries(rt.missing).flatMap(([kind,items])=>[...items.keys()].map(key=>({kind,key})))},{paused:!this.running});}
+    const drawnRuntime=this.rt!,drawnOwner=this.observationOwner();this.renderer.render(drawnRuntime);
+    const owner=this.observationOwner(),rt=this.rt;if(owner&&rt&&rt===drawnRuntime&&drawnOwner&&drawnOwner.playerId===owner.playerId&&drawnOwner.leaseToken===owner.leaseToken&&drawnOwner.replay===owner.replay){this.observeLifecycle(owner);if(this.audio)bindTechnicalOwner(this.audio.ctx,owner);const progress=this.progress();publishTechnicalCommit(this.canvas,owner,'generated-typescript-hfr-v1',{frame:progress.frame,frameDomain:progress.domain,rootFrame:rt.page_.frame,tick:rt.tickCount,errors:[...rt.errors],missing:Object.entries(rt.missing).flatMap(([kind,items])=>[...items.keys()].map(key=>({kind,key}))),...(sourceObservationRequested(owner)?{sourceObservation:snapshotHfrSource(rt,owner,this.sourcePointerRows,this.sourcePointerOverflow)}:{})},{paused:!this.running});}else if(drawnOwner){retireTechnicalObservation(this.canvas,drawnOwner);}
     this.opts.onTick?.();
+  }
+
+  private observeSourcePointer(event:PointerEvent,runtime:Runtime,owner:TechnicalOwner|null,outcome:SourcePointerOutcome|undefined):void {
+    const current=this.observationOwner();if(!outcome||!owner||!current||!sourceObservationRequested(owner)||this.rt!==runtime||current.playerId!==owner.playerId||current.leaseToken!==owner.leaseToken)return;
+    const row=ownSourcePointer(owner,event,outcome);if(!row)return;
+    if(this.sourcePointerRows.length===HFR_SOURCE_POINTER_LIMIT){this.sourcePointerRows.shift();this.sourcePointerOverflow++;}this.sourcePointerRows.push(row);
   }
 
   /** Native/canvas adapters share this exact current-button transaction. Static
@@ -493,10 +503,14 @@ export class HfrPlayer {
     };
     // DOM cancellation retires only this input gesture. It does not execute the
     // authored release/releaseOutside grading action or retire the page lease.
-    const cancelGesture = (rt:Runtime,held:Gesture) => {
+    const cancelGesture = (rt:Runtime,held:Gesture,event:PointerEvent) => {
       if(gesture!==held || held.revision!==revision || held.runtime!==rt || held.lease!==this.runtimeLease || this.rt!==rt)return;
       if(held.drag && rt.drag?.clip===held.drag.clip && !held.drag.clip.removed){
         held.drag.clip.m.tx=held.drag.tx;held.drag.clip.m.ty=held.drag.ty;held.drag.clip.scriptMoved=held.drag.scriptMoved;
+      }
+      const pointerOwner=this.observationOwner();if(sourceObservationRequested(pointerOwner)){
+        const cancelled=sourcePointerOutcome(rt,'cancel',sourceObjectFacts(rt.pressed),rt.tickCount,rt.errors.length,null,sourceActionTrace(),false);
+        this.observeSourcePointer(event,rt,pointerOwner,cancelled);
       }
       clearPress(rt);gesture=null;cancelledPointerId=held.pointerId;++revision;
       this.canvas.style.cursor="default";
@@ -529,13 +543,13 @@ export class HfrPlayer {
       // Preserve the original event order and getter count on ordinary pages.
       if (!this.opts.sourceButtonInput) {
         if (!this.running || !rt) return;
-        const [x, y] = this.stagePoint(e); rt.pointerMove(x, y); rt.pointerDown();rememberGesture(rt,e.pointerId);this.canvas.setPointerCapture(e.pointerId);
+        const [x, y] = this.stagePoint(e); rt.pointerMove(x, y); const owner=this.observationOwner();this.observeSourcePointer(e,rt,owner,rt.pointerDown(sourceObservationRequested(owner)));rememberGesture(rt,e.pointerId);this.canvas.setPointerCapture(e.pointerId);
         return;
       }
       if (!rt) return;
       const point = this.stagePoint(e), decision = disposition(rt, rt.topClickableAt(...point), point);
       if (decision === "blocked" || (!this.running && decision !== "allowed")) return;
-      rt.pointerMove(...point); rt.pointerDown();rememberGesture(rt,e.pointerId);this.canvas.setPointerCapture(e.pointerId);
+      rt.pointerMove(...point); const owner=this.observationOwner();this.observeSourcePointer(e,rt,owner,rt.pointerDown(sourceObservationRequested(owner)));rememberGesture(rt,e.pointerId);this.canvas.setPointerCapture(e.pointerId);
       this.opts.onSourcePointerMutation?.(rt);
     });
     on(this.canvas, "pointerup", (e: PointerEvent) => {
@@ -543,23 +557,23 @@ export class HfrPlayer {
       if(!rt)return;const held=currentGesture(rt,e.pointerId);if(!held)return;
       // Preserve the original event order and getter count on ordinary pages.
       if (!this.opts.sourceButtonInput) {
-        if (!this.running) {cancelGesture(rt,held);return;}
-        const [x, y] = this.stagePoint(e); rt.pointerMove(x, y); rt.pointerUp();finishGesture(held);
+        if (!this.running) {cancelGesture(rt,held,e);return;}
+        const [x, y] = this.stagePoint(e); rt.pointerMove(x, y); const owner=this.observationOwner();this.observeSourcePointer(e,rt,owner,rt.pointerUp(sourceObservationRequested(owner)));finishGesture(held);
         return;
       }
       const point = this.stagePoint(e), button = rt.pressed, decision = disposition(rt, button, point);
-      if (decision === "blocked" || (!this.running && decision !== "allowed")) {cancelGesture(rt,held);return;}
+      if (decision === "blocked" || (!this.running && decision !== "allowed")) {cancelGesture(rt,held,e);return;}
       rt.pointerMove(...point);
       if (button && decision === "allowed" && this.opts.onSourceButtonRelease) {
         let released = false;
         this.opts.onSourceButtonRelease(rt, button, point, () => {
           if (released || gesture!==held || held.revision!==revision || held.lease!==this.runtimeLease || this.rt !== rt || rt.pressed !== button || disposition(rt, button, point) !== "allowed") return;
-          released = true; rt.pointerUp();
+          released = true; const owner=this.observationOwner();this.observeSourcePointer(e,rt,owner,rt.pointerUp(sourceObservationRequested(owner)));
         });
-        if (!released) cancelGesture(rt,held);else finishGesture(held);
-      } else {rt.pointerUp();finishGesture(held);}
+        if (!released) cancelGesture(rt,held,e);else finishGesture(held);
+      } else {const owner=this.observationOwner();this.observeSourcePointer(e,rt,owner,rt.pointerUp(sourceObservationRequested(owner)));finishGesture(held);}
     });
-    const cancel = (e:PointerEvent) => {const rt=this.rt;if(!rt)return;const held=currentGesture(rt,e.pointerId);if(held)cancelGesture(rt,held);};
+    const cancel = (e:PointerEvent) => {const rt=this.rt;if(!rt)return;const held=currentGesture(rt,e.pointerId);if(held)cancelGesture(rt,held,e);};
     on(this.canvas,"pointercancel",cancel);
     on(this.canvas,"lostpointercapture",cancel);
     on(this.canvas, "keydown", (e: KeyboardEvent) => {if (this.running) this.rt?.keyDown(e.keyCode, e.key.length === 1 ? e.key.charCodeAt(0) : 0);});

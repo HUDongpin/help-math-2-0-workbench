@@ -1,0 +1,20 @@
+import assert from'node:assert/strict';import test from'node:test';import fs from'node:fs';
+import{P023_DOMAINS,P023_TEXT_BINDING,algL07P023Frame}from'./alg-l07-p023-frame-v1';import{ALG_L07_P023_SOURCE as S}from'./alg-l07-p023-source-v1';import{SourceStreamRunsClockV1}from'./source-stream-runs-clock-v1';
+test('all16 source domains and1934 EN/ES requirement queries preserve full native text identities',()=>{
+ const raw=JSON.parse(fs.readFileSync('migrations/shared-alg001-l07-p023/native-v1/source-model-v1.json','utf8'));assert.deepEqual(P023_DOMAINS.map(d=>[d.id,d.frameCount]),raw.timelines.map((t:{timelineId:string;declaredFrameCount:number})=>[t.timelineId,t.declaredFrameCount]));
+ const coverage=JSON.parse(fs.readFileSync('migrations/shared-alg001-l07-p023/evidence/full-frame-coverage.json','utf8'));let queries=0;
+ for(const req of coverage.requirements)for(let frame=1;frame<=req.requiredRange.lastFrame;frame++){const v=algL07P023Frame(frame,{frame,frameDomain:req.frameDomainId,scenario:req.scenario,lang:req.language,seed:0,replay:2,requirementId:req.requirementId,traceId:req.traceId,entryStateSha256:req.entryStateSha256});assert.equal(v.textSnapshot.status,'ready');assert.deepEqual(v.textSnapshot.blockers,[]);assert.equal(v.frame,frame);assert.equal(v.frameDomain,req.frameDomainId);assert.equal(v.rootFrame,req.frameDomainId==='root'?frame:6);assert.equal(v.replay,2);queries++;}
+ assert.equal(queries,1934);assert.throws(()=>algL07P023Frame(303));assert.throws(()=>algL07P023Frame(20,{frame:20,frameDomain:'sprite-54',scenario:'wrong-first',lang:'en',seed:0}));
+});
+test('four equations and letter/button identities bind actual source glyph runs',()=>{
+ const raw=JSON.parse(fs.readFileSync('migrations/shared-alg001-l07-p023/native-v1/source-model-v1.json','utf8'));assert.deepEqual(S.answers.map(a=>[a.letter,a.instance,a.characterId,a.equationId]),[['A','AnsBtn1',28,20],['B','AnsBtn2',26,21],['C','AnsBtn3',26,22],['D','AnsBtn4',27,25]]);
+ for(const a of S.answers){const text=raw.texts.find((t:{characterId:number})=>t.characterId===a.equationId);assert.equal(text.runs.map((r:{text:string})=>r.text).join(''),a.equation);assert.equal(a.segments.filter(s=>s.sup).length,a.answer===4?0:1);if(a.answer<4){assert(text.runs[1].yOffsetTwips<text.runs[0].yOffsetTwips);assert(text.runs[1].fontHeightTwips<text.runs[0].fontHeightTwips);}}
+ assert.equal(P023_TEXT_BINDING.blocks.filter(b=>b.id.startsWith('equation-')).length,4);assert.equal(algL07P023Frame(144).textSnapshot.blocks.filter(b=>b.visible&&b.id.startsWith('equation-')).length,4);assert.equal(algL07P023Frame(302).textSnapshot.blocks.filter(b=>b.visible&&b.id.startsWith('equation-')).length,1);
+});
+test('all wrong popup windows retain first-only Tryagain and explicit Close holds',()=>{
+ for(const[id,first,hold,title]of[[124,16,23,'Try Again!'],[137,13,20,'incorrect!'],[156,17,23,'OH! NO']]as const)for(const second of[false,true]){const q=(frame:number)=>algL07P023Frame(frame,{frame,frameDomain:`sprite-${id}`,scenario:second?'wrong-second':'wrong-first',lang:'es',seed:0});assert(!q(first-1).closeVisible);assert(q(first).closeVisible);assert(q(hold).closeVisible);assert(!q(hold+1).closeVisible);assert.equal(q(hold).feedbackTitle,title);assert.equal(q(hold).state.quizTryCount,second?2:1);assert.equal(q(hold).textSnapshot.blocks.find(b=>b.id==='try-again')?.visible,!second);}
+});
+test('eight source MP3 clocks validate and all four right branches are selectable',()=>{
+ for(const c of S.clocks){new SourceStreamRunsClockV1({version:1,sourceSwfSha256:S.sourceSha256,frameDomain:`sprite-${c.spriteId}`,firstFrame:1,lastFrame:c.sourceFrameCount,fps:12,decoder:c.decoder,segments:c.segments,emptyNegativeBlocks:c.emptyNegativeBlocks,alignmentStatus:'source-run-candidate-not-original-runtime-accepted'},{commitHeldFrame:()=>true});assert.equal(c.decoder.sampleRate,22050);assert.equal(c.decoder.channels,1);}
+ assert.equal(S.clocks.length,8);assert.deepEqual(S.branches.filter(b=>b.kind==='right').map(b=>b.spriteId),[54,66,83,97]);assert.equal(S.sa.decodedSamples,199296);
+});

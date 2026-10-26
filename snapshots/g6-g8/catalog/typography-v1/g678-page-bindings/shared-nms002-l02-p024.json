@@ -1,0 +1,375 @@
+{
+  "schemaVersion": 1,
+  "version": "nms-l02-p024-native-source-v1",
+  "animationId": "shared-nms002-l02-p024",
+  "placementId": "shared-nms002-l02-p024",
+  "sourceSwfSha256": "ecdf064c4daa9dcc496a982eeb3aaa4a599a402fff2db1ec30b448b0b34fb082",
+  "template": "exercise",
+  "blocks": [
+    {
+      "id": "course-title",
+      "sourceTextIds": [],
+      "sourceShapeIds": [
+        1
+      ],
+      "role": "heading",
+      "language": "en",
+      "readingOrder": 0,
+      "valueSource": "source-static"
+    },
+    {
+      "id": "activity-title",
+      "sourceTextIds": [],
+      "sourceShapeIds": [
+        1
+      ],
+      "role": "title",
+      "language": "en",
+      "readingOrder": 1,
+      "valueSource": "source-static"
+    },
+    {
+      "id": "instruction",
+      "sourceTextIds": [
+        "character-60",
+        "character-68"
+      ],
+      "role": "body",
+      "language": "en",
+      "readingOrder": 2,
+      "valueSource": "maintained-page-state"
+    },
+    {
+      "id": "zero",
+      "sourceTextIds": [
+        "character-5"
+      ],
+      "role": "body",
+      "language": "en",
+      "readingOrder": 3,
+      "valueSource": "maintained-page-state"
+    },
+    {
+      "id": "one",
+      "sourceTextIds": [
+        "character-6"
+      ],
+      "role": "body",
+      "language": "en",
+      "readingOrder": 4,
+      "valueSource": "maintained-page-state"
+    },
+    {
+      "id": "correct",
+      "sourceTextIds": [
+        "character-76"
+      ],
+      "role": "feedback",
+      "language": "en",
+      "readingOrder": 5,
+      "valueSource": "maintained-page-state"
+    },
+    {
+      "id": "wrong",
+      "sourceTextIds": [
+        "character-89",
+        "character-91",
+        "character-92"
+      ],
+      "sourceShapeIds": [
+        90
+      ],
+      "role": "body",
+      "language": "en",
+      "readingOrder": 6,
+      "valueSource": "maintained-page-state"
+    },
+    {
+      "id": "close",
+      "sourceTextIds": [
+        "character-82"
+      ],
+      "role": "label",
+      "language": "en",
+      "readingOrder": 7,
+      "valueSource": "maintained-page-state"
+    }
+  ],
+  "sourceRelativePath": "G6-G8-shared/NMS002/L2/IN/L2IN09.swf",
+  "sourceCatalogContentSha256": "e8a76cb9908ea00171c13420f7acfeb69a2417120ab540fb5ede198700364367",
+  "sourceRoleDecisions": [
+    {
+      "kind": "outlined-text",
+      "role": "heading",
+      "semanticValue": "Fractions, Decimals, and Percents Concepts:",
+      "sourceShapeHashes": [
+        {
+          "characterId": 1,
+          "sourceTagSha256": "582e14fdb2f9e86bcc7551153f07c918e1e006e3acc406cfacd1fbab71840a93"
+        }
+      ],
+      "evidencePath": "/Volumes/WestWorld/HELP MATH 2.0-g678-implementation/migrations/shared-nms002-l02-p024/audit/source-semantic-qualification-v1.json"
+    },
+    {
+      "kind": "outlined-text",
+      "role": "title",
+      "semanticValue": "Instruction",
+      "sourceShapeHashes": [
+        {
+          "characterId": 1,
+          "sourceTagSha256": "582e14fdb2f9e86bcc7551153f07c918e1e006e3acc406cfacd1fbab71840a93"
+        }
+      ],
+      "evidencePath": "/Volumes/WestWorld/HELP MATH 2.0-g678-implementation/migrations/shared-nms002-l02-p024/audit/source-semantic-qualification-v1.json"
+    },
+    {
+      "kind": "outlined-text",
+      "role": "body",
+      "semanticValue": "Fraction rule in source1/4feedback replaced by native MathML",
+      "sourceShapeHashes": [
+        {
+          "characterId": 90,
+          "sourceTagSha256": "e6ec9d586cecc8b08af938ba839ec0306e52bf6afb1d5193b6c7afc724655dfc"
+        }
+      ],
+      "evidencePath": "/Volumes/WestWorld/HELP MATH 2.0-g678-implementation/migrations/shared-nms002-l02-p024/audit/source-semantic-qualification-v1.json"
+    }
+  ],
+  "sourceDispositions": [
+    {
+      "sourceTextId": "character-94",
+      "kind": "offstage-audio-helper-label",
+      "reason": "Source Coach_audio label belongs to an offstage stopped audio helper; audio binds the exact stream, not visible teaching text."
+    },
+    {
+      "sourceTextId": "character-96",
+      "kind": "offstage-audio-helper-label",
+      "reason": "Source Coach_audio label belongs to an offstage stopped audio helper; audio binds the exact stream, not visible teaching text."
+    }
+  ],
+  "implementation": {
+    "files": [
+      {
+        "path": "apps/web/app/[locale]/migration-status/g678-calibration/shared-nms002-l02-p024/page.tsx",
+        "sha256": "f51fef69ecb36d2cd75298329e27a4d0c2736083c4fe984072403bde156cc602"
+      },
+      {
+        "path": "apps/web/app/flash-assets/g678-local/shared-nms002-l02-p024/source-audio/[domain]/route.ts",
+        "sha256": "66a62f1b5894421c99617c0e595ac07cfc0a1c794e84debb24150bbbb016c8f0"
+      },
+      {
+        "path": "apps/web/components/g678-nms-l02-p024-lesson.tsx",
+        "sha256": "c8d7d77e0298ecd98eed62a21931bb0ce675482fbcb5919ef133064d6c7a9279"
+      },
+      {
+        "path": "apps/web/components/nms-l02-p024-source-runtime-v1.tsx",
+        "sha256": "3ee8ff61d83a9b08e818076d524e7ae452c88c990f090484d3a2f054acb3cd8d"
+      },
+      {
+        "path": "apps/web/lib/g678-nms-l02-p024.server.ts",
+        "sha256": "07039b1e7f6f015ead3421993f857489b0162e05cd7564b6d5d43f8cb2589a18"
+      },
+      {
+        "path": "apps/web/lib/nms-l02-p024-audio-access.ts",
+        "sha256": "483d12827045f6ea1d71462619ce752ca5dd5c1770ac7b8a142a0dd7ea7c83d7"
+      },
+      {
+        "path": "apps/web/lib/nms-l02-p024-binding.server.ts",
+        "sha256": "08cecafbe99bdf9f04275d1a814ad2dc7e41b96f364eee9a6a6933b51d50c156"
+      },
+      {
+        "path": "apps/web/tests/nms-l02-p024-audio-access.test.ts",
+        "sha256": "6a557c9826077725b4980497664609a338b4a8d0fae1f20e1ddfbc8842167dcd"
+      },
+      {
+        "path": "packages/demos/src/generated/nms-l02-p024-art-ir-v1.ts",
+        "sha256": "3a905604bf4df144b12cf5c0b30f2b17cf961ae87fdeac227014909fc4c3a421"
+      },
+      {
+        "path": "packages/demos/src/generated/nms-l02-p024-source-ir-v1.ts",
+        "sha256": "17716007eb7d473b1c267ded76aec65eca6ceed5a9ca023aa53c67c9427fccb5"
+      },
+      {
+        "path": "packages/demos/src/modules/g678-nms-l02-native-drag-p024.tsx",
+        "sha256": "cb1086d91befad58194dc1721c2b66b3e31f14a12bc2f5522f82f63201b0bfb8"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p024-audio-loader-v1.ts",
+        "sha256": "bc62263ed88958cd05d573af51870ad384cfff72087d0063108192d2e7677b29"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p024-audio-v1.ts",
+        "sha256": "882d76343e25314fc2ecb5e4c68d5ac5735eb1659591476e8e1a8fe96ca06576"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p024-frame-v1.ts",
+        "sha256": "006f6668d3c874f21a1989497d1ea2aa9f60cd4c14d6929df9b3722fba1c6c03"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p024-player-v1.tsx",
+        "sha256": "0f39a9171fb4bb23238dc658cc1d1823c5ef13d242a94ed7eac073084f1db6d9"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p024-presentation-v1.tsx",
+        "sha256": "a31f18047390c4f13b4732a98bdd1f546e3f6d931304ae9a84ae60c332f40225"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p024-renderer-v1.tsx",
+        "sha256": "87e331f235b7d2bedb749aa717e340bc02f50e12e809f7fda0c61d1f073d3aa8"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p024-source-contract-v1.ts",
+        "sha256": "ff094660b9d32a88220588f843ca6f6a01d549014229b3934707fcda7384a203"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p024-term-dialog-v1.tsx",
+        "sha256": "aeff06e07f076347fc88fee391286adb17327a9190ba9a52d66584797daa7364"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p024-text-v1.ts",
+        "sha256": "51a295caedede0d9424b7026e953db3fb66f64c545dd5a0b981835a4de1a86eb"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p024-timeline-v1.ts",
+        "sha256": "42dadc78b51b45ee846472e9ed2dfbd86792f9cd52fb94233cea1d10b77acbd9"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p024-v1.css",
+        "sha256": "2bda2f02ed9c1d83bde5a28dbdfb2e20075310c5430aea5f954e65ef08287e05"
+      },
+      {
+        "path": "packages/demos/src/nms-l02-p024-v1.css.d.ts",
+        "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      },
+      {
+        "path": "packages/demos/src/timelines/g678-nms-l02-native-drag-p024.ts",
+        "sha256": "5d136580562a6ae650364ef034af35cdc66f586718a2dd962d94c02ac739f8fe"
+      },
+      {
+        "path": "apps/web/app/[locale]/layout.tsx",
+        "sha256": "1f74e3c6478fba95eaef92c9b4c2a460458afa6be956689f5cdfa0e53b8c5095"
+      },
+      {
+        "path": "apps/web/app/lesson-fonts.css",
+        "sha256": "03dd49cce36180d3ab64ab14bbb3e45442234856c456998c00a642763d8fd538"
+      },
+      {
+        "path": "apps/web/app/lesson-typography-host.css",
+        "sha256": "f7d7164239fbbbc61c265d198a76138a32b0e5eebadf8b32e58751da3537ede8"
+      },
+      {
+        "path": "apps/web/app/lesson-typography.css",
+        "sha256": "8062a331a72437d8d204a716173ef92b37cc9a05f3e2b5574560dc5110a1bd64"
+      },
+      {
+        "path": "apps/web/components/animation-runtime.tsx",
+        "sha256": "c21101c76c36cc8d062f832b2392491434c8e5c1ca0dc77edd24e233e0b74829"
+      },
+      {
+        "path": "apps/web/lib/g678-lesson-typography-presentation.ts",
+        "sha256": "2fb9de912c82967337f9e88d848fe45745ac5d6b89287f07c73163ae96c3ec8a"
+      },
+      {
+        "path": "apps/web/lib/lesson-typography-policy.ts",
+        "sha256": "6503d9c0aac0542801ba6454fd332a4735881a5cda7d0d4a2df1f506f4984301"
+      },
+      {
+        "path": "apps/web/public/fonts/lesson-v1/fredoka-OFL.txt",
+        "sha256": "5c9e7eee5c6b25f4b05b8d53b2e470ea4962f9ced742d044a98f7d95d1375bab"
+      },
+      {
+        "path": "apps/web/public/fonts/lesson-v1/fredoka-variable.ttf",
+        "sha256": "2ba02e68b152868aef9ba28e24b3648c7d457fe6f25c761f2c2c53fb61a73fc8"
+      },
+      {
+        "path": "apps/web/public/fonts/lesson-v1/nunito-sans-variable.ttf",
+        "sha256": "f934d7142fb4784bf828da485b7dcbd90c0c80d514e9d49a5da0ed3a1ae2491d"
+      },
+      {
+        "path": "apps/web/public/fonts/lesson-v1/nunitosans-OFL.txt",
+        "sha256": "efbb0c9e864cef973982d9a17567e6be5c3d1759695574586f3f18c7ecca064b"
+      },
+      {
+        "path": "catalog/typography-v1/fonts.json",
+        "sha256": "1cd7ad71bb21b9002b365323fe4f03c2e785b0637741f8965d199cf466f14fa5"
+      },
+      {
+        "path": "docs/LESSON_TYPOGRAPHY_DEVELOPMENT.md",
+        "sha256": "086ac047c61b569822e4e7bd8988457a4fd0c74baf87156463a4a39b06b97bf1"
+      },
+      {
+        "path": "packages/demos/package.json",
+        "sha256": "584a636a515b5ca90530d667fe1c59a7e3c5e43946dc1337410a41f2134c9e65"
+      },
+      {
+        "path": "packages/demos/src/contract.ts",
+        "sha256": "56e5fc3c1dbde872646ebbc519f8c7d8a9d6dd0d55e37e1c44f4ad1a47798180"
+      },
+      {
+        "path": "packages/demos/src/lesson-canvas-plane.tsx",
+        "sha256": "5c99bad8143f3f8502dc632dc404b081e638ebdc50375dd62ade2b3d7178b903"
+      },
+      {
+        "path": "packages/demos/src/lesson-canvas-resolution.ts",
+        "sha256": "d5901fb121136b52f34fa5af8c999087207df41de6ba741f2899624f1bbdda78"
+      },
+      {
+        "path": "packages/demos/src/lesson-text-contract.ts",
+        "sha256": "e796b04501425b29200d6bf527aae71deac86769894e2f642efa1e36502a56d9"
+      },
+      {
+        "path": "packages/demos/src/lesson-text-presentation.tsx",
+        "sha256": "892bf80f52f964612b7139a5b78334600ba1f9e77c376cb2e9ef938b8916048f"
+      },
+      {
+        "path": "packages/demos/src/lesson-text-snapshot.ts",
+        "sha256": "0fcb076645392914fc2ad3df9f2062037c8ed5d31730903342ecd5e98bd2e95f"
+      },
+      {
+        "path": "packages/demos/src/lesson-text.ts",
+        "sha256": "f856988b0d5ae8b980ab8a56b824ef50426ee8bb6d729446d0024278d74c66e6"
+      },
+      {
+        "path": "packages/demos/src/use-lesson-canvas-resolution.ts",
+        "sha256": "98324a52de61f1469c16bed71a1df38d2ef44af84cd959141e2b9e9e7a67963f"
+      },
+      {
+        "path": "scripts/build-lesson-canvas-resolution-adapter-v1.mjs",
+        "sha256": "dcd6ed9fb2ab159461af7e0b129412d3992b56daf8dd87c3ed6ef75be0f2b251"
+      },
+      {
+        "path": "scripts/build-lesson-text-canvas-adapter-v1.mjs",
+        "sha256": "36d247a0998afbad5c2c39c519e9220eab0291f9aec137f9a433007ebbf60690"
+      },
+      {
+        "path": "scripts/build-lesson-text-source-catalog-v1.mjs",
+        "sha256": "b62681621beed053ba886219e3e26a969c28d17e37eda1764e59c720124cb2b4"
+      },
+      {
+        "path": "scripts/check-g678-lesson-typography-v1.mjs",
+        "sha256": "4810a44f3d40b36c92abf813c82f837e84b53f56ecdf47e3c96b97fb5ed59256"
+      },
+      {
+        "path": "scripts/lib/lesson-text-canvas-runtime-v1.mjs",
+        "sha256": "0829b7c5a17e8c659f6f6ab8b541ba269bff466827b8f67de542b3d74c6da3cc"
+      },
+      {
+        "path": "scripts/lib/swf-text-source-catalog.mjs",
+        "sha256": "5a65075738bcdd62a9fb79cca0aaf7fe7ab59857bd3852fdf5063d6c1fe8a3dc"
+      },
+      {
+        "path": "apps/web/lib/g678-nms-l02-p024-freeze-v1.ts",
+        "sha256": "39d4dd7be761bd2d0230c2b372d8336e4be9ed8c8e1cc3cc6c5bb3c4648df136"
+      }
+    ]
+  },
+  "unresolved": [],
+  "independentPending": [
+    "Original runtime and fidelity",
+    "Human listening and visual review",
+    "Owner and strict completion",
+    "Release and publication",
+    "English lesson and feedback text with localized native controls",
+    "Only a correct quarter drop advances source coach/right feedback to final93; accessible hit testing is a disclosed adaptation"
+  ]
+}

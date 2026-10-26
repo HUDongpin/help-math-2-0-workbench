@@ -1806,7 +1806,8 @@ function hfrGlossaryProjection(base: PageOnlyLessonPlayerDescriptor, packet: Hfr
     assert(!["shared-nms002-l11-p027","shared-nms002-l11-p026","shared-nms002-l07-p005","shared-nms002-l08-p006","shared-alg001-l02-p007","shared-nms002-l03-p005","shared-nms002-l03-p006","shared-nms002-l03-p008","shared-geo001-l03-p007","shared-nms002-l06-p005","shared-nms002-l11-p005","shared-nms002-l11-p006","shared-nms002-l11-p007","shared-nms002-l11-p008","shared-nms002-l11-p009","shared-nms002-l11-p010","shared-nms002-l11-p011","shared-nms002-l11-p012","shared-nms002-l11-p013","shared-nms002-l11-p014","shared-nms002-l11-p015","shared-nms002-l11-p018","shared-nms002-l11-p019","shared-nms002-l11-p020","shared-nms002-l11-p022","shared-nms002-l11-p023","shared-nms002-l11-p024"].includes(packet.entry.key), 'HFR source glossary is required');
     return {};
   }
-  const profile = (Object.freeze({
+  const profile = canvasAddition ? {source: canvasAddition.sourceGlossary.sourceSha256,
+    terms: canvasAddition.descriptorEntries.map(entry => entry.id).sort()} : (Object.freeze({
   "shared-nms002-l07-p006": {"source":"1d31a28a3364ae8edbbde9ca76efbd1961fdcfdb0673357c02d0399e5f68b4ae","terms":["comparison","quantity","ratio"]},
   "shared-nms002-l07-p007": {"source":"d3b29ad9495d600cc6b13ecf231314a3211369e377ec685d5eda38f02f6482f2","terms":["cross-multiplication","equation","equivalent","proportion","ratio"]},
   "shared-nms002-l11-p027": {"source":"bf11159ecf9dbb76b887f303e707bc0f55697e5ec8b5386ea1b3d6eb524632f5","terms":["comparison","express","integers","irrational-numbers","opposite","ratio","rational-numbers","whole-numbers"]},

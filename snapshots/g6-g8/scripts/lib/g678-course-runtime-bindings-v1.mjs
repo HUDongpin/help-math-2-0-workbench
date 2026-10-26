@@ -182,6 +182,8 @@ function sourceGlossary(root,packet,selected,entry) {
  * Metadata-only reader for the registered source-ordered course.
  * Shared registry/dispatch failure stops all selected rows; a page/artifact
  * failure affects only that page. No old packet.inputs verdict is fabricated.
+ * @param {string} root
+ * @param {readonly string[]} ids
  */
 export function readG678CourseRuntimeBindings(root,ids) {
   assert(path.isAbsolute(root)&&fs.realpathSync(root)===root,'physical workspace');
@@ -193,7 +195,7 @@ export function readG678CourseRuntimeBindings(root,ids) {
     dispatchPins=DISPATCH.map(file=>pinFile(root,file));
     manifestPin=pinFile(root,MANIFEST);manifest=readJsonPin(root,manifestPin);
   }catch(error) {
-    return {kind:'g678-course-runtime-bindings-v1',status:'failed',registry:{status:'failed',error:String(error)},rows:ids.map(animationId=>({animationId,status:'failed',error:'shared-registry-dispatch-or-source-manifest: '+String(error)})),acceptanceEffects:{technicalPassed:false,registeredDelta:0}};
+    return {kind:'g678-course-runtime-bindings-v1',status:'failed',registry:{status:'failed',error:String(error)},rows:ids.map(animationId=>({animationId,status:/** @type {const} */ ('failed'),error:'shared-registry-dispatch-or-source-manifest: '+String(error)})),acceptanceEffects:{technicalPassed:false,registeredDelta:0}};
   }
   const sourceRoot=resolveG678PhysicalPath(SOURCE_ROOT,root);
   const entries=new Map();
@@ -244,12 +246,12 @@ export function readG678CourseRuntimeBindings(root,ids) {
       const presentation=selected.presentation?{status:'immutable-freeze-declaration',presentation:selected.presentation,pins:[]}:readG678PresentationMetadata(root,animationId);
       const overlay={rendererAvailability:{kind:'registered',moduleKey:animationId,runtimeQuery},
         ...(selected.runtimeEvidenceBoundary?{runtimeEvidenceBoundary:selected.runtimeEvidenceBoundary}:{}),...(presentation.presentation?{presentation:presentation.presentation}:{})};
-      return {animationId,status:'ready',overlay,glossaryEntries:glossary.entries,
+      return {animationId,status:/** @type {const} */ ('ready'),overlay,glossaryEntries:glossary.entries,
         metadataCoverage:{runtimeQuery:host.runtimeQuery?'source-bound-freeze-and-maintained-host':'immutable-source-bound-freeze',glossary:glossary.coverage,presentation:presentation.status},
         inputPins:uniquePins([registryPin,...dispatchPins,manifestPin,freezePin,...lineagePins,...artifactPins,...host.pins,...presentation.pins,...glossary.pins]),sourcePins:uniquePins([source,xml,...glossary.external]),
         historicalAdmission:{status:'not-revalidated',inputPinsDeclared:countPins(packet.inputs),reason:'This source-metadata reader verifies only selected current artifacts/source bindings. Old packet inputs, build receipts and acceptance remain separate; no historical pin is renewed.'},
         acceptanceEffects:{technicalPassed:false,registeredDelta:0,audioAccepted:false,humanAccepted:false,ownerAccepted:false,published:false}};
-    }catch(error){return {animationId,status:'failed',error:String(error),acceptanceEffects:{technicalPassed:false,registeredDelta:0}};}
+    }catch(error){return {animationId,status:/** @type {const} */ ('failed'),error:String(error),acceptanceEffects:{technicalPassed:false,registeredDelta:0}};}
   });
   // Keep the transaction anchors fresh across every selected-page read.
   readPin(root,registryPin);dispatchPins.forEach(pin=>readPin(root,pin));readPin(root,manifestPin);

@@ -1,0 +1,24 @@
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {createHash} from 'node:crypto';import path from 'node:path';import assert from 'node:assert/strict';
+import {P047_TEXT_BINDING} from '../packages/demos/src/nms-l01-p047-text-v1.ts';
+import {P047_SOURCE} from '../packages/demos/src/nms-l01-p047-source-data-v1.ts';
+import {collectSwfTextSourceCatalog} from './lib/swf-text-source-catalog.mjs';
+const R=path.resolve(import.meta.dirname,'..'),T='/Volumes/American Dream/hudongpin/helpmath-g678-completion-20260909-01a08222',B=T+'/nms-l01-p047-behavior-source-v1';
+const hash=(b:Uint8Array|string)=>createHash('sha256').update(b).digest('hex');
+const sourceRelativePath='G6-G8-shared/NMS002/L1/FQ/L1FQ02.swf',source=await readFile('/Volumes/WestWorld/HELP MATH Related Files/AWS Grade-Classified Courseware/'+sourceRelativePath);assert.equal(hash(source),P047_SOURCE.sourceSwfSha256);
+const catalog=collectSwfTextSourceCatalog(source),sourceRole=JSON.parse(await readFile(B+'/graphics-source-role-disposition-v1.json','utf8'));
+assert.equal(sourceRole.sourceSwfSha256,hash(source));assert.equal(sourceRole.rows.length,192);assert.equal(sourceRole.bitmaps.length,2);
+const shapes=new Map(catalog.shapeDefinitions.map((x:any)=>[x.characterId,x.sourceTagSha256]));
+const values:Record<string,string>={'source-quiz-title':'Positive & Negative Numbers: Final Quiz'};
+for(const q of P047_SOURCE.questions){values[q.promptBlockId]=q.prompt;for(const a of q.options)values[a.blockId]=a.value;}
+for(const item of P047_SOURCE.figureText)values[item.binding.id]=item.text;
+const sourceRoleDecisions=P047_TEXT_BINDING.blocks.flatMap(block=>{const ids=block.sourceShapeIds??[];if(!ids.length)return [];
+ const semanticValue=values[block.id];assert.ok(semanticValue,block.id);return [{kind:'outlined-text',blockId:block.id,role:block.role,semanticValue,sourceShapeHashes:ids.map(characterId=>{assert.ok(shapes.has(characterId));return {characterId,sourceTagSha256:shapes.get(characterId)}})}];});
+const integration=JSON.parse(await readFile(R+'/catalog/typography-v1/g678-integration.json','utf8')),registry=JSON.parse(await readFile(R+'/packages/demos/private-current-js-registry.json','utf8'));
+const entry=registry.calibrations.flatMap((c:any)=>c.entries).find((e:any)=>e.key===P047_TEXT_BINDING.animationId);assert.ok(entry);
+const freeze=JSON.parse(await readFile(R+'/catalog/product-bridge-calibrations/g678-nms-l01-p047-native-quiz-current-js-v1-repair-v2.json','utf8'));
+const files=[...new Set([entry.artifacts.module.path,...integration.sharedFiles.map((p:any)=>p.path),...freeze.inputs.filter((p:any)=>p.path.startsWith('packages/demos/src/')&&!p.path.includes('/generated/')).map((p:any)=>p.path),'apps/web/components/nms-l01-p047-source-runtime-v1.tsx','apps/web/components/g678-nms-l01-p047-lesson.tsx'])];
+const implementation={files:await Promise.all(files.map(async p=>({path:p,sha256:hash(await readFile(path.join(R,p)))})))};
+const binding={...P047_TEXT_BINDING,sourceRelativePath,sourceCatalogContentSha256:hash(JSON.stringify(catalog)),sourceRoleDecisions,implementation,unresolved:[]};
+const out=R+'/catalog/typography-v1/g678-page-bindings';await mkdir(out,{recursive:true});const target=out+'/'+binding.placementId+'.json';await writeFile(target,JSON.stringify(binding,null,2)+'\n',{flag:'wx'});
+console.log(JSON.stringify({target,blocks:binding.blocks.length,sourceRoleDecisions:sourceRoleDecisions.length,sourceCatalogContentSha256:binding.sourceCatalogContentSha256,checkRecordWritten:false}));

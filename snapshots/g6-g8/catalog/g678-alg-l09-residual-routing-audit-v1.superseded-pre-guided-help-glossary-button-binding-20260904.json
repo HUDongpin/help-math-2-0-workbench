@@ -1,0 +1,533 @@
+{
+  "schemaVersion": 1,
+  "artifactType": "g678-alg-l09-residual-routing-audit-v1",
+  "generatedAt": "2026-09-04T05:51:57.087Z",
+  "status": "exact-6-source-script-routed-no-registration",
+  "inputs": {
+    "catalog": {
+      "path": "catalog/g678-shared-catalog.v1.json",
+      "bytes": 12534064,
+      "sha256": "a1692c2a86c6771dcb104f59195b5bfdd2b5281cceff0aaeb63a3aabcf4a5657"
+    },
+    "predecessor": {
+      "path": "catalog/product-bridge-calibrations/g678-current-js-336-page-product-calibrated-registration-v1.json",
+      "bytes": 1833471,
+      "sha256": "3208fdfbcf7e38bb3807039bc8fce52e6374b54afdaeea1964873b2aed3b1b87"
+    },
+    "builder": {
+      "path": "scripts/audit-g678-alg-l09-residual-routing.mjs",
+      "bytes": 23621,
+      "sha256": "1df6cf8f1a7d34fd084e1fa2f9e0fdb1e2d36b17b0da1a95022ac1576b8bdaf7"
+    }
+  },
+  "auditedPlacementCount": 6,
+  "affectedLessonCount": 1,
+  "lessonActivePageCount": 41,
+  "predecessorRegisteredPageCount": 35,
+  "remainingPlacementCount": 6,
+  "laneCounts": {
+    "advanced-manual-cross-page-game-controller": 1,
+    "advanced-manual-final-assessment-state-machine": 1,
+    "advanced-manual-game-state-machine": 1,
+    "advanced-manual-guided-tutorial-quiz-state-machine": 3
+  },
+  "members": [
+    {
+      "animationId": "shared-alg001-l09-p030",
+      "stableLessonKey": "shared-alg001-l09",
+      "moduleCode": "ALG001",
+      "lessonNumber": 9,
+      "sectionCode": "GS",
+      "sectionPageOrdinal": 1,
+      "source": {
+        "path": "G6-G8-shared/ALG001/L9/GS/L9GS02.swf",
+        "bytes": 238486,
+        "sha256": "490bf1270ebaae387784e73c196646da73db623789574e107ef86734d2f238e9"
+      },
+      "runtime": {
+        "rootFrameCount": 10,
+        "fps": 12,
+        "mainFrameDomain": "sprite-140",
+        "mainFrameCount": 749,
+        "domainFingerprintSha256": "c85358247af427e7ad34df20444fd5ec37a2508e56ce430d89a658bacdba75de"
+      },
+      "diagnosticEvidence": {
+        "sourceXml": {
+          "path": "work/g678-shared-page-factory/g678-alg-l09-gs02-diagnostic-20260904/source.xml",
+          "bytes": 1163978,
+          "sha256": "e3c52c3cdff4cd013fde1c2cc3e7ecf461a2b792873f426a7ea5d82636d388e5"
+        },
+        "scripts": {
+          "fileCount": 45,
+          "totalBytes": 13436,
+          "checksumSetSha256": "5d2b2248a6c5bb491298acc8ed2c77c1df4079a74bb16e7de2eb4f59b7c670d2"
+        },
+        "texts": {
+          "fileCount": 40,
+          "totalBytes": 1579,
+          "checksumSetSha256": "2ef68121b1f44fd9d202ffbee5bf7fe380f3aa5a10d020b9a733794662b4baac"
+        }
+      },
+      "interactiveStopFrames": [
+        748
+      ],
+      "semanticEvidence": {
+        "sourceLevelCount": 2,
+        "sourceControlCount": 6,
+        "sourceScoreMutation": false,
+        "replayAndLevelSelection": true,
+        "crossPageTarget": "L9GS03",
+        "legacyShellHandoff": "doNeedMoreHelp"
+      },
+      "lane": "advanced-manual-cross-page-game-controller",
+      "laneReason": "narrated two-level game controller with replay, popup, and a shell call that launches L9GS03",
+      "registrationCandidate": false,
+      "productCalibrationPassed": false
+    },
+    {
+      "animationId": "shared-alg001-l09-p031",
+      "stableLessonKey": "shared-alg001-l09",
+      "moduleCode": "ALG001",
+      "lessonNumber": 9,
+      "sectionCode": "GS",
+      "sectionPageOrdinal": 2,
+      "source": {
+        "path": "G6-G8-shared/ALG001/L9/GS/L9GS03.swf",
+        "bytes": 694582,
+        "sha256": "1ede8bbaa6a64ac2428d5a4dd9d03cdd6ca346621210f2001ea32b9210826adb"
+      },
+      "runtime": {
+        "rootFrameCount": 10,
+        "fps": 12,
+        "mainFrameDomain": "sprite-227",
+        "mainFrameCount": 5,
+        "domainFingerprintSha256": "5475b28421674324654eda815f678cee4bf1e0b3bfea23c95fec8d4389e53aa0"
+      },
+      "diagnosticEvidence": {
+        "sourceXml": {
+          "path": "work/g678-shared-page-factory/g678-alg-l09-gs03-diagnostic-20260904/source.xml",
+          "bytes": 3439384,
+          "sha256": "55726516ff89a30f3d0b6aac62c2f378452662d64c29f1802e4f6f93340f874b"
+        },
+        "scripts": {
+          "fileCount": 101,
+          "totalBytes": 134480,
+          "checksumSetSha256": "d8d05bfc31b6b02aeae53f0a41cfb75df5f27b762f147c3ffb08aaadb460ac49"
+        },
+        "texts": {
+          "fileCount": 47,
+          "totalBytes": 843,
+          "checksumSetSha256": "e93c86b4a902917b5ac7068ed0c50bccd520681d10812ae79b381c8cdcc718d7"
+        }
+      },
+      "interactiveStopFrames": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "semanticEvidence": {
+        "sourceLevelCount": 2,
+        "sourcePairCount": 6,
+        "sourceAnswerReleaseCount": 12,
+        "sourceScoreMutation": true,
+        "replayAndLevelSelection": true
+      },
+      "lane": "advanced-manual-game-state-machine",
+      "laneReason": "two-level matching game with twelve answer pairs, score mutation, fades, feedback, and replay",
+      "registrationCandidate": false,
+      "productCalibrationPassed": false
+    },
+    {
+      "animationId": "shared-alg001-l09-p037",
+      "stableLessonKey": "shared-alg001-l09",
+      "moduleCode": "ALG001",
+      "lessonNumber": 9,
+      "sectionCode": "TS",
+      "sectionPageOrdinal": 6,
+      "source": {
+        "path": "G6-G8-shared/ALG001/L9/TS/L9TS07.swf",
+        "bytes": 562427,
+        "sha256": "29bfe39a4c2ffd7b163b5c03925efad55ae86b4533a19c278e1abf8dbb91cd35"
+      },
+      "runtime": {
+        "rootFrameCount": 10,
+        "fps": 12,
+        "mainFrameDomain": "sprite-307",
+        "mainFrameCount": 942,
+        "domainFingerprintSha256": "3ba1de5edd61f9882dec29b8aa555f148ba8975c1432b6311a938385f16a9674"
+      },
+      "diagnosticEvidence": {
+        "sourceXml": {
+          "path": "work/g678-shared-page-factory/g678-alg-l09-ts07-diagnostic-20260904/source.xml",
+          "bytes": 6851846,
+          "sha256": "be7cd4c7fc22730ba1c9b473775ec40f2fbdccddf712abb9ff7fe74d9c42408c"
+        },
+        "scripts": {
+          "fileCount": 61,
+          "totalBytes": 5479,
+          "checksumSetSha256": "57dcb81cf86ead7cf70dbff45a027bc813eb9a4db1b4b6ba166656712201362b"
+        },
+        "texts": {
+          "fileCount": 70,
+          "totalBytes": 3485,
+          "checksumSetSha256": "e2c7e0c6b2f4424fd9148a7c95c64cd54b4478239e3bcd535657daa11d3eaafa"
+        }
+      },
+      "interactiveStopFrames": [
+        396,
+        564,
+        712,
+        869,
+        925,
+        942
+      ],
+      "semanticEvidence": {
+        "guidedStopCount": 4,
+        "needMoreHelpBranchCount": 2,
+        "finalQuizStopFrame": 925,
+        "resumeFrame": 926,
+        "rightButtonCharacterId": 266,
+        "wrongButtonCharacterId": 267,
+        "question": "What is the ratio of socks to shoes?",
+        "options": [
+          {
+            "id": "choice-a",
+            "label": "A",
+            "value": "1 to 4",
+            "textObjectId": 179,
+            "correct": false
+          },
+          {
+            "id": "choice-b",
+            "label": "B",
+            "value": "2 to 9",
+            "textObjectId": 182,
+            "correct": false
+          },
+          {
+            "id": "choice-c",
+            "label": "C",
+            "value": "9 to 2",
+            "textObjectId": 185,
+            "correct": true
+          },
+          {
+            "id": "choice-d",
+            "label": "D",
+            "value": "18 to 4",
+            "textObjectId": 188,
+            "correct": false
+          }
+        ],
+        "correctChoiceId": "choice-c",
+        "glossaryTerms": [
+          "Acute angle",
+          "Comparison",
+          "Degree",
+          "E-mail",
+          "Greater",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Quantity",
+          "Ratio",
+          "Right angle",
+          "Simplest form",
+          "Spam",
+          "Square corner",
+          "Straight angle"
+        ]
+      },
+      "lane": "advanced-manual-guided-tutorial-quiz-state-machine",
+      "laneReason": "four guided stops, two Need More Help branches, a source feedback quiz, and a terminal stop",
+      "registrationCandidate": false,
+      "productCalibrationPassed": false
+    },
+    {
+      "animationId": "shared-alg001-l09-p038",
+      "stableLessonKey": "shared-alg001-l09",
+      "moduleCode": "ALG001",
+      "lessonNumber": 9,
+      "sectionCode": "TS",
+      "sectionPageOrdinal": 7,
+      "source": {
+        "path": "G6-G8-shared/ALG001/L9/TS/L9TS08.swf",
+        "bytes": 567267,
+        "sha256": "453e9b535c6b349e8ed94598e8db555339d67dc15ac4b89042a117379761112a"
+      },
+      "runtime": {
+        "rootFrameCount": 10,
+        "fps": 12,
+        "mainFrameDomain": "sprite-329",
+        "mainFrameCount": 934,
+        "domainFingerprintSha256": "d617cb465bc3601232fb1a89b693e53558fbf1f7201b5b1e671981cdf7a77e87"
+      },
+      "diagnosticEvidence": {
+        "sourceXml": {
+          "path": "work/g678-shared-page-factory/g678-alg-l09-ts08-diagnostic-20260904/source.xml",
+          "bytes": 7164848,
+          "sha256": "30b69500e3e88a35c6b3b48999f8ec7546e9048868d2b50e024e542741f72513"
+        },
+        "scripts": {
+          "fileCount": 63,
+          "totalBytes": 5748,
+          "checksumSetSha256": "fea40f16354bd2c2f283e94fab5316df231138d902a2e4e02127f51b740e5aae"
+        },
+        "texts": {
+          "fileCount": 81,
+          "totalBytes": 3414,
+          "checksumSetSha256": "7243ab910630c55fb500b25901accb8f59f81e07fa8ac92ded5bccd416ebcd7a"
+        }
+      },
+      "interactiveStopFrames": [
+        391,
+        560,
+        708,
+        865,
+        917,
+        934
+      ],
+      "semanticEvidence": {
+        "guidedStopCount": 4,
+        "needMoreHelpBranchCount": 2,
+        "finalQuizStopFrame": 917,
+        "resumeFrame": 918,
+        "rightButtonCharacterId": 297,
+        "wrongButtonCharacterId": 298,
+        "question": "What is the value of M?",
+        "options": [
+          {
+            "id": "choice-a",
+            "label": "A",
+            "value": "M = 2",
+            "textObjectId": 38,
+            "correct": true
+          },
+          {
+            "id": "choice-b",
+            "label": "B",
+            "value": "M = 7.5",
+            "textObjectId": 41,
+            "correct": false
+          },
+          {
+            "id": "choice-c",
+            "label": "C",
+            "value": "M = 15",
+            "textObjectId": 44,
+            "correct": false
+          },
+          {
+            "id": "choice-d",
+            "label": "D",
+            "value": "M = 20",
+            "textObjectId": 47,
+            "correct": false
+          }
+        ],
+        "correctChoiceId": "choice-a",
+        "glossaryTerms": [
+          "Acute angle",
+          "Coefficient",
+          "Degree",
+          "Denominator",
+          "Equation",
+          "Equivalent",
+          "Greater",
+          "Line",
+          "Measure",
+          "Obtuse angle",
+          "Proportion",
+          "Ratio",
+          "Right angle",
+          "Square corner",
+          "Straight angle",
+          "Value",
+          "Variable"
+        ]
+      },
+      "lane": "advanced-manual-guided-tutorial-quiz-state-machine",
+      "laneReason": "four guided stops, two Need More Help branches, a source feedback quiz, and a terminal stop",
+      "registrationCandidate": false,
+      "productCalibrationPassed": false
+    },
+    {
+      "animationId": "shared-alg001-l09-p039",
+      "stableLessonKey": "shared-alg001-l09",
+      "moduleCode": "ALG001",
+      "lessonNumber": 9,
+      "sectionCode": "TS",
+      "sectionPageOrdinal": 8,
+      "source": {
+        "path": "G6-G8-shared/ALG001/L9/TS/L9TS09.swf",
+        "bytes": 641617,
+        "sha256": "7d972629424cab7fe6aafdb21d56f7049dc8dd906069d44006361036aac178ca"
+      },
+      "runtime": {
+        "rootFrameCount": 10,
+        "fps": 12,
+        "mainFrameDomain": "sprite-342",
+        "mainFrameCount": 1111,
+        "domainFingerprintSha256": "37558bf35bfc3a2b4219e100c4b73c32fdf2a6f24a56aaf6720099da954eabb8"
+      },
+      "diagnosticEvidence": {
+        "sourceXml": {
+          "path": "work/g678-shared-page-factory/g678-alg-l09-ts09-diagnostic-20260904/source.xml",
+          "bytes": 7172236,
+          "sha256": "8b7ce09c4e0dd90602d7f62b4b8ad9cdc0ef7d0d33b786771e9551a67f0bde4b"
+        },
+        "scripts": {
+          "fileCount": 64,
+          "totalBytes": 5830,
+          "checksumSetSha256": "7069e6a1a97a6c0ac15f1ce4334f6c86bf82a4ed1688c8fda7282bde75310693"
+        },
+        "texts": {
+          "fileCount": 95,
+          "totalBytes": 3853,
+          "checksumSetSha256": "287c1b26c9acbae7614543e55a891009e02db056cc02e865bef1abdaeea9c189"
+        }
+      },
+      "interactiveStopFrames": [
+        534,
+        704,
+        852,
+        1008,
+        1094,
+        1111
+      ],
+      "semanticEvidence": {
+        "guidedStopCount": 4,
+        "needMoreHelpBranchCount": 2,
+        "finalQuizStopFrame": 1094,
+        "resumeFrame": 1095,
+        "rightButtonCharacterId": 297,
+        "wrongButtonCharacterId": 298,
+        "question": "Does the caterer use a proportional relationship?",
+        "options": [
+          {
+            "id": "choice-a",
+            "label": "A",
+            "value": "non-proportional relationship",
+            "textObjectId": 31,
+            "correct": true
+          },
+          {
+            "id": "choice-b",
+            "label": "B",
+            "value": "proportional relationship",
+            "textObjectId": 34,
+            "correct": false
+          }
+        ],
+        "correctChoiceId": "choice-a",
+        "glossaryTerms": [
+          "Acute angle",
+          "Column",
+          "Degree",
+          "Equation",
+          "Greater",
+          "Line",
+          "Measure",
+          "Non-proportional relationship",
+          "Obtuse angle",
+          "Pair",
+          "Proportional relationship",
+          "Ratio",
+          "Right angle",
+          "Simple / Simpler / Simplest",
+          "Square corner",
+          "Straight angle",
+          "Table",
+          "Value"
+        ]
+      },
+      "lane": "advanced-manual-guided-tutorial-quiz-state-machine",
+      "laneReason": "four guided stops, two Need More Help branches, a source feedback quiz, and a terminal stop",
+      "registrationCandidate": false,
+      "productCalibrationPassed": false
+    },
+    {
+      "animationId": "shared-alg001-l09-p041",
+      "stableLessonKey": "shared-alg001-l09",
+      "moduleCode": "ALG001",
+      "lessonNumber": 9,
+      "sectionCode": "FQ",
+      "sectionPageOrdinal": 2,
+      "source": {
+        "path": "G6-G8-shared/ALG001/L9/FQ/L9FQ02.swf",
+        "bytes": 40244,
+        "sha256": "a3706178cef1f10fd9d99c430114951bd1c9a07f9c16fc6e66c1d906b6e86af8"
+      },
+      "runtime": {
+        "rootFrameCount": 10,
+        "fps": 12,
+        "mainFrameDomain": "sprite-855",
+        "mainFrameCount": 69,
+        "domainFingerprintSha256": "a9bc306d72187b881e443717a0c70411652736a034d44406a8b0eaa043e9aae8"
+      },
+      "diagnosticEvidence": {
+        "sourceXml": {
+          "path": "work/g678-shared-page-factory/g678-alg-l09-fq02-diagnostic-20260904/source.xml",
+          "bytes": 3281515,
+          "sha256": "01246eaa8634b92406142c06826ccf3f62ff468876d379baad1d187c4c45218e"
+        },
+        "scripts": {
+          "fileCount": 99,
+          "totalBytes": 27933,
+          "checksumSetSha256": "9585aac2aab6709751a9def49698c0eb2c54e46c5a8166ba8c1027d2814d38d6"
+        },
+        "texts": {
+          "fileCount": 472,
+          "totalBytes": 6327,
+          "checksumSetSha256": "b33d3df9f234bff1b7b1ce08bcfd0dcede62bb9fc39edb412f97d48185f09b97"
+        }
+      },
+      "interactiveStopFrames": [
+        44
+      ],
+      "semanticEvidence": {
+        "questionPoolSize": 24,
+        "presentedQuestionCount": 10,
+        "answerKeySize": 24,
+        "randomizedWithoutReplacement": true,
+        "responseReviewImplementedInSource": true,
+        "legacyBookmarkAndReportCallsPresent": true
+      },
+      "lane": "advanced-manual-final-assessment-state-machine",
+      "laneReason": "random ten-of-twenty-four assessment with response arrays, result, review, bookmark, and legacy reporting calls",
+      "registrationCandidate": false,
+      "productCalibrationPassed": false
+    }
+  ],
+  "registrationCandidatePlacementCount": 0,
+  "productCalibrationPassed": false,
+  "wholeLessonEngineeringPreviewReady": false,
+  "scaleOutAuthorized": false,
+  "blockers": [
+    "maintained-game-state-machines-not-implemented",
+    "guided-tutorial-multi-stop-host-consumer-not-implemented",
+    "randomized-final-assessment-state-machine-not-implemented",
+    "browser-product-calibration-pending",
+    "authoritative-original-runtime-not-established",
+    "visual-fidelity-not-accepted",
+    "audio-acceptance-pending"
+  ],
+  "limitations": [
+    "The six diagnostics are source-bound lane-routing evidence only and do not register a renderer.",
+    "FFDec PNG/script and swfmill XML exports are frozen read-only private work evidence, not original-runtime or visual-fidelity acceptance.",
+    "Legacy final-assessment bookmark/report calls are evidence only; they are not authorized network behavior for the maintained product runtime."
+  ],
+  "acceptanceEffects": {
+    "currentJavaScriptRegistered": false,
+    "behaviorAccepted": false,
+    "visualFidelityAccepted": false,
+    "audioAccepted": false,
+    "humanVisualAccepted": false,
+    "ownerAccepted": false,
+    "strictComplete": false,
+    "released": false,
+    "published": false
+  }
+}

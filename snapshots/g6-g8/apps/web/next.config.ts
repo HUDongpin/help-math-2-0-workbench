@@ -334,7 +334,7 @@ const p048HostSource = path.join(webDirectory, 'components/g678-alg-l06-p048-hos
 const p047HostSource = path.join(webDirectory, 'components/g678-alg-l06-p047-host-lesson-v1.tsx');
 const p046HostSource = path.join(webDirectory, 'components/g678-alg-l06-p046-host-lesson-v1.tsx');
 const p001HostProductionStub = path.join(webDirectory, 'lib/alg-l07-p001-host.production-stub.tsx');
-const p060HostProductionStub = path.join(webDirectory, 'lib/alg-l06-p060-host.production-stub.tsx');
+const p060HostProductionStub = path.join(webDirectory, 'lib/alg-l06-course-host.production-stub.tsx');
 const p058HostProductionStub = path.join(webDirectory, 'lib/alg-l06-p058-host.production-stub.tsx');
 const p057HostProductionStub = path.join(webDirectory, 'lib/alg-l06-p057-host.production-stub.tsx');
 const p056HostProductionStub = path.join(webDirectory, 'lib/alg-l06-p056-host.production-stub.tsx');
@@ -1025,6 +1025,12 @@ const nextConfig: NextConfig = {
     if (g678CompiledLocalQaBuild) {
       // No development lazy-compilation backend, extra cache, or expanded header limit.
       config.cache = false;
+      // The compiled loopback QA profile has no hosted Web Analytics endpoint.
+      config.resolve ??= {};
+      config.resolve.alias = {
+        ...(config.resolve.alias ?? {}),
+        '@vercel/analytics/next$': path.join(webDirectory, 'lib/g678-compiled-local-analytics.stub.tsx'),
+      };
     }
     // HFR QA keeps executable eval content and mappings, without duplicating sources.
     if (dev && isG678LocalPreviewEnabled() && process.env.HELP_MATH_HFR_LOCAL_QA === '1') {

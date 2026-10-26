@@ -31,6 +31,6 @@ export function resolveMeasuredSourceDecoderProfile(
   const profile = CHROME_156_PROFILES.find(row => row.sourceSha256 === binding.sourceSha256
     && row.sourceBytes === binding.sourceBytes && row.sampleRate === binding.sampleRate
     && row.channels === binding.channels && row.decodedSamples === binding.decodedSamples
-    && [row.predecessorPcmSha256, row.pcmSha256].includes(binding.pcmSha256));
+    && (binding.pcmSha256 === row.predecessorPcmSha256 || binding.pcmSha256 === row.pcmSha256));
   return profile ? Object.freeze({...binding, pcmSha256: profile.pcmSha256}) : binding;
 }

@@ -1,0 +1,8 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import {commandsFor,MAIN_FRAMES,LIMITS,enforceLimit,PINS,file,GATES,validateAssetSelection,inventory} from './g678-nms-l01-p044-extract-visual-slice.mjs';
+test('bounded exact11main frames and one root6 selection, no bulk SVG option',()=>{const c=commandsFor({java:'/java',jar:'/ffdec.jar',out:'/private-run',source:'/private-run/source.swf'});assert.equal(c.length,4);assert.deepEqual(MAIN_FRAMES,[1,20,40,80,120,160,200,240,280,311,312]);assert.ok(c[2].args.includes('0:6'));assert.ok(c[3].args.includes(`293:${MAIN_FRAMES.join(',')}`));assert.ok(c[1].args.includes('sprite:canvas'));assert.ok(c.slice(1).every(v=>v.args.includes('abort')));});
+test('hard byte/file caps reject broader extraction',()=>{assert.deepEqual(enforceLimit([{bytes:1}]),{files:1,bytes:1});assert.throws(()=>enforceLimit([{bytes:LIMITS.bytes+1}]));assert.throws(()=>enforceLimit(Array.from({length:251},()=>({bytes:1}))));});
+test('physical source/XML/structural/tool receipt pins match before export',async()=>{for(const[p,s]of Object.entries(PINS))assert.equal((await file(p)).sha256,s);});
+test('front end grants no implementation, distribution, or acceptance flags',()=>assert.ok(Object.values(GATES).every(v=>v===false)));
+test('actual retained single-type FFDec hierarchy is validated; missing/extra selected frames reject',async()=>{const rows=await inventory('work/g678-shared-page-factory/g678-nms-l01-p044-visual-slice-v1');validateAssetSelection(rows);assert.throws(()=>validateAssetSelection(rows.filter(r=>!r.path.endsWith('/312.svg'))));assert.throws(()=>validateAssetSelection([...rows,{path:'main-svg/DefineSprite_293/313.svg'}]));});

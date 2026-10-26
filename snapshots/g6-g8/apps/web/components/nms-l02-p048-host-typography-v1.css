@@ -1,0 +1,61 @@
+/* Bounded P048 host correction: textual audit tools must accommodate enlarged text. */
+[data-p048-lesson-host] .lesson-shell2[data-modern-control-presentation="true"] .lesson-shell2__modern-toolbar > button:is([data-responsive-focus-key="key-terms"],[data-responsive-focus-key="rewind"],[data-responsive-focus-key="forward"]) {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  min-width: 0;
+  height: auto;
+  min-height: 44px;
+  flex: 0 1 auto;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+  padding: .5rem .75rem;
+}
+[data-p048-lesson-host] .lesson-shell2[data-modern-control-presentation="true"] .lesson-shell2__modern-timeline {
+  min-width: 0;
+  max-width: 100%;
+  height: auto;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+[data-p048-lesson-host] .lesson-shell2[data-modern-control-presentation="true"] .lesson-shell2__modern-timeline > span {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+
+@media (max-width: 680px) {
+  [data-p048-lesson-host] .lesson-shell2[data-modern-control-presentation="true"] .lesson-shell2__modern-toolbar > button:is([data-responsive-focus-key="key-terms"],[data-responsive-focus-key="rewind"],[data-responsive-focus-key="forward"]) {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
+
+/* Native lesson text must follow the reader's root font size. */
+[data-p048-lesson-host] [data-source-decimal-runtime] {
+  font-size: 1rem;
+}
+/* Wrap enlarged controls by their real size, without fixed grid tracks. */
+@media (max-width: 680px) {
+  [data-p048-lesson-host] .lesson-shell2[data-modern-control-presentation="true"] .lesson-shell2__modern-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+  }
+  [data-p048-lesson-host] .lesson-shell2[data-modern-control-presentation="true"] .lesson-shell2__modern-toolbar > * {
+    flex: 0 0 auto;
+    max-width: 100%;
+    grid-column: auto;
+    grid-row: auto;
+  }
+  [data-p048-lesson-host] .lesson-shell2[data-modern-control-presentation="true"] .lesson-shell2__modern-toolbar > button:is([data-responsive-focus-key="map"], [data-responsive-focus-key="help"], [data-responsive-focus-key="exit"]) {
+    width: auto;
+    min-width: 44px;
+    padding: .5rem;
+  }
+}

@@ -13,6 +13,8 @@ import {flushSync} from "react-dom";
 import type { AnimationRendererProps, RendererPlaybackReport } from "../contract";
 import { bridgeHostCall, createHfrGlossaryRelease, resumeHfrGlossarySource, type HfrGlossaryRelease, type HfrBridgeAction } from "./host-bridge";
 import { HfrPlayer } from "./player";
+import {createDatL3FeedbackHost} from "./dat-l03-feedback-host";
+import {isDatL3FeedbackSource} from "./dat-l03-feedback-source-binding";
 import {ButtonObj, MovieClip, type Runtime, type DisplayObject} from "./display";
 import {LessonRuntime} from "./lesson-runtime";
 import {assertHfrMetaMatchesData} from "./meta";
@@ -122,6 +124,7 @@ function DefaultHfrRenderer({
   const isP009 = meta.key === P009.animationId;
   const isP010 = meta.key === P010.animationId;
   const isPractice=isP009||isP010;
+  const isDatFeedback = isDatL3FeedbackSource(meta.key, meta.sourceSha256);
   const [status, setStatus] = useState<LoadStatus>("loading");
   const nativeProseHost = useRef<HTMLDivElement>(null);
   const nativeLabelsHost = useRef<HTMLDivElement>(null);
@@ -160,6 +163,7 @@ function DefaultHfrRenderer({
       nativeText?.sourceDecisions, nativeText?.frameDomain]);
     const flags = { activity: false, lessonFinished: false };
     let practice:P009Product|P010Product|null = null;
+    let datFeedback: ReturnType<typeof createDatL3FeedbackHost> = null;
     let lastPracticeKey = "";
     let projectedPractice:PracticeNativeFrame|null=null;
     let lastReport = "";
@@ -206,13 +210,15 @@ function DefaultHfrRenderer({
     function executeGlossary(runtime: Runtime, control: HfrNativeGlossaryControl | HfrCanvasGlossaryControl, trigger: HTMLElement,
       point: readonly [number, number] | null, releaseSource: () => void): void {
       const button = control.liveButton;
+      const clip = "sourceTimeline" in control ? control.sourceTimeline : button.parentClip;
       if (disposed || playerRef.current !== player || !lease || !isPageSessionCurrent(lease) || player.rt !== runtime ||
           document.hidden || pendingGlossary || !trigger.isConnected ||
           !(button instanceof ButtonObj) || button.rt !== runtime || !runtime.allObjects().includes(button) || !runtime.isClickable(button) ||
-          !(button.parentClip instanceof MovieClip) || button.parentClip.charId !== meta.progressTimeline) return;
+          !(clip instanceof MovieClip) || clip.rt !== runtime || clip.removed ||
+          !runtime.allObjects().includes(clip) || clip.charId !== meta.progressTimeline) return;
       const release = createHfrGlossaryRelease(meta, control, runtime.tickCount);
       if (!release) return;
-      const clip = button.parentClip, held = glossaryHold.current;
+      const held = glossaryHold.current;
       if (held && (held.player !== player || held.runtime !== runtime || held.clip !== clip || held.frame !== clip.frame)) return;
       const resumeSource = held?.resumeSource ?? clip.playing, errorsBefore = runtime.errors.length;
       const pending = {release, action: null as HfrBridgeAction | null};
@@ -259,6 +265,17 @@ function DefaultHfrRenderer({
       return practice!.mainGlossary().some(i=>i.button===button) || view.choices.some(i=>i.button===button) || view.feedback?.close.button===button ? "allowed" : "blocked";
     }
     const player = new HfrPlayer(canvas, {
+      ...(isDatFeedback ? {
+        onRuntimeActivated: (runtime: Runtime, actualDataSha256: string) => {
+          datFeedback?.dispose();
+          datFeedback = createDatL3FeedbackHost(runtime, {
+            validatedDataSha256: actualDataSha256, seed: effectiveSeed,
+            isCurrent: () => !disposed && playerRef.current === player && Boolean(lease && isPageSessionCurrent(lease)) && player.rt === runtime,
+            onRequest: request => live.current.onLessonHostRequest?.(request),
+          });
+        },
+        onSourceTick: () => datFeedback?.afterSourceUpdate(),
+      } : {}),
       ...(isPractice ? {onRuntimeActivated:(runtime:Runtime,actualDataSha256:string)=>{
         if(meta.completionMode!=="activity" || !lease)throw Error("P009_ACTIVITY_RUNTIME_REQUIRED");
         const options={validatedDataSha256:actualDataSha256,seed:lease.seed,onRequest:(request:import("../lesson-host-contract").LessonHostRequest)=>live.current.onLessonHostRequest?.(request)};
@@ -294,6 +311,7 @@ function DefaultHfrRenderer({
         if(isPractice && practiceRef.current)setPracticeView(practiceRef.current.view(nativeIdentityRef.current));
         for (const host of [nativeProseHost.current, nativeLabelsHost.current]) if (host) host.style.visibility = "hidden";
         setNativeFrame(null);
+        datFeedback?.dispose();datFeedback=null;
         practice?.dispose();practiceRef.current=null;setPracticeView(null);
         setFailureCode(hfrSessionFailureCode(error));
         setStatus("failed");
@@ -435,13 +453,14 @@ function DefaultHfrRenderer({
       if (!live.current.paused && !live.current.reducedMotion && !document.hidden) player.start();
       report();
     })().catch((error: unknown) => {
-      if (!disposed) {practice?.dispose(); if(isPractice){practiceRef.current=null;setPracticeView(null);player.destroy();} setFailureCode(hfrSessionFailureCode(error)); setStatus("failed");}
+      if (!disposed) {datFeedback?.dispose();datFeedback=null;practice?.dispose(); if(isPractice){practiceRef.current=null;setPracticeView(null);player.destroy();} setFailureCode(hfrSessionFailureCode(error)); setStatus("failed");}
     });
     const resize = new ResizeObserver(resizeCanvasAndNativePlane);
     resize.observe(canvas);
     return () => {
       disposed = true;
       activateGlossary.current = null;
+      datFeedback?.dispose();datFeedback=null;
       activatePractice.current=null;committedPractice.current=null;practice?.dispose();
       if(practiceRef.current===practice)practiceRef.current=null;
       glossaryHold.current = null;
@@ -453,7 +472,7 @@ function DefaultHfrRenderer({
       player.destroy();
       if (playerRef.current === player) playerRef.current = null;
     };
-  }, [audioEnabled, meta, page, effectiveSeed, replay, rendererLessonSession, nativeText, reducedMotionState, isPractice,isP010]);
+  }, [audioEnabled, meta, page, effectiveSeed, replay, rendererLessonSession, nativeText, reducedMotionState, isPractice,isP010,isDatFeedback]);
 
   const resumeHeldSource = (hold:NonNullable<typeof glossaryHold.current>) => {
     const practice=practiceRef.current;

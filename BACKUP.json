@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "backupDateAsiaTaipei": "2026-10-24",
+  "backupDateAsiaTaipei": "2026-10-26",
   "repository": "HUDongpin/help-math-2-0-workbench",
-  "branch": "codex/g3-g8-animation-backup-20261024",
-  "scope": "Converted G3-G5 animations and complete G6-G8 shared animation corpus, with a separate historical HFR shell variant",
-  "fileCount": 54856,
-  "logicalBytes": 16587770410,
-  "uniquePayloadSha256Count": 27611,
-  "uniquePayloadBytes": 11397382826,
+  "branch": "codex/g678-v622-incremental-backup-20261026",
+  "scope": "Incremental v622 G6-G8 engineering backup; inherited G3-G5 and historical HFR variant are byte-for-byte unchanged",
+  "fileCount": 59895,
+  "logicalBytes": 16667983226,
+  "uniquePayloadSha256Count": 32525,
+  "uniquePayloadBytes": 11477568506,
   "snapshots": [
     {
       "lane": "g3-g5",
@@ -22,12 +22,12 @@
     {
       "lane": "g6-g8",
       "sourceBranch": "codex/g678-current-js-calibration",
-      "sourceHead": "0111cf5a9d0f0e1bf16de23b51d3a300a14a95f2",
-      "fileCount": 42508,
-      "logicalBytes": 4582031465,
-      "capturedAt": "2026-10-24T04:03:27.318755+00:00",
+      "sourceHead": "33015695ed210760dba835a645a040bd4ea1892c",
+      "fileCount": 47547,
+      "logicalBytes": 4662244281,
+      "capturedAt": "2026-10-26T01:51:35.349836+00:00",
       "inventoryPath": "metadata/g6-g8-files.json",
-      "inventorySha256": "2a926dbdc5908a50475435a80af8c6f21e1b82acf63a97ed914956101f3bb814"
+      "inventorySha256": "8397bc814020da24a5fc5d4e8a80b4dc01fb2a2c83c4beeb45f8ea49e4266581"
     },
     {
       "lane": "hfr-shell-variant",
@@ -45,7 +45,23 @@
   "credentialsIncluded": false,
   "automatedDeploymentEnabled": false,
   "transferValidation": "Use verify-backup.py to check each payload size and SHA-256.",
-  "frozenAtUtc": "2026-10-24T04:04:02.242194+00:00",
-  "g678HostIndexAtCapture": "catalog/g678-admission-v1/index-v613.json",
-  "g678HostSourceLimit": "Original source-v1 Flash/XML inputs referenced by the host remain excluded, as do historical proof chains."
+  "frozenAtUtc": "2026-10-26T01:55:03.034696+00:00",
+  "g678HostIndexAtCapture": "catalog/g678-admission-v1/index-v622.json",
+  "g678HostSourceLimit": "Original source-v1 Flash/XML inputs referenced by the host remain excluded, as do historical proof chains.",
+  "incrementalFrom": {
+    "branch": "codex/g3-g8-animation-backup-20261024",
+    "commit": "380156b57eb276dcc074c1226616f8ed779035e5",
+    "addedG678Files": 5039,
+    "modifiedG678Files": 21,
+    "deletedFiles": 0,
+    "addedLogicalBytes": 80030937,
+    "modifiedFileLogicalBytes": 1045679,
+    "diffInventory": "metadata/g6-g8-v622-delta.json"
+  },
+  "sourceReconstruction": {
+    "pinnedLocalSourceCommit": "33015695ed210760dba835a645a040bd4ea1892c",
+    "planSha256": "0d412cc2e5735ffe1e71fcb0c4b389739c3483b5e9ff6fcef98e07baffb5014e",
+    "method": "Old public snapshot + exact pinned v622 plan blobs + reviewed pin-matched shared dependencies. Development repository history is not imported. Post-v622 working-tree changes and unactivated v623 are excluded."
+  },
+  "runtimeValidation": "No new application build or course playback is claimed by this backup. See metadata/g6-g8-v622-state.json."
 }

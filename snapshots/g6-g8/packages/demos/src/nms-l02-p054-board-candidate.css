@@ -1,0 +1,48 @@
+.p054-board {
+  max-width: 64rem; margin-inline: auto; padding: clamp(1rem, 3vw, 2rem);
+  border: 1px solid #b8cbd8; border-radius: 1rem;
+  background: #f5fbff; color: #17324d;
+  font: 400 1rem/1.5 "HELP Math Nunito Sans", system-ui, sans-serif;
+}
+.p054-board h2 { font-family: "HELP Math Fredoka", system-ui, sans-serif; line-height: 1.2; }
+.p054-board__score { font-weight: 800; font-variant-numeric: tabular-nums; }
+.p054-board__audio-status { min-height: 1.5rem; }
+.p054-board__cards {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(.5rem, 1.5vw, 1rem);
+}
+.p054-board__card {
+  min-width: 0; min-height: 5rem; padding: .5rem;
+  border: 2px solid #6b8da4; border-radius: .7rem;
+  background: #fff; color: inherit; font: 700 clamp(1.15rem, 2.2vw, 1.7rem)/1.2 "HELP Math Nunito Sans", system-ui, sans-serif;
+  cursor: pointer;
+}
+.p054-board__card[aria-pressed="true"] { border-color: #155e75; background: #dff3f8; }
+.p054-board__card:disabled { cursor: default; }
+.p054-board__card[data-p054-matched="true"] { background: #e5f4ec; border-color: #5d8a70; }
+.p054-board__card[data-p054-matched="true"] { padding: 0; overflow: hidden; }
+.p054-board__card[data-p054-matched="true"] img { display: block; width: 100%; height: 100%; min-height: 5rem; object-fit: fill; }
+.p054-board__card math { font-size: 1.2em; }
+.p054-board button:focus-visible { outline: 3px solid #155e75; outline-offset: 3px; }
+.p054-board__feedback { margin-block: 1rem; padding: .75rem 1rem; border-inline-start: .3rem solid #155e75; background: #e8f5f9; }
+.p054-board__feedback p { margin-block: 0 .5rem; }
+.p054-board__feedback button, .p054-board__tools button, .p054-board__help button,
+.p054-board__audio-retry {
+  min-height: 2.75rem; border: 2px solid #155e75; border-radius: .5rem;
+  padding: .4rem .8rem; background: #155e75; color: #fff;
+  font: inherit; font-weight: 700; cursor: pointer;
+}
+.p054-board__tools { display: flex; flex-wrap: wrap; gap: .75rem; margin-block-start: 1rem; }
+.p054-board__help {
+  width: min(34rem, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem);
+  overflow-y: auto; box-sizing: border-box; padding: clamp(1rem, 3vw, 1.5rem);
+  border: 2px solid #155e75; border-radius: .75rem;
+  background: #fff; color: #17324d;
+  font: 400 1rem/1.5 "HELP Math Nunito Sans", system-ui, sans-serif;
+}
+.p054-board__help::backdrop { background: rgb(12 32 49 / 68%); }
+.p054-board__help h3 { margin-block: 0 1rem; }
+.p054-board__help p { margin-block: 0 1rem; }
+@media (max-width: 38rem) {
+  .p054-board__cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

@@ -1,0 +1,101 @@
+/* Bounded P051 host correction: textual audit tools must accommodate enlarged text. */
+[data-p051-lesson-host] .lesson-shell2[data-modern-control-presentation="true"] .lesson-shell2__modern-toolbar > button:is([data-responsive-focus-key="key-terms"],[data-responsive-focus-key="rewind"],[data-responsive-focus-key="forward"]) {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  min-width: 0;
+  height: auto;
+  min-height: 44px;
+  flex: 0 1 auto;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+  padding: .5rem .75rem;
+}
+[data-p051-lesson-host] .lesson-shell2[data-modern-control-presentation="true"] .lesson-shell2__modern-timeline {
+  min-width: 0;
+  max-width: 100%;
+  height: auto;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+[data-p051-lesson-host] .lesson-shell2[data-modern-control-presentation="true"] .lesson-shell2__modern-timeline > span {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
+}
+
+@media (max-width: 680px) {
+  [data-p051-lesson-host] .lesson-shell2[data-modern-control-presentation="true"] .lesson-shell2__modern-toolbar > button:is([data-responsive-focus-key="key-terms"],[data-responsive-focus-key="rewind"],[data-responsive-focus-key="forward"]) {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
+
+/* Native lesson text must follow the reader's root font size. */
+/* The glossary is portaled to body, outside the lesson host subtree. */
+body:has([data-p051-lesson-host]) .p051-glossary-dialog {
+  font-size: 1rem;
+}
+[data-p051-lesson-host] [data-source-fraction-match-runtime] {
+  font-size: 1rem;
+  container: p051-lesson / inline-size;
+}
+
+/* Respond to actual teaching space, including the tablet sidebar and
+   reader-enlarged rem units, rather than only the browser viewport. */
+@container p051-lesson (max-width: 36rem) {
+  [data-p051-lesson-host] .p051-intro-layout,
+  [data-p051-lesson-host] .p051-match-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  [data-p051-lesson-host] .p051-intro-decimals {
+    padding-top: 0;
+  }
+  [data-p051-lesson-host] .p051-choices {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 5rem), 1fr));
+  }
+}
+
+/* The runtime wrapper and activity both carry p051-practice. Only the
+   activity owns content padding; stacked host padding must not consume
+   the mathematical table at 320px with enlarged text. */
+[data-p051-lesson-host] .runtime-shell > .p051-practice {
+  padding: 0;
+}
+@media (max-width: 600px) {
+  [data-p051-lesson-host] .lesson-shell2[data-host-presentation='modern-wide'] .lesson-shell2__learning-column {
+    padding-inline: 4px;
+  }
+  [data-p051-lesson-host] .lesson-shell2 .lesson-shell2__legacy-stage:has(.runtime-shell[data-lesson-presentation='modern-text-v1']) > .lesson-shell2__stage {
+    padding-inline: 4px;
+  }
+  [data-p051-lesson-host] .p051-intro,
+  [data-p051-lesson-host] section.p051-practice {
+    padding-inline: 4px;
+  }
+}
+/* Wrap enlarged controls by their real size, without fixed grid tracks. */
+@media (max-width: 680px) {
+  [data-p051-lesson-host] .lesson-shell2[data-modern-control-presentation="true"] .lesson-shell2__modern-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+  }
+  [data-p051-lesson-host] .lesson-shell2[data-modern-control-presentation="true"] .lesson-shell2__modern-toolbar > * {
+    flex: 0 0 auto;
+    max-width: 100%;
+    grid-column: auto;
+    grid-row: auto;
+  }
+  [data-p051-lesson-host] .lesson-shell2[data-modern-control-presentation="true"] .lesson-shell2__modern-toolbar > button:is([data-responsive-focus-key="map"], [data-responsive-focus-key="help"], [data-responsive-focus-key="exit"]) {
+    width: auto;
+    min-width: 44px;
+    padding: .5rem;
+  }
+}

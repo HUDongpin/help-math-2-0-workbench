@@ -3,13 +3,14 @@ import {P009_NATIVE} from '../../../packages/demos/src/hfr/nms-l11-p009-native-b
 import {P010_NATIVE} from '../../../packages/demos/src/hfr/nms-l11-p010-native-binding';
 import {P014_META} from '../../../packages/demos/src/hfr/nms-l11-p014-meta';
 import {NMS_L07_CANVAS_GLOSSARY_SOURCE_BINDINGS} from '../../../packages/demos/src/hfr/nms-l07-canvas-glossary-source-binding';
+import {DAT_L03_CANVAS_GLOSSARY_SOURCE_BINDINGS} from '../../../packages/demos/src/hfr/dat-l03-canvas-glossary-source-binding';
 import type {HfrOwnGlossarySource} from './hfr-p009-source-html-glossary';
 
 type SourceRequest = Readonly<{dictionaryEntryId: string; sourceKeyAttribute?: string}>;
 /** Pages whose packet glossary must equal their own reviewed source binding exactly. */
 const HFR_REVIEWED_OWN_GLOSSARIES: readonly Readonly<{animationId: string; sourceSha256: string; sourceGlossary: unknown; sourceHtmlLinks?: unknown}>[] = [
   P009_NATIVE, P010_NATIVE, {animationId: P014_META.key, sourceSha256: P014_META.sourceSha256, sourceGlossary: P014_META.sourceGlossary},
-  ...Object.values(NMS_L07_CANVAS_GLOSSARY_SOURCE_BINDINGS).map(binding => ({animationId: binding.animationId,
+  ...Object.values({...NMS_L07_CANVAS_GLOSSARY_SOURCE_BINDINGS, ...DAT_L03_CANVAS_GLOSSARY_SOURCE_BINDINGS}).map(binding => ({animationId: binding.animationId,
     sourceSha256: binding.sourceSwfSha256, sourceGlossary: binding.sourceGlossary})),
 ];
 

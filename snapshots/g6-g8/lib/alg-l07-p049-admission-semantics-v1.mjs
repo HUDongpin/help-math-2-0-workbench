@@ -1,0 +1,1 @@
+import{validateFixedExitEquationGraphAdmission}from'./alg-l07-fixed-exit-equation-graph-admission-v1.mjs';export const P049_ID='shared-alg001-l07-p049',P049_CALIBRATION='g678-alg-l07-p049-current-js-20261005-v1';export function validateP049Admission(root,packet,registration){return validateFixedExitEquationGraphAdmission(root,packet,registration,49,P049_CALIBRATION);}

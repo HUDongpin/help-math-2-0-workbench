@@ -1,0 +1,5 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import test from 'node:test';
+import {fixture} from './g678-technical-assessor-fixture-v1.mjs';import {assessPage} from './g678-technical-assessor-v1.mjs';
+function setup(t){const root=fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(),'pin-alias-')));t.after(()=>fs.rmSync(root,{recursive:true}));return fixture(root);}
+test('relative and absolute references to the same hash-bound physical artifact are not contradictory',t=>{const f=setup(t);f.contract.terminal.sourcePin={...f.contract.source,path:path.join(f.root,f.contract.source.path)};f.saveContract();const r=assessPage(f);assert.equal(r.status,'pass',JSON.stringify(r.issues));});
+test('same physical path with a different hash still fails',t=>{const f=setup(t);f.contract.terminal.sourcePin={...f.contract.source,path:path.join(f.root,f.contract.source.path),sha256:'f'.repeat(64)};f.saveContract();const r=assessPage(f);assert(r.issues.some(i=>i.code==='conflicting-artifact-pins'));});

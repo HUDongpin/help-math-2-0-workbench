@@ -1,0 +1,26 @@
+/* Matching is normal-flow DOM, not an authored 4:3 canvas. Limit this rule
+   to the new P054 runtime so predecessor canvas and quiz states are retained. */
+[data-p054-lesson-host] .lesson-shell2[data-host-presentation='modern-wide']
+ .lesson-shell2__legacy-stage:has([data-p054-runtime-status='contextual-candidate']) {
+  aspect-ratio: auto;
+  height: auto;
+  max-height: none;
+  max-width: min(100%, 64rem);
+  width: 100%;
+  overflow: visible;
+}
+[data-p054-lesson-host] .lesson-shell2[data-host-presentation='modern-wide']
+ .lesson-shell2__legacy-stage:has([data-p054-runtime-status='contextual-candidate']) > .lesson-shell2__stage {
+  aspect-ratio: auto;
+  height: auto;
+  inset: auto;
+  max-height: none;
+  position: relative;
+  overflow: visible;
+}
+[data-p054-runtime-status='contextual-candidate'] {width:100%;min-width:0;overflow-wrap:anywhere;}
+[data-p054-runtime-status='contextual-candidate'] .p054-board {box-sizing:border-box;}
+[data-p054-runtime-status='contextual-candidate'] > .p054-board > button {
+  min-height:44px;border:2px solid #155e75;border-radius:.5rem;padding:.4rem .8rem;
+  background:#155e75;color:#fff;font:inherit;font-weight:700;cursor:pointer;
+}

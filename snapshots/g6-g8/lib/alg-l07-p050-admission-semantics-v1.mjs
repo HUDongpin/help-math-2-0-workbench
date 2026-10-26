@@ -1,0 +1,1 @@
+import{validateFixedExitCircleTableAdmission}from'./alg-l07-fixed-exit-circle-table-admission-v1.mjs';export const P050_ID='shared-alg001-l07-p050',P050_CALIBRATION='g678-alg-l07-p050-current-js-20261005-v1';export function validateP050Admission(root,packet,registration){return validateFixedExitCircleTableAdmission(root,packet,registration,50,P050_CALIBRATION);}

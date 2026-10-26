@@ -1,0 +1,41 @@
+import {resolveG678PhysicalPath} from '../../../lib/g678-life-root-binding-v1.mjs';
+import 'server-only';
+import {createHash} from 'node:crypto';
+import {lstatSync, readFileSync, realpathSync} from 'node:fs';
+import path from 'node:path';
+import {getWorkspaceRoot} from './catalog';
+
+const SOURCE_ROOT = '/Volumes/WestWorld/HELP MATH Related Files/AWS Grade-Classified Courseware';
+const RUNTIME_SHA = 'b2fd1788ce5bab5efab167bf303608da66621ead66f6d276979fb09558b39ddc';
+
+function readPinned(file: string, size: number, hash: string): Buffer {
+  if (realpathSync(file) !== file) throw Error('P006 physical path required');
+  const before = lstatSync(file, {bigint: true});
+  if (!before.isFile() || before.nlink !== 1n || before.size !== BigInt(size)) {
+    throw Error('P006 ordinary bounded file required');
+  }
+  const bytes = readFileSync(file), after = lstatSync(file, {bigint: true});
+  if (before.dev !== after.dev || before.ino !== after.ino ||
+      before.mtimeNs !== after.mtimeNs || before.size !== after.size ||
+      before.nlink !== after.nlink || before.mode !== after.mode ||
+      bytes.length !== size || createHash('sha256').update(bytes).digest('hex') !== hash) {
+    throw Error('P006 source/candidate drift');
+  }
+  return bytes;
+}
+
+/** Local engineering bytes only. No registration, publication, or audio claim. */
+export function algL12P006Canvas() {
+  const sourceRoot = process.env.HELP_MATH_G678_SOURCE_ROOT === SOURCE_ROOT
+    ? SOURCE_ROOT : resolveG678PhysicalPath(SOURCE_ROOT);
+  if (process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV ||
+      process.env.HELP_MATH_G678_SOURCE_ROOT !== sourceRoot ||
+      realpathSync(sourceRoot) !== sourceRoot ||
+      !lstatSync(sourceRoot).isDirectory()) throw Error('P006 local source required');
+  readPinned(path.join(sourceRoot, 'G6-G8-shared/ALG001/L12/RW/L12RW06.swf'),
+    708053, '933f1f6db59435e882c1bf6e9392259fc1d28c0974a0a4c6cebc9bcc7a5d46b6');
+  const bytes = readPinned(path.join(getWorkspaceRoot(),
+    'migrations/shared-alg001-l12-p006/candidate-v2/canvas-renderer.js'),
+  11507597, RUNTIME_SHA);
+  return {bytes, sha256: RUNTIME_SHA};
+}

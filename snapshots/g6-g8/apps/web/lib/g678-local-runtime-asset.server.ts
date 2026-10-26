@@ -13,6 +13,18 @@ import {
   type G678PreviewEnvironment,
 } from './g678-preview-policy';
 
+type CanvasRuntimeRegistry = Readonly<{
+  sha256: string;
+  registry: Readonly<{
+    calibrations: readonly Readonly<{
+      entries: readonly Readonly<{
+        key: string;
+        artifacts: Readonly<{runtime?: Pick<G678LocalRuntimeAssetBinding, 'path' | 'bytes' | 'sha256'>}>;
+      }>[];
+    }>[];
+  }>;
+}>;
+
 export interface G678ResolvedLocalRuntimeAsset {
   readonly bytes: Buffer;
   readonly sha256: string;
@@ -135,7 +147,7 @@ export async function resolveG678CurrentCanvasRuntime(
   const bindings = readG678CourseRuntimeBindings(workspaceRoot, [animationId]);
   const selected = bindings.rows[0];
   if (selected?.status !== 'ready') return undefined;
-  const transaction = readRegistryTransaction(workspaceRoot);
+  const transaction: CanvasRuntimeRegistry = readRegistryTransaction(workspaceRoot);
   if (transaction.sha256 !== bindings.registry.pin?.sha256) return undefined;
   const matches = transaction.registry.calibrations.flatMap(calibration => calibration.entries)
     .filter(entry => entry.key === animationId);

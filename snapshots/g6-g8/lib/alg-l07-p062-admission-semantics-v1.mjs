@@ -1,0 +1,1 @@
+import{validateP062Candidate}from'../scripts/lib/g678-alg-l07-p062-candidate-v1.mjs';export const P062_ID='shared-alg001-l07-p062',P062_CALIBRATION='g678-alg-l07-p062-current-js-20261006-v1';export function validateP062Admission(root,packet,registration){return validateP062Candidate(root,packet,registration,P062_CALIBRATION);}

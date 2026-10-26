@@ -1,0 +1,944 @@
+/** Source-specific P057 DOM admission. No original-runtime or audio acceptance effect. */
+import assert from 'node:assert/strict';
+export const P057_ADMISSION_ID='shared-nms002-l02-p057';
+export const P057_ADMISSION_CALIBRATION='g678-nms-l02-p057-conditional-host-current-js-v1';
+export const P057_SOURCE_ROOT='/Volumes/WestWorld/HELP MATH Related Files/AWS Grade-Classified Courseware';
+export const P057_SOURCE={
+  "path": "G6-G8-shared/NMS002/L2/TS/L2TS04.swf",
+  "bytes": 137055,
+  "sha256": "9cc456a0af745dc31240b3a6d805e8e115c1c1c2725f851fca8e907a767820aa"
+};
+export const P057_XML={
+  "path": "G6-G8-shared/NMS002/L2/index.xml",
+  "bytes": 12845,
+  "sha256": "550aee4286e8a701caf3dc58360f709a606561db8b766057ac36720833d7ff61"
+};
+export const P057_RUN={
+  "path": "work/g678-shared-page-factory/g678-nms-l02-p057-conditional-host-current-js-v1/run-manifest.json",
+  "bytes": 30055,
+  "sha256": "6b83b4c5dcf1b2d137e6c0b1af1165702efbf690430558bec406e8715071d1b3"
+};
+export const P057_MEMBER={
+  "path": "work/g678-shared-page-factory/g678-nms-l02-p057-conditional-host-current-js-v1/members/shared-nms002-l02-p057/member-manifest.json",
+  "bytes": 27123,
+  "sha256": "743592921f6f12eadde5f9a6ae0ad436f639957cc008b05066e003f4d4a5e3bd"
+};
+export const P057_CANONICAL_MODULE={
+  "path": "packages/demos/src/modules/shared-nms002-l02-p057.tsx",
+  "bytes": 1431,
+  "sha256": "922b3d0b98ed257ac8b086a32a7899db5f51cecb3f06b7f8824617099c9f704d"
+};
+export const P057_CANONICAL_TIMELINE={
+  "path": "packages/demos/src/timelines/shared-nms002-l02-p057.ts",
+  "bytes": 2662,
+  "sha256": "b715c374c27fc0193f5d51b918cee78dd6ca954dd141837f48aa61b96c8479af"
+};
+export const P057_MAIN_AUDIO={
+  "path": "output/nms-l02-p057-audio-20260927/embedded-source-stream-v1.mp3",
+  "bytes": 134290,
+  "sha256": "c87ebf7d1117a616ebddd6b3530a7b19c50dfd885bc5e2734817657da026c2dc"
+};
+export const P057_RAW_AUDIO={
+  "path": "output/nms-l02-p057-audio-20260927/raw-index-v1.json",
+  "bytes": 196972,
+  "sha256": "fb0e0bd403255a7a98fd46c5175f48747f7c840b4c5af08c74c53bbf2d64af71"
+};
+export const P057_GLOSSARY_CANDIDATE={
+  "path": "output/nms-l02-p057-glossary-20260927/conditional-bank.json",
+  "bytes": 12794,
+  "sha256": "b651a5d063e4c0c5c9a6f6b73543a643a3af2f5a5e27c8ac51eb6d705da9c365"
+};
+export const P057_GLOSSARY_RECEIPT={
+  "path": "output/nms-l02-p057-glossary-20260927/receipt.json",
+  "bytes": 723,
+  "sha256": "18d9f328e6e2bda55dde822962c92f4ae726489fb17ea9f7ec133260b329b37f"
+};
+export const P057_GLOSSARY_PRODUCT={
+  "path": "packages/demos/src/generated/nms-l02-p057-terms-v1.ts",
+  "bytes": 8325,
+  "sha256": "177cbcdef722656206b29da8a31a643ef6a3555c13decb5d21ff5b7db2285ee7"
+};
+export const P057_SOURCE_AUDIT={
+  "path": "output/nms-l02-p057-source-20260927/source-audit.json",
+  "bytes": 39609,
+  "sha256": "4b4ab7a0f1ddb299703add4117036f31b672b309a62bd912804959f81fc88345"
+};
+export const P057_RUN_INPUTS=[
+  {
+    "path": "output/nms-l02-p057-audio-20260927/AUDIO_SOURCE_2026-09-27.md",
+    "bytes": 1267,
+    "sha256": "dbe2921181ceb6f4b70f98ef2ea943f394ababa6f027789bc49234e74e8c38c0"
+  },
+  {
+    "path": "output/nms-l02-p057-audio-20260927/embedded-source-stream-v1.mp3",
+    "bytes": 134290,
+    "sha256": "c87ebf7d1117a616ebddd6b3530a7b19c50dfd885bc5e2734817657da026c2dc"
+  },
+  {
+    "path": "output/nms-l02-p057-audio-20260927/raw-index-v1.json",
+    "bytes": 196972,
+    "sha256": "fb0e0bd403255a7a98fd46c5175f48747f7c840b4c5af08c74c53bbf2d64af71"
+  },
+  {
+    "path": "output/nms-l02-p057-glossary-20260927/conditional-bank.json",
+    "bytes": 12794,
+    "sha256": "b651a5d063e4c0c5c9a6f6b73543a643a3af2f5a5e27c8ac51eb6d705da9c365"
+  },
+  {
+    "path": "output/nms-l02-p057-glossary-20260927/receipt.json",
+    "bytes": 723,
+    "sha256": "18d9f328e6e2bda55dde822962c92f4ae726489fb17ea9f7ec133260b329b37f"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/embedded-source-stream.mp3",
+    "bytes": 134290,
+    "sha256": "c87ebf7d1117a616ebddd6b3530a7b19c50dfd885bc5e2734817657da026c2dc"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/scripts/DefineButton2_17/BUTTONCONDACTION on(release).as",
+    "bytes": 120,
+    "sha256": "f76c13ce6f90e077f716580e1f8349b40adcf7e54959e5a380af1c619bdd5be8"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/scripts/DefineButton2_18/BUTTONCONDACTION on(release).as",
+    "bytes": 122,
+    "sha256": "0e7c1b6fc97a014da68ee2763e0ec61e72034709c5d9579d0d4cdfec2ef245e4"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/scripts/DefineButton2_25/BUTTONCONDACTION on(release).as",
+    "bytes": 125,
+    "sha256": "eaef840530fbeb0b311d1fb387523713acd1995fbb89f56dc989f87fe8a5d723"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/scripts/DefineButton2_60/BUTTONCONDACTION on(release).as",
+    "bytes": 123,
+    "sha256": "0b89848d79d735127115901984f60c2c8c2996f9561d150573068e496601ed4b"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/scripts/DefineButton2_61/BUTTONCONDACTION on(release).as",
+    "bytes": 122,
+    "sha256": "3439addefa5360b32ee5f1b6e103a76b12db1f1681a3584ac3dff4ed482355db"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/scripts/DefineButton2_62/BUTTONCONDACTION on(release).as",
+    "bytes": 120,
+    "sha256": "ebe5121cf5eee9349a2921629ad89ffa40819e4e6ee707d9bea8a07142282dbd"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/scripts/DefineButton2_63/BUTTONCONDACTION on(release).as",
+    "bytes": 142,
+    "sha256": "97018ac8502cfcf22006ea74db1fc42dfe334964dd810b5b30785c1361ff0476"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/scripts/frame_1/DoAction.as",
+    "bytes": 54,
+    "sha256": "61b33dd1d9f7d1743285a20f2ea2e2c268d0436675891106f6c83d62e4b7bdbf"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/scripts/frame_6/DoAction.as",
+    "bytes": 9,
+    "sha256": "3271a793e3f9600314c6b0facc05023c4f3ed09c116d452966200a5d04735655"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/11.txt",
+    "bytes": 2,
+    "sha256": "4b3ad3a092aaa00fb3f57db445445d38b2085adf2fb98b73015b5a160fd31775"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/12.txt",
+    "bytes": 50,
+    "sha256": "c19f7ada70a335b4a1b71b4d737f4168bb491d822a05a4bd103d55272a382098"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/14.txt",
+    "bytes": 93,
+    "sha256": "ccd9623f262d30faa83c5b5e42ad86d658899db1307211ed4a4cba65621ee679"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/15.txt",
+    "bytes": 1,
+    "sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/19.txt",
+    "bytes": 18,
+    "sha256": "4e6dfb1595690c9487e7dea0deaafa72363cde09f5ce81186f1e4fbdc4205f80"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/20.txt",
+    "bytes": 5,
+    "sha256": "451d387bb28f275b6c072be2166836141decf70d8276f705bda31117c7815d47"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/21.txt",
+    "bytes": 7,
+    "sha256": "47a49356720831b66f38bbe12c06e6cf71a67277b1f5e6a28593e73afde6f226"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/23.txt",
+    "bytes": 46,
+    "sha256": "e1b5115323776d5d0ce87abde1a20bc37fb46700f07d589220ed8b3bc7c9db5e"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/27.txt",
+    "bytes": 1,
+    "sha256": "18ac3e7343f016890c510e93f935261169d9e3f565436429830faf0934f4f8e4"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/28.txt",
+    "bytes": 1,
+    "sha256": "1b16b1df538ba12dc3f97edbb85caa7050d46c148134290feba80f8236c83db9"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/29.txt",
+    "bytes": 1,
+    "sha256": "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/30.txt",
+    "bytes": 1,
+    "sha256": "1b16b1df538ba12dc3f97edbb85caa7050d46c148134290feba80f8236c83db9"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/31.txt",
+    "bytes": 1,
+    "sha256": "65c74c15a686187bb6bbf9958f494fc6b80068034a659a9ad44991b08c58f2d2"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/32.txt",
+    "bytes": 1,
+    "sha256": "de7d1b721a1e0632b7cf04edf5032c8ecffa9f9a08492152b926f1a5a7e765d7"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/33.txt",
+    "bytes": 1,
+    "sha256": "e3b98a4da31a127d4bde6e43033f66ba274cab0eb7eb1c70ec41402bf6273dd8"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/34.txt",
+    "bytes": 1,
+    "sha256": "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/35.txt",
+    "bytes": 1,
+    "sha256": "0bfe935e70c321c7ca3afc75ce0d0ca2f98b5422e008bb31c00c6d7f1f1c0ad6"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/36.txt",
+    "bytes": 1,
+    "sha256": "8e35c2cd3bf6641bdb0e2050b76932cbb2e6034a0ddacc1d9bea82a6ba57f7cf"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/37.txt",
+    "bytes": 1,
+    "sha256": "3f79bb7b435b05321651daefd374cdc681dc06faa65e374e38337b88ca046dea"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/38.txt",
+    "bytes": 1,
+    "sha256": "3f79bb7b435b05321651daefd374cdc681dc06faa65e374e38337b88ca046dea"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/39.txt",
+    "bytes": 1,
+    "sha256": "e3b98a4da31a127d4bde6e43033f66ba274cab0eb7eb1c70ec41402bf6273dd8"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/4.txt",
+    "bytes": 1,
+    "sha256": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/40.txt",
+    "bytes": 1,
+    "sha256": "de7d1b721a1e0632b7cf04edf5032c8ecffa9f9a08492152b926f1a5a7e765d7"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/41.txt",
+    "bytes": 1,
+    "sha256": "454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/42.txt",
+    "bytes": 1,
+    "sha256": "50e721e49c013f00c62cf59f2163542a9d8df02464efeb615d31051b0fddc326"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/43.txt",
+    "bytes": 1,
+    "sha256": "0bfe935e70c321c7ca3afc75ce0d0ca2f98b5422e008bb31c00c6d7f1f1c0ad6"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/44.txt",
+    "bytes": 1,
+    "sha256": "2e7d2c03a9507ae265ecf5b5356885a53393a2029d241394997265a1a25aefc6"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/45.txt",
+    "bytes": 1,
+    "sha256": "148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/46.txt",
+    "bytes": 1,
+    "sha256": "4c94485e0c21ae6c41ce1dfe7b6bfaceea5ab68e40a2476f50208e526f506080"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/47.txt",
+    "bytes": 1,
+    "sha256": "acac86c0e609ca906f632b0e2dacccb2b77d22b0621f20ebece1a4835b93f6f0"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/48.txt",
+    "bytes": 1,
+    "sha256": "65c74c15a686187bb6bbf9958f494fc6b80068034a659a9ad44991b08c58f2d2"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/49.txt",
+    "bytes": 1,
+    "sha256": "043a718774c572bd8a25adbeb1bfcd5c0256ae11cecf9f9c3f925d0e52beaf89"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/5.txt",
+    "bytes": 1,
+    "sha256": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/50.txt",
+    "bytes": 1,
+    "sha256": "454349e422f05297191ead13e21d3db520e5abef52055e4964b82fb213f593a1"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/51.txt",
+    "bytes": 1,
+    "sha256": "148de9c5a7a44d19e56cd9ae1a554bf67847afb0c58f6e12fa29ac7ddfca9940"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/52.txt",
+    "bytes": 1,
+    "sha256": "252f10c83610ebca1a059c0bae8255eba2f95be4d1d7bcfa89d7248a82d9f111"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/53.txt",
+    "bytes": 1,
+    "sha256": "8254c329a92850f6d539dd376f4816ee2764517da5e0235514af433164480d7a"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/54.txt",
+    "bytes": 1,
+    "sha256": "aaa9402664f1a41f40ebbc52c9993eb66aeb366602958fdfaa283b71e64db123"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/55.txt",
+    "bytes": 1,
+    "sha256": "cd0aa9856147b6c5b4ff2b7dfee5da20aa38253099ef1b4a64aced233c9afe29"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/56.txt",
+    "bytes": 1,
+    "sha256": "a1fce4363854ff888cff4b8e7875d600c2682390412a8cf79b37d0b11148b0fa"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/57.txt",
+    "bytes": 1,
+    "sha256": "62c66a7a5dd70c3146618063c344e531e6d4b59e379808443ce962b3abd63c5a"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/59.txt",
+    "bytes": 235,
+    "sha256": "eb854e5c15ecc9f4d0afe31df629fa9972dabfce7b727d1e3a4b1d15f65cd62a"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/6.txt",
+    "bytes": 1,
+    "sha256": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/64.txt",
+    "bytes": 18,
+    "sha256": "5c72cb173a88fe5635da5914b63f025fda2f1e2693d59b9915cc85a6d10dbd42"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/7.txt",
+    "bytes": 1,
+    "sha256": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/8.txt",
+    "bytes": 1,
+    "sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/9.txt",
+    "bytes": 21,
+    "sha256": "982341524fc48dd6ef5fa6204f6fe33a858fb6b992e00de2830c5253d9607814"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/103-on-stage.png",
+    "bytes": 25157,
+    "sha256": "536481d7c8b8f3d8dbac35b217705925e7aeaadc966ec57ae266536e66af6e19"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/266-on-stage.png",
+    "bytes": 25157,
+    "sha256": "8e5784cb027725dc2770f6af9b7af63d76a65bdff36af4f2379c828c3c224d19"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/275-on-stage.png",
+    "bytes": 25934,
+    "sha256": "e208181cded9fc3fc2d7a7b825f00436b1fa8925b409601d72fdcc123f7eb8ab"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/328-on-stage.png",
+    "bytes": 25934,
+    "sha256": "a0dcced8bd1113912026cef2033268214009307c503352db3b30336e236d1440"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/34-on-stage.png",
+    "bytes": 18895,
+    "sha256": "b88fcdee1e795ef83f7871f9cfb6b026753ed95d4b7178a1c7ae0ec1b7196e77"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/35-on-stage.png",
+    "bytes": 18273,
+    "sha256": "8ceda4326e467a2685bbe68bafcbbe52e0e820fd5923313ebfb05eddd34d8a84"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/42-on-stage.png",
+    "bytes": 19086,
+    "sha256": "b23127e5bdf75ba6ec61ed8438375c6185ee06a600158f0fd5ce65b73028fc93"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/43-on-stage.png",
+    "bytes": 18273,
+    "sha256": "8ceda4326e467a2685bbe68bafcbbe52e0e820fd5923313ebfb05eddd34d8a84"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/97-on-stage.png",
+    "bytes": 19750,
+    "sha256": "7f0d5eeca4e0c44bfe237d99b1ea6977d728e30e9c234951787689a93c19b0d3"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/1.png",
+    "bytes": 11432,
+    "sha256": "9a619ba49f3e09adcb3a634ee59dc37b8428814cc4aa952bcc7c44ca0fdb1f19"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/103.png",
+    "bytes": 36176,
+    "sha256": "9ac2a30ab41aed872170339c611091c76c76dffddc02fc3330c479390ed31bbd"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/12.png",
+    "bytes": 16764,
+    "sha256": "50cb5e76f892693afdd2deb1a0fc31d8dd6dcd8fee43edbf4c1c622fc4a9f32b"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/120.png",
+    "bytes": 36176,
+    "sha256": "9ac2a30ab41aed872170339c611091c76c76dffddc02fc3330c479390ed31bbd"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/160.png",
+    "bytes": 36176,
+    "sha256": "9ac2a30ab41aed872170339c611091c76c76dffddc02fc3330c479390ed31bbd"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/200.png",
+    "bytes": 36176,
+    "sha256": "9ac2a30ab41aed872170339c611091c76c76dffddc02fc3330c479390ed31bbd"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/240.png",
+    "bytes": 36176,
+    "sha256": "9ac2a30ab41aed872170339c611091c76c76dffddc02fc3330c479390ed31bbd"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/265.png",
+    "bytes": 36176,
+    "sha256": "9ac2a30ab41aed872170339c611091c76c76dffddc02fc3330c479390ed31bbd"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/266.png",
+    "bytes": 36176,
+    "sha256": "9ac2a30ab41aed872170339c611091c76c76dffddc02fc3330c479390ed31bbd"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/275.png",
+    "bytes": 38541,
+    "sha256": "113b5b0c0f5dfcf8a967422066729d3764cb9fde82fc2307e6b448b445515f17"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/280.png",
+    "bytes": 38541,
+    "sha256": "113b5b0c0f5dfcf8a967422066729d3764cb9fde82fc2307e6b448b445515f17"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/300.png",
+    "bytes": 38541,
+    "sha256": "113b5b0c0f5dfcf8a967422066729d3764cb9fde82fc2307e6b448b445515f17"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/328.png",
+    "bytes": 38541,
+    "sha256": "113b5b0c0f5dfcf8a967422066729d3764cb9fde82fc2307e6b448b445515f17"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/34.png",
+    "bytes": 17206,
+    "sha256": "dec388bdc9c0bcd0189eeb4d0b0147173945ba6ca8acccc9a4de653d239e7408"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/35.png",
+    "bytes": 16764,
+    "sha256": "50cb5e76f892693afdd2deb1a0fc31d8dd6dcd8fee43edbf4c1c622fc4a9f32b"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/42.png",
+    "bytes": 17363,
+    "sha256": "c88870d949e9106e71ca2a056eeb688257c9ffe0803b8ddcc2160ecb3d27bc44"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/43.png",
+    "bytes": 16764,
+    "sha256": "50cb5e76f892693afdd2deb1a0fc31d8dd6dcd8fee43edbf4c1c622fc4a9f32b"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/5.png",
+    "bytes": 11432,
+    "sha256": "9a619ba49f3e09adcb3a634ee59dc37b8428814cc4aa952bcc7c44ca0fdb1f19"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/67.png",
+    "bytes": 16764,
+    "sha256": "50cb5e76f892693afdd2deb1a0fc31d8dd6dcd8fee43edbf4c1c622fc4a9f32b"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/77.png",
+    "bytes": 19288,
+    "sha256": "0e916e2640c73aa1614792b1b4bcec849a9cd7272fb8aa055b7fd3e6bf80dfc5"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/97.png",
+    "bytes": 19288,
+    "sha256": "0e916e2640c73aa1614792b1b4bcec849a9cd7272fb8aa055b7fd3e6bf80dfc5"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/extraction/swfmill.xml",
+    "bytes": 673565,
+    "sha256": "1f80986d0a4d0005162b74c3dcdba12003f8b62515e26440a8520bdc986a9d80"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/README.md",
+    "bytes": 7986,
+    "sha256": "00b70948c65d44bb85556613ae1a86c14522c23e2a987d368951f3a8368558a1"
+  },
+  {
+    "path": "output/nms-l02-p057-source-20260927/source-audit.json",
+    "bytes": 39609,
+    "sha256": "4b4ab7a0f1ddb299703add4117036f31b672b309a62bd912804959f81fc88345"
+  },
+  {
+    "path": "packages/demos/src/generated/nms-l02-p057-display-list-v1.ts",
+    "bytes": 138593,
+    "sha256": "9bb7b24295242c3ab6e8a33a288d50da84ab486a3a962ed1995a8dd044c9c8ee"
+  },
+  {
+    "path": "packages/demos/src/generated/nms-l02-p057-terms-v1.ts",
+    "bytes": 8325,
+    "sha256": "177cbcdef722656206b29da8a31a643ef6a3555c13decb5d21ff5b7db2285ee7"
+  },
+  {
+    "path": "packages/demos/src/modules/shared-nms002-l02-p057.tsx",
+    "bytes": 1431,
+    "sha256": "922b3d0b98ed257ac8b086a32a7899db5f51cecb3f06b7f8824617099c9f704d"
+  },
+  {
+    "path": "packages/demos/src/nms-l02-p057-product-module-v1.tsx",
+    "bytes": 3672,
+    "sha256": "aa7d61f72c76d35bafc657887f86f590001ae11a9ac50ebddb3fb9b7eb46671e"
+  },
+  {
+    "path": "packages/demos/src/nms-l02-p057-product-renderer-v1.tsx",
+    "bytes": 4758,
+    "sha256": "46741d3606441c5bde5e7ecf8401a805afb353ed04a485f12b67ecdcddabb110"
+  },
+  {
+    "path": "packages/demos/src/nms-l02-p057-product-text-v1.ts",
+    "bytes": 3384,
+    "sha256": "4e64b4846744613dbc46bc3074814435b3b36abed7b0e3e3fc2945d3f8d02cde"
+  },
+  {
+    "path": "packages/demos/src/nms-l02-p057-semantic-v1.ts",
+    "bytes": 4719,
+    "sha256": "d10127c540134f0a1e554ead6ee991aa49c9fd32e76797fd354edbb431e9b9a6"
+  },
+  {
+    "path": "packages/demos/src/timelines/shared-nms002-l02-p057-display-list.ts",
+    "bytes": 2982,
+    "sha256": "04375d3e55e89271633eee76ceae438e1562d7817a5488a1cfd4b386d531c43a"
+  },
+  {
+    "path": "packages/demos/src/timelines/shared-nms002-l02-p057.ts",
+    "bytes": 2662,
+    "sha256": "b715c374c27fc0193f5d51b918cee78dd6ca954dd141837f48aa61b96c8479af"
+  },
+  {
+    "path": "packages/demos/tests/nms-l02-p057-product-v1.test.tsx",
+    "bytes": 3853,
+    "sha256": "c3a3c560de8dcde3ad5d7f9465a89032c2c54e89ded9ead4e3c583b5ba566819"
+  },
+  {
+    "path": "scripts/build-nms-l02-p057-display-list-v1.mjs",
+    "bytes": 13339,
+    "sha256": "096651e73612426e6e7bb418391ba0d4c2be666065f604d582c6b5f68b069432"
+  },
+  {
+    "path": "scripts/build-nms-l02-p057-display-list-v1.test.mjs",
+    "bytes": 6173,
+    "sha256": "b3dab3ebc828b40f9236a2c33eb0eb0479c4dcaff787e7579e9cb84cba061d16"
+  },
+  {
+    "path": "scripts/extract-nms-l02-p057-source-stream-v1.mjs",
+    "bytes": 9904,
+    "sha256": "571d9909e0147805684093c2d9d0a39c3066b79ed93a76dd924924d2cc68e9a2"
+  },
+  {
+    "path": "scripts/extract-nms-l02-p057-source-stream-v1.test.mjs",
+    "bytes": 4043,
+    "sha256": "06d8581e29968f3d1fd5bddbd1ce16423aad4795570cab97f31dc46f9807f300"
+  },
+  {
+    "path": "scripts/generate-nms-l02-p057-glossary-v1.mjs",
+    "bytes": 9176,
+    "sha256": "df2eed086a0f2073093a0b4c2e2a28637c3f7ee611e243c18dec406e08132566"
+  },
+  {
+    "path": "scripts/generate-nms-l02-p057-glossary-v1.test.mjs",
+    "bytes": 1866,
+    "sha256": "752cd420b532e4ed49df6252fb920f07f89860761cfcd971cc290a90cd46ddb2"
+  },
+  {
+    "path": "scripts/prepare-nms-l02-p057-dom-artifacts-v1.mjs",
+    "bytes": 13964,
+    "sha256": "d815da07909a9277fb26749f1869fc5f1edf2a6d060fa8ec0125f9c1fd0bd99a"
+  },
+  {
+    "path": "scripts/prepare-nms-l02-p057-dom-artifacts-v1.test.mjs",
+    "bytes": 5875,
+    "sha256": "c123b9edd3afea9012164042253b8eace71636e6b4ed86196375a3895f053420"
+  }
+];
+export const P057_RUN_OUTPUTS=[
+  {
+    "path": "output/nms-l02-p057-audio-20260927/embedded-source-stream-v1.mp3",
+    "bytes": 134290,
+    "sha256": "c87ebf7d1117a616ebddd6b3530a7b19c50dfd885bc5e2734817657da026c2dc"
+  },
+  {
+    "path": "output/nms-l02-p057-audio-20260927/raw-index-v1.json",
+    "bytes": 196972,
+    "sha256": "fb0e0bd403255a7a98fd46c5175f48747f7c840b4c5af08c74c53bbf2d64af71"
+  },
+  {
+    "path": "output/nms-l02-p057-glossary-20260927/conditional-bank.json",
+    "bytes": 12794,
+    "sha256": "b651a5d063e4c0c5c9a6f6b73543a643a3af2f5a5e27c8ac51eb6d705da9c365"
+  },
+  {
+    "path": "output/nms-l02-p057-glossary-20260927/receipt.json",
+    "bytes": 723,
+    "sha256": "18d9f328e6e2bda55dde822962c92f4ae726489fb17ea9f7ec133260b329b37f"
+  },
+  {
+    "path": "packages/demos/src/generated/nms-l02-p057-display-list-v1.ts",
+    "bytes": 138593,
+    "sha256": "9bb7b24295242c3ab6e8a33a288d50da84ab486a3a962ed1995a8dd044c9c8ee"
+  },
+  {
+    "path": "packages/demos/src/generated/nms-l02-p057-terms-v1.ts",
+    "bytes": 8325,
+    "sha256": "177cbcdef722656206b29da8a31a643ef6a3555c13decb5d21ff5b7db2285ee7"
+  },
+  {
+    "path": "packages/demos/src/modules/shared-nms002-l02-p057.tsx",
+    "bytes": 1431,
+    "sha256": "922b3d0b98ed257ac8b086a32a7899db5f51cecb3f06b7f8824617099c9f704d"
+  },
+  {
+    "path": "packages/demos/src/timelines/shared-nms002-l02-p057.ts",
+    "bytes": 2662,
+    "sha256": "b715c374c27fc0193f5d51b918cee78dd6ca954dd141837f48aa61b96c8479af"
+  }
+];
+export const P057_SHARED_DEPENDENCIES=[
+  {
+    "path": "lib/g678-admission-proof.mjs",
+    "bytes": 8258,
+    "sha256": "d8a54b9e982dd31689b03ed502b9e81c574996c2167893336235b41cd83cf6db"
+  },
+  {
+    "path": "packages/demos/src/contract.ts",
+    "bytes": 17646,
+    "sha256": "56e5fc3c1dbde872646ebbc519f8c7d8a9d6dd0d55e37e1c44f4ad1a47798180"
+  },
+  {
+    "path": "packages/demos/src/lesson-text-contract.ts",
+    "bytes": 6749,
+    "sha256": "e796b04501425b29200d6bf527aae71deac86769894e2f642efa1e36502a56d9"
+  },
+  {
+    "path": "packages/demos/src/lesson-text-snapshot.ts",
+    "bytes": 5999,
+    "sha256": "0fcb076645392914fc2ad3df9f2062037c8ed5d31730903342ecd5e98bd2e95f"
+  },
+  {
+    "path": "packages/demos/src/source-glossary-controls.tsx",
+    "bytes": 3180,
+    "sha256": "8cf7e17c4651370c18a917b64d42c8f1f6773e7bdc382ec35092c3405aa8893d"
+  },
+  {
+    "path": "scripts/build-g4-l3-embedded-audio-archive.mjs",
+    "bytes": 49846,
+    "sha256": "2c04bba5dc5e2c5870305ce5d4429457548712c5843e1bdf2dd11c8b5d3658cf"
+  },
+  {
+    "path": "scripts/private-current-js-registry.mjs",
+    "bytes": 7326,
+    "sha256": "6b61308caca87a41c707b83072b010ec51631cd5b65726e948137f523ef83201"
+  }
+];
+export const P057_PAGE_INPUT_PATHS=[
+  "apps/web/components/nms-l02-p057-lesson-runtime-v1.tsx",
+  "apps/web/lib/nms-l02-p057-descriptor-extension.ts",
+  "apps/web/tests/nms-l02-p057-descriptor-extension.test.ts",
+  "lib/nms-l02-p057-admission-semantics.mjs",
+  "lib/nms-l02-p057-admission-semantics.test.mjs",
+  "output/nms-l02-p057-audio-20260927/AUDIO_SOURCE_2026-09-27.md",
+  "output/nms-l02-p057-audio-20260927/embedded-source-stream-v1.mp3",
+  "output/nms-l02-p057-audio-20260927/raw-index-v1.json",
+  "output/nms-l02-p057-glossary-20260927/conditional-bank.json",
+  "output/nms-l02-p057-glossary-20260927/receipt.json",
+  "output/nms-l02-p057-source-20260927/README.md",
+  "output/nms-l02-p057-source-20260927/extraction/embedded-source-stream.mp3",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/scripts/DefineButton2_17/BUTTONCONDACTION on(release).as",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/scripts/DefineButton2_18/BUTTONCONDACTION on(release).as",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/scripts/DefineButton2_25/BUTTONCONDACTION on(release).as",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/scripts/DefineButton2_60/BUTTONCONDACTION on(release).as",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/scripts/DefineButton2_61/BUTTONCONDACTION on(release).as",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/scripts/DefineButton2_62/BUTTONCONDACTION on(release).as",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/scripts/DefineButton2_63/BUTTONCONDACTION on(release).as",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/scripts/frame_1/DoAction.as",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/scripts/frame_6/DoAction.as",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/11.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/12.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/14.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/15.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/19.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/20.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/21.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/23.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/27.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/28.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/29.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/30.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/31.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/32.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/33.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/34.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/35.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/36.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/37.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/38.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/39.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/4.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/40.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/41.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/42.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/43.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/44.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/45.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/46.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/47.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/48.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/49.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/5.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/50.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/51.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/52.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/53.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/54.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/55.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/56.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/57.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/59.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/6.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/64.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/7.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/8.txt",
+  "output/nms-l02-p057-source-20260927/extraction/ffdec/texts/9.txt",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/103-on-stage.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/266-on-stage.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/275-on-stage.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/328-on-stage.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/34-on-stage.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/35-on-stage.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/42-on-stage.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/43-on-stage.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/97-on-stage.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/1.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/103.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/12.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/120.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/160.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/200.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/240.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/265.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/266.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/275.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/280.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/300.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/328.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/34.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/35.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/42.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/43.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/5.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/67.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/77.png",
+  "output/nms-l02-p057-source-20260927/extraction/keyframes/DefineSprite_66/97.png",
+  "output/nms-l02-p057-source-20260927/extraction/swfmill.xml",
+  "output/nms-l02-p057-source-20260927/source-audit.json",
+  "packages/demos/src/generated/nms-l02-p057-display-list-v1.ts",
+  "packages/demos/src/generated/nms-l02-p057-terms-v1.ts",
+  "packages/demos/src/modules/shared-nms002-l02-p057.tsx",
+  "packages/demos/src/nms-l02-p057-product-module-v1.tsx",
+  "packages/demos/src/nms-l02-p057-product-renderer-v1.tsx",
+  "packages/demos/src/nms-l02-p057-product-text-v1.ts",
+  "packages/demos/src/nms-l02-p057-semantic-v1.ts",
+  "packages/demos/src/timelines/shared-nms002-l02-p057-display-list.ts",
+  "packages/demos/src/timelines/shared-nms002-l02-p057.ts",
+  "packages/demos/tests/nms-l02-p057-product-v1.test.tsx",
+  "scripts/build-nms-l02-p057-display-list-v1.mjs",
+  "scripts/build-nms-l02-p057-display-list-v1.test.mjs",
+  "scripts/extract-nms-l02-p057-source-stream-v1.mjs",
+  "scripts/extract-nms-l02-p057-source-stream-v1.test.mjs",
+  "scripts/generate-nms-l02-p057-glossary-v1.mjs",
+  "scripts/generate-nms-l02-p057-glossary-v1.test.mjs",
+  "scripts/prepare-nms-l02-p057-admission.mjs",
+  "scripts/prepare-nms-l02-p057-admission.test.mjs",
+  "scripts/prepare-nms-l02-p057-dom-artifacts-v1.mjs",
+  "scripts/prepare-nms-l02-p057-dom-artifacts-v1.test.mjs",
+  "work/g678-shared-page-factory/g678-nms-l02-p057-conditional-host-current-js-v1/members/shared-nms002-l02-p057/member-manifest.json",
+  "work/g678-shared-page-factory/g678-nms-l02-p057-conditional-host-current-js-v1/run-manifest.json"
+];
+export const P057_EXTERNAL_EXPECTED=Object.freeze([
+ {root:'/Volumes/American Dream/hudongpin/helpmath-g678-completion-20260909-01a08222/nms-l01-p009-host-source-v1/scripts/scripts',pin:{path:'frame_35/DoAction.as',bytes:104008,sha256:'380cd6581859d0ba9814833f1102b08282198713cf30b5230ce2da76c3e27a74'}},
+ {root:'/Volumes/American Dream/hudongpin/helpmath-g678-completion-20260909-01a08222/nms-l01-p009-host-source-v1/scripts/scripts',pin:{path:'frame_50/DoAction.as',bytes:1622,sha256:'d267b54cf74f3aae4167e8bcbc1f803df3228630869d089dee53abbd3b162483'}},
+ {root:P057_SOURCE_ROOT,pin:{path:'G6-G8-shared/NMS002/L2/SA/L2TS04.mp3',bytes:280560,sha256:'a2505e6988cca2f44777711d87175b385564a51c2cb5284c05d6246635cf5dbf'}},
+ {root:P057_SOURCE_ROOT,pin:P057_SOURCE},{root:P057_SOURCE_ROOT,pin:P057_XML},
+ {root:'/Volumes/WestWorld/HELP MATH Related Files/HELP_OnlineKeyTerms_XML/MI',pin:{path:'L1KTE01.xml',bytes:345838,sha256:'14d454f4c1c1a6f0939fb80b454fd3e22890eabb4a730c6bfa7efa1d9a2e5e5b'}},
+ {root:'/Volumes/WestWorld/HELP MATH Related Files/HELP_OnlineKeyTerms_XML/MI',pin:{path:'L1KTS01.xml',bytes:344456,sha256:'3b437b42e75536fa8b4f110325e366c27fbe10a871439d4797650cda4238b407'}},
+ {root:'/Volumes/WestWorld/HELP MATH Related Files/Private Recovery Containers/2026-08-25-BOULDER-LEARNING-AWS-S3-EMERGENCY-V1/objects/sha256/27',pin:{path:'275499325edb24daed95952b207d2dd4ed83056ebac54cd0bc911673058086c9',bytes:689006,sha256:'275499325edb24daed95952b207d2dd4ed83056ebac54cd0bc911673058086c9'}},
+].sort((a,b)=>a.root.localeCompare(b.root)||a.pin.path.localeCompare(b.pin.path)));
+export const P057_ACCEPTANCE_KEYS=Object.freeze(['authoritativeOriginalRuntime','fidelityAccepted','audioAccepted','humanVisualAccepted','ownerAccepted','strictComplete','published']);
+export const P057_RUNTIME=Object.freeze({stage:{width:800,height:600},rootFrameCount:10,rootBeginFrame:6,
+ frameDomain:'sprite-66',frameCount:328,livePlaybackEndFrame:328,fps:12,language:'fixed-en',
+ scenario:'source-static-frame',seed:'0',rendererBinding:'maintained-dom-module-v1',
+ sourceChildTerminalStopPresent:false,productPlaybackMode:'once',originalRuntimeParityEstablished:false});
+export const P057_CONTROL_POLICY=Object.freeze({sourceFirstPlacedFrames:[5,67,97],
+ modernInteractiveFirstFrames:[12,77,103],lastFrameExclusive:329,
+ historicalHitTestingVerified:false,originalHostLookupVerified:false,
+ controls:[
+  {id:'sprite-66/depth-18/generation-1',entryId:'solve',sourceKeyAttribute:'Solve',characterId:17,firstFrame:12},
+  {id:'sprite-66/depth-20/generation-1',entryId:'problem',sourceKeyAttribute:'Problem',characterId:18,firstFrame:12},
+  {id:'sprite-66/depth-25/generation-1',entryId:'strategies',sourceKeyAttribute:'Strategies',characterId:25,firstFrame:77},
+  {id:'sprite-66/depth-110/generation-1',entryId:'equation',sourceKeyAttribute:'Equation',characterId:60,firstFrame:103},
+  {id:'sprite-66/depth-112/generation-1',entryId:'pattern',sourceKeyAttribute:'Pattern',characterId:61,firstFrame:103},
+  {id:'sprite-66/depth-114/generation-1',entryId:'table',sourceKeyAttribute:'Table',characterId:62,firstFrame:103},
+  {id:'sprite-66/depth-116/generation-1',entryId:'simple-simpler-simplest',sourceKeyAttribute:'Simple / Simpler / Simplest',characterId:63,firstFrame:103},
+ ]});
+const ID=P057_ADMISSION_ID,CALIBRATION=P057_ADMISSION_CALIBRATION;
+const FREEZE=`catalog/product-bridge-calibrations/${CALIBRATION}.json`;
+const FRAGMENT=FREEZE.replace(/\.json$/u,'.fragment.json');
+const demand=(value,reason)=>assert(value,`NMS_L02_P057_ADMISSION: ${reason}`);
+const same=(value,expected,reason)=>assert.deepStrictEqual(value,expected,`NMS_L02_P057_ADMISSION: ${reason}`);
+const sorted=values=>[...values].sort((a,b)=>a.localeCompare(b));
+function validPin(value,expectedPath){
+ demand(value&&typeof value==='object'&&!Array.isArray(value)&&
+  Object.keys(value).sort().join(',')==='bytes,path,sha256'&&value.path===expectedPath&&
+  Number.isSafeInteger(value.bytes)&&value.bytes>0&&value.bytes<=64*1024*1024&&
+  /^[a-f0-9]{64}$/u.test(value.sha256),`bounded pin ${expectedPath}`);
+}
+export function validateP057AdmissionSemantics(packet,registration){
+ demand(packet?.schemaVersion===1&&packet.calibrationId===CALIBRATION&&
+  packet.sourceRoot===P057_SOURCE_ROOT&&packet.scope==='private-engineering'&&
+  packet.deploymentScope==='local-only','exact local P057 identity');
+ same(packet.source,P057_SOURCE,'exact SWF');same(packet.sourceXml,P057_XML,'exact lesson XML');
+ demand(packet.selectedPages?.length===1,'single selected page');
+ same(packet.selectedPages[0],{animationId:ID,placementId:ID,assetId:`swf-${P057_SOURCE.sha256}`,
+  stableLessonKey:'shared-nms002-l02',sourceSha256:P057_SOURCE.sha256,
+  moduleCode:'NMS002',lessonNumber:2,globalPageOrdinal:57,sourceOccurrence:57,
+  sectionCode:'TS',sectionPageOrdinal:3,complexityLane:'behavior-heavy',runtime:P057_RUNTIME},
+  'P057 placement and DOM runtime');
+ const entry=packet.entry,artifacts=entry?.artifacts;
+ same(Object.keys(entry??{}).sort(),['artifacts','complexityLane','key','maturity','module'],'canonical entry keys');
+ demand(entry.key===ID&&entry.module===`./modules/${ID}`&&entry.maturity==='private-current-js'&&
+  entry.complexityLane==='behavior-heavy','canonical DOM entry');
+ same(Object.keys(artifacts??{}).sort(),['kind','memberManifest','module','sourceRun','timeline'],'DOM artifacts only');
+ same(artifacts.kind,'maintained-dom-module-v1','renderer kind');
+ same(artifacts.module,P057_CANONICAL_MODULE,'frozen canonical module');
+ same(artifacts.timeline,P057_CANONICAL_TIMELINE,'frozen canonical timeline');
+ same(artifacts.memberManifest,P057_MEMBER,'frozen member manifest');
+ same(artifacts.sourceRun,P057_RUN,'frozen source run');
+ same(packet.audio,{main:P057_MAIN_AUDIO,rawIndex:P057_RAW_AUDIO,
+  productUrl:`/migration-assets/nms-l02-p057/main.mp3?sha256=${P057_MAIN_AUDIO.sha256}`,
+  transportConfigured:true,firstFrame:5,lastFrame:328,blockCount:324,decodedSamples:595008,
+  sampleRate:22050,channels:1,sourceAlignmentAccepted:false,listeningAccepted:false,
+  localeAutoPlayback:false,lessonSaSubstituted:false},'exact embedded source stream and qualified audio');
+ same(packet.glossary,{candidate:P057_GLOSSARY_CANDIDATE,receipt:P057_GLOSSARY_RECEIPT,
+  candidateSha256:P057_GLOSSARY_CANDIDATE.sha256,product:P057_GLOSSARY_PRODUCT,
+  sourceSelection:'identified-indexMI-export-literal-L1-bank-path',
+  originalL2XmlResolved:false,historicalHostAssociationEstablished:false,originalRuntimeLookupVerified:false,
+  lessonXmlDeclaredBanks:{en:'HELP_KEYTERMS/KT/XML/L2KTE01.xml',es:'HELP_KEYTERMS/KT/XML/L2KTS01.xml'},
+  controlPolicy:P057_CONTROL_POLICY,stopPath:'animation_mc.animation',closePolicy:'remain-paused'},
+  'qualified seven-key glossary');
+ same(packet.integrity?.sharedDependencies,P057_SHARED_DEPENDENCIES,'separate exact host dependencies');
+ same(packet.acceptanceEffects,Object.fromEntries(P057_ACCEPTANCE_KEYS.map(key=>[key,false])),'acceptance remains false');
+ demand(packet.productCalibrationPassed===false&&packet.scaleOutAuthorized===false,'no scale-out');
+ validPin(packet.freezeManifest,FREEZE);
+ same(registration,{calibrationId:CALIBRATION,deploymentScope:'local-only',freezeManifest:FREEZE,
+  freezeManifestBytes:packet.freezeManifest.bytes,freezeManifestSha256:packet.freezeManifest.sha256,
+  entries:[entry]},'exact single-entry fragment');
+ return true;
+}
+export function validateP057ProofClosure(proof){
+ demand(proof?.schemaVersion===1&&proof.kind==='nms-l02-page-proof-v1'&&
+  proof.hostContract==='nms-l02-source-bound-host-v1'&&proof.animationId===ID,'P057 proof identity');
+ const packet=proof.packet,own=packet?.integrity?.files;
+ demand(packet?.integrity?.scope==='single-NMS-L02-P057-source-and-implementation'&&
+  packet.integrity.completeTransitiveClosure===false&&Array.isArray(own),'finite page-owned integrity');
+ same(own.map(pin=>pin.path),sorted(P057_PAGE_INPUT_PATHS),'exact page-owned membership');
+ for(const pin of own)validPin(pin,pin.path);
+ const byPath=new Map(own.map(pin=>[pin.path,pin]));
+ demand(byPath.size===own.length,'unique page-owned inputs');
+ for(const pin of P057_RUN_INPUTS)same(byPath.get(pin.path),pin,`frozen run input ${pin.path}`);
+ for(const pin of [...P057_RUN_OUTPUTS,P057_RUN,P057_MEMBER,P057_SOURCE_AUDIT,
+  P057_MAIN_AUDIO,P057_RAW_AUDIO,P057_GLOSSARY_CANDIDATE,P057_GLOSSARY_RECEIPT,
+  P057_GLOSSARY_PRODUCT,P057_CANONICAL_MODULE,P057_CANONICAL_TIMELINE])
+  same(byPath.get(pin.path),pin,`frozen run or resource pin ${pin.path}`);
+ for(const pin of P057_SHARED_DEPENDENCIES)demand(!byPath.has(pin.path),'no host-owned file in page closure');
+ same(packet.integrity.sharedDependencies,P057_SHARED_DEPENDENCIES,'exact shared host pins');
+ validPin(proof.freeze,FREEZE);
+ demand(Array.isArray(proof.files),'proof files');
+ same(proof.files.map(pin=>pin.path),sorted([...P057_PAGE_INPUT_PATHS,FREEZE,FRAGMENT]),'exact proof membership');
+ for(const pin of proof.files)validPin(pin,pin.path);
+ const files=new Map(proof.files.map(pin=>[pin.path,pin]));
+ demand(files.size===proof.files.length,'unique proof files');
+ for(const pin of own)same(files.get(pin.path),pin,`proof retains ${pin.path}`);
+ same(files.get(FREEZE),proof.freeze,'proof freeze pin');
+ same(proof.external,P057_EXTERNAL_EXPECTED,'exact physical source, SA inventory, glossary and host');
+ validateP057AdmissionSemantics({...packet,freezeManifest:proof.freeze},proof.registration);
+ return true;
+}

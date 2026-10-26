@@ -1,38 +1,51 @@
-# HELP Math 已转化动画备份 · 2026-10-24
+# HELP Math G6–G8 v622 工程增量备份 · 2026-10-26
 
-此分支保存 G3–G5 和整个 G6–G8 共用动画库的转换成果、维护源码及所选运行依赖。每个快照目录保留原项目相对路径；逐文件字节数和 SHA-256 记录在 `metadata/*-files.json`。
+本分支在 [2026-10-24 备份提交](https://github.com/HUDongpin/help-math-2-0-workbench/tree/380156b57eb276dcc074c1226616f8ed779035e5) 上保存 G6–G8 的 v622 工程增量。旧分支 `codex/g3-g8-animation-backup-20261024` 保留；本分支不合并 `main`，不部署网站。
 
-原开发工作树包含未提交内容，因此这里保存的是采集时的实际文件。元数据中的 `sourceHead` 用于识别来源基线，不能代替本次逐文件清单。此分支以独立的初始提交开始，不携带其他开发分支的历史。
+## 本次内容
 
-| 快照 | 内容及范围 |
+- G6–G8 新增 **5,039** 个备份文件，更新 **21** 个已有文件，删除 **0** 个。
+- G6–G8 快照合计 **47,547** 文件、**4,662,244,281** 字节（约 4.66 GB 逻辑体积）。文件数量和逻辑体积不代表新增页面或网络传输量。
+- 内容包括转换模块、派生数据/媒体、共享 runtime/compiler、My Lesson 接入、v622 host/index、注册表、构建配置，以及选定的脚本和测试依赖。
+- `snapshots/g3-g5/`、`snapshots/hfr-shell-variant/` 及它们的清单完全继承旧备份；本次没有修改这些内容。
+
+逐文件 SHA-256 和大小见 `metadata/g6-g8-files.json`；增量成员见 `metadata/g6-g8-v622-delta.json`。整体索引是 `BACKUP.json`。
+
+## v622 的来源
+
+活动入口固定为 `catalog/g678-admission-v1/index-v622.json`，host 固定为 `host-v622.json`。本次从已冻结的 24,625 文件清单及本地 WIP 提交 `33015695ed210760dba835a645a040bd4ea1892c` 恢复准确字节，并按同一清单的 hashes 补齐必要共享文件。该来源提交仅用于标识本地恢复来源，开发仓库的提交历史没有导入此备份分支。
+
+源工作区在备份时已有后续开发修改。本快照排除了这些修改、未激活的 v623 及无法证明属于 v622 的新候选，没有修改源工作区来配合备份。
+
+## 已有证据的范围
+
+| 项目 | 冻结状态 |
 | --- | --- |
-| `snapshots/g3-g5/` | 29 个课程；当前 descriptor/registry 中 1,751 个 active page placements（G3 546、G4 645、G5 560，1,750 个唯一 animationId）。保留现代排版实现、共享组件、生成 renderer、图像、字体、MP3/PCM 及 My Lesson 相关源码。 |
-| `snapshots/g6-g8/` | 44 个共用课程；当前 registry/catalog 交集 2,282 个 placements，其中 HFR 1,658、Canvas 448、维护中的 DOM 实现 176。包括生成 TypeScript、data、派生媒体、维护中的编译器/runtime 和当前产品 host 依赖。44 个课程的独立年级映射仍待确认，因此不把该总数称为 G6 页数。 |
-| `snapshots/hfr-shell-variant/` | 单独保留的历史 HFR shell 集成变体，包含 52 个 NMS L7 模块及其实际 data/媒体。它与当前 G6–G8 实现存在重叠，不加入页面总数，也不覆盖当前版本。 |
+| 共用课程与登记成员 | 44 课、2,282 个页面位置 |
+| 实现类型 | HFR TypeScript 1,658；Canvas 448；维护中的 DOM 176 |
+| 方案 A 普通页累计通过 | 7 / 2,282 |
+| 六配置完整样本 | 0 / 1 |
+| 人工课审 | 0 / 44 |
+| 请求门完整闭环 | 0 / 2,282 |
 
-页面登记、My Lesson 集成、真实播放、技术闭合、原始 Flash 保真、听音、人审、Owner 验收和发布是不同状态。上述数量描述备份来源中的成员关系；此次文件备份没有重新执行或提升这些验收状态。历史失败、旧元数据和待确认事项没有被改写为通过。
+普通页为 NMS002 L7 的 P006/P007（v620 历史证据）以及 P010/P016/P017/P019/P021（v622）。这是既有证据的累计状态，本次备份没有重新执行课程验收。英/西路线检查使用已批准的英语可见正文回退及独立西语旁白，不能当作西语翻译验收。音频活动不能当作听音验收。44 课的正式年级映射仍待确认。
 
-## 下载与完整性核对
+build08 `ua58kM2C5ZVqiZIwrLrEr` 有构建和完整类型检查通过记录。四个工具脚本在该 build 后、v622 冻结前又有修复，本快照保留其冻结版本；旧浏览器证据不自动覆盖这些新工具。六个 placement 的七处历史 artifact pin 差异原样保留，未为备份改写断言或验收。详细状态和外部证据引用见 `metadata/g6-g8-v622-state.json`。
+
+## 下载与字节核验
 
 ```sh
-git clone --single-branch --branch codex/g3-g8-animation-backup-20261024 https://github.com/HUDongpin/help-math-2-0-workbench.git help-math-animation-backup
-cd help-math-animation-backup
+git clone --single-branch --branch codex/g678-v622-incremental-backup-20261026 https://github.com/HUDongpin/help-math-2-0-workbench.git help-math-v622-backup
+cd help-math-v622-backup
 python3 verify-backup.py
 ```
 
-验证器检查每个已捕获文件的大小和 SHA-256，并拒绝未列入清单的额外 payload 文件。文件以普通 Git blob 保存，没有仅包含地址的 LFS 占位文件。重复路径保留各自位置，Git 复用相同内容的 blob。目录展开后的逻辑体积大于实际上传数据量。
+验证器检查三份快照的文件大小与 SHA-256，并拒绝未列入清单的额外 payload。文件保存为普通 Git blob，没有 LFS 占位文件。恢复 G6–G8 时使用 `snapshots/g6-g8/`，先核验，再恢复到独立目录；不要覆盖正在开发的工作区。
 
-## 恢复方式和边界
+## 排除内容与恢复限制
 
-先通过完整性核对，再把所需 `snapshots/<版本>/` 内容恢复到新的独立目录或与来源相容的恢复工作树。三个版本分别保存，不应互相覆盖。需要原应用完整环境时，以各版本元数据中的来源基线和当前项目流程补齐环境与独立保存的源档案；不要把这个动画成果快照当作已验证的完整站点部署包。
+本分支不保存凭据、真实 `.env`、浏览器状态、学生/教师数据库、私有办公档案、原始 FLA/SWF/source-assets、`node_modules`、构建缓存、完整浏览器截图/录像或历史验收 proof。原始来源及部分历史依赖仍需从各自独立备份恢复。清单中的原始源/证据引用不表示它们的内容已包含。
 
-没有备份 `.env` 或凭据、浏览器状态、学生/教师数据库、私有办公档案、原始 FLA/SWF 档案、`node_modules`、构建缓存、完整浏览器截图/录像和历史验收证据。原始来源及这些证据仍需依赖各自的独立备份。本快照中的历史 manifest 可能继续引用未收入公开备份的原始资产或 proof。
+这是工程文件备份，不是已验证的独立安装或部署包。没有在全新克隆中重跑完整应用构建或课程播放；[旧备份的恢复注意事项](https://github.com/HUDongpin/help-math-2-0-workbench/blob/380156b57eb276dcc074c1226616f8ed779035e5/README.md) 对继承的内容仍适用。构建生成类型需在恢复环境按项目流程重新生成。
 
-已知恢复注意事项：
-
-- G3 L1 TS008 的旧 controlled-preview supplement 仍记载旧 hash；本快照保留后续实际文件，SHA-256 为 `863191baf3afc666cdd0ad5db837fe79fdc8892e502137ed75bde9e95f15f090`，没有回退文件或重写历史 manifest。
-- 某些旧 G4 L12 calibration、typography 诊断和保留测试引用本地外盘资源或历史 evidence；这些引用不是新增验收，也不保证在独立克隆中可重跑。
-- Next.js 构建类型由本地 `next dev` / `next build` 生成；没有复制 `.next*` 缓存。原 `next-env.d.ts` 的历史生成类型引用需随恢复环境重新生成。
-- 原应用构建和 admission 流程可能要求另行保存的部署压缩包、原始资产或历史 proof。不要在恢复目录里盲目运行旧 materializer 并覆盖已核对的文件；此次验证仅覆盖备份字节完整性，没有声明 fresh clone 的完整构建或端到端播放已通过。
-
-本分支未包含 GitHub Actions workflows；根目录和项目默认 `apps/web` 路径的 Vercel 配置关闭 Git 自动部署。此备份不改变课程公开发布、生产网站或验收门槛。
+根目录和 `apps/web/vercel.json` 均关闭 Git 自动部署，提交树没有 GitHub Actions workflows。备份不提升 Flash 保真、听音、人审、Owner 验收、strict completion 或课程发布状态。
