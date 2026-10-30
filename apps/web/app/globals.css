@@ -8460,15 +8460,16 @@ body:has(.lesson-shell2) {
 }
 
 /* Spanish route, English-only source title: say so instead of passing the
-   English text off as Spanish (helpmath-web #75). */
+   English text off as Spanish (helpmath-web #75). It spans the whole header
+   row so it does not wrap word by word beside the Hide toggle. */
 .lesson-shell2__spine-source-gap {
-  display: block;
+  color: #b8d1f7;
   font-size: .75rem;
   font-weight: 650;
-  letter-spacing: normal;
+  grid-column: 1 / -1;
   line-height: 1.3;
-  margin-top: .2rem;
-  text-transform: none;
+  margin: -.25rem 0 .5rem;
+  padding: 0 .4rem;
 }
 
 .lesson-shell2__spine ol {
@@ -9898,6 +9899,8 @@ body:has(.lesson-shell2[data-tutor-modal='true']) {
   .lesson-shell2[data-host-presentation='modern-wide'][data-tutor-mode='classroom']
     .lesson-shell2__spine-name,
   .lesson-shell2[data-host-presentation='modern-wide'][data-tutor-mode='classroom']
+    .lesson-shell2__spine-source-gap,
+  .lesson-shell2[data-host-presentation='modern-wide'][data-tutor-mode='classroom']
     .lesson-shell2__spine-calculator-label {
     border: 0;
     clip: rect(0 0 0 0);
@@ -10430,6 +10433,7 @@ body:has(.lesson-shell2[data-tutor-modal='true']) {
     :is(
       .lesson-shell2__spine-mark,
       .lesson-shell2__spine-name,
+      .lesson-shell2__spine-source-gap,
       .lesson-shell2__spine-calculator-label
     ),
   .lesson-shell2[data-host-presentation='modern-wide']

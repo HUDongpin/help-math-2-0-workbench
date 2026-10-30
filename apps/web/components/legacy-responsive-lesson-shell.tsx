@@ -1977,13 +1977,6 @@ export function LegacyResponsiveLessonShell({
               <span lang={courseContext.courseTitle.sourceLanguage}>
                 {courseContext.courseTitle.text}
               </span>
-              {spanish && courseContext.courseTitle.usesEnglishFallback
-                ? <small
-                    className="lesson-shell2__spine-source-gap"
-                    data-spine-english-fallback="course-title"
-                    lang="es"
-                  >inglés · la fuente no tiene título español</small>
-                : null}
             </p>
             <button
               aria-controls={sectionListId}
@@ -2010,6 +2003,13 @@ export function LegacyResponsiveLessonShell({
                 ? (spanish ? 'Mostrar' : 'Show')
                 : (spanish ? 'Ocultar' : 'Hide')}</span>
             </button>
+            {spanish && courseContext.courseTitle.usesEnglishFallback
+              ? <p
+                  className="lesson-shell2__spine-source-gap"
+                  data-spine-english-fallback="course-title"
+                  lang="es"
+                >inglés · la fuente no tiene título español</p>
+              : null}
           </div>
           <ol id={sectionListId}>
             {sections.map((section) => {
