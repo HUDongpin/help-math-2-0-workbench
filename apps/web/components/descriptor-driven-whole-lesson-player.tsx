@@ -818,6 +818,7 @@ export function DescriptorDrivenWholeLessonPlayer({
       return {
         code: section.code,
         title: section.labels[progress.locale].text,
+        titleLanguage: section.labels[progress.locale].sourceLanguage,
         state: section.code === currentSection.code
           ? 'current'
           : allReviewed

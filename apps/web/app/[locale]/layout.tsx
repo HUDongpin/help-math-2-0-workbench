@@ -5,27 +5,40 @@ import {Analytics} from '@vercel/analytics/next';
 import {ClerkLocalAuthProvider} from '@/components/auth/clerk-local-auth-provider';
 import {SiteFooter} from '@/components/site-footer';
 import {SiteHeader} from '@/components/site-header';
-import {getSiteContent} from '@/content';
+import {getSiteContent, isLocale} from '@/content';
 import type {Locale} from '@/content/types';
 import {LocaleProvider} from '@/i18n/navigation';
 import {routing} from '@/i18n/routing';
-import {getSiteUrl, SITE_DESCRIPTION, SITE_NAME} from '@/lib/site';
+import {getSiteUrl, SITE_DESCRIPTION, SITE_NAME, siteDescription} from '@/lib/site';
 import {isControlledCurrentJsPreview} from '@/lib/controlled-current-js-preview';
 import {productionSearchIndexingEnabled} from '@/lib/search-indexing';
 
 import 'katex/dist/katex.min.css';
 import '../globals.css';
 
-export const metadata: Metadata = {
-  metadataBase: getSiteUrl(),
-  title: {default: `${SITE_NAME} · Math language made visible`, template: `%s · ${SITE_NAME}`},
-  description: SITE_DESCRIPTION,
-  applicationName: SITE_NAME,
-  category: 'education',
-  creator: SITE_NAME,
-  publisher: SITE_NAME,
-  robots: searchRobotsMetadata()
-};
+// Pages without their own title (such as lesson routes) inherit this default,
+// so it follows the route locale instead of showing English on /es (#75).
+export async function generateMetadata({
+  params
+}: {
+  params: Promise<{locale: string}>;
+}): Promise<Metadata> {
+  const {locale} = await params;
+  const appLocale: Locale = isLocale(locale) ? locale : 'en';
+  return {
+    metadataBase: getSiteUrl(),
+    title: {
+      default: `${SITE_NAME} · ${getSiteContent(appLocale).shared.siteTagline}`,
+      template: `%s · ${SITE_NAME}`
+    },
+    description: siteDescription(appLocale),
+    applicationName: SITE_NAME,
+    category: 'education',
+    creator: SITE_NAME,
+    publisher: SITE_NAME,
+    robots: searchRobotsMetadata()
+  };
+}
 
 // Production opens indexing; X-Robots-Tag (next.config) still forces noindex on
 // every host except www.helpmath.ai, and previews stay noindex.

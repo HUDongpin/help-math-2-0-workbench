@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import sitemap from '../app/sitemap';
+import sitemap, {dynamic} from '../app/sitemap';
 import {CURRENT_JS_1751_PUBLIC_PRODUCTION as PROFILE, CURRENT_JS_1751_PUBLIC_PROJECT as PROJECT} from '../lib/current-js-1751-public-production';
 import {controlledPreviewCoursePathAvailable, isControlledCurrentJsPreview} from '../lib/controlled-current-js-preview';
 import {availableLearningLessons} from '../lib/learning-lesson-availability.server';
@@ -54,6 +54,11 @@ test('production sitemap lists only routes the production profile serves with 20
     assert.ok(!entries.some(({url}) => url === `${SITE}${excluded}`), excluded);
   }
 }));
+
+test('sitemap is prerendered at build time, never computed per request', () => {
+  // `error` keeps the route static and fails the build if a Dynamic API is added.
+  assert.equal(dynamic, 'error');
+});
 
 test('discovery has no hardcoded allowlist and ignores non-lesson routes', () => {
   const {lessonRoutes, robotDisallow} = resolvePublicCourseDiscovery({

@@ -1,6 +1,12 @@
 export const SITE_NAME = 'HELP Math';
 export const SITE_DESCRIPTION =
   'Interactive, language-rich mathematics learning for multilingual students and the educators who support them.';
+const SITE_DESCRIPTION_ES =
+  'Aprendizaje de matemáticas interactivo y rico en lenguaje para estudiantes multilingües y los educadores que los apoyan.';
+
+export function siteDescription(locale: 'en' | 'es'): string {
+  return locale === 'es' ? SITE_DESCRIPTION_ES : SITE_DESCRIPTION;
+}
 
 const fallbackUrl = 'https://www.helpmath.ai';
 

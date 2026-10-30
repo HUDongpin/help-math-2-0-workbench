@@ -131,6 +131,32 @@ for (const locale of ['en', 'es'] as const) {
     }
   });
 
+  test(`${locale} lesson title and section names carry their source language (#75)`, async ({page}) => {
+    expect((await page.goto(`${prefix}/courses/4/3?mode=focus`))?.status()).toBe(200);
+    await expect(page).toHaveTitle(locale === 'es'
+      ? 'HELP Math · El lenguaje matemático, a la vista'
+      : 'HELP Math · Math language made visible');
+    // The section spine only exists in the opt-in modern-wide presentation
+    // (MODERN_WIDE_SHELL_ENABLED); the legacy composite has no spine to check.
+    const host = page.locator('.lesson-shell2');
+    await expect(host).toHaveAttribute('data-host-presentation', /^(modern-wide|legacy-composite)$/u);
+    if (await host.getAttribute('data-host-presentation') !== 'modern-wide') {
+      await expect(page.locator('.lesson-shell2__spine')).toHaveCount(0);
+      return;
+    }
+    const mark = page.locator('.lesson-shell2__spine-mark').first();
+    // The course XML has no lesson-level Spanish title, so /es keeps the English
+    // one, tags it lang="en" and says so rather than passing it off as Spanish.
+    await expect(mark.locator('span[lang="en"]')).toHaveText('Negative Numbers');
+    const gap = page.locator('.lesson-shell2__spine-header [data-spine-english-fallback="course-title"]');
+    if (locale === 'es') await expect(gap).toHaveText('inglés · la fuente no tiene título español');
+    else await expect(gap).toHaveCount(0);
+    const nameLanguages = await page.locator('.lesson-shell2__spine-name')
+      .evaluateAll((names) => names.map((name) => name.getAttribute('lang')));
+    expect(nameLanguages.length).toBeGreaterThan(0);
+    expect(nameLanguages.every((language) => language === locale)).toBe(true);
+  });
+
   for (const route of ['', '/courses/4/3?mode=focus']) {
     test(`${locale} ${route || 'home'} has no serious or critical accessibility violations`, async ({page}) => {
       expect((await page.goto(`${prefix}${route}` || '/'))?.status()).toBe(200);
