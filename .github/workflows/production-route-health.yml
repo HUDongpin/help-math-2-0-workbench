@@ -1,0 +1,47 @@
+name: HELP Math production route health
+
+# Alerting for helpmath-web issue #78: probes the public sitemap, robots and
+# locale homes on www.helpmath.ai every six hours and after each successful
+# Production deployment. A failed run notifies the repository owner; one
+# transient error per route is tolerated, a sustained 5xx rate is not. This is
+# the read-only first slice of the production smoke proposed in #39.
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  deployment_status:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: helpmath-production-route-health
+  cancel-in-progress: false
+
+jobs:
+  route-health:
+    name: Production route health
+    if: >-
+      github.event_name != 'deployment_status' ||
+      (github.event.deployment_status.state == 'success' &&
+      github.event.deployment.environment == 'Production')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out only the probe scripts
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 1
+          filter: blob:none
+          lfs: false
+          persist-credentials: false
+          sparse-checkout: scripts
+          submodules: false
+
+      - name: Use the repository Node.js version
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .nvmrc
+
+      - name: Probe the public production routes
+        run: node scripts/production-route-health.mjs --origin https://www.helpmath.ai --attempts 5 --max-failures 1
