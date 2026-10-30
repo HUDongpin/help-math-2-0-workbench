@@ -8459,6 +8459,18 @@ body:has(.lesson-shell2) {
   text-transform: uppercase;
 }
 
+/* Spanish route, English-only source title: say so instead of passing the
+   English text off as Spanish (helpmath-web #75). */
+.lesson-shell2__spine-source-gap {
+  display: block;
+  font-size: .75rem;
+  font-weight: 650;
+  letter-spacing: normal;
+  line-height: 1.3;
+  margin-top: .2rem;
+  text-transform: none;
+}
+
 .lesson-shell2__spine ol {
   display: flex;
   flex-direction: column;

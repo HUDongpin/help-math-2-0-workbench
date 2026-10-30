@@ -75,6 +75,8 @@ export type LessonShellTool = 'help' | 'key-terms' | 'calculator' | null;
 export interface LessonShellSection {
   readonly code: string;
   readonly title: string;
+  /** The real language of `title`, so English source text is never tagged Spanish. */
+  readonly titleLanguage?: 'en' | 'es';
   readonly state: 'complete' | 'current' | 'upcoming';
   readonly onSelect: () => void;
 }
@@ -1970,9 +1972,19 @@ export function LegacyResponsiveLessonShell({
             {renderLearningHomeLink('directory')}
           </div>
           <div className="lesson-shell2__spine-header">
-            <p className="lesson-shell2__spine-mark">{lessonNumberLabel
-                ? `L${lessonNumberLabel} · ${courseContext.courseTitle.text}`
-                : courseContext.courseTitle.text}</p>
+            <p className="lesson-shell2__spine-mark">
+              {lessonNumberLabel ? `L${lessonNumberLabel} · ` : null}
+              <span lang={courseContext.courseTitle.sourceLanguage}>
+                {courseContext.courseTitle.text}
+              </span>
+              {spanish && courseContext.courseTitle.usesEnglishFallback
+                ? <small
+                    className="lesson-shell2__spine-source-gap"
+                    data-spine-english-fallback="course-title"
+                    lang="es"
+                  >inglés · la fuente no tiene título español</small>
+                : null}
+            </p>
             <button
               aria-controls={sectionListId}
               aria-expanded={!spineCollapsed}
@@ -2020,7 +2032,10 @@ export function LegacyResponsiveLessonShell({
                 >
                   {emoji ?? section.code}
                 </span>
-                <span className="lesson-shell2__spine-name">{section.title}</span>
+                <span
+                  className="lesson-shell2__spine-name"
+                  lang={section.titleLanguage}
+                >{section.title}</span>
               </button>
             </li>;
             })}

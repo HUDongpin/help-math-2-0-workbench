@@ -1027,9 +1027,11 @@ export function G4L3WholeLessonPlayer({
       const allComplete = pages.every(
         (page) => completed.has(page.animationId),
       );
+      const label = getG4L3SectionLabel(section, progress.language);
       return {
         code: section.code,
-        title: getG4L3SectionLabel(section, progress.language).text,
+        title: label.text,
+        titleLanguage: label.sourceLanguage,
         state: isCurrent ? 'current' : allComplete ? 'complete' : 'upcoming',
         onSelect: () => navigateToPage(section.firstActiveAnimationId, true),
       };
