@@ -94,3 +94,28 @@ test("service identity requires the clean-checkout asset restoration", async () 
   const withoutRestore = base.ciWorkflow.replace("node scripts/prepare-site-ci-assets.mjs", "removed-restore-command");
   assert.throws(() => validateServiceIdentityDocuments({...base, ciWorkflow: withoutRestore}), /omitted node scripts\/prepare-site-ci-assets/u);
 });
+
+test("candidate smoke skips preview dispatches before the protected environment", async () => {
+  const base = await checkedInDocuments();
+  const withoutProductionFilter = base.candidateWorkflow.replace(
+    " && github.event.client_payload.environment == 'production'",
+    "",
+  );
+  assert.throws(
+    () => validateServiceIdentityDocuments({...base, candidateWorkflow: withoutProductionFilter}),
+    /omitted github\.event\.client_payload\.environment == 'production'/u,
+  );
+});
+
+test("candidate smoke keeps its concurrency queue on the production-only job", async () => {
+  const base = await checkedInDocuments();
+  const workflowLevelQueue = base.candidateWorkflow.replace(
+    "jobs:\n",
+    "concurrency:\n  group: helpmath-vercel-production-smoke\n  cancel-in-progress: false\n\njobs:\n",
+  );
+  assert.notEqual(workflowLevelQueue, base.candidateWorkflow);
+  assert.throws(
+    () => validateServiceIdentityDocuments({...base, candidateWorkflow: workflowLevelQueue}),
+    /queue only production runs with job-level concurrency/u,
+  );
+});

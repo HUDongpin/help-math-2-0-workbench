@@ -13,14 +13,18 @@ permissions:
   id-token: write
   statuses: write
 
-concurrency:
-  group: helpmath-vercel-production-smoke
-  cancel-in-progress: false
-
 jobs:
   production-smoke:
     name: Vercel production smoke
-    if: ${{ vars.HELP_MATH_CICD_IDENTITY_ACTIVATED == 'true' }}
+    # Vercel also sends deployment.ready for Preview deployments. Skip them
+    # before the protected environment and queue only production runs, so a
+    # preview event can neither wait for approval nor displace the production
+    # candidate's queued run. This only routes events; the dispatch is still
+    # fully validated below.
+    if: ${{ vars.HELP_MATH_CICD_IDENTITY_ACTIVATED == 'true' && github.event.client_payload.environment == 'production' }}
+    concurrency:
+      group: helpmath-vercel-production-smoke
+      cancel-in-progress: false
     environment: helpmath-production
     runs-on: ubuntu-latest
     timeout-minutes: 15

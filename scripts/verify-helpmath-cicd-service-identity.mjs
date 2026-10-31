@@ -31,6 +31,8 @@ export function validateServiceIdentityDocuments(documents) {
   includesAll(candidateWorkflow, [
     "vercel.deployment.ready",
     "vars.HELP_MATH_CICD_IDENTITY_ACTIVATED == 'true'",
+    "github.event.client_payload.environment == 'production'",
+    "group: helpmath-vercel-production-smoke",
     "environment: helpmath-production",
     "HELP_MATH_VERCEL_EVENT_INSTALLATION_ID: ${{ github.event.installation.id }}",
     "HELP_MATH_VERCEL_SENDER_LOGIN: ${{ github.event.sender.login }}",
@@ -88,6 +90,10 @@ export function validateServiceIdentityDocuments(documents) {
     invariant(!text.includes("api.vercel.com"), `${label} must not call the Vercel control-plane API`);
     invariant(!text.includes("pull_request_target"), `${label} must not use pull_request_target`);
   }
+  // Preview deployment.ready events skip the job, so they must not share a
+  // workflow-level concurrency group where they would cancel the queued
+  // production run.
+  invariant(!/^concurrency:/mu.test(candidateWorkflow), "candidate must queue only production runs with job-level concurrency");
   invariant(!postflightWorkflow.includes("id-token: write"), "postflight must not request an OIDC token");
   invariant(!postflightWorkflow.includes("environment: helpmath-production"), "postflight must not request a second promotion approval");
   invariant((candidateWorkflow.match(/vercel\/repository-dispatch\/actions\/status@/gu) ?? []).length === 1, "candidate must register exactly one Vercel status action");
