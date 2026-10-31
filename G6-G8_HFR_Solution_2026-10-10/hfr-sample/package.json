@@ -1,0 +1,15 @@
+{
+  "name": "hfr-sample",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "HELP Flash Runtime (HFR) engineering sample: SWF pages converted to TypeScript page modules plus a TypeScript runtime and viewer.",
+  "scripts": {
+    "compile:nms-l07": "node compiler/compile-lesson.mjs \"/Volumes/WestWorld/HELP MATH 2.0-g678-implementation/catalog/g678-page-only-release-manifest.v1.json\" \"/Volumes/WestWorld/HELP MATH Related Files/AWS Grade-Classified Courseware/G6-G8-shared\" NMS002 7 out/nms002-l07",
+    "compile:p040-p050": "node compiler/compile-lesson.mjs \"/Volumes/WestWorld/HELP MATH 2.0-g678-implementation/catalog/g678-page-only-release-manifest.v1.json\" \"/Volumes/WestWorld/HELP MATH Related Files/AWS Grade-Classified Courseware/G6-G8-shared\" ALG001 8 out/alg001-l08-p040-p050 --only shared-alg001-l08-p040,shared-alg001-l08-p050",
+    "build": "node tools/build.mjs",
+    "verify": "../../node_modules/.bin/esbuild tools/verify.ts --bundle --platform=node --format=esm --outfile=dist/verify.mjs --log-level=warning && node dist/verify.mjs out/nms002-l07 /tmp/hfr-verify ../../node_modules/esbuild/lib/main.js && node dist/verify.mjs out/alg001-l08-p040-p050 /tmp/hfr-verify ../../node_modules/esbuild/lib/main.js",
+    "typecheck": "node ../../node_modules/typescript/bin/tsc -p tsconfig.json",
+    "serve": "node tools/serve.mjs 8765"
+  }
+}
