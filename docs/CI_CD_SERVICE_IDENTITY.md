@@ -29,3 +29,14 @@ The candidate schema matches the captured `ready` / `before_alias` event and val
 Real production dispatch run `36443492803`, at main `1258c3f664496f9164720215054165d303b0be25`, passed event validation but stopped before token retrieval with `GitHub OIDC request origin drifted`. The old test incorrectly used the JWT issuer as the request endpoint. GitHub supplies `ACTIONS_ID_TOKEN_REQUEST_URL` independently; its [runner network reference](https://docs.github.com/en/actions/reference/runners/github-hosted-runners#communication-requirements-for-github-hosted-runners) documents `*.actions.githubusercontent.com` for token retrieval. The [official toolkit](https://github.com/actions/toolkit/blob/main/packages/core/src/oidc-utils.ts) consumes the response `value` field.
 
 Only HTTPS runner-provided endpoints under that exact DNS suffix are accepted, with no credentials, non-default port, fragment or redirects. The JWT issuer remains exactly `https://token.actions.githubusercontent.com`, and all nine repository, environment, workflow and audience claims remain mandatory. Response metadata cannot substitute for a valid JWT. Tests cover the separate endpoint/issuer, metadata, lookalike hosts, insecure transport, redirects, missing JWT and issuer drift. Endpoint fixtures are synthetic contract tests, not captured runtime requests. Live OIDC success is still required before promotion; no token or credential-bearing request URL is recorded.
+
+## Preview dispatch routing repair
+
+Vercel sends `vercel.deployment.ready` for Preview deployments too, and the candidate workflow used a workflow-level concurrency group in front of the Owner-approved `helpmath-production` environment. On 2026-10-30 that meant:
+
+- A Preview-triggered run from 2026-10-20 (`39386711393`) waited 10 days for approval, and every later run queued behind it.
+- After the run was cancelled, Preview dispatches displaced the queued production dispatch for `b4411bb` (run `41090131278`, cancelled at 16:27:58 UTC). The run that was then approved was a Preview payload and correctly stopped with `dispatch environment is not production`.
+
+The candidate job now runs only when `client_payload.environment` is `production`, and its concurrency group is on the job. Preview dispatches are skipped before the protected environment and never enter the queue.
+
+The condition only routes events. A forged `production` payload still faces the Owner approval and the full GitHub-envelope, sender, project, branch, SHA and OIDC validation. The static verifier rejects a missing filter or a workflow-level queue.
