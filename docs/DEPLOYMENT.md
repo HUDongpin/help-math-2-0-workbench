@@ -64,6 +64,8 @@ Before enabling Resend, inventory existing mail DNS. Add only the exact verifica
 
 ## 4. Preview and production release
 
+Bot and backup branches matching `claude/**`, `dependabot/**`, `cursor/**`, and `backup/**` skip automatic Vercel deployments. The `main` branch deploys normally.
+
 Every pull request must receive a protected Vercel Preview. Verify the exact commit SHA, then run the launch acceptance suite against that URL:
 
 - English and Spanish navigation, locale persistence, metadata, canonical and alternate-language links.
